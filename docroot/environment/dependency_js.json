@@ -1,0 +1,51 @@
+{
+    "environment" : [
+        "environment/path.js"
+    ],
+    "library" : [
+        "js/library/jquery/jquery-1.4.2.min.js",
+        "js/library/jquery/jquery-ui-1.8.2.custom.min.js"
+    ],
+    "plugins" : {
+        "minimized"   : [
+            "js/library/plugin/modernizr-1.5.min.js"
+        ],
+        "unminimized" : [
+            "js/library/plugin/jquery-hinter-0.6.js",
+            "js/library/plugin/jquery-grid-0.6.js"
+        ]
+    },
+    "global" : [
+            "js/site/global/plugins.js",
+            "js/site/global/script.js",
+            "js/site/global/display.js"
+    ],
+    "page"   : {
+        "home" : {
+            "global"    :   [],
+            "specific"  :   {
+                "intro"  :   [],
+                "login"  :   [],
+                "logout"  :   []
+            }
+        },
+        "landing" : {
+            "global"    :   [],
+            "specific"  :   {
+                "landing"  :   []
+            }
+        },
+        "visit" : {
+            "global"   : [],
+            "specific" : {
+                "visit" : []
+            }
+        },
+        "help" : {
+            "global"   : [],
+            "specific" : {
+                "help" : []
+            }
+        }
+    }
+}

@@ -1,0 +1,38 @@
+{
+    "library" : [],
+    "plugins" : {
+        "minimized"   : [],
+        "unminimized" : []
+    },
+    "global" : [
+        "css/site/global/style.css"
+    ],
+    "page"   : {
+        "home" : {
+            "global"   : [],
+            "specific" : {
+                "intro" : [],
+                "login" : [],
+                "logout" : []
+            }
+        },
+        "landing" : {
+            "global"   : [],
+            "specific" : {
+                "landing" : []
+            }
+        },
+        "visit" : {
+            "global"   : [],
+            "specific" : {
+                "visit" : []
+            }
+        },
+        "help" : {
+            "global"   : [],
+            "specific" : {
+                "help" : []
+            }
+        }                
+    }
+}

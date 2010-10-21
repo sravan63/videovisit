@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Application Template -->
+	<definition name=".standardPageTemplate" template="/WEB-INF/tiles-templates/applicationLayout.jsp">
+		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="header" value="/WEB-INF/jsp/nav/header.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="footer" value="/WEB-INF/jsp/nav/footer.jsp" />
+	</definition>
+
+	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
+ 		<put-attribute name="header" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="data" value="/WEB-INF/jsp/blank.jsp" />
+	</definition>
+
+	<!-- json data -->
+	<definition name="jsonData" extends=".dataTemplate">
+ 		<put-attribute name="header" value="/WEB-INF/jsp/data/jsonHeader.jsp" />
+ 		<put-attribute name="data" value="/WEB-INF/jsp/data/jsonData.jsp" />
+	</definition>
+
+	<!-- content pages -->
+	<definition name="intro" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-intro.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/intro.jsp" />
+	</definition>
+	<definition name="login" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
+	</definition>
+	<definition name="landing" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/landing.jsp" />
+	</definition>
+	<definition name="visit" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-visit.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/visit.jsp" />
+	</definition>
+	<definition name="help" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/help.jsp" />
+	</definition>
+	<definition name="logout" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/logout.jsp" />
+	</definition>
+
+</tiles-definitions>

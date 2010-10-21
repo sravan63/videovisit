@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="defaultHandlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles-definitions/tiles-definitions.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
+	</bean>
+
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/sso">approot</prop>
+				<prop key="/logout.htm">logout</prop>
+				<prop key="/intro.htm">intro</prop>
+				<prop key="/login.htm">login</prop>
+				<prop key="/landing.htm">landing</prop>
+				<prop key="/visit.htm">visit</prop>
+				<prop key="/help.htm">help</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- Controllers -->
+	<bean id="approot" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+		<property name="contextIdParameter" value="mrn"/>
+		<property name="homePageRedirect" value="redirect:intro.htm"/>
+	</bean>
+	<bean id="logout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoutController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="logout" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="logout" />
+	</bean>
+	<bean id="intro" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="intro" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="intro" />
+	</bean>
+	<bean id="login" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="login" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+	</bean>
+	<bean id="landing" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="landing" />
+		<property name="navigation" value="landing" />
+		<property name="subNavigation" value="landing" />
+	</bean>
+	<bean id="visit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="visit" />
+		<property name="navigation" value="visit" />
+		<property name="subNavigation" value="visit" />
+	</bean>
+	<bean id="help" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="help" />
+		<property name="navigation" value="help" />
+		<property name="subNavigation" value="help" />
+	</bean>
+
+	<!--  COMMAND classes -->
+	<bean id="webAppContextCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand" />
+	<bean id="environmentCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand">
+		<property name="cssDependencyFile" value="environment/dependency_css.json" />
+		<property name="jsDependencyFile" value="environment/dependency_js.json" />
+	</bean>
+</beans>

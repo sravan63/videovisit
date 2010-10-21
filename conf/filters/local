@@ -1,0 +1,4 @@
+PROJECT=VideoVisitsMember
+LOGFILE=/Users/litmusbox/work/tpmg/development/tomcat/logs/videovisitsmember.local.log
+INITFILE=/Users/litmusbox/work/tpmg/development/tomcat/conf/videovisitsmember.local.properties
+LOGLEVEL=info
