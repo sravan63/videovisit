@@ -25,7 +25,11 @@
             "global"    :   [],
             "specific"  :   {
                 "intro"  :   [],
-                "login"  :   [],
+                "login"  :   [
+                    "js/library/plugin/jquery.validate.min.js",
+                    "js/site/login/login.js",
+                    "js/library/plugin/additional-validation-methods.js"
+                ],
                 "logout"  :   []
             }
         },

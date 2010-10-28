@@ -288,7 +288,7 @@ input								{outline:none;}
 	.landing-portal-details p.smallprint		{font-size:100%;text-align:center;}
 	
 	/* Member Login */
-	.error-login					{position:absolute; top:0; right:0; width:180px; right:100px; top:128px;}
+	.error-login					{position:absolute; top:0; right:0; width:250px; right:100px; top:128px;}
 
 
 
