@@ -76,7 +76,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "POST",
-                url: "blank.jsp", // TODO: need the correct path to POST the data
+                url: VIDEO_VISITS.Path.login.ajaxurl,
                 data: prepdata, // alternatively: $(data).serialize() but this adds fields we don't need'
                 success: function(returndata) {
                     console.log('Success', returndata);

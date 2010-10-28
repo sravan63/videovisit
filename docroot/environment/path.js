@@ -3,5 +3,8 @@ VIDEO_VISITS.Path = {
         home : {
             test : 'data/home/test.json'
         }
+    },
+    login : {
+        ajaxurl : 'submitlogin.htm'
     }
 }
