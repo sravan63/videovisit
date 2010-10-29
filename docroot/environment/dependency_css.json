@@ -16,6 +16,18 @@
                 "logout" : []
             }
         },
+        "landingnone" : {
+            "global"   : [],
+            "specific" : {
+                "landingnone" : []
+            }
+        },
+        "landingready" : {
+            "global"   : [],
+            "specific" : {
+                "landingready" : []
+            }
+        },
         "landing" : {
             "global"   : [],
             "specific" : {
