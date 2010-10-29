@@ -25,7 +25,9 @@
 				<prop key="/logout.htm">logout</prop>
 				<prop key="/intro.htm">intro</prop>
 				<prop key="/login.htm">login</prop>
-				<prop key="/landing.htm">landing</prop>
+				<prop key="/submitlogin.htm">submitlogin</prop>
+				<prop key="/landingnone.htm">landingnone</prop>
+				<prop key="/landingready.htm">landingready</prop>
 				<prop key="/visit.htm">visit</prop>
 				<prop key="/help.htm">help</prop>
 			</props>
@@ -56,13 +58,25 @@
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
 	</bean>
-	<bean id="landing" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="submitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LoginController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="landing" />
-		<property name="navigation" value="landing" />
-		<property name="subNavigation" value="landing" />
+		<property name="viewName" value="login" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
 	</bean>
-	<bean id="visit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="landingnone" />
+		<property name="navigation" value="landingnone" />
+		<property name="subNavigation" value="landingnone" />
+	</bean>
+	<bean id="landingready" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="landingready" />
+		<property name="navigation" value="landingready" />
+		<property name="subNavigation" value="landingready" />
+	</bean>
+	<bean id="visit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VisitController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="visit" />
 		<property name="navigation" value="visit" />

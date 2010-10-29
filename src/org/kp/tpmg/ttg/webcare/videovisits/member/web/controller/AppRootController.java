@@ -20,10 +20,9 @@ public class AppRootController implements Controller {
 	private String homePageRedirect;
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String contextId = request.getParameter(getContextIdParameter());
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		if (ctx == null || !ctx.getContextId().equals(contextId))  {
-			ctx = getWebAppContextCommand().createContext(request, contextId);
+		if (ctx == null){
+			ctx = new WebAppContext();
 			WebAppContext.setWebAppContext(request, ctx);
 		}
 		

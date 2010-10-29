@@ -37,10 +37,20 @@
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
 	</definition>
-	<definition name="landing" extends=".standardPageTemplate">
+	<definition name="submitlogin" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
+	</definition>
+	<definition name="landingnone" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo.jsp" />
- 		<put-attribute name="content" value="/WEB-INF/jsp/landing.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/landingnone.jsp" />
+	</definition>
+	<definition name="landingready" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/landingready.jsp" />
 	</definition>
 	<definition name="visit" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />

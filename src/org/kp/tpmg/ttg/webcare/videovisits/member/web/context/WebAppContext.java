@@ -1,6 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.context;
 
 import javax.servlet.http.HttpServletRequest;
+import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*;
 
 import org.apache.log4j.Logger;
 
@@ -9,11 +10,9 @@ public class WebAppContext {
 
 	public static Logger logger = Logger.getLogger(WebAppContext.class);
 	
-	String contextId;
-	String firstName;
-	String lastName;
-
-	//TODO add additional properties that should be kept in the session here
+	//String contextId;
+	public MemberWSO	member = null;	 
+	public MeetingWSO	meeting= null; 
 	
 	public static final String HTTP_SESSION_KEY = "WebAppContext";
 	
@@ -24,7 +23,7 @@ public class WebAppContext {
 	public static void setWebAppContext(HttpServletRequest request, WebAppContext ctx) {
 		request.getSession().setAttribute(WebAppContext.HTTP_SESSION_KEY, ctx);
 	}
-
+/*
 	public String getContextId() {
 		return contextId;
 	}
@@ -33,20 +32,5 @@ public class WebAppContext {
 		this.contextId = contextId;
 	}
 
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
+*/
 }
