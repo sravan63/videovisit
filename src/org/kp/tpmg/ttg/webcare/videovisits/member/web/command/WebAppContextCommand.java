@@ -10,13 +10,13 @@ public class WebAppContextCommand {
 	public static Logger logger = Logger.getLogger(WebAppContextCommand.class);
 	
 	
-	public WebAppContext createContext(HttpServletRequest request, String contextId) throws Exception {
+	public WebAppContext createContext(HttpServletRequest request) throws Exception {
 		WebAppContext ctx = new WebAppContext();
-		ctx.setContextId(contextId);
+		//ctx.setContextId(contextId);
 		
 		//TODO: grab data from web services
-		ctx.setFirstName("First" + contextId);
-		ctx.setLastName("Last" + contextId);
+		//ctx.setFirstName("First" + contextId);
+		//ctx.setLastName("Last" + contextId);
 
 		//TODO: add project-specific initialization here
 		
