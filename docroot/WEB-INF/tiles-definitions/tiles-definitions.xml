@@ -40,7 +40,7 @@
 	<definition name="submitlogin" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
- 		<put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/landingnone.jsp" />
 	</definition>
 	<definition name="landingnone" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />

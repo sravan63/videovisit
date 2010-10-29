@@ -58,19 +58,19 @@
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
 	</bean>
-	<bean id="submitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LoginController">
+	<bean id="submitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SubmitLoginController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="login" />
+		<property name="viewName" value="submitlogin" />
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
 	</bean>
-	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LandingNoneController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="landingnone" />
 		<property name="navigation" value="landingnone" />
 		<property name="subNavigation" value="landingnone" />
 	</bean>
-	<bean id="landingready" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="landingready" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LandingReadyController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="landingready" />
 		<property name="navigation" value="landingready" />

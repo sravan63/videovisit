@@ -23,43 +23,11 @@ public class VisitController extends SimplePageController {
 				// DEBUG
 				System.out.println("VisitController-handlePageReques 1...");
 
-				// Notify web services
-				// VerifyMemberResponseWrapper response = verifyMember(lastName, mrn8Digit,birth_month + "-" + birth_year,	consentVersion,	sessionID);
-				System.out.println("LoginController-handlePageRequest 2...");
-
-				// simulation
-								
-				// Analyse Results and forward.	
-				modelAndView.clear();
-																	
-				// invalid user
-				//if (verifyResult.getSuccess() == false)
-				if (false)
-				{
-					System.out.println("VisitController-handlePageRequest 3...");
-	
-						modelAndView.setViewName("blank");
-						//member.setErrorMessage("Invalid user name. Please try again.");
-				}
-				// valid user, but not NCAL members
-				//else if (result.getErrorMessage() != 
-				else 
-				{
-					System.out.println("VisitController-handlePageRequest 4...");
-
-						modelAndView.setViewName("visit");
-						//member.setErrorMessage("Service is for NCAL user only.");
-						//ctx.member = member.getResult();
-			
-				}
 		}
 		catch  (Exception e)
 		{
 			e.printStackTrace();
-			modelAndView.setViewName("blank");
 		}
-		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-		System.out.println("VisitController-handlePageReques...10");
 												
 		return modelAndView;
 	}

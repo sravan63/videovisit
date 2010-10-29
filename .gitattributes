@@ -141,8 +141,11 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/EnvironmentCommand.ja
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/WebAppContextCommand.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/context/WebAppContext.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/AppRootController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LandingNoneController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LandingReadyController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LoginController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoutController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SimplePageController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SubmitLoginController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VisitController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/RequestLoggingFilter.java -text

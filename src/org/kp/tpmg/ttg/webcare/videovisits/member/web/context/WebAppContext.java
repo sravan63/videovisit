@@ -23,14 +23,21 @@ public class WebAppContext {
 	public static void setWebAppContext(HttpServletRequest request, WebAppContext ctx) {
 		request.getSession().setAttribute(WebAppContext.HTTP_SESSION_KEY, ctx);
 	}
-/*
-	public String getContextId() {
-		return contextId;
+
+	public MemberWSO getMember() {
+		return member;
 	}
 
-	public void setContextId(String contextId) {
-		this.contextId = contextId;
+	public void setMember(MemberWSO member) {
+		this.member = member;
+	}
+	public MeetingWSO getMeeting() {
+		return meeting;
 	}
 
-*/
+	public void setMeeting(MeetingWSO meeting) {
+		this.meeting = meeting;
+	}
+
+
 }
