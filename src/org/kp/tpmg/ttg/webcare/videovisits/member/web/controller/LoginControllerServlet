@@ -11,12 +11,12 @@ import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import nl.captcha.Captcha;
 
-public class SubmitLoginController extends SimplePageController {
-	public static Logger logger = Logger.getLogger(SubmitLoginController.class);
+public class LoginController extends HttpServlet {
+	public static Logger logger = Logger.getLogger(LoginController.class);
 	//private CaseCommand caseCommand;
 
 
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) 
+	public void doPost (HttpServletRequest request,HttpServletResponse response) 
 	{
 		try 
 		{
@@ -28,9 +28,9 @@ public class SubmitLoginController extends SimplePageController {
 				String answer		= "";
 				String sessionID  	= request.getSession().getId();
 				PrintWriter out 	= response.getWriter();
+				
 				WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
-
-				// DEBUG
+								// DEBUG
 				System.out.println("LoginController-handlePageReques 1...");
 				if (request.getParameter("last_name") != null &&
 						!request.getParameter("last_name").equals("")) {
@@ -62,10 +62,7 @@ public class SubmitLoginController extends SimplePageController {
 				    {
 				    		//don't match, return error
 							System.out.println("Captcha failed. answer is=" + answer);
-							//modelAndView.setViewName("login");
-							//return (modelAndView);
-							out.println ("ERROR. Code entered does not match. Please try again");
-							return (null);
+							out.println("ERROR. captcha didn't match, please retry");
 				    }	
 				}
 				
@@ -124,10 +121,10 @@ public class SubmitLoginController extends SimplePageController {
 							ctx.meeting = meeting;
 						}
 						// save data using Spring model and view
-						// modelAndView.clear();
+						//modelAndView.clear();
 						
 						// there is no meeting
-						//if (result.getSuccess())
+						//if (response.getSuccess())
 						if (member.getResult().getLastName().equals("two"))
 
 						{
@@ -137,9 +134,7 @@ public class SubmitLoginController extends SimplePageController {
 							//modelAndView.setViewName("landingnone");
 							//modelAndView.addObject("member", member);
 							//return new ModelAndView ("redirect:landingnone.htm");
-							out.println ("landingnone.htm");
-							return (null); 
-
+							out.println("landingnone.htm");
 						}
 						// there is  meeting.
 						else
@@ -148,17 +143,16 @@ public class SubmitLoginController extends SimplePageController {
 							//modelAndView.setViewName("redirect:landingready.htm");
 							//modelAndView.addObject("host", meeting.getHost());
 							//modelAndView.addObject("member", member);
-							out.println ("landingready.htm");
-							return (null); 
+							out.println("landingready.htm");
+
 						}
 				}
 				else
 				{
-						System.out.println("LoginController-handlePageRequest 3...");
-						//modelAndView.setViewName("login");
+						//System.out.println("LoginController-handlePageRequest 3...");
+									//modelAndView.setViewName("login");
 						//member.setErrorMessage("Invalid user name. Please try again.");
-						out.println ("ERROR. Invalid user. Please try again");
-						return (null);
+						out.println("ERROR, invalid user");
 
 				}
 						
@@ -170,8 +164,7 @@ public class SubmitLoginController extends SimplePageController {
 		}
 		//getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		System.out.println("LoginController-handlePageReques...10");
+												
 		//return modelAndView;
-		return null;
 	}
 }
-

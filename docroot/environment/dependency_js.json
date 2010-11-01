@@ -60,7 +60,9 @@
         "help" : {
             "global"   : [],
             "specific" : {
-                "help" : []
+                "help" : [
+                    "js/site/help/help.js"
+                ]
             }
         }
     }

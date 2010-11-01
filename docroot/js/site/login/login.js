@@ -33,7 +33,7 @@ $(document).ready(function() {
             captcha: {
                 required: true
             },
-            visible: {
+            consentVersion: {
                 required: true
             }
         },
@@ -64,7 +64,7 @@ $(document).ready(function() {
             captcha: {
                 required: "You need to enter something in the captcha field."
             },
-            visible: {
+            consentVersion: {
                 required: "You must agree to the terms of consent to proceed."
             }
         },
@@ -72,24 +72,50 @@ $(document).ready(function() {
             // Clear the error field in case the form didn't submit properly.'
             $("p.error").html('');
             // Prepare data from pertinent fields for POSTing
-            var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&captcha=' + $('input[name=captcha]').val() + '&visible=' + $('input[name=visible]').val();
+            var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
 
             $.ajax({
                 type: "POST",
                 url: VIDEO_VISITS.Path.login.ajaxurl,
-                data: prepdata, // alternatively: $(data).serialize() but this adds fields we don't need'
+                data: prepdata, // alternatively: $(data).serialize() but this adds fields we don't need
                 success: function(returndata) {
-                    console.log('Success', returndata);
-                    // Success! Redirect to the landing page
-                    window.location.replace("landing.htm");
+                    returndata = $.trim(returndata);
+
+                    switch (returndata)
+                    {
+                        case "ERROR. Invalid user. Please try again":
+                            $("p.error").css("display","inline").append('Your username was invalid. Please try again.');
+                            break;
+
+                        case "ERROR. Code entered does not match. Please try again":
+                            $("p.error").css("display","inline").append('The code entered did not match. Please try again.');
+                            break;
+
+                        case "landingready.htm":
+                            window.location.replace(returndata);
+                            break;
+
+                        case "landingnone.htm":
+                            window.location.replace(returndata);
+                            break;
+
+                        default:
+                            $("p.error").css("display","inline").append('There was an error submitting your login. Please try again later.');
+                            break;
+                    }
 
                 },
-                error: function(res) {
-                    console.log('Ajax request failed: ', res.statusText);
+                error: function() {
                     $("p.error").css("display","inline").append('There was an error submitting your login.');
                 }
             });
         }
+    });
+
+    // This is for reloading the captcha image onclick. Since the simplecaptcha code returns the actual contents of the image, I need to appened some random stuff to the img src so it knows the "location" has changed. Without it, this won't work
+    $("#captchaImage").click(function(){
+        $("#stickyImg").load('stickyImg').attr('src', 'stickyImg?' + (new Date().getTime()));
+        return false;
     });
 
 });

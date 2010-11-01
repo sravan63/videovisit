@@ -3,9 +3,9 @@
 
                                 <div id="content-block" class="help-block">
                                         <div class="sidebar">
-                                                <a href="#" class="button right">Back &rsaquo;&rsaquo;</a>
+                                                <a href="#" class="button right back">Back &rsaquo;&rsaquo;</a>
 
-                                                <ul>                                                        <li><a href="#" class="active"><span></span>&nbsp;</a></li>                                                </ul>
+                                                <ul>                                                        <li><a href="#" class="active back"><span></span>&nbsp;</a></li>                                                </ul>
                                         </div>
                                         <div class="content">                                                <h4>Help with My Meetings Page</h4>                                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi ne
 que, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut

@@ -141,7 +141,7 @@ input								{outline:none;}
 		/* special form block styles */
 		.form-block .birth_month	{width:43px; float:left; margin-right:5px;}
 		.form-block .birth_year		{width:87px; float:left;}
-		.form-block .captcha 		{width:127px;}
+		.form-block .captcha 		{width:40px;}
 		.form-block .gfx-captcha 	{float:left; margin:0 14px 0 0;}
 		.form-block .understand_terms  {width:auto; float:left; border:none;}
 		.form-block .label-understand-terms {width:auto; font-weight:normal; padding:1px 0 0 0;}

@@ -75,7 +75,9 @@ docroot/js/site/global/global.js -text
 docroot/js/site/global/lightbox.js -text
 docroot/js/site/global/plugins.js -text
 docroot/js/site/global/script.js -text
+docroot/js/site/help/help.js -text
 docroot/js/site/login/login.js -text
+lib/SimpleCaptcha-1.1.1.jar -text
 lib/XmlSchema-1.3.3.jar -text
 lib/XmlSchema-1.4.2.wso2v1.jar -text
 lib/annogen-0.1.0.jar -text
@@ -144,6 +146,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/AppRootController.
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LandingNoneController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LandingReadyController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LoginController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LoginControllerServlet -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoutController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SimplePageController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SubmitLoginController.java -text
