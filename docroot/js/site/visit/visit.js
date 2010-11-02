@@ -1,17 +1,17 @@
-$(document).ready (function () {
-	
-        // This should probably be in its own file? Why is it setup like this?
-	/*var _init = $.ui.dialog.prototype._init;
-	
+$(document).ready(function() {
+    
+    $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');
+    /*var _init = $.ui.dialog.prototype._init;
+
 	//Custom Dialog Init
 	$.ui.dialog.prototype._init = function() {
 		var self = this;
         _init.apply(this, arguments);
 		uiDialogTitlebar = this.uiDialogTitlebar;
-		
-		
+
+
 		uiDialogTitlebar.append('<a href="#" id="dialog-override" class="dialog-override ui-dialog-titlebar-eo">Emergency Override</a>');
-		
+
 		//Minimize Button
 		this.uiDialogTitlebarMin = $('.dialog-override', uiDialogTitlebar).hover(function(){
 			$(this).addClass('ui-state-hover');
@@ -21,24 +21,24 @@ $(document).ready (function () {
 			self.eOverride();
 			return false;
 		});
-		
+
 	};
 	//Custom Dialog Functions
 	$.extend($.ui.dialog.prototype, {
-		eOverride: function() { 
+		eOverride: function() {
 			console.log("Emergency Override");
 		}
 	});
 
-
-	$('.dialog-block').dialog({
+        $("#quitMeeting").click(function(){
+            $('.dialog-block2').dialog({
 		modal: true,
 		//stack: false,
 		resizable: false,
 		width: 360
+            });
+        })
 
-	});
-	
 	$('.dialog-block-override').dialog({
 		modal: true,
 		//stack: false,
@@ -46,42 +46,11 @@ $(document).ready (function () {
 		width: 360,
 		dialogClass: 'emergency-override'
 	});
+        
 
-        // Tooltips
-	$('.note').each (function (){
-		$(this).qtip({
-			content: $('.tooltip', this).html (),
-			position: {
-				my: "bottom center",
-				at: "top center",
-				adjust: {
-					y: -12,
-					screen: true
-					}
-			},
-			hide: {
-				effect: function () { $(this).fadeOut(100); }
-			},
-			style: {
-				tip: {
-         			corner: true
-      			}
-			}	
-		});
-	});*/
-	
-	//Clinician Accordian Nav
-	  $('#sidebar-main h2').click(function() {
-			 $(this).toggleClass("show");
-			 $(this).next().animate({ height: "toggle", opacity: "toggle"}, 500 );
-			return false;
-		}).next().hide();
-	  
+        $("#dialogclose").click(function(){
+            $(".dialog-block2").dialog('close');
+        })*/
+
 });
-
-
-
-
-
-
 

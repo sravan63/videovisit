@@ -52,9 +52,15 @@
             }
         },
         "visit" : {
-            "global"   : [],
+            "global"   : [
+                "js/library/plugin/jqModal.js",
+                "js/library/plugin/jqDnR.js",
+                "js/library/plugin/dimensions.js"
+            ],
             "specific" : {
-                "visit" : []
+                "visit" : [
+                    "js/site/visit/visit.js"
+                ]
             }
         },
         "help" : {

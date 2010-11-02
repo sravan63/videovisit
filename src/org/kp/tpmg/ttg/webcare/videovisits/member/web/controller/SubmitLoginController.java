@@ -64,14 +64,14 @@ public class SubmitLoginController extends SimplePageController {
 							System.out.println("Captcha failed. answer is=" + answer);
 							//modelAndView.setViewName("login");
 							//return (modelAndView);
-							out.println ("ERROR. Code entered does not match. Please try again");
+							out.println ("4");
 							return (null);
 				    }	
 				}
 				
 				// Validation  
 
-				// VerifyMemberResponseWrapper response = verifyMember(lastName, mrn8Digit,birth_month + "-" + birth_year,	consentVersion,	sessionID);
+				//VerifyMemberResponseWrapper result = verifyMember(lastName, mrn8Digit,birth_month + "-" + birth_year,	consentVersion,	sessionID);
 				System.out.println("LoginController-handlePageRequest 2...");
 
 				// simulation
@@ -137,7 +137,7 @@ public class SubmitLoginController extends SimplePageController {
 							//modelAndView.setViewName("landingnone");
 							//modelAndView.addObject("member", member);
 							//return new ModelAndView ("redirect:landingnone.htm");
-							out.println ("landingnone.htm");
+							out.println ("2");
 							return (null); 
 
 						}
@@ -148,7 +148,7 @@ public class SubmitLoginController extends SimplePageController {
 							//modelAndView.setViewName("redirect:landingready.htm");
 							//modelAndView.addObject("host", meeting.getHost());
 							//modelAndView.addObject("member", member);
-							out.println ("landingready.htm");
+							out.println ("1");
 							return (null); 
 						}
 				}
@@ -157,7 +157,7 @@ public class SubmitLoginController extends SimplePageController {
 						System.out.println("LoginController-handlePageRequest 3...");
 						//modelAndView.setViewName("login");
 						//member.setErrorMessage("Invalid user name. Please try again.");
-						out.println ("ERROR. Invalid user. Please try again");
+						out.println ("3");
 						return (null);
 
 				}

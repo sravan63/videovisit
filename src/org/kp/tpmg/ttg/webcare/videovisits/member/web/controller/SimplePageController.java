@@ -20,10 +20,10 @@ public class SimplePageController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-		return handlePageRequest(modelAndView, request);
+		return handlePageRequest(modelAndView, request, response);
 	}
 	
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request) throws Exception {
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return modelAndView;
 	}
 

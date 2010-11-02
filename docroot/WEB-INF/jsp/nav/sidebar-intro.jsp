@@ -2,7 +2,7 @@
 
                                 <div class="header-inner"></div>
 
-                                <h2><span>Stay Connected With Your Doctor</span></h2>
+                                <!--<h2><span>Stay Connected With Your Doctor</span></h2>
                 <div class="sidebar-nav-wrap">
                                 <ul>
                                         <li>Learn More
@@ -12,5 +12,5 @@
                                                 </ul>
                                         </li>
                                 </ul>
-                                </div>
+                                </div>-->
                         </div>

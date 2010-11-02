@@ -35,7 +35,9 @@
             }
         },
         "visit" : {
-            "global"   : [],
+            "global"   : [
+                "css/library/plugin/jqModal.css"
+            ],
             "specific" : {
                 "visit" : []
             }

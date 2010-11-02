@@ -69,7 +69,7 @@ $(document).ready(function() {
             }
         },
         submitHandler: function(data){
-            // Clear the error field in case the form didn't submit properly.'
+            // Clear the error field in case the form didn't submit properly.
             $("p.error").html('');
             // Prepare data from pertinent fields for POSTing
             var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
@@ -83,20 +83,20 @@ $(document).ready(function() {
 
                     switch (returndata)
                     {
-                        case "ERROR. Invalid user. Please try again":
+                        case "3":
                             $("p.error").css("display","inline").append('Your username was invalid. Please try again.');
                             break;
 
-                        case "ERROR. Code entered does not match. Please try again":
-                            $("p.error").css("display","inline").append('The code entered did not match. Please try again.');
+                        case "4":
+                            $("p.error").css("display","inline").append('The code entered did not match. Please try again (you can click the code image to generate a new one if needed)');
                             break;
 
-                        case "landingready.htm":
-                            window.location.replace(returndata);
+                        case "2":
+                            window.location.replace("landingnone.htm");
                             break;
 
-                        case "landingnone.htm":
-                            window.location.replace(returndata);
+                        case "1":
+                            window.location.replace("landingready.htm");
                             break;
 
                         default:

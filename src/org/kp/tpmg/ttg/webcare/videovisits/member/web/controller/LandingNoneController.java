@@ -4,7 +4,7 @@ import org.kp.tpmg.webservice.client.videovisit.member.*;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*;
 
 import java.util.Date;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.*;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*;
@@ -17,7 +17,7 @@ public class LandingNoneController extends SimplePageController {
 			return test;
 	}
 
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request) 
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
 	{
 		try 
 		{

@@ -36,6 +36,7 @@ docroot/WEB-INF/tiles-definitions/tiles-definitions.xml -text
 docroot/WEB-INF/tiles-templates/applicationLayout.jsp -text
 docroot/WEB-INF/tiles-templates/dataLayout.jsp -text
 docroot/WEB-INF/web.xml -text
+docroot/css/library/plugin/jqModal.css -text
 docroot/css/site/global/base.css -text
 docroot/css/site/global/handheld.css -text
 docroot/css/site/global/jquery-ui.css -text
@@ -66,6 +67,9 @@ docroot/index.jsp -text
 docroot/js/library/jquery/jquery-1.4.2.min.js -text
 docroot/js/library/jquery/jquery-ui-1.8.2.custom.min.js -text
 docroot/js/library/plugin/additional-validation-methods.js -text
+docroot/js/library/plugin/dimensions.js -text
+docroot/js/library/plugin/jqDnR.js -text
+docroot/js/library/plugin/jqModal.js -text
 docroot/js/library/plugin/jquery-grid-0.6.js -text
 docroot/js/library/plugin/jquery-hinter-0.6.js -text
 docroot/js/library/plugin/jquery.validate.min.js -text
@@ -77,6 +81,7 @@ docroot/js/site/global/plugins.js -text
 docroot/js/site/global/script.js -text
 docroot/js/site/help/help.js -text
 docroot/js/site/login/login.js -text
+docroot/js/site/visit/visit.js -text
 lib/SimpleCaptcha-1.1.1.jar -text
 lib/XmlSchema-1.3.3.jar -text
 lib/XmlSchema-1.4.2.wso2v1.jar -text
