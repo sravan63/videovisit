@@ -114,7 +114,7 @@ $(document).ready(function() {
 
     // This is for reloading the captcha image onclick. Since the simplecaptcha code returns the actual contents of the image, I need to appened some random stuff to the img src so it knows the "location" has changed. Without it, this won't work
     $("#captchaImage").click(function(){
-        $("#stickyImg").load('stickyImg').attr('src', 'stickyImg?' + (new Date().getTime()));
+        $("#stickyImg").attr('src', 'stickyImg?' + (new Date().getTime()));
         return false;
     });
 

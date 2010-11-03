@@ -42,7 +42,9 @@
         "landingready" : {
             "global"    :   [],
             "specific"  :   {
-                "landingready"  :   []
+                "landingready"  :   [
+                    "js/site/landingready/landingready.js"
+                ]
             }
         },
         "landing" : {
