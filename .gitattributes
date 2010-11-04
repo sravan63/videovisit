@@ -80,6 +80,7 @@ docroot/js/site/global/lightbox.js -text
 docroot/js/site/global/plugins.js -text
 docroot/js/site/global/script.js -text
 docroot/js/site/help/help.js -text
+docroot/js/site/landingnone/landingnone.js -text
 docroot/js/site/landingready/landingready.js -text
 docroot/js/site/login/login.js -text
 docroot/js/site/visit/visit.js -text

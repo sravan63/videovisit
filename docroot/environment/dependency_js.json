@@ -36,7 +36,9 @@
         "landingnone" : {
             "global"    :   [],
             "specific"  :   {
-                "landingnone"  :   []
+                "landingnone"  :   [
+                    "js/site/landingnone/landingnone.js"
+                ]
             }
         },
         "landingready" : {

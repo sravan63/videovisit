@@ -1,7 +1,9 @@
 <h3 class="page-title">Video Visit with Craig Wargon, DPM</h3>
 
                 <div id="video-main">
-                        <img src="images/global/placeholder-meeting-frame.jpg" alt="Meeting Goes Here" />
+                    <iframe src ="#" width="100%" height="457">
+                        <p>Your browser does not support iframes.</p>
+                    </iframe>
                 </div>
 
                 <div id="quitMeetingModal" class="jqmWindow dialog-block2" style="position:absolute; display:none" title="Quit Meeting">

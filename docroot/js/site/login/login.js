@@ -83,20 +83,20 @@ $(document).ready(function() {
 
                     switch (returndata)
                     {
-                        case "3":
-                            $("p.error").css("display","inline").append('Your username was invalid. Please try again.');
-                            break;
-
-                        case "4":
-                            $("p.error").css("display","inline").append('The code entered did not match. Please try again (you can click the code image to generate a new one if needed)');
+                        case "1":
+                            window.location.replace("landingready.htm");
                             break;
 
                         case "2":
                             window.location.replace("landingnone.htm");
                             break;
 
-                        case "1":
-                            window.location.replace("landingready.htm");
+                        case "3":
+                            $("p.error").css("display","inline").append('Your username was invalid. Please try again.');
+                            break;
+
+                        case "4":
+                            $("p.error").css("display","inline").append('The code entered did not match. Please try again (you can click the code image to generate a new one if needed)');
                             break;
 
                         default:

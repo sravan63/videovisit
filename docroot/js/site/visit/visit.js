@@ -1,56 +1,19 @@
 $(document).ready(function() {
-    
+
+    // To access the GET variable
+    function $_GET(q,s) {
+        s = (s) ? s : window.location.search;
+        var re = new RegExp('&'+q+'=([^&]*)','i');
+        return (s=s.replace(/^\?/,'&').match(re)) ? s=s[1] : s='';
+    }
+
+    // Grab the GET variable
+    var iframedata = $_GET('iframedata');
+
+    // Load it into the iframe's source attribute'
+    $("iframe").attr('src', iframedata);
+
+    // Setup the quit meeting modal and make it draggable
     $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');
-    /*var _init = $.ui.dialog.prototype._init;
-
-	//Custom Dialog Init
-	$.ui.dialog.prototype._init = function() {
-		var self = this;
-        _init.apply(this, arguments);
-		uiDialogTitlebar = this.uiDialogTitlebar;
-
-
-		uiDialogTitlebar.append('<a href="#" id="dialog-override" class="dialog-override ui-dialog-titlebar-eo">Emergency Override</a>');
-
-		//Minimize Button
-		this.uiDialogTitlebarMin = $('.dialog-override', uiDialogTitlebar).hover(function(){
-			$(this).addClass('ui-state-hover');
-		}, function(){
-			$(this).removeClass('ui-state-hover');
-		}).click(function(){
-			self.eOverride();
-			return false;
-		});
-
-	};
-	//Custom Dialog Functions
-	$.extend($.ui.dialog.prototype, {
-		eOverride: function() {
-			console.log("Emergency Override");
-		}
-	});
-
-        $("#quitMeeting").click(function(){
-            $('.dialog-block2').dialog({
-		modal: true,
-		//stack: false,
-		resizable: false,
-		width: 360
-            });
-        })
-
-	$('.dialog-block-override').dialog({
-		modal: true,
-		//stack: false,
-		resizable: false,
-		width: 360,
-		dialogClass: 'emergency-override'
-	});
-        
-
-        $("#dialogclose").click(function(){
-            $(".dialog-block2").dialog('close');
-        })*/
-
 });
 
