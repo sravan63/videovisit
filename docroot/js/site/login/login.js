@@ -118,4 +118,8 @@ $(document).ready(function() {
         return false;
     });
 
+    // Clear/Display "hint" text for form input fields
+    // Find all inputs with a populated title attribute and apply jquery.hint.js;
+    $('input[title!=""]').hint();
+
 });

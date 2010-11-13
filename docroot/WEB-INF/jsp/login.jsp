@@ -4,7 +4,7 @@
     <ul class="form-block">
         <li><label for="last_name">Last Name</label><input type="text" name="last_name" id="last_name"></li>
         <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn"></li>
-        <li><label>Birth Month and Year</label> <label class="label-month" for="birth_month">Month</label><input type="text" name="birth_month" value="mm" id="birth_month" class="birth_month"> <label class="label-year" for="birth_year">Year</label><input type="text" name="birth_year" value="yyyy" class="birth_year"></li>
+        <li><label>Birth Month and Year</label> <label class="label-month" for="birth_month">Month</label><input type="text" name="birth_month" title="mm" id="birth_month" class="birth_month"> <label class="label-year" for="birth_year">Year</label><input type="text" name="birth_year" title="yyyy" class="birth_year"></li>
         <li><label for="captcha">Enter Code Shown</label><a id="captchaImage" href="#"><img width="160" id="stickyImg" src="stickyImg" alt="captcha image" class="gfx-captcha" /></a><input type="text" name="captcha" id="captcha" class="captcha"></li>
         <li class="smallprint align-right">Letters are not case sensitive</li>
         <li class="textarea-block"><h4>Consent to Participiate</h4>
