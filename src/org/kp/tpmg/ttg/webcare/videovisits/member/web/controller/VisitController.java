@@ -29,7 +29,7 @@ public class VisitController extends SimplePageController {
 					
 					System.out.println("LandingReadyController - handlePageRequest..");
 					modelAndView.addObject("WebAppContext", ctx);
-					out.println("http://www.youtube.com/watch?v=ASKnLj2Pp8I	");
+					out.println("samplevideo.mp4 ");
 				}
 		}
 		catch  (Exception e)
