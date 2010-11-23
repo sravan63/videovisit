@@ -2,24 +2,31 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.*;
 
 public class WebAppContextCommand {
 
 	public static Logger logger = Logger.getLogger(WebAppContextCommand.class);
-	
-	
-	public WebAppContext createContext(HttpServletRequest request) throws Exception {
+		
+	public static WebAppContext createContext(HttpServletRequest request, String contextId) throws Exception {
+		
 		WebAppContext ctx = new WebAppContext();
 		//ctx.setContextId(contextId);
 		
-		//TODO: grab data from web services
-		//ctx.setFirstName("First" + contextId);
-		//ctx.setLastName("Last" + contextId);
-
-		//TODO: add project-specific initialization here
-		
+		boolean success = WebService.initWebService();
+		if (success == true)
+		{
+			//
+		}
+		else
+		{
+			// TODO no web service connection
+		}
+	
 		return ctx;
 	}
 
