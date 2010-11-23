@@ -22,7 +22,7 @@ public class AppRootController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
-			ctx = new WebAppContext();
+			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
 		}
 		

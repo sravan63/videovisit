@@ -16,8 +16,8 @@ import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*;
 public class MeetingCommand {
 
 	public static Logger logger = Logger.getLogger(MeetingCommand.class);
-	public static int PAST_MINUTES =10;
-	public static int FUTURE_MINUTES =20;
+	public static int PAST_MINUTES =300;
+	public static int FUTURE_MINUTES =300;
 
 	public static String verifyMember(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{

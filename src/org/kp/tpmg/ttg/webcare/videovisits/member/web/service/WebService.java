@@ -111,11 +111,11 @@ public class WebService{
 
 			try 
 			{
-				query.setArgs0(lastName);
-				query.setArgs1(mrn8Digit);
-				query.setArgs2(birth_month + "-" + birth_year);
-				query.setArgs3(consentVersion);
-				query.setArgs4(sessionID);
+				query.setLastName(lastName);
+				query.setMrn8Digit(mrn8Digit);
+				query.setDob(birth_year + "-" + birth_month);
+				query.setConsentVersion(consentVersion);
+				query.setSessionID(sessionID);
 				
 				VerifyMemberResponse response = stub.verifyMember(query);
 				resp = response.get_return();
@@ -156,8 +156,10 @@ public class WebService{
 			RetrieveMeetingsForMember query = new RetrieveMeetingsForMember();
 			try
 			{
-				query.setArgs0(mrn8Digit);
-				query.setArgs3(sessionID);
+				query.setMrn8Digit(mrn8Digit);
+				query.setPastMinutes(pastMinutes);
+				query.setFutureMinutes(futureMinutes);
+				query.setSessionID(sessionID);
 				
 				RetrieveMeetingsForMemberResponse response = stub.retrieveMeetingsForMember(query);
 				toRet = response.get_return();
@@ -215,8 +217,8 @@ public class WebService{
 			MemberLogout query = new MemberLogout();
 			try
 			{
-				query.setArgs0(mrn8Digit);
-				query.setArgs1(sessionID);
+				query.setMrn8Digit(mrn8Digit);
+				query.setSessionID(sessionID);
 			
 				MemberLogoutResponse response = stub.memberLogout(query);
 				toRet = response.get_return();
@@ -247,9 +249,9 @@ public class WebService{
 			UpdateMemberMeetingStatusJoining query = new UpdateMemberMeetingStatusJoining();
 			try
 			{
-				query.setArgs1(mrn8Digit);
-				query.setArgs2(sessionID);
-				query.setArgs0(meetingID);
+				query.setMrn8Digit(mrn8Digit);
+				query.setSessionID(sessionID);
+				query.setMeetingID(meetingID);
 			
 				UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
 				toRet = response.get_return();
@@ -288,9 +290,9 @@ public class WebService{
 			MemberEndMeetingLogout query = new MemberEndMeetingLogout();
 			try
 			{
-				query.setArgs1(meetingID);
-				query.setArgs2(sessionID);
-				query.setArgs0(mrn8Digit);
+				query.setMeetingID(meetingID);
+				query.setSessionID(sessionID);
+				query.setMrn8Digit(mrn8Digit);
 			
 				MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
 				toRet = response.get_return();

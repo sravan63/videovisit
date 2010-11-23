@@ -33,6 +33,7 @@
 				<prop key="/joinmeeting.json">joinmeeting</prop>
 				<prop key="/quitmeeting.json">quitmeeting</prop>
 				<prop key="/logout.json">logoutmeeting</prop>
+				<prop key="/retrievemeeting.json">retrievemeeting</prop>
 			</props>
 		</property>
 	</bean>
@@ -97,6 +98,9 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<bean id="submitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SubmitLoginController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	<bean id="retrievemeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.RetrieveMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 

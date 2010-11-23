@@ -28,12 +28,13 @@ public class SubmitLoginController extends SimplePageController {
 			{
 				// success login in.  retrieve meetings 
 				data = MeetingCommand.retrieveMeeting(request, response);
-				
+				System.out.println("RetrieveMeeting-handleRequest-data="+data);
+
 				// return JSON code: one - there is meeting, two - no meeting, three - invalid user, four - captcha mismatched
-				if (ctx.getMeetings()== null)
-					data = "2";
-				else 
+				if (ctx.getMeetings().length > 1)
 					data = "1";
+				else 
+					data = "2";
 			}
 		}
 		catch (Exception e)
