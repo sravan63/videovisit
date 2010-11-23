@@ -87,6 +87,7 @@ docroot/js/site/landingready/landingready.js -text
 docroot/js/site/login/login.js -text
 docroot/js/site/visit/visit.js -text
 docroot/samplevideo.mp4 -text
+docs/VideoVisitMembert-DesignSpecifications.doc -text
 lib/SimpleCaptcha-1.1.1.jar -text
 lib/XmlSchema-1.3.3.jar -text
 lib/XmlSchema-1.4.2.wso2v1.jar -text
