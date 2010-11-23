@@ -5,7 +5,7 @@ VIDEO_VISITS.Path = {
         }
     },
     login : {
-        ajaxurl : 'submitlogin.htm'
+        ajaxurl : 'submitlogin.json'
     },
     landingready : {
         visiturl : 'visit.htm'
