@@ -277,17 +277,19 @@ input								{outline:none;}
 
 /* Member Landing Ready */
 #landing-portal-ready			{width:632px; margin:60px auto 0 auto;}
-#landing-portal-ready img 		{float:left;}
-.landing-portal-details			{background:#f3f3f3; border:1px solid #b5b5b5; float:right; padding:25px 30px; width:350px; min-height:196px; height:auto !important; height:196px;}		
+#landing-portal-ready img 		{float:left; width:170px;}
+.landing-portal-details			{background:#f3f3f3; border:1px solid #b5b5b5; float:right; padding:25px 30px; width:350px; min-height:196px; height:auto !important; height:196px; margin-left:20px;}
 .landing-portal-details h3		{line-height:1.26em; font-size:170%; color:#bd6d54; font-weight:normal; margin-bottom:35px;}
 .landing-portal-details p 		{font-size:140%; line-height:1.26em;}
 .landing-portal-details a 		{color:#668d9c;}
 .landing-portal-details .label 	{float:left; display:block; width:140px;}
 .landing-portal-details .name	{float:left; width:210px; padding:0 0 20px 0;}
-.landing-portal-details .btn 	{clear:both; display:inline-block; width:100%; text-align:center; background:#668d9c; padding:8px 0; font-size:140%; margin:0 0 12px 0;}
+.landing-portal-details .btn 	{clear:both; display:inline-block; width:100%; text-align:center; background:#668d9c; padding:8px 0; font-size:140%; margin:0 0 12px 0;background:#668d9c url('../../../images/global/dbl_arrow_right.png') no-repeat 260px 10px;}
 
 .smallprint 	{font-size:inherit; font-style:italic; color:#666; font-size:90%;}
 .landing-portal-details p.smallprint		{font-size:100%;text-align:center;}
+
+.landing-portal-single-container        {float:left; margin-bottom:20px;}
 
 /* Member Login */
 .error-login					{position:absolute; top:0; right:0; width:250px; right:100px; top:128px;}

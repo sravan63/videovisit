@@ -92,21 +92,21 @@ $(document).ready(function() {
                             break;
 
                         case "3":
-                            $("p.error").css("display","inline").append('Your username was invalid. Please try again.');
+                            $("p.error").css("display","inline").append('<li><label>Your username was invalid. Please try again.</label></li>');
                             break;
 
                         case "4":
-                            $("p.error").css("display","inline").append('The code entered did not match. Please try again (you can click the code image to generate a new one if needed)');
+                            $("p.error").css("display","inline").append('<li><label>The code entered did not match. Please try again (you can click the code image to generate a new one if needed).</label></li>');
                             break;
 
                         default:
-                            $("p.error").css("display","inline").append('There was an error submitting your login. Please try again later.');
+                            $("p.error").css("display","inline").append('<li><label>There was an error submitting your login. Please try again later.</label></li>');
                             break;
                     }
 
                 },
                 error: function() {
-                    $("p.error").css("display","inline").append('There was an error submitting your login.');
+                    $("p.error").css("display","inline").append('<li><label>There was an error submitting your login.</label></li>');
                 }
             });
         }
