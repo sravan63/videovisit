@@ -10,9 +10,9 @@ public class WebAppContext {
 
 	public static Logger logger = Logger.getLogger(WebAppContext.class);
 	
-	//String contextId;
-	public MemberWSO	member = null;	 
-	public MeetingWSO	meeting= null; 
+	private String contextId;
+	private MemberWSO	member = null;	 
+	private MeetingWSO[]	meetings= null; 
 	
 	public static final String HTTP_SESSION_KEY = "WebAppContext";
 	
@@ -31,12 +31,19 @@ public class WebAppContext {
 	public void setMember(MemberWSO member) {
 		this.member = member;
 	}
-	public MeetingWSO getMeeting() {
-		return meeting;
+	public MeetingWSO[] getMeetings() {
+		return meetings;
 	}
 
-	public void setMeeting(MeetingWSO meeting) {
-		this.meeting = meeting;
+	public void setMeetings(MeetingWSO[] meetings) {
+		this.meetings = meetings;
+	}
+	public String getContextId() {
+		return contextId;
+	}
+
+	public void setContextId(String contextId) {
+		this.contextId = contextId;
 	}
 
 
