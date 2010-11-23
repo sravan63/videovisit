@@ -1,26 +1,22 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
-import java.io.PrintWriter;
-
-import javax.servlet.http.*;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import java.io.*;
+import javax.servlet.http.*;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*;
 import org.springframework.web.servlet.ModelAndView;
 
-public class LogoutController extends SimplePageController {
-
-	public static Logger logger = Logger.getLogger(LogoutController.class);
+public class QuitMeetingController extends SimplePageController {
+	public static Logger logger = Logger.getLogger(QuitMeetingController.class);
 	private static String JSONMAPPING = "jsonData";
 
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
-		throws Exception
-	{
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
+	{	
 		PrintWriter out = response.getWriter();
 		String data = null;
 		try
 		{
-			 data = MeetingCommand.memberLogout(request, response);
+			 data = MeetingCommand.updateEndMeetingLogout(request, response);
 		}
 		catch (Exception e)
 		{
@@ -28,12 +24,11 @@ public class LogoutController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		//put data into buffer
-		System.out.println("JoinMeetingController-handleRequest-data="+data);
+		System.out.println("QuiteetingController-handleRequest-data="+data);
 		out.println(data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		return (modelAndView);
-
 	}
-
 }
+

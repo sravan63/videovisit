@@ -1,26 +1,22 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
-import java.io.PrintWriter;
-
-import javax.servlet.http.*;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import java.io.*;
+import javax.servlet.http.*;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*;
 import org.springframework.web.servlet.ModelAndView;
 
-public class LogoutController extends SimplePageController {
-
-	public static Logger logger = Logger.getLogger(LogoutController.class);
+public class JoinMeetingController extends SimplePageController {
+	public static Logger logger = Logger.getLogger(JoinMeetingController.class);
 	private static String JSONMAPPING = "jsonData";
 
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
-		throws Exception
-	{
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
+	{	
 		PrintWriter out = response.getWriter();
 		String data = null;
 		try
 		{
-			 data = MeetingCommand.memberLogout(request, response);
+			 data = MeetingCommand.updateMemberMeetingStatusJoining(request, response);
 		}
 		catch (Exception e)
 		{
@@ -33,7 +29,6 @@ public class LogoutController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		return (modelAndView);
-
 	}
-
 }
+
