@@ -25,11 +25,14 @@
 				<prop key="/logout.htm">logout</prop>
 				<prop key="/intro.htm">intro</prop>
 				<prop key="/login.htm">login</prop>
-				<prop key="/submitlogin.htm">submitlogin</prop>
 				<prop key="/landingnone.htm">landingnone</prop>
 				<prop key="/landingready.htm">landingready</prop>
 				<prop key="/visit.htm">visit</prop>
 				<prop key="/help.htm">help</prop>
+				<prop key="/submitlogin.json">submitlogin</prop>
+				<prop key="/joinmeeting.json">joinmeeting</prop>
+				<prop key="/quitmeeting.json">quitmeeting</prop>
+				<prop key="/logout.json">logoutmeeting</prop>
 			</props>
 		</property>
 	</bean>
@@ -40,7 +43,7 @@
 		<property name="contextIdParameter" value="mrn"/>
 		<property name="homePageRedirect" value="redirect:intro.htm"/>
 	</bean>
-	<bean id="logout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoutController">
+	<bean id="logout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="logout" />
 		<property name="navigation" value="home" />
@@ -58,25 +61,19 @@
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
 	</bean>
-	<bean id="submitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SubmitLoginController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="submitlogin" />
-		<property name="navigation" value="home" />
-		<property name="subNavigation" value="login" />
-	</bean>
-	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LandingNoneController">
+	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="landingnone" />
 		<property name="navigation" value="landingnone" />
 		<property name="subNavigation" value="landingnone" />
 	</bean>
-	<bean id="landingready" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LandingReadyController">
+	<bean id="landingready" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="landingready" />
 		<property name="navigation" value="landingready" />
 		<property name="subNavigation" value="landingready" />
 	</bean>
-	<bean id="visit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VisitController">
+	<bean id="visit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="visit" />
 		<property name="navigation" value="visit" />
@@ -87,6 +84,20 @@
 		<property name="viewName" value="help" />
 		<property name="navigation" value="help" />
 		<property name="subNavigation" value="help" />
+	</bean>
+
+	<!--  JSON classes -->
+	<bean id="joinmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.JoinMeetingController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	<bean id="quitmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.QuitMeetingController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	<bean id="logoutmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoutController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	<bean id="submitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SubmitLoginController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 
 	<!--  COMMAND classes -->
