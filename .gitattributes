@@ -10,6 +10,7 @@ conf/videovisitsmember.local.properties -text
 docroot/META-INF/MANIFEST.MF -text
 docroot/WEB-INF/action-servlet.xml -text
 docroot/WEB-INF/applicationContext.xml -text
+docroot/WEB-INF/classes/configuration.properties -text
 docroot/WEB-INF/jsp/blank.jsp -text
 docroot/WEB-INF/jsp/data/jsonData.jsp -text
 docroot/WEB-INF/jsp/data/jsonHeader.jsp -text
