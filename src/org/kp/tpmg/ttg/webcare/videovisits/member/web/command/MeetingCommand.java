@@ -121,13 +121,14 @@ public class MeetingCommand {
 				Date now = new Date();
 				ret= WebService.retrieveMeeting(ctx.getMember().getMrn8Digit(), PAST_MINUTES, FUTURE_MINUTES,request.getSession().getId());
 				// determine which meeting is coming up.
-				if (ret != null && ret.getSuccess() && ret.getResult()!= null && ret.getResult().length > 1)
+				if (ret != null && ret.getSuccess() && ret.getResult()!= null)
 				{
 					// there is meeting, so save it.
 					MeetingWSO[] meetings = ret.getResult();
 					ctx.setMeetings(meetings);
 					ctx.setTotalmeetings(meetings.length - 1);
 				}
+				/*
 				else
 				{
 					// no meeting, we should blank out cached meeting
@@ -135,6 +136,7 @@ public class MeetingCommand {
 					ctx.setTotalmeetings(0);
 
 				}	
+				*/
 				return JSONObject.fromObject(ret).toString();
 			}
 		} 

@@ -31,7 +31,7 @@ public class SubmitLoginController extends SimplePageController {
 				System.out.println("RetrieveMeeting-handleRequest-data="+data);
 
 				// return JSON code: one - there is meeting, two - no meeting, three - invalid user, four - captcha mismatched
-				if (ctx.getMeetings().length > 1)
+				if (ctx.getTotalmeetings() >= 1)
 					data = "1";
 				else 
 					data = "2";

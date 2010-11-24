@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%--
 
 <h3>Video Visits Member development logins and links:</h3>
 
@@ -20,13 +21,12 @@
 <li><a href="logout.htm">Logout</a></li> 
 </ul>
 
+--%>
 
 <%-- NOTE: when development is over use something similar to the following code
            to redirect to the single-sign-on infrastructure. 
 --%>
 <%-- Redirected because we can't set the welcome page to a virtual URL. --%>
-<%--
 <c:redirect url="/sso">
 	<c:param name="nuid" value='<%= request.getParameter("nuid") %>'/>
 </c:redirect>
---%>
