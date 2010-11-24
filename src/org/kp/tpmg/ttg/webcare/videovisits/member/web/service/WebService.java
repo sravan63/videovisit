@@ -183,6 +183,8 @@ public class WebService{
 		ProviderWSO fakeprovider1 = new ProviderWSO();
 		meeting1.setHost(fakeprovider1);
 		
+		meeting1.setScheduledTimestamp(new Date().getTime()+ 300000);
+		meeting1.setMeetingId(1);
 		meeting1.getHost().setFirstName("John");
 		meeting1.getHost().setLastName("Lim");
 		meeting1.getHost().setTitle("PDM");
@@ -194,6 +196,8 @@ public class WebService{
 		ProviderWSO fakeprovider2 = new ProviderWSO();
 		meeting2.setHost(fakeprovider2);
 		
+		meeting2.setScheduledTimestamp(new Date().getTime()+ 900000);
+		meeting2.setMeetingId(2);
 		meeting2.getHost().setFirstName("Samantha");
 		meeting2.getHost().setLastName("Strong");
 		meeting2.getHost().setTitle("MD");

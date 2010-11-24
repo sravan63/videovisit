@@ -13,6 +13,7 @@ public class WebAppContext {
 	private String contextId;
 	private MemberWSO	member = null;	 
 	private MeetingWSO[]	meetings= null; 
+	private int totalmeetings = 0;
 	
 	public static final String HTTP_SESSION_KEY = "WebAppContext";
 	
@@ -44,6 +45,12 @@ public class WebAppContext {
 
 	public void setContextId(String contextId) {
 		this.contextId = contextId;
+	}
+	public void setTotalmeetings(int total) {
+		this.totalmeetings = total;
+	}
+	public int getTotalmeetings () {
+		return totalmeetings;
 	}
 
 
