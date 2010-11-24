@@ -8,6 +8,7 @@ VIDEO_VISITS.Path = {
         ajaxurl : 'submitlogin.json'
     },
     landingready : {
-        visiturl : 'visit.htm'
+        visiturl : 'visit.htm',
+        joinmeeting : 'joinmeeting.json'
     }
 }

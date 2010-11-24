@@ -77,6 +77,7 @@ docroot/js/library/plugin/jquery-hinter-0.6.js -text
 docroot/js/library/plugin/jquery.hint.js -text
 docroot/js/library/plugin/jquery.validate.min.js -text
 docroot/js/library/plugin/modernizr-1.5.min.js -text
+docroot/js/site/global/dateExtensions_loader.js -text
 docroot/js/site/global/display.js -text
 docroot/js/site/global/global.js -text
 docroot/js/site/global/lightbox.js -text

@@ -43,7 +43,9 @@
             }
         },
         "landingready" : {
-            "global"    :   [],
+            "global"    :   [
+                "js/site/global/dateExtensions_loader.js"
+            ],
             "specific"  :   {
                 "landingready"  :   [
                     "js/site/landingready/landingready.js"

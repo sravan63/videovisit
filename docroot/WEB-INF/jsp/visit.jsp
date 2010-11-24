@@ -1,4 +1,4 @@
-<h3 class="page-title">Video Visit with Craig Wargon, DPM</h3>
+<h3 class="page-title">Video Visit with ${WebAppContext.meetings[0].host.firstName} ${WebAppContext.meetings[0].host.lastName}, DPM</h3>
 
                 <div id="video-main">
                     <iframe src ="#" width="100%" height="457">
