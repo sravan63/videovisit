@@ -81,6 +81,7 @@ docroot/js/site/global/dateExtensions_loader.js -text
 docroot/js/site/global/display.js -text
 docroot/js/site/global/global.js -text
 docroot/js/site/global/lightbox.js -text
+docroot/js/site/global/logout.js -text
 docroot/js/site/global/plugins.js -text
 docroot/js/site/global/script.js -text
 docroot/js/site/help/help.js -text

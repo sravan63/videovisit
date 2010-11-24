@@ -13,7 +13,7 @@
 				<div class="pagination">
 					<ul>
 						<li><a id="dialogclose" class="jqmClose" href="#">No &rsaquo;&rsaquo;</a></li>
-						<li><a href="logout.htm">Yes &rsaquo;&rsaquo;</a></li>
+						<li><a id="quitMeetingLink" quitmeetingid="${WebAppContext.meetings[0].meetingId}" href="#">Yes &rsaquo;&rsaquo;</a></li>
 					</ul>
 				</div>
 			</div>

@@ -10,5 +10,12 @@ VIDEO_VISITS.Path = {
     landingready : {
         visiturl : 'visit.htm',
         joinmeeting : 'joinmeeting.json'
+    },
+    visit : {
+        quitmeeting : 'quitmeeting.json',
+        logout : 'logout.htm'
+    },
+    logout : {
+        logoutjson: 'logout.json'
     }
 }

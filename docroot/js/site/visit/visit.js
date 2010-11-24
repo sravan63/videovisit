@@ -15,5 +15,19 @@ $(document).ready(function() {
 
     // Setup the quit meeting modal and make it draggable
     $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');
+
+    $('#quitMeetingLink').click(function(){
+        var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid');
+        $.ajax({
+            type: 'POST',
+            url: VIDEO_VISITS.Path.visit.quitmeeting,
+            data: quitMeetingIdData,
+            //TODO: should change this to "success" when the return data matters
+            complete: function(returndata) {
+                window.location.replace(VIDEO_VISITS.Path.visit.logout);
+            }
+        });
+        return false;
+    })
 });
 
