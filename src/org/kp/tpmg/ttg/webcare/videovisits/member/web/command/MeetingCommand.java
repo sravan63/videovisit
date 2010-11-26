@@ -126,7 +126,7 @@ public class MeetingCommand {
 					// there is meeting, so save it.
 					MeetingWSO[] meetings = ret.getResult();
 					ctx.setMeetings(meetings);
-					ctx.setTotalmeetings(meetings.length - 1);
+					ctx.setTotalmeetings(meetings.length);
 				}
 				/*
 				else
