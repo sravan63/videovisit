@@ -17,6 +17,9 @@ public class QuitMeetingController extends SimplePageController {
 		try
 		{
 			 data = MeetingCommand.updateEndMeetingLogout(request, response);
+			 
+			 // TO DO not sure if we need to logout.
+			 data = MeetingCommand.memberLogout (request, response);
 		}
 		catch (Exception e)
 		{
