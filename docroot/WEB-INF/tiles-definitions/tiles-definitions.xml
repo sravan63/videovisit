@@ -62,6 +62,11 @@
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/help.jsp" />
 	</definition>
+	<definition name="error" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/error.jsp" />
+	</definition>
 	<definition name="logout" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />

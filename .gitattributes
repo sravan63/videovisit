@@ -14,6 +14,7 @@ docroot/WEB-INF/classes/configuration.properties -text
 docroot/WEB-INF/jsp/blank.jsp -text
 docroot/WEB-INF/jsp/data/jsonData.jsp -text
 docroot/WEB-INF/jsp/data/jsonHeader.jsp -text
+docroot/WEB-INF/jsp/error.jsp -text
 docroot/WEB-INF/jsp/help.jsp -text
 docroot/WEB-INF/jsp/intro.jsp -text
 docroot/WEB-INF/jsp/landing.jsp -text
@@ -90,6 +91,7 @@ docroot/js/site/landingready/landingready.js -text
 docroot/js/site/login/login.js -text
 docroot/js/site/visit/visit.js -text
 docroot/samplevideo.mp4 -text
+docs/Video[!!-~]Visit[!!-~]Member[!!-~]WebApp[!!-~]Build[!!-~]and[!!-~]Test.doc -text
 docs/VideoVisitMembert-DesignSpecifications.doc -text
 lib/SimpleCaptcha-1.1.1.jar -text
 lib/XmlSchema-1.3.3.jar -text

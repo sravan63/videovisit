@@ -125,8 +125,17 @@ public class MeetingCommand {
 				{
 					// there is meeting, so save it.
 					MeetingWSO[] meetings = ret.getResult();
-					ctx.setMeetings(meetings);
-					ctx.setTotalmeetings(meetings.length);
+					if (meetings.length == 1 && meetings[0]== null )
+					{
+						// check to see if it is a null
+						ctx.setTotalmeetings(0);
+						ctx.setMeetings(null);
+					}
+					else
+					{
+						ctx.setTotalmeetings(meetings.length);
+						ctx.setMeetings(meetings);
+					}
 				}
 				/*
 				else
@@ -144,7 +153,6 @@ public class MeetingCommand {
 		{	
 			// log error
 			logger.error("System Error" + e.getMessage(),e);
-
 		}
 		return  (JSONObject.fromObject(new SystemError()).toString());
 	}

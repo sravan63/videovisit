@@ -29,6 +29,7 @@
 				<prop key="/landingready.htm">landingready</prop>
 				<prop key="/visit.htm">visit</prop>
 				<prop key="/help.htm">help</prop>
+				<prop key="/error.htm">error</prop>
 				<prop key="/submitlogin.json">submitlogin</prop>
 				<prop key="/joinmeeting.json">joinmeeting</prop>
 				<prop key="/quitmeeting.json">quitmeeting</prop>
@@ -85,6 +86,12 @@
 		<property name="viewName" value="help" />
 		<property name="navigation" value="help" />
 		<property name="subNavigation" value="help" />
+	</bean>
+	<bean id="error" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="error" />
+		<property name="navigation" value="error" />
+		<property name="subNavigation" value="error" />
 	</bean>
 
 	<!--  JSON classes -->
