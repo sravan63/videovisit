@@ -129,13 +129,13 @@ public class MeetingCommand {
 					{
 						// check to see if it is a null
 						ctx.setTotalmeetings(0);
-						ctx.setMeetings(null);
 					}
 					else
 					{
 						ctx.setTotalmeetings(meetings.length);
-						ctx.setMeetings(meetings);
 					}
+					ctx.setMeetings(meetings);
+
 				}
 				/*
 				else
