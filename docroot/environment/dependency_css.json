@@ -34,6 +34,12 @@
                 "landing" : []
             }
         },
+        "error" : {
+            "global"   : [],
+            "specific" : {
+                "error" : []
+            }
+        },
         "visit" : {
             "global"   : [
                 "css/library/plugin/jqModal.css"

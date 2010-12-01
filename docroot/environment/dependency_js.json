@@ -59,6 +59,14 @@
                 "landing"  :   []
             }
         },
+        "error" : {
+            "global"   : [],
+            "specific" : {
+                "error" : [
+                    "js/site/error/error.js"
+                ]
+            }
+        },
         "visit" : {
             "global"   : [
                 "js/library/plugin/jqModal.js",
