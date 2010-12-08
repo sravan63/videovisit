@@ -240,23 +240,32 @@ function convertTimestampToDate(timestamp, format)
 	DayName = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 	monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
 	
-	newDateFormat = Month + "-" + DateNum + "-" + Year + " " + Hour + ":" + Minute + " " + AMPM;
+	newDateFormat = display2Digit(Month) + "-" + display2Digit(DateNum) + "-" + Year + " " + display2Digit(Hour) + ":" + display2Digit(Minute) + " " + AMPM;
 	
 	switch(format) {
 	case 'date_only':
-		return Month + "-" + DateNum + "-" + Year;
+		return display2Digit(Month) + "-" + display2Digit(DateNum) + "-" + Year;
+		break;
+	case 'month':
+		return display2Digit(Month);
+		break;
+	case 'year':
+		return display2Digit(Year);
 		break;
 	case 'time_only':
-		return Hour + ":" + Minute + " " + AMPM;
+		return display2Digit(Hour) + ":" + display2Digit(Minute) + " " + AMPM;
 		break;
 	case 'hours_min':
-		return 	Hour + (Hour?" hrs " : "") + Minute + (Minute?" min" : "");
+		return 	display2Digit(Hour) + (Hour?" hrs " : "") + display2Digit(Minute) + (Minute?" min" : "");
 		break;
 	case 'day_month_date_year':
-		return 	DayName[Day] + ", " + monthNames[Month] + " " + DateNum + ", " + Year;
+		return 	DayName[Day] + ", " + monthNames[Month-1] + " " + display2Digit(DateNum) + ", " + Year;
 		break;
 	case 'mm_dd_yyyy':
-		return 	Month + "-" + DateNum + "-" + Year;
+		return 	display2Digit(Month) + "-" + display2Digit(DateNum) + "-" + Year;
+		break;
+	case 'full_date':
+		return 	newDateFormat;
 		break;
 	case 'date_diff':
 		
@@ -268,7 +277,7 @@ function convertTimestampToDate(timestamp, format)
 			var hours = Math.floor((diff - (days * 86400)) / 3600); 
 			var minutes = Math.floor((diff - ((hours * 3600) + (days * 86400))) / 60);
 			
-			return (days ? days + " day" : '')  + " " + (hours ? hours + " hrs" : '') + " " + (minutes ? minutes + " min" : '');
+			return (days ? display2Digit(days) + " day" : '')  + " " + (hours ? display2Digit(hours) + " hrs" : '') + " " + (minutes ? display2Digit(minutes) + " min" : '');
 		}		
 		return '';		
 		
@@ -288,10 +297,28 @@ function formatDateFromDatePicker(dtPickerDate, format)
 }
 function convertDateIntoTimestamp(dateVal)
 {
+	dateVal = dateVal.replace("-", "/");
+	dateVal = dateVal.replace("-", "/");
+	dateVal = dateVal.replace("-", "/");
+	dateVal = dateVal.replace("-", "/");
+	
 	var DateObj = new Date(dateVal);
 	return DateObj.getTime();
 }
 function getDateDiff(timestamp)
 {
 	
+}
+function displayHours(hours)
+{
+	hours = parseInt(hours);
+	hours = (hours > 12 ? (hours - 12) : hours);
+	return display2Digit(hours);
+}
+function display2Digit(number)
+{
+	number = parseInt(number);
+	if (number <=9)
+		return "0" + number;
+	return number;
 }
