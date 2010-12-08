@@ -9,8 +9,12 @@ $(document).ready(function() {
             data: meetingIdData,
             url: VIDEO_VISITS.Path.landingready.joinmeeting,
             //TODO - Change this from "complete" to "success"
-            complete: function(returndata) {
+            success: function(returndata) {
                 window.location.replace("visit.htm?iframedata=" + hreflocation);
+            },
+            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+            error: function(theRequest, textStatus, errorThrown) {
+                window.location.replace(VIDEO_VISITS.Path.global.error);
             }
         });
         return false;

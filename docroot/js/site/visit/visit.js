@@ -22,9 +22,12 @@ $(document).ready(function() {
             type: 'POST',
             url: VIDEO_VISITS.Path.visit.quitmeeting,
             data: quitMeetingIdData,
-            //TODO: should change this to "success" when the return data matters
-            complete: function(returndata) {
+            success: function(returndata) {
                 window.location.replace(VIDEO_VISITS.Path.visit.logout);
+            },
+            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+            error: function(theRequest, textStatus, errorThrown) {
+                window.location.replace(VIDEO_VISITS.Path.global.error);
             }
         });
         return false;

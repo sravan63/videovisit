@@ -1,4 +1,7 @@
 VIDEO_VISITS.Path = {
+    global : {
+        error : 'error.htm'
+    },
     grid : {
         home : {
             test : 'data/home/test.json'
