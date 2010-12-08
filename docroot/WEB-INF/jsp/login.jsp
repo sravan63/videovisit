@@ -13,11 +13,11 @@
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. unt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
 in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. unt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</textarea></li>
-        <li><input type="checkbox" name="consentVersion" value="understand_terms" id="understand_terms" class="understand_terms"><label class="label-understand-terms" for="understand_terms">I have read and agree to the terms of consent above.</label></li>
+        <li><input type="checkbox" name="consentVersion" value="version 1.2" id="understand_terms" class="understand_terms"><label class="label-understand-terms" for="understand_terms">I have read and agree to the terms of consent above.</label></li>
     </ul>
     <div class="submit-block">
         <input type="submit" name="login" value="Login &rsaquo;&rsaquo;" id="login" class="button">
     </div>
 </form>
-<p class="error error-login"></p>
+<p class="error error-login"><a name="errors"></a></p>
 

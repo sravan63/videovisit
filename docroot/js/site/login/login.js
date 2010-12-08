@@ -70,10 +70,10 @@ $(document).ready(function() {
         },
         submitHandler: function(data){
             // Clear the error field in case the form didn't submit properly.
-            $("p.error").html('');
+            //$("p.error").html('');
             // Prepare data from pertinent fields for POSTing
             var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
-
+            var ep = $("p.error").position();
             $.ajax({
                 type: "POST",
                 url: VIDEO_VISITS.Path.login.ajaxurl,
@@ -93,20 +93,24 @@ $(document).ready(function() {
 
                         case "3":
                             $("p.error").css("display","inline").append('<li><label>Your username was invalid. Please try again.</label></li>');
+                            moveToit("p.error");
                             break;
 
                         case "4":
                             $("p.error").css("display","inline").append('<li><label>The code entered did not match. Please try again (you can click the code image to generate a new one if needed).</label></li>');
+                            moveToit("p.error");
                             break;
 
                         default:
                             $("p.error").css("display","inline").append('<li><label>There was an error submitting your login. Please try again later.</label></li>');
+                            moveToit("p.error");
                             break;
                     }
 
                 },
                 error: function() {
                     $("p.error").css("display","inline").append('<li><label>There was an error submitting your login.</label></li>');
+                    moveToit("p.error");
                 }
             });
         }
@@ -122,4 +126,8 @@ $(document).ready(function() {
     // Find all inputs with a populated title attribute and apply jquery.hint.js;
     $('input[title!=""]').hint();
 
+    /*function moveToit(){
+        var el = $("p.error").position();
+        window.scrollTo(el.left, el.top);
+    }*/
 });

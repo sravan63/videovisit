@@ -16,6 +16,7 @@
         ]
     },
     "global" : [
+            "js/site/global/global.js",
             "js/site/global/plugins.js",
             "js/site/global/script.js",
             "js/site/global/display.js",
