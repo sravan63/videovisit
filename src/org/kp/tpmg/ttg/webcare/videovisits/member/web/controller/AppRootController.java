@@ -25,8 +25,6 @@ public class AppRootController implements Controller {
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
 		}
-		
-		//TODO add any additional logic here (admin user might go to different starting page, etc...)
 
 		return new ModelAndView(getHomePageRedirect());
 	}

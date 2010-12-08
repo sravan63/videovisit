@@ -17,8 +17,7 @@ public class QuitMeetingController extends SimplePageController {
 		try
 		{
 			 data = MeetingCommand.updateEndMeetingLogout(request, response);
-			 
-			 // TO DO not sure if we need to logout.
+			 // logout
 			 data = MeetingCommand.memberLogout (request, response);
 		}
 		catch (Exception e)
@@ -27,7 +26,7 @@ public class QuitMeetingController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		//put data into buffer
-		System.out.println("QuiteetingController-handleRequest-data="+data);
+		logger.info("QuiteetingController-handleRequest-data="+data);
 		out.println(data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);

@@ -15,18 +15,6 @@ public class WebAppContextCommand {
 	public static WebAppContext createContext(HttpServletRequest request, String contextId) throws Exception {
 		
 		WebAppContext ctx = new WebAppContext();
-		//ctx.setContextId(contextId);
-		
-		boolean success = WebService.initWebService();
-		if (success == true)
-		{
-			//
-		}
-		else
-		{
-			// TODO no web service connection
-		}
-	
 		return ctx;
 	}
 

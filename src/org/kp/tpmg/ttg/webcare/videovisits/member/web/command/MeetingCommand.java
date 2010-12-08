@@ -179,7 +179,7 @@ public class MeetingCommand {
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		// worst case error returned, no authenticated user, no web service responded, etc. 
-		return (JSONObject.fromObject(new SystemError()).toString());
+		return JSONObject.fromObject(new SystemError()).toString();
 	}
 	
 	

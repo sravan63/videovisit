@@ -28,7 +28,7 @@ public class SubmitLoginController extends SimplePageController {
 			{
 				// success login in.  retrieve meetings 
 				data = MeetingCommand.retrieveMeeting(request, response);
-				System.out.println("RetrieveMeeting-handleRequest-data="+data);
+				logger.info("RetrieveMeeting-handleRequest-data="+data);
 
 				// return JSON code: one - there is meeting, two - no meeting, three - invalid user, four - captcha mismatched
 				if (ctx.getTotalmeetings() >= 1)
@@ -43,7 +43,7 @@ public class SubmitLoginController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		//put data into buffer
-		System.out.println("SubmitLoginController-handleRequest-data="+data);
+		logger.info("SubmitLoginController-handleRequest-data="+data);
 		out.println(data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);

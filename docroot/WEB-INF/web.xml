@@ -14,10 +14,9 @@
 	</listener>
 	
    <!-- Session for regular Web FILTER -->
-<!--
    <filter>
       <filter-name>WebSessionFilter</filter-name>
-      <filter-class>org.kp.tpmg.ttg.webcare.depression.provider.web.filter.WebSessionFilter</filter-class>
+      <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.WebSessionFilter</filter-class>
       <init-param>
       <param-name>excludeURL</param-name>
       <param-value>healthCheck.htm</param-value>
@@ -27,19 +26,16 @@
       <filter-name>WebSessionFilter</filter-name>
       <url-pattern>*.htm</url-pattern>
    </filter-mapping>
--->
      
   <!-- Session for AJAX call FILTER -->
-<!--
    <filter>
       <filter-name>DataSessionFilter</filter-name>
-      <filter-class>org.kp.tpmg.ttg.webcare.depression.provider.web.filter.DataSessionFilter</filter-class>
+      <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.DataSessionFilter</filter-class>
    </filter>
    <filter-mapping>
       <filter-name>DataSessionFilter</filter-name>
-      <url-pattern>*.xml</url-pattern>
+      <url-pattern>*.json</url-pattern>
    </filter-mapping>
--->
 
    <!-- Request Logging FILTER -->
    <filter>
@@ -48,6 +44,7 @@
    </filter>
 	<filter-mapping>
 		<filter-name>RequestLoggingFilter</filter-name>
+		<url-pattern>*.json</url-pattern>
 		<url-pattern>*.xml</url-pattern>
 		<url-pattern>*.php</url-pattern>
 		<url-pattern>*.htm</url-pattern>

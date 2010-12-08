@@ -24,7 +24,7 @@ public class RetrieveMeetingController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		//put data into buffer
-		System.out.println("RetrieveMeetingController-handleRequest-data="+data);
+		logger.info ("RetrieveMeetingController-handleRequest-data="+data);
 		out.println(data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
