@@ -63,7 +63,23 @@
 	   	  	<antcall target="copy-exp-war" />
 	   </target>
 	
+	<target name="local-exp-no-ws">
+			<antcall target="assemble-no-ws" />
+		  	<antcall target="build-war" />
+	   	  	<antcall target="copy-exp-war" />
+	   </target>
+	
 	<target name="assemble">
+		  <property name="ffile" value="conf/filters/local" />
+	      <property file="${ffile}" />
+	      <echo message="using filter -> ${ffile}" />
+	      <antcall target="clean" />
+		  <antcall target="build-webservice"></antcall>
+	      <antcall target="prepare" />
+	      <antcall target="compile" />
+   </target>
+	
+	<target name="assemble-no-ws">
 		  <property name="ffile" value="conf/filters/local" />
 	      <property file="${ffile}" />
 	      <echo message="using filter -> ${ffile}" />
