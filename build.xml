@@ -5,7 +5,7 @@
 <!-- ant local-exp  builds application  and deploys expanded war for local development  windows desktop mode -->
 
 
-<project name="videovisitsmember" basedir="." default="local-exp">
+<project name="videovisitmember" basedir="." default="local-exp">
    <property file="${basedir}/build.properties" />
    <property name="src.dir" value="src" />
    <property name="conf.dir" value="conf" />

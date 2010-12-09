@@ -45,7 +45,7 @@ public class WebService{
 				reuseHTTP = rbInfo.getString("WEBSERVICE_REUSE").equals("true")? true:false;
 				chunked = rbInfo.getString("WEBSERVICE_CHUNKED").equals ("true")?true:false;
 				simulation = rbInfo.getString ("WEBSERVICE_SIMULATION").equals ("true")?true:false;
-				System.out.println("configuration: serviceURL="+serviceURL+" simulation="+simulation);
+				logger.info("configuration: serviceURL="+serviceURL+" simulation="+simulation);
 			}
 			
 			if (simulation)
@@ -58,7 +58,7 @@ public class WebService{
 			{
 				af.printStackTrace();
 				String message = "Axis failed to create axisConfig";  
-				System.out.println(message);
+				logger.info(message);
 				ret = false;
 				logger.error("System Error" + af.getMessage(),af);
 				throw new RuntimeException(message, af);

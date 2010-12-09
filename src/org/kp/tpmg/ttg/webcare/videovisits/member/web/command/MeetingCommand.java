@@ -35,7 +35,6 @@ public class MeetingCommand {
 			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
 			// DEBUG
-			System.out.println("LoginController-handlePageReques 1...");
 			if (request.getParameter("last_name") != null &&
 					!request.getParameter("last_name").equals("")) {
 				lastName = request.getParameter("last_name");
@@ -65,7 +64,6 @@ public class MeetingCommand {
 			    if (captcha == null || !captcha.isCorrect(answer))
 			    {
 			    		//don't match, return error
-						System.out.println("Captcha failed. answer is=" + answer);
 						out.println ("4");
 						return ("4");
 			    }	
@@ -82,7 +80,6 @@ public class MeetingCommand {
 				if (ret != null && ret.getSuccess()&& ret.getResult()!= null)
 				{
 					// success logged in. save logged in member in cached
-					System.out.println ("getLoginUser=" + JSONObject.fromObject(ret).toString());
 					ctx.setMember(ret.getResult());
 
 					// retrieve meetings status
@@ -104,7 +101,6 @@ public class MeetingCommand {
 			{
 				return ("3");
 			}
-			}
 		}
 		catch (Exception e)
 		{
@@ -115,7 +111,7 @@ public class MeetingCommand {
 
 		}
 		// worst case error returned, no authenticated user, no web service responded, etc. 
-		return (JSONObject.fromObject(new SystemError()).toString());
+		//return (JSONObject.fromObject(new SystemError()).toString());
 	}
 
 	public static String retrieveMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 
