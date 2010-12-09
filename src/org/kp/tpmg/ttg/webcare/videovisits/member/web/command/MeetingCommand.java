@@ -71,8 +71,11 @@ public class MeetingCommand {
 			    }	
 			}
 			
+			// Init web service 	
+			boolean success = WebService.initWebService();
+
 			// Validation  
-			if (ctx != null)
+			if (ctx != null && success == true)
 			{
 				//grab data from web services
 				ret= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, consentVersion,request.getSession().getId()); 
@@ -96,6 +99,11 @@ public class MeetingCommand {
 					// System error, not ret web service record, return retry error.
 					return ("3");
 				}
+			}
+			else
+			{
+				return ("3");
+			}
 			}
 		}
 		catch (Exception e)
