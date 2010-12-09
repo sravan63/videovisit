@@ -19,7 +19,7 @@
       <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.WebSessionFilter</filter-class>
       <init-param>
       <param-name>excludeURL</param-name>
-      <param-value>healthCheck.htm</param-value>
+      <param-value>login.htm</param-value>
     </init-param>
    </filter>
    <filter-mapping>
