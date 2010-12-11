@@ -3,6 +3,7 @@
 /.project -text
 /build.properties -text
 /build.xml -text
+conf/configuration.properties -text
 conf/filters/local -text
 conf/log4j.properties -text
 conf/project.init.properties -text
