@@ -104,7 +104,10 @@
    	<copy file="${conf.dir}/project.init.properties"
    	   	            todir="${dest.dir.classes}"
    	   	            filtering="true" />
-    <copy todir="${dest.dir.lib}">
+   	<copy file="${conf.dir}/configuration.properties"
+   	   	            todir="${dest.dir.classes}"
+   	   	            filtering="true" />
+   	<copy todir="${dest.dir.lib}">
       	         <fileset dir="${dir.lib}">
       	         	<exclude name="j2ee.jar"/>
       	         </fileset>
