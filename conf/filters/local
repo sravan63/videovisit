@@ -1,4 +1,5 @@
 PROJECT=VideoVisitsMember
 LOGFILE=/Users/litmusbox/work/tpmg/development/tomcat/logs/videovisitsmember.local.log
 INITFILE=/Users/litmusbox/work/tpmg/development/tomcat/conf/videovisitsmember.local.properties
+WEBSERVICE_ENDPOINT=http://ttg-dv-esb-1.har.ca.kp.org:29763/services/VideoVisitMemberServices
 LOGLEVEL=info
