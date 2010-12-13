@@ -39,6 +39,8 @@ docroot/WEB-INF/tiles-definitions/tiles-definitions.xml -text
 docroot/WEB-INF/tiles-templates/applicationLayout.jsp -text
 docroot/WEB-INF/tiles-templates/dataLayout.jsp -text
 docroot/WEB-INF/web.xml -text
+docroot/consent_forms/consent_121010.pdf -text
+docroot/consent_forms/consent_121010.txt -text
 docroot/css/library/plugin/jqModal.css -text
 docroot/css/site/global/base.css -text
 docroot/css/site/global/handheld.css -text
