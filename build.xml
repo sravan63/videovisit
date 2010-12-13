@@ -164,6 +164,10 @@
 				 </copy>
 		</target>
 	<target name="copy-war">
+		   <echo message="delete existing files if any"/>
+		   <delete dir="${dest.war.dir}/${ant.project.name}.war" failonerror="false"/>
+		   <delete dir="${dest.war.dir}/${ant.project.name}"  failonerror="false"/>
+		   <echo message="deleted existing contents .. copy in new contents"/>	
 		   <copy file="${dest.war.dir}/${ant.project.name}.war" tofile="${war.target.dir}/${ant.project.name}.war" overwrite="true" />
 	</target>
 	<!-- ************************************************ -->
