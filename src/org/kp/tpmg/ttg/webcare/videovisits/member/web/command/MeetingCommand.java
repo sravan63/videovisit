@@ -51,11 +51,12 @@ public class MeetingCommand {
 					!request.getParameter("birth_year").equals("")) {
 				birth_year = request.getParameter("birth_year");
 			} 
+			/*
 			if (request.getParameter("consentVersion") != null &&
 					!request.getParameter("consentVersion").equals("")) {
 				consentVersion = request.getParameter("consentVersion");
 			}
-
+			 */
 			if (request.getParameter("captcha") != null &&
 					!request.getParameter("captcha").equals("")) 
 			{
@@ -76,7 +77,7 @@ public class MeetingCommand {
 			if (ctx != null && success == true)
 			{
 				//grab data from web services
-				ret= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, consentVersion,request.getSession().getId()); 
+				ret= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, ctx.getConsentVersion(),request.getSession().getId()); 
 				if (ret != null && ret.getSuccess()&& ret.getResult()!= null)
 				{
 					// success logged in. save logged in member in cached

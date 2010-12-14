@@ -14,6 +14,7 @@ public class WebAppContext {
 	private MemberWSO	member = null;	 
 	private MeetingWSO[]	meetings= null; 
 	private int totalmeetings = 0;
+	private String consentVersion = "consent_121010";
 	
 	public static final String HTTP_SESSION_KEY = "WebAppContext";
 	
@@ -51,6 +52,12 @@ public class WebAppContext {
 	}
 	public int getTotalmeetings () {
 		return totalmeetings;
+	}
+	public String getConsentVersion() {
+		return consentVersion;
+	}
+	public void setConsentVersion(String consentVersion) {
+		this.consentVersion = consentVersion;
 	}
 
 
