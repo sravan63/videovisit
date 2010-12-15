@@ -126,8 +126,5 @@ $(document).ready(function() {
     // Find all inputs with a populated title attribute and apply jquery.hint.js;
     $('input[title!=""]').hint();
 
-    /*function moveToit(){
-        var el = $("p.error").position();
-        window.scrollTo(el.left, el.top);
-    }*/
+    $('#terms').load($('#consentFormTXT').val());
 });
