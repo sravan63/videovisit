@@ -7,7 +7,7 @@
         <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn"></li>
         <li><label>Birth Month and Year</label> <label class="label-month" for="birth_month">Month</label><input type="text" name="birth_month" title="mm" id="birth_month" class="birth_month"> <label class="label-year" for="birth_year">Year</label><input type="text" name="birth_year" title="yyyy" class="birth_year"></li>
         <li><label for="captcha">Enter Code Shown</label><a id="captchaImage" href="#"><img width="160" id="stickyImg" src="stickyImg" alt="captcha image" class="gfx-captcha" /></a><input type="text" name="captcha" id="captcha" class="captcha"></li>
-        <li class="smallprint align-right">Click image to refresh. Letters are not case sensitive</li>
+        <li class="smallprint align-right">Click image to refresh. Letters are case sensitive</li>
         <li class="textarea-block"><h4>Consent to Participate</h4>
             <textarea id="terms" name="terms" class="terms-entry">Loading...</textarea></li>
         <li><input type="checkbox" name="consentVersion" value="version 1.2" id="understand_terms" class="understand_terms"><label class="label-understand-terms" for="understand_terms">I have read and agree to the terms of consent above.</label></li>
