@@ -21,7 +21,6 @@
 	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<props>
-				<prop key="/sso">approot</prop>
 				<prop key="/logout.htm">logout</prop>
 				<prop key="/intro.htm">intro</prop>
 				<prop key="/login.htm">login</prop>
@@ -40,12 +39,7 @@
 	</bean>
 	
 	<!-- Controllers -->
-	<bean id="approot" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
-		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
-		<property name="contextIdParameter" value="mrn"/>
-		<property name="homePageRedirect" value="redirect:intro.htm"/>
-	</bean>
-	<bean id="logout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoffController">
+		<bean id="logout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoffController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="logout" />
 		<property name="navigation" value="home" />
@@ -57,12 +51,13 @@
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="intro" />
 	</bean>
-	<bean id="login" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	<bean id="login" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="login" />
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
-	</bean>
+       	</bean>
 	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="landingnone" />

@@ -27,6 +27,5 @@
            to redirect to the single-sign-on infrastructure. 
 --%>
 <%-- Redirected because we can't set the welcome page to a virtual URL. --%>
-<c:redirect url="/sso">
-	<c:param name="nuid" value='<%= request.getParameter("nuid") %>'/>
+<c:redirect url="/intro.htm">
 </c:redirect>
