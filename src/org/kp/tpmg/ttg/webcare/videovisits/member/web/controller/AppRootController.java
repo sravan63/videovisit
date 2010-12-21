@@ -18,6 +18,9 @@ public class AppRootController implements Controller {
 	private EnvironmentCommand environmentCommand;
 	private String contextIdParameter;
 	private String homePageRedirect;
+	private String viewName;
+	private String navigation;
+	private String subNavigation;
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
@@ -25,8 +28,9 @@ public class AppRootController implements Controller {
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
 		}
-
-		return new ModelAndView(getHomePageRedirect());
+		ModelAndView modelAndView = new ModelAndView(getViewName());
+		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
+		return (modelAndView);
 	}
 
 	public WebAppContextCommand getWebAppContextCommand() {
@@ -60,5 +64,29 @@ public class AppRootController implements Controller {
 	public void setHomePageRedirect(String homePageRedirect) {
 		this.homePageRedirect = homePageRedirect;
 	}
+	public String getViewName() {
+		return viewName;
+	}
+	
+	public void setViewName(String viewName) {
+		this.viewName = viewName;
+	}
+	
+	public String getNavigation() {
+		return navigation;
+	}
+	
+	public void setNavigation(String navigation) {
+		this.navigation = navigation;
+	}
+	
+	public String getSubNavigation() {
+		return subNavigation;
+	}
+	
+	public void setSubNavigation(String subNavigation) {
+		this.subNavigation = subNavigation;
+	}
+	
 
 }
