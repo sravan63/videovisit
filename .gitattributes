@@ -31,6 +31,7 @@ docroot/WEB-INF/jsp/nav/sidebar.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo-empty.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo-visit.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo.jsp -text
+docroot/WEB-INF/jsp/setup.jsp -text
 docroot/WEB-INF/jsp/visit.jsp -text
 docroot/WEB-INF/taglib/spring.tld -text
 docroot/WEB-INF/taglib/struts-tiles.tld -text

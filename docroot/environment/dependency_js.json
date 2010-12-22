@@ -33,7 +33,8 @@
                     "js/library/plugin/additional-validation-methods.js",
                     "js/library/plugin/jquery.hint.js"
                 ],
-                "logout"  :   []
+                "logout"  :   [],
+                "setup" : []
             }
         },
         "landingnone" : {
@@ -88,5 +89,6 @@
                 ]
             }
         }
+
     }
 }

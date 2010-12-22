@@ -10,7 +10,7 @@
         <li class="smallprint align-right">Click image to refresh. Letters are case sensitive</li>
         <li class="textarea-block"><h4>Consent to Participate</h4>
             <textarea id="terms" name="terms" class="terms-entry">Loading...</textarea></li>
-        <li><input type="checkbox" name="consentVersion" value="version 1.2" id="understand_terms" class="understand_terms"><label class="label-understand-terms" for="understand_terms">I have read and agree to the terms of consent above.</label></li>
+        <li><input type="checkbox" name="consentVersion" value="version 1.2" id="understand_terms" class="understand_terms"><label class="label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label></li>
     </ul>
     <div class="submit-block">
         <input type="submit" name="login" value="Login &rsaquo;&rsaquo;" id="login" class="button">

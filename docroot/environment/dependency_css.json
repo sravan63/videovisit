@@ -13,7 +13,8 @@
             "specific" : {
                 "intro" : [],
                 "login" : [],
-                "logout" : []
+                "logout" : [],
+                "setup" : []
             }
         },
         "landingnone" : {
@@ -53,6 +54,7 @@
             "specific" : {
                 "help" : []
             }
-        }                
+        }
+                        
     }
 }
