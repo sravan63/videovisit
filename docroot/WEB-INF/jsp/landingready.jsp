@@ -12,7 +12,7 @@
             <h3>Your visit is scheduled for </h3>
             <p class="label">Meeting with:</p>
             <p class="name">${meeting.host.firstName} ${meeting.host.lastName}, DPM<br><a target="_blank" href="${meeting.host.homePageUrl}">Visit home page</a></p>
-            <a id="joinbutton" class="btn" meetingid="${meeting.meetingId}" href="https://tpmgtest.megameeting.com/?page=guest&conid=${meeting.mmMeetingName}&user=&agree=1&reload=1">Click here to join now</a>
+            <a id="joinbutton" class="btn" meetingid="${meeting.meetingId}" href="https://tpmgtest.megameeting.com/?page=guest&conid=${meeting.mmMeetingName}&user=patient&agree=1&reload=1">Click here to join now</a>
             <p class="smallprint">You may be joining before your clinician.  Please be patient.</p>
         </div>
     </div>
