@@ -9,9 +9,9 @@ $(document).ready(function() {
 
     // Grab the GET variable
     var iframedata = $_GET('iframedata');
-
+    
     // Load it into the iframe's source attribute'
-    $("iframe").attr('src', iframedata);
+    $("iframe").attr('src', decodeURIComponent(iframedata));
 
     // Setup the quit meeting modal and make it draggable
     $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');

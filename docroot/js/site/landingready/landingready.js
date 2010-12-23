@@ -4,13 +4,14 @@ $(document).ready(function() {
     $("#joinbutton").click(function(){
         meetingIdData = 'meetingId=' + $(this).attr('meetingid');
         hreflocation = $(this).attr('href');
+        
         $.ajax({
             type: 'POST',
             data: meetingIdData,
             url: VIDEO_VISITS.Path.landingready.joinmeeting,
             //TODO - Change this from "complete" to "success"
             success: function(returndata) {
-                window.location.replace("visit.htm?iframedata=" + hreflocation);
+                window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
