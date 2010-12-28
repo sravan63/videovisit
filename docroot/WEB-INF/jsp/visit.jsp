@@ -1,7 +1,7 @@
 <h3 class="page-title">Video Visit with ${WebAppContext.meetings[0].host.firstName} ${WebAppContext.meetings[0].host.lastName}, DPM</h3>
 
-                <div id="video-main">
-                    <iframe src ="#" width="100%" height="457">
+                <div id="video-main" style="width:800px">
+                    <iframe src ="#" width="100%" height="600">
                         <p>Your browser does not support iframes.</p>
                     </iframe>
                 </div>
