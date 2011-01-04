@@ -145,7 +145,7 @@ input								{outline:none;}
 .form-block .captcha 		{width:40px;}
 .form-block .gfx-captcha 	{float:left; margin:0 14px 0 0;}
 .form-block .understand_terms  {width:auto; float:left; border:none;}
-.form-block .label-understand-terms {width:auto; font-weight:normal; padding:1px 0 0 0;}
+.form-block .label-understand-terms {width:350px; font-weight:normal; padding:1px 0 0 0;}
 
 .form-block .label-month 		{width:40px; font-weight:normal;}
 .form-block .label-year		{width:35px; font-weight:normal;}
