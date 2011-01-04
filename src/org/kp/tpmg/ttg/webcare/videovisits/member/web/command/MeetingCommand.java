@@ -4,6 +4,8 @@ import javax.servlet.http.*;
 
 import java.io.PrintWriter;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sf.json.JSONObject;
 import nl.captcha.Captcha;
@@ -118,6 +120,9 @@ public class MeetingCommand {
 	public static String retrieveMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
 		RetrieveMeetingResponseWrapper ret = null;
+		Pattern p1 = Pattern.compile ("<mmMeetingName>");
+		Pattern p2 = Pattern.compile("<guest name>");
+		Matcher m1, m2;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 		try
 		{
@@ -137,6 +142,19 @@ public class MeetingCommand {
 					}
 					else
 					{
+						for (int i = 0; i < meetings.length; i++ )
+						{
+							{
+									m1 = p1.matcher(ctx.getMegaMeetingURL());
+									ctx.setMegaMeetingURL(m1.replaceAll(meetings[i].getMmMeetingName()));
+									m2 = p2.matcher(ctx.getMegaMeetingURL());
+									ctx.setMegaMeetingURL (m2.replaceAll(ctx.getMember().getFirstName() + " " + ctx.getMember().getLastName()));
+
+									// copy back to the meeting mmMeetingName
+									meetings[i].setMmMeetingName(ctx.getMegaMeetingURL());
+							}	
+						}
+						
 						ctx.setTotalmeetings(meetings.length);
 					}
 					ctx.setMeetings(meetings);

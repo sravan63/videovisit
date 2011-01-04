@@ -15,6 +15,8 @@ public class WebAppContext {
 	private MeetingWSO[]	meetings= null; 
 	private int totalmeetings = 0;
 	private String consentVersion = "consent_121010";
+	private String megaMeetingURL = null;
+
 	
 	public static final String HTTP_SESSION_KEY = "WebAppContext";
 	
@@ -60,5 +62,10 @@ public class WebAppContext {
 		this.consentVersion = consentVersion;
 	}
 
-
+	public String getMegaMeetingURL() {
+		return megaMeetingURL;
+	}
+	public void setMegaMeetingURL(String megaMeetingURL) {
+		this.megaMeetingURL = megaMeetingURL;
+	}
 }

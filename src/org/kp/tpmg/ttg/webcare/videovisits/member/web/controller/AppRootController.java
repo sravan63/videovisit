@@ -1,5 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import java.util.ResourceBundle;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,12 +23,21 @@ public class AppRootController implements Controller {
 	private String viewName;
 	private String navigation;
 	private String subNavigation;
+	private String megaMeetingURL = null;
+
+	public AppRootController() {
+		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");
+		
+	}
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
+			ctx.setMegaMeetingURL(megaMeetingURL);
+
 		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
