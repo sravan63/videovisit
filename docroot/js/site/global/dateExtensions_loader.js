@@ -1,4 +1,4 @@
-﻿// dateExtensions_loader.js
+// dateExtensions_loader.js
 
 // ========================
 
@@ -37,6 +37,7 @@ return d;};var _zeroPad=function(num){var s='0'+num;return s.substring(s.length-
 // Set dates to mm-dd-yyyy format
 
 Date.format = 'mm-dd-yyyy';
+Date.format = 'yyyy-mm-dd';
 
 
 
@@ -152,9 +153,10 @@ Date.prototype.asKwcDisplayDate = function() {
 
 // and returns it. 
 
-Date.fromKwcDateTime = function( dateTimeString ) {
+Date.fromKwcDateTime = function( dateTimeString , format) {
 
-    
+    if (dateTimeString == '' || dateTimeString == '&nbsp;')
+			return dateTimeString; 
 
     // Split the date into parts
 
@@ -209,7 +211,10 @@ Date.fromKwcDateTime = function( dateTimeString ) {
         minute
 
     );
-		return result.asKwcDisplayDate();
+		if (format)
+			return result.asString( format );
+		else
+			return result.asString( 'mm-dd-yyyy' );
         
 
     // Return the result
@@ -220,9 +225,6 @@ Date.fromKwcDateTime = function( dateTimeString ) {
 
 }; // end Date.fromKwcDateTime()
 
-
-
-
 function convertTimestampToDate(timestamp, format)
 {
 	var DateObj = new Date(parseFloat(timestamp));
@@ -230,8 +232,12 @@ function convertTimestampToDate(timestamp, format)
 	//10-01-2010 10:23 AM
 	//10-11-2010 20:19
 	Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
+	if (Hour == 0) {
+		Hour = 12;
+	}
+
 	Minute = DateObj.getMinutes();
-	AMPM = (DateObj.getHours() > 12 ? "PM" : "AM");
+	AMPM = (DateObj.getHours() > 11 ? "PM" : "AM");
 	Month = DateObj.getMonth() + 1;
 	DateNum = DateObj.getDate();
 	Year = DateObj.getFullYear();
@@ -267,6 +273,8 @@ function convertTimestampToDate(timestamp, format)
 	case 'full_date':
 		return 	newDateFormat;
 		break;
+	case 'json_submit':
+		return Year + "-" + display2Digit(Month) + "-" + display2Digit(DateNum) + " 00:00:00";
 	case 'date_diff':
 		
 		diff = ((timestamp - (new Date()).getTime()) / 1000);
