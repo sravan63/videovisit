@@ -158,17 +158,19 @@
    	      </jar>
    </target>
 	<target name="copy-exp-war">
-		<copy todir="${exp.war.target.dir}/${ant.project.name}" overwrite="true">
+		<delete dir="${exp.war.target.dir}/../temp/*" failonerror="false"></delete>
+		<delete dir="${exp.war.target.dir}/../work/*" failonerror="false"></delete>
+		<copy todir="${exp.war.target.dir}/${webapp.name}" overwrite="true">
 		         	    <fileset dir="${dest.dir}">
 		       	    	</fileset>
 				 </copy>
 		</target>
 	<target name="copy-war">
 		   <echo message="delete existing files if any"/>
-		   <delete dir="${war.target.dir}/${ant.project.name}.war" failonerror="false"/>
-		   <delete dir="${war.target.dir}/${ant.project.name}"  failonerror="false"/>
+		   <delete dir="${war.target.dir}/${webapp.name}.war" failonerror="false"/>
+		   <delete dir="${war.target.dir}/${webapp.name}"  failonerror="false"/>
 		   <echo message="deleted existing contents .. copy in new contents"/>	
-		   <copy file="${dest.war.dir}/${ant.project.name}.war" tofile="${war.target.dir}/${ant.project.name}.war" overwrite="true" />
+		   <copy file="${dest.war.dir}/${ant.project.name}.war" tofile="${war.target.dir}/${webapp.name}.war" overwrite="true" />
 	</target>
 	<!-- ************************************************ -->
 	   		<!-- Start of deploy			  -->
