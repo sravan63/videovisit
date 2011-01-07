@@ -5,27 +5,32 @@
     <h2><span>Your Medical Record</span></h2>
     <div class="sidebar-nav-wrap">
         <ul>
-            <li>Email Your Doctor
+            <li>E-mail Your Doctor
                 <ul>
-                    <li><a href="kp_login.html">Compose Mail</a></li>
-                    <li><a href="kp_inbox.html">Check Inbox</a></li>
+                    <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/contactphysician/entrypage.do">Compose message</a></li>
+                    <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/mailbox/epicrecmsglist.do">View messages</a></li>
                 </ul>
             </li>
-            <li>Your Transactions
+            <li>Manage &amp; Schedule
                 <ul>
-                    <li><a href="kp_pharmacy.html">Pharmacy</a></li>
-                    <li><a href="kp_appointment.html">Appointments</a></li>
+                    <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=pharmacycenter">Prescriptions</a></li>
+                    <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=appointmentcenter">Appointments</a></li>
+					<li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/proxy/entrypage.do">Act for a family member</a></li>
                 </ul>
             </li>
-            <li>Your Information
+            <li>View Information
                 <ul>
-                    <li><a href="kp_pastvisit.html">Past Visits</a></li>
-                    <li><a href="#">Immunizations</a></li>
-		    <li><a href="#">Lab Results</a></li>
-		    <li><a href="#">Screenings</a></li>
+                    <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/pastofficevisits/entrypage.do">Past visits</a></li>
+                    <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/labtestresults/entrypage.do">Test results</a></li>
                 </ul>
             </li>
+            <li>Preventive Services
+                <ul>
+                    <li><a target="MDO_ExternalLink" href="http://www.kp.org/mypreventivehealth">Screenings to date</a></li>
+                </ul>
+            </li>
+
         </ul>
-        <p>These secure features require you to <a href="login.htm">sign in.</a><br/><a href="#">Privacy Policy</a></p>
+        <p>These secure features require you to <a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/signonpage.do">sign in.</a><br/><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/privacystate/entrypage.do">Privacy Policy</a></p>
     </div>
 </div>
