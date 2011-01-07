@@ -21,7 +21,7 @@ $(document).ready(function() {
             birth_month: {
                 required: true,
                 digits: true,
-                minlength: 2,
+                minlength: 1,
                 maxlength: 2
             },
             birth_year: {
@@ -52,7 +52,6 @@ $(document).ready(function() {
             birth_month: {
                 required: "Please enter your birth month as a number.",
                 digits: "Please enter your birth month as a number.",
-                minlength: "You need 2 numbers for your birth month.",
                 maxlength: "You cannot have more than 2 numbers for your birth month."
             },
             birth_year: {
@@ -72,7 +71,13 @@ $(document).ready(function() {
             // Clear the error field in case the form didn't submit properly.
             //$("p.error").html('');
             // Prepare data from pertinent fields for POSTing
-            var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
+            // Format birth_month
+            var birth_month = $('input[name=birth_month]').val();
+            if (birth_month.length == 1) {
+            	birth_month = "0" + birth_month;
+            }
+            
+            var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
             var ep = $("p.error").position();
             $.ajax({
                 type: "POST",
