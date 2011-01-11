@@ -24,11 +24,13 @@ public class AppRootController implements Controller {
 	private String navigation;
 	private String subNavigation;
 	private String megaMeetingURL = null;
+	private String consentVersion = null;
 
 	public AppRootController() {
 		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");
-		
+		consentVersion = rbInfo.getString("CONSENT_VERSION");
+
 	}
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -37,6 +39,7 @@ public class AppRootController implements Controller {
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
 			ctx.setMegaMeetingURL(megaMeetingURL);
+			ctx.setConsentVersion(consentVersion);
 
 		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
