@@ -1,7 +1,7 @@
 PROJECT=videovisitmember
 LOGFILE=c:/tmp/videovisitsmember.local.log
 INITFILE=c:/tmp/videovisitsmember.local.properties
-WEBSERVICE_ENDPOINT=http://ttg-dv-esb-1.har.ca.kp.org:29763/services/VideoVisitMemberServices
+WEBSERVICE_ENDPOINT=http://ttg-qa-esb-1.har.ca.kp.org:8008/services/VideoVisitMemberServices 
 LOGLEVEL=info
 
 MEGAMEETING_PARTICIPANT_URL=https://tpmgtest.megameeting.com/?page=guest&conid=<mmMeetingName>&user=<guest name>&agree=1&reload=1
