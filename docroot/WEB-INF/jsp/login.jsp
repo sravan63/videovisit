@@ -9,7 +9,7 @@
         <li><label for="captcha">Enter Code Shown</label><a id="captchaImage" href="#" tabindex="100"><img width="160" id="stickyImg" src="stickyImg" alt="captcha image" class="gfx-captcha" /></a><input type="text" name="captcha" id="captcha" class="captcha" tabindex="5"></li>
         <li class="smallprint align-right">Click image to refresh. Letters are case sensitive</li>
         <li class="textarea-block"><h4>Consent to Participate</h4>
-            <textarea id="terms" name="terms" class="terms-entry" tabindex="6">Loading...</textarea></li>
+            <textarea id="terms" name="terms" class="terms-entry" tabindex="6" readonly>Loading...</textarea></li>
         <li><input type="checkbox" name="consentVersion" value="version 1.2" id="understand_terms" class="understand_terms" tabindex="7"><label class="label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label></li>
     </ul>
     <div class="submit-block">
