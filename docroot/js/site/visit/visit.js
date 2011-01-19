@@ -13,6 +13,12 @@ $(document).ready(function() {
     // Load it into the iframe's source attribute'
     $("iframe").attr('src', decodeURIComponent(iframedata));
 
+    // Move the quit meeting modal outside of the rest of the containers on the page and append to body (fixes some IE modal bugs)
+    $('body').append($('#quitMeetingModal'));
+
+    // Reposition modal on this page only
+    $('.jqmWindow').css('margin-left','-99px');
+    
     // Setup the quit meeting modal and make it draggable
     $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');
 
