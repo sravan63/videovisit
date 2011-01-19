@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
 
-    $("#joinbutton").click(function(){
+    $(".btn").click(function(){
         meetingIdData = 'meetingId=' + $(this).attr('meetingid');
         hreflocation = $(this).attr('href');
         
