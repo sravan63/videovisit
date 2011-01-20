@@ -13,7 +13,7 @@
         <li><input type="checkbox" name="consentVersion" value="version 1.2" id="understand_terms" class="understand_terms" tabindex="7"><label class="label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label></li>
     </ul>
     <div class="submit-block">
-        <input type="submit" name="login" value="Login &rsaquo;&rsaquo;" id="login" class="button">
+        <input type="submit" name="login" value="Login &rsaquo;&rsaquo;" id="login" class="button" tabindex="8">
     </div>
 </form>
 <p class="error error-login"><a name="errors"></a></p>
