@@ -9,7 +9,7 @@ $(document).ready(function() {
         rules:  {
             last_name: {
                 required: true,
-                alphanumeric: true,
+                letterswithbasicpunc: true,
                 minlength: 2
             },
             mrn: {
@@ -41,7 +41,7 @@ $(document).ready(function() {
         messages: {
             last_name: {
                 required: "Please enter your last name.",
-                alphanumeric: "Please enter a valid name."
+                letterswithbasicpunc: "Please enter a valid name."
             },
             mrn: {
                 required: "Please enter your Medical Record Number.",
