@@ -148,8 +148,10 @@ public class MeetingCommand {
 									m1 = p1.matcher(ctx.getMegaMeetingURL());
 									ctx.setMegaMeetingURL(m1.replaceAll(meetings[i].getMmMeetingName()));
 									m2 = p2.matcher(ctx.getMegaMeetingURL());
-									ctx.setMegaMeetingURL (m2.replaceAll(ctx.getMember().getFirstName() + " " + ctx.getMember().getLastName()));
-
+									ctx.setMegaMeetingURL (m2.replaceAll(
+															ctx.getMember().getFirstName().replaceAll("[^a-zA-Z0-9 ]", " ") + 
+															" " + 
+															ctx.getMember().getLastName().replaceAll("[^a-zA-Z0-9 ]", " "))); 
 									// copy back to the meeting mmMeetingName
 									meetings[i].setMmMeetingName(ctx.getMegaMeetingURL());
 							}	
