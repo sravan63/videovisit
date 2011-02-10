@@ -94,6 +94,7 @@ docroot/js/site/landingnone/landingnone.js -text
 docroot/js/site/landingready/landingready.js -text
 docroot/js/site/login/login.js -text
 docroot/js/site/visit/visit.js -text
+docroot/keepalive.jsp -text
 docroot/samplevideo.mp4 -text
 docs/Video[!!-~]Visit[!!-~]Member[!!-~]WebApp[!!-~]Build[!!-~]and[!!-~]Test.doc -text
 docs/VideoVisitMembert-DesignSpecifications.doc -text
