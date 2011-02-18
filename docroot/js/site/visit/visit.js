@@ -38,5 +38,30 @@ $(document).ready(function() {
         });
         return false;
     })
+		LandingReadyPage.keepALive();
 });
+
+var LandingReadyPage =
+{
+		keepALiveDelay: ( 5 * 60 * 1000),
+		keepALiveTimerId:'',
+	
+		keepALive: function()
+		{
+			LandingReadyPage.keepALiveClearTimeOut();
+			LandingReadyPage.keepALiveTimerId = setTimeout( LandingReadyPage.keepALiveAction, LandingReadyPage.keepALiveDelay );
+		},
+		keepALiveClearTimeOut: function()
+		{
+			if (LandingReadyPage.keepALiveTimerId)
+				clearTimeout( LandingReadyPage.keepALiveTimerId );
+		},
+		keepALiveAction: function()
+		{
+			$.post(VIDEO_VISITS.Path.landingready.keepALive, {},function(data){	
+				
+			});
+			LandingReadyPage.keepALive();
+		}
+}
 
