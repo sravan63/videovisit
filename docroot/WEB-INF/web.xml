@@ -53,7 +53,11 @@
 		<url-pattern>*.css</url-pattern>
 		<url-pattern>*.gif</url-pattern>
 	</filter-mapping>
-  
+
+  	<servlet>
+		<servlet-name>livePage</servlet-name>
+		<jsp-file>/live.jsp</jsp-file>
+	</servlet>  
    <!-- Main Dispatcher Controller -->
 	<servlet>
 		<servlet-name>action</servlet-name>
@@ -65,6 +69,10 @@
 	<servlet-mapping>
       <servlet-name>action</servlet-name>
       <url-pattern>/sso</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+      <servlet-name>action</servlet-name>
+      <url-pattern>/healthMonitor</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
@@ -82,6 +90,12 @@
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>livePage</servlet-name>
+		<url-pattern>/ping</url-pattern>
+	</servlet-mapping>
+	
 	
 	<!-- Session Configuration-->
 	<session-config>

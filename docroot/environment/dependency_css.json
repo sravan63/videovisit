@@ -54,6 +54,12 @@
             "specific" : {
                 "help" : []
             }
+        },
+        "healthMonitor" : {
+            "global"   : [],
+            "specific" : {
+                "blank" : []
+            }
         }
                         
     }

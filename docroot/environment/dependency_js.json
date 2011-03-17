@@ -90,6 +90,12 @@
                     "js/site/help/help.js"
                 ]
             }
+        },
+        "healthMonitor" : {
+            "global"   : [],
+            "specific" : {
+                "blank" : []
+            }
         }
 
     }

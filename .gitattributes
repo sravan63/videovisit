@@ -15,6 +15,7 @@ docroot/WEB-INF/jsp/blank.jsp -text
 docroot/WEB-INF/jsp/data/jsonData.jsp -text
 docroot/WEB-INF/jsp/data/jsonHeader.jsp -text
 docroot/WEB-INF/jsp/error.jsp -text
+docroot/WEB-INF/jsp/healthMonitor.jsp -text
 docroot/WEB-INF/jsp/help.jsp -text
 docroot/WEB-INF/jsp/intro.jsp -text
 docroot/WEB-INF/jsp/landing.jsp -text
@@ -27,6 +28,7 @@ docroot/WEB-INF/jsp/nav/header.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-empty.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-intro.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar.jsp -text
+docroot/WEB-INF/jsp/nav/simpleText.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo-empty.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo-visit.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo.jsp -text
@@ -38,6 +40,7 @@ docroot/WEB-INF/taglib/taglib.tld -text
 docroot/WEB-INF/tiles-definitions/tiles-definitions.xml -text
 docroot/WEB-INF/tiles-templates/applicationLayout.jsp -text
 docroot/WEB-INF/tiles-templates/dataLayout.jsp -text
+docroot/WEB-INF/tiles-templates/textLayout.jsp -text
 docroot/WEB-INF/web.xml -text
 docroot/consent_forms/consent_2010_12_16.pdf -text
 docroot/consent_forms/consent_2010_12_16.txt -text
@@ -96,6 +99,7 @@ docroot/js/site/landingready/landingready.js -text
 docroot/js/site/login/login.js -text
 docroot/js/site/visit/visit.js -text
 docroot/keepalive.jsp -text
+docroot/live.jsp -text
 docroot/samplevideo.mp4 -text
 docs/Video[!!-~]Visit[!!-~]Member[!!-~]WebApp[!!-~]Build[!!-~]and[!!-~]Test.doc -text
 docs/VideoVisitMembert-DesignSpecifications.doc -text
@@ -158,10 +162,12 @@ lib/wstx-asl-3.2.1.jar -text
 lib/xml-apis.jar -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/EnvironmentCommand.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/MeetingCommand.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/MonitoringCommand.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/WebAppContextCommand.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/context/SystemError.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/context/WebAppContext.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/AppRootController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/HealthMonitorController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/JoinMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoffController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoutController.java -text

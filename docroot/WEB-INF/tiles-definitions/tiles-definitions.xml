@@ -20,6 +20,10 @@
  		<put-attribute name="data" value="/WEB-INF/jsp/blank.jsp" />
 	</definition>
 
+	<definition name=".textTemplate" template="/WEB-INF/tiles-templates/textLayout.jsp">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/nav/simpleText.jsp" />
+	</definition>
+	
 	<!-- json data -->
 	<definition name="jsonData" extends=".dataTemplate">
  		<put-attribute name="header" value="/WEB-INF/jsp/data/jsonHeader.jsp" />
@@ -77,5 +81,15 @@
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/logout.jsp" />
 	</definition>
+	<definition name="healthMonitor" extends=".standardPageTemplate">
+		<put-attribute name="title" value="" type="string" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="tabs" value="/WEB-INF/jsp/blank.jsp" />
+		<put-attribute name="content" value="/WEB-INF/jsp/healthMonitor.jsp" />
+	</definition>
+
+	<definition name="simpleText" extends=".textTemplate">
+	</definition>
+
 
 </tiles-definitions>

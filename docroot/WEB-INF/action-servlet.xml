@@ -35,6 +35,7 @@
 				<prop key="/quitmeeting.json">quitmeeting</prop>
 				<prop key="/logout.json">logoutmeeting</prop>
 				<prop key="/retrievemeeting.json">retrievemeeting</prop>
+				<prop key="/healthMonitor">healthMonitor</prop>
 			</props>
 		</property>
 	</bean>
@@ -94,6 +95,13 @@
 		<property name="viewName" value="error" />
 		<property name="navigation" value="error" />
 		<property name="subNavigation" value="error" />
+	</bean>
+	<!--  for monitoring -->	
+	<bean id="healthMonitor" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.HealthMonitorController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="healthMonitor" />
+		<property name="navigation" value="healthMonitor" />
+		<property name="simpleText" value="simpleText"/>
 	</bean>
 
 	<!--  JSON classes -->

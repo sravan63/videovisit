@@ -12,7 +12,6 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.videovisit.member.*;
-import org.kp.tpmg.videovisit.member.serviceapi.*;
 import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*;
 import org.kp.tpmg.webservice.client.videovisit.member.*;
 
@@ -305,6 +304,39 @@ public class WebService{
 			{
 				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
 				MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
+				toRet = response.get_return();
+			}
+			return toRet;
+		}
+		
+		// simulation
+		toRet = new UpdateResponseWrapper();
+		toRet.setSuccess(true);
+		
+		return toRet;
+	}
+	
+	
+	/**
+	 * Simply test database round trip
+	 * @return
+	 */
+	public static UpdateResponseWrapper testDbRoundTrip() throws Exception
+	{
+		UpdateResponseWrapper toRet = null; 
+		
+		if (!simulation)
+		{
+			try
+			{
+			
+				TestDbRoundTripResponse response = stub.testDbRoundTrip();
+				toRet = response.get_return();
+			}
+			catch (Exception e)
+			{
+				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+				TestDbRoundTripResponse response = stub.testDbRoundTrip();
 				toRet = response.get_return();
 			}
 			return toRet;
