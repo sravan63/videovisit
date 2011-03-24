@@ -44,6 +44,8 @@ docroot/WEB-INF/tiles-templates/textLayout.jsp -text
 docroot/WEB-INF/web.xml -text
 docroot/consent_forms/consent_2010_12_16.pdf -text
 docroot/consent_forms/consent_2010_12_16.txt -text
+docroot/consent_forms/consent_2011_03_23.ie.txt -text
+docroot/consent_forms/consent_2011_03_23.txt -text
 docroot/css/library/plugin/jqModal.css -text
 docroot/css/site/global/base.css -text
 docroot/css/site/global/handheld.css -text
