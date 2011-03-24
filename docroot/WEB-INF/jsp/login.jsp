@@ -3,6 +3,7 @@
 <p class="login">Please sign on below by completing the fields below.</p>
 <form id="loginForm" method="post" action="">
     <input type="hidden" name="consentFormTXT" id="consentFormTXT" value="consent_forms/${WebAppContext.consentVersion}.txt" />
+	<input type="hidden" name="consentFormTXTIE" id="consentFormTXTIE" value="consent_forms/${WebAppContext.consentVersion}.ie.txt" />
     <ul class="form-block">
         <li><label for="last_name">Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1"></li>
         <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn" tabindex="2"></li>
