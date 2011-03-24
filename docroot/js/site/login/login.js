@@ -130,6 +130,13 @@ $(document).ready(function() {
     // Clear/Display "hint" text for form input fields
     // Find all inputs with a populated title attribute and apply jquery.hint.js;
     $('input[title!=""]').hint();
-
-    $('#terms').load($('#consentFormTXT').val());
+    
+    if ($.browser.msie) {
+    	$('#terms').load($('#consentFormTXTIE').val());
+    }
+    else
+    {
+    	$('#terms').load($('#consentFormTXT').val());
+    }
+    
 });
