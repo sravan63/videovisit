@@ -56,6 +56,10 @@
 	  	<antcall target="build-war" />
    	  	<antcall target="copy-war" />
    </target>
+	<target name="generateWar">
+			<antcall target="assemble" />
+		  	<antcall target="build-war" />
+	</target>
 	
 	<target name="local-exp">
 			<antcall target="assemble" />
