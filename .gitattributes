@@ -1,6 +1,19 @@
 * text=auto !eol
 /.classpath -text
 /.project -text
+build-scripts/branchRelease.sh -text
+build-scripts/build.sh -text
+build-scripts/buildRelease.sh -text
+build-scripts/checkoutRelease.sh -text
+build-scripts/env.sh -text
+build-scripts/override/build.properties.pp -text
+build-scripts/override/build.properties.pr -text
+build-scripts/override/build.properties.qa -text
+build-scripts/override/local.pp -text
+build-scripts/override/local.pr -text
+build-scripts/override/local.qa -text
+build-scripts/tagCode.sh -text
+build-scripts/upload.sh -text
 /build.properties -text
 /build.xml -text
 conf/configuration.properties -text
