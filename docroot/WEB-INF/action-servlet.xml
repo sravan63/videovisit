@@ -36,6 +36,7 @@
 				<prop key="/logout.json">logoutmeeting</prop>
 				<prop key="/retrievemeeting.json">retrievemeeting</prop>
 				<prop key="/healthMonitor">healthMonitor</prop>
+				<prop key="/loading.htm">loading</prop>
 			</props>
 		</property>
 	</bean>
@@ -102,6 +103,11 @@
 		<property name="viewName" value="healthMonitor" />
 		<property name="navigation" value="healthMonitor" />
 		<property name="simpleText" value="simpleText"/>
+	</bean>
+		<bean id="loading" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="loading" />
+		<property name="navigation" value="blank" />
 	</bean>
 
 	<!--  JSON classes -->
