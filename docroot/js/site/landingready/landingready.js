@@ -1,6 +1,23 @@
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
 
+    // Check Meeting Status
+    $.ajax({
+            type: 'POST',
+            url: VIDEO_VISITS.Path.landingready.retrieveMeeting,
+            //TODO - Change this from "complete" to "success"
+            success: function(returndata) {
+                //console.log('success');
+            },
+            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+            error: function(theRequest, textStatus, errorThrown) {
+                //console.log('error');
+            }
+    });
+
+
+
+	// Join now Click Event
     $(".btn").click(function(){
         meetingIdData = 'meetingId=' + $(this).attr('meetingid');
         hreflocation = $(this).attr('href');
