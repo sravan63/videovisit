@@ -86,7 +86,7 @@ public class MeetingCommand {
 					ctx.setMember(ret.getResult());
 
 					// retrieve meetings status
-					return ("2");				
+					return ("1");				
 				}
 				else if (ret != null && ret.getSuccess())
 				{

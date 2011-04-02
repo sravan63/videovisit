@@ -22,20 +22,6 @@ public class SubmitLoginController extends SimplePageController {
 		{
 			//verify member from web service and perform meeting analysis.
 			 data = MeetingCommand.verifyMember(request, response);
-			
-			//if not valid user, return error immediately
-			if (!data.equals("4") && !data.equals("3"))
-			{
-				// success login in.  retrieve meetings 
-				data = MeetingCommand.retrieveMeeting(request, response);
-				logger.info("RetrieveMeeting-handleRequest-data="+data);
-
-				// return JSON code: one - there is meeting, two - no meeting, three - invalid user, four - captcha mismatched
-				if (ctx.getTotalmeetings() >= 1)
-					data = "1";
-				else 
-					data = "2";
-			}
 		}
 		catch (Exception e)
 		{
