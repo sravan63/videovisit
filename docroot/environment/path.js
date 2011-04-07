@@ -14,7 +14,7 @@ VIDEO_VISITS.Path = {
         visiturl : 'visit.htm',
         joinmeeting : 'joinmeeting.json',
 		keepALive: 'keepalive.jsp',
-		retrieveMeeting: 'retrievemeeting.json',
+		retrieveMeeting: 'retrievemeeting.json'
     },
     visit : {
         quitmeeting : 'quitmeeting.json',
