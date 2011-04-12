@@ -18,8 +18,8 @@ import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*;
 public class MeetingCommand {
 
 	public static Logger logger = Logger.getLogger(MeetingCommand.class);
-	public static int PAST_MINUTES =300;
-	public static int FUTURE_MINUTES =300;
+	public static int PAST_MINUTES =120;
+	public static int FUTURE_MINUTES =15;
 
 	public static String verifyMember(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
@@ -144,16 +144,17 @@ public class MeetingCommand {
 					{
 						for (int i = 0; i < meetings.length; i++ )
 						{
-							{
-									m1 = p1.matcher(ctx.getMegaMeetingURL());
-									ctx.setMegaMeetingURL(m1.replaceAll(meetings[i].getMmMeetingName()));
-									m2 = p2.matcher(ctx.getMegaMeetingURL());
-									ctx.setMegaMeetingURL (m2.replaceAll(
+							if(meetings[i].getMmMeetingName() != null && !"".equals(meetings[i].getMmMeetingName())){
+									String megaUrl = ctx.getMegaMeetingURL();
+									m1 = p1.matcher(megaUrl);
+									megaUrl = m1.replaceAll(meetings[i].getMmMeetingName());
+									m2 = p2.matcher(megaUrl);
+									megaUrl = m2.replaceAll(
 															ctx.getMember().getFirstName().replaceAll("[^a-zA-Z0-9 ]", " ") + 
 															" " + 
-															ctx.getMember().getLastName().replaceAll("[^a-zA-Z0-9 ]", " "))); 
+															ctx.getMember().getLastName().replaceAll("[^a-zA-Z0-9 ]", " ")); 
 									// copy back to the meeting mmMeetingName
-									meetings[i].setMmMeetingName(ctx.getMegaMeetingURL());
+									meetings[i].setMmMeetingName(megaUrl);
 							}	
 						}
 						
