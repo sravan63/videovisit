@@ -1,6 +1,7 @@
 VIDEO_VISITS.Path = {
     global : {
-        error : 'error.htm'
+        error : 'error.htm',
+        expired : 'logout.htm'
     },
     grid : {
         home : {

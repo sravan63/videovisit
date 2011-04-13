@@ -11,14 +11,24 @@
 if (typeof console == "undefined" || typeof console.log == "undefined") var console = {
     log: function() {}
 };
-var SESSION_EXPIRED_PAGE;
-var ERROR_PAGE;
+
+var SESSION_EXPIRED_PAGE = "";
+var ERROR_PAGE = "";
+
+// Number of idle milliseconds before redirecting to session timeout
+var SESSION_TIMEOUT_DELAY = 1000 * 60 * 45; // 45 minutes
+
 $(document).ready(function() {
-    try {
+
+	// Set with Path Vars
+	SESSION_EXPIRED_PAGE = VIDEO_VISITS.Path.global.expired;
+	ERROR_PAGE = VIDEO_VISITS.Path.global.error;
+	
+	
+	try {
         $("td:empty").html("&nbsp;");
     }
     catch(e) {
-    //Not sure why this is failing or what it is doing :/
     }
 });
 
@@ -78,7 +88,7 @@ var loading_Threshold;
     };
     
     // Redirects to the "session expired" page.
-    var GoToExpiredPage = function() {
+    var GoToErrorPage = function() {
         location.href = ERROR_PAGE;
     };
     
@@ -101,8 +111,6 @@ var loading_Threshold;
     
     // PRIVATE DATA
     
-    // Number of idle milliseconds before redirecting to session timeout
-    var SESSION_TIMEOUT_DELAY = 1000 * 60 * 22;
     
     // Timer ID for later cancelling
     var m_sessionTimeoutId;
