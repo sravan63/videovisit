@@ -276,6 +276,41 @@ public class WebService{
 		return toRet;
 	}
 
+	public static StringResponseWrapper createMegameetingSession(long meetingID, String mrn8Digit, String sessionID) throws Exception
+	{
+		StringResponseWrapper toRet = null; 
+		
+		if (!simulation)
+		{
+			CreateMegameetingSession query = new CreateMegameetingSession();
+			try
+			{
+				query.setMrn8Digit(mrn8Digit);
+				query.setSessionID(sessionID);
+				query.setMeetingID(meetingID);
+			
+				CreateMegameetingSessionResponse response = stub.createMegameetingSession(query);
+				toRet = response.get_return();
+			}
+			catch (Exception e)
+			{
+				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+				CreateMegameetingSessionResponse response = stub.createMegameetingSession(query);
+				toRet = response.get_return();
+			}
+			return toRet;
+		}
+	
+		// simulation
+		toRet = new StringResponseWrapper();
+		toRet.setSuccess(true);
+		toRet.setResult("http://www.youtube.com/watch?v=ASKnLj2Pp8I");
+		
+		return toRet;
+	}
+	
+	
+	
 	/**
 	 * Member end the meeting and log out.
 	 * @param mrn8Digit

@@ -3,7 +3,6 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 import javax.servlet.http.*;
 
 import java.io.PrintWriter;
-import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +31,6 @@ public class MeetingCommand {
 			String mrn8Digit	= "";
 			String birth_month 	= "";
 			String birth_year  	= "";
-			String consentVersion  = "";
 			String answer		= "";
 			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
@@ -128,7 +126,7 @@ public class MeetingCommand {
 		{
 			if (ctx != null && ctx.getMember() != null)
 			{
-				Date now = new Date();
+
 				ret= WebService.retrieveMeeting(ctx.getMember().getMrn8Digit(), PAST_MINUTES, FUTURE_MINUTES,request.getSession().getId());
 				// determine which meeting is coming up.
 				if (ret != null && ret.getSuccess() && ret.getResult()!= null)
@@ -258,6 +256,38 @@ public class MeetingCommand {
 			{
 				//grab data from web services
 				ret= WebService.memberEndMeetingLogout(ctx.getMember().getMrn8Digit(), meetingId, request.getSession().getId());
+				if (ret != null)
+				{
+					return JSONObject.fromObject(ret).toString();
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
+
+	public static String createMegameeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		StringResponseWrapper ret = null;
+		long meetingId = 0;
+		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+
+		try
+		{
+			// parse parameters
+			if (request.getParameter("meetingId") != null &&
+					!request.getParameter("meetingId").equals("")) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			
+			if (ctx != null && ctx.getMember() != null)
+			{
+				//grab data from web services
+				ret= WebService.createMegameetingSession(meetingId, ctx.getMember().getMrn8Digit(), request.getSession().getId());
 				if (ret != null)
 				{
 					return JSONObject.fromObject(ret).toString();
