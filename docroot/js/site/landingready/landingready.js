@@ -11,6 +11,8 @@ $(document).ready(function() {
             data: meetingIdData,
             url: VIDEO_VISITS.Path.landingready.joinmeeting,
             success: function(returndata) {
+				returndata = jQuery.parseJSON(returndata);
+				hreflocation = returndata.result;
                 window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
