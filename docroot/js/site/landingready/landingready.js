@@ -10,7 +10,6 @@ $(document).ready(function() {
             type: 'POST',
             data: meetingIdData,
             url: VIDEO_VISITS.Path.landingready.joinmeeting,
-            //TODO - Change this from "complete" to "success"
             success: function(returndata) {
                 window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
             },
