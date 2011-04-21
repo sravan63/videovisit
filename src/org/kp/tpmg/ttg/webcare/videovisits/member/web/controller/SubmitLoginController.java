@@ -3,7 +3,6 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 
-import java.io.*;
 import javax.servlet.http.*;
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,7 +13,6 @@ public class SubmitLoginController extends SimplePageController {
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{	
-		PrintWriter out = response.getWriter();
 		String data = null;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
@@ -30,7 +28,6 @@ public class SubmitLoginController extends SimplePageController {
 		}
 		//put data into buffer
 		logger.info("SubmitLoginController-handleRequest-data="+data);
-		out.println(data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		return (modelAndView);
