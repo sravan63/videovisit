@@ -3,7 +3,7 @@ $(document).ready(function() {
     $("#loginForm").validate({
         // Where do we want errors to appear?
         errorLabelContainer: $('p.error'),
-        // Wrapp error messages in a list item
+        // Wrap error messages in a list item
         wrapper: 'li',
         // Validation rules for each field in the form
         rules:  {
@@ -29,6 +29,12 @@ $(document).ready(function() {
                 digits: true,
                 minlength: 4,
                 maxlength: 4
+            },
+            birth_day: {
+                required: true,
+                digits: true,
+                minlength: 1,
+                maxlength: 2
             },
             captcha: {
                 required: true
@@ -57,8 +63,13 @@ $(document).ready(function() {
             birth_year: {
                 required: "Please enter your birth year.",
                 digits: "Please enter your birth year as a number.",
-                minlength: "You need 4 numbers for your birth month.",
-                maxlength: "You need 4 numbers for your birth month."
+                minlength: "You need 4 numbers for your birth year.",
+                maxlength: "You need 4 numbers for your birth year."
+            },
+            birth_day: {
+                required: "Please enter your birth day.",
+                digits: "Please enter your birth day as a number.",
+                maxlength: "You cannot have more than 2 numbers for your birth day."
             },
             captcha: {
                 required: "You need to enter something in the captcha field."
@@ -76,8 +87,15 @@ $(document).ready(function() {
             if (birth_month.length == 1) {
             	birth_month = "0" + birth_month;
             }
+            // Format birth_day
+            var birth_day = $('input[name=birth_day]').val();
+            if (birth_day.length == 1) {
+            	birth_day = "0" + birth_day;
+            }
+
+            $('#consentModal').jqmShow();
             
-            var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
+            var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + $('input[name=birth_day]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
             var ep = $("p.error").position();
             $.ajax({
                 type: "POST",
@@ -121,7 +139,7 @@ $(document).ready(function() {
         }
     });
 
-    // This is for reloading the captcha image onclick. Since the simplecaptcha code returns the actual contents of the image, I need to appened some random stuff to the img src so it knows the "location" has changed. Without it, this won't work
+    // This is for reloading the captcha image onclick. Since the simplecaptcha code returns the actual contents of the image, I need to append some random data to the img src so it knows the "location" has changed. Without it, this won't work
     $("#captchaImage").click(function(){
         $("#stickyImg").attr('src', 'stickyImg?' + (new Date().getTime()));
         return false;
@@ -138,5 +156,11 @@ $(document).ready(function() {
     {
     	$('#terms').load($('#consentFormTXT').val());
     }
+
+    // Move the modal outside of the rest of the containers on the page and append to body (fixes some IE modal bugs)
+    $('body').append($('#consentModal'));
+
+    // Setup the modal and make it draggable
+    $( '#consentModal' ).jqm().jqDrag('.jqDrag');
     
 });
