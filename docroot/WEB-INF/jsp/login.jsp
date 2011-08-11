@@ -36,7 +36,7 @@
 		<div id="parental-consent-fields" style="display: none">
 			<ul>
 				<li><label for="parent_first_name">Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
-				<li><label for="parent_last_name">First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
+				<li><label for="parent_first_name">First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
 				<li><label for="Relationship">Relationship</label>
 					<select id="relationship" tabindex="11" >
 						<option value="Parent">Parent</option>
