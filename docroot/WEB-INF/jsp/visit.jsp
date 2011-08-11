@@ -1,4 +1,8 @@
-<h3 class="page-title">Video Visit with ${WebAppContext.meetings[0].host.firstName} ${WebAppContext.meetings[0].host.lastName}, DPM</h3>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<h3 class="page-title">Video Visit with ${WebAppContext.meetings[0].host.firstName} 
+	${WebAppContext.meetings[0].host.lastName}<c:if test="${not empty WebAppContext.meetings[0].host.title}">, ${WebAppContext.meetings[0].host.title}</c:if>
+</h3>
 
                 <div id="video-main" style="width:785px">
                     <iframe src ="blank.jsp" width="100%" height="600">
