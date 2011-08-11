@@ -31,7 +31,11 @@ public class MeetingCommand {
 			String mrn8Digit	= "";
 			String birth_month 	= "";
 			String birth_year  	= "";
+			String birth_day	= "";
 			String answer		= "";
+			String parentFirstName 	= "";
+			String parentLastName 	= "";
+			String relationship		= "";
 			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
 			// DEBUG
@@ -51,6 +55,23 @@ public class MeetingCommand {
 					!request.getParameter("birth_year").equals("")) {
 				birth_year = request.getParameter("birth_year");
 			} 
+			if (request.getParameter("birth_day") != null &&
+					!request.getParameter("birth_day").equals("")) {
+				birth_day = request.getParameter("birth_day");
+			}			
+			if (request.getParameter("parent_first_name") != null &&
+					!request.getParameter("parent_first_name").equals("")) {
+				parentFirstName = request.getParameter("parent_first_name");
+			}
+			if (request.getParameter("parent_last_name") != null &&
+					!request.getParameter("parent_last_name").equals("")) {
+				parentLastName = request.getParameter("parent_last_name");
+			}
+			if (request.getParameter("relationship") != null &&
+					!request.getParameter("relationship").equals("")) {
+				relationship = request.getParameter("relationship");
+			}
+			
 			/*
 			if (request.getParameter("consentVersion") != null &&
 					!request.getParameter("consentVersion").equals("")) {
@@ -77,7 +98,8 @@ public class MeetingCommand {
 			if (ctx != null && success == true)
 			{
 				//grab data from web services
-				ret= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, ctx.getConsentVersion(),request.getSession().getId()); 
+				ret= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day, ctx.getConsentVersion(),
+						request.getSession().getId(), parentFirstName, parentLastName, relationship); 
 				if (ret != null && ret.getSuccess()&& ret.getResult()!= null)
 				{
 					// success logged in. save logged in member in cached
