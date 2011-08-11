@@ -100,7 +100,9 @@ public class WebService{
 
 
 	public static VerifyMemberResponseWrapper verifyMember(String lastName, String mrn8Digit, 
-							String birth_month, String birth_year, String consentVersion, String sessionID ) throws Exception 
+							String birth_month, String birth_year, String birth_day,
+							String consentVersion, String sessionID,
+							String parentFirstName, String parentLastName, String relationship) throws Exception 
 	{
 		VerifyMemberResponseWrapper resp = null; 
 
@@ -112,9 +114,12 @@ public class WebService{
 			{
 				query.setLastName(lastName);
 				query.setMrn8Digit(mrn8Digit);
-				query.setDob(birth_year + "-" + birth_month);
+				query.setDob(birth_year + "-" + birth_month + "-" + birth_day);
 				query.setConsentVersion(consentVersion);
-				query.setSessionID(sessionID);
+				query.setSessionID(sessionID);	
+				query.setParentFirstName(parentFirstName);
+				query.setParentLastName(parentLastName);
+				query.setRelationship(relationship);
 				
 				VerifyMemberResponse response = stub.verifyMember(query);
 				resp = response.get_return();
