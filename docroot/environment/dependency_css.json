@@ -12,7 +12,9 @@
             "global"   : [],
             "specific" : {
                 "intro" : [],
-                "login" : [],
+                "login" : [
+                    "css/library/plugin/jqModal.css"
+                ],
                 "logout" : [],
                 "setup" : []
             }

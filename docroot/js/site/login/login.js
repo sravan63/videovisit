@@ -1,6 +1,9 @@
 $(document).ready(function() {
 
-    $("#loginForm").validate({
+    $loginForm = $("#loginForm");
+    
+    $('#login').click(function() {
+        $loginForm.validate({
         // Where do we want errors to appear?
         errorLabelContainer: $('p.error'),
         // Wrap error messages in a list item
@@ -77,10 +80,19 @@ $(document).ready(function() {
             consentVersion: {
                 required: "You must agree to the terms of consent to proceed."
             }
-        },
-        submitHandler: function(data){
-            // Clear the error field in case the form didn't submit properly.
-            //$("p.error").html('');
+        }
+        }); //End validation
+
+        if($loginForm.valid()) {
+
+            if($('input[name=birth_year]').val() == 1996) {
+                var addFields = '<input type="hidden" name="birth_year" value="' + $('input[name=birth_year]').val() + '">';
+                $('#parental-consent-fields').append($(addFields));
+                $('#consentModal').jqmShow();
+                return false;
+
+            } else {
+            $("p.error").html('');
             // Prepare data from pertinent fields for POSTing
             // Format birth_month
             var birth_month = $('input[name=birth_month]').val();
@@ -93,10 +105,10 @@ $(document).ready(function() {
             	birth_day = "0" + birth_day;
             }
 
-            $('#consentModal').jqmShow();
-            
             var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
+
             var ep = $("p.error").position();
+
             $.ajax({
                 type: "POST",
                 url: VIDEO_VISITS.Path.login.ajaxurl,
@@ -136,7 +148,54 @@ $(document).ready(function() {
                     moveToit("p.error");
                 }
             });
+            return false;
         }
+        } else {
+            //return false;
+        }
+        });
+
+    $('#consentLink').click(function() {
+        var prepdata = 'birth_year=' + $('input[name=birth_year]').val();
+        $.ajax({
+                type: "POST",
+                url: VIDEO_VISITS.Path.login.ajaxurl,
+                data: prepdata, // alternatively: $(data).serialize() but this adds fields we don't need
+                success: function(returndata) {
+                    returndata = $.trim(returndata);
+
+                    switch (returndata)
+                    {
+                        case "1":
+                            window.location.replace("landingready.htm");
+                            break;
+
+                        case "2":
+                            window.location.replace("landingnone.htm");
+                            break;
+
+                        case "3":
+                            $("p.error").css("display","inline").append('<li><label>Your username was invalid. Please try again.</label></li>');
+                            moveToit("p.error");
+                            break;
+
+                        case "4":
+                            $("p.error").css("display","inline").append('<li><label>The code entered did not match. Please try again (you can click the code image to generate a new one if needed).</label></li>');
+                            moveToit("p.error");
+                            break;
+
+                        default:
+                            $("p.error").css("display","inline").append('<li><label>There was an error submitting your login. Please try again later.</label></li>');
+                            moveToit("p.error");
+                            break;
+                    }
+
+                },
+                error: function() {
+                    $("p.error").css("display","inline").append('<li><label>There was an error submitting your login.</label></li>');
+                    moveToit("p.error");
+                }
+            });
     });
 
     // This is for reloading the captcha image onclick. Since the simplecaptcha code returns the actual contents of the image, I need to append some random data to the img src so it knows the "location" has changed. Without it, this won't work

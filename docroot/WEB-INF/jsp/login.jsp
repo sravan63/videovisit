@@ -33,6 +33,7 @@
 	<div class="dialog-content-question">
         <h2 class="jqHandle jqDrag"><span style="padding-left:8px">Consent to Participate</span></h2>
 		<p class="question">Consent text goes here</p>
+		<form id="consentForm" method="post" action="">
 		<div id="parental-consent-fields" style="display: none">
 			<ul>
 				<li><label for="parent_last_name">Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
@@ -55,6 +56,7 @@
 				<li><a id="consentLink" href="#" tabindex="14" >Continue &rsaquo;&rsaquo;</a></li>
 			</ul>
 		</div>
+		</form>
 	</div>
 </div>
 
