@@ -1,6 +1,6 @@
 <h3 class="page-title">Member Login</h3>
 <p class="login">Children under age 13 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
-<p class="login">Please sign on below by completing the fields below.</p>
+<p class="login">Please sign on by completing the fields below.</p>
 <form id="loginForm" method="post" action="">
     <input type="hidden" name="consentFormTXT_A" id="consentFormTXT_A" value="consent_forms/${WebAppContext.consentVersion}_A.txt" />
 	<input type="hidden" name="consentFormTXTIE_A" id="consentFormTXTIE_A" value="consent_forms/${WebAppContext.consentVersion}_A.ie.txt" />
@@ -35,9 +35,10 @@
 		<p class="question">Consent text goes here</p>
 		<form id="consentForm" method="post" action="">
 		<div id="parental-consent-fields" style="display: none">
+		    The date of birth you entered indicates the patient is a minor.<br />Parental consent is required.
 			<ul>
-				<li><label for="parent_last_name">Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
-				<li><label for="parent_first_name">First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
+				<li><label for="parent_last_name">Parent's Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
+				<li><label for="parent_first_name">Parent's First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
 				<li><label for="Relationship">Relationship</label>
 					<select id="relationship" tabindex="11" >
 						<option value="Parent">Parent</option>
@@ -48,9 +49,9 @@
 		</div>
 		<div class="pagination">
 		    <ul>
-		    	<li>
+		    	<li id="consentListitem">
         			<input type="checkbox" name="consentVersion" value="${WebAppContext.consentVersion}" id="understand_terms" class="understand_terms" tabindex="12">
-        			<label class="label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label>        	
+        			<label class="label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label>        
         		</li>
 			    <li><a id="dialogclose" class="jqmClose" href="#" tabindex="13">Cancel &rsaquo;&rsaquo;</a></li>
 				<li><a id="consentLink" href="#" tabindex="14" >Continue &rsaquo;&rsaquo;</a></li>
@@ -59,4 +60,3 @@
 		</form>
 	</div>
 </div>
-

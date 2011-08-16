@@ -123,7 +123,7 @@ input								{outline:none;}
 
 .form-block						{list-style-type:none;margin:0 0 5px 20px;width:378px;float:left;}
 .form-block li					{padding:5px 0; width:100%;}
-.form-block label				{width:156px;float:left;font-weight:bold;}
+.form-block label				{width:156px;float:left;font-weight:bold; padding-top:5px;}
 .form-block input				{width:216px;font-size:11px; border:1px solid #c0c0c0; padding:4px 2px;}
 .form-block .date,
 .form-block .time				{width:170px;}
@@ -153,6 +153,15 @@ input								{outline:none;}
 .form-block .label-day		{width:32px; font-weight:normal;}
 .form-block .label-year		{width:32px; font-weight:normal;}
 
+/* Consent form styles */
+#consentForm 							{margin: 0 8px;}
+#consentForm ul 						{margin-left:0;}
+#consentForm ul li 						{list-style:none;padding:4px 0;}
+#consentListitem 						{text-align:left;display:block;margin-bottom:12px;}
+#parental-consent-fields ul   			{margin-top:10px;}
+#parental-consent-fields ul li label	{padding-right:5px;}
+#parental-consent-fields input			{width:215px;}
+#consentForm .pagination ul				{margin-top:10px;}
 
 /* Inner Sidebar Section */
 .sidebar						{float:right;display:block;width:160px;}
