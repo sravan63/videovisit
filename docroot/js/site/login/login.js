@@ -190,15 +190,26 @@ $(document).ready(function() {
 
     $('#consentLink').click(function() {
         $("p.error").html('');
-         var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + $('input[name=birth_day]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + $('#relationship').val() + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
-			
+
+        var birth_month = $('input[name=birth_month]').val();
+        if (birth_month.length == 1) {
+            birth_month = "0" + birth_month;
+        }
+        // Format birth_day
+        var birth_day = $('input[name=birth_day]').val();
+        if (birth_day.length == 1) {
+            birth_day = "0" + birth_day;
+        }
+
+        var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + $('#relationship').val() + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
+
         $.ajax({
             type: "POST",
             url: VIDEO_VISITS.Path.login.ajaxurl,
             data: prepdata, // alternatively: $(data).serialize() but this adds fields we don't need
             success: function(returndata) {
                 returndata = $.trim(returndata);
-                
+
                 switch (returndata) {
                     case "1":
                         window.location.replace("landingready.htm");
