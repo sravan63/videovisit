@@ -248,7 +248,9 @@ $(document).ready(function() {
     $('input[title!=""]').hint();
 
     if ($.browser.msie) {
-        $('#terms').load($('#consentFormTXTIE').val());
+        //TODO: Might need to swap this back. Don't know yet.
+        //$('#terms').load($('#consentFormTXTIE').val());
+        $('#terms').load($('#consentFormTXT').val());
     }
     else {
         $('#terms').load($('#consentFormTXT').val());

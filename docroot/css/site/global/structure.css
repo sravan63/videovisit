@@ -133,7 +133,7 @@ input								{outline:none;}
 .form-block .disabled			{}
 
 .form-block .textarea-block		{border:1px solid #ccc; padding:0;}
-.textarea-block textarea 		{width:373px; height:183px; padding:5px 0 0 5px; margin:0; border:none; line-height:1.3em;}
+.textarea-block textarea 		{width:336px; height:183px; padding:5px 0 0 5px; margin:6px 0 14px 0; border:1px solid #ccc; line-height:1.3em;}
 .textarea-block h4				{color:#BC715E; line-height:30px; size:12px; font-weight:normal; background:#E2EAED; padding:0 5px;}
 
 .submit-block					{clear:both;list-style-type:none;margin:0 0 25px 20px;}

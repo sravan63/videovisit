@@ -2,6 +2,7 @@
 <p class="login">Children under age 13 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
 <p class="login">Please sign on by completing the fields below.</p>
 <form id="loginForm" method="post" action="">
+    <input type="hidden" name="consentFormTXT" id="consentFormTXT" value="consent_forms/${WebAppContext.consentVersion}_A.txt" />
     <input type="hidden" name="consentFormTXT_A" id="consentFormTXT_A" value="consent_forms/${WebAppContext.consentVersion}_A.txt" />
 	<input type="hidden" name="consentFormTXTIE_A" id="consentFormTXTIE_A" value="consent_forms/${WebAppContext.consentVersion}_A.ie.txt" />
 	<input type="hidden" name="consentFormTXT_P" id="consentFormTXT_P" value="consent_forms/${WebAppContext.consentVersion}_P.txt" />
@@ -32,8 +33,11 @@
 <div id="consentModal" class="jqmWindow dialog-block2" style="position:absolute; display:none" title="Consent to Participate">
 	<div class="dialog-content-question">
         <h2 class="jqHandle jqDrag"><span style="padding-left:8px">Consent to Participate</span></h2>
-		<p class="question">Consent text goes here</p>
 		<form id="consentForm" method="post" action="">
+        <li class="textarea-block">
+            <textarea id="terms" name="terms" class="terms-entry" readonly>Loading...</textarea>
+        </li>
+		
 		<div id="parental-consent-fields" style="display: none">
 		    The date of birth entered indicates the patient is a minor.<br />A parent or legal guardian of the patient must provide consent by filling out the following fields in order for the patient to participate in the video visit.
 			<ul>
