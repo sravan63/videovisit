@@ -35,11 +35,11 @@
 		<p class="question">Consent text goes here</p>
 		<form id="consentForm" method="post" action="">
 		<div id="parental-consent-fields" style="display: none">
-		    The date of birth you entered indicates the patient is a minor.<br />Parental consent is required.
+		    The date of birth entered indicates the patient is a minor.<br />A parent or legal guardian of the patient must provide consent by filling out the following fields in order for the patient to participate in the video visit.
 			<ul>
 				<li><label for="parent_last_name">Parent's Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
 				<li><label for="parent_first_name">Parent's First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
-				<li><label for="relationship">Relationship</label>
+				<li><label for="relationship">Relationship to Patient</label>
 					<select id="relationship" tabindex="11" >
 						<option value="Parent">Parent</option>
 					 	<option value="Legal Guardian">Legal Guardian</option>					  	
@@ -51,7 +51,8 @@
 		    <ul>
 		    	<li id="consentListitem">
         			<input type="checkbox" name="consentVersion" value="${WebAppContext.consentVersion}" id="understand_terms" class="understand_terms" tabindex="12">
-        			<label class="label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label>        
+        			<label id="textIfChild" class="label-understand-terms" for="understand_terms">I attest that I am the parent/legal guardian of the patient of this video visit, and I have read the above description of telemedicine and agree to the telemedicine consultation.</label>
+        			<label id="textIfAdult" class="label-understand-terms" for="understand_terms">Consent checkbox text for over 18 goes here.</label>
         		</li>
 			    <li><a id="dialogclose" class="jqmClose" href="#" tabindex="13">Cancel &rsaquo;&rsaquo;</a></li>
 				<li><a id="consentLink" href="#" tabindex="14" >Continue &rsaquo;&rsaquo;</a></li>

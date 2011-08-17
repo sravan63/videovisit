@@ -104,6 +104,10 @@ $(document).ready(function() {
             }
 
             if (agetype == 1 || agetype == 3) {
+
+                $('#textIfAdult').hide();
+                $('#textIfChild').hide();
+
                 var addFields = '<input type="hidden" name="last_name" value="' + $('input[name=last_name]').val() + '">'
                     + '<input type="hidden" name="mrn" value="' + $('input[name=mrn]').val() + '">'
                     + '<input type="hidden" name="birth_year" value="' + $('input[name=birth_year]').val() + '">'
@@ -114,8 +118,10 @@ $(document).ready(function() {
                 $parental_consent_fields.append($(addFields));
                 if (agetype == 3) {
                     $parental_consent_fields.show();
+                    $('#textIfChild').show();
                 } else {
                     $parental_consent_fields.hide();
+                    $('#textIfAdult').show();
                 }
                 $consentModal.jqmShow();
                 return false;
