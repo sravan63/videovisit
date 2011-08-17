@@ -59,6 +59,7 @@ docroot/WEB-INF/web.xml -text
 docroot/blank.jsp -text
 docroot/consent_forms/consent_2011_03_23.ie.txt -text
 docroot/consent_forms/consent_2011_03_23.txt -text
+docroot/consent_forms/consent_2011_08_01.txt -text
 docroot/consent_forms/consent_2011_08_01_A.ie.txt -text
 docroot/consent_forms/consent_2011_08_01_A.txt -text
 docroot/consent_forms/consent_2011_08_01_P.ie.txt -text
