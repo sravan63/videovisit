@@ -21,7 +21,7 @@
             <label class="label-year" for="birth_year">Year</label>
             <input type="text" name="birth_year" title="yyyy" class="birth_year" id="birth_year" tabindex="5">
         </li>
-        <li><label for="captcha">Enter Code Shown</label><a id="captchaImage" href="#" tabindex="100"><img width="160" id="stickyImg" src="stickyImg" alt="captcha image" class="gfx-captcha" /></a><input type="text" name="captcha" id="captcha" class="captcha" tabindex="6"></li>
+        <li><label id="captchaLabel" for="captcha">Enter Code Shown</label><a id="captchaImage" href="#" tabindex="100"><img width="160" id="stickyImg" src="stickyImg" alt="captcha image" class="gfx-captcha" /></a><input type="text" name="captcha" id="captcha" class="captcha" tabindex="6"></li>
         <li class="smallprint align-right">Click image to refresh. Letters are case sensitive</li>
   	</ul>
     <div class="submit-block">
@@ -41,7 +41,7 @@
 		<div id="parental-consent-fields" style="display: none">
 		    The date of birth entered indicates the patient is a minor.<br />A parent or legal guardian of the patient must provide consent by filling out the following fields in order for the patient to participate in the video visit.
 			<ul>
-				<li><label for="parent_last_name">Parent's Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
+				<li><label id="parent_last_name_label" for="parent_last_name">Parent's Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
 				<li><label for="parent_first_name">Parent's First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
 				<li><label for="relationship">Relationship to Patient</label>
 					<select id="relationship" tabindex="11" >

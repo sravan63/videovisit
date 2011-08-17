@@ -121,10 +121,10 @@ input								{outline:none;}
 
 #content-block .no-data			{text-align:center;padding:50px 0;font-weight:bold;font-size:12px;}
 
-.form-block						{list-style-type:none;margin:0 0 5px 20px;width:378px;float:left;}
+.form-block						{list-style-type:none;margin:0 0 5px 20px;width:390px;float:left;}
 .form-block li					{padding:5px 0; width:100%;}
 .form-block label				{width:156px;float:left;font-weight:bold; padding-top:5px;}
-.form-block input				{width:216px;font-size:11px; border:1px solid #c0c0c0; padding:4px 2px;}
+.form-block input				{width:216px;font-size:11px; border:1px solid #c0c0c0; padding:4px 2px; margin-left:6px}
 .form-block .date,
 .form-block .time				{width:170px;}
 .date-icon,
@@ -140,28 +140,30 @@ input								{outline:none;}
 #content-block .submit-block p 	{margin:0 35px 0 0;display:block;float:right;width:300px;line-height:25px;}
 
 /* special form block styles */
-.form-block .birth_month	{width:25px; float:left; margin-right:5px;}
-.form-block .birth_day      {width:25px; float:left; margin-right:5px;}
-.form-block .birth_year		{width:30px; float:left;}
+.form-block .birth_month	{width:25px; float:left; margin-right:8px; margin-left:2px;}
+.form-block .birth_day      {width:25px; float:left; margin-right:0; margin-left:2px;}
+.form-block .birth_year		{width:30px; float:right; margin-left:2px;margin-right:6px;}
 
-.form-block .captcha 		{width:40px;}
+.form-block .captcha 		{width:36px;}
 .form-block .gfx-captcha 	{float:left; margin:0 14px 0 0;}
 .form-block .understand_terms  {width:auto; float:left; border:none;}
 .form-block .label-understand-terms {width:350px; font-weight:normal; padding:1px 0 0 0;}
 
-.form-block .label-month 	{width:40px; font-weight:normal;}
-.form-block .label-day		{width:32px; font-weight:normal;}
-.form-block .label-year		{width:32px; font-weight:normal;}
+.form-block .label-month 	{width:35px; font-weight:normal; margin-left: 6px;}
+.form-block .label-day		{width:22px; margin-left:10px; font-weight:normal;}
+.form-block .label-year		{width:26px; margin-left:17px; font-weight:normal;}
 
 /* Consent form styles */
-#consentForm 							{margin: 0 8px;}
-#consentForm ul 						{margin-left:0;}
-#consentForm ul li 						{list-style:none;padding:4px 0;}
-#consentListitem 						{text-align:left;display:block;margin-bottom:12px;}
-#parental-consent-fields ul   			{margin-top:10px;}
-#parental-consent-fields ul li label	{padding-right:5px;}
-#parental-consent-fields input			{width:215px;}
-#consentForm .pagination ul				{margin-top:10px;}
+#consentForm 													{margin: 0 8px;}
+#consentForm ul 												{margin-left:0;}
+#consentForm ul li 												{list-style:none;padding:4px 0;}
+#consentListitem 												{text-align:left;display:block;margin-bottom:12px;}
+#parental-consent-fields ul   									{margin-top:10px;}
+#parental-consent-fields ul li label							{padding-right:5px;}
+#parental-consent-fields input									{width:215px;}
+#consentForm .pagination ul										{margin-top:10px;}
+#parental-consent-fields ul li label#parent_last_name_label		{padding-right:6px;}
+#captchaLabel													{margin-right:6px;}
 
 /* Inner Sidebar Section */
 .sidebar						{float:right;display:block;width:160px;}
@@ -500,4 +502,7 @@ input.disabled
 .ie7 .pagination a				{padding:0 8px;}
 .ie6 .pagination a				{padding:0 8px;}
 .ie6 .button					{padding:0 8px; margin:0; display: inline}
-.ie6 .form-block				{width:381px;}
+.ie6 .form-block				{width:390px;}
+.ie6 .form-block .birth_year	{margin-right:4px;}
+.ie6 #captchaLabel				{margin-right:9px;}
+.ie6 .label-month				{margin-left:8px;}
