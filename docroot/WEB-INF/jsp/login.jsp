@@ -39,7 +39,7 @@
 			<ul>
 				<li><label for="parent_last_name">Parent's Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
 				<li><label for="parent_first_name">Parent's First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
-				<li><label for="Relationship">Relationship</label>
+				<li><label for="relationship">Relationship</label>
 					<select id="relationship" tabindex="11" >
 						<option value="Parent">Parent</option>
 					 	<option value="Legal Guardian">Legal Guardian</option>					  	

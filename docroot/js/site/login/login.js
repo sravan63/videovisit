@@ -88,7 +88,8 @@ $(document).ready(function() {
 
             var agetype;
             var today = new Date();
-            var birthdate = new Date($('input[name=birth_year]').val(), $('input[name=birth_month]').val(), $('input[name=birth_day]').val());
+            var monthAdjusted = parseInt($('input[name=birth_month]').val()) - 1;
+            var birthdate = new Date($('input[name=birth_year]').val(), monthAdjusted, $('input[name=birth_day]').val());
             var diff = today - birthdate;
             var year = 31558464000;
 
@@ -183,7 +184,7 @@ $(document).ready(function() {
 
     $('#consentLink').click(function() {
         $("p.error").html('');
-         var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + $('input[name=birth_day]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + $('input[name=relationship]').val() + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
+         var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + $('input[name=birth_day]').val() + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + $('#relationship').val() + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
 			
         $.ajax({
             type: "POST",
