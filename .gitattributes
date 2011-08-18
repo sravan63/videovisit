@@ -57,7 +57,14 @@ docroot/WEB-INF/tiles-templates/dataLayout.jsp -text
 docroot/WEB-INF/tiles-templates/textLayout.jsp -text
 docroot/WEB-INF/web.xml -text
 docroot/blank.jsp -text
+docroot/consent_forms/consent_2011_03_23.ie.txt -text
+docroot/consent_forms/consent_2011_03_23.txt -text
+docroot/consent_forms/consent_2011_08_01.ie.txt -text
 docroot/consent_forms/consent_2011_08_01.txt -text
+docroot/consent_forms/consent_2011_08_01_A.ie.txt -text
+docroot/consent_forms/consent_2011_08_01_A.txt -text
+docroot/consent_forms/consent_2011_08_01_P.ie.txt -text
+docroot/consent_forms/consent_2011_08_01_P.txt -text
 docroot/css/library/plugin/jqModal.css -text
 docroot/css/site/global/base.css -text
 docroot/css/site/global/handheld.css -text
