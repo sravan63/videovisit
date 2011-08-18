@@ -309,14 +309,15 @@ $(document).ready(function() {
     // Find all inputs with a populated title attribute and apply jquery.hint.js;
     $('input[title!=""]').hint();
 
-    if ($.browser.msie) {
-        //TODO: Might need to swap this back. Don't know yet.
-        //$('#terms').load($('#consentFormTXTIE').val());
-        $('#terms').load($('#consentFormTXT').val());
-    }
-    else {
-        $('#terms').load($('#consentFormTXT').val());
-    }
+	$.get(
+		$('#consentFormTXT').val(), 
+		function(data) {
+			mydata = data;
+			mydata = mydata.replace(/\r\n/g, "\r");
+			$('#terms').text(mydata);
+		}, 
+		'text'
+	);
 
     // Move the modal outside of the rest of the containers on the page and append to body (fixes some IE modal bugs)
     $('body').append($consentModal);
