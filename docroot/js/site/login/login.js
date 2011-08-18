@@ -42,9 +42,6 @@ $(document).ready(function() {
                 },
                 captcha: {
                     required: true
-                },
-                consentVersion: {
-                    required: true
                 }
             },
             // Error messages for each field in the form (corresponds to Rules)
@@ -77,9 +74,6 @@ $(document).ready(function() {
                 },
                 captcha: {
                     required: "You need to enter something in the captcha field."
-                },
-                consentVersion: {
-                    required: "You must agree to the terms of consent to proceed."
                 }
             }
         }); //End validation
@@ -105,8 +99,8 @@ $(document).ready(function() {
 
             if (agetype == 1 || agetype == 3) {
 
-                $('#textIfAdult').hide();
-                $('#textIfChild').hide();
+                $('.pcf-child').hide();
+                $('.pcf-adult').hide();
 
                 var addFields = '<input type="hidden" name="last_name" value="' + $('input[name=last_name]').val() + '">'
                     + '<input type="hidden" name="mrn" value="' + $('input[name=mrn]').val() + '">'
@@ -117,11 +111,17 @@ $(document).ready(function() {
                     + '<input type="hidden" name="consentVersion" value="' + $('input[name=consentVersion]').val() + '">';
                 $parental_consent_fields.append($(addFields));
                 if (agetype == 3) {
-                    $parental_consent_fields.show();
-                    $('#textIfChild').show();
+                     $('#parent_first_name').removeAttr('disabled');
+                    $('#parent_last_name').removeAttr('disabled');
+                    $('#relationship').removeAttr('disabled');
+                    $('.pcf-child').show();
+                    $('.jqHandle span').text('Consent on Behalf of a Minor');
                 } else {
-                    $parental_consent_fields.hide();
-                    $('#textIfAdult').show();
+                    $('#parent_first_name').attr('disabled', 'disabled');
+                    $('#parent_last_name').attr('disabled', 'disabled');
+                    $('#relationship').attr('disabled', 'disabled');
+                    $('.pcf-adult').show();
+                    $('.jqHandle span').text('Consent to Participate');
                 }
                 $consentModal.jqmShow();
                 return false;
@@ -189,6 +189,54 @@ $(document).ready(function() {
     });
 
     $('#consentLink').click(function() {
+
+        $('#consentForm').validate({
+            // Where do we want errors to appear?
+            //errorLabelContainer: $('p.error'),
+			errorPlacement: function(error, element) {
+     			error.appendTo( element.parent("li"));
+   			},
+            // Wrap error messages in a list item
+            wrapper: 'div',
+            // Validation rules for each field in the form
+            rules:  {
+                parent_first_name: {
+                    required: true,
+                    letterswithbasicpunc: true,
+                    minlength: 2
+                },
+                parent_last_name: {
+                    required: true,
+                    letterswithbasicpunc: true,
+                    minlength: 2
+                },
+                relationship: {
+                    required: true
+                },
+                consentVersion: {
+                    required: true
+                }
+            },
+            // Error messages for each field in the form (corresponds to Rules)
+            messages: {
+                parent_first_name: {
+                    required: "Please enter your first name.",
+                    letterswithbasicpunc: "Please enter a valid name."
+                },
+                parent_last_name: {
+                    required: "Please enter your last name.",
+                    letterswithbasicpunc: "Please enter a valid name."
+                },
+                relationship: {
+                    required: "You select a relationship."
+                },
+                consentVersion: {
+                    required: "You must agree to the terms of consent to proceed."
+                }
+            }
+        }); //End validation
+
+        if ($('#consentForm').valid()) {
         $("p.error").html('');
 
         var birth_month = $('input[name=birth_month]').val();
@@ -245,7 +293,10 @@ $(document).ready(function() {
                 moveToit("p.error");
             }
         });
-        return false;
+            return false;
+        } else {
+            //return false;
+        }
     });
 
     // This is for reloading the captcha image onclick. Since the simplecaptcha code returns the actual contents of the image, I need to append some random data to the img src so it knows the "location" has changed. Without it, this won't work

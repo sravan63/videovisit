@@ -133,7 +133,7 @@ input								{outline:none;}
 .form-block .disabled			{}
 
 .form-block .textarea-block		{border:1px solid #ccc; padding:0;}
-.textarea-block textarea 		{width:336px; height:183px; padding:5px 0 0 5px; margin:6px 0 14px 0; border:1px solid #ccc; line-height:1.3em;}
+.textarea-block textarea 		{width:98%; height:183px; padding:5px 0 0 5px; margin:6px 0 14px 0; border:1px solid #ccc; line-height:1.3em;}
 .textarea-block h4				{color:#BC715E; line-height:30px; size:12px; font-weight:normal; background:#E2EAED; padding:0 5px;}
 
 .submit-block					{clear:both;list-style-type:none;margin:0 0 25px 20px;}
@@ -154,16 +154,20 @@ input								{outline:none;}
 .form-block .label-year		{width:26px; margin-left:17px; font-weight:normal;}
 
 /* Consent form styles */
-#consentForm 													{margin: 0 8px;}
+#consentForm 													{margin: 0 16px;}
 #consentForm ul 												{margin-left:0;}
 #consentForm ul li 												{list-style:none;padding:4px 0;}
 #consentListitem 												{text-align:left;display:block;margin-bottom:12px;}
 #parental-consent-fields ul   									{margin-top:10px;}
-#parental-consent-fields ul li label							{padding-right:5px;}
+#parental-consent-fields ul li label							{padding-right:5px; font-weight:bold;}
 #parental-consent-fields input									{width:215px;}
 #consentForm .pagination ul										{margin-top:10px;}
 #parental-consent-fields ul li label#parent_last_name_label		{padding-right:6px;}
+#parental-consent-fields input#understand_terms					{width:10px;}
 #captchaLabel													{margin-right:6px;}
+#consentButtons													{text-align:center;display:block;}
+#consentButtons li												{display:inline;}
+#consentButtons div												{text-align:left;}
 
 /* Inner Sidebar Section */
 .sidebar						{float:right;display:block;width:160px;}

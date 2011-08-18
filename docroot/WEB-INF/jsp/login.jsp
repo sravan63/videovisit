@@ -11,7 +11,7 @@
         <li><label for="last_name">Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1"></li>
         <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn" tabindex="2"></li>
         <li>
-            <label>Birth Month, Day and Year</label>
+            <label>Date of Birth</label>
             <label class="label-month" for="birth_month">Month</label>
             <input type="text" name="birth_month" title="mm" id="birth_month" class="birth_month" tabindex="3">
 
@@ -38,28 +38,28 @@
             <textarea id="terms" name="terms" class="terms-entry" readonly>Loading...</textarea>
         </div>
 		
-		<div id="parental-consent-fields" style="display: none">
-		    The date of birth entered indicates the patient is a minor.<br />A parent or legal guardian of the patient must provide consent by filling out the following fields in order for the patient to participate in the video visit.
+		<div id="parental-consent-fields">
+		    <span class="pcf-child">The date of birth entered indicates the patient is a minor.<br />A parent or legal guardian of the patient must provide consent by filling out the following fields in order for the patient to participate in the video visit.</span>
 			<ul>
-				<li><label id="parent_last_name_label" for="parent_last_name">Parent's Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
-				<li><label for="parent_first_name">Parent's First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
-				<li><label for="relationship">Relationship to Patient</label>
+				<li class="pcf-child"><label for="parent_first_name">First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
+				<li class="pcf-child"><label id="parent_last_name_label" for="parent_last_name">Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
+				<li class="pcf-child"><label for="relationship">Relationship to Patient</label>
 					<select id="relationship" tabindex="11" >
 						<option value="Parent">Parent</option>
 					 	<option value="Legal Guardian">Legal Guardian</option>					  	
 					</select>
 				</li>
-			</ul>
-		</div>
-		<div class="pagination">
-		    <ul>
-		    	<li id="consentListitem">
+		
+		    	<li class="pagination" id="consentListitem">
         			<input type="checkbox" name="consentVersion" value="${WebAppContext.consentVersion}" id="understand_terms" class="understand_terms" tabindex="12">
-        			<label id="textIfChild" class="label-understand-terms" for="understand_terms">I attest that I am the parent/legal guardian of the patient of this video visit, and I have read the above description of telemedicine and agree to the telemedicine consultation.</label>
-        			<label id="textIfAdult" class="label-understand-terms" for="understand_terms">Consent checkbox text for over 18 goes here.</label>
+        			<label class="pcf-child label-understand-terms" for="understand_terms">I attest that I am the parent/legal guardian of the patient of this video visit, and I have read the above description of telemedicine and agree to the telemedicine consultation.</label>
+
+        			<label class="pcf-adult label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label>
         		</li>
-			    <li><a id="dialogclose" class="jqmClose" href="#" tabindex="13">Cancel &rsaquo;&rsaquo;</a></li>
-				<li><a id="consentLink" href="#" tabindex="14" >Continue &rsaquo;&rsaquo;</a></li>
+	<span id="consentButtons">
+			    <li class="pagination"><a id="dialogclose" class="jqmClose" href="#" tabindex="13">Cancel &rsaquo;&rsaquo;</a></li>
+				<li class="pagination"><a id="consentLink" href="#" tabindex="14" >Continue &rsaquo;&rsaquo;</a></li>
+	</span>
 			</ul>
 		</div>
 		</form>
