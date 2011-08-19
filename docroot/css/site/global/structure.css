@@ -164,6 +164,7 @@ input								{outline:none;}
 #consentForm .pagination ul										{margin-top:10px;}
 #parental-consent-fields ul li label#parent_last_name_label		{padding-right:6px;}
 #parental-consent-fields input#understand_terms					{width:10px;}
+.pcf-child-top                                                  {padding: 8px 0; display:block;}
 #captchaLabel													{margin-right:6px;}
 #consentButtons													{text-align:center;display:block;}
 #consentButtons li												{display:inline;}

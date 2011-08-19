@@ -33,19 +33,21 @@
 <div id="consentModal" class="jqmWindow dialog-block2" style="position:absolute; display:none" title="Consent to Participate">
 	<div class="dialog-content-question">
         <h2 class="jqHandle jqDrag"><span style="padding-left:8px">Consent to Participate</span></h2>
+        <span class="pcf-child pcf-child-top">The date of birth entered indicates the patient is a minor.  A parent or legal guardian of the patient must provide consent below in order for the video visit to proceed.</span>
 		<form id="consentForm" method="post" action="">
         <div class="textarea-block">
             <textarea id="terms" name="terms" class="terms-entry" readonly>Loading...</textarea>
         </div>
 		
 		<div id="parental-consent-fields">
-		    <span class="pcf-child">The date of birth entered indicates the patient is a minor.<br />A parent or legal guardian of the patient must provide consent by filling out the following fields in order for the patient to participate in the video visit.</span>
+
 			<ul>
 				<li class="pcf-child"><label for="parent_first_name">First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
 				<li class="pcf-child"><label id="parent_last_name_label" for="parent_last_name">Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
 				<li class="pcf-child"><label for="relationship">Relationship to Patient</label>
 					<select id="relationship" tabindex="11" >
-						<option value="Parent">Parent</option>
+					    <option value="None">Select one...</option>
+						<option value="Parent" selected>Parent</option>
 					 	<option value="Legal Guardian">Legal Guardian</option>					  	
 					</select>
 				</li>

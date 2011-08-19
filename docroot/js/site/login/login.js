@@ -120,6 +120,7 @@ $(document).ready(function() {
                     $('#parent_first_name').attr('disabled', 'disabled');
                     $('#parent_last_name').attr('disabled', 'disabled');
                     $('#relationship').attr('disabled', 'disabled');
+					$('#relationship').val("None");
                     $('.pcf-adult').show();
                     $('.jqHandle span').text('Consent to Participate');
                 }
@@ -142,6 +143,7 @@ $(document).ready(function() {
                 var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
 
                 //var ep = $("p.error").position();
+console.log(prepdata);
 
                 $.ajax({
                     type: "POST",
@@ -257,7 +259,6 @@ $(document).ready(function() {
             data: prepdata, // alternatively: $(data).serialize() but this adds fields we don't need
             success: function(returndata) {
                 returndata = $.trim(returndata);
-
                 switch (returndata) {
                     case "1":
                         window.location.replace("landingready.htm");
