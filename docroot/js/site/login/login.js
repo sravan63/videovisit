@@ -230,7 +230,7 @@ console.log(prepdata);
                     letterswithbasicpunc: "Please enter a valid name."
                 },
                 relationship: {
-                    required: "You select a relationship."
+                    required: "This field is required."
                 },
                 consentVersion: {
                     required: "You must agree to the terms of consent to proceed."
@@ -250,8 +250,15 @@ console.log(prepdata);
         if (birth_day.length == 1) {
             birth_day = "0" + birth_day;
         }
+		
+		var relationship = $('#relationship').val();
+		if(relationship == null){
+			relationship = 'Adult';
+		}
+		
+        var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + relationship + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
 
-        var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + $('#relationship').val() + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
+console.log(prepdata);
 
         $.ajax({
             type: "POST",

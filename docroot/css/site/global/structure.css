@@ -148,6 +148,7 @@ input								{outline:none;}
 .form-block .gfx-captcha 	{float:left; margin:0 14px 0 0;}
 .form-block .understand_terms  {width:auto; float:left; border:none;}
 .form-block .label-understand-terms {width:350px; font-weight:normal; padding:1px 0 0 0;}
+.label-understand-terms             {font-weight:normal !important;}
 
 .form-block .label-month 	{width:35px; font-weight:normal; margin-left: 6px;}
 .form-block .label-day		{width:22px; margin-left:10px; font-weight:normal;}
@@ -164,7 +165,7 @@ input								{outline:none;}
 #consentForm .pagination ul										{margin-top:10px;}
 #parental-consent-fields ul li label#parent_last_name_label		{padding-right:6px;}
 #parental-consent-fields input#understand_terms					{width:10px;}
-.pcf-child-top                                                  {padding: 8px 0; display:block;}
+.pcf-child-top                                                  {padding: 8px 0; display:block; margin: 0 16px;}
 #captchaLabel													{margin-right:6px;}
 #consentButtons													{text-align:center;display:block;}
 #consentButtons li												{display:inline;}

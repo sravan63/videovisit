@@ -45,9 +45,9 @@
 				<li class="pcf-child"><label for="parent_first_name">First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
 				<li class="pcf-child"><label id="parent_last_name_label" for="parent_last_name">Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
 				<li class="pcf-child"><label for="relationship">Relationship to Patient</label>
-					<select id="relationship" tabindex="11" >
-					    <option value="None">Select one...</option>
-						<option value="Parent" selected>Parent</option>
+					<select id="relationship" class="required" tabindex="11" >
+					    <option value="" selected>Select one...</option>
+						<option value="Parent">Parent</option>
 					 	<option value="Legal Guardian">Legal Guardian</option>					  	
 					</select>
 				</li>
