@@ -85,7 +85,7 @@ $(document).ready(function() {
             var monthAdjusted = parseInt($('input[name=birth_month]').val()) - 1;
             var birthdate = new Date($('input[name=birth_year]').val(), monthAdjusted, $('input[name=birth_day]').val());
             var diff = today - birthdate;
-            var year = 31558464000;
+            var year = 31557600000;
 
             var $parental_consent_fields = $('#parental-consent-fields');
 
