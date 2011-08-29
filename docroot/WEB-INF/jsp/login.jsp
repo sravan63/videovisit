@@ -42,10 +42,10 @@
 		<div id="parental-consent-fields">
 
 			<ul>
-				<li class="pcf-child"><label for="parent_first_name">First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="10"></li>
+				<li class="pcf-child"><label for="parent_first_name">First Name</label><input type="text" name="parent_first_name" id="parent_first_name" tabindex="8"></li>
 				<li class="pcf-child"><label id="parent_last_name_label" for="parent_last_name">Last Name</label><input type="text" name="parent_last_name" id="parent_last_name" tabindex="9"></li>
 				<li class="pcf-child"><label for="relationship">Relationship to Patient</label>
-					<select id="relationship" class="required" tabindex="11" >
+					<select id="relationship" class="required" tabindex="10" >
 					    <option value="" selected>Select one...</option>
 						<option value="Parent">Parent</option>
 					 	<option value="Legal Guardian">Legal Guardian</option>					  	
@@ -53,14 +53,14 @@
 				</li>
 		
 		    	<li class="pagination" id="consentListitem">
-        			<input type="checkbox" name="consentVersion" value="${WebAppContext.consentVersion}" id="understand_terms" class="understand_terms" tabindex="12">
+        			<input type="checkbox" name="consentVersion" value="${WebAppContext.consentVersion}" id="understand_terms" class="understand_terms" tabindex="11">
         			<label class="pcf-child label-understand-terms" for="understand_terms">I attest that I am the parent/legal guardian of the patient of this video visit, and I have read the above description of telemedicine and agree to the telemedicine consultation.</label>
 
         			<label class="pcf-adult label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label>
         		</li>
 	<span id="consentButtons">
-			    <li class="pagination"><a id="dialogclose" class="jqmClose" href="#" tabindex="13">Cancel &rsaquo;&rsaquo;</a></li>
-				<li class="pagination"><a id="consentLink" href="#" tabindex="14" >Continue &rsaquo;&rsaquo;</a></li>
+			    <li class="pagination"><a id="dialogclose" class="jqmClose" href="#" tabindex="12">Cancel &rsaquo;&rsaquo;</a></li>
+				<li class="pagination"><a id="consentLink" href="#" tabindex="13" >Continue &rsaquo;&rsaquo;</a></li>
 	</span>
 			</ul>
 		</div>
