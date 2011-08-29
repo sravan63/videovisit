@@ -41,7 +41,9 @@ $(document).ready(function() {
                     maxlength: 2
                 },
                 captcha: {
-                    required: true
+                    required: true,
+                    minlength: 5,
+                    maxlength: 5
                 }
             },
             // Error messages for each field in the form (corresponds to Rules)
@@ -73,7 +75,9 @@ $(document).ready(function() {
                     maxlength: "You cannot have more than 2 numbers for your birth day."
                 },
                 captcha: {
-                    required: "You need to enter something in the captcha field."
+                    required: "You need to enter something in the captcha field.",
+                    minlength: "You must have 5 characters in the captcha field.",
+                    maxlength: "You must have 5 characters in the captcha field."
                 }
             }
         }); //End validation
