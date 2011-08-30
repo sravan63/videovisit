@@ -9,19 +9,19 @@
 	<input type="hidden" name="consentFormTXTIE_P" id="consentFormTXTIE_P" value="consent_forms/${WebAppContext.consentVersion}_P.ie.txt" />
     <ul class="form-block">
         <li><label for="last_name">Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1"></li>
-        <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn" tabindex="2"></li>
+        <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2"></li>
         <li>
             <label>Date of Birth</label>
             <label class="label-month" for="birth_month">Month</label>
-            <input type="text" name="birth_month" title="mm" id="birth_month" class="birth_month" tabindex="3">
+            <input type="text" name="birth_month" title="mm" id="birth_month" class="birth_month" maxlength="2" tabindex="3">
 
             <label class="label-day" for="birth_day">Day</label>
-            <input type="text" name="birth_day" title="dd" id="birth_day" class="birth_day" tabindex="4">
+            <input type="text" name="birth_day" title="dd" id="birth_day" class="birth_day" maxlength="2" tabindex="4">
 
             <label class="label-year" for="birth_year">Year</label>
-            <input type="text" name="birth_year" title="yyyy" class="birth_year" id="birth_year" tabindex="5">
+            <input type="text" name="birth_year" title="yyyy" class="birth_year" id="birth_year" maxlength="4" tabindex="5">
         </li>
-        <li><label id="captchaLabel" for="captcha">Enter Code Shown</label><a id="captchaImage" href="#" tabindex="100"><img width="160" id="stickyImg" src="stickyImg" alt="captcha image" class="gfx-captcha" /></a><input type="text" name="captcha" id="captcha" class="captcha" tabindex="6"></li>
+        <li><label id="captchaLabel" for="captcha">Enter Code Shown</label><a id="captchaImage" href="#" tabindex="100"><img width="160" id="stickyImg" src="stickyImg" alt="captcha image" class="gfx-captcha" /></a><input type="text" name="captcha" id="captcha" class="captcha" maxlength="5" tabindex="6"></li>
         <li class="smallprint align-right">Click image to refresh. Letters are case sensitive</li>
   	</ul>
     <div class="submit-block">
