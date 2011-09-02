@@ -68,4 +68,8 @@ public class WebAppContext {
 	public void setMegaMeetingURL(String megaMeetingURL) {
 		this.megaMeetingURL = megaMeetingURL;
 	}
+	
+	public long getTimestamp() {
+		return System.currentTimeMillis() / 1000;
+	} 
 }
