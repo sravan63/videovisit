@@ -85,17 +85,15 @@ $(document).ready(function() {
         if ($loginForm.valid()) {
 
             var agetype;
-            var today = new Date();
             var monthAdjusted = parseInt($('input[name=birth_month]').val()) - 1;
             var birthdate = new Date($('input[name=birth_year]').val(), monthAdjusted, $('input[name=birth_day]').val());
-            var diff = today - birthdate;
-            var year = 31557600000;
+            var patientAge = getAge(birthdate.getTime());
 
             var $parental_consent_fields = $('#parental-consent-fields');
 
-            if (diff >= (18 * year)) {
+            if (patientAge >= (18)) {
                 agetype = 1; //adult
-            } else if (diff < (18 * year) && diff >= (13 * year)) {
+            } else if (patientAge < (18) && patientAge >= (13)) {
                 agetype = 2; //teen
             } else {
                 agetype = 3; //child
@@ -146,8 +144,6 @@ $(document).ready(function() {
 
                 var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
 
-                //var ep = $("p.error").position();
-console.log(prepdata);
 
                 $.ajax({
                     type: "POST",
@@ -259,10 +255,14 @@ console.log(prepdata);
 		if(relationship == null){
 			relationship = 'Adult';
 		}
-		
-        var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + relationship + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
-
-console.log(prepdata);
+	
+    //If the fields for adult consent are visible we are dealing with an adult, otherwise this is a child 
+    if($('.pcf-adult').is(":visible")){
+      //exclude the parent first and last name fields from the prepared data
+      var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + relationship;
+    }else{
+      var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + relationship + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
+    };
 
         $.ajax({
             type: "POST",
@@ -336,5 +336,37 @@ console.log(prepdata);
 
     // Setup the modal and make it draggable
     $consentModal.jqm().jqDrag('.jqDrag');
+
+    // Function to calculate today from perspective of given timezone offset, assume approximate US daylight savings time
+    function getToday(offset) {
+      if(offset == null){
+        offset = -8;
+      }
+      var today = new Date();
+      var month = today.getMonth();
+      // rough approximation for daylight savings time (goes by month so if this is critical need to calculate down to the day for each year)
+      if(month > 1 && month < 9){
+        offset = offset + 1;
+      }
+      var utcTime = today.getTime() + (today.getTimezoneOffset() * 60000);
+      var todayAdjusted = new Date(utcTime + (3600000*offset));
+
+      return todayAdjusted;
+    }
+
+    // Function to calculate age
+    function getAge(dateString) {
+    //if unix rather than javascript date object
+      //var dateString = dateString * 1000;
+    // end if unix
+    var today = getToday();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
 
 });
