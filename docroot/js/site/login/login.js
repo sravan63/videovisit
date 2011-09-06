@@ -85,7 +85,7 @@ $(document).ready(function() {
         if ($loginForm.valid()) {
 
             var agetype;
-            var monthAdjusted = parseInt($('input[name=birth_month]').val()) - 1;
+            var monthAdjusted = parseInt($('input[name=birth_month]').val(), 10) - 1;
             var birthdate = new Date($('input[name=birth_year]').val(), monthAdjusted, $('input[name=birth_day]').val());
             var patientAge = getAge(birthdate.getTime());
 
