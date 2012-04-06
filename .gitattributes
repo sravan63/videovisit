@@ -117,6 +117,7 @@ docroot/js/site/visit/visit.js -text
 docroot/keepalive.jsp -text
 docroot/live.jsp -text
 docroot/samplevideo.mp4 -text
+docroot/thankyou.html -text
 docs/Video[!!-~]Visit[!!-~]Member[!!-~]WebApp[!!-~]Build[!!-~]and[!!-~]Test.doc -text
 docs/VideoVisitMembert-DesignSpecifications.doc -text
 lib/SimpleCaptcha-1.1.1.jar -text
