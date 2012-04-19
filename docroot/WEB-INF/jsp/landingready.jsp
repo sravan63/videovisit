@@ -19,9 +19,14 @@
         <div class="landing-portal-details">
             <div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
             <h3>Your visit is scheduled for </h3>
-            <p class="label">Meeting with:</p>
-            <p class="name">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
-            	<br><a target="_blank" href="${meeting.host.homePageUrl}">Visit home page</a></p>
+            <div class="meeting-with-container">
+              <span>Meeting with:</span>
+              <span>
+                <a target="_blank" href="${meeting.host.homePageUrl}">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
+                </a>
+              	<!--br><a target="_blank" href="${meeting.host.homePageUrl}">Visit home page</a-->
+              </span>
+            </div>
             <a class="btn" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}">Click here to join now</a>
             <p class="smallprint">You may be joining before your clinician.  Please be patient.</p>
         </div>
