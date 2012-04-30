@@ -21,10 +21,18 @@
             <h3>Your visit is scheduled for </h3>
             <div class="meeting-with-container">
               <span>Meeting with:</span>
-              <span>
+              <span>&nbsp;
                 <a target="_blank" href="${meeting.host.homePageUrl}">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
                 </a>
-              	<!--br><a target="_blank" href="${meeting.host.homePageUrl}">Visit home page</a-->
+              </span>
+            </div>
+            <div class="participant-container">
+              <span>Participants:</span>
+              <span class="participants">
+                <c:forEach var="p" items="${meeting.participants}">
+                  <a target="_blank" href="${p.homePageUrl}">${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></a>
+                </c:forEach>
+
               </span>
             </div>
             <a class="btn" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}">Click here to join now</a>
