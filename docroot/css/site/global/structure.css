@@ -279,14 +279,34 @@ input								{outline:none;}
 .smallprint 	{font-size:inherit; font-style:italic; color:#666; font-size:90%;}
 .landing-portal-details p.smallprint		{font-size:100%;text-align:center;}
 
-.landing-portal-single-container        {float:left; margin-bottom:20px;}
+.landing-portal-single-container {
+  float:left;
+  width:602px;
+  margin-bottom:20px;
+}
 .meeting-with-container {
-  margin-bottom:1em;
+  margin-bottom:9px;
   padding:8px 10px 9px;
-  font-size:140%;
+  font-size:145%;
   border:2px solid #668D9C;
   background:white;
   overflow:hidden;
+}
+.participant-container {
+  margin:0 0 12px 12px;
+  overflow:hidden;
+}
+.participant-container > span {
+  float:left;
+  font-size:14px;
+}
+.participant-container > span.participants {
+  margin-left:3em;
+}
+.participant-container > span.participants a {
+  display:block;
+  margin-bottom:1px;
+  color:black;
 }
 
 /* Member Login */
