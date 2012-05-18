@@ -13,8 +13,7 @@ public class WebAppContext {
 	private String contextId;
 	private MemberWSO	member = null;	 
 	private MeetingWSO[]	meetings= null; 
-	private int totalmeetings = 0;
-	private String consentVersion = "consent_121010";
+	private int totalmeetings = 0;	
 	private String megaMeetingURL = null;
 
 	
@@ -54,13 +53,7 @@ public class WebAppContext {
 	}
 	public int getTotalmeetings () {
 		return totalmeetings;
-	}
-	public String getConsentVersion() {
-		return consentVersion;
-	}
-	public void setConsentVersion(String consentVersion) {
-		this.consentVersion = consentVersion;
-	}
+	}	
 
 	public String getMegaMeetingURL() {
 		return megaMeetingURL;
