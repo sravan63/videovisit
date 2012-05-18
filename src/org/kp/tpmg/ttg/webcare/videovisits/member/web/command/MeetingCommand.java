@@ -32,10 +32,7 @@ public class MeetingCommand {
 			String birth_month 	= "";
 			String birth_year  	= "";
 			String birth_day	= "";
-			String answer		= "";
-			String parentFirstName 	= "";
-			String parentLastName 	= "";
-			String relationship		= "";
+			String answer		= "";			
 			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
 			// DEBUG
@@ -58,26 +55,8 @@ public class MeetingCommand {
 			if (request.getParameter("birth_day") != null &&
 					!request.getParameter("birth_day").equals("")) {
 				birth_day = request.getParameter("birth_day");
-			}			
-			if (request.getParameter("parent_first_name") != null &&
-					!request.getParameter("parent_first_name").equals("")) {
-				parentFirstName = request.getParameter("parent_first_name");
-			}
-			if (request.getParameter("parent_last_name") != null &&
-					!request.getParameter("parent_last_name").equals("")) {
-				parentLastName = request.getParameter("parent_last_name");
-			}
-			if (request.getParameter("relationship") != null &&
-					!request.getParameter("relationship").equals("")) {
-				relationship = request.getParameter("relationship");
-			}
-			
-			/*
-			if (request.getParameter("consentVersion") != null &&
-					!request.getParameter("consentVersion").equals("")) {
-				consentVersion = request.getParameter("consentVersion");
-			}
-			 */
+			}						
+						
 			if (request.getParameter("captcha") != null &&
 					!request.getParameter("captcha").equals("")) 
 			{
@@ -98,8 +77,8 @@ public class MeetingCommand {
 			if (ctx != null && success == true)
 			{
 				//grab data from web services
-				ret= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day, ctx.getConsentVersion(),
-						request.getSession().getId(), parentFirstName, parentLastName, relationship); 
+				ret= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day, 
+						request.getSession().getId()); 
 				if (ret != null && ret.getSuccess()&& ret.getResult()!= null)
 				{
 					// success logged in. save logged in member in cached
