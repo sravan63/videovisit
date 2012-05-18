@@ -2,11 +2,11 @@
 <p class="login">Children under age 13 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
 <p class="login">Please sign on by completing the fields below.</p>
 <form id="loginForm" method="post" action="">
-    <input type="hidden" name="consentFormTXT" id="consentFormTXT" value="consent_forms/${WebAppContext.consentVersion}.txt" />
-    <input type="hidden" name="consentFormTXT_A" id="consentFormTXT_A" value="consent_forms/${WebAppContext.consentVersion}_A.txt" />
-	<input type="hidden" name="consentFormTXTIE_A" id="consentFormTXTIE_A" value="consent_forms/${WebAppContext.consentVersion}_A.ie.txt" />
-	<input type="hidden" name="consentFormTXT_P" id="consentFormTXT_P" value="consent_forms/${WebAppContext.consentVersion}_P.txt" />
-	<input type="hidden" name="consentFormTXTIE_P" id="consentFormTXTIE_P" value="consent_forms/${WebAppContext.consentVersion}_P.ie.txt" />
+    <input type="hidden" name="consentFormTXT" id="consentFormTXT" value="consent_forms/consent_2011_08_01.txt" />
+    <input type="hidden" name="consentFormTXT_A" id="consentFormTXT_A" value="consent_forms/consent_2011_08_01.txt" />
+	<input type="hidden" name="consentFormTXTIE_A" id="consentFormTXTIE_A" value="consent_forms/consent_2011_08_01.txt" />
+	<input type="hidden" name="consentFormTXT_P" id="consentFormTXT_P" value="consent_forms/consent_2011_08_01.txt" />
+	<input type="hidden" name="consentFormTXTIE_P" id="consentFormTXTIE_P" value="consent_forms/consent_2011_08_01.txt" />
     <ul class="form-block">
         <li><label for="last_name">Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1"></li>
         <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2"></li>
@@ -53,7 +53,7 @@
 				</li>
 		
 		    	<li class="pagination" id="consentListitem">
-        			<input type="checkbox" name="consentVersion" value="${WebAppContext.consentVersion}" id="understand_terms" class="understand_terms" tabindex="11">
+        			<input type="checkbox" name="consentVersion" value="consent_2011_08_01" id="understand_terms" class="understand_terms" tabindex="11">
         			<label class="pcf-child label-understand-terms" for="understand_terms">I attest that I am the parent/legal guardian of the patient of this video visit, and I have read the above description of telemedicine and agree to the telemedicine consultation.</label>
 
         			<label class="pcf-adult label-understand-terms" for="understand_terms">I have read the above description of telemedicine and agree to the telemedicine consultation.</label>
