@@ -57,6 +57,8 @@ public class MeetingCommand {
 				birth_day = request.getParameter("birth_day");
 			}						
 						
+			
+			/* captcha no longer needed
 			if (request.getParameter("captcha") != null &&
 					!request.getParameter("captcha").equals("")) 
 			{
@@ -69,6 +71,7 @@ public class MeetingCommand {
 						return ("4");
 			    }	
 			}
+			*/ 
 			
 			// Init web service 	
 			boolean success = WebService.initWebService();

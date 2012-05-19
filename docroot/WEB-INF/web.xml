@@ -106,7 +106,7 @@
 		<welcome-file>index.jsp</welcome-file>		
 	</welcome-file-list>
 
-	<!-- Simple Captcha -->
+	<!-- Simple Captcha not needed
 
     <servlet>
         <servlet-name>SimpleCaptcha</servlet-name>
@@ -125,5 +125,7 @@
         <servlet-name>SimpleCaptcha</servlet-name>
         <url-pattern>/stickyImg</url-pattern>
     </servlet-mapping>
-
+	
+	-->
+	
 </web-app>

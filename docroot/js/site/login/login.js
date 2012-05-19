@@ -39,12 +39,15 @@ $(document).ready(function() {
                     digits: true,
                     minlength: 1,
                     maxlength: 2
-                },
+                }
+                /*
+                ,
                 captcha: {
                     required: true,
                     minlength: 5,
                     maxlength: 5
                 }
+                */
             },
             // Error messages for each field in the form (corresponds to Rules)
             messages: {
@@ -73,12 +76,15 @@ $(document).ready(function() {
                     required: "Please enter your birth day.",
                     digits: "Please enter your birth day as a number.",
                     maxlength: "You cannot have more than 2 numbers for your birth day."
-                },
+                }
+                /*
+                ,
                 captcha: {
                     required: "You need to enter something in the captcha field.",
                     minlength: "You must have 5 characters in the captcha field.",
                     maxlength: "You must have 5 characters in the captcha field."
                 }
+                */
             }
         }); //End validation
 
@@ -109,7 +115,7 @@ $(document).ready(function() {
                     + '<input type="hidden" name="birth_year" value="' + $('input[name=birth_year]').val() + '">'
                     + '<input type="hidden" name="birth_month" value="' + $('input[name=birth_month]').val() + '">'
                     + '<input type="hidden" name="birth_day" value="' + $('input[name=birth_day]').val() + '">'
-                    + '<input type="hidden" name="captcha" value="' + $('input[name=captcha]').val() + '">'
+                    //+ '<input type="hidden" name="captcha" value="' + $('input[name=captcha]').val() + '">'
                     + '<input type="hidden" name="consentVersion" value="' + $('input[name=consentVersion]').val() + '">';
                 $parental_consent_fields.append($(addFields));
                 if (agetype == 3) {
@@ -142,7 +148,7 @@ $(document).ready(function() {
                     birth_day = "0" + birth_day;
                 }
 
-                var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val();
+                var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&consentVersion=' + $('input[name=consentVersion]').val();
 
 
                 $.ajax({
@@ -259,9 +265,9 @@ $(document).ready(function() {
     //If the fields for adult consent are visible we are dealing with an adult, otherwise this is a child 
     if($('.pcf-adult').is(":visible")){
       //exclude the parent first and last name fields from the prepared data
-      var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + relationship;
+      var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + relationship;
     }else{
-      var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&captcha=' + $('input[name=captcha]').val() + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + relationship + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
+      var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&consentVersion=' + $('input[name=consentVersion]').val() + '&relationship=' + relationship + '&parent_first_name=' + $('input[name=parent_first_name]').val() + '&parent_last_name=' + $('input[name=parent_last_name]').val();
     };
 
         $.ajax({
@@ -312,10 +318,12 @@ $(document).ready(function() {
     });
 
     // This is for reloading the captcha image onclick. Since the simplecaptcha code returns the actual contents of the image, I need to append some random data to the img src so it knows the "location" has changed. Without it, this won't work
+    /*
     $("#captchaImage").click(function() {
         $("#stickyImg").attr('src', 'stickyImg?' + (new Date().getTime()));
         return false;
     });
+    */
 
     // Clear/Display "hint" text for form input fields
     // Find all inputs with a populated title attribute and apply jquery.hint.js;

@@ -21,8 +21,10 @@
             <label class="label-year" for="birth_year">Year</label>
             <input type="text" name="birth_year" title="yyyy" class="birth_year" id="birth_year" maxlength="4" tabindex="5">
         </li>
+        <!--  
         <li><label id="captchaLabel" for="captcha">Enter Code Shown</label><a id="captchaImage" href="#" tabindex="100"><img width="160" id="stickyImg" src="stickyImg" alt="captcha image" class="gfx-captcha" /></a><input type="text" name="captcha" id="captcha" class="captcha" maxlength="5" tabindex="6"></li>
         <li class="smallprint align-right">Click image to refresh. Letters are case sensitive</li>
+        -->
   	</ul>
     <div class="submit-block">
         <input type="submit" name="login" value="Login &rsaquo;&rsaquo;" id="login" class="button" tabindex="7">
