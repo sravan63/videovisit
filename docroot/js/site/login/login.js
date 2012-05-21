@@ -19,7 +19,7 @@ $(document).ready(function() {
                 mrn: {
                     required: true,
                     digits: true,
-                    minlength: 8,
+                    minlength: 1,
                     maxlength: 8
                 },
                 birth_month: {
