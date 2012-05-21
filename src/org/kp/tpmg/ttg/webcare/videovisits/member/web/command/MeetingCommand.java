@@ -42,7 +42,7 @@ public class MeetingCommand {
 			} 
 			if (request.getParameter("mrn") != null &&
 					!request.getParameter("mrn").equals("")) {
-				mrn8Digit = request.getParameter("mrn");
+				mrn8Digit = fillToLength(request.getParameter("mrn"), '0', 8);
 			} 
 			if (request.getParameter("birth_month") != null &&
 					!request.getParameter("birth_month").equals("")) {
@@ -307,5 +307,21 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 
+	
+	private static String fillToLength(String src, char fillChar, int total_length) {
+		String ret=null;
+		if (src.length()<total_length) {
+			int count=total_length-src.length();
+			StringBuffer sb=new StringBuffer();
+			for (int i=0; i<count; i++) {
+				sb.append(fillChar);
+			}
+			sb.append(src);
+			ret=sb.toString();
+		} else {
+			ret=src;
+		}				
+		return ret;
+	}
 
 }
