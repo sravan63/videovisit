@@ -104,8 +104,8 @@ $(document).ready(function() {
             } else {
                 agetype = 3; //child
             }
-
-            if (agetype == 1 || agetype == 3) {
+            /* Remove consent requirement, 5/22/12 */
+            if (false /*agetype == 1 || agetype == 3 */) { 
 
                 $('.pcf-child').hide();
                 $('.pcf-adult').hide();
@@ -128,11 +128,11 @@ $(document).ready(function() {
                     $('#parent_first_name').attr('disabled', 'disabled');
                     $('#parent_last_name').attr('disabled', 'disabled');
                     $('#relationship').attr('disabled', 'disabled');
-					$('#relationship').val("None");
+                    $('#relationship').val("None");
                     $('.pcf-adult').show();
                     $('.jqHandle span').text('Consent to Participate');
                 }
-                $consentModal.jqmShow();
+                //$consentModal.jqmShow();
                 return false;
             } else {
                 $("p.error").html('');
@@ -286,19 +286,19 @@ $(document).ready(function() {
                         break;
 
                     case "3":
-                        $consentModal.jqmHide();
+                        //$consentModal.jqmHide();
                         $("p.error").css("display", "inline").append('<li><label>Your username was invalid. Please try again.</label></li>');
                         moveToit("p.error");
                         break;
 
                     case "4":
-                        $consentModal.jqmHide();
+                        //$consentModal.jqmHide();
                         $("p.error").css("display", "inline").append('<li><label>The code entered did not match. Please try again (you can click the code image to generate a new one if needed).</label></li>');
                         moveToit("p.error");
                         break;
 
                     default:
-                        $consentModal.jqmHide();
+                        //$consentModal.jqmHide();
                         $("p.error").css("display", "inline").append('<li><label>There was an error submitting your login. Please try again later.</label></li>');
                         moveToit("p.error");
                         break;
@@ -306,7 +306,7 @@ $(document).ready(function() {
 
             },
             error: function() {
-                $consentModal.jqmHide();
+                //$consentModal.jqmHide();
                 $("p.error").css("display", "inline").append('<li><label>There was an error submitting your login.</label></li>');
                 moveToit("p.error");
             }
@@ -340,10 +340,10 @@ $(document).ready(function() {
 	);
 
     // Move the modal outside of the rest of the containers on the page and append to body (fixes some IE modal bugs)
-    $('body').append($consentModal);
+    //$('body').append($consentModal);
 
     // Setup the modal and make it draggable
-    $consentModal.jqm().jqDrag('.jqDrag');
+    //$consentModal.jqm().jqDrag('.jqDrag');
 
     // Function to calculate today from perspective of given timezone offset, assume approximate US daylight savings time
     function getToday(offset) {
