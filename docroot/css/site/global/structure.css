@@ -292,18 +292,21 @@ input								{outline:none;}
   background:white;
   overflow:hidden;
 }
-.participant-container {
+.names-container {
   margin:0 0 12px 12px;
   overflow:hidden;
 }
-.participant-container > span {
+.names-container > span.label {
   float:left;
+  width:110px;
   font-size:14px;
 }
-.participant-container > span.participants {
-  margin-left:3em;
+.names-container > span.names {
+  float:left;
+  width:200px;
+  margin-left:12px;
 }
-.participant-container > span.participants a {
+.names-container > span.names a {
   display:block;
   margin-bottom:1px;
   color:black;
