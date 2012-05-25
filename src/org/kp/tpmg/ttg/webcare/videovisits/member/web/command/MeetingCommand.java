@@ -1,18 +1,25 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
-import javax.servlet.http.*;
-
 import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.sf.json.JSONObject;
-import nl.captcha.Captcha;
 
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.*;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
+import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.CaregiverWSO;
+import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.MeetingWSO;
+import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.ProviderWSO;
+import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
+import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.StringResponseWrapper;
+import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.UpdateResponseWrapper;
+import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.VerifyMemberResponseWrapper;
 
 public class MeetingCommand {
 
@@ -158,6 +165,9 @@ public class MeetingCommand {
 									// copy back to the meeting mmMeetingName
 									meetings[i].setMmMeetingName(megaUrl);
 							}	
+							
+							meetings[i].setParticipants((ProviderWSO[]) clearNullArray(meetings[i].getParticipants()));
+							meetings[i].setCaregivers((CaregiverWSO[]) clearNullArray(meetings[i].getCaregivers()));				
 						}
 						
 						ctx.setTotalmeetings(meetings.length);
@@ -324,4 +334,10 @@ public class MeetingCommand {
 		return ret;
 	}
 
+	private static Object[] clearNullArray(Object[] input) {		
+		if (input != null && input.length == 1 && input[0] == null) {
+			input = null;
+		}
+		return input;
+	}
 }
