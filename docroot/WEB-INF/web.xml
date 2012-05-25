@@ -19,7 +19,7 @@
       <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.WebSessionFilter</filter-class>
       <init-param>
       <param-name>excludeURL</param-name>
-      <param-value>login.htm,intro.htm,setup.htm</param-value>
+      <param-value>login.htm,intro.htm,setup.htm,verifyguest.json,guestready.htm</param-value>
     </init-param>
    </filter>
    <filter-mapping>
@@ -32,6 +32,7 @@
       <filter-name>DataSessionFilter</filter-name>
       <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.DataSessionFilter</filter-class>
    </filter>
+   +
    <filter-mapping>
       <filter-name>DataSessionFilter</filter-name>
       <url-pattern>*.json</url-pattern>
@@ -75,6 +76,10 @@
       <url-pattern>/healthMonitor</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+      <servlet-name>action</servlet-name>
+      <url-pattern>/guest</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
@@ -94,8 +99,7 @@
 	<servlet-mapping>
 		<servlet-name>livePage</servlet-name>
 		<url-pattern>/ping</url-pattern>
-	</servlet-mapping>
-	
+	</servlet-mapping>		
 	
 	<!-- Session Configuration-->
 	<session-config>

@@ -1,6 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
 import java.io.PrintWriter;
+import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -317,6 +319,47 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 
+	public static String retrieveMeetingForCaregiver(HttpServletRequest request, HttpServletResponse response) 
+			throws RemoteException {
+		RetrieveMeetingResponseWrapper ret = null;			
+		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		String meetingCode = request.getParameter("meetingCode");			
+		boolean success = WebService.initWebService();		
+		if (ctx != null && success) {
+			ret = WebService.retrieveMeetingForCaregiver(meetingCode, PAST_MINUTES, FUTURE_MINUTES);			
+			if (ret != null) {
+				MeetingWSO[] meetings = ret.getResult();				
+				if (meetings != null) {
+					if (meetings.length == 1 && meetings[0]== null ) {					
+						ctx.setTotalmeetings(0);
+					} else {
+						for (int i=0; i<meetings.length; i++) {
+							MeetingWSO meeting = meetings[i];
+							normalizeMeetingData(meeting, meetingCode, ctx);
+						}
+						ctx.setTotalmeetings(meetings.length);
+						ctx.setMeetings(meetings);
+					}
+				}				
+				return JSONObject.fromObject(ret).toString();
+			}
+		}
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
+	
+	public static String verifyCaregiver(HttpServletRequest request, HttpServletResponse response) 
+			throws RemoteException {
+		String json = null;
+		try {
+			String meetingCode = request.getParameter("meetingCode");
+			String patientLastName = request.getParameter("patientLastName");
+			StringResponseWrapper ret = WebService.verifyCaregiver(meetingCode, patientLastName);
+			json = JSONObject.fromObject(ret).toString();
+		} catch (Exception e) {
+			json = JSONObject.fromObject(new SystemError()).toString();
+		}
+		return json;
+	}
 	
 	private static String fillToLength(String src, char fillChar, int total_length) {
 		String ret=null;
@@ -340,4 +383,40 @@ public class MeetingCommand {
 		}
 		return input;
 	}
+	
+	private static void normalizeMeetingData(MeetingWSO meeting, String meetingHash, WebAppContext ctx) {
+		if (meeting == null) {
+			return;
+		}
+		
+		String megaMeetingName = meeting.getMmMeetingName();
+		if (megaMeetingName != null && !megaMeetingName.isEmpty()) {
+			Pattern p1 = Pattern.compile ("<mmMeetingName>");
+			Pattern p2 = Pattern.compile("<guest name>");
+			Matcher m1, m2;
+			
+			String megaMeetingUrl = ctx.getMegaMeetingURL();
+			m1 = p1.matcher(megaMeetingUrl);
+			megaMeetingUrl = m1.replaceAll(megaMeetingName);
+			m2 = p2.matcher(megaMeetingUrl);
+			
+			CaregiverWSO[] caregivers = meeting.getCaregivers();
+			if (caregivers != null && caregivers.length > 0) {
+				for (int i=0; i<caregivers.length; i++) {
+					CaregiverWSO caregiver = caregivers[i];
+					if (caregiver.getMeetingHash().equals(meetingHash)) {
+						megaMeetingUrl = m2.replaceAll(
+								caregiver.getFirstName().replaceAll("[^a-zA-Z0-9 ]", " ") + 
+								" " + 
+								caregiver.getLastName().replaceAll("[^a-zA-Z0-9 ]", " "));
+						meeting.setMmMeetingName(megaMeetingUrl);
+						break;
+					}
+				}
+			}						
+		}
+		
+		meeting.setParticipants((ProviderWSO[]) clearNullArray(meeting.getParticipants()));
+		meeting.setCaregivers((CaregiverWSO[]) clearNullArray(meeting.getCaregivers()));
+	}				
 }

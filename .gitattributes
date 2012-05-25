@@ -28,6 +28,8 @@ docroot/WEB-INF/jsp/blank.jsp -text
 docroot/WEB-INF/jsp/data/jsonData.jsp -text
 docroot/WEB-INF/jsp/data/jsonHeader.jsp -text
 docroot/WEB-INF/jsp/error.jsp -text
+docroot/WEB-INF/jsp/guest.jsp -text
+docroot/WEB-INF/jsp/guestready.jsp -text
 docroot/WEB-INF/jsp/healthMonitor.jsp -text
 docroot/WEB-INF/jsp/help.jsp -text
 docroot/WEB-INF/jsp/intro.jsp -text
@@ -185,6 +187,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/context/SystemError.java -tex
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/context/WebAppContext.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/AppRootController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateMegameetingController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/GuestController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/HealthMonitorController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/JoinMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoffController.java -text
@@ -193,6 +196,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/QuitMeetingControl
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/RetrieveMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SimplePageController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SubmitLoginController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VerifyGuestController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/DataSessionFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/RequestLoggingFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/WebSessionFilter.java -text

@@ -384,4 +384,25 @@ public class WebService{
 		return toRet;
 	}
 
+	public static RetrieveMeetingResponseWrapper retrieveMeetingForCaregiver(String meetingHash,
+			int pastMinutes,int futureMinutes) 
+				throws RemoteException {
+		RetrieveMeetingResponseWrapper toRet = null;
+		RetrieveMeetingForCaregiver query = new RetrieveMeetingForCaregiver();
+		query.setMeetingHash(meetingHash);
+		query.setPastMinutes(pastMinutes);
+		query.setFutureMinutes(futureMinutes);
+		RetrieveMeetingForCaregiverResponse response = stub.retrieveMeetingForCaregiver(query);
+		toRet = response.get_return();
+		return toRet;		
+	}
+	
+	public static StringResponseWrapper verifyCaregiver(String meetingHash, String patientLastName) 
+			throws RemoteException {
+		VerifyCaregiver query = new VerifyCaregiver();
+		query.setMeetingHash(meetingHash);
+		query.setPatientLastName(patientLastName);
+		VerifyCaregiverResponse response = stub.verifyCaregiver(query);
+		return response.get_return();
+	}
 }

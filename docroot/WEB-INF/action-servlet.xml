@@ -38,6 +38,9 @@
 				<prop key="/createmegameeting.json">createmegameeting</prop>
 				<prop key="/healthMonitor">healthMonitor</prop>
 				<prop key="/loading.htm">loading</prop>
+				<prop key="/verifyguest.json">verifyguest</prop>				
+				<prop key="/guest">guest</prop>		
+				<prop key="/guestready.htm">guestready</prop>		
 			</props>
 		</property>
 	</bean>
@@ -97,7 +100,7 @@
 		<property name="viewName" value="error" />
 		<property name="navigation" value="error" />
 		<property name="subNavigation" value="error" />
-	</bean>
+	</bean>		
 	<!--  for monitoring -->	
 	<bean id="healthMonitor" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.HealthMonitorController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
@@ -129,6 +132,19 @@
 	</bean>
 	<bean id="retrievemeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.RetrieveMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	
+	<!-- Guest controllers -->
+	<bean id="guest" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.GuestController">		
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	<bean id="verifyguest" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VerifyGuestController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	<bean id="guestready" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="guestready" />
+		<property name="navigation" value="guestready" />		
 	</bean>
 
 	<!--  COMMAND classes -->
