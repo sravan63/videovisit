@@ -404,7 +404,7 @@ public class MeetingCommand {
 			if (caregivers != null && caregivers.length > 0) {
 				for (int i=0; i<caregivers.length; i++) {
 					CaregiverWSO caregiver = caregivers[i];
-					if (caregiver.getMeetingHash().equals(meetingHash)) {
+					if (caregiver.getMeetingCode().equals(meetingHash)) {
 						megaMeetingUrl = m2.replaceAll(
 								caregiver.getFirstName().replaceAll("[^a-zA-Z0-9 ]", " ") + 
 								" " + 
