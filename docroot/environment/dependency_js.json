@@ -66,6 +66,16 @@
                 "landing"  :   []
             }
         },
+        "guest" : {
+            "global"    :   [
+                "js/site/global/dateExtensions_loader.js"
+            ],
+            "specific"  :   {
+                "guest"  :   [
+                    "js/site/guest/guest.js"
+                ]
+            }
+        },
         "error" : {
             "global"   : [],
             "specific" : {
