@@ -5,6 +5,10 @@
 <%@ page import="javax.servlet.*"%>
 <%@ page import="javax.servlet.http.*"%>
 
+<%
+	MeetingCommand.retrieveMeetingForCaregiver(request, response);
+%>
+
 <c:if test="${WebAppContext.totalmeetings>0}">
 	<div id="landing-portal-ready">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">

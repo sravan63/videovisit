@@ -93,6 +93,12 @@
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guest.jsp" />
 	</definition>
+	
+	<definition name="guestready" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/guestready.jsp" />
+	</definition>
 
 	<definition name="simpleText" extends=".textTemplate">
 	</definition>

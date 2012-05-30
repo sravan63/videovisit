@@ -136,15 +136,14 @@
 	
 	<!-- Guest controllers -->
 	<bean id="guest" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.GuestController">		
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>		
 	</bean>
 	<bean id="verifyguest" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VerifyGuestController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<bean id="guestready" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="guestready" />
-		<property name="navigation" value="guestready" />		
+		<property name="viewName" value="guestready" />				
 	</bean>
 
 	<!--  COMMAND classes -->
