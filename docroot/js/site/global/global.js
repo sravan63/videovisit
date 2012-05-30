@@ -18,6 +18,18 @@ var ERROR_PAGE = "";
 // Number of idle milliseconds before redirecting to session timeout
 var SESSION_TIMEOUT_DELAY = 1000 * 60 * 45; // 45 minutes
 
+/* Get URI params */
+function gup(name) {
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]" + name + "=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.href);
+  if(results == null)
+    return "";
+  else
+    return results[1];
+}
+
 $(document).ready(function() {
 
 	// Set with Path Vars
