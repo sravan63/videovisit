@@ -50,7 +50,7 @@ $(document).ready(function() {
               }
               hreflocation = returndata.result;
               //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
-              window.location.replace("https://dev2.mydoctor.kaiserpermanente.org/videovisit/guestready.htm?meetingCode=" + mtgCode);
+              window.location.replace("/videovisit/guestready.htm?meetingCode=" + mtgCode);
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
