@@ -99,6 +99,24 @@
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guestready.jsp" />
 	</definition>
+	
+	<definition name="guestvisit" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/guestvisit.jsp" />
+	</definition>
+
+	<definition name="guestlogout" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/guestlogout.jsp" />
+	</definition>
+	
+	<definition name="guesterror" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/guesterror.jsp" />
+	</definition>
 
 	<definition name="simpleText" extends=".textTemplate">
 	</definition>

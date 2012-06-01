@@ -16,13 +16,29 @@ VIDEO_VISITS.Path = {
         joinmeeting : 'createmegameeting.json',
         keepALive: 'keepalive.jsp',
         retrieveMeeting: 'retrievemeeting.json'
-    },
+    },    
+    guestglobal : {
+        error : 'guesterror.htm',
+        expired : 'guestlogout.htm'
+    },    
     guest : {
         visiturl : 'visit.htm',
         joinmeeting : 'verifyguest.json',
         keepALive: 'keepalive.jsp',
         retrieveMeeting: 'retrievemeeting.json'
-    },
+    },    
+    guestready : {
+        visiturl : 'guestvisit.htm',
+        joinmeeting : 'createguestsession.json',
+        keepALive: 'keepalive.jsp',        
+    },    
+    guestvisit : {
+    	quitmeeting : 'endguestsession.json',
+        logout : 'guestlogout.htm'
+    },    
+    guestlogout : {
+    	logoutjson: 'endguestsession.json'
+    },    
     visit : {
         quitmeeting : 'quitmeeting.json',
         logout : 'logout.htm'
