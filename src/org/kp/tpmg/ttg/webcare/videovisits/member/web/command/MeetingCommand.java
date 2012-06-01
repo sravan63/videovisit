@@ -361,6 +361,45 @@ public class MeetingCommand {
 		return json;
 	}
 	
+	public static String createCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) 
+			throws Exception {
+		StringResponseWrapper ret = null;
+		try {
+			// parse parameters
+			String meetingCode = request.getParameter("meetingCode");
+			if (meetingCode != null && !meetingCode.isEmpty()) {
+				ret = WebService.createCaregiverMeetingSession(meetingCode);
+				if (ret != null) {
+					return JSONObject.fromObject(ret).toString();
+				}
+			}						
+		} catch (Exception e) {
+			// log error
+			logger.error("Error in createCaregiverMeetingSession " + e.getMessage(), e);
+		}
+		
+		// worst case error returned, no caregiver found, no web service responded, etc. 
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
+	
+	public static String endCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		UpdateResponseWrapper ret = null;		
+		try	{
+			String meetingCode = request.getParameter("meetingCode");
+			if (meetingCode != null && !meetingCode.isEmpty()) {
+				ret = WebService.endCaregiverMeetingSession(meetingCode);
+			}				
+			if (ret != null) {
+				return JSONObject.fromObject(ret).toString();
+			}			
+		} catch (Exception e) {
+			// log error
+			logger.error("Error in createCaregiverMeetingSession " + e.getMessage(), e);
+		}
+		// worst case error returned, no caregiver found, no web service responded, etc. 
+		return JSONObject.fromObject(new SystemError()).toString();
+	}
+	
 	private static String fillToLength(String src, char fillChar, int total_length) {
 		String ret=null;
 		if (src.length()<total_length) {
