@@ -405,4 +405,20 @@ public class WebService{
 		VerifyCaregiverResponse response = stub.verifyCaregiver(query);
 		return response.get_return();
 	}
+	
+	public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash) 
+			throws RemoteException {
+		CreateCaregiverMeetingSession query = new CreateCaregiverMeetingSession();
+		query.setMeetingHash(meetingHash);
+		CreateCaregiverMeetingSessionResponse response = stub.createCaregiverMeetingSession(query);
+		return response.get_return();
+	}
+	
+	public static UpdateResponseWrapper endCaregiverMeetingSession(String meetingHash) 
+			throws RemoteException {
+		EndCaregiverMeetingSession query = new EndCaregiverMeetingSession();
+		query.setMeetingHash(meetingHash);
+		EndCaregiverMeetingSessionResponse response = stub.endCaregiverMeetingSession(query);
+		return response.get_return();		
+	}
 }
