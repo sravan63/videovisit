@@ -194,6 +194,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/context/WebAppContext.java -t
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/AppRootController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateCaregiverSessionController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateMegameetingController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/EndCaregiverSessionController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/GuestController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/HealthMonitorController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/JoinMeetingController.java -text
