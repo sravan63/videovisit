@@ -25,6 +25,7 @@ public class EnvironmentCommand implements InitializingBean {
 	}
 	
 	public JSONArray getJsDependencies(String currentNavigation, String currentSubNavigation) {
+		
 		return getPageDependencies(jsDependencies, currentNavigation, currentSubNavigation);
 	}
 	
@@ -72,13 +73,16 @@ public class EnvironmentCommand implements InitializingBean {
 		if (currentNavigation != null && currentNavigation.length() > 0) {
 			pageDependencies.addAll(dependencies.getJSONObject("page").getJSONObject(currentNavigation).getJSONArray("global"));
 			if (currentSubNavigation == null || currentSubNavigation.length() == 0) {
+				
 				if (dependencies.getJSONObject("page").getJSONObject(currentNavigation).getJSONObject("specific").optJSONArray(currentNavigation) != null) {
 					pageDependencies.addAll(dependencies.getJSONObject("page").getJSONObject(currentNavigation).getJSONObject("specific").getJSONArray(currentNavigation));
 				}
 			} else {
+				
 				pageDependencies.addAll(dependencies.getJSONObject("page").getJSONObject(currentNavigation).getJSONObject("specific").getJSONArray(currentSubNavigation));
 			}
 		}
+		
 		return pageDependencies;
 	}
 
