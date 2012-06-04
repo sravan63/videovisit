@@ -100,6 +100,7 @@
 		<property name="navigation" value="help" />
 		<property name="subNavigation" value="help" />
 	</bean>
+	
 	<bean id="error" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="error" />
@@ -117,6 +118,12 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="loading" />
 		<property name="navigation" value="blank" />
+	</bean>
+	<bean id="guest" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.GuestController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="guest" />
+		<property name="navigation" value="guest" />
+		<property name="subNavigation" value="guest" />
 	</bean>
 
 	<!--  JSON classes -->
@@ -140,9 +147,7 @@
 	</bean>
 	
 	<!-- Guest controllers -->
-	<bean id="guest" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.GuestController">		
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>		
-	</bean>
+
 	<bean id="verifyguest" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VerifyGuestController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
