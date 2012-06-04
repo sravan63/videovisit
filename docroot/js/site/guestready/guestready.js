@@ -2,8 +2,9 @@ $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
 
 	// Join now Click Event
-    $(".btn").click(function(){
-        meetingIdData = 'meetingCode=' + $(this).attr('meetingCode');
+    $(".btn").click(function(e){
+        e.preventDefault();
+        meetingIdData = 'meetingCode=' + gup("meetingCode"); //$(this).attr('meetingCode');
         hreflocation = $(this).attr('href');
         
         $.ajax({
@@ -11,8 +12,8 @@ $(document).ready(function() {
             data: meetingIdData,
             url: VIDEO_VISITS.Path.guestready.joinmeeting,
             success: function(returndata) {
-				returndata = jQuery.parseJSON(returndata);
-				hreflocation = returndata.result;
+                returndata = jQuery.parseJSON(returndata);
+                hreflocation = returndata.result;
                 window.location.replace("guestvisit.htm?iframedata=" + encodeURIComponent(hreflocation));
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
