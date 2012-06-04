@@ -17,7 +17,6 @@ $(document).ready(function() {
             url: "/videovisit/verifyguest.json",
             success: function(returndata) {
               returndata = jQuery.parseJSON(returndata);
-              console.log(returndata.result);
               if(returndata.result === 'false'){
                 alert("No matching patient found. Please try again.");
                 return false;
