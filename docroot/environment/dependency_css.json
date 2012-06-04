@@ -40,7 +40,7 @@
         "guest" : {
             "global"   : [],
             "specific" : {
-                "landing" : []
+                "guest" : []
             }
         },
         "error" : {

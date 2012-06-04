@@ -42,6 +42,14 @@
                 "setup" : []
             }
         },
+        "guest" : {
+            "global"    :   ["js/site/global/dateExtensions_loader.js"
+            				],
+            "specific"  :   {
+                "guest"  :   ["js/site/guest/guest.js"
+                			 ]
+            }
+        },
         "landingnone" : {
             "global"    :   [],
             "specific"  :   {
@@ -64,16 +72,6 @@
             "global"    :   [],
             "specific"  :   {
                 "landing"  :   []
-            }
-        },
-        "guest" : {
-            "global"    :   [
-                "js/site/global/dateExtensions_loader.js"
-            ],
-            "specific"  :   {
-                "guest"  :   [
-                    "js/site/guest/guest.js"
-                ]
             }
         },
         "error" : {
