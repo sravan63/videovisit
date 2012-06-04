@@ -50,6 +50,16 @@
                 			 ]
             }
         },
+        "guestready" : {
+            "global"    :   [
+                "js/site/global/dateExtensions_loader.js"
+            ],
+            "specific"  :   {
+                "guestready"  :   [
+                    "js/site/guestready/guestready.js"
+                ]
+            }
+        },
         "landingnone" : {
             "global"    :   [],
             "specific"  :   {

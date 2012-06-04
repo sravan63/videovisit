@@ -153,7 +153,9 @@
 	</bean>
 	<bean id="guestready" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="guestready" />				
+		<property name="viewName" value="guestready" />	
+		<property name="navigation" value="guestready" />
+		<property name="subNavigation" value="guestready" />			
 	</bean>
 	<bean id="createguestsession" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateCaregiverSessionController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>

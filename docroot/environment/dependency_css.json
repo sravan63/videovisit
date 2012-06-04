@@ -43,6 +43,12 @@
                 "guest" : []
             }
         },
+        "guestready" : {
+            "global"   : [],
+            "specific" : {
+                "guestready" : []
+            }
+        },
         "error" : {
             "global"   : [],
             "specific" : {
