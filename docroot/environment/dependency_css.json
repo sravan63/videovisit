@@ -49,6 +49,14 @@
                 "guestready" : []
             }
         },
+        "guestvisit" : {
+            "global"   : [
+                "css/library/plugin/jqModal.css"
+            ],
+            "specific" : {
+                "guestvisit" : []
+            }
+        },
         "error" : {
             "global"   : [],
             "specific" : {

@@ -111,7 +111,7 @@
                 "js/library/plugin/dimensions.js"
             ],
             "specific" : {
-                "visit" : [
+                "guestvisit" : [
                     "js/site/guestvisit/guestvisit.js"
                 ]
             }
