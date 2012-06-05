@@ -9,6 +9,8 @@
 <c:if test="${WebAppContext.totalmeetings>0}">
 	<div id="landing-portal-ready">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">
+      <p class="guest-config-info">To ensure your webcam and speakers are configured correctly, please use our <a href="javascript:void(0)" onclick="popUrl('http://kaiserm3.videoconferencinginfo.com/guest/meetingSetup.swf');">Setup Wizard</a>, and please make sure you have the latest version of <a href="http://www.adobe.com/software/flash/about" target="_blank">Adobe Flash</a> before proceeding.</p>
+
 			<div class="landing-portal-single-container">				
 				<div class="landing-portal-details guest">
 					<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
