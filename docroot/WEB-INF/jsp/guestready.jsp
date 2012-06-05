@@ -13,6 +13,7 @@
 	<div id="landing-portal-ready">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			<div class="landing-portal-single-container">
+        <img src=${meeting.host.imageUrl} alt="" />
 				<div class="landing-portal-details">
 					<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
 					<h3>This visit is scheduled for</h3>
