@@ -40,7 +40,9 @@
         "guest" : {
             "global"   : [],
             "specific" : {
-                "guest" : []
+                "guest" : [
+                    "css/site/global/guest.css"
+                ]
             }
         },
         "guestready" : {
