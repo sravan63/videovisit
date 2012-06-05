@@ -166,6 +166,8 @@
 	<bean id="guestvisit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="guestvisit" />		
+		<property name="navigation" value="guestvisit" />
+		<property name="subNavigation" value="guestvisit" />
 	</bean>		
 	<bean id="guestlogout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoffController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
