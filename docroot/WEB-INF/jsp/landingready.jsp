@@ -29,8 +29,8 @@
               </span>
             </div>
 
-            <div class="names-container">
-              <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
+            <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
+              <div class="names-container">
                 <span class="label">Participants:</span>
                 <span class="names participants">
                   <c:forEach var="p" items="${meeting.participants}">
@@ -38,8 +38,8 @@
                   </c:forEach>
 
                 </span>
-              </c:if>
-            </div>
+              </div>
+            </c:if>
 
             <div class="names-container">
               <c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
