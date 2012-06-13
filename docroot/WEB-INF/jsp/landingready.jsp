@@ -46,7 +46,7 @@
                 <span class="label">Patient Guests:</span>
                 <span class="names patient-guests">
                   <c:forEach var="p" items="${meeting.caregivers}">
-                    ${p.firstName} ${p.lastName}
+                    <span>${p.firstName} ${p.lastName}</span>
                   </c:forEach>
                 </span>
               </c:if>
