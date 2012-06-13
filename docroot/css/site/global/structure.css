@@ -333,7 +333,8 @@ input								{outline:none;}
   width:200px;
   margin-left:12px;
 }
-.names-container > span.names a {
+.names-container > span.names a,
+.names-container > span.names span {
   display:block;
   margin-bottom:1px;
   color:black;
