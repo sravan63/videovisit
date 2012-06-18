@@ -18,10 +18,12 @@ $(document).ready(function() {
             success: function(returndata) {
               returndata = jQuery.parseJSON(returndata);
               if(returndata.result === '1'){
-                alert("No matching patient found. Please try again.");
+            	$("p.error").css("display", "inline").append('<label>No matching patient found. Please try again.</label><br/>');
+                moveToit("p.error");              	
                 return false;
-              } else if (returndata.result === '2') {
-            	alert("You cannot join the same video visit more than once.");
+              } else if (returndata.result === '2') {            	
+            	$("p.error").css("display", "inline").append('<label>You cannot join the same video visit more than once.</label><br/>');
+                moveToit("p.error");            	
                 return false;  
               }
               hreflocation = returndata.result;

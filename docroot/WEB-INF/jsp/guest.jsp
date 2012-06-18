@@ -19,9 +19,10 @@
 						<label for="patient_last_name">Patient last Name
 						  <input type="text" name="patient_last_name" id="patient_last_name"></input>
             </label>
-					<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click to continue</a>					
-				</div>
+					<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click to continue</a>										
+				</div>				
 			</div>
+			<p class="error error-guest-login"><a name="errors"></a></p>
 		</c:forEach>
 
 
