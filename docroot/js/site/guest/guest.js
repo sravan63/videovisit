@@ -17,9 +17,12 @@ $(document).ready(function() {
             url: "/videovisit/verifyguest.json",
             success: function(returndata) {
               returndata = jQuery.parseJSON(returndata);
-              if(returndata.result === 'false'){
+              if(returndata.result === '1'){
                 alert("No matching patient found. Please try again.");
                 return false;
+              } else if (returndata.result === '2') {
+            	alert("You cannot join the same video visit more than once.");
+                return false;  
               }
               hreflocation = returndata.result;
               //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
