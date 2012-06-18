@@ -30,7 +30,7 @@ VIDEO_VISITS.Path = {
     guestready : {
         visiturl : 'guestvisit.htm',
         joinmeeting : 'createguestsession.json',
-        keepALive: 'keepalive.jsp',        
+        keepALive: 'keepalive.jsp'
     },    
     guestvisit : {
     	quitmeeting : 'endguestsession.json',
