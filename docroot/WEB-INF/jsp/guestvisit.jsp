@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h3 class="page-title">Video Visit with ${WebAppContext.meetings[0].host.firstName} 
-	${WebAppContext.meetings[0].host.lastName}<c:if test="${not empty WebAppContext.meetings[0].host.title}">, ${WebAppContext.meetings[0].host.title}</c:if>
+<h3 class="page-title">Video Visit for ${WebAppContext.meetings[0].member.firstName} 
+	${WebAppContext.meetings[0].member.lastName} 
 </h3>
 
                 <div id="video-main" style="width:785px">
@@ -10,7 +10,7 @@
                     </iframe>
                 </div>
 
-                <div id="quitMeetingModal" class="jqmWindow dialog-block2" style="position:absolute; display:none" title="Quit Meeting">
+        <div id="quitMeetingModal" class="jqmWindow dialog-block2" style="position:absolute; display:none" title="Quit Meeting">
 			<div class="dialog-content-question">
                             <h2 class="jqHandle jqDrag"><span style="padding-left:8px">Quit Meeting</span></h2>
 				<p class="question">Are you sure you want to quit this meeting?</p>
