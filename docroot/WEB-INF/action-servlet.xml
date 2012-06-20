@@ -45,7 +45,8 @@
 				<prop key="/endguestsession.json">endguestsession</prop>
 				<prop key="/guestvisit.htm">guestvisit</prop>	
 				<prop key="/guestlogout.htm">guestlogout</prop>		
-				<prop key="/guesterror.htm">guesterror</prop>		
+				<prop key="/guesterror.htm">guesterror</prop>
+				<prop key="/guesthelp.htm">guesthelp</prop>		
 			</props>
 		</property>
 	</bean>
@@ -177,6 +178,12 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="guesterror" />		
 	</bean>	
+	<bean id="guesthelp" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="guesthelp" />
+		<property name="navigation" value="guesthelp" />
+		<property name="subNavigation" value="guesthelp" />
+	</bean>
 
 	<!--  COMMAND classes -->
 	<bean id="webAppContextCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand" />

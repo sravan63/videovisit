@@ -108,7 +108,7 @@
 
 	<definition name="guestlogout" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
-		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/guestInfo.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guestlogout.jsp" />
 	</definition>
 	
@@ -116,6 +116,12 @@
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guesterror.jsp" />
+	</definition>
+
+	<definition name="guesthelp" extends=".standardPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/help.jsp" />
 	</definition>
 
 	<definition name="simpleText" extends=".textTemplate">

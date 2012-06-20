@@ -117,6 +117,14 @@
                 ]
             }
         },
+        "guesthelp" : {
+            "global"   : [],
+            "specific" : {
+                "guesthelp" : [
+                    "js/site/help/help.js"
+                ]
+            }
+        },
         "help" : {
             "global"   : [],
             "specific" : {

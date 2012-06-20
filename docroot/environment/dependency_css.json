@@ -59,6 +59,12 @@
                 "guestvisit" : []
             }
         },
+        "guesthelp" : {
+            "global"   : [],
+            "specific" : {
+                "guesthelp" : []
+            }
+        },        
         "error" : {
             "global"   : [],
             "specific" : {
