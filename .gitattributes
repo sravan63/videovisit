@@ -16,6 +16,7 @@ build-scripts/tagCode.sh -text
 build-scripts/upload.sh -text
 /build.properties -text
 /build.xml -text
+/buildjenkins.xml -text
 conf/configuration.properties -text
 conf/filters/local -text
 conf/log4j.properties -text
