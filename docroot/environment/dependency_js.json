@@ -21,7 +21,8 @@
             "js/site/global/global.js",
             "js/site/global/plugins.js",
             "js/site/global/script.js",
-            "js/site/global/logout.js"
+            "js/site/global/logout.js",
+            "js/site/global/utils.js"
     ],
     "page"   : {
         "home" : {
