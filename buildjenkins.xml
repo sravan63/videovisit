@@ -63,8 +63,11 @@
 		<if>
 					<equals arg1="${build.env}" arg2="dv"/>
 					<then>
-		   	  		<antcall target="copy-war-dev" />
+		   	  			<antcall target="copy-war-dev" />
 					</then>
+					<else>
+						<antcall target="copy-war-qa" />
+					</else>
 		</if>
    </target>
 	<target name="generateWar">
@@ -228,6 +231,47 @@
 							  command="/usr/local/tomcat5080/bin/startup.sh"
 							/>
 		</target>
+	<target name="copy-war-qa">
+				   <scp todir="vv_user:vv7463@TTG-QA-APP-03:/home/vv_user" failonerror="false" verbose="false"  trust="yes">
+				   	<fileset dir="${dest.war.dir}">
+					  <include name="**/*.war" /> 
+					</fileset>
+				   	</scp>
+				<echo message="stopping tomcat 5080"/>
+				<sshexec host="TTG-QA-APP-03"
+										  username="vv_user"
+										  password="vv7463"
+										  trust="yes"
+										  command="/usr/local/tomcat5080/bin/shutdown.sh"
+										/>
+				<echo message="delete existing files if any ${webapp.name}"/>
+				<sshexec host="TTG-QA-APP-03"
+				  username="vv_user"
+				  password="vv7463"
+				  trust="yes"
+				  command="rm -f ${war.target.dir}/${webapp.name}.war"
+				/>
+				<sshexec host="TTG-QA-APP-03"
+				  username="vv_user"
+				  password="vv7463"
+				  trust="yes"
+				  command="rm -rf ${war.target.dir}/${webapp.name}"
+				/>
+			   <echo message="deleted existing contents .. copy in new contents"/>
+				<sshexec host="TTG-QA-APP-03"
+						  username="vv_user"
+						  password="vv7463"
+						  trust="yes"
+						  command="cp /home/vv_user/${ant.project.name}.war ${war.target.dir}/${webapp.name}.war"
+						/>
+				<echo message="starting tomcat 5080"/>
+				<sshexec host="TTG-QA-APP-03"
+								  username="vv_user"
+								  password="vv7463"
+								  trust="yes"
+								  command="/usr/local/tomcat5080/bin/startup.sh"
+								/>
+			</target>
 	<!-- ************************************************ -->
 	   		<!-- Start of deploy			  -->
 	   		<!-- ************************************************ -->
