@@ -20,8 +20,10 @@
 					<div class="meeting-with-container">
 						<span>Meeting with:</span> 
 						<span>&nbsp; 
+							<a target="_blank" href="${meeting.host.homePageUrl}">
 							${meeting.host.firstName} ${meeting.host.lastName} 
 								<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
+							</a>
 						</span>
 					</div>
 					<div class="names-container">
