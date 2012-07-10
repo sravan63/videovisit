@@ -271,6 +271,7 @@
 								  trust="yes"
 								  command="/usr/local/tomcat5080/bin/startup.sh"
 								/>
+			<sleep seconds="30"/>
 			   <sshexec host="TTG-QA-APP-03"
 				  username="vv_user"
 				  password="vv7463"
