@@ -271,6 +271,26 @@
 								  trust="yes"
 								  command="/usr/local/tomcat5080/bin/startup.sh"
 								/>
+			   <sshexec host="TTG-QA-APP-03"
+				  username="vv_user"
+				  password="vv7463"
+				  trust="yes"
+				  command="cp /home/vv_user/configurationmember.properties /usr/local/tomcat5080/webapps/videovisit/WEB-INF/classes/configuration.properties"
+				/>
+				<echo message="stopping tomcat 5080"/>
+				<sshexec host="TTG-QA-APP-03"
+				  username="vv_user"
+				  password="vv7463"
+				  trust="yes"
+				  command="/usr/local/tomcat5080/bin/shutdown.sh"
+				/>
+				<echo message="starting tomcat 5080"/>
+				<sshexec host="TTG-QA-APP-03"
+				  username="vv_user"
+				  password="vv7463"
+				  trust="yes"
+				  command="/usr/local/tomcat5080/bin/startup.sh"
+				/>
 			</target>
 	<!-- ************************************************ -->
 	   		<!-- Start of deploy			  -->
