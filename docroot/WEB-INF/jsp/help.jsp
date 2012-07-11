@@ -30,17 +30,15 @@
         <div id="helpAudio" class="helptabs">
             <h4>Use Audio</h4>
             <ul>
-                <li>Click the "Turn Audio On" button on the left side of the video visit page.  This enables your microphone and computer speakers to be used for audio.  Make sure you mic and speakers are turned on and not muted.  </li>
-                <li>You can adjust the sensitivity of your microphone with the slider located underneath the "Turn Audio On" button.</li>
-                <li>If you're experiencing an echo when using audio through the Internet, right-click (or CTRL-click on a one-button Mac mouse) on your video window, and select "Settings".  Click on the microphone tab, and check the box "Reduce Echo" (Note: Depending on your version of Adobe Flash you may not see this option).</li>
+                <li>By default, the Video Visits website will try to use your computer's speakers and microphone for audio.  Make sure your microphone and speakers are turned on and not muted.  To turn them off click the big microphone button on the right side of the video visit page.</li>
+                <li>You can adjust the sensitivity of your microphone with the slider located to the left of the microphone button.</li>
+                <li> If you're experiencing an echo when using audio through the Internet, right-click on your video window, and select "Settings". Click on the microphone tab, and check the box "Reduce Echo" (Note: Depending on your version of Adobe Flash you may not see this option).</li>
             </ul>
         </div>
         <div id="helpOther" class="helptabs">
             <h4>Other Help</h4>
             <ul>
-                <li>You can send instant messages to your clinician. Click the "Chat Window" button on the left side of the page. An instant messaging box should appear. Simply type your message and hit "Enter" on your keyboard and the message will instantly display to your clinician.</li>
-                <li>You can turn your video window off.  Click the "Turn Video On/Off" button.</li>
-                <li>You can change video resolution options.  NOTE: It is not recommended to change any of these settings.  They are already set for optimal performance.</li>
+                <li>You can send instant messages to your clinician. Click the chat window at the bottom of the "Public Chat" module in the lower right portion of the screen.  Simply type your message and hit "Enter" on your keyboard and the message will instantly display to the other party.</li>
             </ul>
         </div>
 
