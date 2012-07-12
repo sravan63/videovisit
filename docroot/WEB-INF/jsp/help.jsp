@@ -30,7 +30,7 @@
         <div id="helpAudio" class="helptabs">
             <h4>Use Audio</h4>
             <ul>
-                <li>By default, the Video Visits website will try to use your computer's speakers and microphone for audio.  Make sure your microphone and speakers are turned on and not muted.  To turn them off click the big microphone button on the right side of the video visit page.</li>
+                <li>By default, the Video Visits website will try to use your computer's speakers and microphone for audio.  Make sure your microphone and speakers are turned on and not muted.  If you don't want to use audio through the website, you can turn off this feature by clicking the big microphone button on the right side of the video visit page.</li>
                 <li>You can adjust the sensitivity of your microphone with the slider located to the left of the microphone button.</li>
                 <li> If you're experiencing an echo when using audio through the Internet, right-click on your video window, and select "Settings". Click on the microphone tab, and check the box "Reduce Echo" (Note: Depending on your version of Adobe Flash you may not see this option).</li>
             </ul>
