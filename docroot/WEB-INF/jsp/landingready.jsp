@@ -34,7 +34,12 @@
                 <span class="label">Participants:</span>
                 <span class="names participants">
                   <c:forEach var="p" items="${meeting.participants}">
-                    <a target="_blank" href="${p.homePageUrl}">${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></a>
+                  	<c:if test="${p.homePageUrl != null && fn:length(p.homePageUrl) > 0}">
+                   		 <a target="_blank" href="${p.homePageUrl}">${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></a>
+                   	</c:if>
+                   	<c:if test="${p.homePageUrl == null || fn:length(p.homePageUrl) == 0}">
+                   		${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if>
+                   	</c:if>
                   </c:forEach>
 
                 </span>
