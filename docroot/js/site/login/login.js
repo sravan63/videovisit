@@ -168,7 +168,7 @@ $(document).ready(function() {
                                 break;
 
                             case "3":
-                                $("p.error").css("display", "inline").append('<li><label>Your username was invalid. Please try again.</label></li>');
+                                $("p.error").css("display", "inline").append('<li><label>We could not find this patient.  Please try entering the information again.</label></li>');
                                 moveToit("p.error");
                                 break;
 
@@ -287,7 +287,7 @@ $(document).ready(function() {
 
                     case "3":
                         //$consentModal.jqmHide();
-                        $("p.error").css("display", "inline").append('<li><label>Your username was invalid. Please try again.</label></li>');
+                        $("p.error").css("display", "inline").append('<li><label>We could not find this patient.  Please try entering the information again.</label></li>');
                         moveToit("p.error");
                         break;
 
