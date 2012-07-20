@@ -11,13 +11,14 @@ $(document).ready(function() {
         hreflocation = $(this).attr('href');
         
         $.ajax({
+        	
             type: 'POST',
             data: meetingIdData,
-            //url: VIDEO_VISITS.Path.guest.joinmeeting,
-            url: "/videovisit/verifyguest.json",
+            //url: VIDEO_VISITS.Path.guest.verifyguest,
+            url: "verifyguest.json",
             success: function(returndata) {
               returndata = jQuery.parseJSON(returndata);
-              if(returndata.result === '1'){
+              if(returndata.result === 'false'){
             	$("p.error").css("display", "inline").append('<label>No matching patient found. Please try again.</label><br/>');
                 moveToit("p.error");              	
                 return false;
@@ -28,7 +29,7 @@ $(document).ready(function() {
               }
               hreflocation = returndata.result;
               //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
-              window.location.replace("/videovisit/guestready.htm?meetingCode=" + mtgCode);
+              window.location.replace("guestready.htm?meetingCode=" + mtgCode);
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
