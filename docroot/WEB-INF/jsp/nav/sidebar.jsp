@@ -25,7 +25,7 @@
             </li>
             <li>Preventive Health Reminders
                 <ul>
-                    <li><a target="MDO_ExternalLink" href="http://www.kp.org/mypreventivehealth">Screening tests and Immunizations</a></li>
+                    <li><a target="MDO_ExternalLink" href="https://mydoctor.kaiserpermanente.org/portal/member.portal?refUrl=https://members.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=mymedicalrecord&kp_shortcut_referrer=kp.org/mypreventivehealth">Screening tests and Immunizations</a></li>
                 </ul>
             </li>
             <li>Manage Your Family's Health
