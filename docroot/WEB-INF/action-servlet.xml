@@ -38,8 +38,9 @@
 				<prop key="/createmegameeting.json">createmegameeting</prop>
 				<prop key="/healthMonitor">healthMonitor</prop>
 				<prop key="/loading.htm">loading</prop>
+				<prop key="/guest">guest</prop>	
 				<prop key="/verifyguest.json">verifyguest</prop>				
-				<prop key="/guest">guest</prop>		
+					
 				<prop key="/guestready.htm">guestready</prop>	
 				<prop key="/createguestsession.json">createguestsession</prop>
 				<prop key="/endguestsession.json">endguestsession</prop>
