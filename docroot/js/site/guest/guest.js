@@ -18,7 +18,7 @@ $(document).ready(function() {
             url: "verifyguest.json",
             success: function(returndata) {
               returndata = jQuery.parseJSON(returndata);
-              if(returndata.result === 'false'){
+              if(returndata.result === '1'){
             	$("p.error").css("display", "inline").append('<label>No matching patient found. Please try again.</label><br/>');
                 moveToit("p.error");              	
                 return false;

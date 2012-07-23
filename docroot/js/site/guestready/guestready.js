@@ -13,6 +13,7 @@ $(document).ready(function() {
             url: VIDEO_VISITS.Path.guestready.joinmeeting,
             success: function(returndata) {
                 returndata = jQuery.parseJSON(returndata);
+                
                 hreflocation = returndata.result;
                 window.location.replace("guestvisit.htm?iframedata=" + encodeURIComponent(hreflocation));
             },
