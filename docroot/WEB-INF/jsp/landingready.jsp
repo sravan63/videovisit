@@ -24,8 +24,13 @@
             <div class="meeting-with-container">
               <span>Meeting with:</span>
               <span>&nbsp;
+                <c:if test="${meeting.host.homePageUrl != null && fn:length(meeting.host.homePageUrl) > 0}">
                 <a target="_blank" href="${meeting.host.homePageUrl}">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
                 </a>
+                </c:if>
+               	<c:if test="${meeting.host.homePageUrl == null || fn:length(meeting.host.homePageUrl) == 0}">
+                  		${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
+                  	</c:if>
               </span>
             </div>
 
