@@ -5,6 +5,7 @@ $(document).ready(function() {
     $(".btn").click(function(e){
         e.preventDefault();
         meetingIdData = 'meetingCode=' + gup("meetingCode"); //$(this).attr('meetingCode');
+        alert('guestready = ' + meetingCode);
         hreflocation = $(this).attr('href');
         
         $.ajax({
