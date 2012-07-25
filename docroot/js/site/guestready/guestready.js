@@ -5,7 +5,6 @@ $(document).ready(function() {
     $(".btn").click(function(e){
         e.preventDefault();
         meetingIdData = 'meetingCode=' + gup("meetingCode"); //$(this).attr('meetingCode');
-        alert('guestready = ' + meetingCode);
         hreflocation = $(this).attr('href');
         
         $.ajax({
@@ -16,7 +15,7 @@ $(document).ready(function() {
                 returndata = jQuery.parseJSON(returndata);
                 
                 hreflocation = returndata.result;
-                window.location.replace("guestvisit.htm?iframedata=" + encodeURIComponent(hreflocation));
+                window.location.replace("guestvisit.htm?" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation));
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {

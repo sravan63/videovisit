@@ -23,7 +23,7 @@ $(document).ready(function() {
     $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');
 
     $('#quitMeetingLink').click(function(){
-        var quitMeetingIdData = 'meetingCode=' + $(this).attr('meetingCode');
+        var quitMeetingIdData = 'meetingCode=' + gup("meetingCode"); //$(this).attr('meetingCode');
         $.ajax({
             type: 'POST',
             url: VIDEO_VISITS.Path.guestvisit.quitmeeting,
