@@ -27,6 +27,7 @@ public class GuestController extends SimplePageController {
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {									
 		initializeWebappContext(request);
+		
 		String data = null;
 		try {			
 			data = MeetingCommand.retrieveMeetingForCaregiver(request, response);

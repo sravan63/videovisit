@@ -326,11 +326,13 @@ public class MeetingCommand {
 		String meetingCode = request.getParameter("meetingCode");			
 		boolean success = WebService.initWebService();		
 		if (ctx != null && success) {
+			logger.info("Before retrieving caregiver meetings");
 			ret = WebService.retrieveMeetingForCaregiver(meetingCode, PAST_MINUTES, FUTURE_MINUTES);			
 			if (ret != null) {
 				MeetingWSO[] meetings = ret.getResult();				
 				if (meetings != null) {
-					if (meetings.length == 1 && meetings[0]== null ) {					
+					if (meetings.length == 1 && meetings[0]== null ) {
+						logger.info("setting total meetings = 0");
 						ctx.setTotalmeetings(0);
 					} else {
 						for (int i=0; i<meetings.length; i++) {
@@ -386,6 +388,7 @@ public class MeetingCommand {
 		UpdateResponseWrapper ret = null;		
 		try	{
 			String meetingCode = request.getParameter("meetingCode");
+			logger.info("meetingCode = " + meetingCode);
 			if (meetingCode != null && !meetingCode.isEmpty()) {
 				ret = WebService.endCaregiverMeetingSession(meetingCode);
 			}				
