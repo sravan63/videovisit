@@ -15,7 +15,7 @@ $(document).ready(function() {
                 returndata = jQuery.parseJSON(returndata);
                 
                 hreflocation = returndata.result;
-                window.location.replace("guestvisit.htm?" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation));
+                window.location.replace("guestvisit.htm?meetingCode=" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation));
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
