@@ -1,12 +1,19 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.context;
 
+import java.io.Serializable;
+
 import javax.servlet.http.HttpServletRequest;
 import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*;
 
 import org.apache.log4j.Logger;
 
 
-public class WebAppContext {
+public class WebAppContext implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static Logger logger = Logger.getLogger(WebAppContext.class);
 	
