@@ -162,6 +162,7 @@ lib/cos.jar -text
 lib/dom4j-1.6.1.jar -text
 lib/dynamic-tiles2-1.1.jar -text
 lib/ezmorph-1.0.6.jar -text
+lib/geronimo-stax-api_1.0_spec-1.0.1.wso2v1.jar -text
 lib/geronimo-stax-api_1.0_spec-1.0.jar -text
 lib/httpcore-4.1.0.alpha1-wso2v1.jar -text
 lib/j2ee.jar -text
@@ -189,6 +190,7 @@ lib/wso2mex-2.2.jar -text
 lib/wso2xfer-2.2.jar -text
 lib/wstx-asl-3.2.1.jar -text
 lib/xml-apis.jar -text
+lib/xmlbeans-2.3.0.wso2v1.jar -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/EnvironmentCommand.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/MeetingCommand.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/MonitoringCommand.java -text
