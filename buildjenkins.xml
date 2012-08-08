@@ -58,6 +58,7 @@
 	   </target>
 	
 	<target name="local">
+		<sleep seconds="120"/>
 		<antcall target="assemble" />
 	  	<antcall target="build-war" />
 		<if>
