@@ -9,7 +9,7 @@ $(document).ready(function() {
           '&meetingCode=' + mtgCode +
           '&patientLastName=' + $.trim($("#patient_last_name").val());
         hreflocation = $(this).attr('href');
-        
+        //alert(meetingIdData);
         $.ajax({
         	
             type: 'POST',
@@ -29,7 +29,7 @@ $(document).ready(function() {
               }
               hreflocation = returndata.result;
               //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
-              window.location.replace("guestready.htm?meetingCode=" + mtgCode);
+              window.location.replace("guestready.htm?" + meetingIdData);
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
