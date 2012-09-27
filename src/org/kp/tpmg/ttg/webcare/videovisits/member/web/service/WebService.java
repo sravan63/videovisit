@@ -255,7 +255,7 @@ public class WebService{
 				query.setMrn8Digit(mrn8Digit);
 				query.setSessionID(sessionID);
 				query.setMeetingID(meetingID);
-			
+				
 				UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
 				toRet = response.get_return();
 			}
@@ -288,7 +288,7 @@ public class WebService{
 				query.setMrn8Digit(mrn8Digit);
 				query.setSessionID(sessionID);
 				query.setMeetingID(meetingID);
-			
+				
 				CreateMegameetingSessionResponse response = stub.createMegameetingSession(query);
 				toRet = response.get_return();
 			}
@@ -406,10 +406,11 @@ public class WebService{
 		return response.get_return();
 	}
 	
-	public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash) 
+	public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash, String patientLastName) 
 			throws RemoteException {
 		CreateCaregiverMeetingSession query = new CreateCaregiverMeetingSession();
 		query.setMeetingHash(meetingHash);
+		query.setPatientLastName(patientLastName);
 		CreateCaregiverMeetingSessionResponse response = stub.createCaregiverMeetingSession(query);
 		return response.get_return();
 	}

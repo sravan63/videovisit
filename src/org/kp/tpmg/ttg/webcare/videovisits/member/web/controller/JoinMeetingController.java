@@ -11,6 +11,7 @@ public class JoinMeetingController extends SimplePageController {
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{	
+		logger.info("in JoinMeetingController");
 		String data = null;
 		try
 		{

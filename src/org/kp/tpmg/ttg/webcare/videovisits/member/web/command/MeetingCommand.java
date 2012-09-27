@@ -225,6 +225,7 @@ public class MeetingCommand {
 	public static String updateMemberMeetingStatusJoining(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		UpdateResponseWrapper ret = null;
 		long meetingId = 0;
+		
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
 		try
@@ -234,6 +235,9 @@ public class MeetingCommand {
 					!request.getParameter("meetingId").equals("")) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
 			}
+			
+			
+			
 			
 			if (ctx != null && ctx.getMember() != null)
 			{
@@ -368,8 +372,10 @@ public class MeetingCommand {
 		try {
 			// parse parameters
 			String meetingCode = request.getParameter("meetingCode");
+			String patientLastName = request.getParameter("patientLastName");
+			
 			if (meetingCode != null && !meetingCode.isEmpty()) {
-				ret = WebService.createCaregiverMeetingSession(meetingCode);
+				ret = WebService.createCaregiverMeetingSession(meetingCode, patientLastName);
 				if (ret != null) {
 					return JSONObject.fromObject(ret).toString();
 				}
