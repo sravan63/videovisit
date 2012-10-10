@@ -27,7 +27,7 @@ $(document).ready(function() {
                 moveToit("p.error");              	
                 return false;
               } else if (returndata.result === '2') {            	
-            	$("p.error").css("display", "inline").append('<label>You cannot join the same video visit more than once.</label><br/>');
+            	$("p.error").css("display", "inline").html('<label>You cannot join the same video visit more than once.</label><br/>');
                 moveToit("p.error");            	
                 return false;  
               }
