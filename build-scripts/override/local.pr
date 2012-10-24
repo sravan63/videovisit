@@ -7,5 +7,5 @@ INITFILE=/usr/local/tpmg/apps/videovisit-member/properties/videovisitsmember.loc
 WEBSERVICE_ENDPOINT=http://pr-ivip-ncal-app-to-esb-1.tpmg.net:48008/services/VideoVisitMemberServices
 LOGLEVEL=info
 
-MEGAMEETING_PARTICIPANT_URL=https://kaiser.videoconferencinginfo.com/?page=guest&conid=<mmMeetingName>&user=<guest name>&agree=1&reload=1
-MEGAMEETING_SETUP_URL=https://kaiser.videoconferencinginfo.com/setupwizard_kp.html
+MEGAMEETING_PARTICIPANT_URL=https://kaiserm3.videoconferencinginfo.com/?page=guest&conid=<mmMeetingName>&user=<guest name>&agree=1&reload=1
+MEGAMEETING_SETUP_URL=https://kaiserm3.videoconferencinginfo.com/setupwizard_kp.html
