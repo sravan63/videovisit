@@ -7,4 +7,4 @@ WEBSERVICE_ENDPOINT=http://ttg-qa-esb-1.permanente.net:8008/services/VideoVisitM
 LOGLEVEL=info
 
 MEGAMEETING_PARTICIPANT_URL=https://kaiserm3test.videoconferencinginfo.com/?page=guest&conid=<mmMeetingName>&user=<guest name>&agree=1&reload=1
-MEGAMEETING_SETUP_URL=https://kaiserm3test.videoconferencinginfo.com/setupwizard_kp.html
+MEGAMEETING_SETUP_URL=http://kaiserm3test.videoconferencinginfo.com/guest/meetingSetup.swf

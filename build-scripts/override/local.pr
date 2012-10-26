@@ -8,4 +8,4 @@ WEBSERVICE_ENDPOINT=http://pr-ivip-ncal-app-to-esb-1.tpmg.net:48008/services/Vid
 LOGLEVEL=info
 
 MEGAMEETING_PARTICIPANT_URL=https://kaiserm3.videoconferencinginfo.com/?page=guest&conid=<mmMeetingName>&user=<guest name>&agree=1&reload=1
-MEGAMEETING_SETUP_URL=https://kaiserm3.videoconferencinginfo.com/setupwizard_kp.html
+MEGAMEETING_SETUP_URL=http://kaiserm3.videoconferencinginfo.com/guest/meetingSetup.swf
