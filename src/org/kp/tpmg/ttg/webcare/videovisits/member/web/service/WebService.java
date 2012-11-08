@@ -12,7 +12,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.videovisit.member.*;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.*;
 import org.kp.tpmg.webservice.client.videovisit.member.*;
 
 
@@ -180,28 +180,28 @@ public class WebService{
 		
 		MeetingWSO meeting1 = new MeetingWSO();
 		ProviderWSO fakeprovider1 = new ProviderWSO();
-		meeting1.setHost(fakeprovider1);
+		meeting1.setProviderHost(fakeprovider1);
 		
 		meeting1.setScheduledTimestamp(new Date().getTime()+ 300000);
 		meeting1.setMeetingId(1);
 		meeting1.getHost().setFirstName("John");
 		meeting1.getHost().setLastName("Lim");
 		meeting1.getHost().setTitle("PDM");
-		meeting1.getHost().setImageUrl("http://www.permanente.net/kaiser/pictures/30290.jpg");
-		meeting1.getHost().setHomePageUrl("http://www.permanente.net/homepage/kaiser/pages/c13556-top.html");
+		meeting1.getProviderHost().setImageUrl("http://www.permanente.net/kaiser/pictures/30290.jpg");
+		meeting1.getProviderHost().setHomePageUrl("http://www.permanente.net/homepage/kaiser/pages/c13556-top.html");
 		meeting1.setMmMeetingName("385bne");
 		
 		MeetingWSO meeting2 = new MeetingWSO();
 		ProviderWSO fakeprovider2 = new ProviderWSO();
-		meeting2.setHost(fakeprovider2);
+		meeting2.setProviderHost(fakeprovider2);
 		
 		meeting2.setScheduledTimestamp(new Date().getTime()+ 900000);
 		meeting2.setMeetingId(2);
 		meeting2.getHost().setFirstName("Samantha");
 		meeting2.getHost().setLastName("Strong");
 		meeting2.getHost().setTitle("MD");
-		meeting2.getHost().setImageUrl("http://www.permanente.net/kaiser/pictures/31250.jpg");
-		meeting2.getHost().setHomePageUrl("http://www.permanente.net/homepage/doctor/strong");
+		meeting2.getProviderHost().setImageUrl("http://www.permanente.net/kaiser/pictures/31250.jpg");
+		meeting2.getProviderHost().setHomePageUrl("http://www.permanente.net/homepage/doctor/strong");
 		meeting2.setMmMeetingName("385bnsewe");
 		
 		toRet.setResult (new MeetingWSO[] {meeting1, meeting2});

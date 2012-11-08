@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.UpdateResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.UpdateResponseWrapper;
 
 
 public class MonitoringCommand {

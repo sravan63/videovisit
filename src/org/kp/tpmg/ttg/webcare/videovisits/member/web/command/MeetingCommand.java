@@ -14,13 +14,13 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.CaregiverWSO;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.MeetingWSO;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.ProviderWSO;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.StringResponseWrapper;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.UpdateResponseWrapper;
-import org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.VerifyMemberResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.UpdateResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 
 public class MeetingCommand {
 
@@ -451,7 +451,7 @@ public class MeetingCommand {
 			if (caregivers != null && caregivers.length > 0) {
 				for (int i=0; i<caregivers.length; i++) {
 					CaregiverWSO caregiver = caregivers[i];
-					if (caregiver.getMeetingCode().equals(meetingHash)) {
+					if (caregiver.getMeetingHash().equals(meetingHash)) {
 						megaMeetingUrl = m2.replaceAll(
 								caregiver.getFirstName().replaceAll("[^a-zA-Z0-9 ]", " ") + 
 								" " + 
