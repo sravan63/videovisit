@@ -1,6 +1,6 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*"%>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*"%>
-<%@ page import="org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*"%>
+<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="javax.servlet.*"%>
 <%@ page import="javax.servlet.http.*"%>
@@ -13,16 +13,16 @@
 	<div id="landing-portal-ready">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			<div class="landing-portal-single-container">
-        <img src=${meeting.host.imageUrl} alt="" />
+        <img src=${meeting.providerHost.imageUrl} alt="" />
 				<div class="landing-portal-details">
 					<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
 					<h3>This visit is scheduled for </h3>
 					<div class="meeting-with-container">
 						<span>Meeting with:</span> 
 						<span>&nbsp; 
-							<a target="_blank" href="${meeting.host.homePageUrl}">
-							${meeting.host.firstName} ${meeting.host.lastName} 
-								<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
+							<a target="_blank" href="${meeting.providerHost.homePageUrl}">
+							${meeting.providerHost.firstName} ${meeting.providerHost.lastName} 
+								<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
 							</a>
 						</span>
 					</div>

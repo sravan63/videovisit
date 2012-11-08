@@ -1,6 +1,6 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*"%>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*"%>
-<%@ page import="org.kp.tpmg.videovisit.member.serviceapi.webserviceobject.xsd.*"%>
+<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="javax.servlet.*"%>
 <%@ page import="javax.servlet.http.*"%>
