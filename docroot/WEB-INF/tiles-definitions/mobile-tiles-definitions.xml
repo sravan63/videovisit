@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Application Template -->
+	<definition name=".mobileWebPageTemplate" template="/WEB-INF/tiles-templates/mobileLayout.jsp">
+		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="header" value="/WEB-INF/jsp/mobile/common/header.jsp" />
+		<put-attribute name="sidebar"  value="/WEB-INF/jsp/blank.jsp"  />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
+	</definition>
+
+	<definition name=".oneColumnLayout" extends=".mobileWebPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+	</definition>
+	
+	<definition name="mPatientLandingPageLayout" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
+	</definition>
+	
+	
+	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
+ 		<put-attribute name="header" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="data" value="/WEB-INF/jsp/blank.jsp" />
+	</definition>
+	
+	
+	<!-- json data -->
+	<definition name="jsonData" extends=".dataTemplate">
+ 		<put-attribute name="header" value="/WEB-INF/jsp/data/jsonHeader.jsp" />
+ 		<put-attribute name="data" value="/WEB-INF/jsp/data/jsonData.jsp" />
+	</definition>
+
+	
+
+	
+
+	
+</tiles-definitions>

@@ -10,6 +10,7 @@
 		<property name="definitions">
 			<list>
 				<value>/WEB-INF/tiles-definitions/tiles-definitions.xml</value>
+				<value>/WEB-INF/tiles-definitions/mobile-tiles-definitions.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -39,15 +40,18 @@
 				<prop key="/healthMonitor">healthMonitor</prop>
 				<prop key="/loading.htm">loading</prop>
 				<prop key="/guest">guest</prop>	
-				<prop key="/verifyguest.json">verifyguest</prop>				
-					
+				<prop key="/verifyguest.json">verifyguest</prop>									
 				<prop key="/guestready.htm">guestready</prop>	
 				<prop key="/createguestsession.json">createguestsession</prop>
 				<prop key="/endguestsession.json">endguestsession</prop>
 				<prop key="/guestvisit.htm">guestvisit</prop>	
 				<prop key="/guestlogout.htm">guestlogout</prop>		
 				<prop key="/guesterror.htm">guesterror</prop>
-				<prop key="/guesthelp.htm">guesthelp</prop>		
+				<prop key="/guesthelp.htm">guesthelp</prop>	
+				
+				<!-- Mobile URLs -->
+				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>	
+					
 			</props>
 		</property>
 	</bean>
@@ -182,6 +186,16 @@
 	<bean id="guesthelp" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="guesthelp" />
+		<property name="navigation" value="guesthelp" />
+		<property name="subNavigation" value="guesthelp" />
+	</bean>
+	
+	<!-- Mobile Controllers  -->
+	<bean id="mobilePatientLanding" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	    <!--  defined n mobile-titles-definitions.xml -->
+		<property name="viewName" value="mPatientLandingPageLayout" />
+		
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
 	</bean>

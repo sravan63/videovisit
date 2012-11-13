@@ -43,6 +43,10 @@ docroot/WEB-INF/jsp/landingready.jsp -text
 docroot/WEB-INF/jsp/loading.jsp -text
 docroot/WEB-INF/jsp/login.jsp -text
 docroot/WEB-INF/jsp/logout.jsp -text
+docroot/WEB-INF/jsp/mobile/common/footer.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/mobile/common/header.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/mobile/landingPage.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/mobile/patientLoginModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/nav/footer.jsp -text
 docroot/WEB-INF/jsp/nav/guestInfo.jsp -text
 docroot/WEB-INF/jsp/nav/header.jsp -text
@@ -59,9 +63,11 @@ docroot/WEB-INF/jsp/visit.jsp -text
 docroot/WEB-INF/taglib/spring.tld -text
 docroot/WEB-INF/taglib/struts-tiles.tld -text
 docroot/WEB-INF/taglib/taglib.tld -text
+docroot/WEB-INF/tiles-definitions/mobile-tiles-definitions.xml -text svneol=unset#text/plain
 docroot/WEB-INF/tiles-definitions/tiles-definitions.xml -text
 docroot/WEB-INF/tiles-templates/applicationLayout.jsp -text
 docroot/WEB-INF/tiles-templates/dataLayout.jsp -text
+docroot/WEB-INF/tiles-templates/mobileLayout.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/tiles-templates/textLayout.jsp -text
 docroot/WEB-INF/web.xml -text
 docroot/blank.jsp -text
@@ -72,6 +78,9 @@ docroot/css/library/plugin/jqModal.css -text
 docroot/css/site/global/base.css -text
 docroot/css/site/global/handheld.css -text
 docroot/css/site/global/jquery-ui.css -text
+docroot/css/site/global/mobile-global.css -text svneol=unset#text/plain
+docroot/css/site/global/mobile-reset.min.css -text svneol=unset#text/plain
+docroot/css/site/global/mobile-web.css -text svneol=unset#text/plain
 docroot/css/site/global/print.css -text
 docroot/css/site/global/structure.css -text
 docroot/css/site/global/style.css -text
@@ -96,6 +105,8 @@ docroot/images/global/placeholder-meeting-frame.jpg -text
 docroot/images/global/placeholder-member-landing-portal.jpg -text
 docroot/images/global/portrait-1.jpg -text
 docroot/images/global/sprite-bg-side-nav.png -text
+docroot/images/mobile/video-visit-ui@2x.png -text
+docroot/images/mobile/vv-patient-welcome-image.jpg -text
 docroot/index.jsp -text
 docroot/js/library/jquery/jquery-1.4.2.min.js -text
 docroot/js/library/jquery/jquery-ui-1.8.2.custom.min.js -text
@@ -125,6 +136,7 @@ docroot/js/site/intro/popup.js -text
 docroot/js/site/landingnone/landingnone.js -text
 docroot/js/site/landingready/landingready.js -text
 docroot/js/site/login/login.js -text
+docroot/js/site/mobile/global.js -text svneol=unset#text/plain
 docroot/js/site/visit/visit.js -text
 docroot/keepalive.jsp -text
 docroot/live.jsp -text
