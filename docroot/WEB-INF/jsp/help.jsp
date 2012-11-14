@@ -3,7 +3,7 @@
 
 <div id="content-block" class="help-block">
     <div class="sidebar">
-        <a href="javascript:void(0)"  id="help_back_btn" class="button back right">Back &rsaquo;&rsaquo;</a>
+<!--         <a href="javascript:void(0)"  id="help_back_btn" class="button back right">Back &rsaquo;&rsaquo;</a> -->
 
         <h5>Get Help With:</h5>
         <ul id="helpNavLinks">
