@@ -32,7 +32,7 @@
       <filter-name>DataSessionFilter</filter-name>
       <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.DataSessionFilter</filter-class>
    </filter>
-   +
+  
    <filter-mapping>
       <filter-name>DataSessionFilter</filter-name>
       <url-pattern>*.json</url-pattern>

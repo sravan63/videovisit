@@ -18,10 +18,14 @@
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 	</definition>
 	
-	<definition name="mPatientLandingPageLayout" extends=".oneColumnLayout">
- 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
+	<definition name="mPatientPreLoginPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/preLoginPage.jsp" />
 	</definition>
 	
+	
+	<definition name="mPatientLandingPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
+	</definition>
 	
 	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
  		<put-attribute name="header" value="/WEB-INF/jsp/blank.jsp" />

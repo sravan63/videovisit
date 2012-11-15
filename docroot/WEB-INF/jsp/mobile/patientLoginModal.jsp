@@ -14,7 +14,7 @@
 						<button id="btn-i-have-it" class="button-pri sec"><!-- I&#8217;ve installed it! -->I have it installed!</button>
 					</div>
 					<div id="login-form" class="hide-me">
-						<form class="login-form">
+						<form class="login-form" id="login-form">
 							<ul class="form-block">
 								<li><label for="last_name">Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1" autocorrect = "off" pattern="[a-zA-Z]+" required></li>
 								<li><label for="mrn">Medical Record #</label><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" autocorrect = "off" pattern="[0-9]*" required></li>
@@ -26,9 +26,12 @@
 								</li>
 								
 						</ul>
-							<button id="login-submit" class="off" tabindex="6" onclick="window.location='patients-visits-yes.html', modalShow();">Login</button>
+							<div>
+								<button id="login-submit" name="login-submit"  tabindex="6">Login</button>
+							</div>
 							<p class="disclaimer">Children under age 13 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
 						</form>
+						<p class="error error-login"></p>
 					</div>
 				</div>
 			</div>
