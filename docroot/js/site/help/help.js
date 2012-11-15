@@ -1,5 +1,6 @@
 $(document).ready(function() {
     
+	$('#content-main #nav-user').hide();
     $('.helptabs').hide();
     $('ul#helpNavLinks li a:first').addClass("active")
     $('div.content div:first').show();
