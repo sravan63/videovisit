@@ -20,6 +20,8 @@
 		
 		<li><div class="img-connection"></div>Make sure you have a strong network connection.</li>
 	</ul>
+</div>
+<div>
 	<button class="button-main" onclick="modalShow();">Sign in Here</button>
 </div>
 

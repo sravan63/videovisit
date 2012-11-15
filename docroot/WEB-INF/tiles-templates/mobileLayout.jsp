@@ -24,7 +24,8 @@
         <script src="js/site/mobile/global.js" type="text/javascript"></script>
         
          <script src="environment/path.js" type="text/javascript"></script>
-        
+         <script src="js/site/global/dateExtensions_loader.js" type="text/javascript"></script>
+       
 
 		<link rel="stylesheet" href="css/site/global/mobile-reset.min.css">
 		<link rel="stylesheet" href="css/site/global/mobile-global.css">
