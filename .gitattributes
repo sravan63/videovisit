@@ -110,6 +110,7 @@ docroot/images/mobile/video-visit-ui@2x.png -text
 docroot/images/mobile/vv-patient-welcome-image.jpg -text
 docroot/index.jsp -text
 docroot/js/library/jquery/jquery-1.4.2.min.js -text
+docroot/js/library/jquery/jquery-1.8.2.min.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-ui-1.8.2.custom.min.js -text
 docroot/js/library/plugin/additional-validation-methods.js -text
 docroot/js/library/plugin/dimensions.js -text
