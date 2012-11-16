@@ -29,18 +29,80 @@ $("#login-form").removeClass("hide-me");
 }
 
 $(document).ready(function() {
-//	$(".modal-window .close-button").click(modalHide);
-//	$(".scrollup").click(scrollMe);
-//	// Shows and hides scroll to top button
-//	$(window).scroll(function(){
-//		if ($(this).scrollTop() > 160) {
-//			$('.scrollup').fadeIn();
-//		} else {
-//			$('.scrollup').fadeOut();
-//		}
-//	});
-//	// scrolls to top for anchor page states on load
-//	scrollMe();
+	$(".modal-window .close-button").click(modalHide);
+	$(".scrollup").click(scrollMe);
+	// Shows and hides scroll to top button
+	$(window).scroll(function(){
+		if ($(this).scrollTop() > 160) {
+			$('.scrollup').fadeIn();
+		} else {
+			$('.scrollup').fadeOut();
+		}
+	});
+	// scrolls to top for anchor page states on load
+	scrollMe();
+	
+	$('#overlay, #modal').on('touchmove', function (event) {
+		// locking these elements, so they can't be moved when dragging the div
+			event.preventDefault();
+	});
+	
+	$("form :input").focus(function() {
+		alert("form input=");
+		$(this).parent().addClass("form-focus");
+		$("#modal").addClass("shifted");
+		}).blur(function() {
+			$("#modal").removeClass("shifted");
+			$(this).parent().removeClass("form-focus");
+			});
+
+
+
+
+	$("#last_name").keyup(function () {
+		var value = $(this).val();
+		alert("value=" + value);
+		var errorMessage = "name entered doesn't match our records (sample message)";
+		if (value == "error" || value == "Error") {
+			alert("error");
+			$(this).next(".failmessage").text(errorMessage);
+			$(this).next(".failmessage").removeClass("hide-me");
+			$(this).parent().addClass("error");
+		}
+		else {
+			$(this).next(".failmessage").addClass("hide-me");
+			$(this).parent().removeClass("error");
+		}
+	});
+
+	$("#mrn").keyup(function () {
+		var value = $(this).val();
+		var errorMessage = "invalid number (sample message)";
+		if (value == "99") {
+			$(this).next(".failmessage").text(errorMessage);
+			$(this).next(".failmessage").removeClass("hide-me");
+			$(this).parent().addClass("error");
+		}
+		else {
+			$(this).next(".failmessage").addClass("hide-me");
+			$(this).parent().removeClass("error");
+		}
+	});
+
+	$("#birth_year").keyup(function () {
+		var value = $(this).val();
+		var errorMessage = "Please enter year in a 4-digit format (for example: 1952) (sample msg)";
+		if (value == "99") {
+			$(this).next(".failmessage").text(errorMessage);
+			$(this).next(".failmessage").removeClass("hide-me");
+			$(this).parent().addClass("error");
+		}
+		else {
+			$(this).next(".failmessage").addClass("hide-me");
+			$(this).parent().removeClass("error");
+		}
+	});
+	
 	
 	// Click of "I have it Installed button"
 	$("#btn-i-have-it").click(hidesAppAlert);
@@ -57,6 +119,8 @@ $(document).ready(function() {
 
 
 	});
+	
+	
 	
 	
 });
@@ -120,10 +184,4 @@ function loginSubmit(){
 }
 
 
-$("form :input").focus(function() {
-	$(this).parent().addClass("form-focus");
-	$("#modal").addClass("shifted");
-	}).blur(function() {
-		$("#modal").removeClass("shifted");
-		$(this).parent().removeClass("form-focus");
-		});
+
