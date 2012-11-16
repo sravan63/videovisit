@@ -16,8 +16,9 @@
         <script src="js/library/jquery/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
        	 -->
         
-        <script src="js/library/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
-        <script src="js/library/jquery/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script src="js/library/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
+        
         
         <!-- Defines VIDEO_VISITS variable -->
         <script src="js/site/global/display.js" type="text/javascript"></script>
