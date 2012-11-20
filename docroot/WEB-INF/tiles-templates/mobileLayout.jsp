@@ -18,14 +18,17 @@
         
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
         <script src="js/library/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
-        
-        
         <!-- Defines VIDEO_VISITS variable -->
         <script src="js/site/global/display.js" type="text/javascript"></script>
+        <script src="environment/path.js" type="text/javascript"></script>
+        <script src="js/site/global/dateExtensions_loader.js" type="text/javascript"></script>
+        
+        
         <script src="js/site/mobile/global.js" type="text/javascript"></script>
         
-         <script src="environment/path.js" type="text/javascript"></script>
-         <script src="js/site/global/dateExtensions_loader.js" type="text/javascript"></script>
+        
+        
+        
        
 
 		<link rel="stylesheet" href="css/site/global/mobile-reset.min.css">
