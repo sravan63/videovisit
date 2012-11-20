@@ -1,3 +1,5 @@
+
+
 // Hides address bar on page load
 /mobile/i.test(navigator.userAgent)
 && !window.location.hash
@@ -28,6 +30,18 @@ $("#login-form").removeClass("hide-me");
 	// return false;
 }
 
+function launchVideoVisit(megaMeetingId, lastName, firstName){
+
+	var name = lastName + " " + firstName;
+	
+	var megaMeetingUrl = "tpmg:kaiserm3.videoconferencinginfo.com/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Kaiser&go=1&agree=1"; 
+	
+	
+	window.location.replace(megaMeetingUrl);
+	
+}
+
+
 $(document).ready(function() {
 	$(".modal-window .close-button").click(modalHide);
 	$(".scrollup").click(scrollMe);
@@ -48,7 +62,7 @@ $(document).ready(function() {
 	});
 	
 	$("form :input").focus(function() {
-		alert("form input=");
+		
 		$(this).parent().addClass("form-focus");
 		$("#modal").addClass("shifted");
 		}).blur(function() {
@@ -61,10 +75,10 @@ $(document).ready(function() {
 
 	$("#last_name").keyup(function () {
 		var value = $(this).val();
-		alert("value=" + value);
+		
 		var errorMessage = "name entered doesn't match our records (sample message)";
 		if (value == "error" || value == "Error") {
-			alert("error");
+			
 			$(this).next(".failmessage").text(errorMessage);
 			$(this).next(".failmessage").removeClass("hide-me");
 			$(this).parent().addClass("error");
@@ -92,6 +106,8 @@ $(document).ready(function() {
 	$("#birth_year").keyup(function () {
 		var value = $(this).val();
 		var errorMessage = "Please enter year in a 4-digit format (for example: 1952) (sample msg)";
+		
+		
 		if (value == "99") {
 			$(this).next(".failmessage").text(errorMessage);
 			$(this).next(".failmessage").removeClass("hide-me");
@@ -120,8 +136,16 @@ $(document).ready(function() {
 
 	});
 	
-	
-	
+	$(".button-launch-visit").click(function(event) {	
+		event.preventDefault();
+		
+		var megaMeetingId = $(this).attr("megameetingid");
+		var lastName = $(this).attr("lastname");
+		var firstName = $(this).attr("firstname");
+
+		launchVideoVisit(megaMeetingId, lastName, firstName);
+
+	});
 	
 });
 

@@ -37,7 +37,6 @@
 	opacity: .8;
 }
 
-
 .modal-window .disclaimer {
 	margin-top: 15px;
 	padding-top: 10px;
@@ -61,7 +60,6 @@ box-shadow:
 }
 
 .app-alert {
- 	/* background-color: #FEEF87; */
 	margin-left: -10px;
 	margin-right: -10px;
 	padding-left: 10px;
@@ -142,10 +140,8 @@ font-weight: bold;
 	background-image: -ms-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
 	background-image: linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
 
-
 	color: #656565;
 	text-shadow: 0 1px 0 rgba(255,255,255,.75);
-	/* font-weight: normal; */ 
 }
 
 .modal-window input[type=checkbox] {
@@ -184,11 +180,8 @@ margin-right: 8px;
 	padding: 5px;
 	border-radius: 4px;
 	text-shadow: 0 1px 0 white;
+	font-size: 17px;
 }
-
-/* .form-block input:focus {
-	border: 1px solid #0F579F;
-} */
 
 .form-block input {
 font-size: 17px;
@@ -196,8 +189,14 @@ height:20px;
 padding:5px 2px 5px 4px;
 }
 
-.form-block label {
-	margin-right: 5px;
+.form-block li label {
+		margin-top: 8px;
+	margin-right: 10px;
+	line-height: 32px;
+}
+
+.form-block li input {
+	margin-top: -3px;
 }
 
 #last_name {
@@ -207,7 +206,37 @@ padding:5px 2px 5px 4px;
 .form-focus {
 	background-color: #1885F2;
 	color: white;
-	text-shadow: 0 -1px 0 rgba(0,0,0,.5) !important;
+}
+
+.form-focus label {
+	text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+}
+
+.error {
+	background-color: #B31A99;
+	color: white;
+}
+
+.error label {
+	text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+}
+
+.failmessage {
+	margin-top: 5px;
+	color: white;
+	background-color: rgba(0,0,0,.6);
+	font-weight: bold;
+	font-size: 15px;
+	line-height: 16px;
+	text-shadow: none;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	padding-bottom: 8px;
+	margin-left: -5px;
+	margin-right: -5px; 
+	margin-bottom: -5px;
+	border-radius: 0 0 4px 4px;
 }
 
 #mrn {
@@ -321,10 +350,6 @@ box-shadow: 0 1px 0 #D3D3D3, 0 2px 0 white ;
 .instructions .img-connection{
 width: 80px;
 height: 33px;
-/* background:  url("../images/full-bars@2x.png") no-repeat right;
-background-size: 80px;
-float: right;
-margin: -3px 0 -3px 10px; */
 background:  url("../../../images/mobile/video-visit-ui@2x.png") no-repeat right;
 background-size: 240px;
 background-position: -150px -40px;
@@ -385,8 +410,6 @@ margin-bottom: -10px;
 
 .no-visits-image {
 	float: left;
-/* 	background: url("../images/stopwatch@2x.png") no-repeat;
-background-size: 60px; */
 	background:  url("../../../images/mobile/video-visit-ui@2x.png") no-repeat right;
 	background-size: 240px;
 	background-position: -80px -40px;

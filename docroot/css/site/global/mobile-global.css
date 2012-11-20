@@ -147,7 +147,7 @@ a:visited {
 .scrollup,
 .map-button .icon-map:before,
 .modal-window .close-button {
-	background: url("../images/mdo-ui@2x.png") no-repeat;
+	background: url("../../../images/mobile/mdo-ui@2x.png") no-repeat;
 	background-size: 480px;
 }
 
@@ -347,7 +347,6 @@ left: 5px;
 	width: 192px;
 	height: 31px;
 	background-position: -270px -60px;
-	
 }
 
 .page-content {
@@ -677,7 +676,6 @@ width: 100%;
 
 .expanded:after{
 	content: "▲ See Less";
-	/*background-color: rgba(255,255,255,.3);*/
 	color: #929297;
 	padding-bottom: 9px;
 }
@@ -790,7 +788,7 @@ bottom: -25px;
 	text-align: left;
 	margin-left: auto;
 	margin-right: auto;
-	width: 250px;
+	width: 270px;
 	border-radius: 4px;
 	padding: 10px;
 	margin-top: 45px;
@@ -887,7 +885,6 @@ and (orientation: landscape) {
 	}
 
 	.modal-window{
-		/* width: 340px; */
 		margin-top: 0px;
 	}
 

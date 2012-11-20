@@ -45,7 +45,8 @@
 	<c:forEach var="meeting" items="${WebAppContext.meetings}">
 		<div class="meeting well">
 			<div class="time-slot">
-				<button class="button-launch-visit">Launch Visit</button>
+				
+				<button class="button-launch-visit" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}">Launch Visit</button>
 				<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
 		
 				<p id="displayTime">Visit scheduled for <span class="time"></span></p>
