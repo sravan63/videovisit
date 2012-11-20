@@ -12,6 +12,7 @@
 	MeetingCommand.retrieveMeeting(request, response);
 %>
 
+
 <h1>Upcoming Video Visits</h1>
 
 <!-- 
@@ -45,7 +46,21 @@
 		<div class="meeting well">
 			<div class="time-slot">
 				<button class="button-launch-visit">Launch Visit</button>
-				<p>Visit scheduled for <span class="time">${meeting.scheduledTimestamp}</span></p>
+				<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
+		
+				<p id="displayTime">Visit scheduled for <span class="time"></span></p>
+				<!--  TODO - not a good way of handling -->
+				<script type="text/javascript">
+					// convert time stamp to time
+					
+					$('.timestamp').each(function(){
+				        meetingTimestamp = $(this).text();
+				        convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
+				      
+				        $('#displayTime').append(convertedTimestamp);
+				    });
+				
+				</script>
 			</div>
 			<ul>
 				<h2>Meeting With</h2>
