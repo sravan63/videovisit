@@ -61,6 +61,7 @@
 		<sleep seconds="120"/>
 		<antcall target="assemble" />
 	  	<antcall target="build-war" />
+		<!--
 		<if>
 					<equals arg1="${build.env}" arg2="dv"/>
 					<then>
@@ -69,7 +70,7 @@
 					<else>
 						<antcall target="copy-war-qa" />
 					</else>
-		</if>
+		</if>-->
    </target>
 	<target name="generateWar">
 			<antcall target="assemble" />
