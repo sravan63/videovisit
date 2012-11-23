@@ -194,7 +194,7 @@
 	</target>
 	<target name="copy-war-dev">
 		<echo message="Copying war to tomcat host"/>
-			   <scp todir="vv_user:vv7463@TTG-DEV-APP-04:/home/vv_user" failonerror="false" verbose="false"  trust="yes">
+			   <scp todir="vv_user:vv7463@TTG-DEV-APP-04:/home/vv_user/temp" failonerror="false" verbose="false"  trust="yes">
 			   	<fileset dir="${dest.war.dir}">
 				  <include name="**/*.war" /> 
 				</fileset>
@@ -239,7 +239,7 @@
 		
 	<target name="copy-war-qa">
 		<echo message="Copying war to tomcat host"/>
-				   <scp todir="vv_user:vv7463@TTG-QA-APP-03:/home/vv_user" failonerror="false" verbose="false"  trust="yes">
+				   <scp todir="vv_user:vv7463@TTG-QA-APP-03:/home/vv_user/temp" failonerror="false" verbose="false"  trust="yes">
 				   	<fileset dir="${dest.war.dir}">
 					  <include name="**/*.war" /> 
 					</fileset>
