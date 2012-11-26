@@ -18,7 +18,11 @@ build-scripts/upload.sh -text
 /build.xml -text
 /buildjenkins.xml -text
 conf/configuration.properties -text
+conf/filters/dv/configuration.properties -text svneol=unset#text/plain
 conf/filters/local -text
+conf/filters/pr/configuration.properties -text svneol=unset#text/plain
+conf/filters/qa/configuration.properties -text svneol=unset#text/plain
+conf/filters/tr/configuration.properties -text svneol=unset#text/plain
 conf/log4j.properties -text
 conf/project.init.properties -text
 conf/videovisitsmember.local.properties -text
