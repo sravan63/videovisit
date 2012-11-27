@@ -47,24 +47,22 @@
 			<div class="time-slot">
 				
 				<button class="button-launch-visit" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}">Launch Visit</button>
-				<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
+				<div class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp}</div>
 		
-				<p id="displayTime">Visit scheduled for <span class="time"></span></p>
+				<p id="displayTime">Visit scheduled for <span class="time"> <span class="time_${meeting.meetingId}"></span></span></p>
 				<!--  TODO - not a good way of handling -->
 				<script type="text/javascript">
 					// convert time stamp to time
-					
-					$('.timestamp').each(function(){
-				        meetingTimestamp = $(this).text();
+					 	meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
+					 	
 				        convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
 				      
-				        $('#displayTime').append(convertedTimestamp);
-				    });
-				
+				        $('.time_' + ${meeting.meetingId}).append(convertedTimestamp);
+					
 				</script>
 			</div>
 			<ul>
-				<h2>Meeting With</h2>
+				<h2>Host Clinician</h2>
 				<li class="host">
 					<div class="pic-frame">
 						
