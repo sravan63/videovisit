@@ -1,3 +1,20 @@
+/* AJAX Server requests */
+var VIDEO_VISITS_MOBILE = {
+    jQueryDocument : $(document),
+    jQueryWindow   : $(window)
+};
+
+VIDEO_VISITS_MOBILE.Path = {
+	    global : {
+	        error : 'error.htm',
+	        expired : 'logout.htm'
+	    },
+	    login : {
+	        ajaxurl : 'submitlogin.json'
+	    }
+};
+/*END - AJAX Server requests  */
+
 
 
 // Hides address bar on page load
@@ -167,7 +184,7 @@ function loginSubmit(){
 
 	$.ajax({
         type: "POST",
-        url: VIDEO_VISITS.Path.login.ajaxurl,
+        url: VIDEO_VISITS_MOBILE.Path.login.ajaxurl,
         data: postdata, 
         success: function(returndata) {
             returndata = $.trim(returndata);
