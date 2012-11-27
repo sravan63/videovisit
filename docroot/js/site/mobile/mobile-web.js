@@ -47,16 +47,6 @@ $("#login-form").removeClass("hide-me");
 	// return false;
 }
 
-function launchVideoVisit(megaMeetingId, lastName, firstName){
-
-	var name = lastName + " " + firstName;
-	
-	var megaMeetingUrl = "tpmg:kaiserm3.videoconferencinginfo.com/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Kaiser&go=1&agree=1"; 
-	
-	
-	window.location.replace(megaMeetingUrl);
-	
-}
 
 
 $(document).ready(function() {
@@ -75,82 +65,58 @@ $(document).ready(function() {
 	
 	$('#overlay, #modal').on('touchmove', function (event) {
 		// locking these elements, so they can't be moved when dragging the div
-			event.preventDefault();
+		event.preventDefault();
 	});
 	
+	
+	// for focus and blur events
 	$("form :input").focus(function() {
-		
 		$(this).parent().addClass("form-focus");
-		$("#modal").addClass("shifted");
-		}).blur(function() {
-			$("#modal").removeClass("shifted");
+	}).blur(function() {
 			$(this).parent().removeClass("form-focus");
-			});
-
-
-
-
-	$("#last_name").keyup(function () {
-		var value = $(this).val();
-		
-		var errorMessage = "name entered doesn't match our records (sample message)";
-		if (value == "error" || value == "Error") {
-			
-			$(this).next(".failmessage").text(errorMessage);
-			$(this).next(".failmessage").removeClass("hide-me");
-			$(this).parent().addClass("error");
-		}
-		else {
-			$(this).next(".failmessage").addClass("hide-me");
-			$(this).parent().removeClass("error");
-		}
 	});
 
-	$("#mrn").keyup(function () {
+	// Validations on blur of some text fields
+	$("#last_name,#mrn,#birth_year").blur(function (event) {
+		
+		var elementId = event.target.id;
 		var value = $(this).val();
-		var errorMessage = "invalid number (sample message)";
-		if (value == "99") {
-			$(this).next(".failmessage").text(errorMessage);
-			$(this).next(".failmessage").removeClass("hide-me");
-			$(this).parent().addClass("error");
+		var errorMessage = "";
+		
+		// Clear the global error if any
+		$("#globalError").addClass("hide-me").removeClass("error");
+		
+		if(elementId == "last_name"){
+			errorMessage = "name entered doesn't match our records (sample message)";
 		}
-		else {
-			$(this).next(".failmessage").addClass("hide-me");
-			$(this).parent().removeClass("error");
+		else if(elementId == "mrn"){
+			errorMessage = "invalid number (sample message)";
 		}
+		else if(elementId == "birth_year"){
+			errorMessage = "Please enter year in a 4-digit format (for example: 1952) (sample msg)";
+			if (value == "99") {
+				
+				$(this).next(".failmessage").text(errorMessage);
+				$(this).next(".failmessage").removeClass("hide-me");
+				$(this).parent().addClass("error");
+			}
+			else {
+				$(this).next(".failmessage").addClass("hide-me");
+				$(this).parent().removeClass("error");
+			}
+		}
+		
 	});
 
-	$("#birth_year").keyup(function () {
-		var value = $(this).val();
-		var errorMessage = "Please enter year in a 4-digit format (for example: 1952) (sample msg)";
-		
-		
-		if (value == "99") {
-			$(this).next(".failmessage").text(errorMessage);
-			$(this).next(".failmessage").removeClass("hide-me");
-			$(this).parent().addClass("error");
-		}
-		else {
-			$(this).next(".failmessage").addClass("hide-me");
-			$(this).parent().removeClass("error");
-		}
-	});
-	
 	
 	// Click of "I have it Installed button"
 	$("#btn-i-have-it").click(hidesAppAlert);
 	
 	
+	// Login button submit click
 	$("#login-submit").click(function(event) {
-		
 		event.preventDefault();
-		
-		var validationSuccessful = true;
-		if(validationSuccessful){
-			loginSubmit();
-		}
-
-
+		loginSubmit();
 	});
 	
 	$(".button-launch-visit").click(function(event) {	
@@ -166,9 +132,28 @@ $(document).ready(function() {
 	
 });
 
+/**
+ * Called on the click of the Launch button
+ * @param megaMeetingId
+ * @param lastName
+ * @param firstName
+ */
+function launchVideoVisit(megaMeetingId, lastName, firstName){
+	var name = lastName + " " + firstName;
+	var megaMeetingUrl = "tpmg:kaiserm3.videoconferencinginfo.com/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Kaiser&go=1&agree=1"; 
+	window.location.replace(megaMeetingUrl);
+	
+}
+
+/**
+ * Called on the click of the Sign in button
+ * @param megaMeetingId
+ * @param lastName
+ * @param firstName
+ */
 function loginSubmit(){
 	
-	$("p.error").html('');
+	
     // Prepare data from pertinent fields for POSTing
     // Format birth_month
     var birth_month = $('input[name=birth_month]').val();
@@ -180,6 +165,8 @@ function loginSubmit(){
     if (birth_day.length == 1) {
         birth_day = "0" + birth_day;
     }
+    
+    // Parameters sent to the server
 	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day ;
 
 	$.ajax({
@@ -190,33 +177,37 @@ function loginSubmit(){
             returndata = $.trim(returndata);
            
             var LOGIN_STATUS_SUCCESS = "1";
-        	var LOGIN_STATUS_ERROR = "3";
+        	var LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR = "3";
         	var LOGIN_STATUS_CODE_ERROR = "4";
         	
             switch (returndata) {
                 case LOGIN_STATUS_SUCCESS:
-                	
-                    window.location.replace("mobilepatientmeetings.htm");
+                	window.location.replace("mobilepatientmeetings.htm");
                     break;
 
-               case LOGIN_STATUS_ERROR:
-                    $("p.error").css("display", "inline").append('<li><label>We could not find this patient.  Please try entering the information again.</label></li>');
-                   
+               case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
+            	  
+            	   $("#globalError").text("We could not find this patient.  Please try entering the information again.");
+            	   $("#globalError").removeClass("hide-me").addClass("error");
+
                     break;
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
-                    $("p.error").css("display", "inline").append('<li><label>The code entered did not match. Please try again (you can click the code image to generate a new one if needed).</label></li>');
-                    
+                	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
+             	   	$("#globalError").removeClass("hide-me").addClass("error");
                     break;
                 default:
-                    $("p.error").css("display", "inline").append('<li><label>There was an error submitting your login. Please try again later.</label></li>');
+                	$("#globalError").text("There was an error submitting your login.");
+         	   		$("#globalError").removeClass("hide-me").addClass("error");
                    
                     break;
             }
 
         },
         error: function() {
-            //$("p.error").css("display", "inline").append('<li><label>There was an error submitting your login.</label></li>');
+        	$("#globalError").text("There was an error submitting your login.");
+ 	   		$("#globalError").removeClass("hide-me").addClass("error");
+            
             
         }
     });

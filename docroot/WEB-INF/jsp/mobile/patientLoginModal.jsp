@@ -15,6 +15,8 @@
 					</div>
 					<div id="login-form" class="hide-me">
 						<form class="login-form">
+							<p id="globalError" class="failmessage hide-me"></p>
+								
 							<ul class="form-block">
 								<li><label for="last_name">Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1" autocorrect = "off" pattern="[a-zA-Z]+" required>
 									<div class="failmessage hide-me">
