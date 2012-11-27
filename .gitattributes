@@ -86,6 +86,7 @@ docroot/css/site/global/jquery-ui.css -text
 docroot/css/site/global/mobile-global.css -text svneol=unset#text/plain
 docroot/css/site/global/mobile-reset.min.css -text svneol=unset#text/plain
 docroot/css/site/global/mobile-web.css -text svneol=unset#text/plain
+docroot/css/site/global/mobile.css -text svneol=unset#text/plain
 docroot/css/site/global/print.css -text
 docroot/css/site/global/structure.css -text
 docroot/css/site/global/style.css -text
