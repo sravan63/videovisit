@@ -25,16 +25,9 @@
         
         
         <script src="js/site/mobile/global.js" type="text/javascript"></script>
-        
-        
-        
-        
-       
 
-		<link rel="stylesheet" href="css/site/global/mobile-reset.min.css">
-		<link rel="stylesheet" href="css/site/global/mobile-global.css">
-		<link rel="stylesheet" href="css/site/global/mobile-web.css">
-       
+        
+       <link rel="stylesheet" href="css/site/global/mobile.css">
        
        	<link rel="shortcut icon" href="ico/favicon.ico">
 		<link rel="apple-touch-icon" href="images/vv-apple-touch-icon-72@2x.png">
