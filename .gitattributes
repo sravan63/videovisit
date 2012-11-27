@@ -143,7 +143,7 @@ docroot/js/site/intro/popup.js -text
 docroot/js/site/landingnone/landingnone.js -text
 docroot/js/site/landingready/landingready.js -text
 docroot/js/site/login/login.js -text
-docroot/js/site/mobile/global.js -text svneol=unset#text/plain
+docroot/js/site/mobile/mobile-web.js -text svneol=unset#text/plain
 docroot/js/site/visit/visit.js -text
 docroot/keepalive.jsp -text
 docroot/live.jsp -text
