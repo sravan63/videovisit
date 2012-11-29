@@ -16,52 +16,8 @@ VIDEO_VISITS_MOBILE.Path = {
 /*END - AJAX Server requests  */
 
 
-
-// Hides address bar on page load
-/mobile/i.test(navigator.userAgent)
-&& !window.location.hash
-&& setTimeout(function () {
-window.scrollTo(0,0);
-}, 0);
-
-
-function modalShow(){
-	$("#modal").removeClass("hideMe").hide().fadeIn(200);
-	return false;
-}
-
-function modalHide(){
-	$("#modal").fadeOut(200);
-	return false;
-}
-
-function scrollMe(){
-	$('html, body').animate({scrollTop:0}, 'slow');
-	return false;
-}
-
-function hidesAppAlert (){
-
-$(".app-alert").addClass("hide-me");
-$("#login-form").removeClass("hide-me");
-	// return false;
-}
-
-
-function clearAllErrors(){
-	
-	// Clear global errors if any
-	$("#globalError").addClass("hide-me").removeClass("error");
-	
-    $('.failmessage').each(function(){
-    	$(this).addClass("hide-me");
-    	$(this).parent().removeClass("error");
-    })
-	
-}
-
 /**
- * 
+ * This is the main function which gets called when the document is ready and loaded in DOM
  */
 $(document).ready(function() {
 	$(".modal-window .close-button").click(modalHide);
@@ -94,23 +50,6 @@ $(document).ready(function() {
 			$(this).parent().removeClass("form-focus");
 	});
 
-	// Validations on blur of some text fields
-//	$("#last_name,#mrn,#birth_year,#birth_month,#birth_day").focusout(function (event) {
-//		
-//		var elementId = event.target.id;
-//		var value = $(this).val();
-//		var errorMessage = '';
-//		
-//		
-//		// Clear the global error if any
-//		$("#globalError").addClass("hide-me").removeClass("error");
-//		
-//		// validates the login fields
-//		validateLoginInputFields(elementId, $(this));
-//
-//		
-//	});
-
 	
 	// Click of "I have it Installed button"
 	$("#btn-i-have-it").click(hidesAppAlert);
@@ -120,13 +59,11 @@ $(document).ready(function() {
 	$("#login-submit").click(function(event) {
 		event.preventDefault();
 			
+		// if client side validation successful
 		if(isLoginValiadtionSuccess()){
 			loginSubmit();
 		}
-		
-		
-		
-	
+
 	});
 	
 	$(".button-launch-visit").click(function(event) {	
@@ -141,6 +78,42 @@ $(document).ready(function() {
 	});
 	
 });
+
+
+
+// Hides address bar on page load
+/mobile/i.test(navigator.userAgent)
+&& !window.location.hash
+&& setTimeout(function () {
+window.scrollTo(0,0);
+}, 0);
+
+
+function modalShow(){
+	$("#modal").removeClass("hideMe").hide().fadeIn(200);
+	return false;
+}
+
+function modalHide(){
+	$("#modal").fadeOut(200);
+	return false;
+}
+
+function scrollMe(){
+	$('html, body').animate({scrollTop:0}, 'slow');
+	return false;
+}
+
+function hidesAppAlert (){
+
+$(".app-alert").addClass("hide-me");
+$("#login-form").removeClass("hide-me");
+	// return false;
+}
+
+
+
+
 
 
 /**
@@ -208,8 +181,6 @@ function isLoginValiadtionSuccess(){
 				{
 					"METHOD_NAME" : METHODNAME_IS_REQUIRED,
 					"PARAM_VALUE" : $("#birth_day").val(),
-					"PARAM_MIN_VALUE" :1,
-					"PARAM_MAX_VALUE" :8,
 					"ERROR_MESSAGE" : "Please enter a valid date of birth.",
 					"ERROR_ID" : "dateOfBirthErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true

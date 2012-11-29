@@ -1,10 +1,9 @@
 var METHODNAME_IS_REQUIRED = 0;
 var METHODNAME_IS_ALPHA_NUMERIC = 1;
 var METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX = 2
-var METHODNAME_IS_MAX_LENGTH = 2
+var METHODNAME_IS_MAX_LENGTH = 3
 
 function validate(validationObj){
-	
 	
 	var isValid = false;
 	// Iterate over outer collection which is a set of html input Ids. Each Id will have an array of validations that needs to be performed.
@@ -31,9 +30,9 @@ function validate(validationObj){
 		    var errorId = methodObj.ERROR_ID;
 	    	var paramValue = methodObj.PARAM_VALUE;
 	    	
-	    	
 	    	switch(methodName){
 	    		case METHODNAME_IS_REQUIRED: 
+	    			
 	    			isValid = isRequired(paramValue);
 	    			break;
 	    			
@@ -47,6 +46,7 @@ function validate(validationObj){
 	    			break;
 	    		case METHODNAME_IS_MAX_LENGTH: 
 	    			var max = methodObj.PARAM_MAX_VALUE;
+	    			
 	    			isValid = isMaxLength(paramValue, max);
 	    			break;
 	    				
@@ -87,7 +87,7 @@ function isAlphaNumeric(value){
  * @returns
  */
 function isRequired(value){
-	alert("isRequired");
+	
 	if(value == null || value.trim() == ''){
 		return false;
 	}
@@ -120,6 +120,7 @@ function isValueBetweenMinMax(value, min, max){
  * @returns
  */
 function isMaxLength(value, max){
+	
 	if(value != null &&  value.length == max){
 		return true;
 	}
@@ -141,3 +142,20 @@ function displayError(inputElementId, errorMessage, errorElementId){
 	$("#" +errorElementId).removeClass("hide-me");
 	$("#" +inputElementId).parent().addClass("error");
 }
+
+
+/**
+ * Clears all the errors
+ */
+function clearAllErrors(){
+	
+	// Clear global errors if any
+	$("#globalError").addClass("hide-me").removeClass("error");
+	
+    $('.failmessage').each(function(){
+    	$(this).addClass("hide-me");
+    	$(this).parent().removeClass("error");
+    })
+	
+}
+
