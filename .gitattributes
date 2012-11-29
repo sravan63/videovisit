@@ -202,6 +202,7 @@ lib/standard.jar -text
 lib/tiles-api-2.0.5.jar -text
 lib/tiles-core-2.0.5.jar -text
 lib/tiles-jsp-2.0.5.jar -text
+lib/videovisit-memberservice-client.jar -text
 lib/woden-api-0.95.jar -text
 lib/wsdl4j-1.6.1.jar -text
 lib/wsdl4j-1.6.2.wso2v1.jar -text
