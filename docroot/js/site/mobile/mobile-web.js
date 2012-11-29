@@ -48,7 +48,21 @@ $("#login-form").removeClass("hide-me");
 }
 
 
+function clearAllErrors(){
+	
+	// Clear global errors if any
+	$("#globalError").addClass("hide-me").removeClass("error");
+	
+    $('.failmessage').each(function(){
+    	$(this).addClass("hide-me");
+    	$(this).parent().removeClass("error");
+    })
+	
+}
 
+/**
+ * 
+ */
 $(document).ready(function() {
 	$(".modal-window .close-button").click(modalHide);
 	$(".scrollup").click(scrollMe);
@@ -72,41 +86,30 @@ $(document).ready(function() {
 	// for focus and blur events
 	$("form :input").focus(function() {
 		$(this).parent().addClass("form-focus");
+		
+		// clear all errors
+		clearAllErrors();
+		
 	}).blur(function() {
 			$(this).parent().removeClass("form-focus");
 	});
 
 	// Validations on blur of some text fields
-	$("#last_name,#mrn,#birth_year").blur(function (event) {
-		
-		var elementId = event.target.id;
-		var value = $(this).val();
-		var errorMessage = "";
-		
-		// Clear the global error if any
-		$("#globalError").addClass("hide-me").removeClass("error");
-		
-		if(elementId == "last_name"){
-			errorMessage = "name entered doesn't match our records (sample message)";
-		}
-		else if(elementId == "mrn"){
-			errorMessage = "invalid number (sample message)";
-		}
-		else if(elementId == "birth_year"){
-			errorMessage = "Please enter year in a 4-digit format (for example: 1952) (sample msg)";
-			if (value == "99") {
-				
-				$(this).next(".failmessage").text(errorMessage);
-				$(this).next(".failmessage").removeClass("hide-me");
-				$(this).parent().addClass("error");
-			}
-			else {
-				$(this).next(".failmessage").addClass("hide-me");
-				$(this).parent().removeClass("error");
-			}
-		}
-		
-	});
+//	$("#last_name,#mrn,#birth_year,#birth_month,#birth_day").focusout(function (event) {
+//		
+//		var elementId = event.target.id;
+//		var value = $(this).val();
+//		var errorMessage = '';
+//		
+//		
+//		// Clear the global error if any
+//		$("#globalError").addClass("hide-me").removeClass("error");
+//		
+//		// validates the login fields
+//		validateLoginInputFields(elementId, $(this));
+//
+//		
+//	});
 
 	
 	// Click of "I have it Installed button"
@@ -116,7 +119,14 @@ $(document).ready(function() {
 	// Login button submit click
 	$("#login-submit").click(function(event) {
 		event.preventDefault();
-		loginSubmit();
+			
+		if(isLoginValiadtionSuccess()){
+			loginSubmit();
+		}
+		
+		
+		
+	
 	});
 	
 	$(".button-launch-visit").click(function(event) {	
@@ -132,6 +142,7 @@ $(document).ready(function() {
 	
 });
 
+
 /**
  * Called on the click of the Launch button
  * @param megaMeetingId
@@ -145,6 +156,104 @@ function launchVideoVisit(megaMeetingId, lastName, firstName){
 	
 }
 
+
+
+
+/**
+ * 
+ * 	METHOD_NAME- an int value which determines which method to be called, 
+ *	ERROR_MESSAGE - In case the validation fails
+ *	ERROR_ID - Error Id that will display the error
+ *	HIGHLIGHT_PARENT_WHEN_ERROR - Input that needs to be highlighted when the error occurs. For e.g if text field has error then highlight the text field
+ *	PARAM_VALUE - value which needs to be validated.
+ * 
+ * @returns
+ */
+function isLoginValiadtionSuccess(){
+	
+	var validationObj = 
+		{
+			"last_name" : [
+				{
+					"METHOD_NAME" : METHODNAME_IS_REQUIRED,
+					"PARAM_VALUE" : $("#last_name").val(),
+					"METHOD_ERROR_MESSAGE" : "Please enter your last name.",
+					"ERROR_ID" : "lastNameErrorId",
+					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+					
+					
+				},
+				{
+					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
+					"PARAM_VALUE" : $("#last_name").val(),
+					"ERROR_MESSAGE" : "Please enter your last name.",
+					"ERROR_ID" : "lastNameErrorId",
+					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+
+				}
+			],
+			"mrn"	:[
+				{
+					"METHOD_NAME" : METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX,
+					"PARAM_VALUE" : $("#mrn").val(),
+					"PARAM_MIN_VALUE" :1,
+					"PARAM_MAX_VALUE" :8,
+					"ERROR_MESSAGE" : "Please enter a valid Medical Record Number.",
+					"ERROR_ID" : "mrnErrorId",
+					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+					
+				}
+			],
+			"birth_day"	:[
+				{
+					"METHOD_NAME" : METHODNAME_IS_REQUIRED,
+					"PARAM_VALUE" : $("#birth_day").val(),
+					"PARAM_MIN_VALUE" :1,
+					"PARAM_MAX_VALUE" :8,
+					"ERROR_MESSAGE" : "Please enter a valid date of birth.",
+					"ERROR_ID" : "dateOfBirthErrorId",
+					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+					
+				}
+			],
+			"birth_month"	:[
+						{
+							"METHOD_NAME" : METHODNAME_IS_REQUIRED,
+							"PARAM_VALUE" : $("#birth_month").val(),
+							"ERROR_MESSAGE" : "Please enter a valid date of birth.",
+							"ERROR_ID" : "dateOfBirthErrorId",
+							"HIGHLIGHT_PARENT_WHEN_ERROR": true
+							
+						}
+					],
+			"birth_year"	:[
+			            {
+			            	
+			            	"METHOD_NAME" : METHODNAME_IS_REQUIRED,
+							"PARAM_VALUE" : $("#birth_year").val(),
+							"ERROR_MESSAGE" : "Please enter a valid date of birth.",
+							"ERROR_ID" : "dateOfBirthErrorId",
+							"HIGHLIGHT_PARENT_WHEN_ERROR": true
+			            },
+						{
+							"METHOD_NAME" : METHODNAME_IS_MAX_LENGTH,
+							"PARAM_VALUE" : $("#birth_year").val(),
+							"PARAM_MAX_VALUE" :4,
+							"ERROR_MESSAGE" : "Please enter a valid date of birth.",
+							"ERROR_ID" : "dateOfBirthErrorId",
+							"HIGHLIGHT_PARENT_WHEN_ERROR": true
+							
+						}
+					]
+	
+		}
+	
+	var  isValid = validate(validationObj);
+
+	return isValid;
+	
+}
+
 /**
  * Called on the click of the Sign in button
  * @param megaMeetingId
@@ -152,7 +261,6 @@ function launchVideoVisit(megaMeetingId, lastName, firstName){
  * @param firstName
  */
 function loginSubmit(){
-	
 	
     // Prepare data from pertinent fields for POSTing
     // Format birth_month
