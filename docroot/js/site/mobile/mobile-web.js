@@ -51,9 +51,42 @@ $(document).ready(function() {
 	});
 
 	
-	// Click of "I have it Installed button"
-	$("#btn-i-have-it").click(hidesAppAlert);
 	
+	// START--APP ALERT handling using cookie
+	var appAlertCookie=getCookie("APP_ALERT_COOKIE");
+	var getAppLiId = $("#getAppLiId");
+	
+	if(typeof getAppLiId !== 'undefined' && typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
+		
+		getAppLiId.addClass("hide-me");
+	}
+	
+	$("#preLoginGetAppButtonId, #btn-i-have-it, #patientLoginGetAppButtonId").click(function() {
+		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE", 1);
+		var targetId = event.target.id;
+		if(targetId == 'btn-i-have-it'){
+			hidesAppAlert();
+		}
+		
+	});
+	
+
+	$("#signInId").click(function(event) {
+		event.preventDefault();
+		
+		var targetId = event.target.id;
+		// clear all errors
+		clearAllErrors();
+		if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
+			hidesAppAlert();
+		}
+		return false;
+		
+	});
+	
+	
+	
+	// END--APP ALERT handling using cookie
 	
 	// Login button submit click
 	$("#login-submit").click(function(event) {
@@ -105,15 +138,39 @@ function scrollMe(){
 }
 
 function hidesAppAlert (){
+	$(".app-alert").addClass("hide-me");
+	$("#login-form").removeClass("hide-me");
 
-$(".app-alert").addClass("hide-me");
-$("#login-form").removeClass("hide-me");
-	// return false;
 }
 
 
+/**
+ * This method is used to set the cookie value
+ * @param c_name
+ * @param value
+ * @param exdays
+ */
+function setCookie(c_name,value,exdays){
+	var exdate=new Date();
+	exdate.setDate(exdate.getDate() + exdays);
+	var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+	
+	document.cookie=c_name + "=" + c_value;
+}
 
-
+// Get the cookie value
+function getCookie(c_name){
+	var i,x,y,arrCookies=document.cookie.split(";");
+	for (i=0;i<arrCookies.length;i++)
+	{
+		x=arrCookies[i].substr(0,arrCookies[i].indexOf("="));
+		y=arrCookies[i].substr(arrCookies[i].indexOf("=")+1);
+		x=x.replace(/^\s+|\s+$/g,"");
+		if (x==c_name){
+			return unescape(y);
+		}
+	}
+}
 
 
 /**

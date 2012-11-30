@@ -10,7 +10,7 @@
 							<div class="app-icon"></div>
 							<p><strong>Video Streaming app</strong><br>by The Permanente Medical Group</p>
 						</div><!-- </a> -->
-						<button class="button-pri" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get the app</button>
+						<button id="patientLoginGetAppButtonId" class="button-pri" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get the app</button>
 						<button id="btn-i-have-it" class="button-pri sec"><!-- I&#8217;ve installed it! -->I have it installed!</button>
 					</div>
 					<div id="login-form" class="hide-me">

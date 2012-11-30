@@ -573,7 +573,7 @@ width: 30px;
 
 
 .hide-me {
-	display: none;
+	display: none !important;
 }
 
 
