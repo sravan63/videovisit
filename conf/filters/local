@@ -2,6 +2,7 @@ PROJECT=videovisitmember
 LOGFILE=/usr/local/tpmg/apps/videovisit-member/logs/vvm_webapp.log
 INITFILE=/usr/local/tpmg/apps/videovisit-member/properties/videovisitsmember.local.properties
 WEBSERVICE_ENDPOINT=http://ttg-dv-esb-1.permanente.net:29763/services/VideoVisitMemberServices 
+#http://localhost:9763/services/VideoVisitMemberServices
 LOGLEVEL=info
 MEGAMEETING_PARTICIPANT_URL=https://kaiserm3.videoconferencinginfo.com/?page=guest&conid=<mmMeetingName>&user=<guest name>&agree=1&reload=1
 MEGAMEETING_SETUP_URL=http://kaiserm3.videoconferencinginfo.com/guest/meetingSetup.swf
