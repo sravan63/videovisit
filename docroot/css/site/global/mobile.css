@@ -238,10 +238,12 @@ margin: 0 0 -3px 10px;
 }
 
 #modal {
+ 	left: 0;
+  	top: 0;  
 	position: fixed;
 	width: 100%;
 	height: 100%;
-	z-index: 3000;
+	z-index: 4000; 
 	display: none;
 }
 
@@ -274,15 +276,16 @@ background-color: rgba(0,0,0,.8);
 
 
 .masthead {
-	position: absolute;
-	width: 100%;
-	height: 39px;
-	z-index: 1000;
-	border-bottom: 1px solid #76171B;
-	background-color: #AB2328;
-	padding-top: 5px;
-	text-align: center;
+	 position: absolute;
+	 width: 100%;
+	 height: 39px;
+	 /* z-index: 1000; */
+	 border-bottom: 1px solid #76171B;
+	 background-color: #AB2328;
+	 padding-top: 5px;
+	 text-align: center;
 }
+ 
 
 .masthead-title, 
 .modal-window .close-button{
@@ -740,6 +743,58 @@ display: inline;
 .meeting .host .pic img {
 width: 100%;
 }
+
+
+.alert {
+	-webkit-tap-highlight-color:transparent;
+	position: relative;
+	color: #7E5829;
+	margin-right: -5px;
+	margin-bottom: 10px;
+	margin-left: -5px;
+	padding: 10px 10px;
+	min-height: 36px;
+	border-radius: 3px;
+	box-shadow: inset 0 0 0 1px #F4D96D;
+	font-size: 15px;
+	background-color: #FFF08D;
+	line-height: 18px;
+}
+
+.alert strong {
+	font-weight: bold;
+}
+
+.alert .close-button {
+	content: "";
+	width: 16px;
+	height: 18px; 
+	position: absolute;
+	right: 3px;
+	top: 3px;
+	margin-left: 2px;
+	margin-bottom: 2px;
+/* 	border: solid 1px rgba(255,255,255,.5);
+box-shadow: 0 0 0 1px rgba(50,0,0,.1) inset;
+border-radius: 3px; */
+	background: url("../../../images/video-visit-ui@2x.png") no-repeat;
+	background-size: 240px;
+	background-position: -188px -78px;
+	opacity: .8;
+}
+
+.alert-time-image {
+	float: left;
+	background: url("../../../images/video-visit-ui@2x.png") no-repeat right;
+	background-size: 150px;
+	background-position: -50px -24px;
+	width: 38px;
+	height: 50px;
+	margin-right: 5px;
+	margin-left: -3px;
+	margin-top: -6px;
+}
+
 
 
 /* END- Meetings lnding page */
