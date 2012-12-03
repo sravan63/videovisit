@@ -128,11 +128,9 @@
    	   	            filtering="true" />
    		<echo message="======Config file=====- ${ffile}" />
 	   	<copy file="${ffile}"
-			tofile="${conf.dir}/configuration.properties"
+			todir="${dest.dir.classes}"
 	 		filtering="true" />
-	   	<copy file="${conf.dir}/configuration.properties"
-	   	   	            todir="${dest.dir.classes}"
-	   	   	            filtering="true" />
+	   	
 	   	<copy todir="${dest.dir.lib}">
 	      	         <fileset dir="${dir.lib}">
 	      	         	<exclude name="j2ee.jar"/>
