@@ -139,21 +139,8 @@
      	    <fileset dir="${dest.dir}"/>
    	      </jar>
    </target>
-	<target name="copy-exp-war">
-		<delete dir="${exp.war.target.dir}/../temp/*" failonerror="false"></delete>
-		<delete dir="${exp.war.target.dir}/../work/*" failonerror="false"></delete>
-		<copy todir="${exp.war.target.dir}/${webapp.name}" overwrite="true">
-		         	    <fileset dir="${dest.dir}">
-		       	    	</fileset>
-				 </copy>
-		</target>
-	<target name="copy-war">
-		   <echo message="delete existing files if any"/>
-		   <delete dir="${war.target.dir}/${webapp.name}.war" failonerror="false"/>
-		   <delete dir="${war.target.dir}/${webapp.name}"  failonerror="false"/>
-		   <echo message="deleted existing contents .. copy in new contents"/>	
-		   <copy file="${dest.war.dir}/${ant.project.name}.war" tofile="${war.target.dir}/${webapp.name}.war" overwrite="true" />
-	</target>
+	
+	
 	<target name="copy-war-dev">
 		<echo message="Copying war to tomcat host"/>
 			   <scp todir="vv_user:vv7463@TTG-DEV-APP-04:/home/vv_user/temp" failonerror="false" verbose="false"  trust="yes">
