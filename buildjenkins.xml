@@ -5,7 +5,7 @@
 <!-- ant local-exp  builds application  and deploys expanded war for local development  windows desktop mode -->
 
 
-<project name="videovisitmember" basedir="." default="local-exp">
+<project name="videovisitmember" basedir="." default="local">
    <property file="${basedir}/build.properties" />
    <property name="src.dir" value="src" />
    <property name="conf.dir" value="conf" />
@@ -35,28 +35,7 @@
          <include name="*.jar" />
       </fileset>
    	</path>
-  <!--
-   <target name="sim">
-	  <property name="ffile" value="conf/filters/local" />
-      <property file="${ffile}" />
-      <echo message="using filter -> ${ffile}" />
-      <antcall target="clean" />
-      <antcall target="prepare" />
-      <antcall target="compile" />
-   	  <antcall target="build-war" />
-   	  <antcall target="copy-war" />
-   </target>
-	-->
-	<target name="reg">
-		  <property name="ffile" value="conf/filters/reg" />
-	      <property file="${ffile}" />
-	      <echo message="using filter -> ${ffile}" />
-	      <antcall target="clean" />
-	      <antcall target="prepare" />
-	      <antcall target="compile" />
-	   	  <antcall target="build-war" />
-	   	  <antcall target="copy-war" />
-	   </target>
+  
 	
 	<target name="local">
 		<sleep seconds="120"/>
@@ -73,22 +52,8 @@
 					</else>
 		</if>
    </target>
-	<target name="generateWar">
-			<antcall target="assemble" />
-		  	<antcall target="build-war" />
-	</target>
 	
-	<target name="local-exp">
-			<antcall target="assemble" />
-		  	<antcall target="build-war" />
-	   	  	<antcall target="copy-exp-war" />
-	   </target>
 	
-	<target name="local-exp-no-ws">
-			<antcall target="assemble-no-ws" />
-		  	<antcall target="build-war" />
-	   	  	<antcall target="copy-exp-war" />
-	   </target>
 	
 	<target name="assemble">
 		  <property name="ffile" value="conf/filters/${build.env}/configuration.properties" />
@@ -100,14 +65,7 @@
 	      <antcall target="compile" />
    </target>
 	
-	<target name="assemble-no-ws">
-		  <property name="ffile" value="conf/filters/local" />
-	      <property file="${ffile}" />
-	      <echo message="using filter -> ${ffile}" />
-	      <antcall target="clean" />
-	      <antcall target="prepare" />
-	      <antcall target="compile" />
-   </target>
+	
 	
    <target name="clean">
       <delete dir="${build.dir}" />
