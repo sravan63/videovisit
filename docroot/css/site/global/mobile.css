@@ -285,7 +285,47 @@ background-color: rgba(0,0,0,.8);
 	 padding-top: 5px;
 	 text-align: center;
 }
- 
+
+.btn-nav {
+	z-index: 2000;
+	display: inline-block;
+	padding-right: 7px;
+	padding-left: 7px;
+	width: 40px;
+	height: 34px;
+	border-width: 0;
+	border-color: rgba(0,0,0,.25);
+	border-radius: 4px;
+
+	background-image: -webkit-linear-gradient(top, rgb(102,102,102) 0%, rgb(35,35,35) 100%);
+	background-image: -moz-linear-gradient(top, rgb(102,102,102) 0%, rgb(35,35,35) 100%);
+	background-image: -o-linear-gradient(top, rgb(102,102,102) 0%, rgb(35,35,35) 100%);
+	background-image: -ms-linear-gradient(top, rgb(102,102,102) 0%, rgb(35,35,35) 100%);
+	background-image: linear-gradient(top, rgb(102,102,102) 0%, rgb(35,35,35) 100%);
+
+	-webkit-box-shadow: rgba(0, 0, 0, 0.449219) 0 2px 1px -1px inset, rgb(0, 0, 0) 0 0 1px 0 inset, rgba(255, 255, 255, 0.167969) 0 1px 0 0;
+	text-shadow: rgba(0, 0, 0, 0.347656) 0 -1px 0;
+	font-size: 16px;
+	line-height: 15px;
+	-webkit-user-select: none;
+}
+
+.btn-logout {
+	position: absolute;
+	right: 5px;
+}
+
+.icon-logout{
+	margin-left: -1px;
+	margin-top: 1px;
+	width: 28px;
+	height: 28px;
+	display: inline-block;
+	background: url("../images/video-visit-ui@2x.png") no-repeat;
+	background-size: 240px;
+	background-position: -213px -81px; 
+	opacity: .8;
+}
 
 .masthead-title, 
 .modal-window .close-button{
@@ -831,6 +871,10 @@ and (orientation: landscape) {
 
 	.button-launch-visit {
 		width: 184px;
+	}
+	
+	.btn-logout {
+	width: 60px;
 	}
 }
 
