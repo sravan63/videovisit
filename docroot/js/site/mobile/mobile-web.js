@@ -304,7 +304,11 @@ function loginSubmit(){
     }
     
     // Parameters sent to the server
-	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day ;
+    var currentTime = new Date();
+    var n = currentTime.getTime();
+    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
+	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' 
+								+ birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&nocache=' + n;
 
 	$.ajax({
         type: "POST",
