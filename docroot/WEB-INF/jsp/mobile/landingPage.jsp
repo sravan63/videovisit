@@ -46,7 +46,7 @@
 		<div class="meeting well">
 			<div class="time-slot">
 				
-				<button class="button-launch-visit" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}">Launch Visit</button>
+				<button class="button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}">Launch Visit</button>
 				<div class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp}</div>
 		
 				<p id="displayTime">Visit scheduled for <span class="time"> <span class="time_${meeting.meetingId}"></span></span></p>
