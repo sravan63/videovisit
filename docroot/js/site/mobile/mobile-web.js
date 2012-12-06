@@ -105,8 +105,8 @@ $(document).ready(function() {
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
-
-		launchVideoVisit(megaMeetingId, lastName, firstName);
+		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
+		launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName);
 
 	});
 	
@@ -179,9 +179,10 @@ function getCookie(c_name){
  * @param lastName
  * @param firstName
  */
-function launchVideoVisit(megaMeetingId, lastName, firstName){
+function launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName){
 	var name = lastName + " " + firstName;
-	var megaMeetingUrl = "tpmg:kaiserm3.videoconferencinginfo.com/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Kaiser&go=1&agree=1"; 
+	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
+	alert("megaMeetingUrl=" + megaMeetingUrl);
 	window.location.replace(megaMeetingUrl);
 	
 }
