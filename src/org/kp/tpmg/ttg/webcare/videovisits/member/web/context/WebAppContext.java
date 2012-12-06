@@ -22,6 +22,7 @@ public class WebAppContext implements Serializable{
 	private MeetingWSO[]	meetings= null; 
 	private int totalmeetings = 0;	
 	private String megaMeetingURL = null;
+	private String megaMeetingMobileURL = null;
 
 	
 	public static final String HTTP_SESSION_KEY = "WebAppContext";
@@ -71,5 +72,15 @@ public class WebAppContext implements Serializable{
 	
 	public long getTimestamp() {
 		return System.currentTimeMillis() / 1000;
+	}
+
+	public String getMegaMeetingMobileURL() {
+		return megaMeetingMobileURL;
+	}
+
+	public void setMegaMeetingMobileURL(String megaMeetingMobileURL) {
+		this.megaMeetingMobileURL = megaMeetingMobileURL;
 	} 
+	
+	
 }

@@ -19,9 +19,12 @@ public class GuestController extends SimplePageController {
 		
 	private String megaMeetingURL = null;
 	
+	private String megaMeetingMobileURL = null;
+	
 	public GuestController() {
 		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");		
+		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
+		megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
 	}
 	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
@@ -45,7 +48,8 @@ public class GuestController extends SimplePageController {
 		if (ctx == null){
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
-			ctx.setMegaMeetingURL(megaMeetingURL);			
+			ctx.setMegaMeetingURL(megaMeetingURL);	
+			ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
 		}
 	}
 }

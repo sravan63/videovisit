@@ -24,10 +24,13 @@ public class AppRootController implements Controller {
 	private String navigation;
 	private String subNavigation;
 	private String megaMeetingURL = null;
+	private String megaMeetingMobileURL = null;
 	
 	public AppRootController() {
 		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");		
+		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
+		megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
+		
 	}
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -35,7 +38,8 @@ public class AppRootController implements Controller {
 		if (ctx == null){
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
-			ctx.setMegaMeetingURL(megaMeetingURL);			
+			ctx.setMegaMeetingURL(megaMeetingURL);	
+			ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
 
 		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
