@@ -182,7 +182,7 @@ function getCookie(c_name){
 function launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName){
 	var name = lastName + " " + firstName;
 	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
-	alert("megaMeetingUrl=" + megaMeetingUrl);
+	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	window.location.replace(megaMeetingUrl);
 	
 }
