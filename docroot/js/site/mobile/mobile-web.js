@@ -20,7 +20,7 @@ VIDEO_VISITS_MOBILE.Path = {
  * This is the main function which gets called when the document is ready and loaded in DOM
  */
 $(document).ready(function() {
-	$(".modal-window .close-button").click(modalHide);
+	$(".modal-window .button-close").click(modalHide);
 	$(".scrollup").click(scrollMe);
 	// Shows and hides scroll to top button
 	$(window).scroll(function(){
@@ -33,11 +33,15 @@ $(document).ready(function() {
 	// scrolls to top for anchor page states on load
 	scrollMe();
 	
-	$('#overlay, #modal').on('touchmove', function (event) {
+	$('#modal').on('touchmove', function (event) {
 		// locking these elements, so they can't be moved when dragging the div
 		event.preventDefault();
 	});
 	
+	function hidesAppAlert (){
+		$("#app-alert").addClass("hide-me");
+		$("#login-form").removeClass("hide-me");
+	}
 	
 	// for focus and blur events
 	$("form :input").focus(function() {
@@ -135,12 +139,6 @@ function modalHide(){
 function scrollMe(){
 	$('html, body').animate({scrollTop:0}, 'slow');
 	return false;
-}
-
-function hidesAppAlert (){
-	$(".app-alert").addClass("hide-me");
-	$("#login-form").removeClass("hide-me");
-
 }
 
 
