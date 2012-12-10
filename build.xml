@@ -74,7 +74,7 @@
 	   </target>
 	
 	<target name="assemble">
-		  <property name="ffile" value="conf/filters/local" />
+		  <property name="ffile" value="conf/filters/${build.env}/configuration.properties" />
 	      <property file="${ffile}" />
 	      <echo message="using filter -> ${ffile}" />
 	      <antcall target="clean" />
@@ -108,6 +108,9 @@
    	<copy file="${conf.dir}/project.init.properties"
    	   	            todir="${dest.dir.classes}"
    	   	            filtering="true" />
+   	<copy file="${ffile}"
+		tofile="${conf.dir}/configuration.properties"
+ 		filtering="true" />
    	<copy file="${conf.dir}/configuration.properties"
    	   	            todir="${dest.dir.classes}"
    	   	            filtering="true" />
