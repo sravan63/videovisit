@@ -17,7 +17,6 @@
         <script src="js/site/mobile/mobile-web.js" type="text/javascript"></script>
 
 		<link rel="stylesheet" href="css/site/global/mobile.css">
-       	<link rel="shortcut icon" href="ico/favicon.ico">
 		<link rel="apple-touch-icon" href="images/vv-apple-touch-icon-72@2x.png">
 
     </head>
@@ -26,7 +25,7 @@
     <!--Start Body -->
 	<body>
     	
-    	<div id="main-window" class="main-window profile">
+    	<div id="main-window" class="main-window">
     		<!--  TODO - What is this used for ? -->
 			<div class="scrollup"> <!--  button that scrolls to top  --> </div>
 		
