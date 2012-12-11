@@ -17,14 +17,13 @@
 
 	<c:if test="${WebAppContext.totalmeetings>0}">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">
+		
 			<div class="meeting well">
 				<div class="time-slot">
-					
 					<button class="button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}">Launch Visit</button>
 					<div class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp}</div>
-			
-					<p id="displayTime">Visit scheduled for <span class="time"> <span class="time_${meeting.meetingId}"></span></span></p>
-					<!--  TODO - not a good way of handling -->
+					
+					<p>Visit scheduled for <span class="time"><span class="time_${meeting.meetingId}"></span></span></p>
 					<script type="text/javascript">
 						// convert time stamp to time
 							meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
@@ -43,9 +42,9 @@
 						</div>
 						<div class="name">
 							${meeting.providerHost.firstName} ${meeting.providerHost.lastName}
-							<c:if test="${not empty meeting.providerHost.title}">
-								, ${meeting.providerHost.title}
-							</c:if>
+								<c:if test="${not empty meeting.providerHost.title}">
+									, ${meeting.providerHost.title}
+								</c:if>
 						</div>
 					</li>
 					<c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
@@ -55,14 +54,18 @@
 						</c:forEach>
 					</c:if>
 					<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-							<h2 class="guests">Guest Clinicians</h2>
-							<c:forEach var="p" items="${meeting.caregivers}">
+						<h2 class="guests">Guest Clinicians</h2>
+						<c:forEach var="p" items="${meeting.caregivers}">
 							<li class="guest-clinician">${p.firstName} ${p.lastName}</li>
-							</c:forEach>
+						</c:forEach>
 					</c:if>
-
+					
+					
 				</ul>
 			</div>
+		
+		
+			
 		</c:forEach>
 	</c:if>
 
