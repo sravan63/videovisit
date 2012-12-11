@@ -11,6 +11,9 @@ VIDEO_VISITS_MOBILE.Path = {
 	    },
 	    login : {
 	        ajaxurl : 'submitlogin.json'
+	    },
+	    setSessionTimeout : {
+	        ajaxurl : 'sessiontimeout.json'
 	    }
 };
 /*END - AJAX Server requests  */
@@ -38,10 +41,6 @@ $(document).ready(function() {
 		event.preventDefault();
 	});
 	
-	function hidesAppAlert (){
-		$("#app-alert").addClass("hide-me");
-		$("#login-form").removeClass("hide-me");
-	}
 	
 	// for focus and blur events
 	$("form :input").focus(function() {
@@ -99,6 +98,7 @@ $(document).ready(function() {
 		// if client side validation successful
 		if(isLoginValiadtionSuccess()){
 			loginSubmit();
+			
 		}
 
 	});
@@ -106,11 +106,15 @@ $(document).ready(function() {
 	$(".button-launch-visit").click(function(event) {	
 		event.preventDefault();
 		
+		// set the session timeout before launching the video visit
+		setSessionTimeout();
+		
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
 		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
 		launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName);
+		
 
 	});
 	
@@ -139,6 +143,12 @@ function modalHide(){
 function scrollMe(){
 	$('html, body').animate({scrollTop:0}, 'slow');
 	return false;
+}
+
+function hidesAppAlert (){
+	$("#app-alert").addClass("hide-me");
+	$("#login-form").removeClass("hide-me");
+
 }
 
 
@@ -354,5 +364,25 @@ function loginSubmit(){
 	return false;
 }
 
+
+function setSessionTimeout(){
+	
+	$.ajax({
+        type: "POST",
+        url: VIDEO_VISITS_MOBILE.Path.setSessionTimeout.ajaxurl,
+        data: postdata, 
+        success: function(returndata) {
+           returndata = $.trim(returndata);
+        },
+        error: function() {
+        	$("#globalError").text("There was an error submitting your login.");
+ 	   		$("#globalError").removeClass("hide-me").addClass("error");
+            
+            
+        }
+    });
+	
+	return false;
+}
 
 
