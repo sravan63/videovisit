@@ -52,6 +52,7 @@
 				<!-- Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>	
 				<prop key="/mobilepatientmeetings.htm">mobilePatientMeetings</prop>	
+				<prop key="/sessiontimeout.json">sessionTimeout</prop>	
 				
 					
 			</props>
@@ -193,15 +194,7 @@
 	</bean>
 	
 	<!-- Mobile Controllers  -->
-	<!-- <bean id="mobilePatientLanding" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
-	    
-		<property name="viewName" value="mPatientPreLoginPage" />
-		
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="navigation" value="guesthelp" />
-		<property name="subNavigation" value="guesthelp" />
-	</bean>
-	 -->
+	
 	<bean id="mobilePatientLanding" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
@@ -211,13 +204,19 @@
     </bean>
 	
 	<bean id="mobilePatientMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
-	    <!--  defined n mobile-titles-definitions.xml -->
+	    <!--  defined in mobile-titles-definitions.xml -->
 		<property name="viewName" value="mPatientLandingPage" />
 		
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
 	</bean>
+	
+	<bean id="sessionTimeout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SessionTimeoutController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="sessionTimeoutInSeconds" value="300"></property>
+	</bean>
+	
 	
 
 	<!--  COMMAND classes -->
