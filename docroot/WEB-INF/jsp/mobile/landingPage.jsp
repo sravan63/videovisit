@@ -12,7 +12,7 @@
 	MeetingCommand.retrieveMeeting(request, response);
 %>
 
-<div class="visits">
+<div class="visits patient">
 	<h1>Your Video Visits</h1>
 	
 	<c:choose>
@@ -55,7 +55,6 @@
 								<li>${p.firstName} ${p.lastName}</li>
 							</c:forEach>
 						</c:if>
-						
 						
 					</ul>
 				</div>
