@@ -1,6 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.filter;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,6 +12,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import net.sourceforge.wurfl.core.Device;
+import net.sourceforge.wurfl.core.WURFLHolder;
+import net.sourceforge.wurfl.core.WURFLManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -23,6 +28,8 @@ public class WebSessionFilter implements Filter
 
 	private FilterConfig config = null;
 	private String[] excludeURLs = null;
+	private String mobileLoginUrl = null;
+	private String webLoginUrl = null;
 
 	public void init(FilterConfig config) throws ServletException
 	{
@@ -31,6 +38,9 @@ public class WebSessionFilter implements Filter
 		//exclude the standalone calorie counter url
 		String s = config.getInitParameter("excludeURL");
 		excludeURLs = StringUtils.split(s, ",");
+		
+		mobileLoginUrl = config.getInitParameter("mobileLoginURL");
+		webLoginUrl = config.getInitParameter("webLoginURL");
 	}
 	
 	public void destroy()
@@ -41,7 +51,7 @@ public class WebSessionFilter implements Filter
 	public void doFilter(ServletRequest sreq, ServletResponse sresp,
 			FilterChain chain) throws IOException, ServletException
 	{
-
+		
 		HttpServletRequest req;
 		HttpServletResponse resp;
 	
@@ -50,20 +60,27 @@ public class WebSessionFilter implements Filter
 		
 		HttpSession ss = req.getSession(false);
 		
+		String loginUrl = null;
+		
+		
 		if (!isExclude(req)) {
 			WebAppContext ctx = null;
 			if (ss != null) {
 				 ctx  	= WebAppContext.getWebAppContext(req);
+				// get the login url based on mobile, tablet or desktop application
+				loginUrl = getLoginUrl(req);
+				logger.info("WebSessionFilter:doFilter:loginUrl" + loginUrl);
+				
 			}
 			
 			if (ctx == null) {
-					String url = req.getScheme() + "://" + req.getServerName() + ":"
-					+ req.getServerPort() + req.getContextPath() + "/login.htm";
-		
+					//  login url					
 					logger
 						.info("Inside WebSessionInterceptor.doFilter Session  expired forwarding to>>>>>>>>>>>>>>>>>>>>"
-							+ url);
-					resp.sendRedirect(url);
+							+ loginUrl.toString());
+	
+					// redirect to login page if the user is logged out.
+					resp.sendRedirect(loginUrl.toString());
 			} else {
 				chain.doFilter(req, resp);
 			}
@@ -86,6 +103,71 @@ public class WebSessionFilter implements Filter
 			}
 		}
 		return isExclude;
+	}
+	
+	
+	private boolean isWirelessDeviceOrTablet(HttpServletRequest request){
+		
+		boolean isWirelessDeviceOrTablet = false;
+		HttpSession session = request.getSession(false);
+		
+		
+		
+		
+		WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
+		
+		WURFLManager manager = wurfl.getWURFLManager();
+
+		Device device = manager.getDeviceForRequest(request);
+		
+		Map<String, String > capabilities = device.getCapabilities();
+		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:capabilities=" + capabilities);
+		
+		if("true".equals(capabilities.get("is_wireless_device")) || "true".equals(capabilities.get("is_tablet"))){
+			isWirelessDeviceOrTablet = true;
+		}
+		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:isWirelessDeviceOrTablet value" + isWirelessDeviceOrTablet);
+		return isWirelessDeviceOrTablet;
+	}
+	
+	
+	private String getLoginUrl(HttpServletRequest request){
+		
+		boolean isWirelessDeviceOrTablet = isWirelessDeviceOrTablet(request);
+		
+		
+		String showFullSite= request.getParameter("showFullSite");
+		logger.info("WebSessionFilter:getLoginUrl:showFullSite=" + showFullSite);
+		
+		StringBuffer sbLoginUrl = new StringBuffer();
+		
+		
+		String scheme = request.getScheme();
+		String serverName = request.getServerName();
+		int serverPort = request.getServerPort();
+		String contextPath = request.getContextPath();
+		
+		sbLoginUrl.append(scheme).append("://")
+		.append(serverName).append( ":").append(serverPort)
+		.append(contextPath).append("/");
+		
+		if(isWirelessDeviceOrTablet){
+			
+			if((showFullSite != null && "true".equals(showFullSite))){
+				sbLoginUrl.append(webLoginUrl);
+			}
+			else{
+				// Mobile Login url
+				sbLoginUrl.append(mobileLoginUrl);
+			}
+		}
+		else{
+			//Web Application login Url
+			sbLoginUrl.append(webLoginUrl);
+		}
+		
+		return sbLoginUrl.toString();
+		
 	}
 	
 }
