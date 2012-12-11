@@ -13,13 +13,32 @@
 		</listener-class>
 	</listener>
 	
+	<!--  Listener used to detect devices: mobile, tablet or desktop -->
+	<listener>
+	  <listener-class>
+	     net.sourceforge.wurfl.core.web.WURFLServletContextListener
+	  </listener-class>
+	</listener>
+	<context-param>
+		<param-name>wurfl</param-name>
+		<param-value>/WEB-INF/lib/wurfl.zip</param-value>
+	</context-param>
+	
    <!-- Session for regular Web FILTER -->
    <filter>
       <filter-name>WebSessionFilter</filter-name>
       <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.WebSessionFilter</filter-class>
       <init-param>
-      <param-name>excludeURL</param-name>
-      <param-value>login.htm,intro.htm,setup.htm,verifyguest.json,guestready.htm,guesthelp.htm,mobilepatientlanding.htm</param-value>
+	      <param-name>excludeURL</param-name>
+	      <param-value>login.htm,intro.htm,setup.htm,verifyguest.json,guestready.htm,guesthelp.htm,mobilepatientlanding.htm</param-value>
+    </init-param>
+     <init-param>
+	      <param-name>mobileLoginURL</param-name>
+	      <param-value>mobilepatientlanding.htm</param-value>
+    </init-param>
+    <init-param>
+	      <param-name>webLoginURL</param-name>
+	      <param-value>login.htm</param-value>
     </init-param>
    </filter>
    <filter-mapping>
