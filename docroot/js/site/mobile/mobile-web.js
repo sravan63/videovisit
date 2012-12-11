@@ -159,9 +159,9 @@ function hidesAppAlert (){
  * @param exdays
  */
 function setCookie(c_name,value,exdays){
-	var exdate=new Date();
-	exdate.setDate(exdate.getDate() + exdays);
-	var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+	//var exdate=new Date();
+	//exdate.setDate(exdate.getDate() + exdays);
+	var c_value=escape(value); // + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
 	
 	document.cookie=c_name + "=" + c_value;
 }
@@ -367,10 +367,15 @@ function loginSubmit(){
 
 function setSessionTimeout(){
 	
+	var currentTime = new Date();
+    var n = currentTime.getTime();
+    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
+	var postdata = 'nocache=' + n;
+	
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.setSessionTimeout.ajaxurl,
-        data: null, 
+        data: postdata, 
         success: function(returndata) {
            returndata = $.trim(returndata);
         },
