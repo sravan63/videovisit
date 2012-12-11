@@ -370,7 +370,7 @@ function setSessionTimeout(){
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.setSessionTimeout.ajaxurl,
-        data: postdata, 
+        data: null, 
         success: function(returndata) {
            returndata = $.trim(returndata);
         },
