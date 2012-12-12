@@ -214,7 +214,7 @@
 	
 	<bean id="sessionTimeout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SessionTimeoutController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="sessionTimeoutInSeconds" value="300"></property>
+		<property name="sessionTimeoutInSeconds" value="900"></property>
 	</bean>
 	
 	
