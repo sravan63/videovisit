@@ -9,7 +9,7 @@
 					<div class="app-icon"></div>
 					<p>Video Visits app</p>
 				</div>
-			<button class="button-primary" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get the app</button>
+			<button id="patientLoginGetAppButtonId" class="button-primary" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get the app</button>
 			<button class="button-secondary" id="btn-i-have-it">I have it installed!</button>
 		</div>
 		
