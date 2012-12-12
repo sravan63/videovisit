@@ -32,7 +32,7 @@ public class SessionTimeoutController extends SimplePageController {
 				
 				// session is active
 				if(context != null){
-					System.out.println("=====Calling SessionTimeoutController=======");
+					logger.info("=====SessionTimeoutController:handlePageRequest=======");
 					session.setMaxInactiveInterval(sessionTimeoutInSeconds);
 				}
 			}

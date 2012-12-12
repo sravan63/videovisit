@@ -3,6 +3,8 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.context;
 import java.io.Serializable;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.kp.tpmg.videovisit.webserviceobject.xsd.*;
 
 import org.apache.log4j.Logger;
@@ -29,6 +31,10 @@ public class WebAppContext implements Serializable{
 	
 	public static WebAppContext getWebAppContext(HttpServletRequest request) {
 		return (WebAppContext) request.getSession().getAttribute(WebAppContext.HTTP_SESSION_KEY);
+	}
+	
+	public static WebAppContext getWebAppContext(HttpSession session) {
+		return (WebAppContext) session.getAttribute(WebAppContext.HTTP_SESSION_KEY);
 	}
 
 	public static void setWebAppContext(HttpServletRequest request, WebAppContext ctx) {
