@@ -9,6 +9,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,6 +31,9 @@ public class WebSessionFilter implements Filter
 	private String[] excludeURLs = null;
 	private String mobileLoginUrl = null;
 	private String webLoginUrl = null;
+	
+	private static String DEVICE_TYPE_COOKIE_NAME =  "isWirelessDeviceOrTablet";
+	
 
 	public void init(FilterConfig config) throws ServletException
 	{
@@ -60,27 +64,27 @@ public class WebSessionFilter implements Filter
 		
 		HttpSession ss = req.getSession(false);
 		
-		String loginUrl = null;
-		
-		
+
 		if (!isExclude(req)) {
 			WebAppContext ctx = null;
 			if (ss != null) {
-				 ctx  	= WebAppContext.getWebAppContext(req);
-				// get the login url based on mobile, tablet or desktop application
-				loginUrl = getLoginUrl(req);
-				logger.info("WebSessionFilter:doFilter:loginUrl" + loginUrl);
+				ctx  	= WebAppContext.getWebAppContext(req);
+				setDeviceTypeCookie(req, resp);
 				
 			}
 			
 			if (ctx == null) {
+				
+					String loginUrl = getLoginUrl(req);
+				
 					//  login url					
 					logger
 						.info("Inside WebSessionInterceptor.doFilter Session  expired forwarding to>>>>>>>>>>>>>>>>>>>>"
-							+ loginUrl.toString());
+							+ loginUrl);
 	
+					
 					// redirect to login page if the user is logged out.
-					resp.sendRedirect(loginUrl.toString());
+					resp.sendRedirect(loginUrl);
 			} else {
 				chain.doFilter(req, resp);
 			}
@@ -106,14 +110,12 @@ public class WebSessionFilter implements Filter
 	}
 	
 	
+	
 	private boolean isWirelessDeviceOrTablet(HttpServletRequest request){
 		
 		boolean isWirelessDeviceOrTablet = false;
 		HttpSession session = request.getSession(false);
-		
-		
-		
-		
+
 		WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
 		
 		WURFLManager manager = wurfl.getWURFLManager();
@@ -130,10 +132,16 @@ public class WebSessionFilter implements Filter
 		return isWirelessDeviceOrTablet;
 	}
 	
-	
+	/**
+	 * Get the login url based on the cookie set for the device type
+	 * @param request
+	 * @return
+	 */
 	private String getLoginUrl(HttpServletRequest request){
+
+		Cookie cookie = getCookie(request, DEVICE_TYPE_COOKIE_NAME);
 		
-		boolean isWirelessDeviceOrTablet = isWirelessDeviceOrTablet(request);
+		String isWirelessDeviceOrTablet = cookie.getValue();
 		
 		
 		String showFullSite= request.getParameter("showFullSite");
@@ -151,7 +159,7 @@ public class WebSessionFilter implements Filter
 		.append(serverName).append( ":").append(serverPort)
 		.append(contextPath).append("/");
 		
-		if(isWirelessDeviceOrTablet){
+		if("true".equals(isWirelessDeviceOrTablet)){
 			
 			if((showFullSite != null && "true".equals(showFullSite))){
 				sbLoginUrl.append(webLoginUrl);
@@ -169,5 +177,66 @@ public class WebSessionFilter implements Filter
 		return sbLoginUrl.toString();
 		
 	}
+	
+	/**
+	 * Set the device type cookie
+	 * @param request
+	 * @param response
+	 */
+	private void setDeviceTypeCookie(HttpServletRequest request, HttpServletResponse response){
+		if(isWirelessDeviceOrTablet(request)){
+			createCookie(request, response, DEVICE_TYPE_COOKIE_NAME, "true");
+			System.out.println("1...cookie created");
+		}
+		else{
+			System.out.println("2...cookie created");
+			createCookie(request, response, DEVICE_TYPE_COOKIE_NAME, "false");
+		}
+	}
+	
+	/**
+	 * Create cookie
+	 * @param request
+	 * @param response
+	 * @param cookieName
+	 * @param cookieValue
+	 */
+	private void createCookie(HttpServletRequest request, HttpServletResponse response,
+			String cookieName, String cookieValue){
+		
+		Cookie cookie = getCookie(request, cookieName);
+		System.out.println("1...createCookie:cookie="+ cookie);
+		
+		if(cookie == null){
+			cookie = new Cookie(cookieName, cookieValue);
+			System.out.println("222.:createCookie:cookie="+ cookie);
+			cookie.setMaxAge(-1);
+			
+			
+			response.addCookie(cookie);
+		}
+	
+	}
+	
+	/**
+	 * Get cookie based on the cookie name
+	 * @param httpRequest
+	 * @param cookieName
+	 * @return
+	 */
+	private Cookie getCookie(HttpServletRequest httpRequest, String cookieName) {
+		
+        for (Cookie cookie : httpRequest.getCookies()) {
+        	System.out.println("cookie name===="+ cookie.getName());
+            if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) {
+                return cookie;
+            }
+        }
+        return null;
+    }
+	
+	
+	
+	
 	
 }
