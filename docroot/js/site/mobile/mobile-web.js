@@ -159,10 +159,16 @@ function hidesAppAlert (){
  * @param exdays
  */
 function setCookie(c_name,value,exdays){
-	//var exdate=new Date();
-	//exdate.setDate(exdate.getDate() + exdays);
-	var c_value=escape(value); // + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+	var exdate=new Date();
+	var time = exdate.getTime();
+	// expiry set to 20 years
+	var addTime = 60*60*24*365*20*1000;
 	
+	exdate.setTime(time + addTime);
+	
+	//exdate.setDate(exdate.getDate() + days);
+	var c_value=escape(value) +  ";expires="+exdate.toUTCString();
+	alert(c_value);
 	document.cookie=c_name + "=" + c_value;
 }
 
