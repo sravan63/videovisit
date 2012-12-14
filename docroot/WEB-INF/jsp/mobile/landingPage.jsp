@@ -77,8 +77,7 @@
 	
 
 
-	<div class="alert concealable">
-		<!--<div class="button-close"></div> -->
+	<div class="alert hideable">
 		<p><strong>For security reasons, only visits scheduled for the next 15 minutes are being displayed.</strong></p>
 	</div>
 		
