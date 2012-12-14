@@ -36,6 +36,15 @@ a {
 }
 /* normalize.css END */
 
+button:first-letter {
+	/* Setting sentence Case on all CTA buttons - step 1 of 2 */
+	text-transform: uppercase; 
+}
+
+button {
+	/* Setting sentence Case on all CTA buttons - step 2 of 2 */
+	text-transform: lowercase; 
+}
 
 html {
 	font-size: 62.5%; /* resets 1 rem to 10px */
@@ -677,7 +686,7 @@ ol.instructions > li:before {
 }
 
 
-.alert.concealable:after {
+.alert.hideable:after {
 	content: "";
 	width: 16px;
 	height: 18px; 
