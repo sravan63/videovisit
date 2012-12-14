@@ -64,13 +64,13 @@
 		</c:when>
 		<c:otherwise>
         	<!--  If no meetings are present -->
-			<c:if test="${WebAppContext.totalmeetings>0}">
+			
 				<div class="alert hero">
 					<div class="no-visits-image"></div>
 					<p><strong>You have no visits scheduled within the next 15 minutes.</strong></p>
 					<p>Please check back again later.</p>
 				</div>
-			</c:if>
+	
     	</c:otherwise>
 		
 	</c:choose>
