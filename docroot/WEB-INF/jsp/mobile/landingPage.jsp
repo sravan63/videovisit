@@ -13,7 +13,7 @@
 %>
 
 <div class="visits patient">
-	<h1>Your Video Visits</h1>
+	<h1>Visits in the next 15 minutes</h1>
 	
 	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings>0}">
