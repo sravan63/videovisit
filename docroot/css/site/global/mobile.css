@@ -117,7 +117,7 @@ font-weight: bold;
 	position:fixed;
 	right:12px;
 	bottom: 12px;
-	z-index: 1000;
+	/*z-index: 1000;*/
 	display:none;
 	width: 40px;
 	height: 40px;
