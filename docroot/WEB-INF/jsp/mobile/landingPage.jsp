@@ -83,7 +83,7 @@
 	</div>
 		
 	<ol class="well instructions">
-		<h2>Be ready for your Video Visit:</h2>
+		<h2>Be ready for your video visit:</h2>
 		<li><button class="button-get-app" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get App</button>Install the Video Visits app on your device.</li>
 		<li><div class="img-connection"></div>Make sure you have a good connection.</li>
 		<li>For best results, use headphones during the call.</li>
