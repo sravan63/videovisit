@@ -27,7 +27,7 @@ $(document).ready(function() {
 	$(".scrollup").click(scrollMe);
 	// Shows and hides scroll to top button
 	$(window).scroll(function(){
-		if ($(this).scrollTop() > 160) {
+		if ($(this).scrollTop() > 320) {
 			$('.scrollup').fadeIn();
 		} else {
 			$('.scrollup').fadeOut();
