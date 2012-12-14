@@ -13,12 +13,12 @@
 </div>
 
 <ol class="well instructions">
-	<h2>Be ready for your Video Visit:</h2>
+	<h2>Be ready for your video visit:</h2>
 	<li id="getAppLiId"><button id="preLoginGetAppButtonId" class="button-get-app" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get App</button>Install the Video Visits app on your device.</li>
 	<li><div class="img-connection"></div>Make sure you have a strong network connection.</li>
 	<li>For best results, use headphones during the call.</li>
 </ol>
 
 <div>
-	<button id="signInId" class="button-main" onclick="modalShow();">Get Started</button>
+	<button id="signInId" class="button-main" onclick="modalShow();">Get started</button>
 </div>
