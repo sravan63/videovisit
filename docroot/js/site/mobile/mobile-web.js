@@ -145,12 +145,18 @@ function scrollMe(){
 	return false;
 }
 
-function hidesAppAlert (){
+function hidesAppAlert(){
 	$("#app-alert").addClass("hide-me");
 	$("#login-form").removeClass("hide-me");
 
 }
 
+
+function hideable(){
+	// Hides inline alerts (which have x on top right) on click
+	$(this).addClass("hide-me");
+	return false;
+}
 
 /**
  * This method is used to set the cookie value
