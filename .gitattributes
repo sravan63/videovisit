@@ -236,4 +236,5 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VerifyGuestControl
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/DataSessionFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/RequestLoggingFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/WebSessionFilter.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/service/DeviceDetectionService.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/service/WebService.java -text

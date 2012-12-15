@@ -21,6 +21,7 @@ import net.sourceforge.wurfl.core.WURFLManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 
 public class WebSessionFilter implements Filter
 {
@@ -69,8 +70,6 @@ public class WebSessionFilter implements Filter
 			WebAppContext ctx = null;
 			if (ss != null) {
 				ctx  	= WebAppContext.getWebAppContext(req);
-				setDeviceTypeCookie(req, resp);
-				
 			}
 			
 			if (ctx == null) {
@@ -111,27 +110,7 @@ public class WebSessionFilter implements Filter
 	
 	
 	
-	private boolean isWirelessDeviceOrTablet(HttpServletRequest request){
-		
-		boolean isWirelessDeviceOrTablet = false;
-		HttpSession session = request.getSession(false);
 
-		WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
-		
-		WURFLManager manager = wurfl.getWURFLManager();
-
-		Device device = manager.getDeviceForRequest(request);
-		
-		Map<String, String > capabilities = device.getCapabilities();
-		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:capabilities=" + capabilities);
-		
-		if("true".equals(capabilities.get("is_wireless_device")) || "true".equals(capabilities.get("is_tablet"))){
-			isWirelessDeviceOrTablet = true;
-		}
-		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:isWirelessDeviceOrTablet value" + isWirelessDeviceOrTablet);
-		return isWirelessDeviceOrTablet;
-	}
-	
 	/**
 	 * Get the login url based on the cookie set for the device type
 	 * @param request
@@ -139,9 +118,7 @@ public class WebSessionFilter implements Filter
 	 */
 	private String getLoginUrl(HttpServletRequest request){
 
-		Cookie cookie = getCookie(request, DEVICE_TYPE_COOKIE_NAME);
-		
-		String isWirelessDeviceOrTablet = cookie.getValue();
+		boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(request);
 		
 		
 		String showFullSite= request.getParameter("showFullSite");
@@ -159,7 +136,7 @@ public class WebSessionFilter implements Filter
 		.append(serverName).append( ":").append(serverPort)
 		.append(contextPath).append("/");
 		
-		if("true".equals(isWirelessDeviceOrTablet)){
+		if(isWirelessDeviceOrTablet){
 			
 			if((showFullSite != null && "true".equals(showFullSite))){
 				sbLoginUrl.append(webLoginUrl);
@@ -178,65 +155,7 @@ public class WebSessionFilter implements Filter
 		
 	}
 	
-	/**
-	 * Set the device type cookie
-	 * @param request
-	 * @param response
-	 */
-	private void setDeviceTypeCookie(HttpServletRequest request, HttpServletResponse response){
-		if(isWirelessDeviceOrTablet(request)){
-			createCookie(request, response, DEVICE_TYPE_COOKIE_NAME, "true");
-			System.out.println("1...cookie created");
-		}
-		else{
-			System.out.println("2...cookie created");
-			createCookie(request, response, DEVICE_TYPE_COOKIE_NAME, "false");
-		}
-	}
-	
-	/**
-	 * Create cookie
-	 * @param request
-	 * @param response
-	 * @param cookieName
-	 * @param cookieValue
-	 */
-	private void createCookie(HttpServletRequest request, HttpServletResponse response,
-			String cookieName, String cookieValue){
-		
-		Cookie cookie = getCookie(request, cookieName);
-		System.out.println("1...createCookie:cookie="+ cookie);
-		
-		if(cookie == null){
-			cookie = new Cookie(cookieName, cookieValue);
-			System.out.println("222.:createCookie:cookie="+ cookie);
-			cookie.setMaxAge(-1);
-			
-			
-			response.addCookie(cookie);
-		}
-	
-	}
-	
-	/**
-	 * Get cookie based on the cookie name
-	 * @param httpRequest
-	 * @param cookieName
-	 * @return
-	 */
-	private Cookie getCookie(HttpServletRequest httpRequest, String cookieName) {
-		
-        for (Cookie cookie : httpRequest.getCookies()) {
-        	System.out.println("cookie name===="+ cookie.getName());
-            if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) {
-                return cookie;
-            }
-        }
-        return null;
-    }
-	
-	
-	
+
 	
 	
 }
