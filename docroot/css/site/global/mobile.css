@@ -257,7 +257,7 @@ footer p {
 
 /* - - - - - - - - MODALS - - - - - - - - */
 
-#modal {
+.modal {
 	position: fixed;
 	left: 0;
 	top: 0;
