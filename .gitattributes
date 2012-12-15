@@ -48,6 +48,7 @@ docroot/WEB-INF/jsp/login.jsp -text
 docroot/WEB-INF/jsp/logout.jsp -text
 docroot/WEB-INF/jsp/mobile/common/footer.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/header.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/mobile/common/logoutModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/landingPage.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientLoginModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/preLoginPage.jsp -text svneol=unset#text/plain
