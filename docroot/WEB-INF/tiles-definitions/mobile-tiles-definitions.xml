@@ -27,6 +27,10 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
 	</definition>
 	
+	<definition name="mLogoutPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/logout-confirmation.jsp" />
+	</definition>
+	
 	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
  		<put-attribute name="header" value="/WEB-INF/jsp/blank.jsp" />
  		<put-attribute name="data" value="/WEB-INF/jsp/blank.jsp" />
