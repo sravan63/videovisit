@@ -20,5 +20,5 @@
 </ol>
 
 <div>
-	<button id="signInId" class="button-main" onclick="modalShow();">Sign on here</button>
+	<button id="signInId" class="button-main" onclick="modalShow('modal-login');">Sign on here</button>
 </div>

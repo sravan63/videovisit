@@ -1,4 +1,4 @@
-<div id="modal">
+<div id="modal-login" class="modal">
 	<div class="modal-window">
 		<div id="close-modal" class="button-close"></div>
 		<h1>Sign on to Video Visits</h1>
