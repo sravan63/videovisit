@@ -23,7 +23,10 @@ VIDEO_VISITS_MOBILE.Path = {
  * This is the main function which gets called when the document is ready and loaded in DOM
  */
 $(document).ready(function() {
-	$(".modal-window .button-close").click(modalHide);
+	
+	detectDeviceCookie();
+	
+	$(".modal-window .button-close").click(modalHideByClass);
 	$(".scrollup").click(scrollMe);
 	// Shows and hides scroll to top button
 	$(window).scroll(function(){
@@ -36,7 +39,7 @@ $(document).ready(function() {
 	// scrolls to top for anchor page states on load
 	scrollMe();
 	
-	$('#modal').on('touchmove', function (event) {
+	$('.modal').on('touchmove', function (event) {
 		// locking these elements, so they can't be moved when dragging the div
 		event.preventDefault();
 	});
@@ -57,15 +60,9 @@ $(document).ready(function() {
 	
 	// START--APP ALERT handling using cookie
 	var appAlertCookie=getCookie("APP_ALERT_COOKIE");
-	var getAppLiId = $("#getAppLiId");
-	
-	if(typeof getAppLiId !== 'undefined' && typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
-		
-		getAppLiId.addClass("hide-me");
-	}
 	
 	$("#preLoginGetAppButtonId, #btn-i-have-it, #patientLoginGetAppButtonId").click(function() {
-		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE", 1);
+		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
 		var targetId = event.target.id;
 		if(targetId == 'btn-i-have-it'){
 			hidesAppAlert();
@@ -130,13 +127,18 @@ window.scrollTo(0,0);
 }, 0);
 
 
-function modalShow(){
-	$("#modal").removeClass("hideMe").hide().fadeIn(200);
+function modalShow(modalId){
+	$("#" + modalId).removeClass("hideMe").hide().fadeIn(200);
 	return false;
 }
 
-function modalHide(){
-	$("#modal").fadeOut(200);
+function modalHideByClass(){
+	$(".modal").fadeOut(200);
+	return false;
+}
+
+function modalHide(modalId){
+	$("#" + modalId).fadeOut(200);
 	return false;
 }
 
@@ -145,12 +147,11 @@ function scrollMe(){
 	return false;
 }
 
-function hidesAppAlert(){
+function hidesAppAlert (){
 	$("#app-alert").addClass("hide-me");
 	$("#login-form").removeClass("hide-me");
 
 }
-
 
 function hideable(){
 	// Hides inline alerts (which have x on top right) on click
@@ -158,13 +159,60 @@ function hideable(){
 	return false;
 }
 
+/*
+ * Function used to detect the device.
+ * We need to add code to detect devices which needs to be supported here
+ */
+function getAppOS(){
+    //First, check for supported iOS devices, iPhone, iPod, and iPad
+    var iOS = false,
+    p = navigator.platform;
+ 
+    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p==='iPhone Simulator'){
+        return "iOS";
+    }
+    
+    //next, check if this is a supported AIR 3.1 Android device http://kb2.adobe.com/cps/923/cpsid_92359.html
+    //Updated (3/5/2012) Advertize only to Android 2.2, 2.3, 3.0, 3.1 and 3.2 devices.
+    //Updated (8/29/2012) Added Android 4.0 to the list of supported operating systems. 
+    if (navigator.userAgent.match(/Android 2.2/i) || navigator.userAgent.match(/Android 2.3/i) || 
+    navigator.userAgent.match(/Android 3.0/i) || navigator.userAgent.match(/Android 3.1/i) || 
+    navigator.userAgent.match(/Android 3.2/i) || navigator.userAgent.match(/Android 4.0/i) ||
+    navigator.userAgent.match(/Android 4.1/i) || navigator.userAgent.match(/Android 4.2/i)){
+           return "Android";
+    }
+    
+    //No supported app platform found.
+    return "desktop";
+}
+
+/*
+ * This method sets the isWirelessDeviceOrTablet cookie based on the device detected
+ */
+function detectDeviceCookie(){
+	var appOS = getAppOS();
+	
+	// Check if cookie already set
+	var isWirelessDeviceOrTabletCookie=getCookie("isWirelessDeviceOrTablet");
+	if(typeof isWirelessDeviceOrTabletCookie === 'undefined' || isWirelessDeviceOrTabletCookie ==null || isWirelessDeviceOrTabletCookie === ""){
+		return;
+	}
+	
+	if(appOS === 'iOS' || appOS === 'Android'){
+		setCookie("isWirelessDeviceOrTablet", "true")
+	}
+	else{
+		// for desktop
+		setCookie("isWirelessDeviceOrTablet", "false")
+	}
+}
 /**
  * This method is used to set the cookie value
  * @param c_name
  * @param value
  * @param exdays
  */
-function setCookie(c_name,value,exdays){
+function setCookie(c_name,value){
 	var exdate=new Date();
 	var time = exdate.getTime();
 	// expiry set to 20 years
