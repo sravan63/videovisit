@@ -27,6 +27,9 @@ $(document).ready(function() {
 	detectDeviceCookie();
 	
 	$(".modal-window .button-close").click(modalHideByClass);
+	
+	$(".alert.hideable").click(hideSecurityAlert);
+	
 	$(".scrollup").click(scrollMe);
 	// Shows and hides scroll to top button
 	$(window).scroll(function(){
@@ -71,7 +74,7 @@ $(document).ready(function() {
 	});
 	
 
-	$("#signInId").click(function(event) {
+	$("#signInId, #logout-sign-in").click(function(event) {
 		event.preventDefault();
 		
 		var targetId = event.target.id;
@@ -159,6 +162,13 @@ function hideable(){
 	return false;
 }
 
+
+function hideSecurityAlert (){
+	$(".alert").addClass("hide-me");
+	return false;
+}
+
+
 /*
  * Function used to detect the device.
  * We need to add code to detect devices which needs to be supported here
@@ -194,11 +204,14 @@ function detectDeviceCookie(){
 	
 	// Check if cookie already set
 	var isWirelessDeviceOrTabletCookie=getCookie("isWirelessDeviceOrTablet");
-	if(typeof isWirelessDeviceOrTabletCookie === 'undefined' || isWirelessDeviceOrTabletCookie ==null || isWirelessDeviceOrTabletCookie === ""){
+	
+	if(typeof isWirelessDeviceOrTabletCookie != undefined && isWirelessDeviceOrTabletCookie !=null && isWirelessDeviceOrTabletCookie != ""){
+		
 		return;
 	}
 	
 	if(appOS === 'iOS' || appOS === 'Android'){
+		
 		setCookie("isWirelessDeviceOrTablet", "true")
 	}
 	else{
@@ -222,7 +235,7 @@ function setCookie(c_name,value){
 	
 	//exdate.setDate(exdate.getDate() + days);
 	var c_value=escape(value) +  ";expires="+exdate.toUTCString();
-	alert(c_value);
+	
 	document.cookie=c_name + "=" + c_value;
 }
 
