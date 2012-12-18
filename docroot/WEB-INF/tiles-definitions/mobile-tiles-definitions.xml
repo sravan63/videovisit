@@ -13,8 +13,18 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
  		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
 	</definition>
+	<definition name=".mobileWebPageTemplatePG" template="/WEB-INF/tiles-templates/mobileLayout.jsp">
+		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="header" value="/WEB-INF/jsp/mobile/common/headerpg.jsp" />
+		<put-attribute name="sidebar"  value="/WEB-INF/jsp/blank.jsp"  />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
+	</definition>
 
 	<definition name=".oneColumnLayout" extends=".mobileWebPageTemplate">
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+	</definition>
+	<definition name=".oneColumnLayoutPG" extends=".mobileWebPageTemplatePG">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 	</definition>
 	
@@ -24,7 +34,15 @@
 	
 	
 	<definition name="mPatientLandingPage" extends=".oneColumnLayout">
- 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/preLoginPage.jsp" />
+	</definition>
+	
+	<definition name="mPatientGuestLandingPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPagePG.jsp" />
+	</definition>
+	
+	<definition name="mPatientGuestPreLoginPage" extends=".oneColumnLayoutPG">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/prePatientGuestLoginPage.jsp" />
 	</definition>
 	
 	<definition name="mLogoutPage" extends=".oneColumnLayout">
