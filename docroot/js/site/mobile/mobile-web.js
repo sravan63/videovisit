@@ -12,10 +12,34 @@ VIDEO_VISITS_MOBILE.Path = {
 	    login : {
 	        ajaxurl : 'submitlogin.json'
 	    },
+	    guest : {
+	        verify : 'verifyguest.json'
+	    },
 	    setSessionTimeout : {
 	        ajaxurl : 'sessiontimeout.json'
 	    }
 };
+
+var request = {
+   		 get: function(parameter)
+   		 {
+   		    var tmp = this.parameters()[parameter];
+   		    return tmp;
+   		 },
+   		 parameters: function()
+   		 {
+   		    var result = {};
+   		    var url = window.location.href;
+   		    var parameters = url.slice(url.indexOf('?') + 1).split('&');
+   		 
+   		    for (var i = 0; i < parameters.length; i++)
+   		    {
+   		       var parameter = parameters[i].split('=');
+   		       result[parameter[0]] = parameter[1];
+   		    }
+   		 return result;
+   		 }
+   	};
 /*END - AJAX Server requests  */
 
 
@@ -64,11 +88,14 @@ $(document).ready(function() {
 	// START--APP ALERT handling using cookie
 	var appAlertCookie=getCookie("APP_ALERT_COOKIE");
 	
-	$("#preLoginGetAppButtonId, #btn-i-have-it, #patientLoginGetAppButtonId").click(function() {
+	$("#preLoginGetAppButtonId, #btn-i-have-it, #btn-i-have-it_pg, #patientLoginGetAppButtonId").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
 		var targetId = event.target.id;
 		if(targetId == 'btn-i-have-it'){
 			hidesAppAlert();
+		}
+		if(targetId == 'btn-i-have-it_pg'){
+			hidesAppAlertPatientGuest();
 		}
 		
 	});
@@ -87,6 +114,18 @@ $(document).ready(function() {
 		
 	});
 	
+	$("#signInIdPG").click(function(event) {
+		event.preventDefault();
+		
+		var targetId = event.target.id;
+		// clear all errors
+		clearAllErrors();
+		if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
+			hidesAppAlertPatientGuest();
+		}
+		return false;
+		
+	});
 	
 	
 	// END--APP ALERT handling using cookie
@@ -98,6 +137,18 @@ $(document).ready(function() {
 		// if client side validation successful
 		if(isLoginValiadtionSuccess()){
 			loginSubmit();
+			
+		}
+
+	});
+	
+	// Login button submit click patient guest
+	$("#login-submit-pg").click(function(event) {
+		event.preventDefault();
+			
+		// if client side validation successful
+		if(validationPatientGuestLogin()){
+			loginSubmitPG();
 			
 		}
 
@@ -156,6 +207,11 @@ function hidesAppAlert (){
 
 }
 
+function hidesAppAlertPatientGuest (){
+	$("#app-alert").addClass("hide-me");
+	$("#patientguest-login-form").removeClass("hide-me");
+
+}
 function hideable(){
 	// Hides inline alerts (which have x on top right) on click
 	$(this).addClass("hide-me");
@@ -364,6 +420,38 @@ function isLoginValiadtionSuccess(){
 	
 }
 
+function validationPatientGuestLogin(){
+	
+	var validationObj = 
+		{
+			"last_name" : [
+				{
+					"METHOD_NAME" : METHODNAME_IS_REQUIRED,
+					"PARAM_VALUE" : $("#last_name").val(),
+					"METHOD_ERROR_MESSAGE" : "Please enter your last name.",
+					"ERROR_ID" : "lastNameErrorId",
+					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+					
+					
+				},
+				{
+					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
+					"PARAM_VALUE" : $("#last_name").val(),
+					"ERROR_MESSAGE" : "Please enter your last name.",
+					"ERROR_ID" : "lastNameErrorId",
+					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+
+				}
+			]
+	
+		}
+	
+	var  isValid = validate(validationObj);
+
+	return isValid;
+	
+}
+
 /**
  * Called on the click of the Sign in button
  * @param megaMeetingId
@@ -437,6 +525,50 @@ function loginSubmit(){
 	return false;
 }
 
+function loginSubmitPG(){
+	
+    // Prepare data from pertinent fields for POSTing
+    
+    var meetingCode = request.get('meetingCode');
+    
+    // Parameters sent to the server
+    var currentTime = new Date();
+    var n = currentTime.getTime();
+    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
+	var postdata = 'patientLastName=' + $('input[name=last_name]').val() + '&meetingCode=' + meetingCode  +  '&nocache=' + n;
+
+	$.ajax({
+        type: "POST",
+        url: VIDEO_VISITS_MOBILE.Path.guest.verify,
+        data: postdata,  
+        success: function(returndata) {
+            returndata = $.trim(returndata);
+           
+            returndata = jQuery.parseJSON(returndata);
+            
+            if(returndata.result === '1'){
+            	$("#globalError").text('No matching patient found. Please try again.');          	
+                $("#globalError").removeClass("hide-me").addClass("error");
+                return false;
+              } else if (returndata.result === '2') {            	
+            	$("#globalError").text('You cannot join the same video visit more than once.');           	
+                 $("#globalError").removeClass("hide-me").addClass("error");  
+                 return false;
+              }
+        	
+             window.location.replace("mobilepatientguestmeetings.htm?meetingCode=" + meetingCode);
+
+        },
+        error: function() {
+        	$("#globalError").text("There was an error submitting your login.");
+ 	   		$("#globalError").removeClass("hide-me").addClass("error");
+            
+            
+        }
+    });
+	
+	return false;
+}
 
 function setSessionTimeout(){
 	
