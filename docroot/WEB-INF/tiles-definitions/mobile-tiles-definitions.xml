@@ -34,7 +34,7 @@
 	
 	
 	<definition name="mPatientLandingPage" extends=".oneColumnLayout">
- 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/preLoginPage.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
 	</definition>
 	
 	<definition name="mPatientGuestLandingPage" extends=".oneColumnLayout">
