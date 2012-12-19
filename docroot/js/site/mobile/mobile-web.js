@@ -220,7 +220,7 @@ function hideable(){
 
 
 function hideSecurityAlert (){
-	$(".alert").addClass("hide-me");
+	$(".alert.hideable").addClass("hide-me");
 	return false;
 }
 
