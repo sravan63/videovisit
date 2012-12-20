@@ -358,6 +358,7 @@ footer p {
 }
 
 .app-lockup {
+	-webkit-tap-highlight-color:transparent;
 	padding-top: 10px;
 	margin-left: -10px;
 	margin-right: -10px;
@@ -366,6 +367,7 @@ footer p {
 }
 
 .app-lockup p {
+	-webkit-tap-highlight-color:transparent;
 	font-weight: bold;
 	padding-top: 20px;
 		font-size: 20px;
@@ -373,6 +375,7 @@ footer p {
 }
 
 #app-alert .app-icon {
+	-webkit-tap-highlight-color:transparent;
 	float: left;
 	background: url("../../../images/mobile/video-visit-ui@2x.png") no-repeat right;
 	background-size: 240px;
