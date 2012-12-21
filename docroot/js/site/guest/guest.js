@@ -97,8 +97,8 @@ function getAppOS(){
     //First, check for supported iOS devices, iPhone, iPod, and iPad
     var iOS = false,
     p = navigator.platform;
- 
-    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p==='iPhone Simulator'){
+   // alert(p);
+    if( p.toLowerCase().indexOf('ipad') != -1 || p.toLowerCase().indexOf('iphone') != -1 || p.toLowerCase().indexOf('ipod') != -1 || p.indexOf('iPhone Simulator') != -1 ){
         return "iOS";
     }
     
