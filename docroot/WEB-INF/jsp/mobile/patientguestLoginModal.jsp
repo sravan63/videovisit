@@ -19,7 +19,7 @@
 				<p id="globalError" class="globalfailmessage hide-me"></p>
 
 				<ul class="form-block">
-					<li><label for="last_name">Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1" autocorrect = "off" pattern="[a-zA-Z]+" required>
+					<li><label for="last_name">Patient last Name</label><input type="text" name="last_name" id="last_name" tabindex="1" autocorrect = "off" pattern="[a-zA-Z]+" required>
 						<div id="lastNameErrorId" class="localfailmessage hide-me">
 							<p></p>
 						</div>
