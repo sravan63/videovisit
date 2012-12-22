@@ -10,13 +10,17 @@ VIDEO_VISITS_MOBILE.Path = {
 	        expired : 'logout.htm'
 	    },
 	    login : {
-	        ajaxurl : 'submitlogin.json'
+	        ajaxurl : 'mobilelogin.json'			//'submitlogin.json'
 	    },
 	    guest : {
 	        verify : 'verifyguest.json'
 	    },
 	    setSessionTimeout : {
 	        ajaxurl : 'sessiontimeout.json'
+	    },
+	    logout : {
+	        logoutjson: 'logout.json',
+	        logout_ui:'logout.htm'
 	    }
 };
 
@@ -130,8 +134,11 @@ $(document).ready(function() {
 	
 	// END--APP ALERT handling using cookie
 	
+	
+	
+	
 	// Login button submit click
-	$("#login-submit").click(function(event) {
+	$("#login-submit").live("click",  function(event) {
 		event.preventDefault();
 			
 		// if client side validation successful
@@ -168,6 +175,20 @@ $(document).ready(function() {
 		
 
 	});
+	
+	
+	$('#logout-yes').click(function(){
+        $.ajax({
+            type: 'POST',
+            url: VIDEO_VISITS_MOBILE.Path.logout.logoutjson,
+            complete: function(returndata) {
+            	
+                window.location.replace(VIDEO_VISITS_MOBILE.Path.logout.logout_ui);
+            }
+        });
+        return false;
+    });
+	
 	
 });
 
@@ -481,6 +502,7 @@ function loginSubmit(){
 
 	$.ajax({
         type: "POST",
+        cache:false,
         url: VIDEO_VISITS_MOBILE.Path.login.ajaxurl,
         data: postdata, 
         success: function(returndata) {
@@ -519,7 +541,8 @@ function loginSubmit(){
  	   		$("#globalError").removeClass("hide-me").addClass("error");
             
             
-        }
+        },
+        
     });
 	
 	return false;

@@ -1,6 +1,4 @@
-<!--Start JavaScript-->
-  <script src="js/site/mobile/mobile-web.js" type="text/javascript"></script>
-<!--End JavaScript-->
+
 
 <div class="page-content">
 	<div class="alert hero">

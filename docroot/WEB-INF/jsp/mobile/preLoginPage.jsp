@@ -1,6 +1,6 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
-<%@ include file="patientLoginModal.jsp" %>
+
 
 <div class="intro">
 	<div class="pic-frame">
