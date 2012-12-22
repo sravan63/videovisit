@@ -30,7 +30,7 @@ public class DeviceDetectionService {
 		
 		Cookie cookie = getCookie(request, DEVICE_TYPE_COOKIE_NAME);
 		if(cookie != null){
-			logger.info("WebSessionFilter:isWirelessDeviceOrTablet:Device detected from cookie=" );
+			logger.info("DeviceDetectionService:isWirelessDeviceOrTablet:Device detected from cookie" );
 			isWirelessDeviceOrTablet = Boolean.parseBoolean(cookie.getValue());
 		}
 		
@@ -48,7 +48,7 @@ public class DeviceDetectionService {
 	public static Cookie getCookie(HttpServletRequest httpRequest, String cookieName) {
 		
         for (Cookie cookie : httpRequest.getCookies()) {
-        	System.out.println("cookie name===="+ cookie.getName());
+        	logger.info("DeviceDetectionService:getCookie: cookie name="+ cookie.getName());
             if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) {
                 return cookie;
             }
