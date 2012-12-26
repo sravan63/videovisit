@@ -14,7 +14,7 @@ $(document).ready(function() {
     {
         
         //var url = "http://localhost:8080/videovisitmember/mobilepglanding.htm?meetingCode=" + request.get('meetingCode');
-         var url = getRootUrl(window.location.href) + "/videovisitmember/mobilepglanding.htm?meetingCode=" + request.get('meetingCode');
+         var url = getRootUrl(window.location.href) + "/videovisit/mobilepglanding.htm?meetingCode=" + request.get('meetingCode');
         //alert(url);
         window.location.href = url; 
     }
