@@ -47,12 +47,15 @@ public class DeviceDetectionService {
 	 */
 	public static Cookie getCookie(HttpServletRequest httpRequest, String cookieName) {
 		
-        for (Cookie cookie : httpRequest.getCookies()) {
+		if ( httpRequest.getCookies() != null )
+		{
+			for (Cookie cookie : httpRequest.getCookies()) {
         	logger.info("DeviceDetectionService:getCookie: cookie name="+ cookie.getName());
             if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) {
                 return cookie;
             }
         }
+		}
         return null;
     }
 	
