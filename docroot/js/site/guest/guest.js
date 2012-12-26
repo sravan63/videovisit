@@ -13,7 +13,8 @@ $(document).ready(function() {
    else
     {
         
-        var url = "http://localhost:8080/videovisitmember/mobilepglanding.htm?meetingCode=" + request.get('meetingCode');
+        //var url = "http://localhost:8080/videovisitmember/mobilepglanding.htm?meetingCode=" + request.get('meetingCode');
+         var url = getRootUrl(window.location.href) + "/videovisitmember/mobilepglanding.htm?meetingCode=" + request.get('meetingCode');
         //alert(url);
         window.location.href = url; 
     }
@@ -129,6 +130,11 @@ function getCookie(c_name){
 		}
 	}
 }
+
+function getRootUrl(url) {
+  return url.toString().replace(/^(.*\/\/[^\/?#]*).*$/,"$1");
+}
+
 
 /**
  * This method is used to set the cookie value
