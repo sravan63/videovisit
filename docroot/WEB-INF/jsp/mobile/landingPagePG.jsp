@@ -8,8 +8,10 @@
 
 
 <%
-
+	String guestFirstName = ""; 
+	String guestLastName = "";
 	MeetingCommand.retrieveMeetingForCaregiver(request, response);
+	String meetingHash = request.getParameter("meetingCode");
 %>
 
 <div class="visits patient">
@@ -41,22 +43,20 @@
 								, ${meeting.providerHost.title}
 							</c:if>
 					</p>
-					<button class="button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}">Launch Visit</button>
-					<ul class="additional-participants">
-						<c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
-							<li class="section">Additional Clinicians:</li>
-							<c:forEach var="p" items="${meeting.participants}">
-								<li>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></li>
-							</c:forEach>
-						</c:if>
-						<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-							<li class="section">Guest:</li>
+					<p class="time">
+						${meeting.member.firstName} ${meeting.member.lastName}
+					</p>
+					<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
 							<c:forEach var="p" items="${meeting.caregivers}">
-								<li>${p.firstName} ${p.lastName}</li>
+								<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
+									
+									<c:if test="${p.meetingHash == param.meetingCode}">
+										<button class="button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}">Launch Visit</button>
+									</c:if>
+								</c:if>
 							</c:forEach>
 						</c:if>
-						
-					</ul>
+					
 				</div>
 
 			</c:forEach>
