@@ -34,7 +34,13 @@
 						<input type="text" name="birth_month" title="mm" id="birth_month" class="birth_month" maxlength="2" tabindex="3" placeholder="MM" autocorrect = "off" pattern="[0-9]*" required>
 						<input type="text" name="birth_day" title="dd" id="birth_day" class="birth_day" maxlength="2" tabindex="4" placeholder="DD" autocorrect = "off" pattern="[0-9]*"required>
 						<input type="text" name="birth_year" title="yyyy" class="birth_year" id="birth_year" maxlength="4" tabindex="5" placeholder="YYYY" autocorrect = "off" pattern="[0-9]*"required>
-						<div id="dateOfBirthErrorId" class="localfailmessage hide-me">
+						<div id="dateOfBirthDayErrorId" class="localfailmessage hide-me">
+						<p></p>
+						</div>
+						<div id="dateOfBirthMonthErrorId" class="localfailmessage hide-me">
+						<p></p>
+						</div>
+						<div id="dateOfBirthYearErrorId" class="localfailmessage hide-me">
 							<p></p>
 						</div>
 					</li>
