@@ -140,7 +140,6 @@ $(document).ready(function() {
 	// Login button submit click
 	$("#login-submit").live("click",  function(event) {
 		event.preventDefault();
-			
 		// if client side validation successful
 		if(isLoginValiadtionSuccess()){
 			loginSubmit();
@@ -364,18 +363,9 @@ function isLoginValiadtionSuccess(){
 		{
 			"last_name" : [
 				{
-					"METHOD_NAME" : METHODNAME_IS_REQUIRED,
-					"PARAM_VALUE" : $("#last_name").val(),
-					"METHOD_ERROR_MESSAGE" : "Please enter your last name.",
-					"ERROR_ID" : "lastNameErrorId",
-					"HIGHLIGHT_PARENT_WHEN_ERROR": true
-					
-					
-				},
-				{
 					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
 					"PARAM_VALUE" : $("#last_name").val(),
-					"ERROR_MESSAGE" : "Please enter your last name.",
+					"ERROR_MESSAGE" : "Last name is required and must contain only alphabets.",
 					"ERROR_ID" : "lastNameErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
 
@@ -385,52 +375,43 @@ function isLoginValiadtionSuccess(){
 				{
 					"METHOD_NAME" : METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX,
 					"PARAM_VALUE" : $("#mrn").val(),
-					"PARAM_MIN_VALUE" :1,
+					"PARAM_MIN_VALUE" :8,
 					"PARAM_MAX_VALUE" :8,
-					"ERROR_MESSAGE" : "Please enter a valid Medical Record Number.",
+					"ERROR_MESSAGE" : "MRN is required and should be 8 digits.",
 					"ERROR_ID" : "mrnErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
 					
 				}
 			],
-			"birth_day"	:[
-				{
-					"METHOD_NAME" : METHODNAME_IS_REQUIRED,
-					"PARAM_VALUE" : $("#birth_day").val(),
-					"ERROR_MESSAGE" : "Please enter a valid date of birth.",
-					"ERROR_ID" : "dateOfBirthErrorId",
-					"HIGHLIGHT_PARENT_WHEN_ERROR": true
-					
-				}
-			],
-			"birth_month"	:[
+            "birth_month"	:[
 						{
-							"METHOD_NAME" : METHODNAME_IS_REQUIRED,
+							"METHOD_NAME" : METHODNAME_IS_BIRTHMONTH_VALIDATION,
 							"PARAM_VALUE" : $("#birth_month").val(),
-							"ERROR_MESSAGE" : "Please enter a valid date of birth.",
-							"ERROR_ID" : "dateOfBirthErrorId",
+							"ERROR_MESSAGE" : "Please enter a valid birth month.",
+							"ERROR_ID" : "dateOfBirthMonthErrorId",
 							"HIGHLIGHT_PARENT_WHEN_ERROR": true
 							
 						}
 					],
+			"birth_day"	:[
+				{
+					"METHOD_NAME" : METHODNAME_IS_BIRTHDAY_VALIDATION,
+					"PARAM_VALUE" : $("#birth_day").val(),
+					"ERROR_MESSAGE" : "Please enter a valid birth day.",
+					"ERROR_ID" : "dateOfBirthDayErrorId",
+					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+					
+				}
+			],
 			"birth_year"	:[
 			            {
 			            	
-			            	"METHOD_NAME" : METHODNAME_IS_REQUIRED,
+			            	"METHOD_NAME" : METHODNAME_IS_BIRTHYEAR_VALIDATION,
 							"PARAM_VALUE" : $("#birth_year").val(),
-							"ERROR_MESSAGE" : "Please enter a valid date of birth.",
-							"ERROR_ID" : "dateOfBirthErrorId",
+							"ERROR_MESSAGE" : "Please enter a valid birth year.",
+							"ERROR_ID" : "dateOfBirthYearErrorId",
 							"HIGHLIGHT_PARENT_WHEN_ERROR": true
-			            },
-						{
-							"METHOD_NAME" : METHODNAME_IS_MAX_LENGTH,
-							"PARAM_VALUE" : $("#birth_year").val(),
-							"PARAM_MAX_VALUE" :4,
-							"ERROR_MESSAGE" : "Please enter a valid date of birth.",
-							"ERROR_ID" : "dateOfBirthErrorId",
-							"HIGHLIGHT_PARENT_WHEN_ERROR": true
-							
-						}
+			            }
 					]
 	
 		}
