@@ -1,7 +1,10 @@
 var METHODNAME_IS_REQUIRED = 0;
 var METHODNAME_IS_ALPHA_NUMERIC = 1;
 var METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX = 2
-var METHODNAME_IS_MAX_LENGTH = 3
+var METHODNAME_IS_BIRTHDAY_VALIDATION = 3
+var METHODNAME_IS_BIRTHMONTH_VALIDATION = 4
+var METHODNAME_IS_BIRTHYEAR_VALIDATION = 5
+var METHODNAME_IS_MAX_LENGTH = 6
 
 
 /**
@@ -75,15 +78,48 @@ function validate(validationObj){
 	    			break;
 	    			
 	    		case METHODNAME_IS_ALPHA_NUMERIC: 
-	    			isValid = isAlphaNumeric(paramValue);
+                    isValid = isRequired(paramValue);
+                    if ( isValid)
+                        isValid = isAlphaNumeric(paramValue);
 	    			isAllValid = isAllValid && isValid;
 	    			
 	    			break;
 	    		case METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX: 
 	    			var min = methodObj.PARAM_MIN_VALUE;
 	    			var max = methodObj.PARAM_MAX_VALUE;
-	    			isValid = isValueBetweenMinMax(paramValue, min, max);
+                    isValid = isWhole(paramValue);
+                    
+                    if ( isValid)
+                        isValid = isValueBetweenMinMax(paramValue, min, max);
 	    			isAllValid = isAllValid && isValid;
+	    			break;
+                case METHODNAME_IS_BIRTHMONTH_VALIDATION:
+                    isValid = isRequired(paramValue);
+                    if ( isValid)
+                        isValid = isWhole(paramValue);
+                    if ( isValid)
+                        isValid = isMonth(paramValue);
+                    isAllValid = isAllValid && isValid;
+                    //alert('in month' + isValid);
+	    			break;
+                case METHODNAME_IS_BIRTHDAY_VALIDATION:
+                    isValid = isRequired(paramValue);
+                    if ( isValid)
+                        isValid = isWhole(paramValue);
+                    if ( isValid)
+                        isValid = isDay(paramValue);
+                    isAllValid = isAllValid && isValid;
+                    // alert(isAllValid);
+	    			break; 
+                case METHODNAME_IS_BIRTHYEAR_VALIDATION:
+                    var max = methodObj.PARAM_MAX_VALUE;
+                    isValid = isRequired(paramValue);
+                    if ( isValid)
+                        isValid = isWhole(paramValue);
+                    if ( isValid)
+                        isValid = isYear(paramValue);
+                    isAllValid = isAllValid && isValid;
+                   
 	    			break;
 	    		case METHODNAME_IS_MAX_LENGTH: 
 	    			var max = methodObj.PARAM_MAX_VALUE;
@@ -101,6 +137,8 @@ function validate(validationObj){
 	    	if(!isValid){
 	    		displayError(inputId, errorMessage, errorId);
 	    	}
+            else
+                clearError(inputId, errorMessage, errorId);
 	    	
 	    });
 	    
@@ -124,13 +162,65 @@ function isAlphaNumeric(value){
 }
 
 /**
+ * Returns true or false based on if the value is numeric or not
+ * @param element
+ * @param value
+ * @returns
+ */
+
+
+function isWhole (s) {
+    var isWhole_re       = /^\s*\d+\s*$/;
+   return String(s).search (isWhole_re) != -1
+}
+
+/**
+ * Returns true or false based on if the value is valid month
+ * @param element
+ * @param value
+ * @returns
+ */
+
+
+function isMonth (s) {
+    var is_month       = /^(0[1-9]|1[0-2])$/;
+   return String(s).search (is_month) != -1
+}
+
+/**
+ * Returns true or false based on if the value is valid day
+ * @param element
+ * @param value
+ * @returns
+ */
+
+
+function isDay (s) {
+    var is_day      = /^(0[1-9]|1[0-9]|2[0-9]|3[0-1])$/;
+   return String(s).search (is_day) != -1
+}
+
+/**
+ * Returns true or false based on if the value is valid year
+ * @param element
+ * @param value
+ * @returns
+ */
+
+
+function isYear (s) {
+    var is_year      = /^\d{4}$/;
+   return String(s).search (is_year) != -1
+}
+
+
+/**
  * Returns true or false based on if the value is alphanumeric or not
  * @param element
  * @param value
  * @returns
  */
 function isRequired(value){
-	
 	if(value == null || value.trim() == ''){
 		return false;
 	}
@@ -186,6 +276,17 @@ function displayError(inputElementId, errorMessage, errorElementId){
 	$("#" +inputElementId).parent().addClass("error");
 }
 
+
+/**
+ * Clears UI errors 
+ * @param element
+ * @param errorMessage
+ */
+function clearError(inputElementId, errorMessage, errorElementId){
+	$("#" + errorElementId).text(errorMessage);
+	$("#" +errorElementId).addClass("hide-me");
+	$("#" +inputElementId).parent().removeClass("error");
+}
 
 /**
  * Clears all the errors
