@@ -235,7 +235,8 @@
 	
 	<bean id="sessionTimeout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SessionTimeoutController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="sessionTimeoutInSeconds" value="900"></property>
+		<!-- timeout set to 22 mins -->
+		<property name="sessionTimeoutInSeconds" value="1320"></property>
 	</bean>
 	
 	<bean id="mobilelogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.MobileLoginController">
