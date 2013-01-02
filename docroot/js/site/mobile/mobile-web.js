@@ -10,7 +10,7 @@ VIDEO_VISITS_MOBILE.Path = {
 	        expired : 'logout.htm'
 	    },
 	    login : {
-	        ajaxurl : 'submitlogin.json'
+	        ajaxurl : 'mobilelogin.json'
 	    },
 	    guest : {
 	        verify : 'verifyguest.json'
@@ -29,6 +29,10 @@ VIDEO_VISITS_MOBILE.Path = {
         ,
 	    joinMeeting : {
 	        ajaxurl : 'joinmeeting.json'
+	    },
+	    logout : {
+	        logoutjson: 'logout.json',
+	        logout_ui:'logout.htm'
 	    }
 };
 
@@ -197,6 +201,19 @@ $(document).ready(function() {
 		
 
 	});
+    
+    
+    $('#logout-yes').click(function(){
+        $.ajax({
+            type: 'POST',
+            url: VIDEO_VISITS_MOBILE.Path.logout.logoutjson,
+            complete: function(returndata) {
+            	
+                window.location.replace(VIDEO_VISITS_MOBILE.Path.logout.logout_ui);
+            }
+        });
+        return false;
+    });
 	
 });
 
