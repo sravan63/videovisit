@@ -10,17 +10,25 @@ VIDEO_VISITS_MOBILE.Path = {
 	        expired : 'logout.htm'
 	    },
 	    login : {
-	        ajaxurl : 'mobilelogin.json'			//'submitlogin.json'
+	        ajaxurl : 'submitlogin.json'
 	    },
 	    guest : {
 	        verify : 'verifyguest.json'
 	    },
 	    setSessionTimeout : {
 	        ajaxurl : 'sessiontimeout.json'
-	    },
-	    logout : {
-	        logoutjson: 'logout.json',
-	        logout_ui:'logout.htm'
+	    }
+        ,
+	    createGuestSession : {
+	        ajaxurl : 'createguestsession.json'
+	    }
+        ,
+	    createGuestSession : {
+	        ajaxurl : 'createguestsession.json'
+	    }
+        ,
+	    joinMeeting : {
+	        ajaxurl : 'joinmeeting.json'
 	    }
 };
 
@@ -134,11 +142,8 @@ $(document).ready(function() {
 	
 	// END--APP ALERT handling using cookie
 	
-	
-	
-	
 	// Login button submit click
-	$("#login-submit").live("click",  function(event) {
+	$("#login-submit").click(function(event) {
 		event.preventDefault();
 		// if client side validation successful
 		if(isLoginValiadtionSuccess()){
@@ -170,24 +175,28 @@ $(document).ready(function() {
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
 		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
+        var meetingId = $(this).attr("meetingId");
+        joinMeeting(meetingId);
 		launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName);
 		
 
 	});
-	
-	
-	$('#logout-yes').click(function(){
-        $.ajax({
-            type: 'POST',
-            url: VIDEO_VISITS_MOBILE.Path.logout.logoutjson,
-            complete: function(returndata) {
-            	
-                window.location.replace(VIDEO_VISITS_MOBILE.Path.logout.logout_ui);
-            }
-        });
-        return false;
-    });
-	
+    
+    $(".button-launch-visit-pg").click(function(event) {	
+		event.preventDefault();
+		
+		// set the session timeout before launching the video visit
+		setSessionTimeout();
+		
+		var megaMeetingId = $(this).attr("megameetingid");
+		var lastName = $(this).attr("lastname");
+		var firstName = $(this).attr("firstname");
+		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
+        createGuestSession();
+		launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName);
+		
+
+	});
 	
 });
 
@@ -428,21 +437,13 @@ function validationPatientGuestLogin(){
 		{
 			"last_name" : [
 				{
-					"METHOD_NAME" : METHODNAME_IS_REQUIRED,
+					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
 					"PARAM_VALUE" : $("#last_name").val(),
 					"METHOD_ERROR_MESSAGE" : "Please enter your last name.",
 					"ERROR_ID" : "lastNameErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
 					
 					
-				},
-				{
-					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
-					"PARAM_VALUE" : $("#last_name").val(),
-					"ERROR_MESSAGE" : "Please enter your last name.",
-					"ERROR_ID" : "lastNameErrorId",
-					"HIGHLIGHT_PARENT_WHEN_ERROR": true
-
 				}
 			]
 	
@@ -483,7 +484,6 @@ function loginSubmit(){
 
 	$.ajax({
         type: "POST",
-        cache:false,
         url: VIDEO_VISITS_MOBILE.Path.login.ajaxurl,
         data: postdata, 
         success: function(returndata) {
@@ -522,8 +522,7 @@ function loginSubmit(){
  	   		$("#globalError").removeClass("hide-me").addClass("error");
             
             
-        },
-        
+        }
     });
 	
 	return false;
@@ -560,7 +559,7 @@ function loginSubmitPG(){
                  return false;
               }
         	
-             window.location.replace("mobilepatientguestmeetings.htm?meetingCode=" + meetingCode);
+             window.location.replace("mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + $('input[name=last_name]').val());
 
         },
         error: function() {
@@ -599,4 +598,54 @@ function setSessionTimeout(){
 	return false;
 }
 
+function createGuestSession(){
+	
+	var currentTime = new Date();
+    var n = currentTime.getTime();
+    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
+    var meetingCode = request.get('meetingCode');
+    var patientLastName = request.get('patientLastName');
+	var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;	
+	$.ajax({
+        type: "POST",
+        url: VIDEO_VISITS_MOBILE.Path.createGuestSession.ajaxurl,
+        data: postdata, 
+        success: function(returndata) {
+           returndata = $.trim(returndata);
+        },
+        error: function() {
+        	$("#globalError").text("There was an error submitting your login.");
+ 	   		$("#globalError").removeClass("hide-me").addClass("error");
+            
+            
+        }
+    });
+	
+	return false;
+}
+
+function joinMeeting(meetingId){
+	
+	var currentTime = new Date();
+    var n = currentTime.getTime();
+    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
+    
+	var postdata = 'meetingId=' + meetingId   +  '&nocache=' + n;	
+	$.ajax({
+        type: "POST",
+        url: VIDEO_VISITS_MOBILE.Path.joinMeeting.ajaxurl,
+        data: postdata, 
+        success: function(returndata) {
+           returndata = $.trim(returndata);
+        },
+        error: function() {
+        	$("#globalError").text("There was an error submitting your login.");
+ 	   		$("#globalError").removeClass("hide-me").addClass("error");
+            
+            
+        }
+    });
+	
+	return false;
+}
 
