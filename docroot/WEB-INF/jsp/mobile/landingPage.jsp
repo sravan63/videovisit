@@ -41,7 +41,7 @@
 								, ${meeting.providerHost.title}
 							</c:if>
 					</p>
-					<button class="button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}">Launch Visit</button>
+					<button class="button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}">Launch Visit</button>
 					<ul class="additional-participants">
 						<c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
 							<li class="section">Additional Clinicians:</li>
