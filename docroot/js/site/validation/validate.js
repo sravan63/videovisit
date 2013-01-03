@@ -90,7 +90,13 @@ function validate(validationObj){
                     isValid = isWhole(paramValue);
                     
                     if ( isValid)
+                   	{
                         isValid = isValueBetweenMinMax(paramValue, min, max);
+                        
+                        
+                    }
+                        
+                   
 	    			isAllValid = isAllValid && isValid;
 	    			break;
                 case METHODNAME_IS_BIRTHMONTH_VALIDATION:
