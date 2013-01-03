@@ -71,7 +71,6 @@ function validate(validationObj){
 		    var errorMessage = methodObj.ERROR_MESSAGE;
 		    var errorId = methodObj.ERROR_ID;
 	    	var paramValue = methodObj.PARAM_VALUE;
-	    	
 	    	switch(methodName){
 	    		case METHODNAME_IS_REQUIRED: 
 	    			isValid = isRequired(paramValue);
@@ -104,7 +103,9 @@ function validate(validationObj){
                     if ( !isValid)
                     	removeError = false;
                     else
-                    	removeError = true;
+                    	if ( !removeError)
+                    		clearErrorWithoutInput(inputId, errorMessage, errorId);
+                   
                     isAllValid = isAllValid && isValid;
                     //alert('in month' + isValid);
 	    			break;
@@ -117,7 +118,9 @@ function validate(validationObj){
                     if ( !isValid)
                     	removeError = false;
                     else
-                    	removeError = true;
+                    	if ( !removeError)
+                    		clearErrorWithoutInput(inputId, errorMessage, errorId);
+                    
                     isAllValid = isAllValid && isValid;
                     // alert(isAllValid);
 	    			break; 
@@ -131,7 +134,8 @@ function validate(validationObj){
                     if ( !isValid)
                     	removeError = false;
                     else
-                    	removeError = true;
+                    	if ( !removeError)
+                    		clearErrorWithoutInput(inputId, errorMessage, errorId);
                     isAllValid = isAllValid && isValid;
                    
 	    			break;
@@ -152,8 +156,8 @@ function validate(validationObj){
 	    		displayError(inputId, errorMessage, errorId);
 	    	}
             else
-            	if ( removeError)
-               	 clearError(inputId, errorMessage, errorId);
+            	 if ( removeError)
+               		 clearError(inputId, errorMessage, errorId);
 	    	
 	    });
 	    
@@ -301,6 +305,17 @@ function clearError(inputElementId, errorMessage, errorElementId){
 	$("#" + errorElementId).text(errorMessage);
 	$("#" +errorElementId).addClass("hide-me");
 	$("#" +inputElementId).parent().removeClass("error");
+}
+
+/**
+ * Clears UI errors but not input selection
+ * @param element
+ * @param errorMessage
+ */
+function clearErrorWithoutInput(inputElementId, errorMessage, errorElementId){
+	$("#" + errorElementId).text(errorMessage);
+	$("#" +errorElementId).addClass("hide-me");
+	//$("#" +inputElementId).parent().removeClass("error");
 }
 
 /**
