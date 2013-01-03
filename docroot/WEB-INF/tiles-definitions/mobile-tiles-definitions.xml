@@ -32,6 +32,11 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/preLoginPage.jsp" />
 	</definition>
 	
+	<definition name="mVideoVisitLandingPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/videovisitLanding.jsp" />
+	</definition>
+	
+	
 	
 	<definition name="mPatientLandingPage" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />

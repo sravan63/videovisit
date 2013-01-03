@@ -55,7 +55,8 @@
 				<prop key="/mobilepglanding.htm">mobilePGLanding</prop>	
 				<prop key="/mobilepatientmeetings.htm">mobilePatientMeetings</prop>	
 				<prop key="/mobilepatientguestmeetings.htm">mobilePatientGuestMeetings</prop>	
-				<prop key="/sessiontimeout.json">sessionTimeout</prop>	
+				<prop key="/sessiontimeout.json">sessionTimeout</prop>
+				<prop key="/mobilevideovisitlanding.htm">mobileVideoVisitLanding</prop>	
 				
 					
 			</props>
@@ -242,6 +243,17 @@
 	<bean id="mobilelogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.MobileLoginController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
+	
+	
+	<bean id="mobileVideoVisitLanding" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	    <!--  defined in mobile-titles-definitions.xml -->
+		<property name="viewName" value="mVideoVisitLandingPage" />
+		
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+	</bean>
+	
 	
 
 	<!--  COMMAND classes -->

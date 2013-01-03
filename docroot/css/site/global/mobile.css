@@ -985,6 +985,11 @@ color: #7C7D80;
 	visibility: visible;
 }
 
+.mobile-landing-page .button-main {
+	padding: 12px 20px;
+	margin-top: 18px;
+}
+
 /* Terms and Conditions page */
 
 .legal {font-size: 14px;}

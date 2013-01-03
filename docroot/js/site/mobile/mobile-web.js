@@ -249,6 +249,16 @@ function modalHide(modalId){
 	return false;
 }
 
+function modalClinician() {
+	$(".alert-clinician").removeClass("hide-me");
+	modalShow("videovisitLandingModalId");
+}
+
+function modalGuest(){
+	$(".alert-guest").removeClass("hide-me");
+	modalShow("videovisitLandingModalId");
+}
+
 function scrollMe(){
 	$('html, body').animate({scrollTop:0}, 'slow');
 	return false;
