@@ -48,6 +48,7 @@ function validate(validationObj){
 	// returns true is all the validations are successful
 	var isAllValid = true;
 	// Iterate over outer collection which is a set of html input Ids. Each Id will have an array of validations that needs to be performed.
+	var removeError = true;
 	
 	$.each(validationObj, function(key, arrValidationItems) {
 		
@@ -99,6 +100,11 @@ function validate(validationObj){
                         isValid = isWhole(paramValue);
                     if ( isValid)
                         isValid = isMonth(paramValue);
+                    
+                    if ( !isValid)
+                    	removeError = false;
+                    else
+                    	removeError = true;
                     isAllValid = isAllValid && isValid;
                     //alert('in month' + isValid);
 	    			break;
@@ -108,6 +114,10 @@ function validate(validationObj){
                         isValid = isWhole(paramValue);
                     if ( isValid)
                         isValid = isDay(paramValue);
+                    if ( !isValid)
+                    	removeError = false;
+                    else
+                    	removeError = true;
                     isAllValid = isAllValid && isValid;
                     // alert(isAllValid);
 	    			break; 
@@ -118,6 +128,10 @@ function validate(validationObj){
                         isValid = isWhole(paramValue);
                     if ( isValid)
                         isValid = isYear(paramValue);
+                    if ( !isValid)
+                    	removeError = false;
+                    else
+                    	removeError = true;
                     isAllValid = isAllValid && isValid;
                    
 	    			break;
@@ -138,7 +152,8 @@ function validate(validationObj){
 	    		displayError(inputId, errorMessage, errorId);
 	    	}
             else
-                clearError(inputId, errorMessage, errorId);
+            	if ( removeError)
+               	 clearError(inputId, errorMessage, errorId);
 	    	
 	    });
 	    
