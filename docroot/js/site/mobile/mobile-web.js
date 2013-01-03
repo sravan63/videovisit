@@ -149,6 +149,13 @@ $(document).ready(function() {
 	// Login button submit click
 	$("#login-submit").click(function(event) {
 		event.preventDefault();
+		if ( $("#mrn").val().length < 8 )
+        {
+        	while ( $("#mrn").val().length < 8 )
+        	{
+        		$("#mrn").val('0' + $("#mrn").val());
+        	}
+        }
 		// if client side validation successful
 		if(isLoginValiadtionSuccess()){
 			loginSubmit();
@@ -394,7 +401,6 @@ function isLoginValiadtionSuccess(){
 					"ERROR_MESSAGE" : "Last name is required and must contain only alphabets.",
 					"ERROR_ID" : "lastNameErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
-
 				}
 			],
 			"mrn"	:[
@@ -426,7 +432,6 @@ function isLoginValiadtionSuccess(){
 					"ERROR_MESSAGE" : "Please enter a valid birth day.",
 					"ERROR_ID" : "dateOfBirthDayErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
-					
 				}
 			],
 			"birth_year"	:[
