@@ -208,6 +208,16 @@
 		<property name="subNavigation" value="login" />
     </bean>
     
+	<bean id="mobileVideoVisitLanding" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+	    <property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	    <!--  defined in mobile-titles-definitions.xml -->
+		<property name="viewName" value="mVideoVisitLandingPage" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+	</bean>
+	
+	
     <bean id="mobilePGLanding" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
@@ -245,14 +255,6 @@
 	</bean>
 	
 	
-	<bean id="mobileVideoVisitLanding" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
-	    <!--  defined in mobile-titles-definitions.xml -->
-		<property name="viewName" value="mVideoVisitLandingPage" />
-		
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="navigation" value="home" />
-		<property name="subNavigation" value="login" />
-	</bean>
 	
 	
 
