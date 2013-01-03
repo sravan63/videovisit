@@ -8,8 +8,6 @@
 
 
 <%
-	String guestFirstName = ""; 
-	String guestLastName = "";
 	MeetingCommand.retrieveMeetingForCaregiver(request, response);
 	String meetingHash = request.getParameter("meetingCode");
 %>
@@ -51,7 +49,8 @@
 								<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
 									
 									<c:if test="${p.meetingHash == param.meetingCode}">
-										<button class="button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}">Launch Visit</button>
+										<button  class="button-launch-visit-pg" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}">Launch Visit</button>
+										
 									</c:if>
 								</c:if>
 							</c:forEach>
