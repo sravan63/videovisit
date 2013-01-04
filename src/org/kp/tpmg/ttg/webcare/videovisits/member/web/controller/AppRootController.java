@@ -25,12 +25,13 @@ public class AppRootController implements Controller {
 	private String subNavigation;
 	private String megaMeetingURL = null;
 	private String megaMeetingMobileURL = null;
+	private String clinicianSingleSignOnURL = null;
 	
 	public AppRootController() {
 		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
 		megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
-		
+		clinicianSingleSignOnURL = rbInfo.getString ("CLINICIAN_SINGLE_SIGNON_URL");	
 	}
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -40,6 +41,7 @@ public class AppRootController implements Controller {
 			WebAppContext.setWebAppContext(request, ctx);
 			ctx.setMegaMeetingURL(megaMeetingURL);	
 			ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
+			ctx.setClinicianSingleSignOnURL(clinicianSingleSignOnURL);
 
 		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
