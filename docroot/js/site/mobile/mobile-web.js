@@ -149,12 +149,15 @@ $(document).ready(function() {
 	// Login button submit click
 	$("#login-submit").click(function(event) {
 		event.preventDefault();
-		if ( $("#mrn").val().length < 8 )
-        {
-        	while ( $("#mrn").val().length < 8 )
-        	{
-        		$("#mrn").val('0' + $("#mrn").val());
-        	}
+		if ( $("#mrn").val().length > 0)
+		{
+			if ( $("#mrn").val().length < 8 )
+	        {
+	        	while ( $("#mrn").val().length < 8 )
+	        	{
+	        		$("#mrn").val('0' + $("#mrn").val());
+	        	}
+	        }
         }
 		// if client side validation successful
 		if(isLoginValiadtionSuccess()){
