@@ -87,7 +87,10 @@ function validate(validationObj){
 	    		case METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX: 
 	    			var min = methodObj.PARAM_MIN_VALUE;
 	    			var max = methodObj.PARAM_MAX_VALUE;
-                    isValid = isWhole(paramValue);
+	    			
+	    			isValid = isRequired(paramValue); 
+	    			if ( isValid )
+                   	 isValid = isWhole(paramValue);
                     
                     if ( isValid)
                    	{
