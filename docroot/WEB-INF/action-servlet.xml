@@ -57,6 +57,7 @@
 				<prop key="/mobilepatientguestmeetings.htm">mobilePatientGuestMeetings</prop>	
 				<prop key="/sessiontimeout.json">sessionTimeout</prop>
 				<prop key="/mobilevideovisitlanding.htm">mobileVideoVisitLanding</prop>	
+				<prop key="/keepalive.htm">keepalive</prop>	
 				
 					
 			</props>
@@ -233,6 +234,15 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
+	</bean>
+	
+	
+	<bean id="keepalive" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	    <!--  defined in mobile-titles-definitions.xml -->
+		<property name="viewName" value="keepalive" />
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
 	</bean>
 	
 	<bean id="mobilePatientGuestMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">

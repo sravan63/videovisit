@@ -15,8 +15,9 @@ VIDEO_VISITS_MOBILE.Path = {
 	    guest : {
 	        verify : 'verifyguest.json'
 	    },
-	    setSessionTimeout : {
-	        ajaxurl : 'sessiontimeout.json'
+	    sessionTimeout : {
+	        ajaxurl : 'sessiontimeout.json',
+	        checkSession:'keepalive.htm'
 	    }
         ,
 	    createGuestSession : {
@@ -65,6 +66,20 @@ var request = {
 $(document).ready(function() {
 	
 	detectDeviceCookie();
+	
+	// refresh the meetings page every one min
+//	var refreshId = setInterval(function(){
+//		var isUserLoggedInCookie = getCookie("isUserLoggedIn");
+//		if (typeof isUserLoggedInCookie !== 'undefined' && isUserLoggedInCookie !=null && isUserLoggedInCookie !=""){
+//			//alert("refreshing");
+//			window.location.reload();
+//		}
+//		
+//		
+//	}, 60000);
+		
+	
+	
 	
 	$(".modal-window .button-close").click(modalHideByClass);
 	
@@ -183,7 +198,14 @@ $(document).ready(function() {
 		event.preventDefault();
 		
 		// set the session timeout before launching the video visit
-		setSessionTimeout();
+		//setSessionTimeout();
+		
+		// Check for session timeout before launching the meeting
+//		$.post(VIDEO_VISITS_MOBILE.Path.sessionTimeout.checkSession, {})
+//		.done(function(data, textStatus, jqXHR){
+//				alert(jqXHR.status ); 
+//			}
+//		);
 		
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
@@ -218,7 +240,7 @@ $(document).ready(function() {
             type: 'POST',
             url: VIDEO_VISITS_MOBILE.Path.logout.logoutjson,
             complete: function(returndata) {
-            	
+            	//deleteCookie("isUserLoggedIn");
                 window.location.replace(VIDEO_VISITS_MOBILE.Path.logout.logout_ui);
             }
         });
@@ -372,6 +394,16 @@ function getCookie(c_name){
 		if (x==c_name){
 			return unescape(y);
 		}
+	}
+}
+
+function deleteCookie(c_name){
+
+	var cookie = getCookie(c_name);
+	
+	if (typeof cookie !== 'undefined' && cookie !=null && cookie !=""){
+		var c_value=";expires=Thu, 01-Jan-1970 00:00:01 GMT";
+		document.cookie=c_name + "=" + c_value;
 	}
 }
 
@@ -530,6 +562,8 @@ function loginSubmit(){
         	
             switch (returndata) {
                 case LOGIN_STATUS_SUCCESS:
+                	// set the cookie for logged in user
+                	//setCookie("isUserLoggedIn", true);
                 	window.location.replace("mobilepatientmeetings.htm");
                     break;
 
@@ -617,7 +651,7 @@ function setSessionTimeout(){
 	
 	$.ajax({
         type: "POST",
-        url: VIDEO_VISITS_MOBILE.Path.setSessionTimeout.ajaxurl,
+        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.ajaxurl,
         data: postdata, 
         success: function(returndata) {
            returndata = $.trim(returndata);
