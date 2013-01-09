@@ -36,14 +36,14 @@ a {
 }
 /* normalize.css END */
 
-button:first-letter {
+button {
 	/* Setting sentence Case on all CTA buttons - step 1 of 2 */
-	text-transform: uppercase; 
+	text-transform: lowercase; 
 }
 
-button {
+button:first-letter {
 	/* Setting sentence Case on all CTA buttons - step 2 of 2 */
-	text-transform: lowercase; 
+	text-transform: uppercase; 
 }
 
 html {
@@ -459,6 +459,10 @@ padding:5px 2px 5px 4px;
 	width:155px;
 }
 
+.guest #last_name {
+	width:125px;
+}
+
 .form-focus {
 	background-color: #1885F2;
 	color: white;
@@ -762,27 +766,6 @@ ol.instructions > li:before {
 
 .button-launch-visit {
 	float: right;
-	margin: auto;
-	padding: 6px 4px;
-	width: 154px;
-	border: solid 2px #404040;
-	border-radius: 6px;
-	background-image: -webkit-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -moz-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -o-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -ms-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: linear-gradient(top, #777777 0%, #232323 100%);
-	color: white;
-	text-align: center;
-	text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-	font-weight: bold;
-	font-size: 18px;
-	-webkit-font-smoothing: antialiased;
-	-webkit-transform: translate3d(0,0,0);
-}
-
-.button-launch-visit-pg {
-	float: none;
 	margin: auto;
 	padding: 6px 4px;
 	width: 154px;
