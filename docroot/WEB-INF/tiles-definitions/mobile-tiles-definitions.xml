@@ -42,7 +42,7 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
 	</definition>
 	
-	<definition name="mPatientGuestLandingPage" extends=".oneColumnLayout">
+	<definition name="mPatientGuestLandingPage" extends=".oneColumnLayoutPG">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPagePG.jsp" />
 	</definition>
 	
@@ -52,6 +52,9 @@
 	
 	<definition name="mLogoutPage" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/logout-confirmation.jsp" />
+	</definition>
+	<definition name="mPGLogoutPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/pg-logout-confirmation.jsp" />
 	</definition>
 	
 	<definition name="keepalive" extends=".oneColumnLayout">
