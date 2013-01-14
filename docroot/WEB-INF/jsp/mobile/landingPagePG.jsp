@@ -49,7 +49,7 @@
 								<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
 									
 									<c:if test="${p.meetingHash == param.meetingCode}">
-										<button  class="button-launch-visit-pg" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}">Launch Visit</button>
+										<button  class="button-launch-visit-pg" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Launch Visit</button>
 										
 									</c:if>
 								</c:if>
