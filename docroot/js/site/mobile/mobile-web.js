@@ -227,9 +227,10 @@ $(document).ready(function() {
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
+		var email = $(this).attr("email");
 		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
         createGuestSession();
-		launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName);
+		launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, lastName + ' ' + firstName + ' (' + email + ')');
 		
 
 	});
@@ -423,6 +424,18 @@ function launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName){
 }
 
 
+/**
+ * Called on the click of the Launch button for patient guest
+ * @param megaMeetingId
+ * @param lastName
+ * @param firstName
+ */
+function launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, name){
+	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
+	//alert("megaMeetingUrl=" + megaMeetingUrl);
+	window.location.replace(megaMeetingUrl);
+	
+}
 
 
 /**
