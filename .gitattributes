@@ -56,6 +56,7 @@ docroot/WEB-INF/jsp/mobile/landingPagePG.jsp -text
 docroot/WEB-INF/jsp/mobile/logout-confirmation.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientLoginModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientguestLoginModal.jsp -text
+docroot/WEB-INF/jsp/mobile/pg-logout-confirmation.jsp -text
 docroot/WEB-INF/jsp/mobile/preLoginPage.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/prePatientGuestLoginPage.jsp -text
 docroot/WEB-INF/jsp/mobile/videovisitLanding.jsp -text svneol=unset#text/plain
