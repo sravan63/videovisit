@@ -50,6 +50,7 @@ docroot/WEB-INF/jsp/mobile/common/footer.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/header.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/headerpg.jsp -text
 docroot/WEB-INF/jsp/mobile/common/logoutModal.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/mobile/common/pglogoutModal.jsp -text
 docroot/WEB-INF/jsp/mobile/landingPage.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/landingPagePG.jsp -text
 docroot/WEB-INF/jsp/mobile/logout-confirmation.jsp -text svneol=unset#text/plain
