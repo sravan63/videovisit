@@ -34,6 +34,9 @@ VIDEO_VISITS_MOBILE.Path = {
 	    logout : {
 	        logoutjson: 'logout.json',
 	        logout_ui:'logout.htm'
+	    },
+	     guestlogout : {
+	        logout_ui:'guestlogout.htm'
 	    }
 };
 
@@ -245,6 +248,11 @@ $(document).ready(function() {
                 window.location.replace(VIDEO_VISITS_MOBILE.Path.logout.logout_ui);
             }
         });
+        return false;
+    });
+    
+    $('#pg-logout-yes').click(function(){
+        window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
         return false;
     });
 	
