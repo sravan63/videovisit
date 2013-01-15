@@ -785,9 +785,11 @@ ol.instructions > li:before {
 	-webkit-transform: translate3d(0,0,0);
 }
 
+
 .button-launch-visit-pg {
-	float: right;
+	float: none;
 	margin: auto;
+	margin-left: 10px;
 	padding: 6px 4px;
 	width: 154px;
 	border: solid 2px #404040;
