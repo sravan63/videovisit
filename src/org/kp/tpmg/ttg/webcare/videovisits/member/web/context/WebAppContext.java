@@ -26,7 +26,7 @@ public class WebAppContext implements Serializable{
 	private String megaMeetingURL = null;
 	private String megaMeetingMobileURL = null;
 	private String clinicianSingleSignOnURL = null;
-	
+	private boolean careGiver;
 	public static final String HTTP_SESSION_KEY = "WebAppContext";
 	
 	public static WebAppContext getWebAppContext(HttpServletRequest request) {
@@ -96,5 +96,13 @@ public class WebAppContext implements Serializable{
 		this.clinicianSingleSignOnURL = clinicianSingleSignOnURL;
 	} 
 	
+	public void setCareGiver(boolean careGiver)
+	{
+		this.careGiver = careGiver;
+	}
+	public boolean getCareGiver()
+	{
+		return careGiver;
+	}
 	
 }
