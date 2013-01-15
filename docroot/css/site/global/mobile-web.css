@@ -473,7 +473,7 @@ margin-bottom: -10px;
 }
 
 .button-launch-visit-pg {
-	float: right;
+	float: none;
 	margin: auto;
 	margin-left: 10px;
 	padding: 6px 4px;
@@ -506,17 +506,9 @@ margin-bottom: -10px;
 	font-weight: normal;
 }
 
-.off .button-launch-visit-pg {
-	border-color: white;
-	background-image: -webkit-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
-	background-image: -moz-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
-	background-image: -o-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
-	background-image: -ms-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
-	background-image: linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
-	color: #A6A6A6;
-	text-shadow: 0 1px 0 rgba(255,255,255,.75);
-	font-weight: normal;
-}
+
+			
+
 
 
 .meeting .host {
@@ -600,7 +592,5 @@ display: inline;
 	.button-launch-visit {
 		width: 184px;
 	}
-	.button-launch-visit-pg {
-		width: 184px;
-	}
+	
 }
