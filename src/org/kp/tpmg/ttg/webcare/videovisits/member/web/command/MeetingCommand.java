@@ -356,9 +356,20 @@ public class MeetingCommand {
 			throws RemoteException {
 		String json = null;
 		try {
+			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = request.getParameter("patientLastName");
 			StringResponseWrapper ret = WebService.verifyCaregiver(meetingCode, patientLastName);
+			if ( ret.getResult() != null && ret.getResult().equalsIgnoreCase("0"))
+			{
+				logger.info("setting care giver context true");
+				ctx.setCareGiver(true);
+			}
+			else
+			{
+				logger.info("setting care giver context false");
+				ctx.setCareGiver(false);
+			}
 			json = JSONObject.fromObject(ret).toString();
 		} catch (Exception e) {
 			json = JSONObject.fromObject(new SystemError()).toString();
