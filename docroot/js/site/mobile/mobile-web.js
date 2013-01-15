@@ -137,7 +137,11 @@ $(document).ready(function() {
 
 	$("#signInId, #logout-sign-in").click(function(event) {
 		event.preventDefault();
-		
+		 $("#mrn").val('');
+          $("#last_name").val('');
+        $("#birth_month").val('');
+        $("#birth_day").val('');
+        $("#birth_year").val('');
 		var targetId = event.target.id;
 		// clear all errors
 		clearAllErrors();
