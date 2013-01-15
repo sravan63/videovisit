@@ -340,5 +340,9 @@ function clearAllErrors(){
     	$(this).parent().removeClass("error");
     })
 	
+	$('.localfailmessage').each(function(){
+    	$(this).addClass("hide-me");
+    	$(this).parent().removeClass("error");
+    })
 }
 
