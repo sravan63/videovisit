@@ -765,7 +765,7 @@ ol.instructions > li:before {
 }
 
 .button-launch-visit {
-	float: right;
+	float: none;
 	margin: auto;
 	padding: 6px 4px;
 	width: 154px;
