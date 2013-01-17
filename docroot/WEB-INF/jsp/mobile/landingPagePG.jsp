@@ -14,7 +14,7 @@
 
 <div class="visits patient">
 	<h1>Visits you can join now</h1>
-	
+	<p id="globalError" class="globalfailmessage hide-me"></p>
 	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings>0}">
 			<c:forEach var="meeting" items="${WebAppContext.meetings}">
