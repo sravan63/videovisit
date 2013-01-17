@@ -231,15 +231,56 @@ $(document).ready(function() {
 		// set the session timeout before launching the video visit
 		setSessionTimeout();
 		
+		var meetingCode = request.get('meetingCode');
+    	var patientLastName = request.get('patientLastName');
+    	
+	    // Parameters sent to the server
+	    var currentTime = new Date();
+	    var n = currentTime.getTime();
+	    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
+		var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;
+		
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
 		var email = $(this).attr("email");
-		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
-        createGuestSession();
-		launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, lastName + ' ' + firstName + ' (' + email + ')');
-		
-
+		var megaMeetingUrl = $(this).attr("megaMeetingUrl");	
+	
+		$.ajax({
+	        type: "POST",
+	        url: VIDEO_VISITS_MOBILE.Path.guest.verify,
+	        data: postdata,  
+	        success: function(returndata) {
+	            returndata = $.trim(returndata);
+	           
+	            returndata = jQuery.parseJSON(returndata);
+	            
+	            if(returndata.result === '1'){
+	            	$("#globalError").text('No matching patient found. Please try again.');          	
+	                $("#globalError").removeClass("hide-me").addClass("error");
+	                return false;
+	              } else if (returndata.result === '2') {      	
+	            	$("#globalError").text('You cannot join the same video visit more than once.');           	
+	                 $("#globalError").removeClass("hide-me").addClass("error");  
+	                 return false;
+	              }
+	              
+	            createGuestSession();
+				launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, lastName + ' ' + firstName + ' (' + email + ')');
+				clearAllErrors();
+	
+	        },
+	        error: function() {
+	        	
+	        	//$("#globalError").text("There was an error submitting your login.");
+	 	   		//$("#globalError").removeClass("hide-me").addClass("error");
+	            
+	            
+	        }
+	    });
+	   
+		 
+		return false;
 	});
     
     
@@ -700,6 +741,7 @@ function createGuestSession(){
     var meetingCode = request.get('meetingCode');
     var patientLastName = request.get('patientLastName');
 	var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;	
+
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.createGuestSession.ajaxurl,
@@ -708,8 +750,8 @@ function createGuestSession(){
            returndata = $.trim(returndata);
         },
         error: function() {
-        	$("#globalError").text("There was an error submitting your login.");
- 	   		$("#globalError").removeClass("hide-me").addClass("error");
+        	//$("#globalError").text("There was an error submitting your login.");
+ 	   		//$("#globalError").removeClass("hide-me").addClass("error");
             
             
         }
