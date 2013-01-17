@@ -469,7 +469,8 @@ function deleteCookie(c_name){
  * @param firstName
  */
 function launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName){
-	var name = lastName + " " + firstName;
+	//var name = lastName + " " + firstName;
+	var name = firstName + " " + lastName;
 	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	window.location.replace(megaMeetingUrl);
