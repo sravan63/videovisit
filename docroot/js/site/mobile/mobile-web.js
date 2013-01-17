@@ -266,7 +266,7 @@ $(document).ready(function() {
 	              }
 	              
 	            createGuestSession();
-				launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, lastName + ' ' + firstName + ' (' + email + ')');
+				launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, firstName + ' ' + lastName + ' (' + email + ')');
 				clearAllErrors();
 	
 	        },
