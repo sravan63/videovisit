@@ -334,6 +334,7 @@ public class MeetingCommand {
 			if (ret != null) {
 				MeetingWSO[] meetings = ret.getResult();				
 				if (meetings != null) {
+					logger.info(" length = " + meetings.length);
 					if (meetings.length == 1 && meetings[0]== null ) {
 						logger.info("setting total meetings = 0");
 						ctx.setTotalmeetings(0);
@@ -350,6 +351,36 @@ public class MeetingCommand {
 			}
 		}
 		return (JSONObject.fromObject(new SystemError()).toString());
+	}
+	
+	public static String IsMeetingHashValid(HttpServletRequest request, HttpServletResponse response) 
+	throws RemoteException {
+	RetrieveMeetingResponseWrapper ret = null;			
+	WebAppContext ctx = WebAppContext.getWebAppContext(request);
+	String meetingCode = request.getParameter("meetingCode");			
+	boolean success = WebService.initWebService();		
+	if (ctx != null && success) {
+		logger.info("Before IsMeetingHashValid");
+		ret = WebService.IsMeetingHashValid(meetingCode);			
+		if (ret != null) {
+			MeetingWSO[] meetings = ret.getResult();				
+			if (meetings != null) {
+				if (meetings.length == 1 && meetings[0]== null ) {
+					logger.info("setting total meetings = 0");
+					ctx.setTotalmeetings(0);
+				} else {
+					for (int i=0; i<meetings.length; i++) {
+						MeetingWSO meeting = meetings[i];
+						normalizeMeetingData(meeting, meetingCode, ctx);
+					}
+					ctx.setTotalmeetings(meetings.length);
+					ctx.setMeetings(meetings);
+				}
+			}				
+			return JSONObject.fromObject(ret).toString();
+		}
+	}
+	return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
 	public static String verifyCaregiver(HttpServletRequest request, HttpServletResponse response) 

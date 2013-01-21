@@ -397,6 +397,19 @@ public class WebService{
 		return toRet;		
 	}
 	
+	public static RetrieveMeetingResponseWrapper IsMeetingHashValid(String meetingHash
+			) 
+				throws RemoteException {
+		RetrieveMeetingResponseWrapper toRet = null;
+		IsMeetingHashValid query = new IsMeetingHashValid();
+		query.setMeetingHash(meetingHash);
+		
+		IsMeetingHashValidResponse response = stub.isMeetingHashValid(query);
+		toRet = response.get_return();
+		return toRet;		
+	}
+	
+	
 	public static StringResponseWrapper verifyCaregiver(String meetingHash, String patientLastName) 
 			throws RemoteException {
 		VerifyCaregiver query = new VerifyCaregiver();
