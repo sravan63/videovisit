@@ -996,6 +996,57 @@ color: #7C7D80;
 	margin-top: 18px;
 }
 
+/* Page refresh button and timestamp on visits page*/
+
+.refresh-page {
+	-webkit-transition: .2s;
+	margin-top: 6px;
+	margin-bottom: 8px;
+	width: 250px;
+	border: solid 1px rgba(255,255,255, 1);
+	border-radius: 22px;
+	padding: 4px 7px 5px 8px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: rgba(0,0,0,.03); 
+	box-shadow: inset 0 0 3px hsla(0,0%,0%, .25);
+	text-shadow: 0 1px 0 white;
+}
+
+.refresh-page h2 {
+	font-size: 15px;
+	color: #67686B;
+}
+
+.refresh-page p {
+	font-size: 13px;
+	line-height: 13px;
+	padding-bottom: 4px;
+	color: #67686B;
+}
+
+.refresh-page.touched {
+	box-shadow: inset 0 0 4px hsla(0,0%,0%, .4);
+	background-color: white;
+}
+
+.refresh-page h2:before {
+	content: "";
+	width: 32px;
+	height: 32px;
+	float: left;
+	margin-top: 2px;
+	margin-right: 3px;
+	background: url("../../../images/mobile/video-visit-ui@2x.png") no-repeat;
+	background-size: 240px;
+	background-position: -152px -125px;
+}
+
+.refresh-page.touched h2:before {
+	-webkit-transform: scale(.9);
+	background-position: -151px -125px;
+}
+
 /* Terms and Conditions page */
 
 .legal {font-size: 14px;}
