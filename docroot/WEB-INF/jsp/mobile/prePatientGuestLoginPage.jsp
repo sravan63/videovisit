@@ -10,7 +10,9 @@
 
 
 <%
-	MeetingCommand.retrieveMeetingForCaregiver(request, response);
+	MeetingCommand.IsMeetingHashValid(request, response);
+	
+	//MeetingCommand.retrieveMeetingForCaregiver(request, response);
 	String meetingHash = request.getParameter("meetingCode");
 	
 %>
