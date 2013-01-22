@@ -17,7 +17,7 @@ VIDEO_VISITS_MOBILE.Path = {
 	    },
 	    sessionTimeout : {
 	        ajaxurl : 'sessiontimeout.json',
-	        checkSession:'keepalive.htm'
+	        isValidUserSession: 'isValidUserSession.json',
 	    }
         ,
 	    createGuestSession : {
@@ -204,32 +204,51 @@ $(document).ready(function() {
 	$(".button-launch-visit").click(function(event) {	
 		event.preventDefault();
 		
-		// set the session timeout before launching the video visit
-		//setSessionTimeout();
-		
-		// Check for session timeout before launching the meeting
-//		$.post(VIDEO_VISITS_MOBILE.Path.sessionTimeout.checkSession, {})
-//		.done(function(data, textStatus, jqXHR){
-//				alert(jqXHR.status ); 
-//			}
-//		);
-		
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
 		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
         var meetingId = $(this).attr("meetingId");
-        joinMeeting(meetingId);
-		launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName);
+		
+		// Check if the user session is active before launching the app
+		
+		var currentTime = new Date();
+	    var n = currentTime.getTime();
+		var postdata = 'nocache=' + n;
+		$.ajax({
+			async:false,
+	        type: "POST",
+	        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidUserSession,
+	        data: postdata, 
+	        success: function(returndata) {
+	        	//console.log("returndata=" + returndata);
+	        	returndata = $.parseJSON(returndata);
+	        	var isValidUserSession =  returndata.isValidUserSession; 
+	        	//console.log("isValidUserSession=" + isValidUserSession);
+	            if(isValidUserSession == true){
+	            
+	                //console.log("megaMeetingId=" + megaMeetingId + " lastName=" + lastName + " firstName=" + firstName + " megaMeetingUrl=" + megaMeetingUrl + " meetingId=" + meetingId);
+	                joinMeeting(meetingId);
+	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName);
+	            }
+	            else{
+	            	window.location.replace("logout.htm");
+	            }
+
+	        },
+	        error: function() {
+	        	window.location.replace("logout.htm");
+	        }
+	    });
+		
+		
+		
 		
 
 	});
     
     $(".button-launch-visit-pg").click(function(event) {	
 		event.preventDefault();
-		
-		// set the session timeout before launching the video visit
-		setSessionTimeout();
 		
 		var meetingCode = request.get('meetingCode');
     	var patientLastName = request.get('patientLastName');

@@ -53,9 +53,8 @@
       
        <init-param>
 	      <param-name>excludeURL</param-name>
-	      <param-value>mobilelogin.json</param-value>
-    </init-param>
-      
+	      <param-value>mobilelogin.json,isValidUserSession.json</param-value>
+	    </init-param>
    </filter>
   
    <filter-mapping>
@@ -128,7 +127,7 @@
 	
 	<!-- Session Configuration-->
 	<session-config>
-		<session-timeout>22</session-timeout> <!-- Currently its been configured to 22 minutes-->
+		<session-timeout>1</session-timeout> <!-- Currently its been configured to 22 minutes-->
 	</session-config>
 
 	<welcome-file-list>
