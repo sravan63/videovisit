@@ -32,10 +32,10 @@
 			<tiles:insertAttribute name="header" />
 			
 			<div class="page-content-wrapper welcome-page">
-				<div class="page-content">
+				<!--<div class="page-content">-->
 					<tiles:insertAttribute name="sidebar" />
 					<tiles:insertAttribute name="content" />
-				</div>
+				<!--</div>-->
 			</div>
 			<tiles:insertAttribute name="footer" />
 		</div>
