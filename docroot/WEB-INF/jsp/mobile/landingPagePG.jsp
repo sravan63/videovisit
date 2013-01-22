@@ -12,6 +12,7 @@
 	String meetingHash = request.getParameter("meetingCode");
 %>
 
+<div class="page-content">
 <div class="visits patient">
 	<h1>Visits you can join now</h1>
 	<p id="globalError" class="globalfailmessage hide-me"></p>
@@ -86,4 +87,5 @@
 		<li><div class="img-connection"></div>Make sure you have a good connection.</li>
 		<li>For best results, use headphones during the call.</li>
 	</ol>
+</div>
 </div>
