@@ -16,7 +16,8 @@
 	String meetingHash = request.getParameter("meetingCode");
 	
 %>
-<c:choose>
+<div class="page-content">
+	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings > 0}">
 			<div class="intro">
 		<div class="pic-frame">
@@ -40,7 +41,7 @@
 		</div>
 		</c:when>
 
-<c:otherwise>
+		<c:otherwise>
         	<!--  If no meetings are present -->
 			
 				<div class="alert hero">
@@ -55,4 +56,5 @@
 						<li>For best results, use headphones during the call.</li>
 					</ol>
     	</c:otherwise>
-</c:choose>
+	</c:choose>
+</div>div>
