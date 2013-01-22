@@ -805,3 +805,30 @@ function joinMeeting(meetingId){
 	return false;
 }
 
+function refreshTimestamp(){
+
+	var currentTime = new Date();
+	var month = currentTime.getMonth() + 1;
+	var day = currentTime.getDate();
+	var year = (currentTime.getFullYear() + '').substring(2, 4);
+	var hours = currentTime.getHours();
+	var minutes = currentTime.getMinutes();
+
+	if (minutes < 10){
+		minutes = "0" + minutes;
+	}
+
+	var suffix = "am";
+	if (hours >= 12) {
+		suffix = "pm";
+		hours = hours - 12;
+	}
+	if (hours == 0) {
+		hours = 12;
+	}
+
+	var refreshTimeText = "Last updated: " + month + "/" + day + "/" + year + " at " + hours + ":" + minutes + " " + suffix;
+
+	$("#lastRefreshTimeId").text(refreshTimeText);
+
+}
