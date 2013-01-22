@@ -244,6 +244,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/RetrieveMeetingCon
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SessionTimeoutController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SimplePageController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SubmitLoginController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/ValidateUserSession.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VerifyGuestController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/DataSessionFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/RequestLoggingFilter.java -text
