@@ -27,7 +27,7 @@
 					<button id="login-submit-pg" class="off" tabindex="6" >Sign On</button>
 				</ul>
 
-				<p class="disclaimer">Children under age 13 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
+				<p class="disclaimer">Children under age 11 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
 			</form>
 
 		</div>
