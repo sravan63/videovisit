@@ -214,7 +214,7 @@ $(document).ready(function() {
 		
 		var currentTime = new Date();
 	    var n = currentTime.getTime();
-		var postdata = 'nocache=' + n;
+		var postdata = 'source=member&nocache=' + n;
 		$.ajax({
 			async:false,
 	        type: "POST",
@@ -250,20 +250,87 @@ $(document).ready(function() {
     $(".button-launch-visit-pg").click(function(event) {	
 		event.preventDefault();
 		
+		var megaMeetingId = $(this).attr("megameetingid");
+		var lastName = $(this).attr("lastname");
+		var firstName = $(this).attr("firstname");
+		var email = $(this).attr("email");
+		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
+    	
+    	var currentTime = new Date();
+	    var n = currentTime.getTime();
+		var postdata = 'source=caregiver&nocache=' + n;
+		$.ajax({
+			async:false,
+	        type: "POST",
+	        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidUserSession,
+	        data: postdata, 
+	        success: function(returndata) {
+	        	//console.log("returndata=" + returndata);
+	        	returndata = $.parseJSON(returndata);
+	        	var isValidUserSession =  returndata.isValidUserSession; 
+	        	//console.log("isValidUserSession=" + isValidUserSession);
+	            if(isValidUserSession == true){
+	            
+	                launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
+	            }
+	            else{
+	            	 window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
+	            }
+
+	        },
+	        error: function() {
+	        	 window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
+	        }
+	    });
+    	
+	   
+	   
+		 
+		return false;
+	});
+	
+	
+    
+    
+    $('#logout-yes').click(function(){
+        $.ajax({
+            type: 'POST',
+            url: VIDEO_VISITS_MOBILE.Path.logout.logoutjson,
+            complete: function(returndata) {
+            	//deleteCookie("isUserLoggedIn");
+                window.location.replace(VIDEO_VISITS_MOBILE.Path.logout.logout_ui);
+            }
+        });
+        return false;
+    });
+    
+    $('#pg-logout-yes').click(function(){
+        window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
+        return false;
+    });
+	
+});
+
+
+
+// Hides address bar on page load
+/mobile/i.test(navigator.userAgent)
+&& !window.location.hash
+&& setTimeout(function () {
+window.scrollTo(0,0);
+}, 0);
+
+function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
+{
 		var meetingCode = request.get('meetingCode');
     	var patientLastName = request.get('patientLastName');
-    	
-	    // Parameters sent to the server
+	 // Parameters sent to the server
 	    var currentTime = new Date();
 	    var n = currentTime.getTime();
 	    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
 		var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;
 		
-		var megaMeetingId = $(this).attr("megameetingid");
-		var lastName = $(this).attr("lastname");
-		var firstName = $(this).attr("firstname");
-		var email = $(this).attr("email");
-		var megaMeetingUrl = $(this).attr("megaMeetingUrl");	
+			
 	
 		$.ajax({
 	        type: "POST",
@@ -297,41 +364,7 @@ $(document).ready(function() {
 	            
 	        }
 	    });
-	   
-		 
-		return false;
-	});
-    
-    
-    $('#logout-yes').click(function(){
-        $.ajax({
-            type: 'POST',
-            url: VIDEO_VISITS_MOBILE.Path.logout.logoutjson,
-            complete: function(returndata) {
-            	//deleteCookie("isUserLoggedIn");
-                window.location.replace(VIDEO_VISITS_MOBILE.Path.logout.logout_ui);
-            }
-        });
-        return false;
-    });
-    
-    $('#pg-logout-yes').click(function(){
-        window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
-        return false;
-    });
-	
-});
-
-
-
-// Hides address bar on page load
-/mobile/i.test(navigator.userAgent)
-&& !window.location.hash
-&& setTimeout(function () {
-window.scrollTo(0,0);
-}, 0);
-
-
+}
 function modalShow(modalId){
 	$("#" + modalId).removeClass("hideMe").hide().fadeIn(200);
 	return false;
