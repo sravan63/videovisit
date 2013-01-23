@@ -12,6 +12,18 @@
 	String meetingHash = request.getParameter("meetingCode");
 %>
 
+<!-- Refresh page button and time stamp - to be reworked -->
+				<div class="refresh-page" onClick="window.location.reload();">
+		<h2>Tap here to refresh this page</h2>
+			<p id="lastRefreshTimeId">
+				<script type="text/javascript">
+					refreshTimestamp();
+				</script>
+			</p>
+		</div>
+
+<!-- Refresh page button and timestamp - END -->
+
 <div class="page-content">
 <div class="visits patient">
 	<h1>Visits you can join now</h1>
