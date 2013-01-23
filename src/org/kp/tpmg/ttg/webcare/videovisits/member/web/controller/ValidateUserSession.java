@@ -38,9 +38,22 @@ public class ValidateUserSession extends SimplePageController {
 				WebAppContext context = WebAppContext.getWebAppContext(request);
 				
 				// session is active
-				if(context != null && context.getMember() != null){
-					result.put("isValidUserSession", true);
-					result.put("success", true);	
+				if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("member"))
+				{
+					logger.info("in validateUserSession member");
+					if(context != null && context.getMember() != null){
+						result.put("isValidUserSession", true);
+						result.put("success", true);	
+					}
+				}
+				
+				if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("caregiver"))
+				{
+					logger.info("in validateUserSession caregiver");
+					if(context != null && context.getCareGiver() == true){
+						result.put("isValidUserSession", true);
+						result.put("success", true);	
+					}
 				}
 			}
 			
