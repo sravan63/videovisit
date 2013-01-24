@@ -46,7 +46,7 @@
 			
 				<div class="alert hero">
 					<div class="no-visits-image"></div>
-					<p><strong>No scheduled Video Visits within the next 15 minutes. Please check back later.</strong></p>
+					<p><strong>The video visit you are try to join is no longer available because it has ended or expired.</strong></p>
 					
 				</div>
 				<ol class="well instructions">
