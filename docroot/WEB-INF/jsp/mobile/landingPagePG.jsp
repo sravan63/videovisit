@@ -73,6 +73,9 @@
 
 			</c:forEach>
 			
+			<div class="alert hideable">
+				<p><strong>For security reasons, only visits scheduled for the next 15 minutes are being displayed.</strong></p>
+			</div>
 		</c:when>
 		<c:otherwise>
         	<!--  If no meetings are present -->
@@ -86,12 +89,6 @@
     	</c:otherwise>
 		
 	</c:choose>
-	
-
-
-	<div class="alert hideable">
-		<p><strong>For security reasons, only visits scheduled for the next 15 minutes are being displayed.</strong></p>
-	</div>
 		
 	<ol class="well instructions">
 		<h2>Be ready for your video visit:</h2>
