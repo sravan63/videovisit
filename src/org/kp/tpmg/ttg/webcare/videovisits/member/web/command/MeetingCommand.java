@@ -507,5 +507,55 @@ public class MeetingCommand {
 		
 		meeting.setParticipants((ProviderWSO[]) clearNullArray(meeting.getParticipants()));
 		meeting.setCaregivers((CaregiverWSO[]) clearNullArray(meeting.getCaregivers()));
-	}				
+	}	
+	
+	
+	/**
+	 * This method is used to determine if the user is present in a active mega meeting.
+	 * Based on this condition, the user will be prevented from logging into the meeting again
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String userPresentInMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String userPresentInMeeting = null;
+		StringResponseWrapper userPresentInMeetingResponse = null;
+		long meetingId = 0;
+		String megaMeetingDisplayName = null;
+		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+		
+		try
+		{
+			// parse parameters
+			if (request.getParameter("meetingId") != null &&
+					!request.getParameter("meetingId").equals("")) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			if (request.getParameter("megaMeetingDisplayName") != null &&
+					!request.getParameter("megaMeetingDisplayName").equals("")) {
+				megaMeetingDisplayName = request.getParameter("megaMeetingDisplayName");
+			}
+			 
+			System.out.println("MeetingCommand:userPresentInMeeting: megaMeetingDisplayName="+megaMeetingDisplayName + " meetingId:" + meetingId);
+			//grab data from web services
+			userPresentInMeetingResponse = WebService.userPresentInMeeting(meetingId, megaMeetingDisplayName);
+			if (userPresentInMeetingResponse != null)
+			{
+				logger.info("userPresentInMeeting: success = " + userPresentInMeetingResponse.getSuccess()); 
+				userPresentInMeeting = JSONObject.fromObject(userPresentInMeetingResponse).toString();
+				System.out.println("MeetingCommand:userPresentInMeeting: userPresentInMeeting="+userPresentInMeeting);
+			}
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+			userPresentInMeeting = JSONObject.fromObject(new SystemError()).toString();
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return userPresentInMeeting;
+	}
+	
 }

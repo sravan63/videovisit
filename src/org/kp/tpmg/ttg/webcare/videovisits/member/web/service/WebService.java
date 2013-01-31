@@ -1,7 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.service;
 
 import java.rmi.RemoteException;
-import java.util.*;
+import java.util.Date;
+import java.util.ResourceBundle;
 
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.Options;
@@ -11,9 +12,39 @@ import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.videovisit.member.*;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.*;
-import org.kp.tpmg.webservice.client.videovisit.member.*;
+import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
+import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
+import org.kp.tpmg.videovisit.member.CreateMegameetingSession;
+import org.kp.tpmg.videovisit.member.CreateMegameetingSessionResponse;
+import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSession;
+import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSessionResponse;
+import org.kp.tpmg.videovisit.member.IsMeetingHashValid;
+import org.kp.tpmg.videovisit.member.IsMeetingHashValidResponse;
+import org.kp.tpmg.videovisit.member.MemberEndMeetingLogout;
+import org.kp.tpmg.videovisit.member.MemberEndMeetingLogoutResponse;
+import org.kp.tpmg.videovisit.member.MemberLogout;
+import org.kp.tpmg.videovisit.member.MemberLogoutResponse;
+import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiver;
+import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiverResponse;
+import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMember;
+import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMemberResponse;
+import org.kp.tpmg.videovisit.member.TestDbRoundTripResponse;
+import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoining;
+import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoiningResponse;
+import org.kp.tpmg.videovisit.member.UserPresentInMeeting;
+import org.kp.tpmg.videovisit.member.UserPresentInMeetingResponse;
+import org.kp.tpmg.videovisit.member.VerifyCaregiver;
+import org.kp.tpmg.videovisit.member.VerifyCaregiverResponse;
+import org.kp.tpmg.videovisit.member.VerifyMember;
+import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.UpdateResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
+import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesStub;
 
 
 public class WebService{
@@ -435,4 +466,46 @@ public class WebService{
 		EndCaregiverMeetingSessionResponse response = stub.endCaregiverMeetingSession(query);
 		return response.get_return();		
 	}
+	
+	
+	/**
+	 * This method is used to determine if the user is present in a active mega meeting.
+	 *Based on this condition, the user will be prevented from logging into the meeting again
+	 * @param meetingId
+	 * @param megaMeetingDisplayName
+	 * @return
+	 * @throws Exception
+	 */
+	public static StringResponseWrapper userPresentInMeeting(long meetingId,
+			String megaMeetingDisplayName) throws Exception
+	{
+		
+		StringResponseWrapper toRet = null; 
+		
+		UserPresentInMeeting query = new UserPresentInMeeting();
+		
+		try
+		{
+			System.out.println("Webservice:userPresentInMeeting: query="+query);
+			query.setMeetingId (meetingId);
+			query.setMegaMeetingDisplayName(megaMeetingDisplayName);
+			
+			UserPresentInMeetingResponse response = stub.userPresentInMeeting(query);
+			
+			System.out.println("response=" + response);
+			System.out.println("toRet=" + toRet);
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			logger.error("WebService:userPresentInMeeting: Web Service API error:" + e.getMessage());
+			throw new Exception("WebService:userPresentInMeeting: Web Service API error", e.getCause());
+			
+		}
+		
+		return toRet;
+
+	}
+	
 }
