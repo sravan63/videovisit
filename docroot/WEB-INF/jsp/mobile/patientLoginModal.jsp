@@ -44,7 +44,7 @@
 							<p></p>
 						</div>
 					</li>
-					<button id="login-submit" class="off" tabindex="6" >Sign On</button>
+					<button id="login-submit" class="off" tabindex="6" >Sign on</button>
 				</ul>
 
 				<p class="disclaimer">Children under age 11 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
