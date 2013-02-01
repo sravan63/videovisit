@@ -8,6 +8,6 @@
 <div class="header">
 		<div class="header-title"></div>
 		<c:if test="${WebAppContext.member != null}">
-			<button alt="Log out" id="btn-logout" class="btn-nav btn-logout" onclick="javascript:modalShow('modal-logout');"><span class="icon-logout"></span></button>
+			<button alt="Sign off" id="btn-logout" class="btn-nav-new btn-logout" onclick="javascript:modalShow('modal-logout');"><span class="icon-logout"></span><span class="label">Sign off</span></button>
 		</c:if>
 </div>
