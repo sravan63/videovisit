@@ -8,18 +8,26 @@
 				<img src="images/mobile/vv-patient-welcome-image.jpg">
 			</div>
 		</div>
-		<h1>Video Visit</h1>
-		<p>Meet with your doctor by video on your mobile device.</p>
+		<h1>Video Visits</h1>
+		<div class="only-handsets">
+			<p>Meet with your doctor by video on your mobile device.</p>
+		</div>
+		<div class="only-tablets">
+			<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
+			<p>To attend a video visit, you will need a device with a front-facing camera, <a href="https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#">the Video Visits app</a> and a fast internet connection (4G or Wi-fi highly recommended).</p>
+		</div>
+
+		<button id="signInId" class="button-main only-tablets" onclick="modalShow('modal-login');">Sign on here</button>
 	</div>
 
 	<ol class="well instructions">
-		<h2>Be ready for your video visit:</h2>
-		<li id="getAppLiId"><button id="preLoginGetAppButtonId" class="button-get-app" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get App</button>Install the Video Visits app on your device.</li>
-		<li><div class="img-connection"></div>Make sure you have a strong network connection.</li>
-		<li>For best results, use headphones during the call.</li>
+	<h2>Be ready for your video visit:</h2>
+		<li><div class="img-app"></div><span>Install the Video Visits mobile app. <a class="" href="https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#" class="">Get it now</a></span></li>
+		<li><div class="img-connection"></div><span>Make sure you have a good connection.</span></li>
+		<li><div class="img-headphones"></div><span>For best results, use headphones during the call.</span></li>
 	</ol>
 
-	<div>
-		<button id="signInId" class="button-main" onclick="modalShow('modal-login');">Sign on here</button>
-	</div>
+
+		<button id="signInId" class="button-main only-handsets" onclick="modalShow('modal-login');">Sign on here</button>
+
 </div>
