@@ -48,12 +48,14 @@
 						<div class="meeting-block-handler">
 							<div class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp}</div>
 							<p class="time">Scheduled for <strong><span class="time_${meeting.meetingId}"></span></strong></p>
+
 							<script type="text/javascript">
 							// convert time stamp to time
 								meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
 								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
 								$('.time_' + ${meeting.meetingId}).append(convertedTimestamp);
 							</script>
+
 							<p class="host-name">
 								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}
 									<c:if test="${not empty meeting.providerHost.title}">
@@ -61,21 +63,29 @@
 									</c:if>
 							</p>
 
-
 							<button class="button-launch-visit only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}">Launch visit</button>
 
-							<c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
+							<c:if test="${(meeting.participants != null && fn:length(meeting.participants) > 0) || (meeting.caregivers != null && fn:length(meeting.caregivers) > 0)}">
+
 								<ul class="additional-participants">
+
+								<c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
+
 									<li class="section">Additional Clinicians:</li>
+
 									<c:forEach var="p" items="${meeting.participants}">
 										<li>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></li>
 									</c:forEach>
+
 								</c:if>
+
 								<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-									<li class="section">Guest:</li>
-									<c:forEach var="p" items="${meeting.caregivers}">
-										<li>${p.firstName} ${p.lastName}</li>
-									</c:forEach>
+										<li class="section">Guest:</li>
+										<c:forEach var="p" items="${meeting.caregivers}">
+											<li>${p.firstName} ${p.lastName}</li>
+										</c:forEach>
+								</c:if>
+
 								</ul>
 							</c:if>
 						</div>
