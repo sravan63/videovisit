@@ -748,11 +748,14 @@ ol.instructions > li:before {
 width: 100%;
 }
 
-.mobile-landing-page .button-main {
+.landing-page-wrapper .button-main {
 	margin-top: 18px;
 	padding: 12px 20px;
 }
 
+.landing-page-wrapper p {
+	margin-bottom: 10px;
+}
 
 /* - - - - - - - - Visits - - - - - - - - */
 
@@ -1529,6 +1532,41 @@ and (min-width: 768px) {
 
 		box-shadow: inset 0 0 3px hsla(0,0%,0%, .4);
 
+	}
+
+	/* mobile app landing page */
+	
+	.app-landing-page {
+		text-align: center;
+	}
+	
+	.landing-page-wrapper {
+		width: 380px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 40px;
+	}
+	
+	.landing-page-wrapper .button-main {
+		width: 240px;
+		float: none;
+		display: inline-block;
+	}
+	.landing-page-wrapper h1 {
+		font-size: 26px;
+	line-height: 26px;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	}
+	
+	.landing-page-wrapper p {
+	font-size: 20px;
+	line-height: 26px;
+	}
+	
+	.landing-page-wrapper .button-main {
+		margin-top: 18px;
+		padding: 12px 20px;
 	}
 
 	/* WELCOME PAGE - - - - - - - - - - */
