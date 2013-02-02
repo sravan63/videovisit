@@ -5,8 +5,8 @@
 <%@ include file="videovisitLandingGuestModal.jsp" %>
 
 
-<div class="page-content">
-	<div  class="mobile-landing-page">
+<div class="page-content app-landing-page">
+	<div  class="landing-page-wrapper">
 		<h1>You are almost there!</h1>
 		<p>Thanks for installing the Video Visits app. To get started, please choose one of the following options:</p>
 		<ol>
