@@ -48,6 +48,7 @@
 				<prop key="/guestlogout.htm">guestlogout</prop>		
 				<prop key="/guesterror.htm">guesterror</prop>
 				<prop key="/guesthelp.htm">guesthelp</prop>	
+				<prop key="/userPresentInMeeting.json">dataUserPresentInMeeting</prop>
 				
 				<!-- Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
@@ -58,6 +59,7 @@
 				<prop key="/sessiontimeout.json">sessionTimeout</prop>
 				<prop key="/mobilevideovisitlanding.htm">mobileVideoVisitLanding</prop>	
 				<prop key="/isValidUserSession.json">dataIsValidUserSession</prop>
+			
 				
 					
 			</props>
@@ -140,6 +142,8 @@
 		<property name="navigation" value="guest" />
 		<property name="subNavigation" value="guest" />
 	</bean>
+	
+	
 
 	<!--  JSON classes -->
 	<bean id="joinmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.JoinMeetingController">
@@ -158,6 +162,10 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<bean id="retrievemeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.RetrieveMeetingController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	
+	<bean id="dataUserPresentInMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.UserPresentInMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
@@ -259,7 +267,6 @@
 	<bean id="mobilelogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.MobileLoginController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
-	
 	
 	
 	

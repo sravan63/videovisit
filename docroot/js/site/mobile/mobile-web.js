@@ -29,7 +29,8 @@ VIDEO_VISITS_MOBILE.Path = {
 	    }
         ,
 	    joinMeeting : {
-	        ajaxurl : 'joinmeeting.json'
+	        ajaxurl : 'joinmeeting.json',
+	        userPresentInMeeting:'userPresentInMeeting.json'
 	    },
 	    logout : {
 	        logoutjson: 'logout.json',
@@ -207,6 +208,7 @@ $(document).ready(function() {
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
+		var name = firstName + " " + lastName;
 		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
         var meetingId = $(this).attr("meetingId");
 		
@@ -228,8 +230,21 @@ $(document).ready(function() {
 	            if(isValidUserSession == true){
 	            
 	                //console.log("megaMeetingId=" + megaMeetingId + " lastName=" + lastName + " firstName=" + firstName + " megaMeetingUrl=" + megaMeetingUrl + " meetingId=" + meetingId);
-	                joinMeeting(meetingId);
-	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName);
+	            	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
+	            	var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name, 'nocache=' : n};
+	            	$.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.userPresentInMeeting, postParaForUserPresentInMeeting,function(userPresentInMeetingData){
+	            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
+	            		
+	            		if(userPresentInMeetingData.result == "true"){
+	            			//alert("You have already signed on into the video visit from another device. You must sign off from the Video Visit before you can sign on again.");
+	            			modalShow('modal-user-present');
+	            		}
+	            		else{
+		            			joinMeeting(meetingId);
+		    	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, name);
+	            			}
+	            		});
+	                
 	            }
 	            else{
 	            	window.location.replace("logout.htm");
@@ -520,9 +535,9 @@ function deleteCookie(c_name){
  * @param lastName
  * @param firstName
  */
-function launchVideoVisit(megaMeetingUrl, megaMeetingId, lastName, firstName){
+function launchVideoVisit(megaMeetingUrl, megaMeetingId, name){
 	//var name = lastName + " " + firstName;
-	var name = firstName + " " + lastName;
+	
 	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	window.location.replace(megaMeetingUrl);
