@@ -72,7 +72,10 @@
         },
         "landingready" : {
             "global"    :   [
-                "js/site/global/dateExtensions_loader.js"
+                "js/site/global/dateExtensions_loader.js",
+                "js/library/plugin/jqModal.js",
+                "js/library/plugin/jqDnR.js",
+                "js/library/plugin/dimensions.js"
             ],
             "specific"  :   {
                 "landingready"  :   [

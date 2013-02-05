@@ -1,25 +1,64 @@
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
+    
+    // Dialog initialization
+    $('body').append($('#dialog-block-user-in-meeting-modal'));
+    // Setup the user-in-meeting dialog
+    $( '#dialog-block-user-in-meeting-modal' ).jqm();
 
 	// Join now Click Event
     $(".btn").click(function(){
-        meetingIdData = 'meetingId=' + $(this).attr('meetingid');
+    	var meetingId = $(this).attr('meetingid');
+        meetingIdData = 'meetingId=' + meetingId;
         hreflocation = $(this).attr('href');
         
-        $.ajax({
-            type: 'POST',
-            data: meetingIdData,
-            url: VIDEO_VISITS.Path.landingready.joinmeeting,
-            success: function(returndata) {
-				returndata = jQuery.parseJSON(returndata);
-				hreflocation = returndata.result;
-                window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
-            },
-            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-            error: function(theRequest, textStatus, errorThrown) {
-                window.location.replace(VIDEO_VISITS.Path.global.error);
-            }
-        });
+        
+        var name = hreflocation.substring(hreflocation.indexOf("&user=") +"&user=".length);
+		name = name.substring(0, name.indexOf("&"));
+		
+        var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name};
+        
+        $.post(VIDEO_VISITS.Path.landingready.userPresentInMeeting, postParaForUserPresentInMeeting,function(userPresentInMeetingData){
+			try{
+				userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
+			}
+			catch(e)
+			{
+				$('#end_meeting_error').html('').append(e.message).show();
+			}
+			
+			if (userPresentInMeetingData.errorMessage) {
+				$('#end_meeting_error').html('').append(userPresentInMeetingData.errorMessage).show();		
+			}
+			else{
+				if(userPresentInMeetingData.result == "true"){
+					
+					// show the dialog 
+					$( '#dialog-block-user-in-meeting-modal' ).jqmShow() ;
+				}
+				else{
+					$.ajax({
+			            type: 'POST',
+			            data: meetingIdData,
+			            url: VIDEO_VISITS.Path.landingready.joinmeeting,
+			            success: function(returndata) {
+							returndata = jQuery.parseJSON(returndata);
+							hreflocation = returndata.result;
+			                window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
+			            },
+			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+			            error: function(theRequest, textStatus, errorThrown) {
+			                window.location.replace(VIDEO_VISITS.Path.global.error);
+			            }
+			        });
+				}
+			}
+			
+		});
+        
+        
+        
+        
         return false;
     })
 

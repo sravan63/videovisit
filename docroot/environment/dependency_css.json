@@ -26,7 +26,7 @@
             }
         },
         "landingready" : {
-            "global"   : [],
+            "global"   : ["css/library/plugin/jqModal.css"],
             "specific" : {
                 "landingready" : []
             }

@@ -15,7 +15,8 @@ VIDEO_VISITS.Path = {
         visiturl : 'visit.htm',
         joinmeeting : 'createmegameeting.json',
         keepALive: 'keepalive.jsp',
-        retrieveMeeting: 'retrievemeeting.json'
+        retrieveMeeting: 'retrievemeeting.json',
+        userPresentInMeeting: 'userPresentInMeeting.json'
     },    
     guestglobal : {
         error : 'guesterror.htm',
