@@ -135,6 +135,10 @@ $(document).ready(function() {
 		
 	});
 	
+	
+	$(".getAppButton").click(function() {
+		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
+	});
 
 	$("#signInId, #logout-sign-in").click(function(event) {
 		event.preventDefault();
