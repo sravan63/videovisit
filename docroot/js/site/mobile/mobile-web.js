@@ -153,7 +153,7 @@ $(document).ready(function() {
 		
 	});
 	
-	$("#signInIdPG").click(function(event) {
+	$("#signInIdPG, #signInIdPGHand").click(function(event) {
 		event.preventDefault();
 		
 		var targetId = event.target.id;
