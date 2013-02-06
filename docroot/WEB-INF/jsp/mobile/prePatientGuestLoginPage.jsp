@@ -6,7 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 
-<%@ include file="patientguestLoginModal.jsp" %>
+
 
 
 <%
@@ -20,32 +20,33 @@
 	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings > 0}">
 			<div class="intro">
-			<div class="pic-frame">
-				<div class="pic"><img src="images/mobile/vv-patient-welcome-image.jpg"></div>
-			</div>
-
+				<div class="pic-frame">
+					<div class="pic"><img src="images/mobile/vv-patient-welcome-image.jpg"></div>
+				</div>
+			
 			<h1>Video Visits</h1>
 
-			<div class="only-handsets">
-				<p>Meet with your doctor by video on your mobile device.</p>
+				<div class="only-handsets">
+					<p>Meet with your doctor by video on your mobile device.</p>
+				</div>
+
+				<div class="only-tablets">
+					<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
+					<p>To attend a video visit, you will need a device with a front-facing camera, <a href="https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#">the Video Visits app</a> and a fast internet connection (4G or Wi-fi highly recommended).</p>
+				</div>
+				<button id="signInIdPG" class="button-main only-tablets" onclick="modalShow('modal-login');">Sign on here</button>
 			</div>
-
-			<div class="only-tablets">
-				<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
-				<p>To attend a video visit, you will need a device with a front-facing camera, <a href="https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#">the Video Visits app</a> and a fast internet connection (4G or Wi-fi highly recommended).</p>
-			</div>
-
-			<button id="signInIdPG" class="button-main only-tablets" onclick="modalShow('modal-login');">Sign on here</button>
-
+			
+		
 			<ol class="well instructions">
 			<h2>Be ready for your video visit:</h2>
 				<li><div class="img-app"></div><span>Install the Video Visits mobile app. <a class="" href="https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#" class="">Get it now</a></span></li>
 				<li><div class="img-connection"></div><span>Make sure you have a good connection.</span></li>
 				<li><div class="img-headphones"></div><span>For best results, use headphones during the call.</span></li>
 			</ol>
-
-			<button id="signInIdPG" class="button-main only-handets" onclick="modalShow('modal-login');">Sign on here</button>
-
+		
+			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login');">Sign on here</button>
+			
 		</c:when>
 
 		<c:otherwise>
