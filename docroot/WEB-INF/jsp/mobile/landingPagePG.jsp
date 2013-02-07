@@ -41,7 +41,7 @@
 						</div>
 
 						<div class="launch-button-handler only-tablets">
-							<button class="button-launch-visit-pg button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Launch Visit</button>
+							<button class="button-launch-visit-pg" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Launch Visit</button>
 						</div>
 
 						<div class="meeting-block-handler">
