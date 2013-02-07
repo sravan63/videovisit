@@ -935,7 +935,7 @@ text-align: center;
 }
 
 .patient .pic-frame .pic {
-	overflow-y: hidden;
+	overflow: hidden;
 	width: 65px;
 	height: 78px;
 }
