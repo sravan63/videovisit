@@ -38,7 +38,7 @@
 			</div>
 			
 		
-			<%@ include file="../common/information.jsp" %>	
+			<%@ include file="common/information.jsp" %>	
 		
 			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login');">Sign on here</button>
 			
