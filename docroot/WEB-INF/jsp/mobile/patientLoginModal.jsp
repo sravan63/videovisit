@@ -5,11 +5,11 @@
 
 		<div id="app-alert">
 			<p>To join a video visit from your mobile device, please install our Video Visits mobile app. </p>
-				<div class="app-lockup" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">
+				<div class="app-lockup getAppButton">
 					<div class="app-icon"></div>
 					<p>Video Visits app</p>
 				</div>
-			<button id="patientLoginGetAppButtonId" class="button-primary" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get the app</button>
+			<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the app</button>
 			<button class="button-secondary" id="btn-i-have-it">I have it installed!</button>
 		</div>
 		

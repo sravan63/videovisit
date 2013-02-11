@@ -14,7 +14,7 @@
 		</div>
 		<div class="only-tablets">
 			<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
-			<p>To attend a video visit, you will need a device with a front-facing camera, <a href="https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#">the Video Visits app</a> and a fast internet connection (4G or Wi-fi highly recommended).</p>
+			<p>To attend a video visit, you will need a device with a front-facing camera, <a class="getAppButton" href="#">the Video Visits app</a> and a fast internet connection (4G or Wi-fi highly recommended).</p>
 		</div>
 
 		<button id="signInId" class="button-main only-tablets" onclick="modalShow('modal-login');">Sign on here</button>

@@ -123,7 +123,7 @@ $(document).ready(function() {
 	// START--APP ALERT handling using cookie
 	var appAlertCookie=getCookie("APP_ALERT_COOKIE");
 	
-	$("#preLoginGetAppButtonId, #btn-i-have-it, #btn-i-have-it_pg, #patientLoginGetAppButtonId").click(function() {
+	$("#btn-i-have-it, #btn-i-have-it_pg").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
 		var targetId = event.target.id;
 		if(targetId == 'btn-i-have-it'){
@@ -138,6 +138,18 @@ $(document).ready(function() {
 	
 	$(".getAppButton").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
+		
+		var os = getAppOS();
+		if(os == "iOS"){
+			window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#';
+		}
+		else if(os == "Android"){	
+			window.location='https://play.google.com/store?hl=en';
+		}
+		else{
+			// we should never reach this condition
+			alert("No device detected");
+		}
 	});
 
 	$("#signInId, #logout-sign-in").click(function(event) {
