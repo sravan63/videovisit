@@ -84,6 +84,11 @@ a:visited {
 	color: #1885F2;
 }
 
+.getAppLink{
+	color: #1885F2;
+	cursor:default;
+}
+
 strong {
 	font-weight: bold;
 }
