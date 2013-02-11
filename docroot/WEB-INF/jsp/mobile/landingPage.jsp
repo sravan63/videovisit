@@ -100,7 +100,7 @@
 				<div class="alert alert-hero alert-no-visits">
 					<div class="alert-hero-message">
 					<div class="image"></div>
-						<p><strong>You have no visits scheduled within the next 15 minutes.</strong> Please check back again later.</p>
+						<p><strong>You do not have a video visit scheduled in the next 15 minutes. Please check back later.</strong></p>
 					</div>
 				</div>
 
@@ -111,7 +111,7 @@
 
 
 		<div class="alert hideable">
-			<p><strong>For security reasons, only visits scheduled for the next 15 minutes are being displayed.</strong></p>
+			<p><strong>For security reasons, only visits scheduled for the next 15 minutes are displayed.</strong></p>
 		</div>
 
 		<%@ include file="common/information.jsp" %>		
