@@ -136,15 +136,28 @@ $(document).ready(function() {
 	});
 	
 	
-	$(".getAppButton").click(function() {
+	$(".getAppButton, .getAppLink").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
+		var iOSUrl = 'https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#';
+		var androidUrl = 'https://play.google.com/store?hl=en';
+		
 		
 		var os = getAppOS();
 		if(os == "iOS"){
-			window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#';
+			if(event.target.id == "getAppLink"){
+				$(".getAppLink").attr("href", iOSUrl);
+			}
+			else{
+				window.location= iOSUrl;
+			}
 		}
 		else if(os == "Android"){	
-			window.location='https://play.google.com/store?hl=en';
+			if(event.target.id == "getAppLink"){
+				$(".getAppLink").attr("href", androidUrl);
+			}
+			else{
+				window.location= androidUrl;
+			}
 		}
 		else{
 			// we should never reach this condition
