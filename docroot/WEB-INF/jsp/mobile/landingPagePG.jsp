@@ -62,7 +62,7 @@
 									</c:if>
 							</p>
 							<p class="time">
-								${meeting.member.firstName} ${meeting.member.lastName}
+								${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}
 							</p>
 							<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
 									<c:forEach var="p" items="${meeting.caregivers}">
