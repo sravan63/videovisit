@@ -27,7 +27,7 @@
     	
     	<div id="main-window" class="main-window">
     		<!--  TODO - What is this used for ? -->
-			<div class="scrollup"> <!--  button that scrolls to top  --> </div>
+			<!-- <div class="scrollup"> </div> --> <!--  button that scrolls to top  -->
 		
 			<tiles:insertAttribute name="header" />
 			
