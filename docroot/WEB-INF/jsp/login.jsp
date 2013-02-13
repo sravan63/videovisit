@@ -1,5 +1,5 @@
 <h3 class="page-title">Member Login</h3>
-<p class="login">Children under age 13 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
+<p class="login">Children under age 11 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
 <p class="login">Please sign on by completing the fields below.</p>
 <form id="loginForm" method="post" action="">
     <input type="hidden" name="consentFormTXT" id="consentFormTXT" value="consent_forms/consent_2011_08_01.txt" />
