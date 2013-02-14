@@ -18,6 +18,7 @@ VIDEO_VISITS_MOBILE.Path = {
 	    sessionTimeout : {
 	        ajaxurl : 'sessiontimeout.json',
 	        isValidUserSession: 'isValidUserSession.json',
+	        isValidMeeting: 'isValidMeeting.json',
 	    }
         ,
 	    createGuestSession : {
@@ -245,34 +246,40 @@ $(document).ready(function() {
 		
 		var currentTime = new Date();
 	    var n = currentTime.getTime();
-		var postdata = 'source=member&nocache=' + n;
+		var postdata = "meetingId=" + meetingId + "&source=member&nocache=" + n;
 		$.ajax({
 			async:false,
 	        type: "POST",
-	        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidUserSession,
+	        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidMeeting,
 	        data: postdata, 
 	        success: function(returndata) {
 	        	//console.log("returndata=" + returndata);
 	        	returndata = $.parseJSON(returndata);
 	        	var isValidUserSession =  returndata.isValidUserSession; 
-	        	//console.log("isValidUserSession=" + isValidUserSession);
-	            if(isValidUserSession == true){
-	            
-	                //console.log("megaMeetingId=" + megaMeetingId + " lastName=" + lastName + " firstName=" + firstName + " megaMeetingUrl=" + megaMeetingUrl + " meetingId=" + meetingId);
-	            	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
-	            	var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name, 'nocache=' : n};
-	            	$.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.userPresentInMeeting, postParaForUserPresentInMeeting,function(userPresentInMeetingData){
-	            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
-	            		
-	            		if(userPresentInMeetingData.result == "true"){
-	            			//alert("You have already signed on into the video visit from another device. You must sign off from the Video Visit before you can sign on again.");
-	            			modalShow('modal-user-present');
-	            		}
-	            		else{
-		            			joinMeeting(meetingId);
-		    	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, name);
-	            			}
-	            		});
+	        	
+	        	 if(returndata.success == true && isValidUserSession == true){
+	        		 
+	        		var meetingStatus = returndata.meetingStatus;
+	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
+	             		window.location.replace("meetingexpired.htm");
+	             	}
+	             	else{
+	             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
+		            	var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name, 'nocache=' : n};
+		            	$.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.userPresentInMeeting, postParaForUserPresentInMeeting,function(userPresentInMeetingData){
+		            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
+		            		
+		            		if(userPresentInMeetingData.result == "true"){
+		            			modalShow('modal-user-present');
+		            		}
+		            		else{
+			            			joinMeeting(meetingId);
+			    	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, name);
+		            			}
+		            	});
+	             	}
+	                
+	            	
 	                
 	            }
 	            else{

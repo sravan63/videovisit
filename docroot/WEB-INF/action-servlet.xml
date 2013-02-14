@@ -59,7 +59,8 @@
 				<prop key="/sessiontimeout.json">sessionTimeout</prop>
 				<prop key="/mobilevideovisitlanding.htm">mobileVideoVisitLanding</prop>	
 				<prop key="/isValidUserSession.json">dataIsValidUserSession</prop>
-			
+				<prop key="/isValidMeeting.json">dataIsValidMeeting</prop>
+				<prop key="/meetingexpired.htm">meetingExpired</prop>
 				
 					
 			</props>
@@ -249,6 +250,10 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
+	<bean id="dataIsValidMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.ValidateUserSession">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	
 	<bean id="mobilePatientGuestMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 	    <!--  defined in mobile-titles-definitions.xml -->
 		<property name="viewName" value="mPatientGuestLandingPage" />
@@ -268,6 +273,14 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
+	<bean id="meetingExpired" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand">
+		    	<ref bean="environmentCommand" />
+		</property>
+		<property name="viewName" value="meetingExpired" />
+		<property name="navigation" value="guesthelp" />
+		<property name="subNavigation" value="guesthelp" />
+	</bean>
 	
 	
 
