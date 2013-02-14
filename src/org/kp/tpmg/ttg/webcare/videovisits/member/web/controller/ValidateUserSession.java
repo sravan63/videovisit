@@ -8,7 +8,9 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -42,6 +44,9 @@ public class ValidateUserSession extends SimplePageController {
 				{
 					logger.info("in validateUserSession member");
 					if(context != null && context.getMember() != null){
+						
+						String meetingStatus = MeetingCommand.getMeetingStatus(request, response);
+						result.put("meetingStatus", meetingStatus);
 						result.put("isValidUserSession", true);
 						result.put("success", true);	
 					}

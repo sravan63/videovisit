@@ -18,6 +18,8 @@ import org.kp.tpmg.videovisit.member.CreateMegameetingSession;
 import org.kp.tpmg.videovisit.member.CreateMegameetingSessionResponse;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSessionResponse;
+import org.kp.tpmg.videovisit.member.GetMeetingByMeetingID;
+import org.kp.tpmg.videovisit.member.GetMeetingByMeetingIDResponse;
 import org.kp.tpmg.videovisit.member.IsMeetingHashValid;
 import org.kp.tpmg.videovisit.member.IsMeetingHashValidResponse;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogout;
@@ -37,6 +39,7 @@ import org.kp.tpmg.videovisit.member.VerifyCaregiver;
 import org.kp.tpmg.videovisit.member.VerifyCaregiverResponse;
 import org.kp.tpmg.videovisit.member.VerifyMember;
 import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
@@ -45,6 +48,7 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.UpdateResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesStub;
+
 
 
 public class WebService{
@@ -506,6 +510,41 @@ public class WebService{
 		
 		return toRet;
 
+	}
+	
+	
+	/**
+	 * Get the meeting by meetingId
+	 * @param meetingID
+	 * @param sessionID
+	 * @return
+	 * @throws Exception
+	 */
+	public static MeetingResponseWrapper getMeetingByMeetingID(long meetingID,
+			String sessionID) throws Exception {
+		MeetingResponseWrapper toRet = null; 
+		
+			
+		GetMeetingByMeetingID query = new GetMeetingByMeetingID();
+		try
+		{
+			query.setSessionID(sessionID);
+			query.setMeetingID (meetingID);
+			
+			GetMeetingByMeetingIDResponse response = stub.getMeetingByMeetingID(query);
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			GetMeetingByMeetingIDResponse response = stub.getMeetingByMeetingID(query);
+			toRet = response.get_return();
+		}
+		
+		return toRet;
+		
+		
+	
 	}
 	
 }

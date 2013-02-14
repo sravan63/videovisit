@@ -14,7 +14,10 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
+
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
+
+import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
@@ -557,5 +560,44 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return userPresentInMeeting;
 	}
+	
+	/**
+	 * Get the status of the meeting
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String getMeetingStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		long meetingId = 0;
+		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+		String meetingStatus = "";
+		try
+		{
+			// parse parameters
+			if (request.getParameter("meetingId") != null &&
+					!request.getParameter("meetingId").equals("")) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			MeetingResponseWrapper meetingResponse = WebService.getMeetingByMeetingID(meetingId, request.getSession().getId());
+			
+			MeetingWSO meeting =  meetingResponse.getResult();
+			if(meeting != null){
+				meetingStatus = meeting.getMeetingStatus();
+			}
+			
+			
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return meetingStatus;
+	}
+	
+	
 	
 }
