@@ -31,10 +31,13 @@
 		
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
+				<div class="alert hideable">
+					<p><strong>For security reasons, only visits scheduled for the next 15 minutes are displayed.</strong></p>
+				</div>
 				<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			
 					<div class="meeting well">
-
+	
 						<div class="pic-frame">
 							<div class="pic">
 								<img src="${meeting.providerHost.imageUrl}">
@@ -52,15 +55,12 @@
 							<script type="text/javascript">
 							// convert time stamp to time
 								meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
-								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
+								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only').toLowerCase();
 								$('.time_' + ${meeting.meetingId}).append(convertedTimestamp);
 							</script>
 
 							<p class="host-name">
-								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}
-									<c:if test="${not empty meeting.providerHost.title}">
-										, ${meeting.providerHost.title}
-									</c:if>
+								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
 							</p>
 
 							<button class="button-launch-visit only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}">Launch visit</button>
@@ -110,9 +110,7 @@
 
 
 
-		<div class="alert hideable">
-			<p><strong>For security reasons, only visits scheduled for the next 15 minutes are displayed.</strong></p>
-		</div>
+		
 
 		<%@ include file="common/information.jsp" %>		
 	</div>

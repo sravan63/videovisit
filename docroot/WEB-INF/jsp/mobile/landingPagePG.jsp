@@ -30,6 +30,9 @@
 		<p id="globalError" class="globalfailmessage hide-me"></p>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
+				<div class="alert hideable">
+					<p><strong>For security reasons, only visits scheduled for the next 15 minutes are displayed.</strong></p>
+				</div>
 				<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			
 					<div class="meeting well">
@@ -51,15 +54,15 @@
 							<script type="text/javascript">
 							// convert time stamp to time
 								meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
-								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
+								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only').toLowerCase();
 								$('.time_' + ${meeting.meetingId}).append(convertedTimestamp);
 							
 							</script>
 							<p class="host-name">
-								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}
-									<c:if test="${not empty meeting.providerHost.title}">
-										, ${meeting.providerHost.title}
-									</c:if>
+								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
+									
+									
+									
 							</p>
 							<p class="time">
 								${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}
@@ -79,9 +82,7 @@
 
 				</c:forEach>
 				
-				<div class="alert hideable">
-					<p><strong>For security reasons, only visits scheduled for the next 15 minutes are displayed.</strong></p>
-				</div>
+				
 			</c:when>
 			<c:otherwise>
 	        	<!--  If no meetings are present -->
