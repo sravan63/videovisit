@@ -393,7 +393,7 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	            returndata = jQuery.parseJSON(returndata);
 	            
 	            if(returndata.result === '1'){
-	            	$("#globalError").text('No matching patient found. Please try again.');          	
+	            	$("#globalError").text('The Video Visit you are trying to join is no longer available as the meeting has ended or expired.');          	
 	                $("#globalError").removeClass("hide-me").addClass("error");
 	                return false;
 	              } else if (returndata.result === '2') {      	
