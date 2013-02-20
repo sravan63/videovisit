@@ -61,6 +61,8 @@
 				<prop key="/isValidUserSession.json">dataIsValidUserSession</prop>
 				<prop key="/isValidMeeting.json">dataIsValidMeeting</prop>
 				<prop key="/meetingexpired.htm">meetingExpired</prop>
+				<prop key="/meetingexpiredmember.htm">meetingExpiredMember</prop>
+				
 				
 					
 			</props>
@@ -278,6 +280,15 @@
 		    	<ref bean="environmentCommand" />
 		</property>
 		<property name="viewName" value="meetingExpired" />
+		<property name="navigation" value="guesthelp" />
+		<property name="subNavigation" value="guesthelp" />
+	</bean>
+	
+	<bean id="meetingExpiredMember" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand">
+		    	<ref bean="environmentCommand" />
+		</property>
+		<property name="viewName" value="meetingExpiredMember" />
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
 	</bean>
