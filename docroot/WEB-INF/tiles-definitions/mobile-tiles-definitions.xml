@@ -64,6 +64,9 @@
 	<definition name="meetingExpiredMember" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/expired-visit-member.jsp" />
 	</definition>
+	<definition name="meetingExpiredMemberPG" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/expired-visit-member-pg.jsp" />
+	</definition>
 	
 	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
  		<put-attribute name="header" value="/WEB-INF/jsp/blank.jsp" />

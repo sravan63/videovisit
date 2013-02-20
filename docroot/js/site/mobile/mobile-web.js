@@ -393,8 +393,7 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	            returndata = jQuery.parseJSON(returndata);
 	            
 	            if(returndata.result === '1'){
-	            	$("#globalError").text('The Video Visit you are trying to join is no longer available as the meeting has ended or expired.');          	
-	                $("#globalError").removeClass("hide-me").addClass("error");
+	            	window.location.replace("meetingexpiredmemberpg.htm");
 	                return false;
 	              } else if (returndata.result === '2') {      	
 	            	$("#globalError").text('You have already joined this video visit from another device. Please sign off from the other device before attempting to join this video visit.');           	

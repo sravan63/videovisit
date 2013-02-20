@@ -11,7 +11,6 @@
 	MeetingCommand.retrieveMeetingForCaregiver(request, response);
 	String meetingHash = request.getParameter("meetingCode");
 %>
-
 <!-- Refresh page button and time stamp - to be reworked -->
 				<div class="refresh-page" onClick="window.location.reload();">
 		<h2>Tap here to refresh this page</h2>

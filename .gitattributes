@@ -52,6 +52,7 @@ docroot/WEB-INF/jsp/mobile/common/headerpg.jsp -text
 docroot/WEB-INF/jsp/mobile/common/information.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/logoutModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/pglogoutModal.jsp -text
+docroot/WEB-INF/jsp/mobile/expired-visit-member-pg.jsp -text
 docroot/WEB-INF/jsp/mobile/expired-visit-member.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/expired-visit.jsp -text
 docroot/WEB-INF/jsp/mobile/landingPage.jsp -text svneol=unset#text/plain
