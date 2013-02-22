@@ -27,7 +27,7 @@ $(document).ready(function() {
                 moveToit("p.error");              	
                 return false;
               } else if (returndata.result === '2') {            	
-            	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. Please sign off from the other device before attempting to join this video visit.</label><br/>');
+            	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
                 moveToit("p.error");            	
                 return false;  
               }
