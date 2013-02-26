@@ -792,7 +792,7 @@ function loginSubmitPG(){
                 $("#globalError").removeClass("hide-me").addClass("error");
                 return false;
               } else if (returndata.result === '2') {            	
-            	$("#globalError").text('You have already joined this video visit from another device. Please sign off from the other device before attempting to join this video visit.');           	
+            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');           	
                  $("#globalError").removeClass("hide-me").addClass("error");  
                  return false;
               }
