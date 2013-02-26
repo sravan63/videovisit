@@ -79,7 +79,7 @@
 
 </c:if>
 
-<div id="dialog-block-user-in-meeting-modal" class="jqmWindow dialog-block2" style="position:absolute; display:none" title="Quit Meeting">
+<div id="dialog-block-user-in-meeting-modal" class="jqmWindow dialog-block2" style="display:none" title="Quit Meeting">
 	<div class="dialog-content-question">
 		<h2 class="jqHandle jqDrag"><span style="padding-left:8px">User already signed on</span></h2>
 		<p>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.
