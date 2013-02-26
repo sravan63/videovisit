@@ -84,7 +84,7 @@
 		<h2 class="jqHandle jqDrag"><span style="padding-left:8px">User already signed on</span></h2>
 		<p>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.
 		</p>
-		<div class="jqmClose" align="center"><input class="button" id="ok"  type="button"  value="ok" /></div>
+		<div class="jqmClose" align="center"><input class="button" id="ok"  type="button"  value="OK" /></div>
 	</div>
 </div>	
 
