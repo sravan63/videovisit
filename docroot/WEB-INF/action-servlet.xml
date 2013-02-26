@@ -19,6 +19,50 @@
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
 	</bean>
 
+	<!--  WebSession filter bean -->
+	<bean id="WebSessionFilter" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.WebSessionFilter">
+	   <!-- List of URL's to be excluded from the list -->
+		<property name="excludeUrlList">
+		    <list>
+		       <!--  login page for Member -->
+		       <value>login.htm</value>
+		       <!-- Home Page for Member -->
+		       <value>intro.htm</value>
+		       <!-- Home page for member mobile -->
+		       <value>mobilevideovisitlanding.htm</value>
+		       <value>setup.htm</value>
+		       <value>guestready.htm</value>
+		       <value>guesthelp.htm</value>
+		       <value>mobilepatientlanding.htm</value>
+		       <value>logout.htm</value>
+		       <value>/guest</value>
+		       <value>verifyguest.json</value>
+			</list>
+		</property>
+	    
+		<property name="timeoutUrlMap">
+		    <map>
+	           <entry key="timeout-member-mobile" value="logout.htm"/>
+	           <entry key="timeout-member-web" value="login.htm"/>
+	           <entry key="timeout-guest-mobile" value="USA"/>
+	           <entry key="timeout-guest-web" value="USA"/>
+	        </map>
+		</property>
+		
+		<property name="homePageUrlMap">
+		    <map>
+	           <entry key="homepage-member-mobile" value="mobilepatientlanding.htm"/>
+	           <entry key="homepage-member-web" value="intro.htm"/>
+	           <entry key="homepage-guest-mobile" value="mobilepglanding.htm"/>
+	           <entry key="homepage-guest-web" value="guest"/>
+	        </map>
+		</property>
+		
+	</bean>
+	
+	
+	
+	
 	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<props>
