@@ -33,7 +33,10 @@ public class DeviceDetectionService {
 			logger.info("DeviceDetectionService:isWirelessDeviceOrTablet:Device detected from cookie" );
 			isWirelessDeviceOrTablet = Boolean.parseBoolean(cookie.getValue());
 		}
-		
+		else{
+			logger.info("WebSessionFilter:isWirelessDeviceOrTablet:Device detected using WURLF framework" );
+			isWirelessDeviceOrTablet = checkForDeviceType(request);
+		}
 		return isWirelessDeviceOrTablet;
 	}
 	
@@ -50,16 +53,35 @@ public class DeviceDetectionService {
 		if ( httpRequest.getCookies() != null )
 		{
 			for (Cookie cookie : httpRequest.getCookies()) {
-        	logger.info("DeviceDetectionService:getCookie: cookie name="+ cookie.getName());
-            if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) {
-                return cookie;
-            }
-        }
+	        	logger.info("DeviceDetectionService:getCookie: cookie name="+ cookie.getName());
+	            if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) {
+	                return cookie;
+	            }
+			}
 		}
         return null;
     }
 	
-	
+	private static boolean checkForDeviceType(HttpServletRequest request){
+		
+		boolean isWirelessDeviceOrTablet = false;
+		HttpSession session = request.getSession();
+
+		WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
+		
+		WURFLManager manager = wurfl.getWURFLManager();
+
+		Device device = manager.getDeviceForRequest(request);
+		
+		Map<String, String > capabilities = device.getCapabilities();
+		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:capabilities=" + capabilities);
+		
+		if("true".equals(capabilities.get("is_wireless_device")) || "true".equals(capabilities.get("is_tablet"))){
+			isWirelessDeviceOrTablet = true;
+		}
+		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:isWirelessDeviceOrTablet value" + isWirelessDeviceOrTablet);
+		return isWirelessDeviceOrTablet;
+	}
 	
 	
 }
