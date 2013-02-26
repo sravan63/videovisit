@@ -1545,9 +1545,9 @@ and (min-width: 768px) {
 		background-position: 0 -274px;
 	}
 
-	.modal-window {
+	/* .modal-window {
 		margin-top: 20%;
-	}
+	} */
 
 	.page-content {
 	 	padding-top: 18px; 
