@@ -562,7 +562,7 @@ footer p {
 }
 
 .intro .pic-frame .pic {
-	overflow-y: hidden;
+	overflow: hidden;
 	width: 120px;
 	height: 78px;
 }
