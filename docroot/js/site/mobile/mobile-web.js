@@ -149,7 +149,8 @@ $(document).ready(function() {
 				$(".getAppLink").attr("href", iOSUrl);
 			}
 			else{
-				window.location= iOSUrl;
+				//window.location= iOSUrl;
+				openTab(iOSUrl);
 			}
 		}
 		else if(os == "Android"){	
@@ -157,7 +158,8 @@ $(document).ready(function() {
 				$(".getAppLink").attr("href", androidUrl);
 			}
 			else{
-				window.location= androidUrl;
+				//window.location= androidUrl;
+				openTab(androidUrl);
 			}
 		}
 		else{
@@ -575,8 +577,8 @@ function launchVideoVisit(megaMeetingUrl, megaMeetingId, name){
 	
 	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
-	window.location.replace(megaMeetingUrl);
-	
+	//window.location.replace(megaMeetingUrl);
+	openTab(megaMeetingUrl);
 }
 
 
@@ -589,10 +591,22 @@ function launchVideoVisit(megaMeetingUrl, megaMeetingId, name){
 function launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, name){
 	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
-	window.location.replace(megaMeetingUrl);
-	
+	//window.location.replace(megaMeetingUrl);
+	 openTab(megaMeetingUrl);
 }
 
+
+function openTab(url)
+{
+		var a = window.document.createElement("a");
+	 a.target = '_blank';
+	 a.href = url;
+
+	    // Dispatch fake click
+	 var e = window.document.createEvent("MouseEvents");
+	 e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
+	 a.dispatchEvent(e);
+}
 
 /**
  * 
