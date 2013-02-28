@@ -71,6 +71,7 @@ var request = {
 $(document).ready(function() {
 	
 	detectDeviceCookie();
+	hideAddressBar();
 	
 	// refresh the meetings page every one min
 //	var refreshId = setInterval(function(){
@@ -498,6 +499,37 @@ function getAppOS(){
     return "desktop";
 }
 
+function hideAddressBar(){
+	  if(document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
+	    document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
+	  setTimeout(window.scrollTo(1,1),0);
+	}
+	
+/*	
+function hideAddressBar(){
+	if (navigator.userAgent.match(/Android/i)) {
+	window.scrollTo(0,0); // reset in case prev not scrolled
+	var nPageH = $(document).height();
+	var nViewH = window.outerHeight;
+	if (nViewH > nPageH ) {
+	nViewH = nViewH / window.devicePixelRatio;
+	$('BODY').css('height',nViewH + 'px');
+	}
+	window.scrollTo(0,1);
+	}else{
+	addEventListener("load", function() {
+	setTimeout(hideURLbar, 0);
+	setTimeout(hideURLbar, 600);
+	}, false);
+	}
+	function hideURLbar(){
+	if(!pageYOffset){
+	window.scrollTo(0,1);
+	}
+	}
+	return this;
+	}
+	*/
 /*
  * This method sets the isWirelessDeviceOrTablet cookie based on the device detected
  */
