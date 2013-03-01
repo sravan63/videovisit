@@ -499,13 +499,9 @@ function getAppOS(){
     return "desktop";
 }
 
-function hideAddressBar(){
-	  if(document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
-	    document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
-	  setTimeout(window.scrollTo(1,1),0);
-	}
+
 	
-/*	
+	
 function hideAddressBar(){
 	if (navigator.userAgent.match(/Android/i)) {
 	window.scrollTo(0,0); // reset in case prev not scrolled
@@ -529,7 +525,7 @@ function hideAddressBar(){
 	}
 	return this;
 	}
-	*/
+	
 /*
  * This method sets the isWirelessDeviceOrTablet cookie based on the device detected
  */
