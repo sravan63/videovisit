@@ -406,7 +406,7 @@ footer p {
 	background-size: 520px;
 	-webkit-tap-highlight-color: transparent;
 
-	-webkit-box-reflect: below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.3)));
+	
 }
 
 #logout-alert {
@@ -672,7 +672,7 @@ ol.instructions > li:before {
 	background:  url("../../../images/mobile/video-visit-ui@2x.png") no-repeat;
 	background-position: -247px 0;
 	background-size: 520px;
-	-webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.2)));
+	
 }
 
 .instructions .img-app {
@@ -685,7 +685,7 @@ ol.instructions > li:before {
 	background:  url("../../../images/mobile/video-visit-ui@2x.png") no-repeat;
 	background-position: 0px -30px;
 	background-size: 410px;
-	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.2)));
+	
 }
 
 .instructions .img-headphones {
@@ -696,7 +696,7 @@ ol.instructions > li:before {
 	background:  url("../../../images/mobile/video-visit-ui@2x.png") no-repeat;
 	background-position: -310px 0;
 	background-size: 520px;
-	-webkit-box-reflect: below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.2)));
+	
 }
 
 .button-get-app {
@@ -843,7 +843,7 @@ text-align: center;
 	background-position: -215px 0;
 	background-size: 300px;
 
-	-webkit-box-reflect: below 3px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.2)));
+	
 }
 
 .alert-hero.alert-no-visits .image {
@@ -858,7 +858,7 @@ text-align: center;
 	background-position: -142px -51px;
 	background-size: 300px;
 
-	-webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.2)));
+	
 }
 
 .alert-hero.alert-logout .image {
@@ -1217,7 +1217,7 @@ and (max-width: 767px) {
 		background:  url("../../../images/mobile/video-visit-ui@2x.png") no-repeat;
 		background-position: -1px -29px;
 		background-size: 370px;
-		-webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.2)));
+		
 	}
 
 	.instructions .img-connection{
@@ -1227,7 +1227,7 @@ and (max-width: 767px) {
 		background:  url("../../../images/mobile/video-visit-ui@2x.png") no-repeat;
 		background-position: -192px -3px;
 		background-size: 400px;
-		-webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.2)));
+		
 	}
 
 	.instructions .img-headphones {
@@ -1239,7 +1239,7 @@ and (max-width: 767px) {
 		background-position: -238px -3px;
 		background-size: 400px;
 
-		-webkit-box-reflect: below 1px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(75%, transparent), to(rgba(255,255,255,0.2)));
+		
 	}
 
 	.button-get-app {
