@@ -272,7 +272,7 @@ footer p {
 
 .modal {
 
-	position: fixed;
+	position: absolute;
 	z-index: 3000;
 	display: none;
 	width: 100%;
