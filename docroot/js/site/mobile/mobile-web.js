@@ -103,10 +103,11 @@ $(document).ready(function() {
 	// scrolls to top for anchor page states on load
 	scrollMe();
 	
-	$('.modal').on('touchmove', function (event) {
+	//removing the functionality as the modals lock themselves in Landscape mode (non-scrollable)
+	/*$('.modal').on('touchmove', function (event) {
 		// locking these elements, so they can't be moved when dragging the div
 		event.preventDefault();
-	});
+	});*/
 	
 	
 	// for focus and blur events
