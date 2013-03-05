@@ -32,8 +32,6 @@ public class WebSessionFilter implements Filter
 	public static Logger logger = Logger
 		.getLogger(WebSessionFilter.class);
 
-	private FilterConfig config = null;
-	private String[] excludeURLs = null;
 	
 	
 	private List<String> excludeUrlList = null;
@@ -44,19 +42,11 @@ public class WebSessionFilter implements Filter
 	
 	
 
-	public void init(FilterConfig config) throws ServletException
-	{
-		logger.info("Entering WebSessionFilter: init");
-		this.config = config;
-		//exclude the standalone calorie counter url
-		String s = config.getInitParameter("excludeURL");
-		excludeURLs = StringUtils.split(s, ",");
-
-		logger.info("Exiting WebSessionFilter: init");
-	}
 	
 	public void destroy(){
-		config = null;
+		excludeUrlList = null;
+		timeoutUrlMap = null;
+		homePageUrlMap = null;
 	}
 	
 	/**
@@ -218,7 +208,7 @@ public class WebSessionFilter implements Filter
 		}
 		
 		
-		logger.info("Exiting WebSessionFilter:getLoginUrl:sbTimeoutUrl=" + timeoutUrl);
+		logger.info("Exiting WebSessionFilter:getTimeoutUrl:timeoutUrl=" + timeoutUrl);
 		return timeoutUrl;
 		
 	}
@@ -299,6 +289,12 @@ public class WebSessionFilter implements Filter
 
 	public void setHomePageUrlMap(Map<String, String> homePageUrlMap) {
 		this.homePageUrlMap = homePageUrlMap;
+	}
+
+	@Override
+	public void init(FilterConfig arg0) throws ServletException {
+		// TODO Auto-generated method stub
+		
 	}
 	
 
