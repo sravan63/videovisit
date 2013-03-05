@@ -52,6 +52,7 @@ docroot/WEB-INF/jsp/mobile/common/headerpg.jsp -text
 docroot/WEB-INF/jsp/mobile/common/information.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/logoutModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/pglogoutModal.jsp -text
+docroot/WEB-INF/jsp/mobile/common/preloader.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/expired-visit-member-pg.jsp -text
 docroot/WEB-INF/jsp/mobile/expired-visit-member.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/expired-visit.jsp -text
@@ -121,6 +122,7 @@ docroot/images/global/hoverpoint.gif -text
 docroot/images/global/icon-arrow.png -text
 docroot/images/global/icon-datetime.png -text
 docroot/images/global/icon-glyphs.png -text
+docroot/images/global/iconLoading_small.gif -text
 docroot/images/global/placeholder-captcha.png -text
 docroot/images/global/placeholder-meeting-frame.jpg -text
 docroot/images/global/placeholder-member-landing-portal.jpg -text

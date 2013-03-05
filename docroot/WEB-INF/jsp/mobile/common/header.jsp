@@ -4,6 +4,7 @@
 <!--  Include modal dialog jsps -->
 <%@ include file="../patientLoginModal.jsp" %>
 <%@ include file="logoutModal.jsp" %>
+<%@ include file="preloader.jsp" %>
 				
 <div class="header">
 		<div class="header-title"></div>
