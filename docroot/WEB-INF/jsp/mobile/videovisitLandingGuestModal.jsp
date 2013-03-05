@@ -1,4 +1,4 @@
-<div id="modalGuestId" class="modal"> <!-- Modal - Proof of Concept -->
+<div id="modalGuestId" class="modal" style="top: 0px;"> <!-- Modal - Proof of Concept -->
 
 		<div class="modal-window">
 		
