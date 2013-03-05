@@ -32,31 +32,8 @@
 	</context-param>
 	
    <!-- Session for regular Web FILTER -->
-   <!-- <filter>
-      <filter-name>WebSessionFilter</filter-name>
-      <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.WebSessionFilter</filter-class>
-      <init-param>
-	      <param-name>excludeURL</param-name>
-	      <param-value>login.htm,intro.htm,setup.htm,verifyguest.json,guestready.htm,guesthelp.htm,mobilepatientlanding.htm,mobilepglanding.htm,logout.htm,mobilevideovisitlanding.htm</param-value>
-    </init-param>
-     <init-param>
-	      <param-name>mobileLoginURL</param-name>
-	      <param-value>logout.htm</param-value>
-    </init-param>
-    <init-param>
-	      <param-name>webLoginURL</param-name>
-	      <param-value>login.htm</param-value>
-    </init-param>
-     <init-param>
-	      <param-name>homePageUrl</param-name>
-	      <param-value>login.htm</param-value>
-    </init-param>
-    
-   </filter> -->
-   
    <filter>
-
-    <filter-name>WebSessionFilter</filter-name>
+    	<filter-name>WebSessionFilter</filter-name>
     	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
 	</filter>
    
