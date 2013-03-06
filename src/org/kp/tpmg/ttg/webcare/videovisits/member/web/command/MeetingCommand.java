@@ -171,7 +171,9 @@ public class MeetingCommand {
 							}	
 							
 							meetings[i].setParticipants((ProviderWSO[]) clearNullArray(meetings[i].getParticipants()));
-							meetings[i].setCaregivers((CaregiverWSO[]) clearNullArray(meetings[i].getCaregivers()));				
+							meetings[i].setCaregivers((CaregiverWSO[]) clearNullArray(meetings[i].getCaregivers()));
+							
+							logger.info("hostname = " + meetings[i].getHost().getFirstName());
 						}
 						
 						ctx.setTotalmeetings(meetings.length);
