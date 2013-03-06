@@ -1,20 +1,18 @@
 <style>
 .jqmWindow {
     display: none;
-    
-    position: fixed;
-    top:30%;
-    left: 50%;
-    
-    
     width: 50px;
-    
-    /*background-color: #EEE;
-    color: #333;
-    border: 1px solid black;
-    */
-    padding: 12px;
+    margin: 0 auto;
+    left:50%;
+	top:50%;
+
 }
+.preloader-modal-window{
+	position: absolute;
+    
+}
+
+
 
 </style>
 
