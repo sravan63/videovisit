@@ -147,6 +147,7 @@ public class MeetingCommand {
 				if (ret != null && ret.getSuccess() && ret.getResult()!= null)
 				{
 					// there is meeting, so save it.
+				
 					MeetingWSO[] meetings = ret.getResult();
 					if (meetings.length == 1 && meetings[0]== null )
 					{
@@ -173,7 +174,7 @@ public class MeetingCommand {
 							meetings[i].setParticipants((ProviderWSO[]) clearNullArray(meetings[i].getParticipants()));
 							meetings[i].setCaregivers((CaregiverWSO[]) clearNullArray(meetings[i].getCaregivers()));
 							
-							logger.info("hostname = " + meetings[i].getHost().getFirstName());
+						    logger.info(" Hostname = " + meetings[i].getProviderHost().getFirstName());
 						}
 						
 						ctx.setTotalmeetings(meetings.length);
