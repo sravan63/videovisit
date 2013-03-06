@@ -5,7 +5,7 @@
 <%@ page import="javax.servlet.*"%>
 <%@ page import="javax.servlet.http.*"%>
 
-
+<%@ include file="preloader.jsp" %>
 <c:if test="${WebAppContext.totalmeetings>0}">
 	<div id="landing-portal-ready">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">

@@ -38,7 +38,7 @@
             }
         },
         "guest" : {
-            "global"   : [],
+            "global"   : ["css/library/plugin/jqModal.css"],
             "specific" : {
                 "guest" : [
                     "css/site/global/guest.css"
@@ -46,7 +46,7 @@
             }
         },
         "guestready" : {
-            "global"   : [],
+            "global"   : ["css/library/plugin/jqModal.css"],
             "specific" : {
                 "guestready" : []
             }

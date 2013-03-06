@@ -48,7 +48,9 @@
             "global"    :   ["js/site/global/dateExtensions_loader.js"
             				],
             "specific"  :   {
-                "guest"  :   ["js/site/guest/guest.js"
+                "guest"  :   ["js/site/guest/guest.js",
+                				"js/library/plugin/jqModal.js",
+                    			"js/library/plugin/jqDnR.js"
                 			 ]
             }
         },
@@ -58,7 +60,9 @@
             ],
             "specific"  :   {
                 "guestready"  :   [
-                    "js/site/guestready/guestready.js"
+                    "js/site/guestready/guestready.js",
+    				"js/library/plugin/jqModal.js",
+        			"js/library/plugin/jqDnR.js"
                 ]
             }
         },
