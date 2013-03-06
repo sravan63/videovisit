@@ -13,6 +13,8 @@
 
 <c:if test="${WebAppContext.totalmeetings>0}">
 
+<%@ include file="preloader.jsp" %>
+
 <div id="landing-portal-ready">
 <c:forEach var="meeting" items="${WebAppContext.meetings}">
 

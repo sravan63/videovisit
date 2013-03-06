@@ -5,9 +5,16 @@ $(document).ready(function() {
     $('body').append($('#dialog-block-user-in-meeting-modal'));
     // Setup the user-in-meeting dialog
     $( '#dialog-block-user-in-meeting-modal' ).jqm();
+    
+    // Initialize preloader
+    $('body').append($('#modal-preloader'));
+    // Setup the user-in-meeting dialog
+    $( '#modal-preloader' ).jqm({modal:true});
+    
 
 	// Join now Click Event
     $(".btn").click(function(){
+    	$( '#modal-preloader').jqmShow() ;
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
         hreflocation = $(this).attr('href');
@@ -24,16 +31,19 @@ $(document).ready(function() {
 			}
 			catch(e)
 			{
+				$( '#modal-preloader').jqmHide() ;
 				$('#end_meeting_error').html('').append(e.message).show();
 			}
 			
 			if (userPresentInMeetingData.errorMessage) {
+				$( '#modal-preloader').jqmHide() ;
 				$('#end_meeting_error').html('').append(userPresentInMeetingData.errorMessage).show();		
 			}
 			else{
 				if(userPresentInMeetingData.result == "true"){
 					
 					// show the dialog 
+					$( '#modal-preloader').jqmHide() ;
 					$( '#dialog-block-user-in-meeting-modal' ).jqmShow() ;
 				}
 				else{

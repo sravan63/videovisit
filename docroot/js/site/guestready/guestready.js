@@ -1,9 +1,17 @@
 $(document).ready(function() {
+	
+	 // Initialize preloader
+    $('body').append($('#modal-preloader'));
+    // Setup the user-in-meeting dialog
+    $( '#modal-preloader' ).jqm({modal:true});
+    
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation,meetingId,patientLastName, verifyData;
 
 	// Join now Click Event
     $(".btn").click(function(e){
         e.preventDefault();
+        $( '#modal-preloader').jqmShow() ;
+        
         meetingIdData = 'meetingCode=' + gup("meetingCode"); //$(this).attr('meetingCode');
         meetingId = gup("meetingId");
         patientLastName = gup("patientLastName");
@@ -23,10 +31,12 @@ $(document).ready(function() {
               returndata = jQuery.parseJSON(returndata);
               
               if(returndata.result === '1'){
+            	  $( '#modal-preloader').jqmHide() ;
             	$("p.error").css("display", "inline").append('<label>No matching patient found. Please try again.</label><br/>');
                 moveToit("p.error");              	
                 return false;
-              } else if (returndata.result === '2') {            	
+              } else if (returndata.result === '2') { 
+            	  $( '#modal-preloader').jqmHide() ;
             	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
                 moveToit("p.error");            	
                 return false;  

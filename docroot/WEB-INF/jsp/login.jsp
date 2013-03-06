@@ -1,3 +1,5 @@
+<%@ include file="preloader.jsp" %>
+
 <h3 class="page-title">Member Login</h3>
 <p class="login">Children under age 11 may not use this website. A parent or legal guardian may use this website and have the child with them during the conference.</p>
 <p class="login">Please sign on by completing the fields below.</p>
