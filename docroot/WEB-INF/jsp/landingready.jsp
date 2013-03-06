@@ -13,7 +13,7 @@
 
 <c:if test="${WebAppContext.totalmeetings>0}">
 
-<%@ include file="preloader.jsp" %>
+
 
 <div id="landing-portal-ready">
 <c:forEach var="meeting" items="${WebAppContext.meetings}">
@@ -80,6 +80,8 @@
      </div>
 
 </c:if>
+
+<%@ include file="preloader.jsp" %>
 
 <div id="dialog-block-user-in-meeting-modal" class="jqmWindow dialog-block2" style="display:none" title="Quit Meeting">
 	<div class="dialog-content-question">
