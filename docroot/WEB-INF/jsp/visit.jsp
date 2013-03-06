@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h3 class="page-title">Video Visit with ${WebAppContext.meetings[0].host.firstName} 
-	${WebAppContext.meetings[0].host.lastName}<c:if test="${not empty WebAppContext.meetings[0].host.title}">, ${WebAppContext.meetings[0].host.title}</c:if>
+<h3 class="page-title">Video Visit with ${WebAppContext.meetings[0].providerHost.firstName} 
+	${WebAppContext.meetings[0].providerHost.lastName}<c:if test="${not empty WebAppContext.meetings[0].providerHost.title}">, ${WebAppContext.meetings[0].providerHost.title}</c:if>
 </h3>
 
                 <div id="video-main" style="width:785px">
