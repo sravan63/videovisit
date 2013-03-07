@@ -208,24 +208,26 @@ function isWhole (s) {
  * @param value
  * @returns
  */
-
-
 function isMonth (s) {
-    var is_month       = /^(0[1-9]|1[0-2])$/;
-   return String(s).search (is_month) != -1
+	 if (s.length == 1) {
+	        s = "0" + s;
+	 }
+	 var is_month       = /^(0[1-9]|1[0-2])$/;
+	 return String(s).search (is_month) != -1
 }
 
 /**
- * Returns true or false based on if the value is valid day
- * @param element
- * @param value
- * @returns
- */
-
-
+* Returns true or false based on if the value is valid day
+* @param element
+* @param value
+* @returns
+*/
 function isDay (s) {
-    var is_day      = /^(0[1-9]|1[0-9]|2[0-9]|3[0-1])$/;
-   return String(s).search (is_day) != -1
+	if (s.length == 1) {
+       s = "0" + s;
+	}
+	var is_day      = /^(0[1-9]|1[0-9]|2[0-9]|3[0-1])$/;
+	return String(s).search (is_day) != -1
 }
 
 /**
