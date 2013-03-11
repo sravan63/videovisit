@@ -3,15 +3,10 @@ $(document).ready(function() {
     $loginForm = $("#loginForm");
     $consentModal = $('#consentModal');
 
- // Dialog initialization
-    $('body').append($('#modal-preloader'));
-    // Setup the user-in-meeting dialog
-    $( '#modal-preloader' ).jqm({modal:true});
-    
-    
+ 
     $('#login').click(function() {
     	// show the dialog 
-    	$( '#modal-preloader').jqmShow() ;
+    	
 		
         $loginForm.validate({
             // Where do we want errors to appear?
@@ -143,7 +138,7 @@ $(document).ready(function() {
                 }
                 //$consentModal.jqmShow();
                 // show the dialog 
-            	$( '#modal-preloader').jqmHide() ;
+            	
             	
                 return false;
             } else {
@@ -185,21 +180,21 @@ $(document).ready(function() {
 
                             case "3":
                             	// show the dialog 
-                            	$( '#modal-preloader').jqmHide() ;
+                            	
                                 $("p.error").css("display", "inline").append('<li><label>We could not find this patient.  Please try entering the information again.</label></li>');
                                 moveToit("p.error");
                                 break;
 
                             case "4":
                             	// show the dialog 
-                            	$( '#modal-preloader').jqmHide() ;
+                            	
                                 $("p.error").css("display", "inline").append('<li><label>The code entered did not match. Please try again (you can click the code image to generate a new one if needed).</label></li>');
                                 moveToit("p.error");
                                 break;
 
                             default:
                             	// show the dialog 
-                            	$( '#modal-preloader').jqmHide() ;
+                            	
                                 $("p.error").css("display", "inline").append('<li><label>There was an error submitting your login. Please try again later.</label></li>');
                                 moveToit("p.error");
                                 break;
@@ -208,7 +203,7 @@ $(document).ready(function() {
                     },
                     error: function() {
                     	// show the dialog 
-                    	$( '#modal-preloader').jqmHide() ;
+                    	
                         $("p.error").css("display", "inline").append('<li><label>There was an error submitting your login.</label></li>');
                         moveToit("p.error");
                     }
@@ -218,8 +213,7 @@ $(document).ready(function() {
         } else {
             //return false;
         	
-        	// show the dialog 
-        	$( '#modal-preloader').jqmHide() ;
+        	
         }
     });
 

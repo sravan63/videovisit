@@ -453,11 +453,11 @@ function modalHide(modalId){
 }
 
 function openPreloader(){
-	modalShow("modal-preloader");
+	//modalShow("modal-preloader");
 }
 
 function closePreloader(){
-	modalHide("modal-preloader");
+	//modalHide("modal-preloader");
 }
 
 function modalClinician() {
