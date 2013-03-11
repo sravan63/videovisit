@@ -259,3 +259,4 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/RequestLoggingFilter.j
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/WebSessionFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/service/DeviceDetectionService.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/service/WebService.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/utils/WebUtil.java -text
