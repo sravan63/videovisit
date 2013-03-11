@@ -269,7 +269,7 @@ input								{outline:none;}
 #landing-portal-ready			{width:632px; margin:60px auto 0 auto;}
 #landing-portal-ready img 		{float:left; width:170px;}
 .landing-portal-details			{background:#f3f3f3; border:1px solid #b5b5b5; float:right; padding:25px 30px 30px; width:350px; /* min-height:196px; */ height:auto !important; height:196px; margin-left:20px;}
-.landing-portal-details h3		{line-height:1.26em; font-size:170%; color:#bd6d54; font-weight:normal; margin-bottom:1em;}
+.landing-portal-details h3		{line-height:1.26em; font-size:155%; color:#bd6d54; font-weight:normal; margin-bottom:1em;}
 .landing-portal-details p 		{font-size:140%; line-height:1.26em;}
 .landing-portal-details a 		{color:#668d9c; text-decoration:underline;}
 .landing-portal-details .label 	{float:left; display:block; /* width:140px; */}
