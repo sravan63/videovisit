@@ -74,7 +74,8 @@ $(document).ready(function() {
     //converts it to the correct timestamp and then appends it to the next h3 in the code
     $('.timestamp').each(function(){
         meetingTimestamp = $(this).text();
-        convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
+        var tz = $("#tz").val();
+        convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only')  + " " + tz;
 
         $(this).next('h3').append(convertedTimestamp);
     })

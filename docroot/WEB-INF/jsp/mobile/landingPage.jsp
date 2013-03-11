@@ -1,7 +1,7 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*" %>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*" %>
 <%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.*" %>
-
+<%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.*" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
@@ -10,6 +10,7 @@
 <%
 
 	MeetingCommand.retrieveMeeting(request, response);
+	String timezone = WebUtil.getCurrentDateTimeZone();
 %>
 <%@ include file="userPresentInMeetingModal.jsp" %>
 <!-- Refresh page button and time stamp - to be reworked -->
@@ -55,7 +56,7 @@
 							<script type="text/javascript">
 							// convert time stamp to time
 								meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
-								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only').toLowerCase();
+								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only').toLowerCase() + ' '+ '<%=timezone%>' ;
 								$('.time_' + ${meeting.meetingId}).append(convertedTimestamp);
 							</script>
 

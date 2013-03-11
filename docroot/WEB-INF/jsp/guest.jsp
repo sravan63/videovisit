@@ -1,11 +1,16 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*"%>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*"%>
+<%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.*" %>
 <%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="javax.servlet.*"%>
 <%@ page import="javax.servlet.http.*"%>
 
 <%@ include file="preloader.jsp" %>
+<%
+
+String timezone = WebUtil.getCurrentDateTimeZone();
+%>
 <c:if test="${WebAppContext.totalmeetings>0}">
 	<div id="landing-portal-ready">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">
@@ -34,3 +39,4 @@
 		<p>Please check back again later.</p>
 	</div>
 </c:if>
+<input type="hidden" id="tz" value="<%=timezone%>" /> 

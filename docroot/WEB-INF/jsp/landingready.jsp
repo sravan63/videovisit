@@ -1,5 +1,6 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*" %>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*" %>
+<%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.*" %>
 <%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
@@ -9,6 +10,8 @@
 <%
 
 	MeetingCommand.retrieveMeeting(request, response);
+	String timezone = WebUtil.getCurrentDateTimeZone();
+
 %>
 
 <c:if test="${WebAppContext.totalmeetings>0}">
@@ -21,7 +24,7 @@
     <div class="landing-portal-single-container">
         <img src=${meeting.providerHost.imageUrl} alt="" />
         <div class="landing-portal-details">
-            <div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
+            <div class="hidden timestamp">${meeting.scheduledTimestamp} </div>
             <h3>Your visit is scheduled for </h3>
             <div class="meeting-with-container">
               <span>Meeting with:</span>
@@ -91,6 +94,6 @@
 		<div class="jqmClose" align="center"><input class="button" id="ok"  type="button"  value="OK" /></div>
 	</div>
 </div>	
-
+<input type="hidden" id="tz" value="<%=timezone%>" /> 
 
 
