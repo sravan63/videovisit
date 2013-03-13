@@ -508,7 +508,7 @@ function getAppOS(){
     var iOS = false,
     p = navigator.platform;
  
-    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p==='iPhone Simulator'){
+    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p==='iPhone Simulator' || p==='iPad Simulator'){
         return "iOS";
     }
     
