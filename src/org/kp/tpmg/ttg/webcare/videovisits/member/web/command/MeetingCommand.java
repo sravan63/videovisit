@@ -495,7 +495,7 @@ public class MeetingCommand {
 			megaMeetingUrl = m1.replaceAll(megaMeetingName);
 			m2 = p2.matcher(megaMeetingUrl);
 			
-			CaregiverWSO[] caregivers = meeting.getCaregivers();
+			CaregiverWSO[] caregivers = meeting.getCaregiver();
 			if (caregivers != null && caregivers.length > 0) {
 				for (int i=0; i<caregivers.length; i++) {
 					CaregiverWSO caregiver = caregivers[i];
@@ -512,7 +512,7 @@ public class MeetingCommand {
 		}
 		
 		meeting.setParticipants((ProviderWSO[]) clearNullArray(meeting.getParticipants()));
-		meeting.setCaregivers((CaregiverWSO[]) clearNullArray(meeting.getCaregivers()));
+		meeting.setCaregivers((CaregiverWSO[]) clearNullArray(meeting.getCaregiver()));
 	}	
 	
 	
