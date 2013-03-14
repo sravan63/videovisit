@@ -630,7 +630,7 @@ function deleteCookie(c_name){
 function launchVideoVisit(megaMeetingUrl, megaMeetingId, name){
 	//var name = lastName + " " + firstName;
 	
-	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
+	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1"; 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
 	openTab(megaMeetingUrl);
@@ -644,7 +644,7 @@ function launchVideoVisit(megaMeetingUrl, megaMeetingId, name){
  * @param firstName
  */
 function launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, name){
-	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visit&go=1&agree=1"; 
+	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1"; 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
 	 openTab(megaMeetingUrl);
