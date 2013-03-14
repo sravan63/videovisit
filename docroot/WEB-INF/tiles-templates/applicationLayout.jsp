@@ -30,6 +30,10 @@
         <script src="${item}" type="text/javascript"></script>
         </c:forEach>
         <!--End JavaScript-->
+        
+        <noscript>
+			<meta http-equiv="refresh" content="0; url=enablejavascript.htm"></meta>
+		</noscript>
 
     </head>
     <!--End Head-->

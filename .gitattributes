@@ -31,6 +31,7 @@ docroot/WEB-INF/applicationContext.xml -text
 docroot/WEB-INF/jsp/blank.jsp -text
 docroot/WEB-INF/jsp/data/jsonData.jsp -text
 docroot/WEB-INF/jsp/data/jsonHeader.jsp -text
+docroot/WEB-INF/jsp/enableJavascript.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/error.jsp -text
 docroot/WEB-INF/jsp/guest.jsp -text
 docroot/WEB-INF/jsp/guesterror.jsp -text

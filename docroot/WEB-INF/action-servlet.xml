@@ -37,6 +37,7 @@
 		       <value>logout.htm</value>
 		       <value>/guest</value>
 		       <value>verifyguest.json</value>
+		       <value>enablejavascript.htm</value>
 			</list>
 		</property>
 	    
@@ -94,7 +95,7 @@
 				<prop key="/guesthelp.htm">guesthelp</prop>	
 				<prop key="/userPresentInMeeting.json">dataUserPresentInMeeting</prop>
 				
-				<!-- Mobile URLs -->
+				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
 				<prop key="/mobilelogin.json">mobilelogin</prop>
 				<prop key="/mobilepglanding.htm">mobilePGLanding</prop>	
@@ -108,6 +109,7 @@
 				<prop key="/meetingexpiredmember.htm">meetingExpiredMember</prop>
 				<prop key="/meetingexpiredmemberpg.htm">meetingExpiredMemberPG</prop>
 				
+				<prop key="/enablejavascript.htm">enableJavascript</prop>
 					
 			</props>
 		</property>
@@ -291,6 +293,14 @@
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
 	</bean>
+	
+	<bean id="enableJavascript" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		
+		<property name="viewName" value="enableJavascript" />
+		
+	</bean>
+	
 	
 	<bean id="dataIsValidUserSession" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.ValidateUserSession">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>

@@ -19,6 +19,10 @@
 		<link rel="stylesheet" href="css/site/global/mobile.css">
 		<link rel="apple-touch-icon" href="images/vv-apple-touch-icon-72@2x.png">
 
+		 <noscript>
+			<meta http-equiv="refresh" content="0; url=enablejavascript.htm"></meta>
+		</noscript>
+
     </head>
     <!--End Head-->
 
