@@ -11,18 +11,12 @@
         </title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-        <script src="js/library/jquery/jquery-1.8.2.min.js" type="text/javascript"></script>
-        <script src="js/site/global/dateExtensions_loader.js" type="text/javascript"></script>
-        <script src="js/site/validation/validate.js" type="text/javascript"></script>
-        <script src="js/site/mobile/mobile-web.js" type="text/javascript"></script>
+    
 
 		<link rel="stylesheet" href="css/site/global/mobile.css">
 		<link rel="apple-touch-icon" href="images/vv-apple-touch-icon-72@2x.png">
 
-		 <noscript>
-			<meta http-equiv="refresh" content="0; url=mobileenablejavascript.htm"></meta>
-		</noscript>
-
+	
     </head>
     <!--End Head-->
 
@@ -36,10 +30,10 @@
 			<tiles:insertAttribute name="header" />
 			
 			<div class="page-content-wrapper welcome-page">
-				<!--<div class="page-content">-->
+				
 					<tiles:insertAttribute name="sidebar" />
 					<tiles:insertAttribute name="content" />
-				<!--</div>-->
+				
 			</div>
 			<tiles:insertAttribute name="footer" />
 		</div>

@@ -1,3 +1,7 @@
-
-	<h3 class="page-title">Enable Javascript and login again.</h3>
-	<p class="login">To log back in, please <a href="intro.htm">click here</a></p>
+	 
+	 <div class="page-content">
+		 <div id="landing-portal-none">
+			<p>JavaScripting is disabled.</p>
+			<p>Please go to your browser and enable JavaScripting, then start the Video Visits application again.</p>
+		</div>
+	</div>

@@ -90,6 +90,8 @@ docroot/WEB-INF/tiles-definitions/mobile-tiles-definitions.xml -text svneol=unse
 docroot/WEB-INF/tiles-definitions/tiles-definitions.xml -text
 docroot/WEB-INF/tiles-templates/applicationLayout.jsp -text
 docroot/WEB-INF/tiles-templates/dataLayout.jsp -text
+docroot/WEB-INF/tiles-templates/javascriptNotSupportedLayout.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/tiles-templates/mobileJavascriptNotSupportedLayout.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/tiles-templates/mobileLayout.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/tiles-templates/textLayout.jsp -text
 docroot/WEB-INF/web.xml -text

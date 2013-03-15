@@ -38,6 +38,7 @@
 		       <value>/guest</value>
 		       <value>verifyguest.json</value>
 		       <value>enablejavascript.htm</value>
+		       <value>mobileenablejavascript.htm</value>
 			</list>
 		</property>
 	    
@@ -110,6 +111,7 @@
 				<prop key="/meetingexpiredmemberpg.htm">meetingExpiredMemberPG</prop>
 				
 				<prop key="/enablejavascript.htm">enableJavascript</prop>
+				<prop key="/mobileenablejavascript.htm">mobileEnableJavascript</prop>
 					
 			</props>
 		</property>
@@ -298,6 +300,13 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		
 		<property name="viewName" value="enableJavascript" />
+		
+	</bean>
+	
+	<bean id="mobileEnableJavascript" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		
+		<property name="viewName" value="mobileEnableJavascript" />
 		
 	</bean>
 	

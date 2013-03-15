@@ -21,6 +21,18 @@
  		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
 	</definition>
 
+	<definition name=".mobileJavascriptNotSupportedLayout" template="/WEB-INF/tiles-templates/mobileJavascriptNotSupportedLayout.jsp">
+		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="header" value="/WEB-INF/jsp/mobile/common/header.jsp" />
+		<put-attribute name="sidebar"  value="/WEB-INF/jsp/blank.jsp"  />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
+	</definition>
+
+	<definition name="mobileEnableJavascript" extends=".mobileJavascriptNotSupportedLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/enableJavascript.jsp" />
+	</definition>
+	
 	<definition name=".oneColumnLayout" extends=".mobileWebPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 	</definition>
