@@ -1219,6 +1219,8 @@ and (max-width: 767px) {
 
 	.instructions span {
 		display: table-cell;
+		font-size: 14px;
+		padding: 0;
 	}
 
 	.instructions li:not(:first-of-type) {
@@ -1240,11 +1242,11 @@ and (max-width: 767px) {
 	}
 
 	.instructions .img-connection{
-		margin-top: -4px;
-		width: 42px;
-		height: 40px;
-		background:  url("../../../images/mobile/video-visit-ui@2x.png") no-repeat;
-		background-position: -192px -3px;
+		margin-top: 0px;
+		width: 58px;
+		height: 35px;
+		background:  url("../../../images/mobile/video-visit-ui@2x_old_temp.png") no-repeat;
+		background-position: -120px -25px;
 		background-size: 400px;
 		
 	}
@@ -1264,7 +1266,7 @@ and (max-width: 767px) {
 	.button-get-app {
 		margin-top: 8px;
 
-		padding: 3px 20px 4px 20px;
+		padding: 3px 12px 4px 12px;
 		border: none;
 		border-top: solid 1px white;
 		border-radius: 2px;
