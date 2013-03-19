@@ -9,7 +9,7 @@
 <div class="only-handsets">
 	<ol class="well instructions">
 		<h2>Be ready for your video visit:</h2>
-		<li id="getAppLiId"><button id="preLoginGetAppButtonId" class="button-get-app" style="float:right;" onClick="window.location='https://itunes.apple.com/us/app/vci-mobile/id477260861?mt=8#'">Get App</button><span>Install the Video Visits app on your device.</span></li>
+		<li id="getAppLiId"><button id="preLoginGetAppButtonId" class="button-get-app getAppLink" style="float:right;">Get App</button><span>Install the Video Visits app on your device.</span></li>
 		<li><div class="img-connection"></div><span>Make sure you have a strong network connection.</span></li>
 		<li><span>For best results, use headphones during the call.</span></li>
 	</ol>
