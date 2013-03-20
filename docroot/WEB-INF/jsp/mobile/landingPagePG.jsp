@@ -11,6 +11,7 @@
 	MeetingCommand.retrieveMeetingForCaregiver(request, response);
 	String meetingHash = request.getParameter("meetingCode");
 	String timezone = WebUtil.getCurrentDateTimeZone();
+	
 %>
 <!-- Refresh page button and time stamp - to be reworked -->
 				<div class="refresh-page" onClick="window.location.reload();">
@@ -44,7 +45,17 @@
 						</div>
 
 						<div class="launch-button-handler only-tablets">
-							<button class="button-launch-visit-pg" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Launch Visit</button>
+							<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+									<c:forEach var="p" items="${meeting.caregivers}">
+										<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
+											
+											<c:if test="${p.meetingHash == param.meetingCode}">
+												<button class="button-launch-visit-pg only-tablets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Launch Visit</button>
+											</c:if>
+										</c:if>
+									</c:forEach>
+								</c:if>
+							
 						</div>
 
 						<div class="meeting-block-handler">
