@@ -22,7 +22,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 					<h3>Your visit is scheduled for </h3>
 						<p class="guest-directive">Please enter the following information to join this visit:</p> 
 						<label for="patient_last_name">Patient last Name
-						  <input type="text" name="patient_last_name" id="patient_last_name"></input>
+						  <input type="text" name="patient_last_name" id="patient_last_name" maxlength="35"></input>
             </label>
 					<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click to continue</a>										
 				</div>				
