@@ -41,7 +41,7 @@ $(document).ready(function() {
               returndata = jQuery.parseJSON(returndata);
               if(returndata.result === '1'){
             	
-            	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
+            	$("p.error").css("display":"inline", "font-size":"14px").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
                 moveToit("p.error");              	
                 return false;
               } else if (returndata.result === '2') {  
