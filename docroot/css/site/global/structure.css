@@ -263,7 +263,7 @@ input								{outline:none;}
 
 /* Member Landing None */
 #landing-portal-none			{width:340px; margin:60px auto 0 auto; background:#f3f3f3; border:1px solid #b5b5b5; padding:75px 145px; color:#bd6d54;}
-#landing-portal-none p 			{font-size:170%; line-height:1.26em; margin-bottom:10px;}
+#landing-portal-none p 			{font-size:170%; font-weight:bold; line-height:1.26em; margin-bottom:10px;}
 
 /* Member Landing Ready */
 #landing-portal-ready			{width:632px; margin:60px auto 0 auto;}
