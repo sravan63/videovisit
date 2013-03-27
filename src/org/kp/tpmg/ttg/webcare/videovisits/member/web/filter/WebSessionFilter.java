@@ -121,6 +121,7 @@ public class WebSessionFilter implements Filter
 			String timeoutUrl = getTimeoutUrl(req);
 			// Handle timeout condition
 			if(session != null){
+				logger.info("session is not null");
 				ctx  	= WebAppContext.getWebAppContext(req);
 				// Timeout has not occurred, do normal processing
 				if (ctx != null) {
@@ -141,6 +142,8 @@ public class WebSessionFilter implements Filter
 			}
 			else{
 				// session is null
+				logger.info("session is null");
+				
 				resp.sendRedirect(timeoutUrl);
 			}
 			
