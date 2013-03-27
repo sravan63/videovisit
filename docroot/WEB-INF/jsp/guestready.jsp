@@ -34,7 +34,7 @@
 					</div>
 					<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click here to join now</a>
 					<p class="smallprint">You may be joining before your clinician.	Please be patient.</p>
-					<p class="error error-guest-login"><a name="errors"></a></p>
+					<p class="error error-guest-login"></p>
 				</div>
 			</div>
 		</c:forEach>
