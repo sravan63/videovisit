@@ -27,7 +27,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 					<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click to continue</a>										
 				</div>				
 			</div>
-			<p class="error error-guest-login"><a name="errors"></a></p>
+			<p class="error error-guest-login"></p>
 		</c:forEach>
 
 
