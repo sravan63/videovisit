@@ -30,6 +30,7 @@ $(document).ready(function() {
 			{
 				
 				$('#end_meeting_error').html('').append(e.message).show();
+				 window.location.replace(VIDEO_VISITS.Path.visit.logout);
 			}
 			
 			if (userPresentInMeetingData.errorMessage) {
@@ -49,13 +50,28 @@ $(document).ready(function() {
 			            data: meetingIdData,
 			            url: VIDEO_VISITS.Path.landingready.joinmeeting,
 			            success: function(returndata) {
-							returndata = jQuery.parseJSON(returndata);
-							hreflocation = returndata.result;
-			                window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
+			            	try
+			            	{
+			            		returndata = jQuery.parseJSON(returndata);
+			            		if ( returndata.success)
+			            		{
+			            			hreflocation = returndata.result;
+			            			window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
+			            		}
+			            		
+			            	}
+			            	catch(e)
+			    			{
+			    				
+			    				$('#end_meeting_error').html('').append(e.message).show();
+			    				 window.location.replace(VIDEO_VISITS.Path.visit.logout);
+			    			}
+							
 			            },
 			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
 			            error: function(theRequest, textStatus, errorThrown) {
-			                window.location.replace(VIDEO_VISITS.Path.global.error);
+			            	
+			            	window.location.replace(VIDEO_VISITS.Path.visit.logout);
 			            }
 			        });
 				}

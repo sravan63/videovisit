@@ -38,26 +38,33 @@ $(document).ready(function() {
             //url: VIDEO_VISITS.Path.guest.verifyguest,
             url: "verifyguest.json",
             success: function(returndata) {
-              returndata = jQuery.parseJSON(returndata);
-              if(returndata.result === '1'){
-            	
-            	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
-                moveToit("p.error");              	
-                return false;
-              } else if (returndata.result === '2') {  
-            	 
-            	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
-                moveToit("p.error");            	
-                return false;  
+              try
+              {
+	              returndata = jQuery.parseJSON(returndata);
+	              if(returndata.result === '1'){
+	            	
+	            	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
+	                moveToit("p.error");              	
+	                return false;
+	              } else if (returndata.result === '2') {  
+	            	 
+	            	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
+	                moveToit("p.error");            	
+	                return false;  
+	              }
+	              hreflocation = returndata.result;
+	              //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
+	              window.location.replace("guestready.htm?" + meetingIdData);
               }
-              hreflocation = returndata.result;
-              //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
-              window.location.replace("guestready.htm?" + meetingIdData);
+              catch(e)
+              {
+            	  window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
+              }
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
             	
-                window.location.replace(VIDEO_VISITS.Path.global.error);
+            	 window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
             }
         });
         return false;

@@ -24,8 +24,17 @@ $(document).ready(function() {
             data: verifyData,
             url: VIDEO_VISITS.Path.guestready.joinmeeting,
             success: function(returndata) {
-              returndata = jQuery.parseJSON(returndata);
-              
+            
+              try
+              {
+            	  returndata = jQuery.parseJSON(returndata);
+            	  hreflocation = returndata.result;
+                  window.location.replace("guestvisit.htm?meetingCode=" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation));
+              }
+              catch(e)
+              {
+            	  window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
+              }
               if(returndata.result === '1'){
             	 
             	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
@@ -37,8 +46,7 @@ $(document).ready(function() {
                 moveToit("p.error");            	
                 return false;  
               }
-              hreflocation = returndata.result;
-              window.location.replace("guestvisit.htm?meetingCode=" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation));
+             
               //hreflocation = returndata.result;
               //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
               //window.location.replace("guestready.htm?meetingCode=" + mtgCode+ "&patientLastName=" + $.trim($("#patient_last_name").val() + "&meetingId=" + $(this).attr('meetingid'));
@@ -47,7 +55,7 @@ $(document).ready(function() {
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
-                window.location.replace(VIDEO_VISITS.Path.guestglobal.error);
+            	 window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
             }
         })
 
