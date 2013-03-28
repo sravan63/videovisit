@@ -9,20 +9,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class LogoffController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(LogoutController.class);
+	public static Logger logger = Logger.getLogger(LogoffController.class);
 	private String mobileViewName;
-
+	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
+				
+		boolean isWirelessDeviceorTablet = DeviceDetectionService.isWirelessDeviceorTablet(request);
+		logger.info("isWirelessDeviceorTablet = " + isWirelessDeviceorTablet);
 		logger.info("invalidated session Id=" + request.getSession().getId());
-
 		request.getSession().invalidate();
 		
-		boolean isWirelessDeviceorTablet = DeviceDetectionService.isWirelessDeviceorTablet(request);
-		
+		if ( request.getSession(false) == null)
+			logger.info("LogoffController session is null");
+		else
+			logger.info("LogoffController session is not null");
 		if(isWirelessDeviceorTablet){
 			return new ModelAndView(mobileViewName);				
 		}
 		else{
+			logger.info("view name = " + modelAndView.getViewName());
 			return modelAndView;
 		}
 	}

@@ -117,6 +117,11 @@ public class WebSessionFilter implements Filter
 		}
 		else{
 			HttpSession session = req.getSession(false);
+			
+			if ( session == null)
+				logger.info("web session filter else session is null");
+			else
+				logger.info("web session filter else session is not null");
 			WebAppContext ctx = null;
 			String timeoutUrl = getTimeoutUrl(req);
 			// Handle timeout condition

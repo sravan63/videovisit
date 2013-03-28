@@ -54,14 +54,17 @@ public class DataSessionFilter implements Filter
 				//session expired, return expiration message
 					logger.info("Inside DataSessionFilter.doFilter Session expired forwarding to>>>>>>>>>>>>>>>>>>>>"
 							+ "/logout.htm");
-					RequestDispatcher rd = req.getRequestDispatcher("/login.htm");
+					RequestDispatcher rd = req.getRequestDispatcher("/logout.htm");
 					rd.forward(req, resp);
+					
+	
 			} else if (WebAppContext.getWebAppContext(req)== null) {
 
 				//user was logged out, return empty response
 				logger.info("Inside DataSessionFilter.doFilter user is logged out, returning empty response");
-				RequestDispatcher rd = req.getRequestDispatcher("/error.htm");
+				RequestDispatcher rd = req.getRequestDispatcher("/logout.htm");
 				rd.forward(req, resp);
+				
 			} else {
 				chain.doFilter(req, resp);
 			}
