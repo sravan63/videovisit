@@ -28,6 +28,17 @@ $(document).ready(function() {
               try
               {
             	  returndata = jQuery.parseJSON(returndata);
+            	  if(returndata.result === '1'){
+                 	 
+                  	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
+                      moveToit("p.error");
+                      return false;
+                    } else if (returndata.result === '2') { 
+                  	 
+                  	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
+                      moveToit("p.error");            	
+                      return false;  
+                    }
             	  hreflocation = returndata.result;
                   window.location.replace("guestvisit.htm?meetingCode=" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation));
               }
@@ -35,17 +46,7 @@ $(document).ready(function() {
               {
             	  window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
               }
-              if(returndata.result === '1'){
-            	 
-            	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
-                moveToit("p.error");
-                return false;
-              } else if (returndata.result === '2') { 
-            	 
-            	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
-                moveToit("p.error");            	
-                return false;  
-              }
+              
              
               //hreflocation = returndata.result;
               //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
