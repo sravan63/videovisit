@@ -50,7 +50,7 @@
 			<div class="alert alert-hero alert-expired">
 				<div class="alert-hero-message">
 					<div class="image"></div>
-					<p><strong>Oops!</strong> Looks like the video visit that you are trying to join in is no longer available.</p>
+					<p>The video visit you are trying to join is no longer available. The clinician has ended this visit.</p>
 				</div>
 			</div>
 
