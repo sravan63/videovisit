@@ -265,7 +265,15 @@ $(document).ready(function() {
 	        data: postdata, 
 	        success: function(returndata) {
 	        	//console.log("returndata=" + returndata);
-	        	returndata = $.parseJSON(returndata);
+	        	try
+	        	{
+	        		returndata = $.parseJSON(returndata);
+	        	}
+	        	catch(e)
+	        	{
+	        		closePreloader();
+        			window.location.replace("logout.htm");
+	        	}
 	        	var isValidUserSession =  returndata.isValidUserSession; 
 	        	
 	        	 if(returndata.success == true && isValidUserSession == true){
@@ -279,17 +287,25 @@ $(document).ready(function() {
 	             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
 		            	var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name, 'nocache=' : n};
 		            	$.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.userPresentInMeeting, postParaForUserPresentInMeeting,function(userPresentInMeetingData){
-		            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
-		            		
-		            		if(userPresentInMeetingData.result == "true"){
-		            			closePreloader();
-		            			modalShow('modal-user-present');
+		            		try
+		            		{
+			            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
+			            		
+			            		if(userPresentInMeetingData.result == "true"){
+			            			closePreloader();
+			            			modalShow('modal-user-present');
+			            		}
+			            		else{
+			            				closePreloader();
+				            			joinMeeting(meetingId);
+				    	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, name);
+			            			}
 		            		}
-		            		else{
-		            				closePreloader();
-			            			joinMeeting(meetingId);
-			    	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, name);
-		            			}
+		            		catch(e)
+		            		{
+		            			closePreloader();
+		            			window.location.replace("logout.htm");
+		            		}
 		            	});
 	             	}
 	                
