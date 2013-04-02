@@ -101,7 +101,7 @@
 					<div class="alert alert-hero alert-no-visits">
 						<div class="alert-hero-message">
 						<div class="image"></div>
-							<p><strong>You do not have a video visit scheduled in the next 15 minutes. Please check back later.</p>
+							<p><strong>You do not have a video visit scheduled in the next 15 minutes. Please check back later.</strong></p>
 						</div>
 					</div>
 		
