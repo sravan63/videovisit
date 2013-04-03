@@ -755,20 +755,19 @@ function isLoginValiadtionSuccess(){
 function validationPatientGuestLogin(){
 	
 	var validationObj = 
-		{
-			"last_name" : [
-				{
-					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
-					"PARAM_VALUE" : $("#last_name").val(),
-					"METHOD_ERROR_MESSAGE" : "Please enter your last name.",
-					"ERROR_ID" : "lastNameErrorId",
-					"HIGHLIGHT_PARENT_WHEN_ERROR": true
-					
-					
-				}
-			]
+	{
+		"last_name" : [
+			{
+				"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
+				"PARAM_VALUE" : $("#last_name").val(),
+				"ERROR_MESSAGE" : "Last name is required and must contain only alphabets.",
+				"ERROR_ID" : "lastNameErrorId",
+				"HIGHLIGHT_PARENT_WHEN_ERROR": true
+			}
+		]
+
+	}
 	
-		}
 	
 	var  isValid = validate(validationObj);
 
