@@ -8,7 +8,7 @@
 <div class="header">
 		<div class="header-title"></div>
 		
-		<c:if test="${WebAppContext.careGiver != null}">
+		<c:if test="${WebAppContext.getCareGiver()}">
 			<button alt="Log out" id="btn-logout" class="btn-nav btn-logout" onclick="javascript:modalShow('pg-modal-logout');"><span class="icon-logout"></span></button>
 		</c:if>
 </div>
