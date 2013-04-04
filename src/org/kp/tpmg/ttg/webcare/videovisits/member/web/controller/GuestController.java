@@ -20,7 +20,7 @@ public class GuestController extends SimplePageController {
 	private String megaMeetingURL = null;
 	
 	private String megaMeetingMobileURL = null;
-	
+	private WebAppContext ctx = null;
 	public GuestController() {
 		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
@@ -32,8 +32,10 @@ public class GuestController extends SimplePageController {
 		initializeWebappContext(request);
 		
 		String data = null;
-		try {			
-			data = MeetingCommand.retrieveMeetingForCaregiver(request, response);
+		try {		
+			MeetingCommand.IsMeetingHashValid(request, response);
+//			if ( ctx.getTotalmeetings() > 0)
+//				data = MeetingCommand.retrieveMeetingForCaregiver(request, response);
 		} catch (Exception e) {
 			logger.error("GuestController handleRequest error - " + e.getMessage(), e);
 		}		
@@ -44,7 +46,7 @@ public class GuestController extends SimplePageController {
 	}
 	
 	private void initializeWebappContext(HttpServletRequest request) throws Exception {
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
