@@ -142,7 +142,7 @@ $(document).ready(function() {
 	$(".getAppButton, .getAppLink").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
 		var iOSUrl = 'http://itunes.apple.com/us/app/video-visits/id622918437?mt=8';
-		var androidUrl = 'https://play.google.com/store/apps/details?id=air.com.videoconferencinginfo.mobile';
+		var androidUrl = 'https://play.google.com/store/apps/details?id=air.com.videoconferencinginfo.tpmg';
 		
 		
 		var os = getAppOS();
