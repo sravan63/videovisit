@@ -32,7 +32,7 @@ $(document).ready(function() {
                  	 
 //                  	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
 //                      moveToit("p.error");
-            		  window.location.href=window.location.href;
+            		  window.location.replace("guest?meetingCode=" +  gup("meetingCode"));
                       return false;
                     } else if (returndata.result === '2') { 
                   	 
