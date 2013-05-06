@@ -279,6 +279,10 @@ footer p {
 	background-color: rgba(0,0,0,.8);
 }
 
+.fixed{
+	position: fixed;	
+}
+
 .modal-window {
 	margin-top: 25px;
 	margin-right: auto;
