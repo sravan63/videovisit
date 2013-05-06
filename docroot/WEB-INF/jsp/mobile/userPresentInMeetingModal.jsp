@@ -1,5 +1,5 @@
 
-<div id="modal-user-present" class="modal" style="top:0px;">
+<div id="modal-user-present" class="modal fixed" style="top:0px;">
 	<div id="user-present-modal-window" class="modal-window">
 		<div id="close-modal" class="button-close"></div>
 		<div id="app-alert">
