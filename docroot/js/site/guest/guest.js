@@ -25,10 +25,15 @@ $(document).ready(function() {
         e.preventDefault();
        
         
+        var currentTime = new Date();
+	    var n = currentTime.getTime();
+	    
         var mtgCode = gup("meetingCode");
         meetingIdData = 'meetingId=' + $(this).attr('meetingid') + 
           '&meetingCode=' + mtgCode +
-          '&patientLastName=' + $.trim($("#patient_last_name").val());
+          '&patientLastName=' + $.trim($("#patient_last_name").val()) + 
+          '&nocache=' + n;
+        
         hreflocation = $(this).attr('href');
         //alert(meetingIdData);
         $.ajax({
@@ -41,19 +46,35 @@ $(document).ready(function() {
               try
               {
 	              returndata = jQuery.parseJSON(returndata);
+	              
+	              var errorHtml = "";
+	              
 	              if(returndata.result === '1'){
-	            	
-	            	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
-	                moveToit("p.error");              	
-	                return false;
-	              } else if (returndata.result === '2') {  
-	            	 
-	            	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
-	                moveToit("p.error");            	
-	                return false;  
+	            	  errorHtml = '<label>No matching patient found. Please try again.</label><br/>';
+	            	  $("p.error").css("display", "inline").html(errorHtml);
+					  moveToit("p.error");              	
+					  return false;
+	              } 
+	              else if (returndata.result === '2') {  
+	            	  errorHtml = '<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>'; 
+	            	  $("p.error").css("display", "inline").html(errorHtml);
+	            	  moveToit("p.error");            	
+	            	  return false;  
 	              }
+	              else if (returndata.result === '3') {  
+	            	  errorHtml = '<label>Some exception occurred while processing request.</label><br/>'; 
+	            	  $("p.error").css("display", "inline").html(errorHtml);
+	            	  moveToit("p.error");            	
+	            	  return false;  
+	              }
+	              else if (returndata.result === '4') {  
+	            	  errorHtml = '<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>'; 
+	            	  $("p.error").css("display", "inline").html(errorHtml);
+	            	  moveToit("p.error");            	
+	            	  return false;  
+	              }
+	              
 	              hreflocation = returndata.result;
-	              //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
 	              window.location.replace("guestready.htm?" + meetingIdData);
               }
               catch(e)

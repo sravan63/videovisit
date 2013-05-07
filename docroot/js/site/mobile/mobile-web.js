@@ -427,15 +427,29 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	            returndata = jQuery.parseJSON(returndata);
 	            
 	            if(returndata.result === '1'){
+	            	closePreloader();  
+	            	$("#globalError").text('No matching patient found. Please try again.');           	
+	                 $("#globalError").removeClass("hide-me").addClass("error");  
+	                 return false;
+	              } 
+	            else if (returndata.result === '2') { 
 	            	closePreloader();
 	            	window.location.replace("meetingexpiredmemberpg.htm");
 	                return false;
-	              } else if (returndata.result === '2') {   
+	            	
+	            }
+	            else if (returndata.result === '3') {   
+	            	closePreloader();  
+	            	$("#globalError").text('Some exception occurred while processing request..');           	
+	                 $("#globalError").removeClass("hide-me").addClass("error");  
+	                 return false;
+	            }
+	            else if (returndata.result === '4') {   
 	            	closePreloader();  
 	            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');           	
 	                 $("#globalError").removeClass("hide-me").addClass("error");  
 	                 return false;
-	              }
+	            }
 	              
 	            createGuestSession();
 	            closePreloader();
@@ -872,21 +886,34 @@ function loginSubmitPG(){
         data: postdata,  
         success: function(returndata) {
             returndata = $.trim(returndata);
-           
-            returndata = jQuery.parseJSON(returndata);
             
+            returndata = jQuery.parseJSON(returndata);
             if(returndata.result === '1'){
+            	closePreloader();  
+            	$("#globalError").text('No matching patient found. Please try again.');           	
+                 $("#globalError").removeClass("hide-me").addClass("error");  
+                 return false;
+              } 
+            else if (returndata.result === '2') { 
             	closePreloader();
-            	$("#globalError").text('No matching patient found. Please try again.');          	
-                $("#globalError").removeClass("hide-me").addClass("error");
+            	window.location.replace("meetingexpiredmemberpg.htm");
                 return false;
-              } else if (returndata.result === '2') {  
-            	closePreloader();
+            	
+            }
+            else if (returndata.result === '3') {   
+            	closePreloader();  
+            	$("#globalError").text('Some exception occurred while processing request..');           	
+                 $("#globalError").removeClass("hide-me").addClass("error");  
+                 return false;
+            }
+            else if (returndata.result === '4') {   
+            	closePreloader();  
             	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');           	
                  $("#globalError").removeClass("hide-me").addClass("error");  
                  return false;
-              }
-        	
+            }
+            
+            
              window.location.replace("mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + $('input[name=last_name]').val());
 
         },
