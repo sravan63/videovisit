@@ -28,13 +28,13 @@ $(document).ready(function() {
               try
               {
             	  returndata = jQuery.parseJSON(returndata);
-            	  if(returndata.result === '1'){
-                 	 
-//                  	$("p.error").css("display", "inline").html('<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>');
-//                      moveToit("p.error");
+            	  //MEETING_FINISHED_EXCEPTION
+            	  if(returndata.result === '2'){
             		  window.location.replace("guest?meetingCode=" +  gup("meetingCode"));
                       return false;
-                    } else if (returndata.result === '2') { 
+                    }
+            	  //CAREGIVER JOINED FROM DIFFERENT DEVICE
+            	  else if (returndata.result === '4') { 
                   	 
                   	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
                       moveToit("p.error");            	
