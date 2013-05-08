@@ -1,4 +1,4 @@
-<div id="modalCinicianPopup" class="modal">
+<div id="modalClinicianPopup" class="modal" style="top: 0px;">
 	<div class="modal-window">
 		<div id="app-alert">
 			<p>Please access Video Visits from within the Kaiser Permanente network. </p>
