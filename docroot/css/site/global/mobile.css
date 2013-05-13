@@ -353,6 +353,27 @@ footer p {
 	font-size: 18px;
 }
 
+.modal-window a {
+	margin-top: 8px;
+	padding: 8px 120px 8px 120px;
+	width: 270px;
+	height:auto;
+	border: solid 2px #ADADAD;
+	border: solid 2px #404040;
+	border-radius: 6px;
+
+	background-image: -webkit-linear-gradient(top, #777777 0%, #232323 100%);
+	background-image: -moz-linear-gradient(top, #777777 0%, #232323 100%);
+	background-image: -o-linear-gradient(top, #777777 0%, #232323 100%);
+	background-image: linear-gradient(top, #777777 0%, #232323 100%);
+	color: white;
+	text-align: center;
+
+	text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+	font-weight: bold;
+	font-size: 18px;
+}
+
 .modal-button a {
 	color: inherit;
 }
