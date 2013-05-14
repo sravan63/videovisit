@@ -8,5 +8,5 @@ videovisit_member_endpoint=http\://ttg-qa-esb-1.har.ca.kp.org\:8008/services/Vid
 webapp_location=../vvm
 buildtool_location=../esb-client-tools
 videovisit_member_jarname=videovisit-memberservice-client.jar
-
+build.env=pr
 
