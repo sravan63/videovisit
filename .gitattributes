@@ -29,6 +29,7 @@ docroot/META-INF/MANIFEST.MF -text
 docroot/WEB-INF/action-servlet.xml -text
 docroot/WEB-INF/applicationContext.xml -text
 docroot/WEB-INF/jsp/blank.jsp -text
+docroot/WEB-INF/jsp/common/gtmSnippet.jsp -text
 docroot/WEB-INF/jsp/data/jsonData.jsp -text
 docroot/WEB-INF/jsp/data/jsonHeader.jsp -text
 docroot/WEB-INF/jsp/enableJavascript.jsp -text svneol=unset#text/plain
