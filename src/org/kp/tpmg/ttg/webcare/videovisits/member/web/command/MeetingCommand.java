@@ -242,7 +242,10 @@ public class MeetingCommand {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
 			}
 			
-			
+			if ( meetingId == 0)
+			{
+				meetingId = ctx.getMeetingId();
+			}
 			
 			
 			if (ctx != null && ctx.getMember() != null)
@@ -277,6 +280,11 @@ public class MeetingCommand {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
 			}
 			
+			if ( meetingId == 0)
+			{
+				meetingId = ctx.getMeetingId();
+			}
+			
 			if (ctx != null && ctx.getMember() != null)
 			{
 				//grab data from web services
@@ -307,6 +315,7 @@ public class MeetingCommand {
 			if (request.getParameter("meetingId") != null &&
 					!request.getParameter("meetingId").equals("")) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
+				ctx.setMeetingId(meetingId);
 			}
 			
 			if (ctx != null && ctx.getMember() != null)
@@ -375,6 +384,7 @@ public class MeetingCommand {
 					logger.info("setting total meetings = 0");
 					ctx.setTotalmeetings(0);
 				} else {
+					logger.info("setting total meetings = " + meetings.length);
 					for (int i=0; i<meetings.length; i++) {
 						MeetingWSO meeting = meetings[i];
 						normalizeMeetingData(meeting, meetingCode, ctx);
