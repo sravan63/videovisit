@@ -2,10 +2,12 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  Include modal dialog jsps -->
-<%-- <%@ include file="gtmSnippet.jsp" %> --%>
 <%@ include file="../patientLoginModal.jsp" %>
 <%@ include file="logoutModal.jsp" %>
 <%@ include file="preloader.jsp" %>
+
+<!--  Include Google Tag Manager -->
+<%@ include file="../../common/gtmSnippet.jsp" %>
 				
 <div class="header">
 		<div class="header-title"></div>
