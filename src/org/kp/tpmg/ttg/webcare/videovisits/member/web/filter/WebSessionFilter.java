@@ -55,7 +55,7 @@ public class WebSessionFilter implements Filter
 	public void doFilter(ServletRequest sreq, ServletResponse sresp,
 			FilterChain chain) throws IOException, ServletException
 	{
-		
+		logger.info("WebSessionFilter" );
 		HttpServletRequest req;
 		HttpServletResponse resp;
 	
@@ -71,24 +71,28 @@ public class WebSessionFilter implements Filter
 			 *  This case is handled to take care of patients or guests coming from email.
 			 *  The home page for patient is intro.htm
 			 */
+			logger.info("WebSessionFilter exclude list" );
 			String requestUri = req.getRequestURI();
+			logger.info("requestUri = " + requestUri);
 			int startIndex = requestUri.lastIndexOf("/");
 			int endIndex = requestUri.indexOf("?");
-//			System.out.println("======startIndex:" + startIndex + " endIndex=" + endIndex);
+			//System.out.println("======startIndex:" + startIndex + " endIndex=" + endIndex);
 			if(endIndex != -1){
 				requestUri = requestUri.substring(startIndex + 1, endIndex);
 			}
 			else{
 				requestUri = requestUri.substring(startIndex + 1);
 			}
-//			System.out.println("======Request URI:" + requestUri);
+			logger.info("======Request URI:" + requestUri);
 			String memberWebHomePageUrl = homePageUrlMap.get("homepage-member-web");
 			String memberMobileHomePageUrl = homePageUrlMap.get("homepage-member-mobile");
 			String guestWebHomePageUrl = homePageUrlMap.get("homepage-guest-web");
 			String guestMobileHomePageUrl = homePageUrlMap.get("homepage-guest-mobile");
 			String redirectToUrl = null;
 			// Handle patient home page URL
-			if(requestUri.equals(memberWebHomePageUrl)){
+			logger.info("WebSessionFilter requesturi = " + requestUri + " memberWebHomePageUrl = " + memberWebHomePageUrl + " guestWebHomePageUrl = " + guestWebHomePageUrl);
+			if(requestUri.contains(memberWebHomePageUrl)){
+				logger.info("WebSessionFilter memberwebpage" );
 				boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);
 				if(isWirelessDeviceOrTablet){
 					redirectToUrl = memberMobileHomePageUrl;
@@ -100,6 +104,7 @@ public class WebSessionFilter implements Filter
 			}
 			// Handle guest home page URL
 			else if(requestUri.equals(guestWebHomePageUrl)){
+				logger.info("WebSessionFilter patientguest " );
 				boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);
 				String meetingCode = req.getParameter("meetingCode");
 				if(isWirelessDeviceOrTablet){
