@@ -42,7 +42,7 @@ $(document).ready(function() {
 });
 
 $(window).unload(function() {
-	var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid');
+	var quitMeetingIdData = 'meetingId=0';
     $.ajax({
         type: 'POST',
         url: VIDEO_VISITS.Path.visit.quitmeeting,
@@ -60,7 +60,7 @@ $(window).unload(function() {
 window.onbeforeunload = function (e) {
     var e = e || window.event;
 
-    var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid');
+    var quitMeetingIdData = 'meetingId=0' ;
     $.ajax({
         type: 'POST',
         url: VIDEO_VISITS.Path.visit.quitmeeting,
