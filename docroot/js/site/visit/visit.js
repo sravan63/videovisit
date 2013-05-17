@@ -41,6 +41,49 @@ $(document).ready(function() {
 		LandingReadyPage.keepALive();
 });
 
+$(window).unload(function() {
+	var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid');
+    $.ajax({
+        type: 'POST',
+        url: VIDEO_VISITS.Path.visit.quitmeeting,
+        data: quitMeetingIdData,
+        success: function(returndata) {
+            window.location.replace(VIDEO_VISITS.Path.visit.logout);
+        },
+        //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+        error: function(theRequest, textStatus, errorThrown) {
+            window.location.replace(VIDEO_VISITS.Path.global.error);
+        }
+	});
+});
+ 
+window.onbeforeunload = function (e) {
+    var e = e || window.event;
+
+    var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid');
+    $.ajax({
+        type: 'POST',
+        url: VIDEO_VISITS.Path.visit.quitmeeting,
+        data: quitMeetingIdData,
+        success: function(returndata) {
+            window.location.replace(VIDEO_VISITS.Path.visit.logout);
+        },
+        //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+        error: function(theRequest, textStatus, errorThrown) {
+            window.location.replace(VIDEO_VISITS.Path.global.error);
+        }
+    }); 
+    // For IE and Firefox prior to version 4
+    if (e) {
+        e.returnValue = 'Are you sure you want to leave the video visit meeting';
+    }
+
+    // For Safari
+    return 'Are you sure you want to leave the video visit meeting';
+
+}
+
+  
 var LandingReadyPage =
 {
 		keepALiveDelay: ( 5 * 60 * 1000),
