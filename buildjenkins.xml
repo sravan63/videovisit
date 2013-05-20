@@ -18,10 +18,10 @@
 	<property name="dest.dir.lib" value="${dest.dir}/WEB-INF/lib" />
  	
 	<taskdef resource="net/sf/antcontrib/antlib.xml">
-				      <classpath>
-				        <pathelement location="../ant-script-library/lib/ant-contrib/ant-contrib-1.0b3.jar"/>
-				      </classpath>
-		</taskdef>
+	      <classpath>
+	        <pathelement location="../ant-script-library/lib/ant-contrib/ant-contrib-1.0b3.jar"/>
+	      </classpath>
+	</taskdef>
 	
     <!-- 
 	<taskdef name="jsmin"
@@ -47,6 +47,13 @@
 					<then>
 		   	  			<antcall target="copy-war-dev" />
 					</then>
+					
+					 <elseif>
+						  <equals arg1="${build.env}" arg2="tr"/>
+						  <then>
+							<antcall target="copy-war-tr" />
+						  </then>
+					 </elseif>
 					<else>
 						<antcall target="copy-war-qa" />
 					</else>
@@ -251,6 +258,16 @@
 				/>
 				-->
 			</target>
+			
+	
+	<target name="copy-war-tr">
+		<echo message="Copying war to training host"/>
+		<scp todir="W992736:ttg123@TTG-TR-APP-4:/extra/ttg.workspace/videovisit-member" failonerror="false" verbose="false"  trust="yes">
+			<fileset dir="${dest.war.dir}">
+				<include name="**/*.war" /> 
+			</fileset>
+		</scp>
+	</target>
 	<!-- ************************************************ -->
 	   		<!-- Start of deploy			  -->
 	   		<!-- ************************************************ -->
