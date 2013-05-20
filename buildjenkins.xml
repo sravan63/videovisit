@@ -43,20 +43,21 @@
 	  	<antcall target="build-war" />
 		
 		<if>
-					<equals arg1="${build.env}" arg2="dv"/>
-					<then>
-		   	  			<antcall target="copy-war-dev" />
-					</then>
-					
-					 <elseif>
-						  <equals arg1="${build.env}" arg2="tr"/>
-						  <then>
-							<antcall target="copy-war-tr" />
-						  </then>
-					 </elseif>
-					<else>
-						<antcall target="copy-war-qa" />
-					</else>
+			<equals arg1="${build.env}" arg2="dv"/>
+			<then>
+   	  			<antcall target="copy-war-dev" />
+			</then>
+			 <elseif>
+				  <equals arg1="${build.env}" arg2="tr"/>
+				  <then>
+				      	<echo message="training deploy: ${build.env}" />
+						<antcall target="copy-war-tr" />
+				  </then>
+			 </elseif>
+			<else>
+			    <echo message="QA deploy: ${build.env}" />
+				<antcall target="copy-war-qa" />
+			</else>
 		</if>
    </target>
 	
