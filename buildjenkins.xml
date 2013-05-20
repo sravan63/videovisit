@@ -50,12 +50,11 @@
 			 <elseif>
 				  <equals arg1="${build.env}" arg2="tr"/>
 				  <then>
-				      	<echo message="training deploy: ${build.env}" />
 						<antcall target="copy-war-tr" />
+						<echo message="Manually Copy the jar file to /extra/ttg.tomcat5080" />
 				  </then>
 			 </elseif>
 			<else>
-			    <echo message="QA deploy: ${build.env}" />
 				<antcall target="copy-war-qa" />
 			</else>
 		</if>
