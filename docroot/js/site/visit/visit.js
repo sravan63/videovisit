@@ -40,7 +40,7 @@ $(document).ready(function() {
     })
 		LandingReadyPage.keepALive();
 });
-
+/*
 $(window).unload(function() {
 	var quitMeetingIdData = 'meetingId=0';
     $.ajax({
@@ -56,7 +56,8 @@ $(window).unload(function() {
         }
 	});
 });
- 
+
+
 window.onbeforeunload = function (e) {
     var e = e || window.event;
 
@@ -81,7 +82,7 @@ window.onbeforeunload = function (e) {
     // For Safari
     return 'Are you sure you want to leave the video visit meeting';
 
-}
+}*/
 
   
 var LandingReadyPage =
