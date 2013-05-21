@@ -5,5 +5,5 @@
            to redirect to the single-sign-on infrastructure. 
 --%>
 <%-- Redirected because we can't set the welcome page to a virtual URL. --%>
-<c:redirect url="/intro.htm">
+<c:redirect url="/intro.htm?tst=123">
 </c:redirect>
