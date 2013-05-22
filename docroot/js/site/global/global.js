@@ -14,7 +14,7 @@ if (typeof console == "undefined" || typeof console.log == "undefined") var cons
 
 var SESSION_EXPIRED_PAGE = "";
 var ERROR_PAGE = "";
-
+var SESSION_GUEST_EXPIRED_PAGE = "";
 // Number of idle milliseconds before redirecting to session timeout
 var SESSION_TIMEOUT_DELAY = 1000 * 60 * 45; // 45 minutes
 
@@ -41,7 +41,7 @@ $(document).ready(function() {
 	// Set with Path Vars
 	SESSION_EXPIRED_PAGE = VIDEO_VISITS.Path.global.expired;
 	ERROR_PAGE = VIDEO_VISITS.Path.global.error;
-	
+	SESSION_GUEST_EXPIRED_PAGE = VIDEO_VISITS.Path.global.guestexpired;
 	
 	try {
         $("td:empty").html("&nbsp;");
@@ -102,7 +102,10 @@ var loading_Threshold;
     
     // Redirects to the "session expired" page.
     var GoToExpiredPage = function() {
-        location.href = SESSION_EXPIRED_PAGE;
+    	if ( location.href.indexOf('guest') != -1)
+    		location.href = SESSION_GUEST_EXPIRED_PAGE;
+    	else
+    		location.href = SESSION_EXPIRED_PAGE;
     };
     
     // Redirects to the "session expired" page.
