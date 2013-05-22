@@ -97,3 +97,10 @@
 <input type="hidden" id="tz" value="<%=timezone%>" /> 
 
 
+<div id="join-now-modal" class="jqmWindow dialog-block2" style="display:none" title="Join Now">
+	<%@ include file="visit.jsp" %>
+	
+</div>
+
+
+

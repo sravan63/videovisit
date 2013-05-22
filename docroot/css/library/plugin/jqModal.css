@@ -20,6 +20,22 @@
     padding: 0px;
 }
 
+.join-now-dialog.jqmWindow {
+    display: none;
+    
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    
+  
+    width: 80%;
+    
+    background-color: #FFF;
+    color: #333;
+    border: 1px solid #AAA;
+    padding: 0px;
+}
+
 .jqmOverlay { background-color: #000; }
 
 /* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
