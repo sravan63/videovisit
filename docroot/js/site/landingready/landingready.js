@@ -1,43 +1,8 @@
-//window.onbeforeunload = function (e) {
-//
-//    var e = e || window.event;
-//
-//    var quitMeetingIdData = 'meetingId=0' ;
-//    $.ajax({
-//        type: 'POST',
-//        url: VIDEO_VISITS.Path.visit.quitmeeting,
-//        data: quitMeetingIdData,
-//        success: function(returndata) {
-//            window.location.replace(VIDEO_VISITS.Path.visit.logout);
-//        },
-//        //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-//        error: function(theRequest, textStatus, errorThrown) {
-//            window.location.replace(VIDEO_VISITS.Path.global.error);
-//        }
-//    }); 
-//    // For IE and Firefox prior to version 4
-//    //if (e) {
-//    //    e.returnValue = 'Are you sure you want to leave the video visit meeting';
-//   // }
-//
-//    // For Safari
-//  // return 'Are you sure you want to leave the video visit meeting';
-//
-//}
+
 
 
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
-    
-    // Dialog initialization
-    //$('body').append($('#dialog-block-user-in-meeting-modal'));
-    // Setup the user-in-meeting dialog
-//    $( '#dialog-block-user-in-meeting-modal' ).jqm();
-    
-    // INITIALIZE Join now modal.
-    //initializeJoinNowModal();
-    
-
 	// Join now Click Event
     $(".btn").click(function(){
     	
@@ -87,7 +52,7 @@ $(document).ready(function() {
 			            			hreflocation = returndata.result;
 			            			// SHOW Join now modal.
 			            			window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation) + "&meetingId=" + meetingId);
-			            			//showJoinNowModal(encodeURIComponent(hreflocation));
+			            			
 			            		}
 			            		
 			            	}
@@ -129,83 +94,4 @@ $(document).ready(function() {
 });
 
 
-//function showJoinNowModal(encodedHrefLocation){
-//
-//	// Grab the GET variable
-//    var iframedata = encodedHrefLocation;
-//    
-//    initializeQuitMeetingModal();
-//    
-//    // Load it into the iframe's source attribute'
-//    $("iframe").attr('src', decodeURIComponent(iframedata));
-//    
-//    $('#join-now-modal').jqmShow();
-//    LandingReadyPage.keepALive();
-//    
-//    return false;
-//}
-//
-//
-//function initializeJoinNowModal(){
-//	$('#join-now-modal').jqm({
-//	modal: true,
-//	});
-//}
-//
-//
-//function initializeQuitMeetingModal(){
-//
-//	
-//	// Move the quit meeting modal outside of the rest of the containers on the page and append to body (fixes some IE modal bugs)
-//    $('body').append($('#quitMeetingModal'));
-//
-//    // Reposition modal on this page only
-//    $('.jqmWindow').css('margin-left','-99px');
-//    
-//    // Setup the quit meeting modal and make it draggable
-//    $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');
-//
-//    $('#quitMeetingLink').click(function(){
-//        var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid');
-//        $.ajax({
-//            type: 'POST',
-//            url: VIDEO_VISITS.Path.visit.quitmeeting,
-//            data: quitMeetingIdData,
-//            success: function(returndata) {
-//                window.location.replace(VIDEO_VISITS.Path.visit.logout);
-//            },
-//            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-//            error: function(theRequest, textStatus, errorThrown) {
-//                window.location.replace(VIDEO_VISITS.Path.global.error);
-//            }
-//        });
-//        return false;
-//    })
-//}
 
-
-
-  
-//var LandingReadyPage =
-//{
-//		keepALiveDelay: ( 5 * 60 * 1000),
-//		keepALiveTimerId:'',
-//	
-//		keepALive: function()
-//		{
-//			LandingReadyPage.keepALiveClearTimeOut();
-//			LandingReadyPage.keepALiveTimerId = setTimeout( LandingReadyPage.keepALiveAction, LandingReadyPage.keepALiveDelay );
-//		},
-//		keepALiveClearTimeOut: function()
-//		{
-//			if (LandingReadyPage.keepALiveTimerId)
-//				clearTimeout( LandingReadyPage.keepALiveTimerId );
-//		},
-//		keepALiveAction: function()
-//		{
-//			$.post(VIDEO_VISITS.Path.landingready.keepALive, {},function(data){	
-//				
-//			});
-//			LandingReadyPage.keepALive();
-//		}
-//}
