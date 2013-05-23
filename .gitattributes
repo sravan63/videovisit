@@ -42,6 +42,7 @@ docroot/WEB-INF/jsp/guestvisit.jsp -text
 docroot/WEB-INF/jsp/healthMonitor.jsp -text
 docroot/WEB-INF/jsp/help.jsp -text
 docroot/WEB-INF/jsp/intro.jsp -text
+docroot/WEB-INF/jsp/joinNowModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/landing.jsp -text
 docroot/WEB-INF/jsp/landingnone.jsp -text
 docroot/WEB-INF/jsp/landingready.jsp -text
