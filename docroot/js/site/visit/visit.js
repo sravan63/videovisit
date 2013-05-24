@@ -16,36 +16,42 @@ $(document).ready(function() {
     
     showJoinNowModal(decodeURIComponent(iframedata));
     
+    $('#quitMeeting').click(function() {
+    	$( '#quitMeetingModal' ).jqmShow();
+    });
+   
+    
+    
 });
 
 
 
 
-window.onbeforeunload = function (e) {
-    var e = e || window.event;
-
-    var quitMeetingIdData = 'meetingId=0' ;
-    $.ajax({
-        type: 'POST',
-        url: VIDEO_VISITS.Path.visit.quitmeeting,
-        data: quitMeetingIdData,
-        success: function(returndata) {
-            window.location.replace(VIDEO_VISITS.Path.visit.logout);
-        },
-        //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-        error: function(theRequest, textStatus, errorThrown) {
-            window.location.replace(VIDEO_VISITS.Path.global.error);
-        }
-    }); 
-    // For IE and Firefox prior to version 4
-    //if (e) {
-    //    e.returnValue = 'Are you sure you want to leave the video visit meeting';
-   // }
-
-    // For Safari
-  // return 'Are you sure you want to leave the video visit meeting';
-
-}
+//window.onbeforeunload = function (e) {
+//    var e = e || window.event;
+//
+//    var quitMeetingIdData = 'meetingId=0' ;
+//    $.ajax({
+//        type: 'POST',
+//        url: VIDEO_VISITS.Path.visit.quitmeeting,
+//        data: quitMeetingIdData,
+//        success: function(returndata) {
+//            window.location.replace(VIDEO_VISITS.Path.visit.logout);
+//        },
+//        //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+//        error: function(theRequest, textStatus, errorThrown) {
+//            window.location.replace(VIDEO_VISITS.Path.global.error);
+//        }
+//    }); 
+//    // For IE and Firefox prior to version 4
+//    //if (e) {
+//    //    e.returnValue = 'Are you sure you want to leave the video visit meeting';
+//   // }
+//
+//    // For Safari
+//  // return 'Are you sure you want to leave the video visit meeting';
+//
+//}
 
   
 var LandingReadyPage =
@@ -93,7 +99,14 @@ function showJoinNowModal(encodedHrefLocation){
 function initializeJoinNowModal(){
 	$('#join-now-modal').jqm({
 	modal: true,
+	
 	});
+	
+	$( '#quitMeetingModal' ).jqm({
+		modal:true,
+		
+	}).jqDrag('.jqDrag');
+	
 }
 
 
@@ -101,13 +114,16 @@ function initializeQuitMeetingModal(){
 
 	
 	// Move the quit meeting modal outside of the rest of the containers on the page and append to body (fixes some IE modal bugs)
-    $('body').append($('#quitMeetingModal'));
+    //$('body').append($('#quitMeetingModal'));
 
     // Reposition modal on this page only
     $('.jqmWindow').css('margin-left','-99px');
     
     // Setup the quit meeting modal and make it draggable
-    $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');
+    
+    $('#dialogclose').click(function(){
+    	$( '#quitMeetingModal' ).jqmHide();
+    });
 
     $('#quitMeetingLink').click(function(){
         var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid');

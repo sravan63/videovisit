@@ -38,6 +38,11 @@
 
 .jqmOverlay { background-color: #000; }
 
+.jqmTopMost{
+	 z-index: 5000; 
+	 
+}
+
 /* Background iframe styling for IE6. Prevents ActiveX bleed-through (<select> form elements, etc.) */
 * iframe.jqm {position:absolute;top:0;left:0;z-index:-1;
 	width: expression(this.parentNode.offsetWidth+'px');
