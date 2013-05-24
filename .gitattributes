@@ -35,6 +35,7 @@ docroot/WEB-INF/jsp/data/jsonHeader.jsp -text
 docroot/WEB-INF/jsp/enableJavascript.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/error.jsp -text
 docroot/WEB-INF/jsp/guest.jsp -text
+docroot/WEB-INF/jsp/guestJoinNowModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/guesterror.jsp -text
 docroot/WEB-INF/jsp/guestlogout.jsp -text
 docroot/WEB-INF/jsp/guestready.jsp -text
