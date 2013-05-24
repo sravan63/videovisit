@@ -15,6 +15,10 @@ $(document).ready(function() {
 	initializeJoinNowModal();
 
 	showJoinNowModal(decodeURIComponent(iframedata));
+	
+	$('#quitMeeting').click(function() {
+    	$( '#quitMeetingModal' ).jqmShow();
+    });
     
     
 });
@@ -65,6 +69,11 @@ function initializeJoinNowModal(){
 	$('#guest-join-now-modal').jqm({
 	modal: true,
 	});
+	
+	$( '#quitMeetingModal' ).jqm({
+		modal:true,
+		
+	}).jqDrag('.jqDrag');
 }
 
 
@@ -76,9 +85,10 @@ function initializeQuitMeetingModal(){
     // Reposition modal on this page only
     $('.jqmWindow').css('margin-left','-99px');
     
-    // Setup the quit meeting modal and make it draggable
-    $( '#quitMeetingModal' ).jqm().jqDrag('.jqDrag');
-
+    $('#dialogclose').click(function(){
+    	$( '#quitMeetingModal' ).jqmHide();
+    });
+    
     $('#quitMeetingLink').click(function(){
         var quitMeetingIdData = 'meetingCode=' + gup("meetingCode"); //$(this).attr('meetingCode');
         $.ajax({
