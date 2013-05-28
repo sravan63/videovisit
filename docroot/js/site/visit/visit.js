@@ -101,7 +101,7 @@ var close=function(hash){
 	hash.w.fadeOut('100',function(){
 			hash.o.remove();
 			
-			window.location.replace("landingready.htm");
+			//window.location.replace("landingready.htm");
 	});
 };
 
