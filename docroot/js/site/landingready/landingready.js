@@ -8,7 +8,7 @@ $(document).ready(function() {
     	
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
-        hreflocation = $(this).attr('href');
+        hreflocation = $(this).attr('mmMeetingUrl');
         
         
         var name = hreflocation.substring(hreflocation.indexOf("&user=") +"&user=".length);

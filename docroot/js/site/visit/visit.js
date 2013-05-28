@@ -25,7 +25,8 @@ $(document).ready(function() {
 });
 
 
-
+// onbeforeunload is commented becasue of infinite loop issues in firefox and IE
+// For Firefox- https://bugzilla.mozilla.org/show_bug.cgi?id=770626
 
 //window.onbeforeunload = function (e) {
 //    var e = e || window.event;
@@ -96,18 +97,27 @@ function showJoinNowModal(encodedHrefLocation){
 }
 
 
+var close=function(hash){
+	hash.w.fadeOut('100',function(){
+			hash.o.remove();
+			
+			window.location.replace("landingready.htm");
+	});
+};
+
 function initializeJoinNowModal(){
 	$('#join-now-modal').jqm({
 	modal: true,
-	
+	onHide: close
 	});
 	
 	$( '#quitMeetingModal' ).jqm({
-		modal:true,
-		
+	modal:true,
+	onHide: close
 	}).jqDrag('.jqDrag');
-	
+
 }
+
 
 
 function initializeQuitMeetingModal(){

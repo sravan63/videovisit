@@ -67,7 +67,7 @@
               </c:if>
             </div>
 
-            <a class="btn" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}">Click here to join now</a>
+            <a class="btn" meetingid="${meeting.meetingId}" mmMeetingUrl="${meeting.mmMeetingName}" href="#">Click here to join now</a>
             <p class="smallprint">You may be joining before your clinician.  Please be patient.</p>
         </div>
     </div>
