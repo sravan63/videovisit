@@ -51,7 +51,7 @@ $(document).ready(function() {
 			            		{
 			            			hreflocation = returndata.result;
 			            			// SHOW Join now modal.
-			            			window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation) + "&meetingId=" + meetingId);
+			            			window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation) + "&meetingId=" + meetingId + "&memberName=" + name);
 			            			
 			            		}
 			            		

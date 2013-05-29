@@ -100,8 +100,26 @@ function showJoinNowModal(encodedHrefLocation){
 var close=function(hash){
 	hash.w.fadeOut('100',function(){
 			hash.o.remove();
+//		$.ajax({
+//          type: 'POST',
+//          url: VIDEO_VISITS.Path.visit.quitmeeting,
+//          data: $('#quitMeetingIdData').val(),
+//          success: function(returndata) {
+//              //window.location.replace(VIDEO_VISITS.Path.visit.logout);
+//          	window.location.replace("landingready.htm");
+//          },
+//          //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+//          error: function(theRequest, textStatus, errorThrown) {
+//              window.location.replace(VIDEO_VISITS.Path.global.error);
+//          }
+//      });
+	});
+};
+
+var closeQuitModal=function(hash){
+	hash.w.fadeOut('100',function(){
+			hash.o.remove();
 			
-			//window.location.replace("landingready.htm");
 	});
 };
 
@@ -113,7 +131,7 @@ function initializeJoinNowModal(){
 	
 	$( '#quitMeetingModal' ).jqm({
 	modal:true,
-	onHide: close
+	onHide: closeQuitModal
 	}).jqDrag('.jqDrag');
 
 }
@@ -136,18 +154,23 @@ function initializeQuitMeetingModal(){
     });
 
     $('#quitMeetingLink').click(function(){
-        var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid');
+        var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid') + '&memberName=' + $(this).attr('memberName') ;
+        
+        //$('#quitMeetingIdData').val(quitMeetingIdData);
+       
         $.ajax({
             type: 'POST',
             url: VIDEO_VISITS.Path.visit.quitmeeting,
             data: quitMeetingIdData,
             success: function(returndata) {
                 //window.location.replace(VIDEO_VISITS.Path.visit.logout);
+            	
             	window.location.replace("landingready.htm");
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
                 window.location.replace(VIDEO_VISITS.Path.global.error);
+                
             }
         });
         return false;

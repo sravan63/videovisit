@@ -1,4 +1,5 @@
-	
+
+<input type="hidden" id="quitMeetingIdData" name="quitMeetingIdData" value=""/> 
 <div id="join-now-modal" class="join-now-dialog jqmWindow" style="display:none" title="Join Now">
 	<%@ include file="joinNowModal.jsp" %>
 </div>
@@ -10,7 +11,7 @@
 		<div class="pagination">
 			<ul>
 				<li><a id="dialogclose" class="button">No &rsaquo;&rsaquo;</a></li>
-				<li><a id="quitMeetingLink" class="button" quitmeetingid="${param.meetingId}">Yes &rsaquo;&rsaquo;</a></li>
+				<li><a id="quitMeetingLink" class="button" quitmeetingid="${param.meetingId}" memberName="${param.memberName}">Yes &rsaquo;&rsaquo;</a></li>
 			</ul>
 		</div>
 	</div>

@@ -21,7 +21,7 @@
 	</div>
                                 
      <div id="video-main" style="width:100%">
-         <iframe src ="blank.jsp" width="100%" height="550px">
+         <iframe id="joinNowIframe" src ="blank.jsp" width="100%" height="550px">
              <p>Your browser does not support iframes.</p>
          </iframe>
      </div>
