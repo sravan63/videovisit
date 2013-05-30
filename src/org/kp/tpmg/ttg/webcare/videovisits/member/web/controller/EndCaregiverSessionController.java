@@ -3,8 +3,11 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.springframework.web.servlet.ModelAndView;
 
 public class EndCaregiverSessionController extends SimplePageController   {
@@ -15,8 +18,17 @@ public class EndCaregiverSessionController extends SimplePageController   {
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 		String data = null;
+		StringResponseWrapper responseWrapper = null;
 		try	{
-			data = MeetingCommand.endCaregiverMeetingSession(request, response);
+			
+			responseWrapper = MeetingCommand.quitMeeting(request, response);
+			if(responseWrapper != null && responseWrapper.getSuccess()){
+				data = MeetingCommand.endCaregiverMeetingSession(request, response);
+			}
+			else{
+				data = JSONObject.fromObject(responseWrapper).toString();
+			}
+			
 		} catch (Exception e) {
 			// log error
 			logger.error("System Error" + e.getMessage(),e);

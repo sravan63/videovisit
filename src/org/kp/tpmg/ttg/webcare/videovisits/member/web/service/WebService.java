@@ -22,6 +22,8 @@ import org.kp.tpmg.videovisit.member.GetMeetingByMeetingID;
 import org.kp.tpmg.videovisit.member.GetMeetingByMeetingIDResponse;
 import org.kp.tpmg.videovisit.member.IsMeetingHashValid;
 import org.kp.tpmg.videovisit.member.IsMeetingHashValidResponse;
+import org.kp.tpmg.videovisit.member.KickUserFromMeeting;
+import org.kp.tpmg.videovisit.member.KickUserFromMeetingResponse;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogout;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogoutResponse;
 import org.kp.tpmg.videovisit.member.MemberLogout;
@@ -275,6 +277,30 @@ public class WebService{
 		toRet.setSuccess(true);
 		
 		return toRet;
+	}
+	
+	public static StringResponseWrapper quitMeeting(long meetingId, String memberName, long careGiverId, String sessionID) throws Exception
+	{
+		StringResponseWrapper toRet = null; 
+		
+		KickUserFromMeeting query = new KickUserFromMeeting();
+		query.setMeetingId(meetingId);
+		query.setMemberName(memberName);
+		query.setCaregiverId(careGiverId);
+		query.setSessionId(sessionID);
+		
+		if(memberName == null && careGiverId <= 0){
+			toRet = new StringResponseWrapper();
+			toRet.setSuccess(false);
+			toRet.setErrorMessage("No Caregiver or Participant");
+			return toRet;
+		}
+		
+		KickUserFromMeetingResponse response = stub.kickUserFromMeeting(query);
+		toRet = response.get_return();
+		
+		return toRet;
+		
 	}
 
 	public static UpdateResponseWrapper updateMemberMeetingStatusJoining(long meetingID, String mrn8Digit, String sessionID)

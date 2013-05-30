@@ -227,6 +227,49 @@ public class MeetingCommand {
 		return JSONObject.fromObject(new SystemError()).toString();
 	}
 	
+	public static StringResponseWrapper quitMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		StringResponseWrapper ret = null;
+		
+		long meetingId = -1L;
+		if (request.getParameter("meetingId") != null &&
+				!request.getParameter("meetingId").equals("")) {
+			meetingId = Long.parseLong(request.getParameter("meetingId"));
+		}
+		
+		String participantName = null;
+		if (request.getParameter("memberName") != null &&
+				!request.getParameter("memberName").equals("")) {
+			participantName = request.getParameter("memberName");
+		}
+		
+		long careGiverId = -1L;
+		if (request.getParameter("caregiverId") != null &&
+				!request.getParameter("caregiverId").equals("")) {
+			careGiverId = Long.parseLong(request.getParameter("caregiverId"));
+		}
+		
+		String sessionId = request.getSession().getId();
+		
+		
+		try
+		{
+			ret= WebService.quitMeeting(meetingId, participantName, careGiverId, sessionId);
+			
+			if (ret != null)
+			{
+				return ret;
+			}
+			
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return null;
+	}
+	
 	
 	public static String updateMemberMeetingStatusJoining(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		UpdateResponseWrapper ret = null;
