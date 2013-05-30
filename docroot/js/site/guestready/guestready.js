@@ -15,8 +15,8 @@ $(document).ready(function() {
           '&meetingCode=' + gup("meetingCode")+
           '&patientLastName=' + patientLastName ;
         
+       var cargiverId = $(this).attr('caregiverId');
        
-       //hreflocation = $(this).attr('href');
        
         $.ajax({
         	
@@ -41,7 +41,7 @@ $(document).ready(function() {
                       return false;  
                     }
             	  hreflocation = returndata.result;
-                  window.location.replace("guestvisit.htm?meetingCode=" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation));
+                  window.location.replace("guestvisit.htm?meetingCode=" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation) + "&caregiverId=" + cargiverId) + + "&meetingId=" + meetingId ;
               }
               catch(e)
               {

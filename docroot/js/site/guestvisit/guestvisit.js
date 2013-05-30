@@ -90,7 +90,8 @@ function initializeQuitMeetingModal(){
     });
     
     $('#quitMeetingLink').click(function(){
-        var quitMeetingIdData = 'meetingCode=' + gup("meetingCode"); //$(this).attr('meetingCode');
+        var quitMeetingIdData = 'meetingCode=' + gup("meetingCode") +  '&caregiverId=' + $(this).attr('caregiverId')  + '&meetingId=' + $(this).attr('quitmeetingid');
+      
         $.ajax({
             type: 'POST',
             url: VIDEO_VISITS.Path.guestvisit.quitmeeting,

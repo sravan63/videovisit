@@ -32,7 +32,7 @@
 						<span class="label">Patient name:</span> 
 						<span class="names patient-guests">${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}</span>
 					</div>
-					<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click here to join now</a>
+					<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}" caregiverId="${meeting.caregiver[0].careGiverID}">Click here to join now</a>
 					<p class="smallprint">You may be joining before your clinician.	Please be patient.</p>
 					<p class="error error-guest-login"></p>
 				</div>
