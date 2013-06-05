@@ -19,19 +19,30 @@
 	margin:0;
 }
 
-#videoVisitHomeContainer h4{
-	color: #AC5A41;
-	font-size: 15px;
-	font-family: Arial;
-	font-weight: bold;
-}
-
 #videoVisitHomeContainer h3{
 	color: #AC5A41;
 	font-size: 18px;
 	font-family: Arial;
 	font-style: regular;
-	margin:6px 0 0;	
+	margin: 6px 0 0;
+	padding: 0;
+}
+
+#videoVisitHomeContainer h4{
+	color: #AC5A41;
+	font-size: 15px;
+	font-family: Arial;
+	font-weight: bold;
+	margin:0;
+}
+
+#videoVisitHomeContainer p{
+	line-height:17px;
+	font-size: 14px;
+	font-family: Arial;
+	font-style: regular;
+	color: #333333;
+/* 	text-align: justify;	 */
 }
 
 #videoVisitHomeContainer #mainHeader{
@@ -53,25 +64,23 @@
 }
 
 #videoContainer{
-	background: url("../images/image_landing_page.png") no-repeat scroll center transparent;
+	background: url("../../../images/mdo/image_landing_page.png") no-repeat scroll center transparent;
 	float: left;
 	font-size:11 px;
 	height: 355px;
 	margin: 0px;
 	padding-left: 1px;
 	width: 700px;
-/*	border: 1px solid blue;					 */
 }
 
 #navContent{
 	width: 700px;
-	margin: 30px 0 0 0px;
-/* 	background: none repeat scroll 0 0 #FFFFFF; */
-/* 	border: none; */
+	margin: 30px 0 0;
+	padding-bottom: 10px;
 	float: left;
 	position: relative;
 	height: auto;
-	border-bottom: 1px solid #A8A8A8;
+	border-bottom: 1px solid #CCCCCC;
 }
 
 .landingHalf{
@@ -96,13 +105,11 @@
 
 #lastContent{
 	width: 700px;
-	margin: 30px 0 0 0px;
+	margin: 30px 0 0;
 	border: none;
 	float: left;
 	position: relative;
 	height: auto;
-	
-/*  	border: 1px solid blue; */
 }
 
 .icon{
@@ -111,19 +118,19 @@
 }
 
 div#getPreparedIcon{
-	background: url("../images/icon_checklist.png") no-repeat scroll top center transparent;
+	background: url("../../../images/mdo/icon_checklist.png") no-repeat scroll top center transparent;
 	float: left;
 /* 	height:50px; */
 	width:60px;
 }
 
 div#joinVideoVisit{
-	background: url("../images/icon_devices.png") no-repeat scroll top center transparent;
+	background: url("../../../images/mdo/icon_devices.png") no-repeat scroll top center transparent;
 	float: left;
 }
 
 #videoVisitHomeContainer .landingHalf p{
-	margin-bottom: 5px;
+	margin-bottom: 6px;
 }
 
 #videoVisitHomeContainer .leftNavContent{
@@ -136,16 +143,22 @@ div#joinVideoVisit{
 
 #videoVisitHomeContainer .landingHalf{
 	width: 312px;
-	height: 135px;
+	height: auto;
 }
 
 #videoVisitHomeContainer .buttons{
 /* 	text-align: center; */
 	margin-bottom: 10px;
+	margin-top: 6px;
 }
 
 #videoVisitHomeContainer .button{
-	
+	padding: 4px 10px 3px 7px;
+	background: none repeat scroll 0 0 #4D8993;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-family: Arial;
+	font-style: regular;
 }
 
 #videoVisitHomeContainer .landingTwoThird{
@@ -153,7 +166,7 @@ div#joinVideoVisit{
 	float: left;
 	width: 230px;
 	height: 135px;
-	padding: 5px 2px 0 0;
+	padding: 0 2px 0 0;
 }
 
 .landingTwoThird.leftNav{
@@ -163,15 +176,26 @@ div#joinVideoVisit{
 .landingTwoThird.centerNav{
 	position: relative;
 	float: left;
-	border-left: 1px solid #A8A8A8;
+	border-left: 1px solid #CCCCCC;
 }
 
 .landingTwoThird.rightNav{
 	position: relative;
 	float: left;
-	border-left: 1px solid #A8A8A8;
+	border-left: 1px solid #CCCCCC;
+}
+
+.landingTwoThird .innerDiv{
+	margin: 0 8px 0; 
+}
+
+.landingTwoThird p{
+	margin: 10px 0 10px;
 }
 
 .landingTwoThird a{
-	
+	font-size: 12px;
+	font-family: Arial;
+	font-style: regular;
+	color: #4D8993;
 }
