@@ -85,8 +85,8 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
         <!-- ============ BEGIN:  #container-primary ============ -->
-        <div id="container-primary">
-
+        <div id="container-wrap">
+			<div id="container">
 
 
                 <!-- ============ BEGIN:  #header ============ -->
@@ -135,7 +135,7 @@
 
 
 
-
+			</div>
 
         </div>
         <!-- ============== END:  #container-primary ============ -->
