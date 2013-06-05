@@ -50,6 +50,7 @@ docroot/WEB-INF/jsp/landingready.jsp -text
 docroot/WEB-INF/jsp/loading.jsp -text
 docroot/WEB-INF/jsp/login.jsp -text
 docroot/WEB-INF/jsp/logout.jsp -text
+docroot/WEB-INF/jsp/mdo.jsp -text
 docroot/WEB-INF/jsp/mobile/almostThereClinicianPopupModal.jsp -text
 docroot/WEB-INF/jsp/mobile/common/footer.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/header.jsp -text svneol=unset#text/plain
@@ -73,11 +74,14 @@ docroot/WEB-INF/jsp/mobile/userPresentInMeetingModal.jsp -text svneol=unset#text
 docroot/WEB-INF/jsp/mobile/videovisitLanding.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/videovisitLandingClinicianModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/videovisitLandingGuestModal.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/nav/footer-mdo.jsp -text
 docroot/WEB-INF/jsp/nav/footer.jsp -text
 docroot/WEB-INF/jsp/nav/guestInfo.jsp -text
 docroot/WEB-INF/jsp/nav/header.jsp -text
+docroot/WEB-INF/jsp/nav/mdoheader.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-empty.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-intro.jsp -text
+docroot/WEB-INF/jsp/nav/sidebar-mdo.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar.jsp -text
 docroot/WEB-INF/jsp/nav/simpleText.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo-empty.jsp -text
@@ -95,6 +99,7 @@ docroot/WEB-INF/tiles-definitions/tiles-definitions.xml -text
 docroot/WEB-INF/tiles-templates/applicationLayout.jsp -text
 docroot/WEB-INF/tiles-templates/dataLayout.jsp -text
 docroot/WEB-INF/tiles-templates/javascriptNotSupportedLayout.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/tiles-templates/mdoApplicationLayout.jsp -text
 docroot/WEB-INF/tiles-templates/mobileJavascriptNotSupportedLayout.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/tiles-templates/mobileLayout.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/tiles-templates/textLayout.jsp -text
@@ -114,9 +119,13 @@ docroot/css/site/global/mobile.css -text svneol=unset#text/plain
 docroot/css/site/global/print.css -text
 docroot/css/site/global/structure.css -text
 docroot/css/site/global/style.css -text
+docroot/css/site/mdo/print.css -text
+docroot/css/site/mdo/styles.css -text
+docroot/css/site/mdo/vv_styles.css -text
 docroot/environment/dependency_css.json -text
 docroot/environment/dependency_js.json -text
 docroot/environment/path.js -text
+docroot/images/global/TPGM_Logo_Final_Small.png -text
 docroot/images/global/ajax-loader.gif -text
 docroot/images/global/back-blue.png -text
 docroot/images/global/back-brown.png -text

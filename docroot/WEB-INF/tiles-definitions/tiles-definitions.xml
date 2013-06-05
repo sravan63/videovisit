@@ -14,6 +14,12 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
  		<put-attribute name="footer" value="/WEB-INF/jsp/nav/footer.jsp" />
 	</definition>
+	<definition name=".standardMDOPageTemplate" template="/WEB-INF/tiles-templates/mdoApplicationLayout.jsp">
+		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoheader.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-mdo.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/nav/footer-mdo.jsp" />
+	</definition>
 
 	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
  		<put-attribute name="header" value="/WEB-INF/jsp/blank.jsp" />
@@ -52,6 +58,9 @@
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-intro.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/intro.jsp" />
+	</definition>
+	<definition name="mdo" extends=".standardMDOPageTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/mdo.jsp" />
 	</definition>
 	<definition name="setup" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-intro.jsp" />

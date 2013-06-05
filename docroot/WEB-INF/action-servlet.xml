@@ -28,6 +28,7 @@
 		       <value>login.htm</value>
 		       <!-- Home Page for Member -->
 		       <value>intro.htm</value>
+		       <value>mdo.htm</value>
 		       <!-- Home page for member mobile -->
 		       <value>mobilevideovisitlanding.htm</value>
 		       <value>setup.htm</value>
@@ -70,6 +71,7 @@
 			<props>
 				<prop key="/logout.htm">logout</prop>
 				<prop key="/intro.htm">intro</prop>
+				<prop key="/mdo.htm">mdo</prop>
 				<prop key="/setup.htm">setup</prop>
 				<prop key="/login.htm">login</prop>
 				<prop key="/landingnone.htm">landingnone</prop>
@@ -130,6 +132,10 @@
 		<property name="viewName" value="intro" />
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="intro" />
+	</bean>
+	<bean id="mdo" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="mdo" />
 	</bean>
 	<bean id="setup" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
