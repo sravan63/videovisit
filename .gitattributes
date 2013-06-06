@@ -282,6 +282,17 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VerifyGuestControl
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/DataSessionFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/RequestLoggingFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/WebSessionFilter.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/FaqParser.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/IconPromoParser.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/PromoParser.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/VideoLinkParser.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/faq.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/faqitem.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/hyperlink.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/icon.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/iconpromo.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/promo.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/videolink.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/service/DeviceDetectionService.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/service/WebService.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/utils/WebUtil.java -text
