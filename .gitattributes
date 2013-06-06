@@ -192,6 +192,10 @@ docroot/thankyou.html -text
 docs/Video[!!-~]Visit[!!-~]Member[!!-~]WebApp[!!-~]Build[!!-~]and[!!-~]Test.doc -text
 docs/VideoVisitMembert-DesignSpecifications.doc -text
 lib/SimpleCaptcha-1.1.1.jar -text
+lib/VideoVisitFaqIntegration.jar -text
+lib/VideoVisitIconPromoIntegration.jar -text
+lib/VideoVisitPromoIntegration.jar -text
+lib/VideoVisitVideoLinkIntegration.jar -text
 lib/XmlSchema-1.3.3.jar -text
 lib/XmlSchema-1.4.2.wso2v1.jar -text
 lib/annogen-0.1.0.jar -text
