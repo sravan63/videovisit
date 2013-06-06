@@ -84,8 +84,10 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
-        <!-- ============ BEGIN:  #container-primary ============ -->
+        <!-- ============ BEGIN:  #container-wrap ============ -->
         <div id="container_wrap">
+        	
+        	<!-- ============ BEGIN:  #container ============ -->
 			<div id="container">
 
 
@@ -119,27 +121,24 @@
                                 <!-- End Page Content -->
 
 
-                                <!-- ============ BEGIN:  #footer ============ -->
-                                <tiles:insertAttribute name="footer" />
-                                <!-- ============== END:  #footer ============ -->
-
-
                         </div>
                         <!-- ============ END:  #block-main ============== -->
 
                 </div>
                 <!-- ============== END:  #container-main ============ -->
 
-
-
-
-
-
 			</div>
+			<!-- ============== END:  #container ============ -->
 
         </div>
-        <!-- ============== END:  #container-primary ============ -->
-
+        <!-- ============== END:  #container-wrap ============ -->
+		
+		
+        <!-- ============ BEGIN:  #footer ============ -->
+        <tiles:insertAttribute name="footer" />
+        <!-- ============== END:  #footer ============ -->
+		
+		
 </body>
 </html>
 
