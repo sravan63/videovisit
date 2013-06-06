@@ -121,6 +121,7 @@ public class WebSessionFilter implements Filter
 	
 		}
 		else{
+			logger.info(" in the else WebSessionFilter");
 			HttpSession session = req.getSession(false);
 			
 			if ( session == null)

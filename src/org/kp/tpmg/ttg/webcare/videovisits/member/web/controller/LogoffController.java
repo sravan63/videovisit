@@ -24,7 +24,7 @@ public class LogoffController extends SimplePageController {
 		{
 			if ( ctx.getMeetingId() > 0)
 			{
-				logger.info("logoffcontroller meeting id present");
+				logger.info("logoffcontroller meeting id present " + ctx.getMeetingId());
 				if ( ctx.getMember() != null)
 				{
 					try

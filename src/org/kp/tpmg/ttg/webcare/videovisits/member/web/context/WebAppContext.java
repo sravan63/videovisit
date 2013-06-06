@@ -1,10 +1,15 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.context;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.*;
 
 import org.apache.log4j.Logger;
@@ -29,6 +34,10 @@ public class WebAppContext implements Serializable{
 	private boolean careGiver;
 	private long meetingId = 0;
 	public static final String HTTP_SESSION_KEY = "WebAppContext";
+	private faq objFaq;
+	private List<promo> promos;
+	private List<iconpromo> iconpromos;
+	private videolink videoLink;
 	
 	public static WebAppContext getWebAppContext(HttpServletRequest request) {
 		return (WebAppContext) request.getSession().getAttribute(WebAppContext.HTTP_SESSION_KEY);
@@ -113,5 +122,44 @@ public class WebAppContext implements Serializable{
 	public long getMeetingId()
 	{
 		return meetingId;
+	}
+	
+	public void setFaq(faq objFaq)
+	{
+		this.objFaq = objFaq;
+	}
+	
+	public faq getFaq()
+	{
+		return objFaq;
+	}
+	
+	public void setPromo(List<promo> promos)
+	{
+		this.promos = promos;
+	}
+	
+	public List<promo> getPromo()
+	{
+		return promos;
+	}
+	
+	public void setIconPromo(List<iconpromo> iconpromos)
+	{
+		this.iconpromos = iconpromos;
+	}
+	
+	public List<iconpromo> getIconPromo()
+	{
+		return iconpromos;
+	}
+	public void setVideoLink(videolink videoLink)
+	{
+		this.videoLink = videoLink;
+	}
+	
+	public videolink getVideoLink()
+	{
+		return videoLink;
 	}
 }
