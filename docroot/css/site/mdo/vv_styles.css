@@ -88,14 +88,14 @@
 	float: left;
 }
 
-.leftNavContent{
+.iconpromo1{
 	width: 350 px;
 	position: relative;
 	margin: 0 10px 0 0;
 	height: 
 }
 
-.rightNavContent{
+.iconpromo2{
 	float: left;
 	width: 350 px;
 	position: relative;
@@ -117,14 +117,14 @@
 	height: 100px;
 }
 
-div#getPreparedIcon{
-	background: url("../../../images/mdo/icon_checklist.png") no-repeat scroll top center transparent;
+div#iconpromo1{
+	/*background: url("../../../images/mdo/icon_checklist.png") no-repeat scroll top center transparent;*/
 	float: left;
 /* 	height:50px; */
 	width:60px;
 }
 
-div#joinVideoVisit{
+div#iconpromo2{
 	background: url("../../../images/mdo/icon_devices.png") no-repeat scroll top center transparent;
 	float: left;
 }
@@ -169,17 +169,17 @@ div#joinVideoVisit{
 	padding: 0 2px 0 0;
 }
 
-.landingTwoThird.leftNav{
+.landingTwoThird.promo1{
 	position: relative;
 }
 
-.landingTwoThird.centerNav{
+.landingTwoThird.promo2{
 	position: relative;
 	float: left;
 	border-left: 1px solid #CCCCCC;
 }
 
-.landingTwoThird.rightNav{
+.landingTwoThird.promo3{
 	position: relative;
 	float: left;
 	border-left: 1px solid #CCCCCC;

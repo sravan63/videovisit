@@ -60,6 +60,7 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/intro.jsp" />
 	</definition>
 	<definition name="mdo" extends=".standardMDOPageTemplate">
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/mdo.jsp" />
 	</definition>
 	<definition name="setup" extends=".standardPageTemplate">
