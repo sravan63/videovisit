@@ -3,7 +3,7 @@
         /* "environment/path.js" */
     ],
     "library" : [
-        "js/library/jquery/jquery-1.4.2.min.js",
+        "js/library/jquery/jquery-1.8.2.min.js",
         "js/library/jquery/jquery-ui-1.8.2.custom.min.js"
     ],
     "plugins" : {
@@ -22,7 +22,8 @@
             "js/site/global/plugins.js",
             "js/site/global/script.js",
             "js/site/global/logout.js",
-            "js/site/global/utils.js"
+            "js/site/global/utils.js",
+            "js/site/global/dialogs.js"
     ],
     "page"   : {
         "home" : {
