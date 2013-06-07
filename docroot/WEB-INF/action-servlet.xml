@@ -30,6 +30,8 @@
 		       <value>intro.htm</value>
 		       <value>mdo.htm</value>
 		       <value>mdolive.htm</value>
+		       <value>mdohelp.htm</value>
+		        <value>mdohelplive.htm</value>
 		       <!-- Home page for member mobile -->
 		       <value>mobilevideovisitlanding.htm</value>
 		       <value>setup.htm</value>
@@ -74,6 +76,8 @@
 				<prop key="/intro.htm">intro</prop>
 				<prop key="/mdo.htm">mdo</prop>
 				<prop key="/mdolive.htm">mdolive</prop>
+				<prop key="/mdohelp.htm">mdohelp</prop>
+				<prop key="/mdohelplive.htm">mdohelplive</prop>
 				<prop key="/setup.htm">setup</prop>
 				<prop key="/login.htm">login</prop>
 				<prop key="/landingnone.htm">landingnone</prop>
@@ -142,6 +146,14 @@
 	<bean id="mdolive" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="mdolive" />
+	</bean>
+	<bean id="mdohelp" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="mdohelp" />
+	</bean>
+	<bean id="mdohelplive" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="mdohelplive" />
 	</bean>
 	<bean id="setup" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
