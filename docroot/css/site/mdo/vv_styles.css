@@ -8,6 +8,7 @@
 	width: 762px;
 	height: auto;
 	display: inline;
+/* 	border: 1px solid red; */
 }
 
 .videoVisitContainer h2{
@@ -42,6 +43,24 @@
 	font-style: regular;
 	color: #333333;
 /* 	text-align: justify;	 */
+}
+
+.videoVisitContainer .subHead{
+	color: #333333;
+	font-size: 14px;
+	font-family: Arial;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.videoVisitContainer ul{
+	
+}
+
+.videoVisitContainer ul li{
+	list-style-type: disc;
+	margin-left: 30px;
+	color: #357895;
 }
 
 .videoVisitContainer #mainHeader{
@@ -80,6 +99,10 @@
 	position: relative;
 	height: auto;
 	border-bottom: 1px solid #CCCCCC;
+}
+
+.videoVisitContainer .innerNav{
+	margin-left: 12px;
 }
 
 .landingHalf{
@@ -197,4 +220,38 @@ div#iconpromo2{
 	font-family: Arial;
 	font-style: regular;
 	color: #4D8993;
+}
+
+
+.videoVisitContainer #videoVisitHelpPageContents{
+
+}
+
+#videoVisitHelpPageContents #helpNavContents{
+	width: 700px;
+	margin: 30px 0 0;
+	padding-bottom: 40px;
+	float: left;
+	position: relative;
+	height: auto;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+#videoVisitHelpPageContents #helpLastContents{
+	width: 700px;
+	margin: 40px 0 0;
+	border: none;
+	float: left;
+	position: relative;
+	height: auto;
+}
+
+#videoVisitHelpPageContents #helpLastContents h4{
+	margin-bottom:
+}
+
+#videoVisitHelpPageContents .rightNavContent{
+	border-left: 1px solid #CCCCCC;
+	margin-left: 25px;
+	padding-left: 40px;
 }
