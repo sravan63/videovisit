@@ -33,7 +33,7 @@
     		<div id="mainContent">
     			
     			<div id="videoWrapper">
-    				<div id="videoContainer">
+    				<div id="videoContainer" style="background: url('images/mdo/image_landing_page.png') no-repeat scroll center transparent;">
     				</div>
     			</div>
     			
