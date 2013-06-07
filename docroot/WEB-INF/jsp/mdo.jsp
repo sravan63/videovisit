@@ -23,8 +23,8 @@
 	List<promo> promos = WebAppContext.getWebAppContext(request).getPromo();
 %>
 
-<div id="videoVisitHomeContainer">
-    		
+<div class="videoVisitContainer">
+		<div id="videoVisitHomeContents">
     		<div id="mainHeader">
     			<h2> <%=videoTitle%> </h2>
     			<h3> <%=videoAbstract%> </h4>
@@ -142,4 +142,5 @@
     				 -->
     			</div>
     		</div>
+    	</div>
     </div>
