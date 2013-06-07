@@ -52,28 +52,28 @@
 	
 	
 	
-	<link rel="stylesheet" href="http://mydoctor.kaiserpermanente.org/ncal/static_includes/css/mdo/jquery-ui-1.8.2.custom.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="css/site/mdo/jquery-ui-1.8.2.custom.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 	<link rel="stylesheet" href="css/site/mdo/styles.css" type="text/css" media="screen" charset="utf-8"/>
 	<!--[if IE]>
 	<link rel="stylesheet" type="text/css" href="http://mydoctor.kaiserpermanente.org/ncal/static_includes/css/mdo/iestyles.css" media="screen" charset="utf-8" />
 	<![endif]-->
-    <link rel="stylesheet" href="http://mydoctor.kaiserpermanente.org/ncal/static_includes/css/mdo/jquery-mdo.css" type="text/css" media="screen" charset="utf-8"/>
-    <link rel="stylesheet" href="http://mydoctor.kaiserpermanente.org/ncal/static_includes/css/mdo/new_styles.css" type="text/css" media="screen" charset="utf-8"/> 
+    <link rel="stylesheet" href="css/site/mdo/jquery-mdo.css" type="text/css" media="screen" charset="utf-8"/>
+    <link rel="stylesheet" href="css/site/mdo/new_styles.css" type="text/css" media="screen" charset="utf-8"/> 
 	<link rel="stylesheet" href="css/site/mdo/print.css" type="text/css" media="print" charset="utf-8"/> 
 	
 	<link rel="stylesheet" href="css/site/mdo/vv_styles.css" type="text/css" media="screen" charset="utf-8"/>
 
-	<script type="text/javascript"  src="http://mydoctor.kaiserpermanente.org/ncal/static_includes/js/common/jquery/jquery-1.4.4.min.js"></script> 
-	<script type="text/javascript"  src="http://mydoctor.kaiserpermanente.org/ncal/static_includes/js/common/jquery/jquery-ui-1.8.7.min.js"></script>
+	<script type="text/javascript"  src="js/site/mdo/jquery-1.4.4.min.js"></script> 
+	<script type="text/javascript"  src="js/site/mdo/jquery-ui-1.8.7.min.js"></script>
 	
 	<!--script type="text/javascript"  src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js"></script-->
 	
-	<script type="text/javascript"  src="http://mydoctor.kaiserpermanente.org/ncal/static_includes/js/common/jquery/jquery.address-1.2.2.min.js?strict=false"></script> 
-	<script type="text/javascript"  src="http://mydoctor.kaiserpermanente.org/ncal/static_includes/js/common/jquery/jq-plugins-v1.min.js"></script>
+	<script type="text/javascript"  src="js/site/mdo/jquery.address-1.2.2.min.js?strict=false"></script> 
+	<script type="text/javascript"  src="js/site/mdo/jq-plugins-v1.min.js"></script>
   	
  	 
-  	   <script type="text/javascript"  src="http://mydoctor.kaiserpermanente.org/ncal/static_includes/js/mdo/jq/mdo-jquery-v1.min.js"></script>  
+  	   <script type="text/javascript"  src="js/site/mdo/mdo-jquery-v1.min.js"></script>  
     </head>
     <!--End Head-->
 
