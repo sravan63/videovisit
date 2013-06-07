@@ -51,6 +51,7 @@ docroot/WEB-INF/jsp/loading.jsp -text
 docroot/WEB-INF/jsp/login.jsp -text
 docroot/WEB-INF/jsp/logout.jsp -text
 docroot/WEB-INF/jsp/mdo.jsp -text
+docroot/WEB-INF/jsp/mdohelp.jsp -text
 docroot/WEB-INF/jsp/mobile/almostThereClinicianPopupModal.jsp -text
 docroot/WEB-INF/jsp/mobile/common/footer.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/header.jsp -text svneol=unset#text/plain
@@ -74,13 +75,16 @@ docroot/WEB-INF/jsp/mobile/userPresentInMeetingModal.jsp -text svneol=unset#text
 docroot/WEB-INF/jsp/mobile/videovisitLanding.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/videovisitLandingClinicianModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/videovisitLandingGuestModal.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/nav/footer-mdo-live.jsp -text
 docroot/WEB-INF/jsp/nav/footer-mdo.jsp -text
 docroot/WEB-INF/jsp/nav/footer.jsp -text
 docroot/WEB-INF/jsp/nav/guestInfo.jsp -text
 docroot/WEB-INF/jsp/nav/header.jsp -text
 docroot/WEB-INF/jsp/nav/mdoheader.jsp -text
+docroot/WEB-INF/jsp/nav/mdoliveheader.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-empty.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-intro.jsp -text
+docroot/WEB-INF/jsp/nav/sidebar-mdo-live.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-mdo.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar.jsp -text
 docroot/WEB-INF/jsp/nav/simpleText.jsp -text
