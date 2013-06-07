@@ -70,6 +70,17 @@
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/mdo.jsp" />
 	</definition>
+	<definition name="mdohelplive" extends=".standardMDOPageTemplate">
+		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoliveheader.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-mdo-live.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/nav/footer-mdo-live.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="content" value="/WEB-INF/jsp/mdohelp.jsp" />
+	</definition>
+	<definition name="mdohelp" extends=".standardMDOPageTemplate">
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="content" value="/WEB-INF/jsp/mdohelp.jsp" />
+	</definition>
 	<definition name="setup" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-intro.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
