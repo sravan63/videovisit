@@ -48,12 +48,12 @@
 	    						sb.append(ip.getId());
 	    						sb.append("\">");
 	    						//sb.append("<div  id=\"" + ip.getId() + "\" class=\"icon\" ></div>");
-	    						sb.append("<div id=\"" + ip.getId() + "\" class=\"icon\" style=\"background: url('images/mdo/icon_checklist.png') no-repeat scroll top center transparent;\"></div>");
+	    						sb.append("<div id=\"" + ip.getId() + "\" class=\"icon\" style=\"background: url('" + ip.getPromoIcon().getPath() + "') no-repeat scroll top center transparent;\"></div>");
 	    						sb.append("<div style=\"margin-left:12px;\">");
 	    						sb.append("<h3>" + ip.getTitle() + "</h3>");
 	    						sb.append("<p>" + ip.getAbstractText() + "</p>");
 	    						sb.append("<div class=\"buttons\">");
-	    						sb.append("<button class=\"button\" alt=\"" + ip.getIconPromoHyperLink().getTitle() + "\" value=\"" + ip.getIconPromoHyperLink().getTitle() + "\">" +  ip.getIconPromoHyperLink().getTitle() + "</button>");
+	    						sb.append("<button class=\"button\" alt=\"" + ip.getIconPromoHyperLink().getTitle() + "\" value=\"" + ip.getIconPromoHyperLink().getTitle() + "\" onclick=\"window.location.href = '" + ip.getIconPromoHyperLink().getUrl() + "'\">" +  ip.getIconPromoHyperLink().getTitle() + "</button>");
 	    						sb.append("</div></div></div>");
 	    						out.println(sb.toString());
 	    					}
