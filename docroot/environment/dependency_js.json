@@ -3,7 +3,7 @@
         /* "environment/path.js" */
     ],
     "library" : [
-        "js/library/jquery/jquery-1.8.2.min.js",
+        "js/library/jquery/jquery-1.8.3.min.js",
         "js/library/jquery/jquery-ui-1.8.2.custom.min.js"
     ],
     "plugins" : {
