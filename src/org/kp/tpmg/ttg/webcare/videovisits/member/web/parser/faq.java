@@ -1,6 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 
+import java.util.Collections;
 import java.util.List;
 
 public class faq {
@@ -20,6 +21,7 @@ public class faq {
 	}
 	public List<faqitem> getFaqItems()
 	{
+		Collections.sort(faqItems, new faqitem.seq());
 		return faqItems;
 	}
 	

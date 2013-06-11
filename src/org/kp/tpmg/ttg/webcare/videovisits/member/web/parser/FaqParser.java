@@ -53,9 +53,12 @@ public class FaqParser {
 				
 					String faqItemHeader = faqItem.getFAQItemHeader();
 					String id = faqItem.getID();
-					
+					int sequence  = faqItem.getSequence().intValue();
+					String orientation = faqItem.getOrientation();
 					item.setHeader(faqItemHeader);
 					item.setId(id);
+					item.setOrientation(orientation);
+					item.setSequence(sequence);
 					if ( faqItem.getHyperlinkArray() != null)
 					{
 						List<hyperlink> listLinks = new ArrayList<hyperlink>();

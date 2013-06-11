@@ -1,5 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
+import java.util.Comparator;
+
 
 
 public class iconpromo {
@@ -10,6 +12,7 @@ public class iconpromo {
 	private hyperlink iconpromoHyperLink;
 	private icon promoIcon;
 	private String id;
+	private int sequence;
 	
 	public String getTitle()
 	{
@@ -70,5 +73,23 @@ public class iconpromo {
 	{
 		return id;
 	}
+	
+	public void setSequence(int sequence)
+	{
+		this.sequence = sequence;
+	}
+	
+	public int getSequence()
+	{
+		return sequence;
+	}
 
+	// Comparator
+    public static class seq implements Comparator<iconpromo> {
+        @Override
+        public int compare(iconpromo arg0, iconpromo arg1) {
+            return arg0.sequence - arg1.sequence;
+        }
+    }
+	
 }

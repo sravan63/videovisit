@@ -2,6 +2,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,9 +28,8 @@ public class IconPromoParser {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-//		faq f = parse();
-//		System.out.println(" f.list title = " + f.getFaqListTitle());
-//		System.out.println(" f.item count = " + f.getFaqItems().size());
+		List<iconpromo> f = parse();
+		System.out.println("title = " + f.get(0).getTitle());
 	}
 
 	public static List<iconpromo> parse()
@@ -38,8 +38,8 @@ public class IconPromoParser {
 		try
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			String faqUrl = rbInfo.getString("MDO_ICON_PROMO_URL");
-			URL u = new URL(faqUrl);
+			String iconPromoUrl = rbInfo.getString("MDO_ICON_PROMO_URL");
+			URL u = new URL(iconPromoUrl);
 					
 			IconPromo[] promos = IconPromosDocument.Factory.parse(u).getIconPromos().getIconPromoArray();
 			List<iconpromo> listPromos = new ArrayList<iconpromo>();
@@ -48,13 +48,16 @@ public class IconPromoParser {
 				iconpromo pr = new iconpromo();
 				
 				String title = p.getTitle();
+				log.info("icon promo title = " + title);
 				String header = p.getHeader();
 				String abstractText = p.getAbstract();
 				String id = p.getID();
+				int sequence = p.getSequence().intValue();
 				pr.setAbstractText(abstractText);
 				pr.setHeader(header);
 				pr.setTitle(title);
 				pr.setId(id);
+				pr.setSequence(sequence);
 				if ( p.getHyperlink() != null)
 				{
 					hyperlink link = new hyperlink();
@@ -76,7 +79,7 @@ public class IconPromoParser {
 				}
 				listPromos.add(pr);
 			}
-			
+			Collections.sort(listPromos, new iconpromo.seq());
 			return listPromos;
 			
 			

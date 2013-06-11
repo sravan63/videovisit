@@ -2,6 +2,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -49,10 +50,12 @@ public class PromoParser {
 				String header = p.getHeader();
 				String abstractText = p.getAbstract();
 				String id = p.getID();
+				int sequence = p.getSequence().intValue();
 				pr.setAbstractText(abstractText);
 				pr.setHeader(header);
 				pr.setTitle(title);
 				pr.setId(id);
+				pr.setSequence(sequence);
 				if ( p.getHyperlink() != null)
 				{
 					hyperlink link = new hyperlink();
@@ -66,7 +69,7 @@ public class PromoParser {
 				}
 				listPromos.add(pr);
 			}
-			
+			Collections.sort(listPromos, new promo.seq());
 			return listPromos;
 			
 			
