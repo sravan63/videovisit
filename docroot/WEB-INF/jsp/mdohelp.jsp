@@ -5,6 +5,7 @@
 <%@ page import="java.util.*"%>
 <%
 	faq f = WebAppContext.getWebAppContext(request).getFaq();
+
 %>
     <div class="videoVisitContainer">
     	<div id="videoVisitHelpPageContents">
@@ -31,9 +32,11 @@
     					 int leftcount = 0;
     					 int rightcount = 0;
     					 int count = 0;
+    					
     					 for ( faqitem fi : f.getFaqItems() )
     					 {
-    						 if ( count % 2  == 0 )
+    						 String orientation = fi.getOrientation();
+    						 if ( orientation.equalsIgnoreCase("left") )
     						 {
     							 if ( leftcount == 0 )
     							 {
