@@ -49,7 +49,8 @@
     							 left.append("<ul>");
     							 for ( hyperlink h : fi.getFaqHyperLinks())
     							 {
-    								 left.append("<li> <a href=\"#\"> " + h.getTitle() + " </a> </li>");
+    								 String section = h.getSection();
+    								 left.append("<li> <a href=\"#" + section + "\"> " + h.getTitle() + " </a> </li>");
     							 }
     							 left.append("</ul>");
     							 left.append("</div>");
@@ -66,7 +67,8 @@
     							 right.append("<ul>");
     							 for ( hyperlink h : fi.getFaqHyperLinks())
     							 {
-    								 right.append("<li> <a href=\"#\"> " + h.getTitle() + " </a> </li>");
+    								 String section = h.getSection();
+    								 right.append("<li> <a href=\"#" + section + "\"> " + h.getTitle() + " </a> </li>");
     							 }
     							 right.append("</ul>");
     							 right.append("</div>");
@@ -152,7 +154,7 @@
     							details.append("<div style=\"margin-top: 20px;\">");
     							for ( hyperlink h : fi.getFaqHyperLinks())
     							{
-    								details.append("<p class=\"subHead\">" + h.getTitle() + "</p>");
+    								details.append("<p id= \"" + h.getSection() + "\" class=\"subHead\">" + h.getTitle() + "</p>");
     								details.append("<p>" + h.getAbstractText() + "</p>");
     							}
     							details.append("</div>");
