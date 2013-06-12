@@ -69,9 +69,11 @@ public class FaqParser {
 							String abstractText = hyperlink.getAbstract();
 							String title = hyperlink.getTitle();
 							String url = hyperlink.getUrl();
+							String section = hyperlink.getSection();
 							link.setAbstractText(abstractText);
 							link.setTitle(title);
 							link.setUrl(url);
+							link.setSection(section);
 							listLinks.add(link);
 						}
 						item.setFaqHyperLinks(listLinks);

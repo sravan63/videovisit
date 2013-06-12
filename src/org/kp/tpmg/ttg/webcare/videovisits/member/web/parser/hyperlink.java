@@ -5,6 +5,7 @@ public class hyperlink {
 	private String title;
 	private String url;
 	private String abstractText;
+	private String section;
 	
 	public String getTitle()
 	{
@@ -34,5 +35,15 @@ public class hyperlink {
 	public void setAbstractText(String abstractText)
 	{
 		this.abstractText = abstractText;
+	}
+	
+	public String getSection()
+	{
+		return section;
+	}
+	
+	public void setSection(String section)
+	{
+		this.section = section;
 	}
 }
