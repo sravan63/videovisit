@@ -84,6 +84,8 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
+	<tiles:insertAttribute name="gtm" />
+	
         <!-- ============ BEGIN:  #container-wrap ============ -->
         <div id="container_wrap">
         	
