@@ -16,6 +16,7 @@
 	</definition>
 	<definition name=".standardMDOPageTemplate" template="/WEB-INF/tiles-templates/mdoApplicationLayout.jsp">
 		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
 		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoheader.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-mdo.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/jsp/nav/footer-mdo.jsp" />
