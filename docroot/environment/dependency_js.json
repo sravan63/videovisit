@@ -4,7 +4,7 @@
     ],
     "library" : [
         "js/library/jquery/jquery-1.8.3.min.js",
-        "js/library/jquery/jquery-ui-1.8.2.custom.min.js"
+        "js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js"
     ],
     "plugins" : {
         "minimized"   : [
@@ -23,7 +23,7 @@
             "js/site/global/script.js",
             "js/site/global/logout.js",
             "js/site/global/utils.js",
-            "js/site/global/dialogs.js"
+            
     ],
     "page"   : {
         "home" : {
@@ -33,9 +33,9 @@
                 	"js/site/intro/popup.js"
                 ],
                 "login"  :   [
-                    "js/library/plugin/validation/jquery.validate.min.js",
+                    "js/library/plugin/jquery.validate.min.js",
                     "js/site/login/login.js",
-                    "js/library/plugin/validation/additional-methods.js",
+                    "js/library/plugin/additional-validation-methods.js",
                     "js/library/plugin/jquery.hint.js",
                     "js/library/plugin/jqModal.js",
                     "js/library/plugin/jqDnR.js",
@@ -78,9 +78,6 @@
         "landingready" : {
             "global"    :   [
                 "js/site/global/dateExtensions_loader.js",
-                "js/library/plugin/jqModal.js",
-                "js/library/plugin/jqDnR.js",
-                "js/library/plugin/dimensions.js"
             ],
             "specific"  :   {
                 "landingready"  :   [
@@ -104,9 +101,10 @@
         },
         "visit" : {
             "global"   : [
-                "js/library/plugin/jqModal.js",
+                /*"js/library/plugin/jqModal.js",
                 "js/library/plugin/jqDnR.js",
                 "js/library/plugin/dimensions.js"
+                */
             ],
             "specific" : {
                 "visit" : [
