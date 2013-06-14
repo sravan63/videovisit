@@ -17,11 +17,11 @@
 			<li>${WebAppContext.member.lastName}, ${WebAppContext.member.firstName} ${WebAppContext.member.middleName}</li>
 			<li class="last"><a href="help.htm"  target="_blank">Help</a></li>
 		</ul>
-		<a id="quitMeeting" class="jqModal button" >Quit Meeting &rsaquo;&rsaquo;</a>
+		<a id="quitMeetingId" class="button" >Quit Meeting &rsaquo;&rsaquo;</a>
 	</div>
                                 
      <div id="video-main" style="width:100%">
-         <iframe id="joinNowIframe" src ="blank.jsp" width="100%" height="550px">
+         <iframe id="joinNowIframe" src ="blank.jsp" width="100%" height="600">
              <p>Your browser does not support iframes.</p>
          </iframe>
      </div>

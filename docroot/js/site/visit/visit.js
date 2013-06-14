@@ -11,15 +11,38 @@ $(document).ready(function() {
     	var iframedata = $_GET('iframedata');
 
     
- // INITIALIZE Join now modal.
+ // INITIALIZE  Modals.
     initializeJoinNowModal();
+    initializeQuitMeetingModal();
     
     showJoinNowModal(decodeURIComponent(iframedata));
     
-    $('#quitMeeting').click(function() {
-    	$( '#quitMeetingModal' ).jqmShow();
+    // Quit meeting button on the Quit Meeting modal 
+    $('#quitMeetingId').click(function() { 
+    	$("#quitMeetingModal").dialog( "open" );
     });
    
+    $('#quitMeetingNo').click(function(){
+    	$("#quitMeetingModal").dialog( "close" );
+    });
+
+    $('#quitMeetingYes').click(function(){
+        var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid') + '&memberName=' + $(this).attr('memberName') ;
+         $.ajax({
+            type: 'POST',
+            url: VIDEO_VISITS.Path.visit.quitmeeting,
+            data: quitMeetingIdData,
+            success: function(returndata) {
+            	window.location.replace("landingready.htm");
+            },
+            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+            error: function(theRequest, textStatus, errorThrown) {
+                window.location.replace(VIDEO_VISITS.Path.global.error);
+                
+            }
+        });
+        return false;
+    });
     
     
 });
@@ -85,54 +108,25 @@ function showJoinNowModal(encodedHrefLocation){
 	// Grab the GET variable
     var iframedata = encodedHrefLocation;
     
-    initializeQuitMeetingModal();
-    
     // Load it into the iframe's source attribute'
     $("iframe").attr('src', decodeURIComponent(iframedata));
     
-    $('#join-now-modal').jqmShow();
-    LandingReadyPage.keepALive();
+    $("#join-now-modal").dialog( "open" );
     
-    return false;
+    LandingReadyPage.keepALive();
+	
 }
 
 
-var close=function(hash){
-	hash.w.fadeOut('100',function(){
-			hash.o.remove();
-//		$.ajax({
-//          type: 'POST',
-//          url: VIDEO_VISITS.Path.visit.quitmeeting,
-//          data: $('#quitMeetingIdData').val(),
-//          success: function(returndata) {
-//              //window.location.replace(VIDEO_VISITS.Path.visit.logout);
-//          	window.location.replace("landingready.htm");
-//          },
-//          //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-//          error: function(theRequest, textStatus, errorThrown) {
-//              window.location.replace(VIDEO_VISITS.Path.global.error);
-//          }
-//      });
-	});
-};
 
-var closeQuitModal=function(hash){
-	hash.w.fadeOut('100',function(){
-			hash.o.remove();
-			
-	});
-};
 
 function initializeJoinNowModal(){
-	$('#join-now-modal').jqm({
-	modal: true,
-	onHide: close
+	$("#join-now-modal").dialog({
+	      autoOpen: false,
+	      width: "80%",
+	      modal: true,
+	      dialogClass:'hide-modal-title'
 	});
-	
-	$( '#quitMeetingModal' ).jqm({
-	modal:true,
-	onHide: closeQuitModal
-	}).jqDrag('.jqDrag');
 
 }
 
@@ -140,41 +134,17 @@ function initializeJoinNowModal(){
 
 function initializeQuitMeetingModal(){
 
-	
-	// Move the quit meeting modal outside of the rest of the containers on the page and append to body (fixes some IE modal bugs)
-    //$('body').append($('#quitMeetingModal'));
-
-    // Reposition modal on this page only
-    $('.jqmWindow').css('margin-left','-99px');
+	$("#quitMeetingModal").dialog({
+	      autoOpen: false,
+	      width: "30%",
+	      height:150,
+	      modal: true,
+	      resizable:false,
+	      dialogClass:'hide-modal-title'
+	});
     
-    // Setup the quit meeting modal and make it draggable
     
-    $('#dialogclose').click(function(){
-    	$( '#quitMeetingModal' ).jqmHide();
-    });
-
-    $('#quitMeetingLink').click(function(){
-        var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid') + '&memberName=' + $(this).attr('memberName') ;
-        
-        //$('#quitMeetingIdData').val(quitMeetingIdData);
-       
-        $.ajax({
-            type: 'POST',
-            url: VIDEO_VISITS.Path.visit.quitmeeting,
-            data: quitMeetingIdData,
-            success: function(returndata) {
-                //window.location.replace(VIDEO_VISITS.Path.visit.logout);
-            	
-            	window.location.replace("landingready.htm");
-            },
-            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-            error: function(theRequest, textStatus, errorThrown) {
-                window.location.replace(VIDEO_VISITS.Path.global.error);
-                
-            }
-        });
-        return false;
-    })
+    
 }
 
 

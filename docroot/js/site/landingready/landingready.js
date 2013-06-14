@@ -3,8 +3,11 @@
 
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
+ 
+    initializeUserPresentInMeetingModal();
+    
 	// Join now Click Event
-    $(".btn").click(function(){
+    $("#joinNowId").click(function(){
     	
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
@@ -33,10 +36,8 @@ $(document).ready(function() {
 			}
 			else{
 				if(userPresentInMeetingData.result == "true"){
-					
 					// show the dialog 
-					$( '#dialog-block-user-in-meeting-modal' ).jqm();
-					$( '#dialog-block-user-in-meeting-modal' ).jqmShow() ;
+					 $("#user-in-meeting-modal").dialog( "open" );
 				}
 				else{
 					$.ajax({
@@ -52,7 +53,6 @@ $(document).ready(function() {
 			            			hreflocation = returndata.result;
 			            			// SHOW Join now modal.
 			            			window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation) + "&meetingId=" + meetingId + "&memberName=" + name);
-			            			
 			            		}
 			            		
 			            	}
@@ -90,8 +90,25 @@ $(document).ready(function() {
         convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only') + " " + tz;
 
         $(this).next('h3').append(convertedTimestamp);
-    })
+    });
+    
+    // Ok button on user in meeting modal
+    $('#user-in-meeting-modal-ok').click(function(){
+    	$("#user-in-meeting-modal").dialog( "close" );
+    });
+    
 });
 
+function initializeUserPresentInMeetingModal(){
+	$("#user-in-meeting-modal").dialog({
+	      autoOpen: false,
+	      width: "30%",
+	      height:150,
+	      modal: true,
+	      resizable:false,
+	      dialogClass:'hide-modal-title'
+	});
+
+}
 
 

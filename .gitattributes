@@ -112,6 +112,21 @@ docroot/blank.jsp -text
 docroot/consent_forms/consent_2011_03_23.ie.txt -text
 docroot/consent_forms/consent_2011_03_23.txt -text
 docroot/consent_forms/consent_2011_08_01.txt -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_flat_75_ffffff_40x100.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_glass_55_fbf9ee_1x400.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_glass_65_ffffff_1x400.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_glass_75_dadada_1x400.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_glass_75_e6e6e6_1x400.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_glass_95_fef1ec_1x400.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_highlight-soft_75_cccccc_1x100.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-icons_222222_256x240.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-icons_2e83ff_256x240.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-icons_454545_256x240.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-icons_888888_256x240.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/images/ui-icons_cd0a0a_256x240.png -text
+docroot/css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.css -text svneol=unset#text/plain
+docroot/css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css -text svneol=unset#text/plain
 docroot/css/library/plugin/jqModal.css -text
 docroot/css/site/global/base.css -text
 docroot/css/site/global/handheld.css -text
@@ -160,11 +175,10 @@ docroot/images/mobile/video-visit-ui@2x.png -text
 docroot/images/mobile/video-visit-ui@2x_new.png -text
 docroot/images/mobile/vv-patient-welcome-image.jpg -text
 docroot/index.jsp -text
-docroot/js/library/jquery/jquery-1.4.2.min.js -text
-docroot/js/library/jquery/jquery-1.8.2.min.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-1.8.3.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-1.8.3.min.js -text svneol=unset#text/plain
-docroot/js/library/jquery/jquery-ui-1.8.2.custom.min.js -text
+docroot/js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.js -text svneol=unset#text/plain
+docroot/js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js -text svneol=unset#text/plain
 docroot/js/library/plugin/dimensions.js -text
 docroot/js/library/plugin/jqDnR.js -text
 docroot/js/library/plugin/jqModal.js -text
@@ -178,7 +192,6 @@ docroot/js/library/plugin/validation/jquery.validate.js -text
 docroot/js/library/plugin/validation/jquery.validate.min.js -text
 docroot/js/site/error/error.js -text
 docroot/js/site/global/dateExtensions_loader.js -text
-docroot/js/site/global/dialogs.js -text svneol=unset#text/plain
 docroot/js/site/global/display.js -text
 docroot/js/site/global/global.js -text
 docroot/js/site/global/jquery-ui-1.8.2.custom.css -text svneol=unset#text/plain

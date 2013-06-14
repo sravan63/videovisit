@@ -67,7 +67,7 @@
               </c:if>
             </div>
 
-            <a class="btn" meetingid="${meeting.meetingId}" mmMeetingUrl="${meeting.mmMeetingName}" href="#">Click here to join now</a>
+            <a id="joinNowId" class="btn" meetingid="${meeting.meetingId}" mmMeetingUrl="${meeting.mmMeetingName}" href="#">Click here to join now</a>
             <p class="smallprint">You may be joining before your clinician.  Please be patient.</p>
         </div>
     </div>
@@ -84,16 +84,20 @@
 
 </c:if>
 
-<%@ include file="preloader.jsp" %>
 
-<div id="dialog-block-user-in-meeting-modal" class="jqmWindow dialog-block2" style="display:none" title="Quit Meeting">
-	<div class="dialog-content-question">
-		<h2 class="jqHandle jqDrag"><span style="padding-left:8px">User already signed on</span></h2>
-		<p>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.
+
+<div id="user-in-meeting-modal"  title="User Already Present In Meeting">
+	<div>
+		<h2>User already signed on</span></h2>
+		<p style="padding-top:20px">
+			You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.
 		</p>
-		<div class="jqmClose" align="center"><input class="button" id="ok"  type="button"  value="OK" /></div>
+		<div class="pagination">
+			<input class="button" id="user-in-meeting-modal-ok"  type="button"  value="OK" />
+		</div>
 	</div>
-</div>	
+</div>
+	
 <input type="hidden" id="tz" value="<%=timezone%>" /> 
 
 
