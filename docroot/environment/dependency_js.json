@@ -33,9 +33,9 @@
                 	"js/site/intro/popup.js"
                 ],
                 "login"  :   [
-                    "js/library/plugin/jquery.validate.min.js",
+                    "js/library/plugin/validation/jquery.validate.min.js",
                     "js/site/login/login.js",
-                    "js/library/plugin/additional-validation-methods.js",
+                    "js/library/plugin/validation/additional-validation-methods.js",
                     "js/library/plugin/jquery.hint.js",
                     "js/library/plugin/jqModal.js",
                     "js/library/plugin/jqDnR.js",
