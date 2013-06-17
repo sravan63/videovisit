@@ -179,9 +179,6 @@ docroot/js/library/jquery/jquery-1.8.3.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-1.8.3.min.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js -text svneol=unset#text/plain
-docroot/js/library/plugin/dimensions.js -text
-docroot/js/library/plugin/jquery-grid-0.6.js -text
-docroot/js/library/plugin/modernizr-1.5.min.js -text
 docroot/js/library/plugin/validation/additional-methods.js -text
 docroot/js/library/plugin/validation/additional-methods.min.js -text
 docroot/js/library/plugin/validation/jquery.validate.js -text

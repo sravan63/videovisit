@@ -1,3 +1,4 @@
+
 {
     "environment" : [
         /* "environment/path.js" */
@@ -8,10 +9,10 @@
     ],
     "plugins" : {
         "minimized"   : [
-            "js/library/plugin/modernizr-1.5.min.js"
+            
         ],
         "unminimized" : [
-            "js/library/plugin/jquery-grid-0.6.js"
+            
         ]
     },
     "global" : [
