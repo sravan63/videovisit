@@ -13,7 +13,6 @@
             "specific" : {
                 "intro" : [],
                 "login" : [
-                    "css/library/plugin/jqModal.css"
                 ],
                 "logout" : [],
                 "setup" : []
@@ -38,22 +37,22 @@
             }
         },
         "guest" : {
-            "global"   : ["css/library/plugin/jqModal.css"],
+            "global"   : [],
             "specific" : {
                 "guest" : [
-                    "css/site/global/guest.css"
+                    
                 ]
             }
         },
         "guestready" : {
-            "global"   : ["css/library/plugin/jqModal.css"],
+            "global"   : [],
             "specific" : {
                 "guestready" : []
             }
         },
         "guestvisit" : {
             "global"   : [
-                "css/library/plugin/jqModal.css"
+                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
             ],
             "specific" : {
                 "guestvisit" : []
@@ -73,7 +72,6 @@
         },
         "visit" : {
             "global"   : [
-                /*"css/library/plugin/jqModal.css"*/
                 "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
             ],
             "specific" : {

@@ -231,12 +231,6 @@ function NotifyUser (message, selector) {
         }, fadeoutDelay);
 }
 
-function ModalNotifyUser (hash) {
-    // This function calls NotifyUser from a jqModal hide event
-    NotifyUser ();
-    hash.w.hide();
-    hash.o.remove();
-}
 
 
 function name_formatter(first, last, middle, title, format) {

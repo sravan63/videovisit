@@ -11,7 +11,6 @@
             "js/library/plugin/modernizr-1.5.min.js"
         ],
         "unminimized" : [
-            "js/library/plugin/jquery-hinter-0.6.js",
             "js/library/plugin/jquery-grid-0.6.js"
         ]
     },
@@ -35,11 +34,7 @@
                 "login"  :   [
                     "js/library/plugin/validation/jquery.validate.min.js",
                     "js/site/login/login.js",
-                    "js/library/plugin/validation/additional-validation-methods.js",
-                    "js/library/plugin/jquery.hint.js",
-                    "js/library/plugin/jqModal.js",
-                    "js/library/plugin/jqDnR.js",
-                    "js/library/plugin/dimensions.js"
+                    "js/library/plugin/validation/additional-methods.min.js",              
                 ],
                 "logout"  :   [],
                 "setup" : []
@@ -49,9 +44,8 @@
             "global"    :   ["js/site/global/dateExtensions_loader.js"
             				],
             "specific"  :   {
-                "guest"  :   ["js/site/guest/guest.js",
-                				"js/library/plugin/jqModal.js",
-                    			"js/library/plugin/jqDnR.js"
+                "guest"  :   [
+                				"js/site/guest/guest.js",
                 			 ]
             }
         },
@@ -62,8 +56,6 @@
             "specific"  :   {
                 "guestready"  :   [
                     "js/site/guestready/guestready.js",
-    				"js/library/plugin/jqModal.js",
-        			"js/library/plugin/jqDnR.js"
                 ]
             }
         },
@@ -101,10 +93,6 @@
         },
         "visit" : {
             "global"   : [
-                /*"js/library/plugin/jqModal.js",
-                "js/library/plugin/jqDnR.js",
-                "js/library/plugin/dimensions.js"
-                */
             ],
             "specific" : {
                 "visit" : [
@@ -114,9 +102,6 @@
         },
         "guestvisit" : {
             "global"   : [
-                "js/library/plugin/jqModal.js",
-                "js/library/plugin/jqDnR.js",
-                "js/library/plugin/dimensions.js"
             ],
             "specific" : {
                 "guestvisit" : [

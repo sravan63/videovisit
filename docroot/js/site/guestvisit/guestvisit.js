@@ -13,11 +13,36 @@ $(document).ready(function() {
 	
 	// INITIALIZE Join now modal.
 	initializeJoinNowModal();
+	initializeQuitMeetingModal();
+    
+    showJoinNowModal(decodeURIComponent(iframedata));
+    
+    // Quit meeting button on the Quit Meeting modal 
+    $('#quitMeetingGuestId').click(function() { 
+    	$("#quitMeetingGuestModal").dialog( "open" );
+    });
+   
+    $('#quitMeetingGuestNo').click(function(){
+    	$("#quitMeetingGuestModal").dialog( "close" );
+    });
 
-	showJoinNowModal(decodeURIComponent(iframedata));
-	
-	$('#quitMeeting').click(function() {
-    	$( '#quitMeetingModal' ).jqmShow();
+    $('#quitMeetingGuestYes').click(function(){
+        var quitMeetingIdData = 'meetingCode=' + gup("meetingCode") +  '&caregiverId=' + $(this).attr('caregiverId')  + '&meetingId=' + $(this).attr('quitmeetingid');
+        
+        $.ajax({
+            type: 'POST',
+            url: VIDEO_VISITS.Path.guestvisit.quitmeeting,
+            data: quitMeetingIdData,
+            success: function(returndata) {
+                //window.location.replace(VIDEO_VISITS.Path.guestvisit.logout);
+            	window.location.replace(VIDEO_VISITS.Path.guestvisit.logout);
+            },
+            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+            error: function(theRequest, textStatus, errorThrown) {
+                window.location.replace(VIDEO_VISITS.Path.guestglobal.error);
+            }
+        });
+        return false;
     });
     
     
@@ -53,60 +78,42 @@ function showJoinNowModal(encodedHrefLocation){
 	// Grab the GET variable
     var iframedata = encodedHrefLocation;
     
-    initializeQuitMeetingModal();
-    
     // Load it into the iframe's source attribute'
     $("iframe").attr('src', decodeURIComponent(iframedata));
     
-    $('#guest-join-now-modal').jqmShow();
+    $("#guest-join-now-modal").dialog( "open" );
     GuestReadyPage.keepALive();
     
     return false;
 }
 
 
+
+
 function initializeJoinNowModal(){
-	$('#guest-join-now-modal').jqm({
-	modal: true,
+	$("#guest-join-now-modal").dialog({
+	      autoOpen: false,
+	      width: "80%",
+	      modal: true,
+	      dialogClass:'hide-modal-title'
 	});
-	
-	$( '#quitMeetingModal' ).jqm({
-		modal:true,
-		
-	}).jqDrag('.jqDrag');
+
 }
+
 
 
 function initializeQuitMeetingModal(){
 
-    // Move the quit meeting modal outside of the rest of the containers on the page and append to body (fixes some IE modal bugs)
-    $('body').append($('#quitMeetingModal'));
-
-    // Reposition modal on this page only
-    $('.jqmWindow').css('margin-left','-99px');
+	$("#quitMeetingGuestModal").dialog({
+	      autoOpen: false,
+	      width: "30%",
+	      height:150,
+	      modal: true,
+	      resizable:false,
+	      dialogClass:'hide-modal-title'
+	});
     
-    $('#dialogclose').click(function(){
-    	$( '#quitMeetingModal' ).jqmHide();
-    });
     
-    $('#quitMeetingLink').click(function(){
-        var quitMeetingIdData = 'meetingCode=' + gup("meetingCode") +  '&caregiverId=' + $(this).attr('caregiverId')  + '&meetingId=' + $(this).attr('quitmeetingid');
-      
-        $.ajax({
-            type: 'POST',
-            url: VIDEO_VISITS.Path.guestvisit.quitmeeting,
-            data: quitMeetingIdData,
-            success: function(returndata) {
-                //window.location.replace(VIDEO_VISITS.Path.guestvisit.logout);
-            	window.location.replace(VIDEO_VISITS.Path.guestvisit.logout);
-            },
-            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-            error: function(theRequest, textStatus, errorThrown) {
-                window.location.replace(VIDEO_VISITS.Path.guestglobal.error);
-            }
-        });
-        return false;
-    })
-		
+    
 }
 

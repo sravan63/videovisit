@@ -109,7 +109,7 @@
 	</definition>
 	<definition name="visit" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
-		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-visit.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/visit.jsp" />
 	</definition>
 	<definition name="help" extends=".standardPageTemplate">
@@ -148,7 +148,7 @@
 	
 	<definition name="guestvisit" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
-		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-guestVisit.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guestvisit.jsp" />
 	</definition>
 

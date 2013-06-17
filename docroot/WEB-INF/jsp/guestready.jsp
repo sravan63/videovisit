@@ -10,7 +10,7 @@
 	MeetingCommand.retrieveMeetingForCaregiver(request, response);
 	String timezone = WebUtil.getCurrentDateTimeZone();
 %>
-<%@ include file="preloader.jsp" %>
+
 <c:if test="${WebAppContext.totalmeetings>0}">
 	<div id="landing-portal-ready">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">

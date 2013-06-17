@@ -47,13 +47,7 @@ $(document).ready(function() {
               {
             	  window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
               }
-              
-             
-              //hreflocation = returndata.result;
-              //window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation));
-              //window.location.replace("guestready.htm?meetingCode=" + mtgCode+ "&patientLastName=" + $.trim($("#patient_last_name").val() + "&meetingId=" + $(this).attr('meetingid'));
-              
-              
+ 
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
@@ -61,19 +55,6 @@ $(document).ready(function() {
             }
         })
 
-           /* type: 'POST',
-            data: meetingIdData,
-            url: VIDEO_VISITS.Path.guestready.joinmeeting,
-            success: function(returndata) {
-                returndata = jQuery.parseJSON(returndata);
-                
-                hreflocation = returndata.result;
-                window.location.replace("guestvisit.htm?meetingCode=" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation));
-            },
-            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-            error: function(theRequest, textStatus, errorThrown) {
-                window.location.replace(VIDEO_VISITS.Path.guestglobal.error);
-            }*/
         });
 
     //Get the meeting timestamp, convert it and display it. Grabs the text contents of the element with the timestamp class,

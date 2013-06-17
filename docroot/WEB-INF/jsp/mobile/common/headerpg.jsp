@@ -4,7 +4,7 @@
 <!--  Include modal dialog jsps -->
 <%@ include file="../patientguestLoginModal.jsp" %>
 <%@ include file="pglogoutModal.jsp" %>
-<%@ include file="preloader.jsp" %>	
+
 
 <!--  Include Google Tag Manager -->
 <%@ include file="../../common/gtmSnippet.jsp" %>

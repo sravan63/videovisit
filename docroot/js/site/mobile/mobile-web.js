@@ -206,7 +206,7 @@ $(document).ready(function() {
 	// Login button submit click
 	$("#login-submit").click(function(event) {
 		event.preventDefault();
-		openPreloader();
+		
 		if ( $("#mrn").val().length > 0)
 		{
 			if ( $("#mrn").val().length < 8 )
@@ -221,31 +221,24 @@ $(document).ready(function() {
 		if(isLoginValiadtionSuccess()){
 			loginSubmit();
 		}
-		else{
-			closePreloader();
-		}
-
+		
 	});
 	
 	// Login button submit click patient guest
 	$("#login-submit-pg").click(function(event) {
 		event.preventDefault();
-		openPreloader();	
+			
 		// if client side validation successful
 		if(validationPatientGuestLogin()){
 			loginSubmitPG();
 			
 		}
-		else{
-			closePreloader();
-		}
-
-
+		
 	});
 	
 	$(".button-launch-visit").click(function(event) {	
 		event.preventDefault();
-		openPreloader();
+		
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
@@ -271,7 +264,7 @@ $(document).ready(function() {
 	        	}
 	        	catch(e)
 	        	{
-	        		closePreloader();
+	        		
         			window.location.replace("logout.htm");
 	        	}
 	        	var isValidUserSession =  returndata.isValidUserSession; 
@@ -280,7 +273,7 @@ $(document).ready(function() {
 	        		 
 	        		var meetingStatus = returndata.meetingStatus;
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	             		closePreloader();
+	             		
 	             		window.location.replace("meetingexpiredmember.htm");
 	             	}
 	             	else{
@@ -292,18 +285,18 @@ $(document).ready(function() {
 			            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
 			            		
 			            		if(userPresentInMeetingData.result == "true"){
-			            			closePreloader();
+			            			
 			            			modalShow('modal-user-present');
 			            		}
 			            		else{
-			            				closePreloader();
+			            				
 				            			joinMeeting(meetingId);
 				    	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, name);
 			            			}
 		            		}
 		            		catch(e)
 		            		{
-		            			closePreloader();
+		            			
 		            			window.location.replace("logout.htm");
 		            		}
 		            	});
@@ -313,13 +306,13 @@ $(document).ready(function() {
 	                
 	            }
 	            else{
-	            	closePreloader();
+	            	
 	            	window.location.replace("logout.htm");
 	            }
 
 	        },
 	        error: function() {
-	        	closePreloader();
+
 	        	window.location.replace("logout.htm");
 	        }
 	    });
@@ -332,7 +325,7 @@ $(document).ready(function() {
     
     $(".button-launch-visit-pg").click(function(event) {	
 		event.preventDefault();
-		openPreloader();
+		
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
@@ -357,13 +350,13 @@ $(document).ready(function() {
 	                launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
 	            }
 	            else{
-	            	closePreloader();
+	            	
 	            	 window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
 	            }
 
 	        },
 	        error: function() {
-	        	closePreloader();
+	        	
 	        	 window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
 	        }
 	    });
@@ -427,32 +420,32 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	            returndata = jQuery.parseJSON(returndata);
 	            
 	            if(returndata.result === '1'){
-	            	closePreloader();  
+	            	  
 	            	$("#globalError").text('No matching patient found. Please try again.');           	
 	                 $("#globalError").removeClass("hide-me").addClass("error");  
 	                 return false;
 	              } 
 	            else if (returndata.result === '2') { 
-	            	closePreloader();
+	            	
 	            	window.location.replace("meetingexpiredmemberpg.htm");
 	                return false;
 	            	
 	            }
 	            else if (returndata.result === '3') {   
-	            	closePreloader();  
+	            	  
 	            	$("#globalError").text('Some exception occurred while processing request..');           	
 	                 $("#globalError").removeClass("hide-me").addClass("error");  
 	                 return false;
 	            }
 	            else if (returndata.result === '4') {   
-	            	closePreloader();  
+	            	  
 	            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');           	
 	                 $("#globalError").removeClass("hide-me").addClass("error");  
 	                 return false;
 	            }
 	              
 	            createGuestSession();
-	            closePreloader();
+	            
 				launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, firstName + ' ' + lastName + ' (' + email + ')');
 				clearAllErrors();
 				
@@ -482,13 +475,6 @@ function modalHide(modalId){
 	return false;
 }
 
-function openPreloader(){
-	//modalShow("modal-preloader");
-}
-
-function closePreloader(){
-	//modalHide("modal-preloader");
-}
 
 function modalClinician() {
 	$(".alert-clinician").removeClass("hide-me");
@@ -835,19 +821,19 @@ function loginSubmit(){
                     break;
 
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
-            	   closePreloader();
+            	   
             	   $("#globalError").text("We could not find this patient.  Please try entering the information again.");
             	   $("#globalError").removeClass("hide-me").addClass("error");
 
                     break;
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
-                	closePreloader();
+                	
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
                     break;
                 default:
-                	closePreloader();
+                	
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
                    
@@ -856,7 +842,7 @@ function loginSubmit(){
 
         },
         error: function() {
-        	closePreloader();
+        	
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
             
@@ -889,25 +875,25 @@ function loginSubmitPG(){
             
             returndata = jQuery.parseJSON(returndata);
             if(returndata.result === '1'){
-            	closePreloader();  
+            	  
             	$("#globalError").text('No matching patient found. Please try again.');           	
                  $("#globalError").removeClass("hide-me").addClass("error");  
                  return false;
               } 
             else if (returndata.result === '2') { 
-            	closePreloader();
+            	
             	window.location.replace("meetingexpiredmemberpg.htm");
                 return false;
             	
             }
             else if (returndata.result === '3') {   
-            	closePreloader();  
+            	  
             	$("#globalError").text('Some exception occurred while processing request..');           	
                  $("#globalError").removeClass("hide-me").addClass("error");  
                  return false;
             }
             else if (returndata.result === '4') {   
-            	closePreloader();  
+            	  
             	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');           	
                  $("#globalError").removeClass("hide-me").addClass("error");  
                  return false;
@@ -918,7 +904,6 @@ function loginSubmitPG(){
 
         },
         error: function() {
-        	closePreloader();
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
             

@@ -6,7 +6,7 @@
 <%@ page import="javax.servlet.*"%>
 <%@ page import="javax.servlet.http.*"%>
 
-<%@ include file="preloader.jsp" %>
+
 <%
 
 String timezone = WebUtil.getCurrentDateTimeZone();
