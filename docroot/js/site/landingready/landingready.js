@@ -7,7 +7,7 @@ $(document).ready(function() {
     initializeUserPresentInMeetingModal();
     
 	// Join now Click Event
-    $("#joinNowId").click(function(){
+    $(".joinNowButton").click(function(){
     	
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
