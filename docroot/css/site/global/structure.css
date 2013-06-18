@@ -204,7 +204,8 @@ input								{outline:none;}
 
 .modalWrapper		{zoom:1;margin:0 0 25px 0;}
 .modalWrapper h2             {color:#BC715E;padding:6px 0;font-weight:normal;background-color:#E2EAED;border-bottom:1px solid #AAA;}
-.modalWrapper  p 		{margin:0px 85px 15px 85px;line-height:1.4em;font-weight:bold;}
+.modalWrapper  p.modalParagraph 		{margin:0px 85px 15px 85px;padding-top:20px}
+
 
 
 /* .ui-dialog						{padding:0;}
