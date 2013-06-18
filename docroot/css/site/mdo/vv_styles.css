@@ -150,6 +150,10 @@
 	margin-right: 12px;
 }
 
+.landingHalf .icon{
+	float:left;
+}
+
 .iconpromo1{
 	width: 350 px;
 	position: relative;
