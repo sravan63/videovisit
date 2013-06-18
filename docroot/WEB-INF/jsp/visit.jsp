@@ -7,7 +7,7 @@
 
 <!--  Quit Meeting dialog -->
 <div id="quitMeetingModal"  title="Quit Meeting">
-	<div>
+	<div  class="modalWrapper">
 		<h2><span>Quit Meeting</span></h2>
 		<p style="padding-top:20px">Are you sure you want to quit this meeting?</p>
 		<div class="pagination">

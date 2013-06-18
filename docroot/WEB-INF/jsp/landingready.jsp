@@ -87,7 +87,7 @@
 
 
 <div id="user-in-meeting-modal"  title="User Already Present In Meeting">
-	<div>
+	<div  class="modalWrapper">
 		<h2>User already signed on</span></h2>
 		<p style="padding-top:20px">
 			You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.
