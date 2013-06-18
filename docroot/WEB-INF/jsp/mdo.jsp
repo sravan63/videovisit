@@ -61,28 +61,29 @@
 	    			%>
 
     				<!-- 
-    				<div class="landingHalf leftNavContent" >
-	    					<div id="getPreparedIcon" class="icon">
-	    					</div>
-	    					<div style="margin-left:12px;">
-	    						<h3>  Get Prepared Before Your Visit </h3>
-	    						<p> It's important  to check your system and environment before your visit. </p>
-	    						<div class="buttons">
-	    							<button class="button" alt="Get Prepared" value="Get Prepared"> Get Prepared </button>
-	    						</div>
-	    					</div>
-	    				</div>
-	    				
-    				<div class="landingHalf rightNavContent">
-    					<div id="joinVideoVisit" class="icon"> 
-    					</div>
-    					<div style="margin-left:12px;">
-    						<h3>  Join Video Visit </h3>
-    						<p> You can Video VIsits from any device. </p>
-    						<div class="buttons">
-    							<button class="button" alt="Join Your Video Visit" value="Join Your Video Visit"> Join Your Video Visit </button>
+    				<div class="row">
+    					<div class="landingHalf leftNavContent">
+    						<div id="iconpromo1" class="icon" style="background: url('images/icon_checklist.png') no-repeat scroll top center transparent;">
     						</div>
-    					</div>   					
+    						<div class="innerNav">
+    							<h3> Get Prepared Before Your Visit </h3>
+    							<p> It's important  to check your system and environment before your visit. </p>
+    							<div class="buttons">
+    								<button class="button" alt="Get Prepared" value="Get Prepared"> Get Prepared </button>
+	    						</div>
+    						</div>
+    					</div>
+    					<div class="landingHalf rightNavContent">
+	    					<div id="iconpromo2" class="icon" style="background: url('images/icon_devices.png') no-repeat scroll top center transparent;">
+    						</div>
+	    					<div class="innerNav">
+    							<h3> Join Video Visit </h3>
+    							<p> You can join your Video Visit up to 15 minutes before your appointment. </p>
+    							<div class="buttons">
+    								<button class="button" alt="Join Your Video Visit" value="Join Your Video Visit"> Join Your Video Visit </button>
+    							</div>
+	    					</div>   					
+    					</div>
     				</div>
     				 -->
     			</div>
@@ -110,33 +111,23 @@
     			%>
     			
     			<!-- 
-    			    <div class="landingTwoThird leftNav">
-    					<div style="margin-left:12px;">
-    						<h4> Get Support </h3>
-    						<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-    						<div style="float:right; margin-right:2px;">
-    							<a> More &#62; </a>
-    						</div>
+    			    <div class="row">
+	    			    <div class="landingTwoThird promo1">
+    							<h4> Get Support </h3>
+    							<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+    							<a style="float:right; margin-right:2px;"> More &#62; </a>
     					</div>
-    				</div>
     				
-    				<div class="landingTwoThird centerNav">
-    					<div style="margin-left:12px;">
-    						<h4> Cancel and Reschedule </h3>
-    						<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-    						<div style="float:right; margin-right:2px;">
-    							<a> More &#62; </a>
-    						</div>
-    					</div>    					
-    				</div>
+	    				<div class="landingTwoThird promo2">
+    							<h4> Cancel and Reschedule </h3>
+    							<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. </p>
+    							<a style="float:right; margin-right:2px;"> More &#62; </a>					
+    					</div>
     				
-    				<div class="landingTwoThird rightNav">
-    					<div style="margin-left:12px;">
-    						<h4> How to Schedule a Video Visit </h3>
-    						<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
-    						<div style="float:right; margin-right:2px;">
-    							<a> More &#62; </a>
-    						</div>
+    					<div class="landingTwoThird promo3">
+    							<h4> How to Schedule a Video Visit </h3>
+    							<p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor. </p>
+    							<a style="float:right; margin-right:2px;"> More &#62; </a>
     					</div>
     				</div>
     				 -->
