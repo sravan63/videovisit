@@ -131,17 +131,17 @@
 
 .landingHalf{
 	display: inline;
-	float: left;
-	width: 43%;
-	height: auto;
-	padding: 5px 5px 0;
+    float: left;
+    width: 43%;
+    height: auto;
+    padding: 5px 5px 0;
 }
 
-.landingHalf.leftNavContent{
+.landingHalf.iconpromo1{
 }
 
-.landingHalf.rightNavContent{
-	margin-left: 75px;
+.landingHalf.iconpromo2{
+	margin-left: 55px;
 }
 
 .icon{
@@ -168,7 +168,7 @@
 div#iconpromo1{
 /*  background: url("../../../images/mdo/icon_checklist.png") no-repeat scroll top center transparent; */
 	float: left;
-/* 	width: 60px; */
+/* 	width:60px; */
 }
 
 div#iconpromo2{
