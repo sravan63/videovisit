@@ -103,12 +103,11 @@ function initializeUserPresentInMeetingModal(){
 	$("#user-in-meeting-modal").dialog({
 	      autoOpen: false,
 	      width: "30%",
-	      height:150,
+	      height:165,
 	      modal: true,
 	      resizable:false,
 	      dialogClass:'hide-modal-title'
 	});
 
 }
-
 

@@ -105,8 +105,8 @@ function initializeJoinNowModal(){
 function initializeQuitMeetingModal(){
 
 	$("#quitMeetingGuestModal").dialog({
-	      autoOpen: false,
-	      width: "30%",
+		 autoOpen: false,
+	      width: "23%",
 	      height:150,
 	      modal: true,
 	      resizable:false,

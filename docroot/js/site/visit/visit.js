@@ -136,7 +136,7 @@ function initializeQuitMeetingModal(){
 
 	$("#quitMeetingModal").dialog({
 	      autoOpen: false,
-	      width: "30%",
+	      width: "23%",
 	      height:150,
 	      modal: true,
 	      resizable:false,

@@ -9,7 +9,7 @@
 <div id="quitMeetingModal"  title="Quit Meeting">
 	<div  class="modalWrapper">
 		<h2><span>Quit Meeting</span></h2>
-		<p style="padding-top:20px">Are you sure you want to quit this meeting?</p>
+		<p>Are you sure you want to quit this meeting?</p>
 		<div class="pagination">
 			<ul>
 				<li><a id="quitMeetingNo" class="button">No &rsaquo;&rsaquo;</a></li>
