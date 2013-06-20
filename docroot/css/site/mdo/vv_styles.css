@@ -59,6 +59,10 @@
 .videoVisitContainer ul li{
 	list-style-type: disc;
 	margin-left: 30px;
+/* 	color: #357895; */
+}
+
+.landingHalf ul li{
 	color: #357895;
 }
 
