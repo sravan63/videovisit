@@ -60,14 +60,14 @@
             <li>Preventive Health Reminders
               <ul>
                 <!-- <li><a target="MDO_ExternalLink" href="http://www.kp.org/mypreventivehealth">Screening tests and immunizations</a></li> -->
-				<li><a target="MDO_ExternalLink" href="/ncal/prompt/?refUrl=mdoLeftNav">Screening tests and immunizations</a></li>                
+				<li><a target="MDO_ExternalLink" href="https://mydoctor.kaiserpermanente.org/ncal/prompt/?refUrl=mdoLeftNav">Screening tests and immunizations</a></li>                
 				<!-- <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/portal/member.portal?refUrl=https://hqac.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=mymedicalrecord&kp_shortcut_referrer=kp.org/mypreventivehealth">Screening tests and immunizations</a></li> -->
               </ul>
             </li>
             <li>Manage Your Family's Health
                  <ul>
   
-                   <li><a href="/ncal/myfh/myfh_landing.html">Learn how</a></li>
+                   <li><a href="https://mydoctor.kaiserpermanente.org/ncal/myfh/myfh_landing.html">Learn how</a></li>
                    <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/proxy/entrypage.do">Set up access</a></li>
 
    					
@@ -89,7 +89,7 @@
             Home Page</a></div>
           <ul class="bb-mdo-navigation-section-contents bb-mdo-navigation-collapsed">
             <li>
-            <form action="/ncal/mdo/presentation/providers/providersearchpage.jsp?refresh=true" method="POST" name="searchDirectoryLeftMenu" >
+            <form action="https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/providers/providersearchpage.jsp?refresh=true" method="POST" name="searchDirectoryLeftMenu" >
               <label for="lastName">Last Name</label>
 	          <input type="text" name="Last Name" onfocus="clearText(this)" />
               <br class="clearBoth" />
@@ -446,7 +446,7 @@
             </li>
             <li>
             <ul>
-              <li><a href="/ncal/mdo/presentation/providers/providersearchhome.jsp">Advanced Search</a></li>
+              <li><a href="https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/providers/providersearchhome.jsp">Advanced Search</a></li>
             </ul>
             </li>
           </ul>
@@ -525,5 +525,5 @@
 
     </div>
     <!--[if !IE]>	/leftCol   <![endif]-->
-    <div id="navLoader"><img src="/ncal/static_includes/img/ajax-loader.gif" alt="Loading..."/></div>
+    <div id="navLoader"><img src="https://mydoctor.kaiserpermanente.org/ncal/static_includes/img/ajax-loader.gif" alt="Loading..."/></div>
 
