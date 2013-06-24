@@ -3,10 +3,69 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faqitem"%>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.hyperlink"%>
 <%@ page import="java.util.*"%>
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
+<script>
+$(document).ready(function() {
+	  var myArr = [];
+	  $.ajax({
+    		url: "faq.xml",
+    		dataType: "xml",
+    		success: function(xmlResponse) {
+        	 /* parse response */
+        	var hyperlink = "faqlist\\:Hyperlink";
+        	var title = "faqlist\\:Title";
+        	var section = "faqlist\\:Section";
+        	
+        	if ( navigator.userAgent.toLowerCase().indexOf('chrome') != -1  || navigator.userAgent.toLowerCase().indexOf('safari') != -1  )
+        	{
+        		hyperlink = "Hyperlink";
+        		title = "Title";
+        		section = "Section";
+        	}
+         	var data = $(hyperlink, xmlResponse).map(function() {
+         	return {
+             	value: $(this).find(title).text(),
+             	id: $(this).find(section).text()
+         	};
+         	}).get();
+
+        	 /* bind the results to autocomplete */
+         	$("#faq").autocomplete1({
+             source: data,
+		 minLength: 0,
+             select: function(event, ui) {
+         		var urlPrefix;
+    			if ( document.URL.indexOf('.htm') != -1 )
+    			{
+    				urlPrefix = document.URL.substring(0,document.URL.indexOf('.htm') + 4);
+    			}
+    	        var urlString = urlPrefix + "#" + (ui.item.id);
+    	            //(ui.item.id) + "=" + 
+    	            //(ui.item.value);
+    	            //$("input#searchBox").val(urlString);
+    		  window.location.href=urlString;
+    	        return false;
+
+	      }
+
+         	});
+     	}
+	});
+
+	$("#faq").click(function() {
+  	this.value = '';
+});  
+
+
+});	
+
+</script>
 <%
 	faq f = WebAppContext.getWebAppContext(request).getFaq();
 
 %>
+	
     <div class="videoVisitContainer">
     	<div id="videoVisitHelpPageContents">
     		<div id="helpPageTitle">
@@ -19,7 +78,11 @@
     			}
     		%>
     		</div>
-    		
+		<br/>
+    		<div class="ui-widget">
+				
+					<input id="faq" value="Search Support"/>
+				</div>
     		<div id="helpMainContents">
     			<div id="helpNavContents">
     			<%
