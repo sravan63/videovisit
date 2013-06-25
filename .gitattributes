@@ -150,6 +150,7 @@ docroot/css/site/mdo/vv_styles.css -text
 docroot/environment/dependency_css.json -text
 docroot/environment/dependency_js.json -text
 docroot/environment/path.js -text
+docroot/faq.xml -text
 docroot/helpindex.jsp -text
 docroot/images/global/TPGM_Logo_Final_Small.png -text
 docroot/images/global/ajax-loader.gif -text
