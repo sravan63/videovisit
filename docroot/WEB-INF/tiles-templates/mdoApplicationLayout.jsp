@@ -24,21 +24,6 @@
         <noscript>
 			<meta http-equiv="refresh" content="0; url=enablejavascript.htm"></meta>
 		</noscript>
-
-		<script type="text/javascript">
-	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-	<script type="text/javascript">
-	try {
-		var pageTracker = _gat._getTracker("UA-9446919-1");
-		pageTracker._setLocalGifPath("/ncal/Images/__utm.gif");
-		pageTracker._setLocalRemoteServerMode();
-        //pageTracker._setDomainName(".mydoctor.kaiserpermanente.org");
-		//pageTracker._trackPageview();
-		
-		
-	} catch(err) {}</script>
 	
 	<script type="text/javascript">
 	var bb_mdo_sectionViewer_contentTitle =""  ; 
