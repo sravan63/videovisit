@@ -3,7 +3,7 @@
 .videoVisitContainer{
 	float:left;
 	font-size: 12px;
-	margin-left: 22px;
+	/*margin-left: 22px;*/
 	padding: 10px 0;
 	width: 762px;
 	height: auto;
@@ -69,7 +69,7 @@
 .videoVisitContainer #mainHeader{
 	float: left;
 	padding: 0;
-	margin: 45px 0 0 40px;
+	margin: 0 0 0 40px;
 	width: 720px;
 }
 
@@ -87,17 +87,18 @@
 #videoContainer{
 /* 	background: url("../../../images/mdo/image_landing_page.png") no-repeat scroll center transparent; */
 	float: left;
-	font-size:11 px;
-	height: 355px;
+	font-size: 11px;
+	height: 329px;
 	margin: 0px;
 	padding-left: 1px;
 	width: 100%;
+	border: 1px solid #CCCCCC;
 }
 
 #navContent{
 	width: auto;
-	margin: 30px 0 0;
-	padding-bottom: 10px;
+	margin: 15px 0 0;
+	/*padding-bottom: 10px;*/
 	float: left;
 	position: relative;
 	height: auto;
@@ -199,50 +200,9 @@ div#iconpromo2{
 	font-style: regular;
 }
 
-/* .videoVisitContainer .landingTwoThird{
-	display:inline;
-	float: left;
-	width: 230px;
-	height: 135px;
-	padding: 0 2px 0 0;
-}
-
-.landingTwoThird.promo1{
-	position: relative;
-}
-
-.landingTwoThird.promo2{
-	position: relative;
-	float: left;
-	border-left: 1px solid #CCCCCC;
-}
-
-.landingTwoThird.promo3{
-	position: relative;
-	float: left;
-	border-left: 1px solid #CCCCCC;
-}
-
-.landingTwoThird .innerDiv{
-	margin: 0 8px 0; 
-}
-
-.landingTwoThird p{
-	margin: 10px 0 10px;
-}
-
-.landingTwoThird a{
-	font-size: 12px;
-	font-family: Arial;
-	font-style: regular;
-	color: #4D8993;
-} */
-
-
-
 #lastContent{
 	width: auto;
-	margin: 30px 0 0;
+	margin: 15px 0 0;
 	border: none;
 	float: left;
 	position: relative;
