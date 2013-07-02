@@ -228,6 +228,18 @@ div#iconpromo2{
 
 }
 
+#videoVisitHelpPageContents #helpPageTitle{
+	margin: 0 0 0 40px;
+}
+
+#videoVisitHelpPageContents .ui-widget{
+	margin: 0 0 0 40px;
+}
+
+#videoVisitHelpPageContents #helpMainContents{
+	margin: 0 0 0 40px;
+}
+
 #videoVisitHelpPageContents #helpNavContents{
 	width: 700px;
 	margin: 30px 0 0;
