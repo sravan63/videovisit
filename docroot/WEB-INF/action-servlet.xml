@@ -133,11 +133,9 @@
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="logout" />
 	</bean>
-	<bean id="intro" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="intro" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="intro" />
-		<property name="navigation" value="home" />
-		<property name="subNavigation" value="intro" />
+		<property name="viewName" value="mdolive" />
 	</bean>
 	<bean id="mdo" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>

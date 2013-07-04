@@ -55,9 +55,8 @@
 	</definition>
 
 	<!-- content pages -->
-	<definition name="intro" extends=".standardPageTemplate">
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-intro.jsp" />
-		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+	<definition name="intro" >
+		
  		<put-attribute name="content" value="/WEB-INF/jsp/intro.jsp" />
 	</definition>
 	<definition name="mdo" extends=".standardMDOPageTemplate">
@@ -82,8 +81,7 @@
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/mdohelp.jsp" />
 	</definition>
-	<definition name="setup" extends=".standardPageTemplate">
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-intro.jsp" />
+	<definition name="setup" extends=".standardMDOPageTemplate">
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/setup.jsp" />
 	</definition>

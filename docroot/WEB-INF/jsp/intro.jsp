@@ -1,16 +1,43 @@
-                                <%@page import="java.util.ResourceBundle"%>
-                                <% 
-                                ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-                            	String setupUrl = rbInfo.getString("MEGA_MEETING_SETUP_URL");
-                                %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.net.*"%>
+<%@ page import="java.io.*"%>
+<%@page import="java.util.ResourceBundle"%>
+<%-- NOTE: when development is over use something similar to the following code
+           to redirect to the single-sign-on infrastructure. 
+--%>
+<%-- Redirected because we can't set the welcome page to a virtual URL. --%>
 
-								
-								<img src="images/global/back-intro2.jpg" width="439" height="316" alt="" class="intro-image">
-                                <h3 class="page-title">Welcome to Video Visits </h3>
 
-                                <p class="intro">Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor by video. This new information technology allows you to securely talk with your doctor from the convenience of your home or office, without having to drive to your doctor's office.  You will need a computer, webcam, broadband internet connection, and the latest version of <a href="http://www.adobe.com/software/flash/about/">Adobe Flash</a>.</p>
-                                <p class="intro">If this is your first video visit, please take a moment to make sure that this system works well on your computer by using our <a onclick="javascript:popUrl('<%=setupUrl%>');" href="#"> Setup Wizard</a> </p>
-								<p class="intro">You will be able to enter your video visit within 15 minutes before your appointment time. </p>
-								<p class="intro">Please make sure you have the latest version of <a href="http://www.adobe.com/software/flash/about/">Adobe Flash</a> before proceeding.</p>
+<%
+ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+String url = rbInfo.getString("MDO_LIVE_HEADER_URL");
+URL u = new URL(url);
+BufferedReader in = new BufferedReader(
+new InputStreamReader(u.openStream()));
+boolean live = false;
+String inputLine;
+while ((inputLine = in.readLine()) != null)
+{
+	if ( inputLine.contains("My Doctor Online") )
+	{
+		live = true;
+	}
+}
+in.close();
 
-                                <p class="intro"><a href="login.htm" class="button">Get Started &rsaquo;&rsaquo;</a></p>
+	if ( live )
+	{
+%>
+	<c:redirect url="/mdolive.htm">
+	</c:redirect>
+	
+<%
+	}
+	else
+	{
+%>
+	<c:redirect url="/mdo.htm">
+	</c:redirect>
+<%
+	}
+%>
