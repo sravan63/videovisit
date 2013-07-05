@@ -55,7 +55,10 @@
 	</definition>
 
 	<!-- content pages -->
-	
+	<definition name="intro" extends=".standardMDOPageTemplate">
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="content" value="/WEB-INF/jsp/intro.jsp" />
+	</definition>
 	<definition name="mdo" extends=".standardMDOPageTemplate">
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/mdo.jsp" />

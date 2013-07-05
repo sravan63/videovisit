@@ -135,7 +135,7 @@
 	</bean>
 	<bean id="intro" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="mdolive" />
+		<property name="viewName" value="mdolive"/>
 	</bean>
 	<bean id="mdo" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
