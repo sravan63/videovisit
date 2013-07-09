@@ -268,3 +268,91 @@ div#iconpromo2{
 	margin-left: 25px;
 	padding-left: 40px;
 }
+
+
+/* ******************************* Setup Page ******************************* */
+#videoVisitSetupContainer{
+	margin-left: 190px;
+}
+
+/*
+#setupContainer-primary, #setupContainer-main{
+	display: block; 
+	height: 0; 
+	clear: both; 
+	background: none;
+}
+
+#setupContainer-primary{
+	text-align: left;
+	width: 950px;
+	margin: 0 auto;
+	padding: 5px;	
+}
+
+#setupContainer-main{
+	background: #f3f3f3;
+}
+
+#setupContent-main{
+    display: block;
+    height: auto !important;
+    min-height: 500px;
+    padding: 0 0 100px;
+    width: 785px;
+    margin: 0 auto;
+}*/
+
+
+.videoVisitContainer #videoVisitSetupPageContents{
+	width: 100%;
+	height: auto;
+	margin-top: 7px;
+}
+
+
+.videoVisitContainer #setupPageTitle{
+	margin: 0;
+	width: 100%;
+}
+
+.videoVisitContainer #setupPageTitle h2{
+	line-height: 1em;
+}
+
+.videoVisitContainer #setupMainContents{
+	margin: 40px 0 0;
+	width: 100%;	
+}
+
+.videoVisitContainer #setupMainContents iframe{
+	border: 1px solid #CCCCCC;
+}
+
+#videoVisitSetupPageContents #setupNavContents{
+	width: 100%;
+	margin: 30px 0 0;
+	padding-bottom: 40px;
+	float: left;
+	position: relative;
+	height: auto;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+#videoVisitSetupPageContents #setupLastNav{
+	width: 100%;
+	margin: 20px 0 0;
+	border: none;
+	float: left;
+	position: relative;
+	height: auto;
+}
+
+#videoVisitSetupPageContents #setupPageTitle h2{
+	font-size: 28px;
+}
+
+
+/* ============		@BROWSER FIXES	======================== */
+
+.ie6 #container-main			{margin:0;}
