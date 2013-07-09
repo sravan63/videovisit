@@ -41,18 +41,23 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/enableJavascript.jsp" />
 	</definition>
 	
-	
-	
 	<definition name=".textTemplate" template="/WEB-INF/tiles-templates/textLayout.jsp">
  		<put-attribute name="content" value="/WEB-INF/jsp/nav/simpleText.jsp" />
 	</definition>
 	
+	<definition name=".setupPageTemplate" template="/WEB-INF/tiles-templates/setupLayout.jsp"> 		
+		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoheader.jsp" />
+		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />	
+	</definition>
 	
 	<!-- json data -->
 	<definition name="jsonData" extends=".dataTemplate">
  		<put-attribute name="header" value="/WEB-INF/jsp/data/jsonHeader.jsp" />
  		<put-attribute name="data" value="/WEB-INF/jsp/data/jsonData.jsp" />
 	</definition>
+
 
 	<!-- content pages -->
 	<definition name="intro" extends=".standardMDOPageTemplate">
@@ -81,8 +86,10 @@
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/mdohelp.jsp" />
 	</definition>
-	<definition name="setup" extends=".standardMDOPageTemplate">
-		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+	<definition name="setup" extends=".setupPageTemplate">
+		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoheader.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/setup.jsp" />
 	</definition>
 	<definition name="login" extends=".standardPageTemplate">
