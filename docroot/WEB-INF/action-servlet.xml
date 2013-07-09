@@ -58,7 +58,9 @@
 		<property name="homePageUrlMap">
 		    <map>
 	           <entry key="homepage-member-mobile" value="mobilepatientlanding.htm"/>
-	           <entry key="homepage-member-web" value="intro.htm"/>
+	           <entry key="homepage-member-web1" value="intro.htm"/>
+	           <entry key="homepage-member-web2" value="mdo.htm"/>
+	           <entry key="homepage-member-web3" value="mdolive.htm"/>
 	           <entry key="homepage-guest-mobile" value="mobilepglanding.htm"/>
 	           <entry key="homepage-guest-web" value="guest"/>
 	        </map>
