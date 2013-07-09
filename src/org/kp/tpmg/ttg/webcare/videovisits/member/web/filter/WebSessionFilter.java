@@ -84,21 +84,23 @@ public class WebSessionFilter implements Filter
 				requestUri = requestUri.substring(startIndex + 1);
 			}
 			logger.info("======Request URI:" + requestUri);
-			String memberWebHomePageUrl = homePageUrlMap.get("homepage-member-web");
+			String memberWebHomePageUrl1= homePageUrlMap.get("homepage-member-web1");
+			String memberWebHomePageUrl2= homePageUrlMap.get("homepage-member-web2");
+			String memberWebHomePageUrl3= homePageUrlMap.get("homepage-member-web3");
 			String memberMobileHomePageUrl = homePageUrlMap.get("homepage-member-mobile");
 			String guestWebHomePageUrl = homePageUrlMap.get("homepage-guest-web");
 			String guestMobileHomePageUrl = homePageUrlMap.get("homepage-guest-mobile");
 			String redirectToUrl = null;
-			// Handle patient home page URL
-			logger.info("WebSessionFilter requesturi = " + requestUri + " memberWebHomePageUrl = " + memberWebHomePageUrl + " guestWebHomePageUrl = " + guestWebHomePageUrl);
-			if(requestUri.contains(memberWebHomePageUrl)){
+			// Handle patient home page URL1
+			logger.info("WebSessionFilter requesturi = " + requestUri + " memberWebHomePageUrl1 = " + memberWebHomePageUrl1 + " memberWebHomePageUrl2 = " + memberWebHomePageUrl2 + "  memberWebHomePageUrl3 = " + memberWebHomePageUrl3 + " guestWebHomePageUrl = " + guestWebHomePageUrl);
+			if(requestUri.contains(memberWebHomePageUrl1) || requestUri.contains(memberWebHomePageUrl2) || requestUri.contains(memberWebHomePageUrl3)){
 				logger.info("WebSessionFilter memberwebpage" );
 				boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);
 				if(isWirelessDeviceOrTablet){
 					redirectToUrl = memberMobileHomePageUrl;
 				}
 				else{
-					redirectToUrl = memberWebHomePageUrl;
+					redirectToUrl = memberWebHomePageUrl1;
 				}
 				req.getRequestDispatcher(redirectToUrl).forward(req, resp);
 			}
