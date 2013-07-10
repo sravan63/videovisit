@@ -10,7 +10,7 @@
 
 <%
 ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-String url = rbInfo.getString("MDO_LIVE_HEADER_URL");
+String url = rbInfo.getString("MDO_LIVE_CHECK_URL");
 URL u = new URL(url);
 BufferedReader in = new BufferedReader(
 new InputStreamReader(u.openStream()));
