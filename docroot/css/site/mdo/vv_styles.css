@@ -326,7 +326,7 @@ div#iconpromo2{
 }
 
 .videoVisitContainer #setupMainContents iframe{
-	border: 1px solid #CCCCCC;
+	/*border: 1px solid #CCCCCC;*/
 }
 
 #videoVisitSetupPageContents #setupNavContents{
