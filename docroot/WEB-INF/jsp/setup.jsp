@@ -6,13 +6,12 @@
    				<h3> Check your system and your environment. </h3>
 			</div>
 			<div id="setupMainContents">
-				<iframe src="https://tpmgtest.megameeting.com/setupwizard.html" width="710" height="410" frameborder="0" scrolling="no">
+				<iframe src="https://tpmgtest.megameeting.com/setupwizard.html" width="725" height="548" frameborder="0" scrolling="no">
 					Video Audio Setup Wizard
 				</iframe>
 			</div>
 			<div id="setupLastNav" class="buttons">
-				<a href="intro.htm" class="button"> Back to Welcome Page &gt;&gt; </a>
-				<a href="login.htm" class="button" style="float: right;"> Join Your Video Visit </a>
+				<a href="login.htm" class="button"> Join Your Video Visit </a>
 			</div>
 		</div>
 	</div>
