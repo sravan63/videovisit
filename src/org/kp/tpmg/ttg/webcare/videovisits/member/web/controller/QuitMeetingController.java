@@ -20,13 +20,14 @@ public class QuitMeetingController extends SimplePageController {
 		try
 		{
 			
-			responseWrapper = MeetingCommand.quitMeeting(request, response);
-			if(responseWrapper != null && responseWrapper.getSuccess()){
-				data = MeetingCommand.updateEndMeetingLogout(request, response);
-			}
-			else{
-				data = JSONObject.fromObject(responseWrapper).toString();
-			}
+			data = MeetingCommand.updateEndMeetingLogout(request, response);
+//			responseWrapper = MeetingCommand.quitMeeting(request, response);
+//			if(responseWrapper != null && responseWrapper.getSuccess()){
+//				data = MeetingCommand.updateEndMeetingLogout(request, response);
+//			}
+//			else{
+//				data = JSONObject.fromObject(responseWrapper).toString();
+//			}
 
 			 
 //			 // logout
