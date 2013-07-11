@@ -48,7 +48,7 @@
 	<definition name=".setupPageTemplate" template="/WEB-INF/tiles-templates/setupLayout.jsp"> 		
 		<put-attribute name="title" value="Video Visits" type="string" />
 		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
-		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoheader.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoHeaderStatic.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />	
 	</definition>
 	
@@ -89,7 +89,7 @@
 	<definition name="setup" extends=".setupPageTemplate">
 		<put-attribute name="title" value="Video Visits" type="string" />
 		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
-		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoheader.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoSetupHeader.jsp />
  		<put-attribute name="content" value="/WEB-INF/jsp/setup.jsp" />
 	</definition>
 	<definition name="login" extends=".standardPageTemplate">
