@@ -78,11 +78,7 @@ $(document).ready(function() {
     			}
     		%>
     		</div>
-		<br/>
-    		<div class="ui-widget">
-				
-					<input id="faq" value="Search Support"/>
-				</div>
+    		
     		<div id="helpMainContents">
     			<div id="helpNavContents">
     			<%
