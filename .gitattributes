@@ -81,6 +81,7 @@ docroot/WEB-INF/jsp/nav/footer-mdo.jsp -text
 docroot/WEB-INF/jsp/nav/footer.jsp -text
 docroot/WEB-INF/jsp/nav/guestInfo.jsp -text
 docroot/WEB-INF/jsp/nav/header.jsp -text
+docroot/WEB-INF/jsp/nav/mdoSetupHeader.jsp -text
 docroot/WEB-INF/jsp/nav/mdoheader.jsp -text
 docroot/WEB-INF/jsp/nav/mdoliveheader.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-empty.jsp -text
