@@ -5,6 +5,9 @@
    				<h2> Video Visit Preparation </h2>
    				<h3> Check your system and your environment. </h3>
 			</div>
+			<div id="helpButtonContent" class="buttons">
+				<a href="mdohelp.htm" class="button" target="_blank"> Get Help </a>
+			</div>			
 			<div id="setupMainContents">
 				<iframe src="https://tpmgtest.megameeting.com/setupwizard.html" width="725" height="548" frameborder="0" scrolling="no">
 					Video Audio Setup Wizard
