@@ -270,6 +270,25 @@ div#iconpromo2{
 }
 
 
+/* ********************** ScrollUp ********************* */
+.videoVisitContainer .scrollup {
+	background: url("../../../images/mobile/video-visit-ui@2x_new.png") no-repeat right;
+	background-size: 520px;
+	position: fixed;
+	right:12px;
+	bottom: 12px;
+	z-index: 1000;
+	display:none;
+	width: 40px;
+	height: 40px;
+	border: 1px solid rgba(20,30,40,.20);
+	border-radius: 5px;
+	background-color: rgba(20,30,40,.3);
+	background-position: -9px -134px;
+	content: "";
+}
+
+
 /* ******************************* Setup Page ******************************* */
 #videoVisitSetupContainer{
 	margin-left: 190px;
