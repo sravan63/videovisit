@@ -57,8 +57,24 @@ $(document).ready(function() {
   	this.value = '';
 });  
 
+	$(".scrollup").click(scrollMe);
+	// Shows and hides scroll to top button
+	$(window).scroll(function(){
+		if ($(this).scrollTop() > 320) {
+			$('.scrollup').fadeIn();
+		} else {
+			$('.scrollup').fadeOut();
+		}
+	});
+	// scrolls to top for anchor page states on load
+	scrollMe();
 
 });	
+
+function scrollMe(){
+	$('html, body').animate({scrollTop:0}, 'slow');
+	return false;
+}
 
 </script>
 <%
@@ -67,6 +83,9 @@ $(document).ready(function() {
 %>
 	
     <div class="videoVisitContainer">
+     	
+    	<div class="scrollup" style="display: block;"></div>
+    	
     	<div id="videoVisitHelpPageContents">
     		<div id="helpPageTitle">
     		<%
