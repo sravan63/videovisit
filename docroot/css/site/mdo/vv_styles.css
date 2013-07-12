@@ -322,7 +322,6 @@ div#iconpromo2{
     margin: 0 auto;
 }*/
 
-
 .videoVisitContainer #videoVisitSetupPageContents{
 	width: 100%;
 	height: auto;
@@ -337,6 +336,22 @@ div#iconpromo2{
 
 .videoVisitContainer #setupPageTitle h2{
 	line-height: 1em;
+}
+
+#videoVisitSetupPageContents #helpButtonContent{
+	width: 100%;
+	margin: 10px 0 8px;
+	border: none;
+	float: left;
+	position: relative;
+	height: auto;
+}
+
+#helpButtonContent .button{
+	float: right;
+	font-weight: bold;
+	margin-right: 35px;
+	background: none repeat scroll 0 0 #1F5A78;
 }
 
 .videoVisitContainer #setupMainContents{
@@ -360,7 +375,7 @@ div#iconpromo2{
 
 #videoVisitSetupPageContents #setupLastNav{
 	width: 100%;
-	margin: 20px 0 0;
+	margin: 8px 0 0;
 	border: none;
 	float: left;
 	position: relative;
