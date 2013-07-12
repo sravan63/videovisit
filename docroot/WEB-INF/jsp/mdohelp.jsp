@@ -84,7 +84,7 @@ function scrollMe(){
 	
     <div class="videoVisitContainer">
      	
-    	<div class="scrollup" style="display: block;"></div>
+    	<div class="scrollup"></div>
     	
     	<div id="videoVisitHelpPageContents">
     		<div id="helpPageTitle">
