@@ -9,7 +9,7 @@
 $(document).ready(function() {
 	  var myArr = [];
 	  $.ajax({
-    		url: "faq.xml",
+    		url: "patient_faq.xml",
     		dataType: "xml",
     		success: function(xmlResponse) {
         	 /* parse response */
