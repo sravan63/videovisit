@@ -1,5 +1,6 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.kp.tpmg.ttg.mdo.xml.faqlist.FAQItemDocument.FAQItem;
 import org.kp.tpmg.ttg.mdo.xml.faqlist.FAQListDocument;
 import org.kp.tpmg.ttg.mdo.xml.faqlist.FAQListDocument.FAQList;
 import org.kp.tpmg.ttg.mdo.xml.faqlist.HyperlinkDocument.Hyperlink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 
 
 
@@ -34,12 +36,22 @@ public class FaqParser {
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 			String faqUrl = rbInfo.getString("MDO_FAQ_URL");
-			URL u = new URL(faqUrl);
-			
+			String faqPath = rbInfo.getString("MDO_FAQ_PATH");
+			File faqFile = new File(faqPath);
+			FAQList faqList;
+			if ( faqFile.exists())
+			{
+				log.info("File exists in path = " + faqPath);
+				faqList = FAQListDocument.Factory.parse(faqFile).getFAQList();
+			}
+			else
+			{
+				log.info("reading from url = " + faqUrl);
+				URL u = new URL(faqUrl);
+				faqList = FAQListDocument.Factory.parse(u).getFAQList();
+			}
 			
 			faq f = new faq();
-			FAQList faqList = FAQListDocument.Factory.parse(u).getFAQList();
-			
 			String faqListTitle = faqList.getFAQListTitle();
 			
 			f.setFaqListTitle(faqListTitle);

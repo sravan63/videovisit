@@ -1,5 +1,6 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,9 +40,20 @@ public class IconPromoParser {
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 			String iconPromoUrl = rbInfo.getString("MDO_ICON_PROMO_URL");
-			URL u = new URL(iconPromoUrl);
-					
-			IconPromo[] promos = IconPromosDocument.Factory.parse(u).getIconPromos().getIconPromoArray();
+			String iconPromoPath = rbInfo.getString("MDO_ICON_PROMO_PATH");
+			File iconPromoFile = new File(iconPromoPath);
+			IconPromo[] promos;
+			if ( iconPromoFile.exists())
+			{
+				log.info("File exists in path = " + iconPromoPath);
+				promos = IconPromosDocument.Factory.parse(iconPromoFile).getIconPromos().getIconPromoArray();
+			}
+			else
+			{
+				log.info("reading from url = " + iconPromoUrl);
+				URL u = new URL(iconPromoUrl);
+				promos = IconPromosDocument.Factory.parse(u).getIconPromos().getIconPromoArray();
+			}
 			List<iconpromo> listPromos = new ArrayList<iconpromo>();
 			for ( IconPromo p : promos)
 			{

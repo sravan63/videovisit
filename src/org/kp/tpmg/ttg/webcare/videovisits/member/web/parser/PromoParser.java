@@ -1,5 +1,6 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,10 +38,21 @@ public class PromoParser {
 		try
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			String faqUrl = rbInfo.getString("MDO_PROMO_URL");
-			URL u = new URL(faqUrl);
-					
-			Promo[] promos = PromosDocument.Factory.parse(u).getPromos().getPromoArray();
+			String promoUrl = rbInfo.getString("MDO_PROMO_URL");
+			String promoPath = rbInfo.getString("MDO_PROMO_PATH");
+			File promoFile = new File(promoPath);
+			Promo[] promos;
+			if ( promoFile.exists())
+			{
+				log.info("File exists in path = " + promoPath);
+				promos = PromosDocument.Factory.parse(promoFile).getPromos().getPromoArray();
+			}
+			else
+			{
+				log.info("reading from url = " + promoUrl);
+				URL u = new URL(promoUrl);
+				promos = PromosDocument.Factory.parse(u).getPromos().getPromoArray();
+			}
 			List<promo> listPromos = new ArrayList<promo>();
 			for ( Promo p : promos)
 			{
