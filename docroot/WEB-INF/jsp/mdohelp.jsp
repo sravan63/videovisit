@@ -67,7 +67,7 @@ $(document).ready(function() {
 		}
 	});
 	// scrolls to top for anchor page states on load
-	scrollMe();
+	/* scrollMe(); */
 
 });	
 
