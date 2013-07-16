@@ -228,6 +228,10 @@ div#iconpromo2{
 
 }
 
+#videoVisitHelpPageContents p{
+	margin: 0 0 1em;
+}
+
 #videoVisitHelpPageContents #helpPageTitle{
 	margin: 0 0 0 40px;
 }
@@ -261,6 +265,11 @@ div#iconpromo2{
 
 #videoVisitHelpPageContents #helpLastContents h4{
 	margin-bottom:
+}
+
+#videoVisitHelpPageContents #helpLastContents ul{
+	font-size: 14px;
+	margin: 0 0 1em;
 }
 
 #videoVisitHelpPageContents .rightNavContent{
