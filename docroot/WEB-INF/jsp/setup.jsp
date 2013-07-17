@@ -9,7 +9,7 @@
 				<a href="mdohelp.htm" class="button" target="_blank"> Get Help </a>
 			</div>			
 			<div id="setupMainContents">
-				<iframe src="https://tpmgtest.megameeting.com/setupwizard.html" width="725" height="548" frameborder="0" scrolling="no">
+				<iframe src="http://kaiserm3test.videoconferencinginfo.com/setup/" width="725" height="507" frameborder="0" scrolling="no">
 					Video Audio Setup Wizard
 				</iframe>
 			</div>
