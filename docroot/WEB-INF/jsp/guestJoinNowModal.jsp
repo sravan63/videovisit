@@ -8,13 +8,13 @@
 </div>
 <div id="nav-user">
 	<ul>
-		<li class="last"><a href="guesthelp.htm" target="_blank">Help</a></li>
+		<li class="last"><a href="mdohelp.htm" target="_blank">Help</a></li>
 	</ul>
 	<a id="quitMeetingGuestId" class="button">Quit Meeting &rsaquo;&rsaquo;</a>
 </div>
 
 <div id="video-main" style="width:100%">
-    <iframe id="joinNowIframeGuest"  src ="blank.jsp" width="100%" height="600">
+    <iframe id="joinNowIframeGuest" src="blank.jsp" width="100%" height="600">
         <p>Your browser does not support iframes.</p>
     </iframe>
 </div>
