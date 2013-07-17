@@ -15,7 +15,7 @@
 	<div id="nav-user">
 		<ul>
 			<li>${WebAppContext.member.lastName}, ${WebAppContext.member.firstName} ${WebAppContext.member.middleName}</li>
-			<li class="last"><a href="help.htm"  target="_blank">Help</a></li>
+			<li class="last"><a href="mdohelp.htm"  target="_blank">Help</a></li>
 		</ul>
 		<a id="quitMeetingId" class="button" >Quit Meeting &rsaquo;&rsaquo;</a>
 	</div>
