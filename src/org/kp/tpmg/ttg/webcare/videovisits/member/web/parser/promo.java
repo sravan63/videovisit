@@ -1,11 +1,16 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
-public class promo {
+public class promo implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6813326739015946490L;
 	private String title;
 	private String header;
 	private String abstractText;

@@ -1,10 +1,15 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 
+import java.io.Serializable;
 import java.util.List;
 
-public class videolink {
+public class videolink implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2073024699786339386L;
 	private String title;
 	private String header;
 	private String abstractText;

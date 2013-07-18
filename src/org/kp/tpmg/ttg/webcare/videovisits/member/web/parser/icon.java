@@ -1,7 +1,13 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
-public class icon {
+import java.io.Serializable;
+
+public class icon implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7110664932997621564L;
 	private String title;
 	private String path;
 	private String abstractText;

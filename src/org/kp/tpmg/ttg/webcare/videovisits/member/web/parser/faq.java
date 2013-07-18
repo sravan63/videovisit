@@ -1,11 +1,16 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
-public class faq {
+public class faq implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1804379469280135652L;
 	private String faqListTitle;
 	private List<faqitem> faqItems;
 	
