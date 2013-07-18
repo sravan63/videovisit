@@ -76,7 +76,7 @@ public class WebSessionFilter implements Filter
 			logger.info("requestUri = " + requestUri);
 			int startIndex = requestUri.lastIndexOf("/");
 			int endIndex = requestUri.indexOf("?");
-			//System.out.println("======startIndex:" + startIndex + " endIndex=" + endIndex);
+			
 			if(endIndex != -1){
 				requestUri = requestUri.substring(startIndex + 1, endIndex);
 			}

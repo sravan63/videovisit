@@ -31,8 +31,7 @@ public class VideoLinkParser {
 		// TODO Auto-generated method stub
 		
 //		faq f = parse();
-//		System.out.println(" f.list title = " + f.getFaqListTitle());
-//		System.out.println(" f.item count = " + f.getFaqItems().size());
+
 	}
 
 	public static videolink parse()
