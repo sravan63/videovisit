@@ -251,13 +251,14 @@ div#iconpromo2{
 	float: left;
 	position: relative;
 	height: auto;
-	border-bottom: 1px solid #CCCCCC;
+	/*border-bottom: 1px solid #CCCCCC;*/
 }
 
 #videoVisitHelpPageContents #helpLastContents{
 	width: 700px;
 	margin: 40px 0 0;
-	border: none;
+	padding-top: 20px;
+	border-top: 1px solid #CCCCCC;
 	float: left;
 	position: relative;
 	height: auto;
