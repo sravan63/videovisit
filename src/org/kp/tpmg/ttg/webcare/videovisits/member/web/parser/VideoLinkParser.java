@@ -85,7 +85,7 @@ public class VideoLinkParser {
 		catch(Exception e)
 		{
 			log.error(e);
-			System.out.println("e message = " + e.getMessage());
+			
 			return null;
 		}
 		

@@ -27,7 +27,7 @@ public class UserPresentInMeetingController extends SimplePageController {
 			modelAndView.setViewName(JSONMAPPING);
 			modelAndView.addObject("data", data);
 			
-			System.out.println("UserPresentInMeetingController-handleRequest-data="+data);
+			
 			logger.info("UserPresentInMeetingController-handleRequest-data="+data);
 			
 		}

@@ -597,14 +597,14 @@ public class MeetingCommand {
 				megaMeetingDisplayName = request.getParameter("megaMeetingDisplayName");
 			}
 			 
-			System.out.println("MeetingCommand:userPresentInMeeting: megaMeetingDisplayName="+megaMeetingDisplayName + " meetingId:" + meetingId);
+			logger.info("MeetingCommand:userPresentInMeeting: megaMeetingDisplayName="+megaMeetingDisplayName + " meetingId:" + meetingId);
 			//grab data from web services
 			userPresentInMeetingResponse = WebService.userPresentInMeeting(meetingId, megaMeetingDisplayName);
 			if (userPresentInMeetingResponse != null)
 			{
 				logger.info("userPresentInMeeting: success = " + userPresentInMeetingResponse.getSuccess()); 
 				userPresentInMeeting = JSONObject.fromObject(userPresentInMeetingResponse).toString();
-				System.out.println("MeetingCommand:userPresentInMeeting: userPresentInMeeting="+userPresentInMeeting);
+				logger.info("MeetingCommand:userPresentInMeeting: userPresentInMeeting="+userPresentInMeeting);
 			}
 		}
 		catch (Exception e)

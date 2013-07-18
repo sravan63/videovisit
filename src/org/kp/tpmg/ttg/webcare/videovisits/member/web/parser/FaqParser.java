@@ -25,8 +25,8 @@ public class FaqParser {
 		// TODO Auto-generated method stub
 		
 		faq f = parse();
-		System.out.println(" f.list title = " + f.getFaqListTitle());
-		System.out.println(" f.item count = " + f.getFaqItems().size());
+		log.info(" f.list title = " + f.getFaqListTitle());
+		log.info(" f.item count = " + f.getFaqItems().size());
 	}
 
 	public static faq parse()
@@ -99,7 +99,7 @@ public class FaqParser {
 		catch(Exception e)
 		{
 			log.error(e);
-			System.out.println("e message = " + e.getMessage());
+			
 			return null;
 		}
 		

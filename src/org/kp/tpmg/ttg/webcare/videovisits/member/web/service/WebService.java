@@ -516,14 +516,14 @@ public class WebService{
 		
 		try
 		{
-			System.out.println("Webservice:userPresentInMeeting: query="+query);
+			logger.info("Webservice:userPresentInMeeting: query="+query);
 			query.setMeetingId (meetingId);
 			query.setMegaMeetingDisplayName(megaMeetingDisplayName);
 			
 			UserPresentInMeetingResponse response = stub.userPresentInMeeting(query);
 			
-			System.out.println("response=" + response);
-			System.out.println("toRet=" + toRet);
+			
+			logger.info("toRet=" + toRet);
 			toRet = response.get_return();
 		}
 		catch (Exception e)

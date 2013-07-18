@@ -30,7 +30,7 @@ public class IconPromoParser {
 		// TODO Auto-generated method stub
 		
 		List<iconpromo> f = parse();
-		System.out.println("title = " + f.get(0).getTitle());
+		log.info("title = " + f.get(0).getTitle());
 	}
 
 	public static List<iconpromo> parse()
@@ -99,7 +99,7 @@ public class IconPromoParser {
 		catch(Exception e)
 		{
 			log.error(e);
-			System.out.println("e message = " + e.getMessage());
+			
 			return null;
 		}
 		

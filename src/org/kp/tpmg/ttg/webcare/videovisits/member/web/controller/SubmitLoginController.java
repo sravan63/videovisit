@@ -13,8 +13,8 @@ public class SubmitLoginController extends SimplePageController {
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{
-		System.out.println("=======Entering SubmitLoginController===========");
-		 logger.info("=======Entering SubmitLoginController===========");
+		
+		 logger.info("Entering SubmitLoginController");
 		String data = null;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
@@ -22,8 +22,8 @@ public class SubmitLoginController extends SimplePageController {
 		{
 			//verify member from web service and perform meeting analysis.
 			 data = MeetingCommand.verifyMember(request, response);
-			 System.out.println("=======SubmitLoginController===========" + data);
-			 logger.info("=======SubmitLoginController===========" + data);
+			 
+			 logger.info("SubmitLoginController:data:" + data);
 	}
 		catch (Exception e)
 		{
