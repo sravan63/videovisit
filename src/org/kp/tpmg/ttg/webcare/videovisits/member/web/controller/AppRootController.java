@@ -49,6 +49,7 @@ public class AppRootController implements Controller {
 		logger.info("In AppRootController");
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
+			logger.info("context is null");
 			faq f = FaqParser.parse();
 			List<promo> promos = PromoParser.parse();
 			List<iconpromo> iconpromos = IconPromoParser.parse();
@@ -63,6 +64,8 @@ public class AppRootController implements Controller {
 			ctx.setIconPromo(iconpromos);
 			ctx.setVideoLink(videoLink);
 		}
+		else
+			logger.info("Context is not null");
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		return (modelAndView);
