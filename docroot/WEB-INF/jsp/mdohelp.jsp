@@ -69,6 +69,8 @@ $(document).ready(function() {
 	// scrolls to top for anchor page states on load
 	/* scrollMe(); */
 
+	// Remove the image title's
+	$("img").removeAttr("title");	
 });	
 
 function scrollMe(){
