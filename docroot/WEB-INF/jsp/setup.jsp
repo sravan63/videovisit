@@ -1,3 +1,9 @@
+<%@page import="java.util.ResourceBundle"%>
+<% 
+                                ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+                            	String setupUrl = rbInfo.getString("MEGA_MEETING_SETUP_URL");
+ %>
+
 <div id="videoVisitSetupContainer">
     <div class="videoVisitContainer">
     	<div id="videoVisitSetupPageContents">
@@ -9,7 +15,7 @@
 				<a href="mdohelp.htm" class="button" target="_blank"> Get Help </a>
 			</div>			
 			<div id="setupMainContents">
-				<iframe src="http://kaiserm3test.videoconferencinginfo.com/setup/" width="725" height="507" frameborder="0" scrolling="no">
+				<iframe src="<%=setupUrl%>" width="725" height="507" frameborder="0" scrolling="no">
 					Video Audio Setup Wizard
 				</iframe>
 			</div>
