@@ -32,8 +32,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 
 <c:if test="${WebAppContext.totalmeetings<=0}">
 	<div id="landing-portal-none">
-		<p>The video visit you are trying to join is no longer available.</p>
-		<p>The clinician has ended this visit.</p>
+		<p> The video visit you are trying to join is not currently available. </p>
 	</div>
 </c:if>
 
