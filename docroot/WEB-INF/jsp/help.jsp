@@ -17,7 +17,7 @@
     <div class="content">
         <div id="helpJoin" class="helptabs">
             <h4>Join a Video Visit</h4>
-            <p> After logging in you will see your appointment information and a 'Click here to join now' button 15 minutes before your appointment time.  You will not be able to join your video visit more than 15 minutes prior to the scheduled time. </p>
+            <p> After logging in you will see your appointment information and a 'Click here to Join Now' button 15 minutes before your appointment time.  You will not be able to join your video visit more than 15 minutes prior to the scheduled time. </p>
         </div>
         <div id="helpVideo" class="helptabs">
             <h4>Use Video</h4>
