@@ -352,9 +352,10 @@ input								{outline:none;}
 }
 .names-container > span.names a,
 .names-container > span.names span {
-  display:block;
-  margin-bottom:1px;
-  color:black;
+  display: block;
+  margin-bottom: 1px;
+  color: black;
+  word-wrap: break-word;
 }
 
 /* Member Login */
