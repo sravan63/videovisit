@@ -1,5 +1,6 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,14 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.FaqParser;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.IconPromoParser;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.PromoParser;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.VideoLinkParser;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
 import org.springframework.web.servlet.ModelAndView;
 
 public class GuestController extends SimplePageController {
@@ -33,6 +42,7 @@ public class GuestController extends SimplePageController {
 		
 		String data = null;
 		try {		
+			
 			MeetingCommand.IsMeetingHashValid(request, response);
 //			if ( ctx.getTotalmeetings() > 0)
 //				data = MeetingCommand.retrieveMeetingForCaregiver(request, response);
@@ -48,10 +58,22 @@ public class GuestController extends SimplePageController {
 	private void initializeWebappContext(HttpServletRequest request) throws Exception {
 		ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
+			logger.info("context is null");
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
 			ctx.setMegaMeetingURL(megaMeetingURL);	
 			ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
+			
+			
+			faq f = FaqParser.parse();
+			List<promo> promos = PromoParser.parse();
+			List<iconpromo> iconpromos = IconPromoParser.parse();
+			videolink videoLink = VideoLinkParser.parse();
+			
+			ctx.setFaq(f);
+			ctx.setPromo(promos);
+			ctx.setIconPromo(iconpromos);
+			ctx.setVideoLink(videoLink);
 		}
 	}
 }
