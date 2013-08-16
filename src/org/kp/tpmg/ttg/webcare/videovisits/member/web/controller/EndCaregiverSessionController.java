@@ -20,14 +20,14 @@ public class EndCaregiverSessionController extends SimplePageController   {
 		String data = null;
 		StringResponseWrapper responseWrapper = null;
 		try	{
-			
-			responseWrapper = MeetingCommand.quitMeeting(request, response);
+			data = MeetingCommand.endCaregiverMeetingSession(request, response);
+/*			responseWrapper = MeetingCommand.quitMeeting(request, response);
 			if(responseWrapper != null && responseWrapper.getSuccess()){
 				data = MeetingCommand.endCaregiverMeetingSession(request, response);
 			}
 			else{
 				data = JSONObject.fromObject(responseWrapper).toString();
-			}
+			}*/
 			
 		} catch (Exception e) {
 			// log error
