@@ -1,7 +1,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 
-<div class="page-content">
+<%-- <div class="page-content">
 	<div class="intro">
 		<div class="pic-frame">
 			<div class="pic">
@@ -25,4 +25,19 @@
 
 		<button id="signInId" class="button-main only-handsets" onclick="modalShow('modal-login');">Sign on here</button>
 
+</div> --%>
+
+
+<div style="display:block; border-bottom: 1px solid #CCC; line-height:1 em; font-size: 16px; font-family: Helvetica, Neue; overflow: auto; height: auto; color:#78BE20;">
+	<div style="background-color: #78BE20; height:45px;">
+	</div>
+	
+	<div style="margin: 55px 0 0; text-align: center; color: #DA6426; font-size: 20px;">
+		<p> Video Visit Mobile </p>
+		<p> Coming Soon </p>
+	</div>
+	
+	<div style="margin: 25px 0 40px; text-align: center; color: #666666;">
+		<p style="word-wrap: break-word;"> Until then, please use a laptop or desktop computer to access Video Visits.
+	</div>
 </div>
