@@ -11,11 +11,11 @@
 <%
 ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 String url = rbInfo.getString("MDO_LIVE_CHECK_URL");
-URL u = new URL(url);
+/*URL u = new URL(url);
 BufferedReader in = new BufferedReader(
-new InputStreamReader(u.openStream()));
+new InputStreamReader(u.openStream()));*/
 boolean live = false;
-String inputLine;
+/*String inputLine;
 while ((inputLine = in.readLine()) != null)
 {
 	if ( inputLine.contains("My Doctor Online") )
@@ -24,7 +24,7 @@ while ((inputLine = in.readLine()) != null)
 	}
 }
 in.close();
-
+*/
 	if ( live )
 	{
 %>
