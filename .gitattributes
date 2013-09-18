@@ -65,7 +65,9 @@ docroot/WEB-INF/jsp/mobile/expired-visit-member-pg.jsp -text
 docroot/WEB-INF/jsp/mobile/expired-visit-member.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/expired-visit.jsp -text
 docroot/WEB-INF/jsp/mobile/landingPage.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/mobile/landingPage.jsp.working -text
 docroot/WEB-INF/jsp/mobile/landingPagePG.jsp -text
+docroot/WEB-INF/jsp/mobile/landingPagePG.jsp.working -text
 docroot/WEB-INF/jsp/mobile/logout-confirmation.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientLoginModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientguestLoginModal.jsp -text
