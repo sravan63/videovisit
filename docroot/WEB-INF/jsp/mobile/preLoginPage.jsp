@@ -33,8 +33,8 @@
 	</div>
 	
 	<div style="margin: 55px 0 0; text-align: center; color: #DA6426; font-size: 20px;">
-		<p> Video Visit Mobile </p>
-		<p> Coming Soon </p>
+		<h2> Video Visit Mobile </h2>
+		<h2> Coming Soon </h2>
 	</div>
 	
 	<div style="margin: 25px 0 40px; text-align: center; color: #666666;">
