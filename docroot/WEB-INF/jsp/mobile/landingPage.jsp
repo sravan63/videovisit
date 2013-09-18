@@ -12,8 +12,8 @@
 <div class="page-content">
 
 	<div class="visits patient">
-		<h1>Video Visit Mobile</h1><br/>
-		<h1>Coming Soon</h1>
+		<h2>Video Visit Mobile</h2><br/>
+		<h2>Coming Soon</h2>
 		
 		<div class="alert alert-hero alert-no-visits">
 					<div class="alert-hero-message">
