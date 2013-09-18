@@ -9,17 +9,15 @@
 
 
 
-<div class="page-content">
-	<div class="visits patient">
-		<h1>Video Visit Mobile</h1><br/>
-		<h1>Coming Soon</h1>
-		
-		<div class="alert alert-hero alert-no-visits">
-					<div class="alert-hero-message">
-					<div class="image"></div>
-						<p><strong>Until then, please use a laptop or desktop computer to access Video Visits.</strong></p>
-					</div>
-				</div>		
+<div style="display:block; border-bottom: 1px solid #CCC; line-height:1 em; font-size: 16px; font-family: Helvetica, Neue; overflow: auto; height: auto; color:#78BE20;">
 	</div>
-
+	
+	<div style="margin: 55px 0 0; text-align: center; color: #DA6426; font-size: 20px;">
+		<p> Video Visit Mobile </p>
+		<p> Coming Soon </p>
+	</div>
+	
+	<div style="margin: 25px 0 40px; text-align: center; color: #666666;">
+		<p style="word-wrap: break-word;"> Until then, please use a laptop or desktop computer to access Video Visits.
+	</div>
 </div>
