@@ -29,7 +29,7 @@
 
 
 <div style="display:block; border-bottom: 1px solid #CCC; line-height:1 em; font-size: 16px; font-family: Helvetica, Neue; overflow: auto; height: auto; color:#78BE20;">
-	<div style="background-color: #78BE20; height:45px;">
+	
 	</div>
 	
 	<div style="margin: 55px 0 0; text-align: center; color: #DA6426; font-size: 20px;">
