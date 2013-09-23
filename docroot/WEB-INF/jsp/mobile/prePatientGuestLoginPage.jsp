@@ -13,7 +13,7 @@
 	</div>
 	
 	<div style="margin: 55px 0 0; text-align: center; color: #DA6426; font-size: 20px;">
-		<h2> Video Visit Mobile </h2>
+		<h2> Video Visits Mobile </h2>
 		<h2> Coming Soon </h2>
 	</div>
 	

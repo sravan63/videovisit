@@ -12,7 +12,7 @@
 <div class="page-content">
 
 	<div class="visits patient">
-		<h2>Video Visit Mobile</h2><br/>
+		<h2>Video Visits Mobile</h2><br/>
 		<h2>Coming Soon</h2>
 		
 		<div class="alert alert-hero alert-no-visits">
