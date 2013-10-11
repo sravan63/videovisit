@@ -49,35 +49,9 @@
 
 	<script type="text/javascript"  src="js/site/mdo/jquery-1.4.4.min.js"></script> 
 	<script type="text/javascript"  src="js/site/mdo/jquery-ui-1.8.7.min.js"></script>
-<!--	<script type="text/javascript"  src="js/site/mdo/jquery.address-1.2.2.min.js?strict=false"></script> 
+	<script type="text/javascript"  src="js/site/mdo/jquery.address-1.2.2.min.js?strict=false"></script>
 	<script type="text/javascript"  src="js/site/mdo/jq-plugins-v1.min.js"></script> 
-  	<script type="text/javascript"  src="js/site/mdo/mdo-jquery-v1.min.js"></script>	-->
-  	
-	<script type="text/javascript">
-
-		 // Add a script element as a child of the body
-		 function downloadJSAtOnload() {
-			 var element1 = document.createElement("script");
-			 element1.src = "js/site/mdo/jquery.address-1.2.2.min.js?strict=false";
-			 document.body.appendChild(element1);
-			 
-			 var element2 = document.createElement("script");
-			 element2.src = "js/site/mdo/jq-plugins-v1.min.js";
-			 document.body.appendChild(element2);
-			 
-			 var element3 = document.createElement("script");
-			 element3.src = "js/site/mdo/mdo-jquery-v1.min.js";
-			 document.body.appendChild(element3);
-		 }
-
-		 // Check for browser support of event handling capability
-		 if (window.addEventListener)
-			window.addEventListener("load", downloadJSAtOnload, false);
-		 else if (window.attachEvent)
-			window.attachEvent("onload", downloadJSAtOnload);
-		 else window.onload = downloadJSAtOnload;
-
-	</script>
+  	<script type="text/javascript"  src="js/site/mdo/mdo-jquery-v1.min.js"></script>	
 	  
     </head>
     <!--End Head-->
