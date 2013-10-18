@@ -5,7 +5,9 @@
         "unminimized" : []
     },
     "global" : [
-        "css/site/global/style.css"
+        "css/site/global/base.css",
+        "css/site/global/structure.css",
+        "css/site/global/print.css"
     ],
     "page"   : {
         "home" : {
