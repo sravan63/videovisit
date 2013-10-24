@@ -32,6 +32,42 @@
 	</context-param>
 	
    <!-- Session for regular Web FILTER -->
+   	<filter>
+		<filter-name>Print PDF Filter</filter-name>
+		<filter-class>org.kp.tpmg.ttg.cm.printPdfFilter.PrintPdfFilter</filter-class>
+	
+		<init-param>
+			<param-name>CallPrintPdfServlet</param-name>
+			<param-value>/callPrintPdfServlet</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Print PDF Filter</filter-name>
+		<url-pattern>/printPdf/rest/*</url-pattern>
+	</filter-mapping>
+  	<servlet>
+		<servlet-name>Call Print Pdf Servlet</servlet-name>
+		<servlet-class>org.kp.tpmg.ttg.cm.printPdfFilter.CallPrintPdfServlet</servlet-class>
+
+		<init-param>
+			<param-name>PrintPdfUrl</param-name>
+			<param-value>http://10.237.119.184:58080/printPdf/rest/</param-value>
+		</init-param>
+
+		<init-param>
+			<param-name>PrintPdfFileLocation</param-name>
+			<param-value>http://10.237.119.184:58080/printPdf/static_includes/printFolder/</param-value>
+		</init-param>
+		
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+  	<servlet-mapping>
+		<servlet-name>Call Print Pdf Servlet</servlet-name>
+		<url-pattern>/callPrintPdfServlet/*</url-pattern>
+	</servlet-mapping>
+	
+	
+	
    <filter>
     	<filter-name>WebSessionFilter</filter-name>
     	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
