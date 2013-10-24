@@ -189,6 +189,8 @@ docroot/js/library/plugin/validation/additional-methods.js -text
 docroot/js/library/plugin/validation/additional-methods.min.js -text
 docroot/js/library/plugin/validation/jquery.validate.js -text
 docroot/js/library/plugin/validation/jquery.validate.min.js -text
+docroot/js/site/deprecated/jquery-1.4.4.min.js -text
+docroot/js/site/deprecated/jquery-ui-1.8.7.min.js -text
 docroot/js/site/error/error.js -text
 docroot/js/site/global/dateExtensions_loader.js -text
 docroot/js/site/global/display.js -text
