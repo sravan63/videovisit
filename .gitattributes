@@ -133,7 +133,6 @@ docroot/css/library/jquery/jquery-ui/smoothness/images/ui-icons_888888_256x240.p
 docroot/css/library/jquery/jquery-ui/smoothness/images/ui-icons_cd0a0a_256x240.png -text
 docroot/css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.css -text svneol=unset#text/plain
 docroot/css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css -text svneol=unset#text/plain
-docroot/css/library/plugin/jqModal.css -text
 docroot/css/site/global/base.css -text
 docroot/css/site/global/handheld.css -text
 docroot/css/site/global/jquery-ui.css -text
