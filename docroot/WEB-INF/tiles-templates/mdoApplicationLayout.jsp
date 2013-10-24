@@ -52,6 +52,7 @@
 	<script type="text/javascript"  src="js/library/jquery/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript"  src="js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js"></script>
 	<script type="text/javascript"  src="js/site/mdo/jq-plugins-v1.min.js"></script>
+	<script type="text/javascript"  src="js/site/mdo/print.js"></script>
 <!--	<script type="text/javascript"  src="js/site/mdo/jquery.address-1.2.2.min.js?strict=false"></script>
 	<script type="text/javascript"  src="js/site/mdo/mdo-jquery-v1.min.js"></script> -->
 	
