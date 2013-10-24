@@ -146,8 +146,6 @@ docroot/css/site/global/mobile-web.css -text svneol=unset#text/plain
 docroot/css/site/global/mobile.css -text svneol=unset#text/plain
 docroot/css/site/global/print.css -text
 docroot/css/site/global/structure.css -text
-docroot/css/site/mdo/___9D80.tmp -text
-docroot/css/site/mdo/___B3AF.tmp -text
 docroot/css/site/mdo/jquery-ui-1.8.2.custom.css -text
 docroot/css/site/mdo/print.css -text
 docroot/css/site/mdo/styles.css -text
