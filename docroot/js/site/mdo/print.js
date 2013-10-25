@@ -220,7 +220,7 @@ mdoprint.print = function () {
 		fileref.attr("rel", "stylesheet");
 		fileref.attr("type", "text/css");
 		fileref.attr("media", "print");
-		fileref.attr("href", "/videovisit/static_includes/css/mdo/print.css");
+		fileref.attr("href", "/videovisit/css/site/mdo/print.css");
 		fileref.attr("charset", "utf-8");
 		$('head:eq(0)').append(fileref);
 				
