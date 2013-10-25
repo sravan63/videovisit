@@ -43,7 +43,7 @@
 	<![endif]-->
 <!--     <link rel="stylesheet" href="css/site/mdo/jquery-mdo.css" type="text/css" media="screen" charset="utf-8"/>
     <link rel="stylesheet" href="css/site/mdo/new_styles.css" type="text/css" media="screen" charset="utf-8"/>	--> 
-	<link rel="stylesheet" href="css/site/mdo/print.css" type="text/css" media="print" charset="utf-8"/>
+	<link rel="stylesheet" href="/videovisit/css/site/mdo/print.css" type="text/css" media="print" charset="utf-8"/>
 	<link rel="stylesheet" href="css/site/mdo/vv_styles.css" type="text/css" media="screen" charset="utf-8"/>
 
 
