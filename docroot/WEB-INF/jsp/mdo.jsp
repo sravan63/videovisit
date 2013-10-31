@@ -33,7 +33,7 @@
     		<div id="mainContent">
     			
     			<div id="videoWrapper">
-    				<div id="videoContainer" style="background: url('<%=videoImagePath%>') no-repeat scroll center transparent;">
+    				<div id="videoContainer" style="background: url('/videovisit/<%=videoImagePath%>') no-repeat scroll center transparent;">
     				</div>
     			</div>
     			
