@@ -77,9 +77,10 @@ function showJoinNowModal(encodedHrefLocation){
 
 	// Grab the GET variable
     var iframedata = encodedHrefLocation;
-    
+//  <!-- Commented by Srini  08/27 -->	
     // Load it into the iframe's source attribute'
-    $("iframe").attr('src', decodeURIComponent(iframedata));
+   // $("iframe").attr('src', decodeURIComponent(iframedata));
+    $("iframe").attr('src', iframedata);
     
     $("#guest-join-now-modal").dialog( "open" );
     GuestReadyPage.keepALive();

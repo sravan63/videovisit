@@ -31,7 +31,9 @@ VIDEO_VISITS_MOBILE.Path = {
         ,
 	    joinMeeting : {
 	        ajaxurl : 'joinmeeting.json',
-	        userPresentInMeeting:'userPresentInMeeting.json'
+	        userPresentInMeeting:'userPresentInMeeting.json',
+	        mobileCreateSession:'createMobileMegaMeeting.json',
+	        mobileCareGiverCreateSession:'createCareGiverMobileMegaMeeting.json'
 	    },
 	    logout : {
 	        logoutjson: 'logout.json',
@@ -141,8 +143,8 @@ $(document).ready(function() {
 	
 	$(".getAppButton, .getAppLink").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
-		var iOSUrl = 'http://itunes.apple.com/us/app/video-visits/id622918437?mt=8';
-		var androidUrl = 'https://play.google.com/store/apps/details?id=air.com.videoconferencinginfo.tpmg';
+		var iOSUrl = 'https://itunes.apple.com/us/app/vidyomobile/id444062464?mt=8';
+		var androidUrl = 'https://play.google.com/store/apps/details?id=com.vidyo.VidyoClient&hl=en';
 		
 		
 		var os = getAppOS();
@@ -291,7 +293,7 @@ $(document).ready(function() {
 			            		else{
 			            				
 				            			joinMeeting(meetingId);
-				    	        		launchVideoVisit(megaMeetingUrl, megaMeetingId, name);
+				    	        		launchVideoVisit(megaMeetingUrl, meetingId, name);
 			            			}
 		            		}
 		            		catch(e)
@@ -445,9 +447,28 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	            }
 	              
 	            createGuestSession();
-	            
-				launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, firstName + ' ' + lastName + ' (' + email + ')');
-				clearAllErrors();
+	            $.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.mobileCareGiverCreateSession, postdata,function(data){
+	            	try
+	            	{
+	            		data = jQuery.parseJSON(data);
+	            		if ( data.errorIdentifier == 1){
+	            			window.location.replace("logout.htm");
+	            		}
+
+	            		if (data.errorMessage) {
+	            			window.location.replace("logout.htm");
+	            		}
+	            		url = data.result;
+	            		launchVideoVisitForPatientGuest(url, megaMeetingId, firstName + ' ' + lastName + ' (' + email + ')');
+	    				clearAllErrors();
+
+	            	}
+	            	catch(e)
+	            	{
+	            		window.location.replace("logout.htm");
+	            	}
+	            	});
+				
 				
 	
 	        },
@@ -643,13 +664,54 @@ function deleteCookie(c_name){
  * @param lastName
  * @param firstName
  */
-function launchVideoVisit(megaMeetingUrl, megaMeetingId, name){
+function launchVideoVisit(megaMeetingUrl, meetingId, name){
 	//var name = lastName + " " + firstName;
+	var postPara = { meetingId: meetingId};
+	var url;
+	$.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.mobileCreateSession, postPara,function(data){
+	try
+	{
+		data = jQuery.parseJSON(data);
+		if ( data.errorIdentifier == 1){
+			window.location.replace("logout.htm");
+		}
+
+		if (data.errorMessage) {
+			window.location.replace("logout.htm");
+		}
+		url = data.result;
+		//alert('prefix = ' +url);
+		var appOS = getAppOS();
+		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
+		if(appOS === 'iOS'){
+		
+		    var iOSver = iOSversion();
+		    //alert('iOS ver: ' + iOSver);
+		    //Fix for the ios 7 issue with openTab function
+			if (iOSver[0] >= 7) {
+			  //alert('This is running iOS 7 or later.');
+			  window.location.replace(url);
+			}else{
+				openTab(url);
+			}
+		}
+		else{
+			openTab(url);
+			
+		}	
+		
+
+	}
+	catch(e)
+	{
+		window.location.replace("logout.htm");
+	}
+	});
+	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1"; 
 	
-	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1"; 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
-	openTab(megaMeetingUrl);
+	
 }
 
 
@@ -659,11 +721,30 @@ function launchVideoVisit(megaMeetingUrl, megaMeetingId, name){
  * @param lastName
  * @param firstName
  */
-function launchVideoVisitForPatientGuest(megaMeetingUrl, megaMeetingId, name){
-	var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1"; 
+function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
+	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1"; 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
-	 openTab(megaMeetingUrl);
+	var appOS = getAppOS();
+	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
+	if(appOS === 'iOS'){
+	
+	    var iOSver = iOSversion();
+	    //alert('iOS ver: ' + iOSver);
+	    //Fix for the ios 7 issue with openTab function
+		if (iOSver[0] >= 7) {
+		  //alert('This is running iOS 7 or later.');
+		  window.location.replace(megaMeetingUrl);
+		}else{
+			openTab(megaMeetingUrl);
+		}
+	}
+	else{
+		openTab(megaMeetingUrl);
+		
+	}	
+	
+	
 }
 
 
@@ -1018,5 +1099,13 @@ function refreshTimestamp(){
 
 	$("#lastRefreshTimeId").text(refreshTimeText);
 	
+
+}
+
+function iOSversion() {
+	
+	 // supports iOS 2.0 and later
+	 var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+	 return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
 
 }

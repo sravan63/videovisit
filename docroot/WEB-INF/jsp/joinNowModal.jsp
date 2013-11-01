@@ -17,7 +17,10 @@
 			<li>${WebAppContext.member.lastName}, ${WebAppContext.member.firstName} ${WebAppContext.member.middleName}</li>
 			<li class="last"><a href="mdohelp.htm"  target="_blank">Help</a></li>
 		</ul>
+		 <!-- Below buttons are commented By Srini.P 09/12/2013 -->
+		 <!--Start 
 		<a id="quitMeetingId" class="button" >Quit Meeting &rsaquo;&rsaquo;</a>
+		end -->
 	</div>
                                 
      <div id="video-main" style="width:100%">

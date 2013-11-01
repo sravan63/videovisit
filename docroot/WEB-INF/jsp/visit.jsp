@@ -1,6 +1,6 @@
 
-
-<div id="join-now-modal" class="join-now-modal" style="display:none" title="Join Now">
+ <!-- Commented by Srini  08/27 style="display:none" -->	
+ <div id="join-now-modal" class="join-now-modal" style="display:none" title="Join Now">
 	<%@ include file="joinNowModal.jsp" %>
 </div>
 

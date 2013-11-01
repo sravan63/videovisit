@@ -67,7 +67,7 @@
               </c:if>
             </div>
 
-            <a id="joinNowId" class="btn joinNowButton" meetingid="${meeting.meetingId}" mmMeetingUrl="${meeting.mmMeetingName}" href="#">Click here to Join Now</a>
+            <a id="joinNowId" class="btn joinNowButton"  userName="${WebAppContext.member.firstName} ${WebAppContext.member.lastName}" meetingid="${meeting.meetingId}" href="#">Click here to join now</a> 
             <p class="smallprint">You may be joining before your clinician.  Please be patient.</p>
         </div>
     </div>

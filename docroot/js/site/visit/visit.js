@@ -14,7 +14,7 @@ $(document).ready(function() {
  // INITIALIZE  Modals.
     initializeJoinNowModal();
     initializeQuitMeetingModal();
-    
+//  <!-- Commented by Srini  08/27 -->	
     showJoinNowModal(decodeURIComponent(iframedata));
     
     // Quit meeting button on the Quit Meeting modal 
@@ -107,9 +107,12 @@ function showJoinNowModal(encodedHrefLocation){
 
 	// Grab the GET variable
     var iframedata = encodedHrefLocation;
-    
+
+//  <!-- Commented by Srini  08/27 -->	
     // Load it into the iframe's source attribute'
-    $("iframe").attr('src', decodeURIComponent(iframedata));
+//    $("iframe").attr('src', decodeURIComponent(iframedata));
+    
+    $("iframe").attr('src', iframedata);
     
     $("#join-now-modal").dialog( "open" );
     
@@ -123,7 +126,7 @@ function showJoinNowModal(encodedHrefLocation){
 function initializeJoinNowModal(){
 	$("#join-now-modal").dialog({
 	      autoOpen: false,
-	      width: "80%",
+	      width: "98%",
 	      modal: true,
 	      dialogClass:'hide-modal-title'
 	});

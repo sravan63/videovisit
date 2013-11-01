@@ -11,11 +11,9 @@ $(document).ready(function() {
     	
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
-        hreflocation = $(this).attr('mmMeetingUrl');
-        
-        
-        var name = hreflocation.substring(hreflocation.indexOf("&user=") +"&user=".length);
-		name = name.substring(0, name.indexOf("&"));
+        //  <!-- Commented by Srini  08/27 -->
+        // hreflocation = $(this).attr('mmMeetingUrl');
+        var name = $(this).attr('userName');
 		
         var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name};
         
@@ -50,9 +48,14 @@ $(document).ready(function() {
 			            		returndata = jQuery.parseJSON(returndata);
 			            		if ( returndata.success)
 			            		{
+			            			 //  <!-- Commented by Srini  08/27 -->
 			            			hreflocation = returndata.result;
+			            			//hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
+			            			hreflocation = "/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
+			            			//  <!-- Commented by Srini  08/27 -->	
 			            			// SHOW Join now modal.
 			            			window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation) + "&meetingId=" + meetingId + "&memberName=" + name);
+			            			//window.location.replace("visit.htm?iframedata=" + hreflocation + "&meetingId=" + meetingId + "&memberName=" + name);
 			            		}
 			            		
 			            	}
