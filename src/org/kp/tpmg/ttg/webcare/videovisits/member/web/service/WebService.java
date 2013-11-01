@@ -14,6 +14,7 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
+import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateMegameetingSession;
 import org.kp.tpmg.videovisit.member.CreateMegameetingSessionResponse;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSession;
@@ -573,4 +574,40 @@ public class WebService{
 	
 	}
 	
+	public static StringResponseWrapper createMegameetingMobileSession(long meetingId) throws Exception {
+		StringResponseWrapper toRet = null; 
+		
+		try
+		{
+			org.kp.tpmg.videovisit.member.CreateMobileMegameetingSession createMeeting = new org.kp.tpmg.videovisit.member.CreateMobileMegameetingSession();
+			createMeeting.setMeetingId(meetingId);
+			toRet = stub.createMobileMegameetingSession(createMeeting).get_return();
+			return toRet;
+		}
+		catch(Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			return null;
+		}
 }
+
+	public static StringResponseWrapper createCareGiverMegameetingMobileSession(String patientName, String meetingCode) throws Exception {
+	StringResponseWrapper toRet = null; 
+	
+	try
+	{
+		
+		CreateCaregiverMobileMeetingSession createMeeting = new CreateCaregiverMobileMeetingSession();
+		createMeeting.setMeetingHash(meetingCode);
+		createMeeting.setPatientLastName(patientName);
+		toRet = stub.createCaregiverMobileMeetingSession(createMeeting).get_return();
+		return toRet;
+	}
+	catch(Exception e)
+	{
+		logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+		return null;
+	}
+}
+}
+

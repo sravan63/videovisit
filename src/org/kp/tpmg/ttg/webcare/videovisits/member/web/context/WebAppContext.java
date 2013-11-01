@@ -38,7 +38,7 @@ public class WebAppContext implements Serializable{
 	private List<promo> promos;
 	private List<iconpromo> iconpromos;
 	private videolink videoLink;
-	
+	private String careGiverName = "";
 	public static WebAppContext getWebAppContext(HttpServletRequest request) {
 		return (WebAppContext) request.getSession().getAttribute(WebAppContext.HTTP_SESSION_KEY);
 	}
@@ -161,5 +161,14 @@ public class WebAppContext implements Serializable{
 	public videolink getVideoLink()
 	{
 		return videoLink;
+	}
+	public void setCareGiverName(String careGiverName)
+	{
+		this.careGiverName = careGiverName;
+	}
+	
+	public String getCareGiverName()
+	{
+		return careGiverName;
 	}
 }

@@ -159,7 +159,7 @@ public class MeetingCommand {
 						for (int i = 0; i < meetings.length; i++ )
 						{
 							if(meetings[i].getMmMeetingName() != null && !"".equals(meetings[i].getMmMeetingName())){
-									String megaUrl = ctx.getMegaMeetingURL();
+									/*String megaUrl = ctx.getMegaMeetingURL();
 									m1 = p1.matcher(megaUrl);
 									megaUrl = m1.replaceAll(meetings[i].getMmMeetingName());
 									m2 = p2.matcher(megaUrl);
@@ -168,7 +168,7 @@ public class MeetingCommand {
 															" " + 
 															ctx.getMember().getLastName().replaceAll("[^a-zA-Z0-9 ]", " ")); 
 									// copy back to the meeting mmMeetingName
-									meetings[i].setMmMeetingName(megaUrl);
+									meetings[i].setMmMeetingName(megaUrl);*/
 							}	
 							
 							meetings[i].setParticipants((ProviderWSO[]) clearNullArray(meetings[i].getParticipants()));
@@ -538,7 +538,7 @@ public class MeetingCommand {
 		}
 		
 		String megaMeetingName = meeting.getMmMeetingName();
-		if (megaMeetingName != null && !megaMeetingName.isEmpty()) {
+		/*if (megaMeetingName != null && !megaMeetingName.isEmpty()) {
 			Pattern p1 = Pattern.compile ("<mmMeetingName>");
 			Pattern p2 = Pattern.compile("<guest name>");
 			Matcher m1, m2;
@@ -562,7 +562,7 @@ public class MeetingCommand {
 					}
 				}
 			}						
-		}
+		}*/
 		
 		meeting.setParticipants((ProviderWSO[]) clearNullArray(meeting.getParticipants()));
 		meeting.setCaregivers((CaregiverWSO[]) clearNullArray(meeting.getCaregiver()));
@@ -654,6 +654,76 @@ public class MeetingCommand {
 		return meetingStatus;
 	}
 	
+	public static String createMobileMegaMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		StringResponseWrapper ret = null;
+		long meetingId = 0;
+		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+		
+		
+		try
+		{
+			// parse parameters
+			if (request.getParameter("meetingId") != null &&
+				!request.getParameter("meetingId").equals("")) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			
+			
+			//grab data from web services
+			ret= WebService.createMegameetingMobileSession(meetingId);
+			if (ret != null)
+			{
+				//response.addHeader("P3P", "CP=\"NOI ADM DEV PSAi COM NAV OUR OTR STP IND DEM\"");
+				logger.info(ret.getResult());
+				return JSONObject.fromObject(ret).toString();
+			}
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
 	
+	public static String CreateCareGiverMobileMegaMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		StringResponseWrapper ret = null;
+		String patientName = "";
+		String meetingCode = "";
+		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+		
+		
+		try
+		{
+			// parse parameters
+			if (request.getParameter("patientLastName") != null &&
+				!request.getParameter("patientLastName").equals("")) {
+				patientName = request.getParameter("patientLastName");
+			}
+			
+			if (request.getParameter("meetingCode") != null &&
+					!request.getParameter("meetingCode").equals("")) {
+				meetingCode = request.getParameter("meetingCode");
+				}
+			
+			
+			//grab data from web services
+			ret= WebService.createCareGiverMegameetingMobileSession(patientName,meetingCode);
+			if (ret != null)
+			{
+				//response.addHeader("P3P", "CP=\"NOI ADM DEV PSAi COM NAV OUR OTR STP IND DEM\"");
+				logger.info(ret.getResult());
+				return JSONObject.fromObject(ret).toString();
+			}
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
 	
 }
