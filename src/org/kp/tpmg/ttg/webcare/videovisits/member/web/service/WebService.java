@@ -338,7 +338,7 @@ public class WebService{
 		return toRet;
 	}
 
-	public static StringResponseWrapper createMegameetingSession(long meetingID, String mrn8Digit, String sessionID) throws Exception
+	public static StringResponseWrapper createMeetingSession(long meetingID, String mrn8Digit, String sessionID) throws Exception
 	{
 		StringResponseWrapper toRet = null; 
 		

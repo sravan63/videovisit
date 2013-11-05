@@ -347,7 +347,7 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 
-	public static String createMegameeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String createMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
@@ -364,7 +364,7 @@ public class MeetingCommand {
 			if (ctx != null && ctx.getMember() != null)
 			{
 				//grab data from web services
-				ret= WebService.createMegameetingSession(meetingId, ctx.getMember().getMrn8Digit(), request.getSession().getId());
+				ret= WebService.createMeetingSession(meetingId, ctx.getMember().getMrn8Digit(), request.getSession().getId());
 				if (ret != null)
 				{
 					return JSONObject.fromObject(ret).toString();
