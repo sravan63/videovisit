@@ -114,6 +114,9 @@ function showJoinNowModal(encodedHrefLocation){
     
     $("iframe").attr('src', iframedata);
     
+    var finalHeight = $(window).height();
+	$('#join-now-modal').css({"height": finalHeight*0.90});
+	
     $("#join-now-modal").dialog( "open" );
     
     LandingReadyPage.keepALive();
