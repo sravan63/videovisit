@@ -15,8 +15,8 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
-import org.kp.tpmg.videovisit.member.CreateMegameetingSession;
-import org.kp.tpmg.videovisit.member.CreateMegameetingSessionResponse;
+
+import org.kp.tpmg.videovisit.member.CreateMeetingSession;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.GetMeetingByMeetingID;
@@ -344,23 +344,23 @@ public class WebService{
 		
 		if (!simulation)
 		{
-			CreateMegameetingSession query = new CreateMegameetingSession();
+			CreateMeetingSession query = new CreateMeetingSession();
 			try
 			{
 				query.setMrn8Digit(mrn8Digit);
 				query.setSessionID(sessionID);
 				query.setMeetingID(meetingID);
 				
-				CreateMegameetingSessionResponse response = stub.createMegameetingSession(query);
-				toRet = response.get_return();
+				return stub.createMeetingSession(query).get_return();
+				
 			}
 			catch (Exception e)
 			{
 				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-				CreateMegameetingSessionResponse response = stub.createMegameetingSession(query);
-				toRet = response.get_return();
+				return stub.createMeetingSession(query).get_return();
+				
 			}
-			return toRet;
+			
 		}
 	
 		// simulation
@@ -579,9 +579,9 @@ public class WebService{
 		
 		try
 		{
-			org.kp.tpmg.videovisit.member.CreateMobileMegameetingSession createMeeting = new org.kp.tpmg.videovisit.member.CreateMobileMegameetingSession();
+			org.kp.tpmg.videovisit.member.CreateMobileMeetingSession createMeeting = new org.kp.tpmg.videovisit.member.CreateMobileMeetingSession();
 			createMeeting.setMeetingId(meetingId);
-			toRet = stub.createMobileMegameetingSession(createMeeting).get_return();
+			toRet = stub.createMobileMeetingSession(createMeeting).get_return();
 			return toRet;
 		}
 		catch(Exception e)
