@@ -225,7 +225,7 @@
 	<bean id="joinmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.JoinMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
-	<bean id="createmegameeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateMegameetingController">
+	<bean id="createmegameeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateMeetingSessionController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<bean id="quitmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.QuitMeetingController">
