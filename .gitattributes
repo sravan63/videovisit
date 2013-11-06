@@ -298,6 +298,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/AppRootController.
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateCareGiverMobileMegaMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateCaregiverSessionController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateMeetingSessionController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateMobileMeetingSessionController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateMobileMegaMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/EndCaregiverSessionController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/GuestController.java -text
