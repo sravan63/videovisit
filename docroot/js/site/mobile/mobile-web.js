@@ -32,8 +32,8 @@ VIDEO_VISITS_MOBILE.Path = {
 	    joinMeeting : {
 	        ajaxurl : 'joinmeeting.json',
 	        userPresentInMeeting:'userPresentInMeeting.json',
-	        mobileCreateSession:'createMobileMegaMeeting.json',
-	        mobileCareGiverCreateSession:'createCareGiverMobileMegaMeeting.json'
+	        mobileCreateSession:'createMobileMeeting.json',
+	        mobileCareGiverCreateSession:'createCareGiverMobileMeeting.json'
 	    },
 	    logout : {
 	        logoutjson: 'logout.json',

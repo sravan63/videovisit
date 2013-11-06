@@ -92,7 +92,7 @@
 				<prop key="/quitmeeting.json">quitmeeting</prop>
 				<prop key="/logout.json">logoutmeeting</prop>
 				<prop key="/retrievemeeting.json">retrievemeeting</prop>
-				<prop key="/createmegameeting.json">createmegameeting</prop>
+				<prop key="/createmeeting.json">createmeeting</prop>
 				<prop key="/healthMonitor">healthMonitor</prop>
 				<prop key="/loading.htm">loading</prop>
 				<prop key="/guest">guest</prop>	
@@ -105,8 +105,8 @@
 				<prop key="/guesterror.htm">guesterror</prop>
 				<prop key="/guesthelp.htm">guesthelp</prop>	
 				<prop key="/userPresentInMeeting.json">dataUserPresentInMeeting</prop>
-				<prop key="/createMobileMegaMeeting.json">dataCreateMobileMegaMeeting</prop>
-				<prop key="/createCareGiverMobileMegaMeeting.json">dataCreateCareGiverMobileMegaMeeting</prop>
+				<prop key="/createMobileMeeting.json">dataCreateMobileMeeting</prop>
+				<prop key="/createCareGiverMobileMeeting.json">dataCreateCareGiverMobileMeeting</prop>
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
 				<prop key="/mobilelogin.json">mobilelogin</prop>
@@ -225,7 +225,7 @@
 	<bean id="joinmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.JoinMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
-	<bean id="createmegameeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateMeetingSessionController">
+	<bean id="createmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateMeetingSessionController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<bean id="quitmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.QuitMeetingController">
@@ -335,10 +335,10 @@
 		
 	</bean>
 	
-	<bean id="dataCreateMobileMegaMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateMobileMegaMeetingController">
+	<bean id="dataCreateMobileMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateMobileMeetingSessionController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
-	<bean id="dataCreateCareGiverMobileMegaMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateCareGiverMobileMegaMeetingController">
+	<bean id="dataCreateCareGiverMobileMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateCareGiverMobileMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
