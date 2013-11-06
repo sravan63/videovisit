@@ -296,7 +296,6 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/context/SystemError.java -tex
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/context/WebAppContext.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/AppRootController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateCareGiverMobileMeetingController.java -text
-src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateCareGiverMobileMegaMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateCaregiverSessionController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateMeetingSessionController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/CreateMobileMeetingSessionController.java -text
