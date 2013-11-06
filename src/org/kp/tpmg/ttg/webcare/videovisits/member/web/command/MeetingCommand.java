@@ -402,6 +402,22 @@ public class MeetingCommand {
 							normalizeMeetingData(meeting, meetingCode, ctx);
 						}
 						ctx.setTotalmeetings(meetings.length);
+						
+						for ( MeetingWSO m : meetings)
+						{
+							if ( m.getCaregivers() != null)
+							{
+								for (CaregiverWSO c : m.getCaregivers())
+								{
+									if ( c.getMeetingHash().equalsIgnoreCase(meetingCode))
+									{
+										String  name = c.getFirstName() + " " + c.getLastName() + " (" + c.getEmailAddress() + ")";
+										ctx.setCareGiverName(name);
+										break;
+									}
+								}
+							}
+						}
 						ctx.setMeetings(meetings);
 					}
 				}				
