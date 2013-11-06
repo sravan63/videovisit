@@ -5,7 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.UpdateResponseWrapper;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
+
 
 
 public class MonitoringCommand {
@@ -19,7 +20,7 @@ public class MonitoringCommand {
 		String toRet = null;
 		try
 		{
-			UpdateResponseWrapper result = WebService.testDbRoundTrip();
+			StringResponseWrapper result = WebService.testDbRoundTrip();
 			if(result.getSuccess())
 			{
 				toRet = "OK";

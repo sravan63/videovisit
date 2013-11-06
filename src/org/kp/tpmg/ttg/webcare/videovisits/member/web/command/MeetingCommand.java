@@ -22,7 +22,6 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.UpdateResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 
 public class MeetingCommand {
@@ -203,7 +202,7 @@ public class MeetingCommand {
 	}
 	
 	public static String memberLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		UpdateResponseWrapper ret = null;
+		StringResponseWrapper ret = null;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
 		try
@@ -214,7 +213,7 @@ public class MeetingCommand {
 				ret= WebService.memberLogout(ctx.getMember().getMrn8Digit(), request.getSession().getId());
 				if (ret != null)
 				{
-					return JSONObject.fromObject(ret).toString();
+					return ret.getResult();
 				}
 			}
 		}
@@ -272,7 +271,7 @@ public class MeetingCommand {
 	
 	
 	public static String updateMemberMeetingStatusJoining(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		UpdateResponseWrapper ret = null;
+		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
@@ -297,7 +296,7 @@ public class MeetingCommand {
 				ret= WebService.updateMemberMeetingStatusJoining(meetingId, ctx.getMember().getMrn8Digit(), request.getSession().getId());
 				if (ret != null)
 				{
-					return JSONObject.fromObject(ret).toString();
+					return ret.getResult();
 				}
 			}
 		}
@@ -311,7 +310,7 @@ public class MeetingCommand {
 	}
 
 	public static String updateEndMeetingLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		UpdateResponseWrapper ret = null;
+		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
@@ -334,7 +333,7 @@ public class MeetingCommand {
 				ret= WebService.memberEndMeetingLogout(ctx.getMember().getMrn8Digit(), meetingId, request.getSession().getId());
 				if (ret != null)
 				{
-					return JSONObject.fromObject(ret).toString();
+					return ret.getResult();
 				}
 			}
 		}
@@ -367,7 +366,7 @@ public class MeetingCommand {
 				ret= WebService.createMeetingSession(meetingId, ctx.getMember().getMrn8Digit(), request.getSession().getId());
 				if (ret != null)
 				{
-					return JSONObject.fromObject(ret).toString();
+					return ret.getResult();
 				}
 			}
 		}
@@ -466,17 +465,14 @@ public class MeetingCommand {
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = request.getParameter("patientLastName");
 			StringResponseWrapper ret = WebService.verifyCaregiver(meetingCode, patientLastName);
-			if ( ret.getResult() != null && ret.getResult().equalsIgnoreCase("0"))
+			if ( ret != null )
 			{
 				logger.info("setting care giver context true");
-				ctx.setCareGiver(true);
+				ctx.setCareGiver(ret.getSuccess());
 			}
-			else
-			{
-				logger.info("setting care giver context false");
-				ctx.setCareGiver(false);
-			}
-			json = JSONObject.fromObject(ret).toString();
+
+			json = ret.getResult();
+
 		} catch (Exception e) {
 			json = JSONObject.fromObject(new SystemError()).toString();
 		}
@@ -494,7 +490,7 @@ public class MeetingCommand {
 			if (meetingCode != null && !meetingCode.isEmpty()) {
 				ret = WebService.createCaregiverMeetingSession(meetingCode, patientLastName);
 				if (ret != null) {
-					return JSONObject.fromObject(ret).toString();
+					return ret.getResult();
 				}
 			}						
 		} catch (Exception e) {
@@ -507,7 +503,7 @@ public class MeetingCommand {
 	}
 	
 	public static String endCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		UpdateResponseWrapper ret = null;		
+		StringResponseWrapper ret = null;		
 		try	{
 			String meetingCode = request.getParameter("meetingCode");
 			logger.info("meetingCode = " + meetingCode);
@@ -515,7 +511,7 @@ public class MeetingCommand {
 				ret = WebService.endCaregiverMeetingSession(meetingCode);
 			}				
 			if (ret != null) {
-				return JSONObject.fromObject(ret).toString();
+				return ret.getResult();
 			}			
 		} catch (Exception e) {
 			// log error
@@ -619,7 +615,7 @@ public class MeetingCommand {
 			if (userPresentInMeetingResponse != null)
 			{
 				logger.info("userPresentInMeeting: success = " + userPresentInMeetingResponse.getSuccess()); 
-				userPresentInMeeting = JSONObject.fromObject(userPresentInMeetingResponse).toString();
+				userPresentInMeeting = userPresentInMeetingResponse.getResult();
 				logger.info("MeetingCommand:userPresentInMeeting: userPresentInMeeting="+userPresentInMeeting);
 			}
 		}
@@ -691,7 +687,7 @@ public class MeetingCommand {
 			{
 				//response.addHeader("P3P", "CP=\"NOI ADM DEV PSAi COM NAV OUR OTR STP IND DEM\"");
 				logger.info(ret.getResult());
-				return JSONObject.fromObject(ret).toString();
+				return ret.getResult();
 			}
 		}
 		catch (Exception e)
@@ -730,7 +726,7 @@ public class MeetingCommand {
 			{
 				//response.addHeader("P3P", "CP=\"NOI ADM DEV PSAi COM NAV OUR OTR STP IND DEM\"");
 				logger.info(ret.getResult());
-				return JSONObject.fromObject(ret).toString();
+				return ret.getResult();
 			}
 		}
 		catch (Exception e)

@@ -48,7 +48,6 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.UpdateResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesStub;
 
@@ -137,49 +136,30 @@ public class WebService{
 	}
 
 
-	public static VerifyMemberResponseWrapper verifyMember(String lastName, String mrn8Digit, 
+	public static VerifyMemberResponseWrapper verifyMember(String lastName, String mrn8Digit, //left
 							String birth_month, String birth_year, String birth_day,
 							String sessionID) throws Exception 
 	{
 		VerifyMemberResponseWrapper resp = null; 
 
-		if (!simulation)
-		{
-			VerifyMember query = new VerifyMember();
+		VerifyMember query = new VerifyMember();
 
-			try 
-			{
-				query.setLastName(lastName);
-				query.setMrn8Digit(mrn8Digit);
-				query.setDob(birth_year + "-" + birth_month + "-" + birth_day);				
-				query.setSessionID(sessionID);					
-				
-				VerifyMemberResponse response = stub.verifyMember(query);
-				resp = response.get_return();
-			}
-			catch (Exception e) 
-			{
-				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-				VerifyMemberResponse response = stub.verifyMember(query);
-				resp = response.get_return();
-			}
-			return resp;
-		}
-		
-
-		// simulation
-		resp = new VerifyMemberResponseWrapper();
-		if (lastName.equals("one")|| lastName.equals("two"))
+		try 
 		{
-			resp.setSuccess(true);
-			MemberWSO fakeresp = new MemberWSO();
-			resp.setResult(fakeresp);
-			resp.getResult().setLastName(lastName);	
-			resp.getResult().setFirstName("John");		
-			resp.getResult().setMrn8Digit(mrn8Digit);		
+			query.setLastName(lastName);
+			query.setMrn8Digit(mrn8Digit);
+			query.setDob(birth_year + "-" + birth_month + "-" + birth_day);				
+			query.setSessionID(sessionID);					
+			
+			VerifyMemberResponse response = stub.verifyMember(query);
+			resp = response.get_return();
 		}
-		
-		// end simulation
+		catch (Exception e) 
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			VerifyMemberResponse response = stub.verifyMember(query);
+			resp = response.get_return();
+		}
 		return resp;
 	}
 	
@@ -188,95 +168,47 @@ public class WebService{
 	public static RetrieveMeetingResponseWrapper retrieveMeeting(String mrn8Digit,int pastMinutes,int futureMinutes,String sessionID) throws Exception 
 	{
 		RetrieveMeetingResponseWrapper toRet = null;
-		if (!simulation)
+		RetrieveMeetingsForMember query = new RetrieveMeetingsForMember();
+		try
 		{
-			RetrieveMeetingsForMember query = new RetrieveMeetingsForMember();
-			try
-			{
-				query.setMrn8Digit(mrn8Digit);
-				query.setPastMinutes(pastMinutes);
-				query.setFutureMinutes(futureMinutes);
-				query.setSessionID(sessionID);
-				
-				RetrieveMeetingsForMemberResponse response = stub.retrieveMeetingsForMember(query);
-				toRet = response.get_return();
-			}
-			catch (Exception e)
-			{
-				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-				RetrieveMeetingsForMemberResponse response = stub.retrieveMeetingsForMember(query);
-				toRet = response.get_return();
-			}
-
-			return toRet;
+			query.setMrn8Digit(mrn8Digit);
+			query.setPastMinutes(pastMinutes);
+			query.setFutureMinutes(futureMinutes);
+			query.setSessionID(sessionID);
+			
+			RetrieveMeetingsForMemberResponse response = stub.retrieveMeetingsForMember(query);
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			RetrieveMeetingsForMemberResponse response = stub.retrieveMeetingsForMember(query);
+			toRet = response.get_return();
 		}
 
-		// simulation
-		 
-	 	toRet = new RetrieveMeetingResponseWrapper();												// no meeting.
-		toRet.setSuccess(true);
-		
-		MeetingWSO meeting1 = new MeetingWSO();
-		ProviderWSO fakeprovider1 = new ProviderWSO();
-		meeting1.setProviderHost(fakeprovider1);
-		
-		meeting1.setScheduledTimestamp(new Date().getTime()+ 300000);
-		meeting1.setMeetingId(1);
-		meeting1.getHost().setFirstName("John");
-		meeting1.getHost().setLastName("Lim");
-		meeting1.getHost().setTitle("PDM");
-		meeting1.getProviderHost().setImageUrl("http://www.permanente.net/kaiser/pictures/30290.jpg");
-		meeting1.getProviderHost().setHomePageUrl("http://www.permanente.net/homepage/kaiser/pages/c13556-top.html");
-		meeting1.setMmMeetingName("385bne");
-		
-		MeetingWSO meeting2 = new MeetingWSO();
-		ProviderWSO fakeprovider2 = new ProviderWSO();
-		meeting2.setProviderHost(fakeprovider2);
-		
-		meeting2.setScheduledTimestamp(new Date().getTime()+ 900000);
-		meeting2.setMeetingId(2);
-		meeting2.getHost().setFirstName("Samantha");
-		meeting2.getHost().setLastName("Strong");
-		meeting2.getHost().setTitle("MD");
-		meeting2.getProviderHost().setImageUrl("http://www.permanente.net/kaiser/pictures/31250.jpg");
-		meeting2.getProviderHost().setHomePageUrl("http://www.permanente.net/homepage/doctor/strong");
-		meeting2.setMmMeetingName("385bnsewe");
-		
-		toRet.setResult (new MeetingWSO[] {meeting1, meeting2});
-		
 		return toRet;
-
 	}
 	
 		
-	public static UpdateResponseWrapper memberLogout(String mrn8Digit, String sessionID) throws Exception
+	public static StringResponseWrapper memberLogout(String mrn8Digit, String sessionID) throws Exception
 	{
-		UpdateResponseWrapper toRet = null; 
+		StringResponseWrapper toRet = null; 
 		
-		if (!simulation)
+		MemberLogout query = new MemberLogout();
+		try
 		{
-			MemberLogout query = new MemberLogout();
-			try
-			{
-				query.setMrn8Digit(mrn8Digit);
-				query.setSessionID(sessionID);
-			
-				MemberLogoutResponse response = stub.memberLogout(query);
-				toRet = response.get_return();
-			}
-			catch (Exception e)
-			{
-				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-				MemberLogoutResponse response = stub.memberLogout(query);
-				toRet = response.get_return();
-			}
-			return toRet;
+			query.setMrn8Digit(mrn8Digit);
+			query.setSessionID(sessionID);
+		
+			MemberLogoutResponse response = stub.memberLogout(query);
+			toRet = response.get_return();
 		}
-		
-		// simulation
-		toRet = new UpdateResponseWrapper();
-		toRet.setSuccess(true);
-		
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			MemberLogoutResponse response = stub.memberLogout(query);
+			toRet = response.get_return();
+		}
 		return toRet;
 	}
 	
@@ -304,71 +236,48 @@ public class WebService{
 		
 	}
 
-	public static UpdateResponseWrapper updateMemberMeetingStatusJoining(long meetingID, String mrn8Digit, String sessionID)
+	public static StringResponseWrapper updateMemberMeetingStatusJoining(long meetingID, String mrn8Digit, String sessionID)
 			throws Exception
 	{
-		UpdateResponseWrapper toRet = null; 
+		StringResponseWrapper toRet = null; 
 		
-		if (!simulation)
+		UpdateMemberMeetingStatusJoining query = new UpdateMemberMeetingStatusJoining();
+		try
 		{
-			UpdateMemberMeetingStatusJoining query = new UpdateMemberMeetingStatusJoining();
-			try
-			{
-				query.setMrn8Digit(mrn8Digit);
-				query.setSessionID(sessionID);
-				query.setMeetingID(meetingID);
-				
-				UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
-				toRet = response.get_return();
-			}
-			catch (Exception e)
-			{
-				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-				UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
-				toRet = response.get_return();
-			}
-			return toRet;
+			query.setMrn8Digit(mrn8Digit);
+			query.setSessionID(sessionID);
+			query.setMeetingID(meetingID);
+			
+			UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
+			toRet = response.get_return();
 		}
-		
-		// simulation
-		toRet = new UpdateResponseWrapper();
-		toRet.setSuccess(true);
-		toRet.setErrorMessage("http://www.youtube.com/watch?v=ASKnLj2Pp8I");
-		
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
+			toRet = response.get_return();
+		}
 		return toRet;
 	}
 
 	public static StringResponseWrapper createMeetingSession(long meetingID, String mrn8Digit, String sessionID) throws Exception
 	{
-		StringResponseWrapper toRet = null; 
-		
-		if (!simulation)
+		CreateMeetingSession query = new CreateMeetingSession();
+		try
 		{
-			CreateMeetingSession query = new CreateMeetingSession();
-			try
-			{
-				query.setMrn8Digit(mrn8Digit);
-				query.setSessionID(sessionID);
-				query.setMeetingID(meetingID);
-				
-				return stub.createMeetingSession(query).get_return();
-				
-			}
-			catch (Exception e)
-			{
-				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-				return stub.createMeetingSession(query).get_return();
-				
-			}
+			query.setMrn8Digit(mrn8Digit);
+			query.setSessionID(sessionID);
+			query.setMeetingID(meetingID);
+			
+			return stub.createMeetingSession(query).get_return();
 			
 		}
-	
-		// simulation
-		toRet = new StringResponseWrapper();
-		toRet.setSuccess(true);
-		toRet.setResult("http://www.youtube.com/watch?v=ASKnLj2Pp8I");
-		
-		return toRet;
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			return stub.createMeetingSession(query).get_return();
+			
+		}
 	}
 	
 	
@@ -380,36 +289,27 @@ public class WebService{
 	 * @param sessionID
 	 * @return
 	 */
-	public static UpdateResponseWrapper memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID)
+	public static StringResponseWrapper memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID)
 	throws Exception
 	{
-		UpdateResponseWrapper toRet = null; 
+		StringResponseWrapper toRet = null; 
 		
-		if (!simulation)
+		MemberEndMeetingLogout query = new MemberEndMeetingLogout();
+		try
 		{
-			MemberEndMeetingLogout query = new MemberEndMeetingLogout();
-			try
-			{
-				query.setMeetingID(meetingID);
-				query.setSessionID(sessionID);
-				query.setMrn8Digit(mrn8Digit);
-			
-				MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
-				toRet = response.get_return();
-			}
-			catch (Exception e)
-			{
-				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-				MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
-				toRet = response.get_return();
-			}
-			return toRet;
+			query.setMeetingID(meetingID);
+			query.setSessionID(sessionID);
+			query.setMrn8Digit(mrn8Digit);
+		
+			MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
+			toRet = response.get_return();
 		}
-		
-		// simulation
-		toRet = new UpdateResponseWrapper();
-		toRet.setSuccess(true);
-		
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
+			toRet = response.get_return();
+		}
 		return toRet;
 	}
 	
@@ -418,35 +318,26 @@ public class WebService{
 	 * Simply test database round trip
 	 * @return
 	 */
-	public static UpdateResponseWrapper testDbRoundTrip() throws Exception
+	public static StringResponseWrapper testDbRoundTrip() throws Exception
 	{
-		UpdateResponseWrapper toRet = null; 
+		StringResponseWrapper toRet = null; 
 		
-		if (!simulation)
+		try
 		{
-			try
-			{
-			
-				TestDbRoundTripResponse response = stub.testDbRoundTrip();
-				toRet = response.get_return();
-			}
-			catch (Exception e)
-			{
-				logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-				TestDbRoundTripResponse response = stub.testDbRoundTrip();
-				toRet = response.get_return();
-			}
-			return toRet;
+		
+			TestDbRoundTripResponse response = stub.testDbRoundTrip();
+			toRet = response.get_return();
 		}
-		
-		// simulation
-		toRet = new UpdateResponseWrapper();
-		toRet.setSuccess(true);
-		
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			TestDbRoundTripResponse response = stub.testDbRoundTrip();
+			toRet = response.get_return();
+		}
 		return toRet;
 	}
 
-	public static RetrieveMeetingResponseWrapper retrieveMeetingForCaregiver(String meetingHash,
+	public static RetrieveMeetingResponseWrapper retrieveMeetingForCaregiver(String meetingHash,//left
 			int pastMinutes,int futureMinutes) 
 				throws RemoteException {
 		RetrieveMeetingResponseWrapper toRet = null;
@@ -459,7 +350,7 @@ public class WebService{
 		return toRet;		
 	}
 	
-	public static RetrieveMeetingResponseWrapper IsMeetingHashValid(String meetingHash
+	public static RetrieveMeetingResponseWrapper IsMeetingHashValid(String meetingHash//left
 			) 
 				throws RemoteException {
 		RetrieveMeetingResponseWrapper toRet = null;
@@ -490,7 +381,7 @@ public class WebService{
 		return response.get_return();
 	}
 	
-	public static UpdateResponseWrapper endCaregiverMeetingSession(String meetingHash) 
+	public static StringResponseWrapper endCaregiverMeetingSession(String meetingHash) 
 			throws RemoteException {
 		EndCaregiverMeetingSession query = new EndCaregiverMeetingSession();
 		query.setMeetingHash(meetingHash);
