@@ -654,7 +654,7 @@ public class MeetingCommand {
 		return meetingStatus;
 	}
 	
-	public static String createMobileMegaMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String createMobileMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
@@ -670,7 +670,7 @@ public class MeetingCommand {
 			
 			
 			//grab data from web services
-			ret= WebService.createMegameetingMobileSession(meetingId);
+			ret= WebService.createMobileMeetingSession(meetingId);
 			if (ret != null)
 			{
 				//response.addHeader("P3P", "CP=\"NOI ADM DEV PSAi COM NAV OUR OTR STP IND DEM\"");
@@ -687,7 +687,7 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
-	public static String CreateCareGiverMobileMegaMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String CreateCareGiverMobileMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		String patientName = "";
 		String meetingCode = "";
@@ -709,7 +709,7 @@ public class MeetingCommand {
 			
 			
 			//grab data from web services
-			ret= WebService.createCareGiverMegameetingMobileSession(patientName,meetingCode);
+			ret= WebService.createCareGiverMobileSession(patientName,meetingCode);
 			if (ret != null)
 			{
 				//response.addHeader("P3P", "CP=\"NOI ADM DEV PSAi COM NAV OUR OTR STP IND DEM\"");

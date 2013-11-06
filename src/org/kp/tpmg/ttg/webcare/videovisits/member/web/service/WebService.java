@@ -574,7 +574,7 @@ public class WebService{
 	
 	}
 	
-	public static StringResponseWrapper createMegameetingMobileSession(long meetingId) throws Exception {
+	public static StringResponseWrapper createMobileMeetingSession(long meetingId) throws Exception {
 		StringResponseWrapper toRet = null; 
 		
 		try
@@ -591,7 +591,7 @@ public class WebService{
 		}
 }
 
-	public static StringResponseWrapper createCareGiverMegameetingMobileSession(String patientName, String meetingCode) throws Exception {
+	public static StringResponseWrapper createCareGiverMobileSession(String patientName, String meetingCode) throws Exception {
 	StringResponseWrapper toRet = null; 
 	
 	try
