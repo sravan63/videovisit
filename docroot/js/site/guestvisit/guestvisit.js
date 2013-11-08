@@ -82,6 +82,9 @@ function showJoinNowModal(encodedHrefLocation){
    // $("iframe").attr('src', decodeURIComponent(iframedata));
     $("iframe").attr('src', iframedata);
     
+    var finalHeight = $(window).height();
+	$('#guest-join-now-modal').css({"height": finalHeight*0.90});
+	
     $("#guest-join-now-modal").dialog( "open" );
     GuestReadyPage.keepALive();
     
@@ -94,7 +97,7 @@ function showJoinNowModal(encodedHrefLocation){
 function initializeJoinNowModal(){
 	$("#guest-join-now-modal").dialog({
 	      autoOpen: false,
-	      width: "80%",
+	      width: "98%",
 	      modal: true,
 	      dialogClass:'hide-modal-title'
 	});
