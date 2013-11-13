@@ -48,7 +48,7 @@ $(document).ready(function() {
               }
               catch(e)
               {
-            	  window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
+            	  //window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
               }
  
             },

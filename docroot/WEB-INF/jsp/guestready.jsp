@@ -32,6 +32,7 @@
 						<span class="label">Patient Name:</span> 
 						<span class="names patient-guests">${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}</span>
 					</div>
+					
 					<!-- Commented by Srini  08/27 -->
 					<a class="btn" userName="${WebAppContext.careGiverName}" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}" caregiverId="${meeting.caregiver[0].careGiverID}">Click here to join now</a>
 				<!-- 	<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}" caregiverId="${meeting.caregiver[0].careGiverID}">Click here to join now</a> -->

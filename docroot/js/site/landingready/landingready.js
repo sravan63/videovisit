@@ -46,6 +46,11 @@ $(document).ready(function() {
 			            	try
 			            	{
 			            		returndata = jQuery.parseJSON(returndata);
+			            		if(returndata.result === '2'){
+			            			$("p.error").css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
+			                        moveToit("p.error");            	
+			                        return false; 
+			                      }
 			            		if ( returndata.success)
 			            		{
 			            			 //  <!-- Commented by Srini  08/27 -->
