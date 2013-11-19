@@ -7,9 +7,8 @@ $(document).ready(function() {
         return (s=s.replace(/^\?/,'&').match(re)) ? s=s[1] : s='';
     }
 
-	 // Grab the GET variable
-	var iframedata = $_GET('iframedata');
-	
+    // Grab the GET variable
+	var iframedata = getCookie("iframedata");
 	
 	// INITIALIZE Join now modal.
 	initializeJoinNowModal();
@@ -27,7 +26,7 @@ $(document).ready(function() {
     });
 
     $('#quitMeetingGuestYes').click(function(){
-        var quitMeetingIdData = 'meetingCode=' + gup("meetingCode") +  '&caregiverId=' + $(this).attr('caregiverId')  + '&meetingId=' + $(this).attr('quitmeetingid');
+        var quitMeetingIdData = 'meetingCode=' + $.trim($("#meetingCode").val()) +  '&caregiverId=' + $(this).attr('caregiverId')  + '&meetingId=' + $(this).attr('quitmeetingid');
         
         $.ajax({
             type: 'POST',

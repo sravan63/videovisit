@@ -30,6 +30,28 @@ public class MeetingCommand {
 	public static int PAST_MINUTES =120;
 	public static int FUTURE_MINUTES =15;
 
+	public static void setupGuestInfo (HttpServletRequest request) {
+	
+		try {
+			
+			String meetingCode = request.getParameter("meetingCode");
+			String patientLastName = request.getParameter("patientLastName");
+			String nocache = request.getParameter("nocache");
+			String meetingId = request.getParameter("meetingId");
+			
+			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+
+			ctx.setMeetingCode(meetingCode);
+			ctx.setPatientLastName(patientLastName);
+			ctx.setNocache(nocache);
+			ctx.setGuestMeetingId(meetingId);
+			
+			
+		} catch (Exception e) {
+			logger.error("System Error" + e.getMessage(),e);
+		}
+	}
+	
 	public static String verifyMember(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
 		VerifyMemberResponseWrapper ret = null;
@@ -383,7 +405,7 @@ public class MeetingCommand {
 			throws RemoteException {
 		RetrieveMeetingResponseWrapper ret = null;			
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		String meetingCode = request.getParameter("meetingCode");			
+		String meetingCode = ctx.getMeetingCode();			
 		boolean success = WebService.initWebService();		
 		if (ctx != null && success) {
 			logger.info("Before retrieving caregiver meetings");
@@ -431,6 +453,7 @@ public class MeetingCommand {
 	RetrieveMeetingResponseWrapper ret = null;			
 	WebAppContext ctx = WebAppContext.getWebAppContext(request);
 	String meetingCode = request.getParameter("meetingCode");			
+	String nocache = request.getParameter("nocache");			
 	boolean success = WebService.initWebService();		
 	if (ctx != null && success) {
 		logger.info("Before IsMeetingHashValid");
@@ -450,7 +473,8 @@ public class MeetingCommand {
 					ctx.setTotalmeetings(meetings.length);
 					ctx.setMeetings(meetings);
 				}
-			}				
+			}
+
 			return JSONObject.fromObject(ret).toString();
 		}
 	}

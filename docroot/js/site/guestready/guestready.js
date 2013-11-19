@@ -7,16 +7,17 @@ $(document).ready(function() {
     $(".btn").click(function(e){
         e.preventDefault();
        
+        var cargiverId = $(this).attr('caregiverId');
+        var name = $(this).attr('userName');
         
-        meetingIdData = 'meetingCode=' + gup("meetingCode"); //$(this).attr('meetingCode');
-        meetingId = gup("meetingId");
-        patientLastName = gup("patientLastName");
+        meetingIdData = 'meetingCode=' + $.trim($("#meetingCode").val()); //$(this).attr('meetingCode');
+        meetingId = $.trim($("#meetingId").val());
+        patientLastName = $.trim($("#patientLastName").val());
         verifyData= 'meetingId=' + meetingId+ 
-          '&meetingCode=' + gup("meetingCode")+
-          '&patientLastName=' + patientLastName ;
+        '&meetingCode=' + $.trim($("#meetingCode").val())+
+        '&guestName=' + name +
+        '&patientLastName=' + patientLastName ;
         
-       var cargiverId = $(this).attr('caregiverId');
-       var name = $(this).attr('userName');
        
         $.ajax({
         	
@@ -30,7 +31,7 @@ $(document).ready(function() {
             	  returndata = jQuery.parseJSON(returndata);
             	  //MEETING_FINISHED_EXCEPTION
             	  if(returndata.result === '2'){
-            		  window.location.replace("guest?meetingCode=" +  gup("meetingCode"));
+            		  window.location.replace("guest?meetingCode=" +  $.trim($("#meetingCode").val()));
                       return false;
                     }
             	  //CAREGIVER JOINED FROM DIFFERENT DEVICE
@@ -43,8 +44,9 @@ $(document).ready(function() {
             	  hreflocation = returndata.result;
             	 
             	//  hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-            	  hreflocation = "/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-                  window.location.replace("guestvisit.htm?meetingCode=" +  gup("meetingCode") + "&iframedata=" + encodeURIComponent(hreflocation) + "&caregiverId=" + cargiverId) + + "&meetingId=" + meetingId ;
+            	  hreflocation = "/vidyoplayer/player.html?guestName=" + name + "&guestUrl=" +encodeURIComponent(hreflocation);
+            	  setCookie("iframedata",encodeURIComponent(hreflocation),365);
+                  window.location.replace("guestvisit.htm");
               }
               catch(e)
               {

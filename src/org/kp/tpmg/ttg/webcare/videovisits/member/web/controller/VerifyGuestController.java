@@ -18,12 +18,17 @@ public class VerifyGuestController extends SimplePageController {
 		String data = null;
 		try {
 			data = MeetingCommand.verifyCaregiver(request, response);
+			
+			MeetingCommand.setupGuestInfo(request);
+			
 		} catch (Exception e) {
 			logger.error("Error in VerifyGuest handlePageRequest - " + e.getMessage(), e);
 		}
+		
 		logger.info("VerifyGuestController handleRequest data = " + data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
+		
 		return modelAndView;
 	}
 }

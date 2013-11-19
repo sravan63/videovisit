@@ -75,7 +75,7 @@ $(document).ready(function() {
 	              }
 	              
 	              hreflocation = returndata.result;
-	              window.location.replace("guestready.htm?" + meetingIdData);
+	              window.location.replace("guestready.htm");
               }
               catch(e)
               {

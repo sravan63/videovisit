@@ -59,7 +59,8 @@ $(document).ready(function() {
 			            			hreflocation = "/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
 			            			//  <!-- Commented by Srini  08/27 -->	
 			            			// SHOW Join now modal.
-			            			window.location.replace("visit.htm?iframedata=" + encodeURIComponent(hreflocation) + "&meetingId=" + meetingId + "&memberName=" + name);
+			                  	  	setCookie("iframedata",encodeURIComponent(hreflocation),365);
+			            			window.location.replace("visit.htm");
 			            			//window.location.replace("visit.htm?iframedata=" + hreflocation + "&meetingId=" + meetingId + "&memberName=" + name);
 			            		}
 			            		

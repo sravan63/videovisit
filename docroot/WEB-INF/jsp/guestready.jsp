@@ -9,6 +9,14 @@
 <%
 	MeetingCommand.retrieveMeetingForCaregiver(request, response);
 	String timezone = WebUtil.getCurrentDateTimeZone();
+	
+	WebAppContext ctx = WebAppContext.getWebAppContext(request);
+	
+	String meetingCode = ctx.getMeetingCode();
+	String patientLastName = ctx.getPatientLastName();
+	String nocache = ctx.getNocache();
+	String meetingId = ctx.getGuestMeetingId();
+
 %>
 
 <c:if test="${WebAppContext.totalmeetings>0}">
@@ -32,7 +40,6 @@
 						<span class="label">Patient Name:</span> 
 						<span class="names patient-guests">${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}</span>
 					</div>
-					
 					<!-- Commented by Srini  08/27 -->
 					<a class="btn" userName="${WebAppContext.careGiverName}" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}" caregiverId="${meeting.caregiver[0].careGiverID}">Click here to join now</a>
 				<!-- 	<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}" caregiverId="${meeting.caregiver[0].careGiverID}">Click here to join now</a> -->
@@ -49,3 +56,7 @@
 	</div>
 </c:if>
 <input type="hidden" id="tz" value="<%=timezone%>" /> 
+<input type="hidden" id="meetingCode" value="<%=meetingCode%>" /> 
+<input type="hidden" id="patientLastName" value="<%=patientLastName%>" /> 
+<input type="hidden" id="nocache" value="<%=nocache%>" /> 
+<input type="hidden" id="meetingId" value="<%=meetingId%>" /> 

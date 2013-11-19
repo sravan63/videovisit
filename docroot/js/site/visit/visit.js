@@ -8,7 +8,7 @@ $(document).ready(function() {
     }
 
     // Grab the GET variable
-    	var iframedata = $_GET('iframedata');
+    	var iframedata = getCookie("iframedata");
 
     
  // INITIALIZE  Modals.

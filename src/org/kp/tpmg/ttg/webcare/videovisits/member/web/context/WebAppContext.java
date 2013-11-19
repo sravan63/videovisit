@@ -24,6 +24,11 @@ public class WebAppContext implements Serializable{
 
 	public static Logger logger = Logger.getLogger(WebAppContext.class);
 	
+	private String meetingCode;
+	private String patientLastName;
+	private String nocache;
+	private String guestMeetingId;
+	
 	private String contextId;
 	private MemberWSO	member = null;	 
 	private MeetingWSO[]	meetings= null; 
@@ -39,6 +44,45 @@ public class WebAppContext implements Serializable{
 	private List<iconpromo> iconpromos;
 	private videolink videoLink;
 	private String careGiverName = "";
+	
+	
+	
+	public String getGuestMeetingId() {
+		return guestMeetingId;
+	}
+
+	public void setGuestMeetingId(String guestMeetingId) {
+		this.guestMeetingId = guestMeetingId;
+	}
+
+	public String getNocache() {
+		return nocache;
+	}
+
+	public void setNocache(String nocache) {
+		this.nocache = nocache;
+	}
+
+	public String getMeetingCode() {
+		return meetingCode;
+	}
+
+	public void setMeetingCode(String meetingCode) {
+		this.meetingCode = meetingCode;
+	}
+
+	public String getPatientLastName() {
+		return patientLastName;
+	}
+
+	public void setPatientLastName(String patientLastName) {
+		this.patientLastName = patientLastName;
+	}
+
+	
+	
+	
+	
 	public static WebAppContext getWebAppContext(HttpServletRequest request) {
 		return (WebAppContext) request.getSession().getAttribute(WebAppContext.HTTP_SESSION_KEY);
 	}
