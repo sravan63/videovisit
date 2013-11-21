@@ -56,8 +56,10 @@ public class GuestController extends SimplePageController {
 	}
 	
 	private void initializeWebappContext(HttpServletRequest request) throws Exception {
-		ctx = WebAppContext.getWebAppContext(request);
-		if (ctx == null){
+// This controller is called on calling the url for the guest visit. 
+// This is the new guest and web app context needs to be initialized for every guest entry.
+//		ctx = WebAppContext.getWebAppContext(request);
+//		if (ctx == null){
 			logger.info("context is null");
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
@@ -75,5 +77,5 @@ public class GuestController extends SimplePageController {
 			ctx.setIconPromo(iconpromos);
 			ctx.setVideoLink(videoLink);
 		}
-	}
+//	}
 }
