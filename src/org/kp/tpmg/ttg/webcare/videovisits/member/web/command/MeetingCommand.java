@@ -405,9 +405,10 @@ public class MeetingCommand {
 			throws RemoteException {
 		RetrieveMeetingResponseWrapper ret = null;			
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		String meetingCode = ctx.getMeetingCode();			
+		String meetingCode = null;			
 		boolean success = WebService.initWebService();		
 		if (ctx != null && success) {
+			meetingCode = ctx.getMeetingCode();
 			logger.info("Before retrieving caregiver meetings");
 			ret = WebService.retrieveMeetingForCaregiver(meetingCode, PAST_MINUTES, FUTURE_MINUTES);			
 			if (ret != null) {
