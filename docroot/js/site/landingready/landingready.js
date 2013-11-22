@@ -47,7 +47,7 @@ $(document).ready(function() {
 			            	{
 			            		returndata = jQuery.parseJSON(returndata);
 			            		if(returndata.result === '2'){
-			            			$("p.error").css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
+			            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
 			                        moveToit("p.error");            	
 			                        return false; 
 			                      }
