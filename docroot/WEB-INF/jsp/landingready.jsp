@@ -67,9 +67,9 @@
               </c:if>
             </div>
 
-            <a id="joinNowId" class="btn joinNowButton"  userName="${WebAppContext.member.firstName} ${WebAppContext.member.lastName}" meetingid="${meeting.meetingId}" href="#">Click here to join now</a> 
+            <a id="joinNowId" class="btn joinNowButton"  userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" href="#">Click here to join now</a> 
             <p class="smallprint">You may be joining before your clinician.  Please be patient.</p>
-            <p class="error error-guest-login"></p>
+            <p class="error error-guest-login" id="error_label_${meeting.meetingId}"></p>
         </div>
     </div>
 </c:forEach>
