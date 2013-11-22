@@ -433,7 +433,7 @@ public class MeetingCommand {
 								{
 									if ( c.getMeetingHash().equalsIgnoreCase(meetingCode))
 									{
-										String  name = c.getFirstName() + " " + c.getLastName() + " (" + c.getEmailAddress() + ")";
+										String  name = c.getLastName() + ", " + c.getFirstName();
 										ctx.setCareGiverName(name);
 										break;
 									}
