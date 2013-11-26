@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 	<c:forEach var="meeting" items="${WebAppContext.meetings}">
-		<c:if test="${meeting.meetingId == param.meetingId}">	
+		<c:if test="${meeting.meetingId == WebAppContext.meetingId}">	
 			<div style="float:left">
 				<h3 class="page-title">Video Visit with ${meeting.providerHost.firstName} 
 					${meeting.providerHost.lastName}
