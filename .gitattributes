@@ -114,6 +114,7 @@ docroot/WEB-INF/tiles-templates/mobileJavascriptNotSupportedLayout.jsp -text svn
 docroot/WEB-INF/tiles-templates/mobileLayout.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/tiles-templates/setupLayout.jsp -text
 docroot/WEB-INF/tiles-templates/textLayout.jsp -text
+docroot/WEB-INF/tiles-templates/videoVisitApplicationLayout.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/web.xml -text
 docroot/blank.jsp -text
 docroot/consent_forms/consent_2011_03_23.ie.txt -text
