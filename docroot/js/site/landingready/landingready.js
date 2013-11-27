@@ -1,6 +1,3 @@
-
-
-
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
  
@@ -16,14 +13,12 @@ $(document).ready(function() {
         var name = $(this).attr('userName');
 		
         var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name};
-        
         $.post(VIDEO_VISITS.Path.landingready.userPresentInMeeting, postParaForUserPresentInMeeting,function(userPresentInMeetingData){
 			try{
 				userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
 			}
 			catch(e)
 			{
-				
 				$('#end_meeting_error').html('').append(e.message).show();
 				 window.location.replace(VIDEO_VISITS.Path.visit.logout);
 			}
@@ -50,17 +45,36 @@ $(document).ready(function() {
 			            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
 			                        moveToit("p.error");            	
 			                        return false; 
-			                      }
+			                     }
 			            		if ( returndata.success)
 			            		{
 			            			 //  <!-- Commented by Srini  08/27 -->
 			            			hreflocation = returndata.result;
 			            			//hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-			            			hreflocation = "/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-			            			//  <!-- Commented by Srini  08/27 -->	
-			            			// SHOW Join now modal.
-			                  	  	setCookie("iframedata",encodeURIComponent(hreflocation),365);
-			            			window.location.replace("visit.htm");
+			            			hreflocation = "/vidyoplayer/player.html?guestName=" +name+ "&isProvider=false&meetingId=" +meetingId+ "&guestUrl=" +encodeURIComponent(hreflocation);
+			            			//  <!-- Commented by Srini  08/27 -->
+			            			
+			            			var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y"};
+			            			
+			                  	  	//setCookie("iframedata",encodeURIComponent(hreflocation),365);
+			            			//window.location.replace("visit.htm");
+			            			$.ajax({
+			            			    type: 'POST',
+			            			    url: VIDEO_VISITS.Path.landingready.videoVisit,
+			            			    cache: false,
+			            			    async: false,
+			            			    data: postParaVideoVisit,
+			            			})
+			            			.done(function(){
+			            				alert("ajax done");
+			            				window.location.href="videoVisitReady.htm";
+			            			})
+			            			.fail(function(){
+			            				alert("failed");
+			            			})
+			            			.always(function(){
+			            				//alert("always");
+			            			});
 			            			//window.location.replace("visit.htm?iframedata=" + hreflocation + "&meetingId=" + meetingId + "&memberName=" + name);
 			            		}
 			            		
@@ -75,7 +89,6 @@ $(document).ready(function() {
 			            },
 			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
 			            error: function(theRequest, textStatus, errorThrown) {
-			            	
 			            	window.location.replace(VIDEO_VISITS.Path.visit.logout);
 			            }
 			        });
@@ -83,10 +96,6 @@ $(document).ready(function() {
 			}
 			
 		});
-        
-        
-        
-        
         return false;
     })
 
