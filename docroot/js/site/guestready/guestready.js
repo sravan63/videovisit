@@ -5,9 +5,9 @@ $(document).ready(function() {
 
 	// Join now Click Event
     $(".btn").click(function(e){
-        e.preventDefault();
+       // e.preventDefault();
        
-        var cargiverId = $(this).attr('caregiverId');
+        var caregiverId = $(this).attr('caregiverId');
         var name = $(this).attr('userName');
         
         meetingIdData = 'meetingCode=' + $.trim($("#meetingCode").val()); //$(this).attr('meetingCode');
@@ -41,12 +41,33 @@ $(document).ready(function() {
                       moveToit("p.error");            	
                       return false;  
                     }
-            	  hreflocation = returndata.result;
+            	  	hreflocation = returndata.result;
             	 
-            	//  hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-            	  hreflocation = "/vidyoplayer/player.html?guestName=" + name + "&guestUrl=" +encodeURIComponent(hreflocation);
-            	  setCookie("iframedata",encodeURIComponent(hreflocation),365);
-                  window.location.replace("guestvisit.htm");
+            	  	//  hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
+            	  	hreflocation = "/vidyoplayer/player.html?guestName=" + name + "&isProvider=false&meetingId=" +meetingId + "&caregiverId=" +caregiverId+ "&meetingCode=" +$.trim($("#meetingCode").val())+ "&guestUrl=" +encodeURIComponent(hreflocation);
+            	  
+            	  	var postParaVideoVisit = {vidyoUrl: hreflocation, meetingId: meetingId, meetingCode: $.trim($("#meetingCode").val()),
+            	  	        guestName: name, patientLastName: patientLastName, isMember: "N"};
+            	  	
+	      			$.ajax({
+	      			    type: 'POST',
+	      			    url: VIDEO_VISITS.Path.landingready.videoVisit,
+	      			    cache: false,
+	      			    async: false,
+	      			    data: postParaVideoVisit,
+	      			})
+	      			.done(function(){
+	      				alert("ajax done");
+	      				window.location.href="videoVisitGuestReady.htm";
+	      			})
+	      			.fail(function(theRequest, textStatus, errorThrown){
+	      				alert("failed" + errorThrown);
+	      			})
+	      			.always(function(){
+	      			//	alert("always");
+	      			});
+            	  //setCookie("iframedata",encodeURIComponent(hreflocation),365);
+                  //window.location.replace("guestvisit.htm");
               }
               catch(e)
               {
@@ -59,8 +80,8 @@ $(document).ready(function() {
             	 window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
             }
         })
-
-        });
+        return false;
+     });
 
     //Get the meeting timestamp, convert it and display it. Grabs the text contents of the element with the timestamp class,
     //converts it to the correct timestamp and then appends it to the next h3 in the code
