@@ -107,6 +107,10 @@
 				<prop key="/userPresentInMeeting.json">dataUserPresentInMeeting</prop>
 				<prop key="/createMobileMeeting.json">dataCreateMobileMeeting</prop>
 				<prop key="/createCareGiverMobileMeeting.json">dataCreateCareGiverMobileMeeting</prop>
+				<prop key="/videoVisit.htm">videoVisit</prop>
+				<prop key="/videoVisitReady.htm">videoVisitReady</prop>
+				<prop key="/videoVisitGuestReady.htm">videoVisitGuestReady</prop>
+				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
 				<prop key="/mobilelogin.json">mobilelogin</prop>
@@ -218,7 +222,19 @@
 		<property name="navigation" value="guest" />
 		<property name="subNavigation" value="guest" />
 	</bean>
-	
+	<bean id="videoVisit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VideoVisitPatientController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	<bean id="videoVisitReady" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="videoVisit" />
+		<property name="navigation" value="videoVisit" />
+	</bean>
+	<bean id="videoVisitGuestReady" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="videoVisitGuestReady" />
+		<property name="navigation" value="videoVisitGuestReady" />
+	</bean>	
 	
 
 	<!--  JSON classes -->
