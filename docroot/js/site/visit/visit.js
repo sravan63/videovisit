@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	
     // To access the GET variable
     function $_GET(q,s) {
         s = (s) ? s : window.location.search;
@@ -8,23 +8,23 @@ $(document).ready(function() {
     }
 
     // Grab the GET variable
-    	var iframedata = getCookie("iframedata");
+    //var iframedata = getCookie("iframedata");
 
+    // INITIALIZE  Modals.
+    //initializeJoinNowModal();
+    //initializeQuitMeetingModal();
     
- // INITIALIZE  Modals.
-    initializeJoinNowModal();
-    initializeQuitMeetingModal();
-//  <!-- Commented by Srini  08/27 -->	
-    showJoinNowModal(decodeURIComponent(iframedata));
+    //  <!-- Commented by Srini  08/27 -->	
+    //showJoinNowModal(decodeURIComponent(iframedata));
     
     // Quit meeting button on the Quit Meeting modal 
-    $('#quitMeetingId').click(function() { 
+/*    $('#quitMeetingId').click(function() { 
     	$("#quitMeetingModal").dialog( "open" );
     });
    
     $('#quitMeetingNo').click(function(){
     	$("#quitMeetingModal").dialog( "close" );
-    });
+    });	*/
 
     $('#quitMeetingYes').click(function(){
         var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid') + '&memberName=' + $(this).attr('memberName') ;
@@ -37,14 +37,12 @@ $(document).ready(function() {
             },
             //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
             error: function(theRequest, textStatus, errorThrown) {
-                window.location.replace(VIDEO_VISITS.Path.global.error);
-                
+                window.location.replace(VIDEO_VISITS.Path.global.error);            
             }
         });
         return false;
     });
-    
-    
+        
 });
 
 
@@ -102,6 +100,25 @@ var LandingReadyPage =
 		}
 }
 
+var MemberVisit = {
+		QuitMeetingActionButtonYes: function(meetingId, memberName)
+		{
+			var quitMeetingIdData = 'meetingId=' + meetingId + '&memberName=' + memberName;
+
+	         $.ajax({
+	            type: 'POST',
+	            url: VIDEO_VISITS.Path.visit.quitmeeting,
+	            data: quitMeetingIdData,
+	            success: function(returndata) {
+	            	//window.location.replace("landingready.htm");
+	            },
+	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+	            error: function(theRequest, textStatus, errorThrown) {
+	                window.location.replace(VIDEO_VISITS.Path.global.error);            
+	            }
+	        });
+		}
+}
 
 function showJoinNowModal(encodedHrefLocation){
 
@@ -115,15 +132,16 @@ function showJoinNowModal(encodedHrefLocation){
     $("iframe").attr('src', iframedata);
     
     var finalHeight = $(window).height();
-	$('#join-now-modal').css({"height": finalHeight*0.90});
+    var finalWidth = $(window).width();
+    
+	$('#joinNowIframe').css({"height": finalHeight*0.90});
+	$('#joinNowIframe').css({"width": finalWidth*0.90});
 	
-    $("#join-now-modal").dialog( "open" );
+    //$("#join-now-modal").dialog( "open" );
     
     LandingReadyPage.keepALive();
 	
 }
-
-
 
 
 function initializeJoinNowModal(){
@@ -133,13 +151,9 @@ function initializeJoinNowModal(){
 	      modal: true,
 	      dialogClass:'hide-modal-title'
 	});
-
 }
 
-
-
 function initializeQuitMeetingModal(){
-
 	$("#quitMeetingModal").dialog({
 	      autoOpen: false,
 	      width: "23%",
@@ -148,9 +162,6 @@ function initializeQuitMeetingModal(){
 	      resizable:false,
 	      dialogClass:'hide-modal-title'
 	});
-    
-    
-    
 }
 
 
