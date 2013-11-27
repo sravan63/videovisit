@@ -63,7 +63,7 @@ $(document).ready(function() {
 	      				window.location.href="videoVisitGuestReady.htm";
 	      			})
 	      			.fail(function(theRequest, textStatus, errorThrown){
-	      				alert("failed" + errorThrown);
+	      				alert("failed");
 	      			})
 	      			.always(function(){
 	      			//	alert("always");
