@@ -101,6 +101,7 @@ docroot/WEB-INF/jsp/nav/userInfo.jsp -text
 docroot/WEB-INF/jsp/preloader.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/setup.jsp -text
 docroot/WEB-INF/jsp/videoVisit.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/videoVisitGuest.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/visit.jsp -text
 docroot/WEB-INF/taglib/spring.tld -text
 docroot/WEB-INF/taglib/struts-tiles.tld -text
