@@ -14,8 +14,7 @@
             "global"   : [],
             "specific" : {
                 "intro" : [],
-                "login" : [
-                ],
+                "login" : [],
                 "logout" : [],
                 "setup" : []
             }
@@ -41,9 +40,7 @@
         "guest" : {
             "global"   : [],
             "specific" : {
-                "guest" : [
-                    
-                ]
+                "guest" : []
             }
         },
         "guestready" : {
@@ -91,7 +88,30 @@
             "specific" : {
                 "blank" : []
             }
+        },
+        "videoVisit" : {
+        	"global"   : [
+                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+            ],
+            "specific" : {
+                "videoVisit" : []
+            }
+        },
+        "videoVisitGuest" : {
+        	"global"   : [
+                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+            ],
+            "specific" : {
+                "videoVisitGuest" : []
+            }
+        },
+        "videoVisitGuestReady" :  {
+        	"global"   : [
+                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+            ],
+            "specific" : {
+                "videoVisitGuestReady" : []
+            }
         }
-                        
     }
 }

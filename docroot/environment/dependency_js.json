@@ -131,7 +131,22 @@
             "specific" : {
                 "blank" : []
             }
+        },
+		"videoVisit" : {
+			"global"   : [],
+            "specific" : {
+                "videoVisit" : [
+                	"js/site/visit/visit.js"
+                ]
+            }
+		},
+        "videoVisitGuestReady" : {
+			"global"   : [],
+            "specific" : {
+                "videoVisitGuestReady" : [
+                	"js/site/guestvisit/guestvisit.js"
+                ]
+          	}
         }
-
     }
 }

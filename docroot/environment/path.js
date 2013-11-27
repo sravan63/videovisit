@@ -17,7 +17,8 @@ VIDEO_VISITS.Path = {
         joinmeeting : 'createmeeting.json',
         keepALive: 'keepalive.jsp',
         retrieveMeeting: 'retrievemeeting.json',
-        userPresentInMeeting: 'userPresentInMeeting.json'
+        userPresentInMeeting: 'userPresentInMeeting.json',
+        videoVisit: 'videoVisit.htm'
     },    
     guestglobal : {
         error : 'guesterror.htm',
@@ -32,7 +33,8 @@ VIDEO_VISITS.Path = {
     guestready : {
         visiturl : 'guestvisit.htm',
         joinmeeting : 'createguestsession.json',
-        keepALive: 'keepalive.jsp'
+        keepALive: 'keepalive.jsp',
+        videoVisitGuest: 'videoVisitPG.htm'
     },    
     guestvisit : {
     	quitmeeting : 'endguestsession.json',
