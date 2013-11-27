@@ -317,6 +317,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SubmitLoginControl
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/UserPresentInMeetingController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/ValidateUserSession.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VerifyGuestController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VideoVisitPatientController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/data/VideoVisitParamsDTO.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/DataSessionFilter.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/filter/RequestLoggingFilter.java -text
