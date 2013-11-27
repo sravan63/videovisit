@@ -57,7 +57,9 @@ $(document).ready(function() {
 	      			    data: postParaVideoVisit,
 	      			})
 	      			.done(function(){
-	      				alert("ajax done");
+	      				if($.browser.mozilla){
+	      					alert("ajax done");
+	      				}
 	      				window.location.href="videoVisitGuestReady.htm";
 	      			})
 	      			.fail(function(theRequest, textStatus, errorThrown){
