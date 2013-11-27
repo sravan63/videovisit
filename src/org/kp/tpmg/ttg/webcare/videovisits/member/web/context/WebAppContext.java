@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
@@ -44,7 +45,7 @@ public class WebAppContext implements Serializable{
 	private List<iconpromo> iconpromos;
 	private videolink videoLink;
 	private String careGiverName = "";
-	
+	private VideoVisitParamsDTO videoVisit = null;
 	
 	
 	public String getGuestMeetingId() {
@@ -79,9 +80,7 @@ public class WebAppContext implements Serializable{
 		this.patientLastName = patientLastName;
 	}
 
-	
-	
-	
+
 	
 	public static WebAppContext getWebAppContext(HttpServletRequest request) {
 		return (WebAppContext) request.getSession().getAttribute(WebAppContext.HTTP_SESSION_KEY);
@@ -214,5 +213,13 @@ public class WebAppContext implements Serializable{
 	public String getCareGiverName()
 	{
 		return careGiverName;
+	}
+
+	public VideoVisitParamsDTO getVideoVisit() {
+		return videoVisit;
+	}
+
+	public void setVideoVisit(VideoVisitParamsDTO videoVisit) {
+		this.videoVisit = videoVisit;
 	}
 }
