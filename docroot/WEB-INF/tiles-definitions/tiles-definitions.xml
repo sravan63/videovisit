@@ -51,6 +51,10 @@
 		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoHeaderStatic.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />	
 	</definition>
+		
+	<definition name=".videoVisitPageTemplate" template="/WEB-INF/tiles-templates/videoVisitApplicationLayout.jsp">
+		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+	</definition>
 	
 	<!-- json data -->
 	<definition name="jsonData" extends=".dataTemplate">
@@ -177,7 +181,15 @@
 
 	<definition name="simpleText" extends=".textTemplate">
 	</definition>
-
+	
+	<definition name="videoVisit" extends=".videoVisitPageTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/videoVisit.jsp" />
+	</definition>
+	
+	<definition name="videoVisitGuestReady" extends=".videoVisitPageTemplate">
+		<put-attribute name="content" value="/WEB-INF/jsp/videoVisitGuest.jsp" />
+	</definition>
+	
 	<!-- Empty Pages -->
 	<definition name="loading" template="/WEB-INF/tiles-templates/emptyLayout.jsp">
 		<put-attribute name="content" value="/WEB-INF/jsp/loading.jsp" />
