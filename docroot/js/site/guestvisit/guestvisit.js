@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     // To access the GET variable
     function $_GET(q,s) {
         s = (s) ? s : window.location.search;
@@ -8,13 +7,13 @@ $(document).ready(function() {
     }
 
     // Grab the GET variable
-	var iframedata = getCookie("iframedata");
+	//var iframedata = getCookie("iframedata");
 	
 	// INITIALIZE Join now modal.
-	initializeJoinNowModal();
-	initializeQuitMeetingModal();
+	//initializeJoinNowModal();
+	//initializeQuitMeetingModal();
     
-    showJoinNowModal(decodeURIComponent(iframedata));
+    //showJoinNowModal(decodeURIComponent(iframedata));
     
     // Quit meeting button on the Quit Meeting modal 
     $('#quitMeetingGuestId').click(function() { 
@@ -71,6 +70,25 @@ var GuestReadyPage =
 		}
 }
 
+var GuestVisit = {
+		QuitMeetingActionButtonYes: function(meetingCode, caregiverId, meetingId)
+		{	
+			//var quitMeetingIdData = 'meetingCode=' + $.trim($("#meetingCode").val()) +  '&caregiverId=' + $(this).attr('caregiverId')  + '&meetingId=' + $(this).attr('quitmeetingid');
+			var quitMeetingIdData = 'meetingCode=' + meetingCode + '&caregiverId=' + caregiverId + '&meetingId=' + meetingId;
+	        $.ajax({
+	            type: 'POST',
+	            url: VIDEO_VISITS.Path.guestvisit.quitmeeting,
+	            data: quitMeetingIdData,
+	            success: function(returndata) {
+	            	//window.location.replace(VIDEO_VISITS.Path.guestvisit.logout);
+	            },
+	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+	            error: function(theRequest, textStatus, errorThrown) {
+	                window.location.replace(VIDEO_VISITS.Path.guestglobal.error);
+	            }
+	        });
+		}
+}
 
 function showJoinNowModal(encodedHrefLocation){
 
@@ -82,7 +100,10 @@ function showJoinNowModal(encodedHrefLocation){
     $("iframe").attr('src', iframedata);
     
     var finalHeight = $(window).height();
-	$('#guest-join-now-modal').css({"height": finalHeight*0.90});
+    var finalWidth = $(window).width();
+    
+	$('#joinNowIframeGuest').css({"height": finalHeight*0.90});
+	$('#joinNowIframeGuest').css({"width": finalWidth*0.90});
 	
     $("#guest-join-now-modal").dialog( "open" );
     GuestReadyPage.keepALive();
