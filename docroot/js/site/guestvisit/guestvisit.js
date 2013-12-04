@@ -99,11 +99,11 @@ function showJoinNowModal(encodedHrefLocation){
    // $("iframe").attr('src', decodeURIComponent(iframedata));
     $("iframe").attr('src', iframedata);
     
-    var finalHeight = $(window).height();
+/*    var finalHeight = $(window).height();
     var finalWidth = $(window).width();
     
 	$('#joinNowIframeGuest').css({"height": finalHeight*0.90});
-	$('#joinNowIframeGuest').css({"width": finalWidth*0.90});
+	$('#joinNowIframeGuest').css({"width": finalWidth*0.90});*/
 	
     $("#guest-join-now-modal").dialog( "open" );
     GuestReadyPage.keepALive();
