@@ -131,11 +131,11 @@ function showJoinNowModal(encodedHrefLocation){
     
     $("iframe").attr('src', iframedata);
     
-    var finalHeight = $(window).height();
+/*    var finalHeight = $(window).height();
     var finalWidth = $(window).width();
     
 	$('#joinNowIframe').css({"height": finalHeight*0.90});
-	$('#joinNowIframe').css({"width": finalWidth*0.90});
+	$('#joinNowIframe').css({"width": finalWidth*0.90});*/
 	
     //$("#join-now-modal").dialog( "open" );
     
