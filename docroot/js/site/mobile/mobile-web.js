@@ -144,7 +144,7 @@ $(document).ready(function() {
 	$(".getAppButton, .getAppLink").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
 		var iOSUrl = 'https://itunes.apple.com/us/app/KPPC/id497468339?mt=8';
-		var androidUrl = 'https://play.google.com/store/apps/details?id=com.vidyo.VidyoClient&hl=en';
+		var androidUrl = 'https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en';
 		
 		
 		var os = getAppOS();
