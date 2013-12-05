@@ -143,7 +143,7 @@ $(document).ready(function() {
 	
 	$(".getAppButton, .getAppLink").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
-		var iOSUrl = 'https://itunes.apple.com/us/app/vidyomobile/id444062464?mt=8';
+		var iOSUrl = 'https://itunes.apple.com/us/app/KPPC/id497468339?mt=8';
 		var androidUrl = 'https://play.google.com/store/apps/details?id=com.vidyo.VidyoClient&hl=en';
 		
 		
@@ -173,7 +173,28 @@ $(document).ready(function() {
 	});
 
 	$("#signInId, #logout-sign-in").click(function(event) {
-		event.preventDefault();
+		$("#app-alert").addClass("hide-me");
+		$("#login-form").addClass("hide-me");
+		$("#modal-window").addClass("hide-me");
+		var appOS = getAppOS();
+		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
+		if(appOS === 'iOS'){
+		
+		    var iOSver = iOSversion();
+		    //alert('iOS ver: ' + iOSver);
+		    //Fix for the ios 7 issue with openTab function
+			if (iOSver[0] >= 7) {
+			  //alert('This is running iOS 7 or later.');
+			  window.location.replace('kppc://videovisit?signon=true');
+			}else{
+				openTab('kppc://videovisit?signon=true');
+			}
+		}
+		else{
+			openTab('kppc://videovisit?signon=true');
+			
+		}
+		/*event.preventDefault();
 		 $("#mrn").val('');
           $("#last_name").val('');
         $("#birth_month").val('');
@@ -185,7 +206,7 @@ $(document).ready(function() {
 		if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
 			hidesAppAlert();
 		}
-		return false;
+		return false;*/
 		
 	});
 	

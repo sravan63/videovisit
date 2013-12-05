@@ -16,13 +16,15 @@
 			<p>To attend a video visit, you will need a device with a front-facing camera, the Video Visits app and a fast internet connection (4G or Wi-fi highly recommended).</p>
 		</div>
 
-		<button id="signInId" class="button-main only-tablets" onclick="modalShow('modal-login');">Sign on here</button>
+		 <button id="signInId" class="button-main only-tablets" >Sign on here</button>
+		
 	</div>
 
 	<%@ include file="common/information.jsp" %>	
 
 
-		<button id="signInId" class="button-main only-handsets" onclick="modalShow('modal-login');">Sign on here</button>
+		<button id="signInId" class="button-main only-handsets">Sign on here</button>
+		
 
 </div>
 
