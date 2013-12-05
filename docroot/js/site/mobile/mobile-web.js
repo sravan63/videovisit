@@ -576,7 +576,7 @@ function getAppOS(){
     if (navigator.userAgent.match(/Android 2.2/i) || navigator.userAgent.match(/Android 2.3/i) || 
     navigator.userAgent.match(/Android 3.0/i) || navigator.userAgent.match(/Android 3.1/i) || 
     navigator.userAgent.match(/Android 3.2/i) || navigator.userAgent.match(/Android 4.0/i) ||
-    navigator.userAgent.match(/Android 4.1/i) || navigator.userAgent.match(/Android 4.2/i)){
+    navigator.userAgent.match(/Android 4.1/i) || navigator.userAgent.match(/Android 4.2/i)  || navigator.userAgent.match(/Android 4.3/i)  || navigator.userAgent.match(/Android 4.4/i)){
            return "Android";
     }
     
