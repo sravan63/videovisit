@@ -58,10 +58,12 @@ public class VideoVisitPatientController extends SimplePageController {
 						if(meeting.getMeetingId() == Long.parseLong(request.getParameter("meetingId"))){
 							videoVisitParams.setHostFirstName(meeting.getProviderHost().getFirstName());
 							videoVisitParams.setHostLastName(meeting.getProviderHost().getLastName());
-							videoVisitParams.setHostTitle(meeting.getProviderHost().getTitle());
-						}
-						//System.out.println("meeting host FN:"+meeting.getProviderHost().getFirstName());
-						//System.out.println("meeting host ln:"+meeting.getProviderHost().getLastName());
+							if(meeting.getProviderHost().getTitle() != null && meeting.getProviderHost().getTitle().length() > 0){
+								videoVisitParams.setHostTitle(", " + meeting.getProviderHost().getTitle());
+							}else{
+								videoVisitParams.setHostTitle("");
+							}							
+						}						
 					}
 					
 					WebAppContext.getWebAppContext(request).setVideoVisit(videoVisitParams);
