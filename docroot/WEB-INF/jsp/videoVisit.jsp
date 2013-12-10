@@ -1,14 +1,9 @@
-	<%-- <c:forEach var="meeting" items="${WebAppContext.meetings}"> --%>
-		
-		<%-- <c:if test="${meeting.meetingId == WebAppContext.videoVisit.meetingId}"> --%>	
-			<div style="float:left">
+	<div style="float:left">
 				<h3 class="page-title">Video Visit with ${WebAppContext.videoVisit.hostFirstName} 
-					${WebAppContext.videoVisit.hostLastName}
-					<c:if test="${not empty WebAppContext.videoVisit.hostTitle}">, ${WebAppContext.videoVisit.hostTitle}</c:if>
+					${WebAppContext.videoVisit.hostLastName}${WebAppContext.videoVisit.hostTitle}					
 				</h3>
-			</div>
-		<!-- </c:if> -->
-	<!-- </c:forEach> -->
+	</div>
+		
 
 	<div id="nav-user">
 		<ul>
