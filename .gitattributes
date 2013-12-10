@@ -217,6 +217,7 @@ docroot/js/site/mdo/mdo-jquery-v1.min.js -text
 docroot/js/site/mdo/print.js -text svneol=unset#text/plain
 docroot/js/site/mobile/mobile-web.js -text svneol=unset#text/plain
 docroot/js/site/validation/validate.js -text svneol=unset#text/plain
+docroot/js/site/videovisit/videoVisit.js -text svneol=unset#text/plain
 docroot/js/site/visit/visit.js -text
 docroot/keepalive.jsp -text
 docroot/live.jsp -text
