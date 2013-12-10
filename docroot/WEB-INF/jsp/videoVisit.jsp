@@ -19,7 +19,7 @@
 	</div>
                                 
      <div id="video-main" style="width:100%">
-         <iframe id="joinNowIframe" src ="${WebAppContext.videoVisit.vidyoUrl}" scrolling="no" width="100%" height="700">
+         <iframe id="joinNowIframe" src ="${WebAppContext.videoVisit.vidyoUrl}" scrolling="no" width="100%">
              <p>Your browser does not support iframes.</p>
          </iframe>
      </div>
