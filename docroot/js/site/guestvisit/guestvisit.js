@@ -79,6 +79,7 @@ var GuestVisit = {
 	            type: 'POST',
 	            url: VIDEO_VISITS.Path.guestvisit.quitmeeting,
 	            data: quitMeetingIdData,
+	            async: true,
 	            success: function(returndata) {
 	            	//window.location.replace(VIDEO_VISITS.Path.guestvisit.logout);
 	            },
