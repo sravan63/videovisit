@@ -9,7 +9,8 @@ $(document).ready(function() {
        
         var caregiverId = $(this).attr('caregiverId');
         var name = $(this).attr('userName');
-        
+        var guestDisplayName = $(this).attr('careGiverDisplayName');
+               
         meetingIdData = 'meetingCode=' + $.trim($("#meetingCode").val()); //$(this).attr('meetingCode');
         meetingId = $.trim($("#meetingId").val());
         patientLastName = $.trim($("#patientLastName").val());
@@ -44,7 +45,7 @@ $(document).ready(function() {
             	  	hreflocation = returndata.result;
             	 
             	  	//  hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-            	  	hreflocation = "/vidyoplayer/player.html?guestName=" + name + "&isProvider=false&meetingId=" +meetingId + "&caregiverId=" +caregiverId+ "&meetingCode=" +$.trim($("#meetingCode").val())+ "&guestUrl=" +encodeURIComponent(hreflocation);
+            	  	hreflocation = "/vidyoplayer/player.html?guestName=" + guestDisplayName + "&isProvider=false&meetingId=" +meetingId + "&caregiverId=" +caregiverId+ "&meetingCode=" +$.trim($("#meetingCode").val())+ "&guestUrl=" +encodeURIComponent(hreflocation);
             	  
             	  	var postParaVideoVisit = {vidyoUrl: hreflocation, meetingId: meetingId, meetingCode: $.trim($("#meetingCode").val()),
             	  	        guestName: name, patientLastName: patientLastName, isMember: "N"};
