@@ -109,7 +109,6 @@ var MemberVisit = {
 	            type: 'POST',
 	            url: VIDEO_VISITS.Path.visit.quitmeeting,
 	            data: quitMeetingIdData,
-	            async: true,
 	            success: function(returndata) {
 	            	//window.location.replace("landingready.htm");
 	            },
