@@ -64,8 +64,19 @@ $(document).ready(function() {
 			            			    cache: false,
 			            			    async: false,
 			            			    data: postParaVideoVisit,
+			            			    success: function(){
+			            			    	if($.browser.mozilla){
+			            			    		window.setTimeout(function(){
+			            							window.location.href="videoVisitReady.htm";
+			            							}, 3000);
+				            				}else{
+				            					window.location.href="videoVisitReady.htm";
+				            				}
+			            			    },
+			            		        error: function() {
+			            		        }
 			            			})
-			            			.done(function(){
+			            			/*.done(function(){
 			            				if($.browser.mozilla){
 			            					alert("ajax done");
 			            				}
@@ -76,7 +87,7 @@ $(document).ready(function() {
 			            			})
 			            			.always(function(){
 			            				//alert("always");
-			            			});
+			            			});*/
 			            			//window.location.replace("visit.htm?iframedata=" + hreflocation + "&meetingId=" + meetingId + "&memberName=" + name);
 			            		}
 			            		
