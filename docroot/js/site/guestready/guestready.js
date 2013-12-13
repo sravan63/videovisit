@@ -55,21 +55,19 @@ $(document).ready(function() {
 	      			    cache: false,
 	      			    async: false,
 	      			    data: postParaVideoVisit,
+		      			success: function(){
+	      			    	if($.browser.mozilla){
+	      			    		window.setTimeout(function(){
+	      							window.location.href="videoVisitGuestReady.htm";
+	      							}, 3000);
+	          				}else{
+	          					window.location.href="videoVisitGuestReady.htm";
+	          				}
+	      			    },
+	      		        error: function() {
+	      		        }
 	      			})
-	      			.done(function(){
-	      				if($.browser.mozilla){
-	      					alert("ajax done");
-	      				}
-	      				window.location.href="videoVisitGuestReady.htm";
-	      			})
-	      			.fail(function(theRequest, textStatus, errorThrown){
-	      				alert("failed");
-	      			})
-	      			.always(function(){
-	      			//	alert("always");
-	      			});
-            	  //setCookie("iframedata",encodeURIComponent(hreflocation),365);
-                  //window.location.replace("guestvisit.htm");
+	      			
               }
               catch(e)
               {
