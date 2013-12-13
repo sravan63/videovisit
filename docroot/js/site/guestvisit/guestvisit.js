@@ -84,7 +84,7 @@ var GuestVisit = {
 	            },
 	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
 	            error: function(theRequest, textStatus, errorThrown) {
-	                window.location.replace(VIDEO_VISITS.Path.guestglobal.error);
+	               // window.location.replace(VIDEO_VISITS.Path.guestglobal.error);
 	            }
 	        });
 		}
