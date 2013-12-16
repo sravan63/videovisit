@@ -108,6 +108,8 @@ var MemberVisit = {
 	         $.ajax({
 	            type: 'POST',
 	            url: VIDEO_VISITS.Path.visit.quitmeeting,
+	            cache: false,
+			    async: false,
 	            data: quitMeetingIdData,
 	            success: function(returndata) {
 	            	//window.location.replace("landingready.htm");
