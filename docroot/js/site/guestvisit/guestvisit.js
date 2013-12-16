@@ -78,6 +78,8 @@ var GuestVisit = {
 	        $.ajax({
 	            type: 'POST',
 	            url: VIDEO_VISITS.Path.guestvisit.quitmeeting,
+	            cache: false,
+			    async: false,
 	            data: quitMeetingIdData,
 	            success: function(returndata) {
 	            	//window.location.replace(VIDEO_VISITS.Path.guestvisit.logout);
