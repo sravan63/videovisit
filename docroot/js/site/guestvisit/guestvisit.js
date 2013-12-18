@@ -71,10 +71,10 @@ var GuestReadyPage =
 }
 
 var GuestVisit = {
-		QuitMeetingActionButtonYes: function(meetingCode, caregiverId, meetingId)
+		QuitMeetingActionButtonYes: function(meetingCode, caregiverId, meetingId, refreshMeetings)
 		{	
 			//var quitMeetingIdData = 'meetingCode=' + $.trim($("#meetingCode").val()) +  '&caregiverId=' + $(this).attr('caregiverId')  + '&meetingId=' + $(this).attr('quitmeetingid');
-			var quitMeetingIdData = 'meetingCode=' + meetingCode + '&caregiverId=' + caregiverId + '&meetingId=' + meetingId;
+			var quitMeetingIdData = 'meetingCode=' + meetingCode + '&caregiverId=' + caregiverId + '&meetingId=' + meetingId + '&refreshMeetings=' + refreshMeetings;
 	        $.ajax({
 	            type: 'POST',
 	            url: VIDEO_VISITS.Path.guestvisit.quitmeeting,

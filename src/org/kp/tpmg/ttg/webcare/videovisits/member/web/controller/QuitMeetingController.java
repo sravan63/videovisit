@@ -21,6 +21,13 @@ public class QuitMeetingController extends SimplePageController {
 		{
 			
 			data = MeetingCommand.updateEndMeetingLogout(request, response);
+			
+			String refreshMeetings = request.getParameter("refreshMeetings"); 
+			
+			if (refreshMeetings != null && refreshMeetings.equals("true")) {
+				MeetingCommand.retrieveMeeting(request, response);
+			}
+			
 //			responseWrapper = MeetingCommand.quitMeeting(request, response);
 //			if(responseWrapper != null && responseWrapper.getSuccess()){
 //				data = MeetingCommand.updateEndMeetingLogout(request, response);

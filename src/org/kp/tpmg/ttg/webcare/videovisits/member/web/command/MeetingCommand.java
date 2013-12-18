@@ -14,9 +14,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
-
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
-
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
@@ -203,7 +201,6 @@ public class MeetingCommand {
 					ctx.setMeetings(meetings);
 
 				}
-				/*
 				else
 				{
 					// no meeting, we should blank out cached meeting
@@ -211,7 +208,7 @@ public class MeetingCommand {
 					ctx.setTotalmeetings(0);
 
 				}	
-				*/
+
 				return JSONObject.fromObject(ret).toString();
 			}
 		} 
@@ -444,6 +441,12 @@ public class MeetingCommand {
 					}
 				}				
 				return JSONObject.fromObject(ret).toString();
+			}
+			else
+			{
+				// no meeting, we should blank out cached meeting
+				ctx.setMeetings(null);
+				ctx.setTotalmeetings(0);
 			}
 		}
 		return (JSONObject.fromObject(new SystemError()).toString());

@@ -21,6 +21,13 @@ public class EndCaregiverSessionController extends SimplePageController   {
 		StringResponseWrapper responseWrapper = null;
 		try	{
 			data = MeetingCommand.endCaregiverMeetingSession(request, response);
+			
+			String refreshMeetings = request.getParameter("refreshMeetings");
+			
+			if (refreshMeetings != null && refreshMeetings.equals("true")) {
+				MeetingCommand.retrieveMeetingForCaregiver(request, response);
+			}
+			
 /*			responseWrapper = MeetingCommand.quitMeeting(request, response);
 			if(responseWrapper != null && responseWrapper.getSuccess()){
 				data = MeetingCommand.endCaregiverMeetingSession(request, response);

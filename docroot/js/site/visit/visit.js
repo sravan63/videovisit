@@ -101,9 +101,9 @@ var LandingReadyPage =
 }
 
 var MemberVisit = {
-		QuitMeetingActionButtonYes: function(meetingId, memberName)
+		QuitMeetingActionButtonYes: function(meetingId, memberName, refreshMeetings)
 		{
-			var quitMeetingIdData = 'meetingId=' + meetingId + '&memberName=' + memberName;
+			var quitMeetingIdData = 'meetingId=' + meetingId + '&memberName=' + memberName + '&refreshMeetings=' + refreshMeetings;
 
 	         $.ajax({
 	            type: 'POST',
