@@ -439,7 +439,14 @@ public class MeetingCommand {
 						}
 						ctx.setMeetings(meetings);
 					}
-				}				
+				}	
+				else
+				{
+					// no meeting, we should blank out cached meeting
+					ctx.setMeetings(null);
+					ctx.setTotalmeetings(0);
+				}
+				
 				return JSONObject.fromObject(ret).toString();
 			}
 			else
