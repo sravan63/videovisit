@@ -17,6 +17,7 @@ build-scripts/upload.sh -text
 /build.properties -text
 /build.xml -text
 /buildjenkins.xml -text
+conf/configuration.properties -text
 conf/filters/dv/configuration.properties -text svneol=unset#text/plain
 conf/filters/local -text
 conf/filters/pp/configuration.properties -text
