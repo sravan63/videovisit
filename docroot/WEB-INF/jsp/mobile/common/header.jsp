@@ -2,7 +2,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!--  Include modal dialog jsps -->
-<%@ include file="../patientLoginModal.jsp" %>
+
 <%@ include file="logoutModal.jsp" %>
 
 

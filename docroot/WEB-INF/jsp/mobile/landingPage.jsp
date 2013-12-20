@@ -11,6 +11,8 @@
 
 	MeetingCommand.retrieveMeeting(request, response);
 	String timezone = WebUtil.getCurrentDateTimeZone();
+	
+	
 %>
 <%@ include file="userPresentInMeetingModal.jsp" %>
 <!-- Refresh page button and time stamp - to be reworked -->

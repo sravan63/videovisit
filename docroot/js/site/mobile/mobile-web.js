@@ -55,7 +55,7 @@ var request = {
    		    var result = {};
    		    var url = window.location.href;
    		    var parameters = url.slice(url.indexOf('?') + 1).split('&');
-   		 
+
    		    for (var i = 0; i < parameters.length; i++)
    		    {
    		       var parameter = parameters[i].split('=');
@@ -64,6 +64,23 @@ var request = {
    		 return result;
    		 }
    	};
+
+	function setMemberContext()
+	{
+		if ( window.location.href.indexOf('mobilepatientlanding.htm') != -1)
+		{
+			deleteCookie('memberContext');
+			setCookieWithTime('memberContext','false::landingPage',60*60*24*13);
+		}
+		
+		if ( window.location.href.indexOf('mobilepglanding.htm') != -1)
+		{
+			var meetingCode = request.get('meetingCode');
+			deleteCookie('memberContext');
+			setCookieWithTime('memberContext','true:' + meetingCode +':landingPagePG',60*60*24*13);
+		}
+		
+	}
 /*END - AJAX Server requests  */
 
 
@@ -71,10 +88,10 @@ var request = {
  * This is the main function which gets called when the document is ready and loaded in DOM
  */
 $(document).ready(function() {
-	
+
 	detectDeviceCookie();
 	hideAddressBar();
-	
+	setMemberContext();
 	// refresh the meetings page every one min
 //	var refreshId = setInterval(function(){
 //		var isUserLoggedInCookie = getCookie("isUserLoggedIn");
@@ -82,17 +99,17 @@ $(document).ready(function() {
 //			//alert("refreshing");
 //			window.location.reload();
 //		}
-//		
-//		
+//
+//
 //	}, 60000);
-		
-	
-	
-	
+
+
+
+
 	$(".modal-window .button-close").click(modalHideByClass);
-	
+
 	$(".alert.hideable").click(hideSecurityAlert);
-	
+
 	$(".scrollup").click(scrollMe);
 	// Shows and hides scroll to top button
 	$(window).scroll(function(){
@@ -104,30 +121,30 @@ $(document).ready(function() {
 	});
 	// scrolls to top for anchor page states on load
 	scrollMe();
-	
+
 	//removing the functionality as the modals lock themselves in Landscape mode (non-scrollable)
 	/*$('.modal').on('touchmove', function (event) {
 		// locking these elements, so they can't be moved when dragging the div
 		event.preventDefault();
 	});*/
-	
-	
+
+
 	// for focus and blur events
 	$("form :input").focus(function() {
 		$(this).parent().addClass("form-focus");
-		
+
 		// clear all errors
 		clearAllErrors();
-		
+
 	}).blur(function() {
 			$(this).parent().removeClass("form-focus");
 	});
 
-	
-	
+
+
 	// START--APP ALERT handling using cookie
 	var appAlertCookie=getCookie("APP_ALERT_COOKIE");
-	
+
 	$("#btn-i-have-it, #btn-i-have-it_pg").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
 		var targetId = event.target.id;
@@ -137,16 +154,16 @@ $(document).ready(function() {
 		if(targetId == 'btn-i-have-it_pg'){
 			hidesAppAlertPatientGuest();
 		}
-		
+
 	});
-	
-	
+
+
 	$(".getAppButton, .getAppLink").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
 		var iOSUrl = 'https://itunes.apple.com/us/app/KPPC/id497468339?mt=8';
 		var androidUrl = 'https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en';
-		
-		
+
+
 		var os = getAppOS();
 		if(os == "iOS"){
 			if(event.target.id == "getAppLink"){
@@ -157,7 +174,7 @@ $(document).ready(function() {
 				openTab(iOSUrl);
 			}
 		}
-		else if(os == "Android"){	
+		else if(os == "Android"){
 			if(event.target.id == "getAppLink"){
 				$(".getAppLink").attr("href", androidUrl);
 			}
@@ -179,7 +196,7 @@ $(document).ready(function() {
 		var appOS = getAppOS();
 		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 		if(appOS === 'iOS'){
-		
+
 		    var iOSver = iOSversion();
 		    //alert('iOS ver: ' + iOSver);
 		    //Fix for the ios 7 issue with openTab function
@@ -192,7 +209,7 @@ $(document).ready(function() {
 		}
 		else{
 			openTab('kppc://videovisit?signon=true');
-			
+
 		}
 		/*event.preventDefault();
 		 $("#mrn").val('');
@@ -207,12 +224,12 @@ $(document).ready(function() {
 			hidesAppAlert();
 		}
 		return false;*/
-		
+
 	});
-	
+
 	$("#signInIdPG, #signInIdPGHand").click(function(event) {
 		event.preventDefault();
-		
+
 		var targetId = event.target.id;
 		// clear all errors
 		clearAllErrors();
@@ -220,16 +237,16 @@ $(document).ready(function() {
 			hidesAppAlertPatientGuest();
 		}
 		return false;
-		
+
 	});
-	
-	
+
+
 	// END--APP ALERT handling using cookie
-	
+
 	// Login button submit click
 	$("#login-submit").click(function(event) {
 		event.preventDefault();
-		
+
 		if ( $("#mrn").val().length > 0)
 		{
 			if ( $("#mrn").val().length < 8 )
@@ -244,33 +261,33 @@ $(document).ready(function() {
 		if(isLoginValiadtionSuccess()){
 			loginSubmit();
 		}
-		
+
 	});
-	
+
 	// Login button submit click patient guest
 	$("#login-submit-pg").click(function(event) {
 		event.preventDefault();
-			
+
 		// if client side validation successful
 		if(validationPatientGuestLogin()){
 			loginSubmitPG();
-			
+
 		}
-		
+
 	});
-	
-	$(".button-launch-visit").click(function(event) {	
+
+	$(".button-launch-visit").click(function(event) {
 		event.preventDefault();
-		
+
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
 		var name = firstName + " " + lastName;
 		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
         var meetingId = $(this).attr("meetingId");
-		
+
 		// Check if the user session is active before launching the app
-		
+
 		var currentTime = new Date();
 	    var n = currentTime.getTime();
 		var postdata = "meetingId=" + meetingId + "&source=member&nocache=" + n;
@@ -278,7 +295,7 @@ $(document).ready(function() {
 			async:false,
 	        type: "POST",
 	        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidMeeting,
-	        data: postdata, 
+	        data: postdata,
 	        success: function(returndata) {
 	        	//console.log("returndata=" + returndata);
 	        	try
@@ -287,16 +304,16 @@ $(document).ready(function() {
 	        	}
 	        	catch(e)
 	        	{
-	        		
+
         			window.location.replace("logout.htm");
 	        	}
-	        	var isValidUserSession =  returndata.isValidUserSession; 
-	        	
+	        	var isValidUserSession =  returndata.isValidUserSession;
+
 	        	 if(returndata.success == true && isValidUserSession == true){
-	        		 
+
 	        		var meetingStatus = returndata.meetingStatus;
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	             		
+
 	             		window.location.replace("meetingexpiredmember.htm");
 	             	}
 	             	else{
@@ -306,30 +323,30 @@ $(document).ready(function() {
 		            		try
 		            		{
 			            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
-			            		
+
 			            		if(userPresentInMeetingData.result == "true"){
-			            			
+
 			            			modalShow('modal-user-present');
 			            		}
 			            		else{
-			            				
+
 				            			joinMeeting(meetingId);
 				    	        		launchVideoVisit(megaMeetingUrl, meetingId, name);
 			            			}
 		            		}
 		            		catch(e)
 		            		{
-		            			
+
 		            			window.location.replace("logout.htm");
 		            		}
 		            	});
 	             	}
-	                
-	            	
-	                
+
+
+
 	            }
 	            else{
-	            	
+
 	            	window.location.replace("logout.htm");
 	            }
 
@@ -339,22 +356,22 @@ $(document).ready(function() {
 	        	window.location.replace("logout.htm");
 	        }
 	    });
-		
-		
-		
-		
+
+
+
+
 
 	});
-    
-    $(".button-launch-visit-pg").click(function(event) {	
+
+    $(".button-launch-visit-pg").click(function(event) {
 		event.preventDefault();
-		
+
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
 		var email = $(this).attr("email");
 		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
-    	
+
     	var currentTime = new Date();
 	    var n = currentTime.getTime();
 		var postdata = 'source=caregiver&nocache=' + n;
@@ -362,38 +379,39 @@ $(document).ready(function() {
 			async:false,
 	        type: "POST",
 	        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidUserSession,
-	        data: postdata, 
+	        data: postdata,
 	        success: function(returndata) {
 	        	//console.log("returndata=" + returndata);
 	        	returndata = $.parseJSON(returndata);
-	        	var isValidUserSession =  returndata.isValidUserSession; 
+	        	var isValidUserSession =  returndata.isValidUserSession;
 	        	//console.log("isValidUserSession=" + isValidUserSession);
 	            if(isValidUserSession == true){
-	            
+
 	                launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
 	            }
 	            else{
-	            	
+
 	            	 window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
 	            }
 
 	        },
 	        error: function() {
-	        	
+
 	        	 window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
 	        }
 	    });
-    	
-	   
-	   
-		 
+
+
+
+
 		return false;
 	});
-	
-	
-    
-    
+
+
+
+
     $('#logout-yes').click(function(){
+    	deleteCookie('memberContext');
         $.ajax({
             type: 'POST',
             url: VIDEO_VISITS_MOBILE.Path.logout.logoutjson,
@@ -404,12 +422,13 @@ $(document).ready(function() {
         });
         return false;
     });
-    
+
     $('#pg-logout-yes').click(function(){
+    	deleteCookie('memberContext');
         window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
         return false;
     });
-	
+
 });
 
 
@@ -430,43 +449,43 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	    var n = currentTime.getTime();
 	    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
 		var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;
-		
-			
-	
+
+
+
 		$.ajax({
 	        type: "POST",
 	        url: VIDEO_VISITS_MOBILE.Path.guest.verify,
-	        data: postdata,  
+	        data: postdata,
 	        success: function(returndata) {
 	            returndata = $.trim(returndata);
-	           
+
 	            returndata = jQuery.parseJSON(returndata);
-	            
+
 	            if(returndata.result === '1'){
-	            	  
-	            	$("#globalError").text('No matching patient found. Please try again.');           	
-	                 $("#globalError").removeClass("hide-me").addClass("error");  
+
+	            	$("#globalError").text('No matching patient found. Please try again.');
+	                 $("#globalError").removeClass("hide-me").addClass("error");
 	                 return false;
-	              } 
-	            else if (returndata.result === '2') { 
-	            	
+	              }
+	            else if (returndata.result === '2') {
+
 	            	window.location.replace("meetingexpiredmemberpg.htm");
 	                return false;
-	            	
+
 	            }
-	            else if (returndata.result === '3') {   
-	            	  
-	            	$("#globalError").text('Some exception occurred while processing request..');           	
-	                 $("#globalError").removeClass("hide-me").addClass("error");  
+	            else if (returndata.result === '3') {
+
+	            	$("#globalError").text('Some exception occurred while processing request..');
+	                 $("#globalError").removeClass("hide-me").addClass("error");
 	                 return false;
 	            }
-	            else if (returndata.result === '4') {   
-	            	  
-	            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');           	
-	                 $("#globalError").removeClass("hide-me").addClass("error");  
+	            else if (returndata.result === '4') {
+
+	            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
+	                 $("#globalError").removeClass("hide-me").addClass("error");
 	                 return false;
 	            }
-	              
+
 	            createGuestSession();
 	            $.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.mobileCareGiverCreateSession, postdata,function(data){
 	            	try
@@ -489,16 +508,16 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	            		window.location.replace("logout.htm");
 	            	}
 	            	});
-				
-				
-	
+
+
+
 	        },
 	        error: function() {
-	        	
+
 	        	//$("#globalError").text("There was an error submitting your login.");
 	 	   		//$("#globalError").removeClass("hide-me").addClass("error");
-	            
-	            
+
+
 	        }
 	    });
 }
@@ -565,28 +584,28 @@ function getAppOS(){
     //First, check for supported iOS devices, iPhone, iPod, and iPad
     var iOS = false,
     p = navigator.platform;
- 
+
     if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p==='iPhone Simulator' || p==='iPad Simulator'){
         return "iOS";
     }
-    
+
     //next, check if this is a supported AIR 3.1 Android device http://kb2.adobe.com/cps/923/cpsid_92359.html
     //Updated (3/5/2012) Advertize only to Android 2.2, 2.3, 3.0, 3.1 and 3.2 devices.
-    //Updated (8/29/2012) Added Android 4.0 to the list of supported operating systems. 
-    if (navigator.userAgent.match(/Android 2.2/i) || navigator.userAgent.match(/Android 2.3/i) || 
-    navigator.userAgent.match(/Android 3.0/i) || navigator.userAgent.match(/Android 3.1/i) || 
+    //Updated (8/29/2012) Added Android 4.0 to the list of supported operating systems.
+    if (navigator.userAgent.match(/Android 2.2/i) || navigator.userAgent.match(/Android 2.3/i) ||
+    navigator.userAgent.match(/Android 3.0/i) || navigator.userAgent.match(/Android 3.1/i) ||
     navigator.userAgent.match(/Android 3.2/i) || navigator.userAgent.match(/Android 4.0/i) ||
     navigator.userAgent.match(/Android 4.1/i) || navigator.userAgent.match(/Android 4.2/i)  || navigator.userAgent.match(/Android 4.3/i)  || navigator.userAgent.match(/Android 4.4/i)){
            return "Android";
     }
-    
+
     //No supported app platform found.
     return "desktop";
 }
 
 
-	
-	
+
+
 function hideAddressBar(){
 	if (navigator.userAgent.match(/Android/i)) {
 	window.scrollTo(0,0); // reset in case prev not scrolled
@@ -610,23 +629,23 @@ function hideAddressBar(){
 	}
 	return this;
 	}
-	
+
 /*
  * This method sets the isWirelessDeviceOrTablet cookie based on the device detected
  */
 function detectDeviceCookie(){
 	var appOS = getAppOS();
-	
+
 	// Check if cookie already set
 	var isWirelessDeviceOrTabletCookie=getCookie("isWirelessDeviceOrTablet");
-	
+
 	if(typeof isWirelessDeviceOrTabletCookie != undefined && isWirelessDeviceOrTabletCookie !=null && isWirelessDeviceOrTabletCookie != ""){
-		
+
 		return;
 	}
-	
+
 	if(appOS === 'iOS' || appOS === 'Android'){
-		
+
 		setCookie("isWirelessDeviceOrTablet", "true")
 	}
 	else{
@@ -645,12 +664,25 @@ function setCookie(c_name,value){
 	var time = exdate.getTime();
 	// expiry set to 20 years
 	var addTime = 60*60*24*365*20*1000;
-	
+
 	exdate.setTime(time + addTime);
-	
+
 	//exdate.setDate(exdate.getDate() + days);
 	var c_value=escape(value) +  ";expires="+exdate.toUTCString();
-	
+
+	document.cookie=c_name + "=" + c_value;
+}
+function setCookieWithTime(c_name,value,t){
+	var exdate=new Date();
+	var time = exdate.getTime();
+	// expiry set to 20 years
+	var addTime = t;
+
+	exdate.setTime(time + addTime);
+
+	//exdate.setDate(exdate.getDate() + days);
+	var c_value=escape(value) +  ";expires="+exdate.toUTCString();
+
 	document.cookie=c_name + "=" + c_value;
 }
 
@@ -671,7 +703,7 @@ function getCookie(c_name){
 function deleteCookie(c_name){
 
 	var cookie = getCookie(c_name);
-	
+
 	if (typeof cookie !== 'undefined' && cookie !=null && cookie !=""){
 		var c_value=";expires=Thu, 01-Jan-1970 00:00:01 GMT";
 		document.cookie=c_name + "=" + c_value;
@@ -705,7 +737,7 @@ function launchVideoVisit(megaMeetingUrl, meetingId, name){
 		var appOS = getAppOS();
 		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 		if(appOS === 'iOS'){
-		
+
 		    var iOSver = iOSversion();
 		    //alert('iOS ver: ' + iOSver);
 		    //Fix for the ios 7 issue with openTab function
@@ -718,9 +750,9 @@ function launchVideoVisit(megaMeetingUrl, meetingId, name){
 		}
 		else{
 			openTab(url);
-			
-		}	
-		
+
+		}
+
 
 	}
 	catch(e)
@@ -728,11 +760,11 @@ function launchVideoVisit(megaMeetingUrl, meetingId, name){
 		window.location.replace("logout.htm");
 	}
 	});
-	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1"; 
-	
+	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1";
+
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
-	
+
 }
 
 
@@ -743,13 +775,13 @@ function launchVideoVisit(megaMeetingUrl, meetingId, name){
  * @param firstName
  */
 function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
-	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1"; 
+	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1";
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
 	var appOS = getAppOS();
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 	if(appOS === 'iOS'){
-	
+
 	    var iOSver = iOSversion();
 	    //alert('iOS ver: ' + iOSver);
 	    //Fix for the ios 7 issue with openTab function
@@ -762,10 +794,10 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	}
 	else{
 		openTab(megaMeetingUrl);
-		
-	}	
-	
-	
+
+	}
+
+
 }
 
 
@@ -782,18 +814,18 @@ function openTab(url)
 }
 
 /**
- * 
- * 	METHOD_NAME- an int value which determines which method to be called, 
+ *
+ * 	METHOD_NAME- an int value which determines which method to be called,
  *	ERROR_MESSAGE - In case the validation fails
  *	ERROR_ID - Error Id that will display the error
  *	HIGHLIGHT_PARENT_WHEN_ERROR - Input that needs to be highlighted when the error occurs. For e.g if text field has error then highlight the text field
  *	PARAM_VALUE - value which needs to be validated.
- * 
+ *
  * @returns
  */
 function isLoginValiadtionSuccess(){
-	
-	var validationObj = 
+
+	var validationObj =
 		{
 			"last_name" : [
 				{
@@ -813,7 +845,7 @@ function isLoginValiadtionSuccess(){
 					"ERROR_MESSAGE" : "MRN is required and should be 8 digits.",
 					"ERROR_ID" : "mrnErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
-					
+
 				}
 			],
             "birth_month"	:[
@@ -823,7 +855,7 @@ function isLoginValiadtionSuccess(){
 							"ERROR_MESSAGE" : "Please enter a valid birth month.",
 							"ERROR_ID" : "dateOfBirthMonthErrorId",
 							"HIGHLIGHT_PARENT_WHEN_ERROR": true
-							
+
 						}
 					],
 			"birth_day"	:[
@@ -837,7 +869,7 @@ function isLoginValiadtionSuccess(){
 			],
 			"birth_year"	:[
 			            {
-			            	
+
 			            	"METHOD_NAME" : METHODNAME_IS_BIRTHYEAR_VALIDATION,
 							"PARAM_VALUE" : $("#birth_year").val(),
 							"ERROR_MESSAGE" : "Please enter a valid birth year.",
@@ -845,18 +877,18 @@ function isLoginValiadtionSuccess(){
 							"HIGHLIGHT_PARENT_WHEN_ERROR": true
 			            }
 					]
-	
+
 		}
-	
+
 	var  isValid = validate(validationObj);
 
 	return isValid;
-	
+
 }
 
 function validationPatientGuestLogin(){
-	
-	var validationObj = 
+
+	var validationObj =
 	{
 		"last_name" : [
 			{
@@ -869,12 +901,12 @@ function validationPatientGuestLogin(){
 		]
 
 	}
-	
-	
+
+
 	var  isValid = validate(validationObj);
 
 	return isValid;
-	
+
 }
 
 /**
@@ -884,7 +916,7 @@ function validationPatientGuestLogin(){
  * @param firstName
  */
 function loginSubmit(){
-	
+
     // Prepare data from pertinent fields for POSTing
     // Format birth_month
     var birth_month = $('input[name=birth_month]').val();
@@ -896,25 +928,25 @@ function loginSubmit(){
     if (birth_day.length == 1) {
         birth_day = "0" + birth_day;
     }
-    
+
     // Parameters sent to the server
     var currentTime = new Date();
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
-	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' 
+	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month='
 								+ birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&nocache=' + n;
 
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.login.ajaxurl,
-        data: postdata, 
+        data: postdata,
         success: function(returndata) {
             returndata = $.trim(returndata);
-           
+
             var LOGIN_STATUS_SUCCESS = "1";
         	var LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR = "3";
         	var LOGIN_STATUS_CODE_ERROR = "4";
-        	
+
             switch (returndata) {
                 case LOGIN_STATUS_SUCCESS:
                 	// set the cookie for logged in user
@@ -923,45 +955,45 @@ function loginSubmit(){
                     break;
 
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
-            	   
+
             	   $("#globalError").text("We could not find this patient.  Please try entering the information again.");
             	   $("#globalError").removeClass("hide-me").addClass("error");
 
                     break;
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
-                	
+
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
                     break;
                 default:
-                	
+
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
-                   
+
                     break;
             }
 
         },
         error: function() {
-        	
+
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-            
-            
+
+
         }
     });
-	
+
 
 	return false;
 }
 
 function loginSubmitPG(){
-	
+
     // Prepare data from pertinent fields for POSTing
-    
-    var meetingCode = request.get('meetingCode');
-    
+
+    var meetingCode = request.get('meetingCode') || $('#meetingCode').attr("value");;
+
     // Parameters sent to the server
     var currentTime = new Date();
     var n = currentTime.getTime();
@@ -971,131 +1003,131 @@ function loginSubmitPG(){
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.guest.verify,
-        data: postdata,  
+        data: postdata,
         success: function(returndata) {
             returndata = $.trim(returndata);
-            
+
             returndata = jQuery.parseJSON(returndata);
             if(returndata.result === '1'){
-            	  
-            	$("#globalError").text('No matching patient found. Please try again.');           	
-                 $("#globalError").removeClass("hide-me").addClass("error");  
+
+            	$("#globalError").text('No matching patient found. Please try again.');
+                 $("#globalError").removeClass("hide-me").addClass("error");
                  return false;
-              } 
-            else if (returndata.result === '2') { 
-            	
+              }
+            else if (returndata.result === '2') {
+
             	window.location.replace("meetingexpiredmemberpg.htm");
                 return false;
-            	
+
             }
-            else if (returndata.result === '3') {   
-            	  
-            	$("#globalError").text('Some exception occurred while processing request..');           	
-                 $("#globalError").removeClass("hide-me").addClass("error");  
+            else if (returndata.result === '3') {
+
+            	$("#globalError").text('Some exception occurred while processing request..');
+                 $("#globalError").removeClass("hide-me").addClass("error");
                  return false;
             }
-            else if (returndata.result === '4') {   
-            	  
-            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');           	
-                 $("#globalError").removeClass("hide-me").addClass("error");  
+            else if (returndata.result === '4') {
+
+            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
+                 $("#globalError").removeClass("hide-me").addClass("error");
                  return false;
             }
-            
-            
+
+
              window.location.replace("mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + $('input[name=last_name]').val());
 
         },
         error: function() {
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-            
-            
+
+
         }
     });
-	
+
 	return false;
 }
 
 function setSessionTimeout(){
-	
+
 	var currentTime = new Date();
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
 	var postdata = 'nocache=' + n;
-	
+
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.ajaxurl,
-        data: postdata, 
+        data: postdata,
         success: function(returndata) {
            returndata = $.trim(returndata);
         },
         error: function() {
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-            
-            
+
+
         }
     });
-	
+
 	return false;
 }
 
 function createGuestSession(){
-	
+
 	var currentTime = new Date();
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
     var meetingCode = request.get('meetingCode');
     var patientLastName = request.get('patientLastName');
-	var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;	
+	var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;
 
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.createGuestSession.ajaxurl,
-        data: postdata, 
+        data: postdata,
         success: function(returndata) {
            returndata = $.trim(returndata);
         },
         error: function() {
         	//$("#globalError").text("There was an error submitting your login.");
  	   		//$("#globalError").removeClass("hide-me").addClass("error");
-            
-            
+
+
         }
     });
-	
+
 	return false;
 }
 
 function joinMeeting(meetingId){
-	
+
 	var currentTime = new Date();
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
-    
-	var postdata = 'meetingId=' + meetingId   +  '&nocache=' + n;	
+
+	var postdata = 'meetingId=' + meetingId   +  '&nocache=' + n;
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.joinMeeting.ajaxurl,
-        data: postdata, 
+        data: postdata,
         success: function(returndata) {
            returndata = $.trim(returndata);
         },
         error: function() {
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-            
-            
+
+
         }
     });
-	
+
 	return false;
 }
 
 function refreshTimestamp(){
 
-	
+
 	var currentTime = new Date();
 	var month = currentTime.getMonth() + 1;
 	var day = currentTime.getDate();
@@ -1119,12 +1151,12 @@ function refreshTimestamp(){
 	var refreshTimeText = "Last updated: " + month + "/" + day + "/" + year + " at " + hours + ":" + minutes + " " + suffix;
 
 	$("#lastRefreshTimeId").text(refreshTimeText);
-	
+
 
 }
 
 function iOSversion() {
-	
+
 	 // supports iOS 2.0 and later
 	 var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
 	 return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];

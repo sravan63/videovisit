@@ -12,6 +12,7 @@
 	String meetingHash = request.getParameter("meetingCode");
 	String timezone = WebUtil.getCurrentDateTimeZone();
 	
+	
 %>
 <!-- Refresh page button and time stamp - to be reworked -->
 				<div class="refresh-page" onClick="window.location.reload();">

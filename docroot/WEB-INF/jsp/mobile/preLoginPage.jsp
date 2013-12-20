@@ -1,5 +1,27 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%
+Cookie memberContextCookie = null;
+Cookie cookies[] = request.getCookies();
+String value;
+if (cookies != null) {
+  for(int i=0, n=cookies.length; i < n; i++) {
+	  memberContextCookie = cookies[i];
+    if (memberContextCookie.getName().equals("memberContext")) {
+      try {
+    	  memberContextCookie.setMaxAge(0);
+    	  response.addCookie(memberContextCookie);
+      } catch (Exception e) {
+       
+      }
+      break;
+    }
+  }
+}
+memberContextCookie = new Cookie("memberContext","false::landingPage");
+memberContextCookie.setMaxAge(60*20);
+response.addCookie(memberContextCookie);
 
+%>
 <div class="page-content">
 	<div class="intro">
 		<div class="pic-frame">

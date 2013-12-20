@@ -38,6 +38,9 @@
 		       <value>guestready.htm</value>
 		       <value>guesthelp.htm</value>
 		       <value>mobilepatientlanding.htm</value>
+		       <value>mobilepglanding.htm</value>
+		       <value>mobilepatientlightauth.htm</value>
+		       <value>mobilepglightauth.htm</value>
 		       <value>logout.htm</value>
 		       <value>/guest</value>
 		       <value>verifyguest.json</value>
@@ -61,6 +64,7 @@
 	           <entry key="homepage-member-web1" value="intro.htm"/>
 	           <entry key="homepage-member-web2" value="mdo.htm"/>
 	           <entry key="homepage-member-web3" value="mdolive.htm"/>
+	           <entry key="homepage-member-web4" value="login.htm"/>
 	           <entry key="homepage-guest-mobile" value="mobilepglanding.htm"/>
 	           <entry key="homepage-guest-web" value="guest"/>
 	        </map>
@@ -113,6 +117,8 @@
 				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
+				<prop key="/mobilepatientlightauth.htm">mobilepatientlightauth</prop>
+				<prop key="/mobilepglightauth.htm">mobilepglightauth</prop>
 				<prop key="/mobilelogin.json">mobilelogin</prop>
 				<prop key="/mobilepglanding.htm">mobilePGLanding</prop>	
 				<prop key="/mobilepatientmeetings.htm">mobilePatientMeetings</prop>	
@@ -306,6 +312,20 @@
 		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="mPatientPreLoginPage" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+    </bean>
+    <bean id="mobilepatientlightauth" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="mPatientLightAuthPage" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+    </bean>
+    <bean id="mobilepglightauth" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="mPGLightAuthPage" />
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
     </bean>
