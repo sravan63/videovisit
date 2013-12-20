@@ -70,6 +70,7 @@ docroot/WEB-INF/jsp/mobile/landingPage.jsp.working -text
 docroot/WEB-INF/jsp/mobile/landingPagePG.jsp -text
 docroot/WEB-INF/jsp/mobile/landingPagePG.jsp.working -text
 docroot/WEB-INF/jsp/mobile/logout-confirmation.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/mobile/patientLightAuth.jsp -text
 docroot/WEB-INF/jsp/mobile/patientLoginModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientguestLoginModal.jsp -text
 docroot/WEB-INF/jsp/mobile/pg-logout-confirmation.jsp -text
