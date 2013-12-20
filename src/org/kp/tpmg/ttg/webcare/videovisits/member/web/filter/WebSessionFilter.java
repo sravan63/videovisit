@@ -1,6 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.filter;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -87,22 +88,28 @@ public class WebSessionFilter implements Filter
 			String memberWebHomePageUrl1= homePageUrlMap.get("homepage-member-web1");
 			String memberWebHomePageUrl2= homePageUrlMap.get("homepage-member-web2");
 			String memberWebHomePageUrl3= homePageUrlMap.get("homepage-member-web3");
+			String memberWebHomePageUrl4= homePageUrlMap.get("homepage-member-web4");
 			String memberMobileHomePageUrl = homePageUrlMap.get("homepage-member-mobile");
 			String guestWebHomePageUrl = homePageUrlMap.get("homepage-guest-web");
 			String guestMobileHomePageUrl = homePageUrlMap.get("homepage-guest-mobile");
 			String redirectToUrl = null;
 			// Handle patient home page URL1
 			logger.info("WebSessionFilter requesturi = " + requestUri + " memberWebHomePageUrl1 = " + memberWebHomePageUrl1 + " memberWebHomePageUrl2 = " + memberWebHomePageUrl2 + "  memberWebHomePageUrl3 = " + memberWebHomePageUrl3 + " guestWebHomePageUrl = " + guestWebHomePageUrl);
-			if(requestUri.contains(memberWebHomePageUrl1) || requestUri.contains(memberWebHomePageUrl2) || requestUri.contains(memberWebHomePageUrl3)){
+			if(requestUri.contains(memberWebHomePageUrl1) || requestUri.contains(memberWebHomePageUrl2) || requestUri.contains(memberWebHomePageUrl3) ){
 				logger.info("WebSessionFilter memberwebpage" );
 				boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);
 				if(isWirelessDeviceOrTablet){
+					logger.info("before mobile redirect = " + memberMobileHomePageUrl);
 					redirectToUrl = memberMobileHomePageUrl;
+					resp.sendRedirect(redirectToUrl);
 				}
 				else{
+					logger.info("before web redirect = " + memberWebHomePageUrl1);
 					redirectToUrl = memberWebHomePageUrl1;
+					req.getRequestDispatcher(redirectToUrl).forward(req, resp);
 				}
-				req.getRequestDispatcher(redirectToUrl).forward(req, resp);
+				
+				//req.getRequestDispatcher(redirectToUrl).forward(req, resp);
 			}
 			// Handle guest home page URL
 			else if(requestUri.equals(guestWebHomePageUrl)){
@@ -111,13 +118,72 @@ public class WebSessionFilter implements Filter
 				String meetingCode = req.getParameter("meetingCode");
 				if(isWirelessDeviceOrTablet){
 					redirectToUrl = guestMobileHomePageUrl + "?meetingCode=" + meetingCode;
+					resp.sendRedirect(redirectToUrl);
 				}
 				else{
-					redirectToUrl = guestWebHomePageUrl + "?meetingCode=" + meetingCode;;
+					redirectToUrl = guestWebHomePageUrl + "?meetingCode=" + meetingCode;
+					req.getRequestDispatcher(redirectToUrl).forward(req, resp);	
 				}
-				req.getRequestDispatcher(redirectToUrl).forward(req, resp);
+				//req.getRequestDispatcher(redirectToUrl).forward(req, resp);	
+				
 			}
 			else{
+				logger.info("in else");
+				if(requestUri.contains("mobilepatientlightauth") || requestUri.contains("mobilepglightauth") )
+				{
+					//boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);
+					Cookie memberContextCookie = null;
+					Cookie cookies[] = req.getCookies();
+					String value;
+					boolean cookieNotFound = true;
+					if (cookies != null) {
+					  logger.info("WebSessionFilter ---> Cookies not null");
+					  for(int i=0, n=cookies.length; i < n; i++) {
+						  memberContextCookie = cookies[i];
+					    if (memberContextCookie.getName().equals("memberContext")) {
+					      try {
+					    	  logger.info("memberContext cookie found");
+					    	  cookieNotFound = false;
+					    	  value = URLDecoder.decode(memberContextCookie.getValue());
+					    	  logger.info("memberContext cookie value "+ value);
+					    	  String[] attrs = value.split("\\:");
+					    	  if ( attrs != null && attrs.length > 0)
+					    	  {
+					    		  String isPatientGuest = attrs[0];
+					    		  String meetingCode = attrs[1];
+					    		  String location = attrs[2];
+					    		  logger.info(isPatientGuest + " " + meetingCode + " " + location);
+					    		  if ( isPatientGuest.equalsIgnoreCase("false") && location.equalsIgnoreCase("landingPage"))
+					    		  {
+					    			  logger.info("isPAtientGuest is false and location is landingPage");
+					    			  req.getRequestDispatcher("mobilepatientlightauth.htm").forward(req, resp);
+					    		  }
+					    		  else if ( isPatientGuest.equalsIgnoreCase("true") && location.equalsIgnoreCase("landingPagePG"))
+					    		  {
+					    			  logger.info("isPAtientGuest is true and location is landingPage " + meetingCode);
+					    			  if ( meetingCode != null && meetingCode.length() > 0)
+					    			  {
+					    				  req.setAttribute("meetingCode", meetingCode);
+					    				  req.getRequestDispatcher("mobilepglightauth.htm?meetingCode=" + meetingCode).forward(req, resp);
+					    			  }
+					    			  else
+					    				  req.getRequestDispatcher("mobilevideovisitlanding.htm").forward(req, resp);
+					    		  }
+					    	  }
+					      } catch (Exception e) {
+					       
+					      }
+					      break;
+					    }
+					  }
+					}
+					
+					if ( cookieNotFound)
+					{
+						logger.info("cookie not found redirecting to mobile landing page");
+						req.getRequestDispatcher("mobilevideovisitlanding.htm").forward(req, resp);
+					}
+				}
 				chain.doFilter(req, resp);
 			}
 	
