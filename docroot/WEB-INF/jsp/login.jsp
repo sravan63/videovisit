@@ -28,4 +28,68 @@
     </div>
 </form>
 <p class="error error-login"><a name="errors"></a></p>
+<script type="text/javascript">
 
+	function getBrowserInfo() {
+	
+		var browserUserAgent = navigator.userAgent;
+		
+		
+		var browserInfo = new Object();
+		
+		browserInfo.is32Bit = true;
+	
+		if (browserUserAgent.indexOf("x64") != -1) {
+			browserInfo.is32Bit = false;
+		}
+		browserInfo.is32BitOS = true;
+	
+		if (browserUserAgent.indexOf("WOW64") != -1 || browserUserAgent.indexOf("Win64") != -1 ){
+			browserInfo.is32BitOS = false;
+		} 
+	
+		browserInfo.isIE = false;
+		browserInfo.isFirefox = false;
+		browserInfo.isChrome = false;
+		browserInfo.isSafari = false;
+		
+		var jqBrowserInfoObj = $.browser; 
+	
+		browserInfo.version = jqBrowserInfoObj.version;
+		
+		if ( jqBrowserInfoObj.mozilla) {
+			browserInfo.isFirefox = true;
+		} else if ( jqBrowserInfoObj.msie){
+			browserInfo.isIE = true;
+		} else if ( jqBrowserInfoObj.chrome){
+			browserInfo.isChrome = true;
+		} else if ( jqBrowserInfoObj.safari){
+			browserInfo.isSafari = true;
+		}
+	
+		return browserInfo;
+	}	
+
+	var browserInfo = getBrowserInfo();
+	
+	var browserNotSupportedMsg = "Video Visit is currently supported on 32 bit browsers only.";
+	browserNotSupportedMsg += "<br /><br />";
+	browserNotSupportedMsg += "You are currently running an unsupported browser.";
+	browserNotSupportedMsg += "<br /><br />";
+	browserNotSupportedMsg += "Click <a href='mdohelp.htm' target='_blank'>Help</a> to find out more about supported browsers.";
+	
+	if(browserInfo.isIE) {
+		if (((browserInfo.version == 8 || browserInfo.version == 9) && !browserInfo.is32Bit) || browserInfo.version <= 7) {
+			$('p.error').html( browserNotSupportedMsg );
+			
+			document.getElementById("last_name").disabled = true;
+			document.getElementById("mrn").disabled = true;
+			document.getElementById("birth_month").disabled = true;
+			document.getElementById("birth_day").disabled = true;
+			document.getElementById("birth_year").disabled = true;
+
+			document.getElementById("login").disabled = true;
+		} 
+	}
+	
+</script>
