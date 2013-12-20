@@ -74,6 +74,7 @@ docroot/WEB-INF/jsp/mobile/patientLightAuth.jsp -text
 docroot/WEB-INF/jsp/mobile/patientLoginModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientguestLoginModal.jsp -text
 docroot/WEB-INF/jsp/mobile/pg-logout-confirmation.jsp -text
+docroot/WEB-INF/jsp/mobile/pgLightAuth.jsp -text
 docroot/WEB-INF/jsp/mobile/preLoginPage.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/prePatientGuestLoginPage.jsp -text
 docroot/WEB-INF/jsp/mobile/prePatientGuestLoginPage.jsp.working -text
