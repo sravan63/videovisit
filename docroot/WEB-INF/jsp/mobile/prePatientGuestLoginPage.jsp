@@ -34,12 +34,14 @@
 					<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
 					<p>To attend a video visit, you will need a device with a front-facing camera, the Video Visits app and a fast internet connection (4G or Wi-fi highly recommended).</p>
 				</div>
+				<button id="getAppButton" class="button-get-app only-tablets" >Get App</button><br/>
 				<button id="signInIdPG" class="button-main only-tablets" onclick="modalShow('modal-login');">Sign on here</button>
 			</div>
 			
+			
 		
 			<%@ include file="common/information.jsp" %>	
-		
+			<button id="getAppButton" class="button-get-app only-handsets" >Get App</button><br/>
 			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login');">Sign on here</button>
 			
 		</c:when>

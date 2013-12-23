@@ -1,27 +1,5 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<%
-Cookie memberContextCookie = null;
-Cookie cookies[] = request.getCookies();
-String value;
-if (cookies != null) {
-  for(int i=0, n=cookies.length; i < n; i++) {
-	  memberContextCookie = cookies[i];
-    if (memberContextCookie.getName().equals("memberContext")) {
-      try {
-    	  memberContextCookie.setMaxAge(0);
-    	  response.addCookie(memberContextCookie);
-      } catch (Exception e) {
-       
-      }
-      break;
-    }
-  }
-}
-memberContextCookie = new Cookie("memberContext","false::landingPage");
-memberContextCookie.setMaxAge(60*20);
-response.addCookie(memberContextCookie);
 
-%>
 <div class="page-content">
 	<div class="intro">
 		<div class="pic-frame">
@@ -37,14 +15,15 @@ response.addCookie(memberContextCookie);
 			<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
 			<p>To attend a video visit, you will need a device with a front-facing camera, the Video Visits app and a fast internet connection (4G or Wi-fi highly recommended).</p>
 		</div>
-
-		 <button id="signInId" class="button-main only-tablets" >Sign on here</button>
+		 <button id="getAppButton" class="button-get-app only-tablets" >Get App</button><br/><br/>
+		 <button id="signInId" class="button-main only-tablets"  >Sign on here</button>
 		
 	</div>
-
+	
+		
 	<%@ include file="common/information.jsp" %>	
 
-
+		<button id="getAppButton" class="button-get-app only-handsets" >Get App</button><br/>
 		<button id="signInId" class="button-main only-handsets">Sign on here</button>
 		
 
