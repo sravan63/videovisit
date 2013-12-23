@@ -194,6 +194,13 @@ $(document).ready(function() {
 		$("#login-form").addClass("hide-me");
 		$("#modal-window").addClass("hide-me");
 		var appOS = getAppOS();
+		/*if (typeof appAlertCookie == 'undefined' || appAlertCookie ==null || appAlertCookie ==""){
+			
+			$("#app-alert").removeClass("hide-me");
+			return false;
+		}
+		else
+			$("#app-alert").addClass("hide-me");*/
 		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 		if(appOS === 'iOS'){
 
@@ -233,10 +240,34 @@ $(document).ready(function() {
 		var targetId = event.target.id;
 		// clear all errors
 		clearAllErrors();
-		if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
+		/*if (typeof appAlertCookie == 'undefined' || appAlertCookie ==null || appAlertCookie ==""){
+			$("#app-alert").removeClass("hide-me");
+		}
+		else
+			$("#app-alert").addClass("hide-me");*/
+		/*if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
 			hidesAppAlertPatientGuest();
 		}
-		return false;
+		return false;*/
+		
+		var appOS = getAppOS();
+		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
+		if(appOS === 'iOS'){
+
+		    var iOSver = iOSversion();
+		    //alert('iOS ver: ' + iOSver);
+		    //Fix for the ios 7 issue with openTab function
+			if (iOSver[0] >= 7) {
+			  //alert('This is running iOS 7 or later.');
+			  window.location.replace('kppc://videovisit?signon=true');
+			}else{
+				openTab('kppc://videovisit?signon=true');
+			}
+		}
+		else{
+			openTab('kppc://videovisit?signon=true');
+
+		}
 
 	});
 
@@ -733,6 +764,7 @@ function launchVideoVisit(megaMeetingUrl, meetingId, name){
 			window.location.replace("logout.htm");
 		}
 		url = data.result;
+		alert('kppc url = ' + url);
 		//alert('prefix = ' +url);
 		var appOS = getAppOS();
 		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
@@ -779,6 +811,7 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
 	var appOS = getAppOS();
+	alert('kppc url = ' + megaMeetingUrl);
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 	if(appOS === 'iOS'){
 
