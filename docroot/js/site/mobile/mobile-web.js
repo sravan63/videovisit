@@ -72,14 +72,14 @@ var request = {
 			deleteCookie('memberContext');
 			setCookieWithTime('memberContext','false::landingPage',60*60*24*13);
 		}
-		
+
 		if ( window.location.href.indexOf('mobilepglanding.htm') != -1)
 		{
 			var meetingCode = request.get('meetingCode');
 			deleteCookie('memberContext');
 			setCookieWithTime('memberContext','true:' + meetingCode +':landingPagePG',60*60*24*13);
 		}
-		
+
 	}
 /*END - AJAX Server requests  */
 
@@ -107,7 +107,9 @@ $(document).ready(function() {
 
 
 	$(".modal-window .button-close").click(modalHideByClass);
-
+	$("#close-modal").click(function(){
+		modalHide('modal-login');
+	});
 	$(".alert.hideable").click(hideSecurityAlert);
 
 	$(".scrollup").click(scrollMe);
@@ -147,14 +149,16 @@ $(document).ready(function() {
 
 	$("#btn-i-have-it, #btn-i-have-it_pg").click(function() {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
-		var targetId = event.target.id;
-		if(targetId == 'btn-i-have-it'){
-			hidesAppAlert();
+		//var targetId = event.target.id;
+		/*if(targetId == 'btn-i-have-it'){
+			//hidesAppAlert();
+			modalHide('modal-login');
 		}
 		if(targetId == 'btn-i-have-it_pg'){
 			hidesAppAlertPatientGuest();
-		}
-
+		}*/
+		modalHide('modal-login');
+		window.location.href = window.location.href;
 	});
 
 
@@ -194,13 +198,17 @@ $(document).ready(function() {
 		$("#login-form").addClass("hide-me");
 		$("#modal-window").addClass("hide-me");
 		var appOS = getAppOS();
-		/*if (typeof appAlertCookie == 'undefined' || appAlertCookie ==null || appAlertCookie ==""){
-			
+		if (typeof appAlertCookie == 'undefined' || appAlertCookie ==null || appAlertCookie ==""){
+
+			modalShow('modal-login');
 			$("#app-alert").removeClass("hide-me");
 			return false;
 		}
 		else
-			$("#app-alert").addClass("hide-me");*/
+		{
+			modalHide('modal-login');
+			$("#app-alert").addClass("hide-me");
+		}
 		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 		if(appOS === 'iOS'){
 
@@ -240,16 +248,23 @@ $(document).ready(function() {
 		var targetId = event.target.id;
 		// clear all errors
 		clearAllErrors();
-		/*if (typeof appAlertCookie == 'undefined' || appAlertCookie ==null || appAlertCookie ==""){
+		if (typeof appAlertCookie == 'undefined' || appAlertCookie ==null || appAlertCookie ==""){
+
+			modalShow('modal-login');
 			$("#app-alert").removeClass("hide-me");
+			return false;
 		}
 		else
-			$("#app-alert").addClass("hide-me");*/
+		{
+			modalHide('modal-login');
+			$("#app-alert").addClass("hide-me");
+		}
+		
 		/*if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
 			hidesAppAlertPatientGuest();
 		}
 		return false;*/
-		
+
 		var appOS = getAppOS();
 		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 		if(appOS === 'iOS'){

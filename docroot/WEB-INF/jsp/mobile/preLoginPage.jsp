@@ -11,6 +11,24 @@
 		<div class="only-handsets">
 			<p>Meet with your doctor by video on your mobile device.</p>
 		</div>
+		
+		<div id="modal-login" class="modal">
+			<div class="modal-window">
+				<div id="close-modal" class="button-close"></div>
+				<h1>Sign on to Video Visits</h1>
+		
+				<div id="app-alert">
+					<p>To join a video visit from your mobile device, please install our Video Visits mobile app. </p>
+						<div class="app-lockup getAppButton">
+							<div class="app-icon"></div>
+							<p>Video Visits app</p>
+						</div>
+					<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the app</button>
+					<button class="button-secondary" id="btn-i-have-it">I have it installed!</button>
+				</div>
+			</div>
+		</div>
+	
 		<div class="only-tablets">
 			<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
 			<p>To attend a video visit, you will need a device with a front-facing camera, the Video Visits app and a fast internet connection (4G or Wi-fi highly recommended).</p>
@@ -19,12 +37,11 @@
 		 <button id="signInId" class="button-main only-tablets"  >Sign on here</button>
 		
 	</div>
-	
-		
+
 	<%@ include file="common/information.jsp" %>	
 
 		<button id="getAppButton" class="button-get-app only-handsets" >Get App</button><br/>
-		<button id="signInId" class="button-main only-handsets">Sign on here</button>
+		<button id="signInId" class="button-main only-handsets" >Sign on here</button>
 		
 
 </div>
