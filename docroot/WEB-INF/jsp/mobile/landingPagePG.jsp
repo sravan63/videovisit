@@ -28,13 +28,11 @@
 
 <div class="page-content">
 	<div class="visits patient">
-		<h1>Visits you can join now</h1>
+		<h1>Video Visits you can join now</h1>
 		<p id="globalError" class="globalfailmessage hide-me"></p>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
-				<div class="alert hideable">
-					<p><strong>For security reasons, only visits scheduled for the next 15 minutes are displayed.</strong></p>
-				</div>
+				
 				<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			
 					<div class="meeting well">
@@ -110,6 +108,6 @@
 			
 		</c:choose>
 			
-		<%@ include file="common/information.jsp" %>	
+		<%@ include file="common/informationpg.jsp" %>	
 	</div>
 </div>

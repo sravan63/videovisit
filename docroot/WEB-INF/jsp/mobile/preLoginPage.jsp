@@ -9,19 +9,20 @@
 		</div>
 		<h1>Video Visits</h1>
 		<div class="only-handsets">
-			<p>Meet with your doctor by video on your mobile device.</p>
+			<!-- <p>Meet with your doctor by video on your mobile device.</p> -->
 		</div>
 		
 		<div id="modal-login" class="modal">
 			<div class="modal-window">
 				<div id="close-modal" class="button-close"></div>
-				<h1>Sign on to Video Visits</h1>
+				<h1>To join a video visit</h1>
 		
 				<div id="app-alert">
-					<p>To join a video visit from your mobile device, please install our Video Visits mobile app. </p>
+					
 						<div class="app-lockup getAppButton">
 							<div class="app-icon"></div>
-							<p>Video Visits app</p>
+							<p>Please install and open the latest version of the KP Preventive Care app. </p>
+							<p>After downloading, return to this screen or your email to continue to sign on. </p>
 						</div>
 					<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the app</button>
 					<button class="button-secondary" id="btn-i-have-it">I have it installed!</button>

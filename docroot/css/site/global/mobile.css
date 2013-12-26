@@ -488,7 +488,7 @@ footer p {
 .form-block {
 	margin-right: -5px;
 	margin-left: -5px;
-	text-align: right;
+	text-align: left;
 }
 
 .form-block li {
@@ -529,7 +529,7 @@ footer p {
 }
 
 .guest #last_name {
-	width:100px;
+	width:150px;
 }
 
 .form-focus {

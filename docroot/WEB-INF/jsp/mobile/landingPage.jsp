@@ -34,9 +34,7 @@
 		
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
-				<div class="alert hideable">
-					<p><strong>For security reasons, only visits scheduled for the next 15 minutes are displayed.</strong></p>
-				</div>
+				
 				<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			
 					<div class="meeting well">

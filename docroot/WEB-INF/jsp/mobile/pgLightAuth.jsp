@@ -6,12 +6,12 @@
 %>
 <div class="page-content">
 	<div id="patientguest-login-form">
-
+			<h1>Sign On to Video Visits</h1>
 			<form class="login-form">
 				<p id="globalError" class="globalfailmessage hide-me"></p>
 
 				<ul class="form-block guest">
-					<li><label>Patient Last Name</label><input type="text" name="last_name" id="last_name" maxlength="35" tabindex="1" placeholder="" autocorrect = "off" pattern="[a-zA-Z]+" required>
+					<li><input type="text" name="last_name" id="last_name" maxlength="35" tabindex="1" placeholder="" autocorrect = "off" pattern="[a-zA-Z]+" value="Patient Last Name" required>
 						<div id="lastNameErrorId" class="localfailmessage hide-me">
 							<p></p>
 						</div>
@@ -19,12 +19,12 @@
 					<button id="login-submit-pg" class="off" tabindex="6" >Sign On</button>
 				</ul>
 				<input type="hidden" id="meetingCode" value="<%=meetingCode%>"/> 
-				<p class="disclaimer">Children age 11 or younger may not use this website alone. A parent or legal guardian may use this website and have the child with them during the visit.</p>
+				<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
 			</form>
 
 		</div>
 
-	<%@ include file="common/information.jsp" %>	
+	<%@ include file="common/informationpg.jsp" %>	
 	
 
 		

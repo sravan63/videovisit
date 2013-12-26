@@ -3,9 +3,13 @@
 	
 	<div class="alert-hero-message">
 	<div class="image"></div>
-		<h1>You have signed off.</h1>
-		<p>To sign on as a patient&rsquo;s guest again, go to the email invite and click on the link "join the video visit here".</p> 
-	</div>
+			<h1>Your session has ended</h1><br/><br></br>
+			<p>Keep tab of your health with the KP Preventive care app.</p><br/>
+			<p>If you don't have a kp.org account, register now to access these benefits and more:</p>
+			<li>You health care notifications</li>
+			<li>Appointment reminders</li>
+			<li>Email your doctor</li>
+			<button class="button-main"  id="logout-sign-in"  onclick="">Register for an account</button>
 	</div>
 
 

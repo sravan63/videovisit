@@ -1,13 +1,14 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <div class="page-content">
+	<h1>Sign On to Video Visits</h1>
 	<div id="login-form" >
 	
 		<form class="login-form">
 			<p id="globalError" class="globalfailmessage hide-me"></p>
 
 			<ul class="form-block">
-				<li><label>Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required>
+				<li><label>Your last name</label><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required>
 					<div id="lastNameErrorId" class="localfailmessage hide-me">
 						<p></p>
 					</div>
@@ -35,7 +36,7 @@
 				<button id="login-submit" class="off" tabindex="6" >Sign on</button>
 			</ul>
 
-			<p class="disclaimer">Children age 11 or younger may not use this website alone. A parent or legal guardian may use this website and have the child with them during the visit.</p>
+			<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
 		</form>
 	
 		</div>
