@@ -14,7 +14,6 @@
 			<li class="button-main" href="javascript:void(0)" onclick="window.location='mobilepatientlanding.htm'">I&rsquo;m a Patient</li>
 			<li class="button-main" href="javascript:void(0)" onclick="modalShow('modalGuestId');">I&rsquo;m a Patient&rsquo;s Guest</li>
 <%-- 			<li class="button-main" href="javascript:void(0)" onclick="window.location='${WebAppContext.clinicianSingleSignOnURL}';">I&rsquo;m a clinician</li> --%>
-			<li class="button-main" href="javascript:void(0)" onclick="modalShow('modalClinicianPopup');">I&rsquo;m a Clinician</li>
 		</ol>
 	</div>
 </div>
