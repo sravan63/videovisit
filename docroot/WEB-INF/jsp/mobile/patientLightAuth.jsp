@@ -33,7 +33,7 @@
 						<p></p>
 					</div>
 				</li>
-				<button id="login-submit" class="off" tabindex="6" style="width:100%; height:35px; background-color:#0061A9; color:#FFFFFF; font-weight:bold; font-size:14px; margin:10px auto; border-radius:4px;">Sign on</button>
+				<button id="login-submit" class="off" tabindex="6" style="width:100%; height:35px; background-color:#0061A9; color:#FFFFFF; font-weight:bold; font-size:14px; margin:10px auto; border-radius:4px;">Sign In</button>
 			</ul>
 
 			<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
