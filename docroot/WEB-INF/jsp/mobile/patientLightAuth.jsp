@@ -8,7 +8,7 @@
 			<p id="globalError" class="globalfailmessage hide-me"></p>
 
 			<ul class="form-block">
-				<li><label>Your last name</label><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required>
+				<li><label>Your Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required>
 					<div id="lastNameErrorId" class="localfailmessage hide-me">
 						<p></p>
 					</div>
@@ -33,7 +33,7 @@
 						<p></p>
 					</div>
 				</li>
-				<button id="login-submit" class="off" tabindex="6" >Sign on</button>
+				<button id="login-submit" class="off" tabindex="6" style="width:100%; height:35px; background-color:#0061A9; color:#FFFFFF; font-weight:bold; font-size:14px; margin:10px auto; border-radius:4px;">Sign on</button>
 			</ul>
 
 			<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
