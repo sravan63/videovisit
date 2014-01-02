@@ -30,35 +30,21 @@
 					<p>Get prepared before your video visit.</p>
 				</div>
 
-				<div id="modal-login" class="modal">
-					<div class="modal-window">
-						<div id="close-modal" class="button-close"></div>
-						<h1>To join a video visit</h1>
 				
-						<div id="app-alert">
-								<div class="app-lockup getAppButton">
-										<div class="app-icon"></div>
-										<p>Please install and open the latest version of the KP Preventive Care app. </p>
-									</div>
-							<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the app</button>
-							<button class="button-secondary" id="btn-i-have-it">I have it installed!</button>
-						</div>
-					</div>
-				</div>
 		
 				<div class="only-tablets">
 					<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
 					<p>To attend a video visit, you will need a device with a front-facing camera, the Video Visits app and a fast internet connection (4G or Wi-fi highly recommended).</p>
 				</div>
-				<button id="getAppButton" class="button-get-app only-tablets" >Get App</button><br/>
-				<button id="signInIdPG" class="button-main only-tablets" >Sign on here</button>
+				<button id="getAppButton" class="button-main getAppButton only-tablets" >Get App</button><br/>
+				<button id="signInIdPG" class="button-main only-tablets" onclick="modalShow('modal-login')">Sign on here</button>
 			</div>
 			
 			
 		
 			<%@ include file="common/information.jsp" %>	
-			<button id="getAppButton" class="button-get-app only-handsets" >Get App</button><br/>
-			<button id="signInIdPGHand" class="button-main only-handsets" >Sign on here</button>
+			<button id="getAppButton" class="button-main getAppButton only-handsets" >Get App</button><br/>
+			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login')">Sign on here</button>
 			
 		</c:when>
 

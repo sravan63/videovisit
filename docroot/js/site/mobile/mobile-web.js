@@ -244,47 +244,19 @@ $(document).ready(function() {
 
 	$("#signInIdPG, #signInIdPGHand").click(function(event) {
 		event.preventDefault();
-
+		
 		var targetId = event.target.id;
 		// clear all errors
 		clearAllErrors();
-		if (typeof appAlertCookie == 'undefined' || appAlertCookie ==null || appAlertCookie ==""){
-
-			modalShow('modal-login');
-			$("#app-alert").removeClass("hide-me");
-			return false;
-		}
-		else
-		{
-			modalHide('modal-login');
-			$("#app-alert").addClass("hide-me");
-		}
-		
-		/*if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
+		if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
 			hidesAppAlertPatientGuest();
 		}
-		return false;*/
-
-		var appOS = getAppOS();
-		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
-		if(appOS === 'iOS'){
-
-		    var iOSver = iOSversion();
-		    //alert('iOS ver: ' + iOSver);
-		    //Fix for the ios 7 issue with openTab function
-			if (iOSver[0] >= 7) {
-			  //alert('This is running iOS 7 or later.');
-			  window.location.replace('kppc://videovisit?signon=true');
-			}else{
-				openTab('kppc://videovisit?signon=true');
-			}
-		}
-		else{
-			openTab('kppc://videovisit?signon=true');
-
-		}
-
+		
+		return false;
+		
 	});
+	
+	
 
 
 	// END--APP ALERT handling using cookie
