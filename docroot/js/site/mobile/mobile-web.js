@@ -380,7 +380,12 @@ $(document).ready(function() {
 
 
 	});
-
+	
+	$("#btnPatient").click(function(event) {
+		deleteCookie('memberContext');
+		setCookieWithTime('memberContext','false::landingPage',60*60*24*13);
+		window.location.href = "mobilepatientlightauth.htm";
+	});
     $(".button-launch-visit-pg").click(function(event) {
 		event.preventDefault();
 
