@@ -40,9 +40,13 @@
 						<span class="label">Patient Name:</span> 
 						<span class="names patient-guests">${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}</span>
 					</div>
-					<!-- Commented by Srini  08/27 -->
-					<a class="btn" userName="${meeting.caregiver[0].firstName} ${meeting.caregiver[0].lastName} (${meeting.caregiver[0].emailAddress})" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}" caregiverId="${meeting.caregiver[0].careGiverID}">Click here to join now</a>
-				<!-- 	<a class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}" caregiverId="${meeting.caregiver[0].careGiverID}">Click here to join now</a> -->
+					<!-- Added by Ranjeet for same guest login issue 01/06/2014 -->
+					<c:forEach var="caregiver" items="${meeting.caregiver}">					
+						<c:set var="pgName" value="${caregiver.lastName}, ${caregiver.firstName}"/>
+						 <c:if test="${WebAppContext.careGiverName == pgName}">
+						  <a class="btn" userName="${caregiver.firstName} ${caregiver.lastName} (${caregiver.emailAddress})" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}" caregiverId="${caregiver.careGiverID}">Click here to join now</a>
+						 </c:if>
+					</c:forEach>					
 					<p class="smallprint">You may be joining before your clinician.	Please be patient.</p>
 					<p class="error error-guest-login"></p>
 				</div>
