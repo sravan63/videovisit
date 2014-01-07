@@ -42,8 +42,7 @@
 					</div>
 					<!-- Added by Ranjeet for same guest login issue 01/06/2014 -->
 					<c:forEach var="caregiver" items="${meeting.caregiver}">					
-						<c:set var="pgName" value="${caregiver.lastName}, ${caregiver.firstName}"/>
-						 <c:if test="${WebAppContext.careGiverName == pgName}">
+						<c:if test="${WebAppContext.meetingCode == caregiver.meetingHash}">
 						  <a class="btn" userName="${caregiver.firstName} ${caregiver.lastName} (${caregiver.emailAddress})" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}" caregiverId="${caregiver.careGiverID}">Click here to join now</a>
 						 </c:if>
 					</c:forEach>					
