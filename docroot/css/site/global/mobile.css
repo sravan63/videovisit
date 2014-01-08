@@ -498,13 +498,14 @@ footer p {
 	padding: 5px;
 	border-radius: 4px;
 	text-shadow: 0 1px 0 white;
-	font-size: 17px;
+	font-size: 16px;
 }
 
 .form-block input {
+	color: #666666;
 	padding:5px 2px 5px 4px;
 	height:20px;
-	font-size: 17px;
+	font-size: 12px;
 }
 
 .form-block li label {

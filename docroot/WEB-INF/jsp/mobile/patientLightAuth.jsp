@@ -1,9 +1,9 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
-<div class="page-content">
-	<h1>Sign On to Video Visits</h1>
-	<div id="login-form" >
+<div >
 	
+	<div id="login-form" style="margin-left:460px">
+		<h1>Sign On to Video Visits</h1>	
 		<form class="login-form">
 			<p id="globalError" class="globalfailmessage hide-me"></p>
 
@@ -36,11 +36,11 @@
 				<button id="login-submit" class="off" tabindex="6" style="width:100%; height:35px; background-color:#0061A9; color:#FFFFFF; font-weight:bold; font-size:14px; margin:10px auto; border-radius:4px;">Sign In</button>
 			</ul>
 
-			<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
+			
 		</form>
-	
+		
 		</div>
-
+		<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
 	<%@ include file="common/information.jsp" %>	
 	
 

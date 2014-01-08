@@ -27,7 +27,7 @@
     <!--End Head-->
 
     <!--Start Body -->
-	<body>
+	<body onorientationchange="">
     	
     	<div id="main-window" class="main-window">
     		<!--  TODO - What is this used for ? -->
@@ -35,7 +35,7 @@
 		
 			<tiles:insertAttribute name="header" />
 			
-			<div class="page-content-wrapper welcome-page">
+			<div class="" style="margin:18px">>
 				<!--<div class="page-content">-->
 					<tiles:insertAttribute name="sidebar" />
 					<tiles:insertAttribute name="content" />
