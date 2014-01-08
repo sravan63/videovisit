@@ -36,14 +36,15 @@ docroot/WEB-INF/jsp/common/gtmSnippet.jsp -text
 docroot/WEB-INF/jsp/data/jsonData.jsp -text
 docroot/WEB-INF/jsp/data/jsonHeader.jsp -text
 docroot/WEB-INF/jsp/deprecated/guestJoinNowModal.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/deprecated/guestvisit.jsp -text
 docroot/WEB-INF/jsp/deprecated/joinNowModal.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/deprecated/visit.jsp -text
 docroot/WEB-INF/jsp/enableJavascript.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/error.jsp -text
 docroot/WEB-INF/jsp/guest.jsp -text
 docroot/WEB-INF/jsp/guesterror.jsp -text
 docroot/WEB-INF/jsp/guestlogout.jsp -text
 docroot/WEB-INF/jsp/guestready.jsp -text
-docroot/WEB-INF/jsp/guestvisit.jsp -text
 docroot/WEB-INF/jsp/healthMonitor.jsp -text
 docroot/WEB-INF/jsp/help.jsp -text
 docroot/WEB-INF/jsp/intro.jsp -text
@@ -106,7 +107,6 @@ docroot/WEB-INF/jsp/preloader.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/setup.jsp -text
 docroot/WEB-INF/jsp/videoVisit.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/videoVisitGuest.jsp -text svneol=unset#text/plain
-docroot/WEB-INF/jsp/visit.jsp -text
 docroot/WEB-INF/taglib/spring.tld -text
 docroot/WEB-INF/taglib/struts-tiles.tld -text
 docroot/WEB-INF/taglib/taglib.tld -text
