@@ -2,7 +2,7 @@
 
 <div >
 	
-	<div id="login-form" style="margin-left:460px">
+	<div id="login-form">
 		<h1>Sign On to Video Visits</h1>	
 		<form class="login-form">
 			<p id="globalError" class="globalfailmessage hide-me"></p>
