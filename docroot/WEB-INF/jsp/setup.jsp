@@ -6,7 +6,8 @@
 
 <script src="js/library/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
  
-    <div class="videoVisitContainer">
+    <div id="videoVisitSetupContainer">
+     <div class="videoVisitContainer">
     	<div id="videoVisitSetupPageContents">
     		<div id="setupPageTitle">
    				<h2> Video Visit Preparation </h2>
@@ -28,8 +29,8 @@
 				<a href="login.htm" class="button"> Join Your Video Visit </a>
 			</div>
 		</div>
+	 </div>
 	</div>
-	
 	<script type="text/javascript">
 
 			function getBrowserInfo() {
