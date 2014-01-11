@@ -337,18 +337,19 @@ footer p {
 	padding: 8px 12px 8px 11px;
 	width: 270px;
 	height:auto;
-	border: solid 2px #ADADAD;
-	border: solid 2px #404040;
+/* 	border: solid 2px #ADADAD; */
+/* 	border: solid 2px #404040; */
+	border: 2px solid #004075;
 	border-radius: 6px;
 
-	background-image: -webkit-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -moz-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -o-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: linear-gradient(top, #777777 0%, #232323 100%);
+	background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
 	color: white;
 	text-align: center;
-
-	text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+	text-shadow: none;
+/* 	text-shadow: 0 -1px 0 rgba(0,0,0,.5); */
 	font-weight: bold;
 	font-size: 18px;
 }
@@ -441,19 +442,26 @@ footer p {
 }
 
 .modal-window .button-primary {
-	border: solid 2px #404040;
-	text-shadow: 0 -1px 0 rgba(0,0,0,.5);
-}
-
-.modal-window .button-secondary {
-	border-color: #BABABA;
-
+	border: 2px solid #BABABA;
+	text-shadow: none;
+/* 	text-shadow: 0 -1px 0 rgba(0,0,0,.5); */
 	background-image: -webkit-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
 	background-image: -moz-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
 	background-image: -o-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
 	background-image: linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
-	color: #656565;
-	text-shadow: 0 1px 0 rgba(255,255,255,.75);
+	color: #000000;
+}
+
+.modal-window .button-secondary {
+	border: 2px solid #004075;
+
+	background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
+	color: #FFFFFF;
+/* 	text-shadow: 0 1px 0 rgba(255,255,255,.75); */
+	text-shadow: none;
 }
 
 .modal-window input:required {
@@ -794,7 +802,7 @@ ol.instructions > li:before {
 }
 
 .button-main.only-handsets  {
-width: 100%;
+	width: 100%;
 }
 
 .landing-page-wrapper .button-main {
@@ -930,14 +938,14 @@ text-align: center;
 
 	width: 154px;
 
-	border: solid 2px #404040;
+	border: solid 2px #004075;
 	border-radius: 6px;
 
-	background-image: -webkit-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -moz-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -o-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -ms-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: linear-gradient(top, #777777 0%, #232323 100%);
+	background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -ms-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
 
 	color: white;
 	text-align: center;
@@ -1330,7 +1338,33 @@ and (max-width: 767px) {
 
 		-webkit-font-smoothing: antialiased;
 	}
+	
+	button#signInId.button-main.only-handsets{
+		background-image: -webkit-linear-gradient(top, #777777 0%, #232323 100%);
+		background-image: -moz-linear-gradient(top, #777777 0%, #232323 100%);
+		background-image: -o-linear-gradient(top, #777777 0%, #232323 100%);
+		background-image: linear-gradient(top, #777777 0%, #232323 100%);
+	}
+	
+	button#signInIdPGHand.button-main.only-handsets{
+		background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
+		border: 2px solid #004075;
+		text-shadow: none;
+		color: #FFFFFF;
+	}
 
+	button#getAppButton.button-main.getAppButton.only-handsets{
+		background-image: -webkit-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
+		background-image: -moz-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
+		background-image: -o-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
+		background-image: linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
+		border: 2px solid #000000;
+		text-shadow: none;
+		color: #000000;
+	}
 }
 /* HANDSETS - - END - - - - - - - - - - - - - - - - - - - - - -  */
 
