@@ -9,8 +9,8 @@
 <div class="only-handsets">
 	<ol class="well instructions">
 		<h2>Get prepared before your visit:</h2>
-		<li><div class="img-app getAppLink"></div><span>Download the latest version of the KP Preventive Care app.</span></li>
-		<li><div class="img-connection"></div><span>Make sure you have a good wi-fi connection or 4G.</span></li>
-		<li><span>For best results, use headphones for your call.</span></li>
+		<li><span>Download the latest version of the KP Preventive Care app.</span></li>
+		<li><div class="img-connection"></div><span>Make sure you have a strong Wi-Fi or 4G connection.</span></li>
+		<li><span>For best results, use headphones during the call.</span></li>
 	</ol>
 </div>
