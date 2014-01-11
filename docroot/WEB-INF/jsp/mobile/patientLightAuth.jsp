@@ -1,6 +1,6 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
-<div >
+<div style="padding:10px;">
 	
 	<div id="login-form">
 		<h1>Sign On to Video Visits</h1>	
@@ -41,7 +41,7 @@
 		
 		</div>
 		<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
-	<%@ include file="common/information.jsp" %>	
+<%-- 	<%@ include file="common/information.jsp" %>	 --%>
 	
 
 		
