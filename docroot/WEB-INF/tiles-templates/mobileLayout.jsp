@@ -35,7 +35,7 @@
 		
 			<tiles:insertAttribute name="header" />
 			
-			<div class="" style="margin:18px">>
+			<div class="">
 				<!--<div class="page-content">-->
 					<tiles:insertAttribute name="sidebar" />
 					<tiles:insertAttribute name="content" />
