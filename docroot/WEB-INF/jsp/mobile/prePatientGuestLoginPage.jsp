@@ -20,11 +20,13 @@
 	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings > 0}">
 			<div class="intro">
-				<div class="pic-frame">
-					<div class="pic"><img src="images/mobile/vv-patient-welcome-image.jpg"></div>
-				</div>
 			
-			<h1>Video Visits</h1>
+<!-- 			Commented by Mandar A. on 01/10/2014 - US3503 -->
+			<!--<div class="pic-frame">
+ 					<div class="pic"><img src="images/mobile/vv-patient-welcome-image.jpg"></div>
+	 			</div> -->
+			
+				<h1>Video Visits</h1>
 
 				<div class="only-handsets">
 					<p>Get prepared before your video visit.</p>
@@ -43,8 +45,8 @@
 			
 		
 			<%@ include file="common/information.jsp" %>	
-			<button id="getAppButton" class="button-main getAppButton only-handsets" >Get App</button><br/>
-			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login')">Sign on here</button>
+			<button id="getAppButton" class="button-main getAppButton only-handsets" >Get the App</button><br/>
+			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login')">Sign In</button>
 			
 		</c:when>
 
