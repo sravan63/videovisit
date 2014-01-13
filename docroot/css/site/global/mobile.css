@@ -960,14 +960,14 @@ text-align: center;
 
 	width: 154px;
 
-	border: solid 2px #404040;
+	border: solid 2px #004075;
 	border-radius: 6px;
 
-	background-image: -webkit-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -moz-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -o-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -ms-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: linear-gradient(top, #777777 0%, #232323 100%);
+	background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -ms-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
 
 	color: white;
 	text-align: center;
@@ -1726,6 +1726,14 @@ and (min-width: 768px) {
 	}
 	
 	button#signInId.button-main.only-tablets{
+		background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
+		border: 2px solid #004075;
+	}
+	
+	button#signInIdPG.button-main.only-tablets{
 		background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
 		background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
 		background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
