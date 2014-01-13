@@ -30,7 +30,7 @@
 <div class="page-content">
 
 	<div class="visits patient">
-		<h1>Visits you can join now</h1>
+		<h1>Video Visits you can Join Now</h1>
 		
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">

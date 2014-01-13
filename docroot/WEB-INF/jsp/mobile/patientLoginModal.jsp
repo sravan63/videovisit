@@ -9,7 +9,7 @@
 					<div class="app-icon"></div>
 					<p>Video Visits app</p>
 				</div>
-			<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the app</button>
+			<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the App</button>
 			<button class="button-secondary" id="btn-i-have-it">I have it installed!</button>
 		</div>
 		

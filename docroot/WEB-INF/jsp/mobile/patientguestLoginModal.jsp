@@ -26,7 +26,7 @@
 							<p></p>
 						</div>
 					</li>
-					<button id="login-submit-pg" class="off" tabindex="6" >Sign On</button>
+					<button id="login-submit-pg" class="off" tabindex="6" >Sign In</button>
 				</ul>
 
 				<p class="disclaimer">Children age 11 or younger may not use this website alone. A parent or legal guardian may use this website and have the child with them during the visit.</p>
