@@ -66,6 +66,21 @@ public class FaqParser {
 					String faqItemHeader = faqItem.getFAQItemHeader();
 					String id = faqItem.getID();
 					int sequence  = faqItem.getSequence().intValue();
+					
+					if (faqItemHeader == null) {
+						log.info("FaqParser - faqItemHeader:null");
+					} else {
+						log.info("FaqParser - faqItemHeader:" + faqItemHeader);
+					}
+
+					if (id == null) {
+						log.info("FaqParser - id:null");
+					} else {
+						log.info("FaqParser - id:" + id);
+					}
+
+					log.info("FaqParser - Sequence:" + sequence);
+					
 					String orientation = faqItem.getOrientation();
 					item.setHeader(faqItemHeader);
 					item.setId(id);
@@ -81,6 +96,22 @@ public class FaqParser {
 							String abstractText = hyperlink.getAbstract();
 							String title = hyperlink.getTitle();
 							String url = hyperlink.getUrl();
+
+							if (title == null) {
+								log.info("FaqParser Hyperlink - title:null");
+							} else {
+								log.info("FaqParser Hyperlink - title:" + title);
+								
+							}
+							
+							if (url == null) {
+								log.info("FaqParser Hyperlink - url:null");
+							} else {
+								log.info("FaqParser Hyperlink - url:" + url);
+								
+							}
+							
+
 							String section = hyperlink.getSection();
 							link.setAbstractText(abstractText);
 							link.setTitle(title);
