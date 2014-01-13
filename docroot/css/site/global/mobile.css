@@ -1541,7 +1541,7 @@ and (max-width: 519px) {
 		display: inline; 
 		font-size: 16px;
 /* 		font-size: 18px;
-line-height: 22px; */
+		line-height: 22px; */
 	}
 
 	.provider .data .patient-name {
@@ -1667,14 +1667,14 @@ and (min-width: 768px) {
 	}
 	.landing-page-wrapper h1 {
 		font-size: 26px;
-	line-height: 26px;
-	margin-top: 20px;
-	margin-bottom: 10px;
+		line-height: 26px;
+		margin-top: 20px;
+		margin-bottom: 10px;
 	}
 	
 	.landing-page-wrapper p {
-	font-size: 20px;
-	line-height: 26px;
+		font-size: 20px;
+		line-height: 26px;
 	}
 	
 	.landing-page-wrapper .button-main {
@@ -1713,6 +1713,29 @@ and (min-width: 768px) {
 		padding-bottom: 12px;
 		font-size: 16px;
 		line-height: 20px;
+	}
+	
+	button#getAppButton.button-main.getAppButton.only-tablets{
+		background-image: -webkit-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
+		background-image: -moz-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
+		background-image: -o-linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
+		background-image: linear-gradient(top, #FBFBFB 0%, #E0E0E0 100%);
+		color: #000000;
+		text-shadow: none;
+		border: 2px solid #bababa;
+	}
+	
+	button#signInId.button-main.only-tablets{
+		background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+		background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
+		border: 2px solid #004075;
+	}
+	
+	div#login-form{
+		width: 40%;
+		margin:0 auto;
 	}
 
 	/* INSTRUCTIONS - - - - */
