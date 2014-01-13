@@ -28,7 +28,7 @@
 
 <div class="page-content">
 	<div class="visits patient">
-		<h1>Video Visits you can Join Now</h1>
+		<h1>Video Visits You Can Join Now</h1>
 		<p id="globalError" class="globalfailmessage hide-me"></p>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
@@ -49,7 +49,7 @@
 										<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
 											
 											<c:if test="${p.meetingHash == param.meetingCode}">
-												<button class="button-launch-visit-pg only-tablets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Launch Visit</button>
+												<button class="button-launch-visit-pg only-tablets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
 											</c:if>
 										</c:if>
 									</c:forEach>
@@ -82,7 +82,7 @@
 										<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
 											
 											<c:if test="${p.meetingHash == param.meetingCode}">
-												<button class="button-launch-visit-pg only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Launch Visit</button>
+												<button class="button-launch-visit-pg only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
 											</c:if>
 										</c:if>
 									</c:forEach>
