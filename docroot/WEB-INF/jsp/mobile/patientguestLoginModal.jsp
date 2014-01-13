@@ -12,7 +12,7 @@
 					<p> KP Preventive Care App </p>
 				</div>
 			<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the App</button>
-			<button class="button-secondary" id="btn-i-have-it_pg">I have it Installed</button>
+			<button class="button-secondary" id="btn-i-have-it_pg">I Have it Installed</button>
 		</div>
 		
 		<div id="patientguest-login-form" class="hide-me">

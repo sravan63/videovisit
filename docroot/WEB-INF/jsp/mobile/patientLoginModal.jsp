@@ -10,7 +10,7 @@
 					<p>Video Visits app</p>
 				</div>
 			<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the App</button>
-			<button class="button-secondary" id="btn-i-have-it">I have it installed!</button>
+			<button class="button-secondary" id="btn-i-have-it">I Have it Installed</button>
 		</div>
 		
 		<div id="login-form" class="hide-me">
@@ -44,7 +44,7 @@
 							<p></p>
 						</div>
 					</li>
-					<button id="login-submit" class="off" tabindex="6" >Sign on</button>
+					<button id="login-submit" class="off" tabindex="6" >Sign In</button>
 				</ul>
 
 				<p class="disclaimer">Children age 11 or younger may not use this website alone. A parent or legal guardian may use this website and have the child with them during the visit.</p>
