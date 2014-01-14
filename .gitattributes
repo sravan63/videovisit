@@ -61,7 +61,6 @@ docroot/WEB-INF/jsp/mobile/common/footer.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/header.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/headerpg.jsp -text
 docroot/WEB-INF/jsp/mobile/common/information.jsp -text svneol=unset#text/plain
-docroot/WEB-INF/jsp/mobile/common/informationpg.jsp -text
 docroot/WEB-INF/jsp/mobile/common/logoutModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/common/pglogoutModal.jsp -text
 docroot/WEB-INF/jsp/mobile/common/preloader.jsp -text svneol=unset#text/plain
@@ -69,9 +68,7 @@ docroot/WEB-INF/jsp/mobile/expired-visit-member-pg.jsp -text
 docroot/WEB-INF/jsp/mobile/expired-visit-member.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/expired-visit.jsp -text
 docroot/WEB-INF/jsp/mobile/landingPage.jsp -text svneol=unset#text/plain
-docroot/WEB-INF/jsp/mobile/landingPage.jsp.working -text
 docroot/WEB-INF/jsp/mobile/landingPagePG.jsp -text
-docroot/WEB-INF/jsp/mobile/landingPagePG.jsp.working -text
 docroot/WEB-INF/jsp/mobile/logout-confirmation.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientLightAuth.jsp -text
 docroot/WEB-INF/jsp/mobile/patientLoginModal.jsp -text svneol=unset#text/plain
@@ -80,7 +77,6 @@ docroot/WEB-INF/jsp/mobile/pg-logout-confirmation.jsp -text
 docroot/WEB-INF/jsp/mobile/pgLightAuth.jsp -text
 docroot/WEB-INF/jsp/mobile/preLoginPage.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/prePatientGuestLoginPage.jsp -text
-docroot/WEB-INF/jsp/mobile/prePatientGuestLoginPage.jsp.working -text
 docroot/WEB-INF/jsp/mobile/userPresentInMeetingModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/videovisitLanding.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/videovisitLandingClinicianModal.jsp -text svneol=unset#text/plain
