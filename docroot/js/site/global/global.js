@@ -55,6 +55,46 @@ function getCookie(c_name)
 }
 
 
+function getBrowserInfo() {
+	
+	var browserUserAgent = navigator.userAgent;
+	
+	
+	var browserInfo = new Object();
+	
+	browserInfo.is32Bit = true;
+
+	if (browserUserAgent.indexOf("x64") != -1) {
+		browserInfo.is32Bit = false;
+	}
+	browserInfo.is32BitOS = true;
+
+	if (browserUserAgent.indexOf("WOW64") != -1 || browserUserAgent.indexOf("Win64") != -1 ){
+		browserInfo.is32BitOS = false;
+	} 
+
+	browserInfo.isIE = false;
+	browserInfo.isFirefox = false;
+	browserInfo.isChrome = false;
+	browserInfo.isSafari = false;
+	
+	var jqBrowserInfoObj = $.browser; 
+
+	browserInfo.version = jqBrowserInfoObj.version;
+	
+	if ( jqBrowserInfoObj.mozilla) {
+		browserInfo.isFirefox = true;
+	} else if ( jqBrowserInfoObj.msie){
+		browserInfo.isIE = true;
+	} else if ( jqBrowserInfoObj.chrome){
+		browserInfo.isChrome = true;
+	} else if ( jqBrowserInfoObj.safari){
+		browserInfo.isSafari = true;
+	}
+
+	return browserInfo;
+}	
+
 /* Get URI params */
 function gup(name) {
   name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
