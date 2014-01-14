@@ -4,7 +4,7 @@
 	<div class="alert-hero-message">
 	<div class="image"></div>
 			<h1>Your session has ended</h1><br/><br></br>
-			<p>Keep tab of your health with the KP Preventive care app.</p><br/>
+			<p>Keep tab of your health with the KP Preventive Care App.</p><br/>
 			<p>If you don't have a kp.org account, register now to access these benefits and more:</p>
 			<li>You health care notifications</li>
 			<li>Appointment reminders</li>

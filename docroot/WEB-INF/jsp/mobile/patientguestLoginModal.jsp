@@ -5,7 +5,7 @@
 
 		<div id="app-alert">
 <!-- 			<p>To join a video visit from your mobile device, please install our Video Visits mobile app. </p> -->
-				<p> Please install and open the latest version of the KP Preventive Care app. </p>
+				<p> Please install and open the latest version of the KP Preventive Care App. </p>
 				<p> After downloading, return to this screen or your email to continue to sign on. </p>
 				<div class="app-lockup getAppButton">
 					<div class="app-icon"></div>

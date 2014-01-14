@@ -21,7 +21,7 @@
 					
 						<div class="app-lockup getAppButton">
 							<div class="app-icon"></div>
-							<p>Please install and open the latest version of the KP Preventive Care app. </p>
+							<p>Please install and open the latest version of the KP Preventive Care App. </p>
 						</div>
 					<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the App</button>
 					<button class="button-secondary" id="btn-i-have-it">I Have it Installed</button>
@@ -31,10 +31,10 @@
 	
 		<div class="only-tablets">
 			<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
-			<p>To attend a video visit, you will need a device with a front-facing camera, the Video Visits app and a fast internet connection (4G or Wi-fi highly recommended).</p>
+			<p>To attend a video visit, you will need a device with a front-facing camera, the KP Preventive Care App and a fast internet connection (4G or Wi-Fi highly recommended).</p>
 		</div>
 		<button id="getAppButton" class="button-main getAppButton only-tablets">Get the App</button><br/><br/>
-		 <button id="signInId" class="button-main only-tablets">Sign In</button>
+		<button id="signInId" class="button-main only-tablets">Sign In</button>
 		
 	</div>
 
