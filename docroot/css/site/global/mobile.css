@@ -268,6 +268,9 @@ footer p {
 	line-height: 19px;
 }
 
+p.disclaimer{
+	text-align: center;
+}
 
 /* - - - - - - - - MODALS - - - - - - - - */
 
@@ -461,6 +464,15 @@ footer p {
 	color: #FFFFFF;
 /* 	text-shadow: 0 1px 0 rgba(255,255,255,.75); */
 	text-shadow: none;
+}
+
+button#logout-yes.button-primary{
+	background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
+	color: #FFFFFF;
+	border: 2px solid #004075;
 }
 
 .modal-window input:required {
@@ -819,7 +831,7 @@ ol.instructions > li:before {
 	margin-top: -2px;
 	margin-bottom: 8px;
 	color: #7C7D80;
-text-align: center;
+	text-align: center;
 }
 
 .alert {
