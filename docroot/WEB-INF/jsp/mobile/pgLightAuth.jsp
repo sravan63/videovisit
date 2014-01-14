@@ -24,7 +24,7 @@
 
 		</div>
 
-	<%@ include file="common/informationpg.jsp" %>	
+	<%@ include file="common/information.jsp" %>	
 	
 
 		

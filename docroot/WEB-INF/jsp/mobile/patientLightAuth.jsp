@@ -41,7 +41,7 @@
 		
 		</div>
 		<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
-<%-- 	<%@ include file="common/information.jsp" %>	 --%>
+	 	<%@ include file="common/information.jsp" %>
 	
 
 		

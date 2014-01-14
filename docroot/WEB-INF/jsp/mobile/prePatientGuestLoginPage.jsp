@@ -44,7 +44,7 @@
 			
 			
 		
-			<%@ include file="common/informationpg.jsp" %>	
+			<%@ include file="common/information.jsp" %>	
 			<button id="getAppButton" class="button-main getAppButton only-handsets" >Get the App</button><br/>
 			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login')">Sign In</button>
 			
@@ -60,7 +60,7 @@
 				</div>
 			</div>
 
-			<%@ include file="common/informationpg.jsp" %>	
+			<%@ include file="common/information.jsp" %>	
 		</c:otherwise>
 	</c:choose>
 
