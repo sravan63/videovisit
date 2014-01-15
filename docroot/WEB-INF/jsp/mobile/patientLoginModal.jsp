@@ -1,7 +1,7 @@
 <div id="modal-login" class="modal">
 	<div class="modal-window">
 		<div id="close-modal" class="button-close"></div>
-		<h1>Sign on to Video Visits</h1>
+		<h1>Sign In to Video Visits</h1>
 
 		<div id="app-alert">
 			<p>To join a video visit from your mobile device, please install our Video Visits mobile app. </p>
