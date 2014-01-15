@@ -3,7 +3,7 @@
 <div style="padding:10px;">
 	
 	<div id="login-form">
-		<h1>Sign On to Video Visits</h1>	
+		<h1>Sign In to Video Visits</h1>	
 		<form class="login-form">
 			<p id="globalError" class="globalfailmessage hide-me"></p>
 
