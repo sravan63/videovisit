@@ -11,8 +11,8 @@
 		<h1>You are almost there!</h1>
 		<p>To get started, please choose one of the following options:</p>
 		<ol>
-			<li id = "btnPatient" class="button-main" href="javascript:void(0)" >Patient</li>
-			<li class="button-main" href="javascript:void(0)" onclick="modalShow('modalGuestId');">Patient Guest</li>
+			<li id="btnPatient" class="button-main" href="javascript:void(0)" >Patient</li>
+			<li id="btnPG" class="button-main" href="javascript:void(0)" onclick="modalShow('modalGuestId');">Patient&rsquo;s Guest</li>
 <%-- 			<li class="button-main" href="javascript:void(0)" onclick="window.location='${WebAppContext.clinicianSingleSignOnURL}';">I&rsquo;m a clinician</li> --%>
 		</ol>
 	</div>
