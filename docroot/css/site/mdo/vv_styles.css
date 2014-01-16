@@ -1,5 +1,8 @@
 @CHARSET "ISO-8859-1";
 
+.videoVisitContainer .error
+{color:#AC5A41; font-weight:bold;}
+
 .videoVisitContainer{
 	float:left;
 	font-size: 12px;
