@@ -191,6 +191,7 @@ $(document).ready(function() {
 			// we should never reach this condition
 			alert("No device detected");
 		}
+		window.location.href = window.location.href;
 	});
 
 	$("#signInId, #logout-sign-in").click(function(event) {
@@ -756,7 +757,7 @@ function launchVideoVisit(megaMeetingUrl, meetingId, name){
 			window.location.replace("logout.htm");
 		}
 		url = data.result;
-		alert('kppc url = ' + url);
+		//alert('kppc url = ' + url);
 		//alert('prefix = ' +url);
 		var appOS = getAppOS();
 		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
@@ -803,7 +804,7 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
 	var appOS = getAppOS();
-	alert('kppc url = ' + megaMeetingUrl);
+	//alert('kppc url = ' + megaMeetingUrl);
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 	if(appOS === 'iOS'){
 
