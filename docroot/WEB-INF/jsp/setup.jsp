@@ -26,7 +26,11 @@
 			
 		    </div>
 			<div id="setupLastNav" class="buttons">
+			  <% String isGuest = request.getParameter("isGuest");
+			      if(isGuest == null || (isGuest != null && !"Y".equalsIgnoreCase(isGuest))){
+			   %>
 				<a href="login.htm" class="button"> Join Your Video Visit </a>
+			  <% } %>
 			</div>
 		</div>
 	 </div>
