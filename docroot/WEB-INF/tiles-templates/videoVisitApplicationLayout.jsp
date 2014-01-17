@@ -55,7 +55,7 @@
 <!--[if (gt IE 9)|!(IE)]><!-->
  <body> 
  <!--<![endif]-->
-
+    <tiles:insertAttribute name="gtm" />
 	<tiles:insertAttribute name="content" />
 	
 </body>
