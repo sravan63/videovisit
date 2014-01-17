@@ -76,9 +76,9 @@
 
 			var browserInfo = getBrowserInfo();
 			
-			var browserNotSupportedMsg = "Video Visits is supported on 32 bit browsers only,";
+			var browserNotSupportedMsg = "Video Visits is supported on 32 bit browsers only.";
 			browserNotSupportedMsg += "<br /><br />";
-			browserNotSupportedMsg += "so your current browser is unsupported.";
+			browserNotSupportedMsg += "Your current browser is unsupported.";
 			browserNotSupportedMsg += "<br /><br />";
 			browserNotSupportedMsg += "Please <a href='mdohelp.htm' target='_blank'>Download a 32 bit browser</a>";
 			
