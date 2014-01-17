@@ -164,7 +164,8 @@ public class WebSessionFilter implements Filter
 					    			  if ( meetingCode != null && meetingCode.length() > 0)
 					    			  {
 					    				  req.setAttribute("meetingCode", meetingCode);
-					    				  req.getRequestDispatcher("mobilepglightauth.htm?meetingCode=" + meetingCode).forward(req, resp);
+					    				  //req.getRequestDispatcher("mobilepglightauth.htm?meetingCode=" + meetingCode).forward(req, resp);
+					    				  req.getRequestDispatcher("mobilepglanding.htm?meetingCode=" + meetingCode).forward(req, resp);
 					    			  }
 					    			  else
 					    				  req.getRequestDispatcher("mobilevideovisitlanding.htm").forward(req, resp);
