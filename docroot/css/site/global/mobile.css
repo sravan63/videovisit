@@ -835,18 +835,18 @@ ol.instructions > li:before {
 }
 
 li#btnPatient.button-main{
-	background-image: -webkit-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -moz-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -o-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: linear-gradient(top, #777777 0%, #232323 100%);
-	border: 2px solid #004075;	
+	background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
+	border: 2px solid #004075;
 }
 
 li#btnPG.button-main{
-	background-image: -webkit-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -moz-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: -o-linear-gradient(top, #777777 0%, #232323 100%);
-	background-image: linear-gradient(top, #777777 0%, #232323 100%);
+	background-image: -webkit-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -moz-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
+	background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
 	border: 2px solid #004075;
 }
 
