@@ -64,7 +64,7 @@
 			 
 			 var element2 = document.createElement("script");
 			 element2.src = "js/site/mdo/jq-plugins-v1.min.js";
-			 document.body.appendChild(element2); */
+			 document.body.appendChild(element2); 
 			 
 			 var element2 = document.createElement("script");
 			 element2.src = "js/site/mdo/mdo-jquery-v1.min.js";
