@@ -301,7 +301,8 @@ $(document).ready(function() {
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
-		var name = firstName + " " + lastName;
+		//var name = firstName + " " + lastName;
+		var name = lastName + ", " + firstName;
 		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
         var meetingId = $(this).attr("meetingId");
 
