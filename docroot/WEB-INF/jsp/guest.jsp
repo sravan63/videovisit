@@ -13,7 +13,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	<div id="landing-portal-ready">
 		<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			<p class="login" style="padding:0px;">Children age 11 or younger may not use this website alone. A parent or legal guardian may use this website and have the child with them during the visit.</p>
-	      	<p class="guest-config-info login" style="padding:0px;">To ensure your webcam and speakers are configured correctly, please use our <a href="https://qa2.mydoctor.kaiserpermanente.org:2443/videovisit/setup.htm">Setup Wizard</a> before proceeding.</p>
+	      	<p class="guest-config-info login" style="padding:0px;">To ensure your webcam and speakers are configured correctly, please use our <a href="setup.htm">Setup Wizard</a> before proceeding.</p>
 			<div class="landing-portal-single-container">				
 				<div class="landing-portal-details guest">
 					<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
