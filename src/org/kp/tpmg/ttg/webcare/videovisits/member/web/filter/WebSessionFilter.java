@@ -165,7 +165,8 @@ public class WebSessionFilter implements Filter
 					    			  {
 					    				  req.setAttribute("meetingCode", meetingCode);
 					    				  //req.getRequestDispatcher("mobilepglightauth.htm?meetingCode=" + meetingCode).forward(req, resp);
-					    				  req.getRequestDispatcher("mobilepglanding.htm?meetingCode=" + meetingCode).forward(req, resp);
+					    				 // req.getRequestDispatcher("mobilepglanding.htm?meetingCode=" + meetingCode).forward(req, resp);
+					    				  resp.sendRedirect("mobilepglanding.htm?meetingCode=" + meetingCode);
 					    			  }
 					    			  else
 					    				  req.getRequestDispatcher("mobilevideovisitlanding.htm").forward(req, resp);
