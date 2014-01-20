@@ -8,6 +8,10 @@ $(document).ready(function() {
             }
         });
         return false;
-    })
+    });
+    
+    $('#guestLogoutLink').click(function(){
+         window.location.replace(VIDEO_VISITS.Path.guestvisit.logout);          
+    });
 });
 
