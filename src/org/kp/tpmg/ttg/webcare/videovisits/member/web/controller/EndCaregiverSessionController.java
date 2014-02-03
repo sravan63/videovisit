@@ -7,6 +7,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +29,11 @@ public class EndCaregiverSessionController extends SimplePageController   {
 				MeetingCommand.retrieveMeetingForCaregiver(request, response);
 			}
 			
-/*			responseWrapper = MeetingCommand.quitMeeting(request, response);
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
+			ctx.setHasJoinedMeeting(false);
+
+			/*			
+			responseWrapper = MeetingCommand.quitMeeting(request, response);
 			if(responseWrapper != null && responseWrapper.getSuccess()){
 				data = MeetingCommand.endCaregiverMeetingSession(request, response);
 			}

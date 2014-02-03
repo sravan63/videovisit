@@ -328,7 +328,7 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 
-	public static String updateEndMeetingLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String updateEndMeetingLogout(HttpServletRequest request, HttpServletResponse response, String memberName, boolean notifyVideoForMeetingQuit) throws Exception {
 		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
@@ -349,7 +349,7 @@ public class MeetingCommand {
 			if (ctx != null && ctx.getMember() != null)
 			{
 				//grab data from web services
-				ret= WebService.memberEndMeetingLogout(ctx.getMember().getMrn8Digit(), meetingId, request.getSession().getId());
+				ret= WebService.memberEndMeetingLogout(ctx.getMember().getMrn8Digit(), meetingId, request.getSession().getId(), memberName, notifyVideoForMeetingQuit);
 				if (ret != null)
 				{
 					return ret.getResult();
@@ -543,7 +543,7 @@ public class MeetingCommand {
 			String meetingCode = request.getParameter("meetingCode");
 			logger.info("meetingCode = " + meetingCode);
 			if (meetingCode != null && !meetingCode.isEmpty()) {
-				ret = WebService.endCaregiverMeetingSession(meetingCode);
+				ret = WebService.endCaregiverMeetingSession(meetingCode, null, false);
 			}				
 			if (ret != null) {
 				return ret.getResult();
@@ -556,6 +556,24 @@ public class MeetingCommand {
 		return JSONObject.fromObject(new SystemError()).toString();
 	}
 	
+	public static String endCaregiverMeetingSession(String meetingCode, String megaMeetingNameDisplayName) throws Exception {
+		StringResponseWrapper ret = null;		
+		try	{
+			logger.info("meetingCode = " + meetingCode);
+			if (meetingCode != null && !meetingCode.isEmpty()) {
+				ret = WebService.endCaregiverMeetingSession(meetingCode, megaMeetingNameDisplayName, true);
+			}				
+			if (ret != null) {
+				return ret.getResult();
+			}			
+		} catch (Exception e) {
+			// log error
+			logger.error("Error in createCaregiverMeetingSession " + e.getMessage(), e);
+		}
+		// worst case error returned, no caregiver found, no web service responded, etc. 
+		return JSONObject.fromObject(new SystemError()).toString();
+	}
+
 	private static String fillToLength(String src, char fillChar, int total_length) {
 		String ret=null;
 		if (src.length()<total_length) {

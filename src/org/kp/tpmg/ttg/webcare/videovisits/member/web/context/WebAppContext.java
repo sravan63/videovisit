@@ -46,7 +46,7 @@ public class WebAppContext implements Serializable{
 	private videolink videoLink;
 	private String careGiverName = "";
 	private VideoVisitParamsDTO videoVisit = null;
-	
+	private boolean hasJoinedMeeting = false;
 	
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -221,5 +221,13 @@ public class WebAppContext implements Serializable{
 
 	public void setVideoVisit(VideoVisitParamsDTO videoVisit) {
 		this.videoVisit = videoVisit;
+	}
+
+	public boolean isHasJoinedMeeting() {
+		return hasJoinedMeeting;
+	}
+
+	public void setHasJoinedMeeting(boolean hasJoinedMeeting) {
+		this.hasJoinedMeeting = hasJoinedMeeting;
 	}
 }

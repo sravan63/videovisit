@@ -19,6 +19,13 @@ public class LogoffController extends SimplePageController {
 		boolean isWirelessDeviceorTablet = DeviceDetectionService.isWirelessDeviceorTablet(request);
 		logger.info("isWirelessDeviceorTablet = " + isWirelessDeviceorTablet);
 		logger.info("invalidated session Id=" + request.getSession().getId());
+		/*		
+		 * Commenting this code for now. Earlier in case of leave meeting, user was taken directly to the login page. After the log off functionality added on the member,
+		 * We do not need this any more. In case of Leave meeting, QuitMeetingController calls MeetingCommand.updateEndMeetingLogout(request, response) and status is updated.
+		 * Calling this method on log off from application of member is updating the wrong status.
+		 * 
+		 
+		  
 		org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext ctx = org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext.getWebAppContext(request);
 		if ( ctx != null)
 		{
@@ -39,6 +46,7 @@ public class LogoffController extends SimplePageController {
 				}
 			}
 		}
+		 */		
 		request.getSession().invalidate();
 		
 		if ( request.getSession(false) == null)

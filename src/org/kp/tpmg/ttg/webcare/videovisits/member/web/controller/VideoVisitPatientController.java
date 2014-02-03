@@ -74,6 +74,7 @@ public class VideoVisitPatientController extends SimplePageController {
 				logger.info("vidyoUrl:"+(request.getParameter("vidyoUrl")));
 				logger.info("meetingId:"+(request.getParameter("meetingId")));
 				logger.info("meetingCode:"+(request.getParameter("meetingCode")));
+				logger.info("CaregiverId:"+(request.getParameter("caregiverId")));
 				logger.info("patientLastName:"+(request.getParameter("patientLastName")));
 				//System.out.println("guestName:"+(request.getParameter("guestName")));
 				

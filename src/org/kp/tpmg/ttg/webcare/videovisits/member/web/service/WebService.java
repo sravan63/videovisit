@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
-
 import org.kp.tpmg.videovisit.member.CreateMeetingSession;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSessionResponse;
@@ -289,7 +288,7 @@ public class WebService{
 	 * @param sessionID
 	 * @return
 	 */
-	public static StringResponseWrapper memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID)
+	public static StringResponseWrapper memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID, String memberName, boolean notifyVideoForMeetingQuit)
 	throws Exception
 	{
 		StringResponseWrapper toRet = null; 
@@ -300,6 +299,8 @@ public class WebService{
 			query.setMeetingID(meetingID);
 			query.setSessionID(sessionID);
 			query.setMrn8Digit(mrn8Digit);
+			query.setMemberName(memberName);
+			query.setNotifyVideoForMeetingQuit(notifyVideoForMeetingQuit);
 		
 			MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
 			toRet = response.get_return();
@@ -381,10 +382,13 @@ public class WebService{
 		return response.get_return();
 	}
 	
-	public static StringResponseWrapper endCaregiverMeetingSession(String meetingHash) 
+	public static StringResponseWrapper endCaregiverMeetingSession(String meetingHash, String megaMeetingNameDisplayName, boolean isParticipantDel) 
 			throws RemoteException {
 		EndCaregiverMeetingSession query = new EndCaregiverMeetingSession();
 		query.setMeetingHash(meetingHash);
+		query.setMegaMeetingDisplayName(megaMeetingNameDisplayName);
+		query.setIsDelMeetingFromVidyo(isParticipantDel);
+		
 		EndCaregiverMeetingSessionResponse response = stub.endCaregiverMeetingSession(query);
 		return response.get_return();		
 	}

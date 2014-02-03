@@ -31,7 +31,22 @@
 		<param-value>/WEB-INF/lib/wurfl.zip</param-value>
 	</context-param>
 	
-   <!-- Session for regular Web FILTER -->
+   <filter>
+      <filter-name>Back Button Filter</filter-name>
+      <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.BackButtonFilter</filter-class>
+      
+       <init-param>
+	      <param-name>includeURLs</param-name>
+	      <param-value>guestready.htm,videoVisitGuestReady.htm, videoVisitReady.htm, landingready.htm</param-value>
+	    </init-param>
+   </filter>
+  
+   <filter-mapping>
+		<filter-name>Back Button Filter</filter-name>
+		 <url-pattern>*.htm</url-pattern>
+   </filter-mapping>	
+	
+	<!-- Session for regular Web FILTER -->
    	<filter>
 		<filter-name>Print PDF Filter</filter-name>
 		<filter-class>org.kp.tpmg.ttg.cm.printPdfFilter.PrintPdfFilter</filter-class>
@@ -120,7 +135,7 @@
 		<url-pattern>*.gif</url-pattern>
 	</filter-mapping>
 
-  	<servlet>
+   	<servlet>
 		<servlet-name>livePage</servlet-name>
 		<jsp-file>/live.jsp</jsp-file>
 	</servlet>  

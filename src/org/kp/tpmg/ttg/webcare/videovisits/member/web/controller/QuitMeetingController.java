@@ -3,9 +3,11 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 import net.sf.json.JSONObject;
 
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 
 import javax.servlet.http.*;
+
 import org.apache.log4j.Logger;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,13 +22,16 @@ public class QuitMeetingController extends SimplePageController {
 		try
 		{
 			
-			data = MeetingCommand.updateEndMeetingLogout(request, response);
+			data = MeetingCommand.updateEndMeetingLogout(request, response, null, false);
 			
 			String refreshMeetings = request.getParameter("refreshMeetings"); 
 			
 			if (refreshMeetings != null && refreshMeetings.equals("true")) {
 				MeetingCommand.retrieveMeeting(request, response);
 			}
+		
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
+			ctx.setHasJoinedMeeting(false);
 			
 //			responseWrapper = MeetingCommand.quitMeeting(request, response);
 //			if(responseWrapper != null && responseWrapper.getSuccess()){
