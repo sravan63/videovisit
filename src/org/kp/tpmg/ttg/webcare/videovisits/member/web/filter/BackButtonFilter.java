@@ -75,7 +75,7 @@ public class BackButtonFilter implements Filter  {
 							+ "/logout.htm");
 					RequestDispatcher rd = null;
 				
-					if (req.getRequestURI().contains("guest")) {
+					if (req.getRequestURI().toUpperCase().contains("GUEST")) {
 						rd = req.getRequestDispatcher("/guestlogout.htm");
 					} else {
 						rd = req.getRequestDispatcher("/logout.htm");
@@ -90,7 +90,7 @@ public class BackButtonFilter implements Filter  {
 				
 				RequestDispatcher rd = null;
 
-				if (req.getRequestURI().contains("guest")) {
+				if (req.getRequestURI().toUpperCase().contains("GUEST")) {
 					rd = req.getRequestDispatcher("/guestlogout.htm");
 				} else {
 					rd = req.getRequestDispatcher("/logout.htm");
