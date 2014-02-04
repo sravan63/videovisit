@@ -37,7 +37,7 @@
       
        <init-param>
 	      <param-name>includeURLs</param-name>
-	      <param-value>guestready.htm,videoVisitGuestReady.htm, videoVisitReady.htm, landingready.htm</param-value>
+	      <param-value>guestready.htm,videoVisitGuestReady.htm,videoVisitReady.htm,landingready.htm</param-value>
 	    </init-param>
    </filter>
   
