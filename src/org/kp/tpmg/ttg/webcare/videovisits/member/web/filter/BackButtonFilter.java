@@ -73,15 +73,29 @@ public class BackButtonFilter implements Filter  {
 				//session expired, return expiration message
 					logger.info("Inside BackButtonFilter.doFilter Session expired forwarding to>>>>>>>>>>>>>>>>>>>>"
 							+ "/logout.htm");
-					RequestDispatcher rd = req.getRequestDispatcher("/logout.htm");
-					rd.forward(req, resp);
+					RequestDispatcher rd = null;
+				
+					if (req.getRequestURI().contains("guest")) {
+						rd = req.getRequestDispatcher("/guestlogout.htm");
+					} else {
+						rd = req.getRequestDispatcher("/logout.htm");
+					}
 					
+					rd.forward(req, resp);
 	
 			} else if (WebAppContext.getWebAppContext(req)== null) {
-
+				
 				//user was logged out, return empty response
 				logger.info("Inside BackButtonFilter.doFilter user is logged out, returning empty response");
-				RequestDispatcher rd = req.getRequestDispatcher("/logout.htm");
+				
+				RequestDispatcher rd = null;
+
+				if (req.getRequestURI().contains("guest")) {
+					rd = req.getRequestDispatcher("/guestlogout.htm");
+				} else {
+					rd = req.getRequestDispatcher("/logout.htm");
+				}
+				
 				rd.forward(req, resp);
 				
 			} else {
