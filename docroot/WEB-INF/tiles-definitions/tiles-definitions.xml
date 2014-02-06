@@ -7,7 +7,7 @@
 
 	<!-- Application Template -->
 	<definition name=".standardPageTemplate" template="/WEB-INF/tiles-templates/applicationLayout.jsp">
-		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="title" value="" type="string" />
 		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
 		<put-attribute name="header" value="/WEB-INF/jsp/nav/header.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
@@ -16,7 +16,7 @@
  		<put-attribute name="footer" value="/WEB-INF/jsp/nav/footer.jsp" />
 	</definition>
 	<definition name=".standardMDOPageTemplate" template="/WEB-INF/tiles-templates/mdoApplicationLayout.jsp">
-		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="title" value="" type="string" />
 		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
 		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoheader.jsp" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-mdo.jsp" />
@@ -142,6 +142,7 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/error.jsp" />
 	</definition>
 	<definition name="logout" extends=".standardPageTemplate">
+		<put-attribute name="title" value="Logout" type="string" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/logout.jsp" />
@@ -154,12 +155,14 @@
 	</definition>
 
 	<definition name="guest" extends=".standardPageTemplate">
+		<put-attribute name="title" value="Login Page" type="string" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guest.jsp" />
 	</definition>
 	
 	<definition name="guestready" extends=".standardPageTemplate">
+		<put-attribute name="title" value="Your Video Visit" type="string" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-guestVisit.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guestready.jsp" />
@@ -172,6 +175,7 @@
 	</definition>
 
 	<definition name="guestlogout" extends=".standardPageTemplate">
+		<put-attribute name="title" value="Logout" type="string" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/guestInfo.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guestlogout.jsp" />
@@ -194,12 +198,12 @@
 	</definition>
 	
 	<definition name="videoVisit" extends=".videoVisitPageTemplate">
-		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="title" value="Video Visit" type="string" />
 		<put-attribute name="content" value="/WEB-INF/jsp/videoVisit.jsp" />
 	</definition>
 	
 	<definition name="videoVisitGuestReady" extends=".videoVisitPageTemplate">
-		<put-attribute name="title" value="Video Visits" type="string" />
+		<put-attribute name="title" value="Video Visit" type="string" />
 		<put-attribute name="content" value="/WEB-INF/jsp/videoVisitGuest.jsp" />
 	</definition>
 	
