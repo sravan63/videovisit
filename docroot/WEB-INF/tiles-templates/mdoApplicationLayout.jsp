@@ -16,8 +16,8 @@
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
 
     <!--Start Favicon-->
-<!--     <link rel="shortcut icon" href="images/favicon/favicon.ico">
-    <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png"> -->
+    <link rel="shortcut icon" href="images/favicon/favicon.ico">
+    <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
     <!--End Favicon-->
 
  
