@@ -157,6 +157,7 @@ docroot/environment/dependency_css.json -text
 docroot/environment/dependency_js.json -text
 docroot/environment/path.js -text
 docroot/helpindex.jsp -text
+docroot/images/favicon/favicon.ico -text
 docroot/images/global/TPGM_Logo_Final_Small.png -text
 docroot/images/global/ajax-loader.gif -text
 docroot/images/global/back-blue.png -text
