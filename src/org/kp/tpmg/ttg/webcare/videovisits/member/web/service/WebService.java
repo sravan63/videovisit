@@ -41,6 +41,8 @@ import org.kp.tpmg.videovisit.member.VerifyCaregiver;
 import org.kp.tpmg.videovisit.member.VerifyCaregiverResponse;
 import org.kp.tpmg.videovisit.member.VerifyMember;
 import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
+import org.kp.tpmg.videovisit.member.GetVendorPluginData;
+import org.kp.tpmg.videovisit.member.GetVendorPluginDataResponse;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
@@ -49,7 +51,6 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrappe
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesStub;
-
 
 
 public class WebService{
@@ -484,25 +485,53 @@ public class WebService{
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
 			return null;
 		}
-}
+	}
 
 	public static StringResponseWrapper createCareGiverMobileSession(String patientName, String meetingCode) throws Exception {
 	StringResponseWrapper toRet = null; 
 	
-	try
-	{
+		try
+		{
+			
+			CreateCaregiverMobileMeetingSession createMeeting = new CreateCaregiverMobileMeetingSession();
+			createMeeting.setMeetingHash(meetingCode);
+			createMeeting.setPatientLastName(patientName);
+			toRet = stub.createCaregiverMobileMeetingSession(createMeeting).get_return();
+			return toRet;
+		}
+		catch(Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			return null;
+		}
+	}
+	
+	/**
+	 * This method is to get Vendor Plugin details
+	 * 	 
+	 * @return StringResponseWrapper
+	 * @throws Exception 
+	 */
+	public static StringResponseWrapper getVendorPluginData(String sessionID) throws Exception {
+		StringResponseWrapper toRet = null; 
 		
-		CreateCaregiverMobileMeetingSession createMeeting = new CreateCaregiverMobileMeetingSession();
-		createMeeting.setMeetingHash(meetingCode);
-		createMeeting.setPatientLastName(patientName);
-		toRet = stub.createCaregiverMobileMeetingSession(createMeeting).get_return();
+
+		GetVendorPluginData query = new GetVendorPluginData();
+		try
+		{
+			query.setSessionID(sessionID);
+			
+			GetVendorPluginDataResponse response = stub.getVendorPluginData(query);
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			GetVendorPluginDataResponse response = stub.getVendorPluginData(query);
+			toRet = response.get_return();
+		}		
 		return toRet;
+
 	}
-	catch(Exception e)
-	{
-		logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-		return null;
-	}
-}
 }
 
