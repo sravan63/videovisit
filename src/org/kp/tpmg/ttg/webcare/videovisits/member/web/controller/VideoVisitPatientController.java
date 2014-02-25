@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
@@ -39,6 +40,7 @@ public class VideoVisitPatientController extends SimplePageController {
 	{	
 		try
 		{
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if("Y".equalsIgnoreCase(request.getParameter("isMember"))){
 				logger.info("Member:" +request.getParameterMap());
 				logger.info("VidyoUrl:"+(request.getParameter("vidyoUrl")));
@@ -90,6 +92,12 @@ public class VideoVisitPatientController extends SimplePageController {
 					
 					WebAppContext.getWebAppContext(request).setVideoVisit(videoVisitParams);
 				}
+			}
+			
+			//Set Plugin Data to Context
+			if(ctx != null && ctx.getVendorPlugin() == null){
+				String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
+				logger.info("VideoVisitPatientController: Plugin data in context has been set: " + pluginJSON);
 			}
 		}
 		catch (Exception e)
