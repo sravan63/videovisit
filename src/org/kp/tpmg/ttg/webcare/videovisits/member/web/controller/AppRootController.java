@@ -18,6 +18,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -66,6 +67,12 @@ public class AppRootController implements Controller {
 		}
 		else
 			logger.info("Context is not null");
+		
+		//Set Plugin Data to Context
+		if(ctx != null && ctx.getVendorPlugin() == null){
+			String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
+			logger.info("AppRootController: Plugin data in context has been set: " + pluginJSON);
+		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		return (modelAndView);
