@@ -11,8 +11,8 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.*;
-
 import org.apache.log4j.Logger;
 
 
@@ -47,6 +47,7 @@ public class WebAppContext implements Serializable{
 	private String careGiverName = "";
 	private VideoVisitParamsDTO videoVisit = null;
 	private boolean hasJoinedMeeting = false;
+	private VendorPluginDTO vendorPlugin = null;
 	
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -229,5 +230,19 @@ public class WebAppContext implements Serializable{
 
 	public void setHasJoinedMeeting(boolean hasJoinedMeeting) {
 		this.hasJoinedMeeting = hasJoinedMeeting;
+	}
+
+	/**
+	 * @return the vendorPlugin
+	 */
+	public VendorPluginDTO getVendorPlugin() {
+		return vendorPlugin;
+	}
+
+	/**
+	 * @param vendorPlugin the vendorPlugin to set
+	 */
+	public void setVendorPlugin(VendorPluginDTO vendorPlugin) {
+		this.vendorPlugin = vendorPlugin;
 	}
 }
