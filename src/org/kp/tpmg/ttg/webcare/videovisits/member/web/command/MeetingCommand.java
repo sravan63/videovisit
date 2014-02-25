@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
@@ -21,6 +22,7 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
+
 
 public class MeetingCommand {
 
@@ -788,6 +790,47 @@ public class MeetingCommand {
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
+	
+	public static String getVendorPluginData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		StringResponseWrapper ret = null;
+		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+		// Init web service 	
+		boolean success = WebService.initWebService();
+		try {
+			logger.info("MeetingCommand.getVendorPluginData WebAppContext: " + ctx + " initWebService: " + success);
+			
+				//grab data from web services
+				ret= WebService.getVendorPluginData(request.getSession().getId()); 
+				
+				//  web service call returned 
+				if (ret != null)
+				{
+					if (ctx != null)
+					{
+						
+						VendorPluginDTO vendorPluginDTO = new VendorPluginDTO();
+						JSONObject pluginJsonObject = JSONObject.fromObject(ret.getResult());
+						pluginJsonObject = (JSONObject) pluginJsonObject.get("result");
+						vendorPluginDTO.setVendorPluginName((pluginJsonObject.get("vendorPluginName") != null) ? (String) pluginJsonObject.get("vendorPluginName") : "");
+						vendorPluginDTO.setVendorNewPlugin((pluginJsonObject.get("vendorNewPlugin") != null) ? (String) pluginJsonObject.get("vendorNewPlugin") : "");
+						vendorPluginDTO.setVendorOldPlugins((pluginJsonObject.get("vendorOldPlugins") != null) ? (String) pluginJsonObject.get("vendorOldPlugins") : "");
+						
+						logger.info("MeetingCommand.getVendorPluginData - setting plugin data from service to context: " + vendorPluginDTO.toString());
+						ctx.setVendorPlugin(vendorPluginDTO);
+					}
+					return ret.getResult();
+				}
+			
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
