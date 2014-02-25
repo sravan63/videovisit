@@ -1,3 +1,8 @@
+	<!--Plugin Hidden variables -->
+	<input type="hidden" id="pluginName" value="${WebAppContext.vendorPlugin.vendorPluginName}" /> 
+	<input type="hidden" id="pluginNewVersion" value="${WebAppContext.vendorPlugin.vendorNewPlugin}" /> 
+	<input type="hidden" id="pluginOldVesrions" value="${WebAppContext.vendorPlugin.vendorOldPlugins}" /> 
+	
 	<div style="float:left">
 				<h3 class="page-title">Video Visit with ${WebAppContext.videoVisit.hostFirstName} 
 					${WebAppContext.videoVisit.hostLastName}${WebAppContext.videoVisit.hostTitle}					
