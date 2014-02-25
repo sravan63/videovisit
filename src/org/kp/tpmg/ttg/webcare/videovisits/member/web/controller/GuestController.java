@@ -44,6 +44,12 @@ public class GuestController extends SimplePageController {
 		try {		
 			
 			MeetingCommand.IsMeetingHashValid(request, response);
+			
+			//Set Plugin Data to Context
+			if(ctx != null && ctx.getVendorPlugin() == null){
+				String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
+				logger.info("GuestController: Plugin data in context has been set: " + pluginJSON);
+			}
 //			if ( ctx.getTotalmeetings() > 0)
 //				data = MeetingCommand.retrieveMeetingForCaregiver(request, response);
 		} catch (Exception e) {
