@@ -19,14 +19,14 @@
 	<input type="hidden" id="pluginNewVersion" value="<%=plgVersion %>" /> 
 	<input type="hidden" id="pluginOldVesrions" value="<%=plgOldVersions %>" /> 
     <div id="videoVisitSetupContainer">
-     <div class="videoVisitContainer">
+     <div class="videoVisitContainer" style="padding:0 0;">
     	<div id="videoVisitSetupPageContents">
-    		<div id="setupPageTitle">
+    		<div id="setupPageTitle" style="float:left; width:60%;">
    				<h2> Video Visit Preparation </h2>
    				<h3> You will need the 'Vidyo Web' plug-in for your visit. </h3>
 			</div>
-			<div id="helpButtonContent" class="buttons">
-				<a href="mdohelp.htm" class="button" target="_blank"> Get Help </a>
+			<div id="helpButtonContent" class="buttons" style="float:right; width:40%;">
+				<a href="mdohelp.htm" class="button" target="_blank" style="margin-top: 9px;"> Get Help </a>
 			</div>
 			<div id="setupMainContents">
 			    <div id="browserNotSupportedDiv" Style="height: 100px;margin-top: 100px;display: none;">
