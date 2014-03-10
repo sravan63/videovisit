@@ -68,11 +68,11 @@ public class AppRootController implements Controller {
 		else
 			logger.info("Context is not null");
 		
-		//Set Plugin Data to Context
-		if(ctx != null && ctx.getVendorPlugin() == null){
-			String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
-			logger.info("AppRootController: Plugin data in context has been set: " + pluginJSON);
-		}
+		//Set Plugin Data to Context - uncomment this once IE activex issues is resolved for plugin upgrade
+		//if(ctx != null && ctx.getVendorPlugin() == null){
+			//String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
+			//logger.info("AppRootController: Plugin data in context has been set: " + pluginJSON);
+		//}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		return (modelAndView);
