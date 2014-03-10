@@ -524,7 +524,7 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	            			window.location.replace("logout.htm");
 	            		}
 	            		url = data.result;
-	            		launchVideoVisitForPatientGuest(url, megaMeetingId, firstName + ' ' + lastName + ' (' + email + ')');
+	            		launchVideoVisitForPatientGuest(url, megaMeetingId, lastName + ', ' + firstName + ', (' + email + ')');
 	    				clearAllErrors();
 
 	            	}
