@@ -94,11 +94,11 @@ public class VideoVisitPatientController extends SimplePageController {
 				}
 			}
 			
-			//Set Plugin Data to Context
-			if(ctx != null && ctx.getVendorPlugin() == null){
+			//Set Plugin Data to Context - uncomment this once IE activex issues is resolved for plugin upgrade
+			/**if(ctx != null && ctx.getVendorPlugin() == null){
 				String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
 				logger.info("VideoVisitPatientController: Plugin data in context has been set: " + pluginJSON);
-			}
+			}**/
 		}
 		catch (Exception e)
 		{
