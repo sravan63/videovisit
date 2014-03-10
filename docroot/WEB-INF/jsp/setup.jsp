@@ -1,23 +1,8 @@
-<%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*"%>
-<%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.data.*" %>
-<%@ page import="javax.servlet.*"%>
-<%@ page import="javax.servlet.http.*"%>
-<%@ page import="net.sf.json.JSONObject" %>
-<% 
-		String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
-		VendorPluginDTO vendorPluginDTO = new VendorPluginDTO();
-		JSONObject pluginJsonObject = JSONObject.fromObject(pluginJSON);
-		pluginJsonObject = (JSONObject) pluginJsonObject.get("result");
-		
-		String plgName = (pluginJsonObject.get("vendorPluginName") != null) ? (String) pluginJsonObject.get("vendorPluginName") : "";
-		String plgVersion = (pluginJsonObject.get("vendorNewPlugin") != null) ? (String) pluginJsonObject.get("vendorNewPlugin") : "";
-		String plgOldVersions = (pluginJsonObject.get("vendorOldPlugins") != null) ? (String) pluginJsonObject.get("vendorOldPlugins") : "";		
- %>
 
 <script src="js/library/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-    <input type="hidden" id="pluginName" value="<%=plgName %>" /> 
-	<input type="hidden" id="pluginNewVersion" value="<%=plgVersion %>" /> 
-	<input type="hidden" id="pluginOldVesrions" value="<%=plgOldVersions %>" /> 
+    <input type="hidden" id="pluginName" value="" /> 
+	<input type="hidden" id="pluginNewVersion" value="" /> 
+	<input type="hidden" id="pluginOldVesrions" value="" /> 
     <div id="videoVisitSetupContainer">
      <div class="videoVisitContainer" style="padding:0 0;">
     	<div id="videoVisitSetupPageContents">
