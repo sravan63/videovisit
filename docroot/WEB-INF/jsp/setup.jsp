@@ -17,7 +17,7 @@
 			    <div id="browserNotSupportedDiv" Style="height: 100px;margin-top: 100px;display: none;">
 			      	<p class="error error-guest-login"></p>
 			    </div>
-			    <iframe id="setupWizardiFrame" src="" width="725" height="550" frameborder="0" scrolling="no">
+			    <iframe id="setupWizardiFrame" src="" width="725" height="600" frameborder="0" scrolling="no">
 				
                 </iframe>
 			
