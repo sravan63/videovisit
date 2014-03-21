@@ -38,7 +38,13 @@
        <init-param>
 	      <param-name>includeURLs</param-name>
 	      <param-value>guestready.htm,videoVisitGuestReady.htm,videoVisitReady.htm,landingready.htm</param-value>
-	    </init-param>
+	   </init-param>
+
+       <init-param>
+	      <param-name>excludeURLs</param-name>
+	      <param-value>mdohelp.htm</param-value>
+	   </init-param>
+       	    
    </filter>
   
    <filter-mapping>
