@@ -54,7 +54,10 @@ public class BackButtonFilter implements Filter  {
 		// User stays in the meeting. We need to tell the BackButtonFilter to not process an
 		boolean isExclude = isExcludeUrl (req);
 
-		if (!isExclude) {
+		// User explicity clicked some button to leave the video page
+		boolean explicitUserAction = (request.getParameter("explicitActionNavigation") != null && request.getParameter("explicitActionNavigation").equals("true"));
+
+		if (!isExclude && !explicitUserAction) {
 			WebAppContext ctx = WebAppContext.getWebAppContext(req);
 	
 			if (ctx  != null ) {
