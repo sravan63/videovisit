@@ -33,14 +33,15 @@
 			<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
 			<p>To attend a video visit, you will need a device with a front-facing camera, the KP Preventive Care App and a fast internet connection (4G or Wi-Fi highly recommended).</p>
 		</div>
-		<button id="getAppButton" class="button-main getAppButton only-tablets">Get the App</button><br/><br/>
+		<button id="getAppButton" class="button-main getAppButton only-tablets">Get the App</button>
+		<!--	<br/><br/>	-->
 		<button id="signInId" class="button-main only-tablets">Sign In</button>
 		
 	</div>
 
 	<%@ include file="common/information.jsp" %>	
 
-		<button id="getAppButton" class="button-main getAppButton only-handsets" >Get the App</button><br/>
+		<button id="getAppButton" class="button-main getAppButton only-handsets" >Get the App</button>
 		<button id="signInId" class="button-main only-handsets" >Sign In</button>
 		
 
