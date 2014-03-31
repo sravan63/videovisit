@@ -192,16 +192,14 @@ button {
 .page-content {
 
 	position: relative;
-	margin-top: 5px;
-	margin-right: 5px;
-
+/* 	margin-top: 5px;
+ 	margin-right: 5px;
+ 	margin-left: 5px; */
 	margin-bottom: 10px;
-	margin-left: 5px;
 	padding: 10px;
-
 	min-width: 280px;
-	border-radius: 3px;
-	background-color: #fff;
+/* 	border-radius: 3px; */
+	background-color: #FFFFFF;
 	box-shadow: 0 1px 5px rgba(0,0,0, .4);
 }
 
@@ -669,8 +667,8 @@ button#pg-logout-yes.button-primary{
 		0 1px 0 #D3D3D3,
 		0 2px 0 white;
 	color: #7C7D80;
-	text-shadow: 0 1px white;
-
+/* 	text-shadow: 0 1px white; */
+	text-shadow: none;
 	font-size: 17px;
 	line-height: 14px;
 }
@@ -1221,15 +1219,20 @@ and (max-width: 767px) {
 		padding-right: 9px;
 		padding-bottom: 12px;
 		padding-left: 9px;
-
+		padding-top: 12px;
 		box-shadow:
 			0 1px 0 #D3D3D3,
 			0 2px 0 white;
-		color: #7C7D80;
-		text-shadow: 0 1px white;
+/* 		color: #7C7D80;
+		text-shadow: 0 1px white; */
+		text-shadow: none;
 
 		font-size: 17px;
 		line-height: 14px;
+		
+		color: #FFFFFF;
+		background-color: #686A6C;
+		border-radius: 3px;
 	}
 
 	ol.instructions {
@@ -1279,8 +1282,9 @@ and (max-width: 767px) {
 
 	.well.instructions {
 		display: table;
-		margin-top: 10px;
-		padding-top: 12px;
+ 		margin-top: 10px;
+/* 		padding-top: 12px; */
+		padding-top: 0px;
 		padding-right: 1px;
 		padding-left: 1px;
 		width: 100%;
@@ -1355,7 +1359,7 @@ and (max-width: 767px) {
 	.button-main {
 		margin-bottom: 12px;
 
-		padding: 8px 62px;
+		padding: 8px 8px;
 
 		border: solid 2px #404040;
 		border-radius: 6px;
@@ -1381,6 +1385,8 @@ and (max-width: 767px) {
 		background-image: -o-linear-gradient(top, #0061A9 0%, #004075 100%);
 		background-image: linear-gradient(top, #0061A9 0%, #004075 100%);
 		border: 2px solid #004075;
+		width: 48%;
+		float: right;
 	}
 	
 	button#signInIdPGHand.button-main.only-handsets{
@@ -1391,6 +1397,8 @@ and (max-width: 767px) {
 		border: 2px solid #004075;
 		text-shadow: none;
 		color: #FFFFFF;
+		width: 48%;
+		float: right;
 	}
 
 	button#getAppButton.button-main.getAppButton.only-handsets{
@@ -1401,6 +1409,7 @@ and (max-width: 767px) {
 		border: 2px solid #BABABA;
 		text-shadow: none;
 		color: #000000;
+		width: 48%;
 	}
 }
 /* HANDSETS - - END - - - - - - - - - - - - - - - - - - - - - -  */
