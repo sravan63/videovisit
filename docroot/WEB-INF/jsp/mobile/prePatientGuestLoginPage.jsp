@@ -29,10 +29,8 @@
 				<h1>Video Visits</h1>
 
 				<div class="only-handsets">
-					<p>Get prepared before your video visit.</p>
+					<p style="color:#666666; font-size:16px; font-weight:bold;">Welcome Patient Guest</p>
 				</div>
-
-				
 		
 				<div class="only-tablets">
 					<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
@@ -44,8 +42,14 @@
 			
 			
 		
-			<%@ include file="common/information.jsp" %>	
-			<button id="getAppButton" class="button-main getAppButton only-handsets" >Get the App</button><br/>
+			<%@ include file="common/informationpg.jsp" %>
+			
+			<div style="text-align: center; margin-top:15px; margin-bottom:20px;">
+				For more help use the Sign In Help link on the KP Preventive Care app.
+			</div>
+			
+			<button id="getAppButton" class="button-main getAppButton only-handsets">Get the App</button>
+			<!--	<br/>	-->
 			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login')">Sign In</button>
 			
 		</c:when>
