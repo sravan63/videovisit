@@ -45,10 +45,10 @@
 <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
+	<tiles:insertAttribute name="gtm" />
+
         <!-- ============ BEGIN:  #container-primary ============ -->
         <div id="container-primary">
-
-
 
                 <!-- ============ BEGIN:  #header ============ -->
                 <tiles:insertAttribute name="header" />
