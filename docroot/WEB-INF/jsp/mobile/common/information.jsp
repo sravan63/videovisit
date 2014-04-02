@@ -1,9 +1,9 @@
 <div class="only-tablets">
 	<ol class="well instructions">
-		<h2>Get prepared before your visit:</h2>
+		<h2>What do I need for my visit?</h2>
+		<li><span>Make sure you have a strong Wi-Fi or 4G connection.</span></li>
 		<li><span>Download the latest version of the KP Preventive Care App.</span></li>
-		<li><div class="img-connection"></div><span>Make sure you have a strong Wi-Fi or 4G connection.</span></li>
-		<li><div class="img-headphones"></div><span>For best results, use headphones during the call.</span></li>
+		<li><span>Have your user ID and password ready to sign in to the app.</span></li>
 	</ol>
 </div>
 <div class="only-handsets">
