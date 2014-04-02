@@ -64,7 +64,7 @@
 				</div>
 			</div>
 
-			<%@ include file="common/information.jsp" %>	
+			<%@ include file="common/informationpg.jsp" %>	
 		</c:otherwise>
 	</c:choose>
 
