@@ -30,17 +30,23 @@
 		</div>
 	
 		<div class="only-tablets">
-			<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
-			<p>To attend a video visit, you will need a device with a front-facing camera, the KP Preventive Care App and a fast internet connection (4G or Wi-Fi highly recommended).</p>
+			<p>Kaiser Permanente gives you the opportunity to meet with your doctor from your smartphone or tablet.</p>
+			<p>All you need is the KP Preventive Care app and a user ID and password.</p>
+			<p>
+				<span style="font-weight:bold;">Don't have an account?</span><br/>
+				<span>You can still join the visit by using Sign In Help on the app.</span>
+			</p>
 		</div>
-		<button id="getAppButton" class="button-main getAppButton only-tablets">Get the App</button>
-		<!--	<br/><br/>	-->
-		<button id="signInId" class="button-main only-tablets">Sign In</button>
 		
 	</div>
 
 	<%@ include file="common/information.jsp" %>	
 
+	<div class="only-tablets" style="text-align:center; margin-top:12px;">
+		<button id="getAppButton" class="button-main getAppButton only-tablets">Get the App</button>
+		<button id="signInId" class="button-main only-tablets">Sign In</button>
+	</div>
+	
 		<button id="getAppButton" class="button-main getAppButton only-handsets" >Get the App</button>
 		<button id="signInId" class="button-main only-handsets" >Sign In</button>
 		
