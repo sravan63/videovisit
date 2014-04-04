@@ -21,10 +21,11 @@
 		<c:when test="${WebAppContext.totalmeetings > 0}">
 			<div class="intro">
 			
-<!-- 			Commented by Mandar A. on 01/10/2014 - US3503 -->
-			<!--<div class="pic-frame">
- 					<div class="pic"><img src="images/mobile/vv-patient-welcome-image.jpg"></div>
-	 			</div> -->
+				<div class="pic-frame only-tablets">
+ 					<div class="pic" style="width:325px; height:225px;">
+ 						<img src="images/mobile/vv-patient-welcome-image.jpg" width="325" height="225">
+ 					</div>
+	 			</div>
 			
 				<h1>Video Visits</h1>
 
@@ -33,23 +34,25 @@
 				</div>
 		
 				<div class="only-tablets">
-					<p>Kaiser Permanente is pleased to offer you the opportunity to meet with your doctor from your smartphone or tablet.</p>
-					<p>To attend a video visit, you will need a device with a front-facing camera, the KP Preventive Care App and a fast internet connection (4G or Wi-Fi highly recommended).</p>
+					<p style="color:#666666; font-size:24px; font-weight:bold;">Welcome Patient Guest</p><br/>
+					<p>Follow the steps below to get ready for your visit.</p>
+					<p>You can join a Video Visit within 15 minutes of the appointment time.</p>
 				</div>
-				<button id="getAppButton" class="button-main getAppButton only-tablets" >Get the App</button><br/>
-				<button id="signInIdPG" class="button-main only-tablets" onclick="modalShow('modal-login')">Sign In</button>
+				
 			</div>
-			
-			
 		
 			<%@ include file="common/informationpg.jsp" %>
+			
+			<div class="only-tablets" style="text-align:center; margin-top:12px;">
+				<button id="getAppButton" class="button-main getAppButton only-tablets" >Get the App</button>
+				<button id="signInIdPG" class="button-main only-tablets" onclick="modalShow('modal-login')">Sign In</button>
+			</div>
 			
 			<div style="text-align: center; margin-top:15px; margin-bottom:20px;">
 				For more help use the Sign In Help link on the KP Preventive Care app.
 			</div>
 			
 			<button id="getAppButton" class="button-main getAppButton only-handsets">Get the App</button>
-			<!--	<br/>	-->
 			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login')">Sign In</button>
 			
 		</c:when>
