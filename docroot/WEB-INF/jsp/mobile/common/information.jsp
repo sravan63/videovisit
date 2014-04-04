@@ -1,6 +1,9 @@
 <div class="only-tablets">
 	<ol class="well instructions">
-		<h2>What do I need for my visit?</h2>
+		<h2 style="color:#FFFFFF; background-color:#686A6C;">
+			<img src="images/mobile/icon_video@2x.png" height="18" width="30" style="float:left; padding-right:10px;">
+			What do I need for my visit?
+		</h2>
 		<li><span>Make sure you have a strong Wi-Fi or 4G connection.</span></li>
 		<li><span>Download the latest version of the KP Preventive Care App.</span></li>
 		<li><span>Have your user ID and password ready to sign in to the app.</span></li>
