@@ -109,10 +109,7 @@
 
 		</c:choose>
 
-
-
-		
-
-		<%@ include file="common/information.jsp" %>		
+		<%@ include file="common/informationTwo.jsp" %>
+				
 	</div>
 </div>
