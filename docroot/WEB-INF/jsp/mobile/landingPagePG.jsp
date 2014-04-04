@@ -45,53 +45,48 @@
 
 						<div class="launch-button-handler only-tablets">
 							<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-									<c:forEach var="p" items="${meeting.caregivers}">
-										<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
-											
-											<c:if test="${p.meetingHash == param.meetingCode}">
-												<button class="button-launch-visit-pg only-tablets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
-											</c:if>
+								<c:forEach var="p" items="${meeting.caregivers}">
+									<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
+										
+										<c:if test="${p.meetingHash == param.meetingCode}">
+											<button class="button-launch-visit-pg only-tablets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
 										</c:if>
-									</c:forEach>
-								</c:if>
-							
+									</c:if>
+								</c:forEach>
+							</c:if>
 						</div>
 
 						<div class="meeting-block-handler">
-
 							<div class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp}</div>
 							<p class="time">Scheduled for <strong><span class="time_${meeting.meetingId}"></span></strong></p>
+							
 							<script type="text/javascript">
 							// convert time stamp to time
 								meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
 								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only').toLowerCase() + ' '+ '<%=timezone%>';
 								$('.time_' + ${meeting.meetingId}).append(convertedTimestamp);
-							
 							</script>
+							
 							<p class="host-name">
-								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
-									
-									
-									
+								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>	
 							</p>
 							<p class="time">
 								${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}
 							</p>
 							<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-									<c:forEach var="p" items="${meeting.caregivers}">
-										<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
-											
-											<c:if test="${p.meetingHash == param.meetingCode}">
-												<button class="button-launch-visit-pg only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
-											</c:if>
+								<c:forEach var="p" items="${meeting.caregivers}">
+									<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
+										
+										<c:if test="${p.meetingHash == param.meetingCode}">
+											<button class="button-launch-visit-pg only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
 										</c:if>
-									</c:forEach>
-								</c:if>
+									</c:if>
+								</c:forEach>
+							</c:if>
 						</div>
 					</div>
 
 				</c:forEach>
-				
 				
 			</c:when>
 			<c:otherwise>
@@ -108,6 +103,6 @@
 			
 		</c:choose>
 			
-		<%@ include file="common/information.jsp" %>	
+		<%@ include file="common/informationTwopg.jsp" %>
 	</div>
 </div>
