@@ -130,6 +130,7 @@ docroot/css/deprecated/jquery-mdo.css -text
 docroot/css/deprecated/mobile-global.css -text svneol=unset#text/plain
 docroot/css/deprecated/mobile-reset.min.css -text svneol=unset#text/plain
 docroot/css/deprecated/new_styles.css -text
+docroot/css/deprecated/print.css -text
 docroot/css/deprecated/style.css -text
 docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_flat_0_aaaaaa_40x100.png -text
 docroot/css/library/jquery/jquery-ui/smoothness/images/ui-bg_flat_75_ffffff_40x100.png -text
@@ -150,7 +151,6 @@ docroot/css/site/global/base.css -text
 docroot/css/site/global/jquery-ui.css -text
 docroot/css/site/global/mobile-web.css -text svneol=unset#text/plain
 docroot/css/site/global/mobile.css -text svneol=unset#text/plain
-docroot/css/site/global/print.css -text
 docroot/css/site/global/structure.css -text
 docroot/css/site/mdo/jquery-ui-1.8.2.custom.css -text
 docroot/css/site/mdo/print.css -text
