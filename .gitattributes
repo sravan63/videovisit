@@ -200,6 +200,7 @@ docroot/js/library/plugin/validation/jquery.validate.js -text
 docroot/js/library/plugin/validation/jquery.validate.min.js -text
 docroot/js/site/deprecated/jquery-1.4.4.min.js -text
 docroot/js/site/deprecated/jquery-ui-1.8.7.min.js -text
+docroot/js/site/deprecated/print.js -text svneol=unset#text/plain
 docroot/js/site/error/error.js -text
 docroot/js/site/global/dateExtensions_loader.js -text
 docroot/js/site/global/display.js -text
@@ -219,7 +220,6 @@ docroot/js/site/login/login.js -text
 docroot/js/site/mdo/jq-plugins-v1.min.js -text
 docroot/js/site/mdo/jquery.address-1.2.2.min.js -text
 docroot/js/site/mdo/mdo-jquery-v1.min.js -text
-docroot/js/site/mdo/print.js -text svneol=unset#text/plain
 docroot/js/site/mobile/mobile-web.js -text svneol=unset#text/plain
 docroot/js/site/validation/validate.js -text svneol=unset#text/plain
 docroot/js/site/videovisit/videoVisit.js -text svneol=unset#text/plain
