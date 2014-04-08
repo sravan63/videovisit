@@ -1,12 +1,5 @@
-
- 
-
-
-
-
- 
     <div id="leftCol">
-      <div id="tpmgLogo" style="margin-top:-20px;" class="pb10">
+      <div id="tpmgLogo" class="pb10">
         <img src="images/global/TPGM_Logo_Final_Small.png" alt="TPMG Logo" style="margin:0 auto;">
       </div>	
       <ul id="connectedNav">
