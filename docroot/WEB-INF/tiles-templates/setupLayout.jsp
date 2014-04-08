@@ -33,15 +33,15 @@
 	}		
 	</script>
 	
-	<link rel="stylesheet" href="css/site/mdo/jquery-ui-1.8.2.custom.css" type="text/css" media="screen" title="no title" charset="utf-8" />
-	<link rel="stylesheet" href="css/site/mdo/styles.css" type="text/css" media="screen" charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" href="css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="css/site/mdo/styles.css" media="screen" charset="utf-8"/>
 	<!--[if IE]>
 	<link rel="stylesheet" type="text/css" href="http://mydoctor.kaiserpermanente.org/ncal/static_includes/css/mdo/iestyles.css" media="screen" charset="utf-8" />
 	<![endif]-->
-	<link rel="stylesheet" href="css/site/mdo/vv_styles.css" type="text/css" media="screen" charset="utf-8"/>
+	<link rel="stylesheet" type="text/css" href="css/site/mdo/vv_styles.css" media="screen" charset="utf-8"/>
 
-	<script type="text/javascript"  src="js/library/jquery/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript"  src="js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js"></script>
+	<script type="text/javascript" src="js/library/jquery/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js"></script>
 	
     </head>
     <!--End Head-->
