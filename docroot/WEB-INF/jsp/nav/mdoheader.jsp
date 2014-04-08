@@ -101,18 +101,19 @@ function sendEmail()
 
 </script>
 
-   <div id="iconNav"> 
+<!-- Commented by Mandar A. 04/08/2014 -->
+<!--<div id="iconNav"> 
       <ul id="iconList"> 
         <li id="email"><a href="javascript:sendEmail();" title="E-mail">E-mail</a></li> 
         <li id="print"><a href="javascript: void(0);" title="Print">Print</a></li> 
         <li id="favorites"><a href="javascript: void(0);" title="Bookmark This Page">Bookmark This Page</a></li> 
-        <li id="favorites-bookmarked"><a href="javascript: void(0);" title="Bookmarked Page">BookmarkedPage</a></li>
-        <!--[if !IE]><li id="help"><a href="javascript: void(0);" title="Help">Help</a></li><![endif]--> 
-        <li id="normalFont"><a href="#fontsize0" title="Normal Font Size"></a></li>
+        <li id="favorites-bookmarked"><a href="javascript: void(0);" title="Bookmarked Page">BookmarkedPage</a></li>	 -->   
+ 	 	<!--[if !IE]><li id="help"><a href="javascript: void(0);" title="Help">Help</a></li><![endif]--> 
+ <!--       <li id="normalFont"><a href="#fontsize0" title="Normal Font Size"></a></li>
 		<li id="mediumFont"><a href="#fontsize1" title="Medium Font Size"></a></li>
 		<li id="largeFont"><a href="#fontsize2" title="Large Font Size"></a></li>
       </ul> 
-    </div> 
+    </div> -->
 
 <input type="hidden" name="bb-mdo-doctor-initialContentUrl" id="bb-mdo-doctor-initialContentUrl" value="/mydoctor.kaiserpermanente.org/videovisits" />
 <input type="hidden" name="bb-mdo-doctor-initialContentName" id="bb-mdo-doctor-initialContentName" value="Video Visits" />
