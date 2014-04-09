@@ -127,6 +127,8 @@ docroot/consent_forms/consent_2011_08_01.txt -text
 docroot/css/deprecated/handheld.css -text
 docroot/css/deprecated/jqModal.css -text
 docroot/css/deprecated/jquery-mdo.css -text
+docroot/css/deprecated/jquery-ui-1.8.2.custom.css -text
+docroot/css/deprecated/jquery-ui.css -text
 docroot/css/deprecated/mobile-global.css -text svneol=unset#text/plain
 docroot/css/deprecated/mobile-reset.min.css -text svneol=unset#text/plain
 docroot/css/deprecated/new_styles.css -text
@@ -148,11 +150,9 @@ docroot/css/library/jquery/jquery-ui/smoothness/images/ui-icons_cd0a0a_256x240.p
 docroot/css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.css -text svneol=unset#text/plain
 docroot/css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css -text svneol=unset#text/plain
 docroot/css/site/global/base.css -text
-docroot/css/site/global/jquery-ui.css -text
 docroot/css/site/global/mobile-web.css -text svneol=unset#text/plain
 docroot/css/site/global/mobile.css -text svneol=unset#text/plain
 docroot/css/site/global/structure.css -text
-docroot/css/site/mdo/jquery-ui-1.8.2.custom.css -text
 docroot/css/site/mdo/print.css -text
 docroot/css/site/mdo/styles.css -text
 docroot/css/site/mdo/vv_styles.css -text
