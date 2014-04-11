@@ -123,7 +123,9 @@
          	    <fileset dir="${docroot.dir}">
          	    	<exclude name="${docroot.dir}/WEB-INF/classes/*"/>
          	    	<exclude name="${docroot.dir}/js/*"/>
+         	    	<exclude name="js/deprecated/**"/>
          	    	<exclude name="${docroot.dir}/css/*"/>
+         	    	<exclude name="css/deprecated/**"/>
          	    	<exclude name="${docroot.dir}/images/*"/>
        	    	</fileset>
          </copy>
