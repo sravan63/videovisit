@@ -139,7 +139,7 @@
 	</bean>
 	
 	<!-- Controllers -->
-		<bean id="logout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoffController">
+	<bean id="logout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoffController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="logout" />
 		<property name="mobileViewName" value="mLogoutPage"/>
@@ -149,6 +149,8 @@
 	<bean id="intro" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="mdo"/>
+		<property name="navigation" value="mdo" />
+		<property name="subNavigation" value="mdo" />
 	</bean>
 	<bean id="mdo" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
@@ -161,6 +163,8 @@
 	<bean id="mdohelp" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="mdohelp" />
+		<property name="navigation" value="mdohelp" />
+		<property name="subNavigation" value="mdohelp" />
 	</bean>
 	<bean id="mdohelplive" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
@@ -178,7 +182,7 @@
 		<property name="viewName" value="login" />
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
-       	</bean>
+    </bean>
 	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="landingnone" />
