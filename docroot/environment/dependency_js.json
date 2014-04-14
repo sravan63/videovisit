@@ -16,14 +16,10 @@
         ]
     },
     "global" : [
-            "js/site/global/display.js",
+        	"js/site/global/commonScript.js",
             "environment/path.js",
             "js/site/global/global.js",
-            "js/site/global/plugins.js",
-            "js/site/global/script.js",
-            "js/site/global/logout.js",
-            "js/site/global/utils.js",
-            
+            "js/site/global/plugins.js"
     ],
     "page"   : {
         "home" : {
@@ -42,12 +38,13 @@
             }
         },
         "guest" : {
-            "global"    :   ["js/site/global/dateExtensions_loader.js"
-            				],
+            "global"    :   [
+            	"js/site/global/dateExtensions_loader.js"
+            ],
             "specific"  :   {
                 "guest"  :   [
-                				"js/site/guest/guest.js",
-                			 ]
+                	"js/site/guest/guest.js",
+                ]
             }
         },
         "guestready" : {
@@ -147,6 +144,22 @@
                 	"js/site/guestvisit/guestvisit.js"
                 ]
           	}
+        },
+        "mdo" : {
+            "global"   : [],
+            "specific" : {
+                "mdo" : [
+                	"js/site/mdo/jq-plugins-v1.min.js"
+                ]
+            }
+        },
+        "mdohelp" : {
+            "global"   : [],
+            "specific" : {
+                "mdohelp" : [
+                	"js/site/mdo/jq-plugins-v1.min.js"
+                ]
+            }
         }
     }
 }
