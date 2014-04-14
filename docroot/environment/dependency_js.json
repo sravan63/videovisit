@@ -34,7 +34,8 @@
                     "js/library/plugin/validation/additional-methods.min.js",              
                 ],
                 "logout"  :   [],
-                "setup" : []
+                "setup" : [],
+                "guestlogout" : []
             }
         },
         "guest" : {
