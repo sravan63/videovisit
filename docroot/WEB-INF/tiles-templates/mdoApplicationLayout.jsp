@@ -19,7 +19,19 @@
     <link rel="shortcut icon" href="images/favicon/favicon.ico">
     <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
     <!--End Favicon-->
+    
+    <!--Start CSS-->
+    <c:forEach var='item' items='${cssDependencies}'>
+        <link rel="stylesheet" type="text/css" href="${item}" />
+    </c:forEach>
+    <!--End CSS-->
 
+	<!--Start JavaScript-->
+    <c:forEach var='item' items='${jsDependencies}'>
+        <script src="${item}" type="text/javascript"></script>
+    </c:forEach>
+    <!--End JavaScript-->
+        
 	<noscript>
 		<meta http-equiv="refresh" content="0; url=enablejavascript.htm"></meta>
 	</noscript>
@@ -33,17 +45,6 @@
 			element.value = "";						
 		}
 	</script>
-	
-	<link rel="stylesheet" type="text/css" href="/videovisit/css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css" media="screen" charset="utf-8"/>
-	<link rel="stylesheet" type="text/css" href="/videovisit/css/site/mdo/styles.css" media="screen" charset="utf-8"/>
-	<!--[if IE]>
-	<link rel="stylesheet" type="text/css" href="http://mydoctor.kaiserpermanente.org/ncal/static_includes/css/mdo/iestyles.css" media="screen" charset="utf-8" />
-	<![endif]-->
-	<link rel="stylesheet" href="/videovisit/css/site/mdo/vv_styles.css" type="text/css" media="screen" charset="utf-8"/>
-
-	<script type="text/javascript"  src="js/library/jquery/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript"  src="js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js"></script>
-	<script type="text/javascript"  src="js/site/mdo/jq-plugins-v1.min.js"></script>
 	
     </head>
     <!--End Head-->
