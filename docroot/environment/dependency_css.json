@@ -17,7 +17,8 @@
                 "intro" : [],
                 "login" : [],
                 "logout" : [],
-                "setup" : []
+                "setup" : [],
+                "guestlogout" : []
             }
         },
         "landingnone" : {
