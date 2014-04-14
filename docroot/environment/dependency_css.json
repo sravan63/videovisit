@@ -5,12 +5,14 @@
         "unminimized" : []
     },
     "global" : [
-        "css/site/global/base.css",
-        "css/site/global/structure.css"
+    	"css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
     ],
     "page"   : {
         "home" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "intro" : [],
                 "login" : [],
@@ -19,78 +21,112 @@
             }
         },
         "landingnone" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "landingnone" : []
             }
         },
         "landingready" : {
-            "global"   : ["css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"],
+            "global"   : [
+            	
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "landingready" : []
             }
         },
         "landing" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "landing" : []
             }
         },
         "guest" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "guest" : []
             }
         },
         "guestready" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "guestready" : []
             }
         },
         "guestvisit" : {
             "global"   : [
-                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+                
+                "css/site/global/base.css",
+        		"css/site/global/structure.css"
             ],
             "specific" : {
                 "guestvisit" : []
             }
         },
         "guesthelp" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "guesthelp" : []
             }
         },        
         "error" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "error" : []
             }
         },
         "visit" : {
             "global"   : [
-                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+                
+                "css/site/global/base.css",
+        		"css/site/global/structure.css"
             ],
             "specific" : {
                 "visit" : []
             }
         },
         "help" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "help" : []
             }
         },
         "healthMonitor" : {
-            "global"   : [],
+            "global"   : [
+            	"css/site/global/base.css",
+        		"css/site/global/structure.css"
+            ],
             "specific" : {
                 "blank" : []
             }
         },
         "videoVisit" : {
         	"global"   : [
-                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+                
+                "css/site/global/base.css",
+        		"css/site/global/structure.css"
             ],
             "specific" : {
                 "videoVisit" : []
@@ -98,7 +134,9 @@
         },
         "videoVisitGuest" : {
         	"global"   : [
-                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+                
+                "css/site/global/base.css",
+        		"css/site/global/structure.css"
             ],
             "specific" : {
                 "videoVisitGuest" : []
@@ -106,10 +144,34 @@
         },
         "videoVisitGuestReady" :  {
         	"global"   : [
-                "css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+                
+                "css/site/global/base.css",
+        		"css/site/global/structure.css"
             ],
             "specific" : {
                 "videoVisitGuestReady" : []
+            }
+        },
+        "mdo" : {
+            "global"   : [
+            	
+            ],
+            "specific" : {
+                "mdo" : [
+                	"css/site/mdo/styles.css",
+                	"css/site/mdo/vv_styles.css"
+                ]
+            }
+        },
+        "mdohelp" : {
+            "global"   : [
+            	
+            ],
+            "specific" : {
+                "mdohelp" : [
+                	"css/site/mdo/styles.css",
+                	"css/site/mdo/vv_styles.css"
+                ]
             }
         }
     }
