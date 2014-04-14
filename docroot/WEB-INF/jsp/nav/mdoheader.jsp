@@ -1,5 +1,3 @@
-
-
 <script>
 if (!this.mdoGlobalSearch) {
 	    this.mdoGlobalSearch = {};
@@ -41,65 +39,47 @@ function submitSearch2(){
     	        })
         }
         document.searchContent.submit();
-       }
-  }
+	}
+}
 
 </script>
-                <div id="masthead">
-
-                        <h1>My Doctor Online The Permanente Medical Group</h1>
-
-                        <div id="mastheadSearch">
-                                <form name="search" action="http://mydoctor.kaiserpermanente.org/ncal/mdo/globalsearch/globalSearch.jsp" method="GET">
-                                <input id="mastheadSearchBox"  class="searchBox mdoSearchBox nonAjaxSearch" type="text" name="search" value="Search" autocomplete="off"/>
-								<input id="mastheadCategory" class="category" name="category" type="hidden" value=""/>
-                                <div id="mastheadSearchBtn">
-                                    <a id="globalSearchBtn" class="mdoGlobalSearch" href="javascript:submitSearch();"></a>
-				                </div>
-                                </form>
-                        </div>
-
-                </div>   <!--[if !IE]>  /masthead   <![endif]-->
-
- 
-
-
-
-
-
-
-
+<div id="masthead">
+	<h1>My Doctor Online The Permanente Medical Group</h1>
+	<div id="mastheadSearch">
+		<form name="search" action="http://mydoctor.kaiserpermanente.org/ncal/mdo/globalsearch/globalSearch.jsp" method="GET">
+            <input id="mastheadSearchBox"  class="searchBox mdoSearchBox nonAjaxSearch" type="text" name="search" value="Search" autocomplete="off"/>
+			<input id="mastheadCategory" class="category" name="category" type="hidden" value=""/>
+            
+            <div id="mastheadSearchBtn">
+            	<a id="globalSearchBtn" class="mdoGlobalSearch" href="javascript:submitSearch();"></a>
+            </div>
+		</form>
+	</div>
+</div>   <!--[if !IE]>  /masthead   <![endif]-->
 
 <div id="mainNav">
   <ul>
-	<li  id="active" ><a
-		href="http://mydoctor.kaiserpermanente.org/ncal/mdo/">Home</a></li>
-	<li ><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/ourdoctors.jsp ">Our Doctors</a></li>
-	<li ><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/stayinghealthy/ ">Staying Healthy</a></li>
-	<li ><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthguide/ ">A-Z Health Topics</a></li>
+	<li id="active"><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/"> Home </a></li>
+	<li><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/ourdoctors.jsp"> Our Doctors </a></li>
+	<li><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/stayinghealthy/"> Staying Healthy </a></li>
+	<li><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthguide/"> A-Z Health Topics </a></li>
   </ul>
 </div>
 <!--[if !IE]>	/mainNav   <![endif]-->
 
-<script  type="text/javascript">
-
+<!-- Commented by Mandar A. 04/14/2014 -->
+<!-- <script  type="text/javascript">
 function sendEmail()
 {
    var subject = document.title;
-
-   var body_message = window.location;
-      
+   var body_message = window.location;     
    var mailto_link = "mailto:?subject="+subject+"&body="+escape(body_message);
-  
    win = window.open(mailto_link,'emailWindow');
-   
-   if (win && win.open &&!win.closed) 
-   {
+   if (win && win.open &&!win.closed) {
       win.close();
    }
 }
-
-</script>
+</script>	-->
 
 <!-- Commented by Mandar A. 04/08/2014 -->
 <!--<div id="iconNav"> 
