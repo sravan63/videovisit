@@ -202,6 +202,7 @@ docroot/js/library/plugin/validation/additional-methods.min.js -text
 docroot/js/library/plugin/validation/jquery.validate.js -text
 docroot/js/library/plugin/validation/jquery.validate.min.js -text
 docroot/js/site/error/error.js -text
+docroot/js/site/global/commonScript.js -text svneol=unset#text/plain
 docroot/js/site/global/dateExtensions_loader.js -text
 docroot/js/site/global/display.js -text
 docroot/js/site/global/global.js -text
