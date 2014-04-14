@@ -204,12 +204,8 @@ docroot/js/library/plugin/validation/jquery.validate.min.js -text
 docroot/js/site/error/error.js -text
 docroot/js/site/global/commonScript.js -text svneol=unset#text/plain
 docroot/js/site/global/dateExtensions_loader.js -text
-docroot/js/site/global/display.js -text
 docroot/js/site/global/global.js -text
-docroot/js/site/global/logout.js -text
 docroot/js/site/global/plugins.js -text
-docroot/js/site/global/script.js -text
-docroot/js/site/global/utils.js -text
 docroot/js/site/guest/guest.js -text
 docroot/js/site/guestready/guestready.js -text
 docroot/js/site/guestvisit/guestvisit.js -text
