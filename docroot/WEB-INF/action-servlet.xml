@@ -298,6 +298,8 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="guestlogout" />		
 		<property name="mobileViewName" value="mPGLogoutPage"/>
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="guestlogout" />
 	</bean>
 	<bean id="guesterror" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
