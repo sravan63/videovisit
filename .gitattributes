@@ -197,8 +197,10 @@ docroot/js/deprecated/jquery-1.4.4.min.js -text
 docroot/js/deprecated/jquery-1.8.3.js -text svneol=unset#text/plain
 docroot/js/deprecated/jquery-ui-1.8.7.min.js -text
 docroot/js/deprecated/jquery-ui-1.9.2.custom.js -text svneol=unset#text/plain
+docroot/js/deprecated/jquery.address-1.2.2.min.js -text
 docroot/js/deprecated/jquery.validate.js -text
 docroot/js/deprecated/logout.js -text
+docroot/js/deprecated/mdo-jquery-v1.min.js -text
 docroot/js/deprecated/print.js -text svneol=unset#text/plain
 docroot/js/deprecated/script.js -text
 docroot/js/deprecated/utils.js -text
