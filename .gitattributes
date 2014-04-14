@@ -193,13 +193,9 @@ docroot/index.jsp -text
 docroot/js/deprecated/jquery-1.4.4.min.js -text
 docroot/js/deprecated/jquery-ui-1.8.7.min.js -text
 docroot/js/deprecated/print.js -text svneol=unset#text/plain
-docroot/js/library/jquery/jquery-1.8.3.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-1.8.3.min.js -text svneol=unset#text/plain
-docroot/js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js -text svneol=unset#text/plain
-docroot/js/library/plugin/validation/additional-methods.js -text
 docroot/js/library/plugin/validation/additional-methods.min.js -text
-docroot/js/library/plugin/validation/jquery.validate.js -text
 docroot/js/library/plugin/validation/jquery.validate.min.js -text
 docroot/js/site/error/error.js -text
 docroot/js/site/global/commonScript.js -text svneol=unset#text/plain
