@@ -173,7 +173,7 @@
 	<bean id="setup" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="setup" />
-		<property name="navigation" value="home" />
+		<property name="navigation" value="setup" />
 		<property name="subNavigation" value="setup" />
 	</bean>
 	<bean id="login" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
