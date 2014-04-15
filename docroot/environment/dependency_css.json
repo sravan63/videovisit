@@ -17,7 +17,6 @@
                 "intro" : [],
                 "login" : [],
                 "logout" : [],
-                "setup" : [],
                 "guestlogout" : []
             }
         },
@@ -170,6 +169,17 @@
             ],
             "specific" : {
                 "mdohelp" : [
+                	"css/site/mdo/styles.css",
+                	"css/site/mdo/vv_styles.css"
+                ]
+            }
+        },
+        "setup" : {
+            "global"   : [
+            	
+            ],
+            "specific" : {
+                "setup" : [
                 	"css/site/mdo/styles.css",
                 	"css/site/mdo/vv_styles.css"
                 ]
