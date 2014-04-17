@@ -496,7 +496,7 @@ public class MeetingCommand {
 	
 	public static String verifyCaregiver(HttpServletRequest request, HttpServletResponse response) 
 			throws RemoteException {
-		String json = null;
+		String json = "";
 		try {
 			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 			String meetingCode = request.getParameter("meetingCode");
@@ -506,9 +506,8 @@ public class MeetingCommand {
 			{
 				logger.info("setting care giver context true");
 				ctx.setCareGiver(ret.getSuccess());
-			}
-
-			json = ret.getResult();
+				json = ret.getResult();
+			}			
 
 		} catch (Exception e) {
 			json = JSONObject.fromObject(new SystemError()).toString();
