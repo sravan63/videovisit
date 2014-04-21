@@ -422,7 +422,9 @@ ul#iconList li#largeFont a {width:19px; margin-right:4px;background:transparent 
 #masthead img	{display:none;}
 
 
-	#masthead h1	{text-indent:-9999px;width:950px; height:76px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/static_includes/img/globalsearch/MDO-banner.png') top left no-repeat;margin:0;}
+/* 	#masthead h1	{text-indent:-9999px;width:950px; height:76px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/static_includes/img/globalsearch/MDO-banner.png') top left no-repeat;margin:0;} */
+
+	#masthead h1	{text-indent:-9999px;width:950px; height:76px;background:transparent url('../../../images/mdo/MDO-banner.png') top left no-repeat;margin:0;}
 
 	#mastheadSearch	{position:absolute;bottom:15px;right:10px;width:296px;}
 
