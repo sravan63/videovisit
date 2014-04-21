@@ -6,9 +6,6 @@
 <%@ include file="pglogoutModal.jsp" %>
 
 
-<!--  Include Google Tag Manager -->
-<%@ include file="../../common/gtmSnippet.jsp" %>
-
 <div class="header">		
 		<div class="header-title"></div>
 		<c:if test="${WebAppContext.careGiver}">
