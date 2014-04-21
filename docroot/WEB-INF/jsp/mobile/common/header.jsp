@@ -4,10 +4,6 @@
 <!--  Include modal dialog jsps -->
 
 <%@ include file="logoutModal.jsp" %>
-
-
-<!--  Include Google Tag Manager -->
-<%@ include file="../../common/gtmSnippet.jsp" %>
 				
 <div class="header">
 		<div class="header-title"></div>
