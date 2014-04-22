@@ -8,6 +8,7 @@
 	<!-- Application Template -->
 	<definition name=".mobileWebPageTemplate" template="/WEB-INF/tiles-templates/mobileLayout.jsp">
 		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
 		<put-attribute name="header" value="/WEB-INF/jsp/mobile/common/header.jsp" />
 		<put-attribute name="sidebar"  value="/WEB-INF/jsp/blank.jsp"  />
  		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
@@ -15,6 +16,7 @@
 	</definition>
 	<definition name=".mobileWebPageTemplatePG" template="/WEB-INF/tiles-templates/mobileLayout.jsp">
 		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
 		<put-attribute name="header" value="/WEB-INF/jsp/mobile/common/headerpg.jsp" />
 		<put-attribute name="sidebar"  value="/WEB-INF/jsp/blank.jsp"  />
  		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
