@@ -28,6 +28,8 @@
 
     <!--Start Body -->
 	<body onorientationchange="">
+	
+		<tiles:insertAttribute name="gtm" />
     	
     	<div id="main-window" class="main-window">
     		<!--  TODO - What is this used for ? -->
