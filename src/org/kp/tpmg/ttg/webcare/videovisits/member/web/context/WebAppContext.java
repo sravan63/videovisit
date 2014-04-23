@@ -5,22 +5,18 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionBindingEvent;
-import javax.servlet.http.HttpSessionBindingListener;
 
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.*;
 import org.apache.log4j.Logger;
 
 
-public class WebAppContext implements Serializable, HttpSessionBindingListener {
+public class WebAppContext implements Serializable {
 
 	/**
 	 * 
@@ -249,35 +245,5 @@ public class WebAppContext implements Serializable, HttpSessionBindingListener {
 	public void setVendorPlugin(VendorPluginDTO vendorPlugin) {
 		this.vendorPlugin = vendorPlugin;
 	}
-
-	@Override
-	public void valueBound(HttpSessionBindingEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void valueUnbound(HttpSessionBindingEvent arg0) {
-		// Meeting status and time should be updated during application session time out.		
-		logger.info("===> Entering WebAppContext.valueUnbound ===> user in Meeting: " + isHasJoinedMeeting());		
-		if (isHasJoinedMeeting() && getVideoVisit() != null) { //check if the user was in meeting during session time out.			
-			try {				    
-					if (getMember() == null && getMeetingCode() != null) {
-						logger.debug("===> WebAppContext.valueUnbound before calling endCaregiverMeetingSession for guest: " + getVideoVisit().getUserName());
-						String responseString = MeetingCommand.endCaregiverMeetingSession(getMeetingCode(), getVideoVisit().getUserName());
-					} 
-					else if(getMember() != null){
-						String memberName = getMember().getLastName() + ", " + getMember().getFirstName();
-						logger.debug("===> WebAppContext.valueUnbound before calling memberEndMeetingLogout for member: " + memberName);						
-						//grab data from web services
-						StringResponseWrapper ret= WebService.memberEndMeetingLogout(getMember().getMrn8Digit(), Long.parseLong(getVideoVisit().getMeetingId()), arg0.getSession().getId(), memberName, true);						
-					}
-					
-			} catch (Exception ex) {
-				logger.error("Error while setting the leave meeting in WebAppContext valueUnbound for meeting id " + getVideoVisit().getMeetingId());
-			}
-			setHasJoinedMeeting(false);			
-		}
-		logger.info("===> Exiting WebAppContext.valueUnbound ");
-	}
+	
 }
