@@ -26,13 +26,7 @@ public class IconPromoParser {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		List<iconpromo> f = parse();
-		log.info("title = " + f.get(0).getTitle());
-	}
-
+	
 	public static List<iconpromo> parse()
 	{
 		

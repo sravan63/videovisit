@@ -24,11 +24,7 @@ public class PromoParser {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-//		faq f = parse();
-	}
+	
 
 	public static List<promo> parse()
 	{

@@ -144,7 +144,7 @@ public class WebSessionFilter implements Filter
 					      try {
 					    	  logger.info("memberContext cookie found");
 					    	  cookieNotFound = false;
-					    	  value = URLDecoder.decode(memberContextCookie.getValue());
+					    	  value = URLDecoder.decode(memberContextCookie.getValue(), "UTF-8");
 					    	  logger.info("memberContext cookie value "+ value);
 					    	  String[] attrs = value.split("\\:");
 					    	  if ( attrs != null && attrs.length > 0)

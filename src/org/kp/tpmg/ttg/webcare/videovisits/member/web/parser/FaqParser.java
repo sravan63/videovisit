@@ -21,14 +21,7 @@ public class FaqParser {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-		faq f = parse();
-		log.info(" f.list title = " + f.getFaqListTitle());
-		log.info(" f.item count = " + f.getFaqItems().size());
-	}
-
+	
 	public static faq parse()
 	{
 		

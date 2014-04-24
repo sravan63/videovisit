@@ -24,15 +24,7 @@ import org.kp.tpmg.ttg.mdo.xml.videolink.VideoLinkDocument.VideoLink;
 public class VideoLinkParser {
 
 	private static final Logger log = Logger.getLogger(VideoLinkParser.class);
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
-//		faq f = parse();
-
-	}
+	
 
 	public static videolink parse()
 	{
