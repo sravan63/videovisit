@@ -11,7 +11,7 @@
         <title> <tiles:insertAttribute name="title" /> </title>
         <meta name="description" content="">
         <meta name="author" content="">
-        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
         <!--Start Favicon-->
         <link rel="shortcut icon" href="images/favicon/favicon.ico">
