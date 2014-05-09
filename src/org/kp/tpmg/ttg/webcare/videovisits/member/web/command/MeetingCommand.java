@@ -334,7 +334,7 @@ public class MeetingCommand {
 		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
-
+		logger.info("Entered MeetingCommand.updateEndMeetingLogout - received input attributes as [memberName=" + memberName + ", notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
 		try
 		{
 			// parse parameters
@@ -350,6 +350,7 @@ public class MeetingCommand {
 			
 			if (ctx != null && ctx.getMember() != null)
 			{
+				logger.debug("MeetingCommand.updateEndMeetingLogout - before calling webservice.memberEndMeetingLogout");
 				//grab data from web services
 				ret= WebService.memberEndMeetingLogout(ctx.getMember().getMrn8Digit(), meetingId, request.getSession().getId(), memberName, notifyVideoForMeetingQuit);
 				if (ret != null)
@@ -542,7 +543,7 @@ public class MeetingCommand {
 		StringResponseWrapper ret = null;		
 		try	{
 			String meetingCode = request.getParameter("meetingCode");
-			logger.info("meetingCode = " + meetingCode);
+			logger.info("Entered MeetingCommand.endCaregiverMeetingSession - meetingCode = " + meetingCode);
 			if (meetingCode != null && !meetingCode.isEmpty()) {
 				ret = WebService.endCaregiverMeetingSession(meetingCode, null, false);
 			}				
@@ -560,7 +561,7 @@ public class MeetingCommand {
 	public static String endCaregiverMeetingSession(String meetingCode, String megaMeetingNameDisplayName) throws Exception {
 		StringResponseWrapper ret = null;		
 		try	{
-			logger.info("meetingCode = " + meetingCode);
+			logger.info("Entered MeetingCommand.endCaregiverMeetingSession - meetingCode = " + meetingCode + ", megaMeetingNameDisplayName = " + megaMeetingNameDisplayName);
 			if (meetingCode != null && !meetingCode.isEmpty()) {
 				ret = WebService.endCaregiverMeetingSession(meetingCode, megaMeetingNameDisplayName, true);
 			}				
