@@ -333,16 +333,16 @@ public class WebService{
 	public static StringResponseWrapper memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID, String memberName, boolean notifyVideoForMeetingQuit)
 	throws Exception
 	{
-		logger.info("Entered memberEndMeetingLogout");
+		logger.info("Entered WebService.memberEndMeetingLogout - received input attributes as [mrn8Digit=" + mrn8Digit + ", meetingID=" + meetingID + ", sessionID=" + sessionID + ", memberName=" + memberName + ", notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
 		StringResponseWrapper toRet = null; 
 		
 		MemberEndMeetingLogout query = new MemberEndMeetingLogout();
 		try
 		{
-			if(meetingID < 0 || mrn8Digit == null || sessionID == null || memberName == null){
+			if(meetingID < 0 || mrn8Digit == null || sessionID == null){
 				toRet = new StringResponseWrapper();
 				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingID or mrn or SessionID or memberName is null");
+				toRet.setErrorMessage("meetingID or mrn or SessionID is null");
 				return toRet;
 			}
 			query.setMeetingID(meetingID);
@@ -470,11 +470,11 @@ public class WebService{
 	
 	public static StringResponseWrapper endCaregiverMeetingSession(String meetingHash, String megaMeetingNameDisplayName, boolean isParticipantDel) 
 			throws RemoteException {
-		logger.info("entered endCaregiverMeetingSession");
-		if(meetingHash == null || megaMeetingNameDisplayName == null){
+		logger.info("entered WebService.endCaregiverMeetingSession - received input attributes as [meetingHash=" + meetingHash + ", megaMeetingNameDisplayName=" + megaMeetingNameDisplayName + ", isParticipantDel=" + isParticipantDel + "]");
+		if(meetingHash == null){
 			StringResponseWrapper toRet = new StringResponseWrapper();
 			toRet.setSuccess(false);
-			toRet.setErrorMessage("meetingHash or megaMeetingNameDisplayName is null");
+			toRet.setErrorMessage("meetingHash is null");
 			return toRet;
 		}
 		EndCaregiverMeetingSession query = new EndCaregiverMeetingSession();
@@ -483,7 +483,7 @@ public class WebService{
 		query.setIsDelMeetingFromVidyo(isParticipantDel);
 		
 		EndCaregiverMeetingSessionResponse response = stub.endCaregiverMeetingSession(query);
-		logger.info("exit endCaregiverMeetingSession");
+		logger.info("exiting WebService.endCaregiverMeetingSession");
 		return response.get_return();		
 	}
 	
