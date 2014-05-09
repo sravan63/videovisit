@@ -1,11 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
-import net.sf.json.JSONObject;
-
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
-
 import javax.servlet.http.*;
 
 import org.apache.log4j.Logger;
@@ -17,14 +13,16 @@ public class QuitMeetingController extends SimplePageController {
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{	
-		StringResponseWrapper responseWrapper = null;
 		String data = null;
 		try
 		{
 			
-			data = MeetingCommand.updateEndMeetingLogout(request, response, null, false);
-			
+			String memberName = request.getParameter("memberName");
 			String refreshMeetings = request.getParameter("refreshMeetings"); 
+			
+			logger.info("Entered QuiteetingController-received request parameters as [memberName=" + memberName + ", refreshMeetings="+refreshMeetings + "]");
+			
+			data = MeetingCommand.updateEndMeetingLogout(request, response, memberName, false);			
 			
 			if (refreshMeetings != null && refreshMeetings.equals("true")) {
 				MeetingCommand.retrieveMeeting(request, response);
@@ -51,7 +49,7 @@ public class QuitMeetingController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		//put data into buffer
-		logger.info("QuiteetingController-handleRequest-data="+data);
+		logger.info("Exiting QuiteetingController-sending response as data="+data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		return (modelAndView);
