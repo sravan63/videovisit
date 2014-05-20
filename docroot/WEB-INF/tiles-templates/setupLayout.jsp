@@ -20,30 +20,109 @@
 	    <!--End Favicon-->
 	    
 	    <!--Start CSS-->
-	    <c:forEach var='item' items='${cssDependencies}'>
-	        <link rel="stylesheet" type="text/css" href="${item}" />
-	    </c:forEach>
+		    <c:forEach var='item' items='${cssDependencies}'>
+		        <link rel="stylesheet" type="text/css" href="${item}" />
+		    </c:forEach>
+		    
+			<link href="vidyoplayer/css/bootstrap.min.css" rel="stylesheet">
+		    <link href="vidyoplayer/css/elusive-webfont.css" rel="stylesheet">
+		
+		    <!--[if lte IE 7]><script src="vidyoplayer/scripts/libs/lte-ie7.js"></script><![endif]-->
+		    <!-- Custom css -->
+		    <link rel="stylesheet" href="vidyoplayer/css/vidyo-app.css">
+		
+		    <style type="text/css">       
+		        body{
+		        	background-color: #F6F6E8;
+		        }		        
+		        table td{
+		        	border-bottom: none;
+		        	padding: 0;
+		        }
+		        .button {
+		            padding: 4px 10px 3px 7px;
+		            background: none repeat scroll 0 0 #4D8993;
+		            color: #FFFFFF;
+		            font-size: 15px;
+		            font-family: Arial;     
+		        }				
+				#setupInstructions{
+					float:none;
+					margin-bottom: 0;
+				}
+		        #setupInstructions .button{
+		            font-weight: normal;
+		        }
+		        #setupInstructions a.button:hover{
+		            color: #FFFFFF;
+		            text-decoration: none;
+		        }
+		        #displayDevices{
+		            padding: 10px 35px;
+		            border: 1px solid #E9E9E9;
+		            color: #666666;
+		            font-size: 15px;
+		            /*font-family: 'Avenir Next';*/
+		        }
+		        #displayDevices h3{
+		            color: #666666;
+		            margin-bottom: 10px;
+		            font-size: 17.5px;
+		            font-weight: normal;
+		        }
+		        #displayDevices table{
+		            font-size: 15px;
+		            margin: 0;
+		        }
+		        #displayDevices table th{
+		            border: none;
+		            font-size: 15px;
+		            font-weight: bold;
+		            padding-left: 0;
+		            text-align: left;
+		        }
+		        #displayDevices table tr{
+		            border: none;
+		            font-size: 15px;
+		        }
+		        #displayDevices table td{
+		            border: none;
+		            font-size: 15px;
+		            vertical-align: middle;
+		            padding: 0;
+		        }
+		        #displayDevices .threeColumns{
+		            width: 29%;
+		            float: left;
+		            border-right: 1px solid #CCCCCC;
+		            height: auto;
+		            border-left: none;
+		            padding: 0 5px;
+		            margin: 0 5px 20px;
+		        }
+		    </style>
+	   
 	    <!--End CSS-->
 	
 		<!--Start JavaScript-->
-	    <c:forEach var='item' items='${jsDependencies}'>
-	        <script src="${item}" type="text/javascript"></script>
-	    </c:forEach>
-	    <!--End JavaScript-->
-	 
-	    <noscript>
-			<meta http-equiv="refresh" content="0; url=enablejavascript.htm"></meta>
-		</noscript>
-		
-		<script type="text/javascript">
-			var bb_mdo_sectionViewer_contentTitle =""  ; 
-			var appContextPath = "/ncal/";
-			document.documentElement.className += ' bb-mdo-loading';
-				
-			function clearText(element){		
-				element.value = "";						
-			}
-		</script>
+		    <c:forEach var='item' items='${jsDependencies}'>
+		        <script src="${item}" type="text/javascript"></script>
+		    </c:forEach>
+		 
+		    <noscript>
+				<meta http-equiv="refresh" content="0; url=enablejavascript.htm"></meta>
+			</noscript>
+			
+			<script type="text/javascript">
+				var bb_mdo_sectionViewer_contentTitle =""  ; 
+				var appContextPath = "/ncal/";
+				document.documentElement.className += ' bb-mdo-loading';
+					
+				function clearText(element){		
+					element.value = "";						
+				}
+			</script>
+		<!--End JavaScript-->
     </head>
     <!--End Head-->
 
