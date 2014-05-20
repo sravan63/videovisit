@@ -29,6 +29,7 @@
 	font-style: regular;
 	margin: 6px 0 0;
 	padding: 0;
+	line-height: 1.5em;
 }
 
 .videoVisitContainer h4{
@@ -372,7 +373,9 @@ div#iconpromo2{
 
 .videoVisitContainer #setupMainContents{
 	margin: 40px 0 0;
-	width: 100%;	
+	/*width: 100%;	*/
+	width: 725px;
+	height: auto;	
 }
 
 .videoVisitContainer #setupMainContents iframe{
@@ -406,8 +409,12 @@ div#iconpromo2{
 
 #videoVisitSetupPageContents #setupPageTitle h2{
 	font-size: 28px;
+	font-weight: normal;
 }
 
+#videoVisitSetupPageContents #setupPageTitle h3{
+	font-weight: normal;
+}
 
 /* ============		@BROWSER FIXES	======================== */
 
