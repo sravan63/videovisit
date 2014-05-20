@@ -46,6 +46,9 @@ public class VideoVisitPatientController extends SimplePageController {
 				logger.info("VidyoUrl:"+(request.getParameter("vidyoUrl")));
 				logger.info("UserName:"+(request.getParameter("attendeeName")));
 				logger.info("MeetingId:"+(request.getParameter("meetingId")));
+				logger.info("GuestName:"+(request.getParameter("guestName")));
+				logger.info("isProvider:"+(request.getParameter("isProvider")));
+				logger.info("GuestUrl:"+(request.getParameter("guestUrl")));
 				
 				if ( WebAppContext.getWebAppContext(request) != null )
 				{
@@ -53,6 +56,9 @@ public class VideoVisitPatientController extends SimplePageController {
 					videoVisitParams.setVidyoUrl(request.getParameter("vidyoUrl"));
 					videoVisitParams.setUserName(request.getParameter("attendeeName"));
 					videoVisitParams.setMeetingId(request.getParameter("meetingId"));
+					videoVisitParams.setGuestName(request.getParameter("guestName"));
+					videoVisitParams.setIsProvider(request.getParameter("isProvider"));
+					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
 					
 					MeetingWSO[] meetings = WebAppContext.getWebAppContext(request).getMeetings();
 					for(int i=0;i< meetings.length;i++){
@@ -79,6 +85,9 @@ public class VideoVisitPatientController extends SimplePageController {
 				logger.info("CaregiverId:"+(request.getParameter("caregiverId")));
 				logger.info("patientLastName:"+(request.getParameter("patientLastName")));
 				//System.out.println("guestName:"+(request.getParameter("guestName")));
+				logger.info("GuestName:"+(request.getParameter("guestName")));
+				logger.info("isProvider:"+(request.getParameter("isProvider")));
+				logger.info("guestUrl:"+(request.getParameter("guestUrl")));;
 				
 				if ( WebAppContext.getWebAppContext(request) != null )
 				{
@@ -87,8 +96,12 @@ public class VideoVisitPatientController extends SimplePageController {
 					videoVisitParams.setVidyoUrl(request.getParameter("vidyoUrl"));
 					videoVisitParams.setMeetingId(request.getParameter("meetingId"));
 					videoVisitParams.setMeetingCode(request.getParameter("meetingCode"));
+					videoVisitParams.setCaregiverId(request.getParameter("caregiverId"));
 					videoVisitParams.setPatientLastName(request.getParameter("patientLastName"));
 					videoVisitParams.setUserName(request.getParameter("guestName"));
+					videoVisitParams.setGuestName(request.getParameter("guestName"));
+					videoVisitParams.setIsProvider(request.getParameter("isProvider"));
+					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
 					
 					WebAppContext.getWebAppContext(request).setVideoVisit(videoVisitParams);
 				}
