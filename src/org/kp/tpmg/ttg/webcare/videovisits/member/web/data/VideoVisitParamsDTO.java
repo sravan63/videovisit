@@ -16,6 +16,9 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String hostLastName;
 	private String hostFirstName;
 	private String hostTitle;
+	private String guestName;
+	private String isProvider;
+	private String guestUrl;
 	
 	public String getVidyoUrl() {
 		return vidyoUrl;
@@ -72,7 +75,24 @@ public class VideoVisitParamsDTO implements Serializable {
 	public void setHostTitle(String hostTitle) {
 		this.hostTitle = hostTitle;
 	}
-	
+	public String getGuestName() {
+		return guestName;
+	}
+	public void setGuestName(String guestName) {
+		this.guestName = guestName;
+	}
+	public String getIsProvider() {
+		return isProvider;
+	}
+	public void setIsProvider(String isProvider) {
+		this.isProvider = isProvider;
+	}
+	public String getGuestUrl() {
+		return guestUrl;
+	}
+	public void setGuestUrl(String guestUrl) {
+		this.guestUrl = guestUrl;
+	}
 	@Override
 	public String toString() {
 		return "VideoVisitParamsDTO [vidyoUrl=" + vidyoUrl + ", meetingId="
@@ -80,6 +100,7 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ meetingCode + ", caregiverId=" + caregiverId
 				+ ", patientLastName=" + patientLastName + ", hostLastName="
 				+ hostLastName + ", hostFirstName=" + hostFirstName
-				+ ", hostTitle=" + hostTitle + "]";
+				+ ", hostTitle=" + hostTitle + ", guestName=" + guestName
+				+ ", isProvider=" + isProvider + ", guestUrl=" + guestUrl + "]";
 	}
 }
