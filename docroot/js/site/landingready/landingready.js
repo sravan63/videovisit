@@ -48,13 +48,11 @@ $(document).ready(function() {
 			                     }
 			            		if ( returndata.success)
 			            		{
-			            			 //  <!-- Commented by Srini  08/27 -->
 			            			hreflocation = returndata.result;
 			            			//hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-			            			hreflocation = "/vidyoplayer/player.html?guestName=" +name+ "&isProvider=false&meetingId=" +meetingId+ "&guestUrl=" +encodeURIComponent(hreflocation);
-			            			//  <!-- Commented by Srini  08/27 -->
+			            			//hreflocation = "/vidyoplayer/player.html?guestName=" +name+ "&isProvider=false&meetingId=" +meetingId+ "&guestUrl=" +encodeURIComponent(hreflocation);
 			            			
-			            			var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y"};
+			            			var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y", guestName: name, isProvider: "false", guestUrl: encodeURIComponent(hreflocation)};
 			            			
 			                  	  	//setCookie("iframedata",encodeURIComponent(hreflocation),365);
 			            			//window.location.replace("visit.htm");
