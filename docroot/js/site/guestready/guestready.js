@@ -44,10 +44,12 @@ $(document).ready(function() {
             	  	hreflocation = returndata.result;
             	 
             	  	//  hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-            	  	hreflocation = "/vidyoplayer/player.html?guestName=" + name + "&isProvider=false&meetingId=" +meetingId + "&caregiverId=" +caregiverId+ "&meetingCode=" +$.trim($("#meetingCode").val())+ "&guestUrl=" +encodeURIComponent(hreflocation);
+            	  	//	hreflocation = "/vidyoplayer/player.html?guestName=" + name + "&isProvider=false&meetingId=" +meetingId + "&caregiverId=" +caregiverId+ "&meetingCode=" +$.trim($("#meetingCode").val())+ "&guestUrl=" +encodeURIComponent(hreflocation);
             	  
+            	  	var meetingCode = $.trim($("#meetingCode").val());
             	  	var postParaVideoVisit = {vidyoUrl: hreflocation, meetingId: meetingId, meetingCode: $.trim($("#meetingCode").val()),
-            	  	        guestName: name, patientLastName: patientLastName, isMember: "N"};
+            	  	        guestName: name, patientLastName: patientLastName, isMember: "N",
+            	  	        isProvider: "false", meetingId: meetingId, caregiverId: caregiverId, meetingCode: meetingCode, guestUrl: encodeURIComponent(hreflocation)};
             	  	
 	      			$.ajax({
 	      			    type: 'POST',
