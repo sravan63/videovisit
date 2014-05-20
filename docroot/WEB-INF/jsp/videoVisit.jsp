@@ -8,6 +8,9 @@
 	<input type="hidden" id="guestUrl" value="${WebAppContext.videoVisit.guestUrl}" />
 	<input type="hidden" id="meetingId" value="${WebAppContext.videoVisit.meetingId}" />
 	
+	<input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
+	<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
+	
 	<div style="float:left">
 		<h3 class="page-title">Video Visit with ${WebAppContext.videoVisit.hostFirstName} 
 			${WebAppContext.videoVisit.hostLastName}${WebAppContext.videoVisit.hostTitle}					
