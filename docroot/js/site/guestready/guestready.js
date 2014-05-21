@@ -60,10 +60,10 @@ $(document).ready(function() {
 		      			success: function(){
 	      			    	if($.browser.mozilla){
 	      			    		window.setTimeout(function(){
-	      							window.location.href="videoVisitGuestReady.htm";
+	      							window.location.href="videoVisitReady.htm";
 	      							}, 3000);
 	          				}else{
-	          					window.location.href="videoVisitGuestReady.htm";
+	          					window.location.href="videoVisitReady.htm";
 	          				}
 	      			    },
 	      		        error: function() {
