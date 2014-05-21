@@ -69,7 +69,7 @@
         ) {
 	    var isProvider = false;
 	    var isHost = false;
-            var isMember = false;
+        var isMember = false;
 	    var role = '';
 	    var meetingId = '';
 	    var meetingCode = '';
@@ -2285,12 +2285,15 @@
                         $('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave.png)", "width":"60px"});
                         /*--- End */
                         //if ($.urlParam('meetingCode') !=null && $.urlParam('meetingCode') !='0' && $.urlParam('meetingCode').length > 0 ) {
-                        if ($("#meetingCode") !=null && $("#meetingCode") !='0' && $("#meetingCode").length > 0 ) {
-                            meetingCode = decodeURIComponent($("#meetingCode").val());
-                            caregiverId = decodeURIComponent($("#caregiverId").val());
+                        if($("#isMember").val() =="false"){
+                        	//if ($("#meetingCode") !=null && $("#meetingCode") !='0' && $("#meetingCode").length > 0 ) {
+                                meetingCode = decodeURIComponent($("#meetingCode").val());
+                                caregiverId = decodeURIComponent($("#caregiverId").val());
+                            //}
                         }
-                        else
+                        else{
                             isMember = 'true';
+                        }
 					}
 					else{
                         isHost = decodeURIComponent($("#isHost").val());
