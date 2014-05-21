@@ -59,6 +59,7 @@ public class VideoVisitPatientController extends SimplePageController {
 					videoVisitParams.setGuestName(request.getParameter("guestName"));
 					videoVisitParams.setIsProvider(request.getParameter("isProvider"));
 					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
+					videoVisitParams.setIsMember("true");
 					
 					MeetingWSO[] meetings = WebAppContext.getWebAppContext(request).getMeetings();
 					for(int i=0;i< meetings.length;i++){
@@ -102,6 +103,7 @@ public class VideoVisitPatientController extends SimplePageController {
 					videoVisitParams.setGuestName(request.getParameter("guestName"));
 					videoVisitParams.setIsProvider(request.getParameter("isProvider"));
 					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
+					videoVisitParams.setIsMember("false");
 					
 					WebAppContext.getWebAppContext(request).setVideoVisit(videoVisitParams);
 				}
