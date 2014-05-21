@@ -1,3 +1,6 @@
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>	
+	
 	<!--Plugin Hidden variables -->
 	<input type="hidden" id="pluginName" value="${WebAppContext.vendorPlugin.vendorPluginName}" />
 	<input type="hidden" id="pluginNewVersion" value="${WebAppContext.vendorPlugin.vendorNewPlugin}" /> 
@@ -10,15 +13,19 @@
 	
 	<input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
 	<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
+	<input type="hidden" id="isMember" value="${WebAppContext.videoVisit.isMember}" />
 	
 	<div style="float:left">
-		<h3 class="page-title">Video Visit with ${WebAppContext.videoVisit.hostFirstName} 
-			${WebAppContext.videoVisit.hostLastName}${WebAppContext.videoVisit.hostTitle}					
-		</h3>
-		
-		<h3 class="page-title">Video Visit for ${WebAppContext.meetings[0].member.firstName} 
-			${WebAppContext.meetings[0].member.lastName}
-		</h3>
+		<c:if test="${WebAppContext.videoVisit.isMember == 'true'}">
+			<h3 id="patientTitle" class="page-title">Video Visit with ${WebAppContext.videoVisit.hostFirstName} 
+				${WebAppContext.videoVisit.hostLastName}${WebAppContext.videoVisit.hostTitle}					
+			</h3>
+		</c:if>
+		<c:if test="${WebAppContext.videoVisit.isMember == 'false'}">
+			<h3 id="patientGuestTitle" class="page-title">Video Visit for ${WebAppContext.meetings[0].member.firstName} 
+				${WebAppContext.meetings[0].member.lastName}
+			</h3>
+		</c:if>	
 	</div>
 		
 
