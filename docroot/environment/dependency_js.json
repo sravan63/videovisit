@@ -133,7 +133,8 @@
 			"global"   : [],
             "specific" : {
                 "videoVisit" : [
-                	"js/site/visit/visit.js"
+                	"js/site/visit/visit.js",
+                	"js/site/guestvisit/guestvisit.js"
                 ]
             }
 		},
