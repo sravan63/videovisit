@@ -37,7 +37,7 @@
 		</ul>
 	</div>
                                 
-     <div id="video-main" style="width:100%">
+     <div id="video-main" style="width:100%; clear:both;">
       <%--   <iframe id="joinNowIframe" src ="${WebAppContext.videoVisit.vidyoUrl}" scrolling="no" width="100%">
              <p>Your browser does not support iframes.</p>
          </iframe>	 --%>
