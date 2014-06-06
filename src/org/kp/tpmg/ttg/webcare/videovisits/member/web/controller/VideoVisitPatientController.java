@@ -1,10 +1,11 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
@@ -41,18 +42,33 @@ public class VideoVisitPatientController extends SimplePageController {
 		try
 		{
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			if("Y".equalsIgnoreCase(request.getParameter("isMember"))){
-				logger.info("Member:" +request.getParameterMap());
-				logger.info("VidyoUrl:"+(request.getParameter("vidyoUrl")));
-				logger.info("UserName:"+(request.getParameter("attendeeName")));
-				logger.info("MeetingId:"+(request.getParameter("meetingId")));
-				logger.info("GuestName:"+(request.getParameter("guestName")));
-				logger.info("isProvider:"+(request.getParameter("isProvider")));
-				logger.info("GuestUrl:"+(request.getParameter("guestUrl")));
+			if(ctx != null){
+				VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();			
+				MeetingWSO[] meetings = ctx.getMeetings();
+				for(int i=0;i< meetings.length;i++){
+					MeetingWSO meeting = meetings[i];
+					if(meeting != null && meeting.getMeetingId() == Long.parseLong(request.getParameter("meetingId"))){
+						videoVisitParams.setHostFirstName(meeting.getProviderHost().getFirstName());
+						videoVisitParams.setHostLastName(meeting.getProviderHost().getLastName());
+						if(meeting.getProviderHost().getTitle() != null && meeting.getProviderHost().getTitle().length() > 0){
+							videoVisitParams.setHostTitle(", " + meeting.getProviderHost().getTitle());
+						}else{
+							videoVisitParams.setHostTitle("");
+						}	
+						videoVisitParams.setPatientFirstName(meeting.getMember().getFirstName());
+						videoVisitParams.setPatientLastName(meeting.getMember().getLastName());
+						videoVisitParams.setParticipants(meeting.getParticipants());
+						videoVisitParams.setCaregivers(meeting.getCaregivers());
+						Calendar cal = Calendar.getInstance();
+						cal.setTimeInMillis(meeting.getScheduledTimestamp());
+						SimpleDateFormat sfdate = new SimpleDateFormat("MM-dd-yyyy hh:mm a");
+						//Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below 
+						//SimpleDateFormat sfdate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");	
+						videoVisitParams.setMeetingTime(sfdate.format(cal.getTime()));														
+					}						
+				}
 				
-				if ( WebAppContext.getWebAppContext(request) != null )
-				{
-					VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
+				if("Y".equalsIgnoreCase(request.getParameter("isMember"))){						
 					videoVisitParams.setVidyoUrl(request.getParameter("vidyoUrl"));
 					videoVisitParams.setUserName(request.getParameter("attendeeName"));
 					videoVisitParams.setMeetingId(request.getParameter("meetingId"));
@@ -61,55 +77,25 @@ public class VideoVisitPatientController extends SimplePageController {
 					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
 					videoVisitParams.setIsMember("true");
 					
-					MeetingWSO[] meetings = WebAppContext.getWebAppContext(request).getMeetings();
-					for(int i=0;i< meetings.length;i++){
-						MeetingWSO meeting = meetings[i];
-						if(meeting.getMeetingId() == Long.parseLong(request.getParameter("meetingId"))){
-							videoVisitParams.setHostFirstName(meeting.getProviderHost().getFirstName());
-							videoVisitParams.setHostLastName(meeting.getProviderHost().getLastName());
-							if(meeting.getProviderHost().getTitle() != null && meeting.getProviderHost().getTitle().length() > 0){
-								videoVisitParams.setHostTitle(", " + meeting.getProviderHost().getTitle());
-							}else{
-								videoVisitParams.setHostTitle("");
-							}							
-						}						
-					}
-					
-					WebAppContext.getWebAppContext(request).setVideoVisit(videoVisitParams);
+					ctx.setVideoVisit(videoVisitParams);					
 				}
-			}
-			else{
-				logger.info("Guest:" +request.getParameterMap());
-				logger.info("vidyoUrl:"+(request.getParameter("vidyoUrl")));
-				logger.info("meetingId:"+(request.getParameter("meetingId")));
-				logger.info("meetingCode:"+(request.getParameter("meetingCode")));
-				logger.info("CaregiverId:"+(request.getParameter("caregiverId")));
-				logger.info("patientLastName:"+(request.getParameter("patientLastName")));
-				//System.out.println("guestName:"+(request.getParameter("guestName")));
-				logger.info("GuestName:"+(request.getParameter("guestName")));
-				logger.info("isProvider:"+(request.getParameter("isProvider")));
-				logger.info("guestUrl:"+(request.getParameter("guestUrl")));;
-				
-				if ( WebAppContext.getWebAppContext(request) != null )
-				{
-					
-					VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
+				else{					
 					videoVisitParams.setVidyoUrl(request.getParameter("vidyoUrl"));
 					videoVisitParams.setMeetingId(request.getParameter("meetingId"));
 					videoVisitParams.setMeetingCode(request.getParameter("meetingCode"));
-					videoVisitParams.setCaregiverId(request.getParameter("caregiverId"));
-					videoVisitParams.setPatientLastName(request.getParameter("patientLastName"));
+					videoVisitParams.setCaregiverId(request.getParameter("caregiverId"));					
 					videoVisitParams.setUserName(request.getParameter("guestName"));
 					videoVisitParams.setGuestName(request.getParameter("guestName"));
 					videoVisitParams.setIsProvider(request.getParameter("isProvider"));
 					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
 					videoVisitParams.setIsMember("false");
 					
-					WebAppContext.getWebAppContext(request).setVideoVisit(videoVisitParams);
+					ctx.setVideoVisit(videoVisitParams);					
 				}
+				logger.info("VideoVisitPatientController -> Video Visit data:" + videoVisitParams.toString());				
 			}
 			
-			//Set Plugin Data to Context - uncomment this once IE activex issues is resolved for plugin upgrade
+			//Set Plugin Data to Context - uncomment this once IE activex issues is resolved for plugin upgrade - IE11 onwards
 			/**if(ctx != null && ctx.getVendorPlugin() == null){
 				String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
 				logger.info("VideoVisitPatientController: Plugin data in context has been set: " + pluginJSON);
