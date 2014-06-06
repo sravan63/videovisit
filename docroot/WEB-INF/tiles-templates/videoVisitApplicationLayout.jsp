@@ -50,12 +50,16 @@
 		 			background-position: 0 0;
 				}
 		        .btn-group{
-		            height: 40px;
+		            /* height: 40px;	*/
+		            height: auto;
 		        }
 				.btn-group .btn-large{
-		            margin-top: 3px;
+		            /*margin-top: 3px;
 		            width: 65px;
-		            height: 33px;
+		            height: 33px;*/
+		            padding-top: 3px;
+		            width: 80px;
+		            height: 60px;
 		            padding: 0px;
 		            border: 0;
 		            border-radius: 0px !important;
@@ -74,6 +78,8 @@
 		        }
 		
 		        .btn-leave-meeting{
+		        	background-image: url("vidyoplayer/img/button_leave_return.png");
+		            width: 130px;
 		            border-right: 1px solid grey;
 		        }
 		        .btn-end-meeting{
@@ -83,40 +89,52 @@
 		        }
 		
 		        .btn-local-share{
-		            background-image: url("vidyoplayer/img/screenshare.png");
-		            background-position: 5px;
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -125px;
+		        }
+		        .btn-hideDetails{
+		        	background-image: url("vidyoplayer/img/sprite.png");
+		        	background-position: 0 8px;
 		        }
 		        .btn-config{
-		            background-image: url("vidyoplayer/img/settings.png");
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -67px;
 		        }
 		
 		        .btn-tmv-success{
-		            background-image: url("vidyoplayer/img/video_on_off.png");
-		            width: 60px;
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -400px;
+		            /*width: 60px;	*/
 		        }
 		        .btn-tmv-failure{
-		            background-image: url("vidyoplayer/img/video_on_off.png");
-		            background-position: 0 -30px;
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -455px;
 		        }
 		
 		        .btn-tms-success{
-		            background-image: url("vidyoplayer/img/speaker_on_off.png");
-		            width: 60px;
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -290px;
+		            /*width: 60px;	*/
 		        }
 		        .btn-tms-failure{
-		            background-image: url("vidyoplayer/img/speaker_on_off.png");
-		            background-position: 0 -30px;
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -345px;
 		        }
 		
 		        .btn-tmm-success{
-		            background-image: url("vidyoplayer/img/mic_on_off.png");
-		            width: 60px;
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -180px;
+		            /*width: 60px;	*/
 		        }
 		        .btn-tmm-failure{
-		            background-image: url("vidyoplayer/img/mic_on_off.png");
-		            background-position: 0 -30px;
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -235px;
 		        }
-		
+				.btn-tmc{
+		            background-image: url("vidyoplayer/img/sprite.png");
+		            background-position: 5px -510px;
+		            border-bottom: 
+		        }
 		        #inCallContainer{
 		            margin: 0;
 		            padding: 0px !important;
@@ -127,7 +145,7 @@
 		        #inCallPluginAndControlsWrap{
 		            width: auto !important;
 		            margin: 0;
-		            float: left;
+		            /*float: left;*/
 		        }
 		        #pluginWrap{
 		            /*float: left;*/
@@ -158,6 +176,10 @@
 					font-size: 15px;
 					font-family: Arial;
 					font-weight: normal;
+			    }
+			    #patientTitle{
+			    	font-family: Avenir Next;
+			    	color: #888888;
 			    }
 			</style>
         <!--End CSS-->
