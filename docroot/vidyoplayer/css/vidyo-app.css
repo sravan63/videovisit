@@ -31,11 +31,18 @@
 }
 
 #pluginContainer {
-    width: 100%;
+    /*     width: 100%; */
     min-width: 800px;
     margin: 0;
     padding: 0;
     min-height: 1px;
+}
+#btnContainer{
+    display: inline-block;
+    width: 80px;
+    height: 568px;
+    background-color: #3F3D3D;
+    overflow: auto;
 }
 
 #pluginContainer.fullscreen {
@@ -50,7 +57,7 @@
     margin: 0px;
     margin-top: 10px;
     padding: 0px;
-    min-width: 1122px;
+    min-width: 200px;
     width: 1122px;
     margin-left: auto;
     margin-right: auto;
@@ -118,9 +125,9 @@
 
 #inCallPluginAndControlsWrap {
     vertical-align: top;
-    float: right;
+    /*float: right;
+    min-width: 800px;*/
     width: 800px;
-    min-width: 800px;
     margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
