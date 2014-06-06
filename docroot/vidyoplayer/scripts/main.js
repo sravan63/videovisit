@@ -2282,7 +2282,7 @@
 						self.cache.$inCallButtonEndMeeting.hide();
 						/* Added by Mandar A. on 12/03/2013 to address US3550
 	                     START	*/
-                        $('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave.png)", "width":"60px"});
+                        //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave.png)", "width":"60px"});
                         /*--- End */
                         //if ($.urlParam('meetingCode') !=null && $.urlParam('meetingCode') !='0' && $.urlParam('meetingCode').length > 0 ) {
                         if($("#isMember").val() =="false"){
@@ -2303,7 +2303,7 @@
                         VideoVisit.meetingExpire(isHost, role, meetingId);
                         /* Added by Mandar A. on 12/03/2013 to address US3550
                         START	*/
-                        $('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave_return.png)", "width":"130px"});
+                        //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave_return.png)", "width":"130px"});
                         /*--- End */
 						if (isHost == 'false' && (role != null && role !='ma')) {
 							self.cache.$inCallButtonEndMeeting.hide();
@@ -4220,10 +4220,10 @@
 		                    self.cache.$inCallPluginAndControls.css("width", self.config.pluginWidth);
 		                   //self.cache.$inCallPluginAndControls.css("width", self.config.pluginWidth + self.cache.$inCallButtonPanel.outerWidth(true));
 		                            
-		                   //self.cache.$pluginAndChatContainer.css("width", self.config.pluginWidth);
-		                    //self.cache.$pluginAndChatContainer.css("height", self.config.pluginHeight);
-		                    self.cache.$pluginContainer.css("width", wWidth);
-		                    self.cache.$pluginContainer.css("height", wHeight*0.93);
+		                   self.cache.$pluginAndChatContainer.css("width", self.config.pluginWidth);
+		                   self.cache.$pluginAndChatContainer.css("height", self.config.pluginHeight);
+		                    //self.cache.$pluginContainer.css("width", auto);
+		                    //self.cache.$pluginContainer.css("height", wHeight*0.93);
 		                    
 		                }
 		
@@ -6585,8 +6585,8 @@
 				$(window).resize(function(){
 					var width = $(window).width();
 					var height = $(window).height() *0.90;
-					$("#pluginContainer").width(width);
-					$("#pluginContainer").height(height);
+				//	$("#pluginContainer").width(width);
+				//	$("#pluginContainer").height(height);
 				});
 			} catch (e) {
 		                    requirejs.onError({
