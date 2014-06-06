@@ -1,6 +1,10 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.data;
 
 import java.io.Serializable;
+import java.util.Arrays;
+
+import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 
 public class VideoVisitParamsDTO implements Serializable {
 	/**
@@ -13,6 +17,7 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String meetingCode;
 	private String caregiverId;
 	private String patientLastName;
+	private String patientFirstName;	
 	private String hostLastName;
 	private String hostFirstName;
 	private String hostTitle;
@@ -20,6 +25,9 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String isProvider;
 	private String guestUrl;
 	private String isMember;
+	private String meetingTime;
+	private ProviderWSO[] participants;
+	private CaregiverWSO[] caregivers;
 	
 	public String getVidyoUrl() {
 		return vidyoUrl;
@@ -58,6 +66,18 @@ public class VideoVisitParamsDTO implements Serializable {
 		this.patientLastName = patientLastName;
 	}
 
+	/**
+	 * @return the patientFirstName
+	 */
+	public String getPatientFirstName() {
+		return patientFirstName;
+	}
+	/**
+	 * @param patientFirstName the patientFirstName to set
+	 */
+	public void setPatientFirstName(String patientFirstName) {
+		this.patientFirstName = patientFirstName;
+	}
 	public String getHostLastName() {
 		return hostLastName;
 	}
@@ -99,17 +119,60 @@ public class VideoVisitParamsDTO implements Serializable {
 	}
 	public void setIsMember(String isMember) {
 		this.isMember = isMember;
+	}	
+	/**
+	 * @return the participants
+	 */
+	public ProviderWSO[] getParticipants() {
+		return participants;
 	}
-	
+	/**
+	 * @param participants the participants to set
+	 */
+	public void setParticipants(ProviderWSO[] participants) {
+		this.participants = participants;
+	}
+	/**
+	 * @return the caregivers
+	 */
+	public CaregiverWSO[] getCaregivers() {
+		return caregivers;
+	}
+	/**
+	 * @param caregivers the caregivers to set
+	 */
+	public void setCaregivers(CaregiverWSO[] caregivers) {
+		this.caregivers = caregivers;
+	}
+	/**
+	 * @return the meetingTime
+	 */
+	public String getMeetingTime() {
+		return meetingTime;
+	}
+	/**
+	 * @param meetingTime the meetingTime to set
+	 */
+	public void setMeetingTime(String meetingTime) {
+		this.meetingTime = meetingTime;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return "VideoVisitParamsDTO [vidyoUrl=" + vidyoUrl + ", meetingId="
 				+ meetingId + ", userName=" + userName + ", meetingCode="
 				+ meetingCode + ", caregiverId=" + caregiverId
-				+ ", patientLastName=" + patientLastName + ", hostLastName="
+				+ ", patientLastName=" + patientLastName
+				+ ", patientFirstName=" + patientFirstName + ", hostLastName="
 				+ hostLastName + ", hostFirstName=" + hostFirstName
 				+ ", hostTitle=" + hostTitle + ", guestName=" + guestName
 				+ ", isProvider=" + isProvider + ", guestUrl=" + guestUrl
-				+ ", isMember=" + isMember + "]";
+				+ ", isMember=" + isMember + ", meetingTime=" + meetingTime
+				+ ", participants=" + Arrays.toString(participants)
+				+ ", caregivers=" + Arrays.toString(caregivers) + "]";
 	}
+	
+	
 }
