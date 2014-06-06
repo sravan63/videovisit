@@ -180,6 +180,7 @@
 			    #patientTitle{
 			    	font-family: Avenir Next;
 			    	color: #888888;
+			    	margin: 10px 0;
 			    }
 			</style>
         <!--End CSS-->
