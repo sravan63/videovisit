@@ -510,23 +510,23 @@
 		<div id="video-info">
 			<h3 style="color:#555555; font-size:22px;"> Visit Details </h3>
 			<dl>
-			    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime" style="word-wrap: break-word;">${WebAppContext.videoVisit.meetingTime}</dd>
+			    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime" style="word-wrap:break-word; margin:0;">${WebAppContext.videoVisit.meetingTime}</dd>
 			</dl>
 			<dl>
-				<dt>PATIENT</dt><dd id="meetingPatient" style="word-wrap: break-word;">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
+				<dt>PATIENT</dt><dd id="meetingPatient" style="word-wrap:break-word; margin:0;">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
 			</dl>
 			<dl>
-				<dt>HOST CLINICIAN</dt><dd id="meetingHost" style="word-wrap: break-word;"> 
+				<dt>HOST CLINICIAN</dt><dd id="meetingHost" style="word-wrap:break-word; margin:0;"> 
 				${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
 			</dl>
 			<dl id="meetingParticipantContainer">
 				<c:if test="${not empty WebAppContext.videoVisit.participants}">
 					<dt>ADD'L CLINICIAN(S)</dt>
-					<dd id="meetingParticipant" style="word-wrap: break-word;">
+					<dd id="meetingParticipant" style="word-wrap:break-word; margin:0;">
 						<table>	    
 						   <c:forEach items="${WebAppContext.videoVisit.participants}" var="ProviderWSO">        
 					        <tr>
-					            <td>${ProviderWSO.lastName}, ${ProviderWSO.firstName} ${ProviderWSO.title}</td>            
+					            <td style="padding-bottom:10px;">${ProviderWSO.lastName}, ${ProviderWSO.firstName} ${ProviderWSO.title}</td>            
 					        </tr>
 					       </c:forEach>
 					    </table>
@@ -536,11 +536,11 @@
 			
 			<dl id="meetingPatientGuestContainer">
 			 <c:if test="${not empty WebAppContext.videoVisit.caregivers}">
-				<dt>PATIENT GUEST(S)</dt><dd id="meetingPatientGuest" style="word-wrap: break-word;">
+				<dt>PATIENT GUEST(S)</dt><dd id="meetingPatientGuest" style="word-wrap:break-word; margin:0;">
 				   <table>	 
 						<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
 				        <tr>
-				            <td>${CaregiverWSO.lastName}, ${CaregiverWSO.firstName}</td>            
+				            <td style="padding-bottom:10px;">${CaregiverWSO.lastName}, ${CaregiverWSO.firstName}</td>            
 				        </tr>
 				       </c:forEach>       
 			       </table>
