@@ -263,7 +263,7 @@ input								{outline:none;}
 #copyright						{}
 
 /* Video Visit */
-#video-sidebar					{/*float:right;display:block;*/display:inline-block;width:150px;height:515px;font-family:Avenir Next; color:#666666;}
+#video-sidebar					{float:right;/*display:block;*/display:inline-block;width:150px;height:515px;font-family:Avenir Next; color:#666666;}
 #video-info						{/*border:1px solid;*/padding:8px;display:block;/*height:480px;*/margin:0 0 5px;}
 #video-info dl					{margin:0 0 15px;}
 #video-info dt					{font-weight:bold;}
