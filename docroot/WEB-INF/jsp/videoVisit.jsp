@@ -1,3 +1,5 @@
+	<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO" %>
+	<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO" %>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>	
 	
@@ -13,21 +15,7 @@
 	
 	<input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
 	<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
-	<input type="hidden" id="isMember" value="${WebAppContext.videoVisit.isMember}" />
-	
-<!-- 	<div style="float:left"> -->
-<%-- 		<c:if test="${WebAppContext.videoVisit.isMember == 'true'}"> --%>
-<%-- 			<h3 id="patientTitle" class="page-title">Video Visit with ${WebAppContext.videoVisit.hostFirstName}  --%>
-<%-- 				${WebAppContext.videoVisit.hostLastName}${WebAppContext.videoVisit.hostTitle}					 --%>
-<!-- 			</h3> -->
-<%-- 		</c:if> --%>
-<%-- 		<c:if test="${WebAppContext.videoVisit.isMember == 'false'}"> --%>
-<%-- 			<h3 id="patientGuestTitle" class="page-title">Video Visit for ${WebAppContext.meetings[0].member.firstName}  --%>
-<%-- 				${WebAppContext.meetings[0].member.lastName} --%>
-<!-- 			</h3> -->
-<%-- 		</c:if> --%>
-<!-- 	</div> -->
-		
+	<input type="hidden" id="isMember" value="${WebAppContext.videoVisit.isMember}" />	
 
 <!-- 	<div id="nav-user"> -->
 <!-- 		<ul> -->
@@ -38,17 +26,14 @@
 	
 <div id="abc" style="overflow:hidden; border-top: 10px solid #A2A0A0;">
 	<ul style="float:left; list-style:none; margin-left:0; margin-bottom:0; height:auto;">
-		<li>
-			<c:if test="${WebAppContext.videoVisit.isMember == 'true'}">
-				<h3 id="patientTitle" class="page-title" style="line-height:1em;">Video Visit | ${WebAppContext.videoVisit.hostFirstName} 
-					${WebAppContext.videoVisit.hostLastName}${WebAppContext.videoVisit.hostTitle}					
-				</h3>
-			</c:if>
-			<c:if test="${WebAppContext.videoVisit.isMember == 'false'}">
-				<h3 id="patientGuestTitle" class="page-title" style="line-height:1em;">Video Visit | ${WebAppContext.meetings[0].member.firstName} 
+		<li>		
+				<h3 id="patientTitle" class="page-title" style="line-height:1em;">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
+			
+			<!--<c:if test="${WebAppContext.videoVisit.isMember == 'false'}">
+				<h3 id="patientGuestTitle" class="page-title" style="line-height:1em;">Video Visits | ${WebAppContext.meetings[0].member.firstName} 
 					${WebAppContext.meetings[0].member.lastName}
 				</h3>
-			</c:if>
+			</c:if>-->
 		</li>
 	</ul>
 
@@ -547,20 +532,38 @@
 		<div id="video-info">
 			<h3 style="color:#555555; font-size:22px;"> Visit Details </h3>
 			<dl>
-			    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime" style="word-wrap: break-word;">Current Date and Time</dd>
+			    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime" style="word-wrap: break-word;">${WebAppContext.videoVisit.meetingTime}</dd>
 			</dl>
 			<dl>
-				<dt>PATIENT</dt><dd id="meetingPatient" style="word-wrap: break-word;">Patient Name</dd>
+				<dt>PATIENT</dt><dd id="meetingPatient" style="word-wrap: break-word;">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
 			</dl>
 			<dl>
-				<dt>HOST CLINICIAN</dt><dd id="meetingHost" style="word-wrap: break-word;">Host Clinician Name</dd>
+				<dt>HOST CLINICIAN</dt><dd id="meetingHost" style="word-wrap: break-word;"> 
+				${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
 			</dl>
 			<dl id="meetingParticipantContainer">
-				<dt>ADD'L CLINICIAN(S)</dt><dd id="meetingParticipant" style="word-wrap: break-word;">Additional Clinian Name</dd>
+				<dt>ADD'L CLINICIAN(S)</dt>
+				<dd id="meetingParticipant" style="word-wrap: break-word;">
+					<table>	    
+					   <c:forEach items="${WebAppContext.videoVisit.participants}" var="ProviderWSO">        
+				        <tr>
+				            <td>${ProviderWSO.lastName}, ${ProviderWSO.firstName} ${ProviderWSO.title}</td>            
+				        </tr>
+				       </c:forEach>
+				    </table>
+				</dd>
 			</dl>
 			
 			<dl id="meetingPatientGuestContainer">
-				<dt>PATIENT GUEST(S)</dt><dd id="meetingPatientGuest" style="word-wrap: break-word;">Patient Guest Name</dd>
+				<dt>PATIENT GUEST(S)</dt><dd id="meetingPatientGuest" style="word-wrap: break-word;">
+				   <table>	 
+						<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
+				        <tr>
+				            <td>${CaregiverWSO.lastName}, ${CaregiverWSO.firstName}</td>            
+				        </tr>
+				       </c:forEach>       
+			       </table>
+				</dd>
 			</dl>
 			<!--<dl id="meetingNoteContainer">
 				<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
