@@ -7,7 +7,7 @@ $(document).ready(function() {
 	//$('#joinNowIframe').css({"height": finalHeight*0.90});
 	//$('#joinNowIframeGuest').css({"height": finalHeight*0.90});
 
-	var calculatedWidth = finalWidth - 210;
+	var calculatedWidth = finalWidth - 200;
 	console.log("calculatedWidth: "+calculatedWidth);
 	var calculatedHeight = finalHeight;
 	console.log("calculatedHeight: "+calculatedHeight);
