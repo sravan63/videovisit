@@ -1,23 +1,20 @@
 $(document).ready(function() {
 
-	var finalWidth = $(window).width();
-	console.log("finalWidth: " +finalWidth);
-	var finalHeight = $(window).height();
-	console.log("finalHeight: " +finalHeight);
-	//$('#joinNowIframe').css({"height": finalHeight*0.90});
-	//$('#joinNowIframeGuest').css({"height": finalHeight*0.90});
-
-	var calculatedWidth = finalWidth - 200;
-	console.log("calculatedWidth: "+calculatedWidth);
-	var calculatedHeight = finalHeight;
-	console.log("calculatedHeight: "+calculatedHeight);
-
+	var windowHeight = $(window).height();
+	var windowWidth = $(window).width();
+	
+	var vvHeaderHeight = $("#vvHeader").outerHeight();
+	var videoSidebarWidth = $("#video-sidebar").outerWidth();
+	var calculatedHeight = windowHeight - vvHeaderHeight;
+	var calculatedWidth = windowWidth - videoSidebarWidth;
+	
 	$("#video-main").width(calculatedWidth);
 	$("#video-main").height(calculatedHeight);
 	$("#video-sidebar").height(calculatedHeight);
 
-	var calculatedWidthPluginContainer = calculatedWidth-80;
-	console.log("calculatedWidthPluginContainer: " +calculatedWidthPluginContainer);
+	var btnContainerWidth = $("#btnContainer").outerWidth();
+	var calculatedWidthPluginContainer = calculatedWidth - btnContainerWidth;
+
 	$("#pluginContainer").width(calculatedWidthPluginContainer);
 	$("#pluginContainer").height(calculatedHeight);
 	$("#btnContainer").height(calculatedHeight);
