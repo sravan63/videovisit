@@ -20,26 +20,18 @@
 <div id="vvHeader" style="overflow:hidden; border-top: 10px solid #A2A0A0;">
 	<ul style="float:left; list-style:none; margin-left:0; margin-bottom:0; height:auto;">
 		<li>		
-				<h3 id="patientTitle" class="page-title" style="line-height:1em;">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
-			
+			<h3 id="patientTitle" class="page-title" style="line-height:1em;">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
 		</li>
 	</ul>
-
-	<ul class="btn-group" style="float:right; list-style:none; font-size:100%; margin:4px 0;">
+	<ul id="leaveEndBtnContainer" class="btn-group" style="display:none; float:right; list-style:none; font-size:100%; margin:4px 0;">
         <li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Leave Meeting" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;">
         <li class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;">
         <li class="last" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
-    </ul>	
-
+    </ul>
 </div>
 
 <div id="container-video">
-	
 	<div id="video-main" style="clear:both; float:left;">
-  <%--   <iframe id="joinNowIframe" src ="${WebAppContext.videoVisit.vidyoUrl}" scrolling="no" width="100%">
-         <p>Your browser does not support iframes.</p>
-     </iframe>	 --%>
-
 	    <div id="withjs" class="hide">
 	        <!-- Splash screen -->
 	        <div class="splash" id="splash">
