@@ -38,7 +38,7 @@
     min-height: 1px;
 }
 #btnContainer{
-    display: none;
+    display: inline-block;
     width: 80px;
     height: 568px;
     background-color: #3F3D3D;
