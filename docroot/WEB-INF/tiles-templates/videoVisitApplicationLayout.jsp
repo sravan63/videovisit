@@ -154,12 +154,18 @@
 		            /*float: left;*/
 		        }
 		        #configurationWrap{
-		            width: 150px;
+		            /*width: 150px;*/
+		            width: 160px;
+		        }
+		        #inCallLocalShareList{
+		        	width: 198px;
+		        	margin-top:0;
 		        }
 		        #configurationWrap, #inCallLocalShareList{
 		            position: absolute;
 		            right: 0;
 		            left: auto;
+		            top: 87px;
 		        }
 				#infoWrapper, #errorWrapper{
 					background-color: #FFFFFF;
