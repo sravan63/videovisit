@@ -1882,9 +1882,9 @@
                      START	*/
                     if ($('#pluginContainer').css('visibility')=='hidden'){
                         $('#pluginContainer').css('visibility', 'visible');
-                    } else {
+                    } /*else {
                         $('#pluginContainer').css('visibility', 'hidden');
-                    }
+                    }*/
                     /*--- End */
 
                     self.cache.$configurationContainer.slideToggle();
@@ -2552,13 +2552,13 @@
                     }else{
                     	if (self.cache.$configurationContainer.is(":visible")) {
                             self.cache.$configurationContainer.slideUp();
-                            $('#pluginContainer').css('visibility', 'hidden');
+                            //$('#pluginContainer').css('visibility', 'hidden');
                         }else{
 	                    	if ($('#pluginContainer').css('visibility')=='hidden'){
 	                            $('#pluginContainer').css('visibility', 'visible');
-		                    } else {
+		                    } /*else {
 		                        $('#pluginContainer').css('visibility', 'hidden');
-		                    }
+		                    }*/
                         }
                         //alert(self.kphcShare);
                         self.smd = true;
