@@ -51,7 +51,7 @@ public class VideoVisitPatientController extends SimplePageController {
 						videoVisitParams.setHostFirstName(meeting.getProviderHost().getFirstName());
 						videoVisitParams.setHostLastName(meeting.getProviderHost().getLastName());
 						if(meeting.getProviderHost().getTitle() != null && meeting.getProviderHost().getTitle().length() > 0){
-							videoVisitParams.setHostTitle(", " + meeting.getProviderHost().getTitle());
+							videoVisitParams.setHostTitle(meeting.getProviderHost().getTitle());
 						}else{
 							videoVisitParams.setHostTitle("");
 						}	
@@ -61,10 +61,12 @@ public class VideoVisitPatientController extends SimplePageController {
 						videoVisitParams.setCaregivers(meeting.getCaregivers());
 						Calendar cal = Calendar.getInstance();
 						cal.setTimeInMillis(meeting.getScheduledTimestamp());
-						SimpleDateFormat sfdate = new SimpleDateFormat("MM-dd-yyyy hh:mm a");
+						SimpleDateFormat sfdate = new SimpleDateFormat("MM-dd-yyyy");
+						SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
 						//Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below 
 						//SimpleDateFormat sfdate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");	
-						videoVisitParams.setMeetingTime(sfdate.format(cal.getTime()));														
+						videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
+						videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));							
 					}						
 				}
 				
