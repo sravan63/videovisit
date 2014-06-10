@@ -510,7 +510,7 @@
 		<div id="video-info">
 			<h3 style="color:#555555; font-size:22px;"> Visit Details </h3>
 			<dl>
-			    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime" style="word-wrap:break-word; margin:0;">${WebAppContext.videoVisit.meetingTime}</dd>
+			    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime" style="word-wrap:break-word; margin:0;">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
 			</dl>
 			<dl>
 				<dt>PATIENT</dt><dd id="meetingPatient" style="word-wrap:break-word; margin:0;">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
