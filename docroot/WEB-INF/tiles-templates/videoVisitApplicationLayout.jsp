@@ -178,7 +178,7 @@
 					font-weight: normal;
 			    }
 			    #patientTitle{
-			    	font-family: Avenir Next;
+			    	font-family: Avenir Next, sans-serif;
 			    	color: #888888;
 			    	margin: 10px 0;
 			    }
