@@ -258,7 +258,7 @@
 						<br/>
            			</div>
 
-					<div id="btnContainer" style="">
+					<div id="btnContainer" style="position:static;">
 
 		                <!-- Added by Mandar A.  on 12/03/2013 to address US3549
 		                 START -->
@@ -268,7 +268,7 @@
 	                        <a class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;"></a>
 	                    </div>	-->
 
-	                    <div class="btn-group" style="width:100%;">
+	                    <div class="btn-group" style="width:100%; position:inherit;">
 	                    	<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
 	                    		<a class="btn btn-large btn-hideDetails" href="#" title="Hide Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;"></a>
 	                    	</span>
