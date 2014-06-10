@@ -762,7 +762,7 @@
                     /* Added by Ranjeet on 12/16/2013 to make the buttons visible only after user is connected
                     Start ---*/
                     console.log("application::OutEventConferenceActive() before making buttons visible and plugin width and height 100%");
-                    $('#btnContainer').css('display', 'inline-block');
+                    //$('#btnContainer').css('display', 'inline-block');
                     $('#leaveEndBtnContainer').css('display', '');
                     /*---End*/
                     /* Added by Ranjeet on 02/04/2014 to make the plugin width and height 100% after user is connected to the conference
