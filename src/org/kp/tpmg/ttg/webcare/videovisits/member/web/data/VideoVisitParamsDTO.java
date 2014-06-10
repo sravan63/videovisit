@@ -25,6 +25,7 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String isProvider;
 	private String guestUrl;
 	private String isMember;
+	private String meetingDate;
 	private String meetingTime;
 	private ProviderWSO[] participants;
 	private CaregiverWSO[] caregivers;
@@ -156,6 +157,18 @@ public class VideoVisitParamsDTO implements Serializable {
 	public void setMeetingTime(String meetingTime) {
 		this.meetingTime = meetingTime;
 	}
+	/**
+	 * @return the meetingDate
+	 */
+	public String getMeetingDate() {
+		return meetingDate;
+	}
+	/**
+	 * @param meetingDate the meetingDate to set
+	 */
+	public void setMeetingDate(String meetingDate) {
+		this.meetingDate = meetingDate;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -169,10 +182,10 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ hostLastName + ", hostFirstName=" + hostFirstName
 				+ ", hostTitle=" + hostTitle + ", guestName=" + guestName
 				+ ", isProvider=" + isProvider + ", guestUrl=" + guestUrl
-				+ ", isMember=" + isMember + ", meetingTime=" + meetingTime
-				+ ", participants=" + Arrays.toString(participants)
-				+ ", caregivers=" + Arrays.toString(caregivers) + "]";
-	}
-	
+				+ ", isMember=" + isMember + ", meetingDate=" + meetingDate
+				+ ", meetingTime=" + meetingTime + ", participants="
+				+ Arrays.toString(participants) + ", caregivers="
+				+ Arrays.toString(caregivers) + "]";
+	}	
 	
 }
