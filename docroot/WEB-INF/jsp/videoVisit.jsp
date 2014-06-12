@@ -511,8 +511,9 @@
 				<dt>MY DOCTOR</dt><dd id="meetingHost" style="word-wrap:break-word; margin:0;"> 
 				${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
 			</dl>
-			<dl id="meetingParticipantContainer">
-				<c:if test="${not empty WebAppContext.videoVisit.participants}">
+			
+			<c:if test="${not empty WebAppContext.videoVisit.participants}">
+				<dl id="meetingParticipantContainer">
 					<dt>ADD'L CLINICIAN(S)</dt>
 					<dd id="meetingParticipant" style="word-wrap:break-word; margin:0;">
 						<table>	    
@@ -523,22 +524,23 @@
 					       </c:forEach>
 					    </table>
 					</dd>
-				</c:if>
-			</dl>
+				</dl>
+			</c:if>
 			
-			<dl id="meetingPatientGuestContainer">
-			 <c:if test="${not empty WebAppContext.videoVisit.caregivers}">
-				<dt>MY GUEST(S)</dt><dd id="meetingPatientGuest" style="word-wrap:break-word; margin:0;">
-				   <table>	 
-						<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
-				        <tr>
-				            <td style="padding-bottom:10px;">${CaregiverWSO.lastName}, ${CaregiverWSO.firstName}</td>            
-				        </tr>
-				       </c:forEach>       
-			       </table>
-				</dd>
-			 </c:if>
-		    </dl>
+			<c:if test="${not empty WebAppContext.videoVisit.caregivers}">
+				<dl id="meetingPatientGuestContainer">
+					<dt>MY GUEST(S)</dt>
+					<dd id="meetingPatientGuest" style="word-wrap:break-word; margin:0;">
+					   <table>	 
+							<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
+					        <tr>
+					            <td style="padding-bottom:10px;">${CaregiverWSO.lastName}, ${CaregiverWSO.firstName}</td>            
+					        </tr>
+					       </c:forEach>       
+				       </table>
+					</dd>
+	    		</dl>
+		    </c:if>
 			<!--<dl id="meetingNoteContainer">
 				<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
 			</dl>	-->
