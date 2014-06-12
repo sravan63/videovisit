@@ -508,7 +508,7 @@
 				<dt>PATIENT</dt><dd id="meetingPatient" style="word-wrap:break-word; margin:0;">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
 			</dl>
 			<dl>
-				<dt>HOST CLINICIAN</dt><dd id="meetingHost" style="word-wrap:break-word; margin:0;"> 
+				<dt>MY DOCTOR</dt><dd id="meetingHost" style="word-wrap:break-word; margin:0;"> 
 				${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
 			</dl>
 			<dl id="meetingParticipantContainer">
@@ -528,7 +528,7 @@
 			
 			<dl id="meetingPatientGuestContainer">
 			 <c:if test="${not empty WebAppContext.videoVisit.caregivers}">
-				<dt>PATIENT GUEST(S)</dt><dd id="meetingPatientGuest" style="word-wrap:break-word; margin:0;">
+				<dt>MY GUEST(S)</dt><dd id="meetingPatientGuest" style="word-wrap:break-word; margin:0;">
 				   <table>	 
 						<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
 				        <tr>
