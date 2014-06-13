@@ -17,16 +17,16 @@
 	<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
 	<input type="hidden" id="isMember" value="${WebAppContext.videoVisit.isMember}" />
 	
-<div id="vvHeader" style="overflow:hidden; border-top: 10px solid #A2A0A0;">
-	<ul style="float:left; list-style:none; margin-left:0; margin-bottom:0; height:auto;">
+<div id="vvHeader" style="">
+	<ul style="">
 		<li>		
-			<h3 id="patientTitle" class="page-title" style="line-height:1em;">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
+			<h3 id="patientTitle" class="page-title" style="">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
 		</li>
 	</ul>
 	<ul id="leaveEndBtnContainer" class="btn-group" style="display:none; float:right; list-style:none; font-size:100%; margin:4px 0;">
         <li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Leave Meeting" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;">
         <li class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;">
-        <li class="last" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
+        <li class="btnLast" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
     </ul>
 </div>
 
@@ -497,25 +497,25 @@
  	</div>
 	
 	
-	<div id="video-sidebar" style="width:200px;">
-		<div style="width:100%; height:33px; background-color:#6A6A6A;"></div>		
+	<div id="video-sidebar">
+		<div id="video-sidebar-banner"></div>		
 		<div id="video-info">
-			<h3 style="color:#555555; font-size:22px;"> Visit Details </h3>
+			<h3> Visit Details </h3>
 			<dl>
-			    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime" style="word-wrap:break-word; margin:0;">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
+			    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
 			</dl>
 			<dl>
-				<dt>PATIENT</dt><dd id="meetingPatient" style="word-wrap:break-word; margin:0;">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
+				<dt>PATIENT</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
 			</dl>
 			<dl>
-				<dt>MY DOCTOR</dt><dd id="meetingHost" style="word-wrap:break-word; margin:0;"> 
+				<dt>MY DOCTOR</dt><dd id="meetingHost"> 
 				${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
 			</dl>
 			
 			<c:if test="${not empty WebAppContext.videoVisit.participants}">
 				<dl id="meetingParticipantContainer">
 					<dt>ADD'L CLINICIAN(S)</dt>
-					<dd id="meetingParticipant" style="word-wrap:break-word; margin:0;">
+					<dd id="meetingParticipant">
 						<table>	    
 						   <c:forEach items="${WebAppContext.videoVisit.participants}" var="ProviderWSO">        
 					        <tr>
@@ -530,7 +530,7 @@
 			<c:if test="${not empty WebAppContext.videoVisit.caregivers}">
 				<dl id="meetingPatientGuestContainer">
 					<dt>MY GUEST(S)</dt>
-					<dd id="meetingPatientGuest" style="word-wrap:break-word; margin:0;">
+					<dd id="meetingPatientGuest">
 					   <table>	 
 							<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
 					        <tr>
