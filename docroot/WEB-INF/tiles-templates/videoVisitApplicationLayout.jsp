@@ -71,7 +71,7 @@
 		            margin-top: 3px;
 		            height: 33px;
 		            padding: 0px;
-		            border: 0;
+		            border:0;
 		            border-radius: 0px !important;
 		            background-color: transparent;
 		            background-repeat: no-repeat;
@@ -187,7 +187,30 @@
 			    	font-family: Avenir Next, sans-serif;
 			    	color: #888888;
 			    	margin: 10px 0;
+			    	line-height:1em;
 			    }
+			    #vvHeader{
+			    	overflow:hidden;
+			    	border-top: 10px solid #A2A0A0;
+			    }
+			    #vvHeader ul{
+			    	float:left;
+			    	list-style:none;
+			    	margin-left:0;
+			    	margin-bottom:0;
+			    	height:auto;
+			    }
+/*			    #vvHeader ul#leaveEndBtnContainer{
+			    	display:none;
+			    	float:right;
+			    	font-size:100%;
+			    	margin:4px 0;
+			    }
+			    .btn-group #btnLast{
+			    	display:inline-block;
+			    	margin-left:10px;
+			    	margin-right:10px;
+			    }		*/
 			</style>
         <!--End CSS-->
 
