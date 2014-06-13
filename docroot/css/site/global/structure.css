@@ -263,11 +263,13 @@ input								{outline:none;}
 #copyright						{}
 
 /* Video Visit */
-#video-sidebar					{float:right;/*display:block;*/display:inline-block;width:150px;height:515px;font-family:Avenir Next, sans-serif; color:#666666;}
-#video-info						{/*border:1px solid;*/padding:8px;display:block;/*height:480px;*/margin:0 0 5px;}
+#video-sidebar					{float:right;display:inline-block;width:150px;height:515px;font-family:Avenir Next,sans-serif; color:#666666; width:200px;}
+#video-sidebar-banner   		{width:100%; height:33px; background-color:#6A6A6A;}
+#video-info						{padding:8px;display:block;margin:0 0 5px;}
 #video-info dl					{margin:0 0 15px;}
 #video-info dt					{font-weight:bold;}
-#video-info h3					{margin:5px 0;font-size:12px;font-weight:normal;}
+#video-info dd          		{word-wrap:break-word; margin:0;}
+#video-info h3					{margin:5px 0; font-size:12px; font-weight:normal; color:#555555; font-size:22px;}
 
 #end a							{text-align:center;display:block;line-height:25px;margin:0;}
 
@@ -378,7 +380,6 @@ a,
 .dialog-content th,
 #content-block .content h4,
 #content-block .sidebar	h5,
-#video-info h3,
 #sidebar-main h2,
 #sidebar-main h3,
 .ui-widget-header,
