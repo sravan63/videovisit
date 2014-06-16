@@ -113,22 +113,22 @@
 		
 		        .btn-tms-success{
 		            background-image: url("vidyoplayer/img/sprite.png");
-		            background-position: 5px -290px;
+		            background-position: -15px -290px;
 		            /*width: 60px;	*/
 		        }
 		        .btn-tms-failure{
 		            background-image: url("vidyoplayer/img/sprite.png");
-		            background-position: 5px -345px;
+		            background-position: -15px -345px;
 		        }
 		
 		        .btn-tmm-success{
 		            background-image: url("vidyoplayer/img/sprite.png");
-		            background-position: 5px -180px;
+		            background-position: -15px -180px;
 		            /*width: 60px;	*/
 		        }
 		        .btn-tmm-failure{
 		            background-image: url("vidyoplayer/img/sprite.png");
-		            background-position: 5px -235px;
+		            background-position: -15px -235px;
 		        }
 				.btn-tmc{
 		            background-image: url("vidyoplayer/img/sprite.png");
