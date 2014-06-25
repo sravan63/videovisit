@@ -145,7 +145,7 @@
 		        #inCallPluginAndControlsWrap{
 		            width: auto !important;
 		            margin: 0;
-		            /*float: left;*/
+		            background-color: black;
 		        }
 		        #pluginWrap{
 		            /*float: left;*/
