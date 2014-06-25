@@ -282,6 +282,7 @@ docroot/vidyoplayer/scripts/libs/jnotify/jNotify.jquery.js -text svneol=unset#te
 docroot/vidyoplayer/scripts/libs/jnotify/jNotify.jquery.min.js -text svneol=unset#text/plain
 docroot/vidyoplayer/scripts/libs/jnotify/jquery.js -text svneol=unset#text/plain
 docroot/vidyoplayer/scripts/libs/jnotify/success.png -text
+docroot/vidyoplayer/scripts/libs/jquery-ui-1.9.2.custom.min.js -text svneol=unset#text/plain
 docroot/vidyoplayer/scripts/libs/jquery.1.11.0.min.js -text svneol=unset#text/plain
 docroot/vidyoplayer/scripts/libs/jquery.html5storage.min.1.0.js -text svneol=unset#text/plain
 docroot/vidyoplayer/scripts/libs/jquery.typewatch.2.2.js -text svneol=unset#text/plain
