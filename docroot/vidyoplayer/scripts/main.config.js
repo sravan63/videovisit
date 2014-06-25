@@ -42,6 +42,8 @@
             participantRefreshTimeout: 3000, // in ms
             progressStepInPercents: 15,
             pluginCookieExpDays: 365,
+            maxVolForSpeakerMic: 65535,
+            defaultVolForSpeakerMic: 49000,
             /* Configuration of lib */
             defaultPreviewMode: "PIP",
             enableShowConfParticipantName: true,
