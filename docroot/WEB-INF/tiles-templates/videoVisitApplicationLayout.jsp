@@ -215,16 +215,16 @@
         <!--End CSS-->
 
         <!--Start JavaScript-->
+        	<script type="text/javascript" src="vidyoplayer/scripts/libs/jnotify/jquery.js"></script>
+			<script type="text/javascript" src="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.js"></script>
 	       	<c:forEach var='item' items='${jsDependencies}'>
 	        	<script src="${item}" type="text/javascript"></script>
 	        </c:forEach>
 	        
 	        <script src="js/site/videovisit/videoVisit.js" type="text/javascript"></script>
 	        
-			<!--  <script src="environment/path.js" type="text/javascript"></script> -->
-	
-			<script type="text/javascript" src="vidyoplayer/scripts/libs/jnotify/jquery.js"></script>
-			<script type="text/javascript" src="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.js"></script>
+			<!--  <script src="environment/path.js" type="text/javascript"></script> -->	
+			
         <!--End JavaScript-->
         
         <noscript>
