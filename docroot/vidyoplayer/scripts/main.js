@@ -15,10 +15,12 @@
             'handlebars': ['libs/handlebars.amd.min.1.3.0'],
             'jquery.html5storage': ["libs/jquery.html5storage.min.1.0"],
             'jquery.typewatch': ["libs/jquery.typewatch.2.2"],
-            'bootstrap.notify': ["libs/bootstrap-notify.1.0"],
-            'domReady': ["libs/domReady.2.0.1"]
+            'bootstrap.notify': ["libs/bootstrap-notify.1.0"],	    
+            'domReady': ["libs/domReady.2.0.1"],
+            'jquery-ui': ["libs/jquery-ui-1.9.2.custom.min"]
         },
         shim: {
+        	'jquery-ui': ['jquery'],
             /* Set bootstrap dependencies (just jQuery) */
             'bootstrap': ['jquery'],
             /* Set storage lib dependencies */
@@ -54,6 +56,7 @@
             "jquery.html5storage",
             "jquery.typewatch",
             "bootstrap.notify",
+            "jquery-ui",
             "utils/globalFunctions"
         ],
         function (
@@ -67,233 +70,288 @@
             config,
             handlebars
         ) {
-	    var isProvider = false;
-	    var isHost = false;
-        var isMember = false;
-	    var role = '';
-	    var meetingId = '';
-	    var meetingCode = '';
-	    var guestName='';
-	    var caregiverId='';
-	    var quitclick = 'false';
-	    var endclick = 'false';
-        var refreshMeetings = false;
-        /**
-         * Main application module
-         * @param  {Object} config Configuration (main.config)
-         * @return {Object}        Application representation
-         */
-        var application = function (config) {
-            /**
-             * Predefine functions for faster JS execution
-             */
-            var applicationBuildCache, applicationBuildTemplates, applicationAddPlugin, applicationCallCleanup, applicationCheckForDeveloper, applicationBuildSubscribeEvents, applicationBindVidyoCallbacks, applicationBindSubscribeEvents, applicationBindUIEvents, applicationLoadCacheFromPersistentStore, applicationBindEvents, applicationClientInfoPrint, clientConferenceLeave, clientConferenceStateGet, clientConfigurationBootstrap, clientConfigurationGet, clientConfigurationSet, clientCurrentUserGet, clientEndpointIDGet, clientGroupChatSend, clientGuestLoginAndJoin, clientIncomingCallAccept, clientIncomingCallReject, clientLayoutSet, clientLayoutToggle, clientLocalMediaInfo, clientLocalSharesGet, clientLocalSharesGetExt, clientLocalShareStart, clientLocalShareStop, clientLogLevelsAndCategoriesSet, clientMicrophoneMute, clientParticipantPin, clientParticipantsGet, clientParticipantsSetLimit, clientPreviewModeSet, clientPreviewModeToggle, clientPrivateChatSend, clientRecordAndWebcastStateGet, clientSessionGetInfo, clientSharesGet, clientSharesSetCurrent, clientSpeakerMute, clientUserLogin, clientUserLogout, clientVideoMute, helperConferenceUpdateTimerStart, helperConferenceUpdateTimerStop, helperPersistentStorageGetValue, helperPersistentStorageSetValue, helperPortalUsersStatusUpdateTimerStart, helperPortalUsersStatusUpdateTimerStop, helperRingtonePlay, helperRingtoneStop, helperSoapPromiseToGetMyAccount, helperSoapPromiseToSearch, helperSoapPromiseToSearchMyContacts, helperSoapPromiseToSendUserRequest, portalParticipantsPromiseToGet, portalRecordGetProfiles, portalRecordStart, portalRecordStop, portalRoomInfoPromiseToGet, portalRoomPromiseToLock, portalUserCallDirect, portalUserCancelSearchRequest, portalUserFavoritePromiseToAdd, portalUserFavoritePromiseToRemove, portalUserInviteToConference, portalUserJoinConference, portalUserSearchBothFavAndUsers, uiChatUpdateView, uiChatViewMinimize, uiChatViewScrollToPosition, uiChatViewTabCreateIfNotExists, uiChatViewTabNotifyStart, uiChatViewTabNotifyStop, uiChatViewTabSwitch, uiConfigurationUpdateWithData, uiDesktopNotification, uiDesktopNotificationRequestPermission, uiFullscreenCancel, uiFullscreenSet, uiGenericNotify, uiInCallShow, uiIncomingCallMissedCallNotify, uiIncomingCallNotificationDismiss, uiJoinConferencePinDialogShow, uiReportJoinConferencePinError, uiLocalShareReset, uiLocalSharesUpdateWithData, uiParticipantEnableInvite, uiParticipantsPromiseToSlide, uiParticipantStatusNotify, uiParticipantsUpdateWithData, uiPrecallMenuShow, uiPromiseToEndSplashScreen, uiCallCleanup ,uiPromiseToShowMenu, uiReportError, uiReportGuestLoginError, uiReportInfo, uiReportCloseEngage, uiReportInfoDismiss, uiReportUserLoginError, uiSearchProgressShow, uiSetMicMuted, uiSetSpeakerMuted, uiSetVideoMuted, uiShareSelect, uiSharesUpdateWithData, uiShowInCallContainerMinimizedAndWithPlugin, uiStart, uiStartPluginDetection, uiUpdateGuestLoginProgress, uiUpdateJoinProgress, uiUpdateUserLoginProgress, uiUserFavoriteAdd, uiUserFavoriteRemove, uiUserNavigationUpdateWithData, uiVidyoPluginShow, uiVidyoPluginIsShown, vidyoPluginConfigurationPrepare, vidyoPluginInitAndStart, vidyoPluginIsLoaded, vidyoPluginIsInstalled, vidyoPluginIsStarted, vidyoPluginLoad, vidyoPluginStart, vidyoPluginStop;
-            /**
-             * Application representation module
-             * @type {Object}
-             */
-            var self = {};
-
-        /**
-         * Application configuration
-         * @type {Object}
-         */
-        self.config = config;
-
-        /**
-         * Vidyo library specific configuration
-         * @type {Object}
-         */
-        self.config.vidyoLib = {};
-        /**
-         * Holds caches DOM
-         * @type {Object}
-         */
-        self.cache = {};
-
-        /**
-         * Holds cached events
-         * @type {Object}
-         */
-        self.events = {};
-        /**
-         * Data about user login parameters
-         * @type {Object}
-         */
-        self.loginInfo = {};
-
-        /**
-         * Data about guest login parameters
-         * @type {Object}
-         */
-        self.guestLoginInfo = {};
-
-        /**
-         * Map of handlebars templates
-         * @type {Object}
-         */
-        self.templates = {};
-
-        /**
-         * Guest login request sequencer
-         * @type {Number}
-         */
-        self.currentRequestId = 1;
-
-        /**
-         * Holds information about contacts and searches users
-         * @type {Object}
-         */
-        self.users = {
-            favNum: "",
-            fav: [],
-            userNum: "",
-            user: []
-        };
-        /**
-         * Hold last users variable so we can revert in case
-         * when search is canceled
-         * @type {Object}
-         */
-        self.lastUsers = self.users;
-
-        /**
-         * Holds value for search refresh timer
-         * so we can cancel it later on.
-         * @type {[type]}
-         */
-        self.searchUserRefreshTimer = undefined;
-
-        /**
-         * True if current login process is for guest
-         * False if current login process is for user
-         * @type {Boolean}
-         */
-        self.isGuestLogin = false;
-
-        /**
-         * Current preview mode. On application start it will be propagated from
-         * persistent storage
-         * @type {String}
-         */
-        self.currentPreviewMode = self.config.defaultPreviewMode;
-
-        /**
-         * Current mute state of microphone
-         * @type {Boolean}
-         */
-        self.isMutedMic = false;
-
-        /**
-         * Current mute state of speaker
-         * @type {Boolean}
-         */
-        self.isMutedSpeaker = false;
-
-        /**
-         * Current mute state of video
-         * @type {Boolean}
-         */
-        self.isMutedVideo = false;
-
-        /**
-         * True if in fullscreen mode,
-         * False otherwise
-         * @type {Boolean}
-         */
-        self.isFullscreen = false;
-
-        self.numPreferred = 0;
-		self.numParticipants = 0;
-		self.smd = false;
-		self.stopshare = false;
-
-        /**
-         * Holds current search SOAP request to the VidyoPortal
-         * in case we need to cancel it
-         * @type {Object}
-         */
-        self.currentSearchRequest = undefined;
-
-        /**
-         * Holds information about current user on a portal.
-         * Response to myAccount SOAP request to the portal.
-         * @type {Object}
-         */
-        self.myAccount = undefined;
-
-        /**
-         * Currently shared application id
-         * @type {String}
-         */
-        self.currentShareId = undefined;
-
-        /**
-         * Current state of full page mode
-         * @type {Boolean}
-         */
-        self.isFullpage = false;
-
-        /**
-         * Conference status
-         * @type {Boolean}
-         */
-        self.inConference = false;
-        
-        /**
-         * Is in joining state
-         * @type {Boolean}
-         */
-         self.isJoining = false;
-
-        /**
-         * Status of participant list show
-         * @type {Boolean}
-         */
-        self.isShowingParticipantList = true;
-        self.kphcShare = '';
-
-        /**
-         * List of participants
-         * @type {Object}
-         */
-        self.currentParticipants = [];
-
-        /**
-         * Last invitee
-         * @type {String}
-         */
-         self.invitee = "";
-
-        /**
-         * Configuration of log 
-         */
-        self.logConfig = {};
-        
-        /**
-         * Is in disconnected state
-         * @type {Boolean}
-         */
-         self.isDisconnect = false;
-         
-
-        /* IE 8 tweek for array */
-        if (!Array.prototype.indexOf) {
-            Array.prototype.indexOf = function (val) {
-                var i;
-                for (i = 0; i < this.length; i++) {
-                    if (this[i] === val) {
-                        return i;
-                    }
-                }
-                return -1;
-            };
-        }
-        //if (!self.config.enableAppLogs)
-           // console.log = function() {};
-
-        logger.log('debug', 'application', 'Loaded main');
-        logger.log('debug', 'application', 'Browser supports: ', $.support);
+		    var isProvider = false;
+		    var isHost = false;
+	        var isMember = false;
+		    var role = '';
+		    var meetingId = '';
+		    var meetingCode = '';
+		    var guestName='';
+		    var caregiverId='';
+		    var quitclick = 'false';
+		    var endclick = 'false';
+	        var refreshMeetings = false;
+	        /**
+	         * Main application module
+	         * @param  {Object} config Configuration (main.config)
+	         * @return {Object}        Application representation
+	         */
+	        var application = function (config) {
+	        /**
+	         * Predefine functions for faster JS execution
+	         */
+	        var applicationBuildCache, applicationBuildTemplates, applicationAddPlugin, applicationCallCleanup, applicationCheckForDeveloper, applicationBuildSubscribeEvents, applicationBindVidyoCallbacks, applicationBindSubscribeEvents, applicationBindUIEvents, applicationLoadCacheFromPersistentStore, applicationBindEvents, applicationClientInfoPrint, clientConferenceLeave, clientConferenceStateGet, clientConfigurationBootstrap, clientConfigurationGet, clientConfigurationSet, clientCurrentUserGet, clientEndpointIDGet, clientGroupChatSend, clientGuestLoginAndJoin, clientIncomingCallAccept, clientIncomingCallReject, clientLayoutSet, clientLayoutToggle, clientLocalMediaInfo, clientLocalSharesGet, clientLocalSharesGetExt, clientLocalShareStart, clientLocalShareStop, clientLogLevelsAndCategoriesSet, clientMicrophoneMute, clientParticipantPin, clientParticipantsGet, clientParticipantsSetLimit, clientPreviewModeSet, clientPreviewModeToggle, clientPrivateChatSend, clientRecordAndWebcastStateGet, clientSessionGetInfo, clientSharesGet, clientSharesSetCurrent, clientSpeakerMute, clientUserLogin, clientUserLogout, clientVideoMute, helperConferenceUpdateTimerStart, helperConferenceUpdateTimerStop, helperPersistentStorageGetValue, helperPersistentStorageSetValue, helperPortalUsersStatusUpdateTimerStart, helperPortalUsersStatusUpdateTimerStop, helperRingtonePlay, helperRingtoneStop, helperSoapPromiseToGetMyAccount, helperSoapPromiseToSearch, helperSoapPromiseToSearchMyContacts, helperSoapPromiseToSendUserRequest, portalParticipantsPromiseToGet, portalRecordGetProfiles, portalRecordStart, portalRecordStop, portalRoomInfoPromiseToGet, portalRoomPromiseToLock, portalUserCallDirect, portalUserCancelSearchRequest, portalUserFavoritePromiseToAdd, portalUserFavoritePromiseToRemove, portalUserInviteToConference, portalUserJoinConference, portalUserSearchBothFavAndUsers, uiChatUpdateView, uiChatViewMinimize, uiChatViewScrollToPosition, uiChatViewTabCreateIfNotExists, uiChatViewTabNotifyStart, uiChatViewTabNotifyStop, uiChatViewTabSwitch, uiConfigurationUpdateWithData, uiDesktopNotification, uiDesktopNotificationRequestPermission, uiFullscreenCancel, uiFullscreenSet, uiGenericNotify, uiInCallShow, uiIncomingCallMissedCallNotify, uiIncomingCallNotificationDismiss, uiJoinConferencePinDialogShow, uiReportJoinConferencePinError, uiLocalShareReset, uiLocalSharesUpdateWithData, uiParticipantEnableInvite, uiParticipantsPromiseToSlide, uiParticipantStatusNotify, uiParticipantsUpdateWithData, uiPrecallMenuShow, uiPromiseToEndSplashScreen, uiCallCleanup ,uiPromiseToShowMenu, uiReportError, uiReportGuestLoginError, uiReportInfo, uiReportCloseEngage, uiReportInfoDismiss, uiReportUserLoginError, uiSearchProgressShow, uiSetMicMuted, uiSetSpeakerMuted, uiSetVideoMuted, uiShareSelect, uiSharesUpdateWithData, uiShowInCallContainerMinimizedAndWithPlugin, uiStart, uiStartPluginDetection, uiUpdateGuestLoginProgress, uiUpdateJoinProgress, uiUpdateUserLoginProgress, uiUserFavoriteAdd, uiUserFavoriteRemove, uiUserNavigationUpdateWithData, uiVidyoPluginShow, uiVidyoPluginIsShown, vidyoPluginConfigurationPrepare, vidyoPluginInitAndStart, vidyoPluginIsLoaded, vidyoPluginIsInstalled, vidyoPluginIsStarted, vidyoPluginLoad, vidyoPluginStart, vidyoPluginStop;
+	        
+	        /* Added by Ranjeet on 06/25/2014 to address US4477
+		    Start ---*/
+	        var clientSpeakerVolumeGet, clientSpeakerVolumeSet, clientMicrophoneVolumeGet, clientMicrophoneVolumeSet;
+	        /*--End*/
+	        
+	        /**
+	         * Application representation module
+	         * @type {Object}
+	         */
+	        var self = {};
+	
+	        /**
+	         * Application configuration
+	         * @type {Object}
+	         */
+	        self.config = config;
+	
+	        /**
+	         * Vidyo library specific configuration
+	         * @type {Object}
+	         */
+	        self.config.vidyoLib = {};
+	        /**
+	         * Holds caches DOM
+	         * @type {Object}
+	         */
+	        self.cache = {};
+	
+	        /**
+	         * Holds cached events
+	         * @type {Object}
+	         */
+	        self.events = {};
+	        /**
+	         * Data about user login parameters
+	         * @type {Object}
+	         */
+	        self.loginInfo = {};
+	
+	        /**
+	         * Data about guest login parameters
+	         * @type {Object}
+	         */
+	        self.guestLoginInfo = {};
+	
+	        /**
+	         * Map of handlebars templates
+	         * @type {Object}
+	         */
+	        self.templates = {};
+	
+	        /**
+	         * Guest login request sequencer
+	         * @type {Number}
+	         */
+	        self.currentRequestId = 1;
+	
+	        /**
+	         * Holds information about contacts and searches users
+	         * @type {Object}
+	         */
+	        self.users = {
+	            favNum: "",
+	            fav: [],
+	            userNum: "",
+	            user: []
+	        };
+	        /**
+	         * Hold last users variable so we can revert in case
+	         * when search is canceled
+	         * @type {Object}
+	         */
+	        self.lastUsers = self.users;
+	
+	        /**
+	         * Holds value for search refresh timer
+	         * so we can cancel it later on.
+	         * @type {[type]}
+	         */
+	        self.searchUserRefreshTimer = undefined;
+	
+	        /**
+	         * True if current login process is for guest
+	         * False if current login process is for user
+	         * @type {Boolean}
+	         */
+	        self.isGuestLogin = false;
+	
+	        /**
+	         * Current preview mode. On application start it will be propagated from
+	         * persistent storage
+	         * @type {String}
+	         */
+	        self.currentPreviewMode = self.config.defaultPreviewMode;
+	
+	        /**
+	         * Current mute state of microphone
+	         * @type {Boolean}
+	         */
+	        self.isMutedMic = false;
+	
+	        /**
+	         * Current mute state of speaker
+	         * @type {Boolean}
+	         */
+	        self.isMutedSpeaker = false;
+	
+	        /**
+	         * Current mute state of video
+	         * @type {Boolean}
+	         */
+	        self.isMutedVideo = false;
+	
+	        /**
+	         * True if in fullscreen mode,
+	         * False otherwise
+	         * @type {Boolean}
+	         */
+	        self.isFullscreen = false;
+	
+	        self.numPreferred = 0;
+			self.numParticipants = 0;
+			self.smd = false;
+			self.stopshare = false;
+	
+	        /**
+	         * Holds current search SOAP request to the VidyoPortal
+	         * in case we need to cancel it
+	         * @type {Object}
+	         */
+	        self.currentSearchRequest = undefined;
+	
+	        /**
+	         * Holds information about current user on a portal.
+	         * Response to myAccount SOAP request to the portal.
+	         * @type {Object}
+	         */
+	        self.myAccount = undefined;
+	
+	        /**
+	         * Currently shared application id
+	         * @type {String}
+	         */
+	        self.currentShareId = undefined;
+	
+	        /**
+	         * Current state of full page mode
+	         * @type {Boolean}
+	         */
+	        self.isFullpage = false;
+	
+	        /**
+	         * Conference status
+	         * @type {Boolean}
+	         */
+	        self.inConference = false;
+	        
+	        /**
+	         * Is in joining state
+	         * @type {Boolean}
+	         */
+	         self.isJoining = false;
+	
+	        /**
+	         * Status of participant list show
+	         * @type {Boolean}
+	         */
+	        self.isShowingParticipantList = true;
+	        self.kphcShare = '';
+	
+	        /**
+	         * List of participants
+	         * @type {Object}
+	         */
+	        self.currentParticipants = [];
+	
+	        /**
+	         * Last invitee
+	         * @type {String}
+	         */
+	         self.invitee = "";
+	
+	        /**
+	         * Configuration of log 
+	         */
+	        self.logConfig = {};
+	        
+	        /**
+	         * Is in disconnected state
+	         * @type {Boolean}
+	         */
+	         self.isDisconnect = false;
+	         
+	
+	        /* IE 8 tweek for array */
+	        if (!Array.prototype.indexOf) {
+	            Array.prototype.indexOf = function (val) {
+	                var i;
+	                for (i = 0; i < this.length; i++) {
+	                    if (this[i] === val) {
+	                        return i;
+	                    }
+	                }
+	                return -1;
+	            };
+	        }
+	        //if (!self.config.enableAppLogs)
+	           // console.log = function() {};
+	
+	        logger.log('debug', 'application', 'Loaded main');
+	        logger.log('debug', 'application', 'Browser supports: ', $.support);
+	        /* Added by Ranjeet on 06/25/2014 to address US4477
+		    Start ---*/
+			$( "#volume-control-speaker" ).slider({
+			    orientation: "vertical",
+			    range: "min",
+			    min: 0,
+			    max: self.config.maxVolForSpeakerMic,	    
+			    slide: function( event, ui ) {			  
+			      console.log( "Setting Speaker volume to: " + ui.value);
+			      clientSpeakerVolumeSet(ui.value);		      
+			    }
+			});	
+				
+				
+			$( "#volume-control-mic" ).slider({
+			    orientation: "vertical",
+			    range: "min",
+			    min: 0,
+			    max: self.config.maxVolForSpeakerMic,	   
+			    slide: function( event, ui ) {			  
+			      console.log( "Setting Mic volume to: " + ui.value);
+			      clientMicrophoneVolumeSet(ui.value);		     
+			    }
+			});	
+			
+			
+			function setSpeakerMicVolForSlider(){
+			    $( ".ui-slider-range" ).css("background","#006600");
+			     var speakerVolReq = clientSpeakerVolumeGet();
+			     var speakerVolFromVidyo = speakerVolReq.volume;
+			     console.log("setSpeakerMicVolForSlider -> Speaker Volume=" + speakerVolFromVidyo);
+			     if (speakerVolFromVidyo == null) {
+					//code
+					console.log("setSpeakerMicVolForSlider -> Speaker Volume null so setting default value: " + self.config.defaultVolForSpeakerMic);
+					speakerVolFromVidyo = self.config.defaultVolForSpeakerMic;
+			     }
+			     $("#volume-control-speaker").slider('value',parseInt(speakerVolFromVidyo));
+			     
+			     var micVolReq = clientMicrophoneVolumeGet();
+			     var micVolFromVidyo = micVolReq.volume;
+			     console.log("setSpeakerMicVolForSlider -> Mic Volume=" + micVolFromVidyo);
+			     if (micVolFromVidyo == null) {
+					//code
+					console.log("setSpeakerMicVolForSlider -> Mic Volume null so setting default value: " + self.config.defaultVolForSpeakerMic);
+					micVolFromVidyo = self.config.defaultVolForSpeakerMic;
+			     }
+			     $("#volume-control-mic").slider('value',parseInt(micVolFromVidyo));
+			}
+	        /*--End*/
 
            /**
             * Cache jQuery DOM objects for performance
@@ -759,6 +817,10 @@
                     self.sessionInfo = clientSessionGetInfo();
                     self.events.connectEvent.trigger('done');
                     self.events.participantUpdateEvent.trigger('done', participants);
+                    /* Added by Ranjeet on 06/26/2013 for US4477
+                    Start ---*/
+		    		setSpeakerMicVolForSlider();
+		    		/*---End*/
                     /* Added by Ranjeet on 12/16/2013 to make the buttons visible only after user is connected
                     Start ---*/
                     console.log("application::OutEventConferenceActive() before making buttons visible and plugin width and height 100%");
@@ -3945,7 +4007,7 @@
 		             * So when we make plugin visible then we start it after deferred
 		             * variable for plugin ready event is resolved.
 		            */
-		            self.cache.$inCallContainer.show(function() {
+		            //self.cache.$inCallContainer.show(function() {
 		
 		                self.events.pluginPreloadEvent
 		                    .done(function() {
@@ -3959,7 +4021,7 @@
 		                        self.events.pluginLoadedEvent.trigger('info', "<p style='color: #000000;'>Failed to load Plugin. Please <a href='javascript:history.go(0)'> Click Here to refresh </a> your browser</p>");
 		                        /*---End*/
 		                    });
-		            });
+		            //});
 		
 		            return self;
 		        };
@@ -5016,6 +5078,85 @@
 		
 		            return self;
 		        };
+		        
+		        /* Added by Ranjeet on 06/25/2014 to address US4477
+			    Start ---*/
+		        /**
+                 * Get Speaker Volume
+                 * @return {Object} Speaker Volume object
+                 */
+                clientSpeakerVolumeGet = function () {
+                    logger.log('info', 'call', 'clientSpeakerVolumeGet()');
+                    var request = vidyoClientMessages.requestGetVolumeAudioOut({});
+                    var msg;
+                    if (self.client.sendRequest(request)) {
+                        msg = "VidyoWeb sent " + request.type + " request successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + request.type + " request successfully!";
+                    }
+                    logger.log('info', 'call', "clientSpeakerVolumeGet(): " + msg, request);
+
+                    return request;
+                };
+		
+                /**
+                 * Set Speaker Volume
+                 * @return {Object} Speaker Volume object
+                 */
+                clientSpeakerVolumeSet = function (volume) {
+                    logger.log('info', 'call', 'clientSpeakerVolumeSet(', volume, ')');
+                    var params = {}, msg;
+                    params.volume = volume;
+                    var request = vidyoClientMessages.requestSetVolumeAudioOut(params);
+                    
+                    if (self.client.sendRequest(request)) {
+                        msg = "VidyoWeb sent " + request.type + " request successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + request.type + " request successfully!";
+                    }
+                    logger.log('info', 'call', "clientSpeakerVolumeSet(): " + msg, request);
+
+                    return request;
+                };
+		       
+                /**
+                 * Get Microphone Volume
+                 * @return {Object} Microphone Volume object
+                 */
+                clientMicrophoneVolumeGet = function () {
+                    logger.log('info', 'call', 'clientMicrophoneVolumeGet()');
+                    var request = vidyoClientMessages.requestGetVolumeAudioIn({});
+                    var msg;
+                    if (self.client.sendRequest(request)) {
+                        msg = "VidyoWeb sent " + request.type + " request successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + request.type + " request successfully!";
+                    }
+                    logger.log('info', 'call', "clientMicrophoneVolumeGet(): " + msg, request);
+
+                    return request;
+                };
+		       
+                /**
+                 * Get Microphone Volume
+                 * @return {Object} Microphone Volume object
+                 */
+                clientMicrophoneVolumeSet = function (volume) {
+                    logger.log('info', 'call', 'clientMicrophoneVolumeSet(', volume, ')');
+                    var params = {}, msg;
+                    params.volume = volume;
+                    var request = vidyoClientMessages.requestSetVolumeAudioIn(params);
+                    
+                    if (self.client.sendRequest(request)) {
+                        msg = "VidyoWeb sent " + request.type + " request successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + request.type + " request successfully!";
+                    }
+                    logger.log('info', 'call', "clientMicrophoneVolumeSet(): " + msg, request);
+
+                    return request;
+                };
+                /*--End*/
 		
 		       
 		        /**
