@@ -65,6 +65,8 @@
 		            border-radius: 0px !important;
 		            background-color: transparent;
 		            background-repeat: no-repeat;
+		            box-shadow: none;
+			    	border-bottom: 1px solid #6A6A6A;
 				}
 		
 		        .btn-group .btn-leaveEnd{
@@ -211,6 +213,10 @@
 			    	margin-left:10px;
 			    	margin-right:10px;
 			    }		*/
+			    #volume-control-speaker, #volume-control-mic{
+					border: none;
+					border-radius: 4px;
+			    }
 			</style>
         <!--End CSS-->
 
