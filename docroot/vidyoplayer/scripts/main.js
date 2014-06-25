@@ -2615,6 +2615,10 @@
                     $('#smd_warning_button_continue').click(function() {
                     	$('#smdWarningModal').modal('hide');
                         self.cache.$inCallLocalShareList.hide();
+                        
+                        if ($('#pluginContainer').css('visibility')=='hidden'){
+                            $('#pluginContainer').css('visibility', 'visible');
+                        }
 
                             self.smd = true;
 
