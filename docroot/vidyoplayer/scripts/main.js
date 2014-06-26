@@ -312,6 +312,9 @@
 			    max: self.config.maxVolForSpeakerMic,	    
 			    slide: function( event, ui ) {			  
 			      console.log( "Setting Speaker volume to: " + ui.value);
+			      if(self.isMutedSpeaker){
+	                    self.cache.$inCallButtonMuteSpeaker.click();
+	              }
 			      clientSpeakerVolumeSet(ui.value);		      
 			    }
 			});	
@@ -324,6 +327,9 @@
 			    max: self.config.maxVolForSpeakerMic,	   
 			    slide: function( event, ui ) {			  
 			      console.log( "Setting Mic volume to: " + ui.value);
+			      if(self.isMutedMic){
+	                    self.cache.$inCallButtonMuteMicrophone.click();
+			      }
 			      clientMicrophoneVolumeSet(ui.value);		     
 			    }
 			});	
@@ -2515,10 +2521,14 @@
                 if(self.isMutedSpeaker){
                 	self.cache.$inCallButtonMuteSpeaker.removeClass('btn btn-large btn-tms-success').addClass('btn btn-large btn-tms-failure');
                 	self.cache.$inCallButtonMuteSpeaker.attr('title','Unmute Speakers');
+                	$("#volume-control-speaker .ui-slider-range").css("background", "grey");
+                    $("#slider-handle-speaker").css({"background":"grey", "border":"1px solid grey"});
                 }
                 else{
                 	self.cache.$inCallButtonMuteSpeaker.removeClass('btn btn-large btn-tms-failure').addClass('btn btn-large btn-tms-success');
                 	self.cache.$inCallButtonMuteSpeaker.attr('title','Mute Speakers');
+                	$("#volume-control-speaker .ui-slider-range").css("background","#006600");
+                    $("#slider-handle-speaker").css({"background":"", "border":""});
                 }
 
                 /* Added by Ranjeet on 12/05/2013 to address US3423
@@ -2544,10 +2554,14 @@
                 if(self.isMutedMic){
                 	self.cache.$inCallButtonMuteMicrophone.removeClass('btn btn-large btn-tmm-success').addClass('btn btn-large btn-tmm-failure');
                 	self.cache.$inCallButtonMuteMicrophone.attr('title','Unmute Mic');
+                	$("#volume-control-mic .ui-slider-range").css("background","grey");
+                    $("#slider-handle-mic").css({"background":"grey", "border":"1px solid grey"});
                 }
                 else{
                 	self.cache.$inCallButtonMuteMicrophone.removeClass('btn btn-large btn-tmm-failure').addClass('btn btn-large btn-tmm-success');
                 	self.cache.$inCallButtonMuteMicrophone.attr('title','Mute Mic');
+                	$("#volume-control-mic .ui-slider-range").css("background","#006600");
+                    $("#slider-handle-mic").css({"background":"", "border":""});
                 }
 
                 /* Added by Ranjeet on 12/05/2013 to address US3423
