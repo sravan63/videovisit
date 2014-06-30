@@ -134,7 +134,8 @@
             "specific" : {
                 "videoVisit" : [
                 	"js/site/visit/visit.js",
-                	"js/site/guestvisit/guestvisit.js"
+                	"js/site/guestvisit/guestvisit.js",
+                	"js/site/videovisit/videoVisit.js"
                 ]
             }
 		},
