@@ -17,7 +17,8 @@
             'jquery.typewatch': ["libs/jquery.typewatch.2.2"],
             'bootstrap.notify': ["libs/bootstrap-notify.1.0"],	    
             'domReady': ["libs/domReady.2.0.1"],
-            'jquery-ui': ["libs/jquery-ui-1.9.2.custom.min"]
+            'jquery-ui': ["../../js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min"],
+            'jnotify': ["libs/jnotify/jNotify.jquery"]
         },
         shim: {
         	'jquery-ui': ['jquery'],
@@ -26,7 +27,8 @@
             /* Set storage lib dependencies */
             'jquery.html5storage': ['jquery'],
             'jquery.typewatch': ['jquery'],
-            'bootstrap.notify': ["bootstrap"]
+            'bootstrap.notify': ["bootstrap"],
+            'jnotify': ["jquery"]
         },
         waitSeconds: 15
     });
@@ -57,6 +59,7 @@
             "jquery.typewatch",
             "bootstrap.notify",
             "jquery-ui",
+            "jnotify",
             "utils/globalFunctions"
         ],
         function (
