@@ -157,7 +157,13 @@
 
 #inCallLocalShareList {
     height: 170px;
-    width: 200px;
+    /*width: 200px;*/
+    width: 198px;
+    margin-top: 0;
+    position: absolute;
+    right: 0;
+    left: auto;
+    top: 87px;
     overflow: auto;
     scrollbar-face-color: #ff8c00;
 }
@@ -412,10 +418,16 @@
 
 /* Configuration styles */
 #configurationWrap {
-    width: 250px;
+    /*width: 250px;*/
+    width: 178px;
+    position: absolute;
+    right: 0;
+    left: auto;
+    top: 87px;
     margin-top: 0px;
     margin-left: auto;
     margin-right: auto;
+    padding: 10px;
 }
 
 #configurationWrap .tab-content {
