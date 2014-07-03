@@ -50,13 +50,9 @@
 		 			background-position: 0 0;
 				}
 		        .btn-group{
-		            /* height: 40px;	*/
 		            height: auto;
 		        }
 				.btn-group .btn-large{
-		            /*margin-top: 3px;
-		            width: 65px;
-		            height: 33px;*/
 		            padding-top: 3px;
 		            width: 80px;
 		            height: 60px;
@@ -149,26 +145,6 @@
 		            margin: 0;
 		            background-color: black;
 		        }
-		        #pluginWrap{
-		            /*float: left;*/
-		        }
-		        #btnContainer{
-		            /*float: left;*/
-		        }
-		        #configurationWrap{
-		            /*width: 150px;*/
-		            width: 160px;
-		        }
-		        #inCallLocalShareList{
-		        	width: 198px;
-		        	margin-top:0;
-		        }
-		        #configurationWrap, #inCallLocalShareList{
-		            position: absolute;
-		            right: 0;
-		            left: auto;
-		            top: 87px;
-		        }
 				#infoWrapper, #errorWrapper{
 					background-color: #FFFFFF;
 				}
@@ -202,17 +178,6 @@
 			    	margin-bottom:0;
 			    	height:auto;
 			    }
-/*			    #vvHeader ul#leaveEndBtnContainer{
-			    	display:none;
-			    	float:right;
-			    	font-size:100%;
-			    	margin:4px 0;
-			    }
-			    .btn-group #btnLast{
-			    	display:inline-block;
-			    	margin-left:10px;
-			    	margin-right:10px;
-			    }		*/
 			    #volume-control-speaker, #volume-control-mic{
 					border: none;
 					border-radius: 4px;
