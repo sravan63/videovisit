@@ -3198,6 +3198,11 @@
                         self.logConfig.logLevelsAndCategories = value;
                     }**/
                     clientConfigurationSet(conf);
+
+                   	/* 	Added by Mandar A. on 07/03/2014 as it's not updating the isSelected attribute after converting the Drop-down to Radio Buttons 	*/
+                    //var conf = clientConfigurationGet();
+                    //var updatedConf = clientConfigurationBootstrap(conf);
+                    self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
                 });
 
                 /* Handle invites */
