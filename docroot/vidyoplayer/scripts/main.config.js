@@ -96,47 +96,42 @@
             configurationContainerClass: "#configurationWrap",
             configurationLogLevelsAndCategoriesInput: "#logLevelsAndCategories",
             configurationTemplate: '\
+            <a href="#" class="close" data-hide="alert">&times;</a>\
     <h5 class="text-left">Settings</h5>\
     <div class="control-group">\
         <label class="control-label" for="configurationCamera">Camera</label>\
-        <div class="controls">\
-            <select name="Camera" class="input input-block-level" id="configurationCamera">\
+        <div id="configurationCamera" class="controls">\
             {{#each camera}}\
                 {{#if isSelected}}\
-                    <option value="{{id}}" selected>{{name}}</option>\
+                    <label><input type="radio" class="input" name="Camera" value="{{id}}" checked></input>{{name}}</label>\
                 {{else}}\
-                    <option value="{{id}}">{{name}}</option>\
+                    <label><input type="radio" class="input" name="Camera" value="{{id}}"></input>{{name}}</label>\
                 {{/if}}\
             {{/each}}\
-            </select>\
         </div>\
     </div>\
     <div class="control-group">\
         <label class="control-label" for="configurationSpeaker">Speaker</label>\
-        <div class="controls">\
-            <select name="Speaker" class="input input-block-level" id="configurationSpeaker">\
+        <div id="configurationSpeaker" class="controls">\
             {{#each speaker}}\
                 {{#if isSelected}}\
-                    <option value="{{id}}" selected>{{name}}</option>\
+                    <label><input type="radio" class="input" name="Speaker" value="{{id}}" checked></input>{{name}}</label>\
                 {{else}}\
-                    <option value="{{id}}">{{name}}</option>\
+                    <label><input type="radio" class="input" name="Speaker" value="{{id}}"></input>{{name}}</label>\
                 {{/if}}\
             {{/each}}\
-            </select>\
         </div>\
     </div>\
     <div class="control-group">\
         <label class="control-label" for="configurationMicrophone">Microphone</label>\
-        <div class="controls">\
-            <select name="Microphone" class="input input-block-level" id="configurationMicrophone">\
+        <div id="configurationMicrophone" class="controls">\
             {{#each microphone}}\
                 {{#if isSelected}}\
-                    <option value="{{id}}" selected>{{name}}</option>\
+                    <label><input type="radio" class="input" name="Microphone" value="{{id}}" checked></input>{{name}}</label>\
                 {{else}}\
-                    <option value="{{id}}">{{name}}</option>\
+                    <label><input type="radio" class="input" name="Microphone" value="{{id}}"></input>{{name}}</label>\
                 {{/if}}\
             {{/each}}\
-            </select>\
         </div>\
     </div>\
     ',
