@@ -51,6 +51,7 @@
 				}
 		        .btn-group{
 		            height: auto;
+		            font-family: Avenir Next, sans-serif;
 		        }
 				.btn-group .btn-large{
 		            padding-top: 3px;
