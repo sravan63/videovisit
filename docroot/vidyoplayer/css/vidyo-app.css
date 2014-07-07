@@ -418,7 +418,6 @@
 
 /* Configuration styles */
 #configurationWrap {
-    /*width: 250px;*/
     width: 178px;
     position: absolute;
     right: 0;
@@ -428,6 +427,10 @@
     margin-left: auto;
     margin-right: auto;
     padding: 10px;
+    background-color: #FFFFFF;
+    border-radius: 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    color: #555555;
 }
 
 #configurationWrap .tab-content {
@@ -439,6 +442,29 @@
     padding-right: 10px;
     margin-bottom: 5px;
     background-color: #ffffff;
+}
+
+#configurationWrap h3{
+    font-weight: normal;
+    line-height: 1em;
+}
+
+#configurationWrap .control-group{
+    padding-top: 5px;
+    border-top: 1px solid #888888;
+}
+
+#configurationWrap label.control-label{
+    font-weight: bold;
+}
+
+#configurationWrap input[type="radio"]{
+    margin-right: 10px;
+}
+
+#configurationWrap label{
+    word-wrap: break-word;
+    white-space: pre-line;
 }
 
 .inCallDeviceMenu {
