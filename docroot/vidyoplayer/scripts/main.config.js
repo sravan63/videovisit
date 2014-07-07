@@ -98,46 +98,54 @@
             configurationTemplate: '\
             <a id="configurationCross" href="#" class="close" data-hide="alert">&times;</a>\
     <h3 class="text-left">Settings</h3>\
-    <div class="control-group">\
-        <label class="control-label" for="configurationCamera">Camera</label>\
-        <div id="configurationCamera" class="controls">\
-            <table>\
-                {{#each camera}}\
-                    <tr>\
-                        {{#if isSelected}}\
-                            <td><input type="radio" class="input" name="Camera" value="{{id}}" checked></input></td><td><label>{{name}}</label></td>\
-                        {{else}}\
-                            <td><input type="radio" class="input" name="Camera" value="{{id}}"></input></td><td><label>{{name}}</label></td>\
-                        {{/if}}\
-                    </tr>\
-                {{/each}}\
-            </table>\
-        </div>\
-    </div>\
-    <div class="control-group">\
-        <label class="control-label" for="configurationSpeaker">Speaker</label>\
-        <div id="configurationSpeaker" class="controls">\
-            {{#each speaker}}\
-                {{#if isSelected}}\
-                    <label><input type="radio" class="input" name="Speaker" value="{{id}}" checked></input>{{name}}</label>\
-                {{else}}\
-                    <label><input type="radio" class="input" name="Speaker" value="{{id}}"></input>{{name}}</label>\
-                {{/if}}\
-            {{/each}}\
-        </div>\
-    </div>\
-    <div class="control-group">\
-        <label class="control-label" for="configurationMicrophone">Microphone</label>\
-        <div id="configurationMicrophone" class="controls">\
-            {{#each microphone}}\
-                {{#if isSelected}}\
-                    <label><input type="radio" class="input" name="Microphone" value="{{id}}" checked></input>{{name}}</label>\
-                {{else}}\
-                    <label><input type="radio" class="input" name="Microphone" value="{{id}}"></input>{{name}}</label>\
-                {{/if}}\
-            {{/each}}\
-        </div>\
-    </div>\
+	<div class="control-group">\
+	    <label class="control-label" for="configurationCamera">Camera</label>\
+	    <div id="configurationCamera" class="controls">\
+	        <table>\
+	            {{#each camera}}\
+	                <tr>\
+	                    {{#if isSelected}}\
+	                        <td><input type="radio" class="input" name="Camera" value="{{id}}" checked></input></td><td><label>{{name}}</label></td>\
+	                    {{else}}\
+	                        <td><input type="radio" class="input" name="Camera" value="{{id}}"></input></td><td><label>{{name}}</label></td>\
+	                    {{/if}}\
+	                </tr>\
+	            {{/each}}\
+	        </table>\
+	    </div>\
+	</div>\
+	<div class="control-group">\
+	    <label class="control-label" for="configurationSpeaker">Speaker</label>\
+	    <div id="configurationSpeaker" class="controls">\
+	        <table>\
+	            {{#each speaker}}\
+	        		<tr>\
+	                	{{#if isSelected}}\
+		                    <td><input type="radio" class="input" name="Speaker" value="{{id}}" checked></input></td><td><label>{{name}}</label></td>\
+		                {{else}}\
+		                    <td><input type="radio" class="input" name="Speaker" value="{{id}}"></input></td><td><label>{{name}}</label></td>\
+		                {{/if}}\
+	        		</tr>\
+	            {{/each}}\
+	        </table>\
+	    </div>\
+	</div>\
+	<div class="control-group">\
+	    <label class="control-label" for="configurationMicrophone">Microphone</label>\
+	    <div id="configurationMicrophone" class="controls">\
+	    	 <table>\
+	            {{#each microphone}}\
+	            	<tr>\
+		                {{#if isSelected}}\
+		                    <td><input type="radio" class="input" name="Microphone" value="{{id}}" checked></input></td><td><label>{{name}}</label></td>\
+		                {{else}}\
+		                    <td><input type="radio" class="input" name="Microphone" value="{{id}}"></input></td><td><label>{{name}}</label></td>\
+		                {{/if}}\
+	            	</tr>\
+	            {{/each}}\
+	    	</table>\
+	    </div>\
+	</div>\
     ',
             /* Login menu */
             userLoginPopup: "#userLoginPopup",
