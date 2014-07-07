@@ -96,8 +96,8 @@
             configurationContainerClass: "#configurationWrap",
             configurationLogLevelsAndCategoriesInput: "#logLevelsAndCategories",
             configurationTemplate: '\
-            <a href="#" class="close" data-hide="alert">&times;</a>\
-    <h5 class="text-left">Settings</h5>\
+            <a id="configurationCross" href="#" class="close" data-hide="alert">&times;</a>\
+    <h3 class="text-left">Settings</h3>\
     <div class="control-group">\
         <label class="control-label" for="configurationCamera">Camera</label>\
         <div id="configurationCamera" class="controls">\
