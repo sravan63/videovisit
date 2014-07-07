@@ -1960,6 +1960,11 @@
 
                     self.cache.$configurationContainer.slideToggle();
                 });
+			
+			self.cache.$configurationContainer.
+                    on("click", ".close", function (e) {
+                    	self.cache.$configurationContainer.slideToggle();
+                    });
 
             self.cache.$preCallSearchNavigationList
                 .on('click', "a", function (e) {
