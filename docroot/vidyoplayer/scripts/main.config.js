@@ -101,13 +101,17 @@
     <div class="control-group">\
         <label class="control-label" for="configurationCamera">Camera</label>\
         <div id="configurationCamera" class="controls">\
-            {{#each camera}}\
-                {{#if isSelected}}\
-                    <label><input type="radio" class="input" name="Camera" value="{{id}}" checked></input>{{name}}</label>\
-                {{else}}\
-                    <label><input type="radio" class="input" name="Camera" value="{{id}}"></input>{{name}}</label>\
-                {{/if}}\
-            {{/each}}\
+            <table>\
+                {{#each camera}}\
+                    <tr>\
+                        {{#if isSelected}}\
+                            <td><input type="radio" class="input" name="Camera" value="{{id}}" checked></input></td><td><label>{{name}}</label></td>\
+                        {{else}}\
+                            <td><input type="radio" class="input" name="Camera" value="{{id}}"></input></td><td><label>{{name}}</label></td>\
+                        {{/if}}\
+                    </tr>\
+                {{/each}}\
+            </table>\
         </div>\
     </div>\
     <div class="control-group">\
