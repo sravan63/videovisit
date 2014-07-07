@@ -423,10 +423,10 @@
 	    <!-- MEMBER AND GUEST: END - Quit Meeting Dialogs  -->
 	
         <!--Start PHI Sharing Dialog - SMD  -->
-        <div id="smdWarningModal" class="modal hide fade" style="width:300px;height:200px;" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
+        <div id="smdWarningModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
             <div class="modal-header">
                 <button type="button" id="smd_warning_modal_cross_button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-                <h3 id=""></h3>
+                <h3 id="">Share My Desktop</h3>
             </div>
             <div class="modal-body">
                 <div class="dialog-content-question">
@@ -439,7 +439,7 @@
                             <li>
                                 <input class="button" id="smd_warning_button_cancel"  type="button" value="Cancel &rsaquo;&rsaquo;"/>
                             </li>
-			    			<li style="float:right;">
+			    			<li>
                                 <input class="button" id="smd_warning_button_continue" type="button" value="Continue &rsaquo;&rsaquo;"/>
                             </li>
                         </ul>
