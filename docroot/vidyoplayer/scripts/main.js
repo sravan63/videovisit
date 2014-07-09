@@ -3129,8 +3129,10 @@
              });
 
             /* Handle selection of different input device */
+            /* Mandar A. 07/09/2014: Adding 'onchange .input' -- work around for Firefox
+             * 						 Adding 'setTimeout' -- work around for IE	*/
             self.cache.$configurationContainer
-                .on("change", function(event, obj) {
+                .on("change click", ".input", function(event, obj) {
                     logger.log('info', 'ui',"configurationContainer::change", event, obj);
 
                     var target = $(event.target),
@@ -3207,7 +3209,9 @@
                    	/* 	Added by Mandar A. on 07/03/2014 as it's not updating the isSelected attribute after converting the Drop-down to Radio Buttons 	*/
                     //var conf = clientConfigurationGet();
                     //var updatedConf = clientConfigurationBootstrap(conf);
-                    self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
+                    setTimeout(function() {
+                    	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
+                    }, 500);
                 });
 
                 /* Handle invites */
