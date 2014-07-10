@@ -156,10 +156,12 @@
 }
 
 #inCallLocalShareList {
-    height: 170px;
-    /*width: 200px;*/
-    width: 198px;
+    /*height: 170px;
+    width: 200px;*/
+    height: auto;
+    width: 178px;
     margin-top: 0;
+    padding: 10px;
     position: absolute;
     right: 0;
     left: auto;
@@ -175,7 +177,7 @@
     position: absolute;
     border: 10px solid transparent;
     border-right-color: #FFFFFF;
-    top: 45%;
+    top: 85px;
     left: -20px;
     z-index: 9999;
 }
@@ -452,7 +454,7 @@
     position:absolute;
     border: 10px solid transparent;
     border-right-color: #FFFFFF;
-    top: 5%;
+    top: 25px;
     left: -20px;
     z-index: 9999;
 }
