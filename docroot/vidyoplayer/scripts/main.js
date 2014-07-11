@@ -339,7 +339,7 @@
 			
 			
 			function setSpeakerMicVolForSlider(){
-			    $( ".ui-slider-range" ).css("background","#006600");
+			    $( ".ui-slider-range" ).css("background","#FFFFFF");
 			     var speakerVolReq = clientSpeakerVolumeGet();
 			     var speakerVolFromVidyo = speakerVolReq.volume;
 			     console.log("setSpeakerMicVolForSlider -> Speaker Volume=" + speakerVolFromVidyo);
@@ -2535,7 +2535,7 @@
                 else{
                 	self.cache.$inCallButtonMuteSpeaker.removeClass('btn btn-large btn-tms-failure').addClass('btn btn-large btn-tms-success');
                 	self.cache.$inCallButtonMuteSpeaker.attr('title','Mute Speakers');
-                	$("#volume-control-speaker .ui-slider-range").css("background","#006600");
+                	$("#volume-control-speaker .ui-slider-range").css("background","#FFFFFF");
                     $("#slider-handle-speaker").css({"background":"", "border":""});
                 }
 
@@ -2568,7 +2568,7 @@
                 else{
                 	self.cache.$inCallButtonMuteMicrophone.removeClass('btn btn-large btn-tmm-failure').addClass('btn btn-large btn-tmm-success');
                 	self.cache.$inCallButtonMuteMicrophone.attr('title','Mute Mic');
-                	$("#volume-control-mic .ui-slider-range").css("background","#006600");
+                	$("#volume-control-mic .ui-slider-range").css("background","#FFFFFF");
                     $("#slider-handle-mic").css({"background":"", "border":""});
                 }
 
