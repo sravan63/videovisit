@@ -356,6 +356,7 @@
     </dl>\
     ',
             inCallLocalSharesTemplate: '\
+            	<a id="configurationCross" href="#" class="close" data-hide="alert">&times;</a>\
     {{#if sharing}}\
     <li role="presentation"><a class="inCallLocalShareItem inCallLocalShareUnshare" role="menuitem" tabindex="-1" href="#">Stop sharing</a></li>\
     <li class="divider"></li>\
