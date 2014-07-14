@@ -42,7 +42,7 @@
 
        <init-param>
 	      <param-name>excludeURLs</param-name>
-	      <param-value>mdohelp.htm</param-value>
+	      <param-value>mdo.htm,mdohelp.htm,mdolive.htm,mdohelplive.htm,intro.htm,setup.htm</param-value>
 	   </init-param>
        	    
    </filter>
