@@ -15,16 +15,20 @@
             'handlebars': ['libs/handlebars.amd.min.1.3.0'],
             'jquery.html5storage': ["libs/jquery.html5storage.min.1.0"],
             'jquery.typewatch': ["libs/jquery.typewatch.2.2"],
-            'bootstrap.notify': ["libs/bootstrap-notify.1.0"],
-            'domReady': ["libs/domReady.2.0.1"]
+            'bootstrap.notify': ["libs/bootstrap-notify.1.0"],	    
+            'domReady': ["libs/domReady.2.0.1"],
+            'jquery-ui': ["../../js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min"],
+            'jnotify': ["libs/jnotify/jNotify.jquery"]
         },
         shim: {
+        	'jquery-ui': ['jquery'],
             /* Set bootstrap dependencies (just jQuery) */
             'bootstrap': ['jquery'],
             /* Set storage lib dependencies */
             'jquery.html5storage': ['jquery'],
             'jquery.typewatch': ['jquery'],
-            'bootstrap.notify': ["bootstrap"]
+            'bootstrap.notify': ["bootstrap"],
+            'jnotify': ["jquery"]
         },
         waitSeconds: 15
     });
@@ -54,6 +58,8 @@
             "jquery.html5storage",
             "jquery.typewatch",
             "bootstrap.notify",
+            "jquery-ui",
+            "jnotify",
             "utils/globalFunctions"
         ],
         function (
@@ -67,226 +73,304 @@
             config,
             handlebars
         ) {
-	    var isProvider = false;
-	    var isHost = false;
-            var isMember = false;
-	    var role = '';
-	    var meetingId = '';
-	    var meetingCode = '';
-	    var guestName='';
-	    var caregiverId='';
-	    var quitclick = 'false';
-	    var endclick = 'false';
-            var refreshMeetings = false;
-            /**
-             * Main application module
-             * @param  {Object} config Configuration (main.config)
-             * @return {Object}        Application representation
-             */
-            var application = function (config) {
-                /**
-                 * Predefine functions for faster JS execution
-                 */
-                var applicationBuildCache, applicationBuildTemplates, applicationAddPlugin, applicationCallCleanup, applicationCheckForDeveloper, applicationBuildSubscribeEvents, applicationBindVidyoCallbacks, applicationBindSubscribeEvents, applicationBindUIEvents, applicationLoadCacheFromPersistentStore, applicationBindEvents, applicationClientInfoPrint, clientConferenceLeave, clientConferenceStateGet, clientConfigurationBootstrap, clientConfigurationGet, clientConfigurationSet, clientCurrentUserGet, clientEndpointIDGet, clientGroupChatSend, clientGuestLoginAndJoin, clientIncomingCallAccept, clientIncomingCallReject, clientLayoutSet, clientLayoutToggle, clientLocalMediaInfo, clientLocalSharesGet, clientLocalSharesGetExt, clientLocalShareStart, clientLocalShareStop, clientLogLevelsAndCategoriesSet, clientMicrophoneMute, clientParticipantPin, clientParticipantsGet, clientParticipantsSetLimit, clientPreviewModeSet, clientPreviewModeToggle, clientPrivateChatSend, clientRecordAndWebcastStateGet, clientSessionGetInfo, clientSharesGet, clientSharesSetCurrent, clientSpeakerMute, clientUserLogin, clientUserLogout, clientVideoMute, helperConferenceUpdateTimerStart, helperConferenceUpdateTimerStop, helperPersistentStorageGetValue, helperPersistentStorageSetValue, helperPortalUsersStatusUpdateTimerStart, helperPortalUsersStatusUpdateTimerStop, helperRingtonePlay, helperRingtoneStop, helperSoapPromiseToGetMyAccount, helperSoapPromiseToSearch, helperSoapPromiseToSearchMyContacts, helperSoapPromiseToSendUserRequest, portalParticipantsPromiseToGet, portalRecordGetProfiles, portalRecordStart, portalRecordStop, portalRoomInfoPromiseToGet, portalRoomPromiseToLock, portalUserCallDirect, portalUserCancelSearchRequest, portalUserFavoritePromiseToAdd, portalUserFavoritePromiseToRemove, portalUserInviteToConference, portalUserJoinConference, portalUserSearchBothFavAndUsers, uiChatUpdateView, uiChatViewMinimize, uiChatViewScrollToPosition, uiChatViewTabCreateIfNotExists, uiChatViewTabNotifyStart, uiChatViewTabNotifyStop, uiChatViewTabSwitch, uiConfigurationUpdateWithData, uiDesktopNotification, uiDesktopNotificationRequestPermission, uiFullscreenCancel, uiFullscreenSet, uiGenericNotify, uiInCallShow, uiIncomingCallMissedCallNotify, uiIncomingCallNotificationDismiss, uiJoinConferencePinDialogShow, uiReportJoinConferencePinError, uiLocalShareReset, uiLocalSharesUpdateWithData, uiParticipantEnableInvite, uiParticipantsPromiseToSlide, uiParticipantStatusNotify, uiParticipantsUpdateWithData, uiPrecallMenuShow, uiPromiseToEndSplashScreen, uiCallCleanup ,uiPromiseToShowMenu, uiReportError, uiReportGuestLoginError, uiReportInfo, uiReportCloseEngage, uiReportInfoDismiss, uiReportUserLoginError, uiSearchProgressShow, uiSetMicMuted, uiSetSpeakerMuted, uiSetVideoMuted, uiShareSelect, uiSharesUpdateWithData, uiShowInCallContainerMinimizedAndWithPlugin, uiStart, uiStartPluginDetection, uiUpdateGuestLoginProgress, uiUpdateJoinProgress, uiUpdateUserLoginProgress, uiUserFavoriteAdd, uiUserFavoriteRemove, uiUserNavigationUpdateWithData, uiVidyoPluginShow, uiVidyoPluginIsShown, vidyoPluginConfigurationPrepare, vidyoPluginInitAndStart, vidyoPluginIsLoaded, vidyoPluginIsInstalled, vidyoPluginIsStarted, vidyoPluginLoad, vidyoPluginStart, vidyoPluginStop;
-                /**
-                 * Application representation module
-                 * @type {Object}
-                 */
-                var self = {};
+		    var isProvider = false;
+		    var isHost = false;
+	        var isMember = false;
+		    var role = '';
+		    var meetingId = '';
+		    var meetingCode = '';
+		    var guestName='';
+		    var caregiverId='';
+		    var quitclick = 'false';
+		    var endclick = 'false';
+	        var refreshMeetings = false;
+	        /**
+	         * Main application module
+	         * @param  {Object} config Configuration (main.config)
+	         * @return {Object}        Application representation
+	         */
+	        var application = function (config) {
+	        /**
+	         * Predefine functions for faster JS execution
+	         */
+	        var applicationBuildCache, applicationBuildTemplates, applicationAddPlugin, applicationCallCleanup, applicationCheckForDeveloper, applicationBuildSubscribeEvents, applicationBindVidyoCallbacks, applicationBindSubscribeEvents, applicationBindUIEvents, applicationLoadCacheFromPersistentStore, applicationBindEvents, applicationClientInfoPrint, clientConferenceLeave, clientConferenceStateGet, clientConfigurationBootstrap, clientConfigurationGet, clientConfigurationSet, clientCurrentUserGet, clientEndpointIDGet, clientGroupChatSend, clientGuestLoginAndJoin, clientIncomingCallAccept, clientIncomingCallReject, clientLayoutSet, clientLayoutToggle, clientLocalMediaInfo, clientLocalSharesGet, clientLocalSharesGetExt, clientLocalShareStart, clientLocalShareStop, clientLogLevelsAndCategoriesSet, clientMicrophoneMute, clientParticipantPin, clientParticipantsGet, clientParticipantsSetLimit, clientPreviewModeSet, clientPreviewModeToggle, clientPrivateChatSend, clientRecordAndWebcastStateGet, clientSessionGetInfo, clientSharesGet, clientSharesSetCurrent, clientSpeakerMute, clientUserLogin, clientUserLogout, clientVideoMute, helperConferenceUpdateTimerStart, helperConferenceUpdateTimerStop, helperPersistentStorageGetValue, helperPersistentStorageSetValue, helperPortalUsersStatusUpdateTimerStart, helperPortalUsersStatusUpdateTimerStop, helperRingtonePlay, helperRingtoneStop, helperSoapPromiseToGetMyAccount, helperSoapPromiseToSearch, helperSoapPromiseToSearchMyContacts, helperSoapPromiseToSendUserRequest, portalParticipantsPromiseToGet, portalRecordGetProfiles, portalRecordStart, portalRecordStop, portalRoomInfoPromiseToGet, portalRoomPromiseToLock, portalUserCallDirect, portalUserCancelSearchRequest, portalUserFavoritePromiseToAdd, portalUserFavoritePromiseToRemove, portalUserInviteToConference, portalUserJoinConference, portalUserSearchBothFavAndUsers, uiChatUpdateView, uiChatViewMinimize, uiChatViewScrollToPosition, uiChatViewTabCreateIfNotExists, uiChatViewTabNotifyStart, uiChatViewTabNotifyStop, uiChatViewTabSwitch, uiConfigurationUpdateWithData, uiDesktopNotification, uiDesktopNotificationRequestPermission, uiFullscreenCancel, uiFullscreenSet, uiGenericNotify, uiInCallShow, uiIncomingCallMissedCallNotify, uiIncomingCallNotificationDismiss, uiJoinConferencePinDialogShow, uiReportJoinConferencePinError, uiLocalShareReset, uiLocalSharesUpdateWithData, uiParticipantEnableInvite, uiParticipantsPromiseToSlide, uiParticipantStatusNotify, uiParticipantsUpdateWithData, uiPrecallMenuShow, uiPromiseToEndSplashScreen, uiCallCleanup ,uiPromiseToShowMenu, uiReportError, uiReportGuestLoginError, uiReportInfo, uiReportCloseEngage, uiReportInfoDismiss, uiReportUserLoginError, uiSearchProgressShow, uiSetMicMuted, uiSetSpeakerMuted, uiSetVideoMuted, uiShareSelect, uiSharesUpdateWithData, uiShowInCallContainerMinimizedAndWithPlugin, uiStart, uiStartPluginDetection, uiUpdateGuestLoginProgress, uiUpdateJoinProgress, uiUpdateUserLoginProgress, uiUserFavoriteAdd, uiUserFavoriteRemove, uiUserNavigationUpdateWithData, uiVidyoPluginShow, uiVidyoPluginIsShown, vidyoPluginConfigurationPrepare, vidyoPluginInitAndStart, vidyoPluginIsLoaded, vidyoPluginIsInstalled, vidyoPluginIsStarted, vidyoPluginLoad, vidyoPluginStart, vidyoPluginStop;
+	        
+	        /* Added by Ranjeet on 06/25/2014 to address US4477
+		    Start ---*/
+	        var clientSpeakerVolumeGet, clientSpeakerVolumeSet, clientMicrophoneVolumeGet, clientMicrophoneVolumeSet;
+	        /*--End*/
+	        
+	        /**
+	         * Application representation module
+	         * @type {Object}
+	         */
+	        var self = {};
+	
+	        /**
+	         * Application configuration
+	         * @type {Object}
+	         */
+	        self.config = config;
+	
+	        /**
+	         * Vidyo library specific configuration
+	         * @type {Object}
+	         */
+	        self.config.vidyoLib = {};
+	        /**
+	         * Holds caches DOM
+	         * @type {Object}
+	         */
+	        self.cache = {};
+	
+	        /**
+	         * Holds cached events
+	         * @type {Object}
+	         */
+	        self.events = {};
+	        /**
+	         * Data about user login parameters
+	         * @type {Object}
+	         */
+	        self.loginInfo = {};
+	
+	        /**
+	         * Data about guest login parameters
+	         * @type {Object}
+	         */
+	        self.guestLoginInfo = {};
+	
+	        /**
+	         * Map of handlebars templates
+	         * @type {Object}
+	         */
+	        self.templates = {};
+	
+	        /**
+	         * Guest login request sequencer
+	         * @type {Number}
+	         */
+	        self.currentRequestId = 1;
+	
+	        /**
+	         * Holds information about contacts and searches users
+	         * @type {Object}
+	         */
+	        self.users = {
+	            favNum: "",
+	            fav: [],
+	            userNum: "",
+	            user: []
+	        };
+	        /**
+	         * Hold last users variable so we can revert in case
+	         * when search is canceled
+	         * @type {Object}
+	         */
+	        self.lastUsers = self.users;
+	
+	        /**
+	         * Holds value for search refresh timer
+	         * so we can cancel it later on.
+	         * @type {[type]}
+	         */
+	        self.searchUserRefreshTimer = undefined;
+	
+	        /**
+	         * True if current login process is for guest
+	         * False if current login process is for user
+	         * @type {Boolean}
+	         */
+	        self.isGuestLogin = false;
+	
+	        /**
+	         * Current preview mode. On application start it will be propagated from
+	         * persistent storage
+	         * @type {String}
+	         */
+	        self.currentPreviewMode = self.config.defaultPreviewMode;
+	
+	        /**
+	         * Current mute state of microphone
+	         * @type {Boolean}
+	         */
+	        self.isMutedMic = false;
+	
+	        /**
+	         * Current mute state of speaker
+	         * @type {Boolean}
+	         */
+	        self.isMutedSpeaker = false;
+	
+	        /**
+	         * Current mute state of video
+	         * @type {Boolean}
+	         */
+	        self.isMutedVideo = false;
+	
+	        /**
+	         * True if in fullscreen mode,
+	         * False otherwise
+	         * @type {Boolean}
+	         */
+	        self.isFullscreen = false;
+	
+	        self.numPreferred = 0;
+			self.numParticipants = 0;
+			self.smd = false;
+			self.stopshare = false;
+	
+	        /**
+	         * Holds current search SOAP request to the VidyoPortal
+	         * in case we need to cancel it
+	         * @type {Object}
+	         */
+	        self.currentSearchRequest = undefined;
+	
+	        /**
+	         * Holds information about current user on a portal.
+	         * Response to myAccount SOAP request to the portal.
+	         * @type {Object}
+	         */
+	        self.myAccount = undefined;
+	
+	        /**
+	         * Currently shared application id
+	         * @type {String}
+	         */
+	        self.currentShareId = undefined;
+	
+	        /**
+	         * Current state of full page mode
+	         * @type {Boolean}
+	         */
+	        self.isFullpage = false;
+	
+	        /**
+	         * Conference status
+	         * @type {Boolean}
+	         */
+	        self.inConference = false;
+	        
+	        /**
+	         * Is in joining state
+	         * @type {Boolean}
+	         */
+	         self.isJoining = false;
+	
+	        /**
+	         * Status of participant list show
+	         * @type {Boolean}
+	         */
+	        self.isShowingParticipantList = true;
+	        self.kphcShare = '';
+	
+	        /**
+	         * List of participants
+	         * @type {Object}
+	         */
+	        self.currentParticipants = [];
+	
+	        /**
+	         * Last invitee
+	         * @type {String}
+	         */
+	         self.invitee = "";
+	
+	        /**
+	         * Configuration of log 
+	         */
+	        self.logConfig = {};
+	        
+	        /**
+	         * Is in disconnected state
+	         * @type {Boolean}
+	         */
+	         self.isDisconnect = false;
+	         
+	
+	        /* IE 8 tweek for array */
+	        if (!Array.prototype.indexOf) {
+	            Array.prototype.indexOf = function (val) {
+	                var i;
+	                for (i = 0; i < this.length; i++) {
+	                    if (this[i] === val) {
+	                        return i;
+	                    }
+	                }
+	                return -1;
+	            };
+	        }
+	        //if (!self.config.enableAppLogs)
+	           // console.log = function() {};
+	
+	        logger.log('debug', 'application', 'Loaded main');
+	        logger.log('debug', 'application', 'Browser supports: ', $.support);
+	        /* Added by Ranjeet on 06/25/2014 to address US4477
+		    Start ---*/
+			$( "#volume-control-speaker" ).slider({
+			    orientation: "horizontal",
+			    range: "min",
+			    min: 0,
+			    max: self.config.maxVolForSpeakerMic,	    
+			    slide: function( event, ui ) {			  
+			      console.log( "Setting Speaker volume to: " + ui.value);
+			      if(self.isMutedSpeaker){
+	                    self.cache.$inCallButtonMuteSpeaker.click();
+	              }
+			      clientSpeakerVolumeSet(ui.value);		      
+			    }
+			});	
+				
+				
+			$( "#volume-control-mic" ).slider({
+			    orientation: "horizontal",
+			    range: "min",
+			    min: 0,
+			    max: self.config.maxVolForSpeakerMic,	   
+			    slide: function( event, ui ) {			  
+			      console.log( "Setting Mic volume to: " + ui.value);
+			      if(self.isMutedMic){
+	                    self.cache.$inCallButtonMuteMicrophone.click();
+			      }
+			      clientMicrophoneVolumeSet(ui.value);		     
+			    }
+			});	
+			
+            $("#playMe").on("click", function(){
+                $("#playMe").css("display", "none");
+                $("#pauseMe").css("display", "inline-block");
+                helperRingtonePlay();
+            });
+            $("#pauseMe").on("click", function(){
+                $("#pauseMe").css("display", "none");
+                $("#playMe").css("display", "inline-block");
+                helperRingtoneStop();
+            });
 
-        /**
-         * Application configuration
-         * @type {Object}
-         */
-        self.config = config;
-
-        /**
-         * Vidyo library specific configuration
-         * @type {Object}
-         */
-        self.config.vidyoLib = {};
-        /**
-         * Holds caches DOM
-         * @type {Object}
-         */
-        self.cache = {};
-
-        /**
-         * Holds cached events
-         * @type {Object}
-         */
-        self.events = {};
-        /**
-         * Data about user login parameters
-         * @type {Object}
-         */
-        self.loginInfo = {};
-
-        /**
-         * Data about guest login parameters
-         * @type {Object}
-         */
-        self.guestLoginInfo = {};
-
-        /**
-         * Map of handlebars templates
-         * @type {Object}
-         */
-        self.templates = {};
-
-        /**
-         * Guest login request sequencer
-         * @type {Number}
-         */
-        self.currentRequestId = 1;
-
-        /**
-         * Holds information about contacts and searches users
-         * @type {Object}
-         */
-        self.users = {
-            favNum: "",
-            fav: [],
-            userNum: "",
-            user: []
-        };
-        /**
-         * Hold last users variable so we can revert in case
-         * when search is canceled
-         * @type {Object}
-         */
-        self.lastUsers = self.users;
-
-        /**
-         * Holds value for search refresh timer
-         * so we can cancel it later on.
-         * @type {[type]}
-         */
-        self.searchUserRefreshTimer = undefined;
-
-        /**
-         * True if current login process is for guest
-         * False if current login process is for user
-         * @type {Boolean}
-         */
-        self.isGuestLogin = false;
-
-        /**
-         * Current preview mode. On application start it will be propagated from
-         * persistent storage
-         * @type {String}
-         */
-        self.currentPreviewMode = self.config.defaultPreviewMode;
-
-        /**
-         * Current mute state of microphone
-         * @type {Boolean}
-         */
-        self.isMutedMic = false;
-
-        /**
-         * Current mute state of speaker
-         * @type {Boolean}
-         */
-        self.isMutedSpeaker = false;
-
-        /**
-         * Current mute state of video
-         * @type {Boolean}
-         */
-        self.isMutedVideo = false;
-
-        /**
-         * True if in fullscreen mode,
-         * False otherwise
-         * @type {Boolean}
-         */
-        self.isFullscreen = false;
-
-        self.numPreferred = 0;
-		self.numParticipants = 0;
-		self.smd = false;
-		self.stopshare = false;
-
-        /**
-         * Holds current search SOAP request to the VidyoPortal
-         * in case we need to cancel it
-         * @type {Object}
-         */
-        self.currentSearchRequest = undefined;
-
-        /**
-         * Holds information about current user on a portal.
-         * Response to myAccount SOAP request to the portal.
-         * @type {Object}
-         */
-        self.myAccount = undefined;
-
-        /**
-         * Currently shared application id
-         * @type {String}
-         */
-        self.currentShareId = undefined;
-
-        /**
-         * Current state of full page mode
-         * @type {Boolean}
-         */
-        self.isFullpage = false;
-
-        /**
-         * Conference status
-         * @type {Boolean}
-         */
-        self.inConference = false;
-        
-        /**
-         * Is in joining state
-         * @type {Boolean}
-         */
-         self.isJoining = false;
-
-        /**
-         * Status of participant list show
-         * @type {Boolean}
-         */
-        self.isShowingParticipantList = true;
-        self.kphcShare = '';
-
-        /**
-         * List of participants
-         * @type {Object}
-         */
-        self.currentParticipants = [];
-
-        /**
-         * Last invitee
-         * @type {String}
-         */
-         self.invitee = "";
-
-        /**
-         * Configuration of log 
-         */
-        self.logConfig = {};
-
-        /* IE 8 tweek for array */
-        if (!Array.prototype.indexOf) {
-            Array.prototype.indexOf = function (val) {
-                var i;
-                for (i = 0; i < this.length; i++) {
-                    if (this[i] === val) {
-                        return i;
-                    }
-                }
-                return -1;
-            };
-        }
-        //if (!self.config.enableAppLogs)
-           // console.log = function() {};
-
-        logger.log('debug', 'application', 'Loaded main');
-        logger.log('debug', 'application', 'Browser supports: ', $.support);
+			function setSpeakerMicVolForSlider(){
+			    $( ".ui-slider-range" ).css("background","#76C000");
+			     var speakerVolReq = clientSpeakerVolumeGet();
+			     var speakerVolFromVidyo = speakerVolReq.volume;
+			     console.log("setSpeakerMicVolForSlider -> Speaker Volume=" + speakerVolFromVidyo);
+			     if (speakerVolFromVidyo == null) {
+					//code
+					console.log("setSpeakerMicVolForSlider -> Speaker Volume null so setting default value: " + self.config.defaultVolForSpeakerMic);
+					speakerVolFromVidyo = self.config.defaultVolForSpeakerMic;
+			     }
+			     $("#volume-control-speaker").slider('value',parseInt(speakerVolFromVidyo));
+			     
+			     var micVolReq = clientMicrophoneVolumeGet();
+			     var micVolFromVidyo = micVolReq.volume;
+			     console.log("setSpeakerMicVolForSlider -> Mic Volume=" + micVolFromVidyo);
+			     if (micVolFromVidyo == null) {
+					//code
+					console.log("setSpeakerMicVolForSlider -> Mic Volume null so setting default value: " + self.config.defaultVolForSpeakerMic);
+					micVolFromVidyo = self.config.defaultVolForSpeakerMic;
+			     }
+			     $("#volume-control-mic").slider('value',parseInt(micVolFromVidyo));
+			}
+	        /*--End*/
 
            /**
             * Cache jQuery DOM objects for performance
@@ -309,7 +393,7 @@
             self.cache.$guestProgressBarContainer       = $(self.config.guestProgressBarContainer);
             self.cache.$guestURL                        = $(self.config.guestURL);
             self.cache.$inCallButtonDisconnect          = $(self.config.inCallButtonDisconnect);
-            self.cache.$inCallButtonEndMeeting         = $(self.config.inCallButtonEndMeeting);
+            self.cache.$inCallButtonEndMeeting          = $(self.config.inCallButtonEndMeeting);
             self.cache.$inCallButtonFullpage            = $(self.config.inCallButtonFullpage);
             self.cache.$inCallButtonFullscreen          = $(self.config.inCallButtonFullscreen);
             self.cache.$inCallButtonMuteMicrophone      = $(self.config.inCallButtonMuteMicrophone);
@@ -327,56 +411,63 @@
             self.cache.$inCallContainer                 = $(self.config.inCallContainer);
             self.cache.$inCallParticipantsList          = $(self.config.inCallParticipantsList);
             self.cache.$inCallParticipantsPanel         = $(self.config.inCallParticipantsPanel);
-           self.cache.$inCallParticipantHeaderName = $(self.config.inCallParticipantHeaderName);
+            self.cache.$inCallParticipantHeaderName     = $(self.config.inCallParticipantHeaderName);
             self.cache.$inCallPluginAndControls         = $(self.config.inCallPluginAndControls);
             self.cache.$inCallLocalShareList            = $(self.config.inCallLocalShareList);
             self.cache.$inCallShareList                 = $(self.config.inCallShareList);
-           self.cache.$inCallChatContainer = $(self.config.inCallChatContainer);
-	        self.cache.$inCallChatTabs = $(self.config.inCallChatTabs);
-	        self.cache.$inCallChatPanes = $(self.config.inCallChatPanes);
-	        self.cache.$inCallChatMinimizeLink = $(self.config.inCallChatMinimizeLink);
-	        self.cache.$inCallChatGroupTabLink = $(self.config.inCallChatGroupTabLink);
-	        self.cache.$inCallChatForm = $(self.config.inCallChatForm);
-	        self.cache.$inCallChatTextField = $(self.config.inCallChatTextField);
-	        self.cache.$inCallChatTextSend = $(self.config.inCallChatTextSend);
-	        self.cache.$inCallChatGroupPane = $(self.config.inCallChatGroupPane);
-	        self.cache.$inCallChatGroupTab = $(self.config.inCallChatGroupTab);
-	        self.cache.$notificationContainer = $(self.config.notificationContainer);
-	        self.cache.$mainMenu = $(self.config.mainMenu);
-	        self.cache.$pluginAndChatContainer = $(self.config.pluginAndChatContainer);
-	        self.cache.$pluginContainer = $(self.config.pluginContainer);
-	        self.cache.$plugin = $(self.config.pluginContainer).children(":first"); //Firefox quirk
-	        self.cache.$preCallContainer = $(self.config.preCallContainer);
-	        self.cache.$preCallJoinAsUserPopup = $(self.config.preCallJoinAsUserPopup);
-	        self.cache.$preCallJoinMyRoomButton = $(self.config.preCallJoinMyRoomButton);
-	        self.cache.$preCallJoinProgressBar = $(self.config.preCallJoinProgressBar);
+            self.cache.$inCallChatContainer             = $(self.config.inCallChatContainer);
+	        self.cache.$inCallChatTabs                  = $(self.config.inCallChatTabs);
+	        self.cache.$inCallChatPanes                 = $(self.config.inCallChatPanes);
+	        self.cache.$inCallChatMinimizeLink          = $(self.config.inCallChatMinimizeLink);
+	        self.cache.$inCallChatGroupTabLink          = $(self.config.inCallChatGroupTabLink);
+	        self.cache.$inCallChatForm                  = $(self.config.inCallChatForm);
+	        self.cache.$inCallChatTextField             = $(self.config.inCallChatTextField);
+	        self.cache.$inCallChatTextSend              = $(self.config.inCallChatTextSend);
+	        self.cache.$inCallChatGroupPane             = $(self.config.inCallChatGroupPane);
+	        self.cache.$inCallChatGroupTab              = $(self.config.inCallChatGroupTab);
+	        self.cache.$notificationContainer           = $(self.config.notificationContainer);
+	        self.cache.$mainMenu                        = $(self.config.mainMenu);
+	        self.cache.$pluginAndChatContainer          = $(self.config.pluginAndChatContainer);
+	        self.cache.$pluginContainer                 = $(self.config.pluginContainer);
+	        self.cache.$plugin                          = $(self.config.pluginContainer).children(":first"); //Firefox quirk
+	        self.cache.$preCallContainer                = $(self.config.preCallContainer);
+	        self.cache.$preCallJoinAsUserPopup          = $(self.config.preCallJoinAsUserPopup);
+	        self.cache.$preCallJoinMyRoomButton         = $(self.config.preCallJoinMyRoomButton);
+	        self.cache.$preCallJoinProgressBar          = $(self.config.preCallJoinProgressBar);
 	        self.cache.$preCallJoinProgressBarContainer = $(self.config.preCallJoinProgressBarContainer);
-	        self.cache.$preCallLogoutButton = $(self.config.preCallLogoutButton);
-	        self.cache.$preCallUserDisplayName = $(self.config.preCallUserDisplayName);
-	        self.cache.$preCallPortalName = $(self.config.preCallPortalName);
-	        self.cache.$preCallSearchField = $(self.config.preCallSearchField);
-	        self.cache.$preCallSearchNavigationList = $(self.config.preCallSearchNavigationList);
-	        self.cache.$preCallIntitePopup = $(self.config.preCallIntitePopup);
-	        self.cache.$preCallIntitePopupInvitee = $(self.config.preCallIntitePopupInvitee);
-	        self.cache.$preCallIntitePopupButtonAccept = $(self.config.preCallIntitePopupButtonAccept);
-	        self.cache.$preCallIntitePopupButtonReject = $(self.config.preCallIntitePopupButtonReject);
-	        self.cache.$preCallSearchUserClass = $(self.config.preCallSearchUserClass);
-	        self.cache.$preCallJoinConferencePinDialog = $(self.config.preCallJoinConferencePinDialog);
+	        self.cache.$preCallLogoutButton             = $(self.config.preCallLogoutButton);
+	        self.cache.$preCallUserDisplayName          = $(self.config.preCallUserDisplayName);
+	        self.cache.$preCallPortalName               = $(self.config.preCallPortalName);
+	        self.cache.$preCallSearchField              = $(self.config.preCallSearchField);
+	        self.cache.$preCallSearchNavigationList     = $(self.config.preCallSearchNavigationList);
+	        self.cache.$preCallIntitePopup              = $(self.config.preCallIntitePopup);
+	        self.cache.$preCallIntitePopupInvitee       = $(self.config.preCallIntitePopupInvitee);
+	        self.cache.$preCallIntitePopupButtonAccept  = $(self.config.preCallIntitePopupButtonAccept);
+	        self.cache.$preCallIntitePopupButtonReject  = $(self.config.preCallIntitePopupButtonReject);
+	        self.cache.$preCallSearchUserClass          = $(self.config.preCallSearchUserClass);
+	        self.cache.$preCallJoinConferencePinDialog  = $(self.config.preCallJoinConferencePinDialog);
 	        self.cache.$preCallJoinConferencePinDialogPIN = $(self.config.preCallJoinConferencePinDialogPIN);
 	        self.cache.$preCallJoinConferencePinDialogButton = $(self.config.preCallJoinConferencePinDialogButton);
 	        self.cache.$preCallJoinConferencePinDialogErrorWrapper = $(self.config.preCallJoinConferencePinDialogErrorWrapper);
 	        self.cache.$preCallJoinConferencePinDialogError = $(self.config.preCallJoinConferencePinDialogError);
-	        self.cache.$splash = $(self.config.splash);
-	        self.cache.$userLoginButton = $(self.config.userLoginButton);
-	        self.cache.$userLoginError = $(self.config.userLoginError);
-	        self.cache.$userLoginErrorWrapper = $(self.config.userLoginErrorWrapper);
-	        self.cache.$userLoginInputs = $(self.config.userLoginInputs);
-	        self.cache.$userLoginPassword = $(self.config.userLoginPassword);
-	        self.cache.$userLoginPopup = $(self.config.userLoginPopup);
-	        self.cache.$userLoginPortal = $(self.config.userLoginPortal);
-	        self.cache.$userLoginProgressBar = $(self.config.userLoginProgressBar);
-	        self.cache.$userLoginProgressContainer = $(self.config.userLoginProgressContainer);
-	        self.cache.$userLoginUsername = $(self.config.userLoginUsername);
+	        self.cache.$splash                          = $(self.config.splash);
+	        self.cache.$userLoginButton                 = $(self.config.userLoginButton);
+	        self.cache.$userLoginError                  = $(self.config.userLoginError);
+	        self.cache.$userLoginErrorWrapper           = $(self.config.userLoginErrorWrapper);
+	        self.cache.$userLoginInputs                 = $(self.config.userLoginInputs);
+	        self.cache.$userLoginPassword               = $(self.config.userLoginPassword);
+	        self.cache.$userLoginPopup                  = $(self.config.userLoginPopup);
+	        self.cache.$userLoginPortal                 = $(self.config.userLoginPortal);
+	        self.cache.$userLoginProgressBar            = $(self.config.userLoginProgressBar);
+	        self.cache.$userLoginProgressContainer      = $(self.config.userLoginProgressContainer);
+	        self.cache.$userLoginUsername               = $(self.config.userLoginUsername);
+
+            self.cache.$setupCameraButtonToggleConfig   = $(self.config.setupCameraButtonToggleConfig);
+            self.cache.$setupCameraConfigContainer     	= $(self.config.setupCameraConfigContainer);
+            self.cache.$setupMicButtonToggleConfig    	= $(self.config.setupMicButtonToggleConfig);
+            self.cache.$setupMicConfigContainer     	= $(self.config.setupMicConfigContainer);
+            self.cache.$setupSpeakerButtonToggleConfig  = $(self.config.setupSpeakerButtonToggleConfig);
+            self.cache.$setupSpeakerConfigContainer     = $(self.config.setupSpeakerConfigContainer);
 	        return self;
 	    };
 
@@ -497,6 +588,9 @@
                     self.templates.inCallParticipantInfoTemplate = handlebars['default'].compile(self.config.inCallParticipantInfoTemplate);
                     self.templates.preCallInvitingDialogTemplate = handlebars['default'].compile(self.config.preCallInvitingDialogTemplate);
 
+                    self.templates.setupCameraConfigTemplate = handlebars['default'].compile(self.config.setupCameraConfigTemplate);
+                    self.templates.setupMicConfigTemplate = handlebars['default'].compile(self.config.setupMicConfigTemplate);
+                    self.templates.setupSpeakerConfigTemplate = handlebars['default'].compile(self.config.setupSpeakerConfigTemplate);
                     /* Register helpers */
                     templateHelperUser();
 
@@ -528,9 +622,9 @@
                     if (!self.config.developerEdition) {
                         return;
                     }
-                    if (self.config.soapProxyURL === "http://stunusa.vidyo.com/sp/soap_proxy.php" || self.config.soapProxyURL === "http://vidyoweb.apps.vidyo.com/sp/soap_proxy.php") {
-                        alert("Dear developer. Please install SOAP proxy on your server and change soapProxyURL in the main.config.js to your server's location.");
-                    }
+                    //if (self.config.soapProxyURL === "http://stunusa.vidyo.com/sp/soap_proxy.php" || self.config.soapProxyURL === "http://vidyoweb.apps.vidyo.com/sp/soap_proxy.php") {
+                        //alert("Dear developer. Please install SOAP proxy on your server and change soapProxyURL in the main.config.js to your server's location.");
+                    //}
                 };
 
                 /**
@@ -539,7 +633,7 @@
                  */
                 applicationCallCleanup = function() {
                     logger.log('log', 'application', 'applicationCallCleanup()');
-                    helperConferenceUpdateTimerStop();
+                    //helperConferenceUpdateTimerStop();
                     self.inConference = false;
                     self.isJoining = false;
                     return self;
@@ -752,15 +846,20 @@
                     self.sessionInfo = clientSessionGetInfo();
                     self.events.connectEvent.trigger('done');
                     self.events.participantUpdateEvent.trigger('done', participants);
+                    /* Added by Ranjeet on 06/26/2013 for US4477
+                    Start ---*/
+		    		setSpeakerMicVolForSlider();
+		    		/*---End*/
                     /* Added by Ranjeet on 12/16/2013 to make the buttons visible only after user is connected
                     Start ---*/
-                    //console.log("application::OutEventConferenceActive() before making buttons visible and plugin width and height 100%");
-                    //$('#btnContainer').css('display', '');
+                    console.log("application::OutEventConferenceActive() before making buttons visible and plugin width and height 100%");
+                    //$('#btnContainer').css('display', 'inline-block');
+                    $('#leaveEndBtnContainer').css('display', '');
                     /*---End*/
                     /* Added by Ranjeet on 02/04/2014 to make the plugin width and height 100% after user is connected to the conference
                     Start ---*/
-                    //self.cache.$plugin.css("width", "100%");
-                    //self.cache.$plugin.css("height", "100%");
+                    self.cache.$plugin.css("width", "100%");
+                    self.cache.$plugin.css("height", "100%");
                     /*---End*/
                 },
                  /**
@@ -1004,8 +1103,8 @@
                                     clientPreviewModeSet("Dock");
                         }else{
                                 console.log('setting pip view');
-                                                self.currentPreviewMode = "PIP";
-                                                clientPreviewModeSet("PIP");
+                                                self.currentPreviewMode = "Dock";
+                                                clientPreviewModeSet("Dock");
                          }
                     self.events.participantUpdateEvent.trigger('done', [participants]);
                 },
@@ -1063,10 +1162,10 @@
 									  }
 						});
 						if ($('#pluginContainer').css('visibility')=='hidden'){
-                            $('#pluginContainer').css('visibility', 'visible');
+                             $('#pluginContainer').css('visibility', 'visible');
                         }
-					}
-
+                    }
+                    self.isDisconnect = true;
                 },
                OutEventCallState: function (e) {
                             logger.log('info', 'callback', "OutEventCallState()", e);
@@ -1081,7 +1180,7 @@
                                     self.events.disconnectEvent.trigger('done');
                                     /* Disconnected by the server */
                                     if (self.inConference) {
-                                        uiGenericNotify("Disconnected remotely", "error");
+                                        //uiGenericNotify("Disconnected remotely", "error");
                                     }
                                 }
                             }
@@ -1140,7 +1239,7 @@
 
         /* Added by Ranjeet on 02/20/2014 to address defect DE974
         Start ---*/
-       /** $("body").on("click",function(e){
+        $("body").on("click",function(e){
             if(e.target.id=="inCallPluginAndControlsWrap" || e.target.id=="btnContainer") {
                 if (isProvider != 'true' && self.cache.$inCallLocalShareList.is(":visible")){
                     if ($('#pluginContainer').css('visibility')=='hidden'){
@@ -1150,7 +1249,7 @@
                 }
             }
 
-        });**/
+        });
         /*---End*/
 
         /**
@@ -1241,25 +1340,25 @@
                 .on('done', function() {
                     logger.log('info', 'plugin', 'pluginLoadedEvent::done');
                     uiReportInfoDismiss();
-                    //uiPromiseToEndSplashScreen();
+                    uiPromiseToEndSplashScreen();
                      //   .done(function() {
                      //       uiPromiseToShowMenu(true);
                      //   });
                 })
                 .on('fail', function(event, error) {
                     logger.log('warning', 'plugin', 'pluginLoadedEvent::fail', event, error);
-                   // uiPromiseToEndSplashScreen()
-                       // .done(function(){
-                            //uiReportError('Vidyo Web Plug-in error', error);
-                       // });
+                    uiPromiseToEndSplashScreen()
+                        .done(function(){
+                            uiReportError('Vidyo Web Plug-in error', error);
+                        });
                 })
                 .on('info', function(event, message) {
                     logger.log('info', 'plugin', 'pluginLoadedEvent::info', event, message);
-                   // uiPromiseToEndSplashScreen()
-                        //.done(function(){
-                           // uiReportInfo('Vidyo Web plug-in is not detected.', message);
+                    uiPromiseToEndSplashScreen()
+                        .done(function(){
+                            uiReportInfo('Vidyo Web plug-in is not detected.', message);
 
-                       // });
+                        });
 
                 });
             /* Occurs when Vidyo library configuration is updated */
@@ -1278,20 +1377,11 @@
                             id: i,
                             isSelected: (i === newConfig.currentCamera)
                         });
-                       // alert(i == newConfig.currentCamera);
-                       if (!name == "") {                        
-                        if (i == newConfig.currentCamera) {                           
-                           $("#vdevices").append('<tr><td width="15px" style="vertical-align:top;"><img src="vidyoplayer/img/icon_checkmark_gray.png"/></td><td style="word-wrap: break-word;">'+name+'</td></tr>');
-                        }else{                            
-                             $("#vdevices").append('<tr><td></td><td style="word-wrap: break-word;">'+name+'</td></tr>');
+                        if(i === newConfig.currentCamera){
+                            $("#selected-camera-name").html("<span>" +name+ "</span>");
                         }
-                       }
-                                               
                     });
-                   if (newConfig.numberCameras == 0) {
-                        //code
-                        $("#vdevices").append('<tr><td colspan="2" style="word-wrap: break-word;">No camera detected. You will need a webcam for your video visit.</td></tr>');
-                    }
+
 
                     $.each(newConfig.speakers, function (i, name) {
                         data.speaker.push({
@@ -1299,20 +1389,10 @@
                             id: i,
                             isSelected: (i === newConfig.currentSpeaker)
                         });
-			// alert(i == newConfig.currentSpeaker);
-                        if (!name == "") { 
-                            if (i == newConfig.currentSpeaker) {                               
-                               $("#spdevices").append('<tr><td width="15px" style="vertical-align:top;"><img src="vidyoplayer/img/icon_checkmark_gray.png"/></td><td style="word-wrap: break-word;">'+name+'</td></tr>');
-                            }else{
-                                $("#spdevices").append('<tr><td></td><td style="word-wrap: break-word;">'+name+'</td></tr>');
-                            }
+                        if(i === newConfig.currentSpeaker){
+                            $("#selected-speaker-name").html("<span>" +name+ "</span>");
                         }
                     });
-		    if (newConfig.numberSpeakers == 0) {
-                        //code
-                        $("#spdevices").append('<tr><td colspan="2" style="word-wrap: break-word;">No speaker/headset detected. You will need a speaker/headset for your video visit.</td></tr>');
-                    }
-
 
                     $.each(newConfig.microphones, function (i, name) {
                         data.microphone.push({
@@ -1320,21 +1400,12 @@
                             id: i,
                             isSelected: (i === newConfig.currentMicrophone)
                         });
-                        if (!name == "") { 
-                            if (i == newConfig.currentMicrophone) {                              
-                               $("#mpdevices").append('<tr><td width="15px" style="vertical-align:top;"><img src="vidyoplayer/img/icon_checkmark_gray.png"/></td><td style="word-wrap: break-word;">'+name+'</td></tr>');
-                            }else{
-                                $("#mpdevices").append('<tr><td></td><td style="word-wrap: break-word;">'+name+'</td></tr>');
-                            }
+                        if(i === newConfig.currentMicrophone){
+                            $("#selected-mic-name").html("<span>" +name+ "</span>");
                         }
                     });
-		   if (newConfig.numberMicrophones == 0) {
-                        //code
-                        $("#mpdevices").append('<tr><td colspan="2" style="word-wrap: break-word;">No microphone detected. You will need a microphone for your video visit.</td></tr>');
-                    }
 
-
-                   /** data.selfViewLoopbackPolicy = [{
+                    data.selfViewLoopbackPolicy = [{
                         name: "Show",
                         value: 0,
                         isSelected: newConfig.selfViewLoopbackPolicy === 0
@@ -1346,9 +1417,9 @@
                         name: "Show when only participant",
                         value: 2,
                         isSelected: newConfig.selfViewLoopbackPolicy === 2
-                    }];**/
+                    }];
                     /* From VidyoClientParameters.h */
-                   /** var PROXY_VIDYO_FORCE = 1,
+                    var PROXY_VIDYO_FORCE = 1,
                         PROXY_WEB_ENABLE = (1 << 3),
                         PROXY_WEB_IE = (1 << 4);
 
@@ -1364,14 +1435,13 @@
                     data.logsApplication = self.logConfig.enableAppLogs;
                     data.logsJS = self.logConfig.enableVidyoPluginLogs;
                     data.logsClient = self.logConfig.enableVidyoClientLogs;
-                    data.logLevelsAndCategories = self.logConfig.logLevelsAndCategories;**/
+                    data.logLevelsAndCategories = self.logConfig.logLevelsAndCategories;
 
-                    logger.log('debug', 'configuration', 'configurationUpdateEvent::done - Devices detection completed and stopping Plugin', data);
+                    logger.log('debug', 'configuration', 'configurationUpdateEvent::done - Devices detected', data);
 
                     uiConfigurationUpdateWithData(data);
                                        // uiConfigurationShowWithData(data);
-					//self.cache.$guestLoginButton.click();
-		    vidyoPluginStop();
+					self.cache.$guestLoginButton.click();
                 });
             /* Incoming call */
             self.events.incomingCallEvent
@@ -1507,8 +1577,8 @@
 					        self.currentPreviewMode = "Dock";
                             clientPreviewModeSet("Dock");
 					}else{
-                            self.currentPreviewMode = "PIP";
-                            clientPreviewModeSet("PIP");
+                            self.currentPreviewMode = "Dock";
+                            clientPreviewModeSet("Dock");
                      }
                    /**if (self.config.enableChat && !self.cache.$inCallChatMinimizeLink.data("minimized")) {
                                 self.cache.$inCallChatMinimizeLink.click();
@@ -1618,13 +1688,13 @@
                 self.events.disconnectEvent
                     .on('done', function () {
                         logger.log('info', 'call', 'disconnectEvent::done');
-                        uiCallCleanup();
+                        //uiCallCleanup();
                         applicationCallCleanup();
                     })
                     .on('fail', function (event, error) {
                         logger.log('error', 'call', 'disconnectEvent::fail - error: ', error, event);
-                        uiReportError("Failed to disconnect", error);
-                        uiCallCleanup();
+                        //uiReportError("Failed to disconnect", error);
+                        //uiCallCleanup();
                         applicationCallCleanup();
                     });
 
@@ -1912,13 +1982,57 @@
                      START	*/
                     if ($('#pluginContainer').css('visibility')=='hidden'){
                         $('#pluginContainer').css('visibility', 'visible');
-                    } else {
+                    } /*else {
                         $('#pluginContainer').css('visibility', 'hidden');
-                    }
+                    }*/
                     /*--- End */
 
                     self.cache.$configurationContainer.slideToggle();
                 });
+
+            self.cache.$setupCameraButtonToggleConfig
+                .on('click', function() {
+                	console.log("$setupCameraButtonToggleConfig click");
+                	self.cache.$setupCameraConfigContainer.slideToggle();
+                	
+                	if (self.cache.$setupMicConfigContainer.is(":visible")) {
+                    	self.cache.$setupMicConfigContainer.slideUp();
+                    }
+                	else if (self.cache.$setupSpeakerConfigContainer.is(":visible")) {
+                		self.cache.$setupSpeakerConfigContainer.slideUp();
+                	}
+                });
+			
+            self.cache.$setupMicButtonToggleConfig
+	            .on('click', function() {
+	            	console.log("$setupMicButtonToggleConfig click");
+	            	self.cache.$setupMicConfigContainer.slideToggle();
+	            	
+	            	if (self.cache.$setupCameraConfigContainer.is(":visible")) {
+                    	self.cache.$setupCameraConfigContainer.slideUp();
+                    }
+                	else if (self.cache.$setupSpeakerConfigContainer.is(":visible")) {
+                		self.cache.$setupSpeakerConfigContainer.slideUp();
+                	}
+	            });
+            
+            self.cache.$setupSpeakerButtonToggleConfig
+            	.on('click', function() {
+	            	console.log("$setupSpeakerButtonToggleConfig click");
+	            	self.cache.$setupSpeakerConfigContainer.slideToggle();
+	            	
+	            	if (self.cache.$setupCameraConfigContainer.is(":visible")) {
+	                	self.cache.$setupCameraConfigContainer.slideUp();
+	                }
+	            	else if (self.cache.$setupMicConfigContainer.is(":visible")) {
+	            		self.cache.$setupMicConfigContainer.slideUp();
+	            	}
+            	});
+            
+			self.cache.$configurationContainer.
+                    on("click", ".close", function (e) {
+                    	self.cache.$configurationContainer.slideToggle();
+                    });
 
             self.cache.$preCallSearchNavigationList
                 .on('click', "a", function (e) {
@@ -2289,41 +2403,52 @@
                     // Test http://dev20.vidyo.com/flex.html?roomdirect.html&key=U6AnrCjEaMBx
                     //inEventLoginParams.fullURI = self.cache.$guestURL.val();
                     //console.log(decodeURIComponent($.urlParam('guestUrl')));
-					inEventLoginParams.fullURI = decodeURIComponent($.urlParam('guestUrl'));
+					
+                    //inEventLoginParams.fullURI = decodeURIComponent($.urlParam('guestUrl'));
+                    inEventLoginParams.fullURI = decodeURIComponent($("#guestUrl").val());
+                    
                     /* Split full URI into tokens that Vidyo Client library understands */
                     var fullURIArray = inEventLoginParams.fullURI.split('flex.html?roomdirect.html&key=');
                     inEventLoginParams.portalUri = fullURIArray[0];
                     inEventLoginParams.roomKey = fullURIArray[1];
-					console.log($.urlParam('guestName'));
+					console.log($('#guestName').val());
                     //inEventLoginParams.guestName = self.cache.$guestName.val();
-                    inEventLoginParams.guestName = decodeURIComponent($.urlParam('guestName'));
+                    inEventLoginParams.guestName = decodeURIComponent($('#guestName').val());
                     //inEventLoginParams.pin = self.cache.$guestPIN.val();
                     inEventLoginParams.pin = '';
 
-					isProvider = decodeURIComponent($.urlParam('isProvider'));
-					meetingId = decodeURIComponent($.urlParam('meetingId'));
+					//isProvider = decodeURIComponent($.urlParam('isProvider'));
+					//meetingId = decodeURIComponent($.urlParam('meetingId'));
+                    
+                    isProvider = decodeURIComponent($("#isProvider").val());
+					meetingId = decodeURIComponent($("#meetingId").val());
 
                     if (isProvider=='false'){
 						self.cache.$inCallButtonEndMeeting.hide();
 						/* Added by Mandar A. on 12/03/2013 to address US3550
 	                     START	*/
-                        $('.btn-leave-meeting').css({"background-image":"url(img/button_leave.png)", "width":"60px"});
+                        //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave.png)", "width":"60px"});
                         /*--- End */
-                        if ($.urlParam('meetingCode') !=null && $.urlParam('meetingCode') !='0' && $.urlParam('meetingCode').length > 0 ) {
-                            meetingCode = decodeURIComponent($.urlParam('meetingCode'));
-                            caregiverId = decodeURIComponent($.urlParam('caregiverId'));
+                        //if ($.urlParam('meetingCode') !=null && $.urlParam('meetingCode') !='0' && $.urlParam('meetingCode').length > 0 ) {
+                        if($("#isMember").val() =="false"){
+                        	//if ($("#meetingCode") !=null && $("#meetingCode") !='0' && $("#meetingCode").length > 0 ) {
+                                meetingCode = decodeURIComponent($("#meetingCode").val());
+                                caregiverId = decodeURIComponent($("#caregiverId").val());
+                            //}
                         }
-                        else
+                        else{
                             isMember = 'true';
+                        }
 					}
 					else{
-                        isHost = decodeURIComponent($.urlParam('isHost'));
-                        role = decodeURIComponent($.urlParam('role'));
+                        isHost = decodeURIComponent($("#isHost").val());
+                        role = decodeURIComponent($('#role').val());
                         self.cache.$inCallButtonEndMeeting.show();
-                        parent.VideoVisit.meetingExpire(isHost, role, meetingId);
+                        //parent.VideoVisit.meetingExpire(isHost, role, meetingId);
+                        VideoVisit.meetingExpire(isHost, role, meetingId);
                         /* Added by Mandar A. on 12/03/2013 to address US3550
                         START	*/
-                        $('.btn-leave-meeting').css({"background-image":"url(img/button_leave_return.png)", "width":"130px"});
+                        //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave_return.png)", "width":"130px"});
                         /*--- End */
 						if (isHost == 'false' && (role != null && role !='ma')) {
 							self.cache.$inCallButtonEndMeeting.hide();
@@ -2472,10 +2597,14 @@
                 if(self.isMutedSpeaker){
                 	self.cache.$inCallButtonMuteSpeaker.removeClass('btn btn-large btn-tms-success').addClass('btn btn-large btn-tms-failure');
                 	self.cache.$inCallButtonMuteSpeaker.attr('title','Unmute Speakers');
+                	$("#volume-control-speaker .ui-slider-range").css("background", "grey");
+                    $("#slider-handle-speaker").css({"background":"grey", "border":"1px solid grey"});
                 }
                 else{
                 	self.cache.$inCallButtonMuteSpeaker.removeClass('btn btn-large btn-tms-failure').addClass('btn btn-large btn-tms-success');
                 	self.cache.$inCallButtonMuteSpeaker.attr('title','Mute Speakers');
+                	$("#volume-control-speaker .ui-slider-range").css("background","#FFFFFF");
+                    $("#slider-handle-speaker").css({"background":"", "border":""});
                 }
 
                 /* Added by Ranjeet on 12/05/2013 to address US3423
@@ -2501,10 +2630,14 @@
                 if(self.isMutedMic){
                 	self.cache.$inCallButtonMuteMicrophone.removeClass('btn btn-large btn-tmm-success').addClass('btn btn-large btn-tmm-failure');
                 	self.cache.$inCallButtonMuteMicrophone.attr('title','Unmute Mic');
+                	$("#volume-control-mic .ui-slider-range").css("background","grey");
+                    $("#slider-handle-mic").css({"background":"grey", "border":"1px solid grey"});
                 }
                 else{
                 	self.cache.$inCallButtonMuteMicrophone.removeClass('btn btn-large btn-tmm-failure').addClass('btn btn-large btn-tmm-success');
                 	self.cache.$inCallButtonMuteMicrophone.attr('title','Mute Mic');
+                	$("#volume-control-mic .ui-slider-range").css("background","#FFFFFF");
+                    $("#slider-handle-mic").css({"background":"", "border":""});
                 }
 
                 /* Added by Ranjeet on 12/05/2013 to address US3423
@@ -2571,13 +2704,13 @@
                     }else{
                     	if (self.cache.$configurationContainer.is(":visible")) {
                             self.cache.$configurationContainer.slideUp();
-                            $('#pluginContainer').css('visibility', 'hidden');
+                            //$('#pluginContainer').css('visibility', 'hidden');
                         }else{
 	                    	if ($('#pluginContainer').css('visibility')=='hidden'){
 	                            $('#pluginContainer').css('visibility', 'visible');
-		                    } else {
+		                    } /*else {
 		                        $('#pluginContainer').css('visibility', 'hidden');
-		                    }
+		                    }*/
                         }
                         //alert(self.kphcShare);
                         self.smd = true;
@@ -2634,6 +2767,10 @@
                     $('#smd_warning_button_continue').click(function() {
                     	$('#smdWarningModal').modal('hide');
                         self.cache.$inCallLocalShareList.hide();
+                        
+                        if ($('#pluginContainer').css('visibility')=='hidden'){
+                            $('#pluginContainer').css('visibility', 'visible');
+                        }
 
                             self.smd = true;
 
@@ -2760,9 +2897,14 @@
                         $('#dialog-block-override-meeting-leave').modal({'backdrop': 'static'});
 
                         $('#leave_meeting_button_yes').click(function() {
-                                clientConferenceLeave();
-                                parent.JoinNowCommon.LeaveMeetingActionButtonYes(isHost, role, meetingId);
-                                top.location = '/videovisit/myMeetings.htm?explicitActionNavigation=true';
+                              clientConferenceLeave();
+                              //parent.JoinNowCommon.LeaveMeetingActionButtonYes(isHost, role, meetingId);
+                              JoinNowCommon.LeaveMeetingActionButtonYes(isHost, role, meetingId);
+                              console.log("application::$inCallButtonDisconnect::click - before calling navigateToPage if disconnected completely : " + self.isDisconnect);
+                              
+                              window.setTimeout(function () {
+                                   navigateToPage(true, false);
+                                },2000);  
                         });
 
                         $('#leave_meeting_button_no').click(function() {
@@ -2782,16 +2924,20 @@
                             $('#quit_meeting_button_yes').click(function() {
                             	clientConferenceLeave();
                             	if (isMember == false) {
-                                    parent.GuestVisit.QuitMeetingActionButtonYes(meetingCode, caregiverId, meetingId, refreshMeetings);
+                                    //parent.GuestVisit.QuitMeetingActionButtonYes(meetingCode, caregiverId, meetingId, refreshMeetings);
+                            		GuestVisit.QuitMeetingActionButtonYes(meetingCode, caregiverId, meetingId, refreshMeetings);
                                     refreshMeetings = false;
-
-                                    top.location = '/videovisit/guestready.htm?explicitActionNavigation=true';
+                                    window.setTimeout(function () {
+                                        navigateToPage(false, false);                                        
+                                    },2000);  
                                 }
                                 else{
-                                    parent.MemberVisit.QuitMeetingActionButtonYes(meetingId, self.loginInfo.guestName, refreshMeetings);
+                                    //parent.MemberVisit.QuitMeetingActionButtonYes(meetingId, self.loginInfo.guestName, refreshMeetings);
+                                	MemberVisit.QuitMeetingActionButtonYes(meetingId, self.loginInfo.guestName, refreshMeetings);
                                     refreshMeetings = false;
-
-                                    top.location = '/videovisit/landingready.htm?explicitActionNavigation=true';
+                                    window.setTimeout(function () {
+                                        navigateToPage(false, true);                                        
+                                    },2000);   
                                 }
                             });
 
@@ -2826,8 +2972,12 @@
 
                     $('#end_meeting_button_yes').click(function() {
                         clientConferenceLeave();
-                        parent.JoinNowCommon.EndMeetingActionButtonYes(isHost, role, meetingId);
-                        top.location = '/videovisit/myMeetings.htm?explicitActionNavigation=true';
+                        //parent.JoinNowCommon.EndMeetingActionButtonYes(isHost, role, meetingId);
+                        JoinNowCommon.EndMeetingActionButtonYes(isHost, role, meetingId);
+                        console.log("application::$inCallButtonEndMeeting::click - before calling navigateToPage ");                       
+                        window.setTimeout(function () {
+                             navigateToPage(true, false);                          
+                        },2000);    
                     });
 
                     $('#end_meeting_button_no').click(function() {
@@ -2842,6 +2992,48 @@
                     });
 
             });
+                //Function to navigate back to VV page depending upon the type of user
+                function navigateToPage(providerFlg, memberFlg){                    
+                    console.log("navigateToPage - if disconnected : " + self.isDisconnect + " providerFlag: " + providerFlg + " memberFlag: " + memberFlg);
+                    if (self.isDisconnect) {
+                         console.log("navigateToPage - before navigating to VV page.");
+                         if (providerFlg) {
+                             top.location = '/videovisit/myMeetings.htm?explicitActionNavigation=true';
+                         }else{
+                             if (memberFlg) {
+                                 top.location = '/videovisit/landingready.htm?explicitActionNavigation=true';
+                             }else{
+                                 top.location = '/videovisit/guestready.htm?explicitActionNavigation=true';
+                             }
+                         }
+                    }else{
+                         console.log("navigateToPage - not disconnected completely : " + self.isDisconnect);
+                         if(counterNum() > 2) {
+                            console.log("navigateToPage - not disconnected completely before navigating to VV page.");
+                            if (providerFlg) {
+                                top.location = '/videovisit/myMeetings.htm?explicitActionNavigation=true';
+                            }else{
+                                if (memberFlg) {
+                                    top.location = '/videovisit/landingready.htm?explicitActionNavigation=true';
+                                }else{
+                                    top.location = '/videovisit/guestready.htm?explicitActionNavigation=true'; 
+                                }
+                            }
+                         }else{
+                            navigateToPage(providerFlg, memberFlg);
+                         }
+                    }                                            
+                    
+                }
+                
+                //Function to keep track of incremental counter
+                var counterNum = (function() {
+                    var id = 0; // This is the private persistent value
+                    // The outer function returns a nested function that has access
+                    // to the persistent value.  It is this nested function we're storing
+                    // in the variable uniqueID above.
+                    return function() { return id++; };  // Return and increment
+                 })();
 
 			function getParameterByName( name ){
 			  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
@@ -3005,8 +3197,10 @@
              });
 
             /* Handle selection of different input device */
+            /* Mandar A. 07/09/2014: Adding 'onchange .input' -- work around for Firefox
+             * 						 Adding 'setTimeout' -- work around for IE	*/
             self.cache.$configurationContainer
-                .on("change", function(event, obj) {
+                .on("change click", ".input", function(event, obj) {
                     logger.log('info', 'ui',"configurationContainer::change", event, obj);
 
                     var target = $(event.target),
@@ -3079,8 +3273,67 @@
                         self.logConfig.logLevelsAndCategories = value;
                     }**/
                     clientConfigurationSet(conf);
-                });
 
+                   	/* 	Added by Mandar A. on 07/03/2014 as it's not updating the isSelected attribute after converting the Drop-down to Radio Buttons 	*/
+                    //var conf = clientConfigurationGet();
+                    //var updatedConf = clientConfigurationBootstrap(conf);
+                    setTimeout(function() {
+                    	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
+                    }, 500);
+                });
+            
+            self.cache.$setupCameraConfigContainer
+	            .on("change click", ".input", function(event, obj) {
+	                logger.log('info', 'ui',"setupCameraConfigContainer::change", event, obj);
+	
+	                var target = $(event.target),
+	                selection = target.val();
+	                //isChecked = target.prop("checked") ? 1 : 0;
+	
+	                var conf = clientConfigurationGet();
+	                conf.currentCamera = selection;
+	                
+	                clientConfigurationSet(conf);
+	                
+	                //setTimeout(function() {
+	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
+	                //}, 500);
+	            });
+
+            self.cache.$setupMicConfigContainer
+	            .on("change click", ".input", function(event, obj) {
+	                logger.log('info', 'ui',"setupMicConfigContainer::change", event, obj);
+	
+	                var target = $(event.target),
+	                selection = target.val();
+	
+	                var conf = clientConfigurationGet();
+	                conf.currentMicrophone = selection;
+	                
+	                clientConfigurationSet(conf);
+	
+	                //setTimeout(function() {
+	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
+	                //}, 500);
+	            });
+            
+            self.cache.$setupSpeakerConfigContainer
+	            .on("change click", ".input", function(event, obj) {
+	                logger.log('info', 'ui',"setupSpeakerConfigContainer::change", event, obj);
+	
+	                var target = $(event.target),
+	                selection = target.val();
+	
+	                var conf = clientConfigurationGet();
+	                conf.currentSpeaker = selection;
+	                
+	                clientConfigurationSet(conf);
+	
+	                //setTimeout(function() {
+	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
+	                //}, 500);
+	            });
+            
                 /* Handle invites */
                 self.cache.$preCallIntitePopupButtonAccept
                     .click(function () {
@@ -3279,6 +3532,16 @@
                     logger.log('info', 'ui','uiConfigurationUpdateWithData()');
                     var htmlData = self.templates.configurationTemplate(data);
                     self.cache.$configurationContainer.html(htmlData);
+                    
+                    var htmlDataSetupCamera = self.templates.setupCameraConfigTemplate(data);
+                    self.cache.$setupCameraConfigContainer.html(htmlDataSetupCamera);
+                    
+                    var htmlDataSetupMic = self.templates.setupMicConfigTemplate(data);
+                    self.cache.$setupMicConfigContainer.html(htmlDataSetupMic);
+                    
+                    var htmlDataSetupSpeaker = self.templates.setupSpeakerConfigTemplate(data);
+                    self.cache.$setupSpeakerConfigContainer.html(htmlDataSetupSpeaker);
+                    
                     return self;
                 };
 
@@ -3905,7 +4168,7 @@
 		             * So when we make plugin visible then we start it after deferred
 		             * variable for plugin ready event is resolved.
 		            */
-		            self.cache.$inCallContainer.show(function() {
+		            //self.cache.$inCallContainer.show(function() {
 		
 		                self.events.pluginPreloadEvent
 		                    .done(function() {
@@ -3916,10 +4179,10 @@
 		                        logger.log('warning', 'ui',"uiShowInCallContainerMinimizedAndWithPlugin - Failed to load plugin");
 		                        /* Added by Ranjeet on 12/16/2013 to display the message of refreshing the browser
 		                        Start ---*/
-		                       // self.events.pluginLoadedEvent.trigger('info', "<p style='color: #000000;'>Failed to load Plugin. Please <a href='javascript:history.go(0)'> Click Here to refresh </a> your browser</p>");
+		                        self.events.pluginLoadedEvent.trigger('info', "<p style='color: #000000;'>Failed to load Plugin. Please <a href='javascript:history.go(0)'> Click Here to refresh </a> your browser</p>");
 		                        /*---End*/
 		                    });
-		            });
+		            //});
 		
 		            return self;
 		        };
@@ -4103,8 +4366,18 @@
                             }
                         }
                     }
+                    /* Added by Ranjeet on 04/03/2014 to address the button bar not showing issue
+                    Start ---*/
+                    var participantCount = 0;
+                    if (data !== null && data !== undefined) {               
+                        if (data.participants !== null && data.participants !== undefined) {
+                           participantCount = data.participants.length;
+                        }
+                    }
+                    logger.log('info', 'ui',"uiParticipantsUpdateWithData: participantCount= " + participantCount);
                     /* Update count in badge */
-                    self.cache.$inCallButtonParticipantsBadge.html(String(data.participants.length));
+                    self.cache.$inCallButtonParticipantsBadge.html(String(participantCount));
+                    /*---End*/                     
                     return self;
                 };
 
@@ -4129,14 +4402,14 @@
                         if (inFullpage) { // Configure for full page
                             self.cache.$inCallContainer.removeClass("container");
 
-                    self.cache.$inCallContainer.addClass("fullscreen");
-                    /* Apply wider class when participant list is not shown */
-                    if (self.isShowingParticipantList) {
-                        self.cache.$inCallPluginAndControls.addClass("fullscreen");
-                    }
-                    else {
-                        self.cache.$inCallPluginAndControls.addClass("fullscreenNoParticipantPanel");
-                    }
+		                    self.cache.$inCallContainer.addClass("fullscreen");
+		                    /* Apply wider class when participant list is not shown */
+		                    if (self.isShowingParticipantList) {
+		                        self.cache.$inCallPluginAndControls.addClass("fullscreen");
+		                    }
+		                    else {
+		                        self.cache.$inCallPluginAndControls.addClass("fullscreenNoParticipantPanel");
+		                    }
 
                             self.cache.$inCallButtonPanel.addClass("fullscreen");
                             //self.cache.$inCallParticipantsPanel.addClass("fullscreen");
@@ -4146,12 +4419,12 @@
                                // self.cache.$inCallChatContainer.addClass("fullscreen");
                             }
 
-                    //self.cache.$pluginAndChatContainer.css("width", "auto"); 
-                    self.cache.$pluginContainer.css("width", "auto");
-                    self.cache.$inCallContainer.css("width", "auto");
-                    //self.cache.$pluginAndChatContainer.css("height", "100%");
-                    self.cache.$pluginContainer.css("height", "100%");
-                    self.cache.$inCallPluginAndControls.css("width", "auto");
+		                    //self.cache.$pluginAndChatContainer.css("width", "auto"); 
+		                    self.cache.$pluginContainer.css("width", "auto");
+		                    self.cache.$inCallContainer.css("width", "auto");
+		                    //self.cache.$pluginAndChatContainer.css("height", "100%");
+		                    self.cache.$pluginContainer.css("height", "100%");
+		                    self.cache.$inCallPluginAndControls.css("width", "auto");
 		                }
 		                else { // configure for static size
 		
@@ -4164,26 +4437,26 @@
 		                    self.cache.$inCallPluginAndControls.removeClass("fullscreenNoParticipantPanel");
 		                    self.cache.$inCallButtonPanel.removeClass("fullscreen");
 		                    self.cache.$inCallParticipantsPanel.removeClass("fullscreen");
-		                   self.cache.$pluginAndChatContainer.removeClass("fullscreen");
+		                   	self.cache.$pluginAndChatContainer.removeClass("fullscreen");
 		                    self.cache.$pluginContainer.removeClass("fullscreen");
 		                    self.cache.$plugin.removeClass("fullscreen");
-		                   //if (self.config.enableChat) {
+		                   	//if (self.config.enableChat) {
 		                               // self.cache.$inCallChatContainer.removeClass("fullscreen");
 		                            //}
 		
-		                    self.cache.$inCallContainer.css("width",  self.cache.$inCallContainer.css("min-width"));
-		                    self.cache.$inCallPluginAndControls.css("width", self.config.pluginWidth);
-		                   //self.cache.$inCallPluginAndControls.css("width", self.config.pluginWidth + self.cache.$inCallButtonPanel.outerWidth(true));
-		                            
-		                   //self.cache.$pluginAndChatContainer.css("width", self.config.pluginWidth);
-		                    //self.cache.$pluginAndChatContainer.css("height", self.config.pluginHeight);
-		                    self.cache.$pluginContainer.css("width", wWidth);
-		                    self.cache.$pluginContainer.css("height", wHeight*0.93);
+		                    self.cache.$inCallContainer.css("width",  "auto");
+		                    self.cache.$inCallPluginAndControls.css("width", "auto");
+		                   	//self.cache.$inCallPluginAndControls.css("width", self.config.pluginWidth + self.cache.$inCallButtonPanel.outerWidth(true));
+		                   	         
+		                   	self.cache.$pluginAndChatContainer.css("width", self.config.pluginWidth);
+		                   	self.cache.$pluginAndChatContainer.css("height", self.config.pluginHeight);
+		                    //self.cache.$pluginContainer.css("width", auto);
+		                    //self.cache.$pluginContainer.css("height", wHeight*0.93);
 		                    
 		                }
 		
 		                self.cache.$inCallContainer.css('height', "auto");
-		                self.cache.$inCallContainer.css('padding', "20px");
+		                //self.cache.$inCallContainer.css('padding', "20px");
 		               //self.cache.$pluginAndChatContainer.css("min-width", self.config.pluginWidth / 2);
 		               // self.cache.$pluginAndChatContainer.css("min-height", self.config.pluginHeight / 2);
 		               //self.cache.$plugin.addClass("fullscreen");
@@ -4202,26 +4475,26 @@
 		               uiChatViewMinimize(true);
 		            }
 		            else {
-		               self.cache.$pluginContainer.removeClass();
-		                        self.cache.$pluginContainer.addClass("off");
-		                        if (self.config.enableChat) {
-		                            self.cache.$inCallChatContainer.hide();
-		                        }
+		               	self.cache.$pluginContainer.removeClass();
+                        self.cache.$pluginContainer.addClass("off");
+                        if (self.config.enableChat) {
+                            self.cache.$inCallChatContainer.hide();
+                        }
 		                self.cache.$pluginContainer.css("min-width", 0);
 		                self.cache.$pluginContainer.css("min-height", 0);
 		                self.cache.$inCallContainer.css("min-height", 0);
-		               self.cache.$pluginAndChatContainer.css("min-width", 0);
+		               	self.cache.$pluginAndChatContainer.css("min-width", 0);
 		                self.cache.$pluginAndChatContainer.css("min-height", 0);
 		                self.cache.$inCallButtonPanel.hide();
 		                self.cache.$plugin.css("height", "1px");
 		                self.cache.$plugin.css("width", "1px");
-		               self.cache.$plugin.removeClass("fullscreen");
+		               	self.cache.$plugin.removeClass("fullscreen");
 		                self.cache.$inCallContainer.removeClass('well well-large');
 		                self.cache.$inCallContainer.css('padding', 0);
 		                self.cache.$inCallContainer.css('height', "1px");
 		                self.cache.$pluginContainer.css("height", "1px");
 		                self.cache.$pluginContainer.css("width", "1px");
-		    		self.cache.$pluginAndChatContainer.css("height", "1px");
+		    			self.cache.$pluginAndChatContainer.css("height", "1px");
 		                self.cache.$pluginAndChatContainer.css("width", "1px");
 		                self.cache.$inCallParticipantsPanel.hide();
 		            }
@@ -4966,6 +5239,85 @@
 		
 		            return self;
 		        };
+		        
+		        /* Added by Ranjeet on 06/25/2014 to address US4477
+			    Start ---*/
+		        /**
+                 * Get Speaker Volume
+                 * @return {Object} Speaker Volume object
+                 */
+                clientSpeakerVolumeGet = function () {
+                    logger.log('info', 'call', 'clientSpeakerVolumeGet()');
+                    var request = vidyoClientMessages.requestGetVolumeAudioOut({});
+                    var msg;
+                    if (self.client.sendRequest(request)) {
+                        msg = "VidyoWeb sent " + request.type + " request successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + request.type + " request successfully!";
+                    }
+                    logger.log('info', 'call', "clientSpeakerVolumeGet(): " + msg, request);
+
+                    return request;
+                };
+		
+                /**
+                 * Set Speaker Volume
+                 * @return {Object} Speaker Volume object
+                 */
+                clientSpeakerVolumeSet = function (volume) {
+                    logger.log('info', 'call', 'clientSpeakerVolumeSet(', volume, ')');
+                    var params = {}, msg;
+                    params.volume = volume;
+                    var request = vidyoClientMessages.requestSetVolumeAudioOut(params);
+                    
+                    if (self.client.sendRequest(request)) {
+                        msg = "VidyoWeb sent " + request.type + " request successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + request.type + " request successfully!";
+                    }
+                    logger.log('info', 'call', "clientSpeakerVolumeSet(): " + msg, request);
+
+                    return request;
+                };
+		       
+                /**
+                 * Get Microphone Volume
+                 * @return {Object} Microphone Volume object
+                 */
+                clientMicrophoneVolumeGet = function () {
+                    logger.log('info', 'call', 'clientMicrophoneVolumeGet()');
+                    var request = vidyoClientMessages.requestGetVolumeAudioIn({});
+                    var msg;
+                    if (self.client.sendRequest(request)) {
+                        msg = "VidyoWeb sent " + request.type + " request successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + request.type + " request successfully!";
+                    }
+                    logger.log('info', 'call', "clientMicrophoneVolumeGet(): " + msg, request);
+
+                    return request;
+                };
+		       
+                /**
+                 * Get Microphone Volume
+                 * @return {Object} Microphone Volume object
+                 */
+                clientMicrophoneVolumeSet = function (volume) {
+                    logger.log('info', 'call', 'clientMicrophoneVolumeSet(', volume, ')');
+                    var params = {}, msg;
+                    params.volume = volume;
+                    var request = vidyoClientMessages.requestSetVolumeAudioIn(params);
+                    
+                    if (self.client.sendRequest(request)) {
+                        msg = "VidyoWeb sent " + request.type + " request successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + request.type + " request successfully!";
+                    }
+                    logger.log('info', 'call', "clientMicrophoneVolumeSet(): " + msg, request);
+
+                    return request;
+                };
+                /*--End*/
 		
 		       
 		        /**
@@ -5405,53 +5757,53 @@
 		            return request;
 		        };
 		        /**
-                        * Send a group chat message
-                        * @param  {String} message Message to send.
-                        * @return {Object} Application object
-                        */
-                       clientGroupChatSend = function (message) {
-                           logger.log('info', 'call', "clientGroupChatSend('", message, "')");
-       
-                           var params = {}, inEvent, msg;
-       
-                           params.message = message;
-       
-                           inEvent = vidyoClientMessages.inEventGroupChat(params);
-       
-                           if (self.client.sendEvent(inEvent)) {
-                               msg = "VidyoWeb sent " + inEvent.type + " event successfully";
-                           } else {
-                               msg = "VidyoWeb did not send " + inEvent.type + " event successfully!";
-                           }
-                           logger.log('info', 'call', "clientGroupChatSend(): " + msg);
-       
-                           return self;
-                       };
-       
-                       /**
-                        * Send a private chat message
-                        * @param  {String} message Message to send.
-                        * @return {Object} Application object
-                        */
-                       clientPrivateChatSend = function (uri, message) {
-                           logger.log('info', 'call', "clientPrivateChatSend('", uri, message, "')");
-       
-                           var params = {}, inEvent, msg;
-       
-                           params.message = message;
-                           params.uri = uri;
-       
-                           inEvent = vidyoClientMessages.inEventPrivateChat(params);
-       
-                           if (self.client.sendEvent(inEvent)) {
-                               msg = "VidyoWeb sent " + inEvent.type + " event successfully";
-                           } else {
-                               msg = "VidyoWeb did not send " + inEvent.type + " event successfully!";
-                           }
-                           logger.log('info', 'call', "clientPrivateChatSend(): " + msg);
-       
-                           return self;
-                       };
+                 * Send a group chat message
+                 * @param  {String} message Message to send.
+                 * @return {Object} Application object
+                 */
+                clientGroupChatSend = function (message) {
+                    logger.log('info', 'call', "clientGroupChatSend('", message, "')");
+
+                    var params = {}, inEvent, msg;
+
+                    params.message = message;
+
+                    inEvent = vidyoClientMessages.inEventGroupChat(params);
+
+                    if (self.client.sendEvent(inEvent)) {
+                        msg = "VidyoWeb sent " + inEvent.type + " event successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + inEvent.type + " event successfully!";
+                    }
+                    logger.log('info', 'call', "clientGroupChatSend(): " + msg);
+
+                    return self;
+                };
+
+                /**
+                 * Send a private chat message
+                 * @param  {String} message Message to send.
+                 * @return {Object} Application object
+                 */
+                clientPrivateChatSend = function (uri, message) {
+                    logger.log('info', 'call', "clientPrivateChatSend('", uri, message, "')");
+
+                    var params = {}, inEvent, msg;
+
+                    params.message = message;
+                    params.uri = uri;
+
+                    inEvent = vidyoClientMessages.inEventPrivateChat(params);
+
+                    if (self.client.sendEvent(inEvent)) {
+                        msg = "VidyoWeb sent " + inEvent.type + " event successfully";
+                    } else {
+                        msg = "VidyoWeb did not send " + inEvent.type + " event successfully!";
+                    }
+                    logger.log('info', 'call', "clientPrivateChatSend(): " + msg);
+
+                    return self;
+                };
 		        /**
 		         * Start sharing
 		         * @param  {String} shareId Share window or desktop id. Undefined to stop share.
@@ -5524,7 +5876,7 @@
 		         * @return {Object} Application object
 		         */
 		        vidyoPluginInitAndStart = function() {
-		            logger.log('info', 'ui', 'vidyoPluginInitAndStart()');
+		            logger.log('info', 'plugin', 'vidyoPluginInitAndStart()');
 		            
 		            /*Sets the plugin file type for download*/
 		            setPluginFileType(document.getElementById("macWinPluginFile"),self.config.pluginVersion);
@@ -5537,58 +5889,34 @@
 		
 		            /* Check if started correctly */
 		            if (vidyoPluginIsLoaded()) {
-				var vidPluginVersion = getCookie("vidPluginVersion");
-                		logger.log('info', 'ui', "Plugin version in cookie: " + vidPluginVersion + " pluginVersion: " + self.config.pluginVersion + " cookie exp days: " + self.config.pluginCookieExpDays);
-                		if (vidPluginVersion != "")
-                		{                        
-                    			if (vidPluginVersion != self.config.pluginVersion) {
-                         		//code
-                        			setCookie("vidPluginVersion",self.config.pluginVersion,self.config.pluginCookieExpDays);
-                     			}
-                	    	}
-                	    	else 
-                	    	{
-                    			setCookie("vidPluginVersion",self.config.pluginVersion,self.config.pluginCookieExpDays);                        
-                	    	}
 		                if (vidyoPluginIsStarted()) { // started already
-		                    //self.events.pluginLoadedEvent.trigger('fail', "Another instance is running?");
-				    logger.log('warning', 'plugin', "Another instance is running?");  
+		                    self.events.pluginLoadedEvent.trigger('fail', "Another instance is running?");
 		                }
 		                else { // not started yet
 		                    if (vidyoPluginStart()) {
 		                        self.events.pluginLoadedEvent.trigger('done');
-					logger.log('info', 'ui', 'vidyoPluginInitAndStart() setupReloadCounter : ' + sessionStorage.getItem("setupReloadCounter") + " refersh counter:" + sessionStorage.getItem("refreshCounter"));
-					/* Added by Ranjeet on 04/01/2014 to address DE927 - double refresh
-                        		Start ---*/
-                        		if ( sessionStorage.getItem("refreshCounter") ) {
-                            			sessionStorage.removeItem("refreshCounter");
-                             			/* Added by Ranjeet on 02/11/2014 to address User Story US3834
-                            			Start ---*/                      
-                            			//Display the success message if plugin is installed                        
-						if ( sessionStorage.getItem("setupReloadCounter") ) {
-						    	sessionStorage.removeItem("setupReloadCounter");				
-                                			if (sessionStorage.getItem("isPluginUpgrade")) {
-                                    				//Display plugin upgrade message if any older plugin version is detected other than the latest one
-                                    				$('#plugin_success_message').text('Vidyo Web plug-in upgraded successfully.');
-                                    				sessionStorage.removeItem("isPluginUpgrade");
-                                			}      
-                               				$('#pluginSuccessModal').modal({'backdrop': 'static'});
-						}
-						/*End---*/
-						$("#displayDevices").css('display', '');  
-					}
-                        		else {
-                            			sessionStorage.setItem("refreshCounter", "1");
-                            			vidyoPluginStop();
-                            			window.location.reload();                           
-                       	 		}                     
-                       			/*End---*/		                       
 		                    }
 		                    else { //failed to start
-		                        logger.log('warning', 'plugin', "Failed to start plugin."); 
+		                        self.events.pluginLoadedEvent.trigger('fail', "Failed to start Vidyo Library");
+		                        /* Added by Ranjeet on 12/16/2013 to display the message of refreshing the browser
+		                        Start ---*/
+		                        self.events.pluginLoadedEvent.trigger('info', "<p style='color: #000000;'>Failed to start Plugin. Please <a href='javascript:history.go(0)'> Click Here to refresh </a> your browser</p>");
+		                        /*---End*/
 		                    }
 		                }
-		                
+		                var vidPluginVersion = getCookie("vidPluginVersion");
+		                console.log("Plugin version in cookie: " + vidPluginVersion + " pluginVersion: " + self.config.pluginVersion + " cookie exp days: " + self.config.pluginCookieExpDays);
+		                if (vidPluginVersion != "")
+		                {                        
+		                    if (vidPluginVersion != self.config.pluginVersion) {
+		                         //code
+		                        setCookie("vidPluginVersion",self.config.pluginVersion,self.config.pluginCookieExpDays);
+		                     }
+		                }
+		                else 
+		                {
+		                    setCookie("vidPluginVersion",self.config.pluginVersion,self.config.pluginCookieExpDays);                        
+		                }
 		            }
 		            else {
 		                /* Failed to load plugin */
@@ -5598,17 +5926,19 @@
 							/* Plugin is installed but not loaded. Probably blocked by the browser. */
 							logger.log('warning', 'plugin', "Plugin is installed but not loaded. Probably blocked by the browser.");
 							uiStartPluginDetection(true);
-					}
+						}
 				        else {
-				        	
+				        	/*Display Plugin download and install instructions*/
+							self.events.pluginLoadedEvent.trigger('info', $("#setupContents").html());
+							
 						    var showPluginUpgradeMessage = 'false';		    
 						    var vidPluginVersion = getCookie("vidPluginVersion");
-						    logger.log('info', 'ui', "Plugin version in cookie: " + vidPluginVersion + " pluginVersion: " + self.config.pluginVersion + " cookie exp days: " + self.config.pluginCookieExpDays);
+						    console.log("Plugin version in cookie: " + vidPluginVersion + " pluginVersion: " + self.config.pluginVersion + " cookie exp days: " + self.config.pluginCookieExpDays);
 						    if (vidPluginVersion != "")
 						    {                        
 								if (vidPluginVersion != self.config.pluginVersion) {
 								     showPluginUpgradeMessage = 'true';
-					            		}
+					            }
 						    }
 						    else {
 								showPluginUpgradeMessage = 'true'; 						                       
@@ -5621,7 +5951,7 @@
 							    
 							    $('#plugin_file_download_button').click(function() {				    
 									 window.location = document.getElementById("macWinPluginFile").href;
-									 logger.log('info', 'ui', "application::Plugin upgrade downloaded. Starting plugin auto detection.");
+									 console.warn("application::Plugin upgrade downloaded. Starting plugin auto detection.");
 									/* Start plugin polling */
 									uiStartPluginDetection(false);		
 							    });
@@ -5630,11 +5960,11 @@
 						    else {
 						    	/* Notify deferred object to show plugin download */
 						    	logger.log('warning', 'plugin', "Plugin is not installed. Starting plugin auto detection.");
-		                        		if (sessionStorage.getItem("isPluginUpgrade")) {
-		                            			sessionStorage.removeItem("isPluginUpgrade");
-		                        		}      
-		                        		/* Start plugin polling */
-		                        		uiStartPluginDetection(false);
+		                        if (sessionStorage.getItem("isPluginUpgrade")) {
+		                            sessionStorage.removeItem("isPluginUpgrade");
+		                        }      
+		                        /* Start plugin polling */
+		                        uiStartPluginDetection(false);
 						    }
 				       }
 		            }
@@ -5659,49 +5989,24 @@
 						   if (vidyoPluginIsLoaded()) {
 						       console.log('application::uiStartPluginDetection() -- plugin is found and loaded - reloading page');
 						       if (vidyoPluginIsStarted()) { // started already
-						    	   //self.events.pluginLoadedEvent.trigger('fail', "Another instance is running?");
-							   logger.log('warning', 'plugin', "Another instance is running?");
+						    	   self.events.pluginLoadedEvent.trigger('fail', "Another instance is running?");
 						       } else { // not started yet
-							    if (vidyoPluginStart()) {
-						               self.events.pluginLoadedEvent.trigger('done');
- 								logger.log('info', 'ui','vidyoPluginInitAndStart() setupReloadCounter : ' + sessionStorage.getItem("setupReloadCounter") + " refersh counter:" + sessionStorage.getItem("refreshCounter"));
-								/* Added by Ranjeet on 04/03/2014 to address DE927 - double refresh
-	                        				Start ---*/
-	                        				if ( sessionStorage.getItem("refreshCounter") ) {
-	                            					sessionStorage.removeItem("refreshCounter");	                                          
-	                            					//Display the success message if plugin is installed                        
-							    		if ( sessionStorage.getItem("setupReloadCounter") ) {
-							    			sessionStorage.removeItem("setupReloadCounter");				
-	                                					if (sessionStorage.getItem("isPluginUpgrade")) {
-	                                    						//Display plugin upgrade message if any older plugin version is detected other than the latest one
-	                                    						$('#plugin_success_message').text('Vidyo Web plug-in upgraded successfully.');
-	                                     						sessionStorage.removeItem("isPluginUpgrade");
-	                                					}      
-	                               						$('#pluginSuccessModal').modal({'backdrop': 'static'});
-							    		}
-							   		$("#displayDevices").css('display', '');
-							   	}
-	                        			   	else {
-	                            					sessionStorage.setItem("refreshCounter", "1");
-	                           					vidyoPluginStop();
-	                            					window.location.reload();                           
-	                        			   	}                     
-	                       					/*End---*/		                  
-							    } else { //failed to start
-								       //self.events.pluginLoadedEvent.trigger('fail', "Failed to start Vidyo Library");
-									logger.log('warning', 'plugin', "uiStartPluginDetection Failed to start Vidyo Library"); 
-							     }
+								   if (vidyoPluginStart()) {
+								       self.events.pluginLoadedEvent.trigger('done');
+								   } else { //failed to start
+								       self.events.pluginLoadedEvent.trigger('fail', "Failed to start Vidyo Library");
+								   }
 						       }
 						       return;
-						  }
+						   }
 				       } else {
 						   console.log('application::uiStartPluginDetection() -- plugin is found, reloading');
-						   if ( sessionStorage.getItem("setupReloadCounter")) {
-						       var visits = sessionStorage.getItem("setupReloadCounter");
+						   if ( sessionStorage.getItem("reloadCounter")) {
+						       var visits = sessionStorage.getItem("reloadCounter");
 						       visits = parseInt(visits) + 1;
-						       sessionStorage.setItem("setupReloadCounter", visits);
+						       sessionStorage.setItem("reloadCounter", visits);
 						   }else{
-						       sessionStorage.setItem("setupReloadCounter", 1);
+						       sessionStorage.setItem("reloadCounter", 1);
 						   }
 						   /* IE and Safari does not like loading plugin in the same page after install so reloading page */
 						   location.reload();
@@ -5709,8 +6014,8 @@
 				       }
 				   }
 				   //Check if this is first refresh.
-				   if ( sessionStorage.getItem("setupReloadCounter") ) {
-				       var visits = sessionStorage.getItem("setupReloadCounter");
+				   if ( sessionStorage.getItem("reloadCounter") ) {
+				       var visits = sessionStorage.getItem("reloadCounter");
 				       //allow refresh for only up to 2 minutes for a session
 				       if (parseInt(visits) <= 120) {
 						   /* in case of no plugin detected, try again */
@@ -5720,10 +6025,10 @@
 						       self.config.pluginDetectionTimeout);
 						   return;
 				       }else{
-						   sessionStorage.removeItem("setupReloadCounter");                    
+						   sessionStorage.removeItem("reloadCounter");                    
 						   $('#pluginInstallFailureModal').modal({'backdrop': 'static'});
 						   $('#plugin_failure_modal_cross_button').click(function() {
-						       top.location = '/videovisit/intro.htm';
+						       top.location = '/videovisit/logout.htm?explicitActionNavigation=true';
 						   });
 						   return;			    
 				       }
@@ -5766,17 +6071,17 @@
 		                    console.log('event type ' + event.type);
 		                    if ( event.type === 'OutEventParticipantsChanged')
 		                    {
-                                            if ( event.participantCount > 2 )
-                                            {
-                                                console.log('setting dock view');
-                                                self.currentPreviewMode = "Dock";
-                                                clientPreviewModeSet("Dock");
-                                            }else{
-                                                console.log('setting pip view');
-                                                self.currentPreviewMode = "PIP";
-                                                clientPreviewModeSet("PIP");
-                                             }
-                                    }
+								if ( event.participantCount > 2 )
+								{
+										console.log('setting dock view');
+										self.currentPreviewMode = "Dock";
+											clientPreviewModeSet("Dock");
+								}else{
+										console.log('setting pip view');
+														self.currentPreviewMode = "PIP";
+														clientPreviewModeSet("PIP");
+								 }
+							}
 		                },
 		                useCallbackWithPlugin: true,
 		                outEventCallbackObject: self,
@@ -5811,31 +6116,31 @@
 		            return self;
 		        };
 		        /**
-                        * Shows or hides plugin by assigning 1x1 size
-                        * @param  {Boolean} show True to show and false to hide
-                        * @return {Object} Application object
-                        */
-                       uiVidyoPluginShow = function (show) {
-                           logger.log('info', 'plugin', 'uiVidyoPluginShow(' + show + ')');
-                           if (show) {
-                               self.cache.$plugin.addClass("fullscreen");
-                               self.cache.$plugin.removeClass("minimized");
-                           } else {
-                               self.cache.$plugin.removeClass("fullscreen");
-                               self.cache.$plugin.addClass("minimized");
-                           }
-                           return self;
-                       };
-       
-                       /**
-                        * Returns true if plugin is shown and false otherwise.
-                        * @return {Boolean} Application object
-                        */
-                       uiVidyoPluginIsShown = function () {
-                           logger.log('info', 'plugin', 'uiVidyoPluginIsShown()');
-       
-                           return self.cache.$plugin.hasClass("minimized");
-                       };
+                 * Shows or hides plugin by assigning 1x1 size
+                 * @param  {Boolean} show True to show and false to hide
+                 * @return {Object} Application object
+                 */
+                uiVidyoPluginShow = function (show) {
+                    logger.log('info', 'plugin', 'uiVidyoPluginShow(' + show + ')');
+                    if (show) {
+                        self.cache.$plugin.addClass("fullscreen");
+                        self.cache.$plugin.removeClass("minimized");
+                    } else {
+                        self.cache.$plugin.removeClass("fullscreen");
+                        self.cache.$plugin.addClass("minimized");
+                    }
+                    return self;
+                };
+
+                /**
+                 * Returns true if plugin is shown and false otherwise.
+                 * @return {Boolean} Application object
+                 */
+                uiVidyoPluginIsShown = function () {
+                    logger.log('info', 'plugin', 'uiVidyoPluginIsShown()');
+
+                    return self.cache.$plugin.hasClass("minimized");
+                };
 		        /**
 		         * Detects if plugin is installed or not
 		         *
@@ -6584,12 +6889,12 @@
 		                    app.main();
 		                    window.app = app; // use this as a hook for debugging
 		
-				//$(window).resize(function(){
-					//var width = $(window).width();
-					//var height = $(window).height() *0.90;
-					//$("#pluginContainer").width(width);
-					//$("#pluginContainer").height(height);
-				//});
+				$(window).resize(function(){
+					var width = $(window).width();
+					var height = $(window).height() *0.90;
+				//	$("#pluginContainer").width(width);
+				//	$("#pluginContainer").height(height);
+				});
 			} catch (e) {
 		                    requirejs.onError({
 		                        requireType: e
