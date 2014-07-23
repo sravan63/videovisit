@@ -32,22 +32,22 @@
 		    <link rel="stylesheet" href="vidyoplayer/css/vidyo-app.css">
 		
 		    <style type="text/css">       
-		        body{
+		        /*body{
 		        	background-color: #F6F6E8;
-		        }		        
+		        }*/	        
 		        table td{
 		        	border-bottom: none;
 		        	padding: 0;
 		        }
-		        .button {
+		        /*.button {
 		            padding: 4px 10px 3px 7px;
 		            background: none repeat scroll 0 0 #4D8993;
 		            color: #FFFFFF;
 		            font-size: 15px;
 		            font-family: Arial;     
-		        }				
+		        }	*/				
 				#setupInstructions{
-					float:none;
+					float: none;
 					margin-bottom: 0;
 				}
 		        #setupInstructions .button{
@@ -57,49 +57,7 @@
 		            color: #FFFFFF;
 		            text-decoration: none;
 		        }
-		        #displayDevices{
-		            padding: 10px 35px;
-		            border: 1px solid #E9E9E9;
-		            color: #666666;
-		            font-size: 15px;
-		            /*font-family: 'Avenir Next';*/
-		        }
-		        #displayDevices h3{
-		            color: #666666;
-		            margin-bottom: 10px;
-		            font-size: 17.5px;
-		            font-weight: normal;
-		        }
-		        #displayDevices table{
-		            font-size: 15px;
-		            margin: 0;
-		        }
-		        #displayDevices table th{
-		            border: none;
-		            font-size: 15px;
-		            font-weight: bold;
-		            padding-left: 0;
-		            text-align: left;
-		        }
-		        #displayDevices table tr{
-		            border: none;
-		            font-size: 15px;
-		        }
-		        #displayDevices table td{
-		            border: none;
-		            font-size: 15px;
-		            vertical-align: middle;
-		            padding: 0;
-		        }
-		        #displayDevices .threeColumns{
-		            width: 29%;
-		            float: left;
-		            border-right: 1px solid #CCCCCC;
-		            height: auto;
-		            border-left: none;
-		            padding: 0 5px;
-		            margin: 0 5px 20px;
-		        }
+		        
 		    </style>
 	   
 	    <!--End CSS-->
@@ -134,22 +92,22 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
 	<tiles:insertAttribute name="gtm" />
-	
-        <!-- ============ BEGIN:  #container-wrap ============ -->
-        <div id="container_wrap">
-        	
-        	<!-- ============ BEGIN:  #container ============ -->
-			<div id="container">
+
+        <!-- ============ BEGIN:  #Container-primary ============ -->
+        <div id="setupContainer-primary">
+        
 
                 <!-- ============ BEGIN:  #header ============ -->
                 <tiles:insertAttribute name="header" />
                 <!-- ============== END:  #header ============ -->
 
-                <!-- ============ BEGIN:  #container-main ============ -->
-                <div id="container-main">
+                <!-- ============ BEGIN:  #Container-main ============ -->
+                <div id="setupContainer-main">
+
 
                         <!-- ============ BEGIN: #block-main ============== -->
-                        <div id="content-main">
+                        <div id="setupContent-main">
+
 
                                 <!-- Start Page Content -->
                                 <tiles:insertAttribute name="content" />
@@ -157,15 +115,15 @@
 
                         </div>
                         <!-- ============ END:  #block-main ============== -->
+                        
 
                 </div>
                 <!-- ============== END:  #container-main ============ -->
 
-			</div>
-			<!-- ============== END:  #container ============ -->
 
         </div>
-        <!-- ============== END:  #container-wrap ============ -->
+        <!-- ============== END:  #container-primary ============ -->
+
 
 </body>
 </html>
