@@ -327,8 +327,9 @@
 										    			<!--<span> Microsoft LifeCam Cinema </span>
 										    			<a class="btn btn-large btn-tmm-success" href="#" title="Mute Mic" id="inCallButtonMuteMicrophone" style="border-bottom:none; width:40px; display:inline-block;"></a>	-->
 										    			<div style="width:100%; text-align:center; margin:40px auto 10px;">
-										    				<!-- <span class="setupSprite icon" id="" style="background-position:1px -80px;"></span>	 -->
-										    				<!--<canvas id="meter" width="100" height="50" style="border:1px solid red;"></canvas>-->
+										    				<!-- <span class="setupSprite icon" id="" style="background-position:1px -80px;"></span> -->
+										    				<!--<canvas id="meter" width="100" height="50" style="border:1px solid red;"></canvas> -->
+										    				<a href="#" title="Play" class="" id="" style="background-image: url('vidyoplayer/img/volume-meter.png'); background-repeat:no-repeat; width:200px; height:38px; margin:5px auto 25px; display:inline-block;"></a>
 										    			</div>
 										    			<div style="text-align:center;">
 															<div id="volume-control-mic" style="height:3px; width:120px; vertical-align:middle; margin:12px; display:inline-block; background: grey;" >
