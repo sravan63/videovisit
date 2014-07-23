@@ -68,9 +68,9 @@
             /* Splash */
             splash: ".splash",
             /* audio */
-            audioIncomingCallMp3: 'audio/incomingCall.mp3',
-            audioIncomingCallOgg: 'audio/incomingCall.ogg',
-            audioIncomingCallWav: 'audio/incomingCall.wav',
+            audioIncomingCallMp3: 'vidyoplayer/audio/incomingCall.mp3',
+            audioIncomingCallOgg: 'vidyoplayer/audio/incomingCall.ogg',
+            audioIncomingCallWav: 'vidyoplayer/audio/incomingCall.wav',
             /* UI containers */
             infoWrapper: "#infoWrapper",
             infoTemplate:
@@ -144,6 +144,64 @@
 	            	</tr>\
 	            {{/each}}\
 	    	</table>\
+	    </div>\
+	</div>\
+    ',      
+            setupCameraConfigContainer: "#setupCameraConfigContainer",
+            setupCameraConfigTemplate: '\
+    <div class="control-group">\
+        <div id="configurationCamera" class="controls">\
+            <table>\
+                {{#each camera}}\
+                    <tr>\
+                        {{#if isSelected}}\
+                            <td><input type="radio" class="input" name="Camera" value="{{id}}" checked="checked" style="vertical-align:top; margin-right:5px;"></input></td>\
+            				<td><label style="margin-bottom:0;">{{name}}</label></td>\
+                        {{else}}\
+                            <td><input type="radio" class="input" name="Camera" value="{{id}}" style="vertical-align:top; margin-right:5px;"></input></td>\
+            				<td><label style="margin-bottom:0;">{{name}}</label></td>\
+                        {{/if}}\
+                    </tr>\
+                {{/each}}\
+            </table>\
+        </div>\
+    </div>\
+    ',
+    		setupMicConfigContainer: "#setupMicConfigContainer",
+    		setupMicConfigTemplate: '\
+	    <div id="configurationMicrophone" class="controls">\
+	    	 <table>\
+	            {{#each microphone}}\
+	            	<tr>\
+		                {{#if isSelected}}\
+		                    <td><input type="radio" class="input" name="Microphone" value="{{id}}" checked="checked" style="vertical-align:top; margin-right:5px;"></input></td>\
+    						<td><label style="margin-bottom:0;">{{name}}</label></td>\
+		                {{else}}\
+		                    <td><input type="radio" class="input" name="Microphone" value="{{id}}" style="vertical-align:top; margin-right:5px;"></input></td>\
+    						<td><label style="margin-bottom:0;">{{name}}</label></td>\
+		                {{/if}}\
+	            	</tr>\
+	            {{/each}}\
+	    	</table>\
+	    </div>\
+	</div>\
+    ',
+    		setupSpeakerConfigContainer: "#setupSpeakerConfigContainer",
+    		setupSpeakerConfigTemplate: '\
+	    <div id="configurationSpeaker" class="controls">\
+	        <table>\
+	            {{#each speaker}}\
+	        		<tr>\
+	                	{{#if isSelected}}\
+		                    <td><input type="radio" class="input" name="Speaker" value="{{id}}" checked="checked" style="vertical-align:top; margin-right:5px;"></input></td>\
+    						<td><label style="margin-bottom:0;">{{name}}</label></td>\
+		                {{else}}\
+		                    <td><input type="radio" class="input" name="Speaker" value="{{id}}" style="vertical-align:top; margin-right:5px;"></input></td>\
+    						<td><label style="margin-bottom:0;">{{name}}</label></td>\
+		                {{/if}}\
+	        		</tr>\
+	            {{/each}}\
+	        </table>\
 	    </div>\
 	</div>\
     ',
@@ -239,6 +297,9 @@
             inCallShareList: "#inCallShareList",
             inCallSelectedShareClass: "inCallSelectedShare",
             inCallSelectedLocalShareClass: "inCallSelectedLocalShare",
+            setupCameraButtonToggleConfig: "#setupCameraButtonToggleConfig",
+            setupMicButtonToggleConfig: "#setupMicButtonToggleConfig",
+            setupSpeakerButtonToggleConfig: "#setupSpeakerButtonToggleConfig",
             /* Panels */
             inCallChatTabs: "#inCallChatTabs",
             inCallChatPanes: "#inCallChatPanes",
