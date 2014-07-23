@@ -270,6 +270,7 @@ docroot/vidyoplayer/img/step_1.png -text
 docroot/vidyoplayer/img/step_2.png -text
 docroot/vidyoplayer/img/step_3.png -text
 docroot/vidyoplayer/img/video_on_off.png -text
+docroot/vidyoplayer/img/volume-meter.png -text
 docroot/vidyoplayer/index.html -text svneol=unset#text/plain
 docroot/vidyoplayer/player.html -text svneol=unset#text/plain
 docroot/vidyoplayer/scripts/jquery.min.js -text svneol=unset#text/plain
