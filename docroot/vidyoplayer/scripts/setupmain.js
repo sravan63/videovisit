@@ -1993,6 +1993,13 @@
             self.cache.$setupCameraButtonToggleConfig
                 .on('click', function() {
                 	console.log("$setupCameraButtonToggleConfig click");
+                	
+                	if ($('#pluginContainer').css('visibility')=='hidden'){
+                        $('#pluginContainer').css('visibility', 'visible');
+                    }
+                	else if ($('#pluginContainer').css('visibility')=='visible'){
+                		$('#pluginContainer').css('visibility', 'hidden');
+                	}
                 	self.cache.$setupCameraConfigContainer.slideToggle();
                 	
                 	if (self.cache.$setupMicConfigContainer.is(":visible")) {
@@ -4550,7 +4557,8 @@
 		                title: title,
 		                details: details
 		            });
-		
+		            
+		            self.cache.$inCallContainer.hide();
 		            self.cache.$infoWrapper.html(htmlData);
 		            self.cache.$infoWrapper.fadeIn();
 		           uiReportCloseEngage();
@@ -4567,6 +4575,7 @@
 		            logger.log('info', 'ui','uiReportInfoDismiss()');
 		            self.cache.$infoWrapper.html("");
 		            self.cache.$infoWrapper.hide();
+		            self.cache.$inCallContainer.show();
 		            return self;
 		        };
 
