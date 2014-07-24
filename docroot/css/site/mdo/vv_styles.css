@@ -585,6 +585,11 @@ div#iconpromo2{
 .accessory-header #setupSpeakerConfigContainer{
 }
 
+#displayDevices #infoWrapper{
+	background-color: #FFFFFF;
+	border: none;
+}
+
 /************* END - Setup Display Devices **************/
 #videoVisitSetupPageContents #setupLastNav{
 	margin: 10px 0;
