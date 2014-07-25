@@ -2015,6 +2015,10 @@
 	            	console.log("$setupMicButtonToggleConfig click");
 	            	self.cache.$setupMicConfigContainer.slideToggle();
 	            	
+	            	if ($('#pluginContainer').css('visibility')=='hidden'){
+                        $('#pluginContainer').css('visibility', 'visible');
+                    }
+	            	
 	            	if (self.cache.$setupCameraConfigContainer.is(":visible")) {
                     	self.cache.$setupCameraConfigContainer.slideUp();
                     }
@@ -2027,6 +2031,10 @@
             	.on('click', function() {
 	            	console.log("$setupSpeakerButtonToggleConfig click");
 	            	self.cache.$setupSpeakerConfigContainer.slideToggle();
+	            	
+	            	if ($('#pluginContainer').css('visibility')=='hidden'){
+                        $('#pluginContainer').css('visibility', 'visible');
+                    }
 	            	
 	            	if (self.cache.$setupCameraConfigContainer.is(":visible")) {
 	                	self.cache.$setupCameraConfigContainer.slideUp();
