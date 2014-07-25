@@ -499,6 +499,7 @@ div#iconpromo2{
 
 #displayDevices .selected-accessory{
 	background-color: #EEEEEE;
+	border-bottom: 2px solid #979797;
 	/*height: 27px;	*/
 }
 
