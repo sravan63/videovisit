@@ -356,7 +356,7 @@
 										    			<span> Make sure your face is well lit and there are no bright lights behind you. </span>
 										    		</td>
 										    		<td class="threeColumns">
-										    			<span> Speak into your microphone and adjust the volume until you are in the good range. </span>
+										    			<span> Speak into your microphone and adjust the volume until you&#39;re in the good range. </span>
 										    		</td>
 										    		<td class="threeColumns">
 										    			<span> Play the sound clip and adjust your speaker volume. </span>
