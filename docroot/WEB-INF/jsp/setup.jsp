@@ -353,10 +353,10 @@
 										    	</tr>
 										    	<tr class="accessory-instructions" style="">
 										    		<td class="threeColumns firstColumn">
-										    			<span> Make sure your face is well lit and there is no bright lights behind you. </span>
+										    			<span> Make sure your face is well lit and there are no bright lights behind you. </span>
 										    		</td>
 										    		<td class="threeColumns">
-										    			<span> Speak into your microphone and adjust the volume until you are in a good range. </span>
+										    			<span> Speak into your microphone and adjust the volume until you are in the good range. </span>
 										    		</td>
 										    		<td class="threeColumns">
 										    			<span> Play the sound clip and adjust your speaker volume. </span>
