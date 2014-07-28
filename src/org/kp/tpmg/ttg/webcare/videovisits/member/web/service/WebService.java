@@ -1,7 +1,6 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.service;
 
 import java.rmi.RemoteException;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import org.apache.axis2.AxisFault;
@@ -13,7 +12,6 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
@@ -45,10 +43,11 @@ import org.kp.tpmg.videovisit.member.VerifyMember;
 import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
 import org.kp.tpmg.videovisit.member.GetVendorPluginData;
 import org.kp.tpmg.videovisit.member.GetVendorPluginDataResponse;
+import org.kp.tpmg.videovisit.member.CreateInstantVendorMeeting;
+import org.kp.tpmg.videovisit.member.CreateInstantVendorMeetingResponse;
+import org.kp.tpmg.videovisit.member.TerminateInstantMeeting;
+import org.kp.tpmg.videovisit.member.TerminateInstantMeetingResponse;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
@@ -63,6 +62,12 @@ public class WebService{
 	public static boolean status = false;
 	public static VideoVisitMemberServicesStub stub;
 	public static boolean simulation = true;
+	
+	//setup wizard related properties
+	private static String setupWizardHostNuid;
+	private static String setupWizardMemberMrn;
+	private static String setupWizardMeetingType;
+	private static String setupWizardUserName;
 	
 	public static boolean initWebService()
 	{
@@ -85,6 +90,13 @@ public class WebService{
 				chunked = rbInfo.getString("WEBSERVICE_CHUNKED").equals ("true")?true:false;
 				simulation = rbInfo.getString ("WEBSERVICE_SIMULATION").equals ("true")?true:false;
 				logger.info("configuration: serviceURL="+serviceURL+" simulation="+simulation);
+				
+				//setup wizard related values
+				setupWizardHostNuid = rbInfo.getString("SETUP_WIZARD_HOST_NUID");
+				setupWizardMemberMrn = rbInfo.getString("SETUP_WIZARD_MEMBER_MRN");
+				setupWizardMeetingType = rbInfo.getString("SETUP_WIZARD_MEETING_TYPE");
+				setupWizardUserName = rbInfo.getString("SETUP_WIZARD_USER_NAME");
+				logger.info("configuration: setupWizardHostNuid="+setupWizardHostNuid+", setupWizardMemberMrn="+setupWizardMemberMrn+", setupWizardMeetingType="+setupWizardMeetingType+", setupWizardUserName="+setupWizardUserName);
 			}
 			
 			if (simulation)
@@ -137,6 +149,70 @@ public class WebService{
 		}
 		logger.info("Exit initWebService");
 		return ret;
+	}
+
+
+	/**
+	 * @return the setupWizardHostNuid
+	 */
+	public static String getSetupWizardHostNuid() {
+		return setupWizardHostNuid;
+	}
+
+
+	/**
+	 * @param setupWizardHostNuid the setupWizardHostNuid to set
+	 */
+	public static void setSetupWizardHostNuid(String setupWizardHostNuid) {
+		WebService.setupWizardHostNuid = setupWizardHostNuid;
+	}
+
+
+	/**
+	 * @return the setupWizardMemberMrn
+	 */
+	public static String getSetupWizardMemberMrn() {
+		return setupWizardMemberMrn;
+	}
+
+
+	/**
+	 * @param setupWizardMemberMrn the setupWizardMemberMrn to set
+	 */
+	public static void setSetupWizardMemberMrn(String setupWizardMemberMrn) {
+		WebService.setupWizardMemberMrn = setupWizardMemberMrn;
+	}
+
+
+	/**
+	 * @return the setupWizardMeetingType
+	 */
+	public static String getSetupWizardMeetingType() {
+		return setupWizardMeetingType;
+	}
+
+
+	/**
+	 * @param setupWizardMeetingType the setupWizardMeetingType to set
+	 */
+	public static void setSetupWizardMeetingType(String setupWizardMeetingType) {
+		WebService.setupWizardMeetingType = setupWizardMeetingType;
+	}
+
+
+	/**
+	 * @return the setupWizardUserName
+	 */
+	public static String getSetupWizardUserName() {
+		return setupWizardUserName;
+	}
+
+
+	/**
+	 * @param setupWizardUserName the setupWizardUserName to set
+	 */
+	public static void setSetupWizardUserName(String setupWizardUserName) {
+		WebService.setupWizardUserName = setupWizardUserName;
 	}
 
 
@@ -653,6 +729,65 @@ public class WebService{
 		logger.info("Exit getVendorPluginData");
 		return toRet;
 
+	}
+	
+	/**
+	 * This method creates instant vendor meeting and returns meeting details
+	 * 	 
+	 * @return StringResponseWrapper
+	 * @throws Exception 
+	 */
+	public static StringResponseWrapper createInstantVendorMeeting(String hostNuid, String[] participantNuid, String memberMrn, String meetingType, String sessionId) throws Exception {
+		logger.info("Entered WebService.createInstantVendorMeeting -> received input attributes as [hostNuid=" + hostNuid + ", participantNuid=" + participantNuid + ", memberMrn=" + memberMrn + ", meetingType=" + meetingType + ", sessionId=" + sessionId + "]");
+		StringResponseWrapper toRet = null; 
+		
+		CreateInstantVendorMeeting query = new CreateInstantVendorMeeting();
+		try
+		{
+			query.setHostNuid(hostNuid);
+			query.setParticipantNuid(participantNuid);
+			query.setMemberMrn(memberMrn);
+			query.setMeetingType(meetingType);
+			query.setSessionId(sessionId);
+	
+			CreateInstantVendorMeetingResponse response = stub.createInstantVendorMeeting(query);
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			CreateInstantVendorMeetingResponse response = stub.createInstantVendorMeeting(query);
+			toRet = response.get_return();
+		}
+		logger.info("Exiting WebService.createInstantVendorMeeting");
+		return toRet;
+	}
+	
+	public static StringResponseWrapper terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID, String sessionId) throws Exception
+	{
+		logger.info("Entered WebService.terminateInstantMeeting received input attributes as [meetingId=" + meetingId + ", vendorConfId=" + vendorConfId + ", updaterNUID=" + updaterNUID + ", sessionId=" + sessionId + "]");
+		StringResponseWrapper toRet = null; 
+				
+		TerminateInstantMeeting query = new TerminateInstantMeeting();
+
+		try
+		{
+			query.setSessionId(sessionId);
+			query.setMeetingId (meetingId);
+			query.setUpdaterNUID (updaterNUID);
+			query.setVendorConfId(vendorConfId);
+			TerminateInstantMeetingResponse response = stub.terminateInstantMeeting(query);
+
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			logger.error("WebService.terminateInstantMeeting -> Web Service API error:" + e.getMessage() + " Retrying...");
+			TerminateInstantMeetingResponse response = stub.terminateInstantMeeting(query);
+			toRet = response.get_return();	
+		}
+		logger.info("Exiting WebService.terminateInstantMeeting");
+		return toRet;
 	}
 }
 
