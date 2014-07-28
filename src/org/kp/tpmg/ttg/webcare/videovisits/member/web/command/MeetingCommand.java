@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -834,4 +835,82 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
+	/**
+	 * This method is called for creating instant meeting for setup wizard 
+	 * This will internally call the web service to make updates.
+	 * @param request
+	 * @param response
+	 * @param hostNuid
+	 * @param participantNuid
+	 * @param memberMrn
+	 * @param meetingType
+	 * @return
+	 * @throws Exception
+	 */
+	public static String createInstantVendorMeeting(HttpServletRequest request, HttpServletResponse response, String hostNuid, String[] participantNuid, String memberMrn, String meetingType) throws Exception {
+		logger.info("Entered MeetingCommand.createInstantVendorMeeting -> -> received input attributes as [hostNuid=" + hostNuid + ", participantNuid=" + participantNuid + ", memberMrn=" + memberMrn + ", meetingType=" + meetingType + "]");
+		StringResponseWrapper ret = null;			
+		try
+		{
+			//grab data from web services
+			ret = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType, request.getSession().getId());
+			
+			if (ret != null)
+			{
+				return ret.getResult();
+			}
+			
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
+
+	public static String terminateSetupWizardMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("Entered MeetingCommand.terminateSetupWizardMeeting ");
+		
+		StringResponseWrapper ret = null;
+		long meetingId = 0;
+		String vendorConfId = null;
+				
+		try
+		{
+			// parse parameters
+			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			if (StringUtils.isNotBlank(request.getParameter("vendorConfId"))) {
+				vendorConfId = request.getParameter("vendorConfId");
+			}
+			
+			String hostNuid = WebService.getSetupWizardHostNuid();			
+			
+			if(hostNuid == null){
+				boolean isReady = WebService.initWebService();
+				if(isReady){
+					hostNuid = WebService.getSetupWizardHostNuid();		
+				}
+			}
+			
+			//grab data from web services
+			ret= WebService.terminateInstantMeeting(meetingId, vendorConfId, hostNuid, request.getSession().getId());
+			if (ret != null)
+			{
+				return ret.getResult();
+			}
+			
+		}
+		catch (Exception e)
+		{
+			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
+
 }
