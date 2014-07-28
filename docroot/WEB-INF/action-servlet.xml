@@ -114,6 +114,7 @@
 				<prop key="/videoVisit.htm">videoVisit</prop>
 				<prop key="/videoVisitReady.htm">videoVisitReady</prop>
 				<prop key="/videoVisitGuestReady.htm">videoVisitGuestReady</prop>
+				<prop key="/terminateSetupWizardMeeting.json">dataTerminateSetupWizardMeeting</prop>
 				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
@@ -170,7 +171,7 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="mdohelplive" />
 	</bean>
-	<bean id="setup" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="setup" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SetupWizardController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="setup" />
 		<property name="navigation" value="setup" />
@@ -268,6 +269,10 @@
 	</bean>
 	
 	<bean id="dataUserPresentInMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.UserPresentInMeetingController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	
+	<bean id="dataTerminateSetupWizardMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.TerminateSetupWizardMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
