@@ -7,10 +7,11 @@
 	<input type="hidden" id="pluginNewVersion" value="" /> 
 	<input type="hidden" id="pluginOldVesrions" value="" />
 	
-	<input type="hidden" id="guestName" value="Test, User" />
-	<input type="hidden" id="isProvider" value="false" />
-	<input type="hidden" id="guestUrl" value="https%3A%2F%2Fthvid.kp.org%2Fflex.html%3Froomdirect.html%26key%3DzFbwQiCaCkx6" />
-	<input type="hidden" id="meetingId" value="1358" />
+	<input type="hidden" id="guestName" value="${instantMeetingParams.guestName}" />
+	<input type="hidden" id="isProvider" value="${instantMeetingParams.isProvider}" />
+	<input type="hidden" id="guestUrl" value="${instantMeetingParams.vidyoUrl}" />
+	<input type="hidden" id="meetingId" value="${instantMeetingParams.meetingId}" />
+	<input type="hidden" id="vendorConfId" value="${instantMeetingParams.vendorConfId}" />	
 	
 	<input type="hidden" id="caregiverId" value="" />
 	<input type="hidden" id="meetingCode" value="" />
@@ -635,45 +636,6 @@
 	</div>
 	<script type="text/javascript">
 
-	function getBrowserInfo() {
-
-		var browserUserAgent = navigator.userAgent;
-		
-		var browserInfo = new Object();
-		
-		browserInfo.is32Bit = true;
-	
-		if (browserUserAgent.indexOf("x64") != -1) {
-			browserInfo.is32Bit = false;
-		}
-		browserInfo.is32BitOS = true;
-	
-		if (browserUserAgent.indexOf("WOW64") != -1 || browserUserAgent.indexOf("Win64") != -1 ){
-			browserInfo.is32BitOS = false;
-		} 
-	
-		browserInfo.isIE = false;
-		browserInfo.isFirefox = false;
-		browserInfo.isChrome = false;
-		browserInfo.isSafari = false;
-		
-		var jqBrowserInfoObj = $.browser; 
-	
-		browserInfo.version = jqBrowserInfoObj.version;
-		
-		if ( jqBrowserInfoObj.mozilla) {
-			browserInfo.isFirefox = true;
-		} else if ( jqBrowserInfoObj.msie){
-			browserInfo.isIE = true;
-		} else if ( jqBrowserInfoObj.chrome){
-			browserInfo.isChrome = true;
-		} else if ( jqBrowserInfoObj.safari){
-			browserInfo.isSafari = true;
-		}
-	
-		return browserInfo;
-		}
-
 		var browserInfo = getBrowserInfo();
 		
 		var browserNotSupportedMsg = "Video Visits is supported on 32 bit browsers only.";
@@ -685,15 +647,15 @@
 		if(browserInfo.isIE) {
 			if (((browserInfo.version == 8 || browserInfo.version == 9) && !browserInfo.is32Bit) || browserInfo.version <= 7) {
 				 
-				 $('#setupWizardiFrame').css('display','none');	
-				 $('#browserNotSupportedDiv').css('display','');				
-				 $('p.error').html(browserNotSupportedMsg);
-				 $('#setupLastNav').css('display','none');
+				 //$('#setupWizardiFrame').css('display','none');	
+				 //$('#browserNotSupportedDiv').css('display','');				
+				 //$('p.error').html(browserNotSupportedMsg);
+				 //$('#setupLastNav').css('display','none');
 				 
 			} else{
-		                $('#setupWizardiFrame').attr('src','../vidyoplayer/setupWizard.html');
+		               
 			}
 		}else{		     
-		      $('#setupWizardiFrame').attr('src','../vidyoplayer/setupWizard.html');
+		      
 		}
 </script>
