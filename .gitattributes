@@ -392,8 +392,10 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/MobileLoginControl
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/QuitMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/RetrieveMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SessionTimeoutController.java -text svneol=unset#text/plain
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SetupWizardController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SimplePageController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SubmitLoginController.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/TerminateSetupWizardMeetingController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/UserPresentInMeetingController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/ValidateUserSession.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VerifyGuestController.java -text
