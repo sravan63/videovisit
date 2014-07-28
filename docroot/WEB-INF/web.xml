@@ -115,7 +115,7 @@
       
        <init-param>
 	      <param-name>excludeURL</param-name>
-	      <param-value>mobilelogin.json,isValidUserSession.json</param-value>
+	      <param-value>mobilelogin.json,isValidUserSession.json,terminateSetupWizardMeeting.json</param-value>
 	    </init-param>
    </filter>
   
