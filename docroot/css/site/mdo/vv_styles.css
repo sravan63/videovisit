@@ -575,6 +575,7 @@ div#iconpromo2{
 .accessory-header .setupAccessoryConfigContainer{
 	position: absolute;
 	color: black;
+	z-index: 9;
 }
 
 .accessory-header #setupCameraConfigContainer{
