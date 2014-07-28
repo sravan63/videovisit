@@ -2438,37 +2438,38 @@
                     isProvider = decodeURIComponent($("#isProvider").val());
 					meetingId = decodeURIComponent($("#meetingId").val());
 
-                    if (isProvider=='false'){
-						self.cache.$inCallButtonEndMeeting.hide();
+                    //if (isProvider=='false'){
+						//self.cache.$inCallButtonEndMeeting.hide();
 						/* Added by Mandar A. on 12/03/2013 to address US3550
 	                     START	*/
                         //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave.png)", "width":"60px"});
                         /*--- End */
                         //if ($.urlParam('meetingCode') !=null && $.urlParam('meetingCode') !='0' && $.urlParam('meetingCode').length > 0 ) {
-                        if($("#isMember").val() =="false"){
+                       // if($("#isMember").val() =="false"){
                         	//if ($("#meetingCode") !=null && $("#meetingCode") !='0' && $("#meetingCode").length > 0 ) {
-                                meetingCode = decodeURIComponent($("#meetingCode").val());
-                                caregiverId = decodeURIComponent($("#caregiverId").val());
+                               // meetingCode = decodeURIComponent($("#meetingCode").val());
+                               // caregiverId = decodeURIComponent($("#caregiverId").val());
                             //}
-                        }
-                        else{
-                            isMember = 'true';
-                        }
-					}
-					else{
-                        isHost = decodeURIComponent($("#isHost").val());
-                        role = decodeURIComponent($('#role').val());
-                        self.cache.$inCallButtonEndMeeting.show();
+                       // }
+                        //else{
+                           // isMember = 'true';
+                        //}
+					//}
+					//else{
+                        //isHost = decodeURIComponent($("#isHost").val());
+                        //role = decodeURIComponent($('#role').val());
+                        //self.cache.$inCallButtonEndMeeting.show();
                         //parent.VideoVisit.meetingExpire(isHost, role, meetingId);
-                        VideoVisit.meetingExpire(isHost, role, meetingId);
+                        //VideoVisit.meetingExpire(isHost, role, meetingId);
                         /* Added by Mandar A. on 12/03/2013 to address US3550
                         START	*/
                         //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave_return.png)", "width":"130px"});
                         /*--- End */
-						if (isHost == 'false' && (role != null && role !='ma')) {
-							self.cache.$inCallButtonEndMeeting.hide();
-						}
-					}
+						//if (isHost == 'false' && (role != null && role !='ma')) {
+							//self.cache.$inCallButtonEndMeeting.hide();
+						//}
+					//}
+                    self.cache.$inCallButtonEndMeeting.hide();
                     self.cache.$guestLoginButton.addClass('disabled');
                     self.cache.$guestLoginErrorWrapper.hide();
                     self.isJoining = true;
