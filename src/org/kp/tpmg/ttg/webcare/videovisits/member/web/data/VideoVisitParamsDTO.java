@@ -29,6 +29,7 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String meetingTime;
 	private ProviderWSO[] participants;
 	private CaregiverWSO[] caregivers;
+	private String vendorConfId;
 	
 	public String getVidyoUrl() {
 		return vidyoUrl;
@@ -169,6 +170,18 @@ public class VideoVisitParamsDTO implements Serializable {
 	public void setMeetingDate(String meetingDate) {
 		this.meetingDate = meetingDate;
 	}
+	/**
+	 * @return the vendorConfId
+	 */
+	public String getVendorConfId() {
+		return vendorConfId;
+	}
+	/**
+	 * @param vendorConfId the vendorConfId to set
+	 */
+	public void setVendorConfId(String vendorConfId) {
+		this.vendorConfId = vendorConfId;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -185,7 +198,9 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ ", isMember=" + isMember + ", meetingDate=" + meetingDate
 				+ ", meetingTime=" + meetingTime + ", participants="
 				+ Arrays.toString(participants) + ", caregivers="
-				+ Arrays.toString(caregivers) + "]";
+				+ Arrays.toString(caregivers) + ", vendorConfId="
+				+ vendorConfId + "]";
 	}	
+	
 	
 }
