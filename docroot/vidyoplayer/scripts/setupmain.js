@@ -468,6 +468,7 @@
             self.cache.$setupMicConfigContainer     	= $(self.config.setupMicConfigContainer);
             self.cache.$setupSpeakerButtonToggleConfig  = $(self.config.setupSpeakerButtonToggleConfig);
             self.cache.$setupSpeakerConfigContainer     = $(self.config.setupSpeakerConfigContainer);
+            self.cache.$titleBar						= $(self.config.titleBar);
 	        return self;
 	    };
 
@@ -4563,10 +4564,10 @@
 		           logger.log('info', 'ui','uiReportInfo(', title, ", ", details, ')');
 		
 		            var htmlData = self.templates.infoTemplate({
-		                title: title,
 		                details: details
 		            });
-		            
+		
+					self.cache.$titleBar.hide();
 		            self.cache.$inCallContainer.hide();
 		            self.cache.$infoWrapper.html(htmlData);
 		            self.cache.$infoWrapper.fadeIn();
@@ -4584,6 +4585,7 @@
 		            logger.log('info', 'ui','uiReportInfoDismiss()');
 		            self.cache.$infoWrapper.html("");
 		            self.cache.$infoWrapper.hide();
+		            self.cache.$titleBar.show();
 		            self.cache.$inCallContainer.show();
 		            return self;
 		        };
@@ -6027,7 +6029,7 @@
 						       sessionStorage.setItem("reloadCounter", 1);
 						   }
 						   /* IE and Safari does not like loading plugin in the same page after install so reloading page */
-						   location.reload();
+						   location.reload();						  
 						   return;
 				       }
 				   }
