@@ -237,6 +237,15 @@ div#iconpromo2{
 	border: none;
 }
 
+.installbutton{
+	background: none repeat scroll 0 0 #4D8993;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-weight: normal;
+	padding: 4px 10px 3px 7px;
+	text-decoration: none;
+}
+
 /* ********************** Temporary Mast Head Provider ********************* */
 #masthead {
     background: none repeat scroll 0 0 #FFFFFF;
@@ -411,6 +420,11 @@ div#iconpromo2{
 	position: relative;
 	height: auto;
 	border-bottom: 1px solid #CCCCCC;
+}
+
+#setupInstructions a, #setupInstructions a:active,  #setupInstructions a:visited, #setupInstructions a:hover{
+	text-decoration: none;
+	color: #FFFFFF;
 }
 
 /************* START - Setup Display Devices **************/
