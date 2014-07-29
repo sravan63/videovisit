@@ -21,8 +21,8 @@
 	    <div class="videoVisitContainer">
 	    	<div id="videoVisitSetupPageContents">
 	    		<div id="setupPageTitle">
-	   				<h1 style="display:inline-block;"> Video Visit Preparation </h1>
-	   				<a href="mdohelp.htm" target="_blank" style="float:right; font-size:15px; margin-top:10px; text-decoration:none; color:#005580;"> Help </a>
+	   				<h2 style="display:inline-block;"> Video Visit Preparation </h2>
+	   				<a href="mdohelp.htm" target="_blank" style="float:right; font-size:15px; margin-top:5px; text-decoration:none; color:#005580;"> Help </a>
 	   				<!--<h3> You will need the 'Vidyo Web' plug-in for your visit. </h3>	-->
 				</div>
 				<!--<div id="helpButtonContent" class="buttons">
@@ -64,7 +64,7 @@
 								<div id="setupContents" class="hide">
 									<table id="setupInstructions" width="50%" style="color:#000000;">
 									    <tr style="vertical-align: top;">
-										    <td colspan="2"><h3 style="color:#000000;">Please install the 'Vidyo Web' plug-in for your visit.</h3></td>
+										    <td colspan="2"><h3 style="color:#AC5A41;">You will need the 'Vidyo Web' plug-in for your visit.</h3></td>
 										</tr>
 										<tr height="75px" style="vertical-align: top; background-color: #E9E9E9;">
 											<td width="100px" style="vertical-align: middle;"><img src="vidyoplayer/img/step_1.png" style="margin-left: 35px; margin-right: auto"/></td>
@@ -634,7 +634,7 @@
 		 	</div>
 		</div>
 	</div>
-	<script type="text/javascript">
+	<script type="text/javascript">	
 
 		var browserInfo = getBrowserInfo();
 		
@@ -648,14 +648,10 @@
 			if (((browserInfo.version == 8 || browserInfo.version == 9) && !browserInfo.is32Bit) || browserInfo.version <= 7) {
 				 
 				 //$('#setupWizardiFrame').css('display','none');	
-				 //$('#browserNotSupportedDiv').css('display','');				
-				 //$('p.error').html(browserNotSupportedMsg);
+				// $('#browserNotSupportedDiv').css('display','');				
+				// $('p.error').html(browserNotSupportedMsg);
 				 //$('#setupLastNav').css('display','none');
 				 
-			} else{
-		               
 			}
-		}else{		     
-		      
 		}
 </script>
