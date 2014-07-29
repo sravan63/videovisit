@@ -45,6 +45,7 @@ VIDEO_VISITS.Path = {
     },    
     visit : {
         quitmeeting : 'quitmeeting.json',
+        createSetupWizardMeeting: 'createSetupWizardMeeting.json',
         terminateSetupWizardMeeting : 'terminateSetupWizardMeeting.json',
         logout : 'logout.htm'
     },
