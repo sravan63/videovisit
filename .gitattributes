@@ -342,6 +342,7 @@ lib/dynamic-tiles2-1.1.jar -text
 lib/ezmorph-1.0.6.jar -text
 lib/geronimo-stax-api_1.0_spec-1.0.1.wso2v1.jar -text
 lib/geronimo-stax-api_1.0_spec-1.0.jar -text
+lib/gson-2.2.4.jar -text
 lib/httpcore-4.1.0.alpha1-wso2v1.jar -text
 lib/j2ee.jar -text
 lib/jsmin.0.2.3.jar -text
