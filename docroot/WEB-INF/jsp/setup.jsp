@@ -64,7 +64,7 @@
 								<div id="setupContents" class="hide">
 									<table id="setupInstructions" width="50%" style="color:#000000;">
 									    <tr style="vertical-align: top;">
-										    <td colspan="2"><h3>Please install the 'Vidyo Web' plug-in for your visit.</h3></td>
+										    <td colspan="2"><h3 style="color:#000000;">Please install the 'Vidyo Web' plug-in for your visit.</h3></td>
 										</tr>
 										<tr height="75px" style="vertical-align: top; background-color: #E9E9E9;">
 											<td width="100px" style="vertical-align: middle;"><img src="vidyoplayer/img/step_1.png" style="margin-left: 35px; margin-right: auto"/></td>
