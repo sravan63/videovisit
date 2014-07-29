@@ -24,7 +24,36 @@ var VideoVisitSetupWizard =
 	        	console.log("Terminate setup wizard meeting failed");
 			}
 	    });
-  	}
+  	},
+
+	createMeeting: function()
+	{
+		postPara = {};
+	    console.log("Before calling ajax createMeeting - Ajax url: " + VIDEO_VISITS.Path.visit.createSetupWizardMeeting);
+	    $.ajax({
+	        type: "POST",
+	        url: VIDEO_VISITS.Path.visit.createSetupWizardMeeting,
+	        cache: false,
+		    async: false,
+	        data: postPara, 
+	        success: function(data) {
+	        	console.log("Setupwizard Meeting created successfully - returndata: " + data);
+	        	try{
+		        	data = jQuery.parseJSON(data);
+		        	$("#guestUrl").val(data.vidyoUrl);
+		        	$("#meetingId").val(data.meetingId);
+		        	$("#vendorConfId").val(data.vendorConfId);
+		        	$("#guestName").val(data.guestName);
+		        	$("#isProvider").val(data.isProvider);
+	        	}catch(e){
+	        		console.warn("Error in the return data for Setup Wizard Create meeting: " + data);
+	        	}
+			},
+	        error: function() {
+	        	console.log("Create setup wizard meeting failed");
+			}
+	    });
+	}
 }
 
 $(window).on("beforeunload", function() { 
