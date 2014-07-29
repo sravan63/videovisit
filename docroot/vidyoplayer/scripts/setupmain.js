@@ -1340,6 +1340,7 @@
             self.events.pluginLoadedEvent
                 .on('done', function() {
                     logger.log('info', 'plugin', 'pluginLoadedEvent::done');
+                    VideoVisitSetupWizard.createMeeting();
                     uiReportInfoDismiss();
                     uiPromiseToEndSplashScreen();
                      //   .done(function() {
