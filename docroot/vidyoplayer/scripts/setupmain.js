@@ -2622,7 +2622,7 @@
                 	self.cache.$inCallButtonMuteSpeaker.removeClass('btn btn-large btn-tms-failure').addClass('btn btn-large btn-tms-success');
                 	self.cache.$inCallButtonMuteSpeaker.attr('title','Mute Speakers');
                 	$("#volume-control-speaker .ui-slider-range").css("background","#FFFFFF");
-                    $("#slider-handle-speaker").css({"background":"", "border":""});
+                	$("#slider-handle-speaker").css({"background":"#FFFFFF", "border":"1px solid #FFFFFF"});
                 }
 
                 /* Added by Ranjeet on 12/05/2013 to address US3423
@@ -2655,7 +2655,7 @@
                 	self.cache.$inCallButtonMuteMicrophone.removeClass('btn btn-large btn-tmm-failure').addClass('btn btn-large btn-tmm-success');
                 	self.cache.$inCallButtonMuteMicrophone.attr('title','Mute Mic');
                 	$("#volume-control-mic .ui-slider-range").css("background","#FFFFFF");
-                    $("#slider-handle-mic").css({"background":"", "border":""});
+                	$("#slider-handle-mic").css({"background":"#FFFFFF", "border":"1px solid #FFFFFF"});
                 }
 
                 /* Added by Ranjeet on 12/05/2013 to address US3423
