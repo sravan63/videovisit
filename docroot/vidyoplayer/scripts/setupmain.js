@@ -3313,9 +3313,9 @@
 	                
 	                clientConfigurationSet(conf);
 	                
-	                //setTimeout(function() {
+	                setTimeout(function() {
 	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
-	                //}, 500);
+	                }, 500);
 	            });
 
             self.cache.$setupMicConfigContainer
@@ -3330,9 +3330,9 @@
 	                
 	                clientConfigurationSet(conf);
 	
-	                //setTimeout(function() {
+	                setTimeout(function() {
 	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
-	                //}, 500);
+	                }, 500);
 	            });
             
             self.cache.$setupSpeakerConfigContainer
@@ -3347,9 +3347,9 @@
 	                
 	                clientConfigurationSet(conf);
 	
-	                //setTimeout(function() {
+	                setTimeout(function() {
 	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
-	                //}, 500);
+	                }, 500);
 	            });
             
                 /* Handle invites */
