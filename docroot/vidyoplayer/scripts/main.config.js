@@ -147,6 +147,7 @@
 	    </div>\
 	</div>\
     ',      
+            titleBar: "#titleBar",
             setupCameraConfigContainer: "#setupCameraConfigContainer",
             setupCameraConfigTemplate: '\
     <div class="control-group">\
