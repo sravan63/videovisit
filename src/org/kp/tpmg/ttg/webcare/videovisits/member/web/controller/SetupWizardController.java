@@ -12,10 +12,13 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 
 public class SetupWizardController extends SimplePageController {
 	
 public static Logger logger = Logger.getLogger(SetupWizardController.class);
+private static String JSONMAPPING = "jsonData";
 	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
 	{	
@@ -49,9 +52,10 @@ public static Logger logger = Logger.getLogger(SetupWizardController.class);
 			videoVisitParamsDTO.setGuestName(userName);
 			videoVisitParamsDTO.setIsProvider("false");
 			logger.info("SetupWizardController - setting vendor meeting data from service to object: " + videoVisitParamsDTO.toString());
-			
+						
 			//put data into buffer
-			modelAndView.addObject("instantMeetingParams", videoVisitParamsDTO);			
+			modelAndView.setViewName(JSONMAPPING);
+			modelAndView.addObject("data", new Gson().toJson(videoVisitParamsDTO));		
 			
 		}
 		catch (Exception e)
