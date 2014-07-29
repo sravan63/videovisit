@@ -852,6 +852,10 @@ public class MeetingCommand {
 		StringResponseWrapper ret = null;			
 		try
 		{
+			if (!StringUtils.isNotBlank(hostNuid)) {
+				return "MeetingCommand.createInstantVendorMeeting -> Validation Error: Host Nuid can not be null or blank.";
+			}
+			
 			//grab data from web services
 			ret = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType, request.getSession().getId());
 			
@@ -882,7 +886,10 @@ public class MeetingCommand {
 			// parse parameters
 			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}else{
+				return "MeetingCommand.terminateSetupWizardMeeting -> Validation Error: Meeting Id can not be null or blank.";
 			}
+			
 			if (StringUtils.isNotBlank(request.getParameter("vendorConfId"))) {
 				vendorConfId = request.getParameter("vendorConfId");
 			}
