@@ -469,6 +469,7 @@ div#iconpromo2{
     font-size: 15px;
     vertical-align: middle;
     padding: 0;
+    text-align: left;
 }
 
 #displayDevices .icon{
