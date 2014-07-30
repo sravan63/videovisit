@@ -3301,6 +3301,11 @@
                 });
             
             self.cache.$setupCameraConfigContainer
+    		.on("click", function(e){
+    			e.stopPropagation();
+	    	});
+	        
+	        self.cache.$setupCameraConfigContainer
 	            .on("change click", ".input", function(event, obj) {
 	                logger.log('info', 'ui',"setupCameraConfigContainer::change", event, obj);
 	
@@ -3316,9 +3321,16 @@
 	                setTimeout(function() {
 	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
 	                }, 500);
+	                
+	                self.cache.$setupCameraConfigContainer.slideUp();
 	            });
-
-            self.cache.$setupMicConfigContainer
+	        
+	        self.cache.$setupMicConfigContainer
+	    		.on("click", function(e){
+	    			e.stopPropagation();
+	    	});
+	
+	        self.cache.$setupMicConfigContainer
 	            .on("change click", ".input", function(event, obj) {
 	                logger.log('info', 'ui',"setupMicConfigContainer::change", event, obj);
 	
@@ -3333,9 +3345,16 @@
 	                setTimeout(function() {
 	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
 	                }, 500);
+	                
+	                self.cache.$setupMicConfigContainer.slideUp();
 	            });
-            
-            self.cache.$setupSpeakerConfigContainer
+	        
+	        self.cache.$setupSpeakerConfigContainer
+	    		.on("click", function(e){
+	    			e.stopPropagation();
+	    	});
+	        
+	        self.cache.$setupSpeakerConfigContainer
 	            .on("change click", ".input", function(event, obj) {
 	                logger.log('info', 'ui',"setupSpeakerConfigContainer::change", event, obj);
 	
@@ -3350,6 +3369,8 @@
 	                setTimeout(function() {
 	                	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
 	                }, 500);
+	                
+	                self.cache.$setupSpeakerConfigContainer.slideUp();
 	            });
             
                 /* Handle invites */
