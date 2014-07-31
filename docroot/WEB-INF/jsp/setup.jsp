@@ -270,8 +270,8 @@
 										    <table style="width=100%;">
 										    	<tr class="accessory-header">
 										    		<!--<th class="threeColumns firstColumn" id="inCallButtonToggleConfig">	-->
-										    		<th class="threeColumns firstColumn" id="setupCameraButtonToggleConfig">
-										    			<a href="#" title="Select Camera">
+										    		<th class="threeColumns firstColumn">
+										    			<a href="#" id="setupCameraButtonToggleConfig" title="Select Camera">
 									                		<span id="selectCamera" class="vidyoSprite icon"></span>
 									                    	<span style="display:inline-block; margin:12px 0 0;">Camera</span>
 									                    	<span class="drop-down icon"></span>
@@ -280,8 +280,8 @@
 								                            <!-- See setupCameraConfigTemplate in main.config.js-->
 								                        </div>
 										            </th>
-										            <th class="threeColumns" id="setupMicButtonToggleConfig">
-										    			<a href="#" title="Select Microphone">
+										            <th class="threeColumns">
+										    			<a href="#" id="setupMicButtonToggleConfig" title="Select Microphone">
 									                		<span id="selectMicrophone" class="vidyoSprite icon"></span>
 									                    	<span style="display:inline-block; margin:12px 0 0;">Microphone</span>
 									                    	<span class="drop-down icon"></span>
@@ -290,8 +290,8 @@
 								                            <!-- See setupMicConfigTemplate in main.config.js-->
 								                        </div>
 										            </th>
-										            <th class="threeColumns" id="setupSpeakerButtonToggleConfig">
-										    			<a href="#" title="Select Speaker">
+										            <th class="threeColumns">
+										    			<a href="#" id="setupSpeakerButtonToggleConfig" title="Select Speaker">
 									                		<span id="selectSpeaker" class="vidyoSprite icon"></span>
 									                    	<span style="display:inline-block; margin:12px 0 0;">Speaker</span>
 									                    	<span class="drop-down icon"></span>
