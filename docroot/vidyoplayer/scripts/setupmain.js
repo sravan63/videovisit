@@ -3300,10 +3300,12 @@
                     }, 500);
                 });
             
+            /* Added by Mandar A. - DE1437 */ 
             self.cache.$setupCameraConfigContainer
     		.on("click", function(e){
     			e.stopPropagation();
 	    	});
+            /* END - DE1437 */
 	        
 	        self.cache.$setupCameraConfigContainer
 	            .on("change click", ".input", function(event, obj) {
@@ -3325,11 +3327,13 @@
 	                self.cache.$setupCameraConfigContainer.slideUp();
 	            });
 	        
+	        /* Added by Mandar A. - DE1437 */
 	        self.cache.$setupMicConfigContainer
 	    		.on("click", function(e){
 	    			e.stopPropagation();
 	    	});
-	
+	        /* END - DE1437 */
+	        
 	        self.cache.$setupMicConfigContainer
 	            .on("change click", ".input", function(event, obj) {
 	                logger.log('info', 'ui',"setupMicConfigContainer::change", event, obj);
@@ -3349,10 +3353,12 @@
 	                self.cache.$setupMicConfigContainer.slideUp();
 	            });
 	        
+	        /* Added by Mandar A. - DE1437 */
 	        self.cache.$setupSpeakerConfigContainer
 	    		.on("click", function(e){
 	    			e.stopPropagation();
 	    	});
+	        /* END - DE1437 */
 	        
 	        self.cache.$setupSpeakerConfigContainer
 	            .on("change click", ".input", function(event, obj) {
