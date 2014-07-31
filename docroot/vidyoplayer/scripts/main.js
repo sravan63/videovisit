@@ -3020,9 +3020,9 @@
 
 						if ($('#pluginContainer').css('visibility')=='hidden'){
 							$('#pluginContainer').css('visibility', 'visible');
-						} else {
+						} /*else {
 							$('#pluginContainer').css('visibility', 'hidden');
-						}
+						}*/
 
                     }
                     else {
@@ -3032,9 +3032,9 @@
                         self.cache.$inCallButtonLocalShare.addClass(self.config.btnAltClass);
 						if ($('#pluginContainer').css('visibility')=='hidden'){
 							$('#pluginContainer').css('visibility', 'visible');
-						} else {
+						} /*else {
 							$('#pluginContainer').css('visibility', 'hidden');
-						}
+						}*/
                     }
 
                     /* Added by Ranjeet on 12/05/2013 to address US3423
