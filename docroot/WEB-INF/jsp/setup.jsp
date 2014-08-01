@@ -317,7 +317,7 @@
 
 										    			<!--####################################################################-->
 											                <!-- Plugin wrapper -->
-											                <div id="pluginContainer" style="background-color: transparent;">
+											                <div id="pluginContainer" style="background-color:transparent; visibility:visible;">
 											                    <!-- Will autogenerate plugin tag -->
 																		<br/>
 											                </div>
