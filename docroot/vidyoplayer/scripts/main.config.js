@@ -170,6 +170,7 @@
     ',
     		setupMicConfigContainer: "#setupMicConfigContainer",
     		setupMicConfigTemplate: '\
+    <div class="control-group">\
 	    <div id="configurationMicrophone" class="controls">\
 	    	 <table>\
 	            {{#each microphone}}\
@@ -189,6 +190,7 @@
     ',
     		setupSpeakerConfigContainer: "#setupSpeakerConfigContainer",
     		setupSpeakerConfigTemplate: '\
+    <div class="control-group">\
 	    <div id="configurationSpeaker" class="controls">\
 	        <table>\
 	            {{#each speaker}}\
