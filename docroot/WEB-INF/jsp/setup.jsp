@@ -303,13 +303,13 @@
 										    	</tr>
 										    	<tr class="selected-accessory">
 										    		<td id="selected-camera-name" class="threeColumns firstColumn">
-										    			<span> </span>
+										    			<span> <!-- Camera Placeholder --> </span>
 										    		</td>
 										    		<td id="selected-mic-name" class="threeColumns">
-										    			<span> </span>
+										    			<span> <!-- Mic Placeholder --> </span>
 										    		</td>
 										    		<td id="selected-speaker-name" class="threeColumns">
-										    			<span> </span>
+										    			<span> <!-- Speaker Placeholder --> </span>
 										    		</td>
 										    	</tr>
 										    	<tr class="accessory-demo" style="">
