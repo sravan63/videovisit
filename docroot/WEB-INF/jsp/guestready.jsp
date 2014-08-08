@@ -29,11 +29,19 @@
 					<h3>This visit is scheduled for </h3>
 					<div class="meeting-with-container">
 						<span>Meeting with:</span> 
-						<span>&nbsp; 
-							<a target="_blank" href="${meeting.providerHost.homePageUrl}">
-							${meeting.providerHost.firstName} ${meeting.providerHost.lastName} 
+						<span>&nbsp;						  
+						  <c:choose>
+						    <c:when test="${not empty meeting.providerHost.homePageUrl}">
+						        <a target="_blank" href="${meeting.providerHost.homePageUrl}">
+									${meeting.providerHost.firstName} ${meeting.providerHost.lastName} 
+									<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
+								</a>
+						    </c:when>
+						    <c:otherwise>
+						        ${meeting.providerHost.firstName} ${meeting.providerHost.lastName} 
 								<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
-							</a>
+						    </c:otherwise>
+						 </c:choose>
 						</span>
 					</div>
 					<div class="names-container">
