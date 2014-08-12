@@ -93,9 +93,9 @@
 	        /**
 	         * Predefine functions for faster JS execution
 	         */
-	        var applicationBuildCache, applicationBuildTemplates, applicationAddPlugin, applicationCallCleanup, applicationCheckForDeveloper, applicationBuildSubscribeEvents, applicationBindVidyoCallbacks, applicationBindSubscribeEvents, applicationBindUIEvents, applicationLoadCacheFromPersistentStore, applicationBindEvents, applicationClientInfoPrint, clientConferenceLeave, clientConferenceStateGet, clientConfigurationBootstrap, clientConfigurationGet, clientConfigurationSet, clientCurrentUserGet, clientEndpointIDGet, clientGroupChatSend, clientGuestLoginAndJoin, clientIncomingCallAccept, clientIncomingCallReject, clientLayoutSet, clientLayoutToggle, clientLocalMediaInfo, clientLocalSharesGet, clientLocalSharesGetExt, clientLocalShareStart, clientLocalShareStop, clientLogLevelsAndCategoriesSet, clientMicrophoneMute, clientParticipantPin, clientParticipantsGet, clientParticipantsSetLimit, clientPreviewModeSet, clientPreviewModeToggle, clientPrivateChatSend, clientRecordAndWebcastStateGet, clientSessionGetInfo, clientSharesGet, clientSharesSetCurrent, clientSpeakerMute, clientUserLogin, clientUserLogout, clientVideoMute, helperConferenceUpdateTimerStart, helperConferenceUpdateTimerStop, helperPersistentStorageGetValue, helperPersistentStorageSetValue, helperPortalUsersStatusUpdateTimerStart, helperPortalUsersStatusUpdateTimerStop, helperRingtonePlay, helperRingtoneStop, helperSoapPromiseToGetMyAccount, helperSoapPromiseToSearch, helperSoapPromiseToSearchMyContacts, helperSoapPromiseToSendUserRequest, portalParticipantsPromiseToGet, portalRecordGetProfiles, portalRecordStart, portalRecordStop, portalRoomInfoPromiseToGet, portalRoomPromiseToLock, portalUserCallDirect, portalUserCancelSearchRequest, portalUserFavoritePromiseToAdd, portalUserFavoritePromiseToRemove, portalUserInviteToConference, portalUserJoinConference, portalUserSearchBothFavAndUsers, uiChatUpdateView, uiChatViewMinimize, uiChatViewScrollToPosition, uiChatViewTabCreateIfNotExists, uiChatViewTabNotifyStart, uiChatViewTabNotifyStop, uiChatViewTabSwitch, uiConfigurationUpdateWithData, uiDesktopNotification, uiDesktopNotificationRequestPermission, uiFullscreenCancel, uiFullscreenSet, uiGenericNotify, uiInCallShow, uiIncomingCallMissedCallNotify, uiIncomingCallNotificationDismiss, uiJoinConferencePinDialogShow, uiReportJoinConferencePinError, uiLocalShareReset, uiLocalSharesUpdateWithData, uiParticipantEnableInvite, uiParticipantsPromiseToSlide, uiParticipantStatusNotify, uiParticipantsUpdateWithData, uiPrecallMenuShow, uiPromiseToEndSplashScreen, uiCallCleanup ,uiPromiseToShowMenu, uiReportError, uiReportGuestLoginError, uiReportInfo, uiReportCloseEngage, uiReportInfoDismiss, uiReportUserLoginError, uiSearchProgressShow, uiSetMicMuted, uiSetSpeakerMuted, uiSetVideoMuted, uiShareSelect, uiSharesUpdateWithData, uiShowInCallContainerMinimizedAndWithPlugin, uiStart, uiStartPluginDetection, uiUpdateGuestLoginProgress, uiUpdateJoinProgress, uiUpdateUserLoginProgress, uiUserFavoriteAdd, uiUserFavoriteRemove, uiUserNavigationUpdateWithData, uiVidyoPluginShow, uiVidyoPluginIsShown, vidyoPluginConfigurationPrepare, vidyoPluginInitAndStart, vidyoPluginIsLoaded, vidyoPluginIsInstalled, vidyoPluginIsStarted, vidyoPluginLoad, vidyoPluginStart, vidyoPluginStop;
+	        var applicationBuildCache, applicationBuildTemplates, applicationAddPlugin, applicationCallCleanup, applicationCheckForDeveloper, applicationBuildSubscribeEvents, applicationBindVidyoCallbacks, applicationBindSubscribeEvents, applicationBindUIEvents, applicationLoadCacheFromPersistentStore, applicationBindEvents, applicationClientInfoPrint, clientConferenceLeave, clientConferenceStateGet, clientConfigurationBootstrap, clientConfigurationGet, clientConfigurationSet, clientCurrentUserGet, clientEndpointIDGet, clientGroupChatSend, clientGuestLoginAndJoin, clientIncomingCallAccept, clientIncomingCallReject, clientLayoutSet, clientLayoutToggle, clientLocalMediaInfo, clientLocalSharesGet, clientLocalSharesGetExt, clientLocalShareStart, clientLocalShareStop, clientLogLevelsAndCategoriesSet, clientMicrophoneMute, clientParticipantPin, clientParticipantsGet, clientParticipantsSetLimit, clientPreviewModeSet, clientPreviewModeToggle, clientPrivateChatSend, clientRecordAndWebcastStateGet, clientSessionGetInfo, clientSharesGet, clientSharesSetCurrent, clientSpeakerMute, clientUserLogin, clientUserLogout, clientVideoMute, helperConferenceUpdateTimerStart, helperConferenceUpdateTimerStop, helperPersistentStorageGetValue, helperPersistentStorageSetValue, helperPortalUsersStatusUpdateTimerStart, helperPortalUsersStatusUpdateTimerStop, helperRingtonePlay, helperRingtoneStop, helperSoapPromiseToGetMyAccount, helperSoapPromiseToSearch, helperSoapPromiseToSearchMyContacts, helperSoapPromiseToSendUserRequest, portalParticipantsPromiseToGet, portalRecordGetProfiles, portalRecordStart, portalRecordStop, portalRoomInfoPromiseToGet, portalRoomPromiseToLock, portalUserCallDirect, portalUserCancelSearchRequest, portalUserFavoritePromiseToAdd, portalUserFavoritePromiseToRemove, portalUserInviteToConference, portalUserJoinConference, portalUserSearchBothFavAndUsers, uiChatUpdateView, uiChatViewMinimize, uiChatViewScrollToPosition, uiChatViewTabCreateIfNotExists, uiChatViewTabNotifyStart, uiChatViewTabNotifyStop, uiChatViewTabSwitch, uiConfigurationUpdateWithData, uiDesktopNotification, uiDesktopNotificationRequestPermission, uiFullscreenCancel, uiFullscreenSet, uiGenericNotify, uiInCallShow, uiIncomingCallMissedCallNotify, uiIncomingCallNotificationDismiss, uiJoinConferencePinDialogShow, uiReportJoinConferencePinError, uiLocalShareReset, uiLocalSharesUpdateWithData, uiParticipantEnableInvite, uiParticipantsPromiseToSlide, uiInCallVideoSidebarHide, uiParticipantStatusNotify, uiParticipantsUpdateWithData, uiPrecallMenuShow, uiPromiseToEndSplashScreen, uiCallCleanup ,uiPromiseToShowMenu, uiReportError, uiReportGuestLoginError, uiReportInfo, uiReportCloseEngage, uiReportInfoDismiss, uiReportUserLoginError, uiSearchProgressShow, uiSetMicMuted, uiSetSpeakerMuted, uiSetVideoMuted, uiShareSelect, uiSharesUpdateWithData, uiShowInCallContainerMinimizedAndWithPlugin, uiStart, uiStartPluginDetection, uiUpdateGuestLoginProgress, uiUpdateJoinProgress, uiUpdateUserLoginProgress, uiUserFavoriteAdd, uiUserFavoriteRemove, uiUserNavigationUpdateWithData, uiVidyoPluginShow, uiVidyoPluginIsShown, vidyoPluginConfigurationPrepare, vidyoPluginInitAndStart, vidyoPluginIsLoaded, vidyoPluginIsInstalled, vidyoPluginIsStarted, vidyoPluginLoad, vidyoPluginStart, vidyoPluginStop;
 	        
-	        /* Added by Ranjeet on 06/25/2014 to address US4477
+	        /* Added by Ranjeet on 06/25/2014 to address US4440/US4477
 		    Start ---*/
 	        var clientSpeakerVolumeGet, clientSpeakerVolumeSet, clientMicrophoneVolumeGet, clientMicrophoneVolumeSet;
 	        /*--End*/
@@ -395,17 +395,19 @@
             self.cache.$inCallButtonShare               = $(self.config.inCallButtonShare);
             self.cache.$inCallButtonLocalShare          = $(self.config.inCallButtonLocalShare);
             self.cache.$inCallButtonShareBadge          = $(self.config.inCallButtonShareBadge);
+            self.cache.$inCallButtonToggleDetails       = $(self.config.inCallButtonToggleDetails);
             self.cache.$inCallButtonToggleConfig        = $(self.config.inCallButtonToggleConfig);
             self.cache.$inCallButtonToggleLayout        = $(self.config.inCallButtonToggleLayout);
             self.cache.$inCallButtonTogglePreview       = $(self.config.inCallButtonTogglePreview);
             self.cache.$inCallContainer                 = $(self.config.inCallContainer);
             self.cache.$inCallParticipantsList          = $(self.config.inCallParticipantsList);
+            self.cache.$inCallVideoSidebar              = $(self.config.inCallVideoSidebar);
             self.cache.$inCallParticipantsPanel         = $(self.config.inCallParticipantsPanel);
-           self.cache.$inCallParticipantHeaderName = $(self.config.inCallParticipantHeaderName);
+            self.cache.$inCallParticipantHeaderName = $(self.config.inCallParticipantHeaderName);
             self.cache.$inCallPluginAndControls         = $(self.config.inCallPluginAndControls);
             self.cache.$inCallLocalShareList            = $(self.config.inCallLocalShareList);
             self.cache.$inCallShareList                 = $(self.config.inCallShareList);
-           self.cache.$inCallChatContainer = $(self.config.inCallChatContainer);
+            self.cache.$inCallChatContainer = $(self.config.inCallChatContainer);
 	        self.cache.$inCallChatTabs = $(self.config.inCallChatTabs);
 	        self.cache.$inCallChatPanes = $(self.config.inCallChatPanes);
 	        self.cache.$inCallChatMinimizeLink = $(self.config.inCallChatMinimizeLink);
@@ -1219,7 +1221,7 @@
 
         /* Added by Ranjeet on 02/20/2014 to address defect DE974
         Start ---*/
-        $("body").on("click",function(e){
+        /*$("body").on("click",function(e){
             if(e.target.id=="inCallPluginAndControlsWrap" || e.target.id=="btnContainer") {
                 if (isProvider != 'true' && self.cache.$inCallLocalShareList.is(":visible")){
                     if ($('#pluginContainer').css('visibility')=='hidden'){
@@ -1229,7 +1231,7 @@
                 }
             }
 
-        });
+        });*/
         /*---End*/
 
         /**
@@ -1932,6 +1934,11 @@
             self.cache.$inCallButtonToggleConfig
                 .on('click', function() {
                     logger.log('info', 'ui', "inCallButtonToggleConfig::click");
+                    
+                    if (self.cache.$inCallVideoSidebar.is(":hidden")) {
+                        uiInCallVideoSidebarHide(false);
+                    }
+
                     /* Added by Ranjeet on 12/11/2013 to address defect of US3423
                     Start ---*/
                     if (isProvider=='true'){
@@ -2600,6 +2607,25 @@
 					}
                 });
 
+            self.cache.$inCallButtonToggleDetails
+                .click(function(e) {
+                    logger.log('info', 'ui',"inCallButtonToggleDetails::click");
+
+                    if (self.cache.$inCallVideoSidebar.is(":visible")) {
+                    	if (self.cache.$configurationContainer.is(":visible")) {
+							self.cache.$configurationContainer.slideUp(0);
+						}
+						else if (self.cache.$inCallLocalShareList.is(":visible")) {
+						    self.cache.$inCallLocalShareList.hide();
+						}
+
+                        uiInCallVideoSidebarHide(true);
+                    }
+                    else {
+                        uiInCallVideoSidebarHide(false);
+                    }
+                });
+
             self.cache.$inCallButtonLocalShare
                 .click(function(e) {
                     logger.log('info', 'ui',"inCallButtonLocalShare::click");
@@ -2610,6 +2636,9 @@
                     /* Added by Ranjeet on 12/05/2013 to address US3423
                     Start ---*/
 
+                    if (self.cache.$inCallVideoSidebar.is(":hidden")) {
+                        uiInCallVideoSidebarHide(false);
+                    }
 
                     if (isProvider=='true'){
                     	if (self.cache.$configurationContainer.is(":visible")) {
@@ -3592,6 +3621,34 @@
                         self.isShowingParticipantList = !self.isShowingParticipantList;
                     }
                 };
+
+	            uiInCallVideoSidebarHide = function(hide){
+	            	logger.log('info', 'ui','uiInCallVideoSidebarHide(', hide, ')');
+	            	var videoVisitSidebar = self.cache.$inCallVideoSidebar.outerWidth(true);
+
+	            	if(hide === true){
+	            		console.log("inCallVideoSidebar visible, hide it");
+
+	            		self.cache.$inCallVideoSidebar.fadeOut(0, function () {
+	                     	self.cache.$pluginContainer.css({
+	                     		'width': '+=' + videoVisitSidebar
+	                     	});
+	                    });
+
+	            		$(".btn-hideDetails").css("background-position", "0 -32px");
+	            	}
+	            	else{
+	            		console.log("inCallVideoSidebar not visible, show it");
+
+	                    self.cache.$inCallVideoSidebar.fadeIn(0, function(){
+	                    	self.cache.$pluginContainer.css({
+	                     		'width': '-=' + videoVisitSidebar
+	                    	});
+	                    });
+
+	                    $(".btn-hideDetails").css("background-position", "0 8px");
+	            	}
+	            };
 
                 /**
                  * Show pre-call UI
@@ -5110,7 +5167,7 @@
 		            return self;
 		        };
 		        
-		        /* Added by Ranjeet on 06/25/2014 to address US4477
+		        /* Added by Ranjeet on 06/25/2014 to address US4440/US4477
 			    Start ---*/
 		        /**
                  * Get Speaker Volume
