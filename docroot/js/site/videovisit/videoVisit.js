@@ -8,8 +8,7 @@ $(document).ready(function() {
 	var calculatedHeight = windowHeight - vvHeaderHeight;
 	var calculatedWidth = windowWidth - videoSidebarWidth;
 	
-	$("#video-main").width(calculatedWidth);
-	$("#video-main").height(calculatedHeight);
+	$("#inCallPluginAndControlsWrap").height(calculatedHeight);
 	$("#video-sidebar").height(calculatedHeight);
 
 	var btnContainerWidth = $("#btnContainer").outerWidth();
