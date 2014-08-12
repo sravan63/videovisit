@@ -295,6 +295,7 @@
             inCallButtonDisconnect: "#inCallButtonDisconnect",
             inCallButtonEndMeeting: "#inCallButtonEndMeeting",
             inCallButtonTogglePreview: "#inCallButtonTogglePreview",
+            inCallButtonToggleDetails: "#inCallButtonToggleDetails",
             inCallButtonToggleConfig: "#inCallButtonToggleConfig",
             inCallLocalShareList: "#inCallLocalShareList",
             inCallShareList: "#inCallShareList",
@@ -316,7 +317,9 @@
             inCallChatTabTemplate: '<li data-uri="{{uri}}" id="chatTab{{endpointId}}"><a href="#chatPane{{endpointId}}" data-uri="{{uri}}" data-missed="{{numMissed}}">{{name}}&nbsp;<span class="badge badge-info">{{numMissed}}</span>&nbsp;<i class="close pull-right">&times;</i></a></li>',
             inCallChatPaneTemplate: '<div class="tab-pane" data-uri="{{uri}}" id="chatPane{{endpointId}}"><ul></ul></div>',
             inCallChatPaneMessageTemplate: '<li><div class="chatName{{#if isOutgoing}} chatSelf{{/if}}">[{{name}}]</div><div class="chatMessage">{{message}}</div><div class="chatTime">{{time}}</div></li>',
+            inCallVideoSidebar: "#video-sidebar",
             inCallParticipantsPanel: "#inCallParticipantsPanel",
+
             inCallParticipantsList: "#inCallParticipantsList",
             inCallParticipantsClass: ".inCallParticipant",
             inCallParticipantInfoButtonClass: ".inCallInfoButton",
