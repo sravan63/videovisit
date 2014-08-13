@@ -15,7 +15,7 @@
             'handlebars': ['libs/handlebars.amd.min.1.3.0'],
             'jquery.html5storage': ["libs/jquery.html5storage.min.1.0"],
             'jquery.typewatch': ["libs/jquery.typewatch.2.2"],
-            'bootstrap.notify': ["libs/bootstrap-notify.1.0"],	    
+            'bootstrap.notify': ["libs/bootstrap-notify.1.0"],
             'domReady': ["libs/domReady.2.0.1"],
             'jquery-ui': ["../../js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min"],
             'jnotify': ["libs/jnotify/jNotify.jquery"]
@@ -1939,31 +1939,12 @@
                         uiInCallVideoSidebarHide(false);
                     }
 
-                    /* Added by Ranjeet on 12/11/2013 to address defect of US3423
-                    Start ---*/
-                    if (isProvider=='true'){
-                        if(self.cache.$inCallLocalShareList.is(":visible")) {
-                            self.cache.$inCallLocalShareList.hide();
-                            if ($('#pluginContainer').css('visibility')=='hidden'){
-                                    $('#pluginContainer').css('visibility', 'visible');
-                            }
+                    else if(self.cache.$inCallLocalShareList.is(":visible")) {
+                        self.cache.$inCallLocalShareList.hide();
+                        if ($('#pluginContainer').css('visibility')=='hidden'){
+                                $('#pluginContainer').css('visibility', 'visible');
                         }
-                    }else{
-                        if(self.cache.$inCallLocalShareList.is(":visible")) {
-                            $('#pluginContainer').css('visibility', 'visible');
-                        }
-
                     }
-                    /*---End*/
-
-                    /* Added by Mandar A. on 12/03/2013 to address US3550
-                     START	*/
-                    if ($('#pluginContainer').css('visibility')=='hidden'){
-                        $('#pluginContainer').css('visibility', 'visible');
-                    } /*else {
-                        $('#pluginContainer').css('visibility', 'hidden');
-                    }*/
-                    /*--- End */
 
                     self.cache.$configurationContainer.slideToggle();
                 });
@@ -2665,7 +2646,6 @@
                     }else{
                     	if (self.cache.$configurationContainer.is(":visible")) {
                             self.cache.$configurationContainer.slideUp();
-                            //$('#pluginContainer').css('visibility', 'hidden');
                         }else{
 	                    	if ($('#pluginContainer').css('visibility')=='hidden'){
 	                            $('#pluginContainer').css('visibility', 'visible');
@@ -2673,55 +2653,61 @@
 		                        $('#pluginContainer').css('visibility', 'hidden');
 		                    }*/
                         }
-                        //alert(self.kphcShare);
-                        self.smd = true;
-						clientSetLayout();
-                        var data = clientLocalSharesGet();
-                        var transformedData = {
-                                windows: [],
-                                desktops:[],
-                                sharing: (self.currentShareId === undefined) ? false : true
-                            };
 
-                        for (var i = 0; i < data.numApplicationWindows; i++) {
-                            var name = (data.appWindowAppName[i] && data.appWindowAppName[i].length) ? data.appWindowAppName[i] : data.appWindowName[i];
-                            var mywindow = {
-                                id: data.appWindowId[i],
-                                name: name,
-                                highlight: (self.currentShareId === data.appWindowId[i]) ? true : false
-                            }
-                            transformedData.windows.push(mywindow);
-                        }
+                        if (self.cache.$inCallLocalShareList.is(":visible")) {
+                            self.cache.$inCallLocalShareList.hide();
+                    	}
+                    	else{
+	                        self.smd = true;
+							clientSetLayout();
+	                        var data = clientLocalSharesGet();
+	                        var transformedData = {
+	                                windows: [],
+	                                desktops:[],
+	                                sharing: (self.currentShareId === undefined) ? false : true
+	                            };
 
-                        if ( self.kphcShare != null && self.kphcShare.length > 0)
-                        {
-                        if ( self.kphcShare.indexOf('|') != -1)
-                            {
-                            //alert(self.kphcShare.split('|')[0]);
-                            //alert(self.kphcShare.split('|')[1]);
-                            var kphcWindow = {
-                                                id: self.kphcShare.split('|')[1],
-                                                //name: self.kphcShare.split('|')[0],
-                                                name: 'Health Connect',
-                                                highlight: (self.currentShareId === self.kphcShare.split('|')[1]) ? true : false
-                                        }
-                                    transformedData.windows.push(kphcWindow);
-                        }       
-                        }
-                        for (var i = 0; i < data.numSystemDesktops; i++) {
-                            var desktop = {
-                                id: data.sysDesktopId[i],
-                                name: data.sysDesktopName[i],
-                                highlight: (self.currentShareId === data.sysDesktopId[i]) ? true : false
-                            }
+	                        for (var i = 0; i < data.numApplicationWindows; i++) {
+	                            var name = (data.appWindowAppName[i] && data.appWindowAppName[i].length) ? data.appWindowAppName[i] : data.appWindowName[i];
+	                            var mywindow = {
+	                                id: data.appWindowId[i],
+	                                name: name,
+	                                highlight: (self.currentShareId === data.appWindowId[i]) ? true : false
+	                            }
+	                            transformedData.windows.push(mywindow);
+	                        }
+
+	                        if ( self.kphcShare != null && self.kphcShare.length > 0)
+	                        {
+		                        if ( self.kphcShare.indexOf('|') != -1)
+		                            {
+		                            //alert(self.kphcShare.split('|')[0]);
+		                            //alert(self.kphcShare.split('|')[1]);
+		                            var kphcWindow = {
+		                                                id: self.kphcShare.split('|')[1],
+		                                                //name: self.kphcShare.split('|')[0],
+		                                                name: 'Health Connect',
+		                                                highlight: (self.currentShareId === self.kphcShare.split('|')[1]) ? true : false
+		                                        }
+		                                    transformedData.windows.push(kphcWindow);
+		                        }
+	                        }
+	                        for (var i = 0; i < data.numSystemDesktops; i++) {
+	                            var desktop = {
+	                                id: data.sysDesktopId[i],
+	                                name: data.sysDesktopName[i],
+	                                highlight: (self.currentShareId === data.sysDesktopId[i]) ? true : false
+	                            }
 
 
-                           if ( data.numSystemDesktops == 1 )
-                                   desktop.name = 'Entire Desktop';
+	                           if ( data.numSystemDesktops == 1 )
+	                                   desktop.name = 'Entire Desktop';
 
-                                transformedData.desktops.push(desktop);
-                        }
-                        uiLocalSharesUpdateWithData(transformedData);
+	                                transformedData.desktops.push(desktop);
+	                        }
+	                        uiLocalSharesUpdateWithData(transformedData);
+	                        self.cache.$inCallLocalShareList.show();
+	                    }
                     }
 
 
@@ -2733,81 +2719,77 @@
                             $('#pluginContainer').css('visibility', 'visible');
                         }
 
-                            self.smd = true;
+                        self.smd = true;
 
-                             var data = clientLocalSharesGet();
-                             var transformedData = {
-                                     windows: [],
-                                     desktops:[],
-                                     sharing: (self.currentShareId === undefined) ? false : true
-                                 };
+	                    var data = clientLocalSharesGet();
+	                    var transformedData = {
+	                    	windows: [],
+	                        desktops:[],
+	                        sharing: (self.currentShareId === undefined) ? false : true
+	                    };
+	
+	                    for (var i = 0; i < data.numApplicationWindows; i++) {
+	                    	var name = (data.appWindowAppName[i] && data.appWindowAppName[i].length) ? data.appWindowAppName[i] : data.appWindowName[i];
+	                        var mywindow = {
+	                             id: data.appWindowId[i],
+	                             name: name,
+	                             highlight: (self.currentShareId === data.appWindowId[i]) ? true : false
+	                        }
+	                        transformedData.windows.push(mywindow);
+	                    }  
 
-                             for (var i = 0; i < data.numApplicationWindows; i++) {
-                                 var name = (data.appWindowAppName[i] && data.appWindowAppName[i].length) ? data.appWindowAppName[i] : data.appWindowName[i];
-                                 var mywindow = {
-                                     id: data.appWindowId[i],
-                                     name: name,
-                                     highlight: (self.currentShareId === data.appWindowId[i]) ? true : false
-                                 }
-                                 transformedData.windows.push(mywindow);
-                             }
+                        if ( self.kphcShare != null && self.kphcShare.length > 0)
+                        {
+	                        if ( self.kphcShare.indexOf('|') != -1)
+	                            {
+	                            //alert(self.kphcShare.split('|')[0]);
+	                            //alert(self.kphcShare.split('|')[1]);
+	                            var kphcWindow = {
+                                        id: self.kphcShare.split('|')[1],
+                                        //name: self.kphcShare.split('|')[0],
+                                        name: 'Health Connect',
+                                        highlight: (self.currentShareId === self.kphcShare.split('|')[1]) ? true : false
+                                }
+	                            transformedData.windows.push(kphcWindow);
+	                        }       
+                        }
 
-                            
-
-                            if ( self.kphcShare != null && self.kphcShare.length > 0)
-                            {
-                            if ( self.kphcShare.indexOf('|') != -1)
-                                {
-                                //alert(self.kphcShare.split('|')[0]);
-                                //alert(self.kphcShare.split('|')[1]);
-                                var kphcWindow = {
-                                                    id: self.kphcShare.split('|')[1],
-                                                    //name: self.kphcShare.split('|')[0],
-                                                    name: 'Health Connect',
-                                                    highlight: (self.currentShareId === self.kphcShare.split('|')[1]) ? true : false
-                                            }
-                                        transformedData.windows.push(kphcWindow);
-                            }       
+                        for (var i = 0; i < data.numSystemDesktops; i++) {
+                            var desktop = {
+                                id: data.sysDesktopId[i],
+                                name: data.sysDesktopName[i],
+                                highlight: (self.currentShareId === data.sysDesktopId[i]) ? true : false
                             }
 
-                             for (var i = 0; i < data.numSystemDesktops; i++) {
-                                 var desktop = {
-                                     id: data.sysDesktopId[i],
-                                     name: data.sysDesktopName[i],
-                                     highlight: (self.currentShareId === data.sysDesktopId[i]) ? true : false
-                                 }
+                            if ( data.numSystemDesktops == 1 )
+                            	desktop.name = 'Entire Desktop';
+                            transformedData.desktops.push(desktop);
+                        }
+		                uiLocalSharesUpdateWithData(transformedData);
+		                self.cache.$inCallLocalShareList.show();
 
+                    });
 
-                                if ( data.numSystemDesktops == 1 )
-                                        desktop.name = 'Entire Desktop';
+                    $('#smd_warning_button_cancel').click(function() {
 
-                                     transformedData.desktops.push(desktop);
-                             }
-                             uiLocalSharesUpdateWithData(transformedData);
-                             self.cache.$inCallLocalShareList.show();
+                         $('#smdWarningModal').modal('hide');
+                       self.cache.$inCallLocalShareList.hide();
 
-                        });
+                        if ($('#pluginContainer').css('visibility')=='hidden'){
+                                $('#pluginContainer').css('visibility', 'visible');
+                        }
 
-                        $('#smd_warning_button_cancel').click(function() {
+                    });
 
-                             $('#smdWarningModal').modal('hide');
-                           self.cache.$inCallLocalShareList.hide();
+                    $('#smd_warning_modal_cross_button').click(function() {
+                         $('#smdWarningModal').modal('hide');
+                        self.cache.$inCallLocalShareList.hide();
 
-                            if ($('#pluginContainer').css('visibility')=='hidden'){
-                                    $('#pluginContainer').css('visibility', 'visible');
-                            }
-
-                        });
-
-                        $('#smd_warning_modal_cross_button').click(function() {
-                             $('#smdWarningModal').modal('hide');
-                            self.cache.$inCallLocalShareList.hide();
-
-                            if ($('#pluginContainer').css('visibility')=='hidden'){
-                                    $('#pluginContainer').css('visibility', 'visible');
-                            }
-                        });
-                        /*----End*/
+                        if ($('#pluginContainer').css('visibility')=='hidden'){
+                                $('#pluginContainer').css('visibility', 'visible');
+                        }
+                    });
+                    /*----End*/
 			});
 
             self.cache.$inCallButtonToggleLayout
@@ -2832,14 +2814,14 @@
                 .click(function() {
                     console.log("application::inCallButtonFullpage::click");
                     uiFullPageToggle();
-                });
+            });
 
             self.cache.$inCallButtonTogglePreview
                         .click(function (e) {
                             logger.log('info', 'ui',"inCallButtonTogglePreview::click");
                             e.preventDefault();
                             clientPreviewModeSet($(e.target).data("mode"));
-             });
+            });
 
             self.cache.$inCallButtonDisconnect
                 .click(function() {
