@@ -372,6 +372,7 @@ lib/wurfl-1.4.3.1.jar -text
 lib/wurfl.zip -text
 lib/xml-apis.jar -text
 lib/xmlbeans-2.3.0.wso2v1.jar -text
+src/org/kp/tpmg/common/security/Crypto.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/EnvironmentCommand.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/MeetingCommand.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/command/MonitoringCommand.java -text
