@@ -105,6 +105,9 @@ docroot/WEB-INF/jsp/preloader.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/setup.jsp -text
 docroot/WEB-INF/jsp/videoVisit.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/videoVisitGuest.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/resources/policy/UTPolicy.xml -text svneol=unset#text/plain
+docroot/WEB-INF/resources/repo/modules/addressing-1.6.1-wso2v10.mar -text
+docroot/WEB-INF/resources/repo/modules/rampart-1.6.1-wso2v12.mar -text
 docroot/WEB-INF/taglib/spring.tld -text
 docroot/WEB-INF/taglib/struts-tiles.tld -text
 docroot/WEB-INF/taglib/taglib.tld -text
