@@ -28,21 +28,12 @@ public class FaqParser {
 		try
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			String faqUrl = rbInfo.getString("MDO_FAQ_URL");
+			
 			String faqPath = rbInfo.getString("MDO_FAQ_PATH");
 			File faqFile = new File(faqPath);
 			FAQList faqList;
-			if ( faqFile.exists())
-			{
-				log.info("File exists in path = " + faqPath);
-				faqList = FAQListDocument.Factory.parse(faqFile).getFAQList();
-			}
-			else
-			{
-				log.info("reading from url = " + faqUrl);
-				URL u = new URL(faqUrl);
-				faqList = FAQListDocument.Factory.parse(u).getFAQList();
-			}
+			log.info("File exists in path = " + faqPath);
+			faqList = FAQListDocument.Factory.parse(faqFile).getFAQList();						
 			
 			faq f = new faq();
 			String faqListTitle = faqList.getFAQListTitle();
