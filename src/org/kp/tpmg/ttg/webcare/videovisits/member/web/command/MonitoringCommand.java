@@ -16,10 +16,14 @@ public class MonitoringCommand {
 	
 	public static String testDbRoundTrip(HttpServletRequest request, HttpServletResponse response)
 	{
-		logger.info("testDbRoundTrip entered");
+		logger.info("MonitoringCommand.testDbRoundTrip entered");
 		String toRet = null;
 		try
 		{
+			// Init web service 	
+			boolean success = WebService.initWebService(request);
+			logger.info("MonitoringCommand.testDbRoundTrip -> WebService.initWebService: " + success);
+			
 			StringResponseWrapper result = WebService.testDbRoundTrip();
 			if(result.getSuccess())
 			{
