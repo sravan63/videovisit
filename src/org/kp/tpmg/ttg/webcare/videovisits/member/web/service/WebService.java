@@ -1,8 +1,13 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.service;
 
+import java.io.FileNotFoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.xml.stream.XMLStreamException;
+
+import org.apache.axiom.om.impl.builder.StAXOMBuilder;
 import org.apache.axis2.AxisFault;
 import org.apache.axis2.client.Options;
 import org.apache.axis2.context.ConfigurationContext;
@@ -11,6 +16,10 @@ import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.log4j.Logger;
+import org.apache.neethi.Policy;
+import org.apache.neethi.PolicyEngine;
+import org.apache.rampart.RampartMessageData;
+import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
@@ -32,6 +41,7 @@ import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiver;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiverResponse;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMember;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMemberResponse;
+import org.kp.tpmg.videovisit.member.TestDbRoundTrip;
 import org.kp.tpmg.videovisit.member.TestDbRoundTripResponse;
 import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoining;
 import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoiningResponse;
@@ -61,23 +71,28 @@ public class WebService{
 	public static int retry = 0;
 	public static boolean status = false;
 	public static VideoVisitMemberServicesStub stub;
+	public static ConfigurationContext axisConfig = null;
 	public static boolean simulation = true;
 	
+	private static String modulePath =  "";
+	private static String policyPath =  "";
+	private static String serviceSecurityUsername = null;
+	private static String serviceSecurityPassword = null;
+
 	//setup wizard related properties
 	private static String setupWizardHostNuid;
 	private static String setupWizardMemberMrn;
 	private static String setupWizardMeetingType;
 	private static String setupWizardUserName;
 	
-	public static boolean initWebService()
+	public static boolean initWebService(HttpServletRequest request)
 	{
 		logger.info("Entered initWebService");
 		long timeout = 8000l; // milliseconds default
 		String serviceURL = "";
 		boolean reuseHTTP = true;
 		boolean chunked   = false;
-		boolean ret 	= true;
-		ConfigurationContext axisConfig = null;
+		boolean ret 	= true;		
 
 		try
 		{
@@ -90,6 +105,12 @@ public class WebService{
 				chunked = rbInfo.getString("WEBSERVICE_CHUNKED").equals ("true")?true:false;
 				simulation = rbInfo.getString ("WEBSERVICE_SIMULATION").equals ("true")?true:false;
 				logger.info("configuration: serviceURL="+serviceURL+" simulation="+simulation);
+				modulePath = rbInfo.getString("MODULE_PATH");
+				policyPath = rbInfo.getString("POLICY_PATH");
+				Crypto crypto = new Crypto();
+				serviceSecurityUsername = rbInfo.getString("SERVICE_SECURITY_USERNAME");
+				serviceSecurityPassword = crypto.read(rbInfo.getString("SERVICE_SECURITY_PASSWORD"));
+				logger.debug("webservice.initWebService -> SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
 				
 				//setup wizard related values
 				setupWizardHostNuid = rbInfo.getString("SETUP_WIZARD_HOST_NUID");
@@ -101,22 +122,49 @@ public class WebService{
 			
 			if (simulation)
 				return true;
-			try
-			{
-				axisConfig = ConfigurationContextFactory.createDefaultConfigurationContext();
-			}
-			catch(AxisFault af)
-			{
-				af.printStackTrace();
-				String message = "Axis failed to create axisConfig";  
-				logger.info(message);
-				ret = false;
-				logger.error("System Error" + af.getMessage(),af);
-				throw new RuntimeException(message, af);
+			
+			String policyFilePath = request.getSession().getServletContext().getRealPath(policyPath);
+			logger.info("WebService.initWebService policyFilePath: " + policyFilePath);
+			String moduleFilePath = request.getSession().getServletContext().getRealPath(modulePath);
+			logger.info("WebService.initWebService modulePath: " + moduleFilePath);
+			
+			logger.info("webservice.initWebService -> System property trustStore: " + System.getProperty("javax.net.ssl.trustStore"));
+			logger.info("webservice.initWebService -> System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
+            
+			
+			if(axisConfig == null){
+				try
+				{
+					
+					axisConfig = ConfigurationContextFactory.createConfigurationContextFromFileSystem(moduleFilePath);
+				}
+				catch(AxisFault af)
+				{
+					af.printStackTrace();
+					String message = "Axis failed to create axisConfig";  
+					logger.info(message);
+					ret = false;
+					logger.error("System Error" + af.getMessage(),af);
+					throw new RuntimeException(message, af);
+				}
 			}
 			
-			stub =  new VideoVisitMemberServicesStub(axisConfig, serviceURL);
+			if(stub == null){
+				stub =  new VideoVisitMemberServicesStub(axisConfig, serviceURL);
+			}
+			
 			Options options = stub._getServiceClient().getOptions();
+			
+			options.setUserName(serviceSecurityUsername);
+            options.setPassword(serviceSecurityPassword);           
+          
+            //load the policy    	   
+    	    Policy utPolicy = loadPolicy(policyFilePath);
+    	    //logger.debug("webservice.createStub -> after loadPolicy: : " + utPolicy);
+    	    //set rampart policy in service client options.
+            options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, utPolicy);
+            stub._getServiceClient().engageModule("addressing");
+            stub._getServiceClient().engageModule("rampart");           
 			
 			//this will fix the issue of open file issue.
 			//options.setProperty(HTTPConstants.HTTP_PROTOCOL_VERSION, HTTPConstants.HEADER_PROTOCOL_10);
@@ -150,7 +198,14 @@ public class WebService{
 		logger.info("Exit initWebService");
 		return ret;
 	}
+        
+        private static Policy loadPolicy(String xmlPath)
+            throws XMLStreamException, FileNotFoundException {
 
+        StAXOMBuilder builder = new StAXOMBuilder(xmlPath);
+        return PolicyEngine.getPolicy(builder.getDocumentElement());
+
+    }
 
 	/**
 	 * @return the setupWizardHostNuid
@@ -453,13 +508,13 @@ public class WebService{
 		try
 		{
 		
-			TestDbRoundTripResponse response = stub.testDbRoundTrip();
+			TestDbRoundTripResponse response = stub.testDbRoundTrip(new TestDbRoundTrip());
 			toRet = response.get_return();
 		}
 		catch (Exception e)
 		{
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
-			TestDbRoundTripResponse response = stub.testDbRoundTrip();
+			TestDbRoundTripResponse response = stub.testDbRoundTrip(new TestDbRoundTrip());
 			toRet = response.get_return();
 		}
 		logger.info("Exit testDbRoundTrip");
