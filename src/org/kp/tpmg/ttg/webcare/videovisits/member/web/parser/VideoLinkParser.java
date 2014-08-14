@@ -32,21 +32,12 @@ public class VideoLinkParser {
 		try
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			String videoLinkUrl = rbInfo.getString("MDO_VIDEO_LINK_URL");
 			String videoLinkPath = rbInfo.getString("MDO_VIDEO_LINK_PATH");
 			File videoLinkFile = new File(videoLinkPath);
 			VideoLink videoLink;
-			if ( videoLinkFile.exists())
-			{
-				log.info("File exists in path = " + videoLinkPath);
-				videoLink = VideoLinkDocument.Factory.parse(videoLinkFile).getVideoLink();
-			}
-			else
-			{
-				log.info("reading from url = " + videoLinkUrl);
-				URL u = new URL(videoLinkUrl);
-				videoLink = VideoLinkDocument.Factory.parse(u).getVideoLink();
-			}
+			log.info("File exists in path = " + videoLinkPath);
+			videoLink = VideoLinkDocument.Factory.parse(videoLinkFile).getVideoLink();
+						
 			videolink v = new videolink();
 			if ( videoLink != null)
 			{
