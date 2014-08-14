@@ -33,21 +33,12 @@ public class IconPromoParser {
 		try
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			String iconPromoUrl = rbInfo.getString("MDO_ICON_PROMO_URL");
 			String iconPromoPath = rbInfo.getString("MDO_ICON_PROMO_PATH");
 			File iconPromoFile = new File(iconPromoPath);
 			IconPromo[] promos;
-			if ( iconPromoFile.exists())
-			{
-				log.info("File exists in path = " + iconPromoPath);
-				promos = IconPromosDocument.Factory.parse(iconPromoFile).getIconPromos().getIconPromoArray();
-			}
-			else
-			{
-				log.info("reading from url = " + iconPromoUrl);
-				URL u = new URL(iconPromoUrl);
-				promos = IconPromosDocument.Factory.parse(u).getIconPromos().getIconPromoArray();
-			}
+			log.info("File exists in path = " + iconPromoPath);
+			promos = IconPromosDocument.Factory.parse(iconPromoFile).getIconPromos().getIconPromoArray();
+			
 			List<iconpromo> listPromos = new ArrayList<iconpromo>();
 			for ( IconPromo p : promos)
 			{
