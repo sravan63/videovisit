@@ -17,16 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sourceforge.wurfl.core.Device;
-import net.sourceforge.wurfl.core.WURFLHolder;
-import net.sourceforge.wurfl.core.WURFLManager;
-
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
-
-import com.sun.mail.iap.Response;
 
 public class WebSessionFilter implements Filter
 {
