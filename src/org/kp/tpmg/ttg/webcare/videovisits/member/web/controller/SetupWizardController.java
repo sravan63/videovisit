@@ -30,7 +30,7 @@ private static String JSONMAPPING = "jsonData";
 			String memberMrn = null;
 			String meetingType = null;
 			String userName = "Test, User";
-			boolean isReady = WebService.initWebService();
+			boolean isReady = WebService.initWebService(request);
 			if(isReady){
 				hostNuid = WebService.getSetupWizardHostNuid();
 				memberMrn = WebService.getSetupWizardMemberMrn();
