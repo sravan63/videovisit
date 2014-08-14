@@ -107,7 +107,7 @@ public class MeetingCommand {
 			*/ 
 			
 			// Init web service 	
-			boolean success = WebService.initWebService();
+			boolean success = WebService.initWebService(request);
 
 			// Validation  
 			if (ctx != null && success == true)
@@ -407,7 +407,7 @@ public class MeetingCommand {
 		RetrieveMeetingResponseWrapper ret = null;			
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		String meetingCode = null;			
-		boolean success = WebService.initWebService();		
+		boolean success = WebService.initWebService(request);		
 		if (ctx != null && success) {
 			meetingCode = ctx.getMeetingCode();
 			logger.info("Before retrieving caregiver meetings");
@@ -469,7 +469,7 @@ public class MeetingCommand {
 	WebAppContext ctx = WebAppContext.getWebAppContext(request);
 	String meetingCode = request.getParameter("meetingCode");			
 	String nocache = request.getParameter("nocache");			
-	boolean success = WebService.initWebService();		
+	boolean success = WebService.initWebService(request);		
 	if (ctx != null && success) {
 		logger.info("Before IsMeetingHashValid");
 		ret = WebService.IsMeetingHashValid(meetingCode);			
@@ -798,7 +798,7 @@ public class MeetingCommand {
 		StringResponseWrapper ret = null;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 		// Init web service 	
-		boolean success = WebService.initWebService();
+		boolean success = WebService.initWebService(request);
 		try {
 			logger.info("MeetingCommand.getVendorPluginData WebAppContext: " + ctx + " initWebService: " + success);
 			
@@ -855,6 +855,8 @@ public class MeetingCommand {
 			if (!StringUtils.isNotBlank(hostNuid)) {
 				return "MeetingCommand.createInstantVendorMeeting -> Validation Error: Host Nuid can not be null or blank.";
 			}
+			// Init web service 	
+			boolean success = WebService.initWebService(request);
 			
 			//grab data from web services
 			ret = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType, request.getSession().getId());
@@ -894,15 +896,9 @@ public class MeetingCommand {
 				vendorConfId = request.getParameter("vendorConfId");
 			}
 			
+			boolean success = WebService.initWebService(request);
 			String hostNuid = WebService.getSetupWizardHostNuid();			
-			
-			if(hostNuid == null){
-				boolean isReady = WebService.initWebService();
-				if(isReady){
-					hostNuid = WebService.getSetupWizardHostNuid();		
-				}
-			}
-			
+						
 			//grab data from web services
 			ret= WebService.terminateInstantMeeting(meetingId, vendorConfId, hostNuid, request.getSession().getId());
 			if (ret != null)
