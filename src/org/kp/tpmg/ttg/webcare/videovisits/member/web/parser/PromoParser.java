@@ -32,21 +32,12 @@ public class PromoParser {
 		try
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			String promoUrl = rbInfo.getString("MDO_PROMO_URL");
 			String promoPath = rbInfo.getString("MDO_PROMO_PATH");
 			File promoFile = new File(promoPath);
 			Promo[] promos;
-			if ( promoFile.exists())
-			{
-				log.info("File exists in path = " + promoPath);
-				promos = PromosDocument.Factory.parse(promoFile).getPromos().getPromoArray();
-			}
-			else
-			{
-				log.info("reading from url = " + promoUrl);
-				URL u = new URL(promoUrl);
-				promos = PromosDocument.Factory.parse(u).getPromos().getPromoArray();
-			}
+			log.info("File exists in path = " + promoPath);
+			promos = PromosDocument.Factory.parse(promoFile).getPromos().getPromoArray();
+			
 			List<promo> listPromos = new ArrayList<promo>();
 			for ( Promo p : promos)
 			{
