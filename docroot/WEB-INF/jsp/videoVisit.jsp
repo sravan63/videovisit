@@ -55,26 +55,25 @@
 					<tr height="75px" style="vertical-align: top; background-color: #E9E9E9;">
 						<td width="100px" style="vertical-align: middle;"><img src="vidyoplayer/img/step_1.png" style="margin-left: 35px; margin-right: auto"/></td>
 						<td>
-	                           <br>
-	                           <p style='color: #AC5A41; font-weight:bold;'>Download the 'Vidyo Web' plug-in installer.<br><br>
-						      <a id="macWinPluginFile" href="" class="installbutton">Download</a>
-	                           </p>
+	                    	<br>
+	                        <p style='color: #AC5A41; font-weight:bold;'>Download the 'Vidyo Web' plug-in installer.<br><br>
+						    	<a id="macWinPluginFile" href="" class="installbutton">Download</a>
+	                        </p>
 						</td>
 					</tr>
 	                <tr height="3px;"></tr>
 				    <tr height="100px" style="vertical-align: top; background-color: #E9E9E9;">
 						<td style="vertical-align: middle;"><img src="vidyoplayer/img/step_2.png" style="margin-left: 35px; margin-right: auto"/></td>
-						<td style='vertical-align: middle;'><p style='color:#AC5A41; font-weight:bold;'>Run and Install the  installer file.</p>Double click to open the file, then follow the installer instructions.
-	                       </td>
+						<td style='vertical-align: middle;'><p style='color:#AC5A41; font-weight:bold;'>Run and Install the  installer file.</p>Double click to open the file, then follow the installer instructions.</td>
 					</tr>
 	                <tr height="3px;"></tr>
 					<tr height="75px" style="vertical-align: top; background-color: #E9E9E9;">
 						<td style="vertical-align: middle;"><img src="vidyoplayer/img/step_3.png" style="margin-left: 35px; margin-right: auto"/></td>
 						<td>
-	                           <br>
-	                           <p>If you do not see an image in the video player in 10 to 15 seconds after installation, <br>please refresh your browser.<br><br>
-						      <a href="javascript:window.location.reload();" class="installbutton">Refresh Browser</a>
-	                           </p>
+	                    	<br>
+	                        <p>If you do not see an image in the video player in 10 to 15 seconds after installation, <br>please refresh your browser.<br><br>
+						    	<a href="javascript:window.location.reload();" class="installbutton">Refresh Browser</a>
+	                        </p>
 						</td>
 					</tr>
 				</table>
@@ -430,10 +429,9 @@
             </div>
             <div class="modal-body">
                 <div class="dialog-content-question">
-                    <p id="smd_warning_message"  class="question" style="text-align:center;">You are about to share your desktop</p>
-		    		<br>
-                    <p id="smd_warning_message_small" style="text-align:center;font-size: small">Make sure you are showing only <br> information intended for this patient.</p>
-                    <div id="smd_warning_message" class="error " style="padding:5px;"></div>
+                    <p class="question" style="text-align:center;">You are about to share your desktop</p>
+                    <p style="text-align:center; font-size:small;">Make sure you are showing only <br> information intended for this patient.</p>
+                    <div class="error"></div>
                     <div class="pagination">
                         <ul style="display:block;">
                             <li>
