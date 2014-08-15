@@ -8,8 +8,8 @@
           <ul class="bb-mdo-navigation-section-contents bb-mdo-navigation-collapsed">
             <li>Manage &amp; Schedule
               <ul>
-                <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=pharmacycenter">Prescriptions</a></li>
-                <li><a id="appointments" target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=appointmentcenter">Appointments</a>
+                <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=pharmacycenter">Prescriptions</a></li>
+                <li><a id="appointments" target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=appointmentcenter">Appointments</a>
 
                   <!-- "Appointments" disclaimer popup -->
                   <div id="appt-disclaimer" title="Appointments That Can Be Made Online">
@@ -37,35 +37,35 @@
             </li>
             <li>View Information
               <ul>
-              	<li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/labtestresults/entrypage.do">Test results</a></li>
-                <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/health/mycare/consumer/my-health-manager/my-medical-record/immunizations/">Immunization record</a></li>
-                <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/pastofficevisits/entrypage.do">Past visits</a></li>
-                <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/health/mycare/consumer/my-health-manager/my-medical-record/hospital-stays">Hospital Stays</a></li>
+              	<li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/labtestresults/entrypage.do">Test results</a></li>
+                <li><a target="MDO_ExternalLink" href="https://healthy.kaiserpermanente.org/health/mycare/consumer/my-health-manager/my-medical-record/immunizations/">Immunization record</a></li>
+                <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/pastofficevisits/entrypage.do">Past visits</a></li>
+                <li><a target="MDO_ExternalLink" href="https://healthy.kaiserpermanente.org/health/mycare/consumer/my-health-manager/my-medical-record/hospital-stays">Hospital Stays</a></li>
                
               </ul>
             </li>
             <li>E-mail Your Doctor
               <ul>
-                <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/contactphysician/entrypage.do">Compose message</a></li>
-                <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/mailbox/epicrecmsglist.do">View messages</a></li>
+                <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/contactphysician/entrypage.do">Compose message</a></li>
+                <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/mailbox/epicrecmsglist.do">View messages</a></li>
               </ul>
             </li>
             <li>Preventive Health Reminders
               <ul>
                 <!-- <li><a target="MDO_ExternalLink" href="http://www.kp.org/mypreventivehealth">Screening tests and immunizations</a></li> -->
 				<li><a target="MDO_ExternalLink" href="https://mydoctor.kaiserpermanente.org/ncal/prompt/?refUrl=mdoLeftNav">Screening tests and immunizations</a></li>                
-				<!-- <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/portal/member.portal?refUrl=https://hqac.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=mymedicalrecord&kp_shortcut_referrer=kp.org/mypreventivehealth">Screening tests and immunizations</a></li> -->
+				<!-- <li><a target="MDO_ExternalLink" href="https://mydoctor.kaiserpermanente.org/portal/member.portal?refUrl=https://mydoctor.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=mymedicalrecord&kp_shortcut_referrer=kp.org/mypreventivehealth">Screening tests and immunizations</a></li> -->
               </ul>
             </li>
             <li>Manage Your Family's Health
                  <ul>
   
                    <li><a href="https://mydoctor.kaiserpermanente.org/ncal/myfh/myfh_landing.html">Learn how</a></li>
-                   <li><a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/proxy/entrypage.do">Set up access</a></li>
+                   <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/proxy/entrypage.do">Set up access</a></li>
 
    					
-                   <li class="connectedTout">These secure features require you to <a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/signonpage.do">sign in</a>.
-                     <a target="MDO_ExternalLink" href="https://hqac.kaiserpermanente.org/kpweb/privacystate/entrypage.do">Privacy Practices</a>
+                   <li class="connectedTout">These secure features require you to <a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/signonpage.do">sign in</a>.
+                     <a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/privacystate/entrypage.do">Privacy Practices</a>
                    </li>
                    
                  </ul>
