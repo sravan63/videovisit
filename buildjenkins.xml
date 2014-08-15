@@ -151,7 +151,7 @@
 	
 	<target name="copy-war-dev">
 		<echo message="Copying war to tomcat host"/>
-			   <scp todir="vv_user:vv7463@TTG-DEV-APP-04:/home/vv_user/temp" failonerror="false" verbose="false"  trust="yes">
+			   <scp todir="vv_user:vv7463@TTG-DV-APP-1:/home/vv_user/temp" failonerror="false" verbose="false"  trust="yes">
 			   	<fileset dir="${dest.war.dir}">
 				  <include name="**/*.war" /> 
 				</fileset>
@@ -279,12 +279,16 @@
 			<property name="ws-client.jarname" value="${videovisit_member_jarname}"></property>
 			<property name="ws-client.packagename" value="${videovisit_member_package_name}"></property>
 			<property name="ws-client.endpoint" value="${videovisit_member_endpoint}"></property>
+			<property name="ws-client.wsdlversion" value="1"></property>
+			<property name="ws-client.databinding" value="adb"></property>
+			<property name="wsas.home" value="${wsas_home}"></property>			
 		</ant>
 		
 		
 		<echo message="-----copy jar files that web service client runtime depends-----"></echo>
 		<ant antfile="${buildtool_location}/build-client.xml" target="deployDependencies" inheritall="false">
 			<property name="runtime.ws.lib.dir" value="${dir.lib}" ></property>
+			<property name="wsas.home" value="${wsas_home}"></property>
 		</ant>
 		
 	</target>
