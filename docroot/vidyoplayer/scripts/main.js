@@ -1413,7 +1413,7 @@
                     logger.log('debug', 'configuration', 'configurationUpdateEvent::done - Devices detected', data);
 
                     uiConfigurationUpdateWithData(data);
-                                       // uiConfigurationShowWithData(data);
+                    // uiConfigurationShowWithData(data);
 					self.cache.$guestLoginButton.click();
                 });
             /* Incoming call */
@@ -2361,18 +2361,16 @@
                         }
 					}
 					else{
-                        isHost = decodeURIComponent($("#isHost").val());
-                        role = decodeURIComponent($('#role').val());
-                        self.cache.$inCallButtonEndMeeting.show();
-                        //parent.VideoVisit.meetingExpire(isHost, role, meetingId);
-                        VideoVisit.meetingExpire(isHost, role, meetingId);
-                        /* Added by Mandar A. on 12/03/2013 to address US3550
-                        START	*/
-                        //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave_return.png)", "width":"130px"});
-                        /*--- End */
-						if (isHost == 'false' && (role != null && role !='ma')) {
+                        isHost = $("#isHost").val();
+                        role = $('#role').val();
+
+                        if (isHost == 'false' && (role != null && role !='ma')) {
 							self.cache.$inCallButtonEndMeeting.hide();
 						}
+						else{
+                        	self.cache.$inCallButtonEndMeeting.show();
+                        }
+                        VideoVisit.meetingExpire(isHost, role, meetingId);
 					}
                     self.cache.$guestLoginButton.addClass('disabled');
                     self.cache.$guestLoginErrorWrapper.hide();
