@@ -190,12 +190,16 @@
 			<property name="ws-client.jarname" value="${videovisit_member_jarname}"></property>
 			<property name="ws-client.packagename" value="${videovisit_member_package_name}"></property>
 			<property name="ws-client.endpoint" value="${videovisit_member_endpoint}"></property>
+			<property name="ws-client.wsdlversion" value="1"></property>
+			<property name="ws-client.databinding" value="adb"></property>
+			<property name="wsas.home" value="${wsas_home}"></property>
 		</ant>
 		
 		
 		<echo message="-----copy jar files that web service client runtime depends-----"></echo>
 		<ant antfile="${buildtool_location}/build-client.xml" target="deployDependencies" inheritall="false">
 			<property name="runtime.ws.lib.dir" value="${dir.lib}" ></property>
+			<property name="wsas.home" value="${wsas_home}"></property>
 		</ant>
 		
 	</target>
