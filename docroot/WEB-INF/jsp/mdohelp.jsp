@@ -8,54 +8,10 @@
 <script>
 $(document).ready(function() {
 	  var myArr = [];
-	  $.ajax({
-    		url: "patient_faq.xml",
-    		dataType: "xml",
-    		success: function(xmlResponse) {
-        	 /* parse response */
-        	var hyperlink = "faqlist\\:Hyperlink";
-        	var title = "faqlist\\:Title";
-        	var section = "faqlist\\:Section";
-        	
-        	if ( navigator.userAgent.toLowerCase().indexOf('chrome') != -1  || navigator.userAgent.toLowerCase().indexOf('safari') != -1  )
-        	{
-        		hyperlink = "Hyperlink";
-        		title = "Title";
-        		section = "Section";
-        	}
-         	var data = $(hyperlink, xmlResponse).map(function() {
-         	return {
-             	value: $(this).find(title).text(),
-             	id: $(this).find(section).text()
-         	};
-         	}).get();
-
-        	 /* bind the results to autocomplete */
-         	$("#faq").autocomplete1({
-             source: data,
-		 minLength: 0,
-             select: function(event, ui) {
-         		var urlPrefix;
-    			if ( document.URL.indexOf('.htm') != -1 )
-    			{
-    				urlPrefix = document.URL.substring(0,document.URL.indexOf('.htm') + 4);
-    			}
-    	        var urlString = urlPrefix + "#" + (ui.item.id);
-    	            //(ui.item.id) + "=" + 
-    	            //(ui.item.value);
-    	            //$("input#searchBox").val(urlString);
-    		  window.location.href=urlString;
-    	        return false;
-
-	      }
-
-         	});
-     	}
-	});
-
+	 
 	$("#faq").click(function() {
-  	this.value = '';
-});  
+	  	this.value = '';
+	});  
 
 	$(".scrollup").click(scrollMe);
 	// Shows and hides scroll to top button
