@@ -149,9 +149,7 @@ public class WebService{
 				}
 			}
 			
-			if(stub == null){
-				stub =  new VideoVisitMemberServicesStub(axisConfig, serviceURL);
-			}
+			stub =  new VideoVisitMemberServicesStub(axisConfig, serviceURL);			
 			
 			Options options = stub._getServiceClient().getOptions();
 			
