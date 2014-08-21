@@ -1240,7 +1240,7 @@
 
         /* Added by Ranjeet on 02/20/2014 to address defect DE974
         Start ---*/
-        $("body").on("click",function(e){
+        /* $("body").on("click",function(e){
             if(e.target.id=="inCallPluginAndControlsWrap" || e.target.id=="btnContainer") {
                 if (isProvider != 'true' && self.cache.$inCallLocalShareList.is(":visible")){
                     if ($('#pluginContainer').css('visibility')=='hidden'){
@@ -1250,7 +1250,7 @@
                 }
             }
 
-        });
+        });	*/
         /*---End*/
 
         /**
