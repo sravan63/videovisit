@@ -2440,29 +2440,32 @@
                     isProvider = decodeURIComponent($("#isProvider").val());
 					meetingId = decodeURIComponent($("#meetingId").val());
 
-                    //if (isProvider=='false'){
+                   // if (isProvider=='false'){
 						//self.cache.$inCallButtonEndMeeting.hide();
 						/* Added by Mandar A. on 12/03/2013 to address US3550
 	                     START	*/
                         //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave.png)", "width":"60px"});
                         /*--- End */
                         //if ($.urlParam('meetingCode') !=null && $.urlParam('meetingCode') !='0' && $.urlParam('meetingCode').length > 0 ) {
-                       // if($("#isMember").val() =="false"){
+                        //if($("#isMember").val() =="false"){
                         	//if ($("#meetingCode") !=null && $("#meetingCode") !='0' && $("#meetingCode").length > 0 ) {
                                // meetingCode = decodeURIComponent($("#meetingCode").val());
-                               // caregiverId = decodeURIComponent($("#caregiverId").val());
+                                //caregiverId = decodeURIComponent($("#caregiverId").val());
                             //}
                        // }
-                        //else{
+                       // else{
                            // isMember = 'true';
                         //}
 					//}
 					//else{
-                        //isHost = decodeURIComponent($("#isHost").val());
-                        //role = decodeURIComponent($('#role').val());
-                        //self.cache.$inCallButtonEndMeeting.show();
+                       // isHost = decodeURIComponent($("#isHost").val());
+                       // role = decodeURIComponent($('#role').val());
+                       // self.cache.$inCallButtonEndMeeting.show();
+
                         //parent.VideoVisit.meetingExpire(isHost, role, meetingId);
-                        //VideoVisit.meetingExpire(isHost, role, meetingId);
+                       // VideoVisit.meetingExpire(isHost, role, meetingId);
+
+                     
                         /* Added by Mandar A. on 12/03/2013 to address US3550
                         START	*/
                         //$('.btn-leave-meeting').css({"background-image":"url(vidyoplayer/img/button_leave_return.png)", "width":"130px"});
@@ -2616,7 +2619,7 @@
                 	self.cache.$inCallButtonMuteSpeaker.removeClass('btn btn-large btn-tms-success').addClass('btn btn-large btn-tms-failure');
                 	self.cache.$inCallButtonMuteSpeaker.attr('title','Unmute Speakers');
                 	$("#volume-control-speaker .ui-slider-range").css("background", "grey");
-                    $("#slider-handle-speaker").css({"background":"grey", "border":"1px solid grey"});
+                	$("#slider-handle-speaker").css({"background":"grey", "border":"1px solid grey"});
                 }
                 else{
                 	self.cache.$inCallButtonMuteSpeaker.removeClass('btn btn-large btn-tms-failure').addClass('btn btn-large btn-tms-success');
@@ -3299,8 +3302,8 @@
                     	self.events.configurationUpdateEvent.trigger("done", clientConfigurationGet());
                     }, 500);
                 });
-	        
-	        self.cache.$setupCameraConfigContainer
+            
+            self.cache.$setupCameraConfigContainer
 	            .on("change click", ".input", function(event, obj) {
 	                logger.log('info', 'ui',"setupCameraConfigContainer::change", event, obj);
 	
@@ -3323,8 +3326,8 @@
                         $('#pluginContainer').css('visibility', 'visible');
                     }
 	            });
-	        
-	        self.cache.$setupMicConfigContainer
+
+            self.cache.$setupMicConfigContainer
 	            .on("change click", ".input", function(event, obj) {
 	                logger.log('info', 'ui',"setupMicConfigContainer::change", event, obj);
 	
@@ -3342,8 +3345,8 @@
 	                
 	                self.cache.$setupMicConfigContainer.slideUp();
 	            });
-	        
-	        self.cache.$setupSpeakerConfigContainer
+            
+            self.cache.$setupSpeakerConfigContainer
 	            .on("change click", ".input", function(event, obj) {
 	                logger.log('info', 'ui',"setupSpeakerConfigContainer::change", event, obj);
 	
