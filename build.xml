@@ -6,15 +6,17 @@
 
 
 <project name="videovisitmember" basedir="." default="local-exp">
-   <property file="${basedir}/build.properties" />
-   <property name="src.dir" value="src" />
-   <property name="conf.dir" value="conf" />
-   <property name="docroot.dir" value="docroot" />
-   <property name="dest.dir" value="build/${ant.project.name}" />
+    <property file="${basedir}/build.properties" />
+    <property name="src.dir" value="src" />
+    <property name="conf.dir" value="conf" />
+    <property name="docroot.dir" value="docroot" />
+    <property name="dest.dir" value="build/${ant.project.name}" />
 	<property name="dest.war.dir" value="build/war" />
-   <property name="dir.lib" value="${basedir}/lib" />
-   <property name="dest.dir.classes" value="${dest.dir}/WEB-INF/classes" />
+    <property name="dir.lib" value="${basedir}/lib" />
+    <property name="dest.dir.classes" value="${dest.dir}/WEB-INF/classes" />
 	<property name="dest.dir.lib" value="${dest.dir}/WEB-INF/lib" />
+	<property name="dest.dir.vidyoplayer" value="${dest.dir}/vidyoplayer" />
+	<property name="vidyoplayer.home" value="${vidyoplayer_location}"/>
  	
     <!-- 
 	<taskdef name="jsmin"
@@ -97,28 +99,34 @@
    	</target>
 
    <target name="prepare">
-   	  <filter filtersfile="${ffile}" />
-      <mkdir dir="${dest.dir}" />
+   	 <filter filtersfile="${ffile}" />
+     <mkdir dir="${dest.dir}" />
    	 <mkdir dir="${dest.war.dir}" />
-      <mkdir dir="${dest.dir.classes}" />
+     <mkdir dir="${dest.dir.classes}" />
    	 <mkdir dir="${dest.dir.lib}" />
-   	  <copy file="${conf.dir}/log4j.properties"
+   	 <mkdir dir="${dest.dir.vidyoplayer}"/>
+   	 <copy file="${conf.dir}/log4j.properties"
    	            todir="${dest.dir.classes}"
    	            filtering="true" />
-   	<copy file="${conf.dir}/project.init.properties"
+   	 <copy file="${conf.dir}/project.init.properties"
    	   	            todir="${dest.dir.classes}"
    	   	            filtering="true" />
-   	<copy file="${ffile}"
+   	 <copy file="${ffile}"
 		tofile="${conf.dir}/configuration.properties"
  		filtering="true" />
-   	<copy file="${conf.dir}/configuration.properties"
+   	 <copy file="${conf.dir}/configuration.properties"
    	   	            todir="${dest.dir.classes}"
    	   	            filtering="true" />
-   	<copy todir="${dest.dir.lib}">
+   	 <copy todir="${dest.dir.lib}">
       	         <fileset dir="${dir.lib}">
       	         	<exclude name="j2ee.jar"/>
       	         </fileset>
-       </copy>
+     </copy>
+   	<!--Copy Vidyoplayer to war-->
+   	<echo message="copying vidyoplayer to war from ${vidyoplayer.home}" />
+   	<copy todir="${dest.dir.vidyoplayer}">
+   		<fileset dir="${vidyoplayer.home}" includes="**"/>      	    
+    </copy>
     <copy todir="${dest.dir}">
          	    <fileset dir="${docroot.dir}">
          	    	<exclude name="${docroot.dir}/WEB-INF/classes/*"/>
