@@ -57,7 +57,9 @@ var VideoVisitSetupWizard =
 }
 
 $(window).on("beforeunload", function() { 
-    console.log("Inside before unload"); 
-     VideoVisitSetupWizard.terminateMeeting($("#meetingId").val(), $("#vendorConfId").val());
+	console.log("Inside before unload, is Login button clicked: " + $("#isLoginButtonClicked").val());
+    if ($("#isLoginButtonClicked").val() == 'false') {
+    	VideoVisitSetupWizard.terminateMeeting($("#meetingId").val(), $("#vendorConfId").val());
+    }
 
 });
