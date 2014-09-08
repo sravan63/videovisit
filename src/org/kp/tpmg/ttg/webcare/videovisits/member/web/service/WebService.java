@@ -298,7 +298,7 @@ public class WebService{
 		}
 		catch (Exception e) 
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("verifyMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			VerifyMemberResponse response = stub.verifyMember(query);
 			resp = response.get_return();
 		}
@@ -330,7 +330,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("retrieveMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			RetrieveMeetingsForMemberResponse response = stub.retrieveMeetingsForMember(query);
 			toRet = response.get_return();
 		}
@@ -360,7 +360,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("memberLogout -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			MemberLogoutResponse response = stub.memberLogout(query);
 			toRet = response.get_return();
 		}
@@ -418,7 +418,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("updateMemberMeetingStatusJoining -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
 			toRet = response.get_return();
 		}
@@ -444,7 +444,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("createMeetingSession -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			return stub.createMeetingSession(query).get_return();
 			
 		}
@@ -485,7 +485,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("memberEndMeetingLogout -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
 			toRet = response.get_return();
 		}
@@ -511,7 +511,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("testDbRoundTrip -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			TestDbRoundTripResponse response = stub.testDbRoundTrip(new TestDbRoundTrip());
 			toRet = response.get_return();
 		}
@@ -686,7 +686,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("getMeetingByMeetingID -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			GetMeetingByMeetingIDResponse response = stub.getMeetingByMeetingID(query);
 			toRet = response.get_return();
 		}
@@ -716,7 +716,7 @@ public class WebService{
 		}
 		catch(Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("createMobileMeetingSession -> Web Service API error:" + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -742,7 +742,7 @@ public class WebService{
 		}
 		catch(Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("createCareGiverMobileSession -> Web Service API error:" + e.getMessage(), e);
 			return null;
 		}
 	}
@@ -775,7 +775,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("getVendorPluginData -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			GetVendorPluginDataResponse response = stub.getVendorPluginData(query);
 			toRet = response.get_return();
 		}		
@@ -808,7 +808,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("createInstantVendorMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			CreateInstantVendorMeetingResponse response = stub.createInstantVendorMeeting(query);
 			toRet = response.get_return();
 		}
@@ -835,7 +835,7 @@ public class WebService{
 		}
 		catch (Exception e)
 		{
-			logger.error("WebService.terminateInstantMeeting -> Web Service API error:" + e.getMessage() + " Retrying...");
+			logger.error("WebService.terminateInstantMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
 			TerminateInstantMeetingResponse response = stub.terminateInstantMeeting(query);
 			toRet = response.get_return();	
 		}
