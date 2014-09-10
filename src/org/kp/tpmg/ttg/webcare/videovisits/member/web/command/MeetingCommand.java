@@ -553,7 +553,7 @@ public class MeetingCommand {
 			}			
 		} catch (Exception e) {
 			// log error
-			logger.error("Error in createCaregiverMeetingSession " + e.getMessage(), e);
+			logger.error("Error in MeetingCommand.endCaregiverMeetingSession " + e.getMessage(), e);
 		}
 		// worst case error returned, no caregiver found, no web service responded, etc. 
 		return JSONObject.fromObject(new SystemError()).toString();
@@ -571,7 +571,7 @@ public class MeetingCommand {
 			}			
 		} catch (Exception e) {
 			// log error
-			logger.error("Error in createCaregiverMeetingSession " + e.getMessage(), e);
+			logger.error("Error in MeetingCommand.endCaregiverMeetingSession " + e.getMessage(), e);
 		}
 		// worst case error returned, no caregiver found, no web service responded, etc. 
 		return JSONObject.fromObject(new SystemError()).toString();
