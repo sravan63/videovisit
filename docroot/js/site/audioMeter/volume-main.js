@@ -94,17 +94,31 @@ function gotStream(stream) {
 }
 
 function drawLoop( time ) {
+    
+    var osNameForAM = navigator.platform;
+
     // clear the background
     canvasContext.clearRect(0,0,WIDTH,HEIGHT);
 
-    // check if we're currently clipping
-    if (meter.checkClipping())
-        canvasContext.fillStyle = "red";
-    else
-        canvasContext.fillStyle = "green";
 
+    // change the color based on the input value
     // draw a bar based on the current volume
-    canvasContext.fillRect(0, 0, meter.volume*WIDTH*2.4, HEIGHT);
+    if (osNameForAM.toUpperCase().indexOf('MAC')!==-1){
+	    if (meter.volume > 0.1)
+	        canvasContext.fillStyle = "red";
+	    else
+	        canvasContext.fillStyle = "green";
+
+	    canvasContext.fillRect(0, 0, meter.volume*WIDTH*7.0, HEIGHT);
+	}
+	else if (osNameForAM.toUpperCase().indexOf('WIN')!==-1){
+		if (meter.volume > 0.2)
+	        canvasContext.fillStyle = "red";
+	    else
+	        canvasContext.fillStyle = "green";
+
+	    canvasContext.fillRect(0, 0, meter.volume*WIDTH*3.8, HEIGHT);
+	}
 
     // set up the next visual callback
     rafID = window.requestAnimationFrame( drawLoop );
