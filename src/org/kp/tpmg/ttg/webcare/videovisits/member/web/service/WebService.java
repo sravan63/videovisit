@@ -1,9 +1,13 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.service;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.rmi.RemoteException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.axis2.client.Options;
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.transport.http.HTTPConstants;
@@ -93,12 +97,19 @@ public class WebService{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 			if (rbInfo != null)
 			{
+				logger.info("WebService.initWebService -> configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				//Read external properties file for the web service end point url
+				File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				FileInputStream fileInput = new FileInputStream(file);
+	    		Properties appProp = new Properties();
+	    		appProp.load(fileInput);
+	    		serviceURL = appProp.getProperty("WEBSERVICE_URL");
+				
 				timeout = Integer.parseInt(rbInfo.getString("WEBSERVICE_TIMEOUT"));
-				serviceURL = rbInfo.getString("WEBSERVICE_URL");
 				reuseHTTP = rbInfo.getString("WEBSERVICE_REUSE").equals("true")? true:false;
 				chunked = rbInfo.getString("WEBSERVICE_CHUNKED").equals ("true")?true:false;
 				simulation = rbInfo.getString ("WEBSERVICE_SIMULATION").equals ("true")?true:false;
-				logger.info("configuration: serviceURL="+serviceURL+" simulation="+simulation);
+				logger.info("WebService.initWebService -> configuration: serviceURL="+serviceURL+" ,simulation="+simulation);
 				modulePath = rbInfo.getString("MODULE_PATH");
 				policyPath = rbInfo.getString("POLICY_PATH");
 				Crypto crypto = new Crypto();
@@ -122,8 +133,8 @@ public class WebService{
 			String moduleFilePath = request.getSession().getServletContext().getRealPath(modulePath);
 			logger.info("WebService.initWebService modulePath: " + moduleFilePath);
 			
-			logger.info("webservice.initWebService -> System property trustStore: " + System.getProperty("javax.net.ssl.trustStore"));
-			logger.info("webservice.initWebService -> System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
+			logger.debug("webservice.initWebService -> System property trustStore: " + System.getProperty("javax.net.ssl.trustStore"));
+			logger.debug("webservice.initWebService -> System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
             
 			//create axis2 configuration context if not created already.
 			axisConfig = ServiceSecurityLoader.getConfigContext(moduleFilePath);			
