@@ -134,10 +134,14 @@
 	/*margin: 10px 0 10px;*/
 }
 
-.row a{
+.row a, a:active, a:visited{
 	font-size: 12px;
 	font-family: Arial;
 	font-style: regular;
+	color: #4D8993;
+}
+
+.row > .threeColumns a, a:active, a:visited{
 	color: #4D8993;
 }
 
