@@ -127,7 +127,7 @@
 	/*margin: 10px 0 10px;*/
 }
 
-.row a, a:active, a:visited{
+.row a{
 	font-size: 12px;
 	font-family: Arial;
 	font-style: regular;
