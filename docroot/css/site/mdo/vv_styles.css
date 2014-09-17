@@ -554,6 +554,7 @@ div#iconpromo2{
 #displayDevices .threeColumns a, a:active, a:visited{
 	color: #FFFFFF;
 	font-weight: normal;
+	display: block;
 	text-decoration: none;
 }
 
