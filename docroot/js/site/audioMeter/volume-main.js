@@ -6,7 +6,7 @@ var HEIGHT=50;
 var rafID = null;
 var firefox;
 
-window.onload = function() {
+$(document).ready(function(){
 	var browserInfoForAM = getBrowserInfo();
 //	var browserInfo = new Object();
 //	browserInfo.isIE = false;
@@ -71,7 +71,7 @@ window.onload = function() {
 		$("#mic-instructions").html(" ");
 	}
 
-};
+});
 
 
 function didntGetStream() {
