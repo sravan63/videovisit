@@ -50,9 +50,8 @@
 	    						sb.append("\">");
 	    						//sb.append("<div  id=\"" + ip.getId() + "\" class=\"icon\" ></div>");
 	    						sb.append("<div id=\"" + ip.getId() + "\" class=\"icon\" style=\"background: url('" + ip.getPromoIcon().getPath() + "') no-repeat scroll top center transparent; float: left;\"></div>");
-	    						sb.append("<h3>" + ip.getHeader() + "</h3>");
+	    						sb.append("<div><h3>" + ip.getHeader() + "</h3>");
 	    						sb.append("<p>" + ip.getAbstractText() + "</p>");
-	    						sb.append("<div class=\"buttons\">");
 	    						sb.append("<button class=\"button\" alt=\"" + ip.getIconPromoHyperLink().getTitle() + "\" value=\"" + ip.getIconPromoHyperLink().getTitle() + "\" onclick=\"window.location.href = '" + ip.getIconPromoHyperLink().getUrl() + "'\">" +  ip.getIconPromoHyperLink().getTitle() + "</button>");
 	    						sb.append("</div></div>");
 	    						out.println(sb.toString());
