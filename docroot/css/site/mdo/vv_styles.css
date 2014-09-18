@@ -417,6 +417,7 @@ div#iconpromo2{
 }
 
 #setupInstructions a, #setupInstructions a:active,  #setupInstructions a:visited, #setupInstructions a:hover{
+	display: inline;
 	text-decoration: none;
 	color: #FFFFFF;
 }
