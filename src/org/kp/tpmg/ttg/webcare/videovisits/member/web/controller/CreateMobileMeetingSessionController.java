@@ -18,6 +18,7 @@ public class CreateMobileMeetingSessionController extends SimplePageController {
 	{	
 		try
 		{
+			logger.info("Mobile controller invoked ***");
 			//get JSON data from web services
 			String data = MeetingCommand.createMobileMeetingSession(request, response);
 		

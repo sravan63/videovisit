@@ -4,7 +4,6 @@ import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.wurfl.core.Device;
@@ -13,6 +12,7 @@ import net.sourceforge.wurfl.core.WURFLManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+
 
 
 public class DeviceDetectionService {
@@ -27,6 +27,7 @@ public class DeviceDetectionService {
 	 */
 	public static boolean isWirelessDeviceorTablet(HttpServletRequest request){
 		boolean isWirelessDeviceOrTablet = false;
+		
 		
 		Cookie cookie = getCookie(request, DEVICE_TYPE_COOKIE_NAME);
 		if(cookie != null){
@@ -62,7 +63,30 @@ public class DeviceDetectionService {
         return null;
     }
 	
-	private static boolean checkForDeviceType(HttpServletRequest request){
+	private static boolean checkForDeviceType(HttpServletRequest request) {
+		
+		boolean isWirelessDeviceOrTablet = false;
+		HttpSession session = request.getSession();
+
+		WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
+		
+		WURFLManager manager = wurfl.getWURFLManager();
+
+		Device device = manager.getDeviceForRequest(request);
+					
+		Map<String, String > capabilities = device.getCapabilities();
+		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:capabilities=" + capabilities);
+		
+		if("true".equals(capabilities.get("is_wireless_device")) || "true".equals(capabilities.get("is_tablet"))){
+			isWirelessDeviceOrTablet = true;
+		}
+		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:isWirelessDeviceOrTablet value" + isWirelessDeviceOrTablet);
+		return isWirelessDeviceOrTablet;
+	}
+	
+	
+	
+	public static Device checkForDevice(HttpServletRequest request) {
 		
 		boolean isWirelessDeviceOrTablet = false;
 		HttpSession session = request.getSession();
@@ -74,14 +98,19 @@ public class DeviceDetectionService {
 		Device device = manager.getDeviceForRequest(request);
 		
 		Map<String, String > capabilities = device.getCapabilities();
-		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:capabilities=" + capabilities);
 		
-		if("true".equals(capabilities.get("is_wireless_device")) || "true".equals(capabilities.get("is_tablet"))){
+		
+		if("true".equals(capabilities.get("is_wireless_device"))) {
 			isWirelessDeviceOrTablet = true;
+			logger.info("Device is Mobile");
+		}else if ("true".equals(capabilities.get("is_tablet"))){
+			isWirelessDeviceOrTablet = true;
+			logger.info("Device is tablet");
 		}
+		
+		logger.info("User agent.."+ device.getUserAgent());
 		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:isWirelessDeviceOrTablet value" + isWirelessDeviceOrTablet);
-		return isWirelessDeviceOrTablet;
+		return device;
 	}
-	
 	
 }

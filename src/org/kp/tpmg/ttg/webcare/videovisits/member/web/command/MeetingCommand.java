@@ -2,6 +2,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,8 +13,12 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+
+import net.sourceforge.wurfl.core.Device;
+
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
@@ -727,7 +732,8 @@ public class MeetingCommand {
 		long meetingId = 0;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 		
-		
+		logger.info("In side command for mobile meeting");
+	
 		try
 		{
 			// parse parameters
@@ -736,9 +742,24 @@ public class MeetingCommand {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
 			}
 			
+			// This code will get the device attributes and capabilities and passes it to webservice
+			Device device =	DeviceDetectionService.checkForDevice(request);
+			Map<String, String > capabilities = device.getCapabilities();
+			
+			logger.info("Mobile capabilities ****" + capabilities);
+			String brandName = capabilities.get("brand_name");
+			String modelName = capabilities.get("model_name");
+			String deviceOs = capabilities.get("device_os");
+			String deviceOsVersion = capabilities.get("device_os_version");
+			
+			String deviceType = brandName + modelName;
+			
+			logger.info("**" + brandName + "**" +modelName  + "**" +deviceOs + "**" + deviceOsVersion);
+			
+		
 			
 			//grab data from web services
-			ret= WebService.createMobileMeetingSession(meetingId);
+			ret= WebService.createMobileMeetingSession(meetingId, deviceType, deviceOs, deviceOsVersion);
 			if (ret != null)
 			{
 				//response.addHeader("P3P", "CP=\"NOI ADM DEV PSAi COM NAV OUR OTR STP IND DEM\"");
@@ -755,6 +776,8 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
+	
+
 	public static String CreateCareGiverMobileMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		String patientName = "";

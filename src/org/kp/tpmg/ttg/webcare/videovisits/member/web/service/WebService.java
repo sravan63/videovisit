@@ -816,7 +816,7 @@ public class WebService{
 	
 	}
 	
-	public static StringResponseWrapper createMobileMeetingSession(long meetingId) throws Exception {
+	public static StringResponseWrapper createMobileMeetingSession(long meetingId, String deviceType, String deviceOS, String deviceOSversion) throws Exception {
 		StringResponseWrapper toRet = null; 
 		logger.info("Entered createMobileMeetingSession");
 		try
@@ -827,9 +827,12 @@ public class WebService{
 				toRet.setErrorMessage("meetingId is null");
 				return toRet;
 			}
-			org.kp.tpmg.videovisit.member.CreateMobileMeetingSession createMeeting = new org.kp.tpmg.videovisit.member.CreateMobileMeetingSession();
-			createMeeting.setMeetingId(meetingId);
-			toRet = stub.createMobileMeetingSession(createMeeting).get_return();			
+			org.kp.tpmg.videovisit.member.CreateMobileMeetingSession meeting = new org.kp.tpmg.videovisit.member.CreateMobileMeetingSession();
+			meeting.setMeetingId(meetingId);
+			meeting.setDeviceOS(deviceOS);
+			meeting.setDeviceOSversion(deviceOSversion);
+			meeting.setDeviceType(deviceType);
+			toRet = stub.createMobileMeetingSession(meeting).get_return();			
 		}
 		catch(Exception e)
 		{
