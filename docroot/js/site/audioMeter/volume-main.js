@@ -105,17 +105,17 @@ function drawLoop( time ) {
     // draw a bar based on the current volume
     if (osNameForAM.toUpperCase().indexOf('MAC')!==-1){
 	    if (meter.volume > 0.1)
-	        canvasContext.fillStyle = "red";
-	    else
 	        canvasContext.fillStyle = "green";
+	    else
+	        canvasContext.fillStyle = "red";
 
 	    canvasContext.fillRect(0, 0, meter.volume*WIDTH*7.0, HEIGHT);
 	}
 	else if (osNameForAM.toUpperCase().indexOf('WIN')!==-1){
 		if (meter.volume > 0.2)
-	        canvasContext.fillStyle = "red";
-	    else
 	        canvasContext.fillStyle = "green";
+	    else
+	        canvasContext.fillStyle = "red";
 
 	    canvasContext.fillRect(0, 0, meter.volume*WIDTH*3.8, HEIGHT);
 	}
