@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import net.sourceforge.wurfl.core.Device;
-import net.sourceforge.wurfl.core.WURFLHolder;
-import net.sourceforge.wurfl.core.WURFLManager;
+import net.sourceforge.wurfl.core.WURFLEngine;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -67,12 +66,13 @@ public class DeviceDetectionService {
 		
 		boolean isWirelessDeviceOrTablet = false;
 		HttpSession session = request.getSession();
-
-		WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
 		
-		WURFLManager manager = wurfl.getWURFLManager();
+		 WURFLEngine engine = (WURFLEngine) session.getServletContext().getAttribute(WURFLEngine.class.getName()); 
+		 Device device = engine.getDeviceForRequest(request);
 
-		Device device = manager.getDeviceForRequest(request);
+	//	WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
+	//	WURFLManager manager = wurfl.getWURFLManager();
+	//	Device device = manager.getDeviceForRequest(request);
 					
 		Map<String, String > capabilities = device.getCapabilities();
 		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:capabilities=" + capabilities);
@@ -91,24 +91,26 @@ public class DeviceDetectionService {
 		boolean isWirelessDeviceOrTablet = false;
 		HttpSession session = request.getSession();
 
-		WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
-		
-		WURFLManager manager = wurfl.getWURFLManager();
+		 WURFLEngine engine = (WURFLEngine) session.getServletContext().getAttribute(WURFLEngine.class.getName()); 
+		 Device device = engine.getDeviceForRequest(request);
 
-		Device device = manager.getDeviceForRequest(request);
+		
+/*		WURFLHolder wurfl = (WURFLHolder)session.getServletContext().getAttribute(WURFLHolder.class.getName());
+		WURFLManager manager = wurfl.getWURFLManager();
+		Device device = manager.getDeviceForRequest(request);*/
 		
 		Map<String, String > capabilities = device.getCapabilities();
 		
 		
 		if("true".equals(capabilities.get("is_wireless_device"))) {
 			isWirelessDeviceOrTablet = true;
-			logger.info("Device is Mobile");
+			logger.info("***Device is Mobile***");
 		}else if ("true".equals(capabilities.get("is_tablet"))){
 			isWirelessDeviceOrTablet = true;
-			logger.info("Device is tablet");
+			logger.info("***Device is tablet***");
 		}
 		
-		logger.info("User agent.."+ device.getUserAgent());
+		logger.info("User agent.."+ device.getWURFLUserAgent());
 		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:isWirelessDeviceOrTablet value" + isWirelessDeviceOrTablet);
 		return device;
 	}
