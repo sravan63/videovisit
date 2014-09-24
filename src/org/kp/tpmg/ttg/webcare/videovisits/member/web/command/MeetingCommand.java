@@ -730,6 +730,7 @@ public class MeetingCommand {
 	public static String createMobileMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		long meetingId = 0;
+		String deviceType = null;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 		
 		logger.info("In side command for mobile meeting");
@@ -752,8 +753,9 @@ public class MeetingCommand {
 			String deviceOs = capabilities.get("device_os");
 			String deviceOsVersion = capabilities.get("device_os_version");
 			
-			String deviceType = brandName + modelName;
-			
+			if (brandName != null && modelName!= null){
+			 deviceType = brandName +" " + modelName;
+			}
 			logger.info("**" + brandName + "**" +modelName  + "**" +deviceOs + "**" + deviceOsVersion);
 			
 		
