@@ -171,6 +171,13 @@
                     "js/site/setup/setup.js"
                 ]
             }
+        },
+        "readme" : {
+            "global"   : [],
+            "specific" : {
+                "blank" : []
+            }
         }
+
     }
 }

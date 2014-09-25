@@ -184,6 +184,16 @@
                 	"css/site/mdo/vv_styles.css"
                 ]
             }
+        },
+        "readme" : {
+            "global"   : [
+                "css/site/global/base.css",
+        		"css/site/global/structure.css"
+        	],
+            "specific" : {
+                "blank" : []
+            }
         }
+        
     }
 }
