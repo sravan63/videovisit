@@ -102,6 +102,7 @@ docroot/WEB-INF/jsp/nav/userInfo-guestVisit.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/nav/userInfo-visit.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo.jsp -text
 docroot/WEB-INF/jsp/preloader.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/readme.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/setup.jsp -text
 docroot/WEB-INF/jsp/videoVisit.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/videoVisitGuest.jsp -text svneol=unset#text/plain
