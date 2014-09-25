@@ -46,6 +46,7 @@
 		       <value>verifyguest.json</value>
 		       <value>enablejavascript.htm</value>
 		       <value>mobileenablejavascript.htm</value>
+               <value>readme.htm</value>
 			</list>
 		</property>
 	    
@@ -116,6 +117,7 @@
 				<prop key="/videoVisitGuestReady.htm">videoVisitGuestReady</prop>
 				<prop key="/createSetupWizardMeeting.json">dataCreateSetupWizardMeeting</prop>
 				<prop key="/terminateSetupWizardMeeting.json">dataTerminateSetupWizardMeeting</prop>
+                <prop key="/readme.htm">readme</prop>
 				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
@@ -247,7 +249,12 @@
 		<property name="viewName" value="videoVisitGuestReady" />
 		<property name="navigation" value="videoVisitGuestReady" />
 	</bean>	
-	
+	<!-- for readme file -->
+	<bean id="readme" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="readme" />
+		<property name="navigation" value="readme" />
+	</bean>
 
 	<!--  JSON classes -->
 	<bean id="joinmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.JoinMeetingController">
