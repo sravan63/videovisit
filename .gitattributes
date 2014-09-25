@@ -236,6 +236,7 @@ docroot/js/site/visit/visit.js -text
 docroot/keepalive.jsp -text
 docroot/live.jsp -text
 docroot/patient_faq.xml -text
+docroot/readme.txt -text svneol=unset#text/plain
 docroot/samplevideo.mp4 -text
 docroot/thankyou.html -text
 docs/Video[!!-~]Visit[!!-~]Member[!!-~]WebApp[!!-~]Build[!!-~]and[!!-~]Test.doc -text
