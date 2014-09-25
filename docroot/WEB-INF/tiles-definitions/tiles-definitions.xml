@@ -209,6 +209,7 @@
 	
 	<definition name="readme" extends=".standardPageTemplate">
 		<put-attribute name="title" value="" type="string" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
 		<put-attribute name="tabs" value="/WEB-INF/jsp/blank.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/readme.jsp" />
