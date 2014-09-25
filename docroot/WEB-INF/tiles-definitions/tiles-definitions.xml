@@ -207,6 +207,13 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/videoVisitGuest.jsp" />
 	</definition>
 	
+	<definition name="readme" extends=".standardPageTemplate">
+		<put-attribute name="title" value="" type="string" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="tabs" value="/WEB-INF/jsp/blank.jsp" />
+		<put-attribute name="content" value="/WEB-INF/jsp/readme.jsp" />
+	</definition>
+	
 	<!-- Empty Pages -->
 	<definition name="loading" template="/WEB-INF/tiles-templates/emptyLayout.jsp">
 		<put-attribute name="content" value="/WEB-INF/jsp/loading.jsp" />
