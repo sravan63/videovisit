@@ -45,9 +45,7 @@ var VideoVisit =
 		$("#btnContainer").css("min-height", btnGroupHeight);
 		
 		if (navigator.appName.indexOf("Internet Explorer")!=-1){
-			alert(navigator.appVersion);
 			if(navigator.appVersion.indexOf("MSIE 8")==-1){
-				alert("hi");
 				$("#vidyoPlugin").css("min-height", btnGroupHeight);
 				//$("#vidyoPlugin").css("min-width", calculatedMinWidth-200-btnContainerWidth);
 			}
