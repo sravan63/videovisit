@@ -55,45 +55,63 @@ function getCookie(c_name)
 }
 
 
-function getBrowserInfo() {
-	
+function getBrowserInfo(){
 	var browserUserAgent = navigator.userAgent;
-	
-	
-	var browserInfo = new Object();
-	
-	browserInfo.is32Bit = true;
 
-	if (browserUserAgent.indexOf("x64") != -1) {
+	var browserInfo = new Object();
+
+	browserInfo.is32Bit = true;
+	if (browserUserAgent.indexOf("x64") != -1){
 		browserInfo.is32Bit = false;
 	}
-	browserInfo.is32BitOS = true;
 
+	browserInfo.is32BitOS = true;
 	if (browserUserAgent.indexOf("WOW64") != -1 || browserUserAgent.indexOf("Win64") != -1 ){
 		browserInfo.is32BitOS = false;
-	} 
+	}
 
 	browserInfo.isIE = false;
 	browserInfo.isFirefox = false;
 	browserInfo.isChrome = false;
 	browserInfo.isSafari = false;
-	
+
 	var jqBrowserInfoObj = $.browser; 
 
 	browserInfo.version = jqBrowserInfoObj.version;
-	
-	if ( jqBrowserInfoObj.mozilla) {
+
+	if (jqBrowserInfoObj.mozilla){
 		browserInfo.isFirefox = true;
-	} else if ( jqBrowserInfoObj.msie){
+	}else if (jqBrowserInfoObj.msie){
 		browserInfo.isIE = true;
-	} else if ( jqBrowserInfoObj.chrome){
+	}else if (jqBrowserInfoObj.chrome){
 		browserInfo.isChrome = true;
-	} else if ( jqBrowserInfoObj.safari){
+	}else if (jqBrowserInfoObj.safari){
 		browserInfo.isSafari = true;
 	}
 
+	switch(true){
+		case navigator.appVersion.indexOf("Win") != -1:
+			browserInfo.OSName = "Windows";
+			break;
+		case navigator.appVersion.indexOf("Mac") != -1:
+			browserInfo.OSName = "MacOS";
+			break;
+		case navigator.appVersion.indexOf("X11") !=- 1:
+			browserInfo.OSName = "UNIX";
+			break;
+		case navigator.appVersion.indexOf("Linux") != -1:
+			browserInfo.OSName = "Linux";
+			break;
+		default:
+			browserInfo.OSName = "Unknown OS";
+			break;
+	}
+
+	browserInfo.gUM = Modernizr.getusermedia;
+
 	return browserInfo;
-}	
+}
+
 
 /* Get URI params */
 function gup(name) {
@@ -352,3 +370,9 @@ function moveToit(location){
     var el = $(location).position();
     window.scrollTo(el.left, el.top);
 }
+
+Modernizr.addTest('getUserMedia', function(){
+    var gUm = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    return typeof gUm === 'function';
+});
+
