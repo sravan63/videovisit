@@ -4,6 +4,7 @@
         /* "environment/path.js" */
     ],
     "library" : [
+        "js/library/modernizr/modernizr_283.js",
         "js/library/jquery/jquery-1.8.3.min.js",
         "js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js"
     ],
