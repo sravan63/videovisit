@@ -211,6 +211,7 @@ docroot/js/deprecated/script.js -text
 docroot/js/deprecated/utils.js -text
 docroot/js/library/jquery/jquery-1.8.3.min.js -text svneol=unset#text/plain
 docroot/js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js -text svneol=unset#text/plain
+docroot/js/library/modernizr/modernizr_283.js -text
 docroot/js/library/plugin/validation/additional-methods.min.js -text
 docroot/js/library/plugin/validation/jquery.validate.min.js -text
 docroot/js/site/audioMeter/volume-main.js -text svneol=unset#text/plain
