@@ -8,9 +8,9 @@
 
 
 /* fx for IE6 and 7 for empty cells and borders */
-if (typeof console == "undefined" || typeof console.log == "undefined") var console = {
-    log: function() {}
-};
+if (typeof console == "undefined" || typeof console.log == "undefined"){
+	var console = { log: function() {} };
+}
 
 var SESSION_EXPIRED_PAGE = "";
 var ERROR_PAGE = "";
@@ -20,12 +20,11 @@ var SESSION_TIMEOUT_DELAY = 1000 * 60 * 45; // 45 minutes
 
 GUEST_IFRAME_URL = "";
 
-function setCookie(c_name,value,exdays)
-{
-	var exdate=new Date();
+function setCookie(c_name,value,exdays){
+	var exdate = new Date();
 	exdate.setDate(exdate.getDate() + exdays);
-	var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
-	document.cookie=c_name + "=" + c_value;
+	var c_value = escape(value) + ((exdays == null) ? "" : ";expires = " + exdate.toUTCString());
+	document.cookie = c_name + "=" + c_value;
 }
 
 function getCookie(c_name)
@@ -372,7 +371,17 @@ function moveToit(location){
 }
 
 Modernizr.addTest('getUserMedia', function(){
-    var gUm = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-    return typeof gUm === 'function';
+	var gUm = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+	return typeof gUm === 'function';
+});
+
+Modernizr.addTest('is32Bit', function(){
+	var test32Bit = (navigator.userAgent.indexOf("x64") != -1 ? true : false);
+	return test32Bit;
+});
+
+Modernizr.addTest('is32BitOS', function(){
+	var test32BitOS = (navigator.userAgent.indexOf("WOW64") != -1 || navigator.userAgent.indexOf("Win64") != -1 ? true : false);
+	return test32BitOS;
 });
 
