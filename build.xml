@@ -105,9 +105,9 @@
      <mkdir dir="${dest.dir.classes}" />
    	 <mkdir dir="${dest.dir.lib}" />
    	 <mkdir dir="${dest.dir.vidyoplayer}"/>
-   	 <copy file="${conf.dir}/log4j.properties"
+   	 <!--<copy file="${conf.dir}/log4j.properties"
    	            todir="${dest.dir.classes}"
-   	            filtering="true" />
+   	            filtering="true" />-->
    	 <copy file="${conf.dir}/project.init.properties"
    	   	            todir="${dest.dir.classes}"
    	   	            filtering="true" />
