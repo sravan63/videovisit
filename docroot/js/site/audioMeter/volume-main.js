@@ -30,7 +30,7 @@ $(document).ready(function(){
 	console.log("CH: "+browserInfoForAM.isChrome);
 	console.log("SF: "+browserInfoForAM.isSafari);
 	
-	if (browserInfoForAM.isFirefox == true || browserInfoForAM.isChrome == true){
+	if (Modernizr.getusermedia == true){
 		console.log("Browser supported for Audio Meter");
 		
 	    // grab our canvas
@@ -58,19 +58,24 @@ $(document).ready(function(){
 	        alert('getUserMedia threw exception :' + e);
 	    }
 	}
-	else if(browserInfoForAM.isIE == true){
-		console.log("IE Browser - doesn't support Audio Meter");
+	else if (Modernizr.iswindows == true){
+		console.log("This windows browser doesn't support Audio Meter.");
+		$("#mic-demo").css('color', 'black');
+		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:0;'> <li>Go to Control Panel > Hardware and Sound.</li><li>Under Sound, go to <span style='font-weight:bold; display:inline;'>Manage audio</span> devices.</li><li>Click <span style='font-weight:bold; display:inline;'>Recording</span> tab</li><li>Click <span style='font-weight:bold; display:inline;'>Properties</span> button.</li><li>Click <span style='font-weight:bold; display:inline;'>Levels</span> tab</li> </ul> </span>");
+		$("#mic-instructions").html(" ");
+	}
+	else if (Modernizr.ismacos == true){
+		console.log("This Mac browser doesn't support Audio Meter.");
 		$("#mic-demo").css('color', 'black');
 		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:0;'> <li>Go to Control Panel > Hardware and Sound.</li><li>Under Sound, go to <span style='font-weight:bold; display:inline;'>Manage audio</span> devices.</li><li>Click <span style='font-weight:bold; display:inline;'>Recording</span> tab</li><li>Click <span style='font-weight:bold; display:inline;'>Properties</span> button.</li><li>Click <span style='font-weight:bold; display:inline;'>Levels</span> tab</li> </ul> </span>");
 		$("#mic-instructions").html(" ");
 	}
 	else{
-		console.log("Unknown Browser - doesn't support Audio Meter");
+		console.log("Unknown OS/browser combination.");
 		$("#mic-demo").css('color', 'black');
 		$("#mic-demo").html(" ");
 		$("#mic-instructions").html(" ");
 	}
-
 });
 
 
