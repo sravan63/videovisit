@@ -1,34 +1,13 @@
 var audioContext = null;
 var meter = null;
 var canvasContext = null;
-var WIDTH=100;
-var HEIGHT=50;
+var WIDTH=150;
+var HEIGHT=25;
 var rafID = null;
 var firefox;
 
 $(document).ready(function(){
 	var browserInfoForAM = getBrowserInfo();
-//	var browserInfo = new Object();
-//	browserInfo.isIE = false;
-//	
-//	var jqBrowserInfoObj = $.browser; 
-//
-//	//browserInfo.version = jqBrowserInfoObj.version;
-//	
-//	if ( jqBrowserInfoObj.mozilla) {
-//		browserInfo.isFirefox = true;
-//	} else if ( jqBrowserInfoObj.msie){
-//		browserInfo.isIE = true;
-//	} else if ( jqBrowserInfoObj.chrome){
-//		browserInfo.isChrome = true;
-//	} else if ( jqBrowserInfoObj.safari){
-//		browserInfo.isSafari = true;
-//	}
-	
-	console.log("FF: "+browserInfoForAM.isFirefox);
-	console.log("IE: "+browserInfoForAM.isIE);
-	console.log("CH: "+browserInfoForAM.isChrome);
-	console.log("SF: "+browserInfoForAM.isSafari);
 	
 	if (Modernizr.getusermedia == true){
 		console.log("Browser supported for Audio Meter");
@@ -61,13 +40,13 @@ $(document).ready(function(){
 	else if (Modernizr.iswindows == true){
 		console.log("This windows browser doesn't support Audio Meter.");
 		$("#mic-demo").css('color', 'black');
-		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:0;'> <li>Go to Control Panel > Hardware and Sound.</li><li>Under Sound, go to <span style='font-weight:bold; display:inline;'>Manage audio</span> devices.</li><li>Click <span style='font-weight:bold; display:inline;'>Recording</span> tab</li><li>Click <span style='font-weight:bold; display:inline;'>Properties</span> button.</li><li>Click <span style='font-weight:bold; display:inline;'>Levels</span> tab</li> </ul> </span>");
+		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to Control Panel > Hardware and Sound.</li><li>Under Sound, go to <span style='font-weight:bold; display:inline;'>Manage audio</span> devices.</li><li>Click <span style='font-weight:bold; display:inline;'>Recording</span> tab</li><li>Click <span style='font-weight:bold; display:inline;'>Properties</span> button.</li><li>Click <span style='font-weight:bold; display:inline;'>Levels</span> tab</li> </ul> </span>");
 		$("#mic-instructions").html(" ");
 	}
 	else if (Modernizr.ismacos == true){
 		console.log("This Mac browser doesn't support Audio Meter.");
 		$("#mic-demo").css('color', 'black');
-		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:0;'> <li>Go to Control Panel > Hardware and Sound.</li><li>Under Sound, go to <span style='font-weight:bold; display:inline;'>Manage audio</span> devices.</li><li>Click <span style='font-weight:bold; display:inline;'>Recording</span> tab</li><li>Click <span style='font-weight:bold; display:inline;'>Properties</span> button.</li><li>Click <span style='font-weight:bold; display:inline;'>Levels</span> tab</li> </ul> </span>");
+		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to Control Panel > Hardware and Sound.</li><li>Under Sound, go to <span style='font-weight:bold; display:inline;'>Manage audio</span> devices.</li><li>Click <span style='font-weight:bold; display:inline;'>Recording</span> tab</li><li>Click <span style='font-weight:bold; display:inline;'>Properties</span> button.</li><li>Click <span style='font-weight:bold; display:inline;'>Levels</span> tab</li> </ul> </span>");
 		$("#mic-instructions").html(" ");
 	}
 	else{
