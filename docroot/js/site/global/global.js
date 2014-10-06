@@ -385,3 +385,13 @@ Modernizr.addTest('is32BitOS', function(){
 	return test32BitOS;
 });
 
+Modernizr.addTest('isMacOS', function(){
+	var testMacOS = (navigator.appVersion.indexOf("Mac") != -1 ? true : false);
+	return testMacOS;
+});
+
+Modernizr.addTest('isWindows', function(){
+	var testWindows = (navigator.appVersion.indexOf("Win") != -1 ? true : false);
+	return testWindows;
+});
+
