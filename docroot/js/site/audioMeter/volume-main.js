@@ -46,7 +46,7 @@ $(document).ready(function(){
 	else if (Modernizr.ismacos == true){
 		console.log("This Mac browser doesn't support Audio Meter.");
 		$("#mic-demo").css('color', 'black');
-		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:0;'> <li>Go to System Preferences > Sound.</li><li>Under Sound, select the <span style='font-weight:bold; display:inline;'>Input</span> tab.</li><li>Select and adjust your <span style='font-weight:bold; display:inline;'>default</span> microphone.</li> </ul> </span>");
+		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to System Preferences > Sound.</li><li>Under Sound, go to the <span style='font-weight:bold; display:inline;'>Input</span> section.</li><li>Select the microphone to use and adjust the volume using your slider.</li> </ul> </span>");
 		$("#mic-instructions").html(" ");
 	}
 	else{
