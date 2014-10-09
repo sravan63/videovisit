@@ -10,7 +10,7 @@ $(document).ready(function(){
 	var browserInfoForAM = getBrowserInfo();
 	
 	if (Modernizr.getusermedia == true){
-		console.log("Browser supported for Audio Meter");
+		//console.log("Browser supported for Audio Meter");
 		
 	    // grab our canvas
 		canvasContext = document.getElementById( "meter" ).getContext("2d");
@@ -38,19 +38,19 @@ $(document).ready(function(){
 	    }
 	}
 	else if (Modernizr.iswindows == true){
-		console.log("This windows browser doesn't support Audio Meter.");
+		//console.log("This windows browser doesn't support Audio Meter.");
 		$("#mic-demo").css('color', 'black');
 		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to Control Panel > Hardware and Sound.</li><li>Under Sound, go to <span style='font-weight:bold; display:inline;'>Manage audio</span> devices.</li><li>Click <span style='font-weight:bold; display:inline;'>Recording</span> tab</li><li>Click <span style='font-weight:bold; display:inline;'>Properties</span> button.</li><li>Click <span style='font-weight:bold; display:inline;'>Levels</span> tab</li> </ul> </span>");
 		$("#mic-instructions").html(" ");
 	}
 	else if (Modernizr.ismacos == true){
-		console.log("This Mac browser doesn't support Audio Meter.");
+		//console.log("This Mac browser doesn't support Audio Meter.");
 		$("#mic-demo").css('color', 'black');
 		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to System Preferences > Sound.</li><li>Under Sound, go to the <span style='font-weight:bold; display:inline;'>Input</span> section.</li><li>Select the microphone to use and adjust the volume using your slider.</li> </ul> </span>");
 		$("#mic-instructions").html(" ");
 	}
 	else{
-		console.log("Unknown OS/browser combination.");
+		//console.log("Unknown OS/browser combination.");
 		$("#mic-demo").css('color', 'black');
 		$("#mic-demo").html(" ");
 		$("#mic-instructions").html(" ");
