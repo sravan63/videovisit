@@ -3,9 +3,9 @@ Video Visits Member
 -----------------------------
 Release Number:  5.4
 
-SVN Revision Number: 7359
+SVN Revision Number: 7479
 
-Production Deployment Date: TBD
+Production Deployment Date: 10/16/2014
 
 New Features & Enhancements:
 
@@ -25,7 +25,7 @@ Plugin Version: 1.0.5.00065
 
 Platform: Vidyo 3.0
 
-SVN Revision Number: 7349
+SVN Revision Number: 7486
 
 ------------------
 ------------------
