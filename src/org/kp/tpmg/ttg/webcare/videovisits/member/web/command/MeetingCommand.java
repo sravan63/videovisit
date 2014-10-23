@@ -799,10 +799,21 @@ public class MeetingCommand {
 					!request.getParameter("meetingCode").equals("")) {
 				meetingCode = request.getParameter("meetingCode");
 				}
+			String  deviceType = null;
+			// This code will get the device attributes and capabilities and passes it to webservice
+			Device device =	DeviceDetectionService.checkForDevice(request);
+			Map<String, String > capabilities = device.getCapabilities();
+						
+			String brandName = capabilities.get("brand_name");
+			String modelName = capabilities.get("model_name");
+			String deviceOs = capabilities.get("device_os");
+			String deviceOsVersion = capabilities.get("device_os_version");
 			
-			
+			if (brandName != null && modelName!= null){
+					  deviceType = brandName +" " + modelName;
+				}
 			//grab data from web services
-			ret= WebService.createCareGiverMobileSession(patientName,meetingCode);
+			ret= WebService.createCareGiverMobileSession(patientName,meetingCode,deviceType,deviceOs,deviceOsVersion);
 			if (ret != null)
 			{
 				//response.addHeader("P3P", "CP=\"NOI ADM DEV PSAi COM NAV OUR OTR STP IND DEM\"");

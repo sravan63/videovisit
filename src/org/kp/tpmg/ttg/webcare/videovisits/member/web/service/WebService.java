@@ -847,7 +847,7 @@ public class WebService{
 		return toRet;
 	}
 
-	public static StringResponseWrapper createCareGiverMobileSession(String patientName, String meetingCode) throws Exception {
+	public static StringResponseWrapper createCareGiverMobileSession(String patientName, String meetingCode,String  deviceType,String deviceOs, String deviceOsVersion) throws Exception {
 	StringResponseWrapper toRet = null; 
 	
 		try
@@ -862,6 +862,10 @@ public class WebService{
 			CreateCaregiverMobileMeetingSession createMeeting = new CreateCaregiverMobileMeetingSession();
 			createMeeting.setMeetingHash(meetingCode);
 			createMeeting.setPatientLastName(patientName);
+			createMeeting.setDeviceOs(deviceOs);
+			createMeeting.setDeviceOsVersion(deviceOsVersion);
+			createMeeting.setDeviceType(deviceType);
+			
 			toRet = stub.createCaregiverMobileMeetingSession(createMeeting).get_return();			
 		}
 		catch(Exception e)
