@@ -39,7 +39,7 @@
 	browserNotSupportedMsg += "Please <a href='mdohelp.htm' target='_blank'>Download a 32 bit browser</a>";
 	
 	if(browserInfo.isIE) {
-		if (((browserInfo.version == 8 || browserInfo.version == 9) && !browserInfo.is32Bit) || browserInfo.version <= 7) {
+		if (((browserInfo.version == 8 || browserInfo.version == 9 || browserInfo.version == 10 || browserInfo.version == 11) && !browserInfo.is32Bit) || browserInfo.version <= 7){
 			$('p.error').html( browserNotSupportedMsg );
 			
 			document.getElementById("last_name").disabled = true;
@@ -49,7 +49,7 @@
 			document.getElementById("birth_year").disabled = true;
 
 			document.getElementById("login").disabled = true;
-		} 
+		}
 	}
 	
 </script>
