@@ -77,7 +77,12 @@ function getBrowserInfo(){
 	browserInfo.version = jqBrowserInfoObj.version;
 
 	if (jqBrowserInfoObj.mozilla){
-		browserInfo.isFirefox = true;
+        if(browserUserAgent.indexOf("Trident") != -1){
+            browserInfo.isIE = true;
+        }
+		else{
+            browserInfo.isFirefox = true;    
+        }
 	}else if (jqBrowserInfoObj.msie){
 		browserInfo.isIE = true;
 	}else if (jqBrowserInfoObj.chrome){
