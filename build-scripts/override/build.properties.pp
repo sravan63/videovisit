@@ -9,5 +9,5 @@ buildtool_location=../esb-client-tools
 videovisit_member_jarname=videovisit-memberservice-client.jar
 build.env=pp
 wsas_home=wso2as-5.2.1
-
+vidyoplayer_location=../vidyoplayer
 
