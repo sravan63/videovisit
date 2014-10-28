@@ -284,8 +284,9 @@ div#iconpromo2{
 	/*border-bottom: 1px solid #CCCCCC;*/
 }
 
-#helpNavContents .landingHalf a, a:active, a:visited{
+#helpNavContents a, a:active, a:visited{
 	color: #4D8993;
+	display: inline;
 }
 
 #videoVisitHelpPageContents #helpLastContents{
