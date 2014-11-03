@@ -388,20 +388,7 @@ public class MeetingCommand {
 				ctx.setMeetingId(meetingId);
 			}
 			// sample code//
-			String deviceType = null;
-			Device device =	DeviceDetectionService.checkForDevice(request);
-			Map<String, String > capabilities = device.getCapabilities();
 			
-			logger.info("Desktop capabilities ****" + capabilities);
-			String brandName = capabilities.get("brand_name");
-			String modelName = capabilities.get("model_name");
-			String deviceOs = capabilities.get("device_os");
-			String deviceOsVersion = capabilities.get("device_os_version");
-			
-			if (brandName != null && modelName!= null){
-			 deviceType = brandName +" " + modelName;
-			}
-			logger.info("**" + brandName + "**" +modelName  + "**" +deviceOs + "**" + deviceOsVersion);
 			
 			
 			
