@@ -22,10 +22,6 @@ $(document).ready(function() {
 var VideoVisit =
 {
 	setMinDimensions: function(){
-		/*console.log("inside setMinWidths");
-		console.log("vvHeader width: " +$('#vvHeader').outerWidth());
-		console.log("clinician-name width: " +$('#clinician-name').outerWidth());
-		console.log("leaveEndBtnContainer width: " +$('#leaveEndBtnContainer').outerWidth());	*/
 
 		var btnContainerWidth = $("#btnContainer").width();
 		var calculatedMinWidth = $('#clinician-name').outerWidth() + $('#leaveEndBtnContainer').outerWidth() +10;
@@ -54,7 +50,6 @@ var VideoVisit =
 }
 
 $(window).resize(function(){
-	//console.log("inside resize");
 
 	/* Setting resize Widths */
 	var windowWidth = $(window).width();
@@ -62,12 +57,10 @@ $(window).resize(function(){
 	var btnContainerWidth = $("#btnContainer").outerWidth();
 
 	if($('#video-sidebar').css('display') == 'none'){
-		console.log("inside if: video sidebar display none");
 		var calculatedWidthPluginContainer = windowWidth - btnContainerWidth;
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
 	}
 	else{
-		console.log("inside else: video sidebar display yes");
 		var calculatedWidthPluginContainer = windowWidth - (200 + btnContainerWidth);
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
 	}
