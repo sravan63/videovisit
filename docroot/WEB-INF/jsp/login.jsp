@@ -31,15 +31,17 @@
 <script type="text/javascript">
 
 	var browserInfo = getBrowserInfo();
-	
-	var browserNotSupportedMsg = "Video Visits is supported on 32 bit browsers only.";
-	browserNotSupportedMsg += "<br /><br />";
-	browserNotSupportedMsg += "Your current browser is unsupported."
-	browserNotSupportedMsg += "<br /><br />";
-	browserNotSupportedMsg += "Please <a href='mdohelp.htm' target='_blank'>Download a 32 bit browser</a>";
-	
+	var browserVersion = (browserInfo.version).split(".")[0];
+
 	if(browserInfo.isIE) {
 		if (((browserInfo.version == 8 || browserInfo.version == 9 || browserInfo.version == 10 || browserInfo.version == 11) && !browserInfo.is32Bit) || browserInfo.version <= 7){
+			
+			var browserNotSupportedMsg = "Video Visits is supported on 32 bit browsers only.";
+			browserNotSupportedMsg += "<br /><br />";
+			browserNotSupportedMsg += "Your current browser is unsupported."
+			browserNotSupportedMsg += "<br /><br />";
+			browserNotSupportedMsg += "Please <a href='mdohelp.htm' target='_blank'>Download a 32 bit browser</a>";
+			
 			$('p.error').html( browserNotSupportedMsg );
 			
 			document.getElementById("last_name").disabled = true;
@@ -51,5 +53,20 @@
 			document.getElementById("login").disabled = true;
 		}
 	}
-	
+	else if((navigator.appVersion.indexOf("Mac") != -1) && (browserInfo.isChrome) && (browserVersion == 39)){
+		
+		var browserNotSupportedMsg = "We are currently not supporting the latest Chrome browser.";
+		browserNotSupportedMsg += "<br /><br />";
+		browserNotSupportedMsg += "Please use Safari or Firefox."
+		
+		$('p.error').html( browserNotSupportedMsg );
+		
+		document.getElementById("last_name").disabled = true;
+		document.getElementById("mrn").disabled = true;
+		document.getElementById("birth_month").disabled = true;
+		document.getElementById("birth_day").disabled = true;
+		document.getElementById("birth_year").disabled = true;
+
+		document.getElementById("login").disabled = true;
+	}
 </script>
