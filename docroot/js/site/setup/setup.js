@@ -3,6 +3,14 @@ $(document).ready(function() {
 	var configContainerWidth = $("#setupCameraButtonToggleConfig").width();
 	$(".setupAccessoryConfigContainer").innerWidth(configContainerWidth);
 
+	if (Modernizr.iswindows == true){
+		$("#mic-demo").css('color', 'black');
+		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to Control Panel > Hardware and Sound.</li><li>Under Sound, go to <span style='font-weight:bold; display:inline;'>Manage audio</span> devices.</li><li>Click <span style='font-weight:bold; display:inline;'>Recording</span> tab</li><li>Click <span style='font-weight:bold; display:inline;'>Properties</span> button.</li><li>Click <span style='font-weight:bold; display:inline;'>Levels</span> tab</li> </ul> </span>");
+	}
+	else if (Modernizr.ismacos == true){
+		$("#mic-demo").css('color', 'black');
+		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to System Preferences > Sound.</li><li>Under Sound, go to the <span style='font-weight:bold; display:inline;'>Input</span> section.</li><li>Select the microphone to use and adjust the volume using your slider.</li> </ul> </span>");
+	}
 });
 
 var VideoVisitSetupWizard =
