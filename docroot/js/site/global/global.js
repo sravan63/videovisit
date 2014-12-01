@@ -81,7 +81,7 @@ function getBrowserInfo(){
             browserInfo.isIE = true;
         }
 		else{
-            browserInfo.isFirefox = true;    
+            browserInfo.isFirefox = true;
         }
 	}else if (jqBrowserInfoObj.msie){
 		browserInfo.isIE = true;
@@ -330,37 +330,37 @@ function NotifyUser (message, selector) {
 
 
 
-function name_formatter(first, last, middle, title, format) {
-    if (first == '' && last == '') {
-        return '';
-    }
-	
-    var first_short = first.charAt(0);
-    var middle_short = middle.charAt(0);
-	
-    switch(format) {
-        case 'standard':
-            return first + ' ' + middle_short + ' ' + last + ' ' + title;
-            break;
-        case 'reverse':
-            return last + ', ' + first + ' ' + middle_short + ' ' + title;
-            break;
-        case 'short':
-            return first_short + ' ' + last;
-            break;
-        case 'shortReverse':
-            return last + ', ' + first_short;
-            break;
-        case 'shortTitle':
-            return first_short + ' ' + last + ' ' + title;
-            break;
-        case 'shortTitleReverse':
-            return last + ', ' + first_short + ' ' + title;
-            break;
-        default:
-            return first + ' ' + middle_short + ' ' + last + ' ' + title;
-            break;
-    } // End case
+function name_formatter(first, last, middle, title, format){
+	if (first == '' && last == '') {
+		return '';
+	}
+
+	var first_short = first.charAt(0);
+	var middle_short = middle.charAt(0);
+
+	switch(format){
+		case 'standard':
+			return first + ' ' + middle_short + ' ' + last + ' ' + title;
+			break;
+		case 'reverse':
+			return last + ', ' + first + ' ' + middle_short + ' ' + title;
+			break;
+		case 'short':
+			return first_short + ' ' + last;
+			break;
+		case 'shortReverse':
+			return last + ', ' + first_short;
+			break;
+		case 'shortTitle':
+			return first_short + ' ' + last + ' ' + title;
+			break;
+		case 'shortTitleReverse':
+			return last + ', ' + first_short + ' ' + title;
+			break;
+		default:
+			return first + ' ' + middle_short + ' ' + last + ' ' + title;
+			break;
+	}
 }
 
 /**
@@ -369,23 +369,13 @@ function name_formatter(first, last, middle, title, format) {
  * @author Stuart Tannehill
  */
 function moveToit(location){
-    var el = $(location).position();
-    window.scrollTo(el.left, el.top);
+	var el = $(location).position();
+	window.scrollTo(el.left, el.top);
 }
 
 Modernizr.addTest('getUserMedia', function(){
 	var gUm = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
 	return typeof gUm === 'function';
-});
-
-Modernizr.addTest('is32Bit', function(){
-	var test32Bit = (navigator.userAgent.indexOf("x64") != -1 ? true : false);
-	return test32Bit;
-});
-
-Modernizr.addTest('is32BitOS', function(){
-	var test32BitOS = (navigator.userAgent.indexOf("WOW64") != -1 || navigator.userAgent.indexOf("Win64") != -1 ? true : false);
-	return test32BitOS;
 });
 
 Modernizr.addTest('isMacOS', function(){
