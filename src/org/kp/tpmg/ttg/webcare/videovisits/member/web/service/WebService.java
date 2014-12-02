@@ -659,9 +659,9 @@ public class WebService{
 		return toRet;
 	}
 	
-	public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash, String patientLastName) 
+	public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow) 
 			throws Exception {
-		logger.info("Entered createCaregiverMeetingSession");
+		logger.info("Entered createCaregiverMeetingSession" + "  "+  meetingHash + " "+ patientLastName +" " + isMobileFlow );
 		StringResponseWrapper toRet = null; 
 		try{
 			if(meetingHash == null || patientLastName == null){
@@ -674,6 +674,7 @@ public class WebService{
 			CreateCaregiverMeetingSession query = new CreateCaregiverMeetingSession();
 			query.setMeetingHash(meetingHash);
 			query.setPatientLastName(patientLastName);
+			query.setIsMobileFlow(isMobileFlow);
 			CreateCaregiverMeetingSessionResponse response = stub.createCaregiverMeetingSession(query);
 			toRet = response.get_return();
 		}

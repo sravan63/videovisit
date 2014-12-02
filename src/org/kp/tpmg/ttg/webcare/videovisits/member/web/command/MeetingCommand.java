@@ -534,8 +534,20 @@ public class MeetingCommand {
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = request.getParameter("patientLastName");
 			
+			boolean isMobileFlow= false;
+			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow")) && request.getParameter("isMobileFlow").equalsIgnoreCase("true"))
+			{
+					isMobileFlow = true;
+					logger.info("mobile flow is true");
+			}
+				else{
+					isMobileFlow = false;
+					logger.info("mobile flow is false");
+			}
+					
+			
 			if (meetingCode != null && !meetingCode.isEmpty()) {
-				ret = WebService.createCaregiverMeetingSession(meetingCode, patientLastName);
+				ret = WebService.createCaregiverMeetingSession(meetingCode, patientLastName,isMobileFlow);
 				if (ret != null) {
 					return ret.getResult();
 				}
@@ -812,6 +824,7 @@ public class MeetingCommand {
 			String modelName = capabilities.get("model_name");
 			String deviceOs = capabilities.get("device_os");
 			String deviceOsVersion = capabilities.get("device_os_version");
+			
 			
 			if (brandName != null && modelName!= null){
 					  deviceType = brandName +" " + modelName;

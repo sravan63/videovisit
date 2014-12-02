@@ -18,7 +18,7 @@ public class CreateCareGiverMobileMeetingController extends SimplePageController
 	{	
 		try
 		{
-			logger.info("in CreateCareGiverMobileMeetingController");
+			logger.info("****in CreateCareGiverMobileMeetingController****");
 			//get JSON data from web services
 			String data = MeetingCommand.CreateCareGiverMobileMeeting(request, response);
 		

@@ -108,7 +108,7 @@ public class DeviceDetectionService {
 		}else if ("true".equals(capabilities.get("is_tablet"))){
 			isWirelessDeviceOrTablet = true;
 			logger.info("***Device is tablet***");
-		}
+		} 
 		
 		logger.info("User agent.."+ device.getWURFLUserAgent());
 		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:isWirelessDeviceOrTablet value" + isWirelessDeviceOrTablet);

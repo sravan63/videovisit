@@ -16,6 +16,7 @@ public class CreateCaregiverSessionController extends SimplePageController {
 			throws Exception {	
 		String data = null;
 		try	{
+			logger.info("******in caregiver desktop controller**********");
 			data = MeetingCommand.createCaregiverMeetingSession(request, response);
 		} catch (Exception e) {
 			// log error
