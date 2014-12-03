@@ -196,6 +196,8 @@ docroot/images/mobile/video-visit-ui@2x_new_kp.png -text
 docroot/images/mobile/vv-patient-welcome-image.jpg -text
 docroot/index.jsp -text
 docroot/js/deprecated/additional-methods.js -text
+docroot/js/deprecated/audioMeter/volume-main.js -text svneol=unset#text/plain
+docroot/js/deprecated/audioMeter/volume-meter.js -text svneol=unset#text/plain
 docroot/js/deprecated/display.js -text
 docroot/js/deprecated/error.js -text
 docroot/js/deprecated/jquery-1.4.4.min.js -text
