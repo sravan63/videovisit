@@ -511,7 +511,7 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	                 return false;
 	            }
 
-	            createGuestSession();
+	            createGuestSession("true");
 	            $.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.mobileCareGiverCreateSession, postdata,function(data){
 	            	try
 	            	{
@@ -1100,14 +1100,14 @@ function setSessionTimeout(){
 	return false;
 }
 
-function createGuestSession(){
+function createGuestSession(isMobileFlow){
 
 	var currentTime = new Date();
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
     var meetingCode = request.get('meetingCode');
     var patientLastName = request.get('patientLastName');
-	var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;
+    var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&isMobileFlow=' + isMobileFlow + '&nocache=' + n;
 
 	$.ajax({
         type: "POST",
