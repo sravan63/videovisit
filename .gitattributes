@@ -214,8 +214,6 @@ docroot/js/library/jquery/jquery-ui/jquery-ui-1.9.2.custom.min.js -text svneol=u
 docroot/js/library/modernizr/modernizr_283.js -text
 docroot/js/library/plugin/validation/additional-methods.min.js -text
 docroot/js/library/plugin/validation/jquery.validate.min.js -text
-docroot/js/site/audioMeter/volume-main.js -text svneol=unset#text/plain
-docroot/js/site/audioMeter/volume-meter.js -text svneol=unset#text/plain
 docroot/js/site/global/commonScript.js -text svneol=unset#text/plain
 docroot/js/site/global/dateExtensions_loader.js -text
 docroot/js/site/global/global.js -text
