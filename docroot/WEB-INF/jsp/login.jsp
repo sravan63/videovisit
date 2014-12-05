@@ -53,11 +53,11 @@
 			document.getElementById("login").disabled = true;
 		}
 	}
-	else if((navigator.appVersion.indexOf("Mac") != -1) && (browserInfo.isChrome) && (browserVersion == 39)){
+	else if((browserInfo.isChrome) && (browserVersion >= 39)){
 		
 		var browserNotSupportedMsg = "We are currently not supporting the latest Chrome browser.";
 		browserNotSupportedMsg += "<br /><br />";
-		browserNotSupportedMsg += "Please use Safari or Firefox."
+		browserNotSupportedMsg += "Please use Firefox, Safari or Internet Explorer."
 		
 		$('p.error').html( browserNotSupportedMsg );
 		
