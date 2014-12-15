@@ -55,11 +55,20 @@
 	}
 	else if((browserInfo.isChrome) && (browserVersion >= 39)){
 		
-		var browserNotSupportedMsg = "We are currently not supporting the latest Chrome browser.";
-		browserNotSupportedMsg += "<br /><br />";
-		browserNotSupportedMsg += "Please use Firefox, Safari or Internet Explorer."
+		var browserNotSupportedMsgWin = "We are currently not supporting the latest Chrome browser.";
+		browserNotSupportedMsgWin += "<br /><br />";
+		browserNotSupportedMsgWin += "Please use Firefox or Internet Explorer."
 		
-		$('p.error').html( browserNotSupportedMsg );
+		var browserNotSupportedMsgMac = "We are currently not supporting the latest Chrome browser.";
+		browserNotSupportedMsgMac += "<br /><br />";
+		browserNotSupportedMsgMac += "Please use Firefox or Safari."
+		
+		if(navigator.appVersion.indexOf("Mac") != -1){
+			$('p.error').html( browserNotSupportedMsgMac );	
+		}
+		else{
+			$('p.error').html( browserNotSupportedMsgWin );
+		}
 		
 		document.getElementById("last_name").disabled = true;
 		document.getElementById("mrn").disabled = true;
