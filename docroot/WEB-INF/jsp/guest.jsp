@@ -59,11 +59,20 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 		}
 	}
 	else if((browserInfo.isChrome) && (browserVersion >= 39)){
-			var browserNotSupportedMsg = "We are currently not supporting the latest Chrome browser.";
-			browserNotSupportedMsg += "<br /><br />";
-			browserNotSupportedMsg += "Please use Firefox, Safari or Internet Explorer."
-			
-			$('p.error').html( browserNotSupportedMsg );
+		var browserNotSupportedMsgWin = "We are currently not supporting the latest Chrome browser.";
+		browserNotSupportedMsgWin += "<br /><br />";
+		browserNotSupportedMsgWin += "Please use Firefox or Internet Explorer."
+		
+		var browserNotSupportedMsgMac = "We are currently not supporting the latest Chrome browser.";
+		browserNotSupportedMsgMac += "<br /><br />";
+		browserNotSupportedMsgMac += "Please use Firefox or Safari."
+		
+		if(navigator.appVersion.indexOf("Mac") != -1){
+			$('p.error').html( browserNotSupportedMsgMac );	
+		}
+		else{
+			$('p.error').html( browserNotSupportedMsgWin );
+		}
 			
 			document.getElementById("patient_last_name").disabled = true;
 			//document.getElementById("joinNowBtn").disabled = true;
