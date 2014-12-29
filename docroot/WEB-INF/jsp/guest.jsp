@@ -58,7 +58,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 			document.getElementById("joinNowBtn").disabled = true;
 		}
 	}
-	else if((browserInfo.isChrome) && (browserVersion >= 39)){
+	else if((browserInfo.isChrome && browserVersion >= 39 && navigator.appVersion.indexOf("Mac") != -1) || (browserInfo.isChrome && browserVersion >= 40 && navigator.appVersion.indexOf("Win") != -1)){
 		var browserNotSupportedMsgWin = "We are currently not supporting the latest Chrome browser.";
 		browserNotSupportedMsgWin += "<br /><br />";
 		browserNotSupportedMsgWin += "Please use Firefox or Internet Explorer."
@@ -73,9 +73,9 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 		else{
 			$('p.error').html( browserNotSupportedMsgWin );
 		}
-			
-			document.getElementById("patient_last_name").disabled = true;
-			//document.getElementById("joinNowBtn").disabled = true;
+		
+		document.getElementById("patient_last_name").disabled = true;
+		//document.getElementById("joinNowBtn").disabled = true;
 	}
 	
 </script>
