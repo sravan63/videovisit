@@ -53,7 +53,7 @@
 			document.getElementById("login").disabled = true;
 		}
 	}
-	else if((browserInfo.isChrome) && (browserVersion >= 39)){
+	else if((browserInfo.isChrome && browserVersion >= 39 && navigator.appVersion.indexOf("Mac") != -1) || (browserInfo.isChrome && browserVersion >= 40 && navigator.appVersion.indexOf("Win") != -1)){
 		
 		var browserNotSupportedMsgWin = "We are currently not supporting the latest Chrome browser.";
 		browserNotSupportedMsgWin += "<br /><br />";
@@ -75,7 +75,6 @@
 		document.getElementById("birth_month").disabled = true;
 		document.getElementById("birth_day").disabled = true;
 		document.getElementById("birth_year").disabled = true;
-
 		document.getElementById("login").disabled = true;
 	}
 </script>
