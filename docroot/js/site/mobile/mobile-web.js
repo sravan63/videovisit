@@ -162,7 +162,7 @@ $(document).ready(function() {
 	});
 
 
-	$(".getAppButton, .getAppLink").click(function() {
+	$(".getAppButton, .getAppLink").click(function(event) {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
 		var iOSUrl = 'https://itunes.apple.com/us/app/KPPC/id497468339?mt=8';
 		var androidUrl = 'https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en';
@@ -614,14 +614,19 @@ function getAppOS(){
         return "iOS";
     }
 
+   
     //next, check if this is a supported AIR 3.1 Android device http://kb2.adobe.com/cps/923/cpsid_92359.html
     //Updated (3/5/2012) Advertize only to Android 2.2, 2.3, 3.0, 3.1 and 3.2 devices.
     //Updated (8/29/2012) Added Android 4.0 to the list of supported operating systems.
-    if (navigator.userAgent.match(/Android 2.2/i) || navigator.userAgent.match(/Android 2.3/i) ||
+ /*   if (navigator.userAgent.match(/Android 2.2/i) || navigator.userAgent.match(/Android 2.3/i) ||
     navigator.userAgent.match(/Android 3.0/i) || navigator.userAgent.match(/Android 3.1/i) ||
     navigator.userAgent.match(/Android 3.2/i) || navigator.userAgent.match(/Android 4.0/i) ||
     navigator.userAgent.match(/Android 4.1/i) || navigator.userAgent.match(/Android 4.2/i)  || navigator.userAgent.match(/Android 4.3/i)  || navigator.userAgent.match(/Android 4.4/i)){
            return "Android";
+    }*/
+    
+    if(navigator.userAgent.match(/Android/i)){
+    	return "Android";
     }
 
     //No supported app platform found.
@@ -830,13 +835,13 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 
 function openTab(url)
 {
-		var a = window.document.createElement("a");
+	 var a = window.document.createElement("a");
 	 a.target = '_blank';
 	 a.href = url;
 
 	    // Dispatch fake click
 	 var e = window.document.createEvent("MouseEvents");
-	 e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, true, false, false, false, 0, null);
+	 e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
 	 a.dispatchEvent(e);
 }
 
