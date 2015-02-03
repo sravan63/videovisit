@@ -53,8 +53,8 @@
 			document.getElementById("login").disabled = true;
 		}
 	}
-	else if((browserInfo.isChrome && browserVersion >= 39 && navigator.appVersion.indexOf("Mac") != -1) || (browserInfo.isChrome && browserVersion >= 40 && navigator.appVersion.indexOf("Win") != -1)){
-		
+	else if(browserInfo.isChrome) {
+
 		var browserNotSupportedMsgWin = "We are currently not supporting the latest Chrome browser.";
 		browserNotSupportedMsgWin += "<br /><br />";
 		browserNotSupportedMsgWin += "Please use Firefox or Internet Explorer."
@@ -62,19 +62,28 @@
 		var browserNotSupportedMsgMac = "We are currently not supporting the latest Chrome browser.";
 		browserNotSupportedMsgMac += "<br /><br />";
 		browserNotSupportedMsgMac += "Please use Firefox or Safari."
-		
-		if(navigator.appVersion.indexOf("Mac") != -1){
-			$('p.error').html( browserNotSupportedMsgMac );	
+
+		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
+			$('p.error').html(browserNotSupportedMsgMac);
+
+			document.getElementById("last_name").disabled = true;
+			document.getElementById("mrn").disabled = true;
+			document.getElementById("birth_month").disabled = true;
+			document.getElementById("birth_day").disabled = true;
+			document.getElementById("birth_year").disabled = true;
+			document.getElementById("login").disabled = true;
 		}
-		else{
-			$('p.error').html( browserNotSupportedMsgWin );
+		else if(navigator.appVersion.indexOf("Win") != -1) {
+			if(browserInfo.is32BitOS == false && browserVersion >= 40){
+				$('p.error').html(browserNotSupportedMsgWin);
+
+				document.getElementById("last_name").disabled = true;
+				document.getElementById("mrn").disabled = true;
+				document.getElementById("birth_month").disabled = true;
+				document.getElementById("birth_day").disabled = true;
+				document.getElementById("birth_year").disabled = true;
+				document.getElementById("login").disabled = true;
+			}
 		}
-		
-		document.getElementById("last_name").disabled = true;
-		document.getElementById("mrn").disabled = true;
-		document.getElementById("birth_month").disabled = true;
-		document.getElementById("birth_day").disabled = true;
-		document.getElementById("birth_year").disabled = true;
-		document.getElementById("login").disabled = true;
 	}
 </script>
