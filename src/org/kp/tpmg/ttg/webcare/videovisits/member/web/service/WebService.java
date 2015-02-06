@@ -97,7 +97,7 @@ public class WebService{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 			if (rbInfo != null)
 			{
-				logger.info("WebService.initWebService -> configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				logger.debug("WebService.initWebService -> configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 				//Read external properties file for the web service end point url
 				File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 				FileInputStream fileInput = new FileInputStream(file);
@@ -109,7 +109,7 @@ public class WebService{
 				reuseHTTP = rbInfo.getString("WEBSERVICE_REUSE").equals("true")? true:false;
 				chunked = rbInfo.getString("WEBSERVICE_CHUNKED").equals ("true")?true:false;
 				simulation = rbInfo.getString ("WEBSERVICE_SIMULATION").equals ("true")?true:false;
-				logger.info("WebService.initWebService -> configuration: serviceURL="+serviceURL+" ,simulation="+simulation);
+				logger.debug("WebService.initWebService -> configuration: serviceURL="+serviceURL+" ,simulation="+simulation);
 				modulePath = rbInfo.getString("MODULE_PATH");
 				policyPath = rbInfo.getString("POLICY_PATH");
 				Crypto crypto = new Crypto();
@@ -122,16 +122,16 @@ public class WebService{
 				setupWizardMemberMrn = rbInfo.getString("SETUP_WIZARD_MEMBER_MRN");
 				setupWizardMeetingType = rbInfo.getString("SETUP_WIZARD_MEETING_TYPE");
 				setupWizardUserName = rbInfo.getString("SETUP_WIZARD_USER_NAME");
-				logger.info("configuration: setupWizardHostNuid="+setupWizardHostNuid+", setupWizardMemberMrn="+setupWizardMemberMrn+", setupWizardMeetingType="+setupWizardMeetingType+", setupWizardUserName="+setupWizardUserName);
+				logger.debug("configuration: setupWizardHostNuid="+setupWizardHostNuid+", setupWizardMemberMrn="+setupWizardMemberMrn+", setupWizardMeetingType="+setupWizardMeetingType+", setupWizardUserName="+setupWizardUserName);
 			}
 			
 			if (simulation)
 				return true;
 			
 			String policyFilePath = request.getSession().getServletContext().getRealPath(policyPath);
-			logger.info("WebService.initWebService policyFilePath: " + policyFilePath);
+			logger.debug("WebService.initWebService policyFilePath: " + policyFilePath);
 			String moduleFilePath = request.getSession().getServletContext().getRealPath(modulePath);
-			logger.info("WebService.initWebService modulePath: " + moduleFilePath);
+			logger.debug("WebService.initWebService modulePath: " + moduleFilePath);
 			
 			logger.debug("webservice.initWebService -> System property trustStore: " + System.getProperty("javax.net.ssl.trustStore"));
 			logger.debug("webservice.initWebService -> System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
@@ -196,16 +196,25 @@ public class WebService{
 	{
 		try
 		{
-			Options options = stub._getServiceClient().getOptions();
-			HttpClient client = (HttpClient)options.getProperty(HTTPConstants.CACHED_HTTP_CLIENT);
-			client.getHttpConnectionManager().closeIdleConnections(0);
-			stub._getServiceClient().cleanupTransport();
-			stub._getServiceClient().cleanup();
-			stub.cleanup();
+			if(stub != null)
+			{
+				if(stub._getServiceClient() != null)
+				{
+					Options options = stub._getServiceClient().getOptions();
+					HttpClient client = (HttpClient)options.getProperty(HTTPConstants.CACHED_HTTP_CLIENT);
+					if(client != null && client.getHttpConnectionManager() != null)
+					{
+						client.getHttpConnectionManager().closeIdleConnections(0);
+					}
+					stub._getServiceClient().cleanupTransport();
+					stub._getServiceClient().cleanup();
+				}
+				stub.cleanup();
+			}
 		}
 		catch(Throwable th)
 		{
-			logger.error("failed to close stub.. this is not critical", th);
+			logger.error("closeConnectionManager -> failed to close stub.. this is not critical", th);
 		}
 	}
         

@@ -19,7 +19,7 @@ public class ServiceSecurityLoader {
 	private static Policy policy = null;
     
     public static Policy getPolicy(String xmlPath){
-    	logger.info("Entered ServiceSecurityLoader.getPolicy -> Policy: " + policy + "  - Policy file path: " + xmlPath);
+    	logger.debug("Entered ServiceSecurityLoader.getPolicy -> Policy: " + policy + "  - Policy file path: " + xmlPath);
         if(policy == null){
         	synchronized (ServiceSecurityLoader.class) {
         		if(policy == null){
@@ -42,12 +42,12 @@ public class ServiceSecurityLoader {
         		}
         	}
         }
-        logger.info("Exiting ServiceSecurityLoader.getPolicy -> returning Policy: " + policy);
+        logger.info("Exiting ServiceSecurityLoader.getPolicy -> returning Policy ");
         return policy;       
     }
     
     public static ConfigurationContext getConfigContext(String modulePath){
-    	logger.info("Entered ServiceSecurityLoader.getConfigContext -> axisConfig: " + axisConfig + "  - module path: " + modulePath);
+    	logger.debug("Entered ServiceSecurityLoader.getConfigContext -> axisConfig: " + axisConfig + "  - module path: " + modulePath);
         if(axisConfig == null){
         	synchronized (ServiceSecurityLoader.class) {
         		if(axisConfig == null){
@@ -66,7 +66,7 @@ public class ServiceSecurityLoader {
         		}
         	}
         }
-        logger.info("Exiting ServiceSecurityLoader.getConfigContext -> returning axisConfig: " + axisConfig);
+        logger.info("Exiting ServiceSecurityLoader.getConfigContext -> returning axisConfig ");
         return axisConfig;       
     }
     
