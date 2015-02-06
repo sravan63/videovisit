@@ -75,7 +75,7 @@ public class DeviceDetectionService {
 	//	Device device = manager.getDeviceForRequest(request);
 					
 		Map<String, String > capabilities = device.getCapabilities();
-		logger.info("WebSessionFilter:isWirelessDeviceOrTablet:capabilities=" + capabilities);
+		logger.debug("WebSessionFilter:isWirelessDeviceOrTablet:capabilities=" + capabilities);
 		
 		if("true".equals(capabilities.get("is_wireless_device")) || "true".equals(capabilities.get("is_tablet"))){
 			isWirelessDeviceOrTablet = true;
