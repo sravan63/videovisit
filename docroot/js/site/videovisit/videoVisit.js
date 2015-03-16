@@ -17,6 +17,8 @@ $(document).ready(function() {
 	$("#pluginContainer").width(calculatedWidthPluginContainer);
 	$("#pluginContainer").height(calculatedHeight);
 	$("#btnContainer").height(calculatedHeight);
+	
+	$("#infoWrapper").width(calculatedWidthPluginContainer);
 });
 
 var VideoVisit =
