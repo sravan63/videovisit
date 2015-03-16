@@ -388,3 +388,8 @@ Modernizr.addTest('isWindows', function(){
 	return testWindows;
 });
 
+Modernizr.addTest('isWindowedPlugin', function(){
+	var testWindowedPlugin = $('body').hasClass('ie8');
+	return testWindowedPlugin;
+});
+
