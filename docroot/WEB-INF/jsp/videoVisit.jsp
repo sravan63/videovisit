@@ -37,9 +37,9 @@
 		    <div id="withjs" class="hide">
 		        <!-- Splash screen -->
 		        <div class="splash" id="splash">
-		            <div><img src="vidyoplayer/img/logo-big.jpg" width="300" alt="Vidyo Logo"/></div>
-		            <div id="splashText" style="margin-top: 15px;"><h4>Video Visits - The Permanente Medical Group</h4></div>
-		            <div><img src="vidyoplayer/img/loader-bar.gif"/></div>
+		            <div><img src="vidyoplayer/img/vv_splash.png" alt="Vidyo Logo"/></div>
+		            <div id="splashText" style="margin-top: 15px; visibility: hidden;"><h4>Video Visits - The Permanente Medical Group</h4></div>
+		            <div style="visibility: hidden;"><img src="vidyoplayer/img/loader-bar.gif"/></div>
 		        </div>
 		        <!-- End Splash screen -->
 		        <!-- Error view -->
