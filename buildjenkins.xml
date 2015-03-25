@@ -18,6 +18,16 @@
    <property name="dest.dir.lib" value="${dest.dir}/WEB-INF/lib" />
    <property name="dest.dir.vidyoplayer" value="${dest.dir}/vidyoplayer" />
    <property name="vidyoplayer.home" value="${vidyoplayer_location}"/>
+   <property name="vidyoplayer.dest.main.config.file" value="${dest.dir.vidyoplayer}/scripts/main.config.js"/>
+   <property name="vidyoplayer.src.main.config.file" value="${vidyoplayer.home}/scripts/main.config.js"/>
+   <property name="vidyoplayer.qa.soap.proxy" value="https://ttg-apps-qa.kp.org/soap_proxy.php"/>
+   <property name="vidyoplayer.qa.http.soap.proxy" value="http://ttg-apps-qa.kp.org/soap_proxy.php"/>
+   <property name="vidyoplayer.pp.soap.proxy" value="https://mydoctor-pp.kaiserpermanente.org/soap_proxy.php"/>
+   <property name="vidyoplayer.pr.soap.proxy" value="https://mydoctor.kaiserpermanente.org/soap_proxy.php"/>
+   <property name="vidyoplayer.http.thvid2.soap.userservice.path" value="http://thvid2.kp.org/services/v1_1/VidyoPortalUserService?wsdl"/>
+   <property name="vidyoplayer.thvid2.soap.userservice.path" value="https://thvid2.kp.org/services/v1_1/VidyoPortalUserService?wsdl"/>
+   <property name="vidyoplayer.videohealth.soap.userservice.path" value="https://videohealth.kp.org/services/v1_1/VidyoPortalUserService?wsdl"/>
+	 	
  	
 	<taskdef resource="net/sf/antcontrib/antlib.xml">
 	      <classpath>
@@ -38,6 +48,19 @@
       </fileset>
    	</path>
   
+	<!--Set env property for vidyoplayer config-->   	   
+    <condition property="do.qa">            
+    	<or>
+    		<equals arg1="${build.env}" arg2="dv"/>
+    		<equals arg1="${build.env}" arg2="qa" />           
+        </or>        	
+    </condition>
+    <condition property="do.pp">
+        <equals arg1="${build.env}" arg2="pp" />	        	
+    </condition>
+	<condition property="do.pr">
+        <equals arg1="${build.env}" arg2="pr"/>
+    </condition>
 	
 	<target name="local">
 		<sleep seconds="120"/>
@@ -105,7 +128,7 @@
 	      	         </fileset>
 	       </copy>
 		<!--Copy Vidyoplayer to war-->
-	   	<echo message="copying vidyoplayer to war from ${vidyoplayer.home}" />
+	   	<echo message="copying vidyoplayer to war from ${vidyoplayer.home} on ${build.env}" />
 	   	<copy todir="${dest.dir.vidyoplayer}">
 	   		<fileset dir="${vidyoplayer.home}" includes="**"/>      	    
 	    </copy>
@@ -125,10 +148,53 @@
 	   	</jsmin>
 	   	-->
    </target>
+   
+	<target name="modify-vidyo-Config" depends="set-qa-config,set-pp-config,set-pr-config" ></target>
+			
+	<!--Targets to modify soap proxy and user service paths according to build env-->
+	<target name="set-qa-config" if="do.qa">
+		<echo message="${build.env} -> before replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
+	   	<copy file="${vidyoplayer.src.main.config.file}" tofile="${vidyoplayer.dest.main.config.file}" filtering="true" overwrite="true" verbose="true">
+	   		<filterchain>
+	   			<tokenfilter>
+	   		  		<replacestring from="${vidyoplayer.qa.http.soap.proxy}" to="${vidyoplayer.qa.soap.proxy}"/>
+	   				<replacestring from="${vidyoplayer.http.thvid2.soap.userservice.path}" to="${vidyoplayer.thvid2.soap.userservice.path}"/>
+	   			</tokenfilter>
+	   		</filterchain>
+	   	</copy>   
+	    <echo message="${build.env} -> after replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
+	</target>
+	
+	<target name="set-pp-config" if="do.pp">
+		<echo message="${build.env} -> before replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
+	   	<copy file="${vidyoplayer.src.main.config.file}" tofile="${vidyoplayer.dest.main.config.file}" filtering="true" overwrite="true" verbose="true">
+	   		<filterchain>
+	   			<tokenfilter>
+	   		  		<replacestring from="${vidyoplayer.qa.http.soap.proxy}" to="${vidyoplayer.pp.soap.proxy}"/>
+	   				<replacestring from="${vidyoplayer.http.thvid2.soap.userservice.path}" to="${vidyoplayer.thvid2.soap.userservice.path}"/>
+	   			</tokenfilter>
+	   		</filterchain>
+	   	</copy>   
+	    <echo message="${build.env} -> after replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
+    </target>
+	
+	<target name="set-pr-config" if="do.pr">
+		<echo message="${build.env} -> before replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
+	   	<copy file="${vidyoplayer.src.main.config.file}" tofile="${vidyoplayer.dest.main.config.file}" filtering="true" overwrite="true" verbose="true">
+	   		<filterchain>
+	   			<tokenfilter>
+	   		  		<replacestring from="${vidyoplayer.qa.http.soap.proxy}" to="${vidyoplayer.pr.soap.proxy}"/>
+	   				<replacestring from="${vidyoplayer.http.thvid2.soap.userservice.path}" to="${vidyoplayer.videohealth.soap.userservice.path}"/>
+	   			</tokenfilter>
+	   		</filterchain>
+	   	</copy>   
+	    <echo message="${build.env} -> after replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
+   </target>
+	
 	<!-- ************************************************ -->
 	<!-- Start of compile				  -->
 	<!-- ************************************************ -->
-   <target name="compile">
+   <target name="compile" depends="modify-vidyo-Config">
       <javac srcdir="src" 
       		destdir="${dest.dir.classes}" 
       		debug="on">
