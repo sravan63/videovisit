@@ -27,7 +27,8 @@
    <property name="vidyoplayer.http.thvid2.soap.userservice.path" value="http://thvid2.kp.org/services/v1_1/VidyoPortalUserService?wsdl"/>
    <property name="vidyoplayer.thvid2.soap.userservice.path" value="https://thvid2.kp.org/services/v1_1/VidyoPortalUserService?wsdl"/>
    <property name="vidyoplayer.videohealth.soap.userservice.path" value="https://videohealth.kp.org/services/v1_1/VidyoPortalUserService?wsdl"/>
-	 	
+   <property name="vidyoplayer.config.soap.proxy.url.name" value="soapProxyURL"/>
+   <property name="vidyoplayer.config.soap.userservice.path.name" value="soapUserServicePath"/>
  	
 	<taskdef resource="net/sf/antcontrib/antlib.xml">
 	      <classpath>
@@ -156,10 +157,12 @@
 		<echo message="${build.env} -> before replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
 	   	<copy file="${vidyoplayer.src.main.config.file}" tofile="${vidyoplayer.dest.main.config.file}" filtering="true" overwrite="true" verbose="true">
 	   		<filterchain>
-	   			<tokenfilter>
-	   		  		<replacestring from="${vidyoplayer.qa.http.soap.proxy}" to="${vidyoplayer.qa.soap.proxy}"/>
-	   				<replacestring from="${vidyoplayer.http.thvid2.soap.userservice.path}" to="${vidyoplayer.thvid2.soap.userservice.path}"/>
-	   			</tokenfilter>
+	   		  <tokenfilter>
+	   		    <replaceregex pattern="${vidyoplayer.config.soap.proxy.url.name}[ \t]*:.*$"
+	   		            replace="${vidyoplayer.config.soap.proxy.url.name}: &quot;${vidyoplayer.qa.soap.proxy}&quot;,"/>
+	   		 	<replaceregex pattern="${vidyoplayer.config.soap.userservice.path.name}[ \t]*:.*$"
+	   		 	   		replace="${vidyoplayer.config.soap.userservice.path.name}: &quot;${vidyoplayer.thvid2.soap.userservice.path}&quot;,"/>
+	   		  </tokenfilter>
 	   		</filterchain>
 	   	</copy>   
 	    <echo message="${build.env} -> after replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
@@ -169,10 +172,12 @@
 		<echo message="${build.env} -> before replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
 	   	<copy file="${vidyoplayer.src.main.config.file}" tofile="${vidyoplayer.dest.main.config.file}" filtering="true" overwrite="true" verbose="true">
 	   		<filterchain>
-	   			<tokenfilter>
-	   		  		<replacestring from="${vidyoplayer.qa.http.soap.proxy}" to="${vidyoplayer.pp.soap.proxy}"/>
-	   				<replacestring from="${vidyoplayer.http.thvid2.soap.userservice.path}" to="${vidyoplayer.thvid2.soap.userservice.path}"/>
-	   			</tokenfilter>
+	   		  <tokenfilter>
+	   		    <replaceregex pattern="${vidyoplayer.config.soap.proxy.url.name}[ \t]*:.*$"
+	   		            replace="${vidyoplayer.config.soap.proxy.url.name}: &quot;${vidyoplayer.pp.soap.proxy}&quot;,"/>
+	   		 	<replaceregex pattern="${vidyoplayer.config.soap.userservice.path.name}[ \t]*:.*$"
+	   		 	   		replace="${vidyoplayer.config.soap.userservice.path.name}: &quot;${vidyoplayer.thvid2.soap.userservice.path}&quot;,"/>
+	   		  </tokenfilter>
 	   		</filterchain>
 	   	</copy>   
 	    <echo message="${build.env} -> after replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
@@ -182,10 +187,12 @@
 		<echo message="${build.env} -> before replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
 	   	<copy file="${vidyoplayer.src.main.config.file}" tofile="${vidyoplayer.dest.main.config.file}" filtering="true" overwrite="true" verbose="true">
 	   		<filterchain>
-	   			<tokenfilter>
-	   		  		<replacestring from="${vidyoplayer.qa.http.soap.proxy}" to="${vidyoplayer.pr.soap.proxy}"/>
-	   				<replacestring from="${vidyoplayer.http.thvid2.soap.userservice.path}" to="${vidyoplayer.videohealth.soap.userservice.path}"/>
-	   			</tokenfilter>
+	   		  <tokenfilter>
+	   		    <replaceregex pattern="${vidyoplayer.config.soap.proxy.url.name}[ \t]*:.*$"
+	   		            replace="${vidyoplayer.config.soap.proxy.url.name}: &quot;${vidyoplayer.pr.soap.proxy}&quot;,"/>
+	   		 	<replaceregex pattern="${vidyoplayer.config.soap.userservice.path.name}[ \t]*:.*$"
+	   		 	   		replace="${vidyoplayer.config.soap.userservice.path.name}: &quot;${vidyoplayer.videohealth.soap.userservice.path}&quot;,"/>
+	   		  </tokenfilter>
 	   		</filterchain>
 	   	</copy>   
 	    <echo message="${build.env} -> after replacing soapProxyURL and soapUserServicePath in ${vidyoplayer.dest.main.config.file} from ${vidyoplayer.src.main.config.file}" />
