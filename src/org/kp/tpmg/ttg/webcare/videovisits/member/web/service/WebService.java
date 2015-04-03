@@ -10,15 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.axis2.client.Options;
 import org.apache.axis2.context.ConfigurationContext;
+import org.apache.axis2.databinding.types.soapencoding.xsd.Base64Binary;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.neethi.Policy;
 import org.apache.rampart.RampartMessageData;
 import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.common.security.ServiceSecurityLoader;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.GsonUtil;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
@@ -55,11 +58,14 @@ import org.kp.tpmg.videovisit.member.CreateInstantVendorMeeting;
 import org.kp.tpmg.videovisit.member.CreateInstantVendorMeetingResponse;
 import org.kp.tpmg.videovisit.member.TerminateInstantMeeting;
 import org.kp.tpmg.videovisit.member.TerminateInstantMeetingResponse;
+import org.kp.tpmg.videovisit.member.FileUploadResponse;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesStub;
+
+import com.google.gson.JsonObject;
 
 
 public class WebService{
@@ -998,5 +1004,100 @@ public class WebService{
 		logger.info("Exiting WebService.terminateInstantMeeting");
 		return toRet;
 	}
+	
+	/** This method will upload the file contents to the database using service API
+	 * @param meetingId
+	 * @param userId
+	 * @param deviceType
+	 * @param deviceOS
+	 * @param deviceOsVersion
+	 * @param callingAppName
+	 * @param fileName
+	 * @param binaryData
+	 * @param fileDatetime
+	 * @param sessionId
+	 * @return String
+	 * @throws Exception
+	 */
+	public static String fileUpload(String meetingId, String userId, String deviceType, String deviceOS, String deviceOsVersion, String callingAppName, String fileName, Base64Binary binaryData, long fileDatetime, String sessionId) throws Exception
+	{
+		logger.info("Enetered fileUpload -> Received input attributes [meetingId: "+ meetingId + ", userId: " + userId + ", fileName: " + fileName + ", binaryData: " + binaryData + ", callingApp: " + callingAppName + "]");
+
+		org.kp.tpmg.videovisit.member.FileUpload query =  new org.kp.tpmg.videovisit.member.FileUpload();
+		String returnStatus = "";
+		
+		try
+		{
+			String missingParam = null;
+			if(StringUtils.isBlank(meetingId))
+			{
+				missingParam = "Meeting_Id";
+			}else if(StringUtils.isBlank(userId))
+			{
+				missingParam = "User_Id";
+			}else if(StringUtils.isBlank(callingAppName))
+			{
+				missingParam = "Calling_App_Name";
+			}else if(StringUtils.isBlank(fileName))
+			{
+				missingParam = "File_Name";
+			}else if(binaryData == null)
+			{
+				missingParam = "File_Binary_Data";
+			}else if(fileDatetime <= 0)
+			{
+				missingParam = "File_Date_Time";
+			}
+			
+			if(missingParam != null)
+			{
+				logger.error("fileUpload -> Input parameter " + missingParam + " is required.");
+				JsonObject jsonObj = new JsonObject();				
+				jsonObj.addProperty("result","failure");
+				jsonObj.addProperty("success","false");
+				jsonObj.addProperty("errorIdentifier","4000");
+				jsonObj.addProperty("errorMessage","Input parameter " + missingParam + " is required");
+				returnStatus = GsonUtil.getJsonAsString(jsonObj);
+				logger.info("Exiting fileUpload -> return " + returnStatus);
+				return returnStatus;
+			}
+	       
+			query.setMeetingId(meetingId);			
+			query.setUserId(userId);
+			query.setDeviceType(deviceType);
+			query.setDeviceOS(deviceOS);
+			query.setDeviceOsVersion(deviceOsVersion);
+			query.setCallingAppName(callingAppName);
+			query.setFileName(fileName);
+			query.setBinaryData(binaryData);
+			query.setFileDatetime(fileDatetime);			
+			query.setSessionId(sessionId);
+			FileUploadResponse fileUploadResp = stub.fileUpload(query);
+			if(fileUploadResp != null)
+			{
+				returnStatus = fileUploadResp.get_return();
+			}   
+			
+		}
+		catch(Exception e)
+		{
+			logger.error("Error in fileUpload API", e);
+			if(StringUtils.isBlank(returnStatus))
+			{
+				JsonObject jsonObj = new JsonObject();				
+				jsonObj.addProperty("result","failure");
+				jsonObj.addProperty("success","false");
+				jsonObj.addProperty("errorIdentifier","4300");
+				jsonObj.addProperty("errorMessage","System Error");
+				returnStatus = GsonUtil.getJsonAsString(jsonObj);				
+			}
+		}
+		finally
+		{
+			closeConnectionManager(stub);
+		}
+		logger.info("Exiting WebService.fileUpload -> returnStatus = " + returnStatus);
+        return returnStatus;
+    }
 }
 
