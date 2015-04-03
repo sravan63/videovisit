@@ -362,4 +362,5 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/promo.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/parser/videolink.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/service/DeviceDetectionService.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/service/WebService.java -text
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/utils/GsonUtil.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/utils/WebUtil.java -text
