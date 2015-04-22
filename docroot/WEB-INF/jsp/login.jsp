@@ -74,7 +74,7 @@
 			document.getElementById("login").disabled = true;
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
-			if(browserInfo.is32BitOS == false && browserVersion >= 40){
+			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
 				$('p.error').html(browserNotSupportedMsgWin);
 
 				document.getElementById("last_name").disabled = true;
