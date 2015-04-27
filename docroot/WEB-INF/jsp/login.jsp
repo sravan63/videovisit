@@ -63,7 +63,7 @@
 		browserNotSupportedMsgMac += "<br /><br />";
 		browserNotSupportedMsgMac += "Please use Firefox or Safari."
 
-		if((navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) || (browserVersion >= 42)) {
+		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
 			$('p.error').html(browserNotSupportedMsgMac);
 
 			document.getElementById("last_name").disabled = true;
