@@ -46,36 +46,32 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	if(browserInfo.isIE) {
 		if (((browserInfo.version == 8 || browserInfo.version == 9 || browserInfo.version == 10 || browserInfo.version == 11) && !browserInfo.is32Bit) || browserInfo.version <= 7) {
 			
-			var browserNotSupportedMsg = "Video Visits is supported on 32 bit browsers only.";
-			browserNotSupportedMsg += "<br /><br />";
-			browserNotSupportedMsg += "Your current browser is unsupported.";
-			browserNotSupportedMsg += "<br /><br />";
-			browserNotSupportedMsg += "Please <a href='mdohelp.htm' target='_blank'>Download a 32 bit browser</a>";
+			var browserNotSupportedMsgIE = "Video Visits is supported on 32 bit browsers only.";
+			browserNotSupportedMsgIE += "<br /><br />";
+			browserNotSupportedMsgIE += "Your current browser is unsupported.";
+			browserNotSupportedMsgIE += "<br /><br />";
+			browserNotSupportedMsgIE += "Please <a href='mdohelp.htm' target='_blank'>Download a 32 bit browser</a>";
 			
-			$('p.error').html( browserNotSupportedMsg );
+			$('p.error').html(browserNotSupportedMsgIE);
 			
 			document.getElementById("patient_last_name").disabled = true;
 			document.getElementById("joinNowBtn").disabled = true;
 		}
 	}
 	else if(browserInfo.isChrome) {
-		var browserNotSupportedMsgWin = "We are currently not supporting the latest Chrome browser.";
-		browserNotSupportedMsgWin += "<br /><br />";
-		browserNotSupportedMsgWin += "Please use Firefox or Internet Explorer."
-		
-		var browserNotSupportedMsgMac = "We are currently not supporting the latest Chrome browser.";
-		browserNotSupportedMsgMac += "<br /><br />";
-		browserNotSupportedMsgMac += "Please use Firefox or Safari."
+		var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
+		browserNotSupportedMsgForPatient += "<br /><br />";
+		browserNotSupportedMsgForPatient += "Please try again using Internet Explorer for Windows or Safari for Mac.";
 
 		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
-			$('p.error').html(browserNotSupportedMsgMac);
+			$('p.error').html(browserNotSupportedMsgForPatient);
 
 			document.getElementById("patient_last_name").disabled = true;
 			//document.getElementById("joinNowBtn").disabled = true;
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
-				$('p.error').html(browserNotSupportedMsgWin);
+				$('p.error').html(browserNotSupportedMsgForPatient);
 
 				document.getElementById("patient_last_name").disabled = true;
 				//document.getElementById("joinNowBtn").disabled = true;
