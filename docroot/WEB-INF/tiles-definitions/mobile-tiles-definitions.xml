@@ -48,8 +48,13 @@
 	<definition name="mPatientLightAuthPage" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/patientLightAuth.jsp" />
 	</definition>
+	
 	<definition name="mPGLightAuthPage" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/pgLightAuth.jsp" />
+	</definition>
+	
+	<definition name="mPatientLogin" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileAppPatientLogin.jsp" />
 	</definition>
 	
 	<definition name="mVideoVisitLandingPage" extends=".oneColumnLayout">
@@ -60,6 +65,10 @@
 	
 	<definition name="mPatientLandingPage" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
+	</definition>
+	
+	<definition name="mAppPatientLandingPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileAppLandingPage.jsp" />
 	</definition>
 	
 	<definition name="mPatientGuestLandingPage" extends=".oneColumnLayoutPG">

@@ -282,6 +282,27 @@ $(document).ready(function() {
 		}
 
 	});
+	
+	// Login button submit click
+	$("#mobile-login-submit").click(function(event) {
+		event.preventDefault();
+
+		if ( $("#mrn").val().length > 0)
+		{
+			if ( $("#mrn").val().length < 8 )
+	        {
+	        	while ( $("#mrn").val().length < 8 )
+	        	{
+	        		$("#mrn").val('0' + $("#mrn").val());
+	        	}
+	        }
+        }
+		// if client side validation successful
+		if(isLoginValiadtionSuccess()){
+			mobileloginSubmit();
+		}
+
+	});
 
 	// Login button submit click patient guest
 	$("#login-submit-pg").click(function(event) {
@@ -984,6 +1005,85 @@ function loginSubmit(){
                 	// set the cookie for logged in user
                 	//setCookie("isUserLoggedIn", true);
                 	window.location.replace("mobilepatientmeetings.htm");
+                    break;
+
+               case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
+
+            	   $("#globalError").text("We could not find this patient.  Please try entering the information again.");
+            	   $("#globalError").removeClass("hide-me").addClass("error");
+
+                    break;
+                // TODO- Do we ge this value ?
+                case LOGIN_STATUS_CODE_ERROR:
+
+                	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
+             	   	$("#globalError").removeClass("hide-me").addClass("error");
+                    break;
+                default:
+
+                	$("#globalError").text("There was an error submitting your login.");
+         	   		$("#globalError").removeClass("hide-me").addClass("error");
+
+                    break;
+            }
+
+        },
+        error: function() {
+
+        	$("#globalError").text("There was an error submitting your login.");
+ 	   		$("#globalError").removeClass("hide-me").addClass("error");
+
+
+        }
+    });
+
+
+	return false;
+}
+
+/**
+ * Called on the click of the Sign in button
+ * @param megaMeetingId
+ * @param lastName
+ * @param firstName
+ */
+function mobileloginSubmit(){
+
+    // Prepare data from pertinent fields for POSTing
+    // Format birth_month
+    var birth_month = $('input[name=birth_month]').val();
+    if (birth_month.length == 1) {
+        birth_month = "0" + birth_month;
+    }
+    // Format birth_day
+    var birth_day = $('input[name=birth_day]').val();
+    if (birth_day.length == 1) {
+        birth_day = "0" + birth_day;
+    }
+
+    // Parameters sent to the server
+    var currentTime = new Date();
+    var n = currentTime.getTime();
+    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
+	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month='
+								+ birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&nocache=' + n;
+
+	$.ajax({
+        type: "POST",
+        url: VIDEO_VISITS_MOBILE.Path.login.ajaxurl,
+        data: postdata,
+        success: function(returndata) {
+            returndata = $.trim(returndata);
+
+            var LOGIN_STATUS_SUCCESS = "1";
+        	var LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR = "3";
+        	var LOGIN_STATUS_CODE_ERROR = "4";
+
+            switch (returndata) {
+                case LOGIN_STATUS_SUCCESS:
+                	// set the cookie for logged in user
+                	//setCookie("isUserLoggedIn", true);
+                	window.location.replace("mobileAppPatientMeetings.htm");
                     break;
 
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
