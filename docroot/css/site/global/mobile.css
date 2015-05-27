@@ -1164,23 +1164,81 @@ li#btnPG.button-main{
 	opacity: .6; 
 }
 
-	.patient .meeting .additional-participants {
+.patient .meeting .additional-participants {
 
-		margin-top: 12px; 
-		margin-right: -10px;
-		margin-left: -10px;
-		padding-top: 5px; 
-		padding-right: 10px;
-		padding-left: 10px;
-		box-shadow:
-			0 -1px 0 white,
-			0 -2px 0 #D8D8D8;
-		font-size: 15px;
-		line-height: 18px;
-	}
+	margin-top: 12px; 
+	margin-right: -10px;
+	margin-left: -10px;
+	padding-top: 5px; 
+	padding-right: 10px;
+	padding-left: 10px;
+	box-shadow:
+		0 -1px 0 white,
+		0 -2px 0 #D8D8D8;
+	font-size: 15px;
+	line-height: 18px;
+}
+
+/* - - - - - - - - PATIENT DOWNLOAD APP PAGE - START - - - - - - - - */
+#content-window{
+	background: url('../../../images/mobile/bkgrnd.png') no-repeat center center fixed;
+	background-size: cover;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	font-weight: HelveticaNeue;
+	font-size: 20px;
+}
+
+#content-window img{
+	position: absolute;
+	/*width: 50%;*/
+	bottom: 0;
+}
+
+#contents{
+	padding: 30px 20px;
+}
+
+#contents h1{
+	font-size: 20px;
+}
+
+#contents p{
+	font-size: 14px;
+	margin: 10px 0;
+	color: #191919;
+}
+
+#contents button{
+	float: right;
+	color: #006BA6;
+	border: 1px solid #006BA6;
+	border-radius: 3px;
+	font-size: 18px;
+	width: 130px;
+	height: 35px;
+	background-color: #FFFFFF;
+}
+/* - - - - - - - - PATIENT DOWNLOAD APP PAGE - END - - - - - - - - */
+
+
+
 
 
 /* HANDSETS - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */
+
+@media all and (orientation:portrait){
+	#content-window img{
+		width: 50%;
+	}
+}
+
+@media all and (orientation:landscape){
+	#content-window img{
+		width: 25%;
+	}
+}
 
 @media only screen
 and (min-width: 480) 
