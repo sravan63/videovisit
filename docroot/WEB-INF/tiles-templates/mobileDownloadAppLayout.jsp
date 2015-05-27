@@ -10,7 +10,7 @@
         	<tiles:getAsString name="title" />  
         </title>
         
-        <meta name="apple-itunes-app" content="497468339">
+        <meta name="apple-itunes-app" content="app-id=497468339">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
 		<link rel="stylesheet" href="css/site/global/mobile.css">
