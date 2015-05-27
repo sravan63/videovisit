@@ -22,6 +22,11 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
  		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
 	</definition>
+	<definition name=".mobileDownloadAppPageTemplate" template="/WEB-INF/tiles-templates/mobileDownloadAppLayout.jsp">
+		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+	</definition>
 
 	<definition name=".mobileJavascriptNotSupportedLayout" template="/WEB-INF/tiles-templates/mobileJavascriptNotSupportedLayout.jsp">
 		<put-attribute name="title" value="Video Visits Mobile" type="string" />
@@ -55,6 +60,10 @@
 	
 	<definition name="mPatientLogin" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileAppPatientLogin.jsp" />
+	</definition>
+	
+	<definition name="mDownloadApp" extends=".mobileDownloadAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileDownloadApp.jsp" />
 	</definition>
 	
 	<definition name="mVideoVisitLandingPage" extends=".oneColumnLayout">
