@@ -5,11 +5,11 @@
 
     <!--Start Head-->
     <head>
+    	<!-- <meta charset="utf-8">	 -->
         <title>
         	<tiles:getAsString name="title" />  
         </title>
         
-        <meta charset="utf-8">
         <meta name="apple-itunes-app" content="497468339">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
