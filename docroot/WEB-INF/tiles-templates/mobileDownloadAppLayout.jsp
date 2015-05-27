@@ -30,11 +30,9 @@
 		<tiles:insertAttribute name="gtm" />
     	
     	<div id="main-window" class="main-window">
-			<div>
-				<!--<div class="page-content">-->
-					<tiles:insertAttribute name="content" />
-				<!--</div>-->
-			</div>
+			<!--<div class="page-content">-->
+				<tiles:insertAttribute name="content" />
+			<!--</div>-->
 		</div>
 </body>
 </html>
