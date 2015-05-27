@@ -42,6 +42,7 @@
 		       <value>mobilepatientlightauth.htm</value>
 		       <value>mobilepglightauth.htm</value>
 		       <value>mobileAppPatientLogin.htm</value>
+		       <value>mobileDownloadApp.htm</value>
 		       <value>logout.htm</value>
 		       <value>/guest</value>
 		       <value>verifyguest.json</value>
@@ -124,6 +125,7 @@
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
 				<prop key="/mobilepatientlightauth.htm">mobilepatientlightauth</prop>
 				<prop key="/mobileAppPatientLogin.htm">mobileAppPatientLogin</prop>
+				<prop key="/mobileDownloadApp.htm">mobileDownloadApp</prop>
 				<prop key="/mobilepglightauth.htm">mobilepglightauth</prop>
 				<prop key="/mobilelogin.json">mobilelogin</prop>
 				<prop key="/mobilepglanding.htm">mobilePGLanding</prop>	
@@ -352,6 +354,12 @@
 		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="mPatientLogin" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+    </bean>
+    <bean id="mobileDownloadApp" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="mDownloadApp" />
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
     </bean>
