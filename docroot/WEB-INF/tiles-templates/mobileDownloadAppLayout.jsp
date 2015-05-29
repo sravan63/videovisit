@@ -7,20 +7,20 @@
     <head>
     	<!-- <meta charset="utf-8">	 -->
         <title>
-        	<tiles:getAsString name="title" />  
+        	<tiles:getAsString name="title" />
         </title>
         
         <meta name="apple-itunes-app" content="app-id=497468339">
+        <meta name="google-play-app" content="app-id=org.kp.tpmg.preventivecare">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
-		<link rel="stylesheet" href="css/site/global/mobile.css">
-		<link rel="apple-touch-icon" href="images/vv-apple-touch-icon-72@2x.png">
+		<link rel="stylesheet" type="text/css" href="css/library/plugin/smartbanner/jquery.smartbanner.css">
+		<link rel="stylesheet" type="text/css" href="css/site/global/mobile.css">
+		<link rel="apple-touch-icon" href="images/mobile/phone.png">
 
-		<script src="js/library/jquery/jquery-1.8.3.min.js" type="text/javascript"></script>
-		
-		<noscript>
-			<meta http-equiv="refresh" content="0; url=mobileenablejavascript.htm"></meta>
-		</noscript>
+		<script type="text/javascript" src="js/library/jquery/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="js/library/plugin/smartbanner/jquery.smartbanner.js"></script>
+		<noscript> <meta http-equiv="refresh" content="0; url=mobileenablejavascript.htm"></meta> </noscript>
     </head>
     <!--End Head-->
 
@@ -34,5 +34,22 @@
 				<tiles:insertAttribute name="content" />
 			<!--</div>-->
 		</div>
-</body>
+		
+		<script type="text/javascript">
+			$(function() { $.smartbanner() } )
+			
+			$.smartbanner({
+				title: 'KP Preventive Care',
+				author: 'Kaiser Permanente',
+				icon: null,
+				url: null,
+				button: 'OPEN',
+				scale: 'auto',
+				daysHidden: 0,
+				daysReminder: 0,
+				layer: false,
+				appendToSelector: '#content-window'
+			})
+	    </script>
+	</body>
 </html>
