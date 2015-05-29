@@ -1217,7 +1217,7 @@ li#btnPG.button-main{
 	border-radius: 3px;
 	font-size: 18px;
 	width: 130px;
-	height: 35px;
+	height: 45px;
 	background-color: #FFFFFF;
 }
 /* - - - - - - - - PATIENT DOWNLOAD APP PAGE - END - - - - - - - - */
@@ -1236,7 +1236,7 @@ li#btnPG.button-main{
 
 @media all and (orientation:landscape){
 	#content-window img{
-		width: 25%;
+		width: 15%;
 	}
 }
 
