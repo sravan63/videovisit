@@ -7,7 +7,18 @@
 				this.timer = setTimeout(this.openWebApp, 1000);
 		},
 		openWebApp: function(){
-			window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+			var os = getAppOS();
+			
+			if(os == "iOS"){
+				window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+			}
+			else if(os == "Android"){
+				window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
+			}
+			else{
+				// we should never reach this condition
+				alert("No device detected");
+			}
 		}
 	}
 </script>
