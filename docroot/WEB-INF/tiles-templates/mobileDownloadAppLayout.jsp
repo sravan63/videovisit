@@ -16,10 +16,11 @@
 
 		<link rel="stylesheet" type="text/css" href="css/library/plugin/smartbanner/jquery.smartbanner.css">
 		<link rel="stylesheet" type="text/css" href="css/site/global/mobile.css">
-		<link rel="apple-touch-icon" href="images/mobile/phone.png">
+		<link rel="apple-touch-icon" href="images/mobile/kppc_icon.png">
 
 		<script type="text/javascript" src="js/library/jquery/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="js/library/plugin/smartbanner/jquery.smartbanner.js"></script>
+		<script type="text/javascript" src="js/site/mobile/mobile-web.js"></script>
 		<noscript> <meta http-equiv="refresh" content="0; url=mobileenablejavascript.htm"></meta> </noscript>
     </head>
     <!--End Head-->
