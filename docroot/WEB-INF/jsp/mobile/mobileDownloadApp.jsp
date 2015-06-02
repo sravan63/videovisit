@@ -1,6 +1,11 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <script>
+	$(document).ready(function(){
+		$("head").append("<meta name='apple-itunes-app' content='app-id=497468339'>");
+		$("head").append("<meta name='google-play-app' content='app-id=org.kp.tpmg.preventivecare'>");
+	});
+	
 	var app={
 		launchApp: function(){
 			window.location.replace("kppc://videovisit");
