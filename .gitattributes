@@ -72,6 +72,7 @@ docroot/WEB-INF/jsp/mobile/expired-visit.jsp -text
 docroot/WEB-INF/jsp/mobile/landingPage.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/landingPagePG.jsp -text
 docroot/WEB-INF/jsp/mobile/logout-confirmation.jsp -text svneol=unset#text/plain
+docroot/WEB-INF/jsp/mobile/mobileAppDownload.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/mobileAppLandingPage.jsp -text
 docroot/WEB-INF/jsp/mobile/mobileAppPatientLogin.jsp -text
 docroot/WEB-INF/jsp/mobile/mobileDownloadApp.jsp -text svneol=unset#text/plain
