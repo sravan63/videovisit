@@ -1,19 +1,22 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
-<div style="padding:10px;">
-	
-	<div id="login-form">
-		<h1>Sign In to Video Visits</h1>	
-		<form class="login-form">
+<div style="height:100%; width:100%; background-color:#EBEBEB;">
+	<div id="login-form" style="padding: 27px 18px 0 13px;">
+		<h1 style="text-align:center;">Video Visit Temporary Access</h1>
+		<form class="login-form" style="margin:23px 0 0;">
 			<p id="globalError" class="globalfailmessage hide-me"></p>
-
 			<ul class="form-block">
-				<li><label>Your Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required>
+				<li style="margin:0 0 4px; padding:0; height:30px; border-radius:2px;">
+					<p style="width:100%; background-color:#706259; color:#FFFFFF; text-align:center; padding:5px 0 5px 5px;">
+						Enter Patient&#39s Information
+					</p>
+				</li>
+				<li><label>Last Name</label><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required>
 					<div id="lastNameErrorId" class="localfailmessage hide-me">
 						<p></p>
 					</div>
 				</li>
-				<li><label>Medical Record #</label><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="MRN" autocorrect = "off" pattern="[0-9]*" required>
+				<li><label>Medical Record No.</label><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="MRN" autocorrect = "off" pattern="[0-9]*" required>
 					<div id="mrnErrorId" class="localfailmessage hide-me">
 						<p></p>
 					</div>
@@ -33,30 +36,12 @@
 						<p></p>
 					</div>
 				</li>
-				<button id="mobile-login-submit" class="off" tabindex="6" style="width:100%; height:35px; background-color:#0061A9; color:#FFFFFF; font-weight:bold; font-size:14px; margin:10px auto; border-radius:4px;">Sign In</button>
+				<button id="login-submit" class="off" tabindex="6" style="width:100%; height:35px; background-color:#0061A9; color:#FFFFFF; font-weight:bold; font-size:18px; margin:10px auto; border-radius:3px;">Sign In</button>
 			</ul>
-
-			
 		</form>
-		
-		</div>
-		<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
-	 	
-	 	<%@ include file="common/informationTwo.jsp" %>
-
+	</div>
+	<div style="padding:20px 0 0 15px; height:98px;">
+		<p class="disclaimer" style="text-align:left; font-weight:bold; margin-bottom:10px;">If You&#39re a Patient&#39s Guest</p>
+		<p class="disclaimer" style="text-align:left;">Guests of patients with a video visit, click the link in your email invitation.</p>
+	</div>
 </div>
-
-<!-- 
-<div style="display:block; border-bottom: 1px solid #CCC; line-height:1 em; font-size: 16px; font-family: Helvetica, Neue; overflow: auto; height: auto; color:#78BE20;">
-	
-	</div>
-	
-	<div style="margin: 55px 0 0; text-align: center; color: #DA6426; font-size: 20px;">
-		<h2> Video Visits Mobile </h2>
-		<h2> Coming Soon </h2>
-	</div>
-	
-	<div style="margin: 25px 0 40px; text-align: center; color: #666666;">
-		<p style="word-wrap: break-word;"> Until then, please use a laptop or desktop computer to access Video Visits.
-	</div>
-</div> -->
