@@ -29,7 +29,7 @@
 
 <div class="page-content" style="width:100%; height:100%; background:url('images/mobile/bkgrnd-faded.png') no-repeat center center; background-size:cover; margin:0; padding:0;">
 
-	<div class="visits patient" style="padding:6px;">
+	<div class="visits patient" style="padding:6px; overflow:hidden;">
 		<!--<h1>Video Visits You Can Join Now</h1>	-->
 		<h1 style="width:100%; padding:8px 0; text-align:center; color:#FFFFFF; background-color:#706259; border-radius:3px; margin:20px 0 2px;"> Video Visits </h1>
 		
@@ -38,7 +38,7 @@
 				
 				<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			
-					<div class="meeting well" style="min-height:85px; clear:both; margin-bottom:5px; padding:20px;">
+					<div class="meeting well" style="min-height:85px; overflow:hidden; margin-bottom:5px; padding:20px;">
 	
 						<div class="pic-frame">
 							<div class="pic">
@@ -123,17 +123,19 @@
 			</c:otherwise>
 
 		</c:choose>
-		<div style="font-weight:bold; text-align:left; margin-top:60px; padding-left:32px; clear:both;">
-			<p>Please make sure you have a strong Wi-Fi or 4G connection</p>
-		</div>
-		<!-- Fake Footer - to adjust the length of the Background image -->
-		<div style="visibility:none; margin:100px 0;">
-			<br/>
-			<br/>
-			<br/>
-			<br/>
-		</div>
-		<!-- Fake Footer - to adjust the length of the Background image -->
-				
 	</div>
+
+	<div style="font-weight:bold; text-align:left; margin-top:60px; padding:0 32px;">
+		<p>Please make sure you have a strong Wi-Fi or 4G connection</p>
+	</div>
+
+	<!-- Fake Footer - to adjust the length of the Background image -->
+	<div style="visibility:none; margin:100px 0;">
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+	</div>
+	<!-- Fake Footer - to adjust the length of the Background image -->
+
 </div>
