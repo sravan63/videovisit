@@ -22,6 +22,7 @@
 		<script type="text/javascript" src="js/library/plugin/smartbanner/jquery.smartbanner.js"></script>
 		<script type="text/javascript" src="js/site/mobile/mobile-web.js"></script>
 		<script type="text/javascript" src="js/site/validation/validate.js"></script>
+		<script type="text/javascript" src="js/site/global/dateExtensions_loader.js"></script>
 		
 		<noscript>
 			<meta http-equiv="refresh" content="0; url=mobileenablejavascript.htm"></meta>
