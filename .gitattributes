@@ -196,10 +196,12 @@ docroot/images/mdo/icon_checklist.png -text
 docroot/images/mdo/icon_devices.png -text
 docroot/images/mdo/image_landing_page.png -text
 docroot/images/mdo/image_landing_page_old.png -text
+docroot/images/mobile/bkgrnd-faded.png -text
 docroot/images/mobile/bkgrnd.png -text
 docroot/images/mobile/icon_video@2x.png -text
 docroot/images/mobile/kppc_icon.png -text
 docroot/images/mobile/phone.png -text
+docroot/images/mobile/video-icon-gray.png -text
 docroot/images/mobile/video-visit-ui@2x.png -text
 docroot/images/mobile/video-visit-ui@2x_new.png -text
 docroot/images/mobile/video-visit-ui@2x_new_kp.png -text
