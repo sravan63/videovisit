@@ -75,7 +75,6 @@ docroot/WEB-INF/jsp/mobile/logout-confirmation.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/mobileAppDownload.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/mobileAppLandingPage.jsp -text
 docroot/WEB-INF/jsp/mobile/mobileAppPatientLogin.jsp -text
-docroot/WEB-INF/jsp/mobile/mobileDownloadApp.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientLightAuth.jsp -text
 docroot/WEB-INF/jsp/mobile/patientLoginModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/mobile/patientguestLoginModal.jsp -text
