@@ -1284,7 +1284,13 @@ function refreshTimestamp(){
 
 	$("#lastRefreshTimeId").text(refreshTimeText);
 
+	/* For MobileInAppBrowser */
+	var lastUpdatedText = "Last updated: ";
+	var lastUpdatedTime = month + "/" + day + "/" + year + " at " + hours + ":" + minutes + " " + suffix;
 
+	$("#lastUpdatedText").text(lastUpdatedText);
+	$("#lastUpdatedTime").text(lastUpdatedTime);
+	/* End */
 }
 
 function iOSversion() {
