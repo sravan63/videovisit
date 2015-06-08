@@ -15,17 +15,6 @@
 	
 %>
 <%@ include file="userPresentInMeetingModal.jsp" %>
-<!-- Refresh page button and time stamp - to be reworked -->
-<!--	<div class="refresh-page" onClick="window.location.reload();">
-			<h2>Tap here to refresh this page</h2>
-			<p id="lastRefreshTimeId">
-				<script type="text/javascript">
-					refreshTimestamp();
-				</script>
-			</p>
-		</div>	-->
-
-<!-- Refresh page button and timestamp - END -->
 
 <div class="page-content" style="width:100%; height:100%; background:url('images/mobile/bkgrnd-faded.png') no-repeat center center; background-size:cover; margin:0; padding:0;">
 
@@ -38,7 +27,7 @@
 				
 				<c:forEach var="meeting" items="${WebAppContext.meetings}">
 			
-					<div class="meeting well" style="min-height:85px; overflow:hidden; margin-bottom:5px; padding:20px;">
+					<div class="meeting well" style="min-height:85px; overflow:hidden; margin-bottom:5px; padding:20px; clear:both;">
 	
 						<div class="pic-frame">
 							<div class="pic">
@@ -99,13 +88,14 @@
 			</c:when>
 			<c:otherwise>
 			<!--  If no meetings are present -->
-
 				<div class="alert alert-hero alert-no-visits" style="background-color:#FFFFFF; box-shadow:none;">
 					<div class="alert-hero-message">
 						<div class="image" style="background:url('images/mobile/video-icon-gray.png') no-repeat center; margin:-10px 15px 0 0;"></div>
 						<p style=""><strong>A button to join will appear 15 minutes before your Video Visit appointment time.</strong></p>
 					</div>
 				</div>
+				
+				<!-- Refresh Page button and Time stamp - Start -->
 				<div onClick="window.location.reload();" style="min-height:45px; padding-left:32px;">
 					<div style="float:left; padding-top:5px;">
 						<p id="lastUpdatedText"></p>
@@ -119,7 +109,7 @@
 						<button style="width:136px; height:45px; color:#FFFFFF; background-color:#0061A9; padding:10px 5px; border-radius:4px; font-size:16px;"> Refresh Page </button>
 					</div>
 				</div>
-
+				<!-- Refresh Page button and Time stamp - END -->
 			</c:otherwise>
 
 		</c:choose>
