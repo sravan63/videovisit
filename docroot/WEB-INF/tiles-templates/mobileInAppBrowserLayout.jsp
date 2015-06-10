@@ -10,8 +10,8 @@
         	<tiles:getAsString name="title" />
         </title>
         
-        <!-- <meta name="apple-itunes-app" content="app-id=497468339">
-        <meta name="google-play-app" content="app-id=org.kp.tpmg.preventivecare">	 -->
+        <meta name="apple-itunes-app" content="app-id=497468339">
+        <meta name="google-play-app" content="app-id=org.kp.tpmg.preventivecare">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 
 		<link rel="stylesheet" type="text/css" href="css/library/plugin/smartbanner/jquery.smartbanner.css">
@@ -40,22 +40,5 @@
 				<tiles:insertAttribute name="content" />
 			<!--</div>-->
 		</div>
-		
-		<script type="text/javascript">
-			$(function() { $.smartbanner() } )
-			
-			$.smartbanner({
-				title: 'KP Preventive Care',
-				author: 'Kaiser Permanente',
-				icon: null,
-				url: null,
-				button: 'OPEN',
-				scale: 'auto',
-				daysHidden: 0,
-				daysReminder: 0,
-				layer: false,
-				appendToSelector: '#content-window'
-			})
-	    </script>
 	</body>
 </html>
