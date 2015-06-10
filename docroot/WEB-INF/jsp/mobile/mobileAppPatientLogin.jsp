@@ -2,7 +2,7 @@
 
 <div style="height:100%; width:100%; background-color:#EBEBEB;">
 	<div id="login-form" style="padding: 27px 18px 0 13px;">
-		<h1 style="text-align:center;">Video Visit Temporary Access</h1>
+		<h1 style="text-align:center;">Video Visits Temporary Access</h1>
 		<form class="login-form" style="margin:23px 0 0;">
 			<p id="globalError" class="globalfailmessage hide-me"></p>
 			<ul class="form-block">
