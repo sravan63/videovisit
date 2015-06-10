@@ -2,8 +2,20 @@
 
 <script>
 	$(document).ready(function(){
-		$("head").append("<meta name='apple-itunes-app' content='app-id=497468339'>");
-		$("head").append("<meta name='google-play-app' content='app-id=org.kp.tpmg.preventivecare'>");
+		$(function() { $.smartbanner() } )
+		
+		$.smartbanner({
+			title: 'KP Preventive Care',
+			author: 'Kaiser Permanente',
+			icon: null,
+			url: null,
+			button: 'OPEN',
+			scale: 'auto',
+			daysHidden: 0,
+			daysReminder: 0,
+			layer: false,
+			appendToSelector: '#content-window'
+		})
 	});
 	
 	var app={
