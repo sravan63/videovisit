@@ -345,8 +345,10 @@ $(document).ready(function() {
 	        	}
 	        	catch(e)
 	        	{
-
-        			window.location.replace("logout.htm");
+	        		if (isInAppBrowser == "true")
+	            		window.location.replace("mobileAppPatientLogin.htm");
+	            	else
+	            		window.location.replace("logout.htm");
 	        	}
 	        	var isValidUserSession =  returndata.isValidUserSession;
 
@@ -366,19 +368,19 @@ $(document).ready(function() {
 			            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
 
 			            		if(userPresentInMeetingData.result == "true"){
-
 			            			modalShow('modal-user-present');
 			            		}
 			            		else{
-
 				            			joinMeeting(meetingId);
 				    	        		launchVideoVisit(megaMeetingUrl, meetingId, name);
 			            			}
 		            		}
 		            		catch(e)
 		            		{
-
-		            			window.location.replace("logout.htm");
+		            			if (isInAppBrowser == "true")
+		    	            		window.location.replace("mobileAppPatientLogin.htm");
+		    	            	else
+		    	            		window.location.replace("logout.htm");
 		            		}
 		            	});
 	             	}
@@ -387,14 +389,18 @@ $(document).ready(function() {
 
 	            }
 	            else{
-
-	            	window.location.replace("logout.htm");
+	            	if (isInAppBrowser == "true")
+	            		window.location.replace("mobileAppPatientLogin.htm");
+	            	else
+	            		window.location.replace("logout.htm");
 	            }
 
 	        },
 	        error: function() {
-
-	        	window.location.replace("logout.htm");
+	        	if (isInAppBrowser == "true")
+            		window.location.replace("mobileAppPatientLogin.htm");
+            	else
+            		window.location.replace("logout.htm");
 	        }
 	    });
 
@@ -1083,7 +1089,7 @@ function mobileloginSubmit(){
                 case LOGIN_STATUS_SUCCESS:
                 	// set the cookie for logged in user
                 	//setCookie("isUserLoggedIn", true);
-                	window.location.replace("mobileAppPatientMeetings.htm");
+                	window.location.replace("mobileAppPatientMeetings.htm?inAppBrowserFlag=true");
                     break;
 
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
