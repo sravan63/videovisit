@@ -2,6 +2,8 @@
 
 <script>
 	$(document).ready(function(){
+		$("head").append("<meta name='apple-itunes-app' content='app-id=497468339'>");
+		
 		$(function() { $.smartbanner() } )
 		
 		$.smartbanner({
