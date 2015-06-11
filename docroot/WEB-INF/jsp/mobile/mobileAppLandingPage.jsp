@@ -6,15 +6,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 
-
 <%
-
 	MeetingCommand.retrieveMeeting(request, response);
 	String timezone = WebUtil.getCurrentDateTimeZone();
-	
-	
 %>
+
 <%@ include file="userPresentInMeetingModal.jsp" %>
+
+<input type="hidden" id="inAppBrowserFlag" value='<%=request.getParameter("inAppBrowserFlag")%>' />
 
 <div class="page-content" style="width:100%; height:100%; background:url('images/mobile/bkgrnd-faded.png') no-repeat center center; background-size:cover; margin:0; padding:0;">
 
