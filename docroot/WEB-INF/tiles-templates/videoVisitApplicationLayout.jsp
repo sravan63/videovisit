@@ -78,7 +78,8 @@
 		
 		        .btn-leave-meeting{
 		        	background-image: url("vidyoplayer/img/button_leave_return.png");
-		            width: 130px;
+		        	background-position: 10px 0;
+		            width: 105px;
 		            border-right: 1px solid grey;
 		        }
 		        .btn-end-meeting{
