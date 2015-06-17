@@ -16,7 +16,8 @@ public class QuitMeetingController extends SimplePageController {
 		String data = null;
 		try
 		{
-			
+			HttpSession session = (HttpSession)request.getSession();
+			 session.setMaxInactiveInterval(22);
 			String memberName = request.getParameter("memberName");
 			String refreshMeetings = request.getParameter("refreshMeetings"); 
 			
