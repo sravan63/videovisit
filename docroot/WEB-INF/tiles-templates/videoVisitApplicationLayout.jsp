@@ -84,7 +84,8 @@
 		        }
 		        .btn-end-meeting{
 		            background-image: url("vidyoplayer/img/button_end_mtg.png");
-		            width: 95px;
+		            background-position: 20px 1px;
+		            width: 105px;
 		            border-right: 1px solid grey;
 		        }
 		
