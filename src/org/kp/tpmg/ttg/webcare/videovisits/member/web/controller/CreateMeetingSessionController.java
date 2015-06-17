@@ -14,9 +14,6 @@ public class CreateMeetingSessionController extends SimplePageController {
 		String data = null;
 		try
 		{
-			 HttpSession session = (HttpSession)request.getSession();
-			 session.setMaxInactiveInterval(20000);
-			 logger.info("setting session to very high value ");
 			 data = MeetingCommand.createMeetingSession(request, response);
 		}
 		catch (Exception e)
