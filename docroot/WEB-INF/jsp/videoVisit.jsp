@@ -26,7 +26,7 @@
 			</li>
 		</ul>
 		<ul id="leaveEndBtnContainer" class="btn-group" style="display:none; float:right; list-style:none; font-size:100%; margin:4px 0;">
-	        <li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Leave Meeting" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;">
+	        <li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;">
 	        <li class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;">
 	        <li class="btnLast" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
 	    </ul>
