@@ -254,7 +254,7 @@
 					                 START -->
 		
 				                    <div class="btn-group">
-				                        <a class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Leave Meeting" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;"></a>
+				                        <a class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;"></a>
 				                        <a class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;"></a>
 				                    </div>
 		
