@@ -34,14 +34,15 @@ public class BackButtonFilter implements Filter  {
 	              throws java.io.IOException, ServletException {
 
 		logger.info("Inside BackButtonFilter - doFilter()->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-
+		
 		HttpServletRequest req;
 		HttpServletResponse resp;
 	
 		req = (HttpServletRequest) request;
 		resp = (HttpServletResponse) response;
 		HttpSession ss = req.getSession(false);
-
+		String requestUri = req.getRequestURI();
+		logger.info("Inside BackButtonFilter requestUri = " + requestUri);
 		// Keeping (isVideoVisitGuestMeetingPage and isVideoVisitMemberMeetingPage) separate from exclude url because this is a case of refresh.
 		// Refresh will be the case most probably in which meeting is halt and user clicking the refresh
 		// to rejoin the meeting. In this case notification sent from the user to other participants that
