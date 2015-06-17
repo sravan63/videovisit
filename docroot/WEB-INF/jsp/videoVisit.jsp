@@ -347,7 +347,7 @@
 	        <div id="dialog-block-override-meeting-leave" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
 	            <div class="modal-header">
 	                <button type="button" id="leave_modal_cross_button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-	                <h3 id="">Leave Meeting</h3>
+	                <h3 id="">Step Away</h3>
 	            </div>
 	            <div class="modal-body">
 	                <div class="dialog-content-question">
