@@ -2,7 +2,8 @@ VIDEO_VISITS.Path = {
     global : {
         error : 'error.htm',
         expired : 'logout.htm',
-        guestexpired : 'guestlogout.htm'
+        guestexpired : 'guestlogout.htm',
+        videovisitReady:'videoVisitReady.htm'
     },
     grid : {
         home : {
