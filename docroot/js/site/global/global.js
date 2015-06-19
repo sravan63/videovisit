@@ -140,6 +140,7 @@ $(document).ready(function() {
 	ERROR_PAGE = VIDEO_VISITS.Path.global.error;
 	SESSION_GUEST_EXPIRED_PAGE = VIDEO_VISITS.Path.global.guestexpired;
 	VIDEO_VISIT_PAGE = VIDEO_VISITS.Path.global.videovisitReady;
+	VIDEO_VISIT_GUEST_PAGE = VIDEO_VISITS.Path.global.videovisitGuestReady;
 	try {
         $("td:empty").html("&nbsp;");
     }
@@ -220,7 +221,7 @@ var loading_Threshold;
         }
         
         // Restart the timer if we're not already on the expired page
-        if ( !location.href.match( SESSION_EXPIRED_PAGE ) && !location.href.match( VIDEO_VISIT_PAGE )) {
+        if ( !location.href.match( SESSION_EXPIRED_PAGE ) && !location.href.match( VIDEO_VISIT_PAGE ) && !location.href.match( VIDEO_VISIT_GUEST_PAGE )) {
             m_sessionTimeoutId = setTimeout( GoToExpiredPage, SESSION_TIMEOUT_DELAY );
         }
     };
