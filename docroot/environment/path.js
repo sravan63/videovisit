@@ -3,7 +3,8 @@ VIDEO_VISITS.Path = {
         error : 'error.htm',
         expired : 'logout.htm',
         guestexpired : 'guestlogout.htm',
-        videovisitReady:'videoVisitReady.htm'
+        videovisitReady:'videoVisitReady.htm',
+        videovisitGuestReady:'videoVisitGuestReady.htm'
     },
     grid : {
         home : {

@@ -492,3 +492,33 @@
 		    <script data-main="vidyoplayer/scripts/main" src="vidyoplayer/scripts/libs/require.min.2.1.10.js"></script>
 
 </div>
+
+<script language="javascript">
+                //alert('in here');
+                keepALiveDelay =( 5 * 1000);
+                keepALiveTimerId ='';
+
+        function        keepALive()
+                {
+                        keepALiveAction();
+                        //keepALiveClearTimeOut();
+                        //keepALiveTimerId = setTimeout( keepALiveAction, keepALiveDelay );
+                }
+                function keepALiveClearTimeOut()
+                {
+                        if (keepALiveTimerId)
+                                clearTimeout( keepALiveTimerId );
+                }
+                function keepALiveAction()
+                {
+                        $.post(VIDEO_VISITS.Path.landingready.keepALive, {},function(data){
+                        //alert('post');
+                        });
+                        //keepALive();
+                }
+                window.setInterval(function(){
+                          /// call your function here
+   //                       alert('keepalive');
+                               keepALive();
+                  }, 3 * 60 * 1000);
+</script>
