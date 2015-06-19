@@ -317,6 +317,7 @@ $(document).ready(function() {
 	});
 
 	$(".button-launch-visit").click(function(event) {
+		var inAppBrowserFlag = $('#inAppBrowserFlag').val();
 		event.preventDefault();
 
 		var megaMeetingId = $(this).attr("megameetingid");
@@ -345,8 +346,9 @@ $(document).ready(function() {
 	        	}
 	        	catch(e)
 	        	{
-	        		if (isInAppBrowser == "true")
+	        		if (inAppBrowserFlag == "true")
 	            		window.location.replace("mobileAppPatientLogin.htm");
+
 	            	else
 	            		window.location.replace("logout.htm");
 	        	}
@@ -356,7 +358,6 @@ $(document).ready(function() {
 
 	        		var meetingStatus = returndata.meetingStatus;
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-
 	             		window.location.replace("meetingexpiredmember.htm");
 	             	}
 	             	else{
@@ -377,19 +378,16 @@ $(document).ready(function() {
 		            		}
 		            		catch(e)
 		            		{
-		            			if (isInAppBrowser == "true")
+		            			if (inAppBrowserFlag == "true")
 		    	            		window.location.replace("mobileAppPatientLogin.htm");
 		    	            	else
 		    	            		window.location.replace("logout.htm");
 		            		}
 		            	});
 	             	}
-
-
-
 	            }
 	            else{
-	            	if (isInAppBrowser == "true")
+	            	if (inAppBrowserFlag == "true")
 	            		window.location.replace("mobileAppPatientLogin.htm");
 	            	else
 	            		window.location.replace("logout.htm");
@@ -397,17 +395,12 @@ $(document).ready(function() {
 
 	        },
 	        error: function() {
-	        	if (isInAppBrowser == "true")
+	        	if (inAppBrowserFlag == "true")
             		window.location.replace("mobileAppPatientLogin.htm");
             	else
             		window.location.replace("logout.htm");
 	        }
 	    });
-
-
-
-
-
 	});
 	
 	$("#btnPatient").click(function(event) {
@@ -415,6 +408,7 @@ $(document).ready(function() {
 		setCookieWithTime('memberContext','false::landingPage',60*60*24*13);
 		window.location.href = "mobilepatientlightauth.htm";
 	});
+
     $(".button-launch-visit-pg").click(function(event) {
 		event.preventDefault();
 
@@ -437,19 +431,14 @@ $(document).ready(function() {
 	        	returndata = $.parseJSON(returndata);
 	        	var isValidUserSession =  returndata.isValidUserSession;
 	        	//console.log("isValidUserSession=" + isValidUserSession);
-	            if(isValidUserSession == true){
-
+	            if(isValidUserSession == "true")
 	                launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
-	            }
-	            else{
-
-	            	 window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
-	            }
+	            else
+	            	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
 
 	        },
 	        error: function() {
-
-	        	 window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
+	        	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
 	        }
 	    });
 
