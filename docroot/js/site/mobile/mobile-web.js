@@ -460,14 +460,14 @@ $(document).ready(function() {
 	        	returndata = $.parseJSON(returndata);
 	        	var isValidUserSession =  returndata.isValidUserSession;
 	        	//console.log("isValidUserSession=" + isValidUserSession);
-	            if(isValidUserSession == "true")
+	            if(isValidUserSession == "true"){
 	            	 var delay=1000; //1 seconds
 
                      setTimeout(function(){
-                      //your code to be executed after 1 seconds
-                     launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
+	                     //your code to be executed after 1 seconds
+	                     launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
                      }, delay);
-
+	        	}
 	            else
 	            	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
 
