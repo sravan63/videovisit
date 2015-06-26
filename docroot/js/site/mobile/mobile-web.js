@@ -88,23 +88,20 @@ var request = {
  * This is the main function which gets called when the document is ready and loaded in DOM
  */
 $(document).ready(function() {
-
+	var inAppBrowserFlag = $('#inAppBrowserFlag').val();
+	
 	detectDeviceCookie();
 	hideAddressBar();
 	setMemberContext();
-	// refresh the meetings page every one min
-//	var refreshId = setInterval(function(){
-//		var isUserLoggedInCookie = getCookie("isUserLoggedIn");
-//		if (typeof isUserLoggedInCookie !== 'undefined' && isUserLoggedInCookie !=null && isUserLoggedInCookie !=""){
-//			//alert("refreshing");
-//			window.location.reload();
-//		}
-//
-//
-//	}, 60000);
-
-
-
+	
+/* 	refresh the meetings page every one min
+	var refreshId = setInterval(function(){
+		var isUserLoggedInCookie = getCookie("isUserLoggedIn");
+		if (typeof isUserLoggedInCookie !== 'undefined' && isUserLoggedInCookie !=null && isUserLoggedInCookie !=""){
+			//alert("refreshing");
+			window.location.reload();
+		}
+	}, 60000);*/
 
 	$(".modal-window .button-close").click(modalHideByClass);
 	$("#close-modal").click(function(){
@@ -315,9 +312,41 @@ $(document).ready(function() {
 		}
 
 	});
+	
+	$(".refresh_button").click(function(event){
+		console.log("Refresh button clicked");
+		var postdata = "inAppBrowserFlag=" +inAppBrowserFlag;
+		
+		$.ajax({
+			async: false,
+			type: "POST",
+			url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidMeeting,
+	        data: postdata,
+	        success: function(returndata) {
+	        	try{
+	        		returndata = $.parseJSON(returndata);
+	        	}
+	        	catch(e){
+	            	window.location.replace("mobileAppPatientLogin.htm");
+	        	}
 
+	        	var isValidUserSession =  returndata.isValidUserSession;
+
+	        	if(returndata.success == true && isValidUserSession == true){
+	        		window.location.reload();
+	        	}
+	        	else{
+	            	window.location.replace("mobileAppPatientLogin.htm");
+	        	}
+	        },
+	        error: function() {
+            	window.location.replace("mobileAppPatientLogin.htm");
+	        }
+		});
+	});
+	
 	$(".button-launch-visit").click(function(event) {
-		var inAppBrowserFlag = $('#inAppBrowserFlag').val();
+		//var inAppBrowserFlag = $('#inAppBrowserFlag').val();
 		event.preventDefault();
 
 		var megaMeetingId = $(this).attr("megameetingid");
