@@ -33,36 +33,46 @@ public class ValidateUserSession extends SimplePageController {
 		{
 			HttpSession session = request.getSession(false);
 			
+			String inAppBrowserFlag = request.getParameter("inAppBrowserFlag");
+			logger.info("ValidateUserSession: KPPC In-App Browser flow: inAppBrowserFlag=" +inAppBrowserFlag);
+			
 			result.put("isValidUserSession", false);
 			result.put("success", false);
-			if(session != null){
-				
-				WebAppContext context = WebAppContext.getWebAppContext(request);
-				
-				// session is active
-				if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("member"))
-				{
-					logger.info("in validateUserSession member");
-					if(context != null && context.getMember() != null){
-						
-						String meetingStatus = MeetingCommand.getMeetingStatus(request, response);
-						result.put("meetingStatus", meetingStatus);
-						result.put("isValidUserSession", true);
-						result.put("success", true);	
-					}
+			
+			if(session != null){	
+				if("true".equalsIgnoreCase(inAppBrowserFlag)){
+					// KPPC inAppBrowser call
+					logger.info("ValidateUserSession: KPPC In-App Browser flow");
+					
+					result.put("isValidUserSession", true);
+					result.put("success", true);
 				}
+				else{
+					WebAppContext context = WebAppContext.getWebAppContext(request);
 				
-				if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("caregiver"))
-				{
-					logger.info("in validateUserSession caregiver");
-					if(context != null && context.getCareGiver() == true){
-						result.put("isValidUserSession", true);
-						result.put("success", true);	
+					// session is active
+					if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("member"))
+					{
+						logger.info("in validateUserSession member");
+						if(context != null && context.getMember() != null){
+							
+							String meetingStatus = MeetingCommand.getMeetingStatus(request, response);
+							result.put("meetingStatus", meetingStatus);
+							result.put("isValidUserSession", true);
+							result.put("success", true);	
+						}
+					}
+					
+					if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("caregiver"))
+					{
+						logger.info("in validateUserSession caregiver");
+						if(context != null && context.getCareGiver() == true){
+							result.put("isValidUserSession", true);
+							result.put("success", true);	
+						}
 					}
 				}
 			}
-			
-			
 		}
 		catch (Exception e)
 		{
