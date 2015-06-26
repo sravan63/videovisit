@@ -121,8 +121,8 @@ public class WebSessionFilter implements Filter
 				
 			}
 			else{
-				logger.info("in else");
-				if(requestUri.contains("mobilepatientlightauth") || requestUri.contains("mobilepglightauth") )
+				logger.info("WebSessionFilter in else");
+				if(requestUri.contains("mobilepatientlightauth") || requestUri.contains("mobilepglightauth"))
 				{
 					//boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);
 					Cookie memberContextCookie = null;
@@ -140,18 +140,18 @@ public class WebSessionFilter implements Filter
 					    	  value = URLDecoder.decode(memberContextCookie.getValue(), "UTF-8");
 					    	  logger.info("memberContext cookie value "+ value);
 					    	  String[] attrs = value.split("\\:");
-					    	  if ( attrs != null && attrs.length > 0)
+					    	  if (attrs != null && attrs.length > 0)
 					    	  {
 					    		  String isPatientGuest = attrs[0];
 					    		  String meetingCode = attrs[1];
 					    		  String location = attrs[2];
 					    		  logger.info(isPatientGuest + " " + meetingCode + " " + location);
-					    		  if ( isPatientGuest.equalsIgnoreCase("false") && location.equalsIgnoreCase("landingPage"))
+					    		  if (isPatientGuest.equalsIgnoreCase("false") && location.equalsIgnoreCase("landingPage"))
 					    		  {
 					    			  logger.info("isPAtientGuest is false and location is landingPage");
 					    			  req.getRequestDispatcher("mobilepatientlightauth.htm").forward(req, resp);
 					    		  }
-					    		  else if ( isPatientGuest.equalsIgnoreCase("true") && location.equalsIgnoreCase("landingPagePG"))
+					    		  else if (isPatientGuest.equalsIgnoreCase("true") && location.equalsIgnoreCase("landingPagePG"))
 					    		  {
 					    			  logger.info("isPAtientGuest is true and location is landingPage " + meetingCode);
 					    			  if ( meetingCode != null && meetingCode.length() > 0)
@@ -187,39 +187,53 @@ public class WebSessionFilter implements Filter
 			logger.info(" in the else WebSessionFilter");
 			HttpSession session = req.getSession(false);
 			
-			if ( session == null)
+			if (session == null)
 				logger.info("web session filter else session is null");
 			else
 				logger.info("web session filter else session is not null");
+			
 			WebAppContext ctx = null;
 			String timeoutUrl = getTimeoutUrl(req);
+			String requestUri = req.getRequestURI();
 			// Handle timeout condition
 			if(session != null){
 				
-				logger.info("session is not null timout" + session.getMaxInactiveInterval());
+				logger.info("session is not null timout: " + session.getMaxInactiveInterval());
 				ctx  	= WebAppContext.getWebAppContext(req);
 				// Timeout has not occurred, do normal processing
 				if (ctx != null) {
 					chain.doFilter(req, resp);
 				}
 				else{
-					
 					/*
 					 *  Based on mobile or web, redirect the user to the appropriate timeout URL
 					 *   Member Web - login.htm
 					 *   Member mobile- logout.htm
 					 */					
 					
-					logger.info("WebSessionInterceptor: doFilter: timeoutUrl: " + timeoutUrl);
+					logger.info("requestUri: " +requestUri);
 					
-					resp.sendRedirect(timeoutUrl);
+					if(requestUri.contains("mobileAppPatientMeetings")){
+						resp.sendRedirect("mobileAppPatientLogin.htm");
+					}
+					else{
+						logger.info("WebSessionInterceptor: doFilter: timeoutUrl: " + timeoutUrl);
+						resp.sendRedirect(timeoutUrl);
+					}
 				}
 			}
 			else{
 				// session is null
 				logger.info("session is null");
+				logger.info("requestUri: " +requestUri);
 				
-				resp.sendRedirect(timeoutUrl);
+				if(requestUri.contains("mobileAppPatientMeetings")){
+					resp.sendRedirect("mobileAppPatientLogin.htm");
+				}
+				else{
+					logger.info("WebSessionInterceptor: doFilter: timeoutUrl: " + timeoutUrl);
+					resp.sendRedirect(timeoutUrl);
+				}
 			}
 			
 		}
