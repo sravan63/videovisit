@@ -55,7 +55,7 @@
 
        <init-param>
 	      <param-name>excludeURLs</param-name>
-	      <param-value>mdo.htm,mdohelp.htm,mdolive.htm,mdohelplive.htm,intro.htm,setup.htm</param-value>
+	      <param-value>mdo.htm,mdohelp.htm,mdolive.htm,mdohelplive.htm,intro.htm,setup.htm,mobileAppPatientLogin.htm</param-value>
 	   </init-param>
        	    
    </filter>
@@ -104,7 +104,7 @@
 	
    <filter>
     	<filter-name>WebSessionFilter</filter-name>
-    	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>	    
 	</filter>
    
    <filter-mapping>
@@ -128,7 +128,7 @@
       
        <init-param>
 	      <param-name>excludeURL</param-name>
-	      <param-value>mobilelogin.json,isValidUserSession.json,createSetupWizardMeeting.json,terminateSetupWizardMeeting.json</param-value>
+	      <param-value>mobilelogin.json,isValidUserSession.json,createSetupWizardMeeting.json,terminateSetupWizardMeeting.json,isValidMeeting.json</param-value>
 	    </init-param>
    </filter>
   
@@ -198,7 +198,7 @@
 	
 	<!-- Session Configuration-->
 	<session-config>
-		<session-timeout>3</session-timeout> <!-- Currently its been configured to 22 minutes-->
+		<session-timeout>1</session-timeout> <!-- Currently its been configured to 22 minutes-->
 	</session-config>
 
 	<welcome-file-list>
