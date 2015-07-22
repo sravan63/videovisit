@@ -6,12 +6,12 @@ import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 
 public class WebUtil {
 
 	public static Logger logger = Logger.getLogger(WebUtil.class);
 	private static Pattern DOB_PATTERN = Pattern.compile("\\d\\d\\d\\d-\\d[\\d]-\\d[\\d]");
+	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
 	
 	public static String getCurrentDateTimeZone()
 	{
@@ -33,6 +33,18 @@ public class WebUtil {
 		{
 			value = value.trim();
 			java.util.regex.Matcher m = DOB_PATTERN.matcher(value);
+			return m.matches();
+		}
+		
+	}
+	
+	public static boolean isDOBMMYYYYFormat(String value)
+	{
+		if (value == null) return false;
+		else
+		{
+			value = value.trim();
+			java.util.regex.Matcher m = DOB_MMYYYY_PATTERN.matcher(value);
 			return m.matches();
 		}
 		
