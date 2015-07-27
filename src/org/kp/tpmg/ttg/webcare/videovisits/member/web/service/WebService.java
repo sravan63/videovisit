@@ -292,24 +292,24 @@ public class WebService{
 							String birth_month, String birth_year, String birth_day,
 							String sessionID) throws Exception 
 	{
-		logger.info("Entered verifyMember");
+		logger.info("Entered verifyMember ");
 		VerifyMemberResponseWrapper resp = null; 
 		
 		VerifyMember query = new VerifyMember();
-		String Dob = birth_year + "-" + birth_month + "-" + birth_day;
+		String Dob = birth_month + "/" + birth_year; 
 		try 
 		{
 			if (mrn8Digit == null || sessionID == null || lastName == null)
 			{
 				throw new Exception("One of required fields are null");
 			}
-			if (!WebUtil.isDOBFormat(Dob))
+			if (!WebUtil.isDOBMMYYYYFormat(Dob))
 			{
-				throw new Exception("DOB has to be in the format of YYYY-MM-DD but is [" + Dob + "]");
+				throw new Exception("DOB has to be in the format of MM/YYYY but is [" + Dob + "]");
 			}
 			query.setLastName(lastName);
 			query.setMrn8Digit(mrn8Digit);
-			query.setDob(birth_year + "-" + birth_month + "-" + birth_day);				
+			query.setDob(Dob);				
 			query.setSessionID(sessionID);					
 			
 			VerifyMemberResponse response = stub.verifyMember(query);
