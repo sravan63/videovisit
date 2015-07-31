@@ -419,20 +419,16 @@ p.disclaimer{
 }
 
 #app-alert .app-icon {
-
 	float: left;
 	margin-right: 12px; 
 	margin-bottom: 8px;
 	margin-left: 6px;
 	width: 72px;
 	height: 66px;
-
-	background: url("../../../images/mobile/video-visit-ui@2x_new_kp.png") no-repeat right;
-	background-position: 0 -40px;
-	background-size: 520px;
+	background: url("../../../images/mobile/kppc_icon.png") no-repeat right;
+	/*background-position: 0 -40px;*/
+	background-size: 66px;
 	-webkit-tap-highlight-color: transparent;
-
-	
 }
 
 #logout-alert {
