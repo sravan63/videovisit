@@ -90,7 +90,7 @@
 				<div class="alert alert-hero alert-no-visits" style="background-color:#FFFFFF; box-shadow:none;">
 					<div class="alert-hero-message">
 						<div class="image" style="background:url('images/mobile/video-icon-gray.png') no-repeat center; margin:-10px 15px 0 0; background-size:contain;"></div>
-						<p style=""><strong>A button to join will appear 15 minutes before your Video Visit appointment time.</strong></p>
+						<p style=""><strong>You have no Video Visits scheduled within the next 15 minutes. Please check back again later.</strong></p>
 					</div>
 				</div>
 				
