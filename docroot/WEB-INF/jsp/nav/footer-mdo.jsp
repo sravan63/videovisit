@@ -19,7 +19,7 @@
               <li><a href="https://members.kaiserpermanente.org/kpweb/privacystate/entrypage.do">Privacy Practices</a></li>
             </ul>
          <br class="clearBoth">            
-         <p>Copyright  &copy; 2009-2013 The Permanente Medical Group, Inc. All rights reserved.</p>
+         <p>Copyright  &copy; 2009-2015 The Permanente Medical Group, Inc. All rights reserved.</p>
          
       
     <script>
