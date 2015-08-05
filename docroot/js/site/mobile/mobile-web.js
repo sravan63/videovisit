@@ -89,19 +89,24 @@ var request = {
  */
 $(document).ready(function() {
 	var inAppBrowserFlag = $('#inAppBrowserFlag').val();
+
+	$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
 	
 	detectDeviceCookie();
 	hideAddressBar();
 	setMemberContext();
 	
-/* 	refresh the meetings page every one min
-	var refreshId = setInterval(function(){
-		var isUserLoggedInCookie = getCookie("isUserLoggedIn");
-		if (typeof isUserLoggedInCookie !== 'undefined' && isUserLoggedInCookie !=null && isUserLoggedInCookie !=""){
-			//alert("refreshing");
-			window.location.reload();
+	$(":text").on('keyup', function(){
+		//alert("disabled");
+		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_date').val() != ""){
+			$('#login-submit').removeAttr('disabled');
+			$('#mobile-login-submit').removeAttr('disabled');
 		}
-	}, 60000);*/
+		else{
+			$('#login-submit').attr('disabled', true);
+			$('#mobile-login-submit').attr('disabled', true);
+		}
+	});
 
 	$(".modal-window .button-close").click(modalHideByClass);
 	$("#close-modal").click(function(){
@@ -130,7 +135,7 @@ $(document).ready(function() {
 
 	// for focus and blur events
 	$("form :input").focus(function() {
-		$(this).parent().addClass("form-focus");
+		//$(this).parent().addClass("form-focus");
 
 		// clear all errors
 		clearAllErrors();
@@ -907,16 +912,19 @@ function openTab(url)
  * @returns
  */
 function isLoginValiadtionSuccess(){
-
+	
+	var birth_month = $("#birth_date").val().split("/")[0];
+    var birth_year = $("#birth_date").val().split("/")[1];
+	
 	var validationObj =
 		{
 			"last_name" : [
 				{
 					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
 					"PARAM_VALUE" : $("#last_name").val(),
-					"ERROR_MESSAGE" : "Last name is required and must contain only alphabets.",
+					"ERROR_MESSAGE" : "Last name is required",
 					"ERROR_ID" : "lastNameErrorId",
-					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
 			],
 			"mrn"	:[
@@ -925,13 +933,21 @@ function isLoginValiadtionSuccess(){
 					"PARAM_VALUE" : $("#mrn").val(),
 					"PARAM_MIN_VALUE" :8,
 					"PARAM_MAX_VALUE" :8,
-					"ERROR_MESSAGE" : "MRN is required and should be 8 digits.",
+					"ERROR_MESSAGE" : "MRN is required",
 					"ERROR_ID" : "mrnErrorId",
-					"HIGHLIGHT_PARENT_WHEN_ERROR": true
-
+					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
 			],
-            "birth_month"	:[
+			"birth_date"	:[
+			            {
+			            	"METHOD_NAME" : METHODNAME_IS_BIRTHDATE_VALIDATION,
+							"PARAM_VALUE" : $("#birth_date").val(),
+							"ERROR_MESSAGE" : "Birth Date is required",
+							"ERROR_ID" : "dateOfBirthErrorId",
+							"HIGHLIGHT_PARENT_WHEN_ERROR": false
+			            }
+					]
+            /*"birth_month"	:[
 						{
 							"METHOD_NAME" : METHODNAME_IS_BIRTHMONTH_VALIDATION,
 							"PARAM_VALUE" : $("#birth_month").val(),
@@ -952,14 +968,13 @@ function isLoginValiadtionSuccess(){
 			],
 			"birth_year"	:[
 			            {
-
 			            	"METHOD_NAME" : METHODNAME_IS_BIRTHYEAR_VALIDATION,
 							"PARAM_VALUE" : $("#birth_year").val(),
 							"ERROR_MESSAGE" : "Please enter a valid birth year.",
 							"ERROR_ID" : "dateOfBirthYearErrorId",
 							"HIGHLIGHT_PARENT_WHEN_ERROR": true
 			            }
-					]
+					]*/
 
 		}
 
@@ -1002,7 +1017,7 @@ function loginSubmit(){
 
     // Prepare data from pertinent fields for POSTing
     // Format birth_month
-    var birth_month = $('input[name=birth_month]').val();
+    /*var birth_month = $('input[name=birth_month]').val();
     if (birth_month.length == 1) {
         birth_month = "0" + birth_month;
     }
@@ -1010,15 +1025,18 @@ function loginSubmit(){
     var birth_day = $('input[name=birth_day]').val();
     if (birth_day.length == 1) {
         birth_day = "0" + birth_day;
-    }
+    }*/
+
+    var birth_month = $("#birth_date").val().split("/")[0];
+    var birth_year = $("#birth_date").val().split("/")[1];
+    var birth_day = "";
 
     // Parameters sent to the server
     var currentTime = new Date();
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
 	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month='
-								+ birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&nocache=' + n;
-
+								+ birth_month + '&birth_year=' + birth_year + '&birth_day=' + birth_day + '&nocache=' + n;
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.login.ajaxurl,
@@ -1038,22 +1056,31 @@ function loginSubmit(){
                     break;
 
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
-
-            	   $("#globalError").text("We could not find this patient.  Please try entering the information again.");
-            	   $("#globalError").removeClass("hide-me").addClass("error");
-
+            	    $("#globalError").text("We could not find this patient.  Please try entering the information again.");
+            	    $("#globalError").removeClass("hide-me").addClass("error");
+            	    $("#last_name").val("");
+            	    $("#mrn").val("");
+            	    $("#birth_date").val("");
+            	    $("#login-submit").attr('disabled', true);
                     break;
+
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
-
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
+             	   	$("#last_name").val("");
+            	    $("#mrn").val("");
+            	    $("#birth_date").val("");
+            	    $("#login-submit").attr('disabled', true);
                     break;
-                default:
 
+                default:
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
-
+         	   		$("#last_name").val("");
+            	    $("#mrn").val("");
+            	    $("#birth_date").val("");
+            	    $("#login-submit").attr('disabled', true);
                     break;
             }
 
@@ -1081,7 +1108,7 @@ function mobileloginSubmit(){
 
     // Prepare data from pertinent fields for POSTing
     // Format birth_month
-    var birth_month = $('input[name=birth_month]').val();
+    /*var birth_month = $('input[name=birth_month]').val();
     if (birth_month.length == 1) {
         birth_month = "0" + birth_month;
     }
@@ -1089,14 +1116,18 @@ function mobileloginSubmit(){
     var birth_day = $('input[name=birth_day]').val();
     if (birth_day.length == 1) {
         birth_day = "0" + birth_day;
-    }
+    }*/
+
+    var birth_month = $("#birth_date").val().split("/")[0];
+    var birth_year = $("#birth_date").val().split("/")[1];
+    var birth_day = "";
 
     // Parameters sent to the server
     var currentTime = new Date();
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
 	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month='
-								+ birth_month + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&nocache=' + n;
+								+ birth_month + '&birth_year=' + birth_year + '&birth_day=' + birth_day + '&nocache=' + n;
 
 	$.ajax({
         type: "POST",
@@ -1104,7 +1135,7 @@ function mobileloginSubmit(){
         data: postdata,
         success: function(returndata) {
             returndata = $.trim(returndata);
-
+            
             var LOGIN_STATUS_SUCCESS = "1";
         	var LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR = "3";
         	var LOGIN_STATUS_CODE_ERROR = "4";
@@ -1117,22 +1148,31 @@ function mobileloginSubmit(){
                     break;
 
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
-
-            	   $("#globalError").text("We could not find this patient.  Please try entering the information again.");
-            	   $("#globalError").removeClass("hide-me").addClass("error");
-
+            	   	$("#globalError").text("We could not find this patient.  Please try entering the information again.");
+            	   	$("#globalError").removeClass("hide-me").addClass("error");
+            	   	$("#last_name").val("");
+            	    $("#mrn").val("");
+            	    $("#birth_date").val("");
+            	    $("#mobile-login-submit").attr('disabled', true);
                     break;
+
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
-
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
+             	   	$("#last_name").val("");
+            	    $("#mrn").val("");
+            	    $("#birth_date").val("");
+            	    $("#mobile-login-submit").attr('disabled', true);
                     break;
-                default:
 
+                default:
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
-
+         	   		$("#last_name").val("");
+            	    $("#mrn").val("");
+            	    $("#birth_date").val("");
+            	    $("#mobile-login-submit").attr('disabled', true);
                     break;
             }
 
