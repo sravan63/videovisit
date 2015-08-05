@@ -1,10 +1,11 @@
 var METHODNAME_IS_REQUIRED = 0;
 var METHODNAME_IS_ALPHA_NUMERIC = 1;
-var METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX = 2
-var METHODNAME_IS_BIRTHDAY_VALIDATION = 3
-var METHODNAME_IS_BIRTHMONTH_VALIDATION = 4
-var METHODNAME_IS_BIRTHYEAR_VALIDATION = 5
-var METHODNAME_IS_MAX_LENGTH = 6
+var METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX = 2;
+var METHODNAME_IS_BIRTHDAY_VALIDATION = 3;
+var METHODNAME_IS_BIRTHMONTH_VALIDATION = 4;
+var METHODNAME_IS_BIRTHYEAR_VALIDATION = 5;
+var METHODNAME_IS_MAX_LENGTH = 6;
+var METHODNAME_IS_BIRTHDATE_VALIDATION = 7;
 
 
 /**
@@ -94,12 +95,8 @@ function validate(validationObj){
                     
                     if ( isValid)
                    	{
-                        isValid = isValueBetweenMinMax(paramValue, min, max);
-                        
-                        
+                        isValid = isValueBetweenMinMax(paramValue, min, max);   
                     }
-                        
-                   
 	    			isAllValid = isAllValid && isValid;
 	    			break;
                 case METHODNAME_IS_BIRTHMONTH_VALIDATION:
@@ -154,7 +151,24 @@ function validate(validationObj){
 	    			isValid = isMaxLength(paramValue, max);
 	    			isAllValid = isAllValid && isValid;
 	    			break;
-	    				
+	    		case METHODNAME_IS_BIRTHDATE_VALIDATION:
+                    var max = methodObj.PARAM_MAX_VALUE;
+                    isValid = isRequired(paramValue);
+                    /*if ( isValid){
+                        isValid = isWhole(paramValue);
+                        alert("isWhole: "+isValid);
+                    }*/
+                    if ( isValid){
+                        isValid = isDate(paramValue);
+                    }
+                    if ( !isValid)
+                    	removeError = false;
+                    else
+                    	if ( !removeError)
+                    		clearErrorWithoutInput(inputId, errorMessage, errorId);
+                    isAllValid = isAllValid && isValid;
+                   
+	    			break;	
 	    		default:
 	    			isValid = false;
 	    			isAllValid = isAllValid && isValid;
@@ -243,6 +257,10 @@ function isYear (s) {
    return String(s).search (is_year) != -1
 }
 
+function isDate (s) {
+    var is_date      = /^\d{1,2}\/\d{4}$/;
+   return String(s).search (is_date) != -1
+}
 
 /**
  * Returns true or false based on if the value is alphanumeric or not
