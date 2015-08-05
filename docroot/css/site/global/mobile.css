@@ -515,20 +515,19 @@ button#pg-logout-yes.button-primary{
 }
 
 .form-block li {
-
-	margin-top: 5px;
+	/*margin-top: 5px;*/
 	margin-bottom: 0;
-	padding: 5px;
+	/*padding: 5px;*/
 	border-radius: 4px;
-	text-shadow: 0 1px 0 white;
+	/*text-shadow: 0 1px 0 white;*/
 	font-size: 16px;
 }
 
 .form-block input {
 	color: #666666;
-	padding:5px 2px 5px 4px;
-	height:20px;
-	font-size: 12px;
+	padding: 5px 0 5px 4px;
+	height: 30px;
+	font-size: 15px;
 }
 
 .form-block li label {
@@ -540,7 +539,7 @@ button#pg-logout-yes.button-primary{
 }
 
 .form-block li input {
-	margin-top: -3px;
+	/*margin-top: -3px;*/
 }
 
 .form-block button {
@@ -549,7 +548,10 @@ button#pg-logout-yes.button-primary{
 }
 
 #last_name {
-	width:155px;
+	width: 100%;
+	border-radius: 0;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-bottom: 0;
 }
 
 .guest #last_name {
@@ -575,12 +577,9 @@ button#pg-logout-yes.button-primary{
 }
 
 .failmessage {
-
 	margin: 5px -5px -5px -5px;
-
 	padding: 5px 10px 8px 10px;
 	border-radius: 0 0 4px 4px;
-
 	background-color: rgba(0,0,0,.6);
 	color: white;
 	text-shadow: none;
@@ -590,7 +589,11 @@ button#pg-logout-yes.button-primary{
 }
 
 #mrn {
-	width:108px;
+	width: 100%;
+	border-radius: 0;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-top-color: #999;
+	border-bottom-color: #999;
 }
 
 #birth_month,
@@ -598,8 +601,35 @@ button#pg-logout-yes.button-primary{
 	width: 30px;
 }
 
-#birth_year {
+/*#birth_year {
 	width: 50px;
+}*/
+
+#birth_date {
+	width: 100%;
+	border-radius: 0;
+	border: 1px solid rgba(0,0,0,0.3);
+	border-top: 0;
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+#lastNameErrorId, #mrnErrorId, #dateOfBirthErrorId{
+	background-color: red;
+	color: #FFFFFF;
+	font-weight: bold;
+	line-height: 2em;
+	text-align: center;
+	height: 35px;
+}
+
+#globalError{
+	background-color: red;
+	color: #FFFFFF;
+	font-weight: bold;
+	line-height: 2em;
+	text-align: center;
+	height: 60px;	
 }
 
 /* - - - - - - - - Page Content - - - - - - - - */
