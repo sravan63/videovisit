@@ -20,26 +20,30 @@
 		})
 	});
 	
-	var app={
-		launchApp: function(){
-			window.location.replace("kppc://videovisit");
-				this.timer = setTimeout(this.openWebApp, 1000);
-		},
-		openWebApp: function(){
-			var os = getAppOS();
-			
-			if(os == "iOS"){
-				window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
-			}
-			else if(os == "Android"){
-				window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
-			}
-			else{
-				// we should never reach this condition
-				alert("No device detected");
-			}
-		}
-	}
+	var now = new Date().valueOf();
+    var app={
+    	launchApp: function(){
+        	this.timer = setTimeout(this.openWebApp, 2000);
+            window.location.replace("kppc://videovisit?signon=true");
+        },
+        openWebApp: function(){
+            //alert('in timeout ' + new Date().valueOf() + ' ' + now);
+            if (new Date().valueOf() - now > 9000) return;
+            //alert('after date check');
+            var os = getAppOS();
+
+            if(os == "iOS"){
+                    window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+            }
+            else if(os == "Android"){
+                    window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
+            }
+            else{
+                    // we should never reach this condition
+                    alert("No device detected");
+            }
+        }
+    }
 </script>
 
 <div id="content-window">
