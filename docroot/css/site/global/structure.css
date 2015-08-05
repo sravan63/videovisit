@@ -113,7 +113,7 @@ input								{outline:none;}
 .textarea-block textarea 		{width:98%; height:183px; padding:5px 0 0 5px; margin:6px 0 14px 0; border:1px solid #ccc; line-height:1.3em;}
 .textarea-block h4				{color:#BC715E; line-height:30px; size:12px; font-weight:normal; background:#E2EAED; padding:0 5px;}
 
-.submit-block					{clear:both;list-style-type:none;margin:0 0 25px 20px;}
+.submit-block					{clear:both;list-style-type:none;margin:0 0 25px 20px;width:390px;}
 #content-block .submit-block p 	{margin:0 35px 0 0;display:block;float:right;width:300px;line-height:25px;}
 
 /* special form block styles */
