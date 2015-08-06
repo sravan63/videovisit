@@ -8,7 +8,7 @@
         <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2"></li>
         <li>
             <label for="birth_date">Date of Birth</label>
-            <input type="text" name="birth_date" title="mm/yyyy" placeholder="mm/yyyy" class="birth_date" id="birth_date" maxlength="7" tabindex="3" style="width:108px;">
+            <input type="text" name="birth_date" placeholder="mm/yyyy" class="birth_date" id="birth_date" maxlength="7" tabindex="3" style="width:108px;">
         </li>
   	</ul>
     <div class="submit-block">
