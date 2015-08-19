@@ -80,7 +80,7 @@ function validate(validationObj){
 	    			
 	    		case METHODNAME_IS_ALPHA_NUMERIC: 
                     isValid = isRequired(paramValue);
-                    if ( isValid)
+                    if (isValid)
                         isValid = isAlphaNumeric(paramValue);
 	    			isAllValid = isAllValid && isValid;
 	    			
@@ -101,19 +101,17 @@ function validate(validationObj){
 	    			break;
                 case METHODNAME_IS_BIRTHMONTH_VALIDATION:
                     isValid = isRequired(paramValue);
-                    if ( isValid)
-                        isValid = isWhole(paramValue);
-                    if ( isValid)
+
+                    if (isValid){
                         isValid = isMonth(paramValue);
-                    
-                    if ( !isValid)
+                    }
+                    if (!isValid)
                     	removeError = false;
                     else
                     	if ( !removeError)
                     		clearErrorWithoutInput(inputId, errorMessage, errorId);
-                   
                     isAllValid = isAllValid && isValid;
-                    //alert('in month' + isValid);
+                   
 	    			break;
                 case METHODNAME_IS_BIRTHDAY_VALIDATION:
                     isValid = isRequired(paramValue);
@@ -128,16 +126,15 @@ function validate(validationObj){
                     		clearErrorWithoutInput(inputId, errorMessage, errorId);
                     
                     isAllValid = isAllValid && isValid;
-                    // alert(isAllValid);
-	    			break; 
+                    
+	    			break;
                 case METHODNAME_IS_BIRTHYEAR_VALIDATION:
-                    var max = methodObj.PARAM_MAX_VALUE;
+	    			var max = methodObj.PARAM_MAX_VALUE;
                     isValid = isRequired(paramValue);
-                    if ( isValid)
-                        isValid = isWhole(paramValue);
-                    if ( isValid)
+                    if (isValid){
                         isValid = isYear(paramValue);
-                    if ( !isValid)
+                    }
+                    if (!isValid)
                     	removeError = false;
                     else
                     	if ( !removeError)
@@ -151,24 +148,6 @@ function validate(validationObj){
 	    			isValid = isMaxLength(paramValue, max);
 	    			isAllValid = isAllValid && isValid;
 	    			break;
-	    		case METHODNAME_IS_BIRTHDATE_VALIDATION:
-                    var max = methodObj.PARAM_MAX_VALUE;
-                    isValid = isRequired(paramValue);
-                    /*if ( isValid){
-                        isValid = isWhole(paramValue);
-                        alert("isWhole: "+isValid);
-                    }*/
-                    if ( isValid){
-                        isValid = isDate(paramValue);
-                    }
-                    if ( !isValid)
-                    	removeError = false;
-                    else
-                    	if ( !removeError)
-                    		clearErrorWithoutInput(inputId, errorMessage, errorId);
-                    isAllValid = isAllValid && isValid;
-                   
-	    			break;	
 	    		default:
 	    			isValid = false;
 	    			isAllValid = isAllValid && isValid;
@@ -178,17 +157,16 @@ function validate(validationObj){
 	    	if(!isValid){
 	    		displayError(inputId, errorMessage, errorId);
 	    	}
-            else
-            	 if ( removeError)
-               		 clearError(inputId, errorMessage, errorId);
-	    	
+            else{
+            	if (removeError){
+               		clearError(inputId, errorMessage, errorId);
+               	}
+	    	}
 	    });
 	    
 	    
 	});
 	
-	
-
 	return isAllValid ;
 }
 
@@ -223,9 +201,9 @@ function isWhole (s) {
  * @returns
  */
 function isMonth (s) {
-	 if (s.length == 1) {
+	 /*if (s.length == 1) {
 	        s = "0" + s;
-	 }
+	 }*/
 	 var is_month       = /^(0[1-9]|1[0-2])$/;
 	 return String(s).search (is_month) != -1
 }
@@ -253,8 +231,17 @@ function isDay (s) {
 
 
 function isYear (s) {
-    var is_year      = /^\d{4}$/;
-   return String(s).search (is_year) != -1
+   	var is_year = /^\d{4}$/;
+
+   	var currentDate = new Date();
+	var currentYear = currentDate.getFullYear();
+
+    var selectedYear = s;
+	
+	//The Entered Year should be between 1900 and Current Year
+    if (selectedYear>=1900 && selectedYear<=currentYear){
+    	return String(s).search (is_year) != -1;
+    }
 }
 
 function isDate (s) {
@@ -321,7 +308,7 @@ function isMaxLength(value, max){
 function displayError(inputElementId, errorMessage, errorElementId){
 	$("#" + errorElementId).text(errorMessage);
 	$("#" +errorElementId).removeClass("hide-me");
-	$("#" +inputElementId).parent().addClass("error");
+	//$("#" +inputElementId).parent().addClass("error");
 }
 
 
@@ -331,9 +318,9 @@ function displayError(inputElementId, errorMessage, errorElementId){
  * @param errorMessage
  */
 function clearError(inputElementId, errorMessage, errorElementId){
-	$("#" + errorElementId).text(errorMessage);
-	$("#" +errorElementId).addClass("hide-me");
-	$("#" +inputElementId).parent().removeClass("error");
+	$("#" + errorElementId).text("");
+	//$("#" +errorElementId).addClass("hide-me");
+	//$("#" +inputElementId).parent().removeClass("error");
 }
 
 /**
