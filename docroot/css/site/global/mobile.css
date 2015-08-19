@@ -614,13 +614,13 @@ button#pg-logout-yes.button-primary{
 	border-bottom-right-radius: 3px;
 }
 
-#lastNameErrorId, #mrnErrorId, #dateOfBirthErrorId{
+#lastNameErrorId, #mrnErrorId, #monthOfBirthErrorId, #yearOfBirthErrorId, #dateOfBirthErrorId{
 	background-color: red;
 	color: #FFFFFF;
 	font-weight: bold;
 	line-height: 2em;
 	text-align: center;
-	height: 35px;
+	height: auto;
 }
 
 #globalError{
