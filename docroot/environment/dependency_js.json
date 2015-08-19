@@ -30,10 +30,9 @@
                 	"js/site/intro/popup.js"
                 ],
                 "login"  :   [
-                    "js/library/plugin/validation/jquery.validate.min.js",
+                	"js/library/plugin/maskedinput/jquery.maskedinput.min.js",
                     "js/site/login/login.js",
-                    "js/library/plugin/validation/additional-methods.min.js",
-                    "js/library/plugin/maskedinput/jquery.maskedinput.min.js"              
+                    "js/site/validation/validate.js"
                 ],
                 "logout"  :   [],
                 "guestlogout" : []
