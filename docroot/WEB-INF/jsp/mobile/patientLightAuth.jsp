@@ -5,6 +5,12 @@
 <div id="mrnErrorId" class="localfailmessage hide-me" style="background-color:#686A6C;">
 	<p></p>
 </div>
+<div id="monthOfBirthErrorId" class="localfailmessage hide-me" style="background-color:#686A6C;">
+	<p></p>
+</div>
+<div id="yearOfBirthErrorId" class="localfailmessage hide-me" style="background-color:#686A6C;">
+	<p></p>
+</div>
 <div id="dateOfBirthErrorId" class="localfailmessage hide-me" style="background-color:#686A6C;">
 	<p></p>
 </div>
@@ -13,7 +19,6 @@
 </div>
 
 <div style="padding:10px;">
-	
 	<div id="login-form">
 		<h1>Sign In to Video Visits</h1>	
 		<form class="login-form" style="margin:10px 0 0;">
@@ -31,5 +36,10 @@
 		<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
 	 	
 	 	<%@ include file="common/informationTwo.jsp" %>
-
 </div>
+
+<style>
+	button#login-submit{
+		opacity:0.5;
+	}
+</style>
