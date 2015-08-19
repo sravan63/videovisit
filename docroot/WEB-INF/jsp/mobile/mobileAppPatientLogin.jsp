@@ -5,6 +5,12 @@
 <div id="mrnErrorId" class="localfailmessage hide-me">
 	<p></p>
 </div>
+<div id="monthOfBirthErrorId" class="localfailmessage hide-me">
+	<p></p>
+</div>
+<div id="yearOfBirthErrorId" class="localfailmessage hide-me">
+	<p></p>
+</div>
 <div id="dateOfBirthErrorId" class="localfailmessage hide-me">
 	<p></p>
 </div>
@@ -43,3 +49,9 @@
 		<p class="disclaimer" style="text-align:left;">Guests of patients with a video visit, click the link in your email invitation.</p>
 	</div>
 </div>
+
+<style>
+	button#mobile-login-submit{
+		opacity:0.5;
+	}
+</style>
