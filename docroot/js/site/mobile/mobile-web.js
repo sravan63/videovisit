@@ -96,15 +96,25 @@ $(document).ready(function() {
 	hideAddressBar();
 	setMemberContext();
 	
-	$(":text").on('keyup', function(){
+	$(":input").on('keyup', function(){
 		//alert("disabled");
-		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_date').val() != ""){
+		if($('#last_name').val() != "" && $('#mrn').val() != "" && ($('#birth_date').val() != "mm/yyyy" && $('#birth_date').val() != "")){
 			$('#login-submit').removeAttr('disabled');
+            $('#login-submit').css('cursor', 'pointer');
+            $('button#login-submit').css('opacity', '1.0');
+
 			$('#mobile-login-submit').removeAttr('disabled');
+			$('#mobile-login-submit').css('cursor', 'pointer');
+            $('button#mobile-login-submit').css('opacity', '1.0');
 		}
 		else{
 			$('#login-submit').attr('disabled', true);
+			$('#login-submit').css('cursor', 'default');
+            $('button#login-submit').css('opacity', '0.5');
+
 			$('#mobile-login-submit').attr('disabled', true);
+			$('#mobile-login-submit').css('cursor', 'default');
+            $('button#mobile-login-submit').css('opacity', '0.5');
 		}
 	});
 
@@ -279,7 +289,7 @@ $(document).ready(function() {
 	        }
         }
 		// if client side validation successful
-		if(isLoginValiadtionSuccess()){
+		if(isLoginValidationSuccess()){
 			loginSubmit();
 		}
 
@@ -300,7 +310,7 @@ $(document).ready(function() {
 	        }
         }
 		// if client side validation successful
-		if(isLoginValiadtionSuccess()){
+		if(isLoginValidationSuccess()){
 			mobileloginSubmit();
 		}
 
@@ -911,7 +921,7 @@ function openTab(url)
  *
  * @returns
  */
-function isLoginValiadtionSuccess(){
+function isLoginValidationSuccess(){
 	
 	var birth_month = $("#birth_date").val().split("/")[0];
     var birth_year = $("#birth_date").val().split("/")[1];
@@ -922,7 +932,7 @@ function isLoginValiadtionSuccess(){
 				{
 					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
 					"PARAM_VALUE" : $("#last_name").val(),
-					"ERROR_MESSAGE" : "Last name is required",
+					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed in Last Name",
 					"ERROR_ID" : "lastNameErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
@@ -933,59 +943,61 @@ function isLoginValiadtionSuccess(){
 					"PARAM_VALUE" : $("#mrn").val(),
 					"PARAM_MIN_VALUE" :8,
 					"PARAM_MAX_VALUE" :8,
-					"ERROR_MESSAGE" : "MRN is required",
+					"ERROR_MESSAGE" : "Please enter a valid Medical Record Number",
 					"ERROR_ID" : "mrnErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
 			],
-			"birth_date"	:[
-			            {
-			            	"METHOD_NAME" : METHODNAME_IS_BIRTHDATE_VALIDATION,
-							"PARAM_VALUE" : $("#birth_date").val(),
-							"ERROR_MESSAGE" : "Birth Date is required",
-							"ERROR_ID" : "dateOfBirthErrorId",
-							"HIGHLIGHT_PARENT_WHEN_ERROR": false
-			            }
-					]
-            /*"birth_month"	:[
-						{
-							"METHOD_NAME" : METHODNAME_IS_BIRTHMONTH_VALIDATION,
-							"PARAM_VALUE" : $("#birth_month").val(),
-							"ERROR_MESSAGE" : "Please enter a valid birth month.",
-							"ERROR_ID" : "dateOfBirthMonthErrorId",
-							"HIGHLIGHT_PARENT_WHEN_ERROR": true
-
-						}
-					],
-			"birth_day"	:[
+            "birth_month"	:[
 				{
-					"METHOD_NAME" : METHODNAME_IS_BIRTHDAY_VALIDATION,
-					"PARAM_VALUE" : $("#birth_day").val(),
-					"ERROR_MESSAGE" : "Please enter a valid birth day.",
-					"ERROR_ID" : "dateOfBirthDayErrorId",
+					"METHOD_NAME" : METHODNAME_IS_BIRTHMONTH_VALIDATION,
+					"PARAM_VALUE" : birth_month,
+					"ERROR_MESSAGE" : "Please enter a valid Birth Month.",
+					"ERROR_ID" : "monthOfBirthErrorId",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+
 				}
 			],
 			"birth_year"	:[
-			            {
-			            	"METHOD_NAME" : METHODNAME_IS_BIRTHYEAR_VALIDATION,
-							"PARAM_VALUE" : $("#birth_year").val(),
-							"ERROR_MESSAGE" : "Please enter a valid birth year.",
-							"ERROR_ID" : "dateOfBirthYearErrorId",
-							"HIGHLIGHT_PARENT_WHEN_ERROR": true
-			            }
-					]*/
-
+	            {
+	            	"METHOD_NAME" : METHODNAME_IS_BIRTHYEAR_VALIDATION,
+					"PARAM_VALUE" : birth_year,
+					"ERROR_MESSAGE" : "Please enter a valid Birth Year.",
+					"ERROR_ID" : "yearOfBirthErrorId",
+					"HIGHLIGHT_PARENT_WHEN_ERROR": true
+	            }
+			]
 		}
 
 	var  isValid = validate(validationObj);
 
+	if(isValid){
+		var currentDate = new Date();
+		var currentMonth = currentDate.getMonth() + 1;
+		var currentYear = currentDate.getFullYear();
+
+		var selectedMonth = birth_month;
+	    var selectedYear = birth_year;
+
+	    //The entered Month of current year should not be in future
+	    if(selectedYear == currentYear){
+    		if(selectedMonth <= currentMonth){
+    			return true;
+    		}
+	    }
+	    else{
+	    	return true;
+	    }
+
+	    $('#dateOfBirthErrorId').html("Please enter a valid Birth Date").removeClass("hide-me");
+	    return false;
+	}
+	
 	return isValid;
 
 }
 
 function validationPatientGuestLogin(){
-
 	var validationObj =
 	{
 		"last_name" : [
@@ -999,12 +1011,9 @@ function validationPatientGuestLogin(){
 		]
 
 	}
-
-
 	var  isValid = validate(validationObj);
 
 	return isValid;
-
 }
 
 /**
@@ -1014,19 +1023,6 @@ function validationPatientGuestLogin(){
  * @param firstName
  */
 function loginSubmit(){
-
-    // Prepare data from pertinent fields for POSTing
-    // Format birth_month
-    /*var birth_month = $('input[name=birth_month]').val();
-    if (birth_month.length == 1) {
-        birth_month = "0" + birth_month;
-    }
-    // Format birth_day
-    var birth_day = $('input[name=birth_day]').val();
-    if (birth_day.length == 1) {
-        birth_day = "0" + birth_day;
-    }*/
-
     var birth_month = $("#birth_date").val().split("/")[0];
     var birth_year = $("#birth_date").val().split("/")[1];
     var birth_day = "";
@@ -1096,19 +1092,6 @@ function loginSubmit(){
  * @param firstName
  */
 function mobileloginSubmit(){
-
-    // Prepare data from pertinent fields for POSTing
-    // Format birth_month
-    /*var birth_month = $('input[name=birth_month]').val();
-    if (birth_month.length == 1) {
-        birth_month = "0" + birth_month;
-    }
-    // Format birth_day
-    var birth_day = $('input[name=birth_day]').val();
-    if (birth_day.length == 1) {
-        birth_day = "0" + birth_day;
-    }*/
-
     var birth_month = $("#birth_date").val().split("/")[0];
     var birth_year = $("#birth_date").val().split("/")[1];
     var birth_day = "";
@@ -1226,15 +1209,11 @@ function loginSubmitPG(){
                  return false;
             }
 
-
-             window.location.replace("mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + $('input[name=last_name]').val());
-
+            window.location.replace("mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + $('input[name=last_name]').val());
         },
         error: function() {
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-
-
         }
     });
 
@@ -1258,8 +1237,6 @@ function setSessionTimeout(){
         error: function() {
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-
-
         }
     });
 
@@ -1285,8 +1262,6 @@ function createGuestSession(isMobileFlow){
         error: function() {
         	//$("#globalError").text("There was an error submitting your login.");
  	   		//$("#globalError").removeClass("hide-me").addClass("error");
-
-
         }
     });
 
@@ -1310,8 +1285,6 @@ function joinMeeting(meetingId){
         error: function() {
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-
-
         }
     });
 
@@ -1319,8 +1292,6 @@ function joinMeeting(meetingId){
 }
 
 function refreshTimestamp(){
-
-
 	var currentTime = new Date();
 	var month = currentTime.getMonth() + 1;
 	var day = currentTime.getDate();
@@ -1355,7 +1326,6 @@ function refreshTimestamp(){
 }
 
 function iOSversion() {
-
 	 // supports iOS 2.0 and later
 	 var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
 	 return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
