@@ -72,6 +72,7 @@ function validate(validationObj){
 		    var errorMessage = methodObj.ERROR_MESSAGE;
 		    var errorId = methodObj.ERROR_ID;
 	    	var paramValue = methodObj.PARAM_VALUE;
+	    	var inputElement = methodObj.INPUT_ELEMENT;
 	    	switch(methodName){
 	    		case METHODNAME_IS_REQUIRED: 
 	    			isValid = isRequired(paramValue);
@@ -93,8 +94,7 @@ function validate(validationObj){
 	    			if ( isValid )
                    	 isValid = isWhole(paramValue);
                     
-                    if ( isValid)
-                   	{
+                    if(isValid){
                         isValid = isValueBetweenMinMax(paramValue, min, max);   
                     }
 	    			isAllValid = isAllValid && isValid;
@@ -155,11 +155,11 @@ function validate(validationObj){
 	    	}
 	    	
 	    	if(!isValid){
-	    		displayError(inputId, errorMessage, errorId);
+	    		displayError(inputId, errorMessage, errorId, inputElement);
 	    	}
             else{
             	if (removeError){
-               		clearError(inputId, errorMessage, errorId);
+               		clearError(inputId, errorMessage, errorId, inputElement);
                	}
 	    	}
 	    });
@@ -305,10 +305,11 @@ function isMaxLength(value, max){
  * @param element
  * @param errorMessage
  */
-function displayError(inputElementId, errorMessage, errorElementId){
+function displayError(inputElementId, errorMessage, errorElementId, inputElementText){
 	$("#" + errorElementId).text(errorMessage);
 	$("#" +errorElementId).removeClass("hide-me");
 	//$("#" +inputElementId).parent().addClass("error");
+	$("#" +inputElementText).css("color", "red");
 }
 
 
@@ -317,7 +318,7 @@ function displayError(inputElementId, errorMessage, errorElementId){
  * @param element
  * @param errorMessage
  */
-function clearError(inputElementId, errorMessage, errorElementId){
+function clearError(inputElementId, errorMessage, errorElementId, inputElementText){
 	$("#" + errorElementId).text("");
 	//$("#" +errorElementId).addClass("hide-me");
 	//$("#" +inputElementId).parent().removeClass("error");
@@ -330,7 +331,7 @@ function clearError(inputElementId, errorMessage, errorElementId){
  */
 function clearErrorWithoutInput(inputElementId, errorMessage, errorElementId){
 	$("#" + errorElementId).text(errorMessage);
-	$("#" +errorElementId).addClass("hide-me");
+	$("#" + errorElementId).addClass("hide-me");
 	//$("#" +inputElementId).parent().removeClass("error");
 }
 
@@ -351,5 +352,9 @@ function clearAllErrors(){
     	$(this).addClass("hide-me");
     	$(this).parent().removeClass("error");
     })
+
+    $("#last_name").css("color", "#000000");
+    $("#mrn").css("color", "#000000");
+    $("#birth_date").css("color", "#000000");
 }
 
