@@ -23,7 +23,7 @@
         <input type="submit" name="login" value="Login &rsaquo;&rsaquo;" id="login" class="button" tabindex="4" style="float:right; cursor:default;" disabled="disabled">
     </div>
 </form>
-
+<p class="error error-login"><a name="errors"></a></p>
 <style>
 	.error{
 		width: 250px;
