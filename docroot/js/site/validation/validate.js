@@ -309,7 +309,7 @@ function displayError(inputElementId, errorMessage, errorElementId, inputElement
 	$("#" + errorElementId).text(errorMessage);
 	$("#" +errorElementId).removeClass("hide-me");
 	//$("#" +inputElementId).parent().addClass("error");
-	$("#" +inputElementText).css("color", "red");
+	$("#" +inputElementText).css("color", "#D0021B");
 }
 
 
