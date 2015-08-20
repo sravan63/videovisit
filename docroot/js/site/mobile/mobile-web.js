@@ -932,7 +932,7 @@ function isLoginValidationSuccess(){
 				{
 					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
 					"PARAM_VALUE" : $("#last_name").val(),
-					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed in Last Name",
+					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed.",
 					"ERROR_ID" : "lastNameErrorId",
 					"INPUT_ELEMENT" : "last_name",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
@@ -944,7 +944,7 @@ function isLoginValidationSuccess(){
 					"PARAM_VALUE" : $("#mrn").val(),
 					"PARAM_MIN_VALUE" :8,
 					"PARAM_MAX_VALUE" :8,
-					"ERROR_MESSAGE" : "Please enter a valid Medical Record Number",
+					"ERROR_MESSAGE" : "Please enter a valid Medical Record Number.",
 					"ERROR_ID" : "mrnErrorId",
 					"INPUT_ELEMENT" : "mrn",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
@@ -993,7 +993,7 @@ function isLoginValidationSuccess(){
 	    	return true;
 	    }
 
-	    $('#dateOfBirthErrorId').html("Please enter a valid Birth Date").removeClass("hide-me");
+	    $('#dateOfBirthErrorId').html("Please enter a valid Date of Birth.").removeClass("hide-me");
 	    $('#birth_date').css("color", "#D0021B");
 	    return false;
 	}
