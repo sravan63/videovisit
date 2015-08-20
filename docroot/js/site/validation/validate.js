@@ -75,20 +75,19 @@ function validate(validationObj){
 	    	var inputElement = methodObj.INPUT_ELEMENT;
 	    	switch(methodName){
 	    		case METHODNAME_IS_REQUIRED: 
-	    			isValid = isRequired(paramValue);
+	    			//isValid = isRequired(paramValue);		// Not required & .trim() doesn't work in IE8
 	    			isAllValid = isAllValid && isValid;
 	    			break;
 	    			
 	    		case METHODNAME_IS_LASTNAME_VALIDATION:
 	    			var min = methodObj.PARAM_MIN_VALUE;
 
-                    isValid = isRequired(paramValue);
-                    if(isValid){
-                    	isValid = isMinLength(paramValue, min);
-                    	if(!isValid){
-                    		errorMessage = "Please enter atleast 2 characters."
-                    	}
-                    }
+                    //isValid = isRequired(paramValue);		// Not required & .trim() doesn't work in IE8
+
+                    isValid = isMinLength(paramValue, min);
+                	if(!isValid){
+                		errorMessage = "Please enter atleast 2 characters."
+                	}
                     if (isValid)
                         isValid = isAlphaNumeric(paramValue);
 	    			isAllValid = isAllValid && isValid;
@@ -98,9 +97,8 @@ function validate(validationObj){
 	    			var min = methodObj.PARAM_MIN_VALUE;
 	    			var max = methodObj.PARAM_MAX_VALUE;
 	    			
-	    			isValid = isRequired(paramValue); 
-	    			if ( isValid )
-                   	 isValid = isWhole(paramValue);
+	    			//isValid = isRequired(paramValue);		// Not required & .trim() doesn't work in IE8
+                   	isValid = isWhole(paramValue);
                     
                     if(isValid){
                         isValid = isValueBetweenMinMax(paramValue, min, max);   
@@ -108,11 +106,9 @@ function validate(validationObj){
 	    			isAllValid = isAllValid && isValid;
 	    			break;
                 case METHODNAME_IS_BIRTHMONTH_VALIDATION:
-                    isValid = isRequired(paramValue);
+                    //isValid = isRequired(paramValue);		// Not required & .trim() doesn't work in IE8
 
-                    if (isValid){
-                        isValid = isMonth(paramValue);
-                    }
+                    isValid = isMonth(paramValue);
                     if (!isValid)
                     	removeError = false;
                     else
@@ -122,9 +118,9 @@ function validate(validationObj){
                    
 	    			break;
                 case METHODNAME_IS_BIRTHDAY_VALIDATION:
-                    isValid = isRequired(paramValue);
-                    if ( isValid)
-                        isValid = isWhole(paramValue);
+                    //isValid = isRequired(paramValue);		// Not required & .trim() doesn't work in IE8
+
+                    isValid = isWhole(paramValue);
                     if ( isValid)
                         isValid = isDay(paramValue);
                     if ( !isValid)
@@ -138,10 +134,9 @@ function validate(validationObj){
 	    			break;
                 case METHODNAME_IS_BIRTHYEAR_VALIDATION:
 	    			var max = methodObj.PARAM_MAX_VALUE;
-                    isValid = isRequired(paramValue);
-                    if (isValid){
-                        isValid = isYear(paramValue);
-                    }
+                    //isValid = isRequired(paramValue);		// Not required & .trim() doesn't work in IE8
+
+                    isValid = isYear(paramValue);
                     if (!isValid)
                     	removeError = false;
                     else
@@ -263,14 +258,14 @@ function isDate (s) {
  * @param value
  * @returns
  */
-function isRequired(value){
+/*function isRequired(value){		// Not required & .trim() doesn't work in IE8
 	if(value == null || value.trim() == ''){
 		return false;
 	}
 	else{
 		return true;
 	}
-}
+}*/
 
 
 /**
