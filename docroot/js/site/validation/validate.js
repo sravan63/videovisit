@@ -86,7 +86,7 @@ function validate(validationObj){
 
                     isValid = isMinLength(paramValue, min);
                 	if(!isValid){
-                		errorMessage = "Please enter atleast 2 characters."
+                		errorMessage = "Please enter at least 2 characters."
                 	}
                     if (isValid)
                         isValid = isAlphaNumeric(paramValue);
