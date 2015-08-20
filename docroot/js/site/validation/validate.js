@@ -1,5 +1,5 @@
 var METHODNAME_IS_REQUIRED = 0;
-var METHODNAME_IS_ALPHA_NUMERIC = 1;
+var METHODNAME_IS_LASTNAME_VALIDATION = 1;
 var METHODNAME_IS_VALUE_BETWEEN_MIN_AND_MAX = 2;
 var METHODNAME_IS_BIRTHDAY_VALIDATION = 3;
 var METHODNAME_IS_BIRTHMONTH_VALIDATION = 4;
@@ -79,8 +79,16 @@ function validate(validationObj){
 	    			isAllValid = isAllValid && isValid;
 	    			break;
 	    			
-	    		case METHODNAME_IS_ALPHA_NUMERIC: 
+	    		case METHODNAME_IS_LASTNAME_VALIDATION:
+	    			var min = methodObj.PARAM_MIN_VALUE;
+
                     isValid = isRequired(paramValue);
+                    if(isValid){
+                    	isValid = isMinLength(paramValue, min);
+                    	if(!isValid){
+                    		errorMessage = "Please enter atleast 2 characters."
+                    	}
+                    }
                     if (isValid)
                         isValid = isAlphaNumeric(paramValue);
 	    			isAllValid = isAllValid && isValid;
@@ -177,7 +185,7 @@ function validate(validationObj){
  * @returns
  */
 function isAlphaNumeric(value){
-	var re = /^[a-z-.,()'\"\s]+$/i;
+	var re = /^[a-z-'\s]+$/i;
 	return re.test(value);
 }
 
@@ -288,12 +296,26 @@ function isValueBetweenMinMax(value, min, max){
  * @returns
  */
 function isMaxLength(value, max){
-	
 	if(value != null &&  value.length == max){
 		return true;
 	}
 	else{
 		return false;
+	}
+}
+
+/**
+ * Returns true or false based on if the min length is satisfied
+ * @param element
+ * @param value
+ * @returns
+ */
+function isMinLength(value, min){
+	if(value.length < min){
+		return false;
+	}
+	else{
+		return true;
 	}
 }
 
