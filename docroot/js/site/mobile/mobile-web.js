@@ -934,6 +934,7 @@ function isLoginValidationSuccess(){
 					"PARAM_VALUE" : $("#last_name").val(),
 					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed in Last Name",
 					"ERROR_ID" : "lastNameErrorId",
+					"INPUT_ELEMENT" : "last_name",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
 			],
@@ -945,6 +946,7 @@ function isLoginValidationSuccess(){
 					"PARAM_MAX_VALUE" :8,
 					"ERROR_MESSAGE" : "Please enter a valid Medical Record Number",
 					"ERROR_ID" : "mrnErrorId",
+					"INPUT_ELEMENT" : "mrn",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
 			],
@@ -954,6 +956,7 @@ function isLoginValidationSuccess(){
 					"PARAM_VALUE" : birth_month,
 					"ERROR_MESSAGE" : "Please enter a valid Birth Month.",
 					"ERROR_ID" : "monthOfBirthErrorId",
+					"INPUT_ELEMENT" : "birth_date",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
 
 				}
@@ -964,6 +967,7 @@ function isLoginValidationSuccess(){
 					"PARAM_VALUE" : birth_year,
 					"ERROR_MESSAGE" : "Please enter a valid Birth Year.",
 					"ERROR_ID" : "yearOfBirthErrorId",
+					"INPUT_ELEMENT" : "birth_date",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
 	            }
 			]
@@ -990,6 +994,7 @@ function isLoginValidationSuccess(){
 	    }
 
 	    $('#dateOfBirthErrorId').html("Please enter a valid Birth Date").removeClass("hide-me");
+	    $('#birth_date').css("color", "red");
 	    return false;
 	}
 	
