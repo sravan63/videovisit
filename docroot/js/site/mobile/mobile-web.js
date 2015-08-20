@@ -994,7 +994,7 @@ function isLoginValidationSuccess(){
 	    }
 
 	    $('#dateOfBirthErrorId').html("Please enter a valid Birth Date").removeClass("hide-me");
-	    $('#birth_date').css("color", "red");
+	    $('#birth_date').css("color", "#D0021B");
 	    return false;
 	}
 	
