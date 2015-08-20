@@ -50,9 +50,10 @@ function isLoginValidationSuccess(){
 		{
 			"last_name" : [
 				{
-					"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
+					"METHOD_NAME" : METHODNAME_IS_LASTNAME_VALIDATION,
 					"PARAM_VALUE" : $("#last_name").val(),
-					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed.",
+                    "PARAM_MIN_VALUE" :2,
+					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed",
 					"ERROR_ID" : "lastNameErrorId",
                     "INPUT_ELEMENT" : "last_name",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
