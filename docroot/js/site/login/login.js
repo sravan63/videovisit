@@ -1,5 +1,6 @@
 $(document).ready(function() {
-	$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
+	//$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
+    $("#birth_date").mask("99/9999",{placeholder:""});
 	
 	//Disable the Login button unless all the fields are entered
 	$(":input").on('keyup', function(){
@@ -53,6 +54,7 @@ function isLoginValidationSuccess(){
 					"PARAM_VALUE" : $("#last_name").val(),
 					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed",
 					"ERROR_ID" : "lastNameErrorId",
+                    "INPUT_ELEMENT" : "last_name",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
 			],
@@ -64,6 +66,7 @@ function isLoginValidationSuccess(){
 					"PARAM_MAX_VALUE" :8,
 					"ERROR_MESSAGE" : "Please enter a valid Medical Record Number",
 					"ERROR_ID" : "mrnErrorId",
+                    "INPUT_ELEMENT" : "mrn",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
 			],
@@ -73,6 +76,7 @@ function isLoginValidationSuccess(){
 					"PARAM_VALUE" : birth_month,
 					"ERROR_MESSAGE" : "Please enter a valid Birth Month",
 					"ERROR_ID" : "monthOfBirthErrorId",
+                    "INPUT_ELEMENT" : "birth_date",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 	            }
 			],
@@ -82,6 +86,7 @@ function isLoginValidationSuccess(){
 					"PARAM_VALUE" : birth_year,
 					"ERROR_MESSAGE" : "Please enter a valid Birth Year",
 					"ERROR_ID" : "yearOfBirthErrorId",
+                    "INPUT_ELEMENT" : "birth_date",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 	            }
 			]
@@ -108,6 +113,7 @@ function isLoginValidationSuccess(){
 	    }
 
 	    $('#dateOfBirthErrorId').html("Please enter a valid Birth Date").removeClass("hide-me");
+        $('#birth_date').css("color", "#FF0000");
 	    return false;
 	}
 
@@ -171,10 +177,19 @@ function loginSubmit(){
 }
 
 function clearAllErrorFields(){
+    $("#last_name").css("color", "#000000");
 	$("#lastNameErrorId").html("").addClass("hide-me");
+
+    $("#mrn").css("color", "#000000");
 	$("#mrnErrorId").html("").addClass("hide-me");
+
+    $("#birth_date").css("color", "#000000");
 	$("#monthOfBirthErrorId").html("").addClass("hide-me");
+
 	$("#yearOfBirthErrorId").html("").addClass("hide-me");
+
 	$("#dateOfBirthErrorId").html("").addClass("hide-me");
+
 	$("#global-Error").html("").addClass("hide-me");
+
 }
