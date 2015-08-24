@@ -998,6 +998,9 @@ function isLoginValidationSuccess(){
 	    $('#birth_date').css("color", "#D0021B");
 	    return false;
 	}
+	else if(!isValid){
+		$('html, body').animate({scrollTop:0}, "slow");
+	}
 	
 	return isValid;
 
