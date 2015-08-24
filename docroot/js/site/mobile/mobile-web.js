@@ -1063,20 +1063,17 @@ function loginSubmit(){
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
             	    $("#globalError").text("We could not find this patient.  Please try entering the information again.");
             	    $("#globalError").removeClass("hide-me").addClass("error");
-            	    $("#login-submit").attr('disabled', true);
                     break;
 
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
-            	    $("#login-submit").attr('disabled', true);
                     break;
 
                 default:
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
-            	    $("#login-submit").attr('disabled', true);
                     break;
             }
         },
@@ -1128,20 +1125,17 @@ function mobileloginSubmit(){
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
             	   	$("#globalError").text("We could not find this patient.  Please try entering the information again.");
             	   	$("#globalError").removeClass("hide-me").addClass("error");
-            	    $("#mobile-login-submit").attr('disabled', true);
                     break;
 
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
-            	    $("#mobile-login-submit").attr('disabled', true);
                     break;
 
                 default:
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
-            	    $("#mobile-login-submit").attr('disabled', true);
                     break;
             }
         },
@@ -1175,30 +1169,25 @@ function loginSubmitPG(){
 
             returndata = jQuery.parseJSON(returndata);
             if(returndata.result === '1'){
-
             	$("#globalError").text('No matching patient found. Please try again.');
-                 $("#globalError").removeClass("hide-me").addClass("error");
+            	$("#globalError").removeClass("hide-me").addClass("error");
                  return false;
               }
             else if (returndata.result === '2') {
-
             	window.location.replace("meetingexpiredmemberpg.htm");
                 return false;
-
             }
             else if (returndata.result === '3') {
-
             	$("#globalError").text('Some exception occurred while processing request..');
-                 $("#globalError").removeClass("hide-me").addClass("error");
+            	$("#globalError").removeClass("hide-me").addClass("error");
                  return false;
             }
             else if (returndata.result === '4') {
-
             	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
-                 $("#globalError").removeClass("hide-me").addClass("error");
-                 return false;
+            	$("#globalError").removeClass("hide-me").addClass("error");
+            	return false;
             }
-
+            
             window.location.replace("mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + $('input[name=last_name]').val());
         },
         error: function() {
