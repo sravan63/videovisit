@@ -9,7 +9,7 @@
             <li>Manage &amp; Schedule
               <ul>
                 <li><a target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=pharmacycenter">Prescriptions</a></li>
-                <li><a id="appointments" target="MDO_ExternalLink" href="https://members.kaiserpermanente.org/kpweb/securedClusterQuery.do?cluster=appointmentcenter">Appointments</a>
+                <li><a id="appointments" target="MDO_ExternalLink" href="https://mydoctor.kaiserpermanente.org/ncal/appointments/index.html">Appointments</a>
 
                   <!-- "Appointments" disclaimer popup -->
                   <div id="appt-disclaimer" title="Appointments That Can Be Made Online">
