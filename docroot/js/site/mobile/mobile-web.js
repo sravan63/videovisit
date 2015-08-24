@@ -1076,17 +1076,12 @@ function loginSubmit(){
             	    $("#login-submit").attr('disabled', true);
                     break;
             }
-
         },
         error: function() {
-
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-
-
         }
     });
-
 
 	return false;
 }
@@ -1130,9 +1125,6 @@ function mobileloginSubmit(){
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
             	   	$("#globalError").text("We could not find this patient.  Please try entering the information again.");
             	   	$("#globalError").removeClass("hide-me").addClass("error");
-            	   	$("#last_name").val("");
-            	    $("#mrn").val("");
-            	    $("#birth_date").val("");
             	    $("#mobile-login-submit").attr('disabled', true);
                     break;
 
@@ -1140,33 +1132,22 @@ function mobileloginSubmit(){
                 case LOGIN_STATUS_CODE_ERROR:
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
-             	   	$("#last_name").val("");
-            	    $("#mrn").val("");
-            	    $("#birth_date").val("");
             	    $("#mobile-login-submit").attr('disabled', true);
                     break;
 
                 default:
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
-         	   		$("#last_name").val("");
-            	    $("#mrn").val("");
-            	    $("#birth_date").val("");
             	    $("#mobile-login-submit").attr('disabled', true);
                     break;
             }
-
         },
         error: function() {
-
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
-
-
         }
     });
-
-
+	
 	return false;
 }
 
