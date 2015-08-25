@@ -1,9 +1,9 @@
 $(document).ready(function() {
 	
-	//Firefox fix (cache issue - it keeps the entries in the text box even after refresh)
-	$("#last_name").val("");
+	//DE4286-Firefox fix (cache issue - it keeps the entries in the text box even after refresh)
+	/*$("#last_name").val("");
 	$("#mrn").val("");
-	$("#birth_date").val("");
+	$("#birth_date").val("");*/
 	
 	//$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
     $("#birth_date").mask("99/9999",{placeholder:""});
