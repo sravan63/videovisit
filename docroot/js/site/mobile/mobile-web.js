@@ -996,6 +996,7 @@ function isLoginValidationSuccess(){
 
 	    $('#dateOfBirthErrorId').html("Please enter a valid Date of Birth.").removeClass("hide-me");
 	    $('#birth_date').css("color", "#D0021B");
+	    $('html, body').animate({scrollTop:0}, "slow");
 	    return false;
 	}
 	else if(!isValid){
