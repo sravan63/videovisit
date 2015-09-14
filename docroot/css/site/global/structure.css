@@ -117,7 +117,7 @@ input								{outline:none;}
 #content-block .submit-block p 	{margin:0 35px 0 0;display:block;float:right;width:300px;line-height:25px;}
 
 /* special form block styles */
-.form-block .birth_month	{width:25px; float:left; margin-right:8px; margin-left:2px;}
+.form-block .birth_month	{width:25px; float:left; margin-right:8px; margin-left:6px;}
 .form-block .birth_day      {width:25px; float:left; margin-right:0; margin-left:2px;}
 .form-block .birth_year		{width:30px; float:right; margin-left:2px;margin-right:6px;}
 
