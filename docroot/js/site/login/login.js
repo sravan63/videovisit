@@ -5,12 +5,9 @@ $(document).ready(function() {
 	$("#mrn").val("");
 	$("#birth_date").val("");*/
 	
-	//$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
-    $("#birth_date").mask("99/9999",{placeholder:""});
-	
 	//Disable the Login button unless all the fields are entered
 	$(":input").on('keyup', function(){
-        if($('#last_name').val() != "" && $('#mrn').val() != "" && ($('#birth_date').val() != "mm/yyyy" && $('#birth_date').val() != "")){
+        if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
             $('#login').removeAttr('disabled');
             $('#login').css('cursor', 'pointer');
             $('input#login').css('opacity', '1.0');
@@ -24,7 +21,7 @@ $(document).ready(function() {
 	
 	$("form :input").focus(function() {
 		// clear all errors
-		clearAllErrorFields();
+		clearAllErrors();
 	});
 	
 	$('#login').click(function(e) {
@@ -49,8 +46,6 @@ $(document).ready(function() {
 });
 
 function isLoginValidationSuccess(){
-	var birth_month = $("#birth_date").val().split("/")[0];
-    var birth_year = $("#birth_date").val().split("/")[1];
 	
 	var validationObj =
 		{
@@ -80,20 +75,20 @@ function isLoginValidationSuccess(){
 			"birth_month"	:[
 	            {
 	            	"METHOD_NAME" : METHODNAME_IS_BIRTHMONTH_VALIDATION,
-					"PARAM_VALUE" : birth_month,
+					"PARAM_VALUE" : $("#birth_month").val(),
 					"ERROR_MESSAGE" : "Please enter a valid Birth Month.",
 					"ERROR_ID" : "monthOfBirthErrorId",
-                    "INPUT_ELEMENT" : "birth_date",
+                    "INPUT_ELEMENT" : "birth_month",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 	            }
 			],
 			"birth_year"	:[
 	            {
 	            	"METHOD_NAME" : METHODNAME_IS_BIRTHYEAR_VALIDATION,
-					"PARAM_VALUE" : birth_year,
+					"PARAM_VALUE" : $("#birth_year").val(),
 					"ERROR_MESSAGE" : "Please enter a valid Birth Year.",
 					"ERROR_ID" : "yearOfBirthErrorId",
-                    "INPUT_ELEMENT" : "birth_date",
+                    "INPUT_ELEMENT" : "birth_year",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 	            }
 			]
@@ -101,38 +96,13 @@ function isLoginValidationSuccess(){
 
 	var  isValid = validate(validationObj);
 
-	if(isValid){
-		var currentDate = new Date();
-		var currentMonth = currentDate.getMonth() + 1;
-		var currentYear = currentDate.getFullYear();
-
-		var selectedMonth = birth_month;
-	    var selectedYear = birth_year;
-
-	    //The entered Month of current year should not be in future
-	    if(selectedYear == currentYear){
-    		if(selectedMonth <= currentMonth){
-    			return true;
-    		}
-	    }
-	    else{
-	    	return true;
-	    }
-
-	    $('#dateOfBirthErrorId').html("Please enter a valid Date of Birth.").removeClass("hide-me");
-        $('#birth_date').css("color", "#D0021B");
-	    return false;
-	}
-
 	return isValid;
 }
 
 function loginSubmit(){
-    var birth_month = $("#birth_date").val().split("/")[0];
-    var birth_year = $("#birth_date").val().split("/")[1];
     var birth_day = "";
 
-	var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + birth_month + '&birth_year=' + birth_year + '&birth_day=' + birth_day + '&consentVersion=' + $('input[name=consentVersion]').val();
+	var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=last_name]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&consentVersion=' + $('input[name=consentVersion]').val();
 
 	$.ajax({
         type: "POST",
@@ -181,22 +151,4 @@ function loginSubmit(){
         }
     });
     return false;
-}
-
-function clearAllErrorFields(){
-    $("#last_name").css("color", "#000000");
-	$("#lastNameErrorId").html("").addClass("hide-me");
-
-    $("#mrn").css("color", "#000000");
-	$("#mrnErrorId").html("").addClass("hide-me");
-
-    $("#birth_date").css("color", "#000000");
-	$("#monthOfBirthErrorId").html("").addClass("hide-me");
-
-	$("#yearOfBirthErrorId").html("").addClass("hide-me");
-
-	$("#dateOfBirthErrorId").html("").addClass("hide-me");
-
-	$("#global-Error").html("").addClass("hide-me");
-
 }
