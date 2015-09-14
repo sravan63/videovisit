@@ -1,19 +1,4 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<div id="lastNameErrorId" class="localfailmessage hide-me">
-	<p></p>
-</div>
-<div id="mrnErrorId" class="localfailmessage hide-me">
-	<p></p>
-</div>
-<div id="monthOfBirthErrorId" class="localfailmessage hide-me">
-	<p></p>
-</div>
-<div id="yearOfBirthErrorId" class="localfailmessage hide-me">
-	<p></p>
-</div>
-<div id="dateOfBirthErrorId" class="localfailmessage hide-me">
-	<p></p>
-</div>
 <div>
 	<p id="globalError" class="globalfailmessage hide-me"></p>
 </div>
@@ -30,9 +15,15 @@
 				</li>
 				<li><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect="off" pattern="[a-zA-Z]+" required></li>
 				<li><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="MRN" autocorrect="off" pattern="[0-9]*" required></li>
-				<li><input type="text" name="birth_date" id="birth_date" class="birth_date" tabindex="3" placeholder="Date of Birth (mm/yyyy)" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required>
+				<li style="border:1px solid rgba(0,0,0,0.3); border-top:none; border-radius:0; margin-right:-6px; overflow:auto; background-color:#FFFFFF;">
+					<label style="padding-left:4px; float:left; margin-top:5px;">Date of Birth</label>
+					<span style="float:right; margin:3px 10px 0 0;">
+						<input type="text" name="birth_month" id="birth_month" class="birth_month" maxlength="2" tabindex="3" placeholder="mm" autocorrect="off" pattern="[0-9]*" title="mm" required style="border:none; background-color:#F1F1F1; padding:0 20px;">
+						<label style="margin:0 20px;"> / </label>
+						<input type="text" name="birth_year" id="birth_year" class="birth_year" maxlength="4" tabindex="4" placeholder="yyyy" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required style="border:none; background-color:#F1F1F1; width:45px; padding:0 20px;">
+					</span>
 				</li>
-				<button id="mobile-login-submit" class="off" tabindex="6" style="width:100px; height:45px; float:right; background-color:#FFFFFF; color:#006BA6; font-size:18px; margin:10px -5px 10px 0; border-radius:3px; border:1px solid rgba(0,0,0,0.3);" disabled="disabled">Sign In</button>
+				<button id="mobile-login-submit" class="off" tabindex="6" style="width:100px; height:45px; float:right; background-color:#FFFFFF; color:#006BA6; font-size:18px; margin:10px -5px 10px 0; border-radius:3px; border:1px solid rgba(0,0,0,0.3); clear:both;" disabled="disabled">Sign In</button>
 			</ul>
 		</form>
 	</div>
@@ -52,6 +43,9 @@
 
 <style>
 	button#mobile-login-submit{
-		opacity:0.5;
+		opacity: 0.5;
+	}
+	input::-webkit-input-placeholder{
+		color: #666666;
 	}
 </style>
