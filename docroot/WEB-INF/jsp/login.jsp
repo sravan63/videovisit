@@ -8,22 +8,18 @@
         <li><label for="mrn">Medical Record Number</label><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2"></li>
         <li>
             <label for="birth_date">Date of Birth</label>
-            <input type="text" name="birth_date" placeholder="mm/yyyy" class="birth_date" id="birth_date" maxlength="7" tabindex="3" style="width:108px;">
+            <input type="text" name="birth_month" placeholder="mm" class="birth_month" id="birth_month" maxlength="2" tabindex="3" style="width:90px;">
+            <input type="text" name="birth_year" placeholder="yyyy" class="birth_year" id="birth_year" maxlength="4" tabindex="4" style="width:108px;">
         </li>
   	</ul>
   	<div style="float:right;">
-	  	<p id="lastNameErrorId" class="error hide-me" style="width:300px; height:35px;"> </p>
-		<p id="mrnErrorId" class="error hide-me" style="width:300px; height:35px;"> </p>
-		<p id="monthOfBirthErrorId" class="error hide-me" style="width:300px; height:35px;"> </p>
-		<p id="yearOfBirthErrorId" class="error hide-me" style="width:300px; height:35px;"> </p>
-		<p id="dateOfBirthErrorId" class="error hide-me" style="width:300px; height:35px;"> </p>
-		<p id="global-Error" class="error hide-me" style="width:300px; height:35px;"> </p>
+		<p id="globalError" class="error hide-me" style="width:300px; height:35px; color:#ac5a41; font-weight:bold;"> </p>
 	</div>
     <div class="submit-block" style="overflow:auto;">
         <input type="submit" name="login" value="Login &rsaquo;&rsaquo;" id="login" class="button" tabindex="4" style="float:right; cursor:default;" disabled="disabled">
     </div>
 </form>
-<p class="error error-login"><a name="errors"></a></p>
+<!--<p class="error error-login"><a name="errors"></a></p>-->
 <style>
 	.error{
 		width: 250px;
@@ -33,7 +29,7 @@
 		display: none;
 	}
 	input#login{
-		opacity:0.5;
+		opacity: 0.5;
 	}
 </style>
 
