@@ -90,7 +90,7 @@ var request = {
 $(document).ready(function() {
 	var inAppBrowserFlag = $('#inAppBrowserFlag').val();
 
-	$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
+	//$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
 	
 	detectDeviceCookie();
 	hideAddressBar();
@@ -98,7 +98,7 @@ $(document).ready(function() {
 	
 	$(":input").on('keyup', function(){
 		//alert("disabled");
-		if($('#last_name').val() != "" && $('#mrn').val() != "" && ($('#birth_date').val() != "mm/yyyy" && $('#birth_date').val() != "")){
+		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
 			$('#login-submit').removeAttr('disabled');
             $('#login-submit').css('cursor', 'pointer');
             $('button#login-submit').css('opacity', '1.0');
@@ -239,20 +239,6 @@ $(document).ready(function() {
 			openTab('kppc://videovisit?signon=true');
 
 		}
-		/*event.preventDefault();
-		 $("#mrn").val('');
-          $("#last_name").val('');
-        $("#birth_month").val('');
-        $("#birth_day").val('');
-        $("#birth_year").val('');
-		var targetId = event.target.id;
-		// clear all errors
-		clearAllErrors();
-		if (typeof appAlertCookie !== 'undefined' && appAlertCookie !=null && appAlertCookie !=""){
-			hidesAppAlert();
-		}
-		return false;*/
-
 	});
 
 	$("#signInIdPG, #signInIdPGHand").click(function(event) {
@@ -923,9 +909,6 @@ function openTab(url)
  */
 function isLoginValidationSuccess(){
 	
-	var birth_month = $("#birth_date").val().split("/")[0];
-    var birth_year = $("#birth_date").val().split("/")[1];
-	
 	var validationObj =
 		{
 			"last_name" : [
@@ -933,8 +916,6 @@ function isLoginValidationSuccess(){
 					"METHOD_NAME" : METHODNAME_IS_LASTNAME_VALIDATION,
 					"PARAM_VALUE" : $("#last_name").val(),
 					"PARAM_MIN_VALUE" :2,
-					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed.",
-					"ERROR_ID" : "lastNameErrorId",
 					"INPUT_ELEMENT" : "last_name",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
@@ -945,8 +926,6 @@ function isLoginValidationSuccess(){
 					"PARAM_VALUE" : $("#mrn").val(),
 					"PARAM_MIN_VALUE" :8,
 					"PARAM_MAX_VALUE" :8,
-					"ERROR_MESSAGE" : "Please enter a valid Medical Record Number.",
-					"ERROR_ID" : "mrnErrorId",
 					"INPUT_ELEMENT" : "mrn",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": false
 				}
@@ -954,10 +933,8 @@ function isLoginValidationSuccess(){
             "birth_month"	:[
 				{
 					"METHOD_NAME" : METHODNAME_IS_BIRTHMONTH_VALIDATION,
-					"PARAM_VALUE" : birth_month,
-					"ERROR_MESSAGE" : "Please enter a valid Birth Month.",
-					"ERROR_ID" : "monthOfBirthErrorId",
-					"INPUT_ELEMENT" : "birth_date",
+					"PARAM_VALUE" : $("#birth_month").val(),
+					"INPUT_ELEMENT" : "birth_month",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
 
 				}
@@ -965,10 +942,8 @@ function isLoginValidationSuccess(){
 			"birth_year"	:[
 	            {
 	            	"METHOD_NAME" : METHODNAME_IS_BIRTHYEAR_VALIDATION,
-					"PARAM_VALUE" : birth_year,
-					"ERROR_MESSAGE" : "Please enter a valid Birth Year.",
-					"ERROR_ID" : "yearOfBirthErrorId",
-					"INPUT_ELEMENT" : "birth_date",
+					"PARAM_VALUE" : $("#birth_year").val(),
+					"INPUT_ELEMENT" : "birth_year",
 					"HIGHLIGHT_PARENT_WHEN_ERROR": true
 	            }
 			]
@@ -976,35 +951,11 @@ function isLoginValidationSuccess(){
 
 	var  isValid = validate(validationObj);
 
-	if(isValid){
-		var currentDate = new Date();
-		var currentMonth = currentDate.getMonth() + 1;
-		var currentYear = currentDate.getFullYear();
-
-		var selectedMonth = birth_month;
-	    var selectedYear = birth_year;
-
-	    //The entered Month of current year should not be in future
-	    if(selectedYear == currentYear){
-    		if(selectedMonth <= currentMonth){
-    			return true;
-    		}
-	    }
-	    else{
-	    	return true;
-	    }
-
-	    $('#dateOfBirthErrorId').html("Please enter a valid Date of Birth.").removeClass("hide-me");
-	    $('#birth_date').css("color", "#D0021B");
-	    $('html, body').animate({scrollTop:0}, "slow");
-	    return false;
-	}
-	else if(!isValid){
+	if(!isValid){
 		$('html, body').animate({scrollTop:0}, "slow");
 	}
 	
 	return isValid;
-
 }
 
 function validationPatientGuestLogin(){
@@ -1012,16 +963,20 @@ function validationPatientGuestLogin(){
 	{
 		"last_name" : [
 			{
-				"METHOD_NAME" : METHODNAME_IS_ALPHA_NUMERIC,
+				"METHOD_NAME" : METHODNAME_IS_LASTNAME_VALIDATION,
 				"PARAM_VALUE" : $("#last_name").val(),
-				"ERROR_MESSAGE" : "Last name is required and must contain only alphabets.",
-				"ERROR_ID" : "lastNameErrorId",
-				"HIGHLIGHT_PARENT_WHEN_ERROR": true
+				"PARAM_MIN_VALUE" :2,
+				//"INPUT_ELEMENT" : "last_name",
+				"HIGHLIGHT_PARENT_WHEN_ERROR": false
 			}
 		]
-
 	}
-	var  isValid = validate(validationObj);
+
+	var isValid = validate(validationObj);
+
+	if(!isValid){
+		$('html, body').animate({scrollTop:0}, "slow");
+	}
 
 	return isValid;
 }
@@ -1033,8 +988,6 @@ function validationPatientGuestLogin(){
  * @param firstName
  */
 function loginSubmit(){
-    var birth_month = $("#birth_date").val().split("/")[0];
-    var birth_year = $("#birth_date").val().split("/")[1];
     var birth_day = "";
 
     // Parameters sent to the server
@@ -1042,7 +995,7 @@ function loginSubmit(){
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
 	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month='
-								+ birth_month + '&birth_year=' + birth_year + '&birth_day=' + birth_day + '&nocache=' + n;
+								+ $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&nocache=' + n;
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.login.ajaxurl,
@@ -1094,8 +1047,6 @@ function loginSubmit(){
  * @param firstName
  */
 function mobileloginSubmit(){
-    var birth_month = $("#birth_date").val().split("/")[0];
-    var birth_year = $("#birth_date").val().split("/")[1];
     var birth_day = "";
 
     // Parameters sent to the server
@@ -1103,7 +1054,7 @@ function mobileloginSubmit(){
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
 	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month='
-								+ birth_month + '&birth_year=' + birth_year + '&birth_day=' + birth_day + '&nocache=' + n;
+								+ $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&nocache=' + n;
 
 	$.ajax({
         type: "POST",
