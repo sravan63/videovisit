@@ -50,7 +50,7 @@ function validate(validationObj){
 	var isAllValid = true;
 	// Iterate over outer collection which is a set of html input Ids. Each Id will have an array of validations that needs to be performed.
 	var removeError = true;
-	
+	var errorFlag = false;
 	$.each(validationObj, function(key, arrValidationItems) {
 		
 		var inputId = key;
@@ -158,7 +158,8 @@ function validate(validationObj){
 	    	}
 	    	
 	    	if(!isValid){
-	    		displayError(inputId, errorMessage, errorId, inputElement);
+	    		errorFlag = true;
+	    		hightlightErrorField(inputId, errorMessage, errorId, inputElement);
 	    	}
             else{
             	if (removeError){
@@ -166,8 +167,12 @@ function validate(validationObj){
                	}
 	    	}
 	    });
-	    
-	    
+
+	    if(errorFlag == true){
+	    	errorId = "globalError";
+	    	errorMessage = "Incorrect Patient Information";
+	    	displayError(errorId, errorMessage);
+	    }
 	});
 	
 	return isAllValid ;
@@ -318,15 +323,23 @@ function isMinLength(value, min){
 
 
 /**
+ * Highlight UI fields with errors
+ * @param element
+ * @param errorMessage
+ */
+function hightlightErrorField(inputElementId, errorMessage, errorElementId, inputElementText){
+    $("#" +inputElementText).css("color", "#D0021B");
+}
+
+
+/**
  * Display UI errors 
  * @param element
  * @param errorMessage
  */
-function displayError(inputElementId, errorMessage, errorElementId, inputElementText){
-	$("#" + errorElementId).text(errorMessage);
-	$("#" +errorElementId).removeClass("hide-me");
-	//$("#" +inputElementId).parent().addClass("error");
-	$("#" +inputElementText).css("color", "#D0021B");
+function displayError(errorId, errorMessage){
+	$("#" + errorId).text(errorMessage);
+	$("#" + errorId).removeClass("hide-me");
 }
 
 
@@ -337,8 +350,6 @@ function displayError(inputElementId, errorMessage, errorElementId, inputElement
  */
 function clearError(inputElementId, errorMessage, errorElementId, inputElementText){
 	$("#" + errorElementId).text("");
-	//$("#" +errorElementId).addClass("hide-me");
-	//$("#" +inputElementId).parent().removeClass("error");
 }
 
 /**
@@ -349,7 +360,6 @@ function clearError(inputElementId, errorMessage, errorElementId, inputElementTe
 function clearErrorWithoutInput(inputElementId, errorMessage, errorElementId){
 	$("#" + errorElementId).text(errorMessage);
 	$("#" + errorElementId).addClass("hide-me");
-	//$("#" +inputElementId).parent().removeClass("error");
 }
 
 /**
@@ -372,6 +382,7 @@ function clearAllErrors(){
 
     $("#last_name").css("color", "#000000");
     $("#mrn").css("color", "#000000");
-    $("#birth_date").css("color", "#000000");
+    $("#birth_month").css("color", "#000000");
+    $("#birth_year").css("color", "#000000");
 }
 
