@@ -220,6 +220,7 @@ docroot/js/deprecated/jquery-ui-1.9.2.custom.js -text svneol=unset#text/plain
 docroot/js/deprecated/jquery.address-1.2.2.min.js -text
 docroot/js/deprecated/jquery.validate.js -text
 docroot/js/deprecated/logout.js -text
+docroot/js/deprecated/maskedinput/jquery.maskedinput.min.js -text svneol=unset#text/plain
 docroot/js/deprecated/mdo-jquery-v1.min.js -text
 docroot/js/deprecated/print.js -text svneol=unset#text/plain
 docroot/js/deprecated/script.js -text
