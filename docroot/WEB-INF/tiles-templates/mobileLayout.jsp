@@ -15,7 +15,6 @@
         <script src="js/site/global/dateExtensions_loader.js" type="text/javascript"></script>
         <script src="js/site/validation/validate.js" type="text/javascript"></script>
         <script src="js/site/mobile/mobile-web.js" type="text/javascript"></script>
-        <script type="text/javascript" src="js/library/plugin/maskedinput/jquery.maskedinput.min.js"></script>
 
 		<link rel="stylesheet" href="css/site/global/mobile.css">
 		<link rel="apple-touch-icon" href="images/vv-apple-touch-icon-72@2x.png">
