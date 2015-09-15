@@ -30,7 +30,6 @@
                 	"js/site/intro/popup.js"
                 ],
                 "login"  :   [
-                	"js/library/plugin/maskedinput/jquery.maskedinput.min.js",
                     "js/site/login/login.js",
                     "js/site/validation/validate.js"
                 ],
