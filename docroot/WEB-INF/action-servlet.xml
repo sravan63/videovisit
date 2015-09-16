@@ -39,6 +39,7 @@
 		       <value>guesthelp.htm</value>
 		       <value>mobilepatientlanding.htm</value>
 		       <value>mobilepglanding.htm</value>
+		       <value>mobilepglogin.htm</value>
 		       <value>mobilepatientlightauth.htm</value>
 		       <value>mobilepglightauth.htm</value>
 		       <value>mobileAppPatientLogin.htm</value>
@@ -128,7 +129,8 @@
 				<prop key="/mobileAppDownload.htm">mobileAppDownload</prop>
 				<prop key="/mobilepglightauth.htm">mobilepglightauth</prop>
 				<prop key="/mobilelogin.json">mobilelogin</prop>
-				<prop key="/mobilepglanding.htm">mobilePGLanding</prop>	
+				<prop key="/mobilepglanding.htm">mobilePGLanding</prop>
+				<prop key="/mobilepglogin.htm">mobilePGLogin</prop>	
 				<prop key="/mobilepatientmeetings.htm">mobilePatientMeetings</prop>	
 				<prop key="/mobileAppPatientMeetings.htm">mobileAppPatientMeetings</prop>	
 				<prop key="/mobilepatientguestmeetings.htm">mobilePatientGuestMeetings</prop>	
@@ -389,6 +391,14 @@
 		<property name="subNavigation" value="login" />
     </bean>
 	
+	<bean id="mobilePGLogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="mPatientGuestLoginPage" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+    </bean>
+    
 	<bean id="mobilePatientMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 	    <!--  defined in mobile-titles-definitions.xml -->
 		<property name="viewName" value="mPatientLandingPage" />
