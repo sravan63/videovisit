@@ -38,6 +38,14 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 
 <input type="hidden" id="tz" value="<%=timezone%>" /> 
 
+<style>
+	a#joinNowBtn{
+		opacity: 0.5;
+		pointer-events: none;
+		cursor: none;
+	}
+</style>
+
 <script type="text/javascript">
 
 	var browserInfo = getBrowserInfo();
