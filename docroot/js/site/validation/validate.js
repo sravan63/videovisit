@@ -380,9 +380,9 @@ function clearAllErrors(){
     	$(this).parent().removeClass("error");
     })
 
-    $("#last_name").css("color", "#000000");
-    $("#mrn").css("color", "#000000");
-    $("#birth_month").css("color", "#000000");
-    $("#birth_year").css("color", "#000000");
+    //$("#last_name").css("color", "#000000");
+    //$("#mrn").css("color", "#000000");
+    //$("#birth_month").css("color", "#000000");
+    //$("#birth_year").css("color", "#000000");
 }
 
