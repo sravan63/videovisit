@@ -1,37 +1,33 @@
-<div id="modal-login" class="modal">
-	<div class="modal-window">
-		<div id="close-modal" class="button-close"></div>
-		<h1>To Join a Video Visit</h1>
+<input type="hidden" id="isPG" value="true" />
 
-		<div id="app-alert">
-<!-- 			<p>To join a video visit from your mobile device, please install our Video Visits mobile app. </p> -->
-				<p> Please install and open the latest version of the KP Preventive Care App. </p>
-				<p> After downloading, return to this screen or your email to continue to sign on. </p>
-				<div class="app-lockup getAppButton">
-					<div class="app-icon"></div>
-					<p> KP Preventive Care App </p>
-				</div>
-			<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the App</button>
-			<button class="button-secondary" id="btn-i-have-it_pg">I Have it Installed</button>
-		</div>
-		
-		<div id="patientguest-login-form" class="hide-me">
-
-			<form class="login-form">
-				<p id="globalError" class="globalfailmessage hide-me"></p>
-
-				<ul class="form-block guest">
-					<li><label>Patient Last Name</label><input type="text" name="last_name" id="last_name" maxlength="35" tabindex="1" placeholder="" autocorrect = "off" pattern="[a-zA-Z]+" required>
-						<div id="lastNameErrorId" class="localfailmessage hide-me">
-							<p></p>
-						</div>
-					</li>
-					<button id="login-submit-pg" class="off" tabindex="6" >Sign In</button>
-				</ul>
-
-				<p class="disclaimer">Children age 11 or younger may not use this website alone. A parent or legal guardian may use this website and have the child with them during the visit.</p>
-			</form>
-
-		</div>
-	</div>
+<div>
+	<p id="globalError" class="globalfailmessage hide-me" style="background-color:#686A6C;"></p>
 </div>
+
+<div style="padding:10px;">
+	<div id="login-form">
+		<h1>Sign In as a Guest</h1>	
+		<form class="login-form" style="margin:10px 0 0;">
+			<ul class="form-block">
+				<!--<li style="padding-right:6px; height:30px; border-radius:2px;">
+					<p style="width:100%; background-color:#706259; color:#FFFFFF; text-align:center; padding:5px 1px 5px 5px; border-top-left-radius:3px; border-top-right-radius:3px;">
+						Enter Patient&#39s Information
+					</p>
+				</li>-->
+				<li><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Patient Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required></li>
+
+				<button id="login-submit-pg" class="off" tabindex="6" style="width:100%; height:35px; background-color:#0061A9; color:#FFFFFF; font-weight:bold; font-size:14px; margin:10px auto; border-radius:4px;" disabled="disabled">Sign In</button>
+			</ul>
+		</form>
+		
+		</div>
+		<p class="disclaimer" style="margin: 0 0 10px;">Children age 11 and younger must have a parent present during the visit.</p>
+
+	 	<%@ include file="common/informationpg.jsp" %>
+</div>
+
+<style>
+	button#login-submit-pg{
+		opacity:0.5;
+	}
+</style>
