@@ -1,6 +1,31 @@
 $(document).ready(function() {
     var meetingTimestamp, convertedTimestamp, meetingIdData, hreflocation;
+    
+  //Disable the Login button unless all the fields are entered
+	$(":input").on('keyup', function(){
+        if($('#patient_last_name').val() != ""){
+            $('#joinNowBtn').css('pointer-events', 'auto');
+            $('#joinNowBtn').css('cursor', 'pointer');
+            $('a#joinNowBtn').css('opacity', '1.0');
 
+        }
+        else{
+        	$('#joinNowBtn').css('pointer-events', 'none');
+            $('#joinNowBtn').css('cursor', 'default');
+            $('a#joinNowBtn').css('opacity', '0.5');
+        }
+    });
+	
+	$("form :input").focus(function() {
+		// clear all errors
+		clearAllErrors();
+	});
+	
+	// for focus on individual Input Fields
+	$("#patient_last_name").on('focus', function() {
+		$("#patient_last_name").css("color", "#000000");
+	});
+	
 	// Join now Click Event
     $(".btn").click(function(e){
     	if((navigator.appVersion.indexOf("Mac") != -1) && (browserInfo.isChrome) && (browserVersion == 39)){
