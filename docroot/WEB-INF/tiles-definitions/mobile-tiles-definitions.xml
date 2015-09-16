@@ -81,11 +81,15 @@
 	</definition>
 	
 	<definition name="mPatientGuestLandingPage" extends=".oneColumnLayoutPG">
- 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPagePG.jsp" />
+ 		<!-- <put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPagePG.jsp" />-->
 	</definition>
 	
 	<definition name="mPatientGuestPreLoginPage" extends=".oneColumnLayoutPG">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/prePatientGuestLoginPage.jsp" />
+	</definition>
+	
+	<definition name="mPatientGuestLoginPage" extends=".oneColumnLayoutPG">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/patientguestLoginModal.jsp" />
 	</definition>
 	
 	<definition name="mLogoutPage" extends=".oneColumnLayout">
