@@ -7,7 +7,7 @@
 	<div id="login-form">
 		<h1>Sign In to Video Visits</h1>	
 		<form class="login-form" style="margin:10px 0 0;">
-			<ul class="form-block">
+			<ul class="form-block" style="padding-right:6px;">
 				<li><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required></li>
 				<li><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="MRN" autocorrect = "off" pattern="[0-9]*" required></li>
 				<li style="border:1px solid rgba(0,0,0,0.3); border-top:none; border-radius:0; margin-right:-6px; overflow:auto; background-color:#FFFFFF;">
