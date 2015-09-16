@@ -89,6 +89,7 @@ var request = {
  */
 $(document).ready(function() {
 	var inAppBrowserFlag = $('#inAppBrowserFlag').val();
+	var isPgFlag = $('#isPG').val();
 
 	//$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
 	
@@ -97,25 +98,66 @@ $(document).ready(function() {
 	setMemberContext();
 	
 	$(":input").on('keyup', function(){
-		//alert("disabled");
-		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
-			$('#login-submit').removeAttr('disabled');
-            $('#login-submit').css('cursor', 'pointer');
-            $('button#login-submit').css('opacity', '1.0');
-
-			$('#mobile-login-submit').removeAttr('disabled');
-			$('#mobile-login-submit').css('cursor', 'pointer');
-            $('button#mobile-login-submit').css('opacity', '1.0');
+		if(isPgFlag == "true"){
+			if($('#last_name').val() != ""){
+				$('#login-submit-pg').removeAttr('disabled');
+	            $('#login-submit-pg').css('cursor', 'pointer');
+	            $('button#login-submit-pg').css('opacity', '1.0');
+			}
+			else{
+				$('#login-submit-pg').attr('disabled', true);
+				$('#login-submit-pg').css('cursor', 'default');
+	            $('button#login-submit-pg').css('opacity', '0.5');
+			}
 		}
 		else{
-			$('#login-submit').attr('disabled', true);
-			$('#login-submit').css('cursor', 'default');
-            $('button#login-submit').css('opacity', '0.5');
+			if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
+				$('#login-submit').removeAttr('disabled');
+	            $('#login-submit').css('cursor', 'pointer');
+	            $('button#login-submit').css('opacity', '1.0');
 
-			$('#mobile-login-submit').attr('disabled', true);
-			$('#mobile-login-submit').css('cursor', 'default');
-            $('button#mobile-login-submit').css('opacity', '0.5');
+				$('#mobile-login-submit').removeAttr('disabled');
+				$('#mobile-login-submit').css('cursor', 'pointer');
+	            $('button#mobile-login-submit').css('opacity', '1.0');
+			}
+			else{
+				$('#login-submit').attr('disabled', true);
+				$('#login-submit').css('cursor', 'default');
+	            $('button#login-submit').css('opacity', '0.5');
+
+				$('#mobile-login-submit').attr('disabled', true);
+				$('#mobile-login-submit').css('cursor', 'default');
+	            $('button#mobile-login-submit').css('opacity', '0.5');
+			}
 		}
+	});
+
+	// for focus and blur events
+	$("form :input").focus(function() {
+		// clear all errors
+		clearAllErrors();
+	}).blur(function() {
+		$(this).parent().removeClass("form-focus");
+	});
+
+	// for focus on individual Input Fields
+	$("#last_name").on('focus', function() {
+		$("#last_name").css("color", "#000000");
+	});
+
+	// for focus on individual Input Fields
+	$("#mrn").on('focus', function() {
+		$("#mrn").css("color", "#000000");
+	});
+
+	// for focus on individual Input Fields
+	$("#birth_month").on('focus', function() {
+		$("#birth_month").css("color", "#000000");
+	});
+
+	// for focus on individual Input Fields
+	$("#birth_year").on('focus', function() {
+		$("#birth_year").css("color", "#000000");
 	});
 
 	$(".modal-window .button-close").click(modalHideByClass);
@@ -125,6 +167,7 @@ $(document).ready(function() {
 	$(".alert.hideable").click(hideSecurityAlert);
 
 	$(".scrollup").click(scrollMe);
+
 	// Shows and hides scroll to top button
 	$(window).scroll(function(){
 		if ($(this).scrollTop() > 320) {
@@ -133,6 +176,7 @@ $(document).ready(function() {
 			$('.scrollup').fadeOut();
 		}
 	});
+
 	// scrolls to top for anchor page states on load
 	scrollMe();
 
@@ -141,19 +185,6 @@ $(document).ready(function() {
 		// locking these elements, so they can't be moved when dragging the div
 		event.preventDefault();
 	});*/
-
-
-	// for focus and blur events
-	$("form :input").focus(function() {
-		//$(this).parent().addClass("form-focus");
-
-		// clear all errors
-		clearAllErrors();
-
-	}).blur(function() {
-			$(this).parent().removeClass("form-focus");
-	});
-
 
 
 	// START--APP ALERT handling using cookie
@@ -241,7 +272,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#signInIdPG, #signInIdPGHand").click(function(event) {
+	/*$("#signInIdPG, #signInIdPGHand").click(function(event) {
 		event.preventDefault();
 		
 		var targetId = event.target.id;
@@ -253,11 +284,15 @@ $(document).ready(function() {
 		
 		return false;
 		
+	});*/
+	
+	$("#signInIdPG, #signInIdPGHand").click(function(event) {
+		event.preventDefault();
+		
+		alert("Sign In clicked");
+		window.location.replace("mobilepglogin.htm");
 	});
 	
-	
-
-
 	// END--APP ALERT handling using cookie
 
 	// Login button submit click
@@ -966,7 +1001,7 @@ function validationPatientGuestLogin(){
 				"METHOD_NAME" : METHODNAME_IS_LASTNAME_VALIDATION,
 				"PARAM_VALUE" : $("#last_name").val(),
 				"PARAM_MIN_VALUE" :2,
-				//"INPUT_ELEMENT" : "last_name",
+				"INPUT_ELEMENT" : "last_name",
 				"HIGHLIGHT_PARENT_WHEN_ERROR": false
 			}
 		]
