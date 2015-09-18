@@ -19,13 +19,14 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 					<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
 					<h3>Your visit is scheduled for </h3>
 					<p class="guest-directive">Please enter the following information to join this visit:</p> 
-					<label for="patient_last_name">Patient Last Name
-						  <input type="text" name="patient_last_name" id="patient_last_name" maxlength="35"></input>
+					<label for="last_name">Patient Last Name
+						  <input type="text" name="last_name" id="last_name" maxlength="35"></input>
 	            	</label>
-					<a id="joinNowBtn" class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click to continue</a>										
+					<a id="joinNowBtn" class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click to Continue</a>										
 				</div>				
 			</div>
 			<p class="error error-guest-login"></p>
+			<p id="globalError" class="error hide-me" style="width:300px; height:35px; color:#AC5A41; font-weight:bold;"> </p>
 		</c:forEach>
 	</div>
 </c:if>
@@ -50,39 +51,29 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 
 	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
-	
-	/*if(browserInfo.isIE) {
-		if (((browserInfo.version == 8 || browserInfo.version == 9 || browserInfo.version == 10 || browserInfo.version == 11) && !browserInfo.is32Bit) || browserInfo.version <= 7) {
-			
-			var browserNotSupportedMsgIE = "Video Visits is supported on 32 bit browsers only.";
-			browserNotSupportedMsgIE += "<br /><br />";
-			browserNotSupportedMsgIE += "Your current browser is unsupported.";
-			browserNotSupportedMsgIE += "<br /><br />";
-			browserNotSupportedMsgIE += "Please <a href='mdohelp.htm' target='_blank'>Download a 32 bit browser</a>";
-			
-			$('p.error').html(browserNotSupportedMsgIE);
-			
-			document.getElementById("patient_last_name").disabled = true;
-			document.getElementById("joinNowBtn").disabled = true;
-		}
-	}*/
+
 	if(browserInfo.isChrome) {
 		var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 		browserNotSupportedMsgForPatient += "<br /><br />";
 		browserNotSupportedMsgForPatient += "Please try again using Internet Explorer for Windows or Safari for Mac.";
 
 		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
-			$('p.error').html(browserNotSupportedMsgForPatient);
+			$('p#globalError').html(browserNotSupportedMsgForPatient);
 
-			document.getElementById("patient_last_name").disabled = true;
+			$("#last_name").css('disabled', 'disabled');
+			$('#joinNowBtn').css('pointer-events', 'none');
+            $('#joinNowBtn').css('cursor', 'default');
+            $('#joinNowBtn').css('opacity', '0.5');
 			//document.getElementById("joinNowBtn").disabled = true;
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
-				$('p.error').html(browserNotSupportedMsgForPatient);
+				$('p#globalError').html(browserNotSupportedMsgForPatient);
 
-				document.getElementById("patient_last_name").disabled = true;
-				//document.getElementById("joinNowBtn").disabled = true;
+				$("#last_name").css('disabled', 'disabled');
+				$('#joinNowBtn').css('pointer-events', 'none');
+	            $('#joinNowBtn').css('cursor', 'default');
+	            $('#joinNowBtn').css('opacity', '0.5');
 			}
 		}
 	}
