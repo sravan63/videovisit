@@ -44,6 +44,7 @@
             "specific"  :   {
                 "guest"  :   [
                 	"js/site/guest/guest.js",
+                	"js/site/validation/validate.js"
                 ]
             }
         },
