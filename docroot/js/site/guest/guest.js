@@ -3,16 +3,16 @@ $(document).ready(function() {
     
   //Disable the Login button unless all the fields are entered
 	$(":input").on('keyup', function(){
-        if($('#patient_last_name').val() != ""){
+        if($('#last_name').val() != ""){
             $('#joinNowBtn').css('pointer-events', 'auto');
             $('#joinNowBtn').css('cursor', 'pointer');
-            $('a#joinNowBtn').css('opacity', '1.0');
+            $('#joinNowBtn').css('opacity', '1.0');
 
         }
         else{
         	$('#joinNowBtn').css('pointer-events', 'none');
             $('#joinNowBtn').css('cursor', 'default');
-            $('a#joinNowBtn').css('opacity', '0.5');
+            $('#joinNowBtn').css('opacity', '0.5');
         }
     });
 	
@@ -22,8 +22,8 @@ $(document).ready(function() {
 	});
 	
 	// for focus on individual Input Fields
-	$("#patient_last_name").on('focus', function() {
-		$("#patient_last_name").css("color", "#000000");
+	$("#last_name").on('focus', function() {
+		$("#last_name").css("color", "#000000");
 	});
 	
 	// Join now Click Event
@@ -41,11 +41,11 @@ $(document).ready(function() {
 	        var mtgCode = gup("meetingCode");
 	        meetingIdData = 'meetingId=' + $(this).attr('meetingid') + 
 	          '&meetingCode=' + mtgCode +
-	          '&patientLastName=' + $.trim($("#patient_last_name").val()) + 
+	          '&patientLastName=' + $.trim($("#last_name").val()) + 
 	          '&nocache=' + n;
 	        
 	        hreflocation = $(this).attr('href');
-	        //alert(meetingIdData);
+	        
 	        $.ajax({
 	        	
 	            type: 'POST',
@@ -60,25 +60,25 @@ $(document).ready(function() {
 			              
 			            if(returndata.result === '1'){
 			            	errorHtml = '<label>No matching patient found. Please try again.</label><br/>';
-			            	$("p.error").css("display", "inline").html(errorHtml);
+			            	$("p#globalError").css("display", "inline").html(errorHtml);
 			            	moveToit("p.error");              	
 			            	return false;
 			            } 
 			            else if (returndata.result === '2') {  
 			            	errorHtml = '<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>'; 
-			            	$("p.error").css("display", "inline").html(errorHtml);
+			            	$("p#globalError").css("display", "inline").html(errorHtml);
 			            	moveToit("p.error");            	
 			            	return false;  
 			            }
 			            else if (returndata.result === '3') {  
 			            	errorHtml = '<label>Some exception occurred while processing request.</label><br/>'; 
-			            	$("p.error").css("display", "inline").html(errorHtml);
+			            	$("p#globalError").css("display", "inline").html(errorHtml);
 			            	moveToit("p.error");            	
 			            	return false;  
 			            }
 			            else if (returndata.result === '4') {  
 			            	errorHtml = '<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>'; 
-			            	$("p.error").css("display", "inline").html(errorHtml);
+			            	$("p#globalError").css("display", "inline").html(errorHtml);
 			            	moveToit("p.error");            	
 			            	return false;  
 			            }
