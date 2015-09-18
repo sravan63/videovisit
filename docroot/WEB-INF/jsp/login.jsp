@@ -49,7 +49,8 @@
 
 			document.getElementById("last_name").disabled = true;
 			document.getElementById("mrn").disabled = true;
-			document.getElementById("birth_date").disabled = true;
+			document.getElementById("birth_month").disabled = true;
+			document.getElementById("birth_year").disabled = true;
 			document.getElementById("login").disabled = true;
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
@@ -58,7 +59,8 @@
 
 				document.getElementById("last_name").disabled = true;
 				document.getElementById("mrn").disabled = true;
-				document.getElementById("birth_date").disabled = true;
+				document.getElementById("birth_month").disabled = true;
+				document.getElementById("birth_year").disabled = true;
 				document.getElementById("login").disabled = true;
 			}
 		}
