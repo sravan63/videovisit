@@ -24,6 +24,26 @@ $(document).ready(function() {
 		clearAllErrors();
 	});
 	
+	// for focus on individual Input Fields
+	$("#last_name").on('focus', function() {
+		$("#last_name").css("color", "#000000");
+	});
+
+	// for focus on individual Input Fields
+	$("#mrn").on('focus', function() {
+		$("#mrn").css("color", "#000000");
+	});
+
+	// for focus on individual Input Fields
+	$("#birth_month").on('focus', function() {
+		$("#birth_month").css("color", "#000000");
+	});
+
+	// for focus on individual Input Fields
+	$("#birth_year").on('focus', function() {
+		$("#birth_year").css("color", "#000000");
+	});
+	
 	$('#login').click(function(e) {
 		e.preventDefault();
 		
@@ -102,7 +122,7 @@ function isLoginValidationSuccess(){
 function loginSubmit(){
     var birth_day = "";
 
-	var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=last_name]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&consentVersion=' + $('input[name=consentVersion]').val();
+	var prepdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month=' + $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&consentVersion=' + $('input[name=consentVersion]').val();
 
 	$.ajax({
         type: "POST",
