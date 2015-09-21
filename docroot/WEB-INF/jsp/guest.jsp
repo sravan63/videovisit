@@ -22,11 +22,15 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 					<label for="last_name">Patient Last Name
 						  <input type="text" name="last_name" id="last_name" maxlength="35"></input>
 	            	</label>
-					<a id="joinNowBtn" class="btn" meetingid="${meeting.meetingId}"	href="${meeting.mmMeetingName}">Click to Continue</a>										
+					<!-- <a id="joinNowBtn" class="btn" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}">Click to Continue</a>-->
+					<input type="button" name="joinNowBtn" value="Click to Continue" id="joinNowBtn" class="btn" tabindex="4" disabled="disabled">
 				</div>				
 			</div>
-			<p class="error error-guest-login"></p>
-			<p id="globalError" class="error hide-me" style="width:300px; height:35px; color:#AC5A41; font-weight:bold;"> </p>
+			<!-- <p class="error error-guest-login"></p>-->
+			<p id="globalError" class="error hide-me" style="font-size:14px; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
+			
+			<input type="hidden" id="meetingId" value="${meeting.meetingId}" />
+			<input type="hidden" id="mmMeetingName" value="${meeting.mmMeetingName}" />
 		</c:forEach>
 	</div>
 </c:if>
@@ -37,18 +41,18 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	</div>
 </c:if>
 
-<input type="hidden" id="tz" value="<%=timezone%>" /> 
+<input type="hidden" id="tz" value="<%=timezone%>" />
+<input type="hidden" id="meetingId" value="${meeting.meetingId}" />
+<input type="hidden" id="mmMeetingName" value="${meeting.mmMeetingName}" />
 
 <style>
-	a#joinNowBtn{
+	input#joinNowBtn{
 		opacity: 0.5;
-		pointer-events: none;
-		cursor: none;
+		cursor: default;
 	}
 </style>
 
 <script type="text/javascript">
-
 	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
 
@@ -59,7 +63,8 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 
 		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
 			$('p#globalError').html(browserNotSupportedMsgForPatient);
-
+			$("p#globalError").removeClass("hide-me");
+			
 			$("#last_name").css('disabled', 'disabled');
 			$('#joinNowBtn').css('pointer-events', 'none');
             $('#joinNowBtn').css('cursor', 'default');
@@ -69,6 +74,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
 				$('p#globalError').html(browserNotSupportedMsgForPatient);
+				$("p#globalError").removeClass("hide-me");
 
 				$("#last_name").css('disabled', 'disabled');
 				$('#joinNowBtn').css('pointer-events', 'none');
