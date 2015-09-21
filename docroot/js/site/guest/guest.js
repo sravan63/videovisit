@@ -4,15 +4,14 @@ $(document).ready(function() {
   //Disable the Login button unless all the fields are entered
 	$(":input").on('keyup', function(){
         if($('#last_name').val() != ""){
-            $('#joinNowBtn').css('pointer-events', 'auto');
+        	$('#joinNowBtn').removeAttr('disabled');
             $('#joinNowBtn').css('cursor', 'pointer');
-            $('#joinNowBtn').css('opacity', '1.0');
-
+            $('input#joinNowBtn').css('opacity', '1.0');
         }
         else{
-        	$('#joinNowBtn').css('pointer-events', 'none');
+        	$('#joinNowBtn').attr('disabled', true);
             $('#joinNowBtn').css('cursor', 'default');
-            $('#joinNowBtn').css('opacity', '0.5');
+            $('input#joinNowBtn').css('opacity', '0.5');
         }
     });
 	
@@ -28,77 +27,97 @@ $(document).ready(function() {
 	
 	// Join now Click Event
     $(".btn").click(function(e){
-    	if((navigator.appVersion.indexOf("Mac") != -1) && (browserInfo.isChrome) && (browserVersion == 39)){
-            e.preventDefault();
-            return false;
-        }
-    	else{
-	    	e.preventDefault();
-	        
-	        var currentTime = new Date();
-		    var n = currentTime.getTime();
-		    
-	        var mtgCode = gup("meetingCode");
-	        meetingIdData = 'meetingId=' + $(this).attr('meetingid') + 
-	          '&meetingCode=' + mtgCode +
-	          '&patientLastName=' + $.trim($("#last_name").val()) + 
-	          '&nocache=' + n;
-	        
-	        hreflocation = $(this).attr('href');
-	        
-	        $.ajax({
-	        	
-	            type: 'POST',
-	            data: meetingIdData,
-	            //url: VIDEO_VISITS.Path.guest.verifyguest,
-	            url: "verifyguest.json",
-	            success: function(returndata) {
-	            	try{
-			            returndata = jQuery.parseJSON(returndata);
-			              
-			            var errorHtml = "";
-			              
-			            if(returndata.result === '1'){
-			            	errorHtml = '<label>No matching patient found. Please try again.</label><br/>';
-			            	$("p#globalError").css("display", "inline").html(errorHtml);
-			            	moveToit("p.error");              	
-			            	return false;
-			            } 
-			            else if (returndata.result === '2') {  
-			            	errorHtml = '<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>'; 
-			            	$("p#globalError").css("display", "inline").html(errorHtml);
-			            	moveToit("p.error");            	
-			            	return false;  
-			            }
-			            else if (returndata.result === '3') {  
-			            	errorHtml = '<label>Some exception occurred while processing request.</label><br/>'; 
-			            	$("p#globalError").css("display", "inline").html(errorHtml);
-			            	moveToit("p.error");            	
-			            	return false;  
-			            }
-			            else if (returndata.result === '4') {  
-			            	errorHtml = '<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>'; 
-			            	$("p#globalError").css("display", "inline").html(errorHtml);
-			            	moveToit("p.error");            	
-			            	return false;  
-			            }
-			              
-			            hreflocation = returndata.result;
-			            window.location.replace("guestready.htm");
-	            	}
-		            catch(e)
-		            {
-		            	window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
+    	e.preventDefault();
+    	
+    	// if client side validation successful
+		if(isLoginValidationSuccess()){
+			loginSubmit();
+		}
+    });
+    
+    function isLoginValidationSuccess(){
+    	var validationObj =
+    		{
+    			"last_name" : [
+    				{
+    					"METHOD_NAME" : METHODNAME_IS_LASTNAME_VALIDATION,
+    					"PARAM_VALUE" : $("#last_name").val(),
+                        "PARAM_MIN_VALUE" :2,
+    					"ERROR_MESSAGE" : "Only Letters, Hyphens or Apostrophes allowed.",
+    					"ERROR_ID" : "lastNameErrorId",
+                        "INPUT_ELEMENT" : "last_name",
+    					"HIGHLIGHT_PARENT_WHEN_ERROR": false
+    				}
+    			]
+    		}
+    	var  isValid = validate(validationObj);
+    	return isValid;
+    }
+    
+    function loginSubmit(){
+        
+        var currentTime = new Date();
+	    var n = currentTime.getTime();
+	    
+        var mtgCode = gup("meetingCode");
+        meetingIdData = 'meetingId=' + $.trim($("#meetingId").val()) + 
+          '&meetingCode=' + mtgCode +
+          '&patientLastName=' + $.trim($("#last_name").val()) + 
+          '&nocache=' + n;
+        
+        hreflocation = $.trim($("#mmMeetingName").val());
+        
+        $.ajax({
+            type: 'POST',
+            data: meetingIdData,
+            //url: VIDEO_VISITS.Path.guest.verifyguest,
+            url: "verifyguest.json",
+            success: function(returndata) {
+            	try{
+		            returndata = jQuery.parseJSON(returndata);
+		              
+		            var errorHtml = "";
+		              
+		            if(returndata.result === '1'){
+		            	errorHtml = '<label>No matching patient found. Please try again.</label><br/>';
+		            	$("p#globalError").css("display", "inline").html(errorHtml);
+		            	moveToit("p.error");              	
+		            	return false;
+		            } 
+		            else if (returndata.result === '2') {  
+		            	errorHtml = '<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>'; 
+		            	$("p#globalError").css("display", "inline").html(errorHtml);
+		            	moveToit("p.error");            	
+		            	return false;  
 		            }
-	            },
-	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-	            error: function(theRequest, textStatus, errorThrown) {
+		            else if (returndata.result === '3') {  
+		            	errorHtml = '<label>Some exception occurred while processing request.</label><br/>'; 
+		            	$("p#globalError").css("display", "inline").html(errorHtml);
+		            	moveToit("p.error");            	
+		            	return false;  
+		            }
+		            else if (returndata.result === '4') {  
+		            	errorHtml = '<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>'; 
+		            	$("p#globalError").css("display", "inline").html(errorHtml);
+		            	moveToit("p.error");            	
+		            	return false;  
+		            }
+		              
+		            hreflocation = returndata.result;
+		            window.location.replace("guestready.htm");
+            	}
+	            catch(e)
+	            {
 	            	window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
 	            }
-	        });
-	        return false;
-    	}
-    })
+            },
+            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+            error: function(theRequest, textStatus, errorThrown) {
+            	window.location.replace(VIDEO_VISITS.Path.guestglobal.expired);
+            }
+        });
+        return false;
+    }
 
     //Get the meeting timestamp, convert it and display it. Grabs the text contents of the element with the timestamp class,
     //converts it to the correct timestamp and then appends it to the next h3 in the code
