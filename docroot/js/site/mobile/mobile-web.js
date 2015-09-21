@@ -309,6 +309,15 @@ $(document).ready(function() {
 	        	}
 	        }
         }
+		
+		if ( $("#birth_month").val().length < 2 )
+        {
+        	while( $("#birth_month").val().length < 2 )
+        	{
+        		$("#birth_month").val('0' + $("#birth_month").val());
+        	}
+        }
+		
 		// if client side validation successful
 		if(isLoginValidationSuccess()){
 			loginSubmit();
@@ -330,6 +339,15 @@ $(document).ready(function() {
 	        	}
 	        }
         }
+		
+		if ( $("#birth_month").val().length < 2 )
+        {
+        	while( $("#birth_month").val().length < 2 )
+        	{
+        		$("#birth_month").val('0' + $("#birth_month").val());
+        	}
+        }
+		
 		// if client side validation successful
 		if(isLoginValidationSuccess()){
 			mobileloginSubmit();
