@@ -175,7 +175,7 @@ function loginSubmit(){
         	// show the dialog 
         	
             $("p#globalError").css("display", "inline").append('<li><label>There was an error submitting your login.</label></li>');
-            moveToit("p.error");
+            moveToit("p#globalError");
         }
     });
     return false;
