@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
@@ -118,6 +119,29 @@ public class WebSessionFilter implements Filter
 					req.getRequestDispatcher(redirectToUrl).forward(req, resp);	
 				}
 				//req.getRequestDispatcher(redirectToUrl).forward(req, resp);	
+				
+			}
+			else if("setup.htm".equalsIgnoreCase(requestUri)){
+				logger.info("WebSessionFilter setup wizard request: " +  requestUri);
+				boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);				
+				if(isWirelessDeviceOrTablet){
+					String meetingCode = req.getParameter("meetingCode");
+					if(StringUtils.isNotBlank(meetingCode))
+					{
+						redirectToUrl = guestMobileHomePageUrl + "?meetingCode=" + meetingCode;
+						logger.info("WebSessionFilter before mobile guest home page redirect = " + redirectToUrl);
+						resp.sendRedirect(redirectToUrl);
+					}
+					else{
+						logger.info("WebSessionFilter before mobile member home page redirect = " + memberMobileHomePageUrl);
+						redirectToUrl = memberMobileHomePageUrl;
+						resp.sendRedirect(redirectToUrl);
+					}
+				}
+				else{
+					logger.info("WebSessionFilter before desktop member setup wizard");
+					chain.doFilter(req, resp);
+				}	
 				
 			}
 			else{
