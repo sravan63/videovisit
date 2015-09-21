@@ -41,10 +41,8 @@ $(document).ready(function() {
     $("#mrn, #birth_month, #birth_year").on("keypress", function(e){
         var charCode = !e.charCode ? e.which : e.charCode;
         if(charCode > 31 && (charCode < 48 || charCode > 57)){
-            console.log("false");
             return false;
         }
-        console.log("true");
         return true;
     });
 });
