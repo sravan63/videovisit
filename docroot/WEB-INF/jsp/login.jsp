@@ -45,7 +45,8 @@
 		browserNotSupportedMsgForPatient += "Please try again using Internet Explorer for Windows or Safari for Mac.";
 
 		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
-			$('p.error').html(browserNotSupportedMsgForPatient);
+			$('p#globalError').html(browserNotSupportedMsgForPatient);
+			$("p#globalError").removeClass("hide-me");
 
 			document.getElementById("last_name").disabled = true;
 			document.getElementById("mrn").disabled = true;
@@ -55,7 +56,8 @@
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
-				$('p.error').html(browserNotSupportedMsgForPatient);
+				$('p#globalError').html(browserNotSupportedMsgForPatient);
+				$("p#globalError").removeClass("hide-me");
 
 				document.getElementById("last_name").disabled = true;
 				document.getElementById("mrn").disabled = true;
