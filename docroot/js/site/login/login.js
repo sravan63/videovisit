@@ -58,6 +58,14 @@ $(document).ready(function() {
 	        }
         }
 		
+		if ( $("#birth_month").val().length < 2 )
+        {
+        	while( $("#birth_month").val().length < 2 )
+        	{
+        		$("#birth_month").val('0' + $("#birth_month").val());
+        	}
+        }
+		
 		// if client side validation successful
 		if(isLoginValidationSuccess()){
 			loginSubmit();
@@ -146,19 +154,19 @@ function loginSubmit(){
                 case "3":
                 	// show the dialog 
                 	
-                    $("p#global-Error").removeClass("hide-me").html('We could not find this patient. Please try entering the information again.');
+                    $("p#globalError").removeClass("hide-me").html('We could not find this patient. Please try entering the information again.');
                     break;
 
                 case "4":
                 	// show the dialog 
 
-                	$("p#global-Error").removeClass("hide-me").html('The code entered did not match. Please try again (you can click the code image to generate a new one if needed).');
+                	$("p#globalError").removeClass("hide-me").html('The code entered did not match. Please try again (you can click the code image to generate a new one if needed).');
                     break;
 
                 default:
                 	// show the dialog 
 
-                	$("p#global-Error").removeClass("hide-me").html('There was an error submitting your login. Please try again later.');
+                	$("p#globalError").removeClass("hide-me").html('There was an error submitting your login. Please try again later.');
                     break;
             }
 
@@ -166,7 +174,7 @@ function loginSubmit(){
         error: function() {
         	// show the dialog 
         	
-            $("p.error").css("display", "inline").append('<li><label>There was an error submitting your login.</label></li>');
+            $("p#globalError").css("display", "inline").append('<li><label>There was an error submitting your login.</label></li>');
             moveToit("p.error");
         }
     });
