@@ -42,13 +42,13 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 </c:if>
 
 <input type="hidden" id="tz" value="<%=timezone%>" />
-<input type="hidden" id="meetingId" value="${meeting.meetingId}" />
-<input type="hidden" id="mmMeetingName" value="${meeting.mmMeetingName}" />
 
 <style>
 	input#joinNowBtn{
 		opacity: 0.5;
 		cursor: default;
+		width: 325px;
+		color: #FFFFFF;
 	}
 </style>
 
