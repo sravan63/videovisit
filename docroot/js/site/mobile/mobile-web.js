@@ -90,12 +90,31 @@ var request = {
 $(document).ready(function() {
 	var inAppBrowserFlag = $('#inAppBrowserFlag').val();
 	var isPgFlag = $('#isPG').val();
-
-	//$("#birth_date").mask("99/9999",{placeholder:"mm/yyyy"});
 	
 	detectDeviceCookie();
 	hideAddressBar();
 	setMemberContext();
+	
+	//Block Special Characters in Last Name, MRN & DOB fields on Login Screens
+	$(document).delegate(':input:visible', 'keypress', function(e) {
+        var legalChars = /[\w\d\s\t\b\(\)\[\]\{\}\-.@#,\'\"\:]/gi;
+        var cCode = !e.charCode ? e.which : e.charCode;
+        var key = String.fromCharCode(cCode);
+        if(cCode !== 9 && cCode !== 0) { // Allow normal tab functionality
+        	if (!(legalChars.test(key))) {
+        		e.preventDefault();
+        		return false;
+        	}
+        }
+    });
+    //Block Alphabets in MRN & DOB fields on Login Screens
+    $("#mrn, #birth_month, #birth_year").on("keypress", function(e){
+        var charCode = !e.charCode ? e.which : e.charCode;
+        if(charCode > 31 && (charCode < 48 || charCode > 57)){
+            return false;
+        }
+        return true;
+    });
 	
 	$(":input").on('keyup', function(){
 		if(isPgFlag == "true"){
