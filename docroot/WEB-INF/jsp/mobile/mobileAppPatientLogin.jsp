@@ -20,7 +20,7 @@
 					<span style="float:right; margin:3px 10px 3px 0;">
 						<input type="text" name="birth_month" id="birth_month" class="birth_month" maxlength="2" tabindex="3" placeholder="mm" autocorrect="off" pattern="[0-9]*" title="mm" required style="border:none; background-color:#F1F1F1; padding:0 20px; border-radius:0;">
 						<label style="margin:0 10px;"> / </label>
-						<input type="text" name="birth_year" id="birth_year" class="birth_year" maxlength="4" tabindex="4" placeholder="yyyy" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required style="border:none; background-color:#F1F1F1; width:30px; padding:0 20px; border-radius:0;">
+						<input type="text" name="birth_year" id="birth_year" class="birth_year" maxlength="4" tabindex="4" placeholder="yyyy" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required style="border:none; background-color:#F1F1F1; width:35px; padding:0 20px; border-radius:0;">
 					</span>
 				</li>
 				<button id="mobile-login-submit" class="off" tabindex="6" style="width:100px; height:45px; float:right; background-color:#FFFFFF; color:#006BA6; font-size:18px; margin:10px -5px 10px 0; border-radius:3px; border:1px solid rgba(0,0,0,0.3); clear:both;" disabled="disabled">Sign In</button>
@@ -35,9 +35,9 @@
 	<!-- END - Disclaimer -->
 	
 	<!-- Fake Footer - to adjust the length of the Background image -->
-	<div style="visibility:none; margin:75px 0;">
+	<!-- <div style="visibility:hidden; margin:75px 0;">
 		<br/>
-	</div>
+	</div> -->
 	<!-- END - Fake Footer -->
 </div>
 
