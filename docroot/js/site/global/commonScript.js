@@ -38,6 +38,17 @@ $(document).ready(function() {
         }
     });
     
+    $("#last_name").on("keypress", function(e){
+        var nonLegalChars = /[\D]/gi;
+        var charCode = !e.charCode ? e.which : e.charCode;
+        var key = String.fromCharCode(charCode);
+        if (!(nonLegalChars.test(key))) {
+            e.preventDefault();
+            console.log("return false");
+            return false;
+        }
+    });
+    
     $("#mrn, #birth_month, #birth_year").on("keypress", function(e){
         var charCode = !e.charCode ? e.which : e.charCode;
         if(charCode > 31 && (charCode < 48 || charCode > 57)){
