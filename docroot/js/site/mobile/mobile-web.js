@@ -107,7 +107,19 @@ $(document).ready(function() {
         	}
         }
     });
-    //Block Alphabets in MRN & DOB fields on Login Screens
+	
+	//Block Numbers in Last Name field on Login Screens
+    $("#last_name").on("keypress", function(e){
+        var nonLegalChars = /[\D]/gi;
+        var charCode = !e.charCode ? e.which : e.charCode;
+        var key = String.fromCharCode(charCode);
+        if (!(nonLegalChars.test(key))) {
+            e.preventDefault();
+            console.log("return false");
+            return false;
+        }
+    });    
+	//Block Alphabets in MRN & DOB fields on Login Screens
     $("#mrn, #birth_month, #birth_year").on("keypress", function(e){
         var charCode = !e.charCode ? e.which : e.charCode;
         if(charCode > 31 && (charCode < 48 || charCode > 57)){
@@ -307,8 +319,6 @@ $(document).ready(function() {
 	
 	$("#signInIdPG, #signInIdPGHand").click(function(event) {
 		event.preventDefault();
-		
-		alert("Sign In clicked");
 		window.location.replace("mobilepglogin.htm");
 	});
 	
@@ -1089,23 +1099,27 @@ function loginSubmit(){
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
             	    $("#globalError").text("We could not find this patient.  Please try entering the information again.");
             	    $("#globalError").removeClass("hide-me").addClass("error");
+            	    $('html, body').animate({scrollTop:0}, "slow");
                     break;
 
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
+             	   	$('html, body').animate({scrollTop:0}, "slow");
                     break;
 
                 default:
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
+         	   		$('html, body').animate({scrollTop:0}, "slow");
                     break;
             }
         },
         error: function() {
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
+ 	   		$('html, body').animate({scrollTop:0}, "slow");
         }
     });
 
@@ -1147,25 +1161,29 @@ function mobileloginSubmit(){
                     break;
 
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
-            	   	$("#globalError").text("We could not find this patient.  Please try entering the information again.");
+            	   	$("#globalError").text("We could not find this patient. Please try entering the information again.");
             	   	$("#globalError").removeClass("hide-me").addClass("error");
+            	   	
                     break;
 
                 // TODO- Do we ge this value ?
                 case LOGIN_STATUS_CODE_ERROR:
                 	$("#globalError").text("The code entered did not match. Please try again (you can click the code image to generate a new one if needed).");
              	   	$("#globalError").removeClass("hide-me").addClass("error");
+             	   	$('html, body').animate({scrollTop:0}, "slow");
                     break;
 
                 default:
                 	$("#globalError").text("There was an error submitting your login.");
          	   		$("#globalError").removeClass("hide-me").addClass("error");
+         	   		$('html, body').animate({scrollTop:0}, "slow");
                     break;
             }
         },
         error: function() {
         	$("#globalError").text("There was an error submitting your login.");
  	   		$("#globalError").removeClass("hide-me").addClass("error");
+ 	   		$('html, body').animate({scrollTop:0}, "slow");
         }
     });
 	
