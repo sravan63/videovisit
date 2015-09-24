@@ -1,6 +1,8 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext" %>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!--  Include modal dialog jsps -->
+<%@ include file="pglogoutModal.jsp" %>
 
 <div class="header">		
 	<div class="header-title"></div>
