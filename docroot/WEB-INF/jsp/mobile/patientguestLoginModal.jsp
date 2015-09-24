@@ -8,7 +8,7 @@
 	<div id="login-form">
 		<h1>Sign In as a Guest</h1>	
 		<form class="login-form" style="margin:10px 0 0;">
-			<ul class="form-block">
+			<ul class="form-block" style="padding-right:6px;">
 				<!--<li style="padding-right:6px; height:30px; border-radius:2px;">
 					<p style="width:100%; background-color:#706259; color:#FFFFFF; text-align:center; padding:5px 1px 5px 5px; border-top-left-radius:3px; border-top-right-radius:3px;">
 						Enter Patient&#39s Information
