@@ -6,9 +6,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 
-
-
-
 <%
 	MeetingCommand.IsMeetingHashValid(request, response);
 	
@@ -16,6 +13,9 @@
 	String meetingHash = request.getParameter("meetingCode");
 	
 %>
+
+<input type="hidden" id="meetingCode" name="meetingCode" value="<%=meetingHash%>">
+
 <div class="page-content">
 	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings > 0}">
