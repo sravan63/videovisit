@@ -81,7 +81,7 @@
 	</definition>
 	
 	<definition name="mPatientGuestLandingPage" extends=".oneColumnLayoutPG">
- 		<!-- <put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPagePG.jsp" />-->
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPagePG.jsp" />
 	</definition>
 	
 	<definition name="mPatientGuestPreLoginPage" extends=".oneColumnLayoutPG">
