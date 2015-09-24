@@ -30,11 +30,12 @@
       <artifactId>VideoVisitMemberServices-client</artifactId>
       <version>1.3.0</version>
     </dependency> -->
+    
     <!-- to address package org.kp.tpmg.webservice.client.videovisit.member does not exist -->
     <dependency>
       <groupId>org.kp.tpmg.ttg.serviceartifacts</groupId>
       <artifactId>VideoVisitMemberServices-client</artifactId>
-      <version>1.3.0-SNAPSHOT</version>
+      <version>1.4.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.neethi</groupId>
@@ -185,34 +186,6 @@
             </resource>
         </resources>
         <plugins>
-          <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
-                <executions>
-                  <execution>
-                    <id>additional-resources</id>
-                    <phase>process-test-resources</phase>
-                    <goals>
-                      <goal>copy-resources</goal>
-                    </goals>
-                    <configuration>
-                      <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
-                      <resources>
-                        <resource>
-                          <directory>${project.basedir}/src/test/resources</directory>
-                        </resource>
-                        <resource>
-                          <directory>${project.basedir}/src/main/resources</directory>
-                        </resource>
-                      </resources>
-                    </configuration>
-                  </execution>
-                </executions>
-              </plugin>
-            -->
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -611,30 +584,6 @@
                           <include>vidyoplayer/**</include>
                         </includes>
                       </resource>
-                      <!--
-                        <resource>
-                          <directory>${basedir}/docroot/WEB-INF/jsp</directory>
-                        </resource>
-                        <resource>
-                          <directory>${basedir}/docroot/WEB-INF/taglib</directory>
-                        </resource>
-                        <resource>
-                          <directory>${basedir}/docroot/WEB-INF/tiles-templates</directory>
-                        </resource>
-                        <resource>
-                          <directory>${basedir}/docroot/WEB-INF/tiles-defenitions </directory>
-                        </resource>
-                        <resource>
-                          <directory>${basedir}/docroot/WEB-INF/resources</directory>
-                        </resource>
-                        <resource>
-                          <directory>${basedir}/docroot/WEB-INF</directory>
-                          <includes>
-                            <include>applicationContext.xml</include>
-                            <include>action-servlet.xml</include>
-                          </includes>
-                        </resource>
-                      -->
                         <resource>
                             <directory>${project.build.directory}/lib</directory>
                             <includes>
