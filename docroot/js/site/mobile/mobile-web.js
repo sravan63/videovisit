@@ -319,7 +319,8 @@ $(document).ready(function() {
 	
 	$("#signInIdPG, #signInIdPGHand").click(function(event) {
 		event.preventDefault();
-		window.location.replace("mobilepglogin.htm");
+		var meetingCode = $("#meetingCode").val();
+		window.location.replace("mobilepglogin.htm?meetingCode=" +meetingCode);
 	});
 	
 	// END--APP ALERT handling using cookie
@@ -1191,10 +1192,8 @@ function mobileloginSubmit(){
 }
 
 function loginSubmitPG(){
-
     // Prepare data from pertinent fields for POSTing
-
-    var meetingCode = request.get('meetingCode') || $('#meetingCode').attr("value");;
+    var meetingCode = request.get('meetingCode') || $('#meetingCode').attr("value");
 
     // Parameters sent to the server
     var currentTime = new Date();
