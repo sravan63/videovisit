@@ -128,7 +128,7 @@ public class WebSessionFilter implements Filter
 					String meetingCode = req.getParameter("meetingCode");
 					if(StringUtils.isNotBlank(meetingCode))
 					{
-						redirectToUrl = guestMobileHomePageUrl + "?meetingCode=" + meetingCode;
+						redirectToUrl = memberMobileHomePageUrl + "?meetingCode=" + meetingCode;
 						logger.info("WebSessionFilter before mobile guest home page redirect = " + redirectToUrl);
 						resp.sendRedirect(redirectToUrl);
 					}
@@ -143,6 +143,19 @@ public class WebSessionFilter implements Filter
 					chain.doFilter(req, resp);
 				}	
 				
+			}
+			else if("mdohelp.htm".equalsIgnoreCase(requestUri)){
+				logger.info("WebSessionFilter help request: " +  requestUri);
+				boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);				
+				if(isWirelessDeviceOrTablet){
+					logger.info("WebSessionFilter before mobile member home page redirect = " + memberMobileHomePageUrl);
+					redirectToUrl = memberMobileHomePageUrl;
+					resp.sendRedirect(redirectToUrl);					
+				}
+				else{
+					logger.info("WebSessionFilter before desktop member help page.");
+					chain.doFilter(req, resp);
+				}	
 			}
 			else{
 				logger.info("WebSessionFilter in else");
