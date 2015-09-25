@@ -296,7 +296,7 @@ input								{outline:none;}
 .landing-portal-details a 		{color:#668d9c; text-decoration:underline;}
 .landing-portal-details .label 	{float:left; display:block; /* width:140px; */}
 .landing-portal-details .name	{float:left; /* width:210px; padding:0 0 20px 0; */}
-.landing-portal-details .btn 	{clear:both; display:inline-block; width:100%; text-align:center; background:#668d9c; padding:8px 0; font-size:140%; margin:0 0 12px 0;background:#668d9c url('../../../images/global/dbl_arrow_right.png') no-repeat 235px 11px;}
+.landing-portal-details .btn 	{clear:both; display:inline-block; width:100%; text-align:center; background:#668d9c; padding:8px 0; font-size:140%; margin:0 0 12px 0;background:#668d9c url('../../../images/global/dbl_arrow_right.png') no-repeat 260px 11px;}
 
 .smallprint 	{font-size:inherit; font-style:italic; color:#666; font-size:90%;}
 .landing-portal-details p.smallprint		{font-size:100%;text-align:center;}
