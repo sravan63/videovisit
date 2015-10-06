@@ -119,7 +119,7 @@ input								{outline:none;}
 /* special form block styles */
 .form-block .birth_month	{width:25px; float:left; margin-right:8px; margin-left:6px;}
 .form-block .birth_day      {width:25px; float:left; margin-right:0; margin-left:2px;}
-.form-block .birth_year		{width:30px; float:right; margin-left:2px;margin-right:6px;}
+.form-block .birth_year		{width:30px; margin-left:2px; margin-right:6px;}
 
 .form-block .captcha 		{width:36px;}
 .form-block .gfx-captcha 	{float:left; margin:0 14px 0 0;}
