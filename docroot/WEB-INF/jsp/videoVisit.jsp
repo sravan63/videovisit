@@ -281,7 +281,7 @@
 
 			                    <!--	<a class="btn btn-large btn-toggle-preview" href="#" title="Toggle Preview ('None', 'PiP', 'Dock')" id="inCallButtonTogglePreview" style="display:block;"></a>	-->
 								<a class="btn btn-large btn-local-share" data-toggle="dropdown" href="#" id="inCallButtonLocalShare" title="Share Desktop" style="display:block;"></a>
-									<ul class="dropdown-menu" role="menu" id="inCallLocalShareList">
+									<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;">
 										<!-- Look at the inCallLocalSharesTemplate in main.config.js  -->
 									</ul>
 
