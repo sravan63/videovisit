@@ -948,25 +948,36 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	//alert('kppc url = ' + megaMeetingUrl);
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 	if(appOS === 'iOS'){
-
 	    var iOSver = iOSversion();
-	    //alert('iOS ver: ' + iOSver);
 	    //Fix for the ios 7 issue with openTab function
 		if (iOSver[0] >= 7) {
-		  //alert('This is running iOS 7 or later.');
-		  window.location.replace(megaMeetingUrl);
+			this.timer = setTimeout(this.openWebApp, 1000);
+			window.location.replace(megaMeetingUrl);
 		}else{
+			this.timer = setTimeout(this.openWebApp, 1000);
 			openTab(megaMeetingUrl);
 		}
 	}
 	else{
 		openTab(megaMeetingUrl);
-
 	}
-
-
 }
 
+function openWebApp(){
+    var os = getAppOS();
+
+    if(os == "iOS"){
+        window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+    }
+    else if(os == "Android"){
+        window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
+    }
+    else{
+        // we should never reach this condition
+        alert("No device detected");
+    }
+    //window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+}
 
 function openTab(url)
 {
