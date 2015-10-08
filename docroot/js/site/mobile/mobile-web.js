@@ -942,19 +942,16 @@ function launchVideoVisit(megaMeetingUrl, meetingId, name){
  */
 function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1";
-	//alert("megaMeetingUrl=" + megaMeetingUrl);
-	//window.location.replace(megaMeetingUrl);
 	var appOS = getAppOS();
-	//alert('kppc url = ' + megaMeetingUrl);
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 	if(appOS === 'iOS'){
 	    var iOSver = iOSversion();
 	    //Fix for the ios 7 issue with openTab function
 		if (iOSver[0] >= 7) {
-			this.timer = setTimeout(this.openWebApp, 1000);
+			this.timer = setTimeout(this.openWebApp, 500);
 			window.location.replace(megaMeetingUrl);
 		}else{
-			this.timer = setTimeout(this.openWebApp, 1000);
+			this.timer = setTimeout(this.openWebApp, 500);
 			openTab(megaMeetingUrl);
 		}
 	}
