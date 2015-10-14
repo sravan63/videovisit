@@ -69,7 +69,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 			$('p#globalError').html(browserNotSupportedMsgForPatient);
 			$("p#globalError").removeClass("hide-me");
 			
-			$("#last_name").css('disabled', 'disabled');
+			document.getElementById("last_name").disabled = true;
 			$('#joinNowBtn').css('pointer-events', 'none');
             $('#joinNowBtn').css('cursor', 'default');
             $('#joinNowBtn').css('opacity', '0.5');
@@ -80,7 +80,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 				$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
 
-				$("#last_name").css('disabled', 'disabled');
+				document.getElementById("last_name").disabled = true;
 				$('#joinNowBtn').css('pointer-events', 'none');
 	            $('#joinNowBtn').css('cursor', 'default');
 	            $('#joinNowBtn').css('opacity', '0.5');
