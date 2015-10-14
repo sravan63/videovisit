@@ -1043,7 +1043,7 @@ function isLoginValidationSuccess(){
 	var  isValid = validate(validationObj);
 
 	if(!isValid){
-		$('html, body').animate({scrollTop:0}, "slow");
+		$('html, body').animate({scrollTop:-100}, "slow");
 	}
 	
 	return isValid;
