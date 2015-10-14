@@ -35,9 +35,9 @@
 	<!-- END - Disclaimer -->
 	
 	<!-- Fake Footer - to adjust the length of the Background image -->
-	<!-- <div style="visibility:hidden; margin:75px 0;">
+	<div style="visibility:hidden; margin:75px 0;">
 		<br/>
-	</div> -->
+	</div>
 	<!-- END - Fake Footer -->
 </div>
 
