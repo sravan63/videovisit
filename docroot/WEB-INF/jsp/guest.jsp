@@ -46,6 +46,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 <style>
 	input#joinNowBtn{
 		opacity: 0.5;
+		filter: alpha(opacity=50);
 		cursor: default;
 		width: 345px;
 		color: #FFFFFF;
