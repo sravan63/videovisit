@@ -32,6 +32,7 @@
 	}
 	input#login{
 		opacity: 0.5;
+		filter: alpha(opacity=50);
 	}
 	.login{
 		margin-bottom: 43px;
