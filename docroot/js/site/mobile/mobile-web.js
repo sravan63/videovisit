@@ -1043,9 +1043,8 @@ function isLoginValidationSuccess(){
 	var  isValid = validate(validationObj);
 
 	if(!isValid){
-		window.scrollTo(0,0);
-		//scrollMe();
-		//$('html, body').animate({scrollTop:0}, "slow");
+		//window.scrollTo(0, -50);
+		$('document').animate({scrollTop:0}, "slow");
 	}
 	
 	return isValid;
