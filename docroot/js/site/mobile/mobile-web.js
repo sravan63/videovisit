@@ -1107,8 +1107,7 @@ function loginSubmit(){
 
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
             	    $("#globalError").text("We could not find this patient.  Please try entering the information again.");
-            	    $("#globalError").removeClass("hide-me").addClass("error");
-            	    $('html, body').animate({scrollTop:0}, "slow");
+            	    $('html, body').animate({scrollTop:-100}, "slow");
                     break;
 
                 // TODO- Do we ge this value ?
@@ -1172,7 +1171,7 @@ function mobileloginSubmit(){
                case LOGIN_STATUS_PATIENT_NOT_FOUND_ERROR:
             	   	$("#globalError").text("We could not find this patient. Please try entering the information again.");
             	   	$("#globalError").removeClass("hide-me").addClass("error");
-            	   	
+            	   	$("html, body").animate({scrollTop:-100}, "slow");
                     break;
 
                 // TODO- Do we ge this value ?
