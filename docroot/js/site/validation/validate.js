@@ -170,7 +170,7 @@ function validate(validationObj){
 
 	    if(errorFlag == true){
 	    	errorId = "globalError";
-	    	errorMessage = "Incorrect Patient Information";
+	    	errorMessage = "Incorrect Patient Information.";
 	    	displayError(errorId, errorMessage);
 	    }
 	});
