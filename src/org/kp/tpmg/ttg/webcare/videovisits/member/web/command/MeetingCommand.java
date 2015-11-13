@@ -22,6 +22,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionSer
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
@@ -963,6 +964,54 @@ public class MeetingCommand {
 		catch (Exception e)
 		{
 			// log error
+			logger.error("System Error" + e.getMessage(),e);
+		}
+		// worst case error returned, no authenticated user, no web service responded, etc. 
+		return (JSONObject.fromObject(new SystemError()).toString());
+	}
+	
+  public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		long meetingId = 0;
+		String deviceType = null;
+	    boolean isMobileflow= true;
+	    
+		logger.info("Entered MeetingCommand: getLaunchMeetingDetailsForMember");	
+		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+		String inMeetingDisplayName=null;// ctx.getMember().getLastName()+", "+ctx.getMember().getFirstName();
+		
+		try
+		  {
+			logger.info("getLaunchMeetingDetailsForMember: meetingid=" + request.getParameter("meetingId") + ", in meetingdisplayname=" + request.getParameter("inMeetingDisplayName"));
+			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			
+			if (StringUtils.isNotBlank(request.getParameter("inMeetingDisplayName"))) {
+				inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+			}
+			Device device =	DeviceDetectionService.checkForDevice(request);
+			Map<String, String > capabilities = device.getCapabilities();
+			
+			logger.info("getLaunchMeetingDetailsForMember -> Mobile capabilities" + capabilities);
+			String brandName = capabilities.get("brand_name");
+			String modelName = capabilities.get("model_name");
+			String deviceOs = capabilities.get("device_os");
+			String deviceOsVersion = capabilities.get("device_os_version");
+			
+			if (brandName != null && modelName!= null){
+			 deviceType = brandName +" " + modelName;
+			}
+			MeetingLaunchResponseWrapper meetingResponse = WebService.getLaunchMeetingDetails(meetingId, inMeetingDisplayName, request.getSession().getId(),ctx.getMember().getMrn8Digit(),deviceType,deviceOs,deviceOsVersion,isMobileflow);
+			if (meetingResponse != null)
+			{
+				logger.info("MeetingCommand:getLaunchMeetingDetailsForMember: result got from webservice:"+ meetingResponse.getResult());
+				return meetingResponse.getResult();
+			}
+			
+		}
+		catch (Exception e)
+		{
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		// worst case error returned, no authenticated user, no web service responded, etc. 
