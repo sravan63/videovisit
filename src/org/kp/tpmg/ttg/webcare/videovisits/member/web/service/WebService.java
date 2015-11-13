@@ -34,6 +34,8 @@ import org.kp.tpmg.videovisit.member.IsMeetingHashValid;
 import org.kp.tpmg.videovisit.member.IsMeetingHashValidResponse;
 import org.kp.tpmg.videovisit.member.KickUserFromMeeting;
 import org.kp.tpmg.videovisit.member.KickUserFromMeetingResponse;
+import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuest;
+import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuestResponse;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogout;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogoutResponse;
 import org.kp.tpmg.videovisit.member.MemberLogout;
@@ -59,6 +61,7 @@ import org.kp.tpmg.videovisit.member.CreateInstantVendorMeetingResponse;
 import org.kp.tpmg.videovisit.member.TerminateInstantMeeting;
 import org.kp.tpmg.videovisit.member.TerminateInstantMeetingResponse;
 import org.kp.tpmg.videovisit.member.FileUploadResponse;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
@@ -1099,5 +1102,50 @@ public class WebService{
 		logger.info("Exiting WebService.fileUpload -> returnStatus = " + returnStatus);
         return returnStatus;
     }
+	
+	/** This method will launch the videovisit forMembers using service API
+	 * @param meetingId
+	 * @param inMeetingDisplayNmae
+	 * @param Mrn
+	 * @param deviceType
+	 * @param deviceOS
+	 * @param deviceOsVersion
+	 * @param sessionId
+	 * @param isMobileFlow
+	 */
+	
+	public static MeetingLaunchResponseWrapper getLaunchMeetingDetails(long meetingID,
+			String inMeetingDisplayName,String sessionID,String mrn8Digit,String deviceType, String deviceOS, String deviceOSversion,boolean isMobileFlow) throws Exception {
+		 MeetingLaunchResponseWrapper toRet = null; 
+		
+		logger.info("Entered WebService: getLaunchMeetingDetails");	
+		LaunchMeetingForMemberOrGuest query = new LaunchMeetingForMemberOrGuest();
+		try
+		{
+			query.setSessionID(sessionID);
+			query.setMeetingID (meetingID);
+			query.setMrn8Digit(mrn8Digit);
+			query.setInMeetingDisplayName(inMeetingDisplayName);
+			query.setDeviceType(deviceType);
+			query.setDeviceOS(deviceOS);
+			query.setDeviceOSversion(deviceOSversion);
+			query.setIsMobileFlow(isMobileFlow);
+			logger.info("Entered WebService: getLaunchMeetingDetails:MeetingID=" + meetingID + " sessionId=" + sessionID +" inMeetingDisplayName"+ inMeetingDisplayName + " mrn8Digit=" + mrn8Digit+ " deviceType" + deviceType +" deviceOS" +deviceOS+ " deviceOSversion" +deviceOSversion +" isMobileFlow" +isMobileFlow);
+			LaunchMeetingForMemberOrGuestResponse response = stub.launchMeetingForMemberOrGuest(query);
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			logger.error("WebService: getLaunchMeetingDetails -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			LaunchMeetingForMemberOrGuestResponse response = stub.launchMeetingForMemberOrGuest(query);
+			toRet = response.get_return();
+		}
+		finally
+		{
+			closeConnectionManager(stub);
+		}
+		logger.info("Exit WebService: getLaunchMeetingDetails");
+		return toRet;
+	}
 }
 
