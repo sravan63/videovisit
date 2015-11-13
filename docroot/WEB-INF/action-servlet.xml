@@ -144,6 +144,8 @@
 				
 				<prop key="/enablejavascript.htm">enableJavascript</prop>
 				<prop key="/mobileenablejavascript.htm">mobileEnableJavascript</prop>
+				
+				<prop key="/launchMeetingforMember.json">dataLaunchMeetingForMember</prop>
 					
 			</props>
 		</property>
@@ -442,7 +444,13 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
-	<bean id="dataIsValidMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.ValidateUserSession">
+   <bean id="dataIsValidMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.ValidateUserSession">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	
+	
+	
+	<bean id="dataLaunchMeetingForMember" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LaunchMeetingForMemberController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
