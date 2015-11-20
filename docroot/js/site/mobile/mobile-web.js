@@ -536,11 +536,10 @@ $(document).ready(function() {
 		var currentTime = new Date();
 	    var n = currentTime.getTime();
 		var postdata = "meetingId=" + meetingId + "&inMeetingDisplayName=" + inMeetingDisplayName + "&source=member&nocache=" + n;
-		$.ajax({
-			async:false,
+		$.ajax({			
 	        type: "POST",                                                        
 	        url: VIDEO_VISITS_MOBILE.Path.joinMeeting.launchMeetingforMember,
-	        data: postdata,
+	        data: postdata,	        
 	        success: function(data) {
 	        	try
 	        	{
@@ -602,6 +601,14 @@ $(document).ready(function() {
 	            		window.location.replace("mobileAppPatientLogin.htm");
 	            	else
 	            		window.location.replace("logout.htm");
+		        },
+		        beforeSend: function () {
+		        	console.log("Adding Spinner");
+		        	$("#layover").show();		        	
+	        	},
+		        complete: function () {
+		        	console.log("Complete Spinner");
+		        	$("#layover").hide();		        	
 		        }
 		    });
 		});
