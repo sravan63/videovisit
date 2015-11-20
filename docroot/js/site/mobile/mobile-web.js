@@ -561,7 +561,10 @@ $(document).ready(function() {
 	        		var meetingStatus = data.meetingStatus;
 	        		console.log("meetingStatus: ",meetingStatus);
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	             		window.location.replace("meetingexpiredmember.htm");
+	             		if (inAppBrowserFlag == "true")
+    	            		window.location.replace("mobileAppPatientLogin.htm");
+    	            	else
+    	            		window.location.replace("meetingexpiredmember.htm");
 	             	}
 	             	else{
 		             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
