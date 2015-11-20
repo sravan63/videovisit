@@ -576,6 +576,17 @@ display: inline;
 	display: none;
 }
 
+#overlay {
+	position: fixed;
+	top:50%;
+	left:50%;
+	width:500px;
+	height:500px;
+	margin-left:-250px;
+	margin-top:-250px;
+	background: #A9A9A9;
+}
+
 /* Smartphones (landscape) ----------- */
 @media only screen and (orientation: landscape) {
 
