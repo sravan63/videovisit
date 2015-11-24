@@ -146,6 +146,8 @@
 				<prop key="/mobileenablejavascript.htm">mobileEnableJavascript</prop>
 				
 				<prop key="/launchMeetingforMember.json">dataLaunchMeetingForMember</prop>
+				<prop key="/launchMeetingForMemberGuest.json">dataLaunchMeetingForMemberGuest</prop>
+				
 					
 			</props>
 		</property>
@@ -453,6 +455,12 @@
 	<bean id="dataLaunchMeetingForMember" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LaunchMeetingForMemberController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
+	
+	<bean id="dataLaunchMeetingForMemberGuest" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LaunchMeetingForMemberGuestController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	
+	
 	
 	<bean id="mobilePatientGuestMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 	    <!--  defined in mobile-titles-definitions.xml -->
