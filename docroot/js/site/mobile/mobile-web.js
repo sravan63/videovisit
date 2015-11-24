@@ -573,10 +573,11 @@ $(document).ready(function() {
 				            		console.log("userPresentInMeetingData: ",userPresentInMeetingData);
 
 				            		if(userPresentInMeetingData == true){
+				            			$("#layover").hide();
 				            			modalShow('modal-user-present');
 				            		}
 				            		else{
-					            			
+				            			$("#layover").hide();
 				            			launchVideoVisitMember(data);
 				            			}
 			            		}
@@ -607,11 +608,11 @@ $(document).ready(function() {
 		        beforeSend: function () {
 		        	console.log("Adding Spinner");
 		        	$("#layover").show();		        	
-	        	},
-		        complete: function () {
+	        	}
+		        /*complete: function () {
 		        	console.log("Complete Spinner");
 		        	$("#layover").hide();
-		        }
+		        }*/
 		    });
 		});
 	             	
