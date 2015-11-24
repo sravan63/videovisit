@@ -346,6 +346,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/GuestController.ja
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/HealthMonitorController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/JoinMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LaunchMeetingForMemberController.java -text svneol=unset#text/plain
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LaunchMeetingForMemberGuestController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoffController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoutController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/MobileLoginController.java -text svneol=unset#text/plain
