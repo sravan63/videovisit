@@ -30,6 +30,8 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrappe
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 
+import com.google.gson.Gson;
+
 
 public class MeetingCommand {
 
@@ -1017,5 +1019,70 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
+  
+  public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	  
+	  logger.info("Entered MeetingCommand: getLaunchMeetingDetailsForMember");	
+	  WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+	  String meetingCode=null;
+	  String patientLastName=null;
+	  String json = "";
+	  String  deviceType = null;
+	  Gson gson = new Gson();
+      
+	  try {
+		  logger.info("getLaunchMeetingDetailsForMemberGuest: meetingCode=" + request.getParameter("meetingCode") + ", patientLastName=" + request.getParameter("patientLastName")+", isMobileFlow="+ request.getParameter("isMobileFlow"));
+			meetingCode = request.getParameter("meetingCode");
+			patientLastName = request.getParameter("patientLastName");
+			boolean isMobileFlow;
+			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow")) && request.getParameter("isMobileFlow").equalsIgnoreCase("true"))
+			{
+					isMobileFlow = true;
+					logger.info("mobile flow is true");
+			}
+				else{
+					isMobileFlow = false;
+					logger.info("mobile flow is false");
+			}
+			
+			// This code will get the device attributes and capabilities and passes it to webservice
+			Device device =	DeviceDetectionService.checkForDevice(request);
+			Map<String, String > capabilities = device.getCapabilities();
+						
+			String brandName = capabilities.get("brand_name");
+			String modelName = capabilities.get("model_name");
+			String deviceOs = capabilities.get("device_os");
+			String deviceOsVersion = capabilities.get("device_os_version");
+			
+			
+			if (brandName != null && modelName!= null){
+					  deviceType = brandName +" " + modelName;
+				}
+			MeetingLaunchResponseWrapper meetingResponse = WebService.getMeetingDetailsForMemberGuest(meetingCode, patientLastName,deviceType,deviceOs,deviceOsVersion,isMobileFlow);
+			if ( meetingResponse != null )
+			{
+				logger.info("setting care giver context true");
+				ctx.setCareGiver(meetingResponse.getSuccess());
+				//logger.info("result from webservice"+meetingResponse.toString());
+				logger.info("result from webservice  webservice URl"+meetingResponse.getResult()+" errorMessage "+meetingResponse.getErrorMessage()+" InMeeting "+meetingResponse.getInMeeting()+" MeetingStatus "+meetingResponse.getMeetingStatus());
+			    json=JSONObject.fromObject(meetingResponse).toString();
+				logger.info("result Using JSONObject"+json);
+				//jsonResult = gson.toJson(meetingResponse);
+				//logger.info("MeetingCommand:getLaunchMeetingDetailsForMemberGuest: jsonResult " + jsonResult);
+				return json;
+				
+			}	
+			
+			
+	  }
+	  catch(Exception e){
+		  logger.error("System Error" + e.getMessage(),e);
+		  
+		  
+	  }
+	 return (JSONObject.fromObject(new SystemError()).toString());
+	  
+  }
+  
 
 }
