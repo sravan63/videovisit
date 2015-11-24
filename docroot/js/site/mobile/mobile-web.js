@@ -13,7 +13,9 @@ VIDEO_VISITS_MOBILE.Path = {
 	        ajaxurl : 'mobilelogin.json'
 	    },
 	    guest : {
-	        verify : 'verifyguest.json'
+	        verify : 'verifyguest.json',
+	        launchMeetingForMemberGuest: 'launchMeetingForMemberGuest.json'
+	        	
 	    },
 	    sessionTimeout : {
 	        ajaxurl : 'sessiontimeout.json',
@@ -536,10 +538,10 @@ $(document).ready(function() {
 		var currentTime = new Date();
 	    var n = currentTime.getTime();
 		var postdata = "meetingId=" + meetingId + "&inMeetingDisplayName=" + inMeetingDisplayName + "&source=member&nocache=" + n;
-		$.ajax({			
+		$.ajax({
 	        type: "POST",                                                        
 	        url: VIDEO_VISITS_MOBILE.Path.joinMeeting.launchMeetingforMember,
-	        data: postdata,	        
+	        data: postdata,
 	        success: function(data) {
 	        	try
 	        	{
@@ -561,7 +563,7 @@ $(document).ready(function() {
 	        		var meetingStatus = data.meetingStatus;
 	        		console.log("meetingStatus: ",meetingStatus);
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	            		window.location.replace("meetingexpiredmember.htm");
+	             		window.location.replace("meetingexpiredmember.htm");
 	             	}
 	             	else{
 		             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
@@ -601,14 +603,14 @@ $(document).ready(function() {
 	            		window.location.replace("mobileAppPatientLogin.htm");
 	            	else
 	            		window.location.replace("logout.htm");
-		        },
+	            		 },
 		        beforeSend: function () {
 		        	console.log("Adding Spinner");
 		        	$("#layover").show();		        	
 	        	},
 		        complete: function () {
 		        	console.log("Complete Spinner");
-		        	$("#layover").hide();		        	
+		        	$("#layover").hide();
 		        }
 		    });
 		});
@@ -620,7 +622,7 @@ $(document).ready(function() {
 		window.location.href = "mobilepatientlightauth.htm";
 	});
 
-    $(".button-launch-visit-pg").click(function(event) {
+   /* $(".button-launch-visit-pg").click(function(event) {
 		event.preventDefault();
 
 		var megaMeetingId = $(this).attr("megameetingid");
@@ -648,6 +650,56 @@ $(document).ready(function() {
                      setTimeout(function(){
 	                     //your code to be executed after 1 seconds
 	                     launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
+                     }, delay);
+	        	}
+	            else{
+	            	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
+	            }
+	        },
+	        error: function() {
+	        	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
+	        }
+	    });
+
+
+
+
+		return false;
+	});*/
+	
+	
+	$(".button-launch-visit-pg").click(function(event) {
+		event.preventDefault();
+
+		var megaMeetingId = $(this).attr("megameetingid");
+		var lastName = $(this).attr("lastname");
+		var firstName = $(this).attr("firstname");
+		var email = $(this).attr("email");
+		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
+		var meetingCode = request.get('meetingCode');
+    	var patientLastName = request.get('patientLastName');
+    	var isMobileFlow= true;
+    	
+
+    	var currentTime = new Date();
+	    var n = currentTime.getTime();
+		var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +'&isMobileFlow='+ isMobileFlow +'&source=caregiver&nocache=' + n;
+		$.ajax({
+			async:false,
+	        type: "POST",
+	        url: VIDEO_VISITS_MOBILE.Path.guest.launchMeetingForMemberGuest,
+	        data: postdata,
+	        success: function(returndata) {
+	        	//console.log("returndata=" + returndata);
+	        	returndata = $.parseJSON(returndata);
+	        	var isValidUserSession =  returndata.isValidUserSession;
+	        	//console.log("isValidUserSession=" + isValidUserSession);
+	            if(isValidUserSession == true){
+	            	 var delay=1000; //1 seconds
+
+                     setTimeout(function(){
+	                     //your code to be executed after 1 seconds
+	                     launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
                      }, delay);
 	        	}
 	            else{
@@ -697,6 +749,57 @@ $(document).ready(function() {
 && setTimeout(function () {
 window.scrollTo(0,0);
 }, 0);
+
+//new function launchPatientGuest for guest to join vidyo
+
+function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, lastName,  email){
+	
+	 if(returndata.result === '1'){
+
+     	$("#globalError").text('No matching patient found. Please try again.');
+          $("#globalError").removeClass("hide-me").addClass("error");
+          return false;
+       }
+     else if (returndata.result === '2') {
+
+     	window.location.replace("meetingexpiredmemberpg.htm");
+         return false;
+
+     }
+     else if (returndata.result === '3') {
+
+     	$("#globalError").text('Some exception occurred while processing request..');
+          $("#globalError").removeClass("hide-me").addClass("error");
+          return false;
+     }
+     else if (returndata.result === '4') {
+
+     	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
+          $("#globalError").removeClass("hide-me").addClass("error");
+          return false;
+     }
+	 
+	 try
+ 	{
+ 		//data = jQuery.parseJSON(data);
+ 		if ( returndata.errorIdentifier == 1){
+ 			window.location.replace("logout.htm");
+ 		}
+
+ 		if (returndata.errorMessage) {
+ 			window.location.replace("logout.htm");
+ 		}
+ 		url = returndata.result;
+ 		launchVideoVisitForPatientGuest(url, megaMeetingId, lastName + ', ' + firstName + ', (' + email + ')');
+			clearAllErrors();
+
+ 	}
+ 	catch(e)
+ 	{
+ 		window.location.replace("logout.htm");
+ 	}
+	
+}
 
 function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 {
