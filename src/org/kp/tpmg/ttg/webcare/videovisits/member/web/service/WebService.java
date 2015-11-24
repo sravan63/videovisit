@@ -34,8 +34,12 @@ import org.kp.tpmg.videovisit.member.IsMeetingHashValid;
 import org.kp.tpmg.videovisit.member.IsMeetingHashValidResponse;
 import org.kp.tpmg.videovisit.member.KickUserFromMeeting;
 import org.kp.tpmg.videovisit.member.KickUserFromMeetingResponse;
-import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuest;
-import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuestResponse;
+import org.kp.tpmg.videovisit.member.LaunchMeetingForMember;
+import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuest;
+import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuestResponse;
+import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberResponse;
+//import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuest;
+//import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuestResponse;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogout;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogoutResponse;
 import org.kp.tpmg.videovisit.member.MemberLogout;
@@ -1119,7 +1123,7 @@ public class WebService{
 		 MeetingLaunchResponseWrapper toRet = null; 
 		
 		logger.info("Entered WebService: getLaunchMeetingDetails");	
-		LaunchMeetingForMemberOrGuest query = new LaunchMeetingForMemberOrGuest();
+	    LaunchMeetingForMember query = new LaunchMeetingForMember();
 		try
 		{
 			query.setSessionID(sessionID);
@@ -1131,13 +1135,15 @@ public class WebService{
 			query.setDeviceOSversion(deviceOSversion);
 			query.setIsMobileFlow(isMobileFlow);
 			logger.info("Entered WebService: getLaunchMeetingDetails:MeetingID=" + meetingID + " sessionId=" + sessionID +" inMeetingDisplayName"+ inMeetingDisplayName + " mrn8Digit=" + mrn8Digit+ " deviceType" + deviceType +" deviceOS" +deviceOS+ " deviceOSversion" +deviceOSversion +" isMobileFlow" +isMobileFlow);
-			LaunchMeetingForMemberOrGuestResponse response = stub.launchMeetingForMemberOrGuest(query);
+			LaunchMeetingForMemberResponse response = stub.launchMeetingForMember(query);
 			toRet = response.get_return();
+			//LaunchMeetingForMemberOrGuestResponse response = stub.launchMeetingForMemberOrGuest(query);
+			//toRet = response.get_return();
 		}
 		catch (Exception e)
 		{
 			logger.error("WebService: getLaunchMeetingDetails -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			LaunchMeetingForMemberOrGuestResponse response = stub.launchMeetingForMemberOrGuest(query);
+			LaunchMeetingForMemberResponse response = stub.launchMeetingForMember(query);
 			toRet = response.get_return();
 		}
 		finally
@@ -1147,5 +1153,38 @@ public class WebService{
 		logger.info("Exit WebService: getLaunchMeetingDetails");
 		return toRet;
 	}
+	
+	
+	public static MeetingLaunchResponseWrapper getMeetingDetailsForMemberGuest(String meetingCode, String patientLastName,String deviceType, String deviceOS, String deviceOSVersion,boolean isMobileFlow) throws Exception{
+		
+		MeetingLaunchResponseWrapper toRet = null; 
+		logger.info("Entered WebService: getMeetingDetailsForMemberGuest");	
+		LaunchMeetingForMemberGuest query = new LaunchMeetingForMemberGuest();
+		try{
+			query.setMeetingHash(meetingCode);
+			query.setPatientLastName(patientLastName);
+			query.setDeviceType(deviceType);
+			query.setDeviceOs(deviceOS);
+			query.setDeviceOsVersion(deviceOSVersion);
+			query.setIsMobileFlow(isMobileFlow);
+			logger.info("Entered WebService: getLaunchMeetingDetails:MeetingCode=" + meetingCode + " patientLastName=" + patientLastName +  " deviceType" + deviceType +" deviceOS" +deviceOS+ " deviceOSversion" +deviceOSVersion +" isMobileFlow" +isMobileFlow);
+			LaunchMeetingForMemberGuestResponse response = stub.launchMeetingForMemberGuest(query);
+			toRet = response.get_return();
+			
+			
+		}
+		catch(Exception e){
+			logger.error("WebService: getMeetingDetailsForMemberGuest -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			LaunchMeetingForMemberGuestResponse response = stub.launchMeetingForMemberGuest(query);
+			toRet = response.get_return();
+			
+		}
+		finally{
+			closeConnectionManager(stub);
+		}
+		logger.info("Exit WebService: getLaunchMeetingDetails");
+		return toRet;
+	}
 }
+
 
