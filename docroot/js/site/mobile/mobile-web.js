@@ -603,14 +603,9 @@ $(document).ready(function() {
 	            	else
 	            		window.location.replace("logout.htm");
 	            		 },
-		        beforeSend: function () {
-		        	console.log("Adding Spinner");
+		        beforeSend: function () {		        	
 		        	$("#layover").show();		        	
 	        	}
-		        /*complete: function () {
-		        	console.log("Complete Spinner");
-		        	$("#layover").hide();
-		        }*/
 		    });
 		});
 	             	
@@ -683,8 +678,7 @@ $(document).ready(function() {
     	var currentTime = new Date();
 	    var n = currentTime.getTime();
 		var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +'&isMobileFlow='+ isMobileFlow +'&source=caregiver&nocache=' + n;
-		$.ajax({
-			async:false,
+		$.ajax({			
 	        type: "POST",
 	        url: VIDEO_VISITS_MOBILE.Path.guest.launchMeetingForMemberGuest,
 	        data: postdata,
@@ -707,11 +701,11 @@ $(document).ready(function() {
 	        },
 	        error: function() {
 	        	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
-	        }
+	        },
+	        beforeSend: function () {	        	
+	        	$("#layover").show();		        	
+        	}
 	    });
-
-
-
 
 		return false;
 	});
