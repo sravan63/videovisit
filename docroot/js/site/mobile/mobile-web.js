@@ -572,12 +572,10 @@ $(document).ready(function() {
 				            		var userPresentInMeetingData = data.inMeeting;
 				            		console.log("userPresentInMeetingData: ",userPresentInMeetingData);
 
-				            		if(userPresentInMeetingData == true){
-				            			$("#layover").hide();
+				            		if(userPresentInMeetingData == true){				            			
 				            			modalShow('modal-user-present');
 				            		}
-				            		else{
-				            			$("#layover").hide();
+				            		else{				            			
 				            			launchVideoVisitMember(data);
 				            			}
 			            		}
@@ -1225,6 +1223,7 @@ function openTab(url)
 	 var e = window.document.createEvent("MouseEvents");
 	 e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
 	 a.dispatchEvent(e);
+	 $("#layover").hide();
 }
 
 /**
