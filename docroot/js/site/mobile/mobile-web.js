@@ -1193,7 +1193,7 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 
 function openWebApp(){
     var os = getAppOS();
-
+    $("#layover").hide();
     if(os == "iOS"){
         window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
     }
