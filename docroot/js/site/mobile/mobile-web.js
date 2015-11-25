@@ -1192,8 +1192,7 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 }
 
 function openWebApp(){
-    var os = getAppOS();
-    $("#layover").hide();
+    var os = getAppOS();    
     if(os == "iOS"){
         window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
     }
@@ -1205,6 +1204,7 @@ function openWebApp(){
         alert("No device detected");
     }
     //window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+    $("#layover").hide();
 }
 
 function openTab(url)
