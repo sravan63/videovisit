@@ -752,6 +752,7 @@ function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, 
      	$("#globalError").text('No matching patient found. Please try again.');
           $("#globalError").removeClass("hide-me").addClass("error");
           return false;
+          $("#layover").hide();
        }
      else if (returndata.result === '2') {
 
@@ -764,12 +765,14 @@ function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, 
      	$("#globalError").text('Some exception occurred while processing request..');
           $("#globalError").removeClass("hide-me").addClass("error");
           return false;
+          $("#layover").hide();
      }
      else if (returndata.result === '4') {
 
      	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
           $("#globalError").removeClass("hide-me").addClass("error");
           return false;
+          $("#layover").hide();
      }
 	 
 	 try
