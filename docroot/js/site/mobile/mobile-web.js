@@ -771,8 +771,8 @@ function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, 
 
      	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
           $("#globalError").removeClass("hide-me").addClass("error");
-          return false;
           $("#layover").hide();
+          return false;          
      }
 	 
 	 try
@@ -840,6 +840,7 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 
 	            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
 	                 $("#globalError").removeClass("hide-me").addClass("error");
+	                 $("#layover").hide();
 	                 return false;
 	            }
 
