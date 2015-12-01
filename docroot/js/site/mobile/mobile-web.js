@@ -563,7 +563,10 @@ $(document).ready(function() {
 	        		var meetingStatus = data.meetingStatus;
 	        		console.log("meetingStatus: ",meetingStatus);
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	             		window.location.replace("meetingexpiredmember.htm");
+	             		if (inAppBrowserFlag == "true")
+    	            		window.location.replace("mobileAppPatientMeetingExpired.htm");
+	             		else
+	             			window.location.replace("meetingexpiredmember.htm");
 	             	}
 	             	else{
 		             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
@@ -572,7 +575,8 @@ $(document).ready(function() {
 				            		var userPresentInMeetingData = data.inMeeting;
 				            		console.log("userPresentInMeetingData: ",userPresentInMeetingData);
 
-				            		if(userPresentInMeetingData == true){				            			
+				            		if(userPresentInMeetingData == true){
+				            			$("#layover").hide();
 				            			modalShow('modal-user-present');
 				            		}
 				            		else{				            			
@@ -748,11 +752,10 @@ window.scrollTo(0,0);
 function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, lastName,  email){
 	
 	 if(returndata.result === '1'){
-
+		 $("#layover").hide();
      	$("#globalError").text('No matching patient found. Please try again.');
           $("#globalError").removeClass("hide-me").addClass("error");
-          return false;
-          $("#layover").hide();
+          return false;          
        }
      else if (returndata.result === '2') {
 
@@ -761,17 +764,15 @@ function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, 
 
      }
      else if (returndata.result === '3') {
-
+    	 $("#layover").hide();
      	$("#globalError").text('Some exception occurred while processing request..');
           $("#globalError").removeClass("hide-me").addClass("error");
-          return false;
-          $("#layover").hide();
+          return false;          
      }
      else if (returndata.result === '4') {
-
+    	 $("#layover").hide();
      	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
-          $("#globalError").removeClass("hide-me").addClass("error");
-          $("#layover").hide();
+          $("#globalError").removeClass("hide-me").addClass("error");          
           return false;          
      }
 	 
@@ -837,10 +838,9 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 	                 return false;
 	            }
 	            else if (returndata.result === '4') {
-
+	            	$("#layover").hide();
 	            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
-	                 $("#globalError").removeClass("hide-me").addClass("error");
-	                 $("#layover").hide();
+	                 $("#globalError").removeClass("hide-me").addClass("error");	                 
 	                 return false;
 	            }
 
@@ -1146,6 +1146,7 @@ function launchVideoVisitMember(data){
 
 			    var iOSver = iOSversion();
 				if (iOSver[0] >= 7) {
+					$("#layover").hide();
 				  window.location.replace(url);
 				}else{
 					openTab(url);
@@ -1469,6 +1470,7 @@ function loginSubmitPG(){
             else if (returndata.result === '4') {
             	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
             	$("#globalError").removeClass("hide-me").addClass("error");
+            	$("#layover").hide();
             	return false;
             }
             
