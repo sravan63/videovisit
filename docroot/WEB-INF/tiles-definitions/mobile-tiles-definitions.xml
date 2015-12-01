@@ -106,8 +106,13 @@
 	<definition name="meetingExpiredMember" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/expired-visit-member.jsp" />
 	</definition>
+	
 	<definition name="meetingExpiredMemberPG" extends=".oneColumnLayout">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/expired-visit-member-pg.jsp" />
+	</definition>
+	
+	<definition name="mAppPatientMeetingExpired" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileAppPatientMeetingExpired.jsp" />
 	</definition>
 	
 	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
