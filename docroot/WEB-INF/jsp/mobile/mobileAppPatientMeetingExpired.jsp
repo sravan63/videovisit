@@ -29,7 +29,7 @@
 		<!-- Go Back button - Start -->
 		<div style="min-height:45px; padding-left:32px;">
 			<div style="float:right;">
-				<button onclick="window.location='mobileAppPatientMeetings.htm'" style="width:136px; height:45px; color:#FFFFFF; background-color:#0061A9; padding:10px 5px; border-radius:4px; font-size:16px;"> Go Back </button>
+				<button onclick="window.location='mobileAppPatientMeetings.htm?inAppBrowserFlag=true'" style="width:136px; height:45px; color:#FFFFFF; background-color:#0061A9; padding:10px 5px; border-radius:4px; font-size:16px;"> Go Back </button>
 			</div>
 		</div>
 	</div>
