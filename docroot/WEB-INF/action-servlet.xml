@@ -141,6 +141,7 @@
 				<prop key="/meetingexpired.htm">meetingExpired</prop>
 				<prop key="/meetingexpiredmember.htm">meetingExpiredMember</prop>
 				<prop key="/meetingexpiredmemberpg.htm">meetingExpiredMemberPG</prop>
+				<prop key="/mobileAppPatientMeetingExpired.htm">mobileAppPatientMeetingExpired</prop>
 				
 				<prop key="/enablejavascript.htm">enableJavascript</prop>
 				<prop key="/mobileenablejavascript.htm">mobileEnableJavascript</prop>
@@ -415,7 +416,6 @@
 	<bean id="mobileAppPatientMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 	    <!--  defined in mobile-titles-definitions.xml -->
 		<property name="viewName" value="mAppPatientLandingPage" />
-		
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
@@ -503,6 +503,13 @@
 		    	<ref bean="environmentCommand" />
 		</property>
 		<property name="viewName" value="meetingExpiredMemberPG" />
+		<property name="navigation" value="guesthelp" />
+		<property name="subNavigation" value="guesthelp" />
+	</bean>
+	<bean id="mobileAppPatientMeetingExpired" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	    <!--  defined in mobile-titles-definitions.xml -->
+		<property name="viewName" value="mAppPatientMeetingExpired" />
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
 	</bean>
