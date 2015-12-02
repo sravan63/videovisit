@@ -29,7 +29,7 @@
 <div class="page-content">
 	<div class="visits patient">
 		<h1>Video Visits You Can Join Now</h1>
-		<p id="globalError" class="globalfailmessage hide-me"></p>
+		<p id="globalError" class="globalfailmessage hide-me" style="background-color:#686A6C;"></p>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
 				
