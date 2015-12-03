@@ -688,20 +688,26 @@ $(document).ready(function() {
 	        data: postdata,
 	        success: function(returndata) {
 	        	//console.log("returndata=" + returndata);
-	        	returndata = $.parseJSON(returndata);
-	        	var isValidUserSession =  returndata.isValidUserSession;
-	        	//console.log("isValidUserSession=" + isValidUserSession);
-	            if(isValidUserSession == true){
-	            	 var delay=1000; //1 seconds
-
-                     setTimeout(function(){
-	                     //your code to be executed after 1 seconds
-	                     launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
-                     }, delay);
+	        	try{
+		        	returndata = $.parseJSON(returndata);
+		        	var isValidUserSession =  returndata.isValidUserSession;
+		        	//console.log("isValidUserSession=" + isValidUserSession);
+		            if(isValidUserSession == true){
+		            	 var delay=1000; //1 seconds
+	
+	                     setTimeout(function(){
+		                     //your code to be executed after 1 seconds
+		                     launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
+	                     }, delay);
+		        	}
+		            else{
+		            	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
+		            }
 	        	}
-	            else{
-	            	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
-	            }
+	        	catch(e)
+	         	{
+	        		window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
+	         	}
 	        },
 	        error: function() {
 	        	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
