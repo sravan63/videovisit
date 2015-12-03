@@ -8,13 +8,14 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.springframework.web.servlet.ModelAndView;
-
 import net.sf.json.JSONObject;
 
 public class LaunchMeetingForMemberGuestController extends SimplePageController {
 	
 	public static Logger logger = Logger.getLogger(LaunchMeetingForMemberGuestController.class);
 	private static String JSONMAPPING = "jsonData";
+	
+
 	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 		
@@ -48,14 +49,21 @@ public class LaunchMeetingForMemberGuestController extends SimplePageController 
 					if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("caregiver"))
 					{
 						logger.info("in LaunchMeetingForMemberGuestController caregiver");
-						if(context != null && context.getCareGiver() == true){
+						
+						if(context!=null){
 							dataResult.append(MeetingCommand.getLaunchMeetingDetailsForMemberGuest(request,response));
 							dataResult.setLength(dataResult.length()-1);
 							logger.info("LaunchMeetingForMemberController: dataResult " + dataResult);
 							MeetingCommand.setupGuestInfo(request);
 							result.put("isValidUserSession", true);
-							result.put("success", true);	
+							result.put("success", true);
 						}
+						else{
+							 dataResult.append(JSONObject.fromObject(result).toString());
+							  modelAndView.setViewName(JSONMAPPING);
+							  modelAndView.addObject("data", dataResult);
+							  return modelAndView;
+						}					
 					}
 				}
 			}
@@ -66,6 +74,7 @@ public class LaunchMeetingForMemberGuestController extends SimplePageController 
 			logger.error("System Error" + e.getMessage(),e);
 		}
 		//put data into buffer
+		
 		validationData.append(JSONObject.fromObject(result).toString());
 		validationData.deleteCharAt(1);
 		logger.info("launchMeetingforMemberGuest-validationData=" + validationData);
@@ -79,3 +88,9 @@ public class LaunchMeetingForMemberGuestController extends SimplePageController 
 	}
 
 }
+
+
+
+
+
+
