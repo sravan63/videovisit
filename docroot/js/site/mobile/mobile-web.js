@@ -682,6 +682,7 @@ $(document).ready(function() {
     	var currentTime = new Date();
 	    var n = currentTime.getTime();
 		var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +'&isMobileFlow='+ isMobileFlow +'&source=caregiver&nocache=' + n;
+		console.log("caregiver", caregiver);
 		$.ajax({			
 	        type: "POST",
 	        url: VIDEO_VISITS_MOBILE.Path.guest.launchMeetingForMemberGuest,
@@ -1151,9 +1152,9 @@ function launchVideoVisitMember(data){
 			if(appOS === 'iOS'){
 
 			    var iOSver = iOSversion();
-				if (iOSver[0] >= 7) {
-					$("#layover").hide();
+				if (iOSver[0] >= 7) {					
 				  window.location.replace(url);
+				  $("#layover").hide();
 				}else{
 					openTab(url);
 				}
