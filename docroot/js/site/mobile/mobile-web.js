@@ -1152,9 +1152,9 @@ function launchVideoVisitMember(data){
 			if(appOS === 'iOS'){
 
 			    var iOSver = iOSversion();
-				if (iOSver[0] >= 7) {					
-				  window.location.replace(url);
-				  $("#layover").hide();
+				if (iOSver[0] >= 7) {
+					$("#layover").hide();
+					window.location.replace(url);
 				}else{
 					openTab(url);
 				}
