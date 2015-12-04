@@ -1156,7 +1156,7 @@ function launchVideoVisitMember(data){
 					window.location.replace(url);
 				    setTimeout(function(){
 				    	$("#layover").hide();
-				    }, 10000);
+				    }, 1500);
 				    
 				}else{
 					openTab(url);
