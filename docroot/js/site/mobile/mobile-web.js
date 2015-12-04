@@ -682,7 +682,7 @@ $(document).ready(function() {
     	var currentTime = new Date();
 	    var n = currentTime.getTime();
 		var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +'&isMobileFlow='+ isMobileFlow +'&source=caregiver&nocache=' + n;
-		console.log("caregiver", caregiver);
+		
 		$.ajax({			
 	        type: "POST",
 	        url: VIDEO_VISITS_MOBILE.Path.guest.launchMeetingForMemberGuest,
