@@ -43,7 +43,8 @@ $(document).ready(function() {
 			            		returndata = jQuery.parseJSON(returndata);
 			            		if(returndata.result === '2'){
 			            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
-			                        moveToit("p.error");            	
+			                        moveToit("p.error"); 
+			                        $("#layover").hide();
 			                        return false; 
 			                     }
 			            		if ( returndata.success)
@@ -67,8 +68,10 @@ $(document).ready(function() {
 			            			    		window.setTimeout(function(){
 			            							window.location.href="videoVisitReady.htm";
 			            							}, 3000);
+			            			    		$("#layover").hide();
 				            				}else{
 				            					window.location.href="videoVisitReady.htm";
+				            					$("#layover").hide();
 				            				}
 			            			    },
 			            		        error: function() {
@@ -101,7 +104,10 @@ $(document).ready(function() {
 			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
 			            error: function(theRequest, textStatus, errorThrown) {
 			            	window.location.replace(VIDEO_VISITS.Path.visit.logout);
-			            }
+			            },
+				        beforeSend: function () {		        	
+				        	$("#layover").show();		        	
+				        }
 			        });
 				}
 			}
