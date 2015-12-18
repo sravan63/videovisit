@@ -24,11 +24,12 @@ $(document).ready(function() {
 			}
 			
 			if (userPresentInMeetingData.errorMessage) {
-				
+				$("#layover").hide();
 				$('#end_meeting_error').html('').append(userPresentInMeetingData.errorMessage).show();		
 			}
 			else{
 				if(userPresentInMeetingData.result == "true"){
+					$("#layover").hide();
 					// show the dialog 
 					 $("#user-in-meeting-modal").dialog( "open" );
 				}
@@ -65,13 +66,13 @@ $(document).ready(function() {
 			            			    data: postParaVideoVisit,
 			            			    success: function(){
 			            			    	if($.browser.mozilla){
+			            			    		$("#layover").hide();
 			            			    		window.setTimeout(function(){
 			            							window.location.href="videoVisitReady.htm";
-			            							}, 3000);
-			            			    		$("#layover").hide();
+			            							}, 3000);			            			    		
 				            				}else{
-				            					window.location.href="videoVisitReady.htm";
 				            					$("#layover").hide();
+				            					window.location.href="videoVisitReady.htm";				            					
 				            				}
 			            			    },
 			            		        error: function() {
@@ -104,10 +105,7 @@ $(document).ready(function() {
 			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
 			            error: function(theRequest, textStatus, errorThrown) {
 			            	window.location.replace(VIDEO_VISITS.Path.visit.logout);
-			            },
-				        beforeSend: function () {		        	
-				        	$("#layover").show();		        	
-				        }
+			            }
 			        });
 				}
 			}
