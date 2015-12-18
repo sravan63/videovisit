@@ -6,7 +6,7 @@ $(document).ready(function() {
 	// Join now Click Event
     $(".btn").click(function(e){
        // e.preventDefault();
-       
+    	$("#layover").show();
         var caregiverId = $(this).attr('caregiverId');
         var name = $(this).attr('userName');
                        
@@ -38,7 +38,8 @@ $(document).ready(function() {
             	  else if (returndata.result === '4') { 
                   	 
                   	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
-                      moveToit("p.error");            	
+                      moveToit("p.error");  
+                      $("#layover").hide();
                       return false;  
                     }
             	  	hreflocation = returndata.result;
