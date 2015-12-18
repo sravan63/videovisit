@@ -28,10 +28,9 @@ $(document).ready(function() {
 				$('#end_meeting_error').html('').append(userPresentInMeetingData.errorMessage).show();		
 			}
 			else{
-				if(userPresentInMeetingData.result == "true"){
-					$("#layover").hide();
+				if(userPresentInMeetingData.result == "true"){					
 					// show the dialog 
-					 $("#user-in-meeting-modal").dialog( "open" );
+					 $("#user-in-meeting-modal").dialog( "open" );					 
 				}
 				else{
 					$.ajax({
@@ -128,6 +127,7 @@ $(document).ready(function() {
     // Ok button on user in meeting modal
     $('#user-in-meeting-modal-ok').click(function(){
     	$("#user-in-meeting-modal").dialog( "close" );
+    	$("#layover").hide();
     });
     
 });
