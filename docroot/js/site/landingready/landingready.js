@@ -64,13 +64,11 @@ $(document).ready(function() {
 			            			    async: false,
 			            			    data: postParaVideoVisit,
 			            			    success: function(){
-			            			    	if($.browser.mozilla){
-			            			    		$("#layover").hide();
+			            			    	if($.browser.mozilla){			            			    		
 			            			    		window.setTimeout(function(){
 			            							window.location.href="videoVisitReady.htm";
 			            							}, 3000);			            			    		
-				            				}else{
-				            					$("#layover").hide();
+				            				}else{				            					
 				            					window.location.href="videoVisitReady.htm";				            					
 				            				}
 			            			    },
