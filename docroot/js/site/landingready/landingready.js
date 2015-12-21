@@ -5,7 +5,7 @@ $(document).ready(function() {
     
 	// Join now Click Event
     $(".joinNowButton").click(function(){
-    	
+    	$("#layover").show();
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
         //  <!-- Commented by Srini  08/27 -->
