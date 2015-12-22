@@ -46,7 +46,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
 	<tiles:insertAttribute name="gtm" />
-		<div id="layover" style=" position: fixed; width:100%; height:100%; background-color:rgba(126, 126, 126, 0.5);  z-index: 990; display:none;">                
+		<div id="layover" style=" position: fixed; width:100%; height:100%; background-color:rgba(126, 126, 126, 0.5);  z-index: 1100; display:none;">                
               <div style="background: #A9A9A9 url(images/global/desktop_spinner.gif) no-repeat center center;width:100%;height:100%;z-index: 999;opacity: 0.5; filter: alpha(opacity=50);"></div>
        	</div>
         <!-- ============ BEGIN:  #container-primary ============ -->
