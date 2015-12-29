@@ -85,18 +85,21 @@ $(document).ready(function() {
 		            	return false;
 		            } 
 		            else if (returndata.result === '2') {  
+		            	$("#layover").hide();
 		            	errorHtml = '<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>'; 
 		            	$("p#globalError").css("display", "inline").html(errorHtml);
 		            	moveToit("p.error");            	
 		            	return false;  
 		            }
 		            else if (returndata.result === '3') {  
+		            	$("#layover").hide();
 		            	errorHtml = '<label>Some exception occurred while processing request.</label><br/>'; 
 		            	$("p#globalError").css("display", "inline").html(errorHtml);
 		            	moveToit("p.error");            	
 		            	return false;  
 		            }
-		            else if (returndata.result === '4') {  
+		            else if (returndata.result === '4') { 
+		            	$("#layover").hide();
 		            	errorHtml = '<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>'; 
 		            	$("p#globalError").css("display", "inline").html(errorHtml);
 		            	moveToit("p.error");            	
