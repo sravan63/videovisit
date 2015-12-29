@@ -124,13 +124,13 @@ $(document).ready(function() {
     
     // Ok button on user in meeting modal
     $('#user-in-meeting-modal-ok').click(function(){
-    	$("#user-in-meeting-modal").dialog( "close" );
-    	$("#layover").hide();
+    	$("#user-in-meeting-modal").dialog( "close" );    	
     });
     
 });
 
 function initializeUserPresentInMeetingModal(){
+	$("#layover").hide();
 	$("#user-in-meeting-modal").dialog({
 	      autoOpen: false,
 	      width: "30%",
