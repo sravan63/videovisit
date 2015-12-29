@@ -30,6 +30,7 @@ $(document).ready(function() {
 			else{
 				if(userPresentInMeetingData.result == "true"){					
 					// show the dialog 
+					$("#layover").hide();
 					 $("#user-in-meeting-modal").dialog( "open" );					 
 				}
 				else{
@@ -123,14 +124,13 @@ $(document).ready(function() {
     });
     
     // Ok button on user in meeting modal
-    $('#user-in-meeting-modal-ok').click(function(){
+    $('#user-in-meeting-modal-ok').click(function(){    	
     	$("#user-in-meeting-modal").dialog( "close" );    	
     });
     
 });
 
-function initializeUserPresentInMeetingModal(){
-	$("#layover").hide();
+function initializeUserPresentInMeetingModal(){	
 	$("#user-in-meeting-modal").dialog({
 	      autoOpen: false,
 	      width: "30%",
