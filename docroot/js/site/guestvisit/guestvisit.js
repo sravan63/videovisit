@@ -117,6 +117,7 @@ function showJoinNowModal(encodedHrefLocation){
 
 
 function initializeJoinNowModal(){
+	$("#layover").hide();
 	$("#guest-join-now-modal").dialog({
 	      autoOpen: false,
 	      width: "98%",
@@ -129,7 +130,7 @@ function initializeJoinNowModal(){
 
 
 function initializeQuitMeetingModal(){
-
+	$("#layover").hide();
 	$("#quitMeetingGuestModal").dialog({
 		 autoOpen: false,
 	      width: "23%",
