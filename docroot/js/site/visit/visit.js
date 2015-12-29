@@ -146,8 +146,7 @@ function showJoinNowModal(encodedHrefLocation){
 }
 
 
-function initializeJoinNowModal(){
-	$("#layover").hide();
+function initializeJoinNowModal(){	
 	$("#join-now-modal").dialog({
 	      autoOpen: false,
 	      width: "98%",
@@ -156,8 +155,7 @@ function initializeJoinNowModal(){
 	});
 }
 
-function initializeQuitMeetingModal(){
-	$("#layover").hide();
+function initializeQuitMeetingModal(){	
 	$("#quitMeetingModal").dialog({
 	      autoOpen: false,
 	      width: "23%",
