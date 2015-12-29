@@ -17,6 +17,7 @@ $(document).ready(function() {
     
     // Quit meeting button on the Quit Meeting modal 
     $('#quitMeetingGuestId').click(function() { 
+    	$("#layover").hide();
     	$("#quitMeetingGuestModal").dialog( "open" );
     });
    
@@ -108,6 +109,7 @@ function showJoinNowModal(encodedHrefLocation){
 	$('#joinNowIframeGuest').css({"width": finalWidth*0.90});*/
 	
     $("#guest-join-now-modal").dialog( "open" );
+    $("#layover").hide();
     GuestReadyPage.keepALive();
     
     return false;
@@ -116,8 +118,7 @@ function showJoinNowModal(encodedHrefLocation){
 
 
 
-function initializeJoinNowModal(){
-	$("#layover").hide();
+function initializeJoinNowModal(){	
 	$("#guest-join-now-modal").dialog({
 	      autoOpen: false,
 	      width: "98%",
@@ -129,8 +130,7 @@ function initializeJoinNowModal(){
 
 
 
-function initializeQuitMeetingModal(){
-	$("#layover").hide();
+function initializeQuitMeetingModal(){	
 	$("#quitMeetingGuestModal").dialog({
 		 autoOpen: false,
 	      width: "23%",
