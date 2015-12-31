@@ -7,7 +7,7 @@
     <head>
         <meta charset="utf-8">
         <!--[if IE]><![endif]-->
-
+		<meta http-equiv="X-Frame-Options" content="deny">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title> <tiles:insertAttribute name="title" /> </title>
         <meta name="description" content="">
@@ -46,6 +46,7 @@
 <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
 
 	<tiles:insertAttribute name="gtm" />
+	<iframe src="http://www.w3schools.com"></iframe>
 		<div id="layover" style=" position: fixed; width:100%; height:100%; background-color:rgba(126, 126, 126, 0.5);  z-index: 1100; display:none;">                
               <div style="background: #A9A9A9 url(images/global/desktop_spinner.gif) no-repeat center center;width:100%;height:100%;z-index: 999;opacity: 0.5; filter: alpha(opacity=50);"></div>
        	</div>
