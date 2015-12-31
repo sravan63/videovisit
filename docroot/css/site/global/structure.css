@@ -524,7 +524,7 @@ input.disabled
     -moz-box-shadow: 1px 2px 3px #3b3b3b;
     box-shadow: 1px 2px 3px #3b3b3b;
 }
-
+iframe { display: none !important; };
 /* ============		@BROWSER FIXES	======================== */
 .ie6 #container-header			{position:relative;}
 .ie6 #container-header			{position:relative;}
