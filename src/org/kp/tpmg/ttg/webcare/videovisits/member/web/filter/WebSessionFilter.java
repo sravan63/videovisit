@@ -145,17 +145,8 @@ public class WebSessionFilter implements Filter
 				
 			}
 			else if("mdohelp.htm".equalsIgnoreCase(requestUri)){
-				logger.info("WebSessionFilter help request: " +  requestUri);
-				boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);				
-				if(isWirelessDeviceOrTablet){
-					logger.info("WebSessionFilter before mobile member home page redirect = " + memberMobileHomePageUrl);
-					redirectToUrl = memberMobileHomePageUrl;
-					resp.sendRedirect(redirectToUrl);					
-				}
-				else{
-					logger.info("WebSessionFilter before desktop member help page.");
-					chain.doFilter(req, resp);
-				}	
+				logger.info("WebSessionFilter help page request: " +  requestUri);
+				chain.doFilter(req, resp);					
 			}
 			else{
 				logger.info("WebSessionFilter in else");
