@@ -1026,7 +1026,7 @@ public class WebService{
 	 * @return String
 	 * @throws Exception
 	 */
-	public static String fileUpload(String meetingId, String userId, String deviceType, String deviceOS, String deviceOsVersion, String callingAppName, String fileName, Base64Binary binaryData, long fileDatetime, String sessionId) throws Exception
+	/**public static String fileUpload(String meetingId, String userId, String deviceType, String deviceOS, String deviceOsVersion, String callingAppName, String fileName, Base64Binary binaryData, long fileDatetime, String sessionId) throws Exception
 	{
 		logger.info("Enetered fileUpload -> Received input attributes [meetingId: "+ meetingId + ", userId: " + userId + ", fileName: " + fileName + ", binaryData: " + binaryData + ", callingApp: " + callingAppName + "]");
 
@@ -1105,7 +1105,7 @@ public class WebService{
 		}
 		logger.info("Exiting WebService.fileUpload -> returnStatus = " + returnStatus);
         return returnStatus;
-    }
+    }**/
 	
 	/** This method will launch the videovisit forMembers using service API
 	 * @param meetingId
