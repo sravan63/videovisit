@@ -524,6 +524,37 @@ input.disabled
     -moz-box-shadow: 1px 2px 3px #3b3b3b;
     box-shadow: 1px 2px 3px #3b3b3b;
 }
+
+.refresh-text {      
+    width: 168px;
+    height: 30px;    
+    cursor: default;
+    font-size: 14px;
+    color: #666666;    
+    margin-bottom: 15px;
+    padding: 0px;  
+    text-align: center;
+}
+
+#refreshButton {     
+    cursor: default;
+    padding: 16px;
+    margin-top: 30px;
+}
+
+.refresh-button {  
+    font-size: 14px;
+    width: 168px !important;
+    height: 30px;    
+    cursor: default;
+    color: #FFFFFF;
+    background-color: #006BA6;      
+    padding: 0;
+    overflow: auto;
+    border: 1px solid;       
+}
+
+
 iframe { display: none !important; }
 /* ============		@BROWSER FIXES	======================== */
 .ie6 #container-header			{position:relative;}
