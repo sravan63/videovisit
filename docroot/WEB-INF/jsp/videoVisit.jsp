@@ -556,6 +556,10 @@
 					<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
 				</dl>	-->
 			</div>
+			<div id="refreshButton">
+				<div class="refresh-text">Video issues?<br> Try refreshing</div>
+				<input name="refresh" value="Refresh" class="refresh-button" style="cursor: pointer; opacity: 1;" type="button">
+			</div>
 		</div>
 	</div>
 
@@ -565,7 +569,11 @@
                 //alert('in here');
                 keepALiveDelay =( 5 * 1000);
                 keepALiveTimerId ='';
-
+                
+        $(".refresh-button").click(function(){
+			window.location.href = window.location.href;
+		});
+        
         function        keepALive()
                 {
                         keepALiveAction();
