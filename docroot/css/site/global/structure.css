@@ -525,35 +525,30 @@ input.disabled
     box-shadow: 1px 2px 3px #3b3b3b;
 }
 
+#refreshContainer {
+    padding: 16px;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
 .refresh-text {      
     width: 168px;
-    height: 30px;    
-    cursor: default;
-    font-size: 14px;
+    height: 30px;
     color: #666666;    
     margin-bottom: 15px;
     padding: 0px;  
     text-align: center;
 }
 
-#refreshButton {     
-    cursor: default;
-    padding: 16px;
-    margin-top: 30px;
-}
-
-.refresh-button {  
-    font-size: 14px;
-    width: 168px !important;
-    height: 30px;    
-    cursor: default;
+#refreshContainer .refresh-button {
+    width: 168px;
+    height: 30px;
     color: #FFFFFF;
-    background-color: #006BA6;      
+    background-color: #006BA6;
     padding: 0;
     overflow: auto;
-    border: 1px solid;       
+    border: 1px solid #006BA6;
 }
-
 
 iframe { display: none !important; }
 /* ============		@BROWSER FIXES	======================== */
