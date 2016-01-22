@@ -556,9 +556,9 @@
 					<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
 				</dl>	-->
 			</div>
-			<div id="refreshButton">
-				<div class="refresh-text">Video issues?<br> Try refreshing</div>
-				<input name="refresh" value="Refresh" class="refresh-button" style="cursor: pointer; opacity: 1;" type="button">
+			<div id="refreshContainer">
+				<p class="refresh-text">Video issues?<br> Try refreshing</p>
+				<input name="refresh" value="Refresh" class="refresh-button" type="button">
 			</div>
 		</div>
 	</div>
