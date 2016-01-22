@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	$('html').css('overflow-y', 'hidden');
 	var windowHeight = $(window).height();
 	var windowWidth = $(window).width();
 	
