@@ -16,6 +16,7 @@
         <!--Start Favicon-->
         <link rel="shortcut icon" href="images/favicon/favicon.ico">
         <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
+        <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/mmedphfiemffkinodeemalghecnicmnh">
         <!--End Favicon-->
 
         <!--Start CSS-->
