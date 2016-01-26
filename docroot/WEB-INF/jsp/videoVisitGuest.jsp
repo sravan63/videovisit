@@ -44,36 +44,36 @@
 		        <!-- End Error view -->
 		        <!-- Plugin Install Steps -->
 				<div id="setupContents" class="hide">
-					<table id="setupInstructions" width="50%" style="color:#000000;">
-					    <tr style="vertical-align: top;">
-						    <td colspan="2"><h3>Please install the 'Vidyo Web' plug-in for your visit.</h3></td>
-						</tr>
-						<tr height="75px" style="vertical-align: top; background-color: #E9E9E9;">
-							<td width="100px" style="vertical-align: middle;"><img src="vidyoplayer/img/step_1.png" style="margin-left: 35px; margin-right: auto"/></td>
-							<td>
-		                           <br>
-		                           <p style='color: #AC5A41; font-weight:bold;'>Download the 'Vidyo Web' plug-in installer.<br><br>
-							      <a id="macWinPluginFile" href="" class="installbutton">Download</a>
-		                           </p>
-							</td>
-						</tr>
-		                <tr height="3px;"></tr>
-					    <tr height="100px" style="vertical-align: top; background-color: #E9E9E9;">
-							<td style="vertical-align: middle;"><img src="vidyoplayer/img/step_2.png" style="margin-left: 35px; margin-right: auto"/></td>
-							<td style='vertical-align: middle;'><p style='color:#AC5A41; font-weight:bold;'>Run and Install the  installer file.</p>Double click to open the file, then follow the installer instructions.
-		                       </td>
-						</tr>
-		                <tr height="3px;"></tr>
-						<tr height="75px" style="vertical-align: top; background-color: #E9E9E9;">
-							<td style="vertical-align: middle;"><img src="vidyoplayer/img/step_3.png" style="margin-left: 35px; margin-right: auto"/></td>
-							<td>
-		                           <br>
-		                           <p>If you do not see an image in the video player in 10 to 15 seconds after installation, <br>please refresh your browser.<br><br>
-							      <a href="javascript:window.location.reload();" class="installbutton">Refresh Browser</a>
-		                           </p>
-							</td>
-						</tr>
-					</table>
+					<div style="margin-top:50px; overflow:auto;">
+						<p id="installationTitle" style="text-align:center; font-size:18px; color:#555555;">Downloads are required for your visit</p>
+					</div>
+					<div style="margin-top:50px; overflow:auto;">
+						<div id="downloadStep1" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top;">
+							<span style="display:inline-block; margin:0 10px;">
+								<img width="50" height="60" src="vidyoplayer/img/step_1.png" style="margin-left:35px; margin-right:auto;"/>
+							</span>
+							<span style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
+								<a id="addExtension" href="javascript:void(0)" class="" style="font-size:20px;" onclick="addExtension();">Download Vidyo extension</a>
+							</span>
+						</div>
+						<div id="downloadStep2" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top; opacity:0.4;">
+							<span style="display:inline-block; margin:0 10px;">
+								<img width="50" height="60" src="vidyoplayer/img/step_2.png" style="margin-left:35px; margin-right:auto;"/>
+							</span>
+							<span style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
+								<a id="macWinPluginFile" href="" class="" style="font-size:20px;" onclick="downloadPlugin();">Download Vidyo plug-in</a>
+								<a id="winChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-win32-1.3.0.0042.msi" class="hide" style="font-size:20px;">Download Vidyo plug-in</a>
+							</span>
+						</div>
+						<div id="downloadStep3" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top; opacity:0.4;">
+							<span style="display:inline-block; margin:0 10px; vertical-align:top;">
+								<img width="50" height="60" src="vidyoplayer/img/step_3.png" style="margin-left:35px; margin-right:auto;"/>
+							</span>
+							<span style="display:inline-block; width:145px; margin:10px; vertical-align:middle; color:#555555;">
+								<p style="font-size:20px;">Find and install plug-in</p>
+							</span>
+						</div>
+					</div>
 				</div>
 			    <!-- End Plugin Install Steps -->
 		        <!-- Main Menu -->
