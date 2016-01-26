@@ -54,34 +54,29 @@
 						<p id="installationTitle" style="text-align:center; font-size:18px; color:#555555;">Downloads are required for your visit</p>
 					</div>
 					<div style="margin-top:50px; overflow:auto;">
-						<div id="downloadStep1" class="downloadSteps" style="display:inline-block; margin:10px 40px; vertical-align:top;">
+						<div id="downloadStep1" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top;">
 							<span style="display:inline-block; margin:0 10px;">
 								<img width="50" height="60" src="vidyoplayer/img/step_1.png" style="margin-left:35px; margin-right:auto;"/>
 							</span>
 							<span style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
-								<a id="installExtension" href="javascript:void(0)" class="" style="font-size:20px;" onclick="installExtension();">Download Vidyo extension</a>
+								<a id="addExtension" href="javascript:void(0)" class="" style="font-size:20px;" onclick="addExtension();">Download Vidyo extension</a>
 							</span>
 						</div>
-						<div id="downloadStep2" class="downloadSteps" style="display:inline-block; margin:10px 40px; vertical-align:top; opacity:0.5;">
+						<div id="downloadStep2" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top; opacity:0.4;">
 							<span style="display:inline-block; margin:0 10px;">
 								<img width="50" height="60" src="vidyoplayer/img/step_2.png" style="margin-left:35px; margin-right:auto;"/>
 							</span>
 							<span style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
-								<a id="macWinPluginFile" href="" class="" style="font-size:20px; pointer-events:none;">Download Vidyo plug-in</a>
-								<a id="winChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-win32-1.3.0.0042.msi" class="hide" style="font-size:20px; pointer-events:none;">Download Vidyo plug-in</a>
+								<a id="macWinPluginFile" href="" class="" style="font-size:20px;" onclick="downloadPlugin();">Download Vidyo plug-in</a>
+								<a id="winChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-win32-1.3.0.0042.msi" class="hide" style="font-size:20px;">Download Vidyo plug-in</a>
 							</span>
 						</div>
-						<div id="downloadStep3" class="downloadSteps" style="display:inline-block; margin:10px 40px; vertical-align:top; opacity:0.5;">
+						<div id="downloadStep3" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top; opacity:0.4;">
 							<span style="display:inline-block; margin:0 10px; vertical-align:top;">
 								<img width="50" height="60" src="vidyoplayer/img/step_3.png" style="margin-left:35px; margin-right:auto;"/>
 							</span>
 							<span style="display:inline-block; width:145px; margin:10px; vertical-align:middle; color:#555555;">
-								<span>
-									<p style="font-size:20px;">Find and install plug-in</p>
-								</span>
-								<span style="margin-top:5px; display:block;">
-									<p>Refresh you browser if no image appears 10 to 15 seconds after installing the plug-in</p>
-								</span>
+								<p style="font-size:20px;">Find and install plug-in</p>
 							</span>
 						</div>
 					</div>
