@@ -18,7 +18,10 @@ $(document).ready(function() {
 	$("#pluginContainer").height(calculatedHeight);
 	$("#btnContainer").height(calculatedHeight);
 	
+	$("#infoWrapper").height(calculatedHeight);
 	$("#infoWrapper").width(calculatedWidthPluginContainer);
+
+	$("#setupContents").height(calculatedHeight);
 	$("#setupContents").width(calculatedWidthPluginContainer);
 });
 
