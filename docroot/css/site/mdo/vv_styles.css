@@ -605,6 +605,12 @@ div#iconpromo2{
 #displayDevices #infoWrapper{
 	background-color: #FFFFFF;
 	border: none;
+	padding: 0;
+}
+
+#setupContents, #infoWrapper{
+  border-radius: 0;
+  border: 1px solid #A2A0A0;
 }
 
 /************* END - Setup Display Devices **************/
