@@ -151,6 +151,8 @@
 		        }
 				#infoWrapper, #errorWrapper{
 					background-color: #FFFFFF;
+					border-radius: 0;
+					border: 1px solid #A2A0A0;
 				}
 		
 		        #setupInstructions a.installbutton:hover{
