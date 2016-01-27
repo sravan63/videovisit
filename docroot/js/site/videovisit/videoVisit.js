@@ -40,7 +40,7 @@ var VideoVisit =
 
 		$("#video-main").css("min-height", btnGroupHeight);
 		$("#pluginContainer").css("min-height", btnGroupHeight);
-		$("#video-sidebar").css("min-height", btnGroupHeight);
+		//$("#video-sidebar").css("min-height", btnGroupHeight);
 		$("#btnContainer").css("min-height", btnGroupHeight);
 		
 		if (navigator.appName.indexOf("Internet Explorer")!=-1){
