@@ -20,6 +20,9 @@ $(document).ready(function() {
 	
 	$("#infoWrapper").height(calculatedHeight);
 	$("#infoWrapper").width(calculatedWidthPluginContainer);
+	
+	$("#setupContents").height(calculatedHeight);
+	$("#setupContents").width(calculatedWidthPluginContainer);
 });
 
 var VideoVisit =
