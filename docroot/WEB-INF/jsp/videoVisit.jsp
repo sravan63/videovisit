@@ -54,7 +54,7 @@
 						<p id="installationTitle" style="text-align:center; font-size:18px; color:#555555;">Downloads are required for your visit</p>
 					</div>
 					<div style="margin-top:50px; overflow:auto;">
-						<div id="downloadStep1" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top;">
+						<div id="downloadStep1" class="downloadSteps" style="display:inline-block; margin:10px 20px; vertical-align:top;">
 							<span style="display:inline-block; margin:0 10px;">
 								<img width="50" height="60" src="vidyoplayer/img/step_1.png" style="margin-left:30px; margin-right:auto;"/>
 							</span>
@@ -62,7 +62,7 @@
 								<a id="addExtension" href="javascript:void(0)" class="" style="font-size:20px; color:#0088cc;" onclick="addExtension();">Download Vidyo extension</a>
 							</span>
 						</div>
-						<div id="downloadStep2" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top; opacity:0.4;">
+						<div id="downloadStep2" class="downloadSteps" style="display:inline-block; margin:10px 20px; vertical-align:top; opacity:0.4;">
 							<span style="display:inline-block; margin:0 10px;">
 								<img width="50" height="60" src="vidyoplayer/img/step_2.png" style="margin-left:30px; margin-right:auto;"/>
 							</span>
@@ -71,7 +71,7 @@
 								<a id="winChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-win32-1.3.0.0042.msi" class="hide" style="font-size:20px; color:#0088cc;">Download Vidyo plug-in</a>
 							</span>
 						</div>
-						<div id="downloadStep3" class="downloadSteps" style="display:inline-block; margin:10px 30px; vertical-align:top; opacity:0.4;">
+						<div id="downloadStep3" class="downloadSteps" style="display:inline-block; margin:10px 20px; vertical-align:top; opacity:0.4;">
 							<span style="display:inline-block; margin:0 10px; vertical-align:top;">
 								<img width="50" height="60" src="vidyoplayer/img/step_3.png" style="margin-left:30px; margin-right:auto;"/>
 							</span>
