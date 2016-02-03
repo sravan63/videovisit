@@ -65,10 +65,12 @@ $(window).resize(function(){
 	if($('#video-sidebar').css('display') == 'none'){
 		var calculatedWidthPluginContainer = windowWidth - btnContainerWidth;
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
+		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}
 	else{
 		var calculatedWidthPluginContainer = windowWidth - (200 + btnContainerWidth);
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
+		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}
 
 	/* Setting resize Heights */
