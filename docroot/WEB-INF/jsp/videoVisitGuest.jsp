@@ -52,7 +52,7 @@
 							<span style="display:inline-block; margin:0 10px;">
 								<img width="50" height="60" src="vidyoplayer/img/step_1.png" style="margin-left:30px; margin-right:auto;"/>
 							</span>
-							<span style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
+							<span class="addExtensionContainer" style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
 								<a id="addExtension" href="javascript:void(0)" class="" style="font-size:20px; color:#0088cc;" onclick="addExtension();">Download Vidyo extension</a>
 							</span>
 						</div>
