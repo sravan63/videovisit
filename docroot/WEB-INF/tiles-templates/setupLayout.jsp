@@ -19,6 +19,9 @@
 	    <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
 	    <!--End Favicon-->
 	    
+	    <!-- Chrome Extension Link -->
+        <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/mmedphfiemffkinodeemalghecnicmnh">
+        
 	    <!--Start CSS-->
 		    <c:forEach var='item' items='${cssDependencies}'>
 		        <link rel="stylesheet" type="text/css" href="${item}" />
