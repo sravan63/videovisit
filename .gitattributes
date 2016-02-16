@@ -259,6 +259,7 @@ docroot/samplevideo.mp4 -text
 docroot/thankyou.html -text
 docs/Video[!!-~]Visit[!!-~]Member[!!-~]WebApp[!!-~]Build[!!-~]and[!!-~]Test.doc -text
 docs/VideoVisitMembert-DesignSpecifications.doc -text
+lib/MemberSSOAuthRestClient-1.0.jar -text
 lib/SimpleCaptcha-1.1.1.jar -text
 lib/VideoVisitFaqIntegration.jar -text
 lib/VideoVisitIconPromoIntegration.jar -text
