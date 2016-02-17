@@ -26,6 +26,8 @@
 		    <list>
 		       <!--  login page for Member -->
 		       <value>login.htm</value>
+		       <!-- SSO login page for Member -->
+		       <value>ssologin.htm</value>
 		       <!-- Home Page for Member -->
 		       <value>intro.htm</value>
 		       <value>mdo.htm</value>
@@ -57,6 +59,7 @@
 		    <map>
 	           <entry key="timeout-member-mobile" value="logout.htm"/>
 	           <entry key="timeout-member-web" value="login.htm"/>
+	           <entry key="timeout-member-sso-web" value="ssologin.htm"/>
 	           <entry key="timeout-guest-mobile" value="USA"/>
 	           <entry key="timeout-guest-web" value="USA"/>
 	        </map>
@@ -69,15 +72,13 @@
 	           <entry key="homepage-member-web2" value="mdo.htm"/>
 	           <entry key="homepage-member-web3" value="mdolive.htm"/>
 	           <entry key="homepage-member-web4" value="login.htm"/>
+	           <entry key="homepage-member-sso-web" value="ssologin.htm"/>
 	           <entry key="homepage-guest-mobile" value="mobilepglanding.htm"/>
 	           <entry key="homepage-guest-web" value="guest"/>
 	        </map>
 		</property>
 		
 	</bean>
-	
-	
-	
 	
 	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
@@ -90,6 +91,8 @@
 				<prop key="/mdohelplive.htm">mdohelplive</prop>
 				<prop key="/setup.htm">setup</prop>
 				<prop key="/login.htm">login</prop>
+				<prop key="/ssologin.htm">ssologin</prop>
+				<prop key="/ssosubmitlogin.json">ssosubmitlogin</prop>
 				<prop key="/landingnone.htm">landingnone</prop>
 				<prop key="/landingready.htm">landingready</prop>
 				<prop key="/visit.htm">visit</prop>
@@ -199,6 +202,13 @@
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="login" />
     </bean>
+    <bean id="ssologin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SSOPreLoginController">
+		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="login" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+    </bean>
 	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="landingnone" />
@@ -269,6 +279,9 @@
 	</bean>
 
 	<!--  JSON classes -->
+	<bean id="ssosubmitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SSOSubmitLoginController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
 	<bean id="joinmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.JoinMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
