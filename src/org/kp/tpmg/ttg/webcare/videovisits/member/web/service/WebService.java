@@ -1,16 +1,26 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.service;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.rmi.RemoteException;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.axis2.client.Options;
 import org.apache.axis2.context.ConfigurationContext;
-import org.apache.axis2.databinding.types.soapencoding.xsd.Base64Binary;
 import org.apache.axis2.transport.http.HTTPConstants;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
@@ -20,8 +30,8 @@ import org.apache.neethi.Policy;
 import org.apache.rampart.RampartMessageData;
 import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.common.security.ServiceSecurityLoader;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.GsonUtil;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
@@ -64,15 +74,17 @@ import org.kp.tpmg.videovisit.member.CreateInstantVendorMeeting;
 import org.kp.tpmg.videovisit.member.CreateInstantVendorMeetingResponse;
 import org.kp.tpmg.videovisit.member.TerminateInstantMeeting;
 import org.kp.tpmg.videovisit.member.TerminateInstantMeetingResponse;
-import org.kp.tpmg.videovisit.member.FileUploadResponse;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesStub;
+import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
+import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
+import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 
-import com.google.gson.JsonObject;
+import com.google.gson.Gson;
 
 
 public class WebService{
@@ -95,6 +107,19 @@ public class WebService{
 	private static String setupWizardMemberMrn;
 	private static String setupWizardMeetingType;
 	private static String setupWizardUserName;
+	
+	private static String videoVisitRestServiceUrl = null;
+	
+	//Member SSO related properties
+	private static String memberSSOAuthAPIUrl = null;
+	private static String memberSSOAuthRegionCode = null;
+	private static String kpOrgSSOSignOnAPIUrl = null;
+	private static String kpOrgSSOSignOffAPIUrl = null;
+	private static String kpOrgSSOUserAgentCategoryHeader = null;
+	private static String kpOrgSSOOsVersionHeader = null;
+	private static String kpOrgSSOUserAgentTypeHeader = null;
+	private static String kpOrgSSOAPIKeyHeader = null;
+	private static String kpOrgSSOAppNameHeader = null;
 	
 	public static boolean initWebService(HttpServletRequest request)
 	{
@@ -205,6 +230,59 @@ public class WebService{
 		return ret;
 	}
 	
+	public static boolean initServiceProperties(HttpServletRequest request)
+	{
+		logger.info("Entered initServiceProperties");
+		boolean ret = true;	
+
+		try
+		{
+			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+			if (rbInfo != null)
+			{
+				logger.debug("WebService.initServiceProperties -> configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				//Read external properties file for the web service end point url
+				File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				FileInputStream fileInput = new FileInputStream(file);
+	    		Properties appProp = new Properties();
+	    		appProp.load(fileInput);
+	    		memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
+	    		memberSSOAuthRegionCode = appProp.getProperty("MEMBER_SSO_AUTH_REGION_CODE");
+	    		videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
+	    		kpOrgSSOSignOnAPIUrl = appProp.getProperty("KPORG_SSO_SIGNON_API_URL");	    		
+	    		kpOrgSSOSignOffAPIUrl = appProp.getProperty("KPORG_SSO_SIGNOFF_API_URL");
+	    		kpOrgSSOUserAgentCategoryHeader = appProp.getProperty("KPORG_SSO_USER_AGENT_CATEGORY_HEADER");
+	    		kpOrgSSOOsVersionHeader = appProp.getProperty("KPORG_SSO_OS_VERSION_HEADER");
+	    		kpOrgSSOUserAgentTypeHeader = appProp.getProperty("KPORG_SSO_USER_AGENT_TYPE_HEADER");
+	    		kpOrgSSOAPIKeyHeader = appProp.getProperty("KPORG_SSO_API_KEY_HEADER");
+	    		kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOnAPIUrl:" + kpOrgSSOSignOnAPIUrl);
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOUserAgentCategoryHeader:" + kpOrgSSOUserAgentCategoryHeader + ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:" + kpOrgSSOUserAgentTypeHeader);
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOAppNameHeader:" + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:" + kpOrgSSOAPIKeyHeader);
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOffAPIUrl:" + kpOrgSSOSignOffAPIUrl);
+	    		logger.debug("webservice.initServiceProperties -> memberSSOAuthAPIUrl:" + memberSSOAuthAPIUrl);
+	    		logger.debug("webservice.initServiceProperties -> videoVisitRestServiceUrl:" + videoVisitRestServiceUrl);
+				
+				Crypto crypto = new Crypto();
+				serviceSecurityUsername = rbInfo.getString("SERVICE_SECURITY_USERNAME");
+				serviceSecurityPassword = crypto.read(rbInfo.getString("SERVICE_SECURITY_PASSWORD"));
+				logger.debug("webservice.initServiceProperties -> SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
+				
+			}			
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			String message = "initServiceProperties -> Exception while reading properties file";  
+			logger.error("System Error" + e.getMessage(),e);
+			ret = false;
+			//throw new RuntimeException(message, e);
+		}
+		logger.info("Exit initServiceProperties");
+		return ret;
+	}
+	
 	protected static void closeConnectionManager(VideoVisitMemberServicesStub stub)
 	{
 		try
@@ -222,7 +300,7 @@ public class WebService{
 					stub._getServiceClient().cleanupTransport();
 					stub._getServiceClient().cleanup();
 				}
-				stub.cleanup();
+				stub.cleanup();				
 			}
 		}
 		catch(Throwable th)
@@ -1185,6 +1263,477 @@ public class WebService{
 		logger.info("Exit WebService: getLaunchMeetingDetails");
 		return toRet;
 	}
+	
+	//KP Org sign on API
+	public static KpOrgSignOnInfo performKpOrgSSOSignOn(String userId, String password) throws Exception
+	{
+		 logger.info("Entered performKpOrgSSOSignOn");
+		 HttpURLConnection connection = null; 
+		 Scanner scanner = null; 
+		 InputStream content = null;	
+		 InputStream errorStream = null;		 
+		 String output = null;	
+		 String kpSsoSession = null;
+		 KpOrgSignOnInfo kpOrgSignOnInfo = null;
+		 try
+		 {	        	
+			  	           	
+		    URL url = new URL(kpOrgSSOSignOnAPIUrl);
+            //url = new URL("https://api-hreg2.kaiserpermanente.org/care/v1.1/token");		            
+            String authStr = userId + ":" + password; // qa			        
+            String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");		            
+            connection.setRequestProperty("Authorization", "Basic " + authEncoded);
+            connection.setRequestProperty("X-useragentcategory", kpOrgSSOUserAgentCategoryHeader);
+            connection.setRequestProperty("X-osversion", kpOrgSSOOsVersionHeader);
+            connection.setRequestProperty("X-useragenttype", kpOrgSSOUserAgentTypeHeader);
+            connection.setRequestProperty("X-apiKey", kpOrgSSOAPIKeyHeader);
+            connection.setRequestProperty("X-appName", kpOrgSSOAppNameHeader);
+            connection.setRequestProperty("Accept","*/*");
+            connection.setDoOutput(true);
+            
+            int statusCode = connection.getResponseCode();
+            logger.info("performKpOrgSSOSignOn -> Status code : " + statusCode);
+            if (statusCode != 200 && statusCode != 201 && statusCode != 202)
+            {
+	            errorStream = connection.getErrorStream();
+	            if (errorStream != null) 
+	            {
+	              String errorMessage = convertInputStreamToString(errorStream);
+	              logger.info("performKpOrgSSOSignOn -> Error message :" + errorMessage);
+	            }
+	            kpSsoSession = connection.getHeaderField("ssosession");				
+            }
+            else
+            {		   
+	            content = connection.getInputStream();				
+				scanner = new Scanner(content);
+				scanner.useDelimiter("\\Z");
+				output = scanner.next();
+				scanner.close();  
+				logger.info("performKpOrgSSOSignOn -> output from service: " + output);
+				kpSsoSession = connection.getHeaderField("ssosession");
+				logger.info("performKpOrgSSOSignOn -> kpSsoSession from response header=" + kpSsoSession);
+            }
+            
+            if(StringUtils.isNotBlank(output))
+            {
+            	Gson gson = new Gson();
+            	kpOrgSignOnInfo = gson.fromJson(output, KpOrgSignOnInfo.class);
+            	kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+            }
+				
+        }
+        catch (Exception e) {
+        	logger.warn("performKpOrgSSOSignOn -> Web Service API error:" + e.getMessage(), e);
+        }
+        finally
+        {
+        	try
+        	{
+        		if ( errorStream != null )
+        		{
+        			errorStream.close();	
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		logger.warn("performKpOrgSSOSignOn -> error while closing error inputStream.");
+        	}
+        	
+        	try
+        	{
+        		if ( content != null )
+        		{
+        			content.close();	
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		logger.warn("performKpOrgSSOSignOn -> error while closing inputStream.");
+        	}
+        	
+        	try
+        	{
+        		if ( scanner != null )
+        		{
+        			scanner.close();	
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		logger.warn("performKpOrgSSOSignOn -> error while closing scanner.");        		
+        	}        	
+        	
+        	disconnectURLConnection(connection);
+        }
+		logger.info("Exiting performKpOrgSSOSignOn");
+	    return kpOrgSignOnInfo;
+		
+	}
+	
+	public static KpOrgSignOnInfo validateKpOrgSSOSession(String ssoSession) throws Exception
+	{
+		 logger.info("Entered validateKpOrgSSOSession");
+		 HttpURLConnection connection = null; 
+		 Scanner scanner = null; 
+		 InputStream content = null;	
+		 InputStream errorStream = null;		 
+		 String output = null;	
+		 String kpSsoSession = null;
+		 KpOrgSignOnInfo kpOrgSignOnInfo = null;
+		 try
+		 {			  	           	
+		    URL url = new URL(kpOrgSSOSignOffAPIUrl);
+            //url = new URL("https://api-hreg2.kaiserpermanente.org/care/v1.1/token");            
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Content-Type", "application/json");		            
+            connection.setRequestProperty("X-useragentcategory", kpOrgSSOUserAgentCategoryHeader);
+            connection.setRequestProperty("X-osversion", kpOrgSSOOsVersionHeader);
+            connection.setRequestProperty("X-useragenttype", kpOrgSSOUserAgentTypeHeader);
+            connection.setRequestProperty("X-apiKey", kpOrgSSOAPIKeyHeader);
+            connection.setRequestProperty("X-appName", kpOrgSSOAppNameHeader);
+            connection.setRequestProperty("ssosession", ssoSession);
+            connection.setRequestProperty("Accept","*/*");
+            connection.setDoOutput(true);
+            
+            int statusCode = connection.getResponseCode();
+            logger.info("validateKpOrgSSOSession -> Status code : " + statusCode);
+            if (statusCode != 200 && statusCode != 201 && statusCode != 202)
+            {
+	            errorStream = connection.getErrorStream();
+	            if (errorStream != null) 
+	            {
+	              String errorMessage = convertInputStreamToString(errorStream);
+	              logger.info("validateKpOrgSSOSession -> Error message :" + errorMessage);
+	            }
+	            kpSsoSession = connection.getHeaderField("ssosession");				
+            }
+            else
+            {		   
+	            content = connection.getInputStream();				
+				scanner = new Scanner(content);
+				scanner.useDelimiter("\\Z");
+				output = scanner.next();
+				scanner.close();  
+				logger.info("validateKpOrgSSOSession -> output from service: " + output);
+				kpSsoSession = connection.getHeaderField("ssosession");
+				logger.info("validateKpOrgSSOSession -> kpSsoSession from response header=" + kpSsoSession);
+            }
+            
+            if(StringUtils.isNotBlank(output))
+            {
+            	Gson gson = new Gson();
+            	kpOrgSignOnInfo = gson.fromJson(output, KpOrgSignOnInfo.class);
+            	kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+            }
+				
+        }
+        catch (Exception e) {
+        	logger.warn("validateKpOrgSSOSession -> Web Service API error:" + e.getMessage(), e);
+        }
+        finally
+        {
+        	try
+        	{
+        		if ( errorStream != null )
+        		{
+        			errorStream.close();	
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		logger.warn("validateKpOrgSSOSession -> error while closing error inputStream.");
+        	}
+        	
+        	try
+        	{
+        		if ( content != null )
+        		{
+        			content.close();	
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		logger.warn("validateKpOrgSSOSession -> error while closing inputStream.");
+        	}
+        	
+        	try
+        	{
+        		if ( scanner != null )
+        		{
+        			scanner.close();	
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		logger.warn("validateKpOrgSSOSession -> error while closing scanner.");        		
+        	}        	
+        	
+        	disconnectURLConnection(connection);
+        }
+		logger.info("Exiting validateKpOrgSSOSession");
+	    return kpOrgSignOnInfo;
+		
+	}
+	
+	//Authorize Member by passing guid to Member SSO Auth API
+	public static AuthorizeResponseVo authorizeMemberSSOByGuid(String guid, String regionCode) throws Exception
+	{
+		logger.info("Entered authorizeMemberSSOByGuid -> guid=" + guid + ", regionCode=" + regionCode + ", memberSSOAuthRegionCode=" + memberSSOAuthRegionCode);
+		AuthorizeResponseVo response = null;
+		try
+		{
+			MemberSSOAuthAPIs memberSSOAuthAPI = new MemberSSOAuthAPIs();
+			AuthorizeRequestVo req = new AuthorizeRequestVo();		    
+			req.setGuid(guid);
+			if(StringUtils.isBlank(regionCode))
+			{
+				regionCode = memberSSOAuthRegionCode;
+			}
+			req.setRegionCode(regionCode);
+		    response = memberSSOAuthAPI.authorize(memberSSOAuthAPIUrl, req, serviceSecurityUsername, serviceSecurityPassword);
+			logger.info("authorizeMemberSSOByGuid ->authorize response" + response.getResponseWrapper().getMemberInfo().getFirstName());
+		   
+		}
+		catch(Exception e)
+		{
+			logger.error("authorizeMemberSSOByGuid -> Web Service API error:" + e.getMessage(), e);
+			
+		}
+		return response;
+		
+	}
+	
+	//perform SSO sign off from Kp org API
+	public static boolean performKpOrgSSOSignOff(String ssoSession)
+	{
+		 logger.info("Entered performKpOrgSSOSignOff");
+		 HttpURLConnection connection = null; 		 
+		 InputStream errorStream = null;		 
+		 String kpSsoSession = null;
+		 boolean isSignedOff = false;
+		 try
+		 {			  	           	
+		   URL url = new URL(kpOrgSSOSignOffAPIUrl);           
+           connection = (HttpURLConnection) url.openConnection();
+           connection.setRequestMethod("DELETE");
+           connection.setRequestProperty("Content-Type", "application/json");		            
+           connection.setRequestProperty("X-useragentcategory", kpOrgSSOUserAgentCategoryHeader);
+           connection.setRequestProperty("X-osversion", kpOrgSSOOsVersionHeader);
+           connection.setRequestProperty("X-useragenttype", kpOrgSSOUserAgentTypeHeader);
+           connection.setRequestProperty("X-apiKey", kpOrgSSOAPIKeyHeader);
+           connection.setRequestProperty("X-appName", kpOrgSSOAppNameHeader);
+           connection.setRequestProperty("ssosession", ssoSession);
+                      
+           int statusCode = connection.getResponseCode();
+           logger.info("performKpOrgSSOSignOff -> Status code : " + statusCode);
+           if (statusCode != 200 && statusCode != 202 && statusCode != 204)
+           {
+	            errorStream = connection.getErrorStream();
+		        if (errorStream != null) 
+		        {
+		          String errorMessage = convertInputStreamToString(errorStream);
+		          logger.info("performKpOrgSSOSignOff -> Error message :" + errorMessage);
+		        }
+           }
+           else
+           {
+        	   isSignedOff = true;
+           }
+	        kpSsoSession = connection.getHeaderField("ssosession");
+	        logger.info("performKpOrgSSOSignOff -> ssosession token : " + kpSsoSession);
+		 }
+		 catch (Exception e) {
+       		logger.warn("performKpOrgSSOSignOff -> Web Service API error:" + e.getMessage(), e);
+		 }
+		 finally
+		 {
+			try
+			{
+	       		if (errorStream != null)
+	       		{
+	       			errorStream.close();	
+	       		}
+	       	}
+	       	catch(Exception e)
+	       	{
+	       		logger.warn("performKpOrgSSOSignOff -> error while closing error inputStream.");
+	       	}      	
+	       	
+	       	disconnectURLConnection(connection);
+		 }
+		 logger.info("Exiting performKpOrgSSOSignOff -> isSignedOff=" + isSignedOff);   
+		 return isSignedOff;
+	}
+	
+	public static String callVVRestService(String operationName, String input) 
+	{
+		 logger.info("Entered callVVRestService");
+		 HttpURLConnection connection = null; 
+		 InputStream content = null;	
+		 InputStream errorStream = null;		
+		 Scanner scanner = null; 
+		 OutputStream os = null;			 
+		 String output = null;		
+		  try 
+		  {
+	        	
+            URL url = new URL(videoVisitRestServiceUrl + operationName);
+            String authStr = serviceSecurityUsername + ":" + serviceSecurityPassword;
+            String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setRequestProperty("Authorization", "Basic " + authEncoded);
+            connection.setRequestProperty("Accept","*/*");
+            connection.setDoOutput(true);
+            
+            int statusCode = connection.getResponseCode();
+            logger.info("callVVRestService -> Status code : " + statusCode);
+            if (statusCode != 200 && statusCode != 201 && statusCode != 202)
+            {
+	            errorStream = connection.getErrorStream();
+	            if (errorStream != null) 
+	            {
+	              String errorMessage = convertInputStreamToString(errorStream);
+	              logger.info("callVVRestService -> Error message :" + errorMessage);
+	            }
+	            				
+            }
+            else
+            {           
+	            os = connection.getOutputStream();
+	            os.write(input.getBytes());
+	            os.flush();
+	            content = connection.getInputStream();				
+				scanner = new Scanner(content);
+				scanner.useDelimiter("\\Z");
+				output = scanner.next();
+				scanner.close();
+            }
+				
+	      }
+		  catch(Exception e) 
+		  {
+        	logger.error("callVVRestService -> Web Service API error:" + e.getMessage(), e);
+		  }
+		  finally
+		  {
+	        	
+			    try
+	        	{
+	        		if ( errorStream != null )
+	        		{
+	        			errorStream.close();	
+	        		}
+	        	}
+	        	catch(Exception e)
+	        	{
+	        		logger.warn("callVVRestService -> error while closing error inputStream.");
+	        	}
+	        	
+	        	try
+	        	{
+	        		if ( content != null )
+	        		{
+	        			content.close();	
+	        		}
+	        	}
+	        	catch(Exception e)
+	        	{
+	        		logger.warn("callVVRestService -> error while closing inputStream.");
+	        	}
+	        	
+			    try
+	        	{
+	        		if ( scanner != null )
+	        		{
+	        			scanner.close();	
+	        		}
+	        	}
+	        	catch(Exception e)
+	        	{
+	        		logger.warn("callVVRestService -> error while closing scanner.");        		
+	        	}
+	        	
+	        	try
+	        	{
+	        		if ( os != null )
+	        		{
+		        		os.close();	
+	        		}
+	        	}
+	        	catch(Exception e)
+	        	{
+	        		logger.warn("callVVRestService -> error while closing OutputStream.");
+	        	}
+	        	disconnectURLConnection(connection);
+	       }
+		   logger.info("Exiting callVVRestService");
+		   return output;
+		  
+	  }
+	 
+	private static String convertInputStreamToString(InputStream content)
+	{
+		String result = "";
+		BufferedReader in = null;
+	    try {
+	      in = new BufferedReader(new InputStreamReader(content));
+	      String line;
+	      while ((line = in.readLine()) != null) {
+	        result = result + line;
+	      }	      
+	      return result;
+	    }
+	    catch (Exception ex)
+	    {
+	      logger.error("convertInputStreamToString -> Error while converting input stream to String");
+	      return "";
+	    } finally {
+	      if (in != null)
+	        try {
+	          in.close(); 
+	          in = null;
+	        } catch (IOException e) {
+	          logger.warn("convertInputStreamToString -> Error while closing the buffered reader");
+	        }
+	    }
+	  }
+
+	
+	  private static void disconnectURLConnection(URLConnection connection)
+	  {
+		  	logger.info("Entered disconnectURLConnection");
+		  	try
+			{
+				if(connection != null)
+				{
+					if ((connection instanceof HttpsURLConnection)) {
+				      HttpsURLConnection httpsConn = (HttpsURLConnection)connection;
+				      if (httpsConn != null) {
+				        httpsConn.disconnect();
+				        httpsConn = null;
+				      }
+				    } else if ((connection instanceof HttpURLConnection)) {
+				      HttpURLConnection httpConn = (HttpURLConnection)connection;
+				      if (httpConn != null) {
+				        httpConn.disconnect();
+				        httpConn = null;
+				      }
+				    }
+				}
+			}
+			catch(Exception ex)
+			{
+				logger.warn("disconnectURLConnection -> Error while disconnecting URL connection.");
+			}
+		  	logger.info("Exiting disconnectURLConnection");
+	  }
 }
 
 
