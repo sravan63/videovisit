@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
@@ -48,6 +49,8 @@ public class WebAppContext implements Serializable {
 	private VideoVisitParamsDTO videoVisit = null;
 	private boolean hasJoinedMeeting = false;
 	private VendorPluginDTO vendorPlugin = null;
+	
+	private KpOrgSignOnInfo kpOrgSignOnInfo = null;
 	
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -244,6 +247,20 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setVendorPlugin(VendorPluginDTO vendorPlugin) {
 		this.vendorPlugin = vendorPlugin;
+	}
+
+	/**
+	 * @return the kpOrgSignOnInfo
+	 */
+	public KpOrgSignOnInfo getKpOrgSignOnInfo() {
+		return kpOrgSignOnInfo;
+	}
+
+	/**
+	 * @param kpOrgSignOnInfo the kpOrgSignOnInfo to set
+	 */
+	public void setKpOrgSignOnInfo(KpOrgSignOnInfo kpOrgSignOnInfo) {
+		this.kpOrgSignOnInfo = kpOrgSignOnInfo;
 	}
 	
 }
