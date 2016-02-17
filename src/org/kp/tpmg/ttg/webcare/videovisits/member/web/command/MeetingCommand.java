@@ -2,6 +2,8 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,15 +22,19 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
+import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
+import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
+import org.kp.ttg.sharedservice.domain.MemberInfo;
 
 import com.google.gson.Gson;
 
@@ -972,7 +978,7 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
-  public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		long meetingId = 0;
 		String deviceType = null;
@@ -1018,71 +1024,335 @@ public class MeetingCommand {
 		}
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
-	}
+	 }
   
-  public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request, HttpServletResponse response) throws Exception{
-	  
-	  logger.info("Entered MeetingCommand: getLaunchMeetingDetailsForMember");	
-	  WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
-	  String meetingCode=null;
-	  String patientLastName=null;
-	  String json = "";
-	  String  deviceType = null;
-	  Gson gson = new Gson();
-      
-	  try {
-		  logger.info("getLaunchMeetingDetailsForMemberGuest: meetingCode=" + request.getParameter("meetingCode") + ", patientLastName=" + request.getParameter("patientLastName")+", isMobileFlow="+ request.getParameter("isMobileFlow"));
-			meetingCode = request.getParameter("meetingCode");
-			patientLastName = request.getParameter("patientLastName");
-			boolean isMobileFlow;
-			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow")) && request.getParameter("isMobileFlow").equalsIgnoreCase("true"))
-			{
-					isMobileFlow = true;
-					logger.info("mobile flow is true");
-			}
-				else{
-					isMobileFlow = false;
-					logger.info("mobile flow is false");
-			}
-			
-			// This code will get the device attributes and capabilities and passes it to webservice
-			Device device =	DeviceDetectionService.checkForDevice(request);
-			Map<String, String > capabilities = device.getCapabilities();
-						
-			String brandName = capabilities.get("brand_name");
-			String modelName = capabilities.get("model_name");
-			String deviceOs = capabilities.get("device_os");
-			String deviceOsVersion = capabilities.get("device_os_version");
-			
-			
-			if (brandName != null && modelName!= null){
-					  deviceType = brandName +" " + modelName;
+	  public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		  
+		  logger.info("Entered MeetingCommand: getLaunchMeetingDetailsForMemberGuest");	
+		  WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+		  String meetingCode=null;
+		  String patientLastName=null;
+		  String json = "";
+		  String  deviceType = null;
+		  //Gson gson = new Gson();
+	      
+		  try {
+			  logger.info("getLaunchMeetingDetailsForMemberGuest: meetingCode=" + request.getParameter("meetingCode") + ", patientLastName=" + request.getParameter("patientLastName")+", isMobileFlow="+ request.getParameter("isMobileFlow"));
+				meetingCode = request.getParameter("meetingCode");
+				patientLastName = request.getParameter("patientLastName");
+				boolean isMobileFlow;
+				if (StringUtils.isNotBlank(request.getParameter("isMobileFlow")) && request.getParameter("isMobileFlow").equalsIgnoreCase("true"))
+				{
+						isMobileFlow = true;
+						logger.info("getLaunchMeetingDetailsForMemberGuest -> mobile flow is true");
 				}
-			MeetingLaunchResponseWrapper meetingResponse = WebService.getMeetingDetailsForMemberGuest(meetingCode, patientLastName,deviceType,deviceOs,deviceOsVersion,isMobileFlow);
-			if ( meetingResponse != null )
-			{
-				logger.info("setting care giver context true");
-				ctx.setCareGiver(meetingResponse.getSuccess());
-				//logger.info("result from webservice"+meetingResponse.toString());
-				logger.info("result from webservice  webservice URl"+meetingResponse.getResult()+" errorMessage "+meetingResponse.getErrorMessage()+" InMeeting "+meetingResponse.getInMeeting()+" MeetingStatus "+meetingResponse.getMeetingStatus());
-			    json=JSONObject.fromObject(meetingResponse).toString();
-				logger.info("result Using JSONObject"+json);
-				//jsonResult = gson.toJson(meetingResponse);
-				//logger.info("MeetingCommand:getLaunchMeetingDetailsForMemberGuest: jsonResult " + jsonResult);
-				return json;
+					else{
+						isMobileFlow = false;
+						logger.info("getLaunchMeetingDetailsForMemberGuest -> mobile flow is false");
+				}
 				
-			}	
-			
-			
-	  }
-	  catch(Exception e){
-		  logger.error("System Error" + e.getMessage(),e);
+				// This code will get the device attributes and capabilities and passes it to webservice
+				Device device =	DeviceDetectionService.checkForDevice(request);
+				Map<String, String > capabilities = device.getCapabilities();
+							
+				String brandName = capabilities.get("brand_name");
+				String modelName = capabilities.get("model_name");
+				String deviceOs = capabilities.get("device_os");
+				String deviceOsVersion = capabilities.get("device_os_version");
+				
+				
+				if (brandName != null && modelName!= null){
+						  deviceType = brandName +" " + modelName;
+					}
+				MeetingLaunchResponseWrapper meetingResponse = WebService.getMeetingDetailsForMemberGuest(meetingCode, patientLastName,deviceType,deviceOs,deviceOsVersion,isMobileFlow);
+				if ( meetingResponse != null )
+				{
+					logger.info("getLaunchMeetingDetailsForMemberGuest -> setting care giver context true");
+					ctx.setCareGiver(meetingResponse.getSuccess());
+					//logger.info("result from webservice"+meetingResponse.toString());
+					logger.info("getLaunchMeetingDetailsForMemberGuest -> result from webservice  webservice URl"+meetingResponse.getResult()+" errorMessage "+meetingResponse.getErrorMessage()+" InMeeting "+meetingResponse.getInMeeting()+" MeetingStatus "+meetingResponse.getMeetingStatus());
+				    json=JSONObject.fromObject(meetingResponse).toString();
+					logger.info("getLaunchMeetingDetailsForMemberGuest -> result Using JSONObject"+json);
+					//jsonResult = gson.toJson(meetingResponse);
+					//logger.info("MeetingCommand:getLaunchMeetingDetailsForMemberGuest: jsonResult " + jsonResult);
+					return json;
+					
+				}	
+				
+				
+		  }
+		  catch(Exception e){
+			  logger.error("getLaunchMeetingDetailsForMemberGuest -> System Error" + e.getMessage(),e);
+			  
+			  
+		  }
+		 return (JSONObject.fromObject(new SystemError()).toString());
 		  
-		  
-	  }
-	 return (JSONObject.fromObject(new SystemError()).toString());
-	  
-  }
+	   }
   
+	  public static String performSSOSignOn(HttpServletRequest request, HttpServletResponse response) throws Exception 
+	  {
+		  logger.info("Entered performSSOSignOn");
+		  String strResponse = null;				
+		  try 
+		  {
+				WebAppContext ctx = WebAppContext.getWebAppContext(request);
+
+				// Validation  
+				if (ctx != null)
+				{
+					// Init service properties	
+					boolean success = WebService.initServiceProperties(request);
+					//grab data from web services
+					KpOrgSignOnInfo kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(request.getParameter("userName"), request.getParameter("password")); 
+					
+					if(kpOrgSignOnInfo == null)
+					{
+						// TODO not authenticated. Clear the logged in cache.
+						logger.warn("performSSOSignOn -> SSO Sign on failed due to KP org signon Service unavailability.");
+						strResponse = invalidateWebAppContext(ctx);
+						
+					}
+					else
+					{
+						if(!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError()) || StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))
+						{
+							logger.warn("performSSOSignOn -> SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
+							strResponse = invalidateWebAppContext(ctx);
+						}
+						else if(kpOrgSignOnInfo.getUser() == null || (kpOrgSignOnInfo.getUser() != null && StringUtils.isBlank(kpOrgSignOnInfo.getUser().getGuid())))
+						{
+							logger.warn("performSSOSignOn -> SSO Sign on service failed to return GUID for a user");
+							strResponse = invalidateWebAppContext(ctx);
+						}
+						else
+						{
+							
+							AuthorizeResponseVo authorizeMemberResponse = WebService.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
+							if(authorizeMemberResponse == null)
+							{
+								logger.warn("performSSOSignOn -> SSO Sign on failed due to unavailability of Member SSO Auth API");
+								strResponse = invalidateWebAppContext(ctx);
+							}
+							else
+							{
+								//check for errors returned
+								if(authorizeMemberResponse.getResponseWrapper() == null)
+								{
+									logger.warn("performSSOSignOn -> SSO Sign on failed due to Member SSO Auth API authorization failure");
+									strResponse = invalidateWebAppContext(ctx);
+								}
+								else
+								{
+									if(authorizeMemberResponse.getResponseWrapper().getMemberAuthResponseStatus() != null && !authorizeMemberResponse.getResponseWrapper().getMemberAuthResponseStatus().isSuccess())
+									{
+										logger.warn("performSSOSignOn -> SSO Sign on failed due to Member SSO Auth API authorization failure");
+										strResponse = invalidateWebAppContext(ctx);
+									}
+									else if(authorizeMemberResponse.getResponseWrapper().getMemberInfo() == null)
+									{
+										logger.warn("performSSOSignOn -> SSO Sign on failed as Member SSO Auth API failed to return valid Member info");
+										strResponse = invalidateWebAppContext(ctx);
+									}
+									else
+									{
+										if(StringUtils.isBlank(authorizeMemberResponse.getResponseWrapper().getMemberInfo().getMrn()))
+										{
+											logger.warn("performSSOSignOn -> SSO Sign on failed as Member SSO Auth API failed to return MRN");
+											strResponse = invalidateWebAppContext(ctx);
+										}
+										else
+										{
+											logger.info("performSSOSignOn -> SSO Sign on successful and setting member info into web app context");
+											setWebAppContextMemberInfo(ctx, authorizeMemberResponse.getResponseWrapper().getMemberInfo());
+											ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+											strResponse = "200";
+										}
+									}
+								}
+									
+							}
+						}
+					}
+				}
+				else
+				{
+					logger.warn("performSSOSignOn -> SSO Sign on failed as webapp context from the rquest is null");
+					strResponse = "400";
+				}
+		  }
+		  catch (Exception e)
+		  {
+			  // log error
+			  logger.error("performSSOSignOn -> System Error" + e.getMessage(),e);
+			  if(StringUtils.isBlank(strResponse))
+			  {
+				  strResponse= "400";
+			  }
+
+		  }
+		  return strResponse;			
+	  }
+	  
+	  private static void setWebAppContextMemberInfo(WebAppContext ctx, MemberInfo memberInfo)
+	  {
+		  MemberWSO memberWso = new MemberWSO();
+		  try {
+			    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			    Date date = sdf.parse(memberInfo.getDateOfBirth());
+			    memberWso.setDateofBirth(date.getTime());
+			} catch (Exception e) {
+				logger.warn("setWebAppContextMemberInfo -> error while parsing string date to long.");
+			}
+		  
+		  memberWso.setEmail(memberInfo.getEmail());//to do: check with Martin which email to be used...email or epic email?
+		  memberWso.setFirstName(memberInfo.getFirstName());
+		  memberWso.setGender(memberInfo.getGender());
+		  memberWso.setLastName(memberInfo.getLastName());
+		  memberWso.setMiddleName(memberInfo.getMiddleName());
+		  memberWso.setMrn8Digit(memberInfo.getMrn());//to do: check with martin if mrn returned is 8 digit or not?
+	  }
+  
+	  private static String invalidateWebAppContext(WebAppContext ctx)
+	  {
+		  if(ctx != null)
+		  {
+			  ctx.setMember(null);
+			  ctx.setKpOrgSignOnInfo(null);
+		  }
+		  return "400";
+	  }
+	  
+	  public static String validateKpOrgSSOSession(HttpServletRequest request, HttpServletResponse response, String ssoSession) throws Exception 
+	  {
+		  logger.info("Entered validateKpOrgSSOSession");
+		  String strResponse = null;				
+		  try 
+		  {
+				WebAppContext ctx = WebAppContext.getWebAppContext(request);
+
+				// Validation  
+				if (ctx != null)
+				{
+					// Init service properties	
+					boolean success = WebService.initServiceProperties(request);
+					//grab data from web services
+					KpOrgSignOnInfo kpOrgSignOnInfo = WebService.validateKpOrgSSOSession(ssoSession); 
+					
+					if(kpOrgSignOnInfo == null)
+					{
+						// TODO not authenticated. Clear the logged in cache.
+						logger.warn("validateKpOrgSSOSession -> SSO Sign on failed due to KP org signon Service unavailability.");
+						strResponse = invalidateWebAppContext(ctx);
+						
+					}
+					else
+					{
+						if(!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError()) || StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))
+						{
+							logger.warn("validateKpOrgSSOSession -> SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
+							strResponse = invalidateWebAppContext(ctx);
+						}
+						else if(kpOrgSignOnInfo.getUser() == null || (kpOrgSignOnInfo.getUser() != null && StringUtils.isBlank(kpOrgSignOnInfo.getUser().getGuid())))
+						{
+							logger.warn("validateKpOrgSSOSession -> SSO Sign on service failed to return GUID for a user");
+							strResponse = invalidateWebAppContext(ctx);
+						}
+						else
+						{
+							
+							AuthorizeResponseVo authorizeMemberResponse = WebService.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
+							if(authorizeMemberResponse == null)
+							{
+								logger.warn("validateKpOrgSSOSession -> SSO Sign on failed due to unavailability of Member SSO Auth API");
+								strResponse = invalidateWebAppContext(ctx);
+							}
+							else
+							{
+								//check for errors returned
+								if(authorizeMemberResponse.getResponseWrapper() == null)
+								{
+									logger.warn("validateKpOrgSSOSession -> SSO Sign on failed due to Member SSO Auth API authorization failure");
+									strResponse = invalidateWebAppContext(ctx);
+								}
+								else
+								{
+									if(authorizeMemberResponse.getResponseWrapper().getMemberAuthResponseStatus() != null && !authorizeMemberResponse.getResponseWrapper().getMemberAuthResponseStatus().isSuccess())
+									{
+										logger.warn("validateKpOrgSSOSession -> SSO Sign on failed due to Member SSO Auth API authorization failure");
+										strResponse = invalidateWebAppContext(ctx);
+									}
+									else if(authorizeMemberResponse.getResponseWrapper().getMemberInfo() == null)
+									{
+										logger.warn("validateKpOrgSSOSession -> SSO Sign on failed as Member SSO Auth API failed to return valid Member info");
+										strResponse = invalidateWebAppContext(ctx);
+									}
+									else
+									{
+										if(StringUtils.isBlank(authorizeMemberResponse.getResponseWrapper().getMemberInfo().getMrn()))
+										{
+											logger.warn("validateKpOrgSSOSession -> SSO Sign on failed as Member SSO Auth API failed to return MRN");
+											strResponse = invalidateWebAppContext(ctx);
+										}
+										else
+										{
+											logger.info("validateKpOrgSSOSession -> SSO Sign on successful and setting member info into web app context");
+											setWebAppContextMemberInfo(ctx, authorizeMemberResponse.getResponseWrapper().getMemberInfo());
+											ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+											strResponse = "200";
+										}
+									}
+								}
+									
+							}
+						}
+					}
+				}
+				else
+				{
+					logger.warn("validateKpOrgSSOSession -> SSO Sign on failed as webapp context from the rquest is null");
+					strResponse = "400";
+				}
+		  }
+		  catch (Exception e)
+		  {
+			  // log error
+			  logger.error("validateKpOrgSSOSession -> System Error" + e.getMessage(),e);
+			  if(StringUtils.isBlank(strResponse))
+			  {
+				  strResponse= "400";
+			  }
+
+		  }
+		  return strResponse;			
+	  }
+	  
+	  public static boolean performSSOSignOff(HttpServletRequest request, HttpServletResponse response) 
+	  {
+		  logger.info("Entered performSSOSignOff");	
+		  boolean isSignedOff = false;
+		  try 
+		  {
+				WebAppContext ctx = WebAppContext.getWebAppContext(request);
+				// Validation  
+				if(ctx != null)
+				{
+					if(ctx.getKpOrgSignOnInfo() != null && StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession()))
+					{
+						// Init service properties	
+						boolean success = WebService.initServiceProperties(request);
+						isSignedOff = WebService.performKpOrgSSOSignOff(ctx.getKpOrgSignOnInfo().getSsoSession());
+					}
+					invalidateWebAppContext(ctx);
+				}
+		  }
+		  catch (Exception e)
+		  {
+			  // log error
+			  logger.error("performSSOSignOff -> System Error" + e.getMessage(),e);
+		  }	
+		  logger.info("Exiting performSSOSignOff");	
+		  return isSignedOff;
+      }
 
 }
