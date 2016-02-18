@@ -688,12 +688,9 @@ $(document).ready(function() {
 	        url: VIDEO_VISITS_MOBILE.Path.guest.launchMeetingForMemberGuest,
 	        data: postdata,
 	        success: function(returndata) {
-	        	console.log("returndata=" + returndata);
-	        	console.log("URL",VIDEO_VISITS_MOBILE.Path.guest.launchMeetingForMemberGuest);
 	        	try{
 		        	returndata = $.parseJSON(returndata);
 		        	var isValidUserSession =  returndata.isValidUserSession;
-		        	console.log("isValidUserSession=" + isValidUserSession);
 		            if(isValidUserSession == true){
 		            	 var delay=1000; //1 seconds
 	
@@ -1196,25 +1193,21 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	    var iOSver = iOSversion();
 	    //Fix for the ios 7 issue with openTab function
 		if (iOSver[0] >= 7) {
-			console.log("in IOS > 7");
 			this.timer = setTimeout(this.openWebApp, 500);
 			window.location.replace(megaMeetingUrl);
 		}else{
 			this.timer = setTimeout(this.openWebApp, 500);
 			openTab(megaMeetingUrl);
-			console.log("in Else > 7");
 		}
 	}
 	else{
 		openTab(megaMeetingUrl);
-		console.log("OpenTabCall");
 	}
 }
 
 function openWebApp(){
     var os = getAppOS();    
     if(os == "iOS"){
-    	console.log("in IOS OpenWebAPP");
         window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
     }
     else if(os == "Android"){
