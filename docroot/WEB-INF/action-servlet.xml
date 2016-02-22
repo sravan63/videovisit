@@ -205,9 +205,9 @@
     <bean id="ssologin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SSOPreLoginController">
 		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="login" />
+		<property name="viewName" value="ssologin" />
 		<property name="navigation" value="home" />
-		<property name="subNavigation" value="login" />
+		<property name="subNavigation" value="ssologin" />
     </bean>
 	<bean id="landingnone" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
