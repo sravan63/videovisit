@@ -16,6 +16,7 @@
             "specific" : {
                 "intro" : [],
                 "login" : [],
+                "ssologin" : [],
                 "logout" : [],
                 "guestlogout" : []
             }
