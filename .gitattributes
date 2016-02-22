@@ -17,6 +17,11 @@ build-scripts/upload.sh -text
 /build.properties -text
 /build.xml -text
 /buildjenkins.xml -text
+conf/external/dv/videovisit.properties -text svneol=unset#text/plain
+conf/external/pp/videovisit.properties -text svneol=unset#text/plain
+conf/external/pr/zone1/videovisit.properties -text svneol=unset#text/plain
+conf/external/pr/zone2/videovisit.properties -text svneol=unset#text/plain
+conf/external/qa/videovisit.properties -text svneol=unset#text/plain
 conf/filters/dv/configuration.properties -text svneol=unset#text/plain
 conf/filters/local -text
 conf/filters/pp/configuration.properties -text
