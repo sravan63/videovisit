@@ -12,7 +12,8 @@ VIDEO_VISITS.Path = {
         }
     },
     login : {
-        ajaxurl : 'submitlogin.json'
+        ajaxurl : 'submitlogin.json',
+        ssologinurl : 'ssosubmitlogin.json'
     },
     landingready : {
         visiturl : 'visit.htm',
