@@ -105,6 +105,7 @@ docroot/WEB-INF/jsp/nav/sidebar-empty.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-intro.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-mdo-live.jsp -text
 docroot/WEB-INF/jsp/nav/sidebar-mdo.jsp -text
+docroot/WEB-INF/jsp/nav/sidebar-tpmg-image-only.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/nav/sidebar.jsp -text
 docroot/WEB-INF/jsp/nav/simpleText.jsp -text
 docroot/WEB-INF/jsp/nav/userInfo-empty.jsp -text
