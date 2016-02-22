@@ -94,6 +94,7 @@ docroot/WEB-INF/jsp/mobile/videovisitLandingClinicianModal.jsp -text svneol=unse
 docroot/WEB-INF/jsp/mobile/videovisitLandingGuestModal.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/nav/footer-mdo-live.jsp -text
 docroot/WEB-INF/jsp/nav/footer-mdo.jsp -text
+docroot/WEB-INF/jsp/nav/footer-sso.jsp -text svneol=unset#text/plain
 docroot/WEB-INF/jsp/nav/footer.jsp -text
 docroot/WEB-INF/jsp/nav/guestInfo.jsp -text
 docroot/WEB-INF/jsp/nav/header.jsp -text
