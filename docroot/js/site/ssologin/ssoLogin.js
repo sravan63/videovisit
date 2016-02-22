@@ -62,7 +62,7 @@ function loginSubmit(){
             }
         },
         error: function() {
-
+        	$("#ssoLoginError p").css("display", "block");
         }
     });
     return false;
