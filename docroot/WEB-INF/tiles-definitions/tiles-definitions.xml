@@ -22,12 +22,18 @@
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-mdo.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/jsp/nav/footer-mdo.jsp" />
 	</definition>
-
+	<definition name=".standardSSOPageTemplate" template="/WEB-INF/tiles-templates/mdoApplicationLayout.jsp">
+		<put-attribute name="title" value="" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/nav/mdoSetupHeader.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/nav/footer-sso.jsp" />
+	</definition>
+	
 	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
  		<put-attribute name="header" value="/WEB-INF/jsp/blank.jsp" />
  		<put-attribute name="data" value="/WEB-INF/jsp/blank.jsp" />
 	</definition>
-	
 	<definition name=".javascriptNotSupportedLayout" template="/WEB-INF/tiles-templates/javascriptNotSupportedLayout.jsp">
 		<put-attribute name="title" value="Video Visits" type="string" />
 		<put-attribute name="header" value="/WEB-INF/jsp/nav/header.jsp" />
@@ -108,6 +114,12 @@
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
+	</definition>
+	<definition name="ssologin" extends=".standardSSOPageTemplate">
+		<put-attribute name="title" value="Home Page" type="string" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-tpmg-image-only.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="content" value="/WEB-INF/jsp/ssologin.jsp" />
 	</definition>
 	<definition name="submitlogin" extends=".standardPageTemplate">
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
