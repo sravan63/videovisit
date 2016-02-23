@@ -5,7 +5,7 @@ $(document).ready(function() {
     
 	// Join now Click Event
     $(".joinNowButton").click(function(){
-    	$("#layover").show();
+    	//$("#layover").show();
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
         //  <!-- Commented by Srini  08/27 -->
@@ -65,12 +65,12 @@ $(document).ready(function() {
 			            			    async: false,
 			            			    data: postParaVideoVisit,
 			            			    success: function(){
-			            			    	if($.browser.mozilla){			            			    		
+			            			    	if($.browser.mozilla){
 			            			    		window.setTimeout(function(){
 			            							window.location.href="videoVisitReady.htm";
-			            							}, 3000);			            			    		
-				            				}else{				            					
-				            					window.location.href="videoVisitReady.htm";				            					
+			            							}, 3000);
+				            				}else{
+				            					window.location.href="videoVisitReady.htm";
 				            				}
 			            			    },
 			            		        error: function() {
@@ -102,7 +102,7 @@ $(document).ready(function() {
 			            },
 			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
 			            error: function(theRequest, textStatus, errorThrown) {
-			            	window.location.replace(VIDEO_VISITS.Path.visit.logout);
+			            	return false;
 			            }
 			        });
 				}
