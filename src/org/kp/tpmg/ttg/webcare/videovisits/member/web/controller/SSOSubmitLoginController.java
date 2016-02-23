@@ -1,10 +1,22 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.FaqParser;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.IconPromoParser;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.PromoParser;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.VideoLinkParser;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
 import org.springframework.web.servlet.ModelAndView;
 
 public class SSOSubmitLoginController extends SimplePageController
@@ -19,6 +31,27 @@ public class SSOSubmitLoginController extends SimplePageController
 		String data = null;		
 		try
 		{
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
+			if (ctx == null)
+			{
+				logger.info("SSOSubmitLoginController -> context is null, so creating new context");
+				faq f = FaqParser.parse();
+				List<promo> promos = PromoParser.parse();
+				List<iconpromo> iconpromos = IconPromoParser.parse();
+				videolink videoLink = VideoLinkParser.parse();
+				ctx = WebAppContextCommand.createContext(request, "0");
+				WebAppContext.setWebAppContext(request, ctx);
+				ctx.setFaq(f);
+				ctx.setPromo(promos);
+				ctx.setIconPromo(iconpromos);
+				ctx.setVideoLink(videoLink);
+			}
+			else
+			{
+				logger.info("SSOSubmitLoginController -> Context is not null");
+				
+			}			
+			
 			//Perform SSO sign on and authorization
 			 data = MeetingCommand.performSSOSignOn(request, response);
 			 

@@ -67,6 +67,7 @@ public class SSOPreLoginController implements Controller {
 				}
 			}
 			
+			logger.info("SSOPreLoginController -> ssoSession=" + ssoSession);
 			//TO DO
 			//read ssoSession token from either request header or cookie or context...depending upon the flow.
 			//Pass the ssoSession token to MeetingCommand.validateKpOrgSSOSession()
@@ -76,18 +77,21 @@ public class SSOPreLoginController implements Controller {
 				if("200".equalsIgnoreCase(responseCode))
 				{
 					//	 navigate to myMeetings page
+					logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
 					modelAndView = new ModelAndView("landingready");
 					getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
 				}
 				else
 				{
+					logger.info("SSOPreLoginController -> navigating to SSO login page");
 					modelAndView = new ModelAndView(getViewName());
 					getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 				}			
 			}
 			else
 			{
-			    ////TO DO: read ssoSession token from either request header or cookie for mdo and kp.org integration
+				logger.info("SSOPreLoginController -> navigating to SSO login page");
+				////TO DO: read ssoSession token from either request header or cookie for mdo and kp.org integration
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 			}
