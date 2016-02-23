@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
 	$(":input").on('keyup', function(){	
+		$("#ssoLoginError p").css("display", "none");
         if($('#username').val() != "" && $('#password').val() != ""){
             $('#ssologin').removeAttr('disabled');
             $('#ssologin').css('cursor', 'pointer');
