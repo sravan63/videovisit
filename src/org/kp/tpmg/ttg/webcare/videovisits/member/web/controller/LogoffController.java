@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
-
 import org.springframework.web.servlet.ModelAndView;
 
 public class LogoffController extends SimplePageController {
@@ -19,34 +18,12 @@ public class LogoffController extends SimplePageController {
 		boolean isWirelessDeviceorTablet = DeviceDetectionService.isWirelessDeviceorTablet(request);
 		logger.info("isWirelessDeviceorTablet = " + isWirelessDeviceorTablet);
 		logger.info("invalidated session Id=" + request.getSession().getId());
-		/*		
-		 * Commenting this code for now. Earlier in case of leave meeting, user was taken directly to the login page. After the log off functionality added on the member,
-		 * We do not need this any more. In case of Leave meeting, QuitMeetingController calls MeetingCommand.updateEndMeetingLogout(request, response) and status is updated.
-		 * Calling this method on log off from application of member is updating the wrong status.
-		 * 
-		 
-		  
-		org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext ctx = org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext.getWebAppContext(request);
-		if ( ctx != null)
-		{
-			if ( ctx.getMeetingId() > 0)
-			{
-				logger.info("logoffcontroller meeting id present " + ctx.getMeetingId());
-				if ( ctx.getMember() != null)
-				{
-					try
-					{
-						logger.info("logoffcontroller updating end meeting");
-						MeetingCommand.updateEndMeetingLogout(request, response);
-					}
-					catch(Exception e)
-					{
-						logger.error(e);
-					}
-				}
-			}
+		try {
+			boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(request, response);
+			logger.debug("LogoffController -> isSSOSignedOff=" + isSSOSignedOff);
+		} catch (Exception e) {
+			logger.warn("LogoffController -> error while SSO sign off");
 		}
-		 */		
 		request.getSession().invalidate();
 		
 		if ( request.getSession(false) == null)
