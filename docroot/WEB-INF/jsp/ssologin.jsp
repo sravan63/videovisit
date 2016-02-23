@@ -2,7 +2,7 @@
 <link rel="stylesheet" type="text/css" href="css/site/sso/ssologin.css"/>
 <link rel="stylesheet" type="text/css" href="css/site/mdo/styles.css" />
 
-<h3 class="sso-page-title">Please sign on for Video Visit</h3>
+<h3 class="sso-page-title">Please sign on for your Video Visit</h3>
 <div  style="width: 40%; margin-left: 84px;">
 <p class="sso-login">Use your kp.org user name and password</p>
 <form id="ssoLoginForm" method="post" action="" style="overflow:auto;">
@@ -20,7 +20,7 @@
 	    </div>
 	    
 	    <div class="sso-submit-block-forgot">
-	        <label>Forgot your username or password? </label>
+	        <p>Forgot your username or password? </p>
 	    </div>
 	    <div class="sso-submit-block-temp-access">
 	        <label>Use temporary access</label>
