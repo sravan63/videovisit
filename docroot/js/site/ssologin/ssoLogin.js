@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
-	$(":input").on('keyup', function(){
-		console.log("hi");
+	$(":input").on('keyup', function(){	
         if($('#username').val() != "" && $('#password').val() != ""){
             $('#ssologin').removeAttr('disabled');
             $('#ssologin').css('cursor', 'pointer');
@@ -41,8 +40,6 @@ $(document).ready(function() {
 
 function loginSubmit(){
 	var postdata = 'username=' + $('input[name=username]').val() + '&password=' + $('input[name=password]').val();
-	console.log("post", postdata);
-
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS.Path.login.ssologinurl,
