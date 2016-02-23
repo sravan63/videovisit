@@ -34,7 +34,11 @@
                     "js/site/validation/validate.js"
                 ],
                 "logout"  :   [],
-                "guestlogout" : []
+                "guestlogout" : [],
+                "ssologin"  :   [
+                    "js/site/ssologin/ssoLogin.js",
+                    "js/site/validation/validate.js"
+                ]
             }
         },
         "guest" : {
