@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 public class WebUtil {
@@ -49,5 +50,21 @@ public class WebUtil {
 		}
 		
 	}
+	
+	public static String fillToLength(String src, char fillChar, int total_length) {
+		String ret=null;
+		if (StringUtils.isNotBlank(src) && src.length()<total_length) {
+			int count=total_length-src.length();
+			StringBuffer sb=new StringBuffer();
+			for (int i=0; i<count; i++) {
+				sb.append(fillChar);
+			}
+			sb.append(src);
+			ret=sb.toString();
+		} else {
+			ret=src;
+		}				
+		return ret;
+	}	
 
 }
