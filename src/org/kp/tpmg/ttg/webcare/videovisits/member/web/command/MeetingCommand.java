@@ -3,6 +3,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -22,6 +23,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
@@ -35,8 +37,7 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
-
-import com.google.gson.Gson;
+import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
 
 
 public class MeetingCommand {
@@ -1097,14 +1098,15 @@ public class MeetingCommand {
 		  try 
 		  {
 				WebAppContext ctx = WebAppContext.getWebAppContext(request);
-
+				// Init web service 	
+				boolean isSuccess = WebService.initWebService(request);
 				// Validation  
 				if (ctx != null)
 				{
 					// Init service properties	
 					boolean success = WebService.initServiceProperties(request);
 					//grab data from web services
-					KpOrgSignOnInfo kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(request.getParameter("userName"), request.getParameter("password")); 
+					KpOrgSignOnInfo kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(request.getParameter("username"), request.getParameter("password")); 
 					
 					if(kpOrgSignOnInfo == null)
 					{
@@ -1144,30 +1146,16 @@ public class MeetingCommand {
 								}
 								else
 								{
-									if(authorizeMemberResponse.getResponseWrapper().getMemberAuthResponseStatus() != null && !authorizeMemberResponse.getResponseWrapper().getMemberAuthResponseStatus().isSuccess())
+									if(validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper()))
 									{
-										logger.warn("performSSOSignOn -> SSO Sign on failed due to Member SSO Auth API authorization failure");
-										strResponse = invalidateWebAppContext(ctx);
-									}
-									else if(authorizeMemberResponse.getResponseWrapper().getMemberInfo() == null)
-									{
-										logger.warn("performSSOSignOn -> SSO Sign on failed as Member SSO Auth API failed to return valid Member info");
-										strResponse = invalidateWebAppContext(ctx);
+										logger.info("performSSOSignOn -> SSO Sign on successful and setting member info into web app context");
+										setWebAppContextMemberInfo(ctx, authorizeMemberResponse.getResponseWrapper().getMemberInfo());
+										ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+										strResponse = "200";
 									}
 									else
 									{
-										if(StringUtils.isBlank(authorizeMemberResponse.getResponseWrapper().getMemberInfo().getMrn()))
-										{
-											logger.warn("performSSOSignOn -> SSO Sign on failed as Member SSO Auth API failed to return MRN");
-											strResponse = invalidateWebAppContext(ctx);
-										}
-										else
-										{
-											logger.info("performSSOSignOn -> SSO Sign on successful and setting member info into web app context");
-											setWebAppContextMemberInfo(ctx, authorizeMemberResponse.getResponseWrapper().getMemberInfo());
-											ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
-											strResponse = "200";
-										}
+										strResponse = invalidateWebAppContext(ctx);
 									}
 								}
 									
@@ -1194,13 +1182,64 @@ public class MeetingCommand {
 		  return strResponse;			
 	  }
 	  
+	  private static boolean validateMemberSSOAuthResponse(MemberSSOAuthorizeResponseWrapper responseWrapper)
+	  {
+		  logger.info("Entered validateMemberSSOAuthResponse");
+		  boolean isValid = false;
+		  
+		  if(responseWrapper.getMemberAuthResponseStatus() != null && !responseWrapper.getMemberAuthResponseStatus().isSuccess())
+		  {
+			  logger.warn("validateMemberSSOAuthResponse -> SSO Sign on failed due to Member SSO Auth API authorization failure.");
+			  
+		  }
+		  else if(responseWrapper.getMemberInfo() == null)
+		  {
+			  logger.warn("validateMemberSSOAuthResponse -> SSO Sign on failed as Member SSO Auth API failed to return valid Member info.");
+			  
+		  }
+		  else
+		  {
+			  if(StringUtils.isBlank(responseWrapper.getMemberInfo().getMrn()))
+			  {
+				  logger.warn("validateMemberSSOAuthResponse -> SSO Sign on failed as Member SSO Auth API failed to return MRN.");
+				  
+			  }
+			  else if(StringUtils.isBlank(responseWrapper.getMemberInfo().getAccountRole()) || (!"MBR".equalsIgnoreCase(responseWrapper.getMemberInfo().getAccountRole())))
+			  {
+				  logger.warn("validateMemberSSOAuthResponse -> SSO Sign on failed due to invalid Account Role from Member SSO Auth API.");
+				  
+			  }
+			  else
+			  {
+				  isValid = true;
+			  }
+		  }
+		  logger.info("Exiting validateMemberSSOAuthResponse -> isValid=" + isValid);
+		  return isValid;
+	  }
+	  	  
+		
 	  private static void setWebAppContextMemberInfo(WebAppContext ctx, MemberInfo memberInfo)
 	  {
 		  MemberWSO memberWso = new MemberWSO();
 		  try {
-			    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			    Date date = sdf.parse(memberInfo.getDateOfBirth());
-			    memberWso.setDateofBirth(date.getTime());
+			    String dateStr = memberInfo.getDateOfBirth();
+			    if(StringUtils.isNotBlank(dateStr))
+			    {
+			    	if(dateStr.endsWith("Z"))
+			    	{
+			    		Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(dateStr);
+			    		memberWso.setDateofBirth(cal.getTimeInMillis());
+			    	}
+			    	else
+			    	{
+			    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					    Date date = sdf.parse(memberInfo.getDateOfBirth());
+					    memberWso.setDateofBirth(date.getTime());
+			    	}
+			    	
+			    }
+			    
 			} catch (Exception e) {
 				logger.warn("setWebAppContextMemberInfo -> error while parsing string date to long.");
 			}
@@ -1210,7 +1249,8 @@ public class MeetingCommand {
 		  memberWso.setGender(memberInfo.getGender());
 		  memberWso.setLastName(memberInfo.getLastName());
 		  memberWso.setMiddleName(memberInfo.getMiddleName());
-		  memberWso.setMrn8Digit(memberInfo.getMrn());//to do: check with martin if mrn returned is 8 digit or not?
+		  memberWso.setMrn8Digit(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
+		  ctx.setMember(memberWso);
 	  }
   
 	  private static String invalidateWebAppContext(WebAppContext ctx)
@@ -1277,31 +1317,18 @@ public class MeetingCommand {
 								}
 								else
 								{
-									if(authorizeMemberResponse.getResponseWrapper().getMemberAuthResponseStatus() != null && !authorizeMemberResponse.getResponseWrapper().getMemberAuthResponseStatus().isSuccess())
+									if(validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper()))
 									{
-										logger.warn("validateKpOrgSSOSession -> SSO Sign on failed due to Member SSO Auth API authorization failure");
-										strResponse = invalidateWebAppContext(ctx);
-									}
-									else if(authorizeMemberResponse.getResponseWrapper().getMemberInfo() == null)
-									{
-										logger.warn("validateKpOrgSSOSession -> SSO Sign on failed as Member SSO Auth API failed to return valid Member info");
-										strResponse = invalidateWebAppContext(ctx);
+										logger.info("validateKpOrgSSOSession -> SSO Sign on successful and setting member info into web app context");
+										setWebAppContextMemberInfo(ctx, authorizeMemberResponse.getResponseWrapper().getMemberInfo());
+										ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+										strResponse = "200";
 									}
 									else
 									{
-										if(StringUtils.isBlank(authorizeMemberResponse.getResponseWrapper().getMemberInfo().getMrn()))
-										{
-											logger.warn("validateKpOrgSSOSession -> SSO Sign on failed as Member SSO Auth API failed to return MRN");
-											strResponse = invalidateWebAppContext(ctx);
-										}
-										else
-										{
-											logger.info("validateKpOrgSSOSession -> SSO Sign on successful and setting member info into web app context");
-											setWebAppContextMemberInfo(ctx, authorizeMemberResponse.getResponseWrapper().getMemberInfo());
-											ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
-											strResponse = "200";
-										}
+										strResponse = invalidateWebAppContext(ctx);
 									}
+									
 								}
 									
 							}
