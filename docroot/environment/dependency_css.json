@@ -16,7 +16,11 @@
             "specific" : {
                 "intro" : [],
                 "login" : [],
-                "ssologin" : [],
+                "ssologin" : [
+                	"css/site/global/structure.css",
+                	"css/site/sso/ssologin.css",
+                	"css/site/mdo/styles.css"
+                ],
                 "logout" : [],
                 "guestlogout" : []
             }
