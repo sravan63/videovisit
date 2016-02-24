@@ -205,6 +205,7 @@ input								{outline:none;}
 .modalWrapper		{zoom:1;margin:0;}
 .modalWrapper h2             {color:#BC715E;padding:6px 2px;font-weight:normal;background-color:#E2EAED;border-bottom:1px solid #AAA;}
 #user-in-meeting-modal  p {padding-top:20px; padding-left:45px;padding-right:45px; font-size:12px;overflow:visible;}
+#join-meeting-fail-modal  p {padding-top:20px; padding-left:45px;padding-right:45px; font-size:12px;overflow:visible;}
 #quitMeetingGuestModal p, #quitMeetingModal p	{text-align:center; font-size:14px; overflow:visible; font-weight:bold;}
 .pagination{margin-top:10px;}
 
