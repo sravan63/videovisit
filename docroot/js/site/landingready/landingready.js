@@ -5,7 +5,7 @@ $(document).ready(function() {
     
 	// Join now Click Event
     $(".joinNowButton").click(function(){
-    	//$("#layover").show();
+    	$("#layover").show();
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
         //  <!-- Commented by Srini  08/27 -->
@@ -102,7 +102,8 @@ $(document).ready(function() {
 			            },
 			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
 			            error: function(theRequest, textStatus, errorThrown) {
-			            	return false;
+			            	$("#layover").hide();
+			            	$("#join-meeting-fail-modal").dialog("open");
 			            }
 			        });
 				}
@@ -128,10 +129,23 @@ $(document).ready(function() {
     	$("#user-in-meeting-modal").dialog( "close" );    	
     });
     
+    $('#join-meeting-fail-modal-ok').click(function(){
+    	$("#join-meeting-fail-modal").dialog( "close" );
+    	window.location.href = window.location.href;
+    });
 });
 
 function initializeUserPresentInMeetingModal(){	
 	$("#user-in-meeting-modal").dialog({
+	      autoOpen: false,
+	      width: "30%",
+	      height:165,
+	      modal: true,
+	      resizable:false,
+	      dialogClass:'hide-modal-title'
+	});
+	
+	$("#join-meeting-fail-modal").dialog({
 	      autoOpen: false,
 	      width: "30%",
 	      height:165,
