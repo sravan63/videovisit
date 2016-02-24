@@ -84,10 +84,6 @@
 	</div>
 
 </c:if>
-
-
-
-
 <div id="user-in-meeting-modal"  title="User Already Present In Meeting">
 	<div  class="modalWrapper">
 		<h2><span>User already signed on</span></h2>
@@ -98,6 +94,17 @@
 			<input class="button" id="user-in-meeting-modal-ok"  type="button"  value="OK" />
 		</div>
 	</div>
+</div>
+
+<div id="join-meeting-fail-modal"  title="Something went wrong">
+  <div  class="modalWrapper">
+    <p>
+      Oops something went wrong. Please click ok to refresh.
+    </p>
+    <div class="pagination">
+      <input class="button" id="join-meeting-fail-modal-ok"  type="button"  value="OK" />
+    </div>
+  </div>
 </div>
 	
 <input type="hidden" id="tz" value="<%=timezone%>" /> 
