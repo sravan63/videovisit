@@ -58,7 +58,7 @@
 		<property name="timeoutUrlMap">
 		    <map>
 	           <entry key="timeout-member-mobile" value="logout.htm"/>
-	           <entry key="timeout-member-web" value="login.htm"/>
+	           <entry key="timeout-member-web" value="ssologin.htm"/>
 	           <entry key="timeout-member-sso-web" value="ssologin.htm"/>
 	           <entry key="timeout-guest-mobile" value="USA"/>
 	           <entry key="timeout-guest-web" value="USA"/>
