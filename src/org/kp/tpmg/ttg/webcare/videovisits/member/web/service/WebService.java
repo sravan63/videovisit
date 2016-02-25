@@ -161,6 +161,24 @@ public class WebService{
 				setupWizardMeetingType = rbInfo.getString("SETUP_WIZARD_MEETING_TYPE");
 				setupWizardUserName = rbInfo.getString("SETUP_WIZARD_USER_NAME");
 				logger.debug("configuration: setupWizardHostNuid="+setupWizardHostNuid+", setupWizardMemberMrn="+setupWizardMemberMrn+", setupWizardMeetingType="+setupWizardMeetingType+", setupWizardUserName="+setupWizardUserName);
+				
+				memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
+	    		memberSSOAuthRegionCode = appProp.getProperty("MEMBER_SSO_AUTH_REGION_CODE");
+	    		videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
+	    		kpOrgSSOSignOnAPIUrl = appProp.getProperty("KPORG_SSO_SIGNON_API_URL");	    		
+	    		kpOrgSSOSignOffAPIUrl = appProp.getProperty("KPORG_SSO_SIGNOFF_API_URL");
+	    		kpOrgSSOUserAgentCategoryHeader = appProp.getProperty("KPORG_SSO_USER_AGENT_CATEGORY_HEADER");
+	    		kpOrgSSOOsVersionHeader = appProp.getProperty("KPORG_SSO_OS_VERSION_HEADER");
+	    		kpOrgSSOUserAgentTypeHeader = appProp.getProperty("KPORG_SSO_USER_AGENT_TYPE_HEADER");
+	    		kpOrgSSOAPIKeyHeader = crypto.read(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
+	    		kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOnAPIUrl:" + kpOrgSSOSignOnAPIUrl);
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOUserAgentCategoryHeader:" + kpOrgSSOUserAgentCategoryHeader + ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:" + kpOrgSSOUserAgentTypeHeader);
+	    		logger.info("webservice.initServiceProperties -> kpOrgSSOAppNameHeader:" + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:" + kpOrgSSOAPIKeyHeader);
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOffAPIUrl:" + kpOrgSSOSignOffAPIUrl);
+	    		logger.debug("webservice.initServiceProperties -> memberSSOAuthAPIUrl:" + memberSSOAuthAPIUrl);
+	    		logger.debug("webservice.initServiceProperties -> videoVisitRestServiceUrl:" + videoVisitRestServiceUrl);
+				
 			}
 			
 			if (simulation)
@@ -221,7 +239,7 @@ public class WebService{
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			String message = "Exception constructor failed to create axisConfig";  
+			String message = "Exception while reading properties file in initWebService";  
 			logger.error("System Error" + e.getMessage(),e);
 			ret = false;
 			throw new RuntimeException(message, e);
@@ -229,59 +247,7 @@ public class WebService{
 		logger.info("Exit initWebService");
 		return ret;
 	}
-	
-	public static boolean initServiceProperties(HttpServletRequest request)
-	{
-		logger.info("Entered initServiceProperties");
-		boolean ret = true;	
-
-		try
-		{
-			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			if (rbInfo != null)
-			{
-				logger.debug("WebService.initServiceProperties -> configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				//Read external properties file for the web service end point url
-				File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				FileInputStream fileInput = new FileInputStream(file);
-	    		Properties appProp = new Properties();
-	    		appProp.load(fileInput);
-	    		memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
-	    		memberSSOAuthRegionCode = appProp.getProperty("MEMBER_SSO_AUTH_REGION_CODE");
-	    		videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
-	    		kpOrgSSOSignOnAPIUrl = appProp.getProperty("KPORG_SSO_SIGNON_API_URL");	    		
-	    		kpOrgSSOSignOffAPIUrl = appProp.getProperty("KPORG_SSO_SIGNOFF_API_URL");
-	    		kpOrgSSOUserAgentCategoryHeader = appProp.getProperty("KPORG_SSO_USER_AGENT_CATEGORY_HEADER");
-	    		kpOrgSSOOsVersionHeader = appProp.getProperty("KPORG_SSO_OS_VERSION_HEADER");
-	    		kpOrgSSOUserAgentTypeHeader = appProp.getProperty("KPORG_SSO_USER_AGENT_TYPE_HEADER");
-	    		kpOrgSSOAPIKeyHeader = appProp.getProperty("KPORG_SSO_API_KEY_HEADER");
-	    		kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
-	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOnAPIUrl:" + kpOrgSSOSignOnAPIUrl);
-	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOUserAgentCategoryHeader:" + kpOrgSSOUserAgentCategoryHeader + ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:" + kpOrgSSOUserAgentTypeHeader);
-	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOAppNameHeader:" + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:" + kpOrgSSOAPIKeyHeader);
-	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOffAPIUrl:" + kpOrgSSOSignOffAPIUrl);
-	    		logger.debug("webservice.initServiceProperties -> memberSSOAuthAPIUrl:" + memberSSOAuthAPIUrl);
-	    		logger.debug("webservice.initServiceProperties -> videoVisitRestServiceUrl:" + videoVisitRestServiceUrl);
-				
-				Crypto crypto = new Crypto();
-				serviceSecurityUsername = rbInfo.getString("SERVICE_SECURITY_USERNAME");
-				serviceSecurityPassword = crypto.read(rbInfo.getString("SERVICE_SECURITY_PASSWORD"));
-				logger.debug("webservice.initServiceProperties -> SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
-				
-			}			
-			
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			String message = "initServiceProperties -> Exception while reading properties file";  
-			logger.error("System Error" + e.getMessage(),e);
-			ret = false;
-			//throw new RuntimeException(message, e);
-		}
-		logger.info("Exit initServiceProperties");
-		return ret;
-	}
+		
 	
 	protected static void closeConnectionManager(VideoVisitMemberServicesStub stub)
 	{
@@ -1277,9 +1243,7 @@ public class WebService{
 		 KpOrgSignOnInfo kpOrgSignOnInfo = null;
 		 try
 		 {	        	
-			  	           	
-		    URL url = new URL(kpOrgSSOSignOnAPIUrl);
-            //url = new URL("https://api-hreg2.kaiserpermanente.org/care/v1.1/token");		            
+			URL url = new URL(kpOrgSSOSignOnAPIUrl);            		            
             String authStr = userId + ":" + password; // qa			        
             String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
             connection = (HttpURLConnection) url.openConnection();
@@ -1387,7 +1351,6 @@ public class WebService{
 		 try
 		 {			  	           	
 		    URL url = new URL(kpOrgSSOSignOffAPIUrl);
-            //url = new URL("https://api-hreg2.kaiserpermanente.org/care/v1.1/token");            
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setRequestProperty("Content-Type", "application/json");		            
@@ -1487,6 +1450,7 @@ public class WebService{
 		AuthorizeResponseVo response = null;
 		try
 		{
+			
 			MemberSSOAuthAPIs memberSSOAuthAPI = new MemberSSOAuthAPIs();
 			AuthorizeRequestVo req = new AuthorizeRequestVo();		    
 			req.setGuid(guid);
@@ -1496,8 +1460,7 @@ public class WebService{
 			}
 			req.setRegionCode(regionCode);
 		    response = memberSSOAuthAPI.authorize(memberSSOAuthAPIUrl, req, serviceSecurityUsername, serviceSecurityPassword);
-			logger.info("authorizeMemberSSOByGuid ->authorize response" + response.getResponseWrapper().getMemberInfo().getFirstName());
-		   
+			
 		}
 		catch(Exception e)
 		{
