@@ -17,9 +17,7 @@
                 "intro" : [],
                 "login" : [],
                 "ssologin" : [
-                	"css/site/global/structure.css",
-                	"css/site/sso/ssologin.css",
-                	"css/site/mdo/styles.css"
+                	"css/site/sso/ssologin.css"
                 ],
                 "logout" : [],
                 "guestlogout" : []
