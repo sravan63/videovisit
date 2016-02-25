@@ -313,6 +313,7 @@ lib/log4j-1.2.15.jar -text
 lib/neethi_2.0.4.wso2v4.jar -text
 lib/ognl-2.6.11.jar -text
 lib/opensaml2_2.4.1.wso2v1.jar -text
+lib/org.json-20120521.jar -text
 lib/org.wso2.carbon.addressing_4.2.0.jar -text
 lib/org.wso2.carbon.logging_4.2.0.jar -text
 lib/org.wso2.carbon.mex_4.2.0.jar -text
