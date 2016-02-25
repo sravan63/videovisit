@@ -1099,13 +1099,10 @@ public class MeetingCommand {
 		  {
 				WebAppContext ctx = WebAppContext.getWebAppContext(request);
 				// Init web service 	
-				boolean isSuccess = WebService.initWebService(request);
+				boolean success = WebService.initWebService(request);
 				// Validation  
 				if (ctx != null)
 				{
-					// Init service properties	
-					boolean success = WebService.initServiceProperties(request);
-					
 					String userName = request.getParameter("username");
 					String password = request.getParameter("password");
 					
@@ -1282,12 +1279,10 @@ public class MeetingCommand {
 		  try 
 		  {
 				WebAppContext ctx = WebAppContext.getWebAppContext(request);
-
+				boolean success = WebService.initWebService(request);
 				// Validation  
 				if (ctx != null)
 				{
-					// Init service properties	
-					boolean success = WebService.initServiceProperties(request);
 					//grab data from web services
 					KpOrgSignOnInfo kpOrgSignOnInfo = WebService.validateKpOrgSSOSession(ssoSession); 
 					
@@ -1378,8 +1373,7 @@ public class MeetingCommand {
 				{
 					if(ctx.getKpOrgSignOnInfo() != null && StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession()))
 					{
-						// Init service properties	
-						boolean success = WebService.initServiceProperties(request);
+						boolean success = WebService.initWebService(request);
 						isSignedOff = WebService.performKpOrgSSOSignOff(ctx.getKpOrgSignOnInfo().getSsoSession());
 					}
 					invalidateWebAppContext(ctx);
