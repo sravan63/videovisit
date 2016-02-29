@@ -109,7 +109,7 @@
 	</definition>
 	<definition name="ssologin" extends=".standardPageTemplate">
 		<put-attribute name="title" value="Login Page" type="string" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-tpmg-image-only.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/ssologin.jsp" />
 	</definition>
@@ -125,7 +125,7 @@
 	</definition>
 	<definition name="landingready" extends=".standardPageTemplate">
 		<put-attribute name="title" value="My Meetings" type="string" />
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
 		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/landingready.jsp" />
 	</definition>
