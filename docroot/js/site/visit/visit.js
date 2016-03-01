@@ -119,7 +119,27 @@ var MemberVisit = {
 	                //window.location.replace(VIDEO_VISITS.Path.global.error);            
 	            }
 	        });
+		},
+		SetKPHCConferenceStatus: function(meetingId, status)
+		{
+			var postParaKPHC = 'meetingId=' + meetingId + '&status=' + status;
+
+	         $.ajax({
+	            type: 'POST',
+	            url: VIDEO_VISITS.Path.visit.setKPHCConferenceStatus,
+	            cache: false,
+			    async: true,
+	            data: postParaKPHC,
+	            success: function(returndata) {
+	            	console.log("SetKPHCConferenceStatus: success returndata=" + returndata);
+	            },
+	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+	            error: function(theRequest, textStatus, errorThrown) {
+	            	console.log("SetKPHCConferenceStatus: error");           
+	            }
+	        });
 		}
+		
 }
 
 function showJoinNowModal(encodedHrefLocation){
