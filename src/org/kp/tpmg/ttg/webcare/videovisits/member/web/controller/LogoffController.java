@@ -18,11 +18,14 @@ public class LogoffController extends SimplePageController {
 		boolean isWirelessDeviceorTablet = DeviceDetectionService.isWirelessDeviceorTablet(request);
 		logger.info("isWirelessDeviceorTablet = " + isWirelessDeviceorTablet);
 		logger.info("invalidated session Id=" + request.getSession().getId());
-		try {
-			boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(request, response);
-			logger.debug("LogoffController -> isSSOSignedOff=" + isSSOSignedOff);
-		} catch (Exception e) {
-			logger.warn("LogoffController -> error while SSO sign off");
+		if(!isWirelessDeviceorTablet)
+		{
+			try {
+				boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(request, response);
+				logger.debug("LogoffController -> isSSOSignedOff=" + isSSOSignedOff);
+			} catch (Exception e) {
+				logger.warn("LogoffController -> error while SSO sign off");
+			}
 		}
 		request.getSession().invalidate();
 		
