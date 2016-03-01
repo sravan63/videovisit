@@ -68,6 +68,8 @@ import org.kp.tpmg.videovisit.member.VerifyCaregiver;
 import org.kp.tpmg.videovisit.member.VerifyCaregiverResponse;
 import org.kp.tpmg.videovisit.member.VerifyMember;
 import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
+import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatus;
+import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatusResponse;
 import org.kp.tpmg.videovisit.member.GetVendorPluginData;
 import org.kp.tpmg.videovisit.member.GetVendorPluginDataResponse;
 import org.kp.tpmg.videovisit.member.CreateInstantVendorMeeting;
@@ -1696,6 +1698,39 @@ public class WebService{
 				logger.warn("disconnectURLConnection -> Error while disconnecting URL connection.");
 			}
 		  	logger.info("Exiting disconnectURLConnection");
+	  }
+	  
+	  public static StringResponseWrapper setKPHCConferenceStatus(long meetingId, String joinLeaveStatus, String sessionId) throws Exception 
+	  {
+		  	logger.info("Entered setKPHCConferenceStatus -> received input as [meetingId=" + meetingId + ", joinLeaveStatus=" + joinLeaveStatus + "]");
+			StringResponseWrapper toRet = null; 
+			SetKPHCConferenceStatus setKPHCConferenceStatus = new SetKPHCConferenceStatus();
+			try
+			{
+				setKPHCConferenceStatus.setJoinLeaveStatus(joinLeaveStatus);
+				setKPHCConferenceStatus.setMeetingId(meetingId);
+				setKPHCConferenceStatus.setSessionId(sessionId);
+				SetKPHCConferenceStatusResponse response = stub.setKPHCConferenceStatus(setKPHCConferenceStatus);
+				toRet = response.get_return();
+			}
+			catch (Exception e)
+			{
+				logger.warn("setKPHCConferenceStatus -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+				SetKPHCConferenceStatusResponse response;
+				try {
+					response = stub.setKPHCConferenceStatus(setKPHCConferenceStatus);
+					toRet = response.get_return();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					logger.warn("setKPHCConferenceStatus -> Web Service API error");
+				}			
+			}
+			finally
+			{
+				closeConnectionManager(stub);
+			}
+			logger.info("Exiting setKPHCConferenceStatus");
+			return toRet;
 	  }
 }
 
