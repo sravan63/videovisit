@@ -82,7 +82,7 @@
 
 <script type="text/javascript">
 
-	var browserInfo = getBrowserInfo();
+	/*var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
 	
 	if(browserInfo.isChrome) {
@@ -101,7 +101,7 @@
 			document.getElementById("birth_year").disabled = true;
 			document.getElementById("login").disabled = true;
 		}
-		/*else if(navigator.appVersion.indexOf("Win") != -1) {
+		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
 				$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
@@ -112,6 +112,6 @@
 				document.getElementById("birth_year").disabled = true;
 				document.getElementById("login").disabled = true;
 			}
-		}*/
-	}
+		}
+	}*/
 </script>
