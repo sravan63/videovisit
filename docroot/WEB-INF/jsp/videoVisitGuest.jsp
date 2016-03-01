@@ -62,8 +62,8 @@
 							</span>
 							<span style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
 								<a id="macWinPluginFile" href="" class="" style="font-size:20px; color:#0088cc;" onclick="downloadPlugin();">Download Vidyo plug-in</a>
-								<a id="winChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-win32-1.3.1.0062.msi" class="hide" style="font-size:20px; color:#0088cc;">Download Vidyo plug-in</a>
-								<a id="macChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-macosx-x86-1.3.1.0062.pkg" class="hide" style="font-size:20px; color:#0088cc; display:block;" onclick="downloadPlugin();">Download Vidyo plug-in for Mac</a>
+								<a id="winChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-win32-1.3.1.0062.msi" class="hide" style="font-size:20px; color:#0088cc;" onclick="downloadPlugin();">Download Vidyo plug-in Win</a>
+								<a id="macChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-macosx-x86-1.3.1.0062.pkg" class="hide" style="font-size:20px; color:#0088cc;" onclick="downloadPlugin();">Download Vidyo plug-in Mac</a>
 							</span>
 						</div>
 						<div id="downloadStep3" class="downloadSteps" style="display:inline-block; margin:10px 20px; vertical-align:top; opacity:0.4;">
