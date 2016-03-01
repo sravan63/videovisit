@@ -50,7 +50,8 @@ VIDEO_VISITS.Path = {
         quitmeeting : 'quitmeeting.json',
         createSetupWizardMeeting: 'createSetupWizardMeeting.json',
         terminateSetupWizardMeeting : 'terminateSetupWizardMeeting.json',
-        logout : 'logout.htm'
+        logout : 'logout.htm',
+		setKPHCConferenceStatus: 'setKPHCConferenceStatus.json'
     },
     logout : {
         logoutjson: 'logout.json'
