@@ -39,7 +39,6 @@ import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
 
-
 public class MeetingCommand {
 
 	public static Logger logger = Logger.getLogger(MeetingCommand.class);
@@ -1387,5 +1386,48 @@ public class MeetingCommand {
 		  logger.info("Exiting performSSOSignOff");	
 		  return isSignedOff;
       }
+	  
+	  public static String setKPHCConferenceStatus(HttpServletRequest request, HttpServletResponse response)
+	  {
+			logger.info("Entered setKPHCConferenceStatus");
+			StringResponseWrapper setKPHCConferenceStatusResponse = null; 
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);	
+			long meetingId = 0;
+			
+			try
+			{
+				if (ctx != null && ctx.getMember() != null)
+				{
+					// parse parameters
+					if (StringUtils.isNotBlank(request.getParameter("meetingId"))) 
+					{
+						meetingId = Long.parseLong(request.getParameter("meetingId"));
+					}
+					
+					if (meetingId == 0)
+					{
+						meetingId = ctx.getMeetingId();
+					}
+
+					logger.info("MeetingCommand.setKPHCConferenceStatus: meetingId=" + meetingId + ", status=" + request.getParameter("status"));
+					
+					//grab data from web services
+					setKPHCConferenceStatusResponse = WebService.setKPHCConferenceStatus(meetingId, request.getParameter("status"), request.getSession().getId());
+					if (setKPHCConferenceStatusResponse != null)
+					{
+						logger.info("MeetingCommand.setKPHCConferenceStatus: result = " + setKPHCConferenceStatusResponse.getResult()); 
+						return setKPHCConferenceStatusResponse.getResult();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				logger.error("setKPHCConferenceStatus -> System error:" + e.getMessage(), e);
+				
+			}
+			logger.info("Exiting setKPHCConferenceStatus");
+			// worst case error returned, no authenticated user, no web service responded, etc.
+			return (JSONObject.fromObject(new SystemError()).toString());
+	   }
 
 }
