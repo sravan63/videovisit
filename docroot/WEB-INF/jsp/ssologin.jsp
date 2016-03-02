@@ -14,12 +14,8 @@
 	    <div id="ssoLoginError">
 	    <p>There was an error authenticating your account.  Please sign in using temporary access.</p>
 	    </div>
-	    
-	    <div class="sso-submit-block-forgot">
-	        <p>Forgot your username or password? </p>
-	    </div>
 	    <div class="sso-submit-block-temp-access">
-	        <label  tabindex="4">Use temporary access</label>
+	        <label  tabindex="4">Temporary access</label>
 	    </div>
   	</div>  	
     
