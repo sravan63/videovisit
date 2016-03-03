@@ -86,6 +86,7 @@ public class WebSessionFilter implements Filter
 			String memberMobileHomePageUrl = homePageUrlMap.get("homepage-member-mobile");
 			String guestWebHomePageUrl = homePageUrlMap.get("homepage-guest-web");
 			String guestMobileHomePageUrl = homePageUrlMap.get("homepage-guest-mobile");
+			String memberWebSSOLoginPageUrl = homePageUrlMap.get("homepage-member-sso-web");
 			String redirectToUrl = null;
 			// Handle patient home page URL1
 			logger.info("WebSessionFilter requesturi = " + requestUri + " memberWebHomePageUrl1 = " + memberWebHomePageUrl1 + " memberWebHomePageUrl2 = " + memberWebHomePageUrl2 + "  memberWebHomePageUrl3 = " + memberWebHomePageUrl3 + " guestWebHomePageUrl = " + guestWebHomePageUrl);
@@ -207,6 +208,16 @@ public class WebSessionFilter implements Filter
 						req.getRequestDispatcher("mobilevideovisitlanding.htm").forward(req, resp);
 					}
 				}
+				else if(requestUri.contains(memberWebSSOLoginPageUrl))
+				{
+					logger.info("WebSessionFilter memberWebSSOLoginPageUrl: " + memberWebSSOLoginPageUrl );
+					boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);
+					if(isWirelessDeviceOrTablet){
+						logger.info("before mobile redirect = " + memberMobileHomePageUrl);
+						redirectToUrl = memberMobileHomePageUrl;
+						resp.sendRedirect(redirectToUrl);
+					}					
+				}				
 				chain.doFilter(req, resp);
 			}
 	
