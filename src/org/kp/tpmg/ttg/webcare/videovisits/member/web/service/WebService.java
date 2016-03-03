@@ -176,7 +176,7 @@ public class WebService{
 	    		kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOnAPIUrl:" + kpOrgSSOSignOnAPIUrl);
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOUserAgentCategoryHeader:" + kpOrgSSOUserAgentCategoryHeader + ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:" + kpOrgSSOUserAgentTypeHeader);
-	    		logger.info("webservice.initServiceProperties -> kpOrgSSOAppNameHeader:" + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:" + kpOrgSSOAPIKeyHeader);
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOAppNameHeader:" + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:" + kpOrgSSOAPIKeyHeader);
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOffAPIUrl:" + kpOrgSSOSignOffAPIUrl);
 	    		logger.debug("webservice.initServiceProperties -> memberSSOAuthAPIUrl:" + memberSSOAuthAPIUrl);
 	    		logger.debug("webservice.initServiceProperties -> videoVisitRestServiceUrl:" + videoVisitRestServiceUrl);
