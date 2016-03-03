@@ -1,7 +1,11 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.Enumeration;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,6 +23,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -67,7 +72,42 @@ public class SSOPreLoginController implements Controller {
 				}
 			}
 			
-			logger.info("SSOPreLoginController -> ssoSession=" + ssoSession);
+			//testing
+			Enumeration<String> headerNames = request.getHeaderNames();
+			while (headerNames.hasMoreElements()) {
+				String headerName = headerNames.nextElement();
+				logger.info("SSOPreLoginController ->headerName:" + headerName);
+				
+				Enumeration<String> headers = request.getHeaders(headerName);
+				while (headers.hasMoreElements()) 
+				{
+					String headerValue = headers.nextElement();
+					logger.info("SSOPreLoginController -> headerValue:" + headerValue);
+				}
+				
+			}
+		    //end testing
+			
+			logger.info("SSOPreLoginController -> ssoSession before cookie=" + ssoSession);
+			if(StringUtils.isBlank(ssoSession))
+			{
+				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
+				if(ssoCookie != null)
+				{
+					ssoSession = ssoCookie.getValue();
+					logger.info("SSOPreLoginController -> ssoSession from cookie before decoding=" + ssoSession);
+					try
+					{
+						ssoSession = URLDecoder.decode(ssoSession, "UTF-8");
+					} catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						logger.warn("SSOPreLoginController -> error while decoding a coockie value="+ ssoSession);
+					}
+					logger.info("SSOPreLoginController -> ssoSession from cookie after decoding=" + ssoSession);
+				}
+				WebUtil.readCookie(request);
+			}
+			logger.info("SSOPreLoginController -> ssoSession after cookie=" + ssoSession);
 			//TO DO
 			//read ssoSession token from either request header or cookie or context...depending upon the flow.
 			//Pass the ssoSession token to MeetingCommand.validateKpOrgSSOSession()

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
@@ -17,6 +18,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
 public class SSOSubmitLoginController extends SimplePageController
@@ -55,6 +57,12 @@ public class SSOSubmitLoginController extends SimplePageController
 			//Perform SSO sign on and authorization
 			 data = MeetingCommand.performSSOSignOn(request, response);
 			 
+			 //set ssosession token in cookie
+			 if("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null && StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession()))
+			 {
+				 logger.info("SubmitLoginController: ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
+				 WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
+			 }
 			 logger.info("SubmitLoginController:data:" + data);
 		}
 		catch (Exception e)
