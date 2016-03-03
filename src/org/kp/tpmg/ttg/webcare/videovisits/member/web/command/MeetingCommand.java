@@ -1376,6 +1376,7 @@ public class MeetingCommand {
 						isSignedOff = WebService.performKpOrgSSOSignOff(ctx.getKpOrgSignOnInfo().getSsoSession());
 					}
 					invalidateWebAppContext(ctx);
+					WebUtil.removeCookie(response, WebUtil.SSO_COOKIE_NAME);
 				}
 		  }
 		  catch (Exception e)
