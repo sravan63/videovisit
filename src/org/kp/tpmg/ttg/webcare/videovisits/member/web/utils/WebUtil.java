@@ -96,7 +96,7 @@ public class WebUtil {
         return null;
     }
 	
-	public static void readCookie(HttpServletRequest httpRequest) 
+	public static void readAllCookies(HttpServletRequest httpRequest) 
 	{		
 		if (httpRequest.getCookies() != null)
 		{
