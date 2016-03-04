@@ -72,30 +72,14 @@ public class SSOPreLoginController implements Controller {
 				}
 			}
 			
-			//testing
-			Enumeration<String> headerNames = request.getHeaderNames();
-			while (headerNames.hasMoreElements()) {
-				String headerName = headerNames.nextElement();
-				logger.info("SSOPreLoginController ->headerName:" + headerName);
-				
-				Enumeration<String> headers = request.getHeaders(headerName);
-				while (headers.hasMoreElements()) 
-				{
-					String headerValue = headers.nextElement();
-					logger.info("SSOPreLoginController -> headerValue:" + headerValue);
-				}
-				
-			}
-		    //end testing
-			
-			logger.info("SSOPreLoginController -> ssoSession before cookie=" + ssoSession);
+			logger.info("SSOPreLoginController -> ssoSession in context=" + ssoSession);
 			if(StringUtils.isBlank(ssoSession))
 			{
 				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
-				if(ssoCookie != null)
+				if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue()))
 				{
 					ssoSession = ssoCookie.getValue();
-					logger.info("SSOPreLoginController -> ssoSession from cookie before decoding=" + ssoSession);
+					logger.debug("SSOPreLoginController -> ssoSession from cookie before decoding=" + ssoSession);
 					try
 					{
 						ssoSession = URLDecoder.decode(ssoSession, "UTF-8");
@@ -103,13 +87,12 @@ public class SSOPreLoginController implements Controller {
 						// TODO Auto-generated catch block
 						logger.warn("SSOPreLoginController -> error while decoding a coockie value="+ ssoSession);
 					}
-					logger.info("SSOPreLoginController -> ssoSession from cookie after decoding=" + ssoSession);
-				}
-				WebUtil.readCookie(request);
+					logger.debug("SSOPreLoginController -> ssoSession from cookie after decoding=" + ssoSession);
+				}				
 			}
-			logger.info("SSOPreLoginController -> ssoSession after cookie=" + ssoSession);
-			//TO DO
-			//read ssoSession token from either request header or cookie or context...depending upon the flow.
+			logger.info("SSOPreLoginController -> ssoSession after cookie check=" + ssoSession);
+			
+			//read ssoSession token from either cookie or context...depending upon the flow.
 			//Pass the ssoSession token to MeetingCommand.validateKpOrgSSOSession()
 			if(StringUtils.isNotBlank(ssoSession))
 			{
