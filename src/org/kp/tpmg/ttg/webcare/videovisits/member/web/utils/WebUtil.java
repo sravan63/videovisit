@@ -122,9 +122,10 @@ public class WebUtil {
 		 Cookie cookie;
 		try {
 			cookie = new Cookie(cookieName, URLEncoder.encode(cookieValue, "UTF-8"));
-			//cookie.setMaxAge(60 * 20);  // 20 minutes 
+			cookie.setPath("/");
 			cookie.setDomain(".kaiserpermanente.org");
-	        response.addCookie(cookie);
+			cookie.setSecure(true);
+		    response.addCookie(cookie);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			logger.warn("setCookie: error while adding a coockie="+ cookieName + ", cookie value=" + cookieValue);
@@ -132,12 +133,27 @@ public class WebUtil {
          
 	}
 	
-	public static void removeCookie(HttpServletResponse response, String cookieName)
+	public static void removeCookie(HttpServletRequest httpRequest, HttpServletResponse response, String cookieName)
 	{
 		logger.info("removeCookie: cookie name="+ cookieName);
-		Cookie cookie = new Cookie(cookieName, "");
-		cookie.setMaxAge(0); 
-		response.addCookie(cookie);
+		Cookie[] cookies = httpRequest.getCookies();
+		if (cookies != null)
+		{
+			for (Cookie cookie : cookies) 
+			{
+				if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) 
+	            {
+	            	cookie.setValue(null);
+	            	cookie.setMaxAge(0); 
+	        		cookie.setPath("/");
+	        		cookie.setDomain(".kaiserpermanente.org");
+	        		cookie.setSecure(true);
+	        		response.addCookie(cookie);
+	        		logger.info("removeCookie: removed cookie name="+ cookie.getName());
+	            }
+			}
+		}
+			
 	}
 
 }
