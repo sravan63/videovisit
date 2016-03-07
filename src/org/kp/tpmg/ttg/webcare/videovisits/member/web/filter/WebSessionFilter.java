@@ -19,8 +19,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 
 public class WebSessionFilter implements Filter
 {
@@ -243,11 +245,23 @@ public class WebSessionFilter implements Filter
 				if (ctx != null) {
 					if(requestUri.contains("landingready") && ctx.getMember() == null)
 					{
-						logger.info("session is not null, webapp context is not null but member object in context is null, so redirecting to logout.");
+						logger.info("WebSessionFilter -> session is not null, webapp context is not null but member object in context is null, so redirecting to logout.");
 						resp.sendRedirect("logout.htm");
 					}
 					else
 					{
+						//Handle the case of SSO sign off from kp.org or mdo
+						if(ctx.getKpOrgSignOnInfo() != null)
+						{
+							Cookie ssoCookie = WebUtil.getCookie(req, WebUtil.SSO_COOKIE_NAME);
+							if(ssoCookie == null || (ssoCookie != null && StringUtils.isBlank(ssoCookie.getValue())))
+							{
+								logger.info("WebSessionFilter -> Member signed on using SSO - session is not null, webapp context is not null but cookie in request is not valid due to SSO sign off either from KP.org or MDO, so redirecting to logout.");
+								boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
+								logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
+								resp.sendRedirect("logout.htm");
+							}		
+						}
 						chain.doFilter(req, resp);
 					}
 				}
