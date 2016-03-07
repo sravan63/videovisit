@@ -122,7 +122,8 @@ public class WebUtil {
 		 Cookie cookie;
 		try {
 			cookie = new Cookie(cookieName, URLEncoder.encode(cookieValue, "UTF-8"));
-			cookie.setMaxAge(60 * 20);  // 20 minutes 
+			//cookie.setMaxAge(60 * 20);  // 20 minutes 
+			cookie.setDomain(".kaiserpermanente.org");
 	        response.addCookie(cookie);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
