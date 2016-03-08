@@ -28,6 +28,7 @@ public class LogoffController extends SimplePageController {
 
 	public static Logger logger = Logger.getLogger(LogoffController.class);
 	private String mobileViewName;
+	private String myMeetingsViewName;
 	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 				
@@ -63,7 +64,7 @@ public class LogoffController extends SimplePageController {
 						if("200".equalsIgnoreCase(responseCode))
 						{
 							logger.info("LogoffController -> sso session token from request cookie valid, navigating to my meetings page");
-							return new ModelAndView("landingready.htm");
+							return new ModelAndView(myMeetingsViewName);
 						}
 						else
 						{
@@ -113,6 +114,20 @@ public class LogoffController extends SimplePageController {
 
 	public void setMobileViewName(String mobileViewName) {
 		this.mobileViewName = mobileViewName;
+	}
+
+	/**
+	 * @return the myMeetingsViewName
+	 */
+	public String getMyMeetingsViewName() {
+		return myMeetingsViewName;
+	}
+
+	/**
+	 * @param myMeetingsViewName the myMeetingsViewName to set
+	 */
+	public void setMyMeetingsViewName(String myMeetingsViewName) {
+		this.myMeetingsViewName = myMeetingsViewName;
 	}
 	
 	
