@@ -165,6 +165,7 @@
 		<property name="mobileViewName" value="mLogoutPage"/>
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="ssologin" />
+		<property name="myMeetingsViewName" value="redirect:../landingready.htm"/>
 	</bean>
 	<bean id="intro" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
