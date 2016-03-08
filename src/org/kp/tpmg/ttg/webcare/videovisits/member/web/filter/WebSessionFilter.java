@@ -254,9 +254,33 @@ public class WebSessionFilter implements Filter
 						if(ctx.getKpOrgSignOnInfo() != null)
 						{
 							Cookie ssoCookie = WebUtil.getCookie(req, WebUtil.SSO_COOKIE_NAME);
+							
+							if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue()))
+							{
+								try
+								{
+									String responseCode = MeetingCommand.validateKpOrgSSOSession(req, resp, ssoCookie.getValue());
+									if("200".equalsIgnoreCase(responseCode))
+									{
+										logger.info("WebSessionFilter -> sso session token from request cookie valid");
+									}
+									else
+									{
+										logger.info("WebSessionFilter -> invalid sso session token, navigating to SSO login page");
+										boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
+										logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
+										resp.sendRedirect("logout.htm");
+									}
+								}
+								catch(Exception ex)
+								{
+									
+								}
+							}
+							
 							if(ssoCookie == null || (ssoCookie != null && StringUtils.isBlank(ssoCookie.getValue())))
 							{
-								logger.info("WebSessionFilter -> Member signed on using SSO - session is not null, webapp context is not null but cookie in request is not valid due to SSO sign off either from KP.org or MDO, so redirecting to logout.");
+								logger.info("WebSessionFilter -> Member signed on using SSO - session is not null, webapp context is not null but cookie in request is not valid due to SSO sign off either from KP.org or MDO, so redirecting to SSO login.");
 								boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
 								logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
 								resp.sendRedirect("logout.htm");
