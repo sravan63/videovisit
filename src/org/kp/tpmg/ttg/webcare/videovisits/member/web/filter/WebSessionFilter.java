@@ -219,7 +219,7 @@ public class WebSessionFilter implements Filter
 						redirectToUrl = memberMobileHomePageUrl;
 						resp.sendRedirect(redirectToUrl);
 					}					
-				}				
+				}
 				chain.doFilter(req, resp);
 			}
 	
@@ -267,18 +267,26 @@ public class WebSessionFilter implements Filter
 							{
 								try
 								{
-									String responseCode = MeetingCommand.validateKpOrgSSOSession(req, resp, URLDecoder.decode(ssoCookie.getValue(), "UTF-8"));
-									if("200".equalsIgnoreCase(responseCode))
-									{
-										logger.info("WebSessionFilter -> sso session token from request cookie valid");
-									}
-									else
-									{
-										logger.info("WebSessionFilter -> invalid sso session token, navigating to SSO login page");
-										boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
-										logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
-										resp.sendRedirect("logout.htm");
-									}
+									String ssoCookieVal = URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
+									//if(StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession()) && ctx.getKpOrgSignOnInfo().getSsoSession().equalsIgnoreCase(ssoCookieVal))
+									//{
+										//logger.info("WebSessionFilter -> sso session token from request cookie and context same. validation is not required.");
+									//}
+									//else
+									//{
+										String responseCode = MeetingCommand.validateKpOrgSSOSession(req, resp, ssoCookieVal);
+										if("200".equalsIgnoreCase(responseCode))
+										{
+											logger.info("WebSessionFilter -> sso session token from request cookie valid");
+										}
+										else
+										{
+											logger.info("WebSessionFilter -> invalid sso session token, navigating to SSO login page");
+											boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
+											logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
+											resp.sendRedirect("logout.htm");
+										}
+									//}
 								}
 								catch(Exception ex)
 								{
