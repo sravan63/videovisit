@@ -18,6 +18,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,6 +63,7 @@ public class SSOSubmitLoginController extends SimplePageController
 			 {
 				 logger.info("SubmitLoginController: ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
 				 WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
+				 WebService.callKPKeepAliveUrl();
 			 }
 			 logger.info("SubmitLoginController:data:" + data);
 		}
