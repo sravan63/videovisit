@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 
 public class WebSessionFilter implements Filter
@@ -278,6 +279,7 @@ public class WebSessionFilter implements Filter
 										if("200".equalsIgnoreCase(responseCode))
 										{
 											logger.info("WebSessionFilter -> sso session token from request cookie valid");
+											WebService.callKPKeepAliveUrl();
 										}
 										else
 										{
