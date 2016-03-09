@@ -40,7 +40,9 @@ $(document).ready(function() {
 });
 
 function loginSubmit(){
-	$("#layover").show();
+	$('#ssologin').attr('disabled', true);
+    $('#ssologin').css('cursor', 'default');
+    $('input#ssologin').css('opacity', '0.5');
 	var postdata = 'username=' + $('input[name=username]').val() + '&password=' + $('input[name=password]').val();
 	$.ajax({
         type: "POST",
@@ -55,13 +57,11 @@ function loginSubmit(){
                     break;
 
                 case "400":
-                	$("#layover").hide();
                 	$("#ssoLoginError p").css("display", "block");
                     break;
             }
         },
         error: function() {
-        	$("#layover").hide();
         	$("#ssoLoginError p").css("display", "block");
         }
     });
