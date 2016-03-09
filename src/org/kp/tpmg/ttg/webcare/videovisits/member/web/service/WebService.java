@@ -117,6 +117,7 @@ public class WebService{
 	private static String memberSSOAuthRegionCode = null;
 	private static String kpOrgSSOSignOnAPIUrl = null;
 	private static String kpOrgSSOSignOffAPIUrl = null;
+	private static String kpOrgSSOKeepAliveUrl = null;
 	private static String kpOrgSSOUserAgentCategoryHeader = null;
 	private static String kpOrgSSOOsVersionHeader = null;
 	private static String kpOrgSSOUserAgentTypeHeader = null;
@@ -169,6 +170,7 @@ public class WebService{
 	    		videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
 	    		kpOrgSSOSignOnAPIUrl = appProp.getProperty("KPORG_SSO_SIGNON_API_URL");	    		
 	    		kpOrgSSOSignOffAPIUrl = appProp.getProperty("KPORG_SSO_SIGNOFF_API_URL");
+	    		kpOrgSSOKeepAliveUrl = appProp.getProperty("KPORG_SSO_KEEP_ALIVE_URL");
 	    		kpOrgSSOUserAgentCategoryHeader = appProp.getProperty("KPORG_SSO_USER_AGENT_CATEGORY_HEADER");
 	    		kpOrgSSOOsVersionHeader = appProp.getProperty("KPORG_SSO_OS_VERSION_HEADER");
 	    		kpOrgSSOUserAgentTypeHeader = appProp.getProperty("KPORG_SSO_USER_AGENT_TYPE_HEADER");
@@ -180,7 +182,7 @@ public class WebService{
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOffAPIUrl:" + kpOrgSSOSignOffAPIUrl);
 	    		logger.debug("webservice.initServiceProperties -> memberSSOAuthAPIUrl:" + memberSSOAuthAPIUrl);
 	    		logger.debug("webservice.initServiceProperties -> videoVisitRestServiceUrl:" + videoVisitRestServiceUrl);
-				
+	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOKeepAliveUrl:" + kpOrgSSOKeepAliveUrl);
 			}
 			
 			if (simulation)
@@ -1533,6 +1535,33 @@ public class WebService{
 		 }
 		 logger.info("Exiting performKpOrgSSOSignOff -> isSignedOff=" + isSignedOff);   
 		 return isSignedOff;
+	}
+	
+	public static boolean callKPKeepAliveUrl()
+	{
+		 logger.info("Entered callKPKeepAliveUrl");
+		 URLConnection urlConn = null;
+		 boolean isSuccess = false;
+		 try
+		 {			  	           	
+		    URL url = new URL(kpOrgSSOKeepAliveUrl);           
+		    urlConn = url.openConnection();	
+            if(urlConn != null)
+            {
+            	isSuccess = true;
+            }
+		 }
+		 catch (Exception e)
+		 {
+      		logger.warn("callKPKeepAliveUrl -> error:" + e.getMessage(), e);
+      		isSuccess = false;
+		 }
+		 finally
+		 {
+			disconnectURLConnection(urlConn);
+		 }
+		 logger.info("Exiting callKPKeepAliveUrl -> sucess=" + isSuccess);
+		 return isSuccess;
 	}
 	
 	public static String callVVRestService(String operationName, String input) 
