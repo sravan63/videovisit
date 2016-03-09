@@ -23,6 +23,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -101,6 +102,7 @@ public class SSOPreLoginController implements Controller {
 				{
 					//	 navigate to myMeetings page
 					logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
+					WebService.callKPKeepAliveUrl();
 					modelAndView = new ModelAndView("landingready");
 					getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
 				}
