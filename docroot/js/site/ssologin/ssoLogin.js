@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$(":input").on('keyup', function(){	
+	$(":input").on('keypress', function(event){
 		$("#ssoLoginError p").css("display", "none");
         if($('#username').val() != "" && $('#password').val() != ""){
             $('#ssologin').removeAttr('disabled');
@@ -40,6 +40,7 @@ $(document).ready(function() {
 });
 
 function loginSubmit(){
+	$("#layover").show();
 	var postdata = 'username=' + $('input[name=username]').val() + '&password=' + $('input[name=password]').val();
 	$.ajax({
         type: "POST",
@@ -54,12 +55,13 @@ function loginSubmit(){
                     break;
 
                 case "400":
-                	// show error
+                	$("#layover").hide();
                 	$("#ssoLoginError p").css("display", "block");
                     break;
             }
         },
         error: function() {
+        	$("#layover").hide();
         	$("#ssoLoginError p").css("display", "block");
         }
     });
