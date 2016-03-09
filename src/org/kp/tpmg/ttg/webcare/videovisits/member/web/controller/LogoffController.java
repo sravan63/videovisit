@@ -21,6 +21,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -64,6 +65,7 @@ public class LogoffController extends SimplePageController {
 						if("200".equalsIgnoreCase(responseCode))
 						{
 							logger.info("LogoffController -> sso session token from request cookie valid, navigating to my meetings page");
+							WebService.callKPKeepAliveUrl();
 							return new ModelAndView(myMeetingsViewName);
 						}
 						else
