@@ -142,9 +142,14 @@ $(document).ready(function() {
     	$("#user-in-meeting-modal").dialog( "close" );    	
     });
     
-    $('#join-meeting-fail-modal-ok').click(function(){
+    $('#join-meeting-fail-modal-refresh').click(function(){
     	$("#join-meeting-fail-modal").dialog( "close" );
     	window.location.href = window.location.href;
+    });
+    
+    $('#join-meeting-fail-modal-cancel').click(function(){
+    	$("#join-meeting-fail-modal").dialog( "close" );
+    	return false;
     });
 });
 
@@ -160,7 +165,7 @@ function initializeUserPresentInMeetingModal(){
 	
 	$("#join-meeting-fail-modal").dialog({
 	      autoOpen: false,
-	      width: "30%",
+	      width: "24%",
 	      height:165,
 	      modal: true,
 	      resizable:false,
