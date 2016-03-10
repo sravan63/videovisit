@@ -279,7 +279,7 @@ public class WebSessionFilter implements Filter
 										if("200".equalsIgnoreCase(responseCode))
 										{
 											logger.info("WebSessionFilter -> sso session token from request cookie valid");
-											WebService.callKPKeepAliveUrl();
+											//WebService.callKPKeepAliveUrl();
 										}
 										else
 										{

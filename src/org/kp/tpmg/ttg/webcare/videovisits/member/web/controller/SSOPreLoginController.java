@@ -102,7 +102,7 @@ public class SSOPreLoginController implements Controller {
 				{
 					//	 navigate to myMeetings page
 					logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
-					WebService.callKPKeepAliveUrl();
+					//WebService.callKPKeepAliveUrl();
 					modelAndView = new ModelAndView("landingready");
 					getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
 				}

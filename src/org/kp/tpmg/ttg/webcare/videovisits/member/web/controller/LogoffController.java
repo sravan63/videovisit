@@ -65,7 +65,7 @@ public class LogoffController extends SimplePageController {
 						if("200".equalsIgnoreCase(responseCode))
 						{
 							logger.info("LogoffController -> sso session token from request cookie valid, navigating to my meetings page");
-							WebService.callKPKeepAliveUrl();
+							//WebService.callKPKeepAliveUrl();
 							return new ModelAndView(myMeetingsViewName);
 						}
 						else

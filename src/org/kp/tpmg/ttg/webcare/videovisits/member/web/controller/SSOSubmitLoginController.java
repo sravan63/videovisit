@@ -63,7 +63,7 @@ public class SSOSubmitLoginController extends SimplePageController
 			 {
 				 logger.info("SubmitLoginController: ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
 				 WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
-				 WebService.callKPKeepAliveUrl();
+				 //WebService.callKPKeepAliveUrl();
 			 }
 			 logger.info("SubmitLoginController:data:" + data);
 		}
