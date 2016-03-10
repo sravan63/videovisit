@@ -1430,5 +1430,28 @@ public class MeetingCommand {
 			// worst case error returned, no authenticated user, no web service responded, etc.
 			return (JSONObject.fromObject(new SystemError()).toString());
 	   }
+	  
+	  public static String callKPKeepAliveUrl(HttpServletRequest request, HttpServletResponse response)
+	  {
+			logger.info("Entered callKPKeepAliveUrl");
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);	
+			String strResponse = null;
+			try
+			{
+				if (ctx != null && ctx.getKpOrgSignOnInfo() != null)
+				{
+					boolean isSuccess = WebService.callKPKeepAliveUrl();
+					return String.valueOf(isSuccess);
+				}
+			}
+			catch (Exception e)
+			{
+				logger.error("callKPKeepAliveUrl -> System error:" + e.getMessage(), e);
+				
+			}
+			logger.info("Exiting callKPKeepAliveUrl");
+			// worst case error returned, no authenticated user, no web service responded, etc.
+			return (JSONObject.fromObject(new SystemError()).toString());
+	   }
 
 }
