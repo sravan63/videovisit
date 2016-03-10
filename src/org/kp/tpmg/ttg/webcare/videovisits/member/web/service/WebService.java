@@ -1541,6 +1541,9 @@ public class WebService{
 	{
 		 logger.info("Entered callKPKeepAliveUrl");
 		 URLConnection urlConn = null;
+		 Scanner scanner = null; 
+		 InputStream content = null;	
+		 String output = null;
 		 boolean isSuccess = false;
 		 try
 		 {			  	           	
@@ -1549,7 +1552,17 @@ public class WebService{
             if(urlConn != null)
             {
             	isSuccess = true;
-            }
+            	urlConn.connect();
+            	if(urlConn.getInputStream() != null)
+            	{
+	            	content = urlConn.getInputStream();				
+					scanner = new Scanner(content);
+					scanner.useDelimiter("\\Z");
+					output = scanner.next();
+					scanner.close();  
+            	}
+				logger.info("callKPKeepAliveUrl -> output from service: " + output);
+			}
 		 }
 		 catch (Exception e)
 		 {
@@ -1558,7 +1571,30 @@ public class WebService{
 		 }
 		 finally
 		 {
-			disconnectURLConnection(urlConn);
+			try
+        	{
+        		if ( content != null )
+        		{
+        			content.close();	
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		logger.warn("callKPKeepAliveUrl -> error while closing inputStream.");
+        	}
+        	
+        	try
+        	{
+        		if ( scanner != null )
+        		{
+        			scanner.close();	
+        		}
+        	}
+        	catch(Exception e)
+        	{
+        		logger.warn("callKPKeepAliveUrl -> error while closing scanner.");        		
+        	}        	
+			 //disconnectURLConnection(urlConn);
 		 }
 		 logger.info("Exiting callKPKeepAliveUrl -> sucess=" + isSuccess);
 		 return isSuccess;
