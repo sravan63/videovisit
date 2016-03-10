@@ -3,6 +3,19 @@ $(document).ready(function() {
  
     initializeUserPresentInMeetingModal();
     
+  //make ajax call to KP Keep alive url
+    $.ajax({
+	    url: 'kpKeepAlive.json',
+	    cache: false,
+	    async: true,
+	    success: function(returndata){
+	    	console.log("KP keep alive successful: " + returndata);
+	    },
+        error: function() {
+        	console.log("KP keep alive error");
+        }
+	});
+    
 	// Join now Click Event
     $(".joinNowButton").click(function(){
     	$("#layover").show();
