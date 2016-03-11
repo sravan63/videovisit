@@ -51,6 +51,8 @@ public class WebAppContext implements Serializable {
 	private VendorPluginDTO vendorPlugin = null;
 	
 	private KpOrgSignOnInfo kpOrgSignOnInfo = null;
+	private String kpKeepAliveUrl = null;
+	private boolean isAuthenticated = false;
 	
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -261,6 +263,34 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setKpOrgSignOnInfo(KpOrgSignOnInfo kpOrgSignOnInfo) {
 		this.kpOrgSignOnInfo = kpOrgSignOnInfo;
+	}
+
+	/**
+	 * @return the kpKeepAliveUrl
+	 */
+	public String getKpKeepAliveUrl() {
+		return kpKeepAliveUrl;
+	}
+
+	/**
+	 * @param kpKeepAliveUrl the kpKeepAliveUrl to set
+	 */
+	public void setKpKeepAliveUrl(String kpKeepAliveUrl) {
+		this.kpKeepAliveUrl = kpKeepAliveUrl;
+	}
+
+	/**
+	 * @return the isAuthenticated
+	 */
+	public boolean isAuthenticated() {
+		return isAuthenticated;
+	}
+
+	/**
+	 * @param isAuthenticated the isAuthenticated to set
+	 */
+	public void setAuthenticated(boolean isAuthenticated) {
+		this.isAuthenticated = isAuthenticated;
 	}
 	
 }
