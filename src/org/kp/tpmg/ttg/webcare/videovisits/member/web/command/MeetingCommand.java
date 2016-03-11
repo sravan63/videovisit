@@ -1153,6 +1153,7 @@ public class MeetingCommand {
 											logger.info("performSSOSignOn -> SSO Sign on successful and setting member info into web app context");
 											setWebAppContextMemberInfo(ctx, authorizeMemberResponse.getResponseWrapper().getMemberInfo());
 											ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+											ctx.setKpKeepAliveUrl(WebService.getKpOrgSSOKeepAliveUrl());
 											strResponse = "200";
 										}
 										else
@@ -1267,6 +1268,7 @@ public class MeetingCommand {
 		  {
 			  ctx.setMember(null);
 			  ctx.setKpOrgSignOnInfo(null);
+			  ctx.setAuthenticated(false);
 		  }
 		  return "400";
 	  }
@@ -1328,6 +1330,7 @@ public class MeetingCommand {
 										logger.info("validateKpOrgSSOSession -> SSO Sign on successful and setting member info into web app context");
 										setWebAppContextMemberInfo(ctx, authorizeMemberResponse.getResponseWrapper().getMemberInfo());
 										ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+										ctx.setKpKeepAliveUrl(WebService.getKpOrgSSOKeepAliveUrl());
 										strResponse = "200";
 									}
 									else
