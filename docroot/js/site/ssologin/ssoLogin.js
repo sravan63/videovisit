@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
-	$(":input").on('keypress', function(event){
-		$("#ssoLoginError p").css("display", "none");
+	$(":input").on('keyup', function(event){
         if($('#username').val() != "" && $('#password').val() != ""){
             $('#ssologin').removeAttr('disabled');
             $('#ssologin').css('cursor', 'pointer');
@@ -13,16 +12,19 @@ $(document).ready(function() {
             $('input#ssologin').css('opacity', '0.5');
         }
     });
-	
+
+	$(":input").on('keydown', function(event){
+		$("#ssoLoginError p").css("display", "none");
+	});
 	$('.sso-submit-block-temp-access label').click(function() {
 		window.location = "login.htm";
 	});
-	
+
 	$("form :input").focus(function() {
 		// clear all errors
 		clearAllErrors();
 	});
-	
+
 	// for focus on individual Input Fields
 	$("#username").on('focus', function() {
 		$("#username").css("color", "#000000");
