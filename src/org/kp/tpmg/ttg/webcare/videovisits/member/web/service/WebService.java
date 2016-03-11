@@ -341,6 +341,13 @@ public class WebService{
 	public static void setSetupWizardUserName(String setupWizardUserName) {
 		WebService.setupWizardUserName = setupWizardUserName;
 	}
+	
+	/**
+	 * @return the kpOrgSSOKeepAliveUrl
+	 */
+	public static String getKpOrgSSOKeepAliveUrl() {
+		return kpOrgSSOKeepAliveUrl;
+	}
 
 
 	public static VerifyMemberResponseWrapper verifyMember(String lastName, String mrn8Digit, //left
@@ -1535,69 +1542,6 @@ public class WebService{
 		 }
 		 logger.info("Exiting performKpOrgSSOSignOff -> isSignedOff=" + isSignedOff);   
 		 return isSignedOff;
-	}
-	
-	public static boolean callKPKeepAliveUrl()
-	{
-		 logger.info("Entered callKPKeepAliveUrl");
-		 URLConnection urlConn = null;
-		 Scanner scanner = null; 
-		 InputStream content = null;	
-		 String output = null;
-		 boolean isSuccess = false;
-		 try
-		 {			  	           	
-		    URL url = new URL(kpOrgSSOKeepAliveUrl);           
-		    urlConn = url.openConnection();	
-            if(urlConn != null)
-            {
-            	isSuccess = true;
-            	urlConn.connect();
-            	if(urlConn.getInputStream() != null)
-            	{
-	            	content = urlConn.getInputStream();				
-					scanner = new Scanner(content);
-					scanner.useDelimiter("\\Z");
-					output = scanner.next();
-					scanner.close();  
-            	}
-				logger.info("callKPKeepAliveUrl -> output from service: " + output);
-			}
-		 }
-		 catch (Exception e)
-		 {
-      		logger.warn("callKPKeepAliveUrl -> error:" + e.getMessage(), e);
-      		isSuccess = false;
-		 }
-		 finally
-		 {
-			try
-        	{
-        		if ( content != null )
-        		{
-        			content.close();	
-        		}
-        	}
-        	catch(Exception e)
-        	{
-        		logger.warn("callKPKeepAliveUrl -> error while closing inputStream.");
-        	}
-        	
-        	try
-        	{
-        		if ( scanner != null )
-        		{
-        			scanner.close();	
-        		}
-        	}
-        	catch(Exception e)
-        	{
-        		logger.warn("callKPKeepAliveUrl -> error while closing scanner.");        		
-        	}        	
-			 //disconnectURLConnection(urlConn);
-		 }
-		 logger.info("Exiting callKPKeepAliveUrl -> sucess=" + isSuccess);
-		 return isSuccess;
 	}
 	
 	public static String callVVRestService(String operationName, String input) 
