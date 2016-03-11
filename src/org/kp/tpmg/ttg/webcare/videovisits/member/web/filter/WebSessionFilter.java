@@ -259,9 +259,9 @@ public class WebSessionFilter implements Filter
 							if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
 							{
 								logger.info("WebSessionFilter -> Member signed on using SSO - session is not null, webapp context is not null but cookie in request is not valid due to SSO sign off either from KP.org or MDO, so redirecting to SSO login.");
-								boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
-								logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
-								resp.sendRedirect("logout.htm");
+								//boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
+								//logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
+								//resp.sendRedirect("logout.htm");
 							}	
 							
 							if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue()))
@@ -269,12 +269,15 @@ public class WebSessionFilter implements Filter
 								try
 								{
 									String ssoCookieVal = URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
-									//if(StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession()) && ctx.getKpOrgSignOnInfo().getSsoSession().equalsIgnoreCase(ssoCookieVal))
-									//{
-										//logger.info("WebSessionFilter -> sso session token from request cookie and context same. validation is not required.");
-									//}
-									//else
-									//{
+									logger.info("WebSessionFilter -> isAuthenticated in context: " + ctx.isAuthenticated());
+									
+									if(ctx.isAuthenticated())
+									{
+										logger.info("WebSessionFilter -> already authenticated. validation is not required.");
+										ctx.setAuthenticated(false);
+									}
+									else
+									{
 										String responseCode = MeetingCommand.validateKpOrgSSOSession(req, resp, ssoCookieVal);
 										if("200".equalsIgnoreCase(responseCode))
 										{
@@ -288,7 +291,7 @@ public class WebSessionFilter implements Filter
 											logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
 											resp.sendRedirect("logout.htm");
 										}
-									//}
+									}
 								}
 								catch(Exception ex)
 								{
