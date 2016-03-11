@@ -124,8 +124,7 @@
 				<prop key="/createSetupWizardMeeting.json">dataCreateSetupWizardMeeting</prop>
 				<prop key="/terminateSetupWizardMeeting.json">dataTerminateSetupWizardMeeting</prop>
 				<prop key="/setKPHCConferenceStatus.json">dataSetKPHCConferenceStatus</prop>
-				<prop key="/kpKeepAlive.json">dataKpKeepAlive</prop>
-                <prop key="/readme.htm">readme</prop>
+				<prop key="/readme.htm">readme</prop>
 				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
@@ -317,10 +316,6 @@
 	</bean>
 	
 	<bean id="dataSetKPHCConferenceStatus" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SetKPHCConferenceStatusController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-	</bean>
-	
-	<bean id="dataKpKeepAlive" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.kpKeepAliveController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
