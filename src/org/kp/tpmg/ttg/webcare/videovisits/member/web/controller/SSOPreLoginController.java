@@ -2,7 +2,6 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.Cookie;
@@ -23,7 +22,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -102,7 +100,7 @@ public class SSOPreLoginController implements Controller {
 				{
 					//	 navigate to myMeetings page
 					logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
-					//WebService.callKPKeepAliveUrl();
+					ctx.setAuthenticated(true);
 					modelAndView = new ModelAndView("landingready");
 					getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
 				}
@@ -116,7 +114,6 @@ public class SSOPreLoginController implements Controller {
 			else
 			{
 				logger.info("SSOPreLoginController -> navigating to SSO login page");
-				////TO DO: read ssoSession token from either request header or cookie for mdo and kp.org integration
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 			}
