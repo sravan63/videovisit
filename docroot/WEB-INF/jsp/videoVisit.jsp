@@ -16,7 +16,8 @@
 	<input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
 	<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
 	<input type="hidden" id="isMember" value="${WebAppContext.videoVisit.isMember}" />
-
+	<input type="hidden" id="kpKeepAliveUrl" value="${WebAppContext.kpKeepAliveUrl}" />
+	
 <div id="container-videovisit" style="width:auto;">
 
 	<div id="vvHeader" style="">
