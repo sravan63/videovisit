@@ -3,18 +3,30 @@ $(document).ready(function() {
  
     initializeUserPresentInMeetingModal();
     
-  //make ajax call to KP Keep alive url
-    $.ajax({
-	    url: 'kpKeepAlive.json',
-	    cache: false,
-	    async: true,
-	    success: function(returndata){
-	    	console.log("KP keep alive successful: " + returndata);
-	    },
-        error: function() {
-        	console.log("KP keep alive error");
-        }
-	});
+    //make ajax call to KP Keep alive url
+    var keepAliveUrl = $("#kpKeepAliveUrl").val();
+    if(keepAliveUrl != null && keepAliveUrl != "" && keepAliveUrl.length > 0 && keepAliveUrl != "undefined")
+    {
+    	try
+    	{
+    		$.ajax({
+        	    url: keepAliveUrl,
+        	    type: 'GET',
+        	    dataType: 'jsonp',
+        	    cache: false,
+        	    async: true,
+        	    crossDomain:true,
+        	    success: function(keepAliveData){    	    	
+        	    },
+                error: function() {            	
+                }
+        	});
+    	}
+    	catch(e)
+		{
+			
+		}    	
+    }
     
 	// Join now Click Event
     $(".joinNowButton").click(function(){

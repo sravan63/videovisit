@@ -23,6 +23,31 @@ $(document).ready(function() {
 	
 	$("#setupContents").height(calculatedHeight);
 	$("#setupContents").width(calculatedWidthPluginContainer);
+	
+	//make ajax call to KP Keep alive url
+    var keepAliveUrl = $("#kpKeepAliveUrl").val();
+    if(keepAliveUrl != null && keepAliveUrl != "" && keepAliveUrl.length > 0 && keepAliveUrl != "undefined")
+    {
+    	try
+    	{
+	    	$.ajax({
+	    	    url: keepAliveUrl,
+	    	    type: 'GET',
+	    	    dataType: 'jsonp',
+	    	    cache: false,
+	    	    async: true,
+	    	    crossDomain:true,
+	    	    success: function(returndata){    	    	
+	    	    },
+	            error: function() {            	
+	            }
+	    	});
+    	}
+    	catch(e)
+		{
+			
+		}
+    }
 });
 
 var VideoVisit =
