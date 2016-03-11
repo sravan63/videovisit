@@ -7,6 +7,7 @@
 <%@ page import="javax.servlet.*" %>
 <%@ page import="javax.servlet.http.*" %>
 
+<input type="hidden" id="kpKeepAliveUrl" value="${WebAppContext.kpKeepAliveUrl}" /> 
 <%
 
 	MeetingCommand.retrieveMeeting(request, response);
