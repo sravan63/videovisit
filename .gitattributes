@@ -379,7 +379,6 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/UserPresentInMeeti
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/ValidateUserSession.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VerifyGuestController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/VideoVisitPatientController.java -text svneol=unset#text/plain
-src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/kpKeepAliveController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/data/FailureInfo.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/data/KpOrgAuthMember.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/data/KpOrgSignOnInfo.java -text svneol=unset#text/plain
