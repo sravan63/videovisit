@@ -258,10 +258,17 @@ public class WebSessionFilter implements Filter
 							
 							if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
 							{
-								logger.info("WebSessionFilter -> Member signed on using SSO - session is not null, webapp context is not null but cookie in request is not valid due to SSO sign off either from KP.org or MDO, so redirecting to SSO login.");
-								//boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
-								//logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
-								//resp.sendRedirect("logout.htm");
+								if("localhost".equalsIgnoreCase(req.getServerName()) || "ttg-dev-app-01.har.ca.kp.org".equalsIgnoreCase(req.getServerName()))
+								{
+									logger.info("WebSessionFilter -> cookie validation not required for " + req.getServerName());
+								}
+								else
+								{
+									logger.info("WebSessionFilter -> Member signed on using SSO - session is not null, webapp context is not null but cookie in request is not valid due to SSO sign off either from KP.org or MDO, so redirecting to SSO login.");
+									boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
+									logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
+									resp.sendRedirect("logout.htm");
+								}
 							}	
 							
 							if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue()))
