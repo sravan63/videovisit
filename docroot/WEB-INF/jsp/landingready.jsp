@@ -98,8 +98,8 @@
 </div>
 
 <div id="join-meeting-fail-modal"  title="Join Meeting Error">
-  <div  class="modalWrapper" style="text-align: center;margin-top: 15px">
-    <p style="font-weight: 500; font-size: 20px;">Oops!</p><div><p style="margin-top: 15px;font-size: 16px;margin-left: 20px;margin-right: 20px;">We're sorry, we're having trouble with the connection.</p><p style="margin-top: 15px; margin-bottom: 25px;font-size: 16px;margin-left: 20px;margin-right: 20px;">Please try refreshing.
+  <div class="modalWrapper" style="text-align: center;margin-top: 15px">
+    <p style="font-weight: 500; font-size: 20px;">Oops!</p><div><p style="margin-top: 15px;font-size: 16px;margin-left: 20px;margin-right: 20px;">We're sorry. There is a problem with the connection.</p><p style="margin-top: 15px; margin-bottom: 25px;font-size: 16px;margin-left: 20px;margin-right: 20px;">Please try refreshing.
     </p></div>
     <div class="pagination">
       <input class="button" id="join-meeting-fail-modal-cancel"  type="button"  value="Cancel"/>
