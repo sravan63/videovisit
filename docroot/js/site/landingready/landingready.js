@@ -177,8 +177,8 @@ function initializeUserPresentInMeetingModal(){
 	
 	$("#join-meeting-fail-modal").dialog({
 	      autoOpen: false,
-	      width: "24%",
-	      height:165,
+	      width: "30%",
+	      height:185,
 	      modal: true,
 	      resizable:false,
 	      dialogClass:'hide-modal-title'
