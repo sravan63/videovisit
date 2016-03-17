@@ -71,23 +71,40 @@ public class SSOPreLoginController implements Controller {
 				}
 			}
 			
-			logger.info("SSOPreLoginController -> ssoSession in context=" + ssoSession);
-			if(StringUtils.isBlank(ssoSession))
+			logger.debug("SSOPreLoginController -> ssoSession in context=" + ssoSession);
+			
+			Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
+			
+			if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
 			{
-				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
-				if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue()))
+				if("localhost".equalsIgnoreCase(request.getServerName()) || "ttg-dev-app-01.har.ca.kp.org".equalsIgnoreCase(request.getServerName()))
 				{
-					ssoSession = ssoCookie.getValue();
-					logger.debug("SSOPreLoginController -> ssoSession from cookie before decoding=" + ssoSession);
-					try
+					logger.info("SSOPreLoginController -> cookie validation not required for " + request.getServerName());
+				}
+				else
+				{
+					if(StringUtils.isNotBlank(ssoSession))
 					{
-						ssoSession = URLDecoder.decode(ssoSession, "UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						logger.warn("SSOPreLoginController -> error while decoding a coockie value="+ ssoSession);
+						MeetingCommand.performSSOSignOff(request, response);
 					}
-					logger.debug("SSOPreLoginController -> ssoSession from cookie after decoding=" + ssoSession);
-				}				
+					logger.info("SSOPreLoginController -> invalid cookie, so navigating to SSO login page");
+					modelAndView = new ModelAndView(getViewName());
+					getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
+				}
+			}
+			
+			if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue()))
+			{
+				ssoSession = ssoCookie.getValue();
+				logger.debug("SSOPreLoginController -> ssoSession from cookie before decoding=" + ssoSession);
+				try
+				{
+					ssoSession = URLDecoder.decode(ssoSession, "UTF-8");
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					logger.warn("SSOPreLoginController -> error while decoding a coockie value="+ ssoSession);
+				}
+				logger.debug("SSOPreLoginController -> ssoSession from cookie after decoding=" + ssoSession);
 			}
 			logger.info("SSOPreLoginController -> ssoSession after cookie check=" + ssoSession);
 			
@@ -106,14 +123,14 @@ public class SSOPreLoginController implements Controller {
 				}
 				else
 				{
-					logger.info("SSOPreLoginController -> navigating to SSO login page");
+					logger.info("SSOPreLoginController -> invalid SSO session, so navigating to SSO login page");
 					modelAndView = new ModelAndView(getViewName());
 					getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 				}			
 			}
 			else
 			{
-				logger.info("SSOPreLoginController -> navigating to SSO login page");
+				logger.info("SSOPreLoginController -> SSO session not present, so navigating to SSO login page");
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 			}
