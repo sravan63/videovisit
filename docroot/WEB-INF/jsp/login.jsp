@@ -82,7 +82,7 @@
 
 <script type="text/javascript">
 
-	/*var browserInfo = getBrowserInfo();
+	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
 	
 	if(browserInfo.isChrome) {
@@ -113,5 +113,5 @@
 				document.getElementById("login").disabled = true;
 			}
 		}
-	}*/
+	}
 </script>
