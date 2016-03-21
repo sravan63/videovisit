@@ -76,7 +76,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
             $('#joinNowBtn').css('opacity', '0.5');
 			//document.getElementById("joinNowBtn").disabled = true;
 		}
-		/*else if(navigator.appVersion.indexOf("Win") != -1) {
+		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
 				$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
@@ -86,7 +86,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	            $('#joinNowBtn').css('cursor', 'default');
 	            $('#joinNowBtn').css('opacity', '0.5');
 			}
-		}*/
+		}
 	}
 	
 </script>
