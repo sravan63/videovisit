@@ -22,3 +22,39 @@
 	    <p id="globalError" style="width:300px; height:35px; color:#ac5a41; font-weight:bold;margin-top: 28px;">There was an error authenticating your account.  Please sign in using temporary access.</p>
 </div> 
 <!--<p class="error error-login"><a name="errors"></a></p>-->
+
+<script type="text/javascript">
+
+	var browserInfo = getBrowserInfo();
+	var browserVersion = (browserInfo.version).split(".")[0];
+	
+	if(browserInfo.isChrome) {
+
+		var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
+		browserNotSupportedMsgForPatient += "<br /><br />";
+		browserNotSupportedMsgForPatient += "Please try again using Internet Explorer for Windows or Safari for Mac.";
+
+		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
+			$('p#globalError').html(browserNotSupportedMsgForPatient);
+			$("p#globalError").removeClass("hide-me");
+
+			document.getElementById("last_name").disabled = true;
+			document.getElementById("mrn").disabled = true;
+			document.getElementById("birth_month").disabled = true;
+			document.getElementById("birth_year").disabled = true;
+			document.getElementById("login").disabled = true;
+		}
+		else if(navigator.appVersion.indexOf("Win") != -1) {
+			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
+				$('p#globalError').html(browserNotSupportedMsgForPatient);
+				$("p#globalError").removeClass("hide-me");
+
+				document.getElementById("last_name").disabled = true;
+				document.getElementById("mrn").disabled = true;
+				document.getElementById("birth_month").disabled = true;
+				document.getElementById("birth_year").disabled = true;
+				document.getElementById("login").disabled = true;
+			}
+		}
+	}
+</script>
