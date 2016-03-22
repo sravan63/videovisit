@@ -16,9 +16,10 @@ $(document).ready(function() {
 	$(":input").on('keydown', function(event){
 		$("#ssoLoginError p").css("display", "none");
 	});
-	$('.sso-submit-block-temp-access label').click(function() {
+	
+	/*$('.sso-submit-block-temp-access label').click(function() {
 		window.location = "login.htm";
-	});
+	});*/
 
 	$("form :input").focus(function() {
 		// clear all errors
