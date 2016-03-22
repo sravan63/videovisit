@@ -29,11 +29,10 @@ input#ssologin{
 	padding-left: 38px;
 	list-style-type:none;
 }
-.sso-submit-block-temp-access label{
+#temp-access{
 	font-size: 14px;
 	text-decoration: underline;
 	color: #006ba6;
-	cursor: pointer;
 	margin-left: 38px;
 }
 .sso-form-block input{
