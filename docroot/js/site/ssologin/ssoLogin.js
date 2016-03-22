@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+	$('#username').val('');
 	$(":input").on('keyup', function(event){
         if($('#username').val() != "" && $('#password').val() != ""){
             $('#ssologin').removeAttr('disabled');
