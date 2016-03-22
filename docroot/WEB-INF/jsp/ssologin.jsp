@@ -12,9 +12,7 @@
 	        <input type="submit" name="ssologin" value="Sign on" id="ssologin" class="button" tabindex="3" disabled="disabled" >
 	    </div>
 	    
-	    <div class="sso-submit-block-temp-access">
-	        <label  tabindex="4">Temporary access</label>
-	    </div>
+	    <a href="login.htm" id="temp-access" style="font-size:14px; text-decoration:underline; color:#006ba6; margin-left:38px;"> Temporary access </a>
   	</div> 
 </form>
 </div>
