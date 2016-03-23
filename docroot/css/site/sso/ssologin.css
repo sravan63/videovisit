@@ -84,6 +84,7 @@ div.sso-submit-block-forgot p{
 	font-size: 12px;
 	display:none;
 	margin-bottom: 20px;
+	display: none;
 }
 
 #globalError {
