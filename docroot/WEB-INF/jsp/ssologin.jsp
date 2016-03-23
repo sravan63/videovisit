@@ -16,7 +16,7 @@
 </form>
 </div>
 <div id="ssoLoginError" style="float: right">
-	    <p id="globalError">There was an error authenticating your account. Please sign in using temporary access.</p>
+    <p id="globalError">There was an error authenticating your account. Please sign in using temporary access.</p>
 </div> 
 <!--<p class="error error-login"><a name="errors"></a></p>-->
 
@@ -37,14 +37,10 @@
 			
 			document.getElementById("username").disabled = true;
 			document.getElementById("password").disabled = true;
-			
-			/*$("p#globalError").removeClass("hide-me");
 
-			document.getElementById("last_name").disabled = true;
-			document.getElementById("mrn").disabled = true;
-			document.getElementById("birth_month").disabled = true;
-			document.getElementById("birth_year").disabled = true;
-			document.getElementById("login").disabled = true;*/
+			$('#temp-access').css('cursor', 'default');
+            $('#temp-access').css('opacity', '0.5');
+            $('#temp-access').css('pointer-events', 'none');
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
@@ -53,14 +49,10 @@
 				
 				document.getElementById("username").disabled = true;
 				document.getElementById("password").disabled = true;
-				
-				/*$("p#globalError").removeClass("hide-me");
 
-				document.getElementById("last_name").disabled = true;
-				document.getElementById("mrn").disabled = true;
-				document.getElementById("birth_month").disabled = true;
-				document.getElementById("birth_year").disabled = true;
-				document.getElementById("login").disabled = true;*/
+				$('#temp-access').css('cursor', 'default');
+	            $('#temp-access').css('opacity', '0.5');
+	            $('#temp-access').css('pointer-events', 'none');
 			}
 		}
 	}
