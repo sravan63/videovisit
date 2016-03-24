@@ -134,7 +134,10 @@ $(document).ready(function() {
 				}
 			}
 			
-		});
+        }).fail(function() {
+        	$("#layover").hide();
+        	$("#join-meeting-fail-modal").dialog("open");
+         });
         return false;
     })
 
