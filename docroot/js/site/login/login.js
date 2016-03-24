@@ -1,9 +1,10 @@
 $(document).ready(function() {
 	
 	//DE4286-Firefox fix (cache issue - it keeps the entries in the text box even after refresh)
-	/*$("#last_name").val("");
+	$("#last_name").val("");
 	$("#mrn").val("");
-	$("#birth_date").val("");*/
+	$("#birth_month").val("");
+	$("#birth_year").val("");
 	
 	//Disable the Login button unless all the fields are entered
 	$(":input").on('keyup', function(){
@@ -141,13 +142,13 @@ function loginSubmit(){
             switch (returndata) {
                 case "1":
                 	// show the dialog 
-                	
+                	console.log("1");
                     window.location.replace("landingready.htm");
                     break;
 
                 case "2":
                 	// show the dialog 
-                	
+                	console.log("2");
                     window.location.replace("landingnone.htm");
                     break;
 
@@ -156,16 +157,16 @@ function loginSubmit(){
                 	
                     $("p#globalError").removeClass("hide-me").html('We could not find this patient. Please try entering the information again.');
                     break;
-
+                    console.log("3");
                 case "4":
                 	// show the dialog 
-
+                	console.log("4");
                 	$("p#globalError").removeClass("hide-me").html('The code entered did not match. Please try again (you can click the code image to generate a new one if needed).');
                     break;
 
                 default:
                 	// show the dialog 
-
+                	console.log("5");
                 	$("p#globalError").removeClass("hide-me").html('There was an error submitting your login. Please try again later.');
                     break;
             }
@@ -173,7 +174,7 @@ function loginSubmit(){
         },
         error: function() {
         	// show the dialog 
-        	
+        	console.log("6");
             $("p#globalError").css("display", "inline").append('<li><label>There was an error submitting your login.</label></li>');
             moveToit("p#globalError");
         }
