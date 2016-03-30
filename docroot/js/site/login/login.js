@@ -6,6 +6,10 @@ $(document).ready(function() {
 	$("#birth_month").val("");
 	$("#birth_year").val("");
 	
+	$('#login').attr('disabled', true);
+    $('#login').css('cursor', 'default');
+    $('input#login').css('opacity', '0.5');
+	
 	//Disable the Login button unless all the fields are entered
 	$(":input").on('keyup', function(){
         if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
