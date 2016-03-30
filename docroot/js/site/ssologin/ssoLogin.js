@@ -1,5 +1,9 @@
 $(document).ready(function() {
 	$('#username').val('');
+	$('#ssologin').attr('disabled', true);
+    $('#ssologin').css('cursor', 'default');
+    $('input#ssologin').css('opacity', '0.5');
+    
 	$(":input").on('keyup', function(event){
         if($('#username').val() != "" && $('#password').val() != ""){
             $('#ssologin').removeAttr('disabled');
