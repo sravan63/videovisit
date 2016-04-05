@@ -21,7 +21,8 @@ VIDEO_VISITS.Path = {
         keepALive: 'keepalive.jsp',
         retrieveMeeting: 'retrievemeeting.json',
         userPresentInMeeting: 'userPresentInMeeting.json',
-        videoVisit: 'videoVisit.htm'
+        videoVisit: 'videoVisit.htm',
+        launchMemberProxyMeeting: 'launchMemberProxyMeeting.json'
     },    
     guestglobal : {
         error : 'guesterror.htm',
