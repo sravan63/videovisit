@@ -32,6 +32,8 @@ import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.common.security.ServiceSecurityLoader;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
+import org.kp.tpmg.videovisit.member.CareGiverLeaveMeeting;
+import org.kp.tpmg.videovisit.member.CareGiverLeaveMeetingResponse;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
@@ -48,12 +50,16 @@ import org.kp.tpmg.videovisit.member.LaunchMeetingForMember;
 import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuest;
 import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuestResponse;
 import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberResponse;
+import org.kp.tpmg.videovisit.member.LaunchMemberOrProxyMeetingForMember;
+import org.kp.tpmg.videovisit.member.LaunchMemberOrProxyMeetingForMemberResponse;
 //import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuest;
 //import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuestResponse;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogout;
 import org.kp.tpmg.videovisit.member.MemberEndMeetingLogoutResponse;
 import org.kp.tpmg.videovisit.member.MemberLogout;
 import org.kp.tpmg.videovisit.member.MemberLogoutResponse;
+import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForMemberAndProxies;
+import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForMemberAndProxiesResponse;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiver;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiverResponse;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMember;
@@ -1709,15 +1715,17 @@ public class WebService{
 		  	logger.info("Exiting disconnectURLConnection");
 	  }
 	  
-	  public static StringResponseWrapper setKPHCConferenceStatus(long meetingId, String joinLeaveStatus, String sessionId) throws Exception 
+	  public static StringResponseWrapper setKPHCConferenceStatus(long meetingId, String joinLeaveStatus, boolean isProxyMeeting, String careGiverName, String sessionId) throws Exception 
 	  {
-		  	logger.info("Entered setKPHCConferenceStatus -> received input as [meetingId=" + meetingId + ", joinLeaveStatus=" + joinLeaveStatus + "]");
+		  	logger.info("Entered setKPHCConferenceStatus -> received input as [meetingId=" + meetingId + ", joinLeaveStatus=" + joinLeaveStatus + ", careGiverName=" + careGiverName + "]");
 			StringResponseWrapper toRet = null; 
 			SetKPHCConferenceStatus setKPHCConferenceStatus = new SetKPHCConferenceStatus();
 			try
 			{
 				setKPHCConferenceStatus.setJoinLeaveStatus(joinLeaveStatus);
 				setKPHCConferenceStatus.setMeetingId(meetingId);
+				setKPHCConferenceStatus.setIsProxyMeeting(isProxyMeeting);
+				setKPHCConferenceStatus.setCareGiverName(careGiverName);
 				setKPHCConferenceStatus.setSessionId(sessionId);
 				SetKPHCConferenceStatusResponse response = stub.setKPHCConferenceStatus(setKPHCConferenceStatus);
 				toRet = response.get_return();
@@ -1741,6 +1749,117 @@ public class WebService{
 			logger.info("Exiting setKPHCConferenceStatus");
 			return toRet;
 	  }
+	  
+	  public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForMemberAndProxies(String mrn8Digit, boolean getProxyMeetings, String sessionID) throws Exception 
+	  {
+			logger.info("Entered retrieveActiveMeetingsForMemberAndProxies -> getProxyMeetings=" + getProxyMeetings);
+			RetrieveMeetingResponseWrapper toRet = null;
+			RetrieveActiveMeetingsForMemberAndProxies query = new RetrieveActiveMeetingsForMemberAndProxies();
+			try
+			{
+				if(StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID))
+				{
+					logger.warn("retrieveActiveMeetingsForMemberAndProxies -> mrn8Digit and sessionID are required ");
+					return toRet;
+				}
+				query.setMrn8Digit(mrn8Digit);
+				query.setGetProxyMeetings(getProxyMeetings);
+				query.setSessionId(sessionID);
+				
+				RetrieveActiveMeetingsForMemberAndProxiesResponse response = stub.retrieveActiveMeetingsForMemberAndProxies(query);
+				toRet = response.get_return();
+			}
+			catch (Exception e)
+			{
+				logger.error("retrieveActiveMeetingsForMemberAndProxies -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+				RetrieveActiveMeetingsForMemberAndProxiesResponse response = stub.retrieveActiveMeetingsForMemberAndProxies(query);
+				toRet = response.get_return();
+			}
+			finally
+			{
+				closeConnectionManager(stub);
+			}
+			logger.info("Exiting retrieveActiveMeetingsForMemberAndProxies");
+			return toRet;
+	 }
+	  
+	 public static MeetingLaunchResponseWrapper launchMemberOrProxyMeetingForMember(long meetingId, String mrn8Digit, String inMeetingDisplayName, boolean isProxyMeeting, String sessionId) throws Exception 
+	 {
+			logger.info("Entered launchMemberOrProxyMeetingForMember -> meetingId= " + meetingId + ", inMeetingDisplayName=" + inMeetingDisplayName + ", isProxyMeeting=" + isProxyMeeting);
+			MeetingLaunchResponseWrapper toRet = null;
+			LaunchMemberOrProxyMeetingForMember query = new LaunchMemberOrProxyMeetingForMember();
+			try
+			{
+				if(StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId))
+				{
+					logger.warn("launchMemberOrProxyMeetingForMember -> mrn8Digit and sessionID are required ");
+					return toRet;
+				}
+				query.setMeetingId(meetingId);
+				query.setMrn8Digit(mrn8Digit);
+				query.setInMeetingDisplayName(inMeetingDisplayName);
+				query.setIsProxyMeeting(isProxyMeeting);
+				query.setSessionId(sessionId);
+				
+				LaunchMemberOrProxyMeetingForMemberResponse response = stub.launchMemberOrProxyMeetingForMember(query);
+				toRet = response.get_return();
+			}
+			catch (Exception e)
+			{
+				logger.error("launchMemberOrProxyMeetingForMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+				LaunchMemberOrProxyMeetingForMemberResponse response = stub.launchMemberOrProxyMeetingForMember(query);
+				toRet = response.get_return();
+			}
+			finally
+			{
+				closeConnectionManager(stub);
+			}
+			logger.info("Exiting launchMemberOrProxyMeetingForMember");
+			return toRet;
+	 }
+	 
+	 /**
+	 * Member leave proxy meeting.
+	 * @param meetingId
+	 * @param careGiverName
+	 * @param sessionId
+	 * @return
+	 */
+	public static StringResponseWrapper memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId)
+	throws Exception
+	{
+		logger.info("Entered memberLeaveProxyMeeting - received input attributes as [meetingId=" + meetingId + ", sessionID=" + sessionId + ", careGiverName=" + careGiverName + "]");
+		StringResponseWrapper toRet = null;			
+		CareGiverLeaveMeeting query = new CareGiverLeaveMeeting();
+		try
+		{
+			if(StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId))
+			{
+				toRet = new StringResponseWrapper();
+				toRet.setSuccess(false);
+				toRet.setErrorMessage("meetingId or SessionId is null or blank");
+				return toRet;
+			}
+			query.setMeetingID(meetingId);
+			query.setCareGiverName(careGiverName);
+			query.setSessionId(sessionId);
+		
+			CareGiverLeaveMeetingResponse response = stub.careGiverLeaveMeeting(query);
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			logger.error("memberLeaveProxyMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			CareGiverLeaveMeetingResponse response = stub.careGiverLeaveMeeting(query);
+			toRet = response.get_return();
+		}
+		finally
+		{
+			closeConnectionManager(stub);
+		}
+		logger.info("Exit memberLeaveProxyMeeting");
+		return toRet;
+	}
 }
 
 

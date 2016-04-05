@@ -78,7 +78,7 @@ public class VideoVisitPatientController extends SimplePageController {
 					videoVisitParams.setIsProvider(request.getParameter("isProvider"));
 					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
 					videoVisitParams.setIsMember("true");
-					
+					videoVisitParams.setIsProxyMeeting(request.getParameter("isProxyMeeting"));
 					ctx.setVideoVisit(videoVisitParams);					
 				}
 				else{					

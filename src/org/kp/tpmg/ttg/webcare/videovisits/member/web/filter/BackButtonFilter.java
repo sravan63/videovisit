@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 
 public class BackButtonFilter implements Filter  {
 
@@ -69,8 +70,16 @@ public class BackButtonFilter implements Filter  {
 							MeetingCommand.endCaregiverMeetingSession(ctx.getMeetingCode(), ctx.getVideoVisit().getUserName());
 						} 
 						else if (!isVideoVisitGuestMeetingPage) {
-							String memberName = ctx.getMember().getLastName() + ", " + ctx.getMember().getFirstName();
-							MeetingCommand.updateEndMeetingLogout(req, resp, memberName, true);
+							if(ctx.getVideoVisit() != null && "Y".equalsIgnoreCase(ctx.getVideoVisit().getIsProxyMeeting()))
+							{
+								logger.info("BackButtonFilter -> member leaving proxy meeting");
+								WebService.memberLeaveProxyMeeting(ctx.getVideoVisit().getMeetingId(), ctx.getVideoVisit().getGuestName(), req.getSession().getId());
+							}
+							else
+							{
+								String memberName = ctx.getMember().getLastName() + ", " + ctx.getMember().getFirstName();
+								MeetingCommand.updateEndMeetingLogout(req, resp, memberName, true);
+							}
 						}
 						
 					} catch (Exception ex) {}

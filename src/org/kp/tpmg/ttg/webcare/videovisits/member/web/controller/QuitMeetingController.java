@@ -19,10 +19,17 @@ public class QuitMeetingController extends SimplePageController {
 			
 			String memberName = request.getParameter("memberName");
 			String refreshMeetings = request.getParameter("refreshMeetings"); 
+			String isProxyMeeting = request.getParameter("isProxyMeeting");
 			
-			logger.info("Entered QuiteetingController-received request parameters as [memberName=" + memberName + ", refreshMeetings="+refreshMeetings + "]");
-			
-			data = MeetingCommand.updateEndMeetingLogout(request, response, memberName, false);			
+			logger.info("Entered QuiteetingController-received request parameters as [memberName=" + memberName + ", refreshMeetings="+refreshMeetings + ", isProxyMeeting=" + isProxyMeeting + "]");
+			if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting")))
+			{
+				data = MeetingCommand.memberLeaveProxyMeeting(request, response);		
+			}
+			else
+			{
+				data = MeetingCommand.updateEndMeetingLogout(request, response, memberName, false);	
+			}
 			
 			if (refreshMeetings != null && refreshMeetings.equals("true")) {
 				MeetingCommand.retrieveMeeting(request, response);
@@ -31,17 +38,7 @@ public class QuitMeetingController extends SimplePageController {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			ctx.setHasJoinedMeeting(false);
 			
-//			responseWrapper = MeetingCommand.quitMeeting(request, response);
-//			if(responseWrapper != null && responseWrapper.getSuccess()){
-//				data = MeetingCommand.updateEndMeetingLogout(request, response);
-//			}
-//			else{
-//				data = JSONObject.fromObject(responseWrapper).toString();
-//			}
 
-			 
-//			 // logout
-//			 data = MeetingCommand.memberLogout (request, response);
 		}
 		catch (Exception e)
 		{

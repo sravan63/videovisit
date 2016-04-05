@@ -1412,11 +1412,20 @@ public class MeetingCommand {
 					{
 						meetingId = ctx.getMeetingId();
 					}
-
-					logger.info("MeetingCommand.setKPHCConferenceStatus: meetingId=" + meetingId + ", status=" + request.getParameter("status"));
 					
+					logger.info("MeetingCommand.setKPHCConferenceStatus: meetingId=" + meetingId + ", status=" + request.getParameter("status") + ", careGiverName=" + request.getParameter("careGiverName"));
+					
+					boolean isProxyMeeting;
+					if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting")))
+					{
+						isProxyMeeting = true;
+					}
+					else
+					{
+						isProxyMeeting = false;
+					}
 					//grab data from web services
-					setKPHCConferenceStatusResponse = WebService.setKPHCConferenceStatus(meetingId, request.getParameter("status"), request.getSession().getId());
+					setKPHCConferenceStatusResponse = WebService.setKPHCConferenceStatus(meetingId, request.getParameter("status"), isProxyMeeting, request.getParameter("careGiverName"), request.getSession().getId());
 					if (setKPHCConferenceStatusResponse != null)
 					{
 						logger.info("MeetingCommand.setKPHCConferenceStatus: result = " + setKPHCConferenceStatusResponse.getResult()); 
@@ -1432,5 +1441,134 @@ public class MeetingCommand {
 			logger.info("Exiting setKPHCConferenceStatus");
 			// worst case error returned, no authenticated user, no web service responded, etc.
 			return (JSONObject.fromObject(new SystemError()).toString());
-	   }	  
+	   }
+	  
+	  public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request, HttpServletResponse response) throws Exception 
+	  {
+		  	logger.info("Entered retrieveActiveMeetingsForMemberAndProxies");			
+		  	RetrieveMeetingResponseWrapper respWrapper = null;
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
+			try
+			{
+				if (ctx != null && ctx.getMember() != null)
+				{
+					boolean getProxyMeetings = false;
+					if(ctx.getKpOrgSignOnInfo() != null)
+					{
+						getProxyMeetings = true;
+					}
+					
+					respWrapper = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMember().getMrn8Digit(), getProxyMeetings, request.getSession().getId());
+					if (respWrapper != null && respWrapper.getSuccess())
+					{
+						MeetingWSO[] memberMeetings = respWrapper.getResult();						
+						if (memberMeetings == null || (memberMeetings.length == 1 && memberMeetings[0]== null))
+						{
+							ctx.setTotalmeetings(0);
+						}
+						else
+						{
+							for (int i = 0; i < memberMeetings.length; i++)
+							{
+								memberMeetings[i].setParticipants((ProviderWSO[]) clearNullArray(memberMeetings[i].getParticipants()));
+								memberMeetings[i].setCaregivers((CaregiverWSO[]) clearNullArray(memberMeetings[i].getCaregivers()));
+								
+								logger.info("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting Meeting ID = " + memberMeetings[i].getMeetingId());
+							    logger.info("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting Host NUID = " + memberMeetings[i].getProviderHost().getNuid());
+							    logger.info("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting Member MRN = " + memberMeetings[i].getMember().getMrn8Digit());
+							}							
+							ctx.setTotalmeetings(memberMeetings.length);
+						}
+						ctx.setMeetings(memberMeetings);								
+					}
+					else
+					{
+						// no meeting, we should blank out cached meeting
+						ctx.setMeetings(null);
+						ctx.setTotalmeetings(0);
+					}	
+					return JSONObject.fromObject(respWrapper).toString();
+				}
+			} 
+			catch (Exception e)
+			{	
+				// log error
+				logger.error("retrieveActiveMeetingsForMemberAndProxies -> System Error" + e.getMessage(),e);
+			}
+			logger.info("Exiting retrieveActiveMeetingsForMemberAndProxies");	
+			return  (JSONObject.fromObject(new SystemError()).toString());
+	  }
+	  
+	  public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request, HttpServletResponse response)
+	  {
+			logger.info("Entered launchMemberOrProxyMeetingForMember");
+			MeetingLaunchResponseWrapper launchMemberOrProxyMeetingResponse = null; 
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);	
+			long meetingId = 0;
+			
+			try
+			{
+				if (ctx != null && ctx.getMember() != null)
+				{
+					// parse parameters
+					if (StringUtils.isNotBlank(request.getParameter("meetingId"))) 
+					{
+						meetingId = Long.parseLong(request.getParameter("meetingId"));
+						ctx.setMeetingId(meetingId);
+					}
+					
+					logger.info("launchMemberOrProxyMeetingForMember: meetingId=" + meetingId + ", isProxyMeeting=" + request.getParameter("isProxyMeeting") + ", inMeetingDisplayName=" + request.getParameter("inMeetingDisplayName"));
+					boolean isProxyMeeting;
+					if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting")))
+					{
+						isProxyMeeting = true;
+					}
+					else
+					{
+						isProxyMeeting = false;
+					}
+					//grab data from web services
+					launchMemberOrProxyMeetingResponse = WebService.launchMemberOrProxyMeetingForMember(meetingId, ctx.getMember().getMrn8Digit(), request.getParameter("inMeetingDisplayName"), isProxyMeeting, request.getSession().getId());
+					if (launchMemberOrProxyMeetingResponse != null)
+					{
+						return JSONObject.fromObject(launchMemberOrProxyMeetingResponse).toString();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				logger.error("launchMemberOrProxyMeetingForMember -> System error:" + e.getMessage(), e);				
+			}
+			logger.info("Exiting launchMemberOrProxyMeetingForMember");
+			// worst case error returned, no authenticated user, no web service responded, etc.
+			return (JSONObject.fromObject(new SystemError()).toString());
+	  }
+	  
+	  public static String memberLeaveProxyMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 
+	  {
+		  	logger.info("Entered memberLeaveProxyMeeting");
+			StringResponseWrapper ret = null;
+			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+			try
+			{
+				if (ctx != null)
+				{
+					//grab data from web services
+					ret= WebService.memberLeaveProxyMeeting(request.getParameter("meetingId"), request.getParameter("memberName"), request.getSession().getId());
+					if (ret != null)
+					{
+						logger.info("Exiting memberLeaveProxyMeeting");
+						return ret.getResult();
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				// log error
+				logger.error("System Error" + e.getMessage(),e);
+			}
+			logger.info("Exiting memberLeaveProxyMeeting");
+			// worst case error returned, no authenticated user, no web service responded, etc. 
+			return (JSONObject.fromObject(new SystemError()).toString());
+	  }
 }
