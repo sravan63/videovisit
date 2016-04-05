@@ -101,9 +101,9 @@ var LandingReadyPage =
 }
 
 var MemberVisit = {
-		QuitMeetingActionButtonYes: function(meetingId, memberName, refreshMeetings)
+		QuitMeetingActionButtonYes: function(meetingId, memberName, refreshMeetings, isProxyMeeting)
 		{
-			var quitMeetingIdData = 'meetingId=' + meetingId + '&memberName=' + memberName + '&refreshMeetings=' + refreshMeetings;
+			var quitMeetingIdData = 'meetingId=' + meetingId + '&memberName=' + memberName + '&refreshMeetings=' + refreshMeetings + '&isProxyMeeting=' + isProxyMeeting;
 
 	         $.ajax({
 	            type: 'POST',
@@ -120,9 +120,9 @@ var MemberVisit = {
 	            }
 	        });
 		},
-		SetKPHCConferenceStatus: function(meetingId, status)
+		SetKPHCConferenceStatus: function(meetingId, status, isProxyMeeting, careGiverName)
 		{
-			var postParaKPHC = 'meetingId=' + meetingId + '&status=' + status;
+			var postParaKPHC = 'meetingId=' + meetingId + '&status=' + status + '&isProxyMeeting=' + isProxyMeeting + '&careGiverName=' + careGiverName;
 
 	         $.ajax({
 	            type: 'POST',
