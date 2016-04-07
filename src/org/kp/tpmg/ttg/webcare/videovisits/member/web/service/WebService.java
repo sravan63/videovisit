@@ -91,6 +91,7 @@ import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesS
 import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
+import org.kp.ttg.sharedservice.domain.EsbInfo;
 
 import com.google.gson.Gson;
 
@@ -1467,8 +1468,11 @@ public class WebService{
 		AuthorizeResponseVo response = null;
 		try
 		{
+			EsbInfo esbInfo = new EsbInfo();
+			esbInfo.setEndpoint(memberSSOAuthAPIUrl);
+			esbInfo.setUserName(serviceSecurityUsername);
+			esbInfo.setPassword(serviceSecurityPassword);
 			
-			MemberSSOAuthAPIs memberSSOAuthAPI = new MemberSSOAuthAPIs();
 			AuthorizeRequestVo req = new AuthorizeRequestVo();		    
 			req.setGuid(guid);
 			if(StringUtils.isBlank(regionCode))
@@ -1476,7 +1480,7 @@ public class WebService{
 				regionCode = memberSSOAuthRegionCode;
 			}
 			req.setRegionCode(regionCode);
-		    response = memberSSOAuthAPI.authorize(memberSSOAuthAPIUrl, req, serviceSecurityUsername, serviceSecurityPassword);
+		    response = MemberSSOAuthAPIs.authorize(esbInfo, req);
 			
 		}
 		catch(Exception e)
@@ -1484,8 +1488,8 @@ public class WebService{
 			logger.error("authorizeMemberSSOByGuid -> Web Service API error:" + e.getMessage(), e);
 			
 		}
-		return response;
-		
+		logger.info("Exiting authorizeMemberSSOByGuid");
+		return response;		
 	}
 	
 	//perform SSO sign off from Kp org API
