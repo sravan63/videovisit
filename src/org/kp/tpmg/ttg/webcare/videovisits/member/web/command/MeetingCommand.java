@@ -1129,6 +1129,11 @@ public class MeetingCommand {
 								logger.warn("performSSOSignOn -> SSO Sign on service failed to return GUID for a user");
 								strResponse = invalidateWebAppContext(ctx);
 							}
+							else if(StringUtils.isBlank(kpOrgSignOnInfo.getSsoSession()))
+							{
+								logger.warn("performSSOSignOn -> SSO Sign on service failed to return SSOSESSION for a user");
+								strResponse = invalidateWebAppContext(ctx);
+							}
 							else
 							{
 								
