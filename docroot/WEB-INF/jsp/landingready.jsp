@@ -16,70 +16,80 @@
 %>
 
 <c:if test="${WebAppContext.totalmeetings>0}">
-<div id="landing-portal-ready">
+<div id="landing-portal-ready" style="font-family:Avenir next;">
 <c:forEach var="meeting" items="${WebAppContext.meetings}">
 
     <div class="landing-portal-single-container">
         <img src=${meeting.providerHost.imageUrl} alt="" />
         <div class="landing-portal-details">
-            <div class="names-container">
+            <div class="names-container-member" style="margin-left:0; margin-bottom:5px; font-weight:bold;">
                 <span class="label">Patient:</span>
                 <span class="names patient-guests"><span>${meeting.member.firstName} ${meeting.member.lastName}</span></span>
             </div>
             <div class="hidden timestamp">${meeting.scheduledTimestamp} </div>
-            <h3>Visit scheduled for </h3>
-            <div class="meeting-with-container">
-              <span>Meeting with:</span>
-              <span>&nbsp;
-                <c:if test="${meeting.providerHost.homePageUrl != null && fn:length(meeting.providerHost.homePageUrl) > 0}">
-                <a target="_blank" href="${meeting.providerHost.homePageUrl}">${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
-                </a>
-                </c:if>
-               	<c:if test="${meeting.providerHost.homePageUrl == null || fn:length(meeting.providerHost.homePageUrl) == 0}">
-                  		${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
-                  	</c:if>
+            <span> Appointment Time </span>
+
+            <div id="${meeting.meetingId}" class="host-name-container" style="margin:15px 0;">
+              <span>
+                <span>Host Clinician:</span>
+                <span>
+                    ${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
+                </span>
               </span>
+              <span class="accord-ctrl-container" style="float:right; display:none;"> <a class="accord-ctrl more" href="#" style="text-decoration:none;"> more </a></span>
+            </div>
+            <div class="accord-contents" style="display:none; margin-left:12px;">
+                <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
+                  <div class="names-container-member">
+                    <div class="label" style="float:none;">Additional Clinician:</div>
+                    <span class="names participants" style="margin-left:0;">
+                      <c:forEach var="p" items="${meeting.participants}">
+                       		${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if>
+                      </c:forEach>
+
+                    </span>
+                  </div>
+                </c:if>
+
+                <div class="names-container-member">
+                  <c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+                    <div class="label" style="float:none;">Patient Guests:</div>
+                    <span class="names patient-guests" style="margin-left:0;">
+                      <c:forEach var="p" items="${meeting.caregivers}">
+                        <span>${p.firstName} ${p.lastName}</span>
+                      </c:forEach>
+                    </span>
+                  </c:if>
+                </div>
             </div>
 
-            <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
-              <div class="names-container">
-                <span class="label">Participants:</span>
-                <span class="names participants">
-                  <c:forEach var="p" items="${meeting.participants}">
-                  	<c:if test="${p.homePageUrl != null && fn:length(p.homePageUrl) > 0}">
-                   		 <a target="_blank" href="${p.homePageUrl}">${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></a>
-                   	</c:if>
-                   	<c:if test="${p.homePageUrl == null || fn:length(p.homePageUrl) == 0}">
-                   		${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if>
-                   	</c:if>
-                  </c:forEach>
-
+            <div style="overflow:auto;">
+                <span style="float:left; width:50%;"> <p class="smallprint"  style="text-align:left;">You may be joining before your clinician. Please be patient.</p> </span>
+                <span style="float:right; width:48%;">
+                    <c:choose>
+                      <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
+        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#">Join your visit</a> 
+                      </c:when>
+        			        <c:otherwise>
+        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#">Join your visit</a> 
+                      </c:otherwise>
+        		        </c:choose>
                 </span>
-              </div>
-            </c:if>
+			      </div>
 
-            <div class="names-container">
-              <c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-                <span class="label">Patient Guests:</span>
-                <span class="names patient-guests">
-                  <c:forEach var="p" items="${meeting.caregivers}">
-                    <span>${p.firstName} ${p.lastName}</span>
-                  </c:forEach>
-                </span>
-              </c:if>
-            </div>
-            <c:choose>
-			    <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
-			        <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#">Click here to join now</a> 
-                </c:when>
-			    <c:otherwise>
-			        <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#">Click here to join now</a> 
-            	</c:otherwise>
-		    </c:choose>
-			<p class="smallprint">You may be joining before your clinician.  Please be patient.</p>
             <p class="error error-guest-login" id="error_label_${meeting.meetingId}"></p>
+
         </div>
     </div>
+
+   <script type="text/javascript">
+      if(${meeting.participants != null} || ${meeting.caregivers != null}){
+          $('#${meeting.meetingId}').find($(".accord-ctrl-container")).css("display", "inline-block");
+      } else{
+          $('#${meeting.meetingId}').find($(".accord-ctrl-container")).css("display", "none");
+      }
+    </script>
+
 </c:forEach>
 </div>
 </c:if>
@@ -117,5 +127,12 @@
 	
 <input type="hidden" id="tz" value="<%=timezone%>" /> 
 
-
-
+<style>
+  #accord-ctrl-container{
+      float: right;
+      background-image: url("images/global/sprite-bg-side-nav.png");
+      background-repeat: no-repeat;
+      background-position: 32px 8px;
+      width: 40px;
+  }
+</style>
