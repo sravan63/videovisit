@@ -238,9 +238,11 @@ $(document).ready(function() {
         if($(this).children($('.accord-ctrl')).hasClass("more")){
             $(this).children($('.accord-ctrl')).removeClass("more").addClass("less").html("less");
             $(this).parent($('.host-name-container')).next($('.accord-contents')).toggle();
+            $(this).children($('img')).addClass("accord-ctrl-caret-less");
         } else{
             $(this).children($('.accord-ctrl')).removeClass("less").addClass("more").html("more");
             $(this).parent($('.host-name-container')).next($('.accord-contents')).toggle();
+            $(this).children($('img')).removeClass("accord-ctrl-caret-less");
         }
     });    
 });
