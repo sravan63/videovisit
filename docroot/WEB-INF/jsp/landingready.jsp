@@ -36,7 +36,10 @@
                     ${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
                 </span>
               </span>
-              <span class="accord-ctrl-container" style="float:right; display:none;"> <a class="accord-ctrl more" href="#" style="text-decoration:none;"> more </a></span>
+              <span class="accord-ctrl-container" style="float:right; display:none;">
+                <a class="accord-ctrl more" href="#" style="text-decoration:none;"> more </a>
+                <img src="images/global/caret-kp-midBlue.png" height="8" width"8" style="float:none; width:10px;">
+              </span>
             </div>
             <div class="accord-contents" style="display:none; margin-left:12px;">
                 <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
@@ -44,7 +47,7 @@
                     <div class="label" style="float:none;">Additional Clinician:</div>
                     <span class="names participants" style="margin-left:0;">
                       <c:forEach var="p" items="${meeting.participants}">
-                       		${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if>
+                       	<span>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></span>
                       </c:forEach>
 
                     </span>
@@ -125,14 +128,4 @@
   </div>
 </div>
 	
-<input type="hidden" id="tz" value="<%=timezone%>" /> 
-
-<style>
-  #accord-ctrl-container{
-      float: right;
-      background-image: url("images/global/sprite-bg-side-nav.png");
-      background-repeat: no-repeat;
-      background-position: 32px 8px;
-      width: 40px;
-  }
-</style>
+<input type="hidden" id="tz" value="<%=timezone%>" />
