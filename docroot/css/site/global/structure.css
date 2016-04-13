@@ -365,6 +365,29 @@ input								{outline:none;}
   word-wrap: break-word;
 }
 
+
+.names-container-member {
+  margin:0 0 12px 0;
+  overflow:hidden;
+}
+.names-container-member > span.label {
+  float:left;
+  font-size:14px;
+}
+.names-container-member > span.names {
+  float:left;
+  width:200px;
+  margin-left:12px;
+}
+.names-container-member > span.names a,
+.names-container-member > span.names span {
+  display: block;
+  margin-bottom: 1px;
+  color: black;
+  word-wrap: break-word;
+}
+
+
 /* Member Login */
 .error-login					{position:absolute; top:0; right:0; width:250px; right:100px; top:128px;}
 /* Guest Login */
