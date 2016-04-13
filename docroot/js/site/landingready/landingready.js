@@ -214,7 +214,7 @@ $(document).ready(function() {
 
         convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only') + " " + tz;
 
-        $(this).next('h3').append(convertedTimestamp);
+        $(this).next('span').append(convertedTimestamp);
     });
     
     // Ok button on user in meeting modal
@@ -231,6 +231,18 @@ $(document).ready(function() {
     	$("#join-meeting-fail-modal").dialog( "close" );
     	return false;
     });
+
+    $(".accord-ctrl-container").on("click", function(e){
+        e.preventDefault();
+
+        if($(this).children($('.accord-ctrl')).hasClass("more")){
+            $(this).children($('.accord-ctrl')).removeClass("more").addClass("less").html("less");
+            $(this).parent($('.host-name-container')).next($('.accord-contents')).toggle();
+        } else{
+            $(this).children($('.accord-ctrl')).removeClass("less").addClass("more").html("more");
+            $(this).parent($('.host-name-container')).next($('.accord-contents')).toggle();
+        }
+    });    
 });
 
 function initializeUserPresentInMeetingModal(){	
