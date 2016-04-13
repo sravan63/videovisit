@@ -365,7 +365,6 @@ input								{outline:none;}
   word-wrap: break-word;
 }
 
-
 .names-container-member {
   margin:0 0 12px 0;
   overflow:hidden;
@@ -386,7 +385,11 @@ input								{outline:none;}
   color: black;
   word-wrap: break-word;
 }
-
+.accord-ctrl-container .accord-ctrl-caret-less{
+transform: rotate(180deg);
+-ms-transform: rotate(180deg);
+-webkit-transform: rotate(180deg);
+}
 
 /* Member Login */
 .error-login					{position:absolute; top:0; right:0; width:250px; right:100px; top:128px;}
