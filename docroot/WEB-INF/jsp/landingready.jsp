@@ -66,15 +66,15 @@
                 </div>
             </div>
 
-            <div style="overflow:auto;">
+            <div style="overflow:auto; margin-top:30px;">
                 <span style="float:left; width:50%;"> <p class="smallprint"  style="text-align:left;">You may be joining before your clinician. Please be patient.</p> </span>
                 <span style="float:right; width:48%;">
                     <c:choose>
                       <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
-        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#">Join your visit</a> 
+        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</a> 
                       </c:when>
         			        <c:otherwise>
-        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#">Join your visit</a> 
+        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</a> 
                       </c:otherwise>
         		        </c:choose>
                 </span>
