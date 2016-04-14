@@ -236,13 +236,13 @@ $(document).ready(function() {
         e.preventDefault();
 
         if($(this).children($('.accord-ctrl')).hasClass("more")){
-            $(this).children($('.accord-ctrl')).removeClass("more").addClass("less").html("less");
+        	$('.accord-ctrl').removeClass("more").addClass("less").html("less");
             $(this).parent($('.host-name-container')).next($('.accord-contents')).toggle();
-            $(this).children($('img')).addClass("accord-ctrl-caret-less");
+            $('.accord-ctrl-caret').addClass("accord-ctrl-caret-less");
         } else{
-            $(this).children($('.accord-ctrl')).removeClass("less").addClass("more").html("more");
+        	$('.accord-ctrl').removeClass("less").addClass("more").html("more");
             $(this).parent($('.host-name-container')).next($('.accord-contents')).toggle();
-            $(this).children($('img')).removeClass("accord-ctrl-caret-less");
+            $('.accord-ctrl-caret').removeClass("accord-ctrl-caret-less");
         }
     });    
 });
