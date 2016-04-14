@@ -16,7 +16,7 @@
 %>
 
 <c:if test="${WebAppContext.totalmeetings>0}">
-<div id="landing-portal-ready" style="font-family:Avenir next;">
+<div id="landing-portal-ready">
 <c:forEach var="meeting" items="${WebAppContext.meetings}">
 
     <div class="landing-portal-single-container">
@@ -129,3 +129,9 @@
 </div>
 	
 <input type="hidden" id="tz" value="<%=timezone%>" />
+
+<style>
+	#landing-portal-ready{
+		font-family: Avenir Next;
+	}
+</style>
