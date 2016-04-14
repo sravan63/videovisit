@@ -44,7 +44,7 @@
             <div class="accord-contents" style="display:none; margin-left:12px;">
                 <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
                   <div class="names-container-member">
-                    <div class="label" style="float:none;">Additional Clinician:</div>
+                    <div class="label" style="float:none;">Additional Clinicians:</div>
                     <span class="names participants" style="margin-left:0;">
                       <c:forEach var="p" items="${meeting.participants}">
                        	<span>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></span>
@@ -80,7 +80,7 @@
                 </span>
 			      </div>
 
-            <p class="error error-guest-login" id="error_label_${meeting.meetingId}"></p>
+            <p class="error error-guest-login" id="error_label_${meeting.meetingId}" style="margin-top:20px; font-size:16px;"></p>
 
         </div>
     </div>
