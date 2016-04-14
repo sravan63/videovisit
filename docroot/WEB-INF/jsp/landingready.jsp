@@ -38,7 +38,7 @@
               </span>
               <span class="accord-ctrl-container" style="float:right; display:none;">
                 <a class="accord-ctrl more" href="#" style="text-decoration:none;"> more </a>
-                <img src="images/global/caret-kp-midBlue.png" height="8" width"8" style="float:none; width:10px;">
+                <img class="accord-ctrl-caret" src="images/global/caret-kp-midBlue.png" height="8" width"8" style="float:none; width:10px;">
               </span>
             </div>
             <div class="accord-contents" style="display:none; margin-left:12px;">
