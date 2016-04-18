@@ -70,8 +70,8 @@ $(document).ready(function() {
 	    					 $("#user-in-meeting-modal").dialog( "open" );	
 	                    }
 	            		else if(returndata.errorMessage){
-	        				$("#layover").hide();
-	        				$('#end_meeting_error').html('').append(returndata.errorMessage).show();		
+	            			$("#layover").hide();
+			            	$("#join-meeting-fail-modal").dialog("open");		
 	        			}
 	        			else if (returndata.success)
 	            		{
@@ -100,8 +100,8 @@ $(document).ready(function() {
 	            	}
 	            	catch(e)
 	    			{	    				
-	    				$('#end_meeting_error').html('').append(e.message).show();
-	    				 window.location.replace(VIDEO_VISITS.Path.visit.logout);
+	            		$("#layover").hide();
+		            	$("#join-meeting-fail-modal").dialog("open");
 	    			}					
 	            },
 	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
@@ -113,7 +113,7 @@ $(document).ready(function() {
 	        }).fail(function() {
             	$("#layover").hide();
             	$("#join-meeting-fail-modal").dialog("open");
-             });;
+             });
         }
         else
         {
@@ -124,8 +124,8 @@ $(document).ready(function() {
     			}
     			catch(e)
     			{
-    				$('#end_meeting_error').html('').append(e.message).show();
-    				 window.location.replace(VIDEO_VISITS.Path.visit.logout);
+    				$("#layover").hide();
+	            	$("#join-meeting-fail-modal").dialog("open");
     			}
     			
     			if (userPresentInMeetingData.errorMessage) {
@@ -185,8 +185,8 @@ $(document).ready(function() {
     			            	}
     			            	catch(e)
     			    			{    			    				
-    			    				$('#end_meeting_error').html('').append(e.message).show();
-    			    				 window.location.replace(VIDEO_VISITS.Path.visit.logout);
+    			            		$("#layover").hide();
+        			            	$("#join-meeting-fail-modal").dialog("open");
     			    			}    							
     			            },
     			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
