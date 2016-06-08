@@ -21,7 +21,7 @@
 
     <div class="landing-portal-single-container">
         <img src=${meeting.providerHost.imageUrl} alt="" />
-        <div class="landing-portal-details">
+        <div class="landing-portal-details" style="width:380px;">
             <div class="names-container-member" style="margin-left:0; margin-bottom:5px; font-weight:bold;">
                 <span class="label">Patient:</span>
                 <span class="names patient-guests"><span>${meeting.member.firstName} ${meeting.member.lastName}</span></span>
@@ -64,23 +64,31 @@
                     </span>
                   </c:if>
                 </div>
-            </div>
-
-            <div style="overflow:auto; margin-top:30px;">
-                <span style="float:left; width:50%;"> <p class="smallprint"  style="text-align:left;">You may be joining before your clinician. Please be patient.</p> </span>
-                <span style="float:right; width:48%;">
-                    <c:choose>
-                      <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
-        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</a> 
-                      </c:when>
-        			        <c:otherwise>
-        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</a> 
-                      </c:otherwise>
-        		        </c:choose>
-                </span>
-			      </div>
-
-            <p class="error error-guest-login" id="error_label_${meeting.meetingId}" style="margin-top:20px; font-size:16px;"></p>
+            </div>            
+           	<c:choose>
+           		<c:when test="${not WebAppContext.isNonMember()}">
+           			<div style="overflow:auto; margin-top:30px;">
+		                <span style="float:left; width:50%;"> <p class="smallprint"  style="text-align:left;">You may be joining before your clinician. Please be patient.</p> </span>
+		                <span style="float:right; width:48%;">
+		                    <c:choose>
+		                      <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
+		        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</a> 
+		                      </c:when>
+		        			        <c:otherwise>
+		        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</a> 
+		                      </c:otherwise>
+		        		    </c:choose>
+		                </span>
+	            	</div>
+	           </c:when>
+	      	   <c:otherwise>
+	      	   	<div style="margin-top:30px;">
+	      	   		<span> <p class="smallprint">Caregivers must sign out and use Temporary Access to join the visit.</p> </span>
+	      	   	</div>
+	      	   </c:otherwise>
+	        </c:choose>
+			 
+			 <p class="error error-guest-login" id="error_label_${meeting.meetingId}" style="margin-top:20px; font-size:16px;"></p>
 
         </div>
     </div>
