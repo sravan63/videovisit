@@ -1213,15 +1213,17 @@ public class MeetingCommand {
 		  }
 		  else
 		  {
-			  if(StringUtils.isBlank(responseWrapper.getMemberInfo().getMrn()))
+			  logger.info("validateMemberSSOAuthResponse -> Account Role from Member SSO Auth API = " + responseWrapper.getMemberInfo().getAccountRole());
+			  
+			  if("MBR".equalsIgnoreCase(responseWrapper.getMemberInfo().getAccountRole()) && StringUtils.isBlank(responseWrapper.getMemberInfo().getMrn()))
 			  {
-				  logger.warn("validateMemberSSOAuthResponse -> SSO Sign on failed as Member SSO Auth API failed to return MRN.");
+				  logger.warn("validateMemberSSOAuthResponse -> SSO Sign on failed as Member SSO Auth API failed to return MRN for a Member.");
 				  
 			  }
 			  else if(StringUtils.isBlank(responseWrapper.getMemberInfo().getAccountRole()) || (!"MBR".equalsIgnoreCase(responseWrapper.getMemberInfo().getAccountRole())))
 			  {
-				  logger.warn("validateMemberSSOAuthResponse -> SSO Sign on failed due to invalid Account Role from Member SSO Auth API.");
-				  
+				  logger.info("validateMemberSSOAuthResponse -> Non Member Sign on.");
+				  isValid = true;
 			  }
 			  else
 			  {
@@ -1263,7 +1265,14 @@ public class MeetingCommand {
 		  memberWso.setGender(memberInfo.getGender());
 		  memberWso.setLastName(memberInfo.getLastName());
 		  memberWso.setMiddleName(memberInfo.getMiddleName());
-		  memberWso.setMrn8Digit(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
+		  if(StringUtils.isBlank(memberInfo.getMrn()))
+		  {
+			  ctx.setNonMember(true);
+		  }
+		  else
+		  {
+			  memberWso.setMrn8Digit(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
+		  }
 		  ctx.setMember(memberWso);
 	  }
   
@@ -1457,13 +1466,21 @@ public class MeetingCommand {
 			{
 				if (ctx != null && ctx.getMember() != null)
 				{
-					boolean getProxyMeetings = false;
-					if(ctx.getKpOrgSignOnInfo() != null)
+					if(ctx.isNonMember())
 					{
-						getProxyMeetings = true;
+						respWrapper = WebService.retrieveActiveMeetingsForNonMemberProxies(ctx.getKpOrgSignOnInfo().getUser().getGuid(), request.getSession().getId());
+					}
+					else
+					{
+						boolean getProxyMeetings = false;
+						if(ctx.getKpOrgSignOnInfo() != null)
+						{
+							getProxyMeetings = true;
+						}
+					
+						respWrapper = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMember().getMrn8Digit(), getProxyMeetings, request.getSession().getId());
 					}
 					
-					respWrapper = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMember().getMrn8Digit(), getProxyMeetings, request.getSession().getId());
 					if (respWrapper != null && respWrapper.getSuccess())
 					{
 						MeetingWSO[] memberMeetings = respWrapper.getResult();						

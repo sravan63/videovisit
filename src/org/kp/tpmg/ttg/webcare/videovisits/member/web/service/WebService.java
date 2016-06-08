@@ -60,6 +60,8 @@ import org.kp.tpmg.videovisit.member.MemberLogout;
 import org.kp.tpmg.videovisit.member.MemberLogoutResponse;
 import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForMemberAndProxies;
 import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForMemberAndProxiesResponse;
+import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForNonMemberProxies;
+import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForNonMemberProxiesResponse;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiver;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiverResponse;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMember;
@@ -1862,6 +1864,38 @@ public class WebService{
 			closeConnectionManager(stub);
 		}
 		logger.info("Exit memberLeaveProxyMeeting");
+		return toRet;
+	}
+	
+	public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForNonMemberProxies(String guid, String sessionID) throws Exception 
+	{
+		logger.info("Entered retrieveActiveMeetingsForNonMemberProxies -> guid=" + guid);
+		RetrieveMeetingResponseWrapper toRet = null;
+		RetrieveActiveMeetingsForNonMemberProxies query = new RetrieveActiveMeetingsForNonMemberProxies();
+		try
+		{
+			if(StringUtils.isBlank(guid) || StringUtils.isBlank(sessionID))
+			{
+				logger.warn("retrieveActiveMeetingsForNonMemberProxies -> guid and sessionID are required ");
+				return toRet;
+			}
+			query.setGuid(guid);
+			query.setSessionId(sessionID);
+			
+			RetrieveActiveMeetingsForNonMemberProxiesResponse response = stub.retrieveActiveMeetingsForNonMemberProxies(query);
+			toRet = response.get_return();
+		}
+		catch (Exception e)
+		{
+			logger.error("retrieveActiveMeetingsForNonMemberProxies -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			RetrieveActiveMeetingsForNonMemberProxiesResponse response = stub.retrieveActiveMeetingsForNonMemberProxies(query);
+			toRet = response.get_return();
+		}
+		finally
+		{
+			closeConnectionManager(stub);
+		}
+		logger.info("Exiting retrieveActiveMeetingsForNonMemberProxies");
 		return toRet;
 	}
 }
