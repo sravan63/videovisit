@@ -32,8 +32,8 @@ public class WebAppContext implements Serializable {
 	private String guestMeetingId;
 	
 	private String contextId;
-	private MemberWSO	member = null;	 
-	private MeetingWSO[]	meetings= null; 
+	private MemberWSO member = null;	 
+	private MeetingWSO[] meetings= null; 
 	private int totalmeetings = 0;	
 	private String megaMeetingURL = null;
 	private String megaMeetingMobileURL = null;
@@ -53,6 +53,7 @@ public class WebAppContext implements Serializable {
 	private KpOrgSignOnInfo kpOrgSignOnInfo = null;
 	private String kpKeepAliveUrl = null;
 	private boolean isAuthenticated = false;
+	private boolean isNonMember = false;
 	
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -292,5 +293,19 @@ public class WebAppContext implements Serializable {
 	public void setAuthenticated(boolean isAuthenticated) {
 		this.isAuthenticated = isAuthenticated;
 	}
-	
+
+	/**
+	 * @return the isNonMember
+	 */
+	public boolean isNonMember() {
+		return isNonMember;
+	}
+
+	/**
+	 * @param isNonMember the isNonMember to set
+	 */
+	public void setNonMember(boolean isNonMember) {
+		this.isNonMember = isNonMember;
+	}
+
 }
