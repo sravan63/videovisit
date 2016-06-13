@@ -104,13 +104,13 @@
 	<definition name="login" extends=".standardPageTemplate">
 		<put-attribute name="title" value="Login Page" type="string" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
-		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-help.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
 	</definition>
 	<definition name="ssologin" extends=".standardPageTemplate">
 		<put-attribute name="title" value="Login Page" type="string" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
-		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-help.jsp" />
 		<put-attribute name="content" value="/WEB-INF/jsp/ssologin.jsp" />
 	</definition>
 	<definition name="submitlogin" extends=".standardPageTemplate">
@@ -161,7 +161,7 @@
 	<definition name="guest" extends=".standardPageTemplate">
 		<put-attribute name="title" value="Login Page" type="string" />
 		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
-		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-help.jsp" />
  		<put-attribute name="content" value="/WEB-INF/jsp/guest.jsp" />
 	</definition>
 	
