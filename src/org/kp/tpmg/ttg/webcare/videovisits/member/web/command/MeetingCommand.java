@@ -1495,9 +1495,8 @@ public class MeetingCommand {
 								memberMeetings[i].setParticipants((ProviderWSO[]) clearNullArray(memberMeetings[i].getParticipants()));
 								memberMeetings[i].setCaregivers((CaregiverWSO[]) clearNullArray(memberMeetings[i].getCaregivers()));
 								
-								logger.info("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting Meeting ID = " + memberMeetings[i].getMeetingId());
-							    logger.info("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting Host NUID = " + memberMeetings[i].getProviderHost().getNuid());
-							    logger.info("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting Member MRN = " + memberMeetings[i].getMember().getMrn8Digit());
+								logger.info("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting ID = " + memberMeetings[i].getMeetingId());
+							    logger.debug("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting Vendor meeting id = " + memberMeetings[i].getMmMeetingConId());
 							}							
 							ctx.setTotalmeetings(memberMeetings.length);
 						}
