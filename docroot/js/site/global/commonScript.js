@@ -26,7 +26,8 @@ $(document).ready(function() {
 	}).next().hide();    
     
     
-    $(document).delegate(':input:visible', 'keypress', function(e) {
+    //$(document).delegate(':input:visible', 'keypress', function(e) {
+    $("#mrn, #birth_month, #birth_year, #last_name, #username").on("keypress", function(e){
         var legalChars = /[\w\d\s\t\b\(\)\[\]\{\}\-.@#,\'\"\:]/gi;
         var cCode = !e.charCode ? e.which : e.charCode;
         var key = String.fromCharCode(cCode);
