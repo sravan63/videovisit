@@ -71,7 +71,7 @@
 		                		<c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
 		                			<div style="margin-top:30px;">
 		                				<span style="width: 48%; float:right; margin-bottom:20px;">
-											<a class="btn joinNowButton" href="javascript:location.reload()" style="margin-bottom:0;">Refresh</a>
+											<a class="btn" href="javascript:location.reload()" style="margin-bottom:0;">Refresh</a>
 										</span>
 		        			        	<span style="clear:both; display:inline-block;"> <p class="smallprint">This visit will be available to join within 15 minutes of the appointment time.</p> </span>
 	      	   	   			   		</div>
