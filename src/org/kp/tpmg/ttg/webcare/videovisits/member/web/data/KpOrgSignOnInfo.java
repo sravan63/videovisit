@@ -11,7 +11,7 @@ public class KpOrgSignOnInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private String systemError;
-	private List<String> interruptList;
+	private List<Object> interruptList;
 	private boolean success;
 	private String businessError;
 	private UserInfo user;
@@ -32,13 +32,13 @@ public class KpOrgSignOnInfo implements Serializable {
 	/**
 	 * @return the interruptList
 	 */
-	public List<String> getInterruptList() {
+	public List<Object> getInterruptList() {
 		return interruptList;
 	}
 	/**
 	 * @param interruptList the interruptList to set
 	 */
-	public void setInterruptList(List<String> interruptList) {
+	public void setInterruptList(List<Object> interruptList) {
 		this.interruptList = interruptList;
 	}
 	/**

@@ -18,7 +18,7 @@ public class UserInfo implements Serializable
 	private String preferredFirstName;
 	private String guid;
 	private String email;
-	private List<String> ebizAccountRoles;
+	private List<Object> ebizAccountRoles;
 	private String disabledReasonCode;
 	private String firstName;
 	private String epicEmail;
@@ -111,13 +111,13 @@ public class UserInfo implements Serializable
 	/**
 	 * @return the ebizAccountRoles
 	 */
-	public List<String> getEbizAccountRoles() {
+	public List<Object> getEbizAccountRoles() {
 		return ebizAccountRoles;
 	}
 	/**
 	 * @param ebizAccountRoles the ebizAccountRoles to set
 	 */
-	public void setEbizAccountRoles(List<String> ebizAccountRoles) {
+	public void setEbizAccountRoles(List<Object> ebizAccountRoles) {
 		this.ebizAccountRoles = ebizAccountRoles;
 	}
 	/**
