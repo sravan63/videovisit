@@ -28,9 +28,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.neethi.Policy;
 import org.apache.rampart.RampartMessageData;
+import org.json.JSONObject;
 import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.common.security.ServiceSecurityLoader;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.member.CareGiverLeaveMeeting;
 import org.kp.tpmg.videovisit.member.CareGiverLeaveMeetingResponse;
@@ -1299,15 +1301,35 @@ public class WebService{
 				scanner.close();  
 				logger.info("performKpOrgSSOSignOn -> output from service: " + output);
 				kpSsoSession = connection.getHeaderField("ssosession");
-				logger.info("performKpOrgSSOSignOn -> kpSsoSession from response header=" + kpSsoSession);
+				logger.debug("performKpOrgSSOSignOn -> kpSsoSession from response header=" + kpSsoSession);
             }
             
             if(StringUtils.isNotBlank(output))
             {
-            	Gson gson = new Gson();
-            	kpOrgSignOnInfo = gson.fromJson(output, KpOrgSignOnInfo.class);
-            	kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+            	try
+            	{
+	            	Gson gson = new Gson();
+	            	kpOrgSignOnInfo = gson.fromJson(output, KpOrgSignOnInfo.class);
+	            	kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+            	}
+            	catch(Exception ex)
+            	{
+            		logger.warn("performKpOrgSSOSignOn -> JSON parsing failed:" + ex.getMessage(), ex);
+            		if(kpOrgSignOnInfo == null)
+            		{
+            			kpOrgSignOnInfo = new KpOrgSignOnInfo();
+            			kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+            			JSONObject obj = new JSONObject(output);
+        				if(obj != null && obj.get("user") != null && obj.get("user") instanceof JSONObject)
+        				{
+        					UserInfo userInfo = new UserInfo();
+        					userInfo.setGuid(obj.getJSONObject("user").getString("guid"));
+        					kpOrgSignOnInfo.setUser(userInfo);
+        				}        				
+            		}
+            	}
             }
+            logger.info("performKpOrgSSOSignOn -> SignOn Info=" + kpOrgSignOnInfo);
 				
         }
         catch (Exception e) {
@@ -1404,15 +1426,35 @@ public class WebService{
 				scanner.close();  
 				logger.info("validateKpOrgSSOSession -> output from service: " + output);
 				kpSsoSession = connection.getHeaderField("ssosession");
-				logger.info("validateKpOrgSSOSession -> kpSsoSession from response header=" + kpSsoSession);
+				logger.debug("validateKpOrgSSOSession -> kpSsoSession from response header=" + kpSsoSession);
             }
             
             if(StringUtils.isNotBlank(output))
             {
-            	Gson gson = new Gson();
-            	kpOrgSignOnInfo = gson.fromJson(output, KpOrgSignOnInfo.class);
-            	kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+            	try
+            	{
+	            	Gson gson = new Gson();
+	            	kpOrgSignOnInfo = gson.fromJson(output, KpOrgSignOnInfo.class);
+	            	kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+            	}
+            	catch(Exception ex)
+            	{
+            		logger.warn("validateKpOrgSSOSession -> JSON parsing failed:" + ex.getMessage(), ex);
+            		if(kpOrgSignOnInfo == null)
+            		{
+            			kpOrgSignOnInfo = new KpOrgSignOnInfo();
+            			kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+            			JSONObject obj = new JSONObject(output);
+        				if(obj != null && obj.get("user") != null && obj.get("user") instanceof JSONObject)
+        				{
+        					UserInfo userInfo = new UserInfo();
+        					userInfo.setGuid(obj.getJSONObject("user").getString("guid"));
+        					kpOrgSignOnInfo.setUser(userInfo);
+        				}        				
+            		}
+            	}
             }
+            logger.info("validateKpOrgSSOSession -> SignOn Info=" + kpOrgSignOnInfo);
 				
         }
         catch (Exception e) {
