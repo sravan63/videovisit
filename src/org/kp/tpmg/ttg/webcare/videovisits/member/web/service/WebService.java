@@ -1271,7 +1271,7 @@ public class WebService{
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");		            
-            connection.setRequestProperty("Authorization", "Basic " + authEncoded);
+            connection.setRequestProperty("Authorization", "Basic " + authEncoded.trim());
             connection.setRequestProperty("X-useragentcategory", kpOrgSSOUserAgentCategoryHeader);
             connection.setRequestProperty("X-osversion", kpOrgSSOOsVersionHeader);
             connection.setRequestProperty("X-useragenttype", kpOrgSSOUserAgentTypeHeader);
@@ -1616,7 +1616,7 @@ public class WebService{
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Authorization", "Basic " + authEncoded);
+            connection.setRequestProperty("Authorization", "Basic " + authEncoded.trim());
             connection.setRequestProperty("Accept","*/*");
             connection.setDoOutput(true);
             
