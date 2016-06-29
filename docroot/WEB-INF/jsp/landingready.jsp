@@ -95,7 +95,15 @@
 	           </c:when>
 	      	   <c:otherwise>
 	      	   	<div style="margin-top:30px;">
-	      	   		<span> <p class="smallprint">Caregivers must sign out and use Temporary Access to join the visit.</p> </span>
+	      	   	<c:choose>
+	      	   		<c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
+              			<span> <p class="smallprint" style="text-align:left;">This visit will be available to join within 15 minutes of the appointment time.
+              			Caregivers must sign out and use Temporary Access to join the visit.</p> </span>
+   	   	   			</c:when>
+                   	<c:otherwise>
+  	   					<span> <p class="smallprint">Caregivers must sign out and use Temporary Access to join the visit.</p> </span>
+  	   				</c:otherwise>
+  	   			</c:choose>
 	      	   	</div>
 	      	   </c:otherwise>
 	        </c:choose>
