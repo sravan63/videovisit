@@ -70,22 +70,38 @@
            			     <c:choose>
 		                		<c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
 		                			<div style="margin-top:30px;">
-		                				<span style="width: 48%; float:right; margin-bottom:20px;">
-											<a class="btn" href="javascript:location.reload()" style="margin-bottom:0;">Refresh</a>
-										</span>
-		        			        	<span style="clear:both; display:inline-block;"> <p class="smallprint">This visit will be available to join within 15 minutes of the appointment time.</p> </span>
-	      	   	   			   		</div>
+		                				<c:choose>
+				        			      <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit || meeting.member.age < 18}">
+				        			      	<span style="width: 48%; float:right; margin-bottom:20px;">
+												<a class="btn" href="javascript:location.reload()" style="margin-bottom:0;">Refresh</a>
+											</span>
+	        			        			<span style="clear:both; display:inline-block;"> <p class="smallprint">This visit will be available to join within 15 minutes of the appointment time.</p> </span>
+      	   	   			   			 	  </c:when>
+				                      	  <c:otherwise>
+				                      	  	  <span style="clear:both; display:inline-block;"> <p class="smallprint">To join another adult member's visit, please use temporary access.</p> </span>
+				                      	  </c:otherwise>
+				        		    	 </c:choose>	
+		                			</div>
 	      	   	   			   	</c:when>
 		                      	<c:otherwise>
 		                      		<div style="overflow:auto; margin-top:30px;">
-		                      			<span style="float:left; width:50%;"> <p class="smallprint"  style="text-align:left;">You may be joining before your clinician. Please be patient.</p> </span>
-		                				<span style="float:right; width:48%;">
 					                    <c:choose>
 					                      <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
+					        			          <span style="float:left; width:50%;"> <p class="smallprint"  style="text-align:left;">You may be joining before your clinician. Please be patient.</p> </span>
+		                						  <span style="float:right; width:48%;">
 					        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</a> 
 					                      </c:when>
 					        			  <c:otherwise>
+					        			     <c:choose>
+					        			      <c:when test="${meeting.member.age < 18}">
+					        			      	  <span style="float:left; width:50%;"> <p class="smallprint"  style="text-align:left;">You may be joining before your clinician. Please be patient.</p> </span>
+		                						  <span style="float:right; width:48%;">
 					        			          <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</a> 
+					                      	  </c:when>
+					                      	  <c:otherwise>
+					                      	  	  <span style="clear:both; display:inline-block;"> <p class="smallprint">To join another adult member's visit, please use temporary access.</p> </span>
+					                      	  </c:otherwise>
+					        		    	 </c:choose>					                      	  
 					                      </c:otherwise>
 					        		    </c:choose>
 				        		   		</span>
