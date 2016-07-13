@@ -593,7 +593,7 @@
 				</dl>	-->
 			</div>
 			<div id="refreshContainer">
-				<p class="refresh-text">Video issues?<br> Try refreshing</p>
+				<p class="refresh-text"><span style="font-weight:bold;">Video issues?</span><br> Try refreshing</p>
 				<input name="refresh" value="Refresh" class="refresh-button" type="button">
 			</div>
 		</div>
