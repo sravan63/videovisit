@@ -24,6 +24,42 @@
 
  <!-- dependencies needed during compile time -->   
     <dependencies>
+      <!-- to address org.kp.ttg.sharedservice.client missing -->
+      <dependency>
+      <groupId>org.kp.sharedservices.restclient</groupId>
+      <artifactId>MemberSSOAuthRestClient</artifactId>
+      <version>1.1.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+        <!--
+        <exclusion>
+          <groupId>org.apache.ws.xmlschema</groupId>
+          <artifactId>xmlschema-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.codehaus.woodstox</groupId>
+          <artifactId>woodstox-core-asl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-codec</groupId>
+          <artifactId>commons-codec</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>commons-httpclient</groupId>
+          <artifactId>commons-httpclient</artifactId>
+        </exclusion>
+      -->
+      </exclusions>
+    </dependency>
+      <!-- to address org.json missing -->
+      <dependency>
+        <groupId>org.codeartisans</groupId>
+        <artifactId>org.json</artifactId>
+        <version>20131017</version>
+      </dependency>
       <!-- to address package org.kp.tpmg.videovisit.member does not exist 
       <dependency>
       <groupId>org.kp.tpmg.ttg.serviceartifacts</groupId>
@@ -35,7 +71,7 @@
     <dependency>
       <groupId>org.kp.tpmg.ttg.serviceartifacts</groupId>
       <artifactId>VideoVisitMemberServices-client</artifactId>
-      <version>1.4.0-SNAPSHOT</version>
+      <version>1.5.0-SNAPSHOT</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.neethi</groupId>
@@ -48,6 +84,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
+      <scope>provided</scope>
     </dependency>
     <!-- to address package org.apache.log4j does not exist -->
     <dependency>
