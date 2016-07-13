@@ -576,6 +576,8 @@ input.disabled
     padding: 0;
     overflow: auto;
     border: 1px solid #006BA6;
+    border-radius: 3px;
+    font-weight: bold;
 }
 
 iframe { display: none !important; }
