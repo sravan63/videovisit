@@ -26,6 +26,9 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
@@ -38,6 +41,8 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
+
+import com.google.gson.Gson;
 
 public class MeetingCommand {
 
@@ -514,7 +519,7 @@ public class MeetingCommand {
 	return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
-	public static String verifyCaregiver(HttpServletRequest request, HttpServletResponse response) 
+	/*public static String verifyCaregiver(HttpServletRequest request, HttpServletResponse response) 
 			throws RemoteException {
 		String json = "";
 		try {
@@ -533,7 +538,7 @@ public class MeetingCommand {
 			json = JSONObject.fromObject(new SystemError()).toString();
 		}
 		return json;
-	}
+	}*/
 	
 	public static String createCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
@@ -1025,7 +1030,7 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
 	 }
-  
+  /*
 	  public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		  
 		  logger.info("Entered MeetingCommand: getLaunchMeetingDetailsForMemberGuest");	
@@ -1088,7 +1093,7 @@ public class MeetingCommand {
 		  }
 		 return (JSONObject.fromObject(new SystemError()).toString());
 		  
-	   }
+	   }*/
   
 	  public static String performSSOSignOn(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	  {
@@ -1457,7 +1462,7 @@ public class MeetingCommand {
 			return (JSONObject.fromObject(new SystemError()).toString());
 	   }
 	  
-	  public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request, HttpServletResponse response) throws Exception 
+	 public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	  {
 		  	logger.info("Entered retrieveActiveMeetingsForMemberAndProxies");			
 		  	RetrieveMeetingResponseWrapper respWrapper = null;
@@ -1592,4 +1597,281 @@ public class MeetingCommand {
 			// worst case error returned, no authenticated user, no web service responded, etc. 
 			return (JSONObject.fromObject(new SystemError()).toString());
 	  }
+	  
+	  //calling new api 
+	  public static String verifyCaregiver(HttpServletRequest request, HttpServletResponse response) 		
+				throws RemoteException {		
+			String json = "";		
+			VerifyCareGiverOutput verifyCareGiverOutput = new VerifyCareGiverOutput();		
+					
+			try {		
+				WebAppContext ctx  	= WebAppContext.getWebAppContext(request);		
+				String meetingCode = request.getParameter("meetingCode");		
+				String patientLastName = request.getParameter("patientLastName");		
+						
+				verifyCareGiverOutput = WebService.verifyCaregiver(meetingCode, patientLastName, request.getSession().getId(),WebUtil.clientId);		
+				if ( verifyCareGiverOutput != null )		
+				{		
+					logger.info("setting care giver context true");		
+					String statusCode = verifyCareGiverOutput.getStatus().getCode();		
+					if(statusCode != "200"){		
+					ctx.setCareGiver(false);		
+					}		
+					ctx.setCareGiver(true);		
+					Gson gson = new Gson();		
+					json = gson.toJson(verifyCareGiverOutput);		
+					logger.info("MeetingCommand->verifyCaregiver->value after converting it to json"+ json.toString());		
+				}					
+			} catch (Exception e) {		
+				json = JSONObject.fromObject(new SystemError()).toString();		
+			}		
+			return json;		
+		}
+			
+public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request, HttpServletResponse response) throws Exception{		
+		  		
+		  logger.info("Entered MeetingCommand: getLaunchMeetingDetailsForMemberGuest");			
+		  WebAppContext ctx  	= WebAppContext.getWebAppContext(request);		
+		  LaunchMeetingForMemberGuestOutput launchMeetingForMemberGuest = new LaunchMeetingForMemberGuestOutput();		
+		  String meetingCode=null;		
+		  String patientLastName=null;		
+		  String json = "";		
+		  String  deviceType = null;		
+	      		
+		  try {		
+			  logger.info("getLaunchMeetingDetailsForMemberGuest: meetingCode=" + request.getParameter("meetingCode") + ", patientLastName=" + request.getParameter("patientLastName")+", isMobileFlow="+ request.getParameter("isMobileFlow"));		
+				meetingCode = request.getParameter("meetingCode");		
+				patientLastName = request.getParameter("patientLastName");		
+				boolean isMobileFlow;		
+				if (StringUtils.isNotBlank(request.getParameter("isMobileFlow")) && request.getParameter("isMobileFlow").equalsIgnoreCase("true"))		
+				{		
+						isMobileFlow = true;		
+						logger.info("getLaunchMeetingDetailsForMemberGuest -> mobile flow is true");		
+				}		
+					else{		
+						isMobileFlow = false;		
+						logger.info("getLaunchMeetingDetailsForMemberGuest -> mobile flow is false");		
+				}		
+						
+				// This code will get the device attributes and capabilities and passes it to webservice		
+				Device device =	DeviceDetectionService.checkForDevice(request);		
+				Map<String, String > capabilities = device.getCapabilities();		
+									
+				String brandName = capabilities.get("brand_name");		
+				String modelName = capabilities.get("model_name");		
+				String deviceOs = capabilities.get("device_os");		
+				String deviceOsVersion = capabilities.get("device_os_version");		
+						
+						
+				if (brandName != null && modelName!= null){		
+						  deviceType = brandName +" " + modelName;		
+					}		
+				launchMeetingForMemberGuest = WebService.getMeetingDetailsForMemberGuest(meetingCode, patientLastName,deviceType,deviceOs,deviceOsVersion,isMobileFlow, request.getSession().getId(),WebUtil.clientId);		
+				if ( launchMeetingForMemberGuest != null )		
+				{		
+					logger.info("MeetingCommand->getLaunchMeetingDetailsForMemberGuest -> setting care giver context true");		
+					String statusCode = launchMeetingForMemberGuest.getStatus().getCode();		
+					if(statusCode != "200"){		
+					ctx.setCareGiver(false);		
+							
+					}		
+					ctx.setCareGiver(true);		
+					Gson gson = new Gson();		
+					json = gson.toJson(launchMeetingForMemberGuest);		
+					logger.info("MeetingCommand->getLaunchMeetingDetailsForMemberGuest-> after converting it to json"+ json.toString());		
+					 return json;		
+				}			
+									
+		  }		
+		  catch(Exception e){		
+			  logger.error("getLaunchMeetingDetailsForMemberGuest -> System Error" + e.getMessage(),e);	  		
+		  }		
+		  return (JSONObject.fromObject(new SystemError()).toString());		
+		 		
+}	
+
+///calling rest API
+/*
+ * verifyMember and launchMeetingForMember set the Member details to webcontext, so the variable in we
+ * so the variable in web context needs to match the one provided in the rest apis Member instead of MemberWSO. 
+ * But if changed for one function, it has to be changed for remaining depending functions
+ * Hence cannot commit it
+/*
+public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response) throws Exception {		
+			
+	long meetingId = 0;		
+	String deviceType = null;		
+  boolean isMobileflow= true;		
+  String json = "";		
+  		
+	logger.info("Entered MeetingCommand: getLaunchMeetingDetailsForMember");			
+	WebAppContext ctx  	= WebAppContext.getWebAppContext(request);		
+	LaunchMeetingForMemberGuestOutput launchMeetingForMemberOutput = new LaunchMeetingForMemberGuestOutput();		
+	String inMeetingDisplayName=null;// ctx.getMember().getLastName()+", "+ctx.getMember().getFirstName();		
+			
+	try		
+	  {		
+		logger.info("getLaunchMeetingDetailsForMember: meetingid=" + request.getParameter("meetingId") + ", in meetingdisplayname=" + request.getParameter("inMeetingDisplayName"));		
+		if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {		
+			meetingId = Long.parseLong(request.getParameter("meetingId"));		
+		}		
+				
+		if (StringUtils.isNotBlank(request.getParameter("inMeetingDisplayName"))) {		
+			inMeetingDisplayName = request.getParameter("inMeetingDisplayName");		
+		}		
+		Device device =	DeviceDetectionService.checkForDevice(request);		
+		Map<String, String > capabilities = device.getCapabilities();		
+				
+		logger.info("getLaunchMeetingDetailsForMember -> Mobile capabilities" + capabilities);		
+		String brandName = capabilities.get("brand_name");		
+		String modelName = capabilities.get("model_name");		
+		String deviceOs = capabilities.get("device_os");		
+		String deviceOsVersion = capabilities.get("device_os_version");		
+				
+		if (brandName != null && modelName!= null){		
+		 deviceType = brandName +" " + modelName;		
+		}		
+		launchMeetingForMemberOutput = WebService.getLaunchMeetingDetailsForMember(meetingId, inMeetingDisplayName,ctx.getMember().getMrn8Digit(),deviceType,deviceOs,deviceOsVersion,isMobileflow, request.getSession().getId(),WebUtil.clientId);		
+		if (launchMeetingForMemberOutput != null)		
+		{		
+					
+			Gson gson = new Gson();		
+			json = gson.toJson(launchMeetingForMemberOutput);		
+			logger.info("MeetingCommand->getLaunchMeetingDetailsForMember-> after converting it to json"+ json.toString());		
+			return json;		
+		}		
+				
+	}		
+	catch (Exception e)		
+	{		
+		logger.error("System Error" + e.getMessage(),e);		
+				
+	}		
+	// worst case error returned, no authenticated user, no web service responded, etc. 		
+	return (JSONObject.fromObject(new SystemError()).toString());			
+}		
+public static String verifyMember(HttpServletRequest request, HttpServletResponse response) throws Exception 		
+{		
+	VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();		
+	String json="";		
+	try 		
+	{		
+		String lastName  	= "";		
+		String mrn8Digit	= "";		
+		String birth_month 	= "";		
+		String birth_year  	= "";		
+		String birth_day	= "";					
+		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);		
+		// DEBUG		
+		if (request.getParameter("last_name") != null &&		
+				!request.getParameter("last_name").equals("")) {		
+			lastName = request.getParameter("last_name");		
+		} 		
+		if (request.getParameter("mrn") != null &&		
+				!request.getParameter("mrn").equals("")) {		
+			mrn8Digit = fillToLength(request.getParameter("mrn"), '0', 8);		
+		} 		
+		if (request.getParameter("birth_month") != null &&		
+				!request.getParameter("birth_month").equals("")) {		
+			birth_month = request.getParameter("birth_month");		
+		} 		
+		if (request.getParameter("birth_year") != null &&		
+				!request.getParameter("birth_year").equals("")) {		
+			birth_year = request.getParameter("birth_year");		
+		} 		
+		if (request.getParameter("birth_day") != null &&		
+				!request.getParameter("birth_day").equals("")) {		
+			birth_day = request.getParameter("birth_day");		
+		}								
+		// Init web service 			
+		boolean success = WebService.initWebService(request);		
+		if(ctx == null && !success){		
+			return "3";		
+		}		
+		else{		
+			verifyMemberOutput= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day, 		
+					request.getSession().getId(),WebUtil.clientId); 		
+			if (verifyMemberOutput != null && verifyMemberOutput.getStatus().getCode()=="200")		
+			{		
+				// success logged in. save logged in member in cached		
+				MemberWSO member = new MemberWSO();		
+				Member serviceMember = new Member();		
+				serviceMember =verifyMemberOutput.getEnvelope().getMember();		
+				member.setMrn8Digit(serviceMember.getMrn());		
+				member.setLastName(serviceMember.getLastName());		
+				member.setFirstName(serviceMember.getFirstName());		
+				member.setDateofBirth(Long.parseLong(serviceMember.getDateOfBirth()));		
+				member.setEmail(serviceMember.getEmail());		
+				member.setGender(serviceMember.getGender());		
+				member.setInMeeting(serviceMember.getInMeeting());		
+				member.setMiddleName(serviceMember.getMiddleName());		
+				ctx.setMember(member);		
+				/*Gson gson = new Gson();		
+				json = gson.toJson(verifyMemberOutput);		
+				logger.info("MeetingCommand->verifyMember-> after converting it to json"+ json.toString());*/		
+				/*return "1";						
+			}			
+			else		
+			{		
+				ctx.setMember(null);		
+				return "3";		
+			}			
+		}		
+	}		
+	catch (Exception e)		
+	{		
+		logger.error("System Error" + e.getMessage(),e);		
+	}		
+	// worst case error returned, no authenticated user, no web service responded, etc. 		
+	return (JSONObject.fromObject(new SystemError()).toString());		
+}		
+public static String retrieveMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 		
+{		
+	logger.info("Entered MeetimgCommand->retrieveMeeting");		
+	MeetingDetailsOutput activeMeetingOutput = new MeetingDetailsOutput();		
+	String json="";		
+	WebAppContext ctx  	= WebAppContext.getWebAppContext(request);		
+	try		
+	{		
+		if (ctx != null && ctx.getMember() != null)		
+		{		
+			activeMeetingOutput= WebService.getActiveMeetingForMember(ctx.getMember().getMrn8Digit(), PAST_MINUTES, FUTURE_MINUTES,request.getSession().getId(), WebUtil.clientId);		
+			// determine which meeting is coming up.		
+			if (activeMeetingOutput != null && activeMeetingOutput.getStatus().getCode()=="200")		
+			{		
+				// there is meeting, so save it.		
+				MeetingsEnvelope meetings = activeMeetingOutput.getEnvelope();		
+				List<MeetingDO>	meetingDO = meetings.getMeetings();		
+				if (meetingDO.size() == 1 && meetingDO.get(0)==null)		
+				{		
+					// check to see if it is a null		
+					ctx.setTotalmeetings(0);		
+				}		
+				else		
+				{		
+					ctx.setTotalmeetings(meetingDO.size());		
+				}		
+						
+				ctx.setMeetingDO(meetingDO);		
+				Gson gson = new Gson();		
+				json = gson.toJson(activeMeetingOutput);		
+				logger.info("MeetingCommand->retrieveMeeting-> after converting it to json"+ json.toString());		
+				return json;		
+			}		
+			else		
+			{		
+				// no meeting, we should blank out cached meeting		
+				ctx.setMeetingDO(null);		
+				ctx.setTotalmeetings(0);		
+			}			
+		}		
+	} 		
+	catch (Exception e)		
+	{			
+		// log error		
+		logger.error("System Error" + e.getMessage(),e);		
+	}		
+	return  (JSONObject.fromObject(new SystemError()).toString());		
+}*/	
+		 
 }
