@@ -46,7 +46,7 @@ $(document).ready(function() {
         		type: 'POST',
 	            data: postParaForLaunchProxyMeeting,
 	            cache: false,
-			    async: false,
+			    async: true,
 	            success: function(returndata) {
 	            	try
 	            	{
