@@ -335,6 +335,7 @@ lib/standard.jar -text
 lib/tiles-api-2.0.5.jar -text
 lib/tiles-core-2.0.5.jar -text
 lib/tiles-jsp-2.0.5.jar -text
+lib/videovisit-rest-memberservice-client.jar -text
 lib/woden_1.0.0.M8-wso2v1.jar -text
 lib/wsdl4j_1.6.2.wso2v4.jar -text
 lib/wso2mex-2.2.jar -text
