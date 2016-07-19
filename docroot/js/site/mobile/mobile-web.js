@@ -546,6 +546,9 @@ $(document).ready(function() {
 	        	try
 	        	{
 	        		data = $.parseJSON(data);
+	        		console.log("response",data.status.code);
+	        	
+	   
 	        		//validationData= $.parseJSON(validationData)
 	        	}
 	        	catch(e)
@@ -579,7 +582,7 @@ $(document).ready(function() {
 				            			$("#layover").hide();
 				            			modalShow('modal-user-present');
 				            		}
-				            		else{				            			
+				            		else{
 				            			launchVideoVisitMember(data);
 				            			}
 			            		}
@@ -689,8 +692,10 @@ $(document).ready(function() {
 	        data: postdata,
 	        success: function(returndata) {
 	        	try{
-		        	returndata = $.parseJSON(returndata);
+		        	returndata = $.parseJSON(returndata);		        	
+		        	console.log("response",returndata);	        	
 		        	var isValidUserSession =  returndata.isValidUserSession;
+		        	console.log("isValidUserSession: "+isValidUserSession)
 		            if(isValidUserSession == true){
 		            	 var delay=1000; //1 seconds
 	
@@ -757,25 +762,26 @@ window.scrollTo(0,0);
 
 function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, lastName,  email){
 	
-	 if(returndata.result === '1'){
+	 if(returndata.status.code === '500'){
 		 $("#layover").hide();
      	$("#globalError").text('No matching patient found. Please try again.');
           $("#globalError").removeClass("hide-me").addClass("error");
-          return false;          
+          window.location.replace("logout.htm");
+                   
        }
-     else if (returndata.result === '2') {
+     else if (returndata.status.code === '510') {
 
      	window.location.replace("meetingexpiredmemberpg.htm");
          return false;
 
      }
-     else if (returndata.result === '3') {
+     else if (returndata.status.code === '900') {
     	 $("#layover").hide();
      	$("#globalError").text('Some exception occurred while processing request..');
           $("#globalError").removeClass("hide-me").addClass("error");
           return false;          
      }
-     else if (returndata.result === '4') {
+     else if (returndata.status.code === '400') {
     	 $("#layover").hide();
      	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
           $("#globalError").removeClass("hide-me").addClass("error");          
@@ -785,14 +791,15 @@ function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, 
 	 try
  	{
  		//data = jQuery.parseJSON(data);
- 		if ( returndata.errorIdentifier == 1){
- 			window.location.replace("logout.htm");
- 		}
+ 		//if ( returndata.errorIdentifier == 1){
+ 			//window.location.replace("logout.htm");
+ 		//}
 
- 		if (returndata.errorMessage) {
- 			window.location.replace("logout.htm");
- 		}
- 		url = returndata.result;
+ 		//if (returndata.errorMessage) {
+ 		//	window.location.replace("logout.htm");
+ 		//}
+ 		url = returndata.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
+ 		console.log("url:"+url)
  		launchVideoVisitForPatientGuest(url, megaMeetingId, lastName + ', ' + firstName + ', (' + email + ')');
 			clearAllErrors();
 
@@ -804,7 +811,7 @@ function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, 
 	
 }
 
-function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
+/*function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 {
 		var meetingCode = request.get('meetingCode');
     	var patientLastName = request.get('patientLastName');
@@ -884,7 +891,7 @@ function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
 
 	        }
 	    });
-}
+}*/
 function modalShow(modalId){
 	$("#" + modalId).removeClass("hideMe").hide().fadeIn(200);
 	return false;
@@ -1144,7 +1151,10 @@ function launchVideoVisitMember(data){
 			if (data.errorMessage) {
 				window.location.replace("logout.htm");
 			}
+			console.log("launchVideoVisitMember")
 			url = data.result;
+			console.log("url",url);
+		
 
 			var appOS = getAppOS();
 
@@ -1462,21 +1472,23 @@ function loginSubmitPG(){
             returndata = $.trim(returndata);
 
             returndata = jQuery.parseJSON(returndata);
-            if(returndata.result === '1'){
+            console.log("response",returndata);
+            console.log("responseStatus",returndata.status.code);
+            if(returndata.status.code === '500'){
             	$("#globalError").text('No matching patient found. Please try again.');
             	$("#globalError").removeClass("hide-me").addClass("error");
                  return false;
               }
-            else if (returndata.result === '2') {
+            else if (returndata.status.code === '510') {
             	window.location.replace("meetingexpiredmemberpg.htm");
                 return false;
             }
-            else if (returndata.result === '3') {
+            else if (returndata.status.code === '900') {
             	$("#globalError").text('Some exception occurred while processing request..');
             	$("#globalError").removeClass("hide-me").addClass("error");
                  return false;
             }
-            else if (returndata.result === '4') {
+            else if (returndata.status.code === '400') {
             	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
             	$("#globalError").removeClass("hide-me").addClass("error");
             	$("#layover").hide();
