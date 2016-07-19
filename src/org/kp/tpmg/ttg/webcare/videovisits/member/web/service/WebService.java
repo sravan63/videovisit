@@ -78,6 +78,16 @@ import org.kp.tpmg.videovisit.member.VerifyCaregiver;
 import org.kp.tpmg.videovisit.member.VerifyCaregiverResponse;
 import org.kp.tpmg.videovisit.member.VerifyMember;
 import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
+import org.kp.tpmg.videovisit.model.Status;
+import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberInput;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatus;
 import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatusResponse;
 import org.kp.tpmg.videovisit.member.GetVendorPluginData;
@@ -98,6 +108,8 @@ import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.EsbInfo;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 
 public class WebService{
@@ -714,7 +726,7 @@ public class WebService{
 		return toRet;		
 	}
 	
-	
+	/*
 	public static StringResponseWrapper verifyCaregiver(String meetingHash, String patientLastName) 
 			throws Exception {
 		logger.info("Entered verifyCaregiver");
@@ -745,7 +757,7 @@ public class WebService{
 		}
 		logger.info("Exit verifyCaregiver");
 		return toRet;
-	}
+	}*/
 	
 	public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow) 
 			throws Exception {
@@ -1620,7 +1632,7 @@ public class WebService{
             connection.setRequestProperty("Accept","*/*");
             connection.setDoOutput(true);
             
-            int statusCode = connection.getResponseCode();
+         /*   int statusCode = connection.getResponseCode();
             logger.info("callVVRestService -> Status code : " + statusCode);
             if (statusCode != 200 && statusCode != 201 && statusCode != 202)
             {
@@ -1633,7 +1645,7 @@ public class WebService{
 	            				
             }
             else
-            {           
+            {  */         
 	            os = connection.getOutputStream();
 	            os.write(input.getBytes());
 	            os.flush();
@@ -1642,7 +1654,7 @@ public class WebService{
 				scanner.useDelimiter("\\Z");
 				output = scanner.next();
 				scanner.close();
-            }
+           // }
 				
 	      }
 		  catch(Exception e) 
@@ -1940,6 +1952,264 @@ public class WebService{
 		logger.info("Exiting retrieveActiveMeetingsForNonMemberProxies");
 		return toRet;
 	}
+	
+	  /* verifyCaregiver calling the new rest API*/
+	  
+	  public static VerifyCareGiverOutput verifyCaregiver(String meetingHash, String patientLastName, String sessionId, String clientId) 
+				throws Exception {
+			logger.info("Entered Webservice:->verifyCaregiver");
+			VerifyCareGiverOutput output = new VerifyCareGiverOutput();
+			Status status = new Status();
+			try{
+				if(meetingHash == null || patientLastName == null){
+					status.setCode("500");
+					status.setMessage("Missing Inputs");
+					output.setStatus(status);		
+					return output;
+				}
+				VerifyCareGiverInput input= new VerifyCareGiverInput();
+				input.setMeetingHash(meetingHash);
+				input.setSessionId(sessionId);
+				input.setClientId(clientId);
+				input.setPatientLastName(patientLastName);
+							
+				
+				String operationName="verifyCaregiver";
+				
+				Gson gson = new Gson();
+				String inputString = gson.toJson(input);
+				logger.info("jsonInptString "+ inputString);
+				
+				
+				String jsonString= callVVRestService(operationName,inputString);
+				logger.info("jsonString"+jsonString);
+				
+				JsonParser parser = new JsonParser();
+				JsonObject jobject = new JsonObject();
+				jobject = (JsonObject) parser.parse(jsonString);
+				logger.info("After jobject parser");
+				output = gson.fromJson( jobject.get("service").toString(), VerifyCareGiverOutput.class);
+				
+				//output= gson.fromJson(jsonString,VerifyCareGiverOutput.class);
+				logger.info("verifyCaregverOutput"+output.getEnvelope());
+				logger.info("Output in VerifyCaregiver after converting it to class"+ output.toString());
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				logger.error("verifyCaregiver: Web Service API error:" + e.getMessage());
+				throw new Exception("verifyCaregiver: Web Service API error", e.getCause());
+				
+			}
+			
+			logger.info("Exit verifyCaregiver");
+			return output;
+		}
+	  
+	  /*launchMeetingForMemberGuest calling the new REst API */
+	  
+	  public static LaunchMeetingForMemberGuestOutput getMeetingDetailsForMemberGuest(String meetingHash, String patientLastName,String deviceType, String deviceOS, String deviceOSVersion,boolean isMobileFlow, String sessionId, String clientId) throws Exception{
+			
+		 
+			logger.info("Entered WebService: getMeetingDetailsForMemberGuest");	
+			LaunchMeetingForMemberGuestOutput launchMeetingForMemberGuest = new LaunchMeetingForMemberGuestOutput();
+			
+			LaunchMeetingForMemberGuestInput  launchMeetingForMemberGuestInput = new LaunchMeetingForMemberGuestInput();
+			try{
+				launchMeetingForMemberGuestInput.setMeetingHash(meetingHash);
+				launchMeetingForMemberGuestInput.setPatientLastName(patientLastName);
+				launchMeetingForMemberGuestInput.setDeviceOs(deviceOS);
+				launchMeetingForMemberGuestInput.setDeviceType(deviceType);
+				launchMeetingForMemberGuestInput.setDeviceOsVersion(deviceOSVersion);
+				launchMeetingForMemberGuestInput.setMobileFlow(isMobileFlow);
+				launchMeetingForMemberGuestInput.setClientId(clientId);
+				launchMeetingForMemberGuestInput.setSessionId(sessionId);
+				
+              String operationName="launchMeetingForMemberGuest";
+				
+				Gson gson = new Gson();
+				String inputString = gson.toJson(launchMeetingForMemberGuestInput);
+				logger.info("WebService: getMeetingDetailsForMemberGuest->launchMeetingForMemberGuest->jsonInputString "+ inputString);
+				
+				
+				String jsonString= callVVRestService(operationName,inputString);
+				logger.info("getMeetingDetailsForMemberGuest->launchMeetingForMemberGuest->OutputjsonString"+jsonString);
+				
+				JsonParser parser = new JsonParser();
+				JsonObject jobject = new JsonObject();
+				jobject = (JsonObject) parser.parse(jsonString);
+				logger.info("After jobject parser");
+				launchMeetingForMemberGuest = gson.fromJson( jobject.get("service").toString(), LaunchMeetingForMemberGuestOutput.class);
+				
+				logger.info("getMeetingDetailsForMemberGuest->launchMeetingForMemberGuest->json string after converting it to class"+ launchMeetingForMemberGuest.toString());
+				
+			}
+			catch(Exception e){
+				e.printStackTrace();
+				logger.error("WebService: getMeetingDetailsForMemberGuest -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+				throw new Exception("getMeetingDetailsForMemberGuest: Web Service API error", e.getCause());
+		
+			}
+			
+			logger.info("Exit WebService: getLaunchMeetingDetails");
+			return launchMeetingForMemberGuest;
+	  }
+	  
+	  /*getLaunchMeetingDetailsForMember calling the new rest API launchMeetingForMember*/
+	  /* verifyMember and launchMeetingForMember set the Member details to webcontext, so the variable in we
+	   * so the variable in web context needs to match the one provided in the rest apis Member instead of MemberWSO. 
+	   * But if changed for one function, it has to be changed for remaining depending functions
+	   * Hence cannot commit it*/
+	  
+	/*  public static LaunchMeetingForMemberGuestOutput getLaunchMeetingDetailsForMember(long meetingID,
+				String inMeetingDisplayName,String mrn,String deviceType, String deviceOS, String deviceOSversion,boolean isMobileFlow,String sessionId, String clientId ) throws Exception 
+	  {
+		  logger.info("Entered WebService: getLaunchMeetingDetails");
+		  LaunchMeetingForMemberGuestOutput launchMeetingForMemberOutput = new LaunchMeetingForMemberGuestOutput();
+		  LaunchMeetingForMemberInput launchMeetingForMemberInput = new LaunchMeetingForMemberInput();
+			try
+			{
+				launchMeetingForMemberInput.setMeetingID(meetingID);
+				launchMeetingForMemberInput.setMrn(mrn);
+				launchMeetingForMemberInput.setInMeetingDisplayName(inMeetingDisplayName);
+				launchMeetingForMemberInput.setDeviceType(deviceType);
+				launchMeetingForMemberInput.setDeviceOS(deviceOS);
+				launchMeetingForMemberInput.setDeviceOSversion(deviceOSversion);
+				launchMeetingForMemberInput.setMobileFlow(isMobileFlow);
+				launchMeetingForMemberInput.setSessionId(sessionId);
+				launchMeetingForMemberInput.setClientId(clientId);
+				logger.info("Entered WebService: getLaunchMeetingDetailsForMember:MeetingID=" + meetingID + " sessionId=" + sessionId +" inMeetingDisplayName"+ inMeetingDisplayName + " mrn8Digit=" + mrn+ " deviceType" + deviceType +" deviceOS" +deviceOS+ " deviceOSversion" +deviceOSversion +" isMobileFlow" +isMobileFlow);
+              String operationName="launchMeetingForMember";
+				
+				Gson gson = new Gson();
+				String inputString = gson.toJson(launchMeetingForMemberInput);
+				logger.info("WebService: getMeetingDetailsForMemberGuest->launchMeetingForMember->jsonInputString "+ inputString);
+				
+				
+				String jsonString= callVVRestService(operationName,inputString);
+				logger.info("WebService->getMeetingDetailsForMember->OutputjsonString"+jsonString);
+				
+				JsonParser parser = new JsonParser();
+				JsonObject jobject = new JsonObject();
+				jobject = (JsonObject) parser.parse(jsonString);
+				logger.info("After jobject parser");
+				launchMeetingForMemberOutput = gson.fromJson( jobject.get("service").toString(), LaunchMeetingForMemberGuestOutput.class);
+				
+				logger.info("WebService->getMeetingDetailsForMember->json string after converting it to class"+ launchMeetingForMemberOutput.toString());
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				logger.error("WebService ->getMeetingDetailsForMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+				throw new Exception("getMeetingDetailsForMember: Web Service API error", e.getCause());
+			}
+			
+			logger.info("Exit WebService-> getLaunchMeetingDetailsForMember");
+			return launchMeetingForMemberOutput;
+		}
+	  //Verify Member
+	  public static VerifyMemberOutput verifyMember(String lastName, String mrn, String birth_month, String birth_year, String birth_day,String sessionId, String clientId) throws Exception 
+	  {
+		  logger.info("Entered Webservice->verifyMember ");
+		  VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
+		  
+		  String Dob = birth_month + "/" + birth_year; 
+		  VerifyMemberInput verifyMeberInput = new VerifyMemberInput();
+		  try 
+		  {
+			  if (mrn == null || sessionId == null || lastName == null)
+			  {
+				  throw new Exception("One of required fields are null");
+			  }
+			  if (!WebUtil.isDOBMMYYYYFormat(Dob))
+			  {
+				  throw new Exception("DOB has to be in the format of MM/YYYY but is [" + Dob + "]");
+			  }
+			  verifyMeberInput.setMrn(mrn);		
+			  verifyMeberInput.setLastName(lastName);
+			  verifyMeberInput.setDateOfBirth(Dob);
+			  verifyMeberInput.setSessionID(sessionId);
+			  verifyMeberInput.setClientId(clientId);
+			  String operationName="verifyMember";
+			  
+			    Gson gson = new Gson();
+				String inputString = gson.toJson(verifyMeberInput);
+				logger.info("WebService: verifyMember->jsonInputString "+ inputString);
+				
+				String jsonString= callVVRestService(operationName,inputString);
+				logger.info("WebService->getMeetingDetailsForMember->OutputjsonString"+jsonString);
+				
+				JsonParser parser = new JsonParser();
+				JsonObject jobject = new JsonObject();
+				jobject = (JsonObject) parser.parse(jsonString);
+				logger.info("After jobject parser");
+				verifyMemberOutput= gson.fromJson( jobject.get("service").toString(), VerifyMemberOutput.class);
+				
+				logger.info("WebService->verifyMember->json string after converting it to class"+ verifyMemberOutput.toString());
+
+			 
+		  }
+		  catch (Exception e) 
+		  {
+			  e.printStackTrace();
+				logger.error("WebService ->verifyMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+				throw new Exception("verifyMember: Web Service API error", e.getCause());
+		  }
+		 
+		  logger.info("Exit Webservice->verifyMember");
+		  return verifyMemberOutput;
+	  }
+	  
+	  public static MeetingDetailsOutput getActiveMeetingForMember(String mrn,int pastMinutes,int futureMinutes,String sessionId, String clientId) throws Exception 
+		{
+			logger.info("Entered Webservice-> getActiveMeetingForMember");
+			MeetingDetailsOutput meetingDetailsOutput = new MeetingDetailsOutput();
+			ActiveMeetingsForMemberInput activeMeetingInput = new ActiveMeetingsForMemberInput();
+			
+			try
+			{
+				if(mrn == null || sessionId == null)
+				{
+					throw new Exception("mrn8Digit and sessionID are required ");
+					
+				}
+				activeMeetingInput.setMrn(mrn);
+				activeMeetingInput.setSessionId(sessionId);
+				activeMeetingInput.setClientId(clientId);
+				
+				logger.info("Entered WebService: getActiveMeetingForMember:mrn=" + mrn + " sessionId=" + sessionId +" clientId="+clientId );
+              String operationName="getActiveMeetingsForMember";
+				
+				Gson gson = new Gson();
+				String inputString = gson.toJson(activeMeetingInput);
+				logger.info("WebService: getActiveMeetingForMember->jsonInputString "+ inputString);
+				
+				
+				String jsonString= callVVRestService(operationName,inputString);
+				logger.info("WebService->getActiveMeetingsForMember->OutputResponseJsonString"+jsonString);
+				
+				JsonParser parser = new JsonParser();
+				JsonObject jobject = new JsonObject();
+				jobject = (JsonObject) parser.parse(jsonString);
+				logger.info("After jobject parser");
+				meetingDetailsOutput = gson.fromJson( jobject.get("service").toString(), MeetingDetailsOutput.class);
+				
+				logger.info("WebService->getActiveMeetingsForMember->json string after converting it to class"+ meetingDetailsOutput.toString());
+				
+				
+			}
+			catch (Exception e)
+			{
+				    e.printStackTrace();
+					logger.error("WebService ->getActiveMeetingsForMember-> Web Service API error:" + e.getMessage() + " Retrying...", e);
+					throw new Exception("verifyMember: Web Service API error", e.getCause());
+				
+			}
+			
+			logger.info("Exit getActiveMeetingsForMember");
+			return meetingDetailsOutput;
+		}*/
+	    
 }
 
 
