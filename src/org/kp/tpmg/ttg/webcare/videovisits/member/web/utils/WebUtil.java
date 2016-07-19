@@ -20,6 +20,7 @@ public class WebUtil {
 	private static Pattern DOB_PATTERN = Pattern.compile("\\d\\d\\d\\d-\\d[\\d]-\\d[\\d]");
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
 	public static final String SSO_COOKIE_NAME = "ObSSOCookie";
+	public static final String clientId = "vv-mbr-web";
 	
 	public static String getCurrentDateTimeZone()
 	{
