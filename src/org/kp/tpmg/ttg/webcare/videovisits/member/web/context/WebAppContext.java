@@ -13,6 +13,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.*;
 import org.apache.log4j.Logger;
 
@@ -34,6 +35,7 @@ public class WebAppContext implements Serializable {
 	private String contextId;
 	private MemberWSO member = null;	 
 	private MeetingWSO[] meetings= null; 
+	private List<MeetingDO> myMeetings= null; 
 	private int totalmeetings = 0;	
 	private String megaMeetingURL = null;
 	private String megaMeetingMobileURL = null;
@@ -306,6 +308,20 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setNonMember(boolean isNonMember) {
 		this.isNonMember = isNonMember;
+	}
+
+	/**
+	 * @return the myMeetings
+	 */
+	public List<MeetingDO> getMyMeetings() {
+		return myMeetings;
+	}
+
+	/**
+	 * @param myMeetings the myMeetings to set
+	 */
+	public void setMyMeetings(List<MeetingDO> myMeetings) {
+		this.myMeetings = myMeetings;
 	}
 
 }

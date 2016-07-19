@@ -5,6 +5,7 @@ import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -27,8 +29,13 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
+import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
+import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
@@ -425,7 +432,7 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 
-	public static String retrieveMeetingForCaregiver(HttpServletRequest request, HttpServletResponse response) 
+/*	public static String retrieveMeetingForCaregiver(HttpServletRequest request, HttpServletResponse response) 
 			throws RemoteException {
 		RetrieveMeetingResponseWrapper ret = null;			
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
@@ -484,8 +491,93 @@ public class MeetingCommand {
 			}
 		}
 		return (JSONObject.fromObject(new SystemError()).toString());
+	}*/
+	
+	
+	/**
+	 * Method to invokes rest retrieveMeetingForCaregiver service and adds the meeting information into the web context
+	 * and returns MeetingDetailsOutput JSOn 
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public static String retrieveMeetingForCaregiver(HttpServletRequest request, HttpServletResponse response) 
+			throws Exception {
+		logger.info("Entered retrieveMeetingForCaregiver");
+		MeetingDetailsOutput meetingDetailsOutput = null;
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final String sessionId = request.getSession().getId();
+		String meetingCode = null;		
+		if (ctx != null) {
+			meetingCode = ctx.getMeetingCode();
+			meetingDetailsOutput = WebService.retrieveMeetingForCaregiver(meetingCode, sessionId, WebUtil.clientId);
+			final Gson gson = new Gson();
+			if (isMyMeetingsAvailable(meetingDetailsOutput)) {
+				final List<MeetingDO> myMeetings = meetingDetailsOutput.getEnvelope().getMeetings();
+				if (myMeetings != null) {
+					logger.info("retrieveMeetingForCaregiver Meetings Size: " + myMeetings.size());
+					if (CollectionUtils.isEmpty(myMeetings)) {
+						ctx.setTotalmeetings(0);
+					} else {
+						for (MeetingDO myMeeting : myMeetings) {
+							normalizeMeetingData(myMeeting, meetingCode, ctx);
+						}
+						ctx.setTotalmeetings(myMeetings.size());
+
+						for (MeetingDO meetingDO : myMeetings) {
+							if (meetingDO.getCaregiver() != null) {
+								for (Caregiver c : meetingDO.getCaregiver()) {
+									if (c.getCareGiverMeetingHash().equalsIgnoreCase(meetingCode)) {
+										String name = c.getLastName() + ", " + c.getFirstName();
+										ctx.setCareGiverName(name);
+										break;
+									}
+								}
+							}
+						}
+						ctx.setMyMeetings(myMeetings);
+					}
+				} else {
+					// no meeting, we should blank out cached meeting
+					ctx.setMeetings(null);
+					ctx.setTotalmeetings(0);
+				}
+				logger.info("Exit retrieveMeetingForCaregiver with meetingDetailsOutput JSON");
+				return gson.toJson(meetingDetailsOutput);
+			} else {
+				// no meeting, we should blank out cached meeting
+				ctx.setMeetings(null);
+				ctx.setTotalmeetings(0);
+			}
+		}
+		logger.info("Exit retrieveMeetingForCaregiver with exception while invoking the rest service");
+		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
+	
+	/**
+	 * Check and return true if meetings present. 
+	 * If not return false
+	 * 
+	 * @param meetingDetails
+	 * @return
+	 */
+	private static boolean isMyMeetingsAvailable(final MeetingDetailsOutput meetingDetails) {
+		boolean isMyMeetingsAvailable = false;
+		if(meetingDetails != null){
+			final MeetingsEnvelope meetingsEnvelope = meetingDetails.getEnvelope();
+			if(meetingsEnvelope != null){
+				final List<MeetingDO> meetingDOs = meetingsEnvelope.getMeetings();
+				if(CollectionUtils.isNotEmpty(meetingDOs)){
+					isMyMeetingsAvailable = true;
+				}
+			}
+		}
+		return isMyMeetingsAvailable;
+	}
+
 	public static String IsMeetingHashValid(HttpServletRequest request, HttpServletResponse response) 
 	throws RemoteException {
 	RetrieveMeetingResponseWrapper ret = null;			
@@ -669,6 +761,14 @@ public class MeetingCommand {
 		
 		meeting.setParticipants((ProviderWSO[]) clearNullArray(meeting.getParticipants()));
 		meeting.setCaregivers((CaregiverWSO[]) clearNullArray(meeting.getCaregiver()));
+	}	
+	
+	private static void normalizeMeetingData(MeetingDO meeting, String meetingHash, WebAppContext ctx) {
+		if (meeting == null) {
+			return;
+		}
+		meeting.setParticipant(meeting.getParticipant());
+		meeting.setCaregiver(meeting.getCaregiver());
 	}	
 	
 	

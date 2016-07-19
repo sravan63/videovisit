@@ -1,7 +1,7 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*"%>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*"%>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.*" %>
-<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.*"%>
+<%@ page import="org.kp.tpmg.videovisit.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="javax.servlet.*"%>
 <%@ page import="javax.servlet.http.*"%>
@@ -21,25 +21,25 @@
 
 <c:if test="${WebAppContext.totalmeetings>0}">
 	<div id="landing-portal-ready">
-		<c:forEach var="meeting" items="${WebAppContext.meetings}">
+		<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
 			<div class="landing-portal-single-container">
-        <img src=${meeting.providerHost.imageUrl} alt="" />
+        <img src=${meeting.host.imageUrl} alt="" />
 				<div class="landing-portal-details">
-					<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
+					<div class="hidden timestamp">${meeting.meetingTime}</div>
 					<h3>This visit is scheduled for </h3>
 					<div class="meeting-with-container">
 						<span>Meeting with:</span> 
 						<span>&nbsp;						  
 						  <c:choose>
-						    <c:when test="${not empty meeting.providerHost.homePageUrl}">
-						        <a target="_blank" href="${meeting.providerHost.homePageUrl}">
-									${meeting.providerHost.firstName} ${meeting.providerHost.lastName} 
-									<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
+						    <c:when test="${not empty meeting.host.homePageUrl}">
+						        <a target="_blank" href="${meeting.host.homePageUrl}">
+									${meeting.host.firstName} ${meeting.host.lastName} 
+									<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
 								</a>
 						    </c:when>
 						    <c:otherwise>
-						        ${meeting.providerHost.firstName} ${meeting.providerHost.lastName} 
-								<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
+						        ${meeting.host.firstName} ${meeting.host.lastName} 
+								<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
 						    </c:otherwise>
 						 </c:choose>
 						</span>
@@ -50,8 +50,8 @@
 					</div>
 					<!-- Added by Ranjeet for same guest login issue 01/06/2014 -->
 					<c:forEach var="caregiver" items="${meeting.caregiver}">					
-						<c:if test="${WebAppContext.meetingCode == caregiver.meetingHash}">
-						  <a class="btn" userName="${caregiver.lastName}, ${caregiver.firstName}, (${caregiver.emailAddress})" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}" caregiverId="${caregiver.careGiverID}">Click here to join now</a>
+						<c:if test="${WebAppContext.meetingCode == caregiver.careGiverMeetingHash}">
+						  <a class="btn" userName="${caregiver.lastName}, ${caregiver.firstName}, (${caregiver.emailAddress})" meetingid="${meeting.meetingId}" href="${meeting.meetingVendorId}" caregiverId="${caregiver.careGiverId}">Click here to join now</a>
 						 </c:if>
 					</c:forEach>					
 					<p class="smallprint">You may be joining before your clinician.	Please be patient.</p>

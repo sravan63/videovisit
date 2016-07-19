@@ -79,6 +79,7 @@ import org.kp.tpmg.videovisit.member.VerifyCaregiverResponse;
 import org.kp.tpmg.videovisit.member.VerifyMember;
 import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
 import org.kp.tpmg.videovisit.model.Status;
+import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
@@ -693,6 +694,49 @@ public class WebService{
 		}
 		logger.info("Exit retrieveMeetingForCaregiver");
 		return toRet;		
+	}
+	
+	public static MeetingDetailsOutput retrieveMeetingForCaregiver(final String meetingHash, final String sessionId, final String clientId)
+			throws Exception {
+		logger.info("Entered Webservice -> retrieveMeetingForCaregiver");
+		logger.debug("Inputs -> meetingHash:" + meetingHash + " , sessionId:" + sessionId + " ,clientId:" + clientId);
+		String jsonString = "";
+		MeetingDetailsOutput output = null;
+		final Gson gson = new Gson();
+		try {
+			if (meetingHash == null || sessionId == null || clientId == null) {
+				logger.warn("Missing Inputs: meetingHash" + meetingHash + ", sessionId" + sessionId + ", clientId"+ clientId);
+				output = new MeetingDetailsOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setStatus(status);	
+				return output;
+			}
+			final ActiveMeetingsForCaregiverInput  input = new ActiveMeetingsForCaregiverInput();
+			input.setMeetingHash(meetingHash);
+			input.setClientId(clientId);
+			input.setSessionId(sessionId);
+			final String inputJsonStr = gson.toJson(input);
+			logger.debug("retrieveMeetingForCaregiver --> jsonInputString "+ inputJsonStr);
+			
+			final String operationName = "getActiveMeetingsForCaregiver";
+			jsonString = callVVRestService(operationName, inputJsonStr);
+			logger.debug("retrieveMeetingForCaregiver --> jsonResponseString"+jsonString);
+			
+			final JsonParser parser = new JsonParser();
+			JsonObject jobject = new JsonObject();
+			jobject = (JsonObject) parser.parse(jsonString);
+			output = gson.fromJson( jobject.get("service").toString(), MeetingDetailsOutput.class);
+			final String responseCodeAndMsg = output.getStatus() != null ?  output.getStatus().getMessage()+": "+output.getStatus().getCode(): "No rest response code & message returned from rest service.";
+			logger.info("retrieveMeetingForCaregiver --> getActiveMeetingsForCaregiver rest response message & code: "+responseCodeAndMsg);
+		} catch (Exception e) {
+			logger.error("retrieveMeetingForCaregiver: Web Service API error:" + e.getMessage(), e);
+			throw new Exception("retrieveMeetingForCaregiver: Web Service API error", e.getCause());
+		}
+		logger.debug("retrieveMeetingForCaregiver --> Output after mapping to MeetingDetailsOutput class"+ output.toString());
+		logger.info("Exit retrieveMeetingForCaregiver");
+		return output;
 	}
 	
 	public static RetrieveMeetingResponseWrapper IsMeetingHashValid(String meetingHash//left

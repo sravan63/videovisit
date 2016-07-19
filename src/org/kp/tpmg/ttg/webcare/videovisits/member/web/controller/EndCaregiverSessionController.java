@@ -19,7 +19,6 @@ public class EndCaregiverSessionController extends SimplePageController   {
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 		String data = null;
-		StringResponseWrapper responseWrapper = null;
 		try	{
 			data = MeetingCommand.endCaregiverMeetingSession(request, response);
 			
