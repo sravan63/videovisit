@@ -75,30 +75,33 @@ $(document).ready(function() {
             success: function(returndata) {
             	try{
 		            returndata = jQuery.parseJSON(returndata);
+		            
+		            console.log("response",returndata.status.code);
+		           
 		              
 		            var errorHtml = "";
 		              
-		            if(returndata.result === '1'){
+		            if(returndata.status.code === '500'){
 		            	errorHtml = '<label>No matching patient found. Please try again.</label><br/>';
 		            	$("p#globalError").css("display", "inline").html(errorHtml);
 		            	moveToit("p.error");              	
 		            	return false;
 		            } 
-		            else if (returndata.result === '2') {  
+		            else if (returndata.status.code === '510') {  
 		            	$("#layover").hide();
 		            	errorHtml = '<label>The video visit you are trying to join is no longer available. The clinician has ended this visit.</label><br/>'; 
 		            	$("p#globalError").css("display", "inline").html(errorHtml);
 		            	moveToit("p.error");            	
 		            	return false;  
 		            }
-		            else if (returndata.result === '3') {  
+		            else if (returndata.status.code === '900') {  
 		            	$("#layover").hide();
 		            	errorHtml = '<label>Some exception occurred while processing request.</label><br/>'; 
 		            	$("p#globalError").css("display", "inline").html(errorHtml);
 		            	moveToit("p.error");            	
 		            	return false;  
 		            }
-		            else if (returndata.result === '4') { 
+		            else if (returndata.status.code === '400') { 
 		            	$("#layover").hide();
 		            	errorHtml = '<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>'; 
 		            	$("p#globalError").css("display", "inline").html(errorHtml);
