@@ -1,9 +1,11 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
@@ -32,7 +34,14 @@ public class VideoLinkParser {
 		try
 		{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			String videoLinkPath = rbInfo.getString("MDO_VIDEO_LINK_PATH");
+			log.debug("configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			//Read external properties file
+			File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			FileInputStream fileInput = new FileInputStream(file);
+    		Properties appProp = new Properties();
+    		appProp.load(fileInput);
+    		String videoLinkPath = appProp.getProperty("MDO_VIDEO_LINK_PATH");
+			//String videoLinkPath = rbInfo.getString("MDO_VIDEO_LINK_PATH");
 			File videoLinkFile = new File(videoLinkPath);
 			VideoLink videoLink;
 			log.info("File exists in path = " + videoLinkPath);
