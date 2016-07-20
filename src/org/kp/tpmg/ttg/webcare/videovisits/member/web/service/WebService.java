@@ -56,8 +56,6 @@ import org.kp.tpmg.videovisit.member.LaunchMemberOrProxyMeetingForMember;
 import org.kp.tpmg.videovisit.member.LaunchMemberOrProxyMeetingForMemberResponse;
 //import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuest;
 //import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuestResponse;
-import org.kp.tpmg.videovisit.member.MemberEndMeetingLogout;
-import org.kp.tpmg.videovisit.member.MemberEndMeetingLogoutResponse;
 import org.kp.tpmg.videovisit.member.MemberLogout;
 import org.kp.tpmg.videovisit.member.MemberLogoutResponse;
 import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForMemberAndProxies;
@@ -74,21 +72,17 @@ import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoining;
 import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoiningResponse;
 import org.kp.tpmg.videovisit.member.UserPresentInMeeting;
 import org.kp.tpmg.videovisit.member.UserPresentInMeetingResponse;
-import org.kp.tpmg.videovisit.member.VerifyCaregiver;
-import org.kp.tpmg.videovisit.member.VerifyCaregiverResponse;
 import org.kp.tpmg.videovisit.member.VerifyMember;
 import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
+import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
-import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
+import org.kp.tpmg.videovisit.model.meeting.UpdateMemberMeetingStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
-import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
-import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatus;
 import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatusResponse;
 import org.kp.tpmg.videovisit.member.GetVendorPluginData;
@@ -589,6 +583,7 @@ public class WebService{
 	
 	
 	
+	//TODO: Remove after rest service integration is successful. 
 	/**
 	 * Member end the meeting and log out.
 	 * @param mrn8Digit
@@ -596,7 +591,7 @@ public class WebService{
 	 * @param sessionID
 	 * @return
 	 */
-	public static StringResponseWrapper memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID, String memberName, boolean notifyVideoForMeetingQuit)
+	/*public static StringResponseWrapper memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID, String memberName, boolean notifyVideoForMeetingQuit)
 	throws Exception
 	{
 		logger.info("Entered WebService.memberEndMeetingLogout - received input attributes as [mrn8Digit=" + mrn8Digit + ", meetingID=" + meetingID + ", sessionID=" + sessionID + ", memberName=" + memberName + ", notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
@@ -632,6 +627,64 @@ public class WebService{
 		}
 		logger.info("Exit memberEndMeetingLogout");
 		return toRet;
+	}*/
+	
+	/**
+	 * This method invokes updateMemberMeetingStatus rest service and updates the member meeting status. 
+	 * 
+	 * @param mrn8Digit
+	 * @param meetingID
+	 * @param sessionID
+	 * @param memberName
+	 * @param notifyVideoForMeetingQuit
+	 * @return
+	 * @throws Exception
+	 */
+	public static ServiceCommonOutput memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID,
+			String memberName, boolean notifyVideoForMeetingQuit, String clientId) throws Exception {
+		logger.info("Entered WebService.memberEndMeetingLogout with MeetingID : " + meetingID + ", memberName : " + memberName);
+		logger.debug("WebService --> memberEndMeetingLogout with mrn: " + mrn8Digit);
+
+		ServiceCommonOutput output = new ServiceCommonOutput();
+		final UpdateMemberMeetingStatusInput input = new UpdateMemberMeetingStatusInput();
+		input.setMeetingId(meetingID);
+		input.setSessionId(sessionID);
+		input.setMrn(mrn8Digit);
+		input.setMemberName(memberName);
+		input.setClientId(clientId);
+		input.setNotifyVideoForMeetingQuit(notifyVideoForMeetingQuit);
+		final Status status = new Status();
+		String responseJsonStr = "";
+
+		try {
+			if (meetingID <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID) || StringUtils.isBlank(memberName) ) {
+				logger.warn("memberEndMeetingLogout --> empty input attributes.");
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setStatus(status);
+			} else {
+
+				final String operationName = "updateMemberMeetingStatus";
+
+				final Gson gson = new Gson();
+				final String inputJsonString = gson.toJson(input);
+				logger.info("jsonInptString " + inputJsonString);
+
+				responseJsonStr = callVVRestService(operationName, inputJsonString);
+
+				JsonParser parser = new JsonParser();
+				JsonObject jobject = new JsonObject();
+				jobject = (JsonObject) parser.parse(responseJsonStr);
+				output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+			}
+
+		} catch (Exception e) {
+			logger.error("memberEndMeetingLogout -> Web Service API error:" + e.getMessage());
+			throw new Exception("memberEndMeetingLogout: Web Service API error", e);
+		}
+		logger.debug("WebService --> memberEndMeetingLogout with MeetingID : " + meetingID + ", memberName : " + memberName);
+		logger.info("Exit memberEndMeetingLogout");
+		return output;
 	}
 	
 	

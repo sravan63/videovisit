@@ -28,6 +28,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
+import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
@@ -357,41 +358,38 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 
-	public static String updateEndMeetingLogout(HttpServletRequest request, HttpServletResponse response, String memberName, boolean notifyVideoForMeetingQuit) throws Exception {
-		StringResponseWrapper ret = null;
+	public static String updateEndMeetingLogout(HttpServletRequest request, HttpServletResponse response,
+			String memberName, boolean notifyVideoForMeetingQuit) throws Exception {
+		logger.info("Entered MeetingCommand.updateEndMeetingLogout - received input attributes as [memberName="
+				+ memberName + ", notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
+		ServiceCommonOutput ret = null;
 		long meetingId = 0;
-		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
-		logger.info("Entered MeetingCommand.updateEndMeetingLogout - received input attributes as [memberName=" + memberName + ", notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
-		try
-		{
+		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		try {
 			// parse parameters
-			if (request.getParameter("meetingId") != null &&
-					!request.getParameter("meetingId").equals("")) {
+			if (request.getParameter("meetingId") != null && !request.getParameter("meetingId").equals("")) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
 			}
-			
-			if ( meetingId == 0)
-			{
+
+			if (meetingId == 0) {
 				meetingId = ctx.getMeetingId();
 			}
-			
-			if (ctx != null && ctx.getMember() != null)
-			{
-				logger.debug("MeetingCommand.updateEndMeetingLogout - before calling webservice.memberEndMeetingLogout");
-				//grab data from web services
-				ret= WebService.memberEndMeetingLogout(ctx.getMember().getMrn8Digit(), meetingId, request.getSession().getId(), memberName, notifyVideoForMeetingQuit);
-				if (ret != null)
-				{
-					return ret.getResult();
+
+			if (ctx != null && ctx.getMember() != null) {
+				ret = WebService.memberEndMeetingLogout(ctx.getMember().getMrn8Digit(), meetingId,
+						request.getSession().getId(), memberName, notifyVideoForMeetingQuit, WebUtil.clientId);
+				if (ret != null) {
+					final String responseDesc = ret.getStatus() != null ? ret.getStatus().getMessage() + ": " + ret.getStatus().getCode()
+							: "No reponse from rest service";
+					logger.info("Exit updateEndMeetingLogout response description: " + responseDesc);
+					return ret.toString();
 				}
 			}
+		} catch (Exception e) {
+			logger.error("System Error" + e.getMessage(), e);
 		}
-		catch (Exception e)
-		{
-			// log error
-			logger.error("System Error" + e.getMessage(),e);
-		}
-		// worst case error returned, no authenticated user, no web service responded, etc. 
+		// worst case error returned, no authenticated user, no web service responded, etc.
+		logger.info("Exit updateEndMeetingLogout with system error ");
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 
