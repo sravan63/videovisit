@@ -1,7 +1,5 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
-import java.util.ResourceBundle;
-
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -24,27 +22,14 @@ public class MobileLoginController extends SimplePageController {
 		if (ctx == null){
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
-			
-			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			String megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
-			String megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
-			
-			ctx.setMegaMeetingURL(megaMeetingURL);	
-			ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
-
-		}
-		
-		
+		}		
 		String data = null;
-		
-
 		try
 		{
 			//verify member from web service and perform meeting analysis.
-			 data = MeetingCommand.verifyMember(request, response);
-			 
+			 data = MeetingCommand.verifyMember(request, response);			 
 			 logger.info("MobileLoginController:handlePageRequest:data:" + data);
-	}
+		}
 		catch (Exception e)
 		{
 			// log error

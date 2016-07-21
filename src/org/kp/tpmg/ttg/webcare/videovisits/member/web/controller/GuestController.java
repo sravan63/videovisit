@@ -1,8 +1,6 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -26,14 +24,10 @@ public class GuestController extends SimplePageController {
 	
 	private final static String GUEST_PAGE = "guest";
 		
-	private String megaMeetingURL = null;
 	
-	private String megaMeetingMobileURL = null;
 	private WebAppContext ctx = null;
-	public GuestController() {
-		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
-		megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
+	public GuestController() {		
+		
 	}
 	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
@@ -69,15 +63,10 @@ public class GuestController extends SimplePageController {
 			logger.info("context is null");
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
-			ctx.setMegaMeetingURL(megaMeetingURL);	
-			ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
-			
-			
 			faq f = FaqParser.parse();
 			List<promo> promos = PromoParser.parse();
 			List<iconpromo> iconpromos = IconPromoParser.parse();
 			videolink videoLink = VideoLinkParser.parse();
-			
 			ctx.setFaq(f);
 			ctx.setPromo(promos);
 			ctx.setIconPromo(iconpromos);

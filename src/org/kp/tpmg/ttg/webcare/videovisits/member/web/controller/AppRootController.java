@@ -1,6 +1,9 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +21,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -33,16 +35,28 @@ public class AppRootController implements Controller {
 	private String viewName;
 	private String navigation;
 	private String subNavigation;
-	private String megaMeetingURL = null;
-	private String megaMeetingMobileURL = null;
+	//private String megaMeetingURL = null;
+	//private String megaMeetingMobileURL = null;
 	private String clinicianSingleSignOnURL = null;
 	
 	public AppRootController() {
-		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-		megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
-		megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
-		clinicianSingleSignOnURL = rbInfo.getString ("CLINICIAN_SINGLE_SIGNON_URL");	
+		try{
+			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 		
+			logger.debug("AppRootController -> configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			//Read external properties file for the web service end point url
+			File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			FileInputStream fileInput = new FileInputStream(file);
+    		Properties appProp = new Properties();
+    		appProp.load(fileInput);
+    		clinicianSingleSignOnURL = appProp.getProperty("CLINICIAN_SINGLE_SIGNON_URL");
+    		logger.info("AppRootController -> clinicianSingleSignOnURL: " + clinicianSingleSignOnURL);
+			//megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
+    		//megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
+    		//clinicianSingleSignOnURL = rbInfo.getString ("CLINICIAN_SINGLE_SIGNON_URL");	
+		}catch(Exception ex){
+			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
+		}
 		
 	}
 	
@@ -57,8 +71,8 @@ public class AppRootController implements Controller {
 			videolink videoLink = VideoLinkParser.parse();
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
-			ctx.setMegaMeetingURL(megaMeetingURL);	
-			ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
+			//ctx.setMegaMeetingURL(megaMeetingURL);	
+			//ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
 			ctx.setClinicianSingleSignOnURL(clinicianSingleSignOnURL);
 			ctx.setFaq(f);
 			ctx.setPromo(promos);
