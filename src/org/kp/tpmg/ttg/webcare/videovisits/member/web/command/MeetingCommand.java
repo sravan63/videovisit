@@ -499,59 +499,53 @@ public class MeetingCommand {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws Exception
 	 */
-	public static String retrieveMeetingForCaregiver(HttpServletRequest request, HttpServletResponse response) 
-			throws Exception {
+	public static String retrieveMeetingForCaregiver(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("Entered retrieveMeetingForCaregiver");
 		MeetingDetailsOutput meetingDetailsOutput = null;
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		final String sessionId = request.getSession().getId();
-		String meetingCode = null;		
+		String meetingCode = null;
+		String jsonStr = null;
 		if (ctx != null) {
 			meetingCode = ctx.getMeetingCode();
-			meetingDetailsOutput = WebService.retrieveMeetingForCaregiver(meetingCode, sessionId, WebUtil.clientId);
+			try {
+				meetingDetailsOutput = WebService.retrieveMeetingForCaregiver(meetingCode, request.getSession().getId(), WebUtil.clientId);
+			} catch (Exception e) {
+				logger.error("retrieveMeetingForCaregiver: Web Service API error:" + e.getMessage(), e);
+			}
 			final Gson gson = new Gson();
 			if (isMyMeetingsAvailable(meetingDetailsOutput)) {
 				final List<MeetingDO> myMeetings = meetingDetailsOutput.getEnvelope().getMeetings();
-				if (myMeetings != null) {
-					logger.info("retrieveMeetingForCaregiver Meetings Size: " + myMeetings.size());
-					if (CollectionUtils.isEmpty(myMeetings)) {
-						ctx.setTotalmeetings(0);
-					} else {
-						for (MeetingDO myMeeting : myMeetings) {
-							normalizeMeetingData(myMeeting, meetingCode, ctx);
-						}
-						ctx.setTotalmeetings(myMeetings.size());
+				logger.info("retrieveMeetingForCaregiver Meetings Size: " + myMeetings.size());
+				for (MeetingDO myMeeting : myMeetings) {
+					normalizeMeetingData(myMeeting, meetingCode, ctx);
+				}
+				ctx.setTotalmeetings(myMeetings.size());
 
-						for (MeetingDO meetingDO : myMeetings) {
-							if (meetingDO.getCaregiver() != null) {
-								for (Caregiver c : meetingDO.getCaregiver()) {
-									if (c.getCareGiverMeetingHash().equalsIgnoreCase(meetingCode)) {
-										String name = c.getLastName() + ", " + c.getFirstName();
-										ctx.setCareGiverName(name);
-										break;
-									}
-								}
+				for (MeetingDO meetingDO : myMeetings) {
+					if (meetingDO.getCaregiver() != null) {
+						for (Caregiver c : meetingDO.getCaregiver()) {
+							if (c.getCareGiverMeetingHash().equalsIgnoreCase(meetingCode)) {
+								String name = c.getLastName() + ", " + c.getFirstName();
+								ctx.setCareGiverName(name);
+								break;
 							}
 						}
-						ctx.setMyMeetings(myMeetings);
 					}
-				} else {
-					// no meeting, we should blank out cached meeting
-					ctx.setMeetings(null);
-					ctx.setTotalmeetings(0);
 				}
-				logger.info("Exit retrieveMeetingForCaregiver with meetingDetailsOutput JSON");
-				return gson.toJson(meetingDetailsOutput);
+				ctx.setMyMeetings(myMeetings);
 			} else {
 				// no meeting, we should blank out cached meeting
 				ctx.setMeetings(null);
 				ctx.setTotalmeetings(0);
 			}
+			jsonStr = gson.toJson(meetingDetailsOutput);
+		} else {
+			logger.warn("retrieveMeetingForCaregiver -> empty web context");
+			jsonStr = JSONObject.fromObject(new SystemError()).toString();
 		}
-		logger.info("Exit retrieveMeetingForCaregiver with exception while invoking the rest service");
-		return (JSONObject.fromObject(new SystemError()).toString());
+		logger.info("Exit retrieveMeetingForCaregiver");
+		return jsonStr;
 	}
 	
 	
