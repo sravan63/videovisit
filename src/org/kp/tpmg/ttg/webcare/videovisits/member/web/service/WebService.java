@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.DatatypeConverter;
+import javax.xml.bind.DatatypeConverter;		
 
 import org.apache.axis2.client.Options;
 import org.apache.axis2.context.ConfigurationContext;
@@ -34,6 +34,7 @@ import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.common.security.ServiceSecurityLoader;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.member.CareGiverLeaveMeeting;
 import org.kp.tpmg.videovisit.member.CareGiverLeaveMeetingResponse;
@@ -644,34 +645,34 @@ public class WebService{
 	public static ServiceCommonOutput memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID,
 			String memberName, boolean notifyVideoForMeetingQuit, String clientId) throws Exception {
 		logger.info("Entered WebService.memberEndMeetingLogout with MeetingID : " + meetingID + ", memberName : " + memberName);
-		logger.debug("WebService --> memberEndMeetingLogout with mrn: " + mrn8Digit);
+		logger.debug("memberEndMeetingLogout with mrn: " + mrn8Digit);
 
-		ServiceCommonOutput output = new ServiceCommonOutput();
-		final UpdateMemberMeetingStatusInput input = new UpdateMemberMeetingStatusInput();
-		input.setMeetingId(meetingID);
-		input.setSessionId(sessionID);
-		input.setMrn(mrn8Digit);
-		input.setMemberName(memberName);
-		input.setClientId(clientId);
-		input.setNotifyVideoForMeetingQuit(notifyVideoForMeetingQuit);
-		final Status status = new Status();
+		ServiceCommonOutput output = null;
 		String responseJsonStr = "";
 
 		try {
 			if (meetingID <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID) || StringUtils.isBlank(memberName) ) {
 				logger.warn("memberEndMeetingLogout --> empty input attributes.");
+				output = new ServiceCommonOutput();
+				final Status status = new Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
 			} else {
-
-				final String operationName = "updateMemberMeetingStatus";
-
+				
+				final UpdateMemberMeetingStatusInput input = new UpdateMemberMeetingStatusInput();
+				input.setMeetingId(meetingID);
+				input.setSessionId(sessionID);
+				input.setMrn(mrn8Digit);
+				input.setMemberName(memberName);
+				input.setClientId(clientId);
+				input.setNotifyVideoForMeetingQuit(notifyVideoForMeetingQuit);
+				
 				final Gson gson = new Gson();
 				final String inputJsonString = gson.toJson(input);
-				logger.info("jsonInptString " + inputJsonString);
+				logger.info("memberEndMeetingLogout -> jsonInptString : " + inputJsonString);
 
-				responseJsonStr = callVVRestService(operationName, inputJsonString);
+				responseJsonStr = callVVRestService(ServiceUtil.UPDATE_MEMBER_MEETING_STATUS, inputJsonString);
 
 				JsonParser parser = new JsonParser();
 				JsonObject jobject = new JsonObject();
@@ -680,10 +681,10 @@ public class WebService{
 			}
 
 		} catch (Exception e) {
-			logger.error("memberEndMeetingLogout -> Web Service API error:" + e.getMessage());
-			throw new Exception("memberEndMeetingLogout: Web Service API error", e);
+			logger.error("memberEndMeetingLogout -> Web Service API error :" + e.getMessage());
+			throw new Exception("memberEndMeetingLogout -> Web Service API error :", e);
 		}
-		logger.debug("WebService --> memberEndMeetingLogout with MeetingID : " + meetingID + ", memberName : " + memberName);
+		logger.debug("memberEndMeetingLogout with MeetingID : " + meetingID + ", memberName : " + memberName);
 		logger.info("Exit memberEndMeetingLogout");
 		return output;
 	}

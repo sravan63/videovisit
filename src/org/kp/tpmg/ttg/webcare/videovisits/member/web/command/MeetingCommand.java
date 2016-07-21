@@ -360,14 +360,15 @@ public class MeetingCommand {
 
 	public static String updateEndMeetingLogout(HttpServletRequest request, HttpServletResponse response,
 			String memberName, boolean notifyVideoForMeetingQuit) throws Exception {
-		logger.info("Entered MeetingCommand.updateEndMeetingLogout - received input attributes as [memberName="
+		logger.info("Entered updateEndMeetingLogout - received input attributes as [memberName="
 				+ memberName + ", notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
 		ServiceCommonOutput ret = null;
+		String jsonString = null;
 		long meetingId = 0;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
 			// parse parameters
-			if (request.getParameter("meetingId") != null && !request.getParameter("meetingId").equals("")) {
+			if(StringUtils.isNotBlank(request.getParameter("meetingId"))){
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
 			}
 
@@ -381,16 +382,16 @@ public class MeetingCommand {
 				if (ret != null) {
 					final String responseDesc = ret.getStatus() != null ? ret.getStatus().getMessage() + ": " + ret.getStatus().getCode()
 							: "No reponse from rest service";
-					logger.info("Exit updateEndMeetingLogout response description: " + responseDesc);
-					return ret.toString();
+					logger.debug("updateEndMeetingLogout -> response description: " + responseDesc);
+					jsonString = ret.toString();
 				}
 			}
 		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("updateEndMeetingLogout : System Error :" + e.getMessage(), e);
+			jsonString = JSONObject.fromObject(new SystemError()).toString();
 		}
-		// worst case error returned, no authenticated user, no web service responded, etc.
-		logger.info("Exit updateEndMeetingLogout with system error ");
-		return (JSONObject.fromObject(new SystemError()).toString());
+		logger.info("Exit updateEndMeetingLogout ");
+		return jsonString;
 	}
 
 	public static String createMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
