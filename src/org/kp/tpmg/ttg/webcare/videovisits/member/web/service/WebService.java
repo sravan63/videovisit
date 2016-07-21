@@ -166,23 +166,35 @@ public class WebService{
 	    		appProp.load(fileInput);
 	    		serviceURL = appProp.getProperty("WEBSERVICE_URL");
 				
-				timeout = Integer.parseInt(rbInfo.getString("WEBSERVICE_TIMEOUT"));
-				reuseHTTP = rbInfo.getString("WEBSERVICE_REUSE").equals("true")? true:false;
-				chunked = rbInfo.getString("WEBSERVICE_CHUNKED").equals ("true")?true:false;
-				simulation = rbInfo.getString ("WEBSERVICE_SIMULATION").equals ("true")?true:false;
+				//timeout = Integer.parseInt(rbInfo.getString("WEBSERVICE_TIMEOUT"));
+				timeout = Integer.parseInt(appProp.getProperty("WEBSERVICE_TIMEOUT"));
+				//reuseHTTP = rbInfo.getString("WEBSERVICE_REUSE").equals("true")? true:false;
+				reuseHTTP = appProp.getProperty("WEBSERVICE_REUSE").equals("true")? true:false;
+				//chunked = rbInfo.getString("WEBSERVICE_CHUNKED").equals ("true")?true:false;
+				chunked = appProp.getProperty("WEBSERVICE_CHUNKED").equals("true")?true:false;
+				//simulation = rbInfo.getString ("WEBSERVICE_SIMULATION").equals ("true")?true:false;
+				simulation = appProp.getProperty("WEBSERVICE_SIMULATION").equals("true")?true:false;
 				logger.debug("WebService.initWebService -> configuration: serviceURL="+serviceURL+" ,simulation="+simulation);
-				modulePath = rbInfo.getString("MODULE_PATH");
-				policyPath = rbInfo.getString("POLICY_PATH");
+				//modulePath = rbInfo.getString("MODULE_PATH");
+				modulePath = appProp.getProperty("MODULE_PATH");
+				//policyPath = rbInfo.getString("POLICY_PATH");
+				policyPath = appProp.getProperty("POLICY_PATH");
 				Crypto crypto = new Crypto();
-				serviceSecurityUsername = rbInfo.getString("SERVICE_SECURITY_USERNAME");
-				serviceSecurityPassword = crypto.read(rbInfo.getString("SERVICE_SECURITY_PASSWORD"));
+				//serviceSecurityUsername = rbInfo.getString("SERVICE_SECURITY_USERNAME");
+				serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
+				//serviceSecurityPassword = crypto.read(rbInfo.getString("SERVICE_SECURITY_PASSWORD"));
+				serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
 				logger.debug("webservice.initWebService -> SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
 				
 				//setup wizard related values
-				setupWizardHostNuid = rbInfo.getString("SETUP_WIZARD_HOST_NUID");
-				setupWizardMemberMrn = rbInfo.getString("SETUP_WIZARD_MEMBER_MRN");
-				setupWizardMeetingType = rbInfo.getString("SETUP_WIZARD_MEETING_TYPE");
-				setupWizardUserName = rbInfo.getString("SETUP_WIZARD_USER_NAME");
+				//setupWizardHostNuid = rbInfo.getString("SETUP_WIZARD_HOST_NUID");
+				setupWizardHostNuid = appProp.getProperty("SETUP_WIZARD_HOST_NUID");
+				//setupWizardMemberMrn = rbInfo.getString("SETUP_WIZARD_MEMBER_MRN");
+				setupWizardMemberMrn = appProp.getProperty("SETUP_WIZARD_MEMBER_MRN");
+				//setupWizardMeetingType = rbInfo.getString("SETUP_WIZARD_MEETING_TYPE");
+				setupWizardMeetingType = appProp.getProperty("SETUP_WIZARD_MEETING_TYPE");
+				//setupWizardUserName = rbInfo.getString("SETUP_WIZARD_USER_NAME");
+				setupWizardUserName = appProp.getProperty("SETUP_WIZARD_USER_NAME");
 				logger.debug("configuration: setupWizardHostNuid="+setupWizardHostNuid+", setupWizardMemberMrn="+setupWizardMemberMrn+", setupWizardMeetingType="+setupWizardMeetingType+", setupWizardUserName="+setupWizardUserName);
 				
 				memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
@@ -1736,6 +1748,7 @@ public class WebService{
 	        	
             URL url = new URL(videoVisitRestServiceUrl + operationName);
             String authStr = serviceSecurityUsername + ":" + serviceSecurityPassword;
+            logger.info("callVVRestService url: " + videoVisitRestServiceUrl + operationName);
             String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
             connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
