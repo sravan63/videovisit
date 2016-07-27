@@ -13,8 +13,12 @@ $(document).ready(function() {
 
 	var btnContainerWidth = $("#btnContainer").outerWidth();
 	var calculatedWidthPluginContainer = calculatedWidth - btnContainerWidth;
-
-	$("#pluginContainer").width(calculatedWidthPluginContainer);
+	
+	/* Mandar [DE7189] - Code changes for right side space */
+	var calWidth = windowWidth - (200 + btnContainerWidth);
+	$("#pluginContainer").width(calWidth);
+	/* Mandar [DE7189] END */
+	
 	$("#pluginContainer").height(calculatedHeight);
 	$("#btnContainer").height(calculatedHeight);
 	
