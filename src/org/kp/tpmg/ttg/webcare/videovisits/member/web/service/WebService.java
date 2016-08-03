@@ -56,8 +56,6 @@ import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuestResponse;
 import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberResponse;
 import org.kp.tpmg.videovisit.member.LaunchMemberOrProxyMeetingForMember;
 import org.kp.tpmg.videovisit.member.LaunchMemberOrProxyMeetingForMemberResponse;
-//import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuest;
-//import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberOrGuestResponse;
 import org.kp.tpmg.videovisit.member.MemberLogout;
 import org.kp.tpmg.videovisit.member.MemberLogoutResponse;
 import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForMemberAndProxies;
@@ -74,8 +72,6 @@ import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoining;
 import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoiningResponse;
 import org.kp.tpmg.videovisit.member.UserPresentInMeeting;
 import org.kp.tpmg.videovisit.member.UserPresentInMeetingResponse;
-import org.kp.tpmg.videovisit.member.VerifyMember;
-import org.kp.tpmg.videovisit.member.VerifyMemberResponse;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
@@ -85,6 +81,8 @@ import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.UpdateMemberMeetingStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatus;
 import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatusResponse;
 import org.kp.tpmg.videovisit.member.GetVendorPluginData;
@@ -97,7 +95,6 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesStub;
 import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
@@ -382,7 +379,9 @@ public class WebService{
 	}
 
 
-	public static VerifyMemberResponseWrapper verifyMember(String lastName, String mrn8Digit, //left
+	//TODO: Remove after rest service integration is successful. 
+	
+	/*public static VerifyMemberResponseWrapper verifyMember(String lastName, String mrn8Digit, //left
 							String birth_month, String birth_year, String birth_day,
 							String sessionID) throws Exception 
 	{
@@ -421,7 +420,7 @@ public class WebService{
 		}
 		logger.info("Exit initWebService");
 		return resp;
-	}
+	}*/
 	
 
 	 
@@ -2232,60 +2231,60 @@ public class WebService{
 			logger.info("Exit WebService-> getLaunchMeetingDetailsForMember");
 			return launchMeetingForMemberOutput;
 		}
-	  //Verify Member
-	  public static VerifyMemberOutput verifyMember(String lastName, String mrn, String birth_month, String birth_year, String birth_day,String sessionId, String clientId) throws Exception 
-	  {
-		  logger.info("Entered Webservice->verifyMember ");
-		  VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
-		  
-		  String Dob = birth_month + "/" + birth_year; 
-		  VerifyMemberInput verifyMeberInput = new VerifyMemberInput();
-		  try 
-		  {
-			  if (mrn == null || sessionId == null || lastName == null)
-			  {
-				  throw new Exception("One of required fields are null");
-			  }
-			  if (!WebUtil.isDOBMMYYYYFormat(Dob))
-			  {
-				  throw new Exception("DOB has to be in the format of MM/YYYY but is [" + Dob + "]");
-			  }
-			  verifyMeberInput.setMrn(mrn);		
-			  verifyMeberInput.setLastName(lastName);
-			  verifyMeberInput.setDateOfBirth(Dob);
-			  verifyMeberInput.setSessionID(sessionId);
-			  verifyMeberInput.setClientId(clientId);
-			  String operationName="verifyMember";
-			  
-			    Gson gson = new Gson();
-				String inputString = gson.toJson(verifyMeberInput);
-				logger.info("WebService: verifyMember->jsonInputString "+ inputString);
-				
-				String jsonString= callVVRestService(operationName,inputString);
-				logger.info("WebService->getMeetingDetailsForMember->OutputjsonString"+jsonString);
-				
-				JsonParser parser = new JsonParser();
-				JsonObject jobject = new JsonObject();
-				jobject = (JsonObject) parser.parse(jsonString);
-				logger.info("After jobject parser");
-				verifyMemberOutput= gson.fromJson( jobject.get("service").toString(), VerifyMemberOutput.class);
-				
-				logger.info("WebService->verifyMember->json string after converting it to class"+ verifyMemberOutput.toString());
+	*/
+	 
+	/**
+	 * @param lastName
+	 * @param mrn
+	 * @param birth_month
+	 * @param birth_year
+	 * @param birth_day
+	 * @param sessionId
+	 * @param clientId
+	 * @return
+	 * @throws Exception
+	 */
+	public static VerifyMemberOutput verifyMember(String lastName, String mrn, String birth_month, String birth_year,
+			String birth_day, String sessionId, String clientId) throws Exception {
+		logger.info("Entered Webservice -> verifyMember ");
+		VerifyMemberOutput verifyMemberOutput = null;
+		final String Dob = birth_month + "/" + birth_year;
+		VerifyMemberInput verifyMeberInput = new VerifyMemberInput();
+		try {
+			if (mrn == null || sessionId == null || lastName == null) {
+				throw new Exception("One of required fields are null");
+			}
+			if (!WebUtil.isDOBMMYYYYFormat(Dob)) {
+				throw new Exception("DOB has to be in the format of MM/YYYY but is [" + Dob + "]");
+			}
+			verifyMeberInput.setMrn(mrn);
+			verifyMeberInput.setLastName(lastName);
+			verifyMeberInput.setDateOfBirth(Dob);
+			verifyMeberInput.setSessionID(sessionId);
+			verifyMeberInput.setClientId(clientId);
 
-			 
-		  }
-		  catch (Exception e) 
-		  {
-			  e.printStackTrace();
-				logger.error("WebService ->verifyMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-				throw new Exception("verifyMember: Web Service API error", e.getCause());
-		  }
-		 
-		  logger.info("Exit Webservice->verifyMember");
-		  return verifyMemberOutput;
-	  }
+			Gson gson = new Gson();
+			String inputString = gson.toJson(verifyMeberInput);
+			logger.debug("verifyMember -> jsonInputString " + inputString);
+
+			String jsonString = callVVRestService(ServiceUtil.VERIFY_MEMBER, inputString);
+			logger.debug("verifyMember -> OutputjsonString" + jsonString);
+
+			JsonParser parser = new JsonParser();
+			JsonObject jobject = new JsonObject();
+			jobject = (JsonObject) parser.parse(jsonString);
+			verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), VerifyMemberOutput.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("WebService -> verifyMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			throw new Exception("verifyMember: Web Service API error", e.getCause());
+		}
+
+		logger.info("Exit Webservice -> verifyMember");
+		return verifyMemberOutput;
+	}
 	  
-	  public static MeetingDetailsOutput getActiveMeetingForMember(String mrn,int pastMinutes,int futureMinutes,String sessionId, String clientId) throws Exception 
+	 /* public static MeetingDetailsOutput getActiveMeetingForMember(String mrn,int pastMinutes,int futureMinutes,String sessionId, String clientId) throws Exception 
 		{
 			logger.info("Entered Webservice-> getActiveMeetingForMember");
 			MeetingDetailsOutput meetingDetailsOutput = new MeetingDetailsOutput();

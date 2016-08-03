@@ -1,6 +1,5 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
-import java.io.PrintWriter;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,25 +12,19 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-
-import net.sourceforge.wurfl.core.Device;
-
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
@@ -45,12 +38,14 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.VerifyMemberResponseWrapper;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
 
 import com.google.gson.Gson;
+
+import net.sf.json.JSONObject;
+import net.sourceforge.wurfl.core.Device;
 
 public class MeetingCommand {
 
@@ -82,8 +77,8 @@ public class MeetingCommand {
 	
 	public static String verifyMember(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
-		VerifyMemberResponseWrapper ret = null;
-		PrintWriter out 	= response.getWriter();
+		logger.info("Entered MeetingCommand -> verifyMember");
+		VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
 
 		try 
 		{
@@ -92,7 +87,6 @@ public class MeetingCommand {
 			String birth_month 	= "";
 			String birth_year  	= "";
 			String birth_day	= "";
-			String answer		= "";			
 			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
 			// DEBUG
@@ -115,8 +109,8 @@ public class MeetingCommand {
 			if (request.getParameter("birth_day") != null &&
 					!request.getParameter("birth_day").equals("")) {
 				birth_day = request.getParameter("birth_day");
-			}						
-						
+			}
+									
 			
 			/* captcha no longer needed
 			if (request.getParameter("captcha") != null &&
@@ -140,27 +134,40 @@ public class MeetingCommand {
 			if (ctx != null && success == true)
 			{
 				//grab data from web services
-				ret= WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day, 
-						request.getSession().getId()); 
-				if (ret != null && ret.getSuccess()&& ret.getResult()!= null)
+				verifyMemberOutput = WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day,
+						request.getSession().getId(), WebUtil.clientId);
+				
+				if (verifyMemberOutput != null && verifyMemberOutput.getStatus() != null
+						&& "200".equals(verifyMemberOutput.getStatus().getCode())
+						&& verifyMemberOutput.getEnvelope() != null
+						&& verifyMemberOutput.getEnvelope().getMember() != null)
 				{
 					// success logged in. save logged in member in cached
-					ctx.setMember(ret.getResult());
+					final MemberWSO memberWSO = new MemberWSO();
+					//memberWSO.setAge(Integer.parseInt(verifyMemberOutput.getEnvelope().getMember().getAge()));
+					memberWSO.setDateofBirth(Long.parseLong(verifyMemberOutput.getEnvelope().getMember().getDateOfBirth()));
+					memberWSO.setEmail(verifyMemberOutput.getEnvelope().getMember().getEmail());
+					memberWSO.setFirstName(verifyMemberOutput.getEnvelope().getMember().getFirstName());
+					memberWSO.setGender(verifyMemberOutput.getEnvelope().getMember().getGender());
+					memberWSO.setInMeeting(verifyMemberOutput.getEnvelope().getMember().getInMeeting());
+					memberWSO.setLastName(verifyMemberOutput.getEnvelope().getMember().getLastName());
+					memberWSO.setMiddleName(verifyMemberOutput.getEnvelope().getMember().getMiddleName());
+					memberWSO.setMrn8Digit(verifyMemberOutput.getEnvelope().getMember().getMrn());
+					
+					ctx.setMember(memberWSO);
+					ctx.setMemberDO(verifyMemberOutput.getEnvelope().getMember());
 
 					// retrieve meetings status
 					return ("1");				
 				}
-				else if (ret != null && ret.getSuccess())
+				else
 				{
 					// TODO not authenticated. Clear the logged in cache.
 					ctx.setMember(null);
+					ctx.setMemberDO(null);
 					return ("3");
 				}
-				else 
-				{
-					// System error, not ret web service record, return retry error.
-					return ("3");
-				}
+				
 			}
 			else
 			{
@@ -169,9 +176,7 @@ public class MeetingCommand {
 		}
 		catch (Exception e)
 		{
-			// log error
 			logger.error("System Error" + e.getMessage(),e);
-			out.println ("3");
 			return ("3");
 
 		}
