@@ -33,23 +33,23 @@
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
 				
-				<c:forEach var="meeting" items="${WebAppContext.meetings}">
+				<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
 			
 					<div class="meeting well">
 								
 						<div class="pic-frame">
 							<div class="pic">
-								<img src="${meeting.providerHost.imageUrl}">
+								<img src="${meeting.host.imageUrl}">
 							</div>
 						</div>
 
 						<div class="launch-button-handler only-tablets">
-							<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-								<c:forEach var="p" items="${meeting.caregivers}">
-									<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
+							<c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
+								<c:forEach var="p" items="${meeting.caregiver}">
+									<c:if test="${p.careGiverMeetingHash != null && fn:length(p.careGiverMeetingHash) > 0}">
 										
-										<c:if test="${p.meetingHash == param.meetingCode}">
-											<button class="button-launch-visit-pg only-tablets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
+										<c:if test="${p.careGiverMeetingHash == param.meetingCode}">
+											<button class="button-launch-visit-pg only-tablets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
 										</c:if>
 									</c:if>
 								</c:forEach>
@@ -57,7 +57,7 @@
 						</div>
 
 						<div class="meeting-block-handler">
-							<div class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp}</div>
+							<div class="hide-me timestamp_${meeting.meetingId}">${meeting.meetingTime}</div>
 							<p class="time">Scheduled for <strong><span class="time_${meeting.meetingId}"></span></strong></p>
 							
 							<script type="text/javascript">
@@ -68,17 +68,17 @@
 							</script>
 							
 							<p class="host-name">
-								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>	
+								${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>	
 							</p>
 							<p class="time">
 								${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}
 							</p>
-							<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-								<c:forEach var="p" items="${meeting.caregivers}">
-									<c:if test="${p.meetingHash != null && fn:length(p.meetingHash) > 0}">
+							<c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
+								<c:forEach var="p" items="${meeting.caregiver}">
+									<c:if test="${p.careGiverMeetingHash != null && fn:length(p.careGiverMeetingHash) > 0}">
 										
-										<c:if test="${p.meetingHash == param.meetingCode}">
-											<button class="button-launch-visit-pg only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
+										<c:if test="${p.careGiverMeetingHash == param.meetingCode}">
+											<button class="button-launch-visit-pg only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join Visit</button>
 										</c:if>
 									</c:if>
 								</c:forEach>

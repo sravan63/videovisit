@@ -542,7 +542,7 @@ public class MeetingCommand {
 				ctx.setMyMeetings(myMeetings);
 			} else {
 				// no meeting, we should blank out cached meeting
-				ctx.setMeetings(null);
+				ctx.setMyMeetings(null);
 				ctx.setTotalmeetings(0);
 			}
 			jsonStr = gson.toJson(meetingDetailsOutput);
