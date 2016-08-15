@@ -141,6 +141,11 @@ public class WebService{
 	private static String kpOrgSSOAPIKeyHeader = null;
 	private static String kpOrgSSOAppNameHeader = null;
 	
+	//Parameters for Proxy Appts logic
+	private static String secureCodes = null;
+	private static boolean isAdhoc = false;
+	private static boolean isParrs = true;
+	
 	public static boolean initWebService(HttpServletRequest request)
 	{
 		logger.info("Entered initWebService");
@@ -192,7 +197,13 @@ public class WebService{
 				setupWizardMeetingType = appProp.getProperty("SETUP_WIZARD_MEETING_TYPE");
 				//setupWizardUserName = rbInfo.getString("SETUP_WIZARD_USER_NAME");
 				setupWizardUserName = appProp.getProperty("SETUP_WIZARD_USER_NAME");
-				logger.debug("configuration: setupWizardHostNuid="+setupWizardHostNuid+", setupWizardMemberMrn="+setupWizardMemberMrn+", setupWizardMeetingType="+setupWizardMeetingType+", setupWizardUserName="+setupWizardUserName);
+				logger.debug("initWebService: setupWizardHostNuid="+setupWizardHostNuid+", setupWizardMemberMrn="+setupWizardMemberMrn+", setupWizardMeetingType="+setupWizardMeetingType+", setupWizardUserName="+setupWizardUserName);
+				
+				//Proxy Appts parameters
+				secureCodes = appProp.getProperty("SECURE_CODES");
+				isAdhoc = appProp.getProperty("ADHOC").equals("true") ? true : false;
+				isParrs = appProp.getProperty("PARRS").equals ("true") ? true : false;
+				logger.debug("initWebService: secureCodes="+secureCodes+", isAdhoc="+isAdhoc+", isParrs="+isParrs);
 				
 				memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
 	    		memberSSOAuthRegionCode = appProp.getProperty("MEMBER_SSO_AUTH_REGION_CODE");
@@ -1946,8 +1957,19 @@ public class WebService{
 					logger.warn("retrieveActiveMeetingsForMemberAndProxies -> mrn8Digit and sessionID are required ");
 					return toRet;
 				}
+				
+				if(secureCodes == null)
+				{
+					secureCodes = "";
+				}
+				
+				logger.debug("retrieveActiveMeetingsForMemberAndProxies -> after split secure codes: " + secureCodes.split(","));
+								
 				query.setMrn8Digit(mrn8Digit);
 				query.setGetProxyMeetings(getProxyMeetings);
+				query.setSecureCodes(secureCodes.split(","));
+				query.setIsAdhoc(isAdhoc);
+				query.setIsParrs(isParrs);
 				query.setSessionId(sessionID);
 				
 				RetrieveActiveMeetingsForMemberAndProxiesResponse response = stub.retrieveActiveMeetingsForMemberAndProxies(query);
