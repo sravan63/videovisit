@@ -258,7 +258,7 @@ public class WebSessionFilter implements Filter
 							
 							if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
 							{
-								if("localhost".equalsIgnoreCase(req.getServerName()) || "ttg-dev-app-01.har.ca.kp.org".equalsIgnoreCase(req.getServerName()))
+								if("localhost".equalsIgnoreCase(req.getServerName()) || "ttg-dev-app-01.har.ca.kp.org".equalsIgnoreCase(req.getServerName()) || "ttg-dv-app-1.har.ca.kp.org".equalsIgnoreCase(req.getServerName()))
 								{
 									logger.info("WebSessionFilter -> cookie validation not required for " + req.getServerName());
 								}

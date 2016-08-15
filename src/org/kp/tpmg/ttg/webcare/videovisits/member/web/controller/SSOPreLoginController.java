@@ -77,7 +77,7 @@ public class SSOPreLoginController implements Controller {
 			
 			if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
 			{
-				if("localhost".equalsIgnoreCase(request.getServerName()) || "ttg-dev-app-01.har.ca.kp.org".equalsIgnoreCase(request.getServerName()))
+				if("localhost".equalsIgnoreCase(request.getServerName()) || "ttg-dev-app-01.har.ca.kp.org".equalsIgnoreCase(request.getServerName()) || "ttg-dv-app-1.har.ca.kp.org".equalsIgnoreCase(request.getServerName()))
 				{
 					logger.info("SSOPreLoginController -> cookie validation not required for " + request.getServerName());
 				}
