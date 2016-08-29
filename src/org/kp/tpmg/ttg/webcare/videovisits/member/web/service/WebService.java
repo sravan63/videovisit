@@ -1999,7 +1999,14 @@ public class WebService{
 			LaunchMemberOrProxyMeetingForMember query = new LaunchMemberOrProxyMeetingForMember();
 			try
 			{
-				if(StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId))
+				boolean isNonMember = false;
+				if(isProxyMeeting && StringUtils.isBlank(mrn8Digit))
+				{
+					isNonMember = true;
+				}
+				logger.info("launchMemberOrProxyMeetingForMember -> isNonMember= " + isNonMember);
+				
+				if((!isNonMember && StringUtils.isBlank(mrn8Digit)) || StringUtils.isBlank(sessionId))
 				{
 					logger.warn("launchMemberOrProxyMeetingForMember -> mrn8Digit and sessionID are required ");
 					return toRet;
@@ -2082,7 +2089,17 @@ public class WebService{
 				logger.warn("retrieveActiveMeetingsForNonMemberProxies -> guid and sessionID are required ");
 				return toRet;
 			}
+			
+			if(secureCodes == null)
+			{
+				secureCodes = "";
+			}
+			
+			logger.debug("retrieveActiveMeetingsForNonMemberProxies -> after split secure codes: " + secureCodes.split(","));
 			query.setGuid(guid);
+			query.setSecureCodes(secureCodes.split(","));
+			query.setIsAdhoc(isAdhoc);
+			query.setIsParrs(isParrs);
 			query.setSessionId(sessionID);
 			
 			RetrieveActiveMeetingsForNonMemberProxiesResponse response = stub.retrieveActiveMeetingsForNonMemberProxies(query);
