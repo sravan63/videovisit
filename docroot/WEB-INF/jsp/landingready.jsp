@@ -98,17 +98,24 @@
 			        	</c:choose>		                	            	
 	           </c:when>
 	      	   <c:otherwise>
-	      	   	<div style="margin-top:30px;">
-	      	   	<c:choose>
-	      	   		<c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
-              			<span> <p class="smallprint" style="text-align:left;">This visit will be available to join within 15 minutes of the appointment time.
-              			Caregivers must sign out and use Temporary Access to join the visit.</p> </span>
-   	   	   			</c:when>
-                   	<c:otherwise>
-  	   					<span> <p class="smallprint">Caregivers must sign out and use Temporary Access to join the visit.</p> </span>
-  	   				</c:otherwise>
-  	   			</c:choose>
-	      	   	</div>
+	      	   <c:choose>
+               		<c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
+               			<div style="margin-top:30px;">
+               				<span style="width: 48%; float:right; margin-bottom:20px;">
+								<a class="btn" href="javascript:location.reload()" style="margin-bottom:0;">Refresh</a>
+							</span>
+     			        	<span style="clear:both; display:inline-block;"> <p class="smallprint">This visit will be available to join within 15 minutes of the appointment time.</p> </span>
+  	   	   			   	</div>
+    	   	   		</c:when>
+                    <c:otherwise>
+                     	<div style="overflow:auto; margin-top:30px;">
+		                    <span style="float:left; width:50%;"> <p class="smallprint"  style="text-align:left;">You may be joining before your clinician. Please be patient.</p> </span>
+              				<span style="float:right; width:48%;">
+	        			        <a id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</a> 
+	                      	</span>
+	                    </div>
+	        	   </c:otherwise>
+			   </c:choose>		                	
 	      	   </c:otherwise>
 	        </c:choose>
 			 
