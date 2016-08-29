@@ -75,6 +75,8 @@ import org.kp.tpmg.videovisit.member.UserPresentInMeetingResponse;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
+import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
+import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
@@ -1157,13 +1159,14 @@ public class WebService{
 
 	}
 	
+	//calling rest service 
 	/**
 	 * This method creates instant vendor meeting and returns meeting details
 	 * 	 
 	 * @return StringResponseWrapper
 	 * @throws Exception 
 	 */
-	public static StringResponseWrapper createInstantVendorMeeting(String hostNuid, String[] participantNuid, String memberMrn, String meetingType, String sessionId) throws Exception {
+	/*public static StringResponseWrapper createInstantVendorMeeting(String hostNuid, String[] participantNuid, String memberMrn, String meetingType, String sessionId) throws Exception {
 		logger.info("Entered WebService.createInstantVendorMeeting -> received input attributes as [hostNuid=" + hostNuid + ", participantNuid=" + participantNuid + ", memberMrn=" + memberMrn + ", meetingType=" + meetingType + ", sessionId=" + sessionId + "]");
 		StringResponseWrapper toRet = null; 
 		
@@ -1191,7 +1194,7 @@ public class WebService{
 		}
 		logger.info("Exiting WebService.createInstantVendorMeeting");
 		return toRet;
-	}
+	}*/
 	
 	public static StringResponseWrapper terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID, String sessionId) throws Exception
 	{
@@ -2355,6 +2358,61 @@ public class WebService{
 			logger.info("Exit getActiveMeetingsForMember");
 			return meetingDetailsOutput;
 		}*/
+	
+	public static CreateInstantVendorMeetingOutput createInstantVendorMeeting(String hostNuid, String[] participantNuid,
+			String memberMrn, String meetingType, String sessionId, String clientId) throws Exception {
+		logger.info("Entered WebService.createInstantVendorMeeting -> received input attributes as [hostNuid="
+				+ hostNuid + ", participantNuid=" + participantNuid + ", memberMrn=" + memberMrn + ", meetingType="
+				+ meetingType + ", sessionId=" + sessionId + ", clientId=" + clientId + "]");
+		CreateInstantVendorMeetingOutput output = null;
+		String responseJsonStr = "";
+		try {
+			if (StringUtils.isBlank(hostNuid) || StringUtils.isBlank(memberMrn) || StringUtils.isBlank(meetingType)
+					|| StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)) {
+				logger.warn("createInstantVendorMeeting --> missing input attributes.");
+				output = new CreateInstantVendorMeetingOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setStatus(status);
+			}
+			CreateInstantVendorMeetingInput input = new CreateInstantVendorMeetingInput();
+			input.setHostNuid(hostNuid);
+			input.setParticipantNuid(participantNuid);
+			input.setMemberMrn(memberMrn);
+			input.setMeetingType(meetingType);
+			input.setSessionId(sessionId);
+			input.setClientId(clientId);
+
+			final Gson gson = new Gson();
+			final String inputJsonString = gson.toJson(input);
+			logger.info("createInstantVendorMeeting -> jsonInptString : " + inputJsonString);
+
+			responseJsonStr = callVVRestService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString);
+
+			JsonParser parser = new JsonParser();
+			JsonObject jobject = new JsonObject();
+			jobject = (JsonObject) parser.parse(responseJsonStr);
+			output = gson.fromJson(jobject.get("service").toString(), CreateInstantVendorMeetingOutput.class);
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			logger.error("WebService.createInstantVendorMeeting: Web Service API error:" + e.getMessage());
+			throw new Exception("createInstantVendorMeeting: Web Service API error", e.getCause());
+
+		}
+		String responseCodeAndMsg = "Empty reponse";
+		if (output != null) {
+			responseCodeAndMsg = output.getStatus() != null
+					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
+					: "No rest response code & message returned from service.";
+		}
+		logger.info("Exit WebService.createInstantVendorMeeting --> createInstantVendorMeeting rest response message & code: "
+				+ responseCodeAndMsg);
+		return output;
+
+	}
 	    
 }
 

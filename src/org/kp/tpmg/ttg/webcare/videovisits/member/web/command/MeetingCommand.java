@@ -23,6 +23,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionSer
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
+import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
@@ -1000,6 +1001,7 @@ public class MeetingCommand {
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
 	
+	//calling rest API call 
 	/**
 	 * This method is called for creating instant meeting for setup wizard 
 	 * This will internally call the web service to make updates.
@@ -1012,7 +1014,7 @@ public class MeetingCommand {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String createInstantVendorMeeting(HttpServletRequest request, HttpServletResponse response, String hostNuid, String[] participantNuid, String memberMrn, String meetingType) throws Exception {
+	/*public static String createInstantVendorMeeting(HttpServletRequest request, HttpServletResponse response, String hostNuid, String[] participantNuid, String memberMrn, String meetingType) throws Exception {
 		logger.info("Entered MeetingCommand.createInstantVendorMeeting -> -> received input attributes as [hostNuid=" + hostNuid + ", participantNuid=" + participantNuid + ", memberMrn=" + memberMrn + ", meetingType=" + meetingType + "]");
 		StringResponseWrapper ret = null;			
 		try
@@ -1039,7 +1041,37 @@ public class MeetingCommand {
 		}
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
+	}*/
+	
+	public static String createInstantVendorMeeting(HttpServletRequest request, HttpServletResponse response, String hostNuid, String[] participantNuid, String memberMrn, String meetingType) throws Exception {
+		logger.info("Entered MeetingCommand.createInstantVendorMeeting -> -> received input attributes as [hostNuid=" + hostNuid + ", participantNuid=" + participantNuid + ", memberMrn=" + memberMrn + ", meetingType=" + meetingType + "]");
+		CreateInstantVendorMeetingOutput output = null;
+		String jsonString = null;	
+		
+		try
+		{
+			if (!StringUtils.isNotBlank(hostNuid)) {
+				return "MeetingCommand.createInstantVendorMeeting -> Validation Error: Host Nuid can not be null or blank.";
+			}
+			
+			output = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType, request.getSession().getId(),WebUtil.clientId);
+			
+			if ( output != null )		
+			{		
+				Gson gson = new Gson();		
+				jsonString = gson.toJson(output);		
+				logger.info("MeetingCommand->createInstantVendorMeeting->value after converting it to json"+ jsonString.toString());		
+			}	
+			
+		}
+		catch (Exception e) {
+			logger.error("MeetingCommand->createInstantVendorMeeting : System Error :" + e.getMessage(), e);
+			jsonString = JSONObject.fromObject(new SystemError()).toString();
+		}
+		logger.info("Exit MeetingCommand.createInstantVendorMeeting ");
+		return jsonString;
 	}
+	
 
 	public static String terminateSetupWizardMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("Entered MeetingCommand.terminateSetupWizardMeeting ");
