@@ -46,11 +46,25 @@ private static String JSONMAPPING = "jsonData";
 			
 			logger.info("SetupWizardController-instantMeetingJsonObject="+instantMeetingJsonObject);
 			VideoVisitParamsDTO videoVisitParamsDTO = new VideoVisitParamsDTO();
-			videoVisitParamsDTO.setMeetingId((instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("meetingId") != null) ? String.valueOf(instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("meetingId")) : "");
+			final JSONObject jsonEnvelope = instantMeetingJsonObject.getJSONObject("envelope");
+			if(jsonEnvelope!= null){
+				final JSONObject jsonVendorMeeting = jsonEnvelope.getJSONObject("vendorMeeting");
+				if(jsonVendorMeeting != null){
+					videoVisitParamsDTO.setMeetingId(jsonVendorMeeting.get("meetingId") != null ? String.valueOf(jsonVendorMeeting.get("meetingId")) : "");
+					videoVisitParamsDTO.setVidyoUrl(jsonVendorMeeting.get("roomUrl") != null ? String.valueOf(jsonVendorMeeting.get("roomUrl")) : "");
+					videoVisitParamsDTO.setVendorConfId(jsonVendorMeeting.get("conferenceId") != null ? String.valueOf(jsonVendorMeeting.get("conferenceId")) : "");
+				}
+			}
+			//videoVisitParamsDTO.setMeetingId((instantMeetingJsonObject.get("meetingId") != null) ? String.valueOf(instantMeetingJsonObject.get("meetingId")) : "");
+			//videoVisitParamsDTO.setVidyoUrl((instantMeetingJsonObject.get("vendorConfRoomUrl") != null) ? (String) instantMeetingJsonObject.get("vendorConfRoomUrl") : "");
+			//videoVisitParamsDTO.setVendorConfId((instantMeetingJsonObject.get("vendorConferenceId") != null) ? (String) instantMeetingJsonObject.get("vendorConferenceId") : "");
+			videoVisitParamsDTO.setGuestName(userName);
+			videoVisitParamsDTO.setIsProvider("false");
+			/*videoVisitParamsDTO.setMeetingId((instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("meetingId") != null) ? String.valueOf(instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("meetingId")) : "");
 			videoVisitParamsDTO.setVidyoUrl((instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("roomUrl") != null) ? (String) instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("roomUrl") : "");
 			videoVisitParamsDTO.setVendorConfId((instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("conferenceId") != null) ? (String) instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("conferenceId") : "");
 			videoVisitParamsDTO.setGuestName(userName);
-			videoVisitParamsDTO.setIsProvider("false");
+			videoVisitParamsDTO.setIsProvider("false");*/
 			logger.info("SetupWizardController - setting vendor meeting data from service to object: " + videoVisitParamsDTO.toString());
 						
 			//put data into buffer

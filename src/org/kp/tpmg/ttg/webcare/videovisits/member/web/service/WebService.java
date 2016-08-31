@@ -2406,6 +2406,8 @@ public class WebService{
 			logger.info("createInstantVendorMeeting -> jsonInptString : " + inputJsonString);
 
 			responseJsonStr = callVVRestService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString);
+			//responseJsonStr = "{\"service\":{\"name\":\"createInstantVendorMeeting\",\"status\":{\"code\":\"200\",\"message\":\"Success\"},\"appVersion\":{\"version\":\"1.4.0\",\"instructions\":null},\"envelope\":{\"vendorMeeting\":{\"conferenceId\":\"78087\",\"callerId\":0,\"entityId\":78087,\"roomUrl\":\"https://thvid.kp.org/flex.html?roomdirect.html&key=X8gvjBn73e5yZKqqm0vEpda4b8E\",\"userId\":0,\"meetingId\":142306}}}}";
+			logger.info("createInstantVendorMeeting -> jsonResponseString : " + responseJsonStr);
 
 			JsonParser parser = new JsonParser();
 			JsonObject jobject = new JsonObject();
