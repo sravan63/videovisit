@@ -213,7 +213,8 @@ $(document).ready(function() {
         meetingTimestamp = $(this).text();
         var tz = $("#tz").val();
 
-        convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only') + " " + tz;
+        //convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only') + " " + tz;
+        convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
 
         $(this).next('span').append(convertedTimestamp);
     });
