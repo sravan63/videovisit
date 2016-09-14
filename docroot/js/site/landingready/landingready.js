@@ -1,6 +1,8 @@
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
- 
+    /*Satish US14366 - Automatically refresh page every one minute --Start*/
+    setTimeout(function(){window.location.reload();},60000);
+    /*Satish US14366 - Automatically refresh page every one minute --End*/
     initializeUserPresentInMeetingModal();
     
     //make ajax call to KP Keep alive url
