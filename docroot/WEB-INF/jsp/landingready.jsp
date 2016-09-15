@@ -36,8 +36,10 @@
               </h1>
               <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
               <div class="accord-contents" style="display:block;">
+                  <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0 || meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+                    <h2 class="label" style="float:none;margin:10px 0px;">Additional Participants</h2>
+                  </c:if>
                   <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
-                  <h2 class="label" style="float:none;margin:10px 0px;">Additional Participants</h2>
                     <div class="names-container-member" style="margin:0px;">
                       <span class="names participants" style="margin-left:0;">
                         <c:forEach var="p" items="${meeting.participants}">
