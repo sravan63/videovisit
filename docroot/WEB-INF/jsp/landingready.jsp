@@ -81,7 +81,7 @@
                                 <c:choose>
                                   <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
                                     <p class="">
-                                      <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button> 
+                                      <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</button> 
                                     </p>
                                     <p class="" style="margin-top:10px;">You may be joining before your clinician. Please be patient.</p>
                                   </c:when>
