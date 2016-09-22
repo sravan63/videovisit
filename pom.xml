@@ -18,12 +18,19 @@
     </properties>
 
 	<scm>
-		 <connection>scm:svn:http://ttg-pr-svn-1.har.ca.kp.org/svn/videovisit/member-facing/TRUNK/videovisit-member-webapp</connection>
-		 <developerConnection>scm:svn:http://ttg-pr-svn-1.har.ca.kp.org/svn/videovisit/member-facing/TRUNK/videovisit-member-webapp</developerConnection>
+		 <connection>scm:svn:https://svn.tpmg.kp.org/svn/videovisit/member-facing/TRUNK/videovisit-member-webapp</connection>
+		 <developerConnection>scm:svn:https://svn.tpmg.kp.org/svn/videovisit/member-facing/TRUNK/videovisit-member-webapp</developerConnection>
 	</scm>
 
  <!-- dependencies needed during compile time -->   
     <dependencies>
+      <!-- to address missing -->
+      <dependency>
+        <groupId>org.kp.tpmg.ttg.videovisit</groupId>
+        <artifactId>videovisitservice</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <classifier>serviceclientjar</classifier>
+      </dependency>
       <!-- to address org.kp.ttg.sharedservice.client missing -->
       <dependency>
       <groupId>org.kp.sharedservices.restclient</groupId>
@@ -34,24 +41,6 @@
           <groupId>*</groupId>
           <artifactId>*</artifactId>
         </exclusion>
-        <!--
-        <exclusion>
-          <groupId>org.apache.ws.xmlschema</groupId>
-          <artifactId>xmlschema-core</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.codehaus.woodstox</groupId>
-          <artifactId>woodstox-core-asl</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-codec</groupId>
-          <artifactId>commons-codec</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-httpclient</groupId>
-          <artifactId>commons-httpclient</artifactId>
-        </exclusion>
-      -->
       </exclusions>
     </dependency>
       <!-- to address org.json missing -->
@@ -60,13 +49,6 @@
         <artifactId>org.json</artifactId>
         <version>20131017</version>
       </dependency>
-      <!-- to address package org.kp.tpmg.videovisit.member does not exist 
-      <dependency>
-      <groupId>org.kp.tpmg.ttg.serviceartifacts</groupId>
-      <artifactId>VideoVisitMemberServices-client</artifactId>
-      <version>1.3.0</version>
-    </dependency> -->
-    
     <!-- to address package org.kp.tpmg.webservice.client.videovisit.member does not exist -->
     <dependency>
       <groupId>org.kp.tpmg.ttg.serviceartifacts</groupId>
@@ -636,7 +618,7 @@
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-release-plugin</artifactId>
                  <configuration>
-                     <tagBase>http://ttg-pr-svn-1.har.ca.kp.org/svn/Mobile/MobileCare/webmodules/tags</tagBase>
+                     <tagBase>https://svn.tpmg.kp.org/svn/videovisit/member-facing/TAGS/</tagBase>
                  </configuration>
             </plugin>
         </plugins>
