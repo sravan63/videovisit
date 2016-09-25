@@ -1,6 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.service;
 
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil.GET_ACTIVE_MEETINGS_FOR_CAREGIVER;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +19,7 @@ import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.DatatypeConverter;		
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.axis2.client.Options;
 import org.apache.axis2.context.ConfigurationContext;
@@ -46,6 +47,8 @@ import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSession;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.GetMeetingByMeetingID;
 import org.kp.tpmg.videovisit.member.GetMeetingByMeetingIDResponse;
+import org.kp.tpmg.videovisit.member.GetVendorPluginData;
+import org.kp.tpmg.videovisit.member.GetVendorPluginDataResponse;
 import org.kp.tpmg.videovisit.member.IsMeetingHashValid;
 import org.kp.tpmg.videovisit.member.IsMeetingHashValidResponse;
 import org.kp.tpmg.videovisit.member.KickUserFromMeeting;
@@ -66,6 +69,8 @@ import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiver;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiverResponse;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMember;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMemberResponse;
+import org.kp.tpmg.videovisit.member.TerminateInstantMeeting;
+import org.kp.tpmg.videovisit.member.TerminateInstantMeetingResponse;
 import org.kp.tpmg.videovisit.member.TestDbRoundTrip;
 import org.kp.tpmg.videovisit.member.TestDbRoundTripResponse;
 import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoining;
@@ -80,19 +85,12 @@ import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
+import org.kp.tpmg.videovisit.model.meeting.SetKPHCConferenceStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.UpdateMemberMeetingStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
-import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatus;
-import org.kp.tpmg.videovisit.member.SetKPHCConferenceStatusResponse;
-import org.kp.tpmg.videovisit.member.GetVendorPluginData;
-import org.kp.tpmg.videovisit.member.GetVendorPluginDataResponse;
-import org.kp.tpmg.videovisit.member.CreateInstantVendorMeeting;
-import org.kp.tpmg.videovisit.member.CreateInstantVendorMeetingResponse;
-import org.kp.tpmg.videovisit.member.TerminateInstantMeeting;
-import org.kp.tpmg.videovisit.member.TerminateInstantMeetingResponse;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
@@ -1913,8 +1911,62 @@ public class WebService{
 		  	logger.info("Exiting disconnectURLConnection");
 	  }
 	  
-	  public static StringResponseWrapper setKPHCConferenceStatus(long meetingId, String joinLeaveStatus, boolean isProxyMeeting, String careGiverName, String sessionId) throws Exception 
+	  /**
+	 * @param meetingId
+	 * @param joinLeaveStatus
+	 * @param isProxyMeeting
+	 * @param careGiverName
+	 * @param sessionId
+	 * @param clientId
+	 * @return
+	 * @throws Exception
+	 */
+	public static ServiceCommonOutput setKPHCConferenceStatus(long meetingId, String joinLeaveStatus,
+			boolean isProxyMeeting, String careGiverName, String sessionId, String clientId) throws Exception 
 	  {
+			logger.info("Entered setKPHCConferenceStatus -> Inputs [meetingId=" + meetingId + ", joinLeaveStatus="
+				+ joinLeaveStatus + ", isProxyMeeting" + isProxyMeeting + ", careGiverName=" + careGiverName + "]");
+		
+			ServiceCommonOutput output = null;
+			String inputJsonString = "";
+			String jsonResponseStr = "";
+		
+			try {
+				if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
+					logger.warn("setKPHCConferenceStatus --> Missing input attributes.");
+					output = new ServiceCommonOutput();
+					final Status status = new Status();
+					status.setCode("300");
+					status.setMessage("Missing input attributes.");
+					output.setStatus(status);
+				} else {
+					final SetKPHCConferenceStatusInput input = new SetKPHCConferenceStatusInput();
+					input.setCareGiverName(careGiverName);
+					input.setClientId(clientId);
+					input.setJoinLeaveStatus(joinLeaveStatus);
+					input.setMeetingId(meetingId);
+					input.setProxyMeeting(isProxyMeeting);
+					input.setSessionId(sessionId);
+					
+					final Gson gson = new Gson();
+					inputJsonString = gson.toJson(input);
+					logger.info("setKPHCConferenceStatus -> jsonInputString : " + inputJsonString);
+					jsonResponseStr = callVVRestService(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, inputJsonString);
+					logger.info("setKPHCConferenceStatus -> jsonResponseString : " + jsonResponseStr);
+					final JsonParser parser = new JsonParser();
+					final JsonObject jobject = (JsonObject) parser.parse(jsonResponseStr);
+					output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+				}
+			} catch (Exception e) {
+				logger.error("setKPHCConferenceStatus -> Web Service API error");
+			}
+			
+			logger.info("Exit setKPHCConferenceStatus");
+			return output;
+		}
+	
+		/*public static StringResponseWrapper setKPHCConferenceStatus(long meetingId, String joinLeaveStatus, boolean isProxyMeeting, String careGiverName, String sessionId) throws Exception 
+		{
 		  	logger.info("Entered setKPHCConferenceStatus -> received input as [meetingId=" + meetingId + ", joinLeaveStatus=" + joinLeaveStatus + ", careGiverName=" + careGiverName + "]");
 			StringResponseWrapper toRet = null; 
 			SetKPHCConferenceStatus setKPHCConferenceStatus = new SetKPHCConferenceStatus();
@@ -1946,7 +1998,7 @@ public class WebService{
 			}
 			logger.info("Exiting setKPHCConferenceStatus");
 			return toRet;
-	  }
+	  }*/
 	  
 	  public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForMemberAndProxies(String mrn8Digit, boolean getProxyMeetings, String sessionID) throws Exception 
 	  {

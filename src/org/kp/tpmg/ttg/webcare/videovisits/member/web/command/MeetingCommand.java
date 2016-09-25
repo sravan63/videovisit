@@ -23,6 +23,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionSer
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
+import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
@@ -1540,57 +1541,51 @@ public class MeetingCommand {
 		  return isSignedOff;
       }
 	  
-	  public static String setKPHCConferenceStatus(HttpServletRequest request, HttpServletResponse response)
+	  public static String setKPHCConferenceStatus(HttpServletRequest request, HttpServletResponse response) 
 	  {
-			logger.info("Entered setKPHCConferenceStatus");
-			StringResponseWrapper setKPHCConferenceStatusResponse = null; 
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);	
-			long meetingId = 0;
-			
-			try
-			{
-				if (ctx != null && ctx.getMember() != null)
-				{
-					// parse parameters
-					if (StringUtils.isNotBlank(request.getParameter("meetingId"))) 
-					{
-						meetingId = Long.parseLong(request.getParameter("meetingId"));
-					}
-					
-					if (meetingId == 0)
-					{
-						meetingId = ctx.getMeetingId();
-					}
-					
-					logger.info("MeetingCommand.setKPHCConferenceStatus: meetingId=" + meetingId + ", status=" + request.getParameter("status") + ", careGiverName=" + request.getParameter("careGiverName"));
-					
-					boolean isProxyMeeting;
-					if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting")))
-					{
-						isProxyMeeting = true;
-					}
-					else
-					{
-						isProxyMeeting = false;
-					}
-					//grab data from web services
-					setKPHCConferenceStatusResponse = WebService.setKPHCConferenceStatus(meetingId, request.getParameter("status"), isProxyMeeting, request.getParameter("careGiverName"), request.getSession().getId());
-					if (setKPHCConferenceStatusResponse != null)
-					{
-						logger.info("MeetingCommand.setKPHCConferenceStatus: result = " + setKPHCConferenceStatusResponse.getResult()); 
-						return setKPHCConferenceStatusResponse.getResult();
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				logger.error("setKPHCConferenceStatus -> System error:" + e.getMessage(), e);
-				
-			}
-			logger.info("Exiting setKPHCConferenceStatus");
-			// worst case error returned, no authenticated user, no web service responded, etc.
-			return (JSONObject.fromObject(new SystemError()).toString());
-	   }
+		  logger.info("Enter setKPHCConferenceStatus");
+		  ServiceCommonOutput output = null;
+		  WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		  long meetingId = 0;
+		  String jsonStr = null;
+		  final Gson gson = new Gson();
+		  try {
+			  if (ctx != null && ctx.getMember() != null) {
+				  // parse parameters
+				  if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
+					  meetingId = Long.parseLong(request.getParameter("meetingId"));
+				  }
+				  if (meetingId == 0) {
+					  meetingId = ctx.getMeetingId();
+				  }
+				  final String status = request.getParameter("status");
+				  final String careGiverName = request.getParameter("careGiverName");
+				  logger.info("setKPHCConferenceStatus -> meetingId=" + meetingId + ", status=" + status
+						+ ", careGiverName=" + careGiverName);
+
+				  boolean isProxyMeeting = false;
+				  if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
+					  isProxyMeeting = true;
+				  } 
+				  
+				  output = WebService.setKPHCConferenceStatus(meetingId, status, isProxyMeeting, careGiverName,
+						request.getSession().getId(), WebUtil.clientId);
+			  }
+		  } catch (Exception e) {
+			  logger.error("setKPHCConferenceStatus -> System error:" + e.getMessage(), e);
+		  }
+		  if (output == null) {
+			  output = new ServiceCommonOutput();
+			  output.setName("SetKPHCConferenceStatus");
+			  final Status status = new Status();
+			  status.setCode("900");
+			  status.setMessage("System error");
+			  output.setStatus(status);
+		  }
+		  jsonStr = gson.toJson(output);
+		  logger.info("Exiting setKPHCConferenceStatus. Result: " + jsonStr);
+		  return jsonStr;
+	  }
 	  
 	 public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	  {
