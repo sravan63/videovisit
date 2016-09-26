@@ -86,6 +86,7 @@ import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.SetKPHCConferenceStatusInput;
+import org.kp.tpmg.videovisit.model.meeting.TerminateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.UpdateMemberMeetingStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
@@ -1194,7 +1195,8 @@ public class WebService{
 		return toRet;
 	}*/
 	
-	public static StringResponseWrapper terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID, String sessionId) throws Exception
+	//calling rest service
+	/*public static StringResponseWrapper terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID, String sessionId) throws Exception
 	{
 		logger.info("Entered WebService.terminateInstantMeeting received input attributes as [meetingId=" + meetingId + ", vendorConfId=" + vendorConfId + ", updaterNUID=" + updaterNUID + ", sessionId=" + sessionId + "]");
 		StringResponseWrapper toRet = null; 
@@ -1223,6 +1225,57 @@ public class WebService{
 		}
 		logger.info("Exiting WebService.terminateInstantMeeting");
 		return toRet;
+	}*/
+	public static ServiceCommonOutput terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID, String sessionId) throws Exception
+	{
+		logger.info("Entered WebService.terminateInstantMeeting received input attributes as [meetingId=" + meetingId + ", vendorConfId=" + vendorConfId + ", updaterNUID=" + updaterNUID + ", sessionId=" + sessionId + "]");
+		
+		ServiceCommonOutput output = null;
+		String responseJsonStr = "";
+		try {
+			if (meetingId <= 0  || StringUtils.isBlank(updaterNUID) || StringUtils.isBlank(sessionId)) {
+				logger.warn("terminateInstantMeeting --> missing input attributes.");
+				output = new ServiceCommonOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setStatus(status);
+			}
+			TerminateInstantVendorMeetingInput input = new TerminateInstantVendorMeetingInput();
+			input.setMeetingId(meetingId);
+			input.setMeetingVendorId(vendorConfId);
+			input.setUpdaterNuid(updaterNUID);
+			input.setSessionId(sessionId);
+			input.setClientId(WebUtil.clientId);
+
+			final Gson gson = new Gson();
+			final String inputJsonString = gson.toJson(input);
+			logger.info("terminateInstantMeeting -> jsonInptString : " + inputJsonString);
+
+			responseJsonStr = callVVRestService(ServiceUtil.TERMINATE_INSTANT_VENDOR_MEETING, inputJsonString);
+			logger.info("terminateInstantMeeting -> jsonResponseString : " + responseJsonStr);
+
+			JsonParser parser = new JsonParser();
+			JsonObject jobject = new JsonObject();
+			jobject = (JsonObject) parser.parse(responseJsonStr);
+			output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			logger.error("WebService.terminateInstantMeeting: Web Service API error:" + e.getMessage());
+			throw new Exception("terminateInstantMeeting: Web Service API error", e.getCause());
+
+		}
+		String responseCodeAndMsg = "Empty response";
+		if (output != null) {
+			responseCodeAndMsg = output.getStatus() != null
+					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
+					: "No rest response code & message returned from service.";
+		}
+		logger.info("Exit WebService.terminateInstantMeeting --> terminateInstantMeeting rest response message & code: "
+				+ responseCodeAndMsg);
+		return output;
 	}
 	
 	/** This method will upload the file contents to the database using service API

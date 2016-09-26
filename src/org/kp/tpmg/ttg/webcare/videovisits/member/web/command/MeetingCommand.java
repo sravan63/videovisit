@@ -1073,8 +1073,9 @@ public class MeetingCommand {
 		return jsonString;
 	}
 	
-
-	public static String terminateSetupWizardMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	//calling rest service
+	/*public static String terminateSetupWizardMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info("Entered MeetingCommand.terminateSetupWizardMeeting ");
 		
 		StringResponseWrapper ret = null;
@@ -1112,6 +1113,48 @@ public class MeetingCommand {
 		}
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
+	}*/
+	
+	
+	public static String terminateSetupWizardMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		logger.info("Entered MeetingCommand.terminateSetupWizardMeeting");
+		ServiceCommonOutput output = null;
+		String jsonString = null;	
+		long meetingId = 0;
+		String vendorConfId = null;
+		
+		try
+		{
+			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}else{
+				return "MeetingCommand.terminateSetupWizardMeeting -> Validation Error: Meeting Id can not be null or blank.";
+			}
+			
+			if (StringUtils.isNotBlank(request.getParameter("vendorConfId"))) {
+				vendorConfId = request.getParameter("vendorConfId");
+			}
+			
+			boolean success = WebService.initWebService(request);
+			String hostNuid = WebService.getSetupWizardHostNuid();
+			
+			output = WebService.terminateInstantMeeting(meetingId, vendorConfId, hostNuid, request.getSession().getId());
+			
+			if ( output != null )		
+			{		
+				Gson gson = new Gson();		
+				jsonString = gson.toJson(output);		
+				logger.info("MeetingCommand->terminateSetupWizardMeeting->output value after converting to json"+ jsonString.toString());		
+			}	
+			
+		}
+		catch (Exception e) {
+			logger.error("MeetingCommand->terminateSetupWizardMeeting : System Error :" + e.getMessage(), e);
+			jsonString = JSONObject.fromObject(new SystemError()).toString();
+		}
+		logger.info("Exit MeetingCommand.terminateSetupWizardMeeting ");
+		return jsonString;
 	}
 	
 	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
