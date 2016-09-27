@@ -29,6 +29,12 @@
         <artifactId>videovisitservice</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <classifier>serviceclientjar</classifier>
+        <exclusions>
+          <exclusion>
+            <groupId>*</groupId>
+            <artifactId>*</artifactId>
+          </exclusion>
+        </exclusions>
       </dependency>
       <!-- to address org.kp.ttg.sharedservice.client missing -->
       <dependency>
