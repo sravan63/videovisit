@@ -291,7 +291,7 @@ input								{outline:none;}
 
 /* Member Landing Ready */
 #landing-portal-ready			{width:632px; margin:60px auto 0 auto;}
-#landing-portal-ready img 		{float:left; width:50px; height: 50px; border-radius: 50px;}
+#landing-portal-ready img 		{float:left; width:55px; height: 55px; border-radius: 55px;}
 .landing-portal-details			{float:right; padding:25px 30px 30px; width:350px; /* min-height:196px; */ height:auto !important; height:196px; margin-left:20px;}
 .landing-portal-details h3		{line-height:1.26em; font-size:155%; color:#bd6d54; font-weight:normal; margin-bottom:1em;}
 .landing-portal-details p 		{font-size:140%; line-height:1.26em;}
@@ -333,7 +333,7 @@ input								{outline:none;}
   float:left;
   /* width:602px; */
   width:100%;
-  margin-bottom:20px;
+  /*margin-bottom:20px;*/
   /*border-top: 1px solid rgb(181, 181, 181);*/
   border-bottom: 1px solid rgb(181, 181, 181);
   background-color: #FFFFFF;
@@ -394,17 +394,19 @@ transform: rotate(180deg);
 -webkit-transform: rotate(180deg);
 }
 .meeting-details-container {
-	margin: 20px 0px;
+	margin: 35px 0px;
 }
 
 .meeting-details-container .left{
+	margin-top: 5px;
 	width: 30%;
 	float: left;
 }
 
-.meeting-details-container .left h1{
+.meeting-details-container .left .time-display{
 	font-size: 25px;
 	margin-bottom: 5px;
+	font-weight: none;
 }
 
 .meeting-details-container .center{
@@ -426,16 +428,19 @@ transform: rotate(180deg);
  	display: inline-block;
 	margin: 0px 0px 10px 10px;
 	text-transform: capitalize;
+	width: 200px;
+	word-break: break-all;
  }
 
 .meeting-details-container .right{
+	margin-top: 5px;
 	width: 30%;
 	float: left;
 }
 
 .meeting-details-container .joinNowButton{
 	width: 100%;
-	height: 35px;
+	height: 45px;
 	border: 1px solid #1A7CBD;
 	background-color: #ffffff;
 	color: #1A7CBD;
@@ -444,7 +449,7 @@ transform: rotate(180deg);
 
 .meeting-details-container .not-available{
 	width: 100%;
-	height: 35px;
+	height: 45px;
 	border: 1px solid #999999;
 	background-color: #999999;
 	color: #FFFFFF;
@@ -454,18 +459,18 @@ transform: rotate(180deg);
 }
 
 .sub-banner{
-	margin: 30px auto 20px;
+	margin: 40px auto 0px;
 	border-bottom: 1px solid #B5B5B5;
 	width: 90%;
 }
 
 .sub-banner h1{
 	font-size: 35px;
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 }
 
 .sub-banner .links{
-	margin-bottom: 20px;
+	margin-bottom: 60px;
 }
 
 .sub-banner .links a{

@@ -30,14 +30,14 @@
       <div class="landing-portal-single-container">
           <div class="meeting-details-container" style="font-size:14px;">
             <div class="left">
-              <h1 class="">
+              <div class="time-display">
                 <span class="hidden timestamp">${meeting.scheduledTimestamp} </span>
                 <span></span>
-              </h1>
+              </div>
               <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
-              <div class="accord-contents" style="display:block;">
+              <div class="accord-contents" style="display:block;margin-top:30px;">
                   <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0 || meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-                    <h2 class="label" style="float:none;margin:10px 0px;">Additional Participants</h2>
+                    <h2 class="label" style="float:none;margin-bottom: 15px;">Additional Participants</h2>
                   </c:if>
                   <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
                     <div class="names-container-member" style="margin:0px;">
@@ -69,27 +69,27 @@
                 <c:when test="${not WebAppContext.isNonMember()}">
                    <c:choose>
                       <c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
-                        <div style="margin-top:5px;">
+                        <div style="">
                           <p style="">
                               <button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button> 
                           </p>
-                          <p class="" style="margin-top:10px;">Your visit will be available within 15 minutes of the start time.</p>
+                          <p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p>
                         </div>
                         </c:when>
                           <c:otherwise>
-                            <div style="margin-top:5px;">
+                            <div style="">
                                 <c:choose>
                                   <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
                                     <p class="">
                                       <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</button> 
                                     </p>
-                                    <p class="" style="margin-top:10px;">You may be joining before your clinician. Please be patient.</p>
+                                    <p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
                                   </c:when>
                                   <c:otherwise>
                                      <p style="">
                                         <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button> 
                                     </p>
-                                    <p class="" style="margin-top:10px;">You may be joining before your clinician. Please be patient.</p>
+                                    <p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
                                   </c:otherwise>
                                 </c:choose>
                          </div>
@@ -99,26 +99,26 @@
                 <c:otherwise>
                    <c:choose>
                         <c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
-                          <div style="margin-top:30px;">
+                          <div style="">
                             <p style="">
                                 <button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button> 
                             </p>
-                            <p class="" style="margin-top:10px;">Your visit will be available within 15 minutes of the start time.</p>
+                            <p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p>
                           </div>
                         </c:when>
                         <c:otherwise>
-                          <div style="margin-top:5px;">
+                          <div style="">
                             <p style="">
                                 <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button> 
                             </p>
-                            <p class="" style="margin-top:10px;">You may be joining before your clinician. Please be patient.</p>
+                            <p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
                           </div>
                         </c:otherwise>
                      </c:choose>                      
                  </c:otherwise>
             </c:choose>
             </div>
-            <p class="error error-guest-login" id="error_label_${meeting.meetingId}" style="margin-top:20px; font-size:16px;"></p>
+            <p class="error error-guest-login" id="error_label_${meeting.meetingId}" style="margin-bottom:25px; font-size:16px;"></p>
           </div>
       </div>
 
