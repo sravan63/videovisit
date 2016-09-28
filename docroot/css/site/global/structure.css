@@ -420,16 +420,16 @@ transform: rotate(180deg);
 
 .meeting-details-container .center .name-and-details{
  	display: inline-block;
-	margin: 10px 0px 0px 10px;
+	margin: 10px 0px 0px 15px;
 	font-weight: bold;
  }
 
  .meeting-details-container .center .department-details{
  	display: inline-block;
-	margin: 0px 0px 10px 10px;
+	margin: 0px 0px 10px 15px;
 	text-transform: capitalize;
 	width: 200px;
-	word-break: break-all;
+	word-break: keep-all;
  }
 
 .meeting-details-container .right{
