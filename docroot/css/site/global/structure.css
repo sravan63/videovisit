@@ -464,7 +464,7 @@ transform: rotate(180deg);
 	width: 90%;
 }
 
-.sub-banner h1{
+.sub-banner .heading{
 	font-size: 35px;
 	margin-bottom: 20px;
 }

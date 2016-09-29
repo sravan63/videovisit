@@ -16,7 +16,7 @@
 %>
 
 <div class="sub-banner">
-  <h1>Your Video Visits for Today</h1>
+  <div class="heading">Your Video Visits for Today</div>
   <div class="links">
     <a href="javascript:location.reload()">Refresh page</a>
     <span>|</span>
