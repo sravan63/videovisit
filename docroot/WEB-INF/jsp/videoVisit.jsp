@@ -290,10 +290,16 @@
 		            <!-- Plugin and controls panel -->
 		            <div id="inCallPluginAndControlsWrap">
 		                <!-- Plugin wrapper -->
-		                <div id="pluginContainer" style="background-color: black; display:inline-block; float:left;">
-							<!-- Will autogenerate plugin tag -->
-							<br/>
-	           			</div>
+		                <div style="display:inline-block; float:left;">
+		                	<div id="waitingRoom" style="background-color:#3F3D3D; border:1px solid #000000; display:none; color:#ffffff;">
+		                		<p style="font-size:40px; margin:50px; text-align:center;"> Waiting Room Concept </p>
+		                		<p style="font-size:40px; margin:50px; text-align:center;"> Please wait for the Doctor to join </p>
+		                	</div>
+			                <div id="pluginContainer" style="background-color: black; display:inline-block; float:left;">
+								<!-- Will autogenerate plugin tag -->
+								<br/>
+		           			</div>
+		           		</div>
 
 						<div id="btnContainer" style="position:static;">
 
