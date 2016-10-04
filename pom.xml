@@ -13,8 +13,8 @@
     <packaging>war</packaging>
 
     <properties>
-        <env>qa</env>
-    	<servicesArtifactsVersion>1.3.0</servicesArtifactsVersion>
+      <env>pr</env>
+    	<servicesArtifactsVersion>1.5.0-SNAPSHOT</servicesArtifactsVersion>
     </properties>
 
 	<scm>
@@ -58,7 +58,7 @@
     <dependency>
       <groupId>org.kp.tpmg.ttg.serviceartifacts</groupId>
       <artifactId>VideoVisitMemberServices-client</artifactId>
-      <version>1.5.0-SNAPSHOT</version>
+      <version>${servicesArtifactsVersion}</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.neethi</groupId>
@@ -103,7 +103,6 @@
     <dependency>
           <groupId>org.springframework</groupId>
           <artifactId>spring-webmvc</artifactId>
-          <!-- <version>3.2.2.RELEASE</version> -->
           <!-- in ant build version 2.5.5 is used -->
           <version>2.5.5</version>
           <exclusions>
