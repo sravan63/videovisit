@@ -610,7 +610,7 @@
                         <resource>
                             <directory>${project.build.directory}/lib</directory>
                             <includes>
-                                <include>*.jar</include>
+                                <include>**</include>
                             </includes>
                             <targetPath>WEB-INF/lib</targetPath>
                         </resource>
