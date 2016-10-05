@@ -671,6 +671,14 @@ input.disabled
 }
 
 iframe { display: none !important; }
+/* Satish US13301	Waiting Room Start */
+#waitingRoom{
+	display:none;
+	background-color:#3F3D3D;
+	border:1px solid #000000;
+	color:#ffffff;
+}
+/* Satish US13301	Waiting Room End */
 /* ============		@BROWSER FIXES	======================== */
 .ie6 #container-header			{position:relative;}
 .ie6 #container-header			{position:relative;}
