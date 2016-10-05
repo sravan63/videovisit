@@ -291,7 +291,8 @@
 		            <div id="inCallPluginAndControlsWrap">
 		                <!-- Plugin wrapper -->
 		                <div style="display:inline-block; float:left;">
-		                	<div id="waitingRoom" style="background-color:#3F3D3D; border:1px solid #000000; display:none; color:#ffffff;">
+		                <!--Satish US13301 Start -->
+		                	<div id="waitingRoom">
 		                		<p style="font-size:40px; margin:50px; text-align:center;"> Waiting Room Concept </p>
 		                		<p style="font-size:40px; margin:50px; text-align:center;"> Please wait for the Doctor to join </p>
 		                	</div>
@@ -300,6 +301,7 @@
 								<br/>
 		           			</div>
 		           		</div>
+		           		<!--Satish US13301 End -->
 
 						<div id="btnContainer" style="position:static;">
 
