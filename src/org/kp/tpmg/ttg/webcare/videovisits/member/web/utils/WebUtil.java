@@ -21,6 +21,7 @@ public class WebUtil {
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
 	public static final String SSO_COOKIE_NAME = "ObSSOCookie";
 	public static final String clientId = "vv-mbr-web";
+	public static final String DEFAULT_DEVICE = "Desktop";
 	
 	public static String getCurrentDateTimeZone()
 	{
@@ -211,4 +212,11 @@ public class WebUtil {
         return browser;
 	}
 
+	public static String getDeviceOs(){
+		return StringUtils.isBlank(System.getProperty("os.name")) ? DEFAULT_DEVICE : System.getProperty("os.name");
+	}
+	
+	public static String getDeviceOsVersion(){
+		return StringUtils.isBlank(System.getProperty("os.version")) ? DEFAULT_DEVICE : System.getProperty("os.version");
+	}
 }

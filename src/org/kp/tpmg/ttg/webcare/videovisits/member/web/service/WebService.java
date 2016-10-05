@@ -78,10 +78,13 @@ import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoiningResponse;
 import org.kp.tpmg.videovisit.member.UserPresentInMeeting;
 import org.kp.tpmg.videovisit.member.UserPresentInMeetingResponse;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
+import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
+import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
+import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
@@ -712,12 +715,12 @@ public class WebService{
 		return output;
 	}
 	
-	
+	//calling rest service	
 	/**
 	 * Simply test database round trip
 	 * @return
 	 */
-	public static StringResponseWrapper testDbRoundTrip() throws Exception
+/*	public static StringResponseWrapper testDbRoundTrip() throws Exception
 	{
 		logger.info("Entered testDbRoundTrip");
 		StringResponseWrapper toRet = null; 
@@ -741,7 +744,7 @@ public class WebService{
 		logger.info("Exit testDbRoundTrip");
 		return toRet;
 	}
-
+*/
 	public static RetrieveMeetingResponseWrapper retrieveMeetingForCaregiver(String meetingHash,//left
 			int pastMinutes,int futureMinutes) 
 				throws RemoteException {
@@ -2138,7 +2141,8 @@ public class WebService{
 			logger.info("Exiting launchMemberOrProxyMeetingForMember");
 			return toRet;
 	 }
-	 
+
+	//calling rest service	
 	 /**
 	 * Member leave proxy meeting.
 	 * @param meetingId
@@ -2146,7 +2150,7 @@ public class WebService{
 	 * @param sessionId
 	 * @return
 	 */
-	public static StringResponseWrapper memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId)
+/*	public static StringResponseWrapper memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId)
 	throws Exception
 	{
 		logger.info("Entered memberLeaveProxyMeeting - received input attributes as [meetingId=" + meetingId + ", sessionID=" + sessionId + ", careGiverName=" + careGiverName + "]");
@@ -2181,7 +2185,7 @@ public class WebService{
 		logger.info("Exit memberLeaveProxyMeeting");
 		return toRet;
 	}
-	
+*/	
 	public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForNonMemberProxies(String guid, String sessionID) throws Exception 
 	{
 		logger.info("Entered retrieveActiveMeetingsForNonMemberProxies -> guid=" + guid);
@@ -2538,6 +2542,71 @@ public class WebService{
 
 	}
 	    
+	public static ServiceCommonOutputJson testDbRoundTrip() throws Exception
+	{
+		logger.info("Entered testDbRoundTrip");
+		String responseJsonStr = null;
+		final Gson gson = new Gson();
+		ServiceCommonOutputJson testDbRoundTripJson = new ServiceCommonOutputJson();
+		try
+		{
+			responseJsonStr = callVVRestService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}");
+			testDbRoundTripJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+		}
+		catch (Exception e)
+		{
+			logger.error("testDbRoundTrip -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			responseJsonStr = callVVRestService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}");
+			testDbRoundTripJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+		}
+		logger.info("Exit testDbRoundTrip");
+		return testDbRoundTripJson;
+	}
+	
+	public static JoinLeaveMeetingJSON memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId)
+	throws Exception
+	{
+		logger.info("Entered memberLeaveProxyMeeting - received input attributes as [meetingId=" + meetingId + ", sessionID=" + sessionId + ", careGiverName=" + careGiverName + "]");
+		JoinLeaveMeetingJSON output = null;
+		String responseJsonStr = null;
+		final Gson gson = new Gson();
+		String inputJsonString = null;
+		try
+		{
+			if(StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId))
+			{
+				output = new JoinLeaveMeetingJSON();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.getService().setStatus(status);
+			}
+			JoinLeaveMeetingInput joinLeaveMeetingInput = new JoinLeaveMeetingInput();
+			joinLeaveMeetingInput.setMeetingId(Long.parseLong(meetingId));
+			joinLeaveMeetingInput.setInMeetingDisplayName(careGiverName);
+			joinLeaveMeetingInput.setSessionId(sessionId);
+			joinLeaveMeetingInput.setClientId(WebUtil.clientId);
+			joinLeaveMeetingInput.setIsPatient(false);
+			joinLeaveMeetingInput.setDeviceType(WebUtil.DEFAULT_DEVICE);
+			joinLeaveMeetingInput.setDeviceOs(WebUtil.getDeviceOs());
+			joinLeaveMeetingInput.setDeviceOsVersion(WebUtil.getDeviceOsVersion());
+			inputJsonString = gson.toJson(joinLeaveMeetingInput);
+			logger.info("memberLeaveProxyMeeting -> jsonInptString : " + inputJsonString);
+
+			responseJsonStr = callVVRestService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString);
+			output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+			
+		}
+		catch (Exception e)
+		{
+			logger.error("memberLeaveProxyMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			responseJsonStr = callVVRestService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString);
+			output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+		}
+		logger.info("Exit memberLeaveProxyMeeting");
+		return output;
+	}
+
 }
 
 

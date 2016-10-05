@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
+import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
+import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 
 
@@ -24,12 +26,20 @@ public class MonitoringCommand {
 			boolean success = WebService.initWebService(request);
 			logger.info("MonitoringCommand.testDbRoundTrip -> WebService.initWebService: " + success);
 			
-			StringResponseWrapper result = WebService.testDbRoundTrip();
-			if(result.getSuccess())
+			ServiceCommonOutputJson result = WebService.testDbRoundTrip();
+			
+			if(result != null && result.getService() != null 
+					&& result.getService().getStatus() != null)
 			{
-				toRet = "OK";
+				if("200".equals(result.getService().getStatus().getCode())){
+					toRet = "OK";
+				}else{
+					toRet = result.getService().getStatus().getMessage();
+				}
 			}
-			else toRet = "errorID=" + result.getErrorIdentifier(); //+ " message=" + result.getErrorMessage();
+			else{
+				toRet = "Failure";
+			} 
 		}
 		catch(Throwable th)
 		{

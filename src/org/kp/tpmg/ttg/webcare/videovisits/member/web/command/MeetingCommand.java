@@ -25,6 +25,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
+import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
@@ -1741,29 +1742,37 @@ public class MeetingCommand {
 	  public static String memberLeaveProxyMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	  {
 		  	logger.info("Entered memberLeaveProxyMeeting");
-			StringResponseWrapper ret = null;
+			//StringResponseWrapper ret = null;
+		  	JoinLeaveMeetingJSON output = null;
 			WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+			String responseStr = null;
 			try
 			{
 				if (ctx != null)
 				{
 					//grab data from web services
-					ret= WebService.memberLeaveProxyMeeting(request.getParameter("meetingId"), request.getParameter("memberName"), request.getSession().getId());
-					if (ret != null)
+					output = WebService.memberLeaveProxyMeeting(request.getParameter("meetingId"), request.getParameter("memberName"),
+							request.getSession().getId());
+					if (output != null && output.getService() != null 
+							&& output.getService().getStatus() != null)
 					{
-						logger.info("Exiting memberLeaveProxyMeeting");
-						return ret.getResult();
+						if("200".equals(output.getService().getStatus().getCode())){
+							responseStr = output.getService().getStatus().getMessage();
+						}
 					}
+				}
+				if(StringUtils.isBlank(responseStr)){
+					responseStr = new SystemError().getErrorMessage();
 				}
 			}
 			catch (Exception e)
 			{
 				// log error
+				responseStr = new SystemError().getErrorMessage();
 				logger.error("System Error" + e.getMessage(),e);
 			}
-			logger.info("Exiting memberLeaveProxyMeeting");
-			// worst case error returned, no authenticated user, no web service responded, etc. 
-			return (JSONObject.fromObject(new SystemError()).toString());
+		    logger.info("Exiting memberLeaveProxyMeeting" + responseStr);
+			return responseStr;
 	  }
 	  
 	  //calling new api 

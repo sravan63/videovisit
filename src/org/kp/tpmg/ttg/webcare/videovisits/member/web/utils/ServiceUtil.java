@@ -11,5 +11,8 @@ public class ServiceUtil {
 	public static final String CREATE_INSTANT_VENDOR_MEETING = "createInstantVendorMeeting";
 	public static final String TERMINATE_INSTANT_VENDOR_MEETING = "terminateInstantVendorMeeting";
 	public static final String SET_KPHC_CONFERENCE_STATUS = "setKPHCConferenceStatus";
+	public static final String TEST_DB_ROUND_TRIP = "testDbRoundTrip";
+	public static final String MEMBER_LEAVE_PROXY_MEETING = "leaveMeeting";
+	
 	
 }
