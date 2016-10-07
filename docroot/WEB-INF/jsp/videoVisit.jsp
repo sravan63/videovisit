@@ -553,57 +553,61 @@
 		
 		
 		<div id="video-sidebar">
-			<div id="video-sidebar-banner"></div>		
-			<div id="video-info">
-				<h3> Visit Details </h3>
-				<dl>
-				    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
-				</dl>
-				<dl>
-					<dt>PATIENT</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
-				</dl>
-				<dl>
-					<dt>MY DOCTOR</dt><dd id="meetingHost"> 
-					${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
-				</dl>
-				
-				<c:if test="${not empty WebAppContext.videoVisit.participants}">
-					<dl id="meetingParticipantContainer">
-						<dt>ADD'L CLINICIAN(S)</dt>
-						<dd id="meetingParticipant">
-							<table>	    
-							   <c:forEach items="${WebAppContext.videoVisit.participants}" var="ProviderWSO">        
-						        <tr>
-						            <td style="padding-bottom:10px;">${ProviderWSO.lastName}, ${ProviderWSO.firstName} ${ProviderWSO.title}</td>            
-						        </tr>
-						       </c:forEach>
-						    </table>
-						</dd>
+			<div id="video-sidebar-banner"></div>
+			<!-- video-sidebar-content START -->	
+			<div class="video-sidebar-content">
+				<div id="video-info">
+					<h3> Visit Details </h3>
+					<dl>
+					    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
 					</dl>
-				</c:if>
-				
-				<c:if test="${not empty WebAppContext.videoVisit.caregivers}">
-					<dl id="meetingPatientGuestContainer">
-						<dt>MY GUEST(S)</dt>
-						<dd id="meetingPatientGuest">
-						   <table>	 
-								<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
-						        <tr>
-						            <td style="padding-bottom:10px;">${CaregiverWSO.lastName}, ${CaregiverWSO.firstName}</td>            
-						        </tr>
-						       </c:forEach>       
-					       </table>
-						</dd>
-		    		</dl>
-			    </c:if>
-				<!--<dl id="meetingNoteContainer">
-					<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
-				</dl>	-->
+					<dl>
+						<dt>PATIENT</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
+					</dl>
+					<dl>
+						<dt>MY DOCTOR</dt><dd id="meetingHost"> 
+						${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
+					</dl>
+					
+					<c:if test="${not empty WebAppContext.videoVisit.participants}">
+						<dl id="meetingParticipantContainer">
+							<dt>ADD'L CLINICIAN(S)</dt>
+							<dd id="meetingParticipant">
+								<table>	    
+								   <c:forEach items="${WebAppContext.videoVisit.participants}" var="ProviderWSO">        
+							        <tr>
+							            <td style="padding-bottom:10px;">${ProviderWSO.lastName}, ${ProviderWSO.firstName} ${ProviderWSO.title}</td>            
+							        </tr>
+							       </c:forEach>
+							    </table>
+							</dd>
+						</dl>
+					</c:if>
+					
+					<c:if test="${not empty WebAppContext.videoVisit.caregivers}">
+						<dl id="meetingPatientGuestContainer">
+							<dt>MY GUEST(S)</dt>
+							<dd id="meetingPatientGuest">
+							   <table>	 
+									<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
+							        <tr>
+							            <td style="padding-bottom:10px;">${CaregiverWSO.lastName}, ${CaregiverWSO.firstName}</td>            
+							        </tr>
+							       </c:forEach>       
+						       </table>
+							</dd>
+			    		</dl>
+				    </c:if>
+					<!--<dl id="meetingNoteContainer">
+						<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
+					</dl>	-->
+				</div>
+				<div id="refreshContainer">
+					<p class="refresh-text"><span style="font-weight:bold;">Video issues?</span><br> Try refreshing</p>
+					<input name="refresh" value="Refresh" class="refresh-button" type="button">
+				</div>
 			</div>
-			<div id="refreshContainer">
-				<p class="refresh-text"><span style="font-weight:bold;">Video issues?</span><br> Try refreshing</p>
-				<input name="refresh" value="Refresh" class="refresh-button" type="button">
-			</div>
+			<!-- video-sidebar-content END -->
 		</div>
 	</div>
 
