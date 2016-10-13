@@ -60,7 +60,7 @@
               </div>
             </div>
             <div class="center">
-              <img src=${meeting.providerHost.imageUrl} alt="" />
+              <img class="circle-image" src=${meeting.providerHost.imageUrl} alt="" />
               <span class="name-and-details">${meeting.providerHost.firstName} ${meeting.providerHost.lastName}, ${meeting.providerHost.title}</span>
               <span class="department-details">${meeting.providerHost.departmentName}</span>
             </div>

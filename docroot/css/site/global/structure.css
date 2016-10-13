@@ -292,7 +292,8 @@ input								{outline:none;}
 
 /* Member Landing Ready */
 #landing-portal-ready			{width:632px; margin:60px auto 0 auto;}
-#landing-portal-ready img 		{float:left; width:55px; height: 55px; border-radius: 55px;}
+#landing-portal-ready img 		{float:left; width:170px;}
+.circle-image					{float:left; width:55px!important; height: 55px; border-radius: 55px;}
 .landing-portal-details			{float:right; padding:25px 30px 30px; width:350px; /* min-height:196px; */ height:auto !important; height:196px; margin-left:20px;}
 .landing-portal-details h3		{line-height:1.26em; font-size:155%; color:#bd6d54; font-weight:normal; margin-bottom:1em;}
 .landing-portal-details p 		{font-size:140%; line-height:1.26em;}
