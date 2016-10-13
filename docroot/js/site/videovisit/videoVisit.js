@@ -111,7 +111,7 @@ $(window).resize(function(){
 	//$('#container-videovisit').height(calculatedHeight);
 	$("#video-main").height(calculatedHeight);
 	$("#pluginContainer").height(calculatedHeight);
-	//$("#video-sidebar").height(calculatedHeight);
+	$("#video-sidebar").height(calculatedHeight);
 	$(".video-sidebar-content").height(calculatedHeight - 33);
 	$("#btnContainer").height(calculatedHeight);
 });
