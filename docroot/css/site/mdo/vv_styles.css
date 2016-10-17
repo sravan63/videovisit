@@ -241,17 +241,36 @@ div#iconpromo2{
 }
 
 /* ********************** Temporary Mast Head Provider ********************* */
+/*satish US15275 start*/
+
 #masthead {
-    background: none repeat scroll 0 0 #FFFFFF;
+    
+    background: #bb1654 none repeat scroll 0 0;
+font-family: "Open Sans";
+font-size:16px;
+color:white;
+width: 950px;
+    height: 76px;
+
 }
 
 #masthead h1 {
-    background: url("../../../images/mdo/MDO-banner.png") no-repeat scroll left top transparent;
-    height: 76px;
-    text-indent: -9999px;
-    width: 950px;
+   /* background: url("../../../images/mdo/MDO-banner.png") no-repeat scroll left top transparent;*/
+    /*text-indent: -9999px;*/
+ 
     margin: 0;
+     font-size: 24px;
+    font-weight: normal;
+    padding: 40px 0 5px 10px;
+    line-height:2px;
 }
+#masthead h2 {
+ font-size: 14px;
+    font-weight: normal;
+    padding: 4px 0 0 10px;
+    line-height:0px
+}
+/*satish US15275 end*/
 
 /* ******************************* Help Page ******************************* */
 .videoVisitContainer #videoVisitHelpPageContents{
