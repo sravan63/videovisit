@@ -563,8 +563,15 @@ input.disabled
 {background:#af1210;}
 
 .header-inner 						{background:#e2eaed url('../../../images/global/back-blue.png') repeat-x top left;}
-#header-main 						{background: #c10901 url('../../../images/global/back-masthead.jpg') no-repeat top left;}
+/*satish US15275 start*/
+#header-main{
+/*	background: #c10901 url('../../../images/global/back-masthead.jpg') no-repeat top left;*/
+background: #bb1654 none repeat scroll 0 0;
+font-family: "Open Sans";
+font-size:16px;
+}
 
+/*satish US15275 end*/
 #nav-tabs a						{background:#e2eaed url('../../../images/global/back-blue.png') repeat-x top left;}
 #nav-tabs a:hover,
 #nav-tabs a.active					{background:#d9d3c3 url('../../../images/global/back-brown.png') repeat-x top left;}
