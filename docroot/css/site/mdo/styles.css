@@ -418,14 +418,19 @@ ul#iconList li#largeFont a {width:19px; margin-right:4px;background:transparent 
 
 /* masthead */
 
-#masthead	{float:left;padding:5px 0;background:#fff;position:relative;}
-#masthead img	{display:none;}
+/*satish US15275 start*/
 
-
-/* 	#masthead h1	{text-indent:-9999px;width:950px; height:76px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/static_includes/img/globalsearch/MDO-banner.png') top left no-repeat;margin:0;} */
-
-	#masthead h1	{text-indent:-9999px;width:950px; height:76px;background:transparent url('../../../images/mdo/MDO-banner.png') top left no-repeat;margin:0;}
-
+#masthead {
+background: #bb1654 none repeat scroll 0 0;
+font-family: "Open Sans";
+font-size:16px;
+color:white;
+width: 950px;
+height: 76px;
+}
+#masthead h1 {color:white;}
+#masthead h2 {color:white;margin: 10px 0;}
+/*satish US15275 end*/
 	#mastheadSearch	{position:absolute;bottom:15px;right:10px;width:296px;}
 
 	#mastheadSearchBox, #searchBox, #searchClinicianBox	{width:250px; height:22px;  color:#5c5c5c; border:0; font-size:1.0em;padding: 0 0 0 5px; margin-right: 4px; float:left;}
