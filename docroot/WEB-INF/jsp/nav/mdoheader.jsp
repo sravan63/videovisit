@@ -43,8 +43,11 @@ function submitSearch2(){
 }
 
 </script>
+<!--satish US15275 start -->
 <div id="masthead">
-	<h1>My Doctor Online The Permanente Medical Group</h1>
+	<h1>My Doctor Online </h1>
+  <h2>The Permanente Medical Group</h2>
+  <!--satish US15275 end -->
 	<div id="mastheadSearch">
 		<form name="search" action="http://mydoctor.kaiserpermanente.org/ncal/mdo/globalsearch/globalSearch.jsp" method="GET">
             <input id="mastheadSearchBox"  class="searchBox mdoSearchBox nonAjaxSearch" type="text" name="search" value="Search" autocomplete="off"/>
