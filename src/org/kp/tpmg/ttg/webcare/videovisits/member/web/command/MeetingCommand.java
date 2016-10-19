@@ -1694,50 +1694,52 @@ public class MeetingCommand {
 			return  (JSONObject.fromObject(new SystemError()).toString());
 	  }
 	  
-	  public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request, HttpServletResponse response)
-	  {
+		public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request, HttpServletResponse response) {
 			logger.info("Entered launchMemberOrProxyMeetingForMember");
-			MeetingLaunchResponseWrapper launchMemberOrProxyMeetingResponse = null; 
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);	
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			long meetingId = 0;
-			
-			try
-			{
-				if (ctx != null && ctx.getMember() != null)
-				{
+			String output = null;
+			try {
+				if (ctx != null && ctx.getMember() != null) {
 					// parse parameters
-					if (StringUtils.isNotBlank(request.getParameter("meetingId"))) 
-					{
+					if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 						meetingId = Long.parseLong(request.getParameter("meetingId"));
 						ctx.setMeetingId(meetingId);
 					}
-					
-					logger.info("launchMemberOrProxyMeetingForMember: meetingId=" + meetingId + ", isProxyMeeting=" + request.getParameter("isProxyMeeting") + ", inMeetingDisplayName=" + request.getParameter("inMeetingDisplayName"));
+
+					logger.info("launchMemberOrProxyMeetingForMember: meetingId=" + meetingId + ", isProxyMeeting="
+							+ request.getParameter("isProxyMeeting") + ", inMeetingDisplayName="
+							+ request.getParameter("inMeetingDisplayName"));
 					boolean isProxyMeeting;
-					if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting")))
-					{
+					if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
 						isProxyMeeting = true;
-					}
-					else
-					{
+					} else {
 						isProxyMeeting = false;
 					}
-					//grab data from web services
-					launchMemberOrProxyMeetingResponse = WebService.launchMemberOrProxyMeetingForMember(meetingId, ctx.getMember().getMrn8Digit(), request.getParameter("inMeetingDisplayName"), isProxyMeeting, request.getSession().getId());
-					if (launchMemberOrProxyMeetingResponse != null)
-					{
-						return JSONObject.fromObject(launchMemberOrProxyMeetingResponse).toString();
-					}
+					// grab data from web services
+					// launchMemberOrProxyMeetingResponse =
+					// WebService.launchMemberOrProxyMeetingForMember(meetingId,
+					// ctx.getMember().getMrn8Digit(),
+					// request.getParameter("inMeetingDisplayName"), isProxyMeeting,
+					// request.getSession().getId());
+					output = WebService.launchMemberOrProxyMeetingForMember(meetingId, ctx.getMember().getMrn8Digit(),
+							request.getParameter("inMeetingDisplayName"), isProxyMeeting, request.getSession().getId());
+					// if (launchMemberOrProxyMeetingResponse != null)
+					// {
+					// return
+					// JSONObject.fromObject(launchMemberOrProxyMeetingResponse).toString();
+					// JSONObject.fromObject(launchMeetingForMemberGuestJSON).toString();
+					// }
+					return output;
 				}
-			}
-			catch (Exception e)
-			{
-				logger.error("launchMemberOrProxyMeetingForMember -> System error:" + e.getMessage(), e);				
+			} catch (Exception e) {
+				logger.error("launchMemberOrProxyMeetingForMember -> System error:" + e.getMessage(), e);
 			}
 			logger.info("Exiting launchMemberOrProxyMeetingForMember");
-			// worst case error returned, no authenticated user, no web service responded, etc.
+			// worst case error returned, no authenticated user, no web service
+			// responded, etc.
 			return (JSONObject.fromObject(new SystemError()).toString());
-	  }
+		}
 	  
 	  public static String memberLeaveProxyMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	  {
@@ -1756,9 +1758,7 @@ public class MeetingCommand {
 					if (output != null && output.getService() != null 
 							&& output.getService().getStatus() != null)
 					{
-						if("200".equals(output.getService().getStatus().getCode())){
 							responseStr = output.getService().getStatus().getMessage();
-						}
 					}
 				}
 				if(StringUtils.isBlank(responseStr)){
@@ -2050,5 +2050,37 @@ public static String retrieveMeeting(HttpServletRequest request, HttpServletResp
 	}		
 	return  (JSONObject.fromObject(new SystemError()).toString());		
 }*/	
-		 
+	
+public static String launchMeetingForMemberDesktop(HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+	logger.info("Entered launchMeetingForMemberDesktop");
+	long meetingId = 0;
+	String megaMeetingDisplayName = null;
+	String output = null;
+	WebAppContext ctx = WebAppContext.getWebAppContext(request);
+
+	try {
+		if (request.getParameter("meetingId") != null && !request.getParameter("meetingId").equals("")) {
+			meetingId = Long.parseLong(request.getParameter("meetingId"));
+		}
+		if (request.getParameter("megaMeetingDisplayName") != null
+				&& !request.getParameter("megaMeetingDisplayName").equals("")) {
+			megaMeetingDisplayName = request.getParameter("megaMeetingDisplayName");
+		}
+
+		logger.info("MeetingCommand:launchMeetingForMemberDesktop: megaMeetingDisplayName=" + megaMeetingDisplayName
+				+ " meetingId:" + meetingId);
+		output = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName,
+				ctx.getMember().getMrn8Digit(), request.getSession().getId());
+		if (output != null) {
+			logger.info("launchMeetingForMemberDesktop: = " + output.toString());
+		}
+	} catch (Exception e) {
+		logger.error("System Error" + e.getMessage(), e);
+		output = JSONObject.fromObject(new SystemError()).toString();
+	}
+	logger.info("Exiting launchMeetingForMemberDesktop");
+	return output;
+}
 }

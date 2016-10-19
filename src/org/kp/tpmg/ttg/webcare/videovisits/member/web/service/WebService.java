@@ -85,8 +85,12 @@ import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
+import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingOutput;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMemberOrProxyMeetingForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.SetKPHCConferenceStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.TerminateInstantVendorMeetingInput;
@@ -2099,8 +2103,8 @@ public class WebService{
 			logger.info("Exiting retrieveActiveMeetingsForMemberAndProxies");
 			return toRet;
 	 }
-	  
-	 public static MeetingLaunchResponseWrapper launchMemberOrProxyMeetingForMember(long meetingId, String mrn8Digit, String inMeetingDisplayName, boolean isProxyMeeting, String sessionId) throws Exception 
+//Calling rest service	  
+/*	 public static MeetingLaunchResponseWrapper launchMemberOrProxyMeetingForMember(long meetingId, String mrn8Digit, String inMeetingDisplayName, boolean isProxyMeeting, String sessionId) throws Exception 
 	 {
 			logger.info("Entered launchMemberOrProxyMeetingForMember -> meetingId= " + meetingId + ", inMeetingDisplayName=" + inMeetingDisplayName + ", isProxyMeeting=" + isProxyMeeting);
 			MeetingLaunchResponseWrapper toRet = null;
@@ -2141,7 +2145,7 @@ public class WebService{
 			logger.info("Exiting launchMemberOrProxyMeetingForMember");
 			return toRet;
 	 }
-
+*/
 	//calling rest service	
 	 /**
 	 * Member leave proxy meeting.
@@ -2576,10 +2580,13 @@ public class WebService{
 			if(StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId))
 			{
 				output = new JoinLeaveMeetingJSON();
+				JoinLeaveMeetingOutput joinLeaveMeetingOutput = new JoinLeaveMeetingOutput();
 				final Status status = new Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
+				output.setService(joinLeaveMeetingOutput);
 				output.getService().setStatus(status);
+				return output;
 			}
 			JoinLeaveMeetingInput joinLeaveMeetingInput = new JoinLeaveMeetingInput();
 			joinLeaveMeetingInput.setMeetingId(Long.parseLong(meetingId));
@@ -2607,6 +2614,88 @@ public class WebService{
 		return output;
 	}
 
+	public static String launchMemberOrProxyMeetingForMember(long meetingId, String mrn8Digit,
+			String inMeetingDisplayName, boolean isProxyMeeting, String sessionId) throws Exception {
+		logger.info("Entered launchMemberOrProxyMeetingForMember -> meetingId= " + meetingId + ", inMeetingDisplayName="
+				+ inMeetingDisplayName + ", isProxyMeeting=" + isProxyMeeting);
+		final Gson gson = new Gson();
+		String responseJsonStr = null;
+		String inputJsonString = null;
+		LaunchMemberOrProxyMeetingForMemberInput input = null;
+		try {
+			boolean isNonMember = false;
+			if (isProxyMeeting && StringUtils.isBlank(mrn8Digit)) {
+				isNonMember = true;
+			}
+			logger.info("launchMemberOrProxyMeetingForMember -> isNonMember= " + isNonMember);
+			if ((!isNonMember && StringUtils.isBlank(mrn8Digit)) || meetingId <= 0 || StringUtils.isBlank(sessionId)
+					|| StringUtils.isBlank(inMeetingDisplayName) || StringUtils.isBlank(mrn8Digit)) {
+				logger.warn("launchMemberOrProxyMeetingForMember --> missing input attributes.");
+				LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
+				output.setService(new LaunchMeetingForMemberGuestOutput());
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.getService().setStatus(status);
+				return gson.toJson(output);
+			}
+
+			input = new LaunchMemberOrProxyMeetingForMemberInput();
+			input.setMeetingId(meetingId);
+			input.setMrn(mrn8Digit);
+			input.setInMeetingDisplayName(inMeetingDisplayName);
+			input.setGetProxyMeeting(isProxyMeeting);
+			input.setSessionId(sessionId);
+			input.setClientId(WebUtil.clientId);
+			inputJsonString = gson.toJson(input);
+			logger.info("launchMemberOrProxyMeetingForMember -> inputJsonString : " + inputJsonString);
+			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
+		} catch (Exception e) {
+			logger.error("launchMemberOrProxyMeetingForMember -> Web Service API error:" + e.getMessage() 
+			+ " Retrying...",e);
+			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
+		}
+		logger.info("Exiting launchMemberOrProxyMeetingForMember");
+		return responseJsonStr;
+	}
+
+	public static String launchMeetingForMemberDesktop(long meetingId, String inMeetingDisplayName, String mrn8Digit,
+			String sessionId) throws Exception {
+		logger.info("Entered launchMeetingForMemberDesktop");
+		final Gson gson = new Gson();
+		String responseJsonStr = null;
+		String inputJsonString = null;
+		LaunchMeetingForMemberDesktopInput input = null;
+		if (meetingId <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId)
+				|| StringUtils.isBlank(inMeetingDisplayName)) {
+			logger.warn("launchMeetingForMemberDesktop --> missing input attributes.");
+			LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
+			output.setService(new LaunchMeetingForMemberGuestOutput());
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			output.getService().setStatus(status);
+			return gson.toJson(output);
+		}
+
+		try {
+			input = new LaunchMeetingForMemberDesktopInput();
+			input.setMeetingId(meetingId);
+			input.setInMeetingDisplayName(inMeetingDisplayName);
+			input.setMrn(mrn8Digit);
+			input.setSessionId(sessionId);
+			input.setClientId(WebUtil.clientId);
+			inputJsonString = gson.toJson(input);
+			logger.info("launchMeetingForMemberDesktop -> inputJsonString : " + inputJsonString);
+			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
+		} catch (Exception e) {
+			logger.error("launchMeetingForMemberDesktop -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
+		}
+		logger.info("Exiting launchMeetingForMemberDesktop");
+		return responseJsonStr;
+
+	}
 }
 
 

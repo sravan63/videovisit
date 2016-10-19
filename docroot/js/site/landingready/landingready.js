@@ -52,31 +52,9 @@ $(document).ready(function() {
 	            	try
 	            	{
 	            		returndata = jQuery.parseJSON(returndata);
-	            		
-	            		if(returndata.errorIdentifier === 510){
-	            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
-	                        moveToit("p.error"); 
-	                        $("#layover").hide();
-	                        return false; 
-	                    }
-	            		else if(returndata.errorIdentifier === 520){
-	            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has been cancelled.</label><br/>');
-	                        moveToit("p.error"); 
-	                        $("#layover").hide();
-	                        return false; 
-	                    }
-	            		else if(returndata.errorIdentifier === 400){
-	            			// show the dialog 
-	    					$("#layover").hide();
-	    					 $("#user-in-meeting-modal").dialog( "open" );	
-	                    }
-	            		else if(returndata.errorMessage){
-	            			$("#layover").hide();
-			            	$("#join-meeting-fail-modal").dialog("open");		
-	        			}
-	        			else if (returndata.success)
+	        			if (returndata.service.status.code === '200')
 	            		{
-	            			hreflocation = returndata.result;
+	            			hreflocation = returndata.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
 	            			var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y", guestName: name, isProvider: "false", isProxyMeeting: isProxyMeeting, guestUrl: encodeURIComponent(hreflocation)};
 	            			$.ajax({
 	            			    type: 'POST',
@@ -97,7 +75,25 @@ $(document).ready(function() {
 	            		        }
 	            			})
 	            		}
-	            		
+	            		else if(returndata.service.status.code === '400'){
+	    					$("#layover").hide();
+	    					 $("#user-in-meeting-modal").dialog( "open" );	
+	                    }else if(returndata.service.status.code === '510'){
+	            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
+	                        moveToit("p.error"); 
+	                        $("#layover").hide();
+	                        return false; 
+	                    }
+	            		else if(returndata.service.status.code === '520'){
+	            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has been cancelled.</label><br/>');
+	                        moveToit("p.error"); 
+	                        $("#layover").hide();
+	                        return false; 
+	                    }
+	            		else{
+	            			$("#layover").hide();
+			            	$("#join-meeting-fail-modal").dialog("open");		
+	        			}
 	            	}
 	            	catch(e)
 	    			{	    				
@@ -119,86 +115,56 @@ $(document).ready(function() {
         else
         {
         	var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name};
-            $.post(VIDEO_VISITS.Path.landingready.userPresentInMeeting, postParaForUserPresentInMeeting,function(userPresentInMeetingData){
+            $.post(VIDEO_VISITS.Path.landingready.launchMeetingForMemberDesktop, postParaForUserPresentInMeeting,function(launchMeetingForMemberDesktopData){
     			try{
-    				userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
+    				launchMeetingForMemberDesktopData = jQuery.parseJSON(launchMeetingForMemberDesktopData);
+        			if(launchMeetingForMemberDesktopData.service.status.code === '200'){
+
+            			hreflocation = launchMeetingForMemberDesktopData.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
+            			var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y", guestName: name, isProvider: "false", isProxyMeeting: isProxyMeeting, guestUrl: encodeURIComponent(hreflocation)};
+            			$.ajax({
+            			    type: 'POST',
+            			    url: VIDEO_VISITS.Path.landingready.videoVisit,
+            			    cache: false,
+            			    async: false,
+            			    data: postParaVideoVisit,
+            			    success: function(){
+            			    	if($.browser.mozilla){
+            			    		window.setTimeout(function(){
+            							window.location.href="videoVisitReady.htm";
+            							}, 3000);
+                				}else{
+                					window.location.href="videoVisitReady.htm";
+                				}
+            			    },
+            		        error: function() {
+            		        }
+            			})
+            		
+        			}else if(launchMeetingForMemberDesktopData.service.status.code === '400'){
+        				$("#layover").hide();
+    					$("#user-in-meeting-modal").dialog( "open" );					 
+        			}else if(launchMeetingForMemberDesktopData.service.status.code === '510'){
+            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
+                        moveToit("p.error"); 
+                        $("#layover").hide();
+                        return false; 
+        			}else if(launchMeetingForMemberDesktopData.service.status.code === '520'){
+            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has been cancelled.</label><br/>');
+                        moveToit("p.error"); 
+                        $("#layover").hide();
+                        return false; 
+        			}
+        			else {
+        				$("#layover").hide();
+        				$('#end_meeting_error').html('').append(launchMeetingForMemberDesktopData.service.status.message).show();		
+        			}
     			}
     			catch(e)
     			{
     				$("#layover").hide();
 	            	$("#join-meeting-fail-modal").dialog("open");
     			}
-    			
-    			if (userPresentInMeetingData.errorMessage) {
-    				$("#layover").hide();
-    				$('#end_meeting_error').html('').append(userPresentInMeetingData.errorMessage).show();		
-    			}
-    			else{
-    				if(userPresentInMeetingData.result == "true"){					
-    					// show the dialog 
-    					$("#layover").hide();
-    					 $("#user-in-meeting-modal").dialog( "open" );					 
-    				}
-    				else{
-    					$.ajax({
-    			            type: 'POST',
-    			            data: meetingIdData,
-    			            url: VIDEO_VISITS.Path.landingready.joinmeeting,
-    			            success: function(returndata) {
-    			            	try
-    			            	{
-    			            		returndata = jQuery.parseJSON(returndata);
-    			            		if(returndata.result === '2'){
-    			            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
-    			                        moveToit("p.error"); 
-    			                        $("#layover").hide();
-    			                        return false; 
-    			                     }
-    			            		if ( returndata.success)
-    			            		{
-    			            			hreflocation = returndata.result;
-    			            			//hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
-    			            			//hreflocation = "/vidyoplayer/player.html?guestName=" +name+ "&isProvider=false&meetingId=" +meetingId+ "&guestUrl=" +encodeURIComponent(hreflocation);
-    			            			
-    			            			var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y", guestName: name, isProvider: "false", isProxyMeeting: isProxyMeeting, guestUrl: encodeURIComponent(hreflocation)};
-    			            			
-    			                  	  	//setCookie("iframedata",encodeURIComponent(hreflocation),365);
-    			            			//window.location.replace("visit.htm");
-    			            			$.ajax({
-    			            			    type: 'POST',
-    			            			    url: VIDEO_VISITS.Path.landingready.videoVisit,
-    			            			    cache: false,
-    			            			    async: false,
-    			            			    data: postParaVideoVisit,
-    			            			    success: function(){
-    			            			    	if($.browser.mozilla){
-    			            			    		window.setTimeout(function(){
-    			            							window.location.href="videoVisitReady.htm";
-    			            							}, 3000);
-    				            				}else{
-    				            					window.location.href="videoVisitReady.htm";
-    				            				}
-    			            			    },
-    			            		        error: function() {
-    			            		        }
-    			            			})
-    			            		}    			            		
-    			            	}
-    			            	catch(e)
-    			    			{    			    				
-    			            		$("#layover").hide();
-        			            	$("#join-meeting-fail-modal").dialog("open");
-    			    			}    							
-    			            },
-    			            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-    			            error: function(theRequest, textStatus, errorThrown) {
-    			            	$("#layover").hide();
-    			            	$("#join-meeting-fail-modal").dialog("open");
-    			            }
-    			        });
-    				}
-    			}
-    			
             }).fail(function() {
             	$("#layover").hide();
             	$("#join-meeting-fail-modal").dialog("open");

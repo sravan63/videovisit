@@ -13,6 +13,8 @@ public class ServiceUtil {
 	public static final String SET_KPHC_CONFERENCE_STATUS = "setKPHCConferenceStatus";
 	public static final String TEST_DB_ROUND_TRIP = "testDbRoundTrip";
 	public static final String MEMBER_LEAVE_PROXY_MEETING = "leaveMeeting";
+	public static final String LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER = "launchMemberOrProxyMeetingForMember";
+	public static final String LAUNCH_MEETING_FOR_MEMBER_DESKTOP = "launchMeetingForMemberDesktop";
 	
 	
 }

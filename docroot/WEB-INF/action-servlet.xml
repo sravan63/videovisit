@@ -153,7 +153,7 @@
 				
 				<prop key="/launchMeetingforMember.json">dataLaunchMeetingForMember</prop>
 				<prop key="/launchMeetingForMemberGuest.json">dataLaunchMeetingForMemberGuest</prop>
-				
+				<prop key="/launchMeetingForMemberDesktop.json">dataLaunchMeetingForMemberDesktop</prop>
 					
 			</props>
 		</property>
@@ -484,6 +484,9 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
+	<bean id="dataLaunchMeetingForMemberDesktop" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LaunchMeetingForMemberDesktopController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
 	
 	
 	<bean id="mobilePatientGuestMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
