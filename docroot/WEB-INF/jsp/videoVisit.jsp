@@ -291,10 +291,14 @@
 		            <div id="inCallPluginAndControlsWrap">
 		                <!-- Plugin wrapper -->
 		                <div style="display:inline-block; float:left;">
-		                <!--Satish US13301 Start -->
+		                 <!--US13310 & US133102(iteration21) Satish Start-->
 		                	<div id="waitingRoom">
-		                		<p style="font-size:40px; margin:50px; text-align:center;"> Waiting Room Concept </p>
-		                		<p style="font-size:40px; margin:50px; text-align:center;"> Please wait for the Doctor to join </p>
+		                		<div class="waitingRoomMessageBlock">
+		        <img src="vidyoplayer/img/TPMG_logo.png"" class="waitingroom-logo"/>
+		           <span class="waitingroom-text">Your visit will start once your doctor joins.</span>
+
+		                		</div>
+		                	<!-- US133102(iteration21) End-->	
 		                	</div>
 			                <div id="pluginContainer" style="background-color: black; display:inline-block; float:left;">
 								<!-- Will autogenerate plugin tag -->
