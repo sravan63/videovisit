@@ -45,8 +45,12 @@ function submitSearch2(){
 </script>
 <!--satish US15275 start -->
 <div id="masthead">
-	<h1>My Doctor Online </h1>
-  <h2>The Permanente Medical Group</h2>
+<a href="#" class="mdo-video-logo MART-masthead-logo">
+                        <h1>Video Visits <br>
+                        <small>The Permanente Medical Group</small>
+                        </h1>
+                        </a>
+
   <!--satish US15275 end -->
 	<div id="mastheadSearch">
 		<form name="search" action="http://mydoctor.kaiserpermanente.org/ncal/mdo/globalsearch/globalSearch.jsp" method="GET">

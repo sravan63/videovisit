@@ -420,16 +420,42 @@ ul#iconList li#largeFont a {width:19px; margin-right:4px;background:transparent 
 
 /*satish US15275 start*/
 
-#masthead {
-background: #bb1654 none repeat scroll 0 0;
-font-family: "Open Sans";
-font-size:16px;
-color:white;
-width: 950px;
-height: 76px;
+
+/*satish US15275 start*/
+#masthead{
+/*  background: #c10901 url('../../../images/global/back-masthead.jpg') no-repeat top left;*/
+ background: #bb1654 none repeat scroll 0 0;
+    color: #000;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-weight: 400;
+    height: 76px;
+    line-height: 25px;
+    margin-bottom: 5px;
 }
-#masthead h1 {color:white;}
-#masthead h2 {color:white;margin: 10px 0;}
+#masthead .mdo-video-logo{
+   bottom: 10px;
+    display: block;
+    left: 8px;
+    text-decoration:none;
+    }
+    #masthead a.mdo-video-logo:hover,#masthead a.mdo-video-logo:active{
+      text-decoration:none;
+    }
+#masthead h1{
+   color: #fff;
+    font-size: 24px;
+    line-height: inherit;
+    margin: 0;
+    padding:12px;
+}
+#masthead h1 small{
+display: block;
+ font-size: 16px; 
+color:#FFFFFF;
+margin-top:4px;
+}
+/*satish US15275 end*/
 /*satish US15275 end*/
 	#mastheadSearch	{position:absolute;bottom:15px;right:10px;width:296px;}
 
