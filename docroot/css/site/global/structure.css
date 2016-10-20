@@ -680,14 +680,29 @@ font-size:16px;
 }
 
 iframe { display: none !important; }
-/* Satish US13301	Waiting Room Start */
+/* ============= Satish @ US13301 & US133102(waiting room background & transparent box with logo) Start === */
 #waitingRoom{
-	display:none;
-	background-color:#3F3D3D;
-	border:1px solid #000000;
-	color:#ffffff;
+  display:none;
+  border:1px solid #000000;
+  color:#ffffff;
+  background:#668d9c url('../../../images/global/waiting_rm_bkgd.png') no-repeat 100% 100%;
+ background-size: cover;
+  }
+.waitingRoomMessageBlock{
+  text-align:center;
+  background:black;
+  min-height:100px;
+  padding:36px;
+  border-radius:10px;
+  opacity:0.5;
+  filter:alpha(opacity=50);
+  width:44%;
+  margin:0 auto;
+  margin-top:5%; 
 }
-/* Satish US13301	Waiting Room End */
+.waitingroom-logo{height:95px;width:95px;float:left;}
+.waitingroom-text{font-family:"Avenir Next";font-size:32px;line-height:44px;color:#ffffff;}
+/* ============= Satish @ US13301 & US133102 End === */
 /* ============		@BROWSER FIXES	======================== */
 .ie6 #container-header			{position:relative;}
 .ie6 #container-header			{position:relative;}
