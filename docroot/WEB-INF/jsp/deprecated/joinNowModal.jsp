@@ -1,12 +1,12 @@
 <!-- Join Now modal for patient -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<c:forEach var="meeting" items="${WebAppContext.meetings}">
+	<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
 		<c:if test="${meeting.meetingId == WebAppContext.meetingId}">	
 			<div style="float:left">
-				<h3 class="page-title">Video Visit with ${meeting.providerHost.firstName} 
-					${meeting.providerHost.lastName}
-					<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
+				<h3 class="page-title">Video Visit with ${meeting.host.firstName} 
+					${meeting.host.lastName}
+					<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
 				</h3>
 			</div>
 		</c:if>

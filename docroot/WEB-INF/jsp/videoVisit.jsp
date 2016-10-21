@@ -1,5 +1,6 @@
 	<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO" %>
 	<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO" %>
+	<%@ page import="org.kp.tpmg.videovisit.model.*"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>	
 	
@@ -573,14 +574,14 @@
 						${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
 					</dl>
 					
-					<c:if test="${not empty WebAppContext.videoVisit.participants}">
+					<c:if test="${not empty WebAppContext.videoVisit.participant}">
 						<dl id="meetingParticipantContainer">
 							<dt>ADD'L CLINICIAN(S)</dt>
 							<dd id="meetingParticipant">
 								<table>	    
-								   <c:forEach items="${WebAppContext.videoVisit.participants}" var="ProviderWSO">        
+								   <c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">        
 							        <tr>
-							            <td style="padding-bottom:10px;">${ProviderWSO.lastName}, ${ProviderWSO.firstName} ${ProviderWSO.title}</td>            
+							            <td style="padding-bottom:10px;">${Provider.lastName}, ${Provider.firstName} ${Provider.title}</td>            
 							        </tr>
 							       </c:forEach>
 							    </table>
@@ -588,14 +589,14 @@
 						</dl>
 					</c:if>
 					
-					<c:if test="${not empty WebAppContext.videoVisit.caregivers}">
+					<c:if test="${not empty WebAppContext.videoVisit.caregiver}">
 						<dl id="meetingPatientGuestContainer">
 							<dt>MY GUEST(S)</dt>
 							<dd id="meetingPatientGuest">
 							   <table>	 
-									<c:forEach items="${WebAppContext.videoVisit.caregivers}" var="CaregiverWSO">        
+									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">        
 							        <tr>
-							            <td style="padding-bottom:10px;">${CaregiverWSO.lastName}, ${CaregiverWSO.firstName}</td>            
+							            <td style="padding-bottom:10px;">${Caregiver.lastName}, ${Caregiver.firstName}</td>            
 							        </tr>
 							       </c:forEach>       
 						       </table>

@@ -92,6 +92,8 @@ import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMemberOrProxyMeetingForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
+import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForMemberAndProxiesInput;
+import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForNonMemberProxiesInput;
 import org.kp.tpmg.videovisit.model.meeting.SetKPHCConferenceStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.TerminateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.UpdateMemberMeetingStatusInput;
@@ -837,7 +839,7 @@ public class WebService{
 		return output;
 	}
 	
-	public static RetrieveMeetingResponseWrapper IsMeetingHashValid(String meetingHash//left
+	/*public static RetrieveMeetingResponseWrapper IsMeetingHashValid(String meetingHash//left
 			) 
 				throws RemoteException {
 		logger.info("Entered IsMeetingHashValid");
@@ -866,6 +868,55 @@ public class WebService{
 		}
 		logger.info("Exit IsMeetingHashValid");
 		return toRet;		
+	}*/
+	
+	public static MeetingDetailsOutput IsMeetingHashValid(String meetingHash, String clientId, String sessionId) 
+				throws RemoteException, Exception {
+		logger.info("Entered WebService->IsMeetingHashValid");
+		MeetingDetailsOutput output = null;
+		String responseJsonStr = "";
+		try {
+			if (StringUtils.isBlank(meetingHash) || StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId)) {
+				logger.warn("WebService->IsMeetingHashValid --> missing input attributes.");
+				output = new MeetingDetailsOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setStatus(status);
+				return output;
+			}
+			ActiveMeetingsForCaregiverInput input = new ActiveMeetingsForCaregiverInput();
+
+			input.setMeetingHash(meetingHash);
+			input.setClientId(clientId);
+			input.setSessionId(sessionId);
+			
+			final Gson gson = new Gson();
+			final String inputJsonString = gson.toJson(input);
+			logger.info("WebService->IsMeetingHashValid -> jsonInptString : " + inputJsonString);
+
+			responseJsonStr = callVVRestService(ServiceUtil.IS_MEETING_HASH_VALID, inputJsonString);
+			logger.info("WebService->IsMeetingHashValid -> jsonResponseString : " + responseJsonStr);
+
+			JsonParser parser = new JsonParser();
+			JsonObject jobject = new JsonObject();
+			jobject = (JsonObject) parser.parse(responseJsonStr);
+			output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.error("WebService->IsMeetingHashValid: Web Service API error:" + e.getMessage());
+			throw new Exception("WebService->IsMeetingHashValid: Web Service API error", e.getCause());
+		}
+		String responseCodeAndMsg = "Empty response";
+		if (output != null) {
+			responseCodeAndMsg = output.getStatus() != null
+					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
+					: "No rest response code & message returned from service.";
+		}
+		logger.info(
+				"Exiting WebService->IsMeetingHashValid --> IsMeetingHashValid rest response message & code: " + responseCodeAndMsg);
+
+		return output;		
 	}
 	
 	/*
@@ -1247,6 +1298,7 @@ public class WebService{
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
+				return output;
 			}
 			TerminateInstantVendorMeetingInput input = new TerminateInstantVendorMeetingInput();
 			input.setMeetingId(meetingId);
@@ -2060,7 +2112,7 @@ public class WebService{
 			return toRet;
 	  }*/
 	  
-	  public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForMemberAndProxies(String mrn8Digit, boolean getProxyMeetings, String sessionID) throws Exception 
+	  /*public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForMemberAndProxies(String mrn8Digit, boolean getProxyMeetings, String sessionID) throws Exception 
 	  {
 			logger.info("Entered retrieveActiveMeetingsForMemberAndProxies -> getProxyMeetings=" + getProxyMeetings);
 			RetrieveMeetingResponseWrapper toRet = null;
@@ -2102,7 +2154,71 @@ public class WebService{
 			}
 			logger.info("Exiting retrieveActiveMeetingsForMemberAndProxies");
 			return toRet;
-	 }
+	 }*/
+	
+	public static MeetingDetailsOutput retrieveActiveMeetingsForMemberAndProxies(String mrn8Digit, boolean getProxyMeetings, String sessionID, String clientId) throws Exception {
+		logger.info("Entered WebService->retrieveActiveMeetingsForMemberAndProxies -> received input attributes as [mrn8Digit="
+						+ mrn8Digit + ", getProxyMeetings=" + getProxyMeetings + ", sessionId=" + sessionID + ", clientId=" + clientId + "]");
+		MeetingDetailsOutput output = null;
+		String responseJsonStr = "";
+		String inputJsonString = "";
+		Gson gson = new Gson();
+		JsonParser parser = new JsonParser();
+		JsonObject jobject = new JsonObject();
+		try {
+			if (StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID) || StringUtils.isBlank(clientId)) {
+				logger.warn("WebService->retrieveActiveMeetingsForMemberAndProxies --> missing input attributes.");
+				output = new MeetingDetailsOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setStatus(status);
+				return output;
+			}
+
+			if (secureCodes == null) {
+				secureCodes = "";
+			}
+
+			logger.debug("retrieveActiveMeetingsForMemberAndProxies -> after split secure codes: " + secureCodes.split(","));
+			RetrieveActiveMeetingsForMemberAndProxiesInput input = new RetrieveActiveMeetingsForMemberAndProxiesInput();
+			input.setMrn(mrn8Digit);
+			input.setGetProxyMeetings(getProxyMeetings);
+			input.setSecureCodes(secureCodes.split(","));
+			input.setIsAdhoc(isAdhoc);
+			input.setIsParrs(isParrs);
+			input.setClientId(clientId);
+			input.setSessionId(sessionID);
+
+			inputJsonString = gson.toJson(input);
+			logger.info("WebService->retrieveActiveMeetingsForMemberAndProxies -> jsonInptString : " + inputJsonString);
+
+			responseJsonStr = callVVRestService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,inputJsonString);
+
+			logger.info("WebService->retrieveActiveMeetingsForMemberAndProxies -> jsonResponseString : " + responseJsonStr);
+
+			jobject = (JsonObject) parser.parse(responseJsonStr);
+			output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
+		} catch (Exception e) {
+			logger.error("retrieveActiveMeetingsForMemberAndProxies -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			responseJsonStr = callVVRestService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,inputJsonString);
+
+			logger.info("WebService->retrieveActiveMeetingsForMemberAndProxies -> jsonResponseString : " + responseJsonStr);
+
+			jobject = (JsonObject) parser.parse(responseJsonStr);
+			output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
+		}
+		String responseCodeAndMsg = "Empty response";
+		if (output != null) {
+			responseCodeAndMsg = output.getStatus() != null
+					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
+					: "No rest response code & message returned from service.";
+		}
+		logger.info(
+				"Exiting WebService->retrieveActiveMeetingsForMemberAndProxies --> retrieveActiveMeetingsForMemberAndProxies rest response message & code: " + responseCodeAndMsg);
+
+		return output;
+	}
 //Calling rest service	  
 /*	 public static MeetingLaunchResponseWrapper launchMemberOrProxyMeetingForMember(long meetingId, String mrn8Digit, String inMeetingDisplayName, boolean isProxyMeeting, String sessionId) throws Exception 
 	 {
@@ -2190,7 +2306,7 @@ public class WebService{
 		return toRet;
 	}
 */	
-	public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForNonMemberProxies(String guid, String sessionID) throws Exception 
+	/*public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForNonMemberProxies(String guid, String sessionID) throws Exception 
 	{
 		logger.info("Entered retrieveActiveMeetingsForNonMemberProxies -> guid=" + guid);
 		RetrieveMeetingResponseWrapper toRet = null;
@@ -2230,7 +2346,72 @@ public class WebService{
 		}
 		logger.info("Exiting retrieveActiveMeetingsForNonMemberProxies");
 		return toRet;
-	}
+	}*/
+	 
+	 public static MeetingDetailsOutput retrieveActiveMeetingsForNonMemberProxies(String guid, String sessionID, String clientId) throws Exception 
+		{
+			logger.info("Entered WebService->retrieveActiveMeetingsForNonMemberProxies -> guid=" + guid+ ", sessionId=" + sessionID + ", clientId=" + clientId + "]");
+			MeetingDetailsOutput output = null;
+			String responseJsonStr = "";
+			String inputJsonString = "";
+			Gson gson = new Gson();
+			JsonParser parser = new JsonParser();
+			JsonObject jobject = new JsonObject();
+			try
+			{
+				if(StringUtils.isBlank(guid) || StringUtils.isBlank(sessionID) || StringUtils.isBlank(clientId))
+				{
+					logger.warn("WebService->retrieveActiveMeetingsForNonMemberProxies -> guid, sessionID and clientId are required ");
+					output = new MeetingDetailsOutput();
+					final Status status = new Status();
+					status.setCode("300");
+					status.setMessage("Missing input attributes.");
+					output.setStatus(status);
+					return output;
+				}
+				
+				if(secureCodes == null)
+				{
+					secureCodes = "";
+				}
+				
+				logger.debug("WebService->retrieveActiveMeetingsForNonMemberProxies -> after split secure codes: " + secureCodes.split(","));
+				RetrieveActiveMeetingsForNonMemberProxiesInput input = new RetrieveActiveMeetingsForNonMemberProxiesInput();
+				input.setGuid(guid);
+				input.setClientId(clientId);
+				input.setSessionId(sessionID);
+				
+				inputJsonString = gson.toJson(input);
+				logger.info("WebService->retrieveActiveMeetingsForNonMemberProxies -> jsonInptString : " + inputJsonString);
+
+				responseJsonStr = callVVRestService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES,inputJsonString);
+
+				logger.info("WebService->retrieveActiveMeetingsForNonMemberProxies -> jsonResponseString : " + responseJsonStr);
+
+				jobject = (JsonObject) parser.parse(responseJsonStr);
+				output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);	
+			}
+			catch (Exception e)
+			{
+				logger.error("retrieveActiveMeetingsForNonMemberProxies -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+				responseJsonStr = callVVRestService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES,inputJsonString);
+
+				logger.info("WebService->retrieveActiveMeetingsForNonMemberProxies -> jsonResponseString : " + responseJsonStr);
+
+				jobject = (JsonObject) parser.parse(responseJsonStr);
+				output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
+			}
+			String responseCodeAndMsg = "Empty response";
+			if (output != null) {
+				responseCodeAndMsg = output.getStatus() != null
+						? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
+						: "No rest response code & message returned from service.";
+			}
+			logger.info(
+					"Exiting WebService->retrieveActiveMeetingsForNonMemberProxies --> retrieveActiveMeetingsForNonMemberProxies rest response message & code: " + responseCodeAndMsg);
+
+			return output;
+		}
 	
 	  /* verifyCaregiver calling the new rest API*/
 	  
@@ -2505,6 +2686,7 @@ public class WebService{
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
+				return output;
 			}
 			CreateInstantVendorMeetingInput input = new CreateInstantVendorMeetingInput();
 			input.setHostNuid(hostNuid);

@@ -15,6 +15,8 @@ public class ServiceUtil {
 	public static final String MEMBER_LEAVE_PROXY_MEETING = "leaveMeeting";
 	public static final String LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER = "launchMemberOrProxyMeetingForMember";
 	public static final String LAUNCH_MEETING_FOR_MEMBER_DESKTOP = "launchMeetingForMemberDesktop";
-	
+	public static final String RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES = "retrieveActiveMeetingsForMemberAndProxies";
+	public static final String RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES = "retrieveActiveMeetingsForNonMemberProxies";
+	public static final String IS_MEETING_HASH_VALID = "isMeetingHashValid";
 	
 }

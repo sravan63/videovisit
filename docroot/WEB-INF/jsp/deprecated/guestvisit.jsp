@@ -27,7 +27,7 @@
 		<div class="pagination">
 			<ul>
 				<li><a id="quitMeetingGuestNo" class="button">No &rsaquo;&rsaquo;</a></li>
-				<li><a id="quitMeetingGuestYes" class="button" quitmeetingid="${WebAppContext.meetings[0].meetingId}" caregiverId="${param.caregiverId}">Yes &rsaquo;&rsaquo;</a></li>
+				<li><a id="quitMeetingGuestYes" class="button" quitmeetingid="${WebAppContext.myMeetings[0].meetingId}" caregiverId="${param.caregiverId}">Yes &rsaquo;&rsaquo;</a></li>
 			</ul>
 		</div>
 	</div>

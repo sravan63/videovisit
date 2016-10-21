@@ -11,18 +11,18 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 %>
 <c:if test="${WebAppContext.totalmeetings>0}">
 	<div id="landing-portal-ready">
-		<c:forEach var="meeting" items="${WebAppContext.meetings}">
+		<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
 			<p class="login" style="padding:0px;">Children age 11 or younger must have a parent or legal guardian with them during the Video Visit.</p>
 	      	<p class="guest-config-info login" style="padding:0px;">To ensure your webcam and speakers are configured correctly, please use our <a href="setup.htm?isGuest=Y" target="_blank">Setup Wizard</a> before proceeding.</p>
 			<div class="landing-portal-single-container">				
 				<div class="landing-portal-details guest">
-					<div class="hidden timestamp">${meeting.scheduledTimestamp}</div>
+					<div class="hidden timestamp">${meeting.meetingTime}</div>
 					<h3>Your visit is scheduled for </h3>
 					<p class="guest-directive">Please enter the following information to join this visit:</p> 
 					<label for="last_name">Patient Last Name
 						  <input type="text" name="last_name" id="last_name" maxlength="35"></input>
 	            	</label>
-					<!-- <a id="joinNowBtn" class="btn" meetingid="${meeting.meetingId}" href="${meeting.mmMeetingName}">Click to Continue</a>-->
+					<!-- <a id="joinNowBtn" class="btn" meetingid="${meeting.meetingId}" href="${meeting.meetingVendorId}">Click to Continue</a>-->
 					<input type="button" name="joinNowBtn" value="Click to Continue" id="joinNowBtn" class="btn" tabindex="4" disabled="disabled">
 				</div>				
 			</div>
@@ -30,7 +30,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 			<p id="globalError" class="error hide-me" style="font-size:14px; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
 			
 			<input type="hidden" id="meetingId" value="${meeting.meetingId}" />
-			<input type="hidden" id="mmMeetingName" value="${meeting.mmMeetingName}" />
+			<input type="hidden" id="mmMeetingName" value="${meeting.meetingVendorId}" />
 		</c:forEach>
 	</div>
 </c:if>

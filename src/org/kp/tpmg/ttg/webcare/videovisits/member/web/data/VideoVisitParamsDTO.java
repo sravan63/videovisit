@@ -2,7 +2,10 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.data;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 
+import org.kp.tpmg.videovisit.model.user.Caregiver;
+import org.kp.tpmg.videovisit.model.user.Provider;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 
@@ -28,7 +31,9 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String meetingDate;
 	private String meetingTime;
 	private ProviderWSO[] participants;
+	private List<Provider> participant;
 	private CaregiverWSO[] caregivers;
+	private List<Caregiver> caregiver;
 	private String vendorConfId;
 	private String isProxyMeeting;
 	
@@ -195,6 +200,22 @@ public class VideoVisitParamsDTO implements Serializable {
 	public void setIsProxyMeeting(String isProxyMeeting) {
 		this.isProxyMeeting = isProxyMeeting;
 	}
+	
+	public void setParticipant(List<Provider> participant) {
+		this.participant = participant;
+	}
+	
+	public List<Provider> getParticipant() {
+		return participant;
+	}
+	
+	public void setCaregiver(List<Caregiver> caregiver) {
+		this.caregiver = caregiver;
+	}
+	
+	public List<Caregiver> getCaregiver() {
+		return caregiver;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -206,7 +227,8 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ ", hostFirstName=" + hostFirstName + ", hostTitle=" + hostTitle + ", guestName=" + guestName
 				+ ", isProvider=" + isProvider + ", guestUrl=" + guestUrl + ", isMember=" + isMember + ", meetingDate="
 				+ meetingDate + ", meetingTime=" + meetingTime + ", participants=" + Arrays.toString(participants)
-				+ ", caregivers=" + Arrays.toString(caregivers) + ", vendorConfId=" + vendorConfId + ", isProxyMeeting="
+				+ ", caregivers=" + Arrays.toString(caregivers) + ", participant=" + participant
+				+ ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId + ", isProxyMeeting="
 				+ isProxyMeeting + "]";
 	}
 		

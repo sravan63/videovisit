@@ -26,32 +26,32 @@
 
 <c:if test="${WebAppContext.totalmeetings>0}">
   <div id="landing-portal-ready" style="width:90%; margin-top:0px; font-family:Avenir Next, sans-serif;">
-  <c:forEach var="meeting" items="${WebAppContext.meetings}">
+  <c:forEach var="meeting" items="${WebAppContext.myMeetings}">
       <div class="landing-portal-single-container">
           <div class="meeting-details-container" style="font-size:14px;">
             <div class="left">
               <div class="time-display">
-                <span class="hidden timestamp">${meeting.scheduledTimestamp} </span>
+                <span class="hidden timestamp">${meeting.meetingTime} </span>
                 <span></span>
               </div>
               <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
               <div class="accord-contents" style="display:block;margin-top:30px;">
-                  <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0 || meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0 || meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
                     <h2 class="label" style="float:none;margin-bottom: 15px;">Additional Participants</h2>
                   </c:if>
-                  <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
+                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0}">
                     <div class="names-container-member" style="margin:0px;">
                       <span class="names participants" style="margin-left:0;">
-                        <c:forEach var="p" items="${meeting.participants}">
+                        <c:forEach var="p" items="${meeting.participant}">
                           <span>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></span>
                         </c:forEach>
                       </span>
                     </div>
                   </c:if>
                   <div class="names-container-member" style="margin:0px;">
-                    <c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+                    <c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
                       <span class="names patient-guests" style="margin-left:0;">
-                        <c:forEach var="p" items="${meeting.caregivers}">
+                        <c:forEach var="p" items="${meeting.caregiver}">
                           <span>${p.firstName} ${p.lastName}</span>
                         </c:forEach>
                       </span>
@@ -60,15 +60,15 @@
               </div>
             </div>
             <div class="center">
-              <img class="circle-image" src=${meeting.providerHost.imageUrl} alt="" />
-              <span class="name-and-details">${meeting.providerHost.firstName} ${meeting.providerHost.lastName}, ${meeting.providerHost.title}</span>
-              <span class="department-details">${meeting.providerHost.departmentName}</span>
+              <img class="circle-image" src=${meeting.host.imageUrl} alt="" />
+              <span class="name-and-details">${meeting.host.firstName} ${meeting.host.lastName}, ${meeting.host.title}</span>
+              <span class="department-details">${meeting.host.departmentName}</span>
             </div>
             <div class="right">
               <c:choose>
                 <c:when test="${not WebAppContext.isNonMember()}">
                    <c:choose>
-                      <c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
+                      <c:when test="${meeting.meetingVendorId == null || fn:length(meeting.meetingVendorId) <= 0}">
                         <div style="">
                           <p style="">
                               <button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button> 
@@ -79,15 +79,15 @@
                           <c:otherwise>
                             <div style="">
                                 <c:choose>
-                                  <c:when test="${WebAppContext.member.mrn8Digit == meeting.member.mrn8Digit}">
+                                  <c:when test="${WebAppContext.memberDO.mrn == meeting.member.mrn}">
                                     <p class="">
-                                      <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</button> 
+                                      <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.memberDO.lastName}, ${WebAppContext.memberDO.firstName}" meetingid="${meeting.meetingId}" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</button> 
                                     </p>
                                     <p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
                                   </c:when>
                                   <c:otherwise>
                                      <p style="">
-                                        <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button> 
+                                        <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.memberDO.lastName}, ${WebAppContext.memberDO.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button> 
                                     </p>
                                     <p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
                                   </c:otherwise>
@@ -98,7 +98,7 @@
                </c:when>
                 <c:otherwise>
                    <c:choose>
-                        <c:when test="${meeting.mmMeetingConId == null || fn:length(meeting.mmMeetingConId) <= 0}">
+                        <c:when test="${meeting.meetingVendorId == null || fn:length(meeting.meetingVendorId) <= 0}">
                           <div style="">
                             <p style="">
                                 <button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button> 
@@ -109,7 +109,7 @@
                         <c:otherwise>
                           <div style="">
                             <p style="">
-                                <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.member.lastName}, ${WebAppContext.member.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button> 
+                                <button id="joinNowId" class="btn joinNowButton" userName="${WebAppContext.memberDO.lastName}, ${WebAppContext.memberDO.firstName}, (dummy@dummy.com)" meetingid="${meeting.meetingId}" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button> 
                             </p>
                             <p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
                           </div>
@@ -123,7 +123,7 @@
       </div>
 
      <script type="text/javascript">
-        if(${meeting.participants != null} || ${meeting.caregivers != null}){
+        if(${meeting.participant != null} || ${meeting.caregiver != null}){
             $('#${meeting.meetingId}').find($(".accord-ctrl-container")).css("display", "inline-block");
         } else{
             $('#${meeting.meetingId}').find($(".accord-ctrl-container")).css("display", "none");

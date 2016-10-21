@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div style="float:left">
-	<h3 class="page-title">Video Visit for ${WebAppContext.meetings[0].member.firstName} 
-		${WebAppContext.meetings[0].member.lastName} 
+	<h3 class="page-title">Video Visit for ${WebAppContext.myMeetings[0].member.firstName} 
+		${WebAppContext.myMeetings[0].member.lastName} 
 	</h3>
 </div>
 <div id="nav-user">

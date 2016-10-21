@@ -2,12 +2,15 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,23 +47,24 @@ public class VideoVisitPatientController extends SimplePageController {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if(ctx != null){
 				VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();			
-				MeetingWSO[] meetings = ctx.getMeetings();
-				for(int i=0;i< meetings.length;i++){
-					MeetingWSO meeting = meetings[i];
-					if(meeting != null && meeting.getMeetingId() == Long.parseLong(request.getParameter("meetingId"))){
-						videoVisitParams.setHostFirstName(meeting.getProviderHost().getFirstName());
-						videoVisitParams.setHostLastName(meeting.getProviderHost().getLastName());
-						if(meeting.getProviderHost().getTitle() != null && meeting.getProviderHost().getTitle().length() > 0){
-							videoVisitParams.setHostTitle(meeting.getProviderHost().getTitle());
+				List<MeetingDO> meetings = ctx.getMyMeetings();
+				for(MeetingDO meeting : meetings){
+					//MeetingWSO meeting = meetings[i];
+					//if(meeting != null && meeting.getMeetingId() == Long.parseLong(request.getParameter("meetingId"))){
+					if(meeting != null && meeting.getMeetingId().equals(request.getParameter("meetingId"))){
+						videoVisitParams.setHostFirstName(meeting.getHost().getFirstName());
+						videoVisitParams.setHostLastName(meeting.getHost().getLastName());
+						if(meeting.getHost().getTitle() != null && meeting.getHost().getTitle().length() > 0){
+							videoVisitParams.setHostTitle(meeting.getHost().getTitle());
 						}else{
 							videoVisitParams.setHostTitle("");
 						}	
 						videoVisitParams.setPatientFirstName(meeting.getMember().getFirstName());
 						videoVisitParams.setPatientLastName(meeting.getMember().getLastName());
-						videoVisitParams.setParticipants(meeting.getParticipants());
-						videoVisitParams.setCaregivers(meeting.getCaregivers());
+						videoVisitParams.setParticipant(meeting.getParticipant());
+						videoVisitParams.setCaregiver(meeting.getCaregiver());
 						Calendar cal = Calendar.getInstance();
-						cal.setTimeInMillis(meeting.getScheduledTimestamp());
+						cal.setTimeInMillis(Long.parseLong(meeting.getMeetingTime()));
 						SimpleDateFormat sfdate = new SimpleDateFormat("MM-dd-yyyy");
 						SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
 						//Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below 

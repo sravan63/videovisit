@@ -579,7 +579,7 @@ public class MeetingCommand {
 		return isMyMeetingsAvailable;
 	}
 
-	public static String IsMeetingHashValid(HttpServletRequest request, HttpServletResponse response) 
+	/*public static String IsMeetingHashValid(HttpServletRequest request, HttpServletResponse response) 
 	throws RemoteException {
 	RetrieveMeetingResponseWrapper ret = null;			
 	WebAppContext ctx = WebAppContext.getWebAppContext(request);
@@ -610,7 +610,41 @@ public class MeetingCommand {
 		}
 	}
 	return (JSONObject.fromObject(new SystemError()).toString());
-	}
+	}*/
+
+	public static String IsMeetingHashValid(HttpServletRequest request, HttpServletResponse response) 
+			throws RemoteException, Exception {
+			logger.info("Entered MeetingCommand -> IsMeetingHashValid");
+			MeetingDetailsOutput output = null;			
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
+			String meetingCode = request.getParameter("meetingCode");			
+			String nocache = request.getParameter("nocache");			
+			boolean success = WebService.initWebService(request);		
+			if (ctx != null && success) {
+				logger.info("Before IsMeetingHashValid");
+				output = WebService.IsMeetingHashValid(meetingCode, WebUtil.clientId, request.getSession().getId());			
+				if (output != null && output.getEnvelope() != null) {
+					List<MeetingDO> meetings = output.getEnvelope().getMeetings();				
+					if (meetings != null) {
+						if (!isMyMeetingsAvailable(output) ) {
+							logger.info("setting total meetings = 0");
+							ctx.setTotalmeetings(0);
+						} else {
+							logger.info("setting total meetings = " + meetings.size());
+							for (MeetingDO meeting : meetings) {
+								normalizeMeetingData(meeting, meetingCode, ctx);
+							}
+							ctx.setTotalmeetings(meetings.size());
+							ctx.setMyMeetings(meetings);
+						}
+					}
+
+					return JSONObject.fromObject(output).toString();
+				}
+			}
+			logger.info("Exit MeetingCommand -> IsMeetingHashValid");
+			return (JSONObject.fromObject(new SystemError()).toString());
+			}
 	
 	/*public static String verifyCaregiver(HttpServletRequest request, HttpServletResponse response) 
 			throws RemoteException {
@@ -1052,9 +1086,9 @@ public class MeetingCommand {
 		
 		try
 		{
-			if (!StringUtils.isNotBlank(hostNuid)) {
+			/*if (!StringUtils.isNotBlank(hostNuid)) {
 				return "MeetingCommand.createInstantVendorMeeting -> Validation Error: Host Nuid can not be null or blank.";
-			}
+			}*/
 			
 			output = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType, request.getSession().getId(),WebUtil.clientId);
 			
@@ -1630,7 +1664,7 @@ public class MeetingCommand {
 		  logger.info("Exiting setKPHCConferenceStatus. Result: " + jsonStr);
 		  return jsonStr;
 	  }
-	  
+	  /*
 	 public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	  {
 		  	logger.info("Entered retrieveActiveMeetingsForMemberAndProxies");			
@@ -1693,6 +1727,73 @@ public class MeetingCommand {
 			logger.info("Exiting retrieveActiveMeetingsForMemberAndProxies");	
 			return  (JSONObject.fromObject(new SystemError()).toString());
 	  }
+	 */
+	 public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request, HttpServletResponse response) throws Exception 
+	  {
+		  	logger.info("Entered MeetingCommand->retrieveActiveMeetingsForMemberAndProxies");			
+		  	//RetrieveMeetingResponseWrapper respWrapper = null;
+		  	MeetingDetailsOutput output = null;
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
+			try
+			{
+				if (ctx != null && ctx.getMember() != null)
+				{
+					if(ctx.isNonMember())
+					{
+						output = WebService.retrieveActiveMeetingsForNonMemberProxies(ctx.getKpOrgSignOnInfo().getUser().getGuid(), request.getSession().getId(), WebUtil.clientId);
+					}
+					else
+					{
+						boolean getProxyMeetings = false;
+						if(ctx.getKpOrgSignOnInfo() != null)
+						{
+							getProxyMeetings = true;
+						}
+					
+						output = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMember().getMrn8Digit(), getProxyMeetings, request.getSession().getId(), WebUtil.clientId);
+					}
+					
+					if (output != null && "200".equals(output.getStatus().getCode()))
+					{
+						List<MeetingDO> memberMeetings = output.getEnvelope().getMeetings();						
+						//if (memberMeetings == null || memberMeetings.isEmpty() || CollectionUtils.isEmpty(memberMeetings) || (memberMeetings.size() == 0))
+						if (!isMyMeetingsAvailable(output))
+						{
+							ctx.setTotalmeetings(0);
+						}
+						else
+						{
+							for (MeetingDO myMeeting : memberMeetings)
+							{
+								normalizeMeetingData(myMeeting, ctx.getMeetingCode(), ctx);
+								//memberMeetings.get(i).setParticipant((ProviderWSO[]) clearNull(memberMeetings.get(i).getParticipant()));
+								//memberMeetings[i].setCaregivers((CaregiverWSO[]) clearNullArray(memberMeetings[i].getCaregivers()));
+								
+								logger.info("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting ID = " + myMeeting.getMeetingId());
+							    logger.debug("retrieveActiveMeetingsForMemberAndProxies -> Member Meeting Vendor meeting id = " + myMeeting.getMeetingVendorId());
+							}							
+							ctx.setTotalmeetings(memberMeetings.size());
+						}
+						ctx.setMyMeetings(memberMeetings);
+					}
+					else
+					{
+						// no meeting, we should blank out cached meeting
+						ctx.setMyMeetings(null);
+						ctx.setTotalmeetings(0);
+					}	
+					return JSONObject.fromObject(output).toString();
+				}
+			} 
+			catch (Exception e)
+			{	
+				// log error
+				logger.error("retrieveActiveMeetingsForMemberAndProxies -> System Error" + e.getMessage(),e);
+			}
+			logger.info("Exiting retrieveActiveMeetingsForMemberAndProxies");	
+			return  (JSONObject.fromObject(new SystemError()).toString());
+	  }
+	 
 	  
 		public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request, HttpServletResponse response) {
 			logger.info("Entered launchMemberOrProxyMeetingForMember");
