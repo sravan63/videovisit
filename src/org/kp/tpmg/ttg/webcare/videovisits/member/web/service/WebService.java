@@ -2378,6 +2378,9 @@ public class WebService{
 				logger.debug("WebService->retrieveActiveMeetingsForNonMemberProxies -> after split secure codes: " + secureCodes.split(","));
 				RetrieveActiveMeetingsForNonMemberProxiesInput input = new RetrieveActiveMeetingsForNonMemberProxiesInput();
 				input.setGuid(guid);
+				input.setSecureCodes(secureCodes.split(","));
+				input.setIsAdhoc(isAdhoc);
+				input.setIsParrs(isParrs);
 				input.setClientId(clientId);
 				input.setSessionId(sessionID);
 				
