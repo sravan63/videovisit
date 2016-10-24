@@ -704,7 +704,8 @@ iframe { display: none !important; }
   display:none;
   border:1px solid #000000;
   color:#ffffff;
-  background:url('../../../images/global/waiting_rm_bkgd.png') no-repeat 100% 100%;
+  background-repeat: no-repeat;
+  background-size:100% 100%;
  background-size: cover;
   }
 .waitingRoomMessageBlock{
