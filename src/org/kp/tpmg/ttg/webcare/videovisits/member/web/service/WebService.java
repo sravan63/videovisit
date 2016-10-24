@@ -2814,7 +2814,7 @@ public class WebService{
 			}
 			logger.info("launchMemberOrProxyMeetingForMember -> isNonMember= " + isNonMember);
 			if ((!isNonMember && StringUtils.isBlank(mrn8Digit)) || meetingId <= 0 || StringUtils.isBlank(sessionId)
-					|| StringUtils.isBlank(inMeetingDisplayName) || StringUtils.isBlank(mrn8Digit)) {
+					|| StringUtils.isBlank(inMeetingDisplayName)) {
 				logger.warn("launchMemberOrProxyMeetingForMember --> missing input attributes.");
 				LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
 				output.setService(new LaunchMeetingForMemberGuestOutput());
