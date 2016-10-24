@@ -33,6 +33,7 @@ import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
+import org.kp.tpmg.videovisit.model.user.Member;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
@@ -1452,6 +1453,7 @@ public class MeetingCommand {
 	  private static void setWebAppContextMemberInfo(WebAppContext ctx, MemberInfo memberInfo)
 	  {
 		  MemberWSO memberWso = new MemberWSO();
+		  Member memberDO = new Member();
 		  try {
 			    String dateStr = memberInfo.getDateOfBirth();
 			    if(StringUtils.isNotBlank(dateStr))
@@ -1460,12 +1462,14 @@ public class MeetingCommand {
 			    	{
 			    		Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(dateStr);
 			    		memberWso.setDateofBirth(cal.getTimeInMillis());
+			    		memberDO.setDateOfBirth(String.valueOf(cal.getTimeInMillis()));
 			    	}
 			    	else
 			    	{
 			    		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					    Date date = sdf.parse(memberInfo.getDateOfBirth());
 					    memberWso.setDateofBirth(date.getTime());
+					    memberDO.setDateOfBirth(String.valueOf(date.getTime()));
 			    	}
 			    	
 			    }
@@ -1479,6 +1483,13 @@ public class MeetingCommand {
 		  memberWso.setGender(memberInfo.getGender());
 		  memberWso.setLastName(memberInfo.getLastName());
 		  memberWso.setMiddleName(memberInfo.getMiddleName());
+		  
+		  memberDO.setEmail(memberInfo.getEmail());
+		  memberDO.setFirstName(memberInfo.getFirstName());
+		  memberDO.setGender(memberInfo.getGender());
+		  memberDO.setLastName(memberInfo.getLastName());
+		  memberDO.setMiddleName(memberInfo.getMiddleName());
+		  
 		  if(StringUtils.isBlank(memberInfo.getMrn()))
 		  {
 			  ctx.setNonMember(true);
@@ -1486,8 +1497,10 @@ public class MeetingCommand {
 		  else
 		  {
 			  memberWso.setMrn8Digit(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
+			  memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
 		  }
 		  ctx.setMember(memberWso);
+		  ctx.setMemberDO(memberDO);
 	  }
   
 	  private static String invalidateWebAppContext(WebAppContext ctx)
@@ -1750,7 +1763,7 @@ public class MeetingCommand {
 							getProxyMeetings = true;
 						}
 					
-						output = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMember().getMrn8Digit(), getProxyMeetings, request.getSession().getId(), WebUtil.clientId);
+						output = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMemberDO().getMrn(), getProxyMeetings, request.getSession().getId(), WebUtil.clientId);
 					}
 					
 					if (output != null && "200".equals(output.getStatus().getCode()))
