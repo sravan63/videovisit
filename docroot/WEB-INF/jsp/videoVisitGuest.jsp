@@ -316,7 +316,7 @@
 		
 				                <div style="display:inline-block; float:left;">
 				                	<!--US13310 & US133102(iteration21) Satish Start-->
-		                	<div id="waitingRoom">
+		                	<div id="waitingRoom" style="background-image:url('vidyoplayer/img/waiting_rm_bkgd.png')">
 		                		<div class="waitingRoomMessageBlock">
 		        <img src="vidyoplayer/img/TPMG_logo.png"" class="waitingroom-logo"/>
 		           <span class="waitingroom-text">Your visit will start once your doctor joins.</span>
