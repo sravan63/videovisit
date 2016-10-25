@@ -702,11 +702,12 @@ iframe { display: none !important; }
 /* ============= Satish @ US13301 & US133102(waiting room background & transparent box with logo) Start === */
 #waitingRoom{
   display:none;
-  border:1px solid #000000;
   color:#ffffff;
   background-repeat: no-repeat;
   background-size:100% 100%;
  background-size: cover;
+ overflow:hidden;
+ height:354px;
   }
 .waitingRoomMessageBlock{
   text-align:center;
