@@ -426,7 +426,8 @@ ul#iconList li#largeFont a {width:19px; margin-right:4px;background:transparent 
 /*  background: #c10901 url('../../../images/global/back-masthead.jpg') no-repeat top left;*/
  background: #bb1654 none repeat scroll 0 0;
     color: #000;
-    font-family: "Open Sans";
+    /*font-family: "Open Sans";*/
+    font-family: Arial, sans-serif;
     font-size: 16px;
     font-weight: 400;
     height: 76px;
