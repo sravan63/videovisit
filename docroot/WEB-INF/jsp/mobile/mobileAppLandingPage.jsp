@@ -13,74 +13,74 @@
 
 <%@ include file="userPresentInMeetingModal.jsp" %>
 
-<div class="page-content" style="width:100%; height:100%; background:url('images/mobile/bkgrnd-faded.png') no-repeat center center; background-size:cover; margin:0; padding:0;">
+<div class="page-content" style="width:100%; height:100%; margin:0; padding:0;">
 
 	<div class="visits patient" style="padding:6px; overflow:hidden;">
 		<!--<h1>Video Visits You Can Join Now</h1>	-->
-		<h1 style="width:100%; padding:8px 0; text-align:center; color:#FFFFFF; background-color:#706259; border-radius:3px; margin:20px 0 2px;"> Video Visits </h1>
+		<h1 style="text-align: left; border-bottom: 1px solid #D4D4D5; padding: 20px 10px;font-size: 25px;line-height: 30px;color: #333333;"> Your Video Visits for Today </h1>
 		
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
-				
 				<c:forEach var="meeting" items="${WebAppContext.meetings}">
-			
-					<div class="meeting well" style="min-height:85px; overflow:hidden; margin-bottom:5px; padding:20px; clear:both;">
-	
-						<div class="pic-frame">
-							<div class="pic">
-								<img src="${meeting.providerHost.imageUrl}">
-							</div>
-						</div>
-
-						<div class="meeting-block-handler">
-							<div class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp}</div>
-							<p class="time" style="padding-bottom:9px;">Scheduled Appointment</p>
-							<p class="time_${meeting.meetingId}" style="font-size:22px; padding-bottom:3px;"></p>
-
-							<script type="text/javascript">
+			      <div class="landing-portal-single-container">
+			          <div class="meeting-details-container" style="font-size:14px;">
+			            <div class="top">
+			              <div class="time-display">
+			                <span class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp} </span>
+			                <span class="time_${meeting.meetingId}" style="font-size:25px; padding-bottom:3px;"></span>
+			                <script type="text/javascript">
 							// convert time stamp to time
 								meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
-								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only').toLowerCase() + ' '+ '<%=timezone%>' ;
+								convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only').toUpperCase();
 								$('.time_' + ${meeting.meetingId}).append(convertedTimestamp);
 							</script>
-
-							<p class="host-name" style="font-weight:normal;">
-								${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if>
-							</p>
-
-							<c:if test="${(meeting.participants != null && fn:length(meeting.participants) > 0) || (meeting.caregivers != null && fn:length(meeting.caregivers) > 0)}">
-
-								<ul class="additional-participants" style="margin-top:20px;">
-
-								<c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
-
-									<li class="section">Additional Clinicians:</li>
-
-									<c:forEach var="p" items="${meeting.participants}">
-										<li>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></li>
-									</c:forEach>
-
-								</c:if>
-
-								<c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
-										<li class="section">Guest:</li>
-										<c:forEach var="p" items="${meeting.caregivers}">
-											<li>${p.firstName} ${p.lastName}</li>
-										</c:forEach>
-								</c:if>
-
-								</ul>
-							</c:if>
-						</div>
-					</div>
-
-					<div class="launch-button-handler only-tablets">
-						<button class="button-launch-visit" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}" style="float:right;">Join Visit</button>
-					</div>
-
-					<button class="button-launch-visit only-handsets" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}" style="float:right; height:50px; margin-bottom:20px;">Join</button>
-
-				</c:forEach>
+			              </div>
+			              <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
+			              <div class="accord-contents" style="display:block;margin-top:30px;">
+			                  <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0 || meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+			                    <h2 class="label" style="float:none;">Additional Participants</h2>
+			                  </c:if>
+			                  <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
+			                    <div class="names-container-member" style="margin:0px;">
+			                      <span class="names participants" style="margin-left:0;">
+			                        <c:forEach var="p" items="${meeting.participants}">
+			                          <span>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></span>
+			                        </c:forEach>
+			                      </span>
+			                    </div>
+			                  </c:if>
+			                  <div class="names-container-member" style="margin:0px;">
+			                    <c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+			                      <span class="names patient-guests" style="margin-left:0;">
+			                        <c:forEach var="p" items="${meeting.caregivers}">
+			                          <span>${p.firstName} ${p.lastName}</span>
+			                        </c:forEach>
+			                      </span>
+			                    </c:if>
+			                  </div>
+			              </div>
+			            </div>
+			            <div class="middle">
+				            <div class="image-holder">
+				            	<img class="circle-image" src=${meeting.providerHost.imageUrl} alt="" />
+				            </div>
+				            <div class="info-holder">
+				            	<span class="name-and-details">${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if></span><br>
+				              <span class="department-details">${meeting.providerHost.departmentName}</span>
+				            </div>
+			            </div>
+			            <div class="bottom">
+			              	<div class="launch-button-handler only-tablets" style="float: none; box-shadow: none;padding:0px; min-height: 60px;text-align:right;">
+                          		<button id="joinNowId" class="btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}" style="margin-bottom:0;">Join your visit</button>
+	                        </div>
+	                        <div class="launch-button-handler only-handsets">
+	                        	<button id="joinNowId" class="btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}" style="margin-bottom:0;">Join your visit</button>
+	                        </div>
+	                        <p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
+			            </div>
+			          </div>
+			      </div>
+			  </c:forEach>
 				
 			</c:when>
 			<c:otherwise>
@@ -88,7 +88,7 @@
 				<div class="alert alert-hero alert-no-visits" style="background-color:#FFFFFF; box-shadow:none;">
 					<div class="alert-hero-message">
 						<div class="image" style="background:url('images/mobile/video-icon-gray.png') no-repeat center; margin:-10px 15px 0 0; background-size:contain;"></div>
-						<p style=""><strong>You have no Video Visits scheduled within the next 15 minutes. Please check back again later.</strong></p>
+						<p style=""><strong>You have no Video Visits scheduled for Today</strong></p>
 					</div>
 				</div>
 				
