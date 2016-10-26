@@ -712,21 +712,27 @@ iframe { display: none !important; }
  height:354px;
   }
 .waitingRoomMessageBlock{
-  text-align:center;
-  background:black;
-  min-height:100px;
-  padding:36px;
-  border-radius:10px;
-  opacity:0.7;
-  filter:alpha(opacity=70);
-   /*width:44%;*/
-  width:458px;
-  min-width:400px;
-  margin:0 auto;
-  margin-top:5%; 
+  /*text-align: center;*/
+  background: #000000;
+  min-height: 100px;
+  padding: 36px;
+  border-radius: 10px;
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  /*width: 44%;*/
+  width: 458px;
+  min-width: 400px;
+  margin: 0 auto;
+  margin-top: 5%; 
 }
-.waitingroom-logo{height:95px;width:95px;float:left;}
+.waitingroom-logo{
+	height: 95px;
+	width: 95px;
+	float: left;
+	margin-right: 24px;
+}
 .waitingroom-text{font-family:"Avenir Next";font-size:32px;line-height:44px;color:#ffffff;}
+
 /* ============= Satish @ US13301 & US133102 End === */
 /* ============		@BROWSER FIXES	======================== */
 .ie6 #container-header			{position:relative;}
