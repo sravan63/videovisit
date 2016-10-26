@@ -11,6 +11,7 @@ $(document).ready(function() {
 	$("#inCallPluginAndControlsWrap").height(calculatedHeight);
 	$("#video-sidebar").height(calculatedHeight);
 	$(".video-sidebar-content").height(calculatedHeight - 33);
+	$("#waitingRoom").css("background-image","url('vidyoplayer/img/waiting_rm_bkgd.png')");
 
 	var btnContainerWidth = $("#btnContainer").outerWidth();
 	var calculatedWidthPluginContainer = calculatedWidth - btnContainerWidth;
