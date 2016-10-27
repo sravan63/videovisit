@@ -705,9 +705,12 @@ iframe { display: none !important; }
 #waitingRoom{
 	display: none;
   	color: #ffffff;
+ 	overflow: hidden;
+ 	height: 354px;
+  }
+  .waitingRoomBg{
   	background: url('../../../images/global/waiting_rm_bkgd.png') no-repeat 100% 100%;
  	background-size: cover;
- 	overflow: hidden;
  	height: 354px;
   }
 .waitingRoomMessageBlock{
