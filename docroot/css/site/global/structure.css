@@ -702,30 +702,40 @@ display: block;
 
 iframe { display: none !important; }
 /* ============= Satish @ US13301 & US133102(waiting room background & transparent box with logo) Start === */
+/*waiting room bg late load image issue fix start*/
+.waitingRoomBgImg{
+	display:none;
+	height:354px
+}
+/*waiting room bg late load image issue fix end*/
 #waitingRoom{
-	display: none;
-  	color: #ffffff;
- 	overflow: hidden;
- 	height: 354px;
+ display:none;
+ color:#ffffff;
+ overflow:hidden;
+ height:354px;
+  background: url('../../../images/global/waiting_rm_bkgd.png') no-repeat 100% 100%;
+  background-size: cover;
   }
-  .waitingRoomBg{
-  	background: url('../../../images/global/waiting_rm_bkgd.png') no-repeat 100% 100%;
- 	background-size: cover;
- 	height: 354px;
-  }
+ /* .waitingRoomBg{
+   background: url('../../../images/global/waiting_rm_bkgd.png') no-repeat 100% 100%;
+  background-size: cover;
+  height: 354px;
+  }*/
 .waitingRoomMessageBlock{
- 	/*text-align: center;*/
-  	background: #000000;
-  	min-height: 100px;
-  	padding: 36px;
-  	border-radius: 10px;
-  	opacity: 0.7;
-  	filter: alpha(opacity=70);
-  	/*width: 44%;*/
-  	width: 458px;
-  	min-width: 400px;
-  	margin: 0 auto;
-  	margin-top: 5%; 
+  /*text-align:center;*/
+  background:black;
+  min-height:100px;
+  padding:36px;
+  border-radius:10px;
+  opacity:0.7;
+  filter:alpha(opacity=50);
+  /*width:44%;*/
+  width:458px;
+  min-width:400px;
+  margin:0 auto;
+   position: relative;
+    top: 70px;
+
 }
 .waitingroom-logo{
 	height: 95px;
@@ -733,7 +743,13 @@ iframe { display: none !important; }
 	float: left;
 	margin-right: 24px;
 }
-.waitingroom-text{font-family:"Avenir Next";font-size:32px;line-height:44px;color:#ffffff;}
+.waitingroom-text{
+	font-family: "Avenir Next"; 
+	font-size: 32px;
+	line-height: 44px;
+	color:#ffffff;
+}
+
 
 /* ============= Satish @ US13301 & US133102 End === */
 /* ============		@BROWSER FIXES	======================== */
