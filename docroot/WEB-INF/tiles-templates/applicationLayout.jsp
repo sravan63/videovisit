@@ -18,6 +18,10 @@
         <link rel="shortcut icon" href="images/favicon/favicon.ico">
         <link rel="apple-touch-icon" href="images/favicon/apple-touch-icon.png">
         <!--End Favicon-->
+        
+        <!--Start Importing Open Sans Font-->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" />
+        <!--End Importing Open Sans Font-->
 
         <!--Start CSS-->
         <c:forEach var='item' items='${cssDependencies}'>
