@@ -10,6 +10,10 @@
 <input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
 <input type="hidden" id="guestUrl" value="${WebAppContext.videoVisit.guestUrl}" />
 
+<!-- waiting room bg late load image issue fix start-->
+<img src="images/global/waiting_rm_bkgd.png" class="waitingRoomBgImg" />
+<!-- waiting room bg late load image issue fix end-->
+
 <div style="float:left">
 	<h3 class="page-title">Video Visit for ${WebAppContext.myMeetings[0].member.firstName} 
 		${WebAppContext.myMeetings[0].member.lastName} 
@@ -316,8 +320,9 @@
 		
 				                <div style="display:inline-block; float:left;">
 				                	<!--US13310 & US133102(iteration21) Satish Start-->
-		                	<div id="waitingRoom" style="background-image:url('vidyoplayer/img/waiting_rm_bkgd.png')">
-		                		<div class="waitingRoomMessageBlock">
+		                	<div id="waitingRoom">
+		                		<div class="waitingRoomMessageBlock"> 
+		                		
 		        <img src="vidyoplayer/img/TPMG_logo.png"" class="waitingroom-logo"/>
 		           <span class="waitingroom-text">Your visit will start once your doctor joins.</span>
 

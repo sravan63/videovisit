@@ -20,7 +20,9 @@
 	<input type="hidden" id="isProxyMeeting" value="${WebAppContext.videoVisit.isProxyMeeting}" />
 	
 	<input type="hidden" id="kpKeepAliveUrl" value="${WebAppContext.kpKeepAliveUrl}" />
-	
+	<!-- waiting room bg late load image issue fix start-->
+<img src="images/global/waiting_rm_bkgd.png" class="waitingRoomBgImg" />
+<!-- waiting room bg late load image issue fix end-->
 <div id="container-videovisit" style="width:auto;">
 
 	<div id="vvHeader" style="">
@@ -294,12 +296,11 @@
 		                <div style="display:inline-block; float:left;">
 		                 <!--US13310 & US133102(iteration21) Satish Start-->
 		                	<div id="waitingRoom">
-		                	<div class="waitingRoomBg">
-		                		<div class="waitingRoomMessageBlock">
+		                		<div class="waitingRoomMessageBlock"> 
+		                		
 		        <img src="vidyoplayer/img/TPMG_logo.png"" class="waitingroom-logo"/>
 		           <span class="waitingroom-text">Your visit will start once your doctor joins.</span>
 
-		                		</div>
 		                		</div>
 		                	<!-- US133102(iteration21) End-->	
 		                	</div>
