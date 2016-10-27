@@ -564,13 +564,11 @@ input.disabled
 
 .header-inner 						{background:#e2eaed url('../../../images/global/back-blue.png') repeat-x top left;}
 /*satish US15275 start*/
+
 #header-main{
-/*	background: #c10901 url('../../../images/global/back-masthead.jpg') no-repeat top left;*/
- background: #bb1654 none repeat scroll 0 0;
-    color: #000;
-    /*font-family: "Open Sans";*/
-    /*font-family: Arial, sans-serif;*/
-    font-family:Arial,Helvetica,sans-serif;
+ 	background: #bb1654 none repeat scroll 0 0;
+    color: #ffffff;
+    font-family: "Open Sans";
     font-size: 16px;
     font-weight: 400;
     height: 76px;
