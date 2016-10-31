@@ -87,6 +87,7 @@ import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopInput;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestDesktopInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
@@ -952,7 +953,7 @@ public class WebService{
 		return toRet;
 	}*/
 	
-	public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow) 
+	/*public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow) 
 			throws Exception {
 		logger.info("Entered createCaregiverMeetingSession" + "  "+  meetingHash + " "+ patientLastName +" " + isMobileFlow );
 		StringResponseWrapper toRet = null; 
@@ -984,6 +985,61 @@ public class WebService{
 		}
 		logger.info("Exit createCaregiverMeetingSession"); 
 		return toRet;
+	}*/
+	
+	public static LaunchMeetingForMemberGuestOutput createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow, String sessionId) 
+			throws Exception {
+		logger.info("Entered WebService->createCaregiverMeetingSession" + "  "+  meetingHash + " "+ patientLastName +" " + isMobileFlow );
+		LaunchMeetingForMemberGuestOutput output = null;
+		String responseJsonStr = "";
+		try{
+			if(StringUtils.isBlank(meetingHash) || StringUtils.isBlank(patientLastName)){
+				logger.warn("WebService->createCaregiverMeetingSession --> missing input attributes.");
+				output = new LaunchMeetingForMemberGuestOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setStatus(status);
+				return output;
+
+			}
+			
+			LaunchMeetingForMemberGuestDesktopInput input = new LaunchMeetingForMemberGuestDesktopInput();
+			input.setMeetingHash(meetingHash);
+			input.setPatientLastName(patientLastName);
+			input.setMobileFlow(isMobileFlow);
+			input.setClientId(WebUtil.clientId);
+			input.setSessionId(sessionId);
+
+			final Gson gson = new Gson();
+			final String inputJsonString = gson.toJson(input);
+			logger.info("WebService->createCaregiverMeetingSession -> jsonInptString : " + inputJsonString);
+
+			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString);
+			logger.info("WebService->createCaregiverMeetingSession -> jsonResponseString : " + responseJsonStr);
+
+			JsonParser parser = new JsonParser();
+			JsonObject jobject = new JsonObject();
+			jobject = (JsonObject) parser.parse(responseJsonStr);
+			output = gson.fromJson(jobject.get("service").toString(), LaunchMeetingForMemberGuestOutput.class);
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			logger.error("createCaregiverMeetingSession: Web Service API error:" + e.getMessage());
+			throw new Exception("createCaregiverMeetingSession: Web Service API error", e.getCause());
+			
+		}
+		String responseCodeAndMsg = "Empty response";
+		if (output != null) {
+			responseCodeAndMsg = output.getStatus() != null
+					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
+					: "No rest response code & message returned from service.";
+		}
+		logger.info("Exit WebService->createCaregiverMeetingSession --> createCaregiverMeetingSession rest response message & code: "
+				+ responseCodeAndMsg);
+		return output;
 	}
 	
 	public static StringResponseWrapper endCaregiverMeetingSession(String meetingHash, String megaMeetingNameDisplayName, boolean isParticipantDel) 

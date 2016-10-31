@@ -667,7 +667,7 @@ public class MeetingCommand {
 		}
 		return json;
 	}*/
-	
+	/*
 	public static String createCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 		StringResponseWrapper ret = null;
@@ -701,6 +701,46 @@ public class MeetingCommand {
 		
 		// worst case error returned, no caregiver found, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
+	}*/
+	
+	public static String createCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) 
+			throws Exception {
+		logger.info("Entered MeetingCommand->createCaregiverMeetingSession");
+		LaunchMeetingForMemberGuestOutput output = null;
+		String jsonString = null;
+		try {
+			// parse parameters
+			String meetingCode = request.getParameter("meetingCode");
+			String patientLastName = request.getParameter("patientLastName");
+			
+			boolean isMobileFlow= false;
+			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow")) && request.getParameter("isMobileFlow").equalsIgnoreCase("true"))
+			{
+					isMobileFlow = true;
+					logger.info("MeetingCommand->createCaregiverMeetingSession : mobile flow is true");
+			}
+				else{
+					isMobileFlow = false;
+					logger.info("MeetingCommand->createCaregiverMeetingSession : mobile flow is false");
+			}
+					
+			
+			if (StringUtils.isNotBlank( meetingCode )) {
+				output = WebService.createCaregiverMeetingSession(meetingCode, patientLastName, isMobileFlow, request.getSession().getId());
+				if (output != null) {
+					Gson gson = new Gson();		
+					jsonString = gson.toJson(output);		
+					logger.info("MeetingCommand->createCaregiverMeetingSession->output value after converting to json"+ jsonString.toString());	
+				}
+			}						
+		} catch (Exception e) {
+			logger.error("MeetingCommand->createCaregiverMeetingSession : System Error :" + e.getMessage(), e);
+			jsonString = JSONObject.fromObject(new SystemError()).toString();
+		}
+		
+		logger.info("Exit MeetingCommand.createCaregiverMeetingSession ");
+		return jsonString;
+
 	}
 	
 	public static String endCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -18,5 +18,6 @@ public class ServiceUtil {
 	public static final String RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES = "retrieveActiveMeetingsForMemberAndProxies";
 	public static final String RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES = "retrieveActiveMeetingsForNonMemberProxies";
 	public static final String IS_MEETING_HASH_VALID = "isMeetingHashValid";
+	public static final String LAUNCH_MEETING_FOR_MEMBER_GUEST_DESKTOP = "launchMeetingForMemberGuestDesktop";
 	
 }
