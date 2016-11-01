@@ -42,8 +42,9 @@ $(document).ready(function() {
                       $("#layover").hide();
                       return false;  
                     }
-            	  	hreflocation = returndata.result;
-            	 
+            	  	//hreflocation = returndata.result;
+            	  	hreflocation = returndata.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
+            	    
             	  	//  hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
             	  	//	hreflocation = "/vidyoplayer/player.html?guestName=" + name + "&isProvider=false&meetingId=" +meetingId + "&caregiverId=" +caregiverId+ "&meetingCode=" +$.trim($("#meetingCode").val())+ "&guestUrl=" +encodeURIComponent(hreflocation);
             	  
