@@ -708,6 +708,7 @@ public class MeetingCommand {
 		logger.info("Entered MeetingCommand->createCaregiverMeetingSession");
 		LaunchMeetingForMemberGuestOutput output = null;
 		String jsonString = null;
+		Gson gson = new Gson();
 		try {
 			// parse parameters
 			String meetingCode = request.getParameter("meetingCode");
@@ -724,21 +725,25 @@ public class MeetingCommand {
 					logger.info("MeetingCommand->createCaregiverMeetingSession : mobile flow is false");
 			}
 					
-			
 			if (StringUtils.isNotBlank( meetingCode )) {
 				output = WebService.createCaregiverMeetingSession(meetingCode, patientLastName, isMobileFlow, request.getSession().getId());
-				if (output != null) {
-					Gson gson = new Gson();		
+				if (output != null && output.getLaunchMeetingEnvelope().getLaunchMeeting() != null) {		
 					jsonString = gson.toJson(output);		
 					logger.info("MeetingCommand->createCaregiverMeetingSession->output value after converting to json"+ jsonString.toString());	
 				}
 			}						
 		} catch (Exception e) {
 			logger.error("MeetingCommand->createCaregiverMeetingSession : System Error :" + e.getMessage(), e);
-			jsonString = JSONObject.fromObject(new SystemError()).toString();
+			output = new LaunchMeetingForMemberGuestOutput();
+			final Status status = new Status();
+			status.setCode("900");
+			status.setMessage("System error");
+			output.setStatus(status);
+			jsonString = gson.toJson(output);
+			//jsonString = JSONObject.fromObject(new SystemError()).toString();
 		}
 		
-		logger.info("Exit MeetingCommand.createCaregiverMeetingSession ");
+		logger.info("Exit MeetingCommand.createCaregiverMeetingSession : "+jsonString);
 		return jsonString;
 
 	}

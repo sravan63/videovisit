@@ -993,7 +993,7 @@ public class WebService{
 		LaunchMeetingForMemberGuestOutput output = null;
 		String responseJsonStr = "";
 		try{
-			if(StringUtils.isBlank(meetingHash) || StringUtils.isBlank(patientLastName)){
+			if(StringUtils.isBlank(meetingHash) || StringUtils.isBlank(patientLastName) || StringUtils.isBlank(sessionId)){
 				logger.warn("WebService->createCaregiverMeetingSession --> missing input attributes.");
 				output = new LaunchMeetingForMemberGuestOutput();
 				final Status status = new Status();

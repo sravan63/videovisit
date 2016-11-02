@@ -30,21 +30,25 @@ $(document).ready(function() {
               {
             	  returndata = jQuery.parseJSON(returndata);
             	  //MEETING_FINISHED_EXCEPTION
-            	  if(returndata.result === '2'){
+            	  //if(returndata.result === '2'){
+            	  if(returndata.status.code === '510'){
             		  window.location.replace("guest?meetingCode=" +  $.trim($("#meetingCode").val()));
                       return false;
                     }
             	  //CAREGIVER JOINED FROM DIFFERENT DEVICE
-            	  else if (returndata.result === '4') { 
-                  	 
+            	  //else if (returndata.result === '4') {
+            	  else if (returndata.status.code === '400') { 
                   	$("p.error").css("display", "inline").html('<label>You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.</label><br/>');
                       moveToit("p.error");  
                       $("#layover").hide();
                       return false;  
                     }
             	  	//hreflocation = returndata.result;
+            	  if(returndata.launchMeetingEnvelope.launchMeeting != null){
             	  	hreflocation = returndata.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
-            	    
+            	  }else{
+            	  hreflocation = null;
+            	  }
             	  	//  hreflocation = "http://localhost:8080/vidyoplayer/player.html?guestName="+name+"&guestUrl=" +encodeURIComponent(hreflocation);
             	  	//	hreflocation = "/vidyoplayer/player.html?guestName=" + name + "&isProvider=false&meetingId=" +meetingId + "&caregiverId=" +caregiverId+ "&meetingCode=" +$.trim($("#meetingCode").val())+ "&guestUrl=" +encodeURIComponent(hreflocation);
             	  
