@@ -31,7 +31,8 @@ $(document).ready(function() {
             	  returndata = jQuery.parseJSON(returndata);
             	  //MEETING_FINISHED_EXCEPTION
             	  //if(returndata.result === '2'){
-            	  if(returndata.status.code === '510'){
+            	  //500-Meeting data not found, 520-Meeting Cancelled, 510-Meeting Ended
+            	  if(returndata.status.code === '510' || returndata.status.code === '500' || returndata.status.code === '520'){
             		  window.location.replace("guest?meetingCode=" +  $.trim($("#meetingCode").val()));
                       return false;
                     }
