@@ -31,9 +31,9 @@ public class QuitMeetingController extends SimplePageController {
 				data = MeetingCommand.updateEndMeetingLogout(request, response, memberName, false);	
 			}
 			
-			if (refreshMeetings != null && refreshMeetings.equals("true")) {
+			/*if (refreshMeetings != null && refreshMeetings.equals("true")) {// removing duplicate call because meetings are retrieved in jsp also.
 				MeetingCommand.retrieveMeeting(request, response);
-			}
+			}*/
 		
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			ctx.setHasJoinedMeeting(false);

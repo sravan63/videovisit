@@ -28,6 +28,7 @@ import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
@@ -187,8 +188,8 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		//return (JSONObject.fromObject(new SystemError()).toString());
 	}
-
-	public static String retrieveMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 
+//calling rest service
+/*	public static String retrieveMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
 		RetrieveMeetingResponseWrapper ret = null;
 		Pattern p1 = Pattern.compile ("<mmMeetingName>");
@@ -217,7 +218,7 @@ public class MeetingCommand {
 						for (int i = 0; i < meetings.length; i++ )
 						{
 							if(meetings[i].getMmMeetingName() != null && !"".equals(meetings[i].getMmMeetingName())){
-									/*String megaUrl = ctx.getMegaMeetingURL();
+									String megaUrl = ctx.getMegaMeetingURL();
 									m1 = p1.matcher(megaUrl);
 									megaUrl = m1.replaceAll(meetings[i].getMmMeetingName());
 									m2 = p2.matcher(megaUrl);
@@ -226,7 +227,7 @@ public class MeetingCommand {
 															" " + 
 															ctx.getMember().getLastName().replaceAll("[^a-zA-Z0-9 ]", " ")); 
 									// copy back to the meeting mmMeetingName
-									meetings[i].setMmMeetingName(megaUrl);*/
+									meetings[i].setMmMeetingName(megaUrl);
 							}	
 							
 							meetings[i].setParticipants((ProviderWSO[]) clearNullArray(meetings[i].getParticipants()));
@@ -258,7 +259,7 @@ public class MeetingCommand {
 		}
 		return  (JSONObject.fromObject(new SystemError()).toString());
 	}
-	
+*/	
 	public static String memberLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
@@ -2242,4 +2243,49 @@ public static String launchMeetingForMemberDesktop(HttpServletRequest request, H
 	logger.info("Exiting launchMeetingForMemberDesktop");
 	return output;
 }
+
+public static String retrieveMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception 
+{
+	logger.info("Entered retrieveMeeting");
+	WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+	MeetingDetailsJSON meetingDetailsJSON = null;
+	try
+	{
+		if (ctx != null && ctx.getMember() != null)
+		{
+			meetingDetailsJSON = WebService.retrieveMeeting(ctx.getMember().getMrn8Digit(), PAST_MINUTES, FUTURE_MINUTES,request.getSession().getId());
+			if (meetingDetailsJSON != null && meetingDetailsJSON.getService() != null 
+					&& meetingDetailsJSON.getService().getStatus() != null
+					&& "200".equals(meetingDetailsJSON.getService().getStatus().getCode())
+					&& meetingDetailsJSON.getService().getEnvelope() != null
+					&& meetingDetailsJSON.getService().getEnvelope().getMeetings() != null)
+			{
+				List<MeetingDO> myMeetings = meetingDetailsJSON.getService().getEnvelope().getMeetings();
+				if (myMeetings.size() == 1 && myMeetings.get(0) == null)
+				{
+					ctx.setTotalmeetings(0);
+				}
+				else
+				{
+					ctx.setTotalmeetings(myMeetings.size());
+				}
+				ctx.setMyMeetings(myMeetings);
+			}
+			else
+			{
+				// no meeting, we should blank out cached meeting
+				ctx.setMyMeetings(null);
+				ctx.setTotalmeetings(0);
+			}
+			logger.info("Exiting retrieveMeeting");
+			return JSONObject.fromObject(meetingDetailsJSON).toString();
+		}
+	} 
+	catch (Exception e)
+	{	
+		logger.error("System Error" + e.getMessage(),e);
+	}
+	return  (JSONObject.fromObject(new SystemError()).toString());
+}
+
 }

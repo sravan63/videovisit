@@ -21,12 +21,12 @@
 		
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
-				<c:forEach var="meeting" items="${WebAppContext.meetings}">
+				<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
 			      <div class="landing-portal-single-container">
 			          <div class="meeting-details-container" style="font-size:14px;">
 			            <div class="top">
 			              <div class="time-display">
-			                <span class="hide-me timestamp_${meeting.meetingId}">${meeting.scheduledTimestamp} </span>
+			                <span class="hide-me timestamp_${meeting.meetingId}">${meeting.meetingTime} </span>
 			                <span class="time_${meeting.meetingId}" style="font-size:25px; padding-bottom:3px;"></span>
 			                <script type="text/javascript">
 							// convert time stamp to time
@@ -37,22 +37,22 @@
 			              </div>
 			              <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
 			              <div class="accord-contents" style="display:block;margin-top:30px;">
-			                  <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0 || meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+			                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0 || meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
 			                    <h2 class="label" style="float:none;">Additional Participants</h2>
 			                  </c:if>
-			                  <c:if test="${meeting.participants != null && fn:length(meeting.participants) > 0}">
+			                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0}">
 			                    <div class="names-container-member" style="margin:0px;">
 			                      <span class="names participants" style="margin-left:0;">
-			                        <c:forEach var="p" items="${meeting.participants}">
+			                        <c:forEach var="p" items="${meeting.participant}">
 			                          <span>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></span>
 			                        </c:forEach>
 			                      </span>
 			                    </div>
 			                  </c:if>
 			                  <div class="names-container-member" style="margin:0px;">
-			                    <c:if test="${meeting.caregivers != null && fn:length(meeting.caregivers) > 0}">
+			                    <c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
 			                      <span class="names patient-guests" style="margin-left:0;">
-			                        <c:forEach var="p" items="${meeting.caregivers}">
+			                        <c:forEach var="p" items="${meeting.caregiver}">
 			                          <span>${p.firstName} ${p.lastName}</span>
 			                        </c:forEach>
 			                      </span>
@@ -62,19 +62,19 @@
 			            </div>
 			            <div class="middle">
 				            <div class="image-holder">
-				            	<img class="circle-image" src=${meeting.providerHost.imageUrl} alt="" />
+				            	<img class="circle-image" src=${meeting.host.imageUrl} alt="" />
 				            </div>
 				            <div class="info-holder">
-				            	<span class="name-and-details">${meeting.providerHost.firstName} ${meeting.providerHost.lastName}<c:if test="${not empty meeting.providerHost.title}">, ${meeting.providerHost.title}</c:if></span><br>
-				              <span class="department-details">${meeting.providerHost.departmentName}</span>
+				            	<span class="name-and-details">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if></span><br>
+				              <span class="department-details">${meeting.host.departmentName}</span>
 				            </div>
 			            </div>
 			            <div class="bottom">
 			              	<div class="launch-button-handler only-tablets" style="float: none; box-shadow: none;padding:0px; min-height: 60px;text-align:right;">
-                          		<button id="joinNowId" class="button-launch-visit btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}" style="margin-bottom:0;">Join your visit</button>
+                          		<button id="joinNowId" class="button-launch-visit btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}" style="margin-bottom:0;">Join your visit</button>
 	                        </div>
 	                        <div class="launch-button-handler only-handsets">
-	                        	<button id="joinNowId" class="button-launch-visit btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.mmMeetingConId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}" style="margin-bottom:0;">Join your visit</button>
+	                        	<button id="joinNowId" class="button-launch-visit btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}" style="margin-bottom:0;">Join your visit</button>
 	                        </div>
 	                        <p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
 			            </div>

@@ -37,10 +37,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.member.CareGiverLeaveMeeting;
-import org.kp.tpmg.videovisit.member.CareGiverLeaveMeetingResponse;
-import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSession;
-import org.kp.tpmg.videovisit.member.CreateCaregiverMeetingSessionResponse;
 import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
 import org.kp.tpmg.videovisit.member.CreateMeetingSession;
 import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSession;
@@ -49,30 +45,16 @@ import org.kp.tpmg.videovisit.member.GetMeetingByMeetingID;
 import org.kp.tpmg.videovisit.member.GetMeetingByMeetingIDResponse;
 import org.kp.tpmg.videovisit.member.GetVendorPluginData;
 import org.kp.tpmg.videovisit.member.GetVendorPluginDataResponse;
-import org.kp.tpmg.videovisit.member.IsMeetingHashValid;
-import org.kp.tpmg.videovisit.member.IsMeetingHashValidResponse;
 import org.kp.tpmg.videovisit.member.KickUserFromMeeting;
 import org.kp.tpmg.videovisit.member.KickUserFromMeetingResponse;
 import org.kp.tpmg.videovisit.member.LaunchMeetingForMember;
 import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuest;
 import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuestResponse;
 import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberResponse;
-import org.kp.tpmg.videovisit.member.LaunchMemberOrProxyMeetingForMember;
-import org.kp.tpmg.videovisit.member.LaunchMemberOrProxyMeetingForMemberResponse;
 import org.kp.tpmg.videovisit.member.MemberLogout;
 import org.kp.tpmg.videovisit.member.MemberLogoutResponse;
-import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForMemberAndProxies;
-import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForMemberAndProxiesResponse;
-import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForNonMemberProxies;
-import org.kp.tpmg.videovisit.member.RetrieveActiveMeetingsForNonMemberProxiesResponse;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiver;
 import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiverResponse;
-import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMember;
-import org.kp.tpmg.videovisit.member.RetrieveMeetingsForMemberResponse;
-import org.kp.tpmg.videovisit.member.TerminateInstantMeeting;
-import org.kp.tpmg.videovisit.member.TerminateInstantMeetingResponse;
-import org.kp.tpmg.videovisit.member.TestDbRoundTrip;
-import org.kp.tpmg.videovisit.member.TestDbRoundTripResponse;
 import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoining;
 import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoiningResponse;
 import org.kp.tpmg.videovisit.member.UserPresentInMeeting;
@@ -81,6 +63,7 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
+import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
@@ -92,6 +75,7 @@ import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMemberOrProxyMeetingForMemberInput;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForMemberAndProxiesInput;
 import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForNonMemberProxiesInput;
@@ -445,8 +429,8 @@ public class WebService{
 	}*/
 	
 
-	 
-	public static RetrieveMeetingResponseWrapper retrieveMeeting(String mrn8Digit,int pastMinutes,int futureMinutes,String sessionID) throws Exception 
+//calling rest service	 
+/*	public static RetrieveMeetingResponseWrapper retrieveMeeting(String mrn8Digit,int pastMinutes,int futureMinutes,String sessionID) throws Exception 
 	{
 		logger.info("Entered retrieveMeeting");
 		RetrieveMeetingResponseWrapper toRet = null;
@@ -479,7 +463,7 @@ public class WebService{
 		logger.info("Exit initWebService");
 		return toRet;
 	}
-	
+*/	
 		
 	public static StringResponseWrapper memberLogout(String mrn8Digit, String sessionID) throws Exception
 	{
@@ -2937,6 +2921,42 @@ public class WebService{
 		return responseJsonStr;
 
 	}
+	
+	public static MeetingDetailsJSON retrieveMeeting(String mrn8Digit,int pastMinutes,int futureMinutes,String sessionID) throws Exception 
+	{
+		logger.info("Entered retrieveMeeting");
+		MeetingDetailsJSON meetingDetailsJSON = null;
+		Gson gson = new Gson();
+		String output = null;
+		ActiveMeetingsForMemberInput jsonInput = new ActiveMeetingsForMemberInput();
+		try
+		{
+			if(mrn8Digit == null || sessionID == null)
+			{
+				logger.warn("retrieveMeeting --> missing input attributes.");
+				MeetingDetailsJSON detailsJSON = new MeetingDetailsJSON();
+				detailsJSON.setService(new MeetingDetailsOutput());
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				detailsJSON.getService().setStatus(status);
+				return detailsJSON;
+			}
+			jsonInput.setMrn(mrn8Digit);
+			jsonInput.setClientId(WebUtil.clientId);
+			jsonInput.setSessionId(sessionID);
+			logger.info("retrieveMeeting -> inputJsonString : " + gson.toJson(jsonInput));		
+			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
+			meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
+		}
+		catch (Exception e)
+		{
+			logger.error("retrieveMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
+			meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
+		}
+		logger.info("Exit retrieveMeeting");
+		return meetingDetailsJSON;
+	}
+
 }
-
-
