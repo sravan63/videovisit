@@ -74,6 +74,7 @@ import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestDesktopIn
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMemberOrProxyMeetingForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
@@ -1482,8 +1483,8 @@ public class WebService{
 	 * @param sessionId
 	 * @param isMobileFlow
 	 */
-	
-	public static MeetingLaunchResponseWrapper getLaunchMeetingDetails(long meetingID,
+//calling rest service	
+/*	public static MeetingLaunchResponseWrapper getLaunchMeetingDetails(long meetingID,
 			String inMeetingDisplayName,String sessionID,String mrn8Digit,String deviceType, String deviceOS, String deviceOSversion,boolean isMobileFlow) throws Exception {
 		 MeetingLaunchResponseWrapper toRet = null; 
 		
@@ -1518,7 +1519,7 @@ public class WebService{
 		logger.info("Exit WebService: getLaunchMeetingDetails");
 		return toRet;
 	}
-	
+*/	
 	
 	public static MeetingLaunchResponseWrapper getMeetingDetailsForMemberGuest(String meetingCode, String patientLastName,String deviceType, String deviceOS, String deviceOSVersion,boolean isMobileFlow) throws Exception{
 		
@@ -2957,6 +2958,49 @@ public class WebService{
 		}
 		logger.info("Exit retrieveMeeting");
 		return meetingDetailsJSON;
+	}
+
+	public static String getLaunchMeetingDetails(long meetingID,
+			String inMeetingDisplayName,String sessionID,String mrn8Digit,String deviceType, String deviceOS, String deviceOSversion,boolean isMobileFlow) throws Exception {
+		logger.info("Entered WebService: getLaunchMeetingDetails");	
+	    LaunchMeetingForMemberInput jsonInput = new LaunchMeetingForMemberInput();
+	    Gson gson = new Gson();
+	    String output = null;
+	    
+		logger.info("Entered WebService: getLaunchMeetingDetails:MeetingID=" + meetingID + " sessionId=" + sessionID +" inMeetingDisplayName"+ inMeetingDisplayName + " mrn8Digit=" + mrn8Digit+ " deviceType" + deviceType +" deviceOS" +deviceOS+ " deviceOSversion" +deviceOSversion +" isMobileFlow" +isMobileFlow);
+		if (meetingID <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID)
+				|| StringUtils.isBlank(inMeetingDisplayName)) {
+			logger.warn("getLaunchMeetingDetails --> missing input attributes.");
+			LaunchMeetingForMemberGuestJSON memberOutput = new LaunchMeetingForMemberGuestJSON();
+			memberOutput.setService(new LaunchMeetingForMemberGuestOutput());
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			memberOutput.getService().setStatus(status);
+			return gson.toJson(output);
+		}
+		try
+		{
+			jsonInput.setMrn(mrn8Digit);
+			jsonInput.setMeetingID(meetingID);
+			jsonInput.setSessionId(sessionID);
+			jsonInput.setInMeetingDisplayName(inMeetingDisplayName);
+			jsonInput.setDeviceType(deviceType);
+			jsonInput.setDeviceOS(deviceOS);
+			jsonInput.setDeviceOSversion(deviceOSversion);
+			jsonInput.setMobileFlow(isMobileFlow);
+			jsonInput.setClientId(WebUtil.clientId);
+			
+			logger.info("getLaunchMeetingDetails -> inputJsonString : " + gson.toJson(jsonInput));
+			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
+		}
+		catch (Exception e)
+		{
+			logger.error("WebService: getLaunchMeetingDetails -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
+		}
+		logger.info("Exit WebService: getLaunchMeetingDetails");
+		return output;
 	}
 
 }

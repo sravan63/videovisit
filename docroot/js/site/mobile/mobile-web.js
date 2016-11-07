@@ -546,7 +546,7 @@ $(document).ready(function() {
 	        	try
 	        	{
 	        		data = $.parseJSON(data);
-	        		console.log("response",data.status.code);
+	        		//console.log("response",data.status.code);
 	        	
 	   
 	        		//validationData= $.parseJSON(validationData)
@@ -563,7 +563,7 @@ $(document).ready(function() {
 
 	        	 if(data.success == true && isValidUserSession == true){
 
-	        		var meetingStatus = data.meetingStatus;
+	        		var meetingStatus = data.service.launchMeetingEnvelope.launchMeeting.meetingStatus;
 	        		console.log("meetingStatus: ",meetingStatus);
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
 	             		if (inAppBrowserFlag == "true")
@@ -575,7 +575,7 @@ $(document).ready(function() {
 		             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
 			            		try
 			            		{
-				            		var userPresentInMeetingData = data.inMeeting;
+				            		var userPresentInMeetingData = data.service.launchMeetingEnvelope.launchMeeting.inMeeting;
 				            		console.log("userPresentInMeetingData: ",userPresentInMeetingData);
 
 				            		if(userPresentInMeetingData == true){
@@ -1144,16 +1144,16 @@ function launchVideoVisitMember(data){
 		//var name = lastName + " " + firstName;
 		try{
 			//data = jQuery.parseJSON(data);
-			if ( data.errorIdentifier == 1){
+			if ( data.service.status.code != 200){
 				window.location.replace("logout.htm");
 			}
 
-			if (data.errorMessage) {
-				window.location.replace("logout.htm");
-			}
-			console.log("launchVideoVisitMember")
-			url = data.result;
-			console.log("url",url);
+//			if (data.errorMessage) {
+//				window.location.replace("logout.htm");
+//			}
+//			console.log("launchVideoVisitMember")
+			url = data.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
+//			console.log("url",url);
 		
 
 			var appOS = getAppOS();

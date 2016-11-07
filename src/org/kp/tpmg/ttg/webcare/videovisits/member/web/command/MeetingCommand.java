@@ -1238,8 +1238,8 @@ public class MeetingCommand {
 		logger.info("Exit MeetingCommand.terminateSetupWizardMeeting ");
 		return jsonString;
 	}
-	
-	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
+// calling rest service	
+/*	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		long meetingId = 0;
 		String deviceType = null;
@@ -1285,7 +1285,7 @@ public class MeetingCommand {
 		}
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
-	 }
+	 }*/
   /*
 	  public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		  
@@ -2288,4 +2288,52 @@ public static String retrieveMeeting(HttpServletRequest request, HttpServletResp
 	return  (JSONObject.fromObject(new SystemError()).toString());
 }
 
+public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	
+	long meetingId = 0;
+	String deviceType = null;
+    boolean isMobileflow= true;
+    String output = null;
+	logger.info("Entered MeetingCommand: getLaunchMeetingDetailsForMember");	
+	WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+	String inMeetingDisplayName=null;// ctx.getMember().getLastName()+", "+ctx.getMember().getFirstName();
+	
+	try
+	  {
+		logger.info("getLaunchMeetingDetailsForMember: meetingid=" + request.getParameter("meetingId") + ", in meetingdisplayname=" + request.getParameter("inMeetingDisplayName"));
+		if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
+			meetingId = Long.parseLong(request.getParameter("meetingId"));
+		}
+		
+		if (StringUtils.isNotBlank(request.getParameter("inMeetingDisplayName"))) {
+			inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+		}
+		Device device =	DeviceDetectionService.checkForDevice(request);
+		Map<String, String > capabilities = device.getCapabilities();
+		
+		logger.info("getLaunchMeetingDetailsForMember -> Mobile capabilities" + capabilities);
+		String brandName = capabilities.get("brand_name");
+		String modelName = capabilities.get("model_name");
+		String deviceOs = capabilities.get("device_os");
+		String deviceOsVersion = capabilities.get("device_os_version");
+		
+		if (brandName != null && modelName!= null){
+		 deviceType = brandName +" " + modelName;
+		}
+		output = WebService.getLaunchMeetingDetails(meetingId, inMeetingDisplayName, request.getSession().getId(),ctx.getMember().getMrn8Digit(),deviceType,deviceOs,deviceOsVersion,isMobileflow);
+		if (output != null)
+		{
+			logger.info("MeetingCommand:getLaunchMeetingDetailsForMember: result got from webservice:"+output);
+			logger.info("Exiting getLaunchMeetingDetailsForMember");
+			return output;
+		}
+		
+	}
+	catch (Exception e)
+	{
+		logger.error("System Error" + e.getMessage(),e);
+	}
+	// worst case error returned, no authenticated user, no web service responded, etc. 
+	return (JSONObject.fromObject(new SystemError()).toString());
+ }
 }
