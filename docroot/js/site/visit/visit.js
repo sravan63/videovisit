@@ -186,4 +186,38 @@ function initializeQuitMeetingModal(){
 	});
 }
 
+function initializeDialog(className, isModal, isResizable, dialogWidth, shouldAutoOpen, dialogTitle, shouldCloseOnEscape, dialogClassName, beforeCloseFunction)
+{
+	$('.' + className).dialog({
+		modal: isModal,
+		resizable: isResizable,
+		width: dialogWidth,
+		autoOpen: shouldAutoOpen,
+		title: dialogTitle,
+		closeOnEscape:shouldCloseOnEscape,
+		dialogClass:dialogClassName,
+		beforeClose: beforeCloseFunction
+	});
+
+}
+
+/*
+ * Opens the dialog specified by class name
+ */
+function openDialog(className){
+	$("#layover").hide();
+	$('.' + className).dialog( "open" );
+	$(".ui-dialog-titlebar").css({"display":"none"});
+}
+
+/*
+ * Closes the dialog specified by class name
+ */
+function closeDialog(className){
+	var isOpen = $('.' + className).dialog( "isOpen" );
+	if(isOpen){
+		$('.' + className).dialog( "close" );
+		$(".ui-dialog-titlebar").css({"display":"block"});	
+	}
+}
 
