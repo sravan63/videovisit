@@ -97,7 +97,7 @@ $(document).ready(function() {
     $('.timestamp').each(function(){
         meetingTimestamp = $(this).text();
         var tz = $("#tz").val();
-        convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only')  + " " + tz;
+        convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
 
         $(this).next('h3').append(convertedTimestamp);
     })
