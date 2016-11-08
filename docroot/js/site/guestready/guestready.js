@@ -99,7 +99,7 @@ $(document).ready(function() {
         var tz = $("#tz").val();
         convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
 
-        $(this).next('h3').append(convertedTimestamp);
+        $(this).html(convertedTimestamp);
     })
 });
 
