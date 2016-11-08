@@ -62,6 +62,12 @@ $(document).ready(function() {
 		}
     });
 
+    $(window).scroll(function(e) {
+     	if($('#splash').css('display') === "block"){
+        	$(window).scrollTop(0);
+	    }
+     });
+
 });
 
 var VideoVisit =
