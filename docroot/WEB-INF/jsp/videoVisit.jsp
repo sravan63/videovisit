@@ -25,13 +25,13 @@
 <!-- waiting room bg late load image issue fix end-->
 <div id="container-videovisit" style="width:auto;">
 
-	<div id="vvHeader" style="">
+	<div id="vvHeader" style="display:none;">
 		<ul id="clinician-name" style="">
 			<li>		
 				<h3 id="patientTitle" class="page-title" style="">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
 			</li>
 		</ul>
-		<ul id="leaveEndBtnContainer" class="btn-group" style="display:none; float:right; list-style:none; font-size:100%; margin:4px 0;">
+		<ul id="leaveEndBtnContainer" class="btn-group" style="float:right; list-style:none; font-size:100%; margin:4px 0;">
 	        <li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;">
 	        <li class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;">
 	        <li class="btnLast" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
@@ -42,7 +42,7 @@
 		<div id="video-main" style="clear:both; float:left;">
 		    <div id="withjs" class="hide">
 		        <!-- Splash screen -->
-		        <div class="splash" id="splash">
+		        <div class="splash" style="height:100vh;" id="splash">
 		            <div><img src="vidyoplayer/img/vv_splash.png" alt="Vidyo Logo"/></div>
 		            <div id="splashText" style="margin-top: 15px; visibility: hidden;"><h4>Video Visits - The Permanente Medical Group</h4></div>
 		            <div style="visibility: hidden;"><img src="vidyoplayer/img/loader-bar.gif"/></div>
@@ -560,7 +560,7 @@
 	 	</div>
 		
 		
-		<div id="video-sidebar">
+		<div id="video-sidebar" style="display:none;">
 			<div id="video-sidebar-banner"></div>
 			<!-- video-sidebar-content START -->	
 			<div class="video-sidebar-content">
