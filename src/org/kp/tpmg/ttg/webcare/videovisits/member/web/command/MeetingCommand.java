@@ -749,7 +749,7 @@ public class MeetingCommand {
 
 	}
 	
-	public static String endCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	/*public static String endCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;		
 		try	{
 			String meetingCode = request.getParameter("meetingCode");
@@ -766,9 +766,37 @@ public class MeetingCommand {
 		}
 		// worst case error returned, no caregiver found, no web service responded, etc. 
 		return JSONObject.fromObject(new SystemError()).toString();
+	}*/
+	
+	public static String endCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info("Entered MeetingCommand -> endCaregiverMeetingSession");
+		ServiceCommonOutput output = null;
+		String jsonString = null;
+		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		try	{
+			String meetingCode = request.getParameter("meetingCode");
+			logger.info("Entered MeetingCommand.endCaregiverMeetingSession - meetingCode = " + meetingCode);
+			if (StringUtils.isNotBlank(meetingCode)) {
+				output = WebService.endCaregiverMeetingSession(meetingCode, ctx.getVideoVisit().getPatientLastName(), false, request.getSession().getId());
+			}	
+			if ( output != null )		
+			{		
+				Gson gson = new Gson();		
+				jsonString = gson.toJson(output);		
+				logger.info("MeetingCommand->endCaregiverMeetingSession->output value after converting to json"+ jsonString.toString());		
+			}	
+			
+		}
+		catch (Exception e) {
+			logger.error("MeetingCommand->endCaregiverMeetingSession : System Error :" + e.getMessage(), e);
+			jsonString = JSONObject.fromObject(new SystemError()).toString();
+		}
+		logger.info("Exit MeetingCommand -> endCaregiverMeetingSession ");
+		return jsonString;
+		
 	}
 	
-	public static String endCaregiverMeetingSession(String meetingCode, String megaMeetingNameDisplayName) throws Exception {
+	/*public static String endCaregiverMeetingSession(String meetingCode, String megaMeetingNameDisplayName) throws Exception {
 		StringResponseWrapper ret = null;		
 		try	{
 			logger.info("Entered MeetingCommand.endCaregiverMeetingSession - meetingCode = " + meetingCode + ", megaMeetingNameDisplayName = " + megaMeetingNameDisplayName);
@@ -784,6 +812,32 @@ public class MeetingCommand {
 		}
 		// worst case error returned, no caregiver found, no web service responded, etc. 
 		return JSONObject.fromObject(new SystemError()).toString();
+	}*/
+	
+	public static String endCaregiverMeetingSession(String meetingCode, String megaMeetingNameDisplayName, String sessionId) throws Exception {
+		logger.info("Entered MeetingCommand -> endCaregiverMeetingSession");
+		ServiceCommonOutput output = null;
+		String jsonString = null;		
+		try	{
+			logger.info("Entered MeetingCommand.endCaregiverMeetingSession - meetingCode = " + meetingCode + ", megaMeetingNameDisplayName = " + megaMeetingNameDisplayName);
+			if (StringUtils.isNotBlank(meetingCode)) {
+				output = WebService.endCaregiverMeetingSession(meetingCode, megaMeetingNameDisplayName, true, sessionId);
+			}	
+			if ( output != null )		
+			{		
+				Gson gson = new Gson();		
+				jsonString = gson.toJson(output);		
+				logger.info("MeetingCommand->endCaregiverMeetingSession->output value after converting to json"+ jsonString.toString());		
+			}	
+			
+		}
+		catch (Exception e) {
+			logger.error("MeetingCommand->endCaregiverMeetingSession : System Error :" + e.getMessage(), e);
+			jsonString = JSONObject.fromObject(new SystemError()).toString();
+		}
+		logger.info("Exit MeetingCommand -> endCaregiverMeetingSession ");
+		return jsonString;
+		
 	}
 
 	private static String fillToLength(String src, char fillChar, int total_length) {
