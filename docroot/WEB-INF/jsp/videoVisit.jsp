@@ -621,15 +621,17 @@
 
 </div>
 <!-- US15318 - START [Popup displays after meeting disconnected] -->
-<div class="dialog-block-meeting-disconnected" style="display:none;text-align:center;overflow:hidden;min-height:0px;" title="Start Meeting">
-	<div class="dialog-content-question">
-		<p id="start_meeting_question" style="padding:15px;" class="question">
-			Your video visit has ended.
-		</p>
-	</div>
-	<div class="dialog-action">
-		<input type="button" style="width:150px;" value="Leave visit" id="meetingDisconnected" class="button">
-	</div>
+<div id="dialog-block-meeting-disconnected" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
+    <div class="modal-body">
+        <div class="dialog-content-question">
+	        <p id="start_meeting_question" style="padding:15px;font-weight:bold;text-align:center;" class="question">
+				Your video visit has ended.
+			</p>
+            <div class="pagination">
+                <input type="button" style="width:150px;" value="Leave visit" id="meetingDisconnected" class="button">
+            </div>
+         </div>
+    </div>
 </div>
 <!-- US15318 - END -->
 <script language="javascript">
