@@ -585,7 +585,7 @@ input.disabled
     font-size: 24px;
     line-height: inherit;
     margin: 0;
-    -webkit-font-smoothing: none !important;
+    -webkit-font-smoothing: subpixel-antialiased;
 }
 #header-main h1 small{
 display: block;
