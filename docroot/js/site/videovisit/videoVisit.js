@@ -102,18 +102,24 @@ var VideoVisit =
 
 $(window).resize(function(){
 
+	$('#container-videovisit').css("min-width", "900px");/*us13302*/
+
 	/* Setting resize Widths */
 	var windowWidth = $(window).width();
 	var videoSidebarWidth = $("#video-sidebar").outerWidth();
 	var btnContainerWidth = $("#btnContainer").outerWidth();
 
+	var width = $('#container-videovisit').width();
+
+	console.log("vvHeader width: " + $('vvHeader').width());
+
 	if($('#video-sidebar').css('display') == 'none'){
-		var calculatedWidthPluginContainer = windowWidth - btnContainerWidth;
+		var calculatedWidthPluginContainer = width - btnContainerWidth;
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
 		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}
 	else{
-		var calculatedWidthPluginContainer = windowWidth - (200 + btnContainerWidth);
+		var calculatedWidthPluginContainer = width - (200 + btnContainerWidth);
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
 		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}
