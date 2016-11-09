@@ -2008,7 +2008,17 @@ public class MeetingCommand {
 					if(statusCode != "200"){		
 					ctx.setCareGiver(false);		
 					}		
-					ctx.setCareGiver(true);		
+					ctx.setCareGiver(true);
+					if (verifyCareGiverOutput.getEnvelope() != null && verifyCareGiverOutput.getEnvelope().getMeeting() != null) {
+						List<Caregiver> caregivers = verifyCareGiverOutput.getEnvelope().getMeeting().getCaregiver();
+						if (CollectionUtils.isNotEmpty(caregivers)) {
+							for (Caregiver caregiver : caregivers) {
+								if(StringUtils.isNotBlank(meetingCode) && meetingCode.equals(caregiver.getCareGiverMeetingHash())){
+									ctx.setCareGiverName(caregiver.getLastName() + ", " + caregiver.getFirstName());
+								}
+							}
+						}
+					}
 					Gson gson = new Gson();		
 					json = gson.toJson(verifyCareGiverOutput);		
 					logger.info("MeetingCommand->verifyCaregiver->value after converting it to json"+ json.toString());		
