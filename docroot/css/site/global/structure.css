@@ -576,15 +576,16 @@ input.disabled
     margin-bottom: 5px;
 }
 #header-main .mdo-video-logo{
-   bottom: 10px;
+   	bottom: 10px;
     display: block;
     left: 8px;
-    }
+}
 #header-main h1{
-	 color: #fff;
+	color: #fff;
     font-size: 24px;
     line-height: inherit;
     margin: 0;
+    -webkit-font-smoothing: none !important;
 }
 #header-main h1 small{
 display: block;
