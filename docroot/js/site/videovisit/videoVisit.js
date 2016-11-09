@@ -55,12 +55,12 @@ $(document).ready(function() {
 		}
     }
 
-	$('#meetingDisconnected').click(function() {
+	/*$('#meetingDisconnected').click(function() {
 		closeDialog('dialog-block-meeting-disconnected');
 		if ($('#pluginContainer').css('visibility') == 'hidden'){
 			$('#pluginContainer').css({"visibility":"visible"});
 		}
-    });
+    });*/
 
     $(window).scroll(function(e) {
      	if($('#splash').css('display') === "block"){
