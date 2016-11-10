@@ -606,7 +606,7 @@
 							   <table>	 
 									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">        
 							        <tr>
-							            <td style="padding-bottom:10px;">${Caregiver.lastName}, ${Caregiver.firstName}</td>            
+							            <td>${Caregiver.lastName}, ${Caregiver.firstName}</td>            
 							        </tr>
 							       </c:forEach>       
 						       </table>
