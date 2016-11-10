@@ -2188,7 +2188,14 @@ and (min-width: 768px) {
 	}
 }
 /*======= US14882 =======*/
-
+/*======= US15510 start=======*/
+.mobile-patient-guest-meeting-container{
+  width: 85%;
+  padding: 20px 20px 0px;
+  border-bottom: 1px solid #D4D4D5;
+  background-color: #FFFFFF;
+}
+/*======= US15510 end=======*/
 .landing-portal-single-container {
   float:left;
   width: 85%;
