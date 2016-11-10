@@ -2013,8 +2013,9 @@ public class MeetingCommand {
 						List<Caregiver> caregivers = verifyCareGiverOutput.getEnvelope().getMeeting().getCaregiver();
 						if (CollectionUtils.isNotEmpty(caregivers)) {
 							for (Caregiver caregiver : caregivers) {
-								if(StringUtils.isNotBlank(meetingCode) && meetingCode.equals(caregiver.getCareGiverMeetingHash())){
+								if(StringUtils.isNotBlank(meetingCode) && meetingCode.equalsIgnoreCase(caregiver.getCareGiverMeetingHash())){
 									ctx.setCareGiverName(caregiver.getLastName() + ", " + caregiver.getFirstName());
+									break;
 								}
 							}
 						}
