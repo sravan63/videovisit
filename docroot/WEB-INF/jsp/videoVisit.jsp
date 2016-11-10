@@ -21,11 +21,20 @@
 	
 	<input type="hidden" id="kpKeepAliveUrl" value="${WebAppContext.kpKeepAliveUrl}" />
 	<!-- waiting room bg late load image issue fix start-->
-<img src="images/global/waiting_rm_bkgd.png" class="waitingRoomBgImg" />
-<!-- waiting room bg late load image issue fix end-->
-<div id="container-videovisit" style="width:auto;">
+	<img src="images/global/waiting_rm_bkgd.png" class="waitingRoomBgImg" />
+	<!-- waiting room bg late load image issue fix end-->
 
-	<div id="vvHeader" style="display:none;">
+<!-- =========== Mandar 11/10/2016 US15507 START ===========  -->
+<!-- Splash screen -->
+<div class="splash" style="height:100vh;" id="splash">
+    <div><img src="vidyoplayer/img/vv_splash.png" alt="Vidyo Logo"/></div>
+    <div id="splashText" style="margin-top: 15px; visibility: hidden;"><h4>Video Visits - The Permanente Medical Group</h4></div>
+    <div style="visibility: hidden;"><img src="vidyoplayer/img/loader-bar.gif"/></div>
+</div>
+<!-- End Splash screen -->
+<!-- =========== Mandar 11/10/2016 US15507 END ===========  -->
+<div id="container-videovisit" style="width:auto; visibility:none;">
+	<div id="vvHeader">
 		<ul id="clinician-name" style="">
 			<li>		
 				<h3 id="patientTitle" class="page-title" style="">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
@@ -42,11 +51,11 @@
 		<div id="video-main" style="clear:both; float:left;">
 		    <div id="withjs" class="hide">
 		        <!-- Splash screen -->
-		        <div class="splash" style="height:100vh;" id="splash">
+		        <!--<div class="splash" style="height:100vh;" id="splash">
 		            <div><img src="vidyoplayer/img/vv_splash.png" alt="Vidyo Logo"/></div>
 		            <div id="splashText" style="margin-top: 15px; visibility: hidden;"><h4>Video Visits - The Permanente Medical Group</h4></div>
 		            <div style="visibility: hidden;"><img src="vidyoplayer/img/loader-bar.gif"/></div>
-		        </div>
+		        </div>-->
 		        <!-- End Splash screen -->
 		        <!-- Error view -->
 		        <div id="errorWrapper" class="alert alert-error hide"></div>
@@ -296,11 +305,9 @@
 		                <div style="display:inline-block; float:left;">
 		                 <!--US13310 & US133102(iteration21) Satish Start-->
 		                	<div id="waitingRoom">
-		                		<div class="waitingRoomMessageBlock"> 
-		                		
-		        <img src="vidyoplayer/img/TPMG_logo.png"" class="waitingroom-logo"/>
-		           <span class="waitingroom-text">Your visit will start once your doctor joins.</span>
-
+		                		<div class="waitingRoomMessageBlock">
+						        	<img src="vidyoplayer/img/TPMG_logo.png" class="waitingroom-logo" />
+						           	<span class="waitingroom-text">Your visit will start once your doctor joins.</span>
 		                		</div>
 		                	<!-- US133102(iteration21) End-->	
 		                	</div>
@@ -560,7 +567,7 @@
 	 	</div>
 		
 		
-		<div id="video-sidebar" style="display:none;">
+		<div id="video-sidebar">
 			<div id="video-sidebar-banner"></div>
 			<!-- video-sidebar-content START -->	
 			<div class="video-sidebar-content">
