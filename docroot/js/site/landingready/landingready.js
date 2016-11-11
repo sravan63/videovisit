@@ -184,6 +184,22 @@ $(document).ready(function() {
 
         $(this).next('span').append(convertedTimestamp);
     });
+
+    /* Grabs the text contents of the element with class name 'camel-case' and converts it into 'camel case format' (Ex:Camel Case) */
+    $('.camel-case').each(function(){
+        var existingText = $(this).text().toLowerCase().trim();
+        var splittedText = existingText.split(' ');
+        var isClinician = (existingText.indexOf(',') > 0);
+        var convertedCamelCaseText = '';
+
+        for(var i=0;i<splittedText.length;i++){
+            var s = (isClinician && i == splittedText.length-1)?splittedText[i].toUpperCase():splittedText[i];
+            if(s !== ''){
+                convertedCamelCaseText += s.charAt(0).toUpperCase() + s.slice(1)+' ';
+            }
+        }
+        $(this).html(convertedCamelCaseText.trim());
+    });
     
     // Ok button on user in meeting modal
     $('#user-in-meeting-modal-ok').click(function(){    	

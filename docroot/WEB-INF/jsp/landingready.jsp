@@ -61,8 +61,8 @@
             </div>
             <div class="center">
               <img class="circle-image" src=${meeting.host.imageUrl} alt="" />
-              <span class="name-and-details">${meeting.host.firstName} ${meeting.host.lastName}, ${meeting.host.title}</span>
-              <span class="department-details">${meeting.host.departmentName}</span>
+              <span class="name-and-details camel-case">${meeting.host.firstName} ${meeting.host.lastName}, ${meeting.host.title}</span>
+              <span class="department-details camel-case">${meeting.host.departmentName}</span>
             </div>
             <div class="right">
               <c:choose>

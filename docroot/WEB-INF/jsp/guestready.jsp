@@ -60,20 +60,21 @@
 	    			<!--left end-->
 			 		<div class="center">
 		              <img class="circle-image" src=${meeting.host.imageUrl} alt="" />
-		              <!--<span class="name-and-details">${meeting.host.firstName} ${meeting.host.lastName}, ${meeting.host.title}</span>-->
 		               <c:choose>
-						    <c:when test="${not empty meeting.host.homePageUrl}">
-						        <a target="_blank" class="name-and-details" style="font-weight:bold" href="${meeting.host.homePageUrl}">
-									${meeting.host.firstName} ${meeting.host.lastName} 
-									<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
-								</a>
-						    </c:when>
-						    <c:otherwise>
-						        ${meeting.host.firstName} ${meeting.host.lastName} 
+					    <c:when test="${not empty meeting.host.homePageUrl}">
+					        <a target="_blank" class="name-and-details camel-case" style="font-weight:bold" href="${meeting.host.homePageUrl}">
+								${meeting.host.firstName} ${meeting.host.lastName} 
 								<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
-						    </c:otherwise>
-						 </c:choose>
-		              <div class="department-details" style="width: 180px;">${meeting.host.departmentName}</div>
+							</a>
+					    </c:when>
+					    <c:otherwise>
+					        <div class="name-and-details camel-case" style="font-weight:bold">
+								${meeting.host.firstName} ${meeting.host.lastName} 
+								<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
+							</div>
+					    </c:otherwise>
+					  </c:choose>
+		              <div class="department-details camel-case" style="width: 180px;">${meeting.host.departmentName}</div>
 			         </div>
          			<!--center end-->
 					<div class="right">

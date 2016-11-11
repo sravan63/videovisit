@@ -77,8 +77,8 @@
 				            	<img class="circle-image" src=${meeting.host.imageUrl} alt="" />
 				            </div>
 				            <div class="info-holder">
-				            	<span class="name-and-details">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if></span><br>
-				              <span class="department-details">${meeting.host.departmentName}</span>
+				            	<span class="name-and-details camel-case">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if></span><br>
+				              <span class="department-details camel-case">${meeting.host.departmentName}</span>
 				            </div>
 			            </div>
 			            <div class="bottom">
