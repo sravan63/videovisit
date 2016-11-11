@@ -19,11 +19,21 @@
 	String meetingId = ctx.getGuestMeetingId();
 
 %>
+
+<div class="sub-banner">
+  <div class="heading">Your Video Visits for Today</div>
+  <div class="links">
+    <a href="javascript:location.reload()">Refresh page</a>
+    <span>|</span>
+    <a href="mdohelp.htm" target="_blank">Help</a>
+  </div>
+</div>
+
 <c:if test="${WebAppContext.totalmeetings>0}">
 <!--satish US15509 start>-->
-	<div id="landing-portal-ready" class="guestPortalReady">
+	<div id="landing-portal-ready" class="guestPortalReady" style="width:90%; margin-top:0px; font-family:Avenir Next, sans-serif;">
 		<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
-		<div class="landing-portal-single-container" style="padding-bottom:23px;border-top:1px solid rgb(181, 181, 181)">
+		<div class="landing-portal-single-container" style="padding-bottom:23px;">
             <!--<img src=${meeting.host.imageUrl} alt="" />-->
 				<div class="meeting-details-container" style="font-size:14px;">
 
@@ -81,7 +91,7 @@
 						<!-- Added by Ranjeet for same guest login issue 01/06/2014 -->
 						<c:forEach var="caregiver" items="${meeting.caregiver}">		
 							<c:if test="${WebAppContext.meetingCode == caregiver.careGiverMeetingHash}">
-							  <button id="joinNowId" class="btn joinNowButton"userName="${caregiver.lastName}, ${caregiver.firstName}, (${caregiver.emailAddress})" meetingid="${meeting.meetingId}" href="${meeting.meetingVendorId}" caregiverId="${caregiver.careGiverId}">Click here to join now</button>
+							  <button id="joinNowId" class="btn joinNowButton"userName="${caregiver.lastName}, ${caregiver.firstName}, (${caregiver.emailAddress})" meetingid="${meeting.meetingId}" href="${meeting.meetingVendorId}" caregiverId="${caregiver.careGiverId}">Join your visit</button>
 							 </c:if>
 						</c:forEach>	
 						<p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>
