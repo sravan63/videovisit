@@ -45,7 +45,7 @@
 		                   <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
 		                   <div class="accord-contents" style="display:block;margin-top:30px;">
 		                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0 || meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
-		                    <h2 class="label" style="float:none;margin-bottom: 15px;">Additional Participants</h2>
+		                    <h2 class="label" style="float:none;margin-bottom:10px;">Additional Participants</h2>
 		                  </c:if>
 		                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0}">
 		                    <div class="names-container-member" style="margin:0px;">
@@ -79,7 +79,7 @@
 					    </c:when>
 					    <c:otherwise>
 					        <div class="name-and-details camel-case" style="font-weight:bold">
-								${meeting.host.firstName} ${meeting.host.lastName} 
+								${meeting.host.firstName} ${meeting.host.lastName}
 								<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
 							</div>
 					    </c:otherwise>
