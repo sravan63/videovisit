@@ -37,7 +37,7 @@
               <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
               <div class="accord-contents" style="display:block;margin-top:30px;">
                   <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0 || meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
-                    <h2 class="label" style="float:none;margin-bottom: 15px;">Additional Participants</h2>
+                    <h2 class="label" style="float:none;margin-bottom:10px;">Additional Participants</h2>
                   </c:if>
                   <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0}">
                     <div class="names-container-member" style="margin:0px;">
