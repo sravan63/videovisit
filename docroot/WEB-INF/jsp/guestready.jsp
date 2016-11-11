@@ -72,15 +72,13 @@
 		              <img class="circle-image" src=${meeting.host.imageUrl} alt="" />
 		               <c:choose>
 					    <c:when test="${not empty meeting.host.homePageUrl}">
-					        <a target="_blank" class="name-and-details camel-case" style="font-weight:bold" href="${meeting.host.homePageUrl}">
-								${meeting.host.firstName} ${meeting.host.lastName} 
-								<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
+					        <a target="_blank" class="name-and-details camel-case" style="font-weight:bold;" href="${meeting.host.homePageUrl}">
+								${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
 							</a>
 					    </c:when>
 					    <c:otherwise>
-					        <div class="name-and-details camel-case" style="font-weight:bold">
-								${meeting.host.firstName} ${meeting.host.lastName}
-								<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
+					        <div class="name-and-details camel-case" style="font-weight:bold;">
+								${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if>
 							</div>
 					    </c:otherwise>
 					  </c:choose>
