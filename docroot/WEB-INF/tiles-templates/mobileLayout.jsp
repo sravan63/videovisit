@@ -18,6 +18,10 @@
 
 		<link rel="stylesheet" href="css/site/global/mobile.css">
 		<link rel="apple-touch-icon" href="images/vv-apple-touch-icon-72@2x.png">
+		
+		<!--Start Importing Open Sans Font-->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" />
+        <!--End Importing Open Sans Font-->
 
 		 <noscript>
 			<meta http-equiv="refresh" content="0; url=mobileenablejavascript.htm"></meta>
