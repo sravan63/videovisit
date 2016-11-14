@@ -9,7 +9,7 @@
 <!-- 		<li class="bold"><span>Return here or use the email to sign in to the Video Visit.</span></li> -->
 	</ol>
 </div>
-<div class="only-handsets">
+<div class="only-handsets" style="padding-top:20px;">
 	<ol class="well instructions" style="margin-top:0;">
 		<h2 style="color:#FFFFFF; background-color:#686A6C;">
 			<img src="images/mobile/icon_video@2x.png" height="18" width="30" style="float:left; padding-right:10px;">
