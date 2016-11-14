@@ -28,7 +28,7 @@
 
 <div class="page-content">
 	<div class="visits patient">
-		<h1 style="text-align: left; border-bottom: 1px solid #D4D4D5; padding: 20px 10px;font-size: 25px;line-height: 30px;color: #333333;"> Your Video Visits for Today </h1>
+		<h1 style="text-align:left; border-bottom:1px solid #D4D4D5; padding:20px 10px; font-size:38px; line-height:1em; color:#333333;"> Your Video Visits for Today </h1>
 		<p id="globalError" class="globalfailmessage hide-me" style="background-color:#686A6C;"></p>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
