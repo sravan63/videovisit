@@ -41,10 +41,10 @@
 	</definition>
 	
 	<definition name=".oneColumnLayout" extends=".mobileWebPageTemplate">
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<!-- <put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />	 -->
 	</definition>
 	<definition name=".oneColumnLayoutPG" extends=".mobileWebPageTemplatePG">
-		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<!-- <put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />	 -->
 	</definition>
 	
 	<definition name="mPatientPreLoginPage" extends=".oneColumnLayout">
