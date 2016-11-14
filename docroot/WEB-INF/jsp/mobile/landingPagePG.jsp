@@ -28,7 +28,7 @@
 
 <div class="page-content">
 	<div class="visits patient">
-		<h1 style="text-align:left; border-bottom:1px solid #D4D4D5; padding:20px 10px; font-size:38px; line-height:1em; color:#333333;"> Your Video Visits for Today </h1>
+		<h1 style="text-align:left; border-bottom:1px solid #D4D4D5; padding:20px; font-size:38px; font-weight:normal; line-height:1em; color:#333333;"> Your Video Visits for Today </h1>
 		<p id="globalError" class="globalfailmessage hide-me" style="background-color:#686A6C;"></p>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
@@ -39,7 +39,7 @@
 			            <div class="top">
 			              <div class="time-display">
 			                <span class="hide-me timestamp_${meeting.meetingId}">${meeting.meetingTime} </span>
-			                <span class="time_${meeting.meetingId}" style="font-size:25px; padding-bottom:3px;"></span>
+			                <span class="time_${meeting.meetingId}" style="font-size:24px; padding-bottom:3px;"></span>
 			                <script type="text/javascript">
 							// convert time stamp to time
 								meetingTimestamp = $('.timestamp_' + ${meeting.meetingId}).text();
@@ -47,7 +47,7 @@
 								$('.time_' + ${meeting.meetingId}).append(convertedTimestamp);
 							</script>
 			              </div>
-			              <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
+			              <span style="font-size:16px;">${meeting.member.firstName} ${meeting.member.lastName}</span>
 			              <div class="accord-contents" style="display:block;margin-top:45px;">
 			                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0 || meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
 			                    <h2 class="label" style="float:none;">Additional Participants</h2>
@@ -90,7 +90,7 @@
                           		<button class="button-launch-visit-pg btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}" style="margin-bottom:0;margin-top:40px;">Join your visit</button>
 	                    </div>
 	                    <div class="launch-button-handler only-handsets">
-	                        	<button class="button-launch-visit-pg btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}" style="margin-bottom:0;margin-top:40px;">Join your visit</button>
+	                        	<button class="button-launch-visit-pg btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}" style="margin-bottom:0;margin-top:40px; font-size:18px;">Join your visit</button>
 	                    </div>
 
 					</c:if>
