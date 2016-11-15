@@ -17,6 +17,10 @@
 		<link rel="stylesheet" type="text/css" href="css/library/plugin/smartbanner/jquery.smartbanner.css">
 		<link rel="stylesheet" type="text/css" href="css/site/global/mobile.css">
 		<link rel="apple-touch-icon" href="images/mobile/kppc_icon.png">
+		
+		<!--Start Importing Open Sans Font-->
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:400,700" />
+        <!--End Importing Open Sans Font-->
 
 		<script type="text/javascript" src="js/library/jquery/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="js/library/plugin/smartbanner/jquery.smartbanner.js"></script>
