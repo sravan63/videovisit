@@ -189,15 +189,10 @@ button {
 }
 
 .page-content {
-
 	position: relative;
-/* 	margin-top: 5px;
- 	margin-right: 5px;
- 	margin-left: 5px; */
-	margin-bottom: 10px;
-	padding: 10px;
+	/*margin-bottom: 10px;*/
+	padding: 30px;
 	min-width: 280px;
-/* 	border-radius: 3px; */
 	background-color: #FFFFFF;
 	box-shadow: 0 1px 5px rgba(0,0,0, .4);
 }
@@ -211,9 +206,7 @@ button {
 }
 
 footer {
-	padding-right: 5px;
-	padding-bottom: 15px;
-	padding-left: 5px;
+	padding: 15px 5px;
 	min-width: 300px;
 	color: #676767;
 }
@@ -2189,16 +2182,13 @@ and (min-width: 768px) {
 /*======= US14882 =======*/
 /*======= US15510 start=======*/
 .mobile-patient-guest-meeting-container{
-  /*width: 85%;*/
-  padding: 20px 20px 0px;
+  padding: 0 0 20px;
   border-bottom: 1px solid #D4D4D5;
   background-color: #FFFFFF;
 }
 /*======= US15510 end=======*/
 .landing-portal-single-container {
-  float:left;
-  width: 85%;
-  padding: 20px 20px 0px;
+  padding: 0 0 20px;
   border-bottom: 1px solid #D4D4D5;
   background-color: #FFFFFF;
 }
@@ -2232,6 +2222,7 @@ and (min-width: 768px) {
 
 .meeting-details-container .middle{
 	margin-top: 20px;
+	overflow: auto;
 }
 
 .meeting-details-container .bottom{
