@@ -16,7 +16,7 @@
 
 <input type="hidden" id="meetingCode" name="meetingCode" value="<%=meetingHash%>">
 
-<div class="page-content">
+<div class="page-content" style="padding:10px;">
 	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings > 0}">
 			<div class="intro">
