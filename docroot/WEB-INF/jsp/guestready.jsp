@@ -33,7 +33,7 @@
 <!--satish US15509 start>-->
 	<div id="landing-portal-ready" class="guestPortalReady" style="width:90%; margin-top:0px; font-family:Avenir Next, sans-serif;">
 		<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
-		<div class="landing-portal-single-container" style="padding-bottom:23px;">
+		<div class="landing-portal-single-container" style="padding-bottom:25px;">
             <!--<img src=${meeting.host.imageUrl} alt="" />-->
 				<div class="meeting-details-container" style="font-size:14px;">
 
