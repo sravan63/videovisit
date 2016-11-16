@@ -54,7 +54,7 @@
 			                  </c:if>
 			                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0}">
 			                    <div class="names-container-member" style="margin:0px;">
-			                      <span class="names participants" style="margin-left:0;font-size:16px;>
+			                      <span class="names participants" style="margin-left:0;font-size:16px;">
 			                        <c:forEach var="p" items="${meeting.participant}">
 			                          <span style="font-size:16px;">${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></span>
 			                        </c:forEach>
