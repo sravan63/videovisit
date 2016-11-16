@@ -216,6 +216,12 @@
 	    <tiles:insertAttribute name="gtm" />
 		<tiles:insertAttribute name="content" />
 		
+		<!-- Mandar A. US15318 - Start -->
+		<div id="layover" style="position:fixed; top:0; width:100%; height:100%; background-color:rgba(126, 126, 126, 0.5); z-index:1100; display:none;">                
+              <div style="background:#A9A9A9 url(images/global/desktop_spinner.gif) no-repeat center center; width:100%; height:100%; z-index:999; opacity:0.5; filter:alpha(opacity=50);"></div>
+       	</div>
+       	<!-- Mandar A. US15318 - End -->
+       	
 	</body>
 	
 </html> 
