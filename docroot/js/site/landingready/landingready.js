@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
     /*Satish US14366 - Automatically refresh page every one minute --Start*/
-    setTimeout(function(){window.location.reload();},60000);
+    setTimeout(function(){window.location.reload();},180000);
     /*Satish US14366 - Automatically refresh page every one minute --End*/
     initializeUserPresentInMeetingModal();
     
