@@ -28,7 +28,7 @@
 
 <div class="page-content">
 	<div class="visits patient">
-		<h1 style="text-align:left; border-bottom:1px solid #D4D4D5; padding:0 0 20px; font-size:38px; font-weight:normal; line-height:1em; color:#333333;"> Your Video Visits for Today </h1>
+		<h1> Your Video Visits for Today </h1>
 		<p id="globalError" class="globalfailmessage hide-me" style="background-color:#686A6C;"></p>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
@@ -74,7 +74,7 @@
 			            </div>
 			            <div class="middle">
 				            <div class="image-holder">
-				            	<img class="circle-image" src=${meeting.host.imageUrl} alt=""  style="margin-right:20px;"/>
+				            	<img class="circle-image" src=${meeting.host.imageUrl} alt="" />
 				            </div>
 				            <div class="info-holder" style="float:left;margin-top:10px;">
 				            	<span class="name-and-details camel-case">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if></span><br>
@@ -87,16 +87,16 @@
 									<c:if test="${p.careGiverMeetingHash != null && fn:length(p.careGiverMeetingHash) > 0}">		
 										<c:if test="${p.careGiverMeetingHash == param.meetingCode}">
 											<div class="launch-button-handler only-tablets" style="float: none; box-shadow: none;padding:0px; min-height: 60px;text-align:right;">
-					                          	<button class="button-launch-visit-pg btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}" style="margin-bottom:0; margin-top:43px; font-size:18px !important;">Join your visit</button>
+					                          	<button class="button-launch-visit-pg btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join your visit</button>
 						                    </div>
 						                    <div class="launch-button-handler only-handsets">
-						                        <button class="button-launch-visit-pg btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}" style="margin-bottom:0; margin-top:20px; font-size:18px !important;">Join your visit</button>
+						                        <button class="button-launch-visit-pg btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${p.lastName}" firstname="${p.firstName}" email="${p.emailAddress}">Join your visit</button>
 						                    </div>
 										</c:if>
 									</c:if>
 								</c:forEach>
 							</c:if>
-			                <p class="" style="margin-top:25px;">You may be joining before your clinician. Please be patient.</p>
+			                <p class="patient-msg">You may be joining before your clinician. Please be patient.</p>
 			            </div>
 			          </div>
 			      	</div>
