@@ -26,9 +26,8 @@
     <dependencies>
       <dependency>
         <groupId>org.kp.tpmg.ttg.videovisit</groupId>
-        <artifactId>videovisitservice</artifactId>
+        <artifactId>videovisitservice-client</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <classifier>serviceclientjar</classifier>
         <exclusions>
           <exclusion>
             <groupId>*</groupId>
