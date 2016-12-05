@@ -59,6 +59,7 @@ import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoining;
 import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoiningResponse;
 import org.kp.tpmg.videovisit.member.UserPresentInMeeting;
 import org.kp.tpmg.videovisit.member.UserPresentInMeetingResponse;
+import org.kp.tpmg.videovisit.model.MemberLogoutInput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
@@ -467,7 +468,8 @@ public class WebService{
 	}
 */	
 		
-	public static StringResponseWrapper memberLogout(String mrn8Digit, String sessionID) throws Exception
+	// calling rest service
+/*	public static StringResponseWrapper memberLogout(String mrn8Digit, String sessionID) throws Exception
 	{
 		logger.info("Entered memberLogout");
 		StringResponseWrapper toRet = null; 
@@ -499,7 +501,7 @@ public class WebService{
 		logger.info("Exit initWebService");
 		return toRet;
 	}
-	
+*/	
 	public static StringResponseWrapper quitMeeting(long meetingId, String memberName, long careGiverId, String sessionID) throws Exception
 	{
 		logger.info("Entered quitMeeting");
@@ -3029,7 +3031,7 @@ public class WebService{
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			memberOutput.getService().setStatus(status);
-			return gson.toJson(output);
+			return gson.toJson(memberOutput);
 		}
 		try
 		{
@@ -3052,6 +3054,43 @@ public class WebService{
 			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		}
 		logger.info("Exit WebService: getLaunchMeetingDetails");
+		return output;
+	}
+
+	public static String memberLogout(String mrn8Digit, String sessionID) throws Exception
+	{
+		logger.info("Entered memberLogout -> input attributes: sessionId ="+ sessionID +"mrn8Digit"+ mrn8Digit);
+		MemberLogoutInput input = new MemberLogoutInput();
+	    Gson gson = new Gson();
+	    String output = null;
+	    if(StringUtils.isBlank(mrn8Digit)){
+	    	mrn8Digit = WebUtil.NON_MEMBER;
+	    }
+		if (StringUtils.isBlank(sessionID)) 
+		{
+			logger.warn("memberLogout --> missing input attributes.");
+			ServiceCommonOutputJson memberLogoutOutput = new ServiceCommonOutputJson();
+			memberLogoutOutput.setService(new ServiceCommonOutput());
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			memberLogoutOutput.getService().setStatus(status);
+			return gson.toJson(memberLogoutOutput);
+		}
+
+		try
+		{
+			input.setMrn8Digit(mrn8Digit);
+			input.setSessionId(sessionID);
+			logger.info("memberLogout -> inputJsonString : " + gson.toJson(input));
+			output = callVVRestService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input));
+		}
+		catch (Exception e)
+		{
+			logger.error("memberLogout -> Web Service API error:" + e.getMessage() + " Retrying...", e);
+			output = callVVRestService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input));
+		}
+		logger.info("Exit memberLogout");
 		return output;
 	}
 

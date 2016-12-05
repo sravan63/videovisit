@@ -260,7 +260,8 @@ public class MeetingCommand {
 		return  (JSONObject.fromObject(new SystemError()).toString());
 	}
 */	
-	public static String memberLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	// Calling rest service
+/*	public static String memberLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 
@@ -284,7 +285,7 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return JSONObject.fromObject(new SystemError()).toString();
 	}
-	
+*/	
 	public static StringResponseWrapper quitMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		
@@ -2401,4 +2402,31 @@ public static String getLaunchMeetingDetailsForMember(HttpServletRequest request
 	// worst case error returned, no authenticated user, no web service responded, etc. 
 	return (JSONObject.fromObject(new SystemError()).toString());
  }
+
+public static String memberLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	logger.info("Entered memberLogout");
+	String output = null;
+	WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
+	try
+	{
+		if (ctx != null && ctx.getMember() != null)
+		{
+			output = WebService.memberLogout(ctx.getMember().getMrn8Digit(), request.getSession().getId());
+			if (output != null)
+			{
+				logger.info("MeetingCommand:memberLogout: result got from webservice:"+output);
+				logger.info("Exiting memberLogout");
+				return output;
+			}
+
+		}
+	}
+	catch (Exception e)
+	{
+		logger.error("System Error" + e.getMessage(),e);
+	}
+	// worst case error returned, no authenticated user, no web service responded, etc. 
+	return JSONObject.fromObject(new SystemError()).toString();
+}
+
 }

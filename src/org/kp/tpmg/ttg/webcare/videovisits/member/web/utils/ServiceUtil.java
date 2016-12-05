@@ -22,5 +22,6 @@ public class ServiceUtil {
 	public static final String END_MEETING_FOR_MEMBER_GUEST_DESKTOP = "endMeetingForMemberGuestDesktop";
 	public static final String GET_ACTIVE_MEETINGS_FOR_MEMBER = "getActiveMeetingsForMember";
 	public static final String LAUNCH_MEETING_FOR_MEMBER = "launchMeetingForMember";
+	public static final String MEMBER_LOGOUT = "memberLogout";
 	
 }

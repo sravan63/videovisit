@@ -22,6 +22,7 @@ public class WebUtil {
 	public static final String SSO_COOKIE_NAME = "ObSSOCookie";
 	public static final String clientId = "vv-mbr-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
+	public static final String NON_MEMBER = "Non_Mmbr";
 	
 	public static String getCurrentDateTimeZone()
 	{
