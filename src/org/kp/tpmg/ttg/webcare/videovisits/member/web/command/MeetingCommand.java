@@ -1722,6 +1722,8 @@ public class MeetingCommand {
 					}
 					invalidateWebAppContext(ctx);
 					WebUtil.removeCookie(request, response, WebUtil.SSO_COOKIE_NAME);
+					WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);
+					WebUtil.removeCookie(request, response, WebUtil.S_COOKIE_NAME);
 				}
 		  }
 		  catch (Exception e)

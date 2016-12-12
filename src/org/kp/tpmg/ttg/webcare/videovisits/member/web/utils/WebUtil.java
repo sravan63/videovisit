@@ -24,6 +24,9 @@ public class WebUtil {
 	public static final String DEFAULT_DEVICE = "Desktop";
 	public static final String NON_MEMBER = "Non_Mmbr";
 	
+	public static final String HSESSIONID_COOKIE_NAME = "HSESSIONID";
+	public static final String S_COOKIE_NAME = "S";
+	
 	public static String getCurrentDateTimeZone()
 	{
 		logger.info("in getCurrentDateTimeZone");
