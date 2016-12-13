@@ -21,44 +21,14 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
 
-import org.apache.axis2.client.Options;
-import org.apache.axis2.context.ConfigurationContext;
-import org.apache.axis2.transport.http.HTTPConstants;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.neethi.Policy;
-import org.apache.rampart.RampartMessageData;
 import org.json.JSONObject;
 import org.kp.tpmg.common.security.Crypto;
-import org.kp.tpmg.common.security.ServiceSecurityLoader;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.member.CreateCaregiverMobileMeetingSession;
-import org.kp.tpmg.videovisit.member.CreateMeetingSession;
-import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSession;
-import org.kp.tpmg.videovisit.member.EndCaregiverMeetingSessionResponse;
-import org.kp.tpmg.videovisit.member.GetMeetingByMeetingID;
-import org.kp.tpmg.videovisit.member.GetMeetingByMeetingIDResponse;
-import org.kp.tpmg.videovisit.member.GetVendorPluginData;
-import org.kp.tpmg.videovisit.member.GetVendorPluginDataResponse;
-import org.kp.tpmg.videovisit.member.KickUserFromMeeting;
-import org.kp.tpmg.videovisit.member.KickUserFromMeetingResponse;
-import org.kp.tpmg.videovisit.member.LaunchMeetingForMember;
-import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuest;
-import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberGuestResponse;
-import org.kp.tpmg.videovisit.member.LaunchMeetingForMemberResponse;
-import org.kp.tpmg.videovisit.member.MemberLogout;
-import org.kp.tpmg.videovisit.member.MemberLogoutResponse;
-import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiver;
-import org.kp.tpmg.videovisit.member.RetrieveMeetingForCaregiverResponse;
-import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoining;
-import org.kp.tpmg.videovisit.member.UpdateMemberMeetingStatusJoiningResponse;
-import org.kp.tpmg.videovisit.member.UserPresentInMeeting;
-import org.kp.tpmg.videovisit.member.UserPresentInMeetingResponse;
 import org.kp.tpmg.videovisit.model.MemberLogoutInput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
@@ -89,11 +59,6 @@ import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
-import org.kp.tpmg.webservice.client.videovisit.member.VideoVisitMemberServicesStub;
 import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
@@ -110,8 +75,8 @@ public class WebService{
 	public static final int MAX_RETRY = 2;
 	public static int retry = 0;
 	public static boolean status = false;
-	public static VideoVisitMemberServicesStub stub;
-	public static ConfigurationContext axisConfig = null;
+	//public static VideoVisitMemberServicesStub stub;
+	//public static ConfigurationContext axisConfig = null;
 	public static boolean simulation = true;
 	
 	private static String modulePath =  "";
@@ -235,40 +200,40 @@ public class WebService{
 			logger.debug("webservice.initWebService -> System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
             
 			//create axis2 configuration context if not created already.
-			axisConfig = ServiceSecurityLoader.getConfigContext(moduleFilePath);			
+			//axisConfig = ServiceSecurityLoader.getConfigContext(moduleFilePath);			
 			
-			stub =  new VideoVisitMemberServicesStub(axisConfig, serviceURL);			
+			//stub =  new VideoVisitMemberServicesStub(axisConfig, serviceURL);			
 			
-			Options options = stub._getServiceClient().getOptions();
+			//Options options = stub._getServiceClient().getOptions();
 			
-			options.setUserName(serviceSecurityUsername);
-            options.setPassword(serviceSecurityPassword);           
+			//options.setUserName(serviceSecurityUsername);
+            //options.setPassword(serviceSecurityPassword);           
           
             //load the policy    	
-            Policy utPolicy = ServiceSecurityLoader.getPolicy(policyFilePath);
+           // Policy utPolicy = ServiceSecurityLoader.getPolicy(policyFilePath);
     	   
     	    //logger.debug("webservice.createStub -> after loadPolicy: : " + utPolicy);
     	    //set rampart policy in service client options.
-            options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, utPolicy);
-            stub._getServiceClient().engageModule("addressing");
-            stub._getServiceClient().engageModule("rampart");           
+            //options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, utPolicy);
+            //stub._getServiceClient().engageModule("addressing");
+            //stub._getServiceClient().engageModule("rampart");           
 			
 			//this will fix the issue of open file issue.
 			//options.setProperty(HTTPConstants.HTTP_PROTOCOL_VERSION, HTTPConstants.HEADER_PROTOCOL_10);
 			// we need to create one http connection manager per thread to avoid close wait problems 
 			// and we shut down this connection manager after all the invocations. 
 			
-			MultiThreadedHttpConnectionManager httpConnectionManager = new MultiThreadedHttpConnectionManager(); 
+			//MultiThreadedHttpConnectionManager httpConnectionManager = new MultiThreadedHttpConnectionManager(); 
 			//Not sure if we need the below 3 lines
 			//HttpConnectionManagerParams params = new HttpConnectionManagerParams(); 
             //params.setDefaultMaxConnectionsPerHost(100); 
             //httpConnectionManager.setParams(params);
-			HttpClient httpClient = new HttpClient(httpConnectionManager); 
-			options.setProperty(HTTPConstants.REUSE_HTTP_CLIENT, reuseHTTP);
-			options.setProperty(HTTPConstants.CACHED_HTTP_CLIENT, httpClient); 
+			//HttpClient httpClient = new HttpClient(httpConnectionManager); 
+			//options.setProperty(HTTPConstants.REUSE_HTTP_CLIENT, reuseHTTP);
+			//options.setProperty(HTTPConstants.CACHED_HTTP_CLIENT, httpClient); 
 			// switch off chuncking this some times gives problems with sending messages through proxy 
-			options.setProperty(HTTPConstants.CHUNKED, chunked);
-			options.setTimeOutInMilliSeconds(timeout);
+			//options.setProperty(HTTPConstants.CHUNKED, chunked);
+			//options.setTimeOutInMilliSeconds(timeout);
 		}
 		catch(RemoteException re)
 		{
@@ -291,7 +256,7 @@ public class WebService{
 	}
 		
 	
-	protected static void closeConnectionManager(VideoVisitMemberServicesStub stub)
+/*	protected static void closeConnectionManager(VideoVisitMemberServicesStub stub)
 	{
 		try
 		{
@@ -316,7 +281,7 @@ public class WebService{
 			logger.error("closeConnectionManager -> failed to close stub.. this is not critical", th);
 		}
 	}
-        
+*/        
         /**
 	 * @return the setupWizardHostNuid
 	 */
@@ -502,7 +467,8 @@ public class WebService{
 		return toRet;
 	}
 */	
-	public static StringResponseWrapper quitMeeting(long meetingId, String memberName, long careGiverId, String sessionID) throws Exception
+//calling rest service
+/*	public static StringResponseWrapper quitMeeting(long meetingId, String memberName, long careGiverId, String sessionID) throws Exception
 	{
 		logger.info("Entered quitMeeting");
 		StringResponseWrapper toRet = null; 
@@ -538,8 +504,9 @@ public class WebService{
 		return toRet;
 		
 	}
-
-	public static StringResponseWrapper updateMemberMeetingStatusJoining(long meetingID, String mrn8Digit, String sessionID)
+*/
+//calling rest service	
+/*	public static StringResponseWrapper updateMemberMeetingStatusJoining(long meetingID, String mrn8Digit, String sessionID)
 			throws Exception
 	{
 		logger.info("Entered updateMemberMeetingStatusJoining");
@@ -574,8 +541,9 @@ public class WebService{
 		logger.info("Entered updateMemberMeetingStatusJoining");
 		return toRet;
 	}
-
-	public static StringResponseWrapper createMeetingSession(long meetingID, String mrn8Digit, String sessionID) throws Exception
+*/
+	//calling rest service
+/*	public static StringResponseWrapper createMeetingSession(long meetingID, String mrn8Digit, String sessionID) throws Exception
 	{
 		logger.info("Entered createMeetingSession");
 		StringResponseWrapper toRet = null; 
@@ -603,7 +571,7 @@ public class WebService{
 		logger.info("Exiting createMeetingSession");
 		return toRet;
 	}
-	
+*/	
 	
 	
 	//TODO: Remove after rest service integration is successful. 
@@ -740,7 +708,8 @@ public class WebService{
 		return toRet;
 	}
 */
-	public static RetrieveMeetingResponseWrapper retrieveMeetingForCaregiver(String meetingHash,//left
+	//calling rest service
+/*	public static RetrieveMeetingResponseWrapper retrieveMeetingForCaregiver(String meetingHash,//left
 			int pastMinutes,int futureMinutes) 
 				throws RemoteException {
 		logger.info("Entered retrieveMeetingForCaregiver");		
@@ -771,7 +740,7 @@ public class WebService{
 		logger.info("Exit retrieveMeetingForCaregiver");
 		return toRet;		
 	}
-	
+*/	
 	/**
 	 * Retrieve meetings for caregiver
 	 * 
@@ -1125,7 +1094,8 @@ public class WebService{
 	 * @return
 	 * @throws Exception
 	 */
-	public static StringResponseWrapper userPresentInMeeting(long meetingId,
+	//calling rest service
+/*	public static StringResponseWrapper userPresentInMeeting(long meetingId,
 			String megaMeetingDisplayName) throws Exception
 	{
 		logger.info("Entered userPresentInMeeting");
@@ -1165,7 +1135,7 @@ public class WebService{
 		return toRet;
 
 	}
-	
+*/	
 	
 	/**
 	 * Get the meeting by meetingId
@@ -1174,7 +1144,8 @@ public class WebService{
 	 * @return
 	 * @throws Exception
 	 */
-	public static MeetingResponseWrapper getMeetingByMeetingID(long meetingID,
+	//calling rest service
+/*	public static MeetingResponseWrapper getMeetingByMeetingID(long meetingID,
 			String sessionID) throws Exception {
 		MeetingResponseWrapper toRet = null; 
 		
@@ -1204,8 +1175,9 @@ public class WebService{
 		
 	
 	}
-	
-	public static StringResponseWrapper createMobileMeetingSession(long meetingId, String deviceType, String deviceOS, String deviceOSversion) throws Exception {
+*/	
+	//calling rest service
+/*	public static StringResponseWrapper createMobileMeetingSession(long meetingId, String deviceType, String deviceOS, String deviceOSversion) throws Exception {
 		StringResponseWrapper toRet = null; 
 		logger.info("Entered createMobileMeetingSession");
 		try
@@ -1235,8 +1207,9 @@ public class WebService{
 		logger.info("Exit createMobileMeetingSession");
 		return toRet;
 	}
-
-	public static StringResponseWrapper createCareGiverMobileSession(String patientName, String meetingCode,String  deviceType,String deviceOs, String deviceOsVersion) throws Exception {
+*/
+	//calling rest service
+/*	public static StringResponseWrapper createCareGiverMobileSession(String patientName, String meetingCode,String  deviceType,String deviceOs, String deviceOsVersion) throws Exception {
 	StringResponseWrapper toRet = null; 
 	
 		try
@@ -1269,14 +1242,15 @@ public class WebService{
 		logger.info("Exit createCareGiverMobileSession");
 		return toRet;
 	}
-	
+*/	
 	/**
 	 * This method is to get Vendor Plugin details
 	 * 	 
 	 * @return StringResponseWrapper
 	 * @throws Exception 
 	 */
-	public static StringResponseWrapper getVendorPluginData(String sessionID) throws Exception {
+	//calling rest service
+/*	public static StringResponseWrapper getVendorPluginData(String sessionID) throws Exception {
 		StringResponseWrapper toRet = null; 
 		
 		logger.info("Entered getVendorPluginData");
@@ -1310,7 +1284,7 @@ public class WebService{
 		return toRet;
 
 	}
-	
+*/	
 	//calling rest service 
 	/**
 	 * This method creates instant vendor meeting and returns meeting details
@@ -1574,8 +1548,8 @@ public class WebService{
 		return toRet;
 	}
 */	
-	
-	public static MeetingLaunchResponseWrapper getMeetingDetailsForMemberGuest(String meetingCode, String patientLastName,String deviceType, String deviceOS, String deviceOSVersion,boolean isMobileFlow) throws Exception{
+	//calling rest service
+/*	public static MeetingLaunchResponseWrapper getMeetingDetailsForMemberGuest(String meetingCode, String patientLastName,String deviceType, String deviceOS, String deviceOSVersion,boolean isMobileFlow) throws Exception{
 		
 		MeetingLaunchResponseWrapper toRet = null; 
 		logger.info("Entered WebService: getMeetingDetailsForMemberGuest");	
@@ -1605,7 +1579,7 @@ public class WebService{
 		logger.info("Exit WebService: getLaunchMeetingDetails");
 		return toRet;
 	}
-	
+*/	
 	//KP Org sign on API
 	public static KpOrgSignOnInfo performKpOrgSSOSignOn(String userId, String password) throws Exception
 	{

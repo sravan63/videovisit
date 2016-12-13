@@ -15,7 +15,7 @@ public class JoinMeetingController extends SimplePageController {
 		String data = null;
 		try
 		{
-			 data = MeetingCommand.updateMemberMeetingStatusJoining(request, response);
+			 data = null;//MeetingCommand.updateMemberMeetingStatusJoining(request, response);
 		}
 		catch (Exception e)
 		{

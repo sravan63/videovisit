@@ -56,7 +56,7 @@ public class ValidateUserSession extends SimplePageController {
 						logger.info("in validateUserSession member");
 						if(context != null && context.getMember() != null){
 							
-							String meetingStatus = MeetingCommand.getMeetingStatus(request, response);
+							String meetingStatus = null;//MeetingCommand.getMeetingStatus(request, response);
 							result.put("meetingStatus", meetingStatus);
 							result.put("isValidUserSession", true);
 							result.put("success", true);	

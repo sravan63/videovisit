@@ -14,7 +14,7 @@ public class CreateMeetingSessionController extends SimplePageController {
 		String data = null;
 		try
 		{
-			 data = MeetingCommand.createMeetingSession(request, response);
+			 data = null;//MeetingCommand.createMeetingSession(request, response);
 		}
 		catch (Exception e)
 		{

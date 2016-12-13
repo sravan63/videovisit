@@ -6,8 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +16,6 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
@@ -36,13 +33,9 @@ import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Member;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingLaunchResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingResponseWrapper;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.RetrieveMeetingResponseWrapper;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
@@ -286,7 +279,8 @@ public class MeetingCommand {
 		return JSONObject.fromObject(new SystemError()).toString();
 	}
 */	
-	public static StringResponseWrapper quitMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//calling rest service
+/*	public static StringResponseWrapper quitMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		
 		long meetingId = -1L;
@@ -328,9 +322,9 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return null;
 	}
-	
-	
-	public static String updateMemberMeetingStatusJoining(HttpServletRequest request, HttpServletResponse response) throws Exception {
+*/	
+	//calling rest service
+/*	public static String updateMemberMeetingStatusJoining(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		
@@ -368,7 +362,7 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
-
+*/
 	public static String updateEndMeetingLogout(HttpServletRequest request, HttpServletResponse response,
 			String memberName, boolean notifyVideoForMeetingQuit) throws Exception {
 		logger.info("Entered updateEndMeetingLogout - received input attributes as [memberName="
@@ -405,7 +399,8 @@ public class MeetingCommand {
 		return jsonString;
 	}
 
-	public static String createMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//calling rest service
+/*	public static String createMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
@@ -441,7 +436,7 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
-
+*/
 /*	public static String retrieveMeetingForCaregiver(HttpServletRequest request, HttpServletResponse response) 
 			throws RemoteException {
 		RetrieveMeetingResponseWrapper ret = null;			
@@ -917,7 +912,8 @@ public class MeetingCommand {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String userPresentInMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//calling rest service
+/*	public static String userPresentInMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		String userPresentInMeeting = null;
 		StringResponseWrapper userPresentInMeetingResponse = null;
@@ -956,7 +952,7 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return userPresentInMeeting;
 	}
-	
+*/	
 	/**
 	 * Get the status of the meeting
 	 * @param request
@@ -964,7 +960,8 @@ public class MeetingCommand {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String getMeetingStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//calling rest service
+/*	public static String getMeetingStatus(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		long meetingId = 0;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
@@ -993,8 +990,9 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return meetingStatus;
 	}
-	
-	public static String createMobileMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
+*/	
+	//calling rest service
+/*	public static String createMobileMeetingSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		long meetingId = 0;
 		String deviceType = null;
@@ -1044,10 +1042,10 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
+*/	
 	
-	
-
-	public static String CreateCareGiverMobileMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	//calling rest service
+/*	public static String CreateCareGiverMobileMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		String patientName = "";
 		String meetingCode = "";
@@ -1097,8 +1095,9 @@ public class MeetingCommand {
 		// worst case error returned, no authenticated user, no web service responded, etc. 
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
-	
-	public static String getVendorPluginData(HttpServletRequest request, HttpServletResponse response) throws Exception {
+*/	
+	//calling rest service
+/*	public static String getVendorPluginData(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		StringResponseWrapper ret = null;
 		WebAppContext ctx  	= WebAppContext.getWebAppContext(request);
 		// Init web service 	
@@ -1138,7 +1137,7 @@ public class MeetingCommand {
 		
 		return (JSONObject.fromObject(new SystemError()).toString());
 	}
-	
+*/	
 	//calling rest API call 
 	/**
 	 * This method is called for creating instant meeting for setup wizard 

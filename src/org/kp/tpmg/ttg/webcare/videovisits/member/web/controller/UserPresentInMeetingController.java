@@ -20,7 +20,7 @@ public class UserPresentInMeetingController extends SimplePageController {
 		try
 		{
 			//get JSON data from web services
-			String data = MeetingCommand.userPresentInMeeting(request, response);
+			String data = null;//MeetingCommand.userPresentInMeeting(request, response);
 			
 			//response.setHeader("P3P","CP=IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT");
 			//put data into buffer

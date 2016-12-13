@@ -20,7 +20,7 @@ public class CreateCareGiverMobileMeetingController extends SimplePageController
 		{
 			logger.info("****in CreateCareGiverMobileMeetingController****");
 			//get JSON data from web services
-			String data = MeetingCommand.CreateCareGiverMobileMeeting(request, response);
+			String data = null;//MeetingCommand.CreateCareGiverMobileMeeting(request, response);
 		
 			//put data into buffer
 			modelAndView.setViewName(JSONMAPPING);
