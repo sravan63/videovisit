@@ -14,7 +14,9 @@
 
     <properties>
       <env>pr</env>
-    	<servicesArtifactsVersion>1.5.0</servicesArtifactsVersion>
+      <servicesArtifactsVersion>1.5.0</servicesArtifactsVersion>
+      <vidyoplayerVersion>1.0.1-SNAPSHOT</vidyoplayerVersion>
+      <vvservice-clientVersion>1.0.1-SNAPSHOT</vvservice-clientVersion>
     </properties>
 
 	<scm>
@@ -27,7 +29,7 @@
       <dependency>
         <groupId>org.kp.tpmg.ttg.videovisit</groupId>
         <artifactId>videovisitservice-client</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>${vvservice-clientVersion}</version>
         <exclusions>
           <exclusion>
             <groupId>*</groupId>
@@ -581,7 +583,7 @@
                        <artifactItem>
                          <groupId>org.kp.tpmg.ttg.videovisit</groupId>
                          <artifactId>vidyoplayer</artifactId>
-                         <version>1.0.0</version>
+                         <version>${vidyoplayerVersion}</version>
                          <classifier>bundle</classifier>
                           <type>zip</type>
                        </artifactItem>
@@ -622,7 +624,7 @@
                         </excludes>
                       </resource>
                       <resource>
-                        <directory>${project.build.directory}/vidyoplayer-1.0.0/</directory>
+                        <directory>${project.build.directory}/vidyoplayer-${vidyoplayerVersion}/</directory>
                         <includes>
                           <include>vidyoplayer/**</include>
                         </includes>
