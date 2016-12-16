@@ -65,7 +65,7 @@ public class VideoVisitPatientController extends SimplePageController {
 						videoVisitParams.setCaregiver(meeting.getCaregiver());
 						Calendar cal = Calendar.getInstance();
 						cal.setTimeInMillis(Long.parseLong(meeting.getMeetingTime()));
-						SimpleDateFormat sfdate = new SimpleDateFormat("MM-dd-yyyy");
+						SimpleDateFormat sfdate = new SimpleDateFormat("MMM dd");
 						SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
 						//Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below 
 						//SimpleDateFormat sfdate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");	
