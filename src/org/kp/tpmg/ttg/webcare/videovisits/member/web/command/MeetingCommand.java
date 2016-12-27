@@ -378,7 +378,7 @@ public class MeetingCommand {
 			}
 
 			if (meetingId == 0) {
-				meetingId = ctx.getMeetingId();
+				meetingId = (ctx.getMeetingId() <= 0) ? Long.parseLong(ctx.getVideoVisit().getMeetingId()) : ctx.getMeetingId();
 			}
 
 			if (ctx != null && ctx.getMember() != null) {
