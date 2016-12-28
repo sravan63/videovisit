@@ -101,9 +101,11 @@
 							</script>
 						</p>
 					</div>
-					<div class="refresh_button" style="float:right;">
+					<!-- US16197 hiding refresh button in KPPC Mobile app-->
+					<!-- <div class="refresh_button" style="float:right;">
 						<button style="width:136px; height:45px; color:#FFFFFF; background-color:#0061A9; padding:10px 5px; border-radius:4px; font-size:16px;"> Refresh Page </button>
-					</div>
+					</div> -->
+					<!-- US16197 hiding refresh button in KPPC Mobile app-->
 				</div>
 				<!-- Refresh Page button and Time stamp - END -->
 			</c:otherwise>
