@@ -23,6 +23,7 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
@@ -703,7 +704,7 @@ public class MeetingCommand {
 	public static String createCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 		logger.info("Entered MeetingCommand->createCaregiverMeetingSession");
-		LaunchMeetingForMemberGuestOutput output = null;
+		LaunchMeetingForMemberDesktopOutput output = null;
 		String jsonString = null;
 		Gson gson = new Gson();
 		try {
@@ -731,7 +732,7 @@ public class MeetingCommand {
 			}						
 		} catch (Exception e) {
 			logger.error("MeetingCommand->createCaregiverMeetingSession : System Error :" + e.getMessage(), e);
-			output = new LaunchMeetingForMemberGuestOutput();
+			output = new LaunchMeetingForMemberDesktopOutput();
 			final Status status = new Status();
 			status.setCode("900");
 			status.setMessage("System error");
