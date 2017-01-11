@@ -15,7 +15,7 @@
     <properties>
       <env>pr</env>
       <servicesArtifactsVersion>1.5.0</servicesArtifactsVersion>
-      <vidyoplayerVersion>1.0.1-SNAPSHOT</vidyoplayerVersion>
+      <vidyoplayerVersion>1.1.1-SNAPSHOT</vidyoplayerVersion>
       <vvservice-clientVersion>1.0.1-SNAPSHOT</vvservice-clientVersion>
     </properties>
 
