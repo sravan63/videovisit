@@ -42,7 +42,6 @@ import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopInput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestDesktopInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
@@ -945,15 +944,15 @@ public class WebService{
 		return toRet;
 	}*/
 	
-	public static LaunchMeetingForMemberDesktopOutput createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow, String sessionId) 
+	public static LaunchMeetingForMemberGuestOutput createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow, String sessionId) 
 			throws Exception {
 		logger.info("Entered WebService->createCaregiverMeetingSession" + "  "+  meetingHash + " "+ patientLastName +" " + isMobileFlow );
-		LaunchMeetingForMemberDesktopOutput output = null;
+		LaunchMeetingForMemberGuestOutput output = null;
 		String responseJsonStr = "";
 		try{
 			if(StringUtils.isBlank(meetingHash) || StringUtils.isBlank(patientLastName) || StringUtils.isBlank(sessionId)){
 				logger.warn("WebService->createCaregiverMeetingSession --> missing input attributes.");
-				output = new LaunchMeetingForMemberDesktopOutput();
+				output = new LaunchMeetingForMemberGuestOutput();
 				final Status status = new Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
@@ -979,7 +978,7 @@ public class WebService{
 			JsonParser parser = new JsonParser();
 			JsonObject jobject = new JsonObject();
 			jobject = (JsonObject) parser.parse(responseJsonStr);
-			output = gson.fromJson(jobject.get("service").toString(), LaunchMeetingForMemberDesktopOutput.class);
+			output = gson.fromJson(jobject.get("service").toString(), LaunchMeetingForMemberGuestOutput.class);
 
 		}
 		catch (Exception e)

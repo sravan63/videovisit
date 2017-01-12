@@ -704,7 +704,7 @@ public class MeetingCommand {
 	public static String createCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 		logger.info("Entered MeetingCommand->createCaregiverMeetingSession");
-		LaunchMeetingForMemberDesktopOutput output = null;
+		LaunchMeetingForMemberGuestOutput output = null;
 		String jsonString = null;
 		Gson gson = new Gson();
 		try {
@@ -732,7 +732,7 @@ public class MeetingCommand {
 			}						
 		} catch (Exception e) {
 			logger.error("MeetingCommand->createCaregiverMeetingSession : System Error :" + e.getMessage(), e);
-			output = new LaunchMeetingForMemberDesktopOutput();
+			output = new LaunchMeetingForMemberGuestOutput();
 			final Status status = new Status();
 			status.setCode("900");
 			status.setMessage("System error");
