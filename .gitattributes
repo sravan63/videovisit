@@ -22,6 +22,8 @@ conf/external/pp/videovisit.properties -text svneol=unset#text/plain
 conf/external/pr/zone1/videovisit.properties -text svneol=unset#text/plain
 conf/external/pr/zone2/videovisit.properties -text svneol=unset#text/plain
 conf/external/qa/videovisit.properties -text svneol=unset#text/plain
+conf/external/qaint/int1/videovisit.properties -text svneol=unset#text/plain
+conf/external/qaint/int2/videovisit.properties -text svneol=unset#text/plain
 conf/filters/dv/configuration.properties -text svneol=unset#text/plain
 conf/filters/local -text
 conf/filters/pp/configuration.properties -text
