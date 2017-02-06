@@ -748,6 +748,13 @@ iframe { display: none !important; }
 	line-height: 44px;
 	color:#ffffff;
 }
+/*US17810 start*/
+a.download-mdo:active, a.download-mdo:visited{
+  color:#4D8993;
+  display: inline
+}
+/*US17810 end*/
+
 
 
 /* ============= Satish @ US13301 & US133102 End === */
