@@ -59,6 +59,9 @@ import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
+import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateInput;
+import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutput;
+import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
 import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
@@ -3066,6 +3069,47 @@ public class WebService{
 		}
 		logger.info("Exit memberLogout");
 		return output;
+	}
+	
+	/**
+	 * @param meetingId
+	 * @param sessionId
+	 * @return
+	 */
+	public static String getProviderRunningLateDetails(final String meetingId, final String sessionId) {
+		logger.info("Entered getProviderRunningLateDetails");
+
+		final Gson gson = new Gson();
+		String jsonOutput = null;
+		MeetingRunningLateInput input = null;
+
+		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId)) {
+			logger.warn("getProviderRunningLateDetails -> missing input attributes");
+			final MeetingRunningLateOutputJson output = new MeetingRunningLateOutputJson();
+			final MeetingRunningLateOutput service = new MeetingRunningLateOutput();
+			service.setName(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS);
+			output.setService(service);
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			output.getService().setStatus(status);
+			jsonOutput = gson.toJson(output);
+		}
+		try {
+			input = new MeetingRunningLateInput();
+			input.setMeetingId(meetingId);
+			input.setClientId(WebUtil.clientId);
+			input.setSessionId(sessionId);
+
+			final String inputJsonStr = gson.toJson(input);
+			logger.debug("getProviderRunningLateDetails -> inputJsonStr " + inputJsonStr);
+			jsonOutput = callVVRestService(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS, inputJsonStr);
+			logger.debug("getProviderRunningLateDetails -> jsonOutput " + jsonOutput);
+		} catch (Exception e) {
+			logger.error("getProviderRunningLateDetails -> Web Service API error ", e);
+		}
+		logger.info("Exiting getProviderRunningLateDetails");
+		return jsonOutput;
 	}
 
 }

@@ -375,6 +375,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LaunchMemberProxyM
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoffController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoutController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/MobileLoginController.java -text svneol=unset#text/plain
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/ProviderRunningLateInfoController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/QuitMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/RetrieveMeetingController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/SSOPreLoginController.java -text svneol=unset#text/plain

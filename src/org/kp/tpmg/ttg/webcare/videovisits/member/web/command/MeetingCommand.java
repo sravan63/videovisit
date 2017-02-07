@@ -2431,4 +2431,31 @@ public static String memberLogout(HttpServletRequest request, HttpServletRespons
 	return JSONObject.fromObject(new SystemError()).toString();
 }
 
+	/**
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public static String getProviderRunningLateDetails(final HttpServletRequest request,
+			final HttpServletResponse response) {
+		logger.info("Entered getProviderRunningLateDetails");
+
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		String output = null;
+
+		final String meetingId = request.getParameter("meetingId");
+		final String sessionId = request.getSession().getId();
+
+		try {
+			if (ctx != null) {
+				output = WebService.getProviderRunningLateDetails(meetingId, sessionId);
+			}
+		} catch (Exception e) {
+			output = (new Gson().toJson(new SystemError()));
+			logger.error("getProviderRunningLateDetails -> System Error" + e.getMessage(), e);
+		}
+		logger.info("Exiting getProviderRunningLateDetails");
+		return output;
+	}
+
 }
