@@ -3092,7 +3092,7 @@ public class WebService{
 			final Status status = new Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
-			output.getService().setStatus(status);
+			service.setStatus(status);
 			jsonOutput = gson.toJson(output);
 		}
 		try {

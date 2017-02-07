@@ -22,7 +22,7 @@ public class ProviderRunningLateInfoController extends SimplePageController {
 			modelAndView.setViewName(JSONMAPPING);
 			modelAndView.addObject("data", data);
 		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("handlePageRequest -> System Error" + e.getMessage(), e);
 		}
 		logger.info("Exiting handlePageRequest");
 		return (modelAndView);
