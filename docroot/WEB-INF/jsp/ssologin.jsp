@@ -30,7 +30,7 @@
 		var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 		browserNotSupportedMsgForPatient += "<br /><br />";
 		/*US17810*/
-		browserNotSupportedMsgForPatient += "Please download the <a target='_blank' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac. ";
+		browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac. ";
 
 		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
 			$('p#globalError').html(browserNotSupportedMsgForPatient);
