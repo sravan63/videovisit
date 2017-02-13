@@ -307,7 +307,7 @@
 		                	<div id="waitingRoom">
 		                		<div class="waitingRoomMessageBlock">
 						        	<img src="vidyoplayer/img/TPMG_logo.png" class="waitingroom-logo" />
-						           	<span class="waitingroom-text">Your visit will start once your doctor joins.</span>
+						           	<span class="waitingroom-text"></span>
 		                		</div>
 		                	<!-- US133102(iteration21) End-->	
 		                	</div>

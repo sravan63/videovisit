@@ -1,4 +1,5 @@
 VIDEO_VISITS.Path = {
+    IS_HOST_AVAILABLE: false,
     global : {
         error : 'error.htm',
         expired : 'logout.htm',

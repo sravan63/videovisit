@@ -743,9 +743,9 @@ iframe { display: none !important; }
 	margin-right: 24px;
 }
 .waitingroom-text{
-	font-family: "Avenir Next"; 
-	font-size: 32px;
-	line-height: 44px;
+	font-family: Avenir Next, sans-serif;
+	font-size: 20px;
+	line-height: 35px;
 	color:#ffffff;
 }
 /*US17810 start*/

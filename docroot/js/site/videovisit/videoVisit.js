@@ -1,3 +1,6 @@
+var isRunningLate = true;
+var runningLateRecursiveCall;
+
 $(document).ready(function() {
 	//$('html').css('overflow-y', 'hidden');
 	var windowHeight = $(window).height();
@@ -54,6 +57,46 @@ $(document).ready(function() {
 			
 		}
     }
+
+    // US14832 - Displaying dynamic message in Waiting Room based on reccurent service call [START]
+    // This service call will trigger for every 2 minutes
+    var waitingRoomCheck = function(){
+    	if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
+			$.ajax({
+				type: "GET",
+				url: VIDEO_VISITS.Path.visit.providerRunningLateInfo,
+				cache: false,
+				dataType: "json",
+				data: {'meetingId':$("#meetingId").val()},
+				success: function(result, textStatus){
+					if(result.service.status.code == 200){
+						isRunningLate = result.service.runningLateEnvelope.isRunningLate;
+						if(isRunningLate == true){
+							var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
+							var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
+							$(".waitingroom-text").html("Your visit will now start at  <b style='font-size:25px;'>"+newTime+"</b><br><span style='font-size:15px;'>Your doctor is running late</span>");
+						}else{
+							$(".waitingroom-text").html("Your visit will start once your doctor joins.");
+						}
+					}
+				},
+				error: function(textStatus){
+					console.log("RUNNING LATE ERROR: "+textStatus);
+				}
+			});
+		}else{
+			window.clearInterval(runningLateRecursiveCall);
+		}
+	};
+
+	waitingRoomCheck();
+
+	// Making a service for every 2 minutes
+	runningLateRecursiveCall = window.setInterval(function(){
+    	waitingRoomCheck();
+    },20000);
+
+    // US14832 - Displaying dynamic message in Waiting Room based on recurrent service call [END]
 
 	/*$('#meetingDisconnected').click(function() {
 		closeDialog('dialog-block-meeting-disconnected');

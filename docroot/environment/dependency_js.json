@@ -135,7 +135,9 @@
             }
         },
 		"videoVisit" : {
-			"global"   : [],
+			"global"   : [
+                "js/site/global/dateExtensions_loader.js"
+            ],
             "specific" : {
                 "videoVisit" : [
                 	"js/site/visit/visit.js",
