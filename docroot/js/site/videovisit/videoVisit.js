@@ -94,7 +94,7 @@ $(document).ready(function() {
 	// Making a service for every 2 minutes
 	runningLateRecursiveCall = window.setInterval(function(){
     	waitingRoomCheck();
-    },20000);
+    },120000);
 
     // US14832 - Displaying dynamic message in Waiting Room based on recurrent service call [END]
 
