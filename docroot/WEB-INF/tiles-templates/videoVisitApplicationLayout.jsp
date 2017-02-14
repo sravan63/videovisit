@@ -7,7 +7,7 @@
         <!-- <meta charset="utf-8">	 -->
         <!--[if IE]><![endif]-->
 
-        <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">  -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
         <title> <tiles:insertAttribute name="title" /> </title>
         <meta name="description" content="">
         <meta name="author" content="">
