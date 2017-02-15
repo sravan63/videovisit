@@ -4,7 +4,7 @@
 <html>
     <!--Start Head-->
     <head>
-        <!-- <meta charset="utf-8">	 -->
+        <meta charset="utf-8">
         <!--[if IE]><![endif]-->
 		
 		<meta http-equiv="X-UA-Compatible" content="IE=11" />
