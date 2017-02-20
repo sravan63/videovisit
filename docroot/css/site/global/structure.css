@@ -733,7 +733,7 @@ iframe { display: none !important; }
   min-width:400px;
   margin:0 auto;
    position: relative;
-    top: 70px;
+    top: 35px;
 
 }
 .waitingroom-logo{
@@ -744,8 +744,8 @@ iframe { display: none !important; }
 }
 .waitingroom-text{
 	font-family: Avenir Next, sans-serif;
-	font-size: 20px;
-	line-height: 35px;
+	font-size: 32px;
+	line-height: 44px;
 	color:#ffffff;
 }
 /*US17810 start*/
