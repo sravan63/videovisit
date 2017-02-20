@@ -340,6 +340,13 @@ input								{outline:none;}
   border-bottom: 1px solid rgb(181, 181, 181);
   background-color: #FFFFFF;
 }
+.running-late-indicator{
+	background-color: #FCE3C0;
+	padding: 12px;
+	font-size: 15px;
+	text-align: center;
+	margin: 5px 0px 0px 0px;
+}
 .meeting-with-container {
   margin-bottom:9px;
   padding:8px 10px 9px;

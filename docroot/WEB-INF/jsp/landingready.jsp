@@ -28,6 +28,15 @@
   <div id="landing-portal-ready" style="width:90%; margin-top:0px; font-family:Avenir Next, sans-serif;">
   <c:forEach var="meeting" items="${WebAppContext.myMeetings}">
       <div class="landing-portal-single-container">
+        <c:if test="${meeting.isRunningLate == true}">
+            <div class="running-late-indicator">Your doctor is running late. New start time is <b class="running-late-timestamp-${meeting.runLateMeetingTime}">${meeting.runLateMeetingTime}</b></div>
+            <script type="text/javascript">
+              var cls = ".running-late-timestamp-"+${meeting.runLateMeetingTime};
+              var meetingTimestamp = $(cls).text();
+              var convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
+              $(cls).text(convertedTimestamp);
+            </script>
+          </c:if>
           <div class="meeting-details-container" style="font-size:14px;">
             <div class="left">
               <div class="time-display">
