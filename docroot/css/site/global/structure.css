@@ -755,10 +755,11 @@ iframe { display: none !important; }
 	line-height: 44px;
 	color:#ffffff;
 }
-/*US17810 start*/
+/*US17810 start*/ /* added US18393 */
 a.download-mdo:active, a.download-mdo:visited{
-  color:#4D8993;
-  display: inline
+  color: #4D8993;
+  display: inline;
+  font-weight: bold;
 }
 /*US17810 end*/
 
