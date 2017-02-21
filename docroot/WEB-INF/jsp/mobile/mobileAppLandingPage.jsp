@@ -16,12 +16,22 @@
 <div class="page-content">
 	<div class="visits patient" style="overflow:hidden;">
 		<!--<h1>Video Visits You Can Join Now</h1>	-->
-		<h1> Your Video Visits for Today </h1>
-		
+		<h1> Your Video Visits for Today</h1>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
 				<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
 			      <div class="landing-portal-single-container">
+			    <!--US18235 Running Late: Patient My Meetings Notification UI start>-->
+                     <c:if test="${meeting.isRunningLate == true}"> 
+			            <div class="running-late-indicator">Your doctor is running late. New start time is <b class="running-late-timestamp-${meeting.runLateMeetingTime}">${meeting.runLateMeetingTime}</b></div>
+			            <script type="text/javascript">
+			              var cls = ".running-late-timestamp-"+${meeting.runLateMeetingTime};
+			              var meetingTimestamp = $(cls).text();
+			              var convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
+			              $(cls).text(convertedTimestamp);
+			            </script>
+			          </c:if>
+                    <!--US18235 Running Late: Patient My Meetings Notification UI end-->
 			          <div class="meeting-details-container" style="font-size:14px;">
 			            <div class="top" style="margin-top:30px;">
 			              <div class="time-display">
