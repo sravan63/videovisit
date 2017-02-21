@@ -580,7 +580,7 @@ margin-top:4px;
 
 #displayDevices .threeColumns a, a:active, a:visited{
 	color: #FFFFFF;
-	font-weight: normal;
+	/*font-weight: normal;*/
 	display: block;
 	text-decoration: none;
 }
