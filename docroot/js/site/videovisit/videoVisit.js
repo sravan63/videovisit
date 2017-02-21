@@ -74,6 +74,7 @@ $(document).ready(function() {
 						if(isRunningLate == true){
 							var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 							var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
+							$('#displayMeetingNewStartTime').html('New Start '+newTime);
 							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><br><span style='font-size:20px;line-height:44px;'>Your doctor is running late</span>");
 						}else{
 							$(".waitingroom-text").html("Your visit will start once your doctor joins.");

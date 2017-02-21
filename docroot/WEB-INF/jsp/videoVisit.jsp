@@ -575,6 +575,7 @@
 					<h3> Visit Details </h3>
 					<dl>
 					    <dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
+					    <dd id="displayMeetingNewStartTime" style="word-wrap: break-word;"></dd>
 					</dl>
 					<dl>
 						<dt>PATIENT</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
