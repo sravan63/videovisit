@@ -85,7 +85,7 @@
 	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
 	
-	if(browserInfo.isChrome) {
+	if(browserInfo.isChrome || browserInfo.isFirefox) {
 
 		var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 		browserNotSupportedMsgForPatient += "<br /><br />";
