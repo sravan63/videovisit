@@ -2196,6 +2196,16 @@ and (min-width: 768px) {
   border-bottom: 1px solid #D4D4D5;
   background-color: #FFFFFF;
 }
+/*US18235 Running Late:*/
+.running-late-indicator{
+	background-color: #FCE3C0;
+	padding: 12px;
+	font-size: 15px;
+	text-align: center;
+	margin: 5px 0px 0px 0px;
+	height:45px;
+	font-family: "Open Sans";
+}
 .patient-msg {
 	margin-top:25px;
 }
