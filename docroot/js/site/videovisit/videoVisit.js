@@ -74,7 +74,7 @@ $(document).ready(function() {
 						if(isRunningLate == true){
 							var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 							var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
-							if($("#isHost").val() == true){
+							if($("#isHost").val() == true || $("#isHost").val() == "true"){
 								$('#displayMeetingNewStartTime').html('');
 							}else{
 								$('#displayMeetingNewStartTime').html('New Start '+newTime);
