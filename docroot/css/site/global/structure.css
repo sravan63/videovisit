@@ -751,6 +751,7 @@ iframe { display: none !important; }
 	width: 95px;
 	float: left;
 	margin-right: 24px;
+	margin-bottom: 50px;
 }
 .waitingroom-text{
 	font-family: Avenir Next, sans-serif;
