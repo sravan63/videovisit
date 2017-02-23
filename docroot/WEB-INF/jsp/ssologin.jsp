@@ -25,8 +25,7 @@
 	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
 	
-	/*US18393*/
-	if(browserInfo.isChrome || browserInfo.isFirefox) {
+	if(browserInfo.isChrome) {
 		var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 		browserNotSupportedMsgForPatient += "<br /><br />";
 		/*US17810*/
@@ -57,4 +56,17 @@
 			}
 		}
 	}
+	/*US18393*/
+	else if(browserInfo.isFirefox){
+		$('p#globalError').html(browserNotSupportedMsgForPatient);
+		$('#ssoLoginError p').css("display", "block");
+		
+		document.getElementById("username").disabled = true;
+		document.getElementById("password").disabled = true;
+
+		$('#temp-access').css('cursor', 'default');
+        $('#temp-access').css('opacity', '0.5');
+        $('#temp-access').css('pointer-events', 'none');
+	}
+	/*US18393*/
 </script>
