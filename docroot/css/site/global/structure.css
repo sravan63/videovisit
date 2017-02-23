@@ -341,11 +341,15 @@ input								{outline:none;}
   background-color: #FFFFFF;
 }
 .running-late-indicator{
-	background-color: #FCE3C0;
-	padding: 12px;
+	background-color: #ffe3c2;
+	height:45px;
+	font-family: "Open Sans";
 	font-size: 15px;
 	text-align: center;
-	margin: 5px 0px 0px 0px;
+	line-height:45px;
+	color: black;
+	margin: 10px 0px 12px 0px;
+	vertical-align:middle;
 }
 .meeting-with-container {
   margin-bottom:9px;
