@@ -74,11 +74,7 @@ $(document).ready(function() {
 						if(isRunningLate == true){
 							var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 							var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
-							if($("#isHost").val() == true || $("#isHost").val() == "true"){
-								$('#displayMeetingNewStartTime').html('');
-							}else{
-								$('#displayMeetingNewStartTime').html('New Start '+newTime);
-							}
+							$('#displayMeetingNewStartTime').html('New Start '+newTime);
 							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><br><span style='font-size:20px;line-height:72px;'>Your doctor is running late</span>");
 						}else{
 							$(".waitingroom-text").html("Your visit will start once your doctor joins.");
@@ -91,7 +87,6 @@ $(document).ready(function() {
 			});
 		}else{
 			window.clearInterval(runningLateRecursiveCall);
-			$('#displayMeetingNewStartTime').html('');
 		}
 	};
 
