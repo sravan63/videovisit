@@ -1,5 +1,6 @@
 var isRunningLate = true;
 var runningLateRecursiveCall;
+var newStartTimeRecursiveCall;
 
 $(document).ready(function() {
 	//$('html').css('overflow-y', 'hidden');
@@ -89,13 +90,49 @@ $(document).ready(function() {
 			window.clearInterval(runningLateRecursiveCall);
 		}
 	};
+	
+	var newStartTimeCheck = function(){
+		$.ajax({
+			type: "GET",
+			url: VIDEO_VISITS.Path.visit.providerRunningLateInfo,
+			cache: false,
+			dataType: "json",
+			data: {'meetingId':$("#meetingId").val()},
+			success: function(result, textStatus){
+				if(result.service.status.code == 200){
+					isRunningLate = result.service.runningLateEnvelope.isRunningLate;
+					if(isRunningLate == true){
+						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
+						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
+						$('#displayMeetingNewStartTime').html('New Start '+newTime);
+						if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
+							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>Your doctor is running late</span>");
+						}
+					}else{
+						$('#displayMeetingNewStartTime').html('');
+						if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
+							$(".waitingroom-text").html("Your visit will start once your doctor joins.");
+						}
+					}
+				}
+			},
+			error: function(textStatus){
+				console.log("RUNNING LATE ERROR: "+textStatus);
+			}
+		});
+	};
+	
+	newStartTimeCheck();
+	newStartTimeRecursiveCall = window.setInterval(function(){
+		newStartTimeCheck();
+    },120000);
 
-	waitingRoomCheck();
+	/*waitingRoomCheck();
 
 	// Making a service for every 2 minutes
 	runningLateRecursiveCall = window.setInterval(function(){
     	waitingRoomCheck();
-    },120000);
+    },120000);*/
 
     // US14832 - Displaying dynamic message in Waiting Room based on recurrent service call [END]
 
