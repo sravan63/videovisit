@@ -346,17 +346,22 @@
 
 								<a class="btn btn-large btn-tmv-success" href="#" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;"></a>
 								<div style="clear:both; border-bottom:1px solid #6A6A6A;">
-									<a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="width:40px; display:inline-block; border-bottom:none;"></a>					
-									<div id="volume-control-speaker" style="height: 35px; width: 3px; vertical-align: middle; margin: 12px; display: inline-block; background: grey;">						
+									<a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="width:40px; display:inline-block; border-bottom:none;"></a>	
+									<!--US18202 Remove Microphone Slider start-->	
+									<!--<div id="volume-control-speaker" style="height: 35px; width: 3px; vertical-align: middle; margin: 12px; display: inline-block; background: grey;">						
 										<a id="slider-handle-speaker" class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="border:1px solid #FFFFFF; width:9px; height:2px; margin-left:-4px; position:absolute;"></a>
-									</div>
+									</div>-->
+									<!--US18202 Remove Microphone Slider end-->
 								</div>
 								
 								<div style="clear:both; border-bottom:1px solid #6A6A6A;">
 									<a class="btn btn-large btn-tmm-success" href="#" title="Mute Mic" id="inCallButtonMuteMicrophone" style="border-bottom:none; width:40px; display:inline-block;"></a>
-									<div id="volume-control-mic" style="height:35px; width:3px; vertical-align:middle; margin:12px; display:inline-block; background: grey;" >
+									
+                                    <!--US18202 Remove Microphone Slider start-->
+									 <!--<div id="volume-control-mic" style="height:35px; width:3px; vertical-align:middle; margin:12px; display:inline-block; background: grey;" >
 										<a id="slider-handle-mic" class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="border:1px solid #FFFFFF; width:9px; height:2px; margin-left:-4px; position:absolute;"></a>
-									</div>
+									</div>-->
+									<!--US18202 Remove Microphone Slider End-->
 								</div>
 								<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>
 							</div>
