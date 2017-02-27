@@ -23,9 +23,9 @@
 			      <div class="landing-portal-single-container">
 			    <!--US18235 Running Late: Patient My Meetings Notification UI start>-->
                      <c:if test="${meeting.isRunningLate == true}"> 
-			           <div class="running-late-indicator"><span  style="font-size:16px;">Your doctor is running late.<br/> New start time is </span><b style="font-size:20px;"class="running-late-timestamp-${meeting.runLateMeetingTime}">${meeting.runLateMeetingTime}</b></div>
+			           <div class="running-late-indicator"><span  style="font-size:16px;">Your doctor is running late.<br/> New start time is </span><b style="font-size:20px;"class="running-late-timestamp-${meeting.meetingId}">${meeting.runLateMeetingTime}</b></div>
 			            <script type="text/javascript">
-			              var cls = ".running-late-timestamp-"+${meeting.runLateMeetingTime};
+			              var cls = ".running-late-timestamp-"+${meeting.meetingId};
 			              var meetingTimestamp = $(cls).text();
 			              var convertedTimestamp = convertTimestampToDate(meetingTimestamp, 'time_only');
 			              $(cls).text(convertedTimestamp);
