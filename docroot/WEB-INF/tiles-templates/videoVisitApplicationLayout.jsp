@@ -133,7 +133,7 @@
 		        }
 		        .btn-tmm-failure{
 		            background-image: url("vidyoplayer/img/sprite.png");
-		            background-position: -15px -235px;
+		            background-position: 5px -235px;
 		        }
 				.btn-tmc{
 		            background-image: url("vidyoplayer/img/sprite.png");
