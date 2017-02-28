@@ -128,7 +128,7 @@
 		
 		        .btn-tmm-success{
 		            background-image: url("vidyoplayer/img/sprite.png");
-		            background-position: -15px -180px;
+		            background-position: 5px -180px;
 		            /*width: 60px;	*/
 		        }
 		        .btn-tmm-failure{
