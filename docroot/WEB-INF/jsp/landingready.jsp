@@ -30,7 +30,7 @@
       <div class="landing-portal-single-container">
         <c:if test="${meeting.isRunningLate == true}">
           <!--DE9375 Fix-->
-            <div class="running-late-indicator">Your doctor is running late. New start time is <b style="font-size:18px;" class="running-late-timestamp-${meeting.meetingId}">${meeting.runLateMeetingTime}</b></div>
+            <div class="running-late-indicator">Your doctor is running late. New start time is <b style="font-size:20px;" class="running-late-timestamp-${meeting.meetingId}">${meeting.runLateMeetingTime}</b></div>
             <script type="text/javascript">
               var cls = ".running-late-timestamp-"+${meeting.meetingId};
               var meetingTimestamp = $(cls).text();
