@@ -143,11 +143,8 @@ $(document).ready(function() {
 		}
     });*/
 
-    $(window).scroll(function(e) {
-     	if($('#splash').css('display') === "block"){
-        	$(window).scrollTop(0);
-	    }
-     });
+    //DE9451 - Splash screen scroll issue fix
+     $('html').css('overflow','hidden');
 
 });
 
