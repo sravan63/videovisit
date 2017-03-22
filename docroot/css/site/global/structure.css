@@ -783,3 +783,8 @@ a.download-mdo:active, a.download-mdo:visited{
 .ie6 .form-block .birth_year	{margin-right:4px;}
 .ie6 #captchaLabel				{margin-right:9px;}
 .ie6 .label-month				{margin-left:8px;}
+/*DE7868 Start*/
+.ie #configurationMicrophone .input,.ie #configurationSpeaker .input{
+  margin-top:-6px;
+}
+/*DE7868 End*/
