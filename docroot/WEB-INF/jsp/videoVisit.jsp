@@ -584,7 +584,7 @@
 					    <dd id="displayMeetingNewStartTime" style="word-wrap: break-word;"></dd>
 					</dl>
 					<dl>
-						<dt>PATIENT</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName}</dd>
+						<dt>PATIENT</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName} ${WebAppContext.videoVisit.patientMiddleName}</dd>
 					</dl>
 					<dl>
 						<dt>MY DOCTOR</dt><dd id="meetingHost"> 
