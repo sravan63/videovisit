@@ -61,6 +61,7 @@ public class VideoVisitPatientController extends SimplePageController {
 						}	
 						videoVisitParams.setPatientFirstName(meeting.getMember().getFirstName());
 						videoVisitParams.setPatientLastName(meeting.getMember().getLastName());
+						videoVisitParams.setPatientMiddleName(meeting.getMember().getMiddleName());
 						videoVisitParams.setParticipant(meeting.getParticipant());
 						videoVisitParams.setCaregiver(meeting.getCaregiver());
 						Calendar cal = Calendar.getInstance();
