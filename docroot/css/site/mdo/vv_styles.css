@@ -648,7 +648,7 @@ margin-top:4px;
 
 .ie6 #container-main			{margin:0;}
 /*DE7868 Start*/
-#displayDevices #configurationMicrophone table td, #displayDevices #configurationSpeaker table td{
+#displayDevices #configurationMicrophone table td, #displayDevices #configurationSpeaker table td, #displayDevices #configurationCamera table td{
 vertical-align:top;
 }
 /*DE7868 End*/
