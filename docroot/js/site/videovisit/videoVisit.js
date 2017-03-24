@@ -61,35 +61,8 @@ $(document).ready(function() {
 
     // US14832 - Displaying dynamic message in Waiting Room based on reccurent service call [START]
     // This service call will trigger for every 2 minutes
-    var waitingRoomCheck = function(){
-    	if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
-			$.ajax({
-				type: "GET",
-				url: VIDEO_VISITS.Path.visit.providerRunningLateInfo,
-				cache: false,
-				dataType: "json",
-				data: {'meetingId':$("#meetingId").val()},
-				success: function(result, textStatus){
-					if(result.service.status.code == 200){
-						isRunningLate = result.service.runningLateEnvelope.isRunningLate;
-						if(isRunningLate == true){
-							var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
-							var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
-							$('#displayMeetingNewStartTime').html('New Start '+newTime);
-							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>Your doctor is running late</span>");
-						}else{
-							$(".waitingroom-text").html("Your visit will start once your doctor joins.");
-						}
-					}
-				},
-				error: function(textStatus){
-					console.log("RUNNING LATE ERROR: "+textStatus);
-				}
-			});
-		}else{
-			window.clearInterval(runningLateRecursiveCall);
-		}
-	};
+  //Start DE9501: VV_Provider_Member_Vidyo Page_"New Start" time is updating even if the Host joins the meeting
+  //Start US18295: Running Late: Add time in player: add time in player
 	
 	var newStartTimeCheck = function(){
 		if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == true){
@@ -152,17 +125,13 @@ $(document).ready(function() {
 	};
 	
 	newStartTimeCheckForOneTime();
-	//newStartTimeCheck();
 	newStartTimeRecursiveCall = window.setInterval(function(){
 		newStartTimeCheck();
     },120000);
+	
+	//End DE9501: VV_Provider_Member_Vidyo Page_"New Start" time is updating even if the Host joins the meeting
+	//End US18295: Running Late: Add time in player: add time in player
 
-	/*waitingRoomCheck();
-
-	// Making a service for every 2 minutes
-	runningLateRecursiveCall = window.setInterval(function(){
-    	waitingRoomCheck();
-    },120000);*/
 
     // US14832 - Displaying dynamic message in Waiting Room based on recurrent service call [END]
 

@@ -71,7 +71,9 @@
             </div>
             <div class="center">
               <img class="circle-image" src=${meeting.host.imageUrl} alt="" />
+              <!-- start: DE8948: If the clinician does not have title then the name appears with comma at the end in member application.-->
               <span class="name-and-details camel-case">${meeting.host.firstName} ${meeting.host.lastName}<c:if test="${not empty meeting.host.title}">, ${meeting.host.title}</c:if></span>
+              <!-- end: DE8948: If the clinician does not have title then the name appears with comma at the end in member application.-->
               <span class="department-details camel-case">${meeting.host.departmentName}</span>
             </div>
             <div class="right">
