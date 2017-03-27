@@ -134,34 +134,22 @@ public class WebService{
 	    		appProp.load(fileInput);
 	    		serviceURL = appProp.getProperty("WEBSERVICE_URL");
 				
-				//timeout = Integer.parseInt(rbInfo.getString("WEBSERVICE_TIMEOUT"));
 				timeout = Integer.parseInt(appProp.getProperty("WEBSERVICE_TIMEOUT"));
-				//reuseHTTP = rbInfo.getString("WEBSERVICE_REUSE").equals("true")? true:false;
 				reuseHTTP = appProp.getProperty("WEBSERVICE_REUSE").equals("true")? true:false;
-				//chunked = rbInfo.getString("WEBSERVICE_CHUNKED").equals ("true")?true:false;
 				chunked = appProp.getProperty("WEBSERVICE_CHUNKED").equals("true")?true:false;
-				//simulation = rbInfo.getString ("WEBSERVICE_SIMULATION").equals ("true")?true:false;
 				simulation = appProp.getProperty("WEBSERVICE_SIMULATION").equals("true")?true:false;
 				logger.debug("WebService.initWebService -> configuration: serviceURL="+serviceURL+" ,simulation="+simulation);
-				//modulePath = rbInfo.getString("MODULE_PATH");
 				modulePath = appProp.getProperty("MODULE_PATH");
-				//policyPath = rbInfo.getString("POLICY_PATH");
 				policyPath = appProp.getProperty("POLICY_PATH");
 				Crypto crypto = new Crypto();
-				//serviceSecurityUsername = rbInfo.getString("SERVICE_SECURITY_USERNAME");
 				serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
-				//serviceSecurityPassword = crypto.read(rbInfo.getString("SERVICE_SECURITY_PASSWORD"));
 				serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
 				logger.debug("webservice.initWebService -> SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
 				
 				//setup wizard related values
-				//setupWizardHostNuid = rbInfo.getString("SETUP_WIZARD_HOST_NUID");
 				setupWizardHostNuid = appProp.getProperty("SETUP_WIZARD_HOST_NUID");
-				//setupWizardMemberMrn = rbInfo.getString("SETUP_WIZARD_MEMBER_MRN");
 				setupWizardMemberMrn = appProp.getProperty("SETUP_WIZARD_MEMBER_MRN");
-				//setupWizardMeetingType = rbInfo.getString("SETUP_WIZARD_MEETING_TYPE");
 				setupWizardMeetingType = appProp.getProperty("SETUP_WIZARD_MEETING_TYPE");
-				//setupWizardUserName = rbInfo.getString("SETUP_WIZARD_USER_NAME");
 				setupWizardUserName = appProp.getProperty("SETUP_WIZARD_USER_NAME");
 				logger.debug("initWebService: setupWizardHostNuid="+setupWizardHostNuid+", setupWizardMemberMrn="+setupWizardMemberMrn+", setupWizardMeetingType="+setupWizardMeetingType+", setupWizardUserName="+setupWizardUserName);
 				
@@ -202,41 +190,6 @@ public class WebService{
 			logger.debug("webservice.initWebService -> System property trustStore: " + System.getProperty("javax.net.ssl.trustStore"));
 			logger.debug("webservice.initWebService -> System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
             
-			//create axis2 configuration context if not created already.
-			//axisConfig = ServiceSecurityLoader.getConfigContext(moduleFilePath);			
-			
-			//stub =  new VideoVisitMemberServicesStub(axisConfig, serviceURL);			
-			
-			//Options options = stub._getServiceClient().getOptions();
-			
-			//options.setUserName(serviceSecurityUsername);
-            //options.setPassword(serviceSecurityPassword);           
-          
-            //load the policy    	
-           // Policy utPolicy = ServiceSecurityLoader.getPolicy(policyFilePath);
-    	   
-    	    //logger.debug("webservice.createStub -> after loadPolicy: : " + utPolicy);
-    	    //set rampart policy in service client options.
-            //options.setProperty(RampartMessageData.KEY_RAMPART_POLICY, utPolicy);
-            //stub._getServiceClient().engageModule("addressing");
-            //stub._getServiceClient().engageModule("rampart");           
-			
-			//this will fix the issue of open file issue.
-			//options.setProperty(HTTPConstants.HTTP_PROTOCOL_VERSION, HTTPConstants.HEADER_PROTOCOL_10);
-			// we need to create one http connection manager per thread to avoid close wait problems 
-			// and we shut down this connection manager after all the invocations. 
-			
-			//MultiThreadedHttpConnectionManager httpConnectionManager = new MultiThreadedHttpConnectionManager(); 
-			//Not sure if we need the below 3 lines
-			//HttpConnectionManagerParams params = new HttpConnectionManagerParams(); 
-            //params.setDefaultMaxConnectionsPerHost(100); 
-            //httpConnectionManager.setParams(params);
-			//HttpClient httpClient = new HttpClient(httpConnectionManager); 
-			//options.setProperty(HTTPConstants.REUSE_HTTP_CLIENT, reuseHTTP);
-			//options.setProperty(HTTPConstants.CACHED_HTTP_CLIENT, httpClient); 
-			// switch off chuncking this some times gives problems with sending messages through proxy 
-			//options.setProperty(HTTPConstants.CHUNKED, chunked);
-			//options.setTimeOutInMilliSeconds(timeout);
 		}
 		catch(RemoteException re)
 		{
@@ -259,33 +212,7 @@ public class WebService{
 	}
 		
 	
-/*	protected static void closeConnectionManager(VideoVisitMemberServicesStub stub)
-	{
-		try
-		{
-			if(stub != null)
-			{
-				if(stub._getServiceClient() != null)
-				{
-					Options options = stub._getServiceClient().getOptions();
-					HttpClient client = (HttpClient)options.getProperty(HTTPConstants.CACHED_HTTP_CLIENT);
-					if(client != null && client.getHttpConnectionManager() != null)
-					{
-						client.getHttpConnectionManager().closeIdleConnections(0);
-					}
-					stub._getServiceClient().cleanupTransport();
-					stub._getServiceClient().cleanup();
-				}
-				stub.cleanup();				
-			}
-		}
-		catch(Throwable th)
-		{
-			logger.error("closeConnectionManager -> failed to close stub.. this is not critical", th);
-		}
-	}
-*/        
-        /**
+	/**
 	 * @return the setupWizardHostNuid
 	 */
 	public static String getSetupWizardHostNuid() {
@@ -355,274 +282,6 @@ public class WebService{
 		return kpOrgSSOKeepAliveUrl;
 	}
 
-
-	//TODO: Remove after rest service integration is successful. 
-	
-	/*public static VerifyMemberResponseWrapper verifyMember(String lastName, String mrn8Digit, //left
-							String birth_month, String birth_year, String birth_day,
-							String sessionID) throws Exception 
-	{
-		logger.info("Entered verifyMember ");
-		VerifyMemberResponseWrapper resp = null; 
-		
-		VerifyMember query = new VerifyMember();
-		String Dob = birth_month + "/" + birth_year; 
-		try 
-		{
-			if (mrn8Digit == null || sessionID == null || lastName == null)
-			{
-				throw new Exception("One of required fields are null");
-			}
-			if (!WebUtil.isDOBMMYYYYFormat(Dob))
-			{
-				throw new Exception("DOB has to be in the format of MM/YYYY but is [" + Dob + "]");
-			}
-			query.setLastName(lastName);
-			query.setMrn8Digit(mrn8Digit);
-			query.setDob(Dob);				
-			query.setSessionID(sessionID);					
-			
-			VerifyMemberResponse response = stub.verifyMember(query);
-			resp = response.get_return();
-		}
-		catch (Exception e) 
-		{
-			logger.error("verifyMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			VerifyMemberResponse response = stub.verifyMember(query);
-			resp = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit initWebService");
-		return resp;
-	}*/
-	
-
-//calling rest service	 
-/*	public static RetrieveMeetingResponseWrapper retrieveMeeting(String mrn8Digit,int pastMinutes,int futureMinutes,String sessionID) throws Exception 
-	{
-		logger.info("Entered retrieveMeeting");
-		RetrieveMeetingResponseWrapper toRet = null;
-		RetrieveMeetingsForMember query = new RetrieveMeetingsForMember();
-		try
-		{
-			if(mrn8Digit == null || sessionID == null)
-			{
-				throw new Exception("mrn8Digit and sessionID are required ");
-				
-			}
-			query.setMrn8Digit(mrn8Digit);
-			query.setPastMinutes(pastMinutes);
-			query.setFutureMinutes(futureMinutes);
-			query.setSessionID(sessionID);
-			
-			RetrieveMeetingsForMemberResponse response = stub.retrieveMeetingsForMember(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("retrieveMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			RetrieveMeetingsForMemberResponse response = stub.retrieveMeetingsForMember(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit initWebService");
-		return toRet;
-	}
-*/	
-		
-	// calling rest service
-/*	public static StringResponseWrapper memberLogout(String mrn8Digit, String sessionID) throws Exception
-	{
-		logger.info("Entered memberLogout");
-		StringResponseWrapper toRet = null; 
-		
-		MemberLogout query = new MemberLogout();
-		try
-		{
-			if(mrn8Digit == null || sessionID == null)
-			{
-				throw new Exception("mrn8Digit and sessionID are required ");
-				
-			}
-			query.setMrn8Digit(mrn8Digit);
-			query.setSessionID(sessionID);
-		
-			MemberLogoutResponse response = stub.memberLogout(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("memberLogout -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			MemberLogoutResponse response = stub.memberLogout(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit initWebService");
-		return toRet;
-	}
-*/	
-//calling rest service
-/*	public static StringResponseWrapper quitMeeting(long meetingId, String memberName, long careGiverId, String sessionID) throws Exception
-	{
-		logger.info("Entered quitMeeting");
-		StringResponseWrapper toRet = null; 
-		try{		
-			KickUserFromMeeting query = new KickUserFromMeeting();
-			query.setMeetingId(meetingId);
-			query.setMemberName(memberName);
-			query.setCaregiverId(careGiverId);
-			query.setSessionId(sessionID);
-			
-			if(memberName == null && careGiverId <= 0){
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("No Caregiver or Participant");
-				return toRet;
-			}
-			
-			KickUserFromMeetingResponse response = stub.kickUserFromMeeting(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			logger.error("quitMeeting: Web Service API error:" + e.getMessage());
-			throw new Exception("quitMeeting: Web Service API error", e.getCause());
-			
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Quit initWebService");
-		return toRet;
-		
-	}
-*/
-//calling rest service	
-/*	public static StringResponseWrapper updateMemberMeetingStatusJoining(long meetingID, String mrn8Digit, String sessionID)
-			throws Exception
-	{
-		logger.info("Entered updateMemberMeetingStatusJoining");
-		StringResponseWrapper toRet = null; 
-		
-		UpdateMemberMeetingStatusJoining query = new UpdateMemberMeetingStatusJoining();
-		try
-		{
-			if(meetingID < 0 || mrn8Digit == null || sessionID == null){
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingID or mrn or SessionID is null");
-				return toRet;
-			}
-			query.setMrn8Digit(mrn8Digit);
-			query.setSessionID(sessionID);
-			query.setMeetingID(meetingID);
-			
-			UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("updateMemberMeetingStatusJoining -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			UpdateMemberMeetingStatusJoiningResponse response = stub.updateMemberMeetingStatusJoining(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Entered updateMemberMeetingStatusJoining");
-		return toRet;
-	}
-*/
-	//calling rest service
-/*	public static StringResponseWrapper createMeetingSession(long meetingID, String mrn8Digit, String sessionID) throws Exception
-	{
-		logger.info("Entered createMeetingSession");
-		StringResponseWrapper toRet = null; 
-		CreateMeetingSession query = new CreateMeetingSession();
-		try
-		{
-			if(meetingID < 0 || mrn8Digit == null || sessionID == null){
-				throw new Exception("meetingID or mrn or SessionID is null");
-				}
-			query.setMrn8Digit(mrn8Digit);
-			query.setSessionID(sessionID);
-			query.setMeetingID(meetingID);			
-			toRet = stub.createMeetingSession(query).get_return();			
-		}
-		catch (Exception e)
-		{
-			logger.error("createMeetingSession -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			toRet = stub.createMeetingSession(query).get_return();
-			
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exiting createMeetingSession");
-		return toRet;
-	}
-*/	
-	
-	
-	//TODO: Remove after rest service integration is successful. 
-	/**
-	 * Member end the meeting and log out.
-	 * @param mrn8Digit
-	 * @param meetingID
-	 * @param sessionID
-	 * @return
-	 */
-	/*public static StringResponseWrapper memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID, String memberName, boolean notifyVideoForMeetingQuit)
-	throws Exception
-	{
-		logger.info("Entered WebService.memberEndMeetingLogout - received input attributes as [mrn8Digit=" + mrn8Digit + ", meetingID=" + meetingID + ", sessionID=" + sessionID + ", memberName=" + memberName + ", notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
-		StringResponseWrapper toRet = null; 
-		
-		MemberEndMeetingLogout query = new MemberEndMeetingLogout();
-		try
-		{
-			if(meetingID < 0 || mrn8Digit == null || sessionID == null){
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingID or mrn or SessionID is null");
-				return toRet;
-			}
-			query.setMeetingID(meetingID);
-			query.setSessionID(sessionID);
-			query.setMrn8Digit(mrn8Digit);
-			query.setMemberName(memberName);
-			query.setNotifyVideoForMeetingQuit(notifyVideoForMeetingQuit);
-		
-			MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("memberEndMeetingLogout -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			MemberEndMeetingLogoutResponse response = stub.memberEndMeetingLogout(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit memberEndMeetingLogout");
-		return toRet;
-	}*/
-	
 	/**
 	 * This method invokes updateMemberMeetingStatus rest service and updates the member meeting status. 
 	 * 
@@ -681,69 +340,6 @@ public class WebService{
 		return output;
 	}
 	
-	//calling rest service	
-	/**
-	 * Simply test database round trip
-	 * @return
-	 */
-/*	public static StringResponseWrapper testDbRoundTrip() throws Exception
-	{
-		logger.info("Entered testDbRoundTrip");
-		StringResponseWrapper toRet = null; 
-		
-		try
-		{
-		
-			TestDbRoundTripResponse response = stub.testDbRoundTrip(new TestDbRoundTrip());
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("testDbRoundTrip -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			TestDbRoundTripResponse response = stub.testDbRoundTrip(new TestDbRoundTrip());
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit testDbRoundTrip");
-		return toRet;
-	}
-*/
-	//calling rest service
-/*	public static RetrieveMeetingResponseWrapper retrieveMeetingForCaregiver(String meetingHash,//left
-			int pastMinutes,int futureMinutes) 
-				throws RemoteException {
-		logger.info("Entered retrieveMeetingForCaregiver");		
-		RetrieveMeetingResponseWrapper toRet = null;
-		try{
-			if(meetingHash == null){
-				toRet = new RetrieveMeetingResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingHash is null");
-				return toRet;
-			}
-			RetrieveMeetingForCaregiver query = new RetrieveMeetingForCaregiver();
-			query.setMeetingHash(meetingHash);
-			query.setPastMinutes(pastMinutes);
-			query.setFutureMinutes(futureMinutes);
-			RetrieveMeetingForCaregiverResponse response = stub.retrieveMeetingForCaregiver(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("retrieveMeetingForCaregiver: Web Service API error:" + e.getMessage(), e);
-			
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit retrieveMeetingForCaregiver");
-		return toRet;		
-	}
-*/	
 	/**
 	 * Retrieve meetings for caregiver
 	 * 
@@ -800,37 +396,6 @@ public class WebService{
 		return output;
 	}
 	
-	/*public static RetrieveMeetingResponseWrapper IsMeetingHashValid(String meetingHash//left
-			) 
-				throws RemoteException {
-		logger.info("Entered IsMeetingHashValid");
-		RetrieveMeetingResponseWrapper toRet = null;		
-		try{
-			if(meetingHash == null){
-				toRet = new RetrieveMeetingResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingHash is null");
-				return toRet;
-			}
-			IsMeetingHashValid query = new IsMeetingHashValid();
-			query.setMeetingHash(meetingHash);
-			
-			IsMeetingHashValidResponse response = stub.isMeetingHashValid(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("IsMeetingHashValid: Web Service API error:" + e.getMessage(), e);		
-			
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit IsMeetingHashValid");
-		return toRet;		
-	}*/
-	
 	public static MeetingDetailsOutput IsMeetingHashValid(String meetingHash, String clientId, String sessionId) 
 				throws RemoteException, Exception {
 		logger.info("Entered WebService->IsMeetingHashValid");
@@ -879,73 +444,6 @@ public class WebService{
 
 		return output;		
 	}
-	
-	/*
-	public static StringResponseWrapper verifyCaregiver(String meetingHash, String patientLastName) 
-			throws Exception {
-		logger.info("Entered verifyCaregiver");
-		StringResponseWrapper toRet = null; 
-		try{
-			if(meetingHash == null || patientLastName == null){
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingHash or patientLastName is null");
-				return toRet;
-			}
-			VerifyCaregiver query = new VerifyCaregiver();
-			query.setMeetingHash(meetingHash);
-			query.setPatientLastName(patientLastName);
-			VerifyCaregiverResponse response = stub.verifyCaregiver(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			logger.error("verifyCaregiver: Web Service API error:" + e.getMessage());
-			throw new Exception("verifyCaregiver: Web Service API error", e.getCause());
-			
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit verifyCaregiver");
-		return toRet;
-	}*/
-	
-	/*public static StringResponseWrapper createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow) 
-			throws Exception {
-		logger.info("Entered createCaregiverMeetingSession" + "  "+  meetingHash + " "+ patientLastName +" " + isMobileFlow );
-		StringResponseWrapper toRet = null; 
-		try{
-			if(meetingHash == null || patientLastName == null){
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingHash or patientLastName is null");
-				return toRet;
-			}
-			
-			CreateCaregiverMeetingSession query = new CreateCaregiverMeetingSession();
-			query.setMeetingHash(meetingHash);
-			query.setPatientLastName(patientLastName);
-			query.setIsMobileFlow(isMobileFlow);
-			CreateCaregiverMeetingSessionResponse response = stub.createCaregiverMeetingSession(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			logger.error("createCaregiverMeetingSession: Web Service API error:" + e.getMessage());
-			throw new Exception("createCaregiverMeetingSession: Web Service API error", e.getCause());
-			
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit createCaregiverMeetingSession"); 
-		return toRet;
-	}*/
 	
 	public static LaunchMeetingForMemberGuestOutput createCaregiverMeetingSession(String meetingHash, String patientLastName,boolean isMobileFlow, String sessionId) 
 			throws Exception {
@@ -1002,41 +500,6 @@ public class WebService{
 		return output;
 	}
 	
-	/*public static StringResponseWrapper endCaregiverMeetingSession(String meetingHash, String megaMeetingNameDisplayName, boolean isParticipantDel) 
-			throws Exception {
-		logger.info("entered WebService.endCaregiverMeetingSession - received input attributes as [meetingHash=" + meetingHash + ", megaMeetingNameDisplayName=" + megaMeetingNameDisplayName + ", isParticipantDel=" + isParticipantDel + "]");
-		StringResponseWrapper toRet = null; 
-		try{
-			if(meetingHash == null){
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingHash is null");
-				return toRet;
-			}
-			EndCaregiverMeetingSession query = new EndCaregiverMeetingSession();
-			query.setMeetingHash(meetingHash);
-			query.setMegaMeetingDisplayName(megaMeetingNameDisplayName);
-			query.setIsDelMeetingFromVidyo(isParticipantDel);
-			
-			EndCaregiverMeetingSessionResponse response = stub.endCaregiverMeetingSession(query);
-			logger.info("WebService.endCaregiverMeetingSession -> toRet=" + toRet);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			logger.error("endCaregiverMeetingSession: Web Service API error:" + e.getMessage());
-			throw new Exception("WebService:endCaregiverMeetingSession: Web Service API error", e.getCause());
-			
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("exiting WebService.endCaregiverMeetingSession");
-		return toRet;		
-	}*/
-	
 	public static ServiceCommonOutput endCaregiverMeetingSession(String meetingHash, String megaMeetingNameDisplayName, boolean isParticipantDel, String sessionId) 
 			throws Exception {
 		logger.info("entered WebService -> endCaregiverMeetingSession - received input attributes as [meetingHash=" + meetingHash + ", megaMeetingNameDisplayName=" + megaMeetingNameDisplayName + ", isParticipantDel=" + isParticipantDel + "]");
@@ -1088,274 +551,6 @@ public class WebService{
 		return output;
 	}
 	
-	
-	/**
-	 * This method is used to determine if the user is present in a active mega meeting.
-	 *Based on this condition, the user will be prevented from logging into the meeting again
-	 * @param meetingId
-	 * @param megaMeetingDisplayName
-	 * @return
-	 * @throws Exception
-	 */
-	//calling rest service
-/*	public static StringResponseWrapper userPresentInMeeting(long meetingId,
-			String megaMeetingDisplayName) throws Exception
-	{
-		logger.info("Entered userPresentInMeeting");
-		StringResponseWrapper toRet = null; 
-		
-		UserPresentInMeeting query = new UserPresentInMeeting();
-		if(meetingId <=0 || megaMeetingDisplayName == null){
-			toRet = new StringResponseWrapper();
-			toRet.setSuccess(false);
-			toRet.setErrorMessage("meetingId or megaMeetingDisplayName is null");
-			return toRet;
-		}
-		try
-		{
-			logger.info("Webservice:userPresentInMeeting: query="+query);
-			query.setMeetingId (meetingId);
-			query.setMegaMeetingDisplayName(megaMeetingDisplayName);
-			
-			UserPresentInMeetingResponse response = stub.userPresentInMeeting(query);
-			
-			
-			logger.info("toRet=" + toRet);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			logger.error("WebService:userPresentInMeeting: Web Service API error:" + e.getMessage());
-			throw new Exception("WebService:userPresentInMeeting: Web Service API error", e.getCause());
-			
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit userPresentInMeeting");
-		return toRet;
-
-	}
-*/	
-	
-	/**
-	 * Get the meeting by meetingId
-	 * @param meetingID
-	 * @param sessionID
-	 * @return
-	 * @throws Exception
-	 */
-	//calling rest service
-/*	public static MeetingResponseWrapper getMeetingByMeetingID(long meetingID,
-			String sessionID) throws Exception {
-		MeetingResponseWrapper toRet = null; 
-		
-		logger.info("Entered getMeetingByMeetingID");	
-		GetMeetingByMeetingID query = new GetMeetingByMeetingID();
-		try
-		{
-			query.setSessionID(sessionID);
-			query.setMeetingID (meetingID);
-			
-			GetMeetingByMeetingIDResponse response = stub.getMeetingByMeetingID(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("getMeetingByMeetingID -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			GetMeetingByMeetingIDResponse response = stub.getMeetingByMeetingID(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit getMeetingByMeetingID");
-		return toRet;
-		
-		
-	
-	}
-*/	
-	//calling rest service
-/*	public static StringResponseWrapper createMobileMeetingSession(long meetingId, String deviceType, String deviceOS, String deviceOSversion) throws Exception {
-		StringResponseWrapper toRet = null; 
-		logger.info("Entered createMobileMeetingSession");
-		try
-		{
-			if(meetingId <=0){
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingId is null");
-				return toRet;
-			}
-			org.kp.tpmg.videovisit.member.CreateMobileMeetingSession meeting = new org.kp.tpmg.videovisit.member.CreateMobileMeetingSession();
-			meeting.setMeetingId(meetingId);
-			meeting.setDeviceOS(deviceOS);
-			meeting.setDeviceOSversion(deviceOSversion);
-			meeting.setDeviceType(deviceType);
-			toRet = stub.createMobileMeetingSession(meeting).get_return();			
-		}
-		catch(Exception e)
-		{
-			logger.error("createMobileMeetingSession -> Web Service API error:" + e.getMessage(), e);
-			toRet = null;
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit createMobileMeetingSession");
-		return toRet;
-	}
-*/
-	//calling rest service
-/*	public static StringResponseWrapper createCareGiverMobileSession(String patientName, String meetingCode,String  deviceType,String deviceOs, String deviceOsVersion) throws Exception {
-	StringResponseWrapper toRet = null; 
-	
-		try
-		{
-			logger.info("Entered createCareGiverMobileSession");
-			if(meetingCode == null || patientName == null){
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingCode or patientName is null");
-				return toRet;
-			}
-			CreateCaregiverMobileMeetingSession createMeeting = new CreateCaregiverMobileMeetingSession();
-			createMeeting.setMeetingHash(meetingCode);
-			createMeeting.setPatientLastName(patientName);
-			createMeeting.setDeviceOs(deviceOs);
-			createMeeting.setDeviceOsVersion(deviceOsVersion);
-			createMeeting.setDeviceType(deviceType);
-			
-			toRet = stub.createCaregiverMobileMeetingSession(createMeeting).get_return();			
-		}
-		catch(Exception e)
-		{
-			logger.error("createCareGiverMobileSession -> Web Service API error:" + e.getMessage(), e);
-			toRet = null;
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit createCareGiverMobileSession");
-		return toRet;
-	}
-*/	
-	/**
-	 * This method is to get Vendor Plugin details
-	 * 	 
-	 * @return StringResponseWrapper
-	 * @throws Exception 
-	 */
-	//calling rest service
-/*	public static StringResponseWrapper getVendorPluginData(String sessionID) throws Exception {
-		StringResponseWrapper toRet = null; 
-		
-		logger.info("Entered getVendorPluginData");
-		GetVendorPluginData query = new GetVendorPluginData();
-		try
-		{
-			if ( sessionID == null)
-			{
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("sessionID is null");
-				return toRet;
-			}
-			query.setSessionID(sessionID);
-			
-			GetVendorPluginDataResponse response = stub.getVendorPluginData(query);
-			toRet = response.get_return();
-			
-		}
-		catch (Exception e)
-		{
-			logger.error("getVendorPluginData -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			GetVendorPluginDataResponse response = stub.getVendorPluginData(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit getVendorPluginData");
-		return toRet;
-
-	}
-*/	
-	//calling rest service 
-	/**
-	 * This method creates instant vendor meeting and returns meeting details
-	 * 	 
-	 * @return StringResponseWrapper
-	 * @throws Exception 
-	 */
-	/*public static StringResponseWrapper createInstantVendorMeeting(String hostNuid, String[] participantNuid, String memberMrn, String meetingType, String sessionId) throws Exception {
-		logger.info("Entered WebService.createInstantVendorMeeting -> received input attributes as [hostNuid=" + hostNuid + ", participantNuid=" + participantNuid + ", memberMrn=" + memberMrn + ", meetingType=" + meetingType + ", sessionId=" + sessionId + "]");
-		StringResponseWrapper toRet = null; 
-		
-		CreateInstantVendorMeeting query = new CreateInstantVendorMeeting();
-		try
-		{
-			query.setHostNuid(hostNuid);
-			query.setParticipantNuid(participantNuid);
-			query.setMemberMrn(memberMrn);
-			query.setMeetingType(meetingType);
-			query.setSessionId(sessionId);
-	
-			CreateInstantVendorMeetingResponse response = stub.createInstantVendorMeeting(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("createInstantVendorMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			CreateInstantVendorMeetingResponse response = stub.createInstantVendorMeeting(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exiting WebService.createInstantVendorMeeting");
-		return toRet;
-	}*/
-	
-	//calling rest service
-	/*public static StringResponseWrapper terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID, String sessionId) throws Exception
-	{
-		logger.info("Entered WebService.terminateInstantMeeting received input attributes as [meetingId=" + meetingId + ", vendorConfId=" + vendorConfId + ", updaterNUID=" + updaterNUID + ", sessionId=" + sessionId + "]");
-		StringResponseWrapper toRet = null; 
-				
-		TerminateInstantMeeting query = new TerminateInstantMeeting();
-
-		try
-		{
-			query.setSessionId(sessionId);
-			query.setMeetingId (meetingId);
-			query.setUpdaterNUID (updaterNUID);
-			query.setVendorConfId(vendorConfId);
-			TerminateInstantMeetingResponse response = stub.terminateInstantMeeting(query);
-
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("WebService.terminateInstantMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			TerminateInstantMeetingResponse response = stub.terminateInstantMeeting(query);
-			toRet = response.get_return();	
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exiting WebService.terminateInstantMeeting");
-		return toRet;
-	}*/
 	public static ServiceCommonOutput terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID, String sessionId) throws Exception
 	{
 		logger.info("Entered WebService.terminateInstantMeeting received input attributes as [meetingId=" + meetingId + ", vendorConfId=" + vendorConfId + ", updaterNUID=" + updaterNUID + ", sessionId=" + sessionId + "]");
@@ -1504,85 +699,6 @@ public class WebService{
         return returnStatus;
     }**/
 	
-	/** This method will launch the videovisit forMembers using service API
-	 * @param meetingId
-	 * @param inMeetingDisplayNmae
-	 * @param Mrn
-	 * @param deviceType
-	 * @param deviceOS
-	 * @param deviceOsVersion
-	 * @param sessionId
-	 * @param isMobileFlow
-	 */
-//calling rest service	
-/*	public static MeetingLaunchResponseWrapper getLaunchMeetingDetails(long meetingID,
-			String inMeetingDisplayName,String sessionID,String mrn8Digit,String deviceType, String deviceOS, String deviceOSversion,boolean isMobileFlow) throws Exception {
-		 MeetingLaunchResponseWrapper toRet = null; 
-		
-		logger.info("Entered WebService: getLaunchMeetingDetails");	
-	    LaunchMeetingForMember query = new LaunchMeetingForMember();
-		try
-		{
-			query.setSessionID(sessionID);
-			query.setMeetingID (meetingID);
-			query.setMrn8Digit(mrn8Digit);
-			query.setInMeetingDisplayName(inMeetingDisplayName);
-			query.setDeviceType(deviceType);
-			query.setDeviceOS(deviceOS);
-			query.setDeviceOSversion(deviceOSversion);
-			query.setIsMobileFlow(isMobileFlow);
-			logger.info("Entered WebService: getLaunchMeetingDetails:MeetingID=" + meetingID + " sessionId=" + sessionID +" inMeetingDisplayName"+ inMeetingDisplayName + " mrn8Digit=" + mrn8Digit+ " deviceType" + deviceType +" deviceOS" +deviceOS+ " deviceOSversion" +deviceOSversion +" isMobileFlow" +isMobileFlow);
-			LaunchMeetingForMemberResponse response = stub.launchMeetingForMember(query);
-			toRet = response.get_return();
-			//LaunchMeetingForMemberOrGuestResponse response = stub.launchMeetingForMemberOrGuest(query);
-			//toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("WebService: getLaunchMeetingDetails -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			LaunchMeetingForMemberResponse response = stub.launchMeetingForMember(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit WebService: getLaunchMeetingDetails");
-		return toRet;
-	}
-*/	
-	//calling rest service
-/*	public static MeetingLaunchResponseWrapper getMeetingDetailsForMemberGuest(String meetingCode, String patientLastName,String deviceType, String deviceOS, String deviceOSVersion,boolean isMobileFlow) throws Exception{
-		
-		MeetingLaunchResponseWrapper toRet = null; 
-		logger.info("Entered WebService: getMeetingDetailsForMemberGuest");	
-		LaunchMeetingForMemberGuest query = new LaunchMeetingForMemberGuest();
-		try{
-			query.setMeetingHash(meetingCode);
-			query.setPatientLastName(patientLastName);
-			query.setDeviceType(deviceType);
-			query.setDeviceOs(deviceOS);
-			query.setDeviceOsVersion(deviceOSVersion);
-			query.setIsMobileFlow(isMobileFlow);
-			logger.info("Entered WebService: getLaunchMeetingDetails:MeetingCode=" + meetingCode + " patientLastName=" + patientLastName +  " deviceType" + deviceType +" deviceOS" +deviceOS+ " deviceOSversion" +deviceOSVersion +" isMobileFlow" +isMobileFlow);
-			LaunchMeetingForMemberGuestResponse response = stub.launchMeetingForMemberGuest(query);
-			toRet = response.get_return();
-			
-			
-		}
-		catch(Exception e){
-			logger.error("WebService: getMeetingDetailsForMemberGuest -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			LaunchMeetingForMemberGuestResponse response = stub.launchMeetingForMemberGuest(query);
-			toRet = response.get_return();
-			
-		}
-		finally{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit WebService: getLaunchMeetingDetails");
-		return toRet;
-	}
-*/	
 	//KP Org sign on API
 	public static KpOrgSignOnInfo performKpOrgSSOSignOn(String userId, String password) throws Exception
 	{
@@ -2107,126 +1223,47 @@ public class WebService{
 	 */
 	public static ServiceCommonOutput setKPHCConferenceStatus(long meetingId, String joinLeaveStatus,
 			boolean isProxyMeeting, String careGiverName, String sessionId, String clientId) throws Exception 
-	  {
-			logger.info("Entered setKPHCConferenceStatus -> Inputs [meetingId=" + meetingId + ", joinLeaveStatus="
-				+ joinLeaveStatus + ", isProxyMeeting" + isProxyMeeting + ", careGiverName=" + careGiverName + "]");
-		
-			ServiceCommonOutput output = null;
-			String inputJsonString = "";
-			String jsonResponseStr = "";
-		
-			try {
-				if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
-					logger.warn("setKPHCConferenceStatus --> Missing input attributes.");
-					output = new ServiceCommonOutput();
-					final Status status = new Status();
-					status.setCode("300");
-					status.setMessage("Missing input attributes.");
-					output.setStatus(status);
-				} else {
-					final SetKPHCConferenceStatusInput input = new SetKPHCConferenceStatusInput();
-					input.setCareGiverName(careGiverName);
-					input.setClientId(clientId);
-					input.setJoinLeaveStatus(joinLeaveStatus);
-					input.setMeetingId(meetingId);
-					input.setProxyMeeting(isProxyMeeting);
-					input.setSessionId(sessionId);
-					
-					final Gson gson = new Gson();
-					inputJsonString = gson.toJson(input);
-					logger.info("setKPHCConferenceStatus -> jsonInputString : " + inputJsonString);
-					jsonResponseStr = callVVRestService(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, inputJsonString);
-					logger.info("setKPHCConferenceStatus -> jsonResponseString : " + jsonResponseStr);
-					final JsonParser parser = new JsonParser();
-					final JsonObject jobject = (JsonObject) parser.parse(jsonResponseStr);
-					output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
-				}
-			} catch (Exception e) {
-				logger.error("setKPHCConferenceStatus -> Web Service API error");
-			}
-			
-			logger.info("Exit setKPHCConferenceStatus");
-			return output;
-		}
+    {
+		logger.info("Entered setKPHCConferenceStatus -> Inputs [meetingId=" + meetingId + ", joinLeaveStatus="
+			+ joinLeaveStatus + ", isProxyMeeting" + isProxyMeeting + ", careGiverName=" + careGiverName + "]");
 	
-		/*public static StringResponseWrapper setKPHCConferenceStatus(long meetingId, String joinLeaveStatus, boolean isProxyMeeting, String careGiverName, String sessionId) throws Exception 
-		{
-		  	logger.info("Entered setKPHCConferenceStatus -> received input as [meetingId=" + meetingId + ", joinLeaveStatus=" + joinLeaveStatus + ", careGiverName=" + careGiverName + "]");
-			StringResponseWrapper toRet = null; 
-			SetKPHCConferenceStatus setKPHCConferenceStatus = new SetKPHCConferenceStatus();
-			try
-			{
-				setKPHCConferenceStatus.setJoinLeaveStatus(joinLeaveStatus);
-				setKPHCConferenceStatus.setMeetingId(meetingId);
-				setKPHCConferenceStatus.setIsProxyMeeting(isProxyMeeting);
-				setKPHCConferenceStatus.setCareGiverName(careGiverName);
-				setKPHCConferenceStatus.setSessionId(sessionId);
-				SetKPHCConferenceStatusResponse response = stub.setKPHCConferenceStatus(setKPHCConferenceStatus);
-				toRet = response.get_return();
-			}
-			catch (Exception e)
-			{
-				logger.warn("setKPHCConferenceStatus -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-				SetKPHCConferenceStatusResponse response;
-				try {
-					response = stub.setKPHCConferenceStatus(setKPHCConferenceStatus);
-					toRet = response.get_return();
-				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					logger.warn("setKPHCConferenceStatus -> Web Service API error");
-				}			
-			}
-			finally
-			{
-				closeConnectionManager(stub);
-			}
-			logger.info("Exiting setKPHCConferenceStatus");
-			return toRet;
-	  }*/
-	  
-	  /*public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForMemberAndProxies(String mrn8Digit, boolean getProxyMeetings, String sessionID) throws Exception 
-	  {
-			logger.info("Entered retrieveActiveMeetingsForMemberAndProxies -> getProxyMeetings=" + getProxyMeetings);
-			RetrieveMeetingResponseWrapper toRet = null;
-			RetrieveActiveMeetingsForMemberAndProxies query = new RetrieveActiveMeetingsForMemberAndProxies();
-			try
-			{
-				if(StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID))
-				{
-					logger.warn("retrieveActiveMeetingsForMemberAndProxies -> mrn8Digit and sessionID are required ");
-					return toRet;
-				}
+		ServiceCommonOutput output = null;
+		String inputJsonString = "";
+		String jsonResponseStr = "";
+	
+		try {
+			if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
+				logger.warn("setKPHCConferenceStatus --> Missing input attributes.");
+				output = new ServiceCommonOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setStatus(status);
+			} else {
+				final SetKPHCConferenceStatusInput input = new SetKPHCConferenceStatusInput();
+				input.setCareGiverName(careGiverName);
+				input.setClientId(clientId);
+				input.setJoinLeaveStatus(joinLeaveStatus);
+				input.setMeetingId(meetingId);
+				input.setProxyMeeting(isProxyMeeting);
+				input.setSessionId(sessionId);
 				
-				if(secureCodes == null)
-				{
-					secureCodes = "";
-				}
-				
-				logger.debug("retrieveActiveMeetingsForMemberAndProxies -> after split secure codes: " + secureCodes.split(","));
-								
-				query.setMrn8Digit(mrn8Digit);
-				query.setGetProxyMeetings(getProxyMeetings);
-				query.setSecureCodes(secureCodes.split(","));
-				query.setIsAdhoc(isAdhoc);
-				query.setIsParrs(isParrs);
-				query.setSessionId(sessionID);
-				
-				RetrieveActiveMeetingsForMemberAndProxiesResponse response = stub.retrieveActiveMeetingsForMemberAndProxies(query);
-				toRet = response.get_return();
+				final Gson gson = new Gson();
+				inputJsonString = gson.toJson(input);
+				logger.info("setKPHCConferenceStatus -> jsonInputString : " + inputJsonString);
+				jsonResponseStr = callVVRestService(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, inputJsonString);
+				logger.info("setKPHCConferenceStatus -> jsonResponseString : " + jsonResponseStr);
+				final JsonParser parser = new JsonParser();
+				final JsonObject jobject = (JsonObject) parser.parse(jsonResponseStr);
+				output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
 			}
-			catch (Exception e)
-			{
-				logger.error("retrieveActiveMeetingsForMemberAndProxies -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-				RetrieveActiveMeetingsForMemberAndProxiesResponse response = stub.retrieveActiveMeetingsForMemberAndProxies(query);
-				toRet = response.get_return();
-			}
-			finally
-			{
-				closeConnectionManager(stub);
-			}
-			logger.info("Exiting retrieveActiveMeetingsForMemberAndProxies");
-			return toRet;
-	 }*/
+		} catch (Exception e) {
+			logger.error("setKPHCConferenceStatus -> Web Service API error");
+		}
+		
+		logger.info("Exit setKPHCConferenceStatus");
+		return output;
+	}
 	
 	public static MeetingDetailsOutput retrieveActiveMeetingsForMemberAndProxies(String mrn8Digit, boolean getProxyMeetings, String sessionID, String clientId) throws Exception {
 		logger.info("Entered WebService->retrieveActiveMeetingsForMemberAndProxies -> received input attributes as [mrn8Digit="
@@ -2291,134 +1328,6 @@ public class WebService{
 
 		return output;
 	}
-//Calling rest service	  
-/*	 public static MeetingLaunchResponseWrapper launchMemberOrProxyMeetingForMember(long meetingId, String mrn8Digit, String inMeetingDisplayName, boolean isProxyMeeting, String sessionId) throws Exception 
-	 {
-			logger.info("Entered launchMemberOrProxyMeetingForMember -> meetingId= " + meetingId + ", inMeetingDisplayName=" + inMeetingDisplayName + ", isProxyMeeting=" + isProxyMeeting);
-			MeetingLaunchResponseWrapper toRet = null;
-			LaunchMemberOrProxyMeetingForMember query = new LaunchMemberOrProxyMeetingForMember();
-			try
-			{
-				boolean isNonMember = false;
-				if(isProxyMeeting && StringUtils.isBlank(mrn8Digit))
-				{
-					isNonMember = true;
-				}
-				logger.info("launchMemberOrProxyMeetingForMember -> isNonMember= " + isNonMember);
-				
-				if((!isNonMember && StringUtils.isBlank(mrn8Digit)) || StringUtils.isBlank(sessionId))
-				{
-					logger.warn("launchMemberOrProxyMeetingForMember -> mrn8Digit and sessionID are required ");
-					return toRet;
-				}
-				query.setMeetingId(meetingId);
-				query.setMrn8Digit(mrn8Digit);
-				query.setInMeetingDisplayName(inMeetingDisplayName);
-				query.setIsProxyMeeting(isProxyMeeting);
-				query.setSessionId(sessionId);
-				
-				LaunchMemberOrProxyMeetingForMemberResponse response = stub.launchMemberOrProxyMeetingForMember(query);
-				toRet = response.get_return();
-			}
-			catch (Exception e)
-			{
-				logger.error("launchMemberOrProxyMeetingForMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-				LaunchMemberOrProxyMeetingForMemberResponse response = stub.launchMemberOrProxyMeetingForMember(query);
-				toRet = response.get_return();
-			}
-			finally
-			{
-				closeConnectionManager(stub);
-			}
-			logger.info("Exiting launchMemberOrProxyMeetingForMember");
-			return toRet;
-	 }
-*/
-	//calling rest service	
-	 /**
-	 * Member leave proxy meeting.
-	 * @param meetingId
-	 * @param careGiverName
-	 * @param sessionId
-	 * @return
-	 */
-/*	public static StringResponseWrapper memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId)
-	throws Exception
-	{
-		logger.info("Entered memberLeaveProxyMeeting - received input attributes as [meetingId=" + meetingId + ", sessionID=" + sessionId + ", careGiverName=" + careGiverName + "]");
-		StringResponseWrapper toRet = null;			
-		CareGiverLeaveMeeting query = new CareGiverLeaveMeeting();
-		try
-		{
-			if(StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId))
-			{
-				toRet = new StringResponseWrapper();
-				toRet.setSuccess(false);
-				toRet.setErrorMessage("meetingId or SessionId is null or blank");
-				return toRet;
-			}
-			query.setMeetingID(meetingId);
-			query.setCareGiverName(careGiverName);
-			query.setSessionId(sessionId);
-		
-			CareGiverLeaveMeetingResponse response = stub.careGiverLeaveMeeting(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("memberLeaveProxyMeeting -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			CareGiverLeaveMeetingResponse response = stub.careGiverLeaveMeeting(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exit memberLeaveProxyMeeting");
-		return toRet;
-	}
-*/	
-	/*public static RetrieveMeetingResponseWrapper retrieveActiveMeetingsForNonMemberProxies(String guid, String sessionID) throws Exception 
-	{
-		logger.info("Entered retrieveActiveMeetingsForNonMemberProxies -> guid=" + guid);
-		RetrieveMeetingResponseWrapper toRet = null;
-		RetrieveActiveMeetingsForNonMemberProxies query = new RetrieveActiveMeetingsForNonMemberProxies();
-		try
-		{
-			if(StringUtils.isBlank(guid) || StringUtils.isBlank(sessionID))
-			{
-				logger.warn("retrieveActiveMeetingsForNonMemberProxies -> guid and sessionID are required ");
-				return toRet;
-			}
-			
-			if(secureCodes == null)
-			{
-				secureCodes = "";
-			}
-			
-			logger.debug("retrieveActiveMeetingsForNonMemberProxies -> after split secure codes: " + secureCodes.split(","));
-			query.setGuid(guid);
-			query.setSecureCodes(secureCodes.split(","));
-			query.setIsAdhoc(isAdhoc);
-			query.setIsParrs(isParrs);
-			query.setSessionId(sessionID);
-			
-			RetrieveActiveMeetingsForNonMemberProxiesResponse response = stub.retrieveActiveMeetingsForNonMemberProxies(query);
-			toRet = response.get_return();
-		}
-		catch (Exception e)
-		{
-			logger.error("retrieveActiveMeetingsForNonMemberProxies -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-			RetrieveActiveMeetingsForNonMemberProxiesResponse response = stub.retrieveActiveMeetingsForNonMemberProxies(query);
-			toRet = response.get_return();
-		}
-		finally
-		{
-			closeConnectionManager(stub);
-		}
-		logger.info("Exiting retrieveActiveMeetingsForNonMemberProxies");
-		return toRet;
-	}*/
 	 
 	 public static MeetingDetailsOutput retrieveActiveMeetingsForNonMemberProxies(String guid, String sessionID, String clientId) throws Exception 
 		{
@@ -2590,59 +1499,6 @@ public class WebService{
 			return launchMeetingForMemberGuest;
 	  }
 	  
-	  /*getLaunchMeetingDetailsForMember calling the new rest API launchMeetingForMember*/
-	  /* verifyMember and launchMeetingForMember set the Member details to webcontext, so the variable in we
-	   * so the variable in web context needs to match the one provided in the rest apis Member instead of MemberWSO. 
-	   * But if changed for one function, it has to be changed for remaining depending functions
-	   * Hence cannot commit it*/
-	  
-	/*  public static LaunchMeetingForMemberGuestOutput getLaunchMeetingDetailsForMember(long meetingID,
-				String inMeetingDisplayName,String mrn,String deviceType, String deviceOS, String deviceOSversion,boolean isMobileFlow,String sessionId, String clientId ) throws Exception 
-	  {
-		  logger.info("Entered WebService: getLaunchMeetingDetails");
-		  LaunchMeetingForMemberGuestOutput launchMeetingForMemberOutput = new LaunchMeetingForMemberGuestOutput();
-		  LaunchMeetingForMemberInput launchMeetingForMemberInput = new LaunchMeetingForMemberInput();
-			try
-			{
-				launchMeetingForMemberInput.setMeetingID(meetingID);
-				launchMeetingForMemberInput.setMrn(mrn);
-				launchMeetingForMemberInput.setInMeetingDisplayName(inMeetingDisplayName);
-				launchMeetingForMemberInput.setDeviceType(deviceType);
-				launchMeetingForMemberInput.setDeviceOS(deviceOS);
-				launchMeetingForMemberInput.setDeviceOSversion(deviceOSversion);
-				launchMeetingForMemberInput.setMobileFlow(isMobileFlow);
-				launchMeetingForMemberInput.setSessionId(sessionId);
-				launchMeetingForMemberInput.setClientId(clientId);
-				logger.info("Entered WebService: getLaunchMeetingDetailsForMember:MeetingID=" + meetingID + " sessionId=" + sessionId +" inMeetingDisplayName"+ inMeetingDisplayName + " mrn8Digit=" + mrn+ " deviceType" + deviceType +" deviceOS" +deviceOS+ " deviceOSversion" +deviceOSversion +" isMobileFlow" +isMobileFlow);
-              String operationName="launchMeetingForMember";
-				
-				Gson gson = new Gson();
-				String inputString = gson.toJson(launchMeetingForMemberInput);
-				logger.info("WebService: getMeetingDetailsForMemberGuest->launchMeetingForMember->jsonInputString "+ inputString);
-				
-				
-				String jsonString= callVVRestService(operationName,inputString);
-				logger.info("WebService->getMeetingDetailsForMember->OutputjsonString"+jsonString);
-				
-				JsonParser parser = new JsonParser();
-				JsonObject jobject = new JsonObject();
-				jobject = (JsonObject) parser.parse(jsonString);
-				logger.info("After jobject parser");
-				launchMeetingForMemberOutput = gson.fromJson( jobject.get("service").toString(), LaunchMeetingForMemberGuestOutput.class);
-				
-				logger.info("WebService->getMeetingDetailsForMember->json string after converting it to class"+ launchMeetingForMemberOutput.toString());
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				logger.error("WebService ->getMeetingDetailsForMember -> Web Service API error:" + e.getMessage() + " Retrying...", e);
-				throw new Exception("getMeetingDetailsForMember: Web Service API error", e.getCause());
-			}
-			
-			logger.info("Exit WebService-> getLaunchMeetingDetailsForMember");
-			return launchMeetingForMemberOutput;
-		}
-	*/
 	 
 	/**
 	 * @param lastName
@@ -2695,56 +1551,6 @@ public class WebService{
 		return verifyMemberOutput;
 	}
 	  
-	 /* public static MeetingDetailsOutput getActiveMeetingForMember(String mrn,int pastMinutes,int futureMinutes,String sessionId, String clientId) throws Exception 
-		{
-			logger.info("Entered Webservice-> getActiveMeetingForMember");
-			MeetingDetailsOutput meetingDetailsOutput = new MeetingDetailsOutput();
-			ActiveMeetingsForMemberInput activeMeetingInput = new ActiveMeetingsForMemberInput();
-			
-			try
-			{
-				if(mrn == null || sessionId == null)
-				{
-					throw new Exception("mrn8Digit and sessionID are required ");
-					
-				}
-				activeMeetingInput.setMrn(mrn);
-				activeMeetingInput.setSessionId(sessionId);
-				activeMeetingInput.setClientId(clientId);
-				
-				logger.info("Entered WebService: getActiveMeetingForMember:mrn=" + mrn + " sessionId=" + sessionId +" clientId="+clientId );
-              String operationName="getActiveMeetingsForMember";
-				
-				Gson gson = new Gson();
-				String inputString = gson.toJson(activeMeetingInput);
-				logger.info("WebService: getActiveMeetingForMember->jsonInputString "+ inputString);
-				
-				
-				String jsonString= callVVRestService(operationName,inputString);
-				logger.info("WebService->getActiveMeetingsForMember->OutputResponseJsonString"+jsonString);
-				
-				JsonParser parser = new JsonParser();
-				JsonObject jobject = new JsonObject();
-				jobject = (JsonObject) parser.parse(jsonString);
-				logger.info("After jobject parser");
-				meetingDetailsOutput = gson.fromJson( jobject.get("service").toString(), MeetingDetailsOutput.class);
-				
-				logger.info("WebService->getActiveMeetingsForMember->json string after converting it to class"+ meetingDetailsOutput.toString());
-				
-				
-			}
-			catch (Exception e)
-			{
-				    e.printStackTrace();
-					logger.error("WebService ->getActiveMeetingsForMember-> Web Service API error:" + e.getMessage() + " Retrying...", e);
-					throw new Exception("verifyMember: Web Service API error", e.getCause());
-				
-			}
-			
-			logger.info("Exit getActiveMeetingsForMember");
-			return meetingDetailsOutput;
-		}*/
-	
 	public static CreateInstantVendorMeetingOutput createInstantVendorMeeting(String hostNuid, String[] participantNuid,
 			String memberMrn, String meetingType, String sessionId, String clientId) throws Exception {
 		logger.info("Entered WebService.createInstantVendorMeeting -> received input attributes as [hostNuid="
