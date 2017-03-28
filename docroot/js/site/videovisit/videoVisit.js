@@ -143,8 +143,8 @@ $(document).ready(function() {
     });*/
 
     //DE9451 - Splash screen scroll issue fix
-     $('html').css('overflow','hidden');
-
+	$('html').addClass("no-scroll");
+	
 });
 
 var VideoVisit =

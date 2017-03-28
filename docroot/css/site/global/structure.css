@@ -783,3 +783,14 @@ a.download-mdo:active, a.download-mdo:visited{
 .ie6 .form-block .birth_year	{margin-right:4px;}
 .ie6 #captchaLabel				{margin-right:9px;}
 .ie6 .label-month				{margin-left:8px;}
+
+/*DE9451 - Splash screen scroll issue fix Close splash screen */
+.no-scroll{
+  position:fixed;
+  width:100%;
+  top:0px;
+  left:0px;
+  height:100%;
+  z-index:10;
+  overflow-y:scroll !important;
+}
