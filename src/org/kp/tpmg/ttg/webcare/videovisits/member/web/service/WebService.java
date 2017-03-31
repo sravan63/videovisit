@@ -38,6 +38,7 @@ import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.EndMeetingForMemberGuestDesktopInput;
+import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingOutput;
@@ -1915,6 +1916,52 @@ public class WebService{
 			logger.error("getProviderRunningLateDetails -> Web Service API error ", e);
 		}
 		logger.info("Exiting getProviderRunningLateDetails");
+		return jsonOutput;
+	}
+	
+	/**
+	 * @param meetingId
+	 * @param meetingHash
+	 * @param joinOrLeave
+	 * @param sessionId
+	 * @return
+	 */
+	public static String caregiverJoinLeaveMeeting(final String meetingId, final String meetingHash, final String joinOrLeave, final String sessionId) {
+		logger.info("Entered caregiverJoinLeaveMeeting");
+
+		final Gson gson = new Gson();
+		String jsonOutput = null;
+		JoinLeaveMeetingForMemberGuestInput input = null;
+
+		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(meetingHash) || StringUtils.isBlank(joinOrLeave)
+				|| StringUtils.isBlank(sessionId)) {
+			logger.warn("caregiverJoinLeaveMeeting -> missing input attributes");
+			final JoinLeaveMeetingJSON output = new JoinLeaveMeetingJSON();
+			final JoinLeaveMeetingOutput service = new JoinLeaveMeetingOutput();
+			service.setName(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST);
+			output.setService(service);
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			service.setStatus(status);
+			jsonOutput = gson.toJson(output);
+		}
+		try {
+			input = new JoinLeaveMeetingForMemberGuestInput();
+			input.setMeetingId(meetingId);
+			input.setMeetingHash(meetingHash);
+			input.setJoinLeaveMeeting(joinOrLeave);
+			input.setClientId(WebUtil.clientId);
+			input.setSessionId(sessionId);
+
+			final String inputJsonStr = gson.toJson(input);
+			logger.info("caregiverJoinLeaveMeeting -> inputJsonStr " + inputJsonStr);
+			jsonOutput = callVVRestService(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST, inputJsonStr);
+			logger.info("caregiverJoinLeaveMeeting -> jsonOutput " + jsonOutput);
+		} catch (Exception e) {
+			logger.error("caregiverJoinLeaveMeeting -> Web Service API error ", e);
+		}
+		logger.info("Exiting caregiverJoinLeaveMeeting");
 		return jsonOutput;
 	}
 

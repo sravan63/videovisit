@@ -127,6 +127,7 @@
 				<prop key="/launchMemberProxyMeeting.json">dataLaunchMemberProxyMeeting</prop>
 				<prop key="/providerRunningLateInfo.json">dataProviderRunningLateInfo</prop>
 				<prop key="/readme.htm">readme</prop>
+				<prop key="/caregiverJoinMeeting.json">dataCaregiverJoinLeaveMeeting</prop>
 				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
@@ -366,6 +367,9 @@
 		<property name="subNavigation" value="guesthelp" />
 	</bean>
 	<bean id="dataProviderRunningLateInfo" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.ProviderRunningLateInfoController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	<bean id="dataCaregiverJoinLeaveMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CaregiverJoinLeaveMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	

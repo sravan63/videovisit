@@ -23,7 +23,6 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
@@ -2455,6 +2454,30 @@ public static String memberLogout(HttpServletRequest request, HttpServletRespons
 			logger.error("getProviderRunningLateDetails -> System Error" + e.getMessage(), e);
 		}
 		logger.info("Exiting getProviderRunningLateDetails");
+		return output;
+	}
+
+	public static String caregiverJoinLeaveMeeting(HttpServletRequest request, HttpServletResponse response) {
+		logger.info("Entered caregiverJoinLeaveMeeting");
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		String output = null;
+
+		final String meetingId = request.getParameter("meetingId");
+		final String meetingHash = request.getParameter("meetingHash");
+		String joinOrLeave = request.getParameter("status");
+		final String sessionId = request.getSession().getId();
+		if(StringUtils.isNotEmpty(joinOrLeave)){
+			joinOrLeave = joinOrLeave.trim();
+		}
+		try {
+			if (ctx != null) {
+				output = WebService.caregiverJoinLeaveMeeting(meetingId, meetingHash, joinOrLeave, sessionId);
+			}
+		} catch (Exception e) {
+			output = (new Gson().toJson(new SystemError()));
+			logger.error("caregiverJoinLeaveMeeting -> System Error" + e.getMessage(), e);
+		}
+		logger.info("Exiting caregiverJoinLeaveMeeting");
 		return output;
 	}
 
