@@ -22,8 +22,10 @@
 				<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
 			      <div class="landing-portal-single-container">
 			    <!--US18235 Running Late: Patient My Meetings Notification UI start>-->
-                     <c:if test="${meeting.isRunningLate == true}"> 
+                     <c:if test="${meeting.isRunningLate == true}">
+                     <!-- Kranti US19234 start -->
 			           <div class="running-late-indicator"><span  style="font-size:16px;">We're sorry, your doctor is running late.<br/> New start time is </span><b style="font-size:20px;"class="running-late-timestamp-${meeting.meetingId}">${meeting.runLateMeetingTime}</b>.</div>
+			         <!-- Kranti US19234 end -->
 			            <script type="text/javascript">
 			              var cls = ".running-late-timestamp-"+${meeting.meetingId};
 			              var meetingTimestamp = $(cls).text();
