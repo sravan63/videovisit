@@ -90,6 +90,8 @@ $(document).ready(function() {
 			},
 			error: function(textStatus){
 				console.log("RUNNING LATE ERROR: "+textStatus);
+				$('#displayMeetingNewStartTime').html('');
+				$(".waitingroom-text").html("Your visit will start once your doctor joins.");
 			}
 		});
 	};
@@ -120,6 +122,8 @@ $(document).ready(function() {
 			},
 			error: function(textStatus){
 				console.log("RUNNING LATE ERROR: "+textStatus);
+				$('#displayMeetingNewStartTime').html('');
+				$(".waitingroom-text").html("Your visit will start once your doctor joins.");
 			}
 		});
 	};
