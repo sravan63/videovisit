@@ -103,7 +103,7 @@ $(document).ready(function() {
 			dataType: "json",
 			data: {'meetingId':$("#meetingId").val()},
 			success: function(result, textStatus){
-				if(result.service.status.code == 200){
+				if(result != null && result.service.status.code == 200){
 					isRunningLate = result.service.runningLateEnvelope.isRunningLate;
 					if(isRunningLate == true){
 						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
