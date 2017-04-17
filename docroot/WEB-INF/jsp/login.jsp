@@ -115,7 +115,7 @@
 		}
 	}
 	/*US18393*/
-	else if(browserInfo.isFirefox){
+	/*else if(browserInfo.isFirefox){
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$("p#globalError").removeClass("hide-me");
 
@@ -124,6 +124,6 @@
 		document.getElementById("birth_month").disabled = true;
 		document.getElementById("birth_year").disabled = true;
 		document.getElementById("login").disabled = true;
-	}
+	}*/
 	/*US18393*/
 </script>

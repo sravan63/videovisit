@@ -57,7 +57,7 @@
 		}
 	}
 	/*US18393*/
-	else if(browserInfo.isFirefox){
+	/*else if(browserInfo.isFirefox){
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$('#ssoLoginError p').css("display", "block");
 		
@@ -67,6 +67,6 @@
 		$('#temp-access').css('cursor', 'default');
         $('#temp-access').css('opacity', '0.5');
         $('#temp-access').css('pointer-events', 'none');
-	}
+	}*/
 	/*US18393*/
 </script>
