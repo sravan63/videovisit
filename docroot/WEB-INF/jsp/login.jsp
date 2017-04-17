@@ -79,7 +79,7 @@
 		padding: 0;
 	}
 </style>
-
+<!-- 
 <script type="text/javascript">
 
 	var browserInfo = getBrowserInfo();
@@ -126,4 +126,4 @@
 		document.getElementById("login").disabled = true;
 	}*/
 	/*US18393*/
-</script>
+</script>-->

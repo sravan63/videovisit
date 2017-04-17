@@ -57,7 +57,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	}
 </style>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
 	
@@ -91,4 +91,4 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 		}
 	}
 	
-</script>
+</script>-->

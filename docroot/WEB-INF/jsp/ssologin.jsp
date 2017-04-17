@@ -19,7 +19,7 @@
     <p id="globalError">There was an error authenticating your account. Please sign in using temporary access.</p>
 </div> 
 <!--<p class="error error-login"><a name="errors"></a></p>-->
-
+<!-- 
 <script type="text/javascript">
 
 	var browserInfo = getBrowserInfo();
@@ -69,4 +69,4 @@
         $('#temp-access').css('pointer-events', 'none');
 	}*/
 	/*US18393*/
-</script>
+</script>-->
