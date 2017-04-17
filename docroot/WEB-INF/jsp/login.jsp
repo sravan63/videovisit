@@ -91,15 +91,15 @@
 	browserNotSupportedMsgForPatient += "Please download the <a target='_blank'  style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
 	
 	if(browserInfo.isChrome) {
-		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
-			/*$('p#globalError').html(browserNotSupportedMsgForPatient);
+		/*if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
+			$('p#globalError').html(browserNotSupportedMsgForPatient);
 			$("p#globalError").removeClass("hide-me");
 
 			document.getElementById("last_name").disabled = true;
 			document.getElementById("mrn").disabled = true;
 			document.getElementById("birth_month").disabled = true;
 			document.getElementById("birth_year").disabled = true;
-			document.getElementById("login").disabled = true;*/
+			document.getElementById("login").disabled = true;
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
@@ -112,7 +112,7 @@
 				document.getElementById("birth_year").disabled = true;
 				document.getElementById("login").disabled = true;
 			}
-		}
+		}*/
 	}
 	/*US18393*/
 	/*else if(browserInfo.isFirefox){
