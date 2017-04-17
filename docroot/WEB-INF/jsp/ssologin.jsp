@@ -32,7 +32,7 @@
 	
 	if(browserInfo.isChrome) {
 		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
-			$('p#globalError').html(browserNotSupportedMsgForPatient);
+			/*$('p#globalError').html(browserNotSupportedMsgForPatient);
 			$('#ssoLoginError p').css("display", "block");
 			
 			document.getElementById("username").disabled = true;
@@ -40,7 +40,7 @@
 
 			$('#temp-access').css('cursor', 'default');
             $('#temp-access').css('opacity', '0.5');
-            $('#temp-access').css('pointer-events', 'none');
+            $('#temp-access').css('pointer-events', 'none');*/
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){

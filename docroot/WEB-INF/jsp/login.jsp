@@ -92,14 +92,14 @@
 	
 	if(browserInfo.isChrome) {
 		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
-			$('p#globalError').html(browserNotSupportedMsgForPatient);
+			/*$('p#globalError').html(browserNotSupportedMsgForPatient);
 			$("p#globalError").removeClass("hide-me");
 
 			document.getElementById("last_name").disabled = true;
 			document.getElementById("mrn").disabled = true;
 			document.getElementById("birth_month").disabled = true;
 			document.getElementById("birth_year").disabled = true;
-			document.getElementById("login").disabled = true;
+			document.getElementById("login").disabled = true;*/
 		}
 		else if(navigator.appVersion.indexOf("Win") != -1) {
 			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
