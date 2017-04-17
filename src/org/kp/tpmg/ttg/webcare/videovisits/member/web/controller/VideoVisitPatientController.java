@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.MeetingWSO;
 import org.springframework.web.servlet.ModelAndView;
 
 public class VideoVisitPatientController extends SimplePageController {
@@ -46,6 +46,8 @@ public class VideoVisitPatientController extends SimplePageController {
 		{
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if(ctx != null){
+				ctx.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
+				logger.info("VideoVisitPatientController isChromeOrFFBrowser: " + ctx.getWebrtc());
 				VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();			
 				List<MeetingDO> meetings = ctx.getMyMeetings();
 				for(MeetingDO meeting : meetings){

@@ -215,6 +215,21 @@ public class WebUtil {
 		logger.info("exiting getBrowserDetails -> Browser Name="+browser);
         return browser;
 	}
+	
+	public static boolean isChromeOrFFBrowser(HttpServletRequest httpRequest) {
+		logger.info("Entered isChromeOrFFBrowser");
+		boolean isChromeOrFFBrowser = false;
+		try {
+			final String browser = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browser) && (browser.contains("firefox") || browser.contains("chrome"))) {
+				isChromeOrFFBrowser = true;
+			}
+		} catch (Exception ex) {
+			logger.info("IsChromeOrFFBrowser -> error while checking the requested browser is firefox or chrome: ", ex);
+		}
+		logger.info("Exiting isChromeOrFFBrowser -> isChromeOrFFBrowser: " + isChromeOrFFBrowser);
+		return isChromeOrFFBrowser;
+	}
 
 	public static String getDeviceOs(){
 		return StringUtils.isBlank(System.getProperty("os.name")) ? DEFAULT_DEVICE : System.getProperty("os.name");
