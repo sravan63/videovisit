@@ -24,172 +24,6 @@
 		<div id="container-video" style="clear:both;width:100%;">
 			<div id="video-main" style="background-color: #FFFF00;min-height: 500px;clear:both; float:left;">
 				<div id="withjs" class="hide">
-					<!-- Error view -->
-					<div id="errorWrapper" class="alert alert-error hide"></div>
-					<!-- End Error view -->
-					<!-- Info view -->
-					<div id="infoWrapper" class="alert alert-info hide"></div>
-					<!-- End Error view -->
-					<!-- Plugin Install Steps -->
-					
-					<div id="setupContents" class="hide">
-						<table id="setupInstructions" width="50%" style="color:#000000;">
-							<tr style="vertical-align: top;">
-								<td colspan="2"><h3>Please install the 'Vidyo Web' plug-in for your visit.</h3></td>
-							</tr>
-							<tr height="75px" style="vertical-align: top; background-color: #E9E9E9;">
-								<td width="100px" style="vertical-align: middle;"><img src="vidyoplayer/img/step_1.png" style="margin-left: 35px; margin-right: auto"/></td>
-								<td>
-									<br>
-									<p style='color: #AC5A41; font-weight:bold;'>Download the 'Vidyo Web' plug-in installer.<br><br>
-										<a id="macWinPluginFile" href="" class="installbutton">Download</a>
-									</p>
-								</td>
-							</tr>
-							<tr height="3px;"></tr>
-							<tr height="100px" style="vertical-align: top; background-color: #E9E9E9;">
-								<td style="vertical-align: middle;"><img src="vidyoplayer/img/step_2.png" style="margin-left: 35px; margin-right: auto"/></td>
-								<td style='vertical-align: middle;'><p style='color:#AC5A41; font-weight:bold;'>Run and Install the  installer file.</p>Double click to open the file, then follow the installer instructions.</td>
-							</tr>
-							<tr height="3px;"></tr>
-							<tr height="75px" style="vertical-align: top; background-color: #E9E9E9;">
-								<td style="vertical-align: middle;"><img src="vidyoplayer/img/step_3.png" style="margin-left: 35px; margin-right: auto"/></td>
-								<td>
-									<br>
-									<p>If you do not see an image in the video player in 10 to 15 seconds after installation, <br>please refresh your browser.<br><br>
-										<a href="javascript:window.location.reload();" class="installbutton">Refresh Browser</a>
-									</p>
-								</td>
-							</tr>
-						</table>
-					</div>
-					
-					<!-- Login as user modal window -->
-					<div id="userLoginPopup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-							<h3 id="userLoginLabel">Login info</h3>
-						</div>
-						<div class="modal-body">
-							<div id="userLoginErrorWrapper" class="alert alert-error hide">
-									<p id="userLoginError"></p>
-							</div>
-
-							<form class="form-inline">
-								<fieldset>
-									<label>Portal</label>
-
-									<div class="input-medium">
-											<input id="userLoginPortal" type="url" placeholder="http://portalAddress" class="userLoginInput">
-									</div>
-									<label>Username</label>
-
-									<div class="input-medium">
-											<input id="userLoginUsername" type="text" placeholder="username" class="userLoginInput">
-									</div>
-									<label>Password</label>
-									<div class="input-medium">
-											<input id="userLoginPassword" type="password" placeholder="password" class="userLoginInput">
-									</div>
-								</fieldset>
-							</form>
-							<div id="userLoginProgressBarContainer" class="progress progress-info progress-striped active hide">
-								<div id="userLoginProgressBar" class="bar" style="width: 0%;"></div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button class="btn btn-primary" id="userLoginButton">Login</button>
-						</div>
-					</div>
-					<!-- End Login as user modal window -->
-		
-					<!-- Join enter PIN dialog -->
-					<div id="preCallJoinConferencePinDialog" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="preCallJoinConferencePinDialogLabel" aria-hidden="true">
-						<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-								<h3 id="preCallJoinConferencePinDialogLabel">This room is PIN protected</h3>
-						</div>
-						<div class="modal-body">
-								<div id="preCallJoinConferencePinDialogErrorWrapper" class="alert alert-error hide">
-										<p id="preCallJoinConferencePinDialogError"></p>
-								</div>
-								<form class="form-inline" onsubmit="return false;">
-										<fieldset>
-												<div class="clearfix">
-														<label>PIN code</label>
-														<div class="input-medium">
-																<input id="preCallJoinConferencePinDialogPIN" type="password" tabindex="1">
-														</div>
-												</div>
-										</fieldset>
-								</form>
-						</div>
-						<div class="modal-footer">
-								<a class="btn btn-primary" id="preCallJoinConferencePinDialogButton" tabindex="2">Join with PIN</a>
-						</div>
-					</div>
-					<!-- Join enter PIN dialog end -->
-					<!-- Login as guest modal window -->
-					<div id="guestLoginPopup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="guestLoginLabel" aria-hidden="true">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-							<h3 id="guestLoginLabel">Credentials</h3>
-						</div>
-						<div class="modal-body">
-							<div id="guestLoginErrorWrapper" class="alert alert-error hide">
-									<p id="guestLoginError"></p>
-							</div>
-							<form class="form-inline">
-								<fieldset>
-									<em>
-										<div class="clearfix">
-											<label>Guest link</label>
-											<div class="input-xxlarge">
-												<input class="input-xxlarge guestLoginInput" id="guestURL" type="url" placeholder="http://PORTAL_ADDRESS/flex.html?roomdirect.html&amp;key=U2AnrCjEaMBx" tabindex="1">
-											</div>
-										</div>
-										<div class="clearfix">
-											<label>Your name</label>
-											<div class="input-medium">
-												<input id="guestName" type="text" placeholder="Your Name" class="guestLoginInput" tabindex="2">
-											</div>
-										</div>
-										<div class="clearfix">
-											<label>PIN code if provided</label>
-											<div class="input-medium">
-												<input id="guestPIN" type="password" placeholder="PIN" tabindex="3">
-											</div>
-										</div>
-									</em>
-								</fieldset>
-							</form>
-							<div id="guestLoginProgressBarContainer" class="progress progress-info progress-striped active hide">
-									<div id="guestLoginProgressBar" class="bar" style="width: 0%;"></div>
-							</div>
-						</div>
-						<div class="modal-footer">
-								<button class="btn btn-primary" id="guestLoginButton" tabindex="4">Join room</button>
-						</div>
-					</div>
-					<!-- End Login as guest modal window -->
-					<!-- Pre-call container -->
-					<div id="preCallContainer" class="container well well-large hide">
-							<h5 id="preCallUserInfo" class="muted"><span id="preCallUserDisplayName" class="text-info"></span>, you are @ <span id="preCallPortalName" class="text-info"></span></h5>
-							<div class="navbar">
-									<div class="navbar-inner">
-											<!-- <form class="navbar-search pull-left"> -->
-											<input type="text" class="navbar-search pull-left input input-large search-query" placeholder="Search" id="preCallSearchField">
-											<!-- </form> -->
-											<button class="btn btn-primary pull-left" id="preCallJoinMyRoomButton" title="In my room"><i class="icon-home"></i>  Go to my room</button>
-											<button class="btn btn-danger pull-right" id="preCallLogoutButton" title="Logout"><i class="icon-off"></i>  Logout</button>
-									</div>
-							</div>
-							<ul class="nav nav-tabs nav-stacked" id="preCallSearchNavigationList">
-							</ul>
-							<hr>
-					</div>
-					<!-- End Pre-call container -->
-						
 					<!-- Central inCallContainer -->
 					<div id="inCallContainer" class="container hide">
 
@@ -207,7 +41,62 @@
 								</div>
 								<div id="pluginContainer" style="background-color: black; display:inline-block; float:left;">
 									<!-- Will autogenerate plugin tag -->
-									<br/>
+									<div class="video-frames">
+										<div class="container" id="whole">
+											<div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
+												<img src="vidyoplayer/img/logo-big.jpg" style="padding-top: 75px;">
+												<div id="loaderBar"><img src="vidyoplayer/img/loader-bar.gif" alt="Loading"/></div>
+											</div>
+
+											<div class="videoWrapperSmall" id="VidyoArea" align="center">
+											   	<div id="participantDiv0" class="participant-wrapper">
+											      	<video id="remoteVideo0" autoplay="" class="remotevideo-default"></video>
+											      	<span id="participant0" class="participant-title"></span>
+											   	</div>
+											   
+											   	<div id="participantDiv1" class="participant-wrapper">
+											      	<video id="remoteVideo1" autoplay="" class="remotevideo-default"></video>
+											    	<span id="participant1" class="participant-title"></span>
+											   	</div>
+											   
+											   	<div id="participantDiv2" class="participant-wrapper">
+											      	<video id="remoteVideo2" autoplay="" class="remotevideo-default"></video>
+											      	<span id="participant2" class="participant-title"></span>
+											   	</div>
+											   
+											   	<div id="participantDiv3" class="participant-wrapper">
+											      	<video id="remoteVideo3" autoplay="" class="remotevideo-default"></video>
+											      	<span id="participant3" class="participant-title"></span>
+											   	</div>
+												<div id="shareVideoDiv" class="sharevideo-wrapper">
+													<video id="shareVideo0" autoplay="" class="remotevideo-default"></video>
+													<span id="shareName" class="participant-title"></span>
+												</div>
+											 
+												<div id="selfViewDiv" class="local-participant-wrapper">
+													<video id="localVideo" autoplay="" muted class="localvideo-default"></video>
+													<span id="localNameDiv" class="local-participant-title">Self View</span>
+												</div>
+											</div>
+										</div>
+										<!--<div class="buttons" id="Buttons" align="center" style="display: none;">
+											<button id="img_share_b"   onclick="toggleShare()">
+												 <img id="img_share" height="15px" src="./images/share.png">
+											</button>
+											<button id="img_camera_b"   onclick="toggleCameraIcon()">
+												 <img id="img_camera" height="15px" src="./images/camera.png">
+											</button>
+											<button id="img_mic_b"       onclick="toggleMicIcon()">
+												 <img id="img_mic" height="15px" src="./images/mic.png">
+											</button>
+											<button id="img_speaker_b"   onclick="toggleSpeakerIcon()">
+												 <img id="img_speaker" height="15px" src="./images/speaker.png">
+												 </button>
+											<button id="img_disconnect_b"onclick="sendLeaveEvent()">
+												 <img id="img_speaker" height="15px" src="./images/disconnect.png">
+											</button>
+										</div>	-->
+									</div>
 								</div>
 							</div>
 							<!--Satish US13301 End -->
@@ -262,7 +151,7 @@
 					<input id="sendEmailPopUpFlag" type="hidden" value="false">
 				</div>
 				<!-- End of withjs div -->
-				<div class="video-frames">
+				<!--<div class="video-frames">
 					<div class="container" id="whole">
 						<div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
 							<img src="vidyoplayer/img/logo-big.jpg" style="padding-top: 75px;">
@@ -319,7 +208,7 @@
 					</div>
 				</div>
 				<div class="video-controls">
-				</div>
+				</div>-->
 			</div>
 			<div id="video-sidebar">
 				<div id="video-sidebar-banner"></div>
