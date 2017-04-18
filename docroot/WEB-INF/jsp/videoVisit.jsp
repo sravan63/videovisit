@@ -41,10 +41,10 @@
 		//var browserVersion = (browserInfo.version).split(".")[0];
 		
 		if(browserInfo.isChrome) {
-			alert("inside Chrome");
+			console.log("inside Chrome");
 	    }
 		else if(browserInfo.isFirefox){
-			alert("inside Firefox");
+			console.log("inside Firefox");
 		}
 	    else{
 	        var reqscript = document.createElement( 'script' );
