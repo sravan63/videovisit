@@ -23,12 +23,10 @@ $(document).ready(function() {
 	/* Mandar [DE7189] - Code changes for right side space */
 	var calWidth = windowWidth - (200 + btnContainerWidth);
 	$("#pluginContainer").width(calWidth);
-	$("#video-main").width(calculatedWidth);
 	/* Mandar [DE7189] END */
 	
 	$("#pluginContainer").height(calculatedHeight);
 	$("#btnContainer").height(calculatedHeight);
-	$("#video-main").height(calculatedHeight);
 	
 	$("#infoWrapper").height(calculatedHeight);
 	$("#infoWrapper").width(calculatedWidthPluginContainer);
@@ -77,7 +75,7 @@ $(document).ready(function() {
 			dataType: "json",
 			data: {'meetingId':$("#meetingId").val()},
 			success: function(result, textStatus){
-				if(result != null && result.service.status.code == 200){
+				if(result.service.status.code == 200){
 					isRunningLate = result.service.runningLateEnvelope.isRunningLate;
 					if(isRunningLate == true){
 						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
@@ -193,7 +191,7 @@ $(window).resize(function(){
 	var btnContainerWidth = $("#btnContainer").outerWidth();
 
 	var width = $('#container-videovisit').width();
-	$("#video-main").width(windowWidth - videoSidebarWidth);
+
 	console.log("vvHeader width: " + $('vvHeader').width());
 
 	if($('#video-sidebar').css('display') == 'none'){
