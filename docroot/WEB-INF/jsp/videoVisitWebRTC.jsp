@@ -16,13 +16,12 @@
 			</ul>
 			<ul id="leaveEndBtnContainer" class="btn-group" style="float:right; list-style:none; font-size:100%; margin:4px 0;">
 				<li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;"></li>
-				<li class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;"></li>
 				<li class="btnLast" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
 			</ul>
 		</div>
 
 		<div id="container-video" style="clear:both;width:100%;">
-			<div id="video-main" style="background-color: #FFFF00;min-height: 500px;clear:both; float:left;">
+			<div id="video-main" style="clear:both; float:left;">
 				<div id="withjs" class="hide">
 					<!-- Central inCallContainer -->
 					<div id="inCallContainer" class="container hide">
@@ -43,10 +42,10 @@
 									<!-- Will autogenerate plugin tag -->
 									<div class="video-frames">
 										<div class="container" id="whole">
-											<div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
+											<!-- <div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
 												<img src="vidyoplayer/img/logo-big.jpg" style="padding-top: 75px;">
 												<div id="loaderBar"><img src="vidyoplayer/img/loader-bar.gif" alt="Loading"/></div>
-											</div>
+											</div> -->
 
 											<div class="videoWrapperSmall" id="VidyoArea" align="center">
 											   	<div id="participantDiv0" class="participant-wrapper">

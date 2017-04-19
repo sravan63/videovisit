@@ -178,6 +178,10 @@ var VideoVisit =
 				//$("#vidyoPlugin").css("min-width", calculatedMinWidth-200-btnContainerWidth);
 			}
 		}
+		if($('#webrtc').val() == 'true'){
+			$('#inCallContainer').css('min-width', '0');
+			$('#inCallContainer').css('margin-top', '0');
+		}
 	}
 }
 
