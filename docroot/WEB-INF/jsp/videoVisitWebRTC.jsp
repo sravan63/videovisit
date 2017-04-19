@@ -42,7 +42,7 @@
 									<!-- Will autogenerate plugin tag -->
 									<div class="video-frames">
 										<div class="container" id="whole">
-											<div class="videoWrapperFull" id="VidyoSplash" align="center">
+											<div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
 												<img src="vidyoplayer/img/logo-big.jpg" style="padding-top: 75px;">
 												<div id="loaderBar"><img src="vidyoplayer/img/loader-bar.gif" alt="Loading"/></div>
 											</div>
@@ -101,7 +101,7 @@
 							<!--Satish US13301 End -->
 
 						
-							<div id="btnContainer" style="position:static;">
+							<div id="btnContainer" style="position:static; display:none;">
 								<div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
 									<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
 										<a class="btn btn-large btn-hideDetails" href="#" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;"></a>
