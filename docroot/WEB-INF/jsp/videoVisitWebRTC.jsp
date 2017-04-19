@@ -42,10 +42,10 @@
 									<!-- Will autogenerate plugin tag -->
 									<div class="video-frames">
 										<div class="container" id="whole">
-											<!-- <div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
+											<div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
 												<img src="vidyoplayer/img/logo-big.jpg" style="padding-top: 75px;">
 												<div id="loaderBar"><img src="vidyoplayer/img/loader-bar.gif" alt="Loading"/></div>
-											</div> -->
+											</div>
 
 											<div class="videoWrapperSmall" id="VidyoArea" align="center">
 											   	<div id="participantDiv0" class="participant-wrapper">
