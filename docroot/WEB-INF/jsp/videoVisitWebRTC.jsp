@@ -100,6 +100,7 @@
 							</div>
 							<!--Satish US13301 End -->
 
+						
 							<div id="btnContainer" style="position:static;">
 								<div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
 									<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
@@ -110,20 +111,29 @@
 										<div class="well hide" id="configurationWrap">
 												<!-- See configurationTemplate in main.config.js-->
 										</div>
-									<a class="btn btn-large btn-local-share" data-toggle="dropdown" href="#" id="inCallButtonLocalShare" title="Share Desktop" style="display:block;"></a>
-										<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;">
-											<!-- Look at the inCallLocalSharesTemplate in main.config.js  -->
-										</ul>
 
+									<!--US19792 Start-->
+									<!--<a class="btn btn-large btn-local-share" data-toggle="dropdown" href="#" id="inCallButtonLocalShare" title="Share Desktop" style="display:block;"></a>
+										<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;">
+											<!-- Look at the inCallLocalSharesTemplate in main.config.js 
+										</ul>-->
+                                 
 									<a class="btn btn-large btn-tmv-success" href="#" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;"></a>
 										<!--US18908 Swap Microphone and Speaker in Vidyo Player Start-->
 									<a class="btn btn-large btn-tmm-success" href="#" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;"></a>
-									<div style="clear:both; border-bottom:1px solid #6A6A6A;">
-										<a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="width:40px; display:inline-block; border-bottom:none;"></a> 
+
+
+                                      <a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;background-position:5px -290px;"></a> 
+
+
+
+									<!--<div style="clear:both; border-bottom:1px solid #6A6A6A;">
+										
 										<div id="volume-control-speaker" style="height: 35px; width: 3px; vertical-align: middle; margin: 12px; display: inline-block; background: grey;">
 											<a id="slider-handle-speaker" class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="border:1px solid #FFFFFF; width:9px; height:2px; margin-left:-4px; position:absolute;"></a>
 										</div>
-									</div>
+									</div>-->
+									   <!--US19792 End-->
 									<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>
 								</div>
 
