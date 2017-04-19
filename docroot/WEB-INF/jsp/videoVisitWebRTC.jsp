@@ -40,7 +40,7 @@
 								</div>
 								<div id="pluginContainer" style="background-color: black; display:inline-block; float:left;">
 									<!-- Will autogenerate plugin tag -->
-									<div class="video-frames">
+									<div class="video-frames" style="height:100%;">
 										<div class="container" id="whole">
 											<div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
 												<img src="vidyoplayer/img/logo-big.jpg" style="padding-top: 75px;">
