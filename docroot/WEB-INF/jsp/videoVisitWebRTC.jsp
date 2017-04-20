@@ -1,13 +1,13 @@
 		
 	<!-- Splash screen -->
-	<div class="splash" style="height:100vh;display:none;" id="splash">
+	<div class="splash" style="height:100vh;display:block;" id="splash">
 			<div><img src="vidyoplayer/img/vv_splash.png" alt="Vidyo Logo"/></div>
 			<div id="splashText" style="margin-top: 15px; visibility: hidden;"><h4>Video Visits - The Permanente Medical Group</h4></div>
 			<div style="visibility: hidden;"><img src="vidyoplayer/img/loader-bar.gif"/></div>
 	</div>
 	<!-- End Splash screen -->
 
-	<div id="container-videovisit" style="width:auto; visibility:visible;">
+	<div id="container-videovisit" class="container-videovisit" style="width:auto; display:none;">
 		<div id="vvHeader">
 			<ul id="clinician-name" style="">
 				<li>    
@@ -42,10 +42,10 @@
 									<!-- Will autogenerate plugin tag -->
 									<div class="video-frames" style="height:100%;">
 										<div class="container" id="whole">
-											<div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
+											<!-- <div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
 												<img src="vidyoplayer/img/logo-big.jpg" style="padding-top: 75px;">
 												<div id="loaderBar"><img src="vidyoplayer/img/loader-bar.gif" alt="Loading"/></div>
-											</div>
+											</div>-->
 
 											<div class="videoWrapperSmall" id="VidyoArea" align="center">
 											   	<div id="participantDiv0" class="participant-wrapper">
