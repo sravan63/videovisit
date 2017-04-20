@@ -101,7 +101,7 @@
 							<!--Satish US13301 End -->
 
 						
-							<div id="btnContainer" style="position:static; display:none;">
+							<div id="btnContainer" style="position:static;">
 								<div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
 									<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
 										<a class="btn btn-large btn-hideDetails" href="#" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;"></a>
