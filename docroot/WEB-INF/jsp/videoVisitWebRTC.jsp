@@ -7,7 +7,7 @@
 	</div>
 	<!-- End Splash screen -->
 
-	<div id="container-videovisit" class="container-videovisit" style="width:auto; display:none;">
+	<div id="container-videovisit" class="container-videovisit" style="width:auto; visibility: none;">
 		<div id="vvHeader">
 			<ul id="clinician-name" style="">
 				<li>    
