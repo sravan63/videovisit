@@ -46,9 +46,10 @@ public class VideoVisitPatientController extends SimplePageController {
 		{
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if(ctx != null){
-				ctx.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
-				logger.info("VideoVisitPatientController isChromeOrFFBrowser: " + ctx.getWebrtc());
-				VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();			
+				
+				VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();	
+				videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
+				
 				List<MeetingDO> meetings = ctx.getMyMeetings();
 				for(MeetingDO meeting : meetings){
 					//MeetingWSO meeting = meetings[i];

@@ -58,8 +58,6 @@ public class WebAppContext implements Serializable {
 	private boolean isAuthenticated = false;
 	private boolean isNonMember = false;
 
-	private String webrtc = "false";
-
 	public String getGuestMeetingId() {
 		return guestMeetingId;
 	}
@@ -339,21 +337,6 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setMemberDO(Member memberDO) {
 		this.memberDO = memberDO;
-	}
-
-	/**
-	 * @return the webrtc
-	 */
-	public String getWebrtc() {
-		return webrtc;
-	}
-
-	/**
-	 * @param webrtc
-	 *            the webrtc to set
-	 */
-	public void setWebrtc(String webrtc) {
-		this.webrtc = webrtc;
 	}
 
 }

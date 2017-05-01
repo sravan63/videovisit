@@ -13,6 +13,7 @@
 	<input type="hidden" id="caregiverId" value="" />
 	<input type="hidden" id="meetingCode" value="" />
 	<input type="hidden" id="isMember" value="" />
+	<input type="hidden" id="webrtc" value="" />
 
 	<%@ include file="../../vidyoplayer/setupWizard.html" %>
 

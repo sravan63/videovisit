@@ -20,14 +20,14 @@
 	<input type="hidden" id="isProxyMeeting" value="${WebAppContext.videoVisit.isProxyMeeting}" />
 	
 	<input type="hidden" id="kpKeepAliveUrl" value="${WebAppContext.kpKeepAliveUrl}" />
-	<input type="hidden" id="webrtc" value="${WebAppContext.webrtc}" />
+	<input type="hidden" id="webrtc" value="${WebAppContext.videoVisit.webrtc}" />
 	<!-- waiting room bg late load image issue fix start-->
 	<img src="images/global/waiting_rm_bkgd.png" class="waitingRoomBgImg" />
 	<!-- waiting room bg late load image issue fix end-->
 	
 	
 	<c:choose>
-	    <c:when test="${WebAppContext.webrtc == 'true'}">
+	    <c:when test="${WebAppContext.videoVisit.webrtc == 'true'}">
 	        <%@ include file="videoVisitWebRTC.jsp" %>
 	    </c:when>    
 	    <c:otherwise>

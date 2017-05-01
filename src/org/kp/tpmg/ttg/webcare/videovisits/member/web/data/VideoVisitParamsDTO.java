@@ -37,6 +37,7 @@ public class VideoVisitParamsDTO implements Serializable {
 	private List<Caregiver> caregiver;
 	private String vendorConfId;
 	private String isProxyMeeting;
+	private String webrtc = "false";
 
 	public String getVidyoUrl() {
 		return vidyoUrl;
@@ -277,20 +278,38 @@ public class VideoVisitParamsDTO implements Serializable {
 	public void setPatientMiddleName(String patientMiddleName) {
 		this.patientMiddleName = patientMiddleName;
 	}
+	
+	/**
+	 * @return the webrtc
+	 */
+	public String getWebrtc() {
+		return webrtc;
+	}
 
-	/** 
+	/**
+	 * @param webrtc
+	 *            the webrtc to set
+	 */
+	public void setWebrtc(String webrtc) {
+		this.webrtc = webrtc;
+	}
+
+	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "VideoVisitParamsDTO [vidyoUrl=" + vidyoUrl + ", meetingId=" + meetingId + ", userName=" + userName
-				+ ", meetingCode=" + meetingCode + ", caregiverId=" + caregiverId + ", patientLastName="
-				+ patientLastName + ", patientFirstName=" + patientFirstName + ", hostLastName=" + hostLastName
-				+ ", hostFirstName=" + hostFirstName + ", hostTitle=" + hostTitle + ", guestName=" + guestName
-				+ ", isProvider=" + isProvider + ", guestUrl=" + guestUrl + ", isMember=" + isMember + ", meetingDate="
-				+ meetingDate + ", meetingTime=" + meetingTime + ", participants=" + Arrays.toString(participants)
-				+ ", caregivers=" + Arrays.toString(caregivers) + ", participant=" + participant + ", caregiver="
-				+ caregiver + ", vendorConfId=" + vendorConfId + ", isProxyMeeting=" + isProxyMeeting + "]";
+				+ ", meetingCode=" + meetingCode + ", caregiverId=" + caregiverId + ", patientMiddleName="
+				+ patientMiddleName + ", patientLastName=" + patientLastName + ", patientFirstName=" + patientFirstName
+				+ ", hostLastName=" + hostLastName + ", hostFirstName=" + hostFirstName + ", hostTitle=" + hostTitle
+				+ ", guestName=" + guestName + ", isProvider=" + isProvider + ", guestUrl=" + guestUrl + ", isMember="
+				+ isMember + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime + ", participants="
+				+ Arrays.toString(participants) + ", participant=" + participant + ", caregivers="
+				+ Arrays.toString(caregivers) + ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId
+				+ ", isProxyMeeting=" + isProxyMeeting + ", webrtc=" + webrtc + "]";
 	}
+
+	
 
 }
