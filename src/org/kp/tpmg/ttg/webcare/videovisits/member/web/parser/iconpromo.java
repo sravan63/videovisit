@@ -90,8 +90,11 @@ public class iconpromo implements Serializable{
 	}
 
 	// Comparator
-    public static class seq implements Comparator<iconpromo> {
-        @Override
+    public static class seq implements Comparator<iconpromo>, Serializable {
+    	
+		private static final long serialVersionUID = -626062665037209339L;
+
+		@Override
         public int compare(iconpromo arg0, iconpromo arg1) {
             return arg0.sequence - arg1.sequence;
         }
