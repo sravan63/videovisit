@@ -1,6 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,6 +17,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.springframework.web.servlet.ModelAndView;
 
 public class GuestController extends SimplePageController {
@@ -56,21 +58,17 @@ public class GuestController extends SimplePageController {
 	}
 	
 	private void initializeWebappContext(HttpServletRequest request) throws Exception {
-// This controller is called on calling the url for the guest visit. 
-// This is the new guest and web app context needs to be initialized for every guest entry.
-//		ctx = WebAppContext.getWebAppContext(request);
-//		if (ctx == null){
-			logger.info("context is null");
-			ctx = WebAppContextCommand.createContext(request, "0");
-			WebAppContext.setWebAppContext(request, ctx);
-			faq f = FaqParser.parse();
-			List<promo> promos = PromoParser.parse();
-			List<iconpromo> iconpromos = IconPromoParser.parse();
-			videolink videoLink = VideoLinkParser.parse();
-			ctx.setFaq(f);
-			ctx.setPromo(promos);
-			ctx.setIconPromo(iconpromos);
-			ctx.setVideoLink(videoLink);
-		}
-//	}
+		ctx = WebAppContextCommand.createContext(request, "0");
+		WebAppContext.setWebAppContext(request, ctx);
+		faq f = FaqParser.parse();
+		List<promo> promos = PromoParser.parse();
+		List<iconpromo> iconpromos = IconPromoParser.parse();
+		videolink videoLink = VideoLinkParser.parse();
+		ctx.setFaq(f);
+		ctx.setPromo(promos);
+		ctx.setIconPromo(iconpromos);
+		ctx.setVideoLink(videoLink);
+		ctx.setWebrtcSessionManager(WebService.getVidyoWebrtcSessionManger());
+	}
+	
 }

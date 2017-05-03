@@ -57,6 +57,7 @@ public class WebAppContext implements Serializable {
 	private String kpKeepAliveUrl = null;
 	private boolean isAuthenticated = false;
 	private boolean isNonMember = false;
+	private String webrtcSessionManager;
 
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -337,6 +338,21 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setMemberDO(Member memberDO) {
 		this.memberDO = memberDO;
+	}
+
+	/**
+	 * @return the webrtcSessionManager
+	 */
+	public String getWebrtcSessionManager() {
+		return webrtcSessionManager;
+	}
+
+	/**
+	 * @param webrtcSessionManager
+	 *            the webrtcSessionManager to set
+	 */
+	public void setWebrtcSessionManager(String webrtcSessionManager) {
+		this.webrtcSessionManager = webrtcSessionManager;
 	}
 
 }

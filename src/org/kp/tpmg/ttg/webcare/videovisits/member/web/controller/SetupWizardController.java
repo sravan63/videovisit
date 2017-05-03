@@ -65,6 +65,7 @@ private static String JSONMAPPING = "jsonData";
 			videoVisitParamsDTO.setGuestName(userName);
 			videoVisitParamsDTO.setIsProvider("false");
 			videoVisitParamsDTO.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
+			videoVisitParamsDTO.setWebrtcSessionManager(WebService.getVidyoWebrtcSessionManger());
 			//videoVisitParamsDTO.setMeetingId((instantMeetingJsonObject.get("meetingId") != null) ? String.valueOf(instantMeetingJsonObject.get("meetingId")) : "");
 			//videoVisitParamsDTO.setVidyoUrl((instantMeetingJsonObject.get("vendorConfRoomUrl") != null) ? (String) instantMeetingJsonObject.get("vendorConfRoomUrl") : "");
 			//videoVisitParamsDTO.setVendorConfId((instantMeetingJsonObject.get("vendorConferenceId") != null) ? (String) instantMeetingJsonObject.get("vendorConferenceId") : "");

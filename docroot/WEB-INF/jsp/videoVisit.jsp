@@ -21,6 +21,7 @@
 	
 	<input type="hidden" id="kpKeepAliveUrl" value="${WebAppContext.kpKeepAliveUrl}" />
 	<input type="hidden" id="webrtc" value="${WebAppContext.videoVisit.webrtc}" />
+	<input type="hidden" id="webrtcSessionManager" value="${WebAppContext.webrtcSessionManager}" />
 	<!-- waiting room bg late load image issue fix start-->
 	<img src="images/global/waiting_rm_bkgd.png" class="waitingRoomBgImg" />
 	<!-- waiting room bg late load image issue fix end-->

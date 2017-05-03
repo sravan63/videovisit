@@ -14,6 +14,7 @@
 	<input type="hidden" id="meetingCode" value="" />
 	<input type="hidden" id="isMember" value="" />
 	<input type="hidden" id="webrtc" value="" />
+	<input type="hidden" id="webrtcSessionManager" value="" />
 
 	<%@ include file="../../vidyoplayer/setupWizard.html" %>
 

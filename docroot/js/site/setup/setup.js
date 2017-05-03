@@ -53,6 +53,7 @@ var VideoVisitSetupWizard =
 		        	$("#guestName").val(data.guestName);
 		        	$("#isProvider").val(data.isProvider);
 		        	$("#webrtc").val(data.webrtc);
+		        	$("#webrtcSessionManager").val(data.webrtcSessionManager);
 	        	}catch(e){
 	        		console.warn("Error in the return data for Setup Wizard Create meeting: " + data);
 	        	}

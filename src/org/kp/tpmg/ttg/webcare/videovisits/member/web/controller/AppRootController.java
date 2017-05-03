@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
@@ -21,6 +22,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
@@ -38,6 +40,7 @@ public class AppRootController implements Controller {
 	//private String megaMeetingURL = null;
 	//private String megaMeetingMobileURL = null;
 	private String clinicianSingleSignOnURL = null;
+	private String vidyoWebrtcSessionManger = null;
 	
 	public AppRootController() {
 		try{
@@ -51,6 +54,10 @@ public class AppRootController implements Controller {
     		appProp.load(fileInput);
     		clinicianSingleSignOnURL = appProp.getProperty("CLINICIAN_SINGLE_SIGNON_URL");
     		logger.info("AppRootController -> clinicianSingleSignOnURL: " + clinicianSingleSignOnURL);
+    		vidyoWebrtcSessionManger = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
+    		if(StringUtils.isBlank(vidyoWebrtcSessionManger)){
+    			vidyoWebrtcSessionManger = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+    		}
 			//megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
     		//megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
     		//clinicianSingleSignOnURL = rbInfo.getString ("CLINICIAN_SINGLE_SIGNON_URL");	
@@ -87,6 +94,7 @@ public class AppRootController implements Controller {
 			//String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
 			//logger.info("AppRootController: Plugin data in context has been set: " + pluginJSON);
 		//}
+		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManger);
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		return (modelAndView);

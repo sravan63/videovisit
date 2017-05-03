@@ -107,6 +107,7 @@ public class WebService{
 	private static String kpOrgSSOUserAgentTypeHeader = null;
 	private static String kpOrgSSOAPIKeyHeader = null;
 	private static String kpOrgSSOAppNameHeader = null;
+	private static String vidyoWebrtcSessionManger = null;
 	
 	//Parameters for Proxy Appts logic
 	private static String secureCodes = null;
@@ -171,6 +172,10 @@ public class WebService{
 	    		kpOrgSSOUserAgentTypeHeader = WebUtil.getBrowserDetails(request);
 	    		kpOrgSSOAPIKeyHeader = crypto.read(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
 	    		kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
+	    		vidyoWebrtcSessionManger = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
+	    		if(StringUtils.isBlank(vidyoWebrtcSessionManger)){
+	    			vidyoWebrtcSessionManger = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+	    		}
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOnAPIUrl:" + kpOrgSSOSignOnAPIUrl);
 	    		logger.info("webservice.initServiceProperties -> kpOrgSSOUserAgentCategoryHeader:" + kpOrgSSOUserAgentCategoryHeader + ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:" + kpOrgSSOUserAgentTypeHeader);
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOAppNameHeader:" + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:" + kpOrgSSOAPIKeyHeader);
@@ -178,6 +183,7 @@ public class WebService{
 	    		logger.debug("webservice.initServiceProperties -> memberSSOAuthAPIUrl:" + memberSSOAuthAPIUrl);
 	    		logger.debug("webservice.initServiceProperties -> videoVisitRestServiceUrl:" + videoVisitRestServiceUrl);
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOKeepAliveUrl:" + kpOrgSSOKeepAliveUrl);
+	    		logger.debug("webservice.initServiceProperties -> vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManger);
 			}
 			
 			if (simulation)
@@ -219,7 +225,7 @@ public class WebService{
 	public static String getSetupWizardHostNuid() {
 		return setupWizardHostNuid;
 	}
-
+	
 
 	/**
 	 * @param setupWizardHostNuid the setupWizardHostNuid to set
@@ -281,6 +287,13 @@ public class WebService{
 	 */
 	public static String getKpOrgSSOKeepAliveUrl() {
 		return kpOrgSSOKeepAliveUrl;
+	}
+	
+	/**
+	 * @return the vidyoWebrtcSessionManger
+	 */
+	public static String getVidyoWebrtcSessionManger() {
+		return vidyoWebrtcSessionManger;
 	}
 
 	/**
