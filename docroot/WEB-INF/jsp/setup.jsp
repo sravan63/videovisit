@@ -15,6 +15,7 @@
 	<input type="hidden" id="isMember" value="" />
 	<input type="hidden" id="webrtc" value="true" />
 	<input type="hidden" id="webrtcSessionManager" value="" />
+	
 
 	<%@ include file="../../vidyoplayer/setupWizard.html" %>
 	
@@ -93,6 +94,9 @@
 					reqscript.setAttribute( 'type',"text/javascript");
 					reqscript.setAttribute( 'src',"vidyoplayer/scripts/main-webrtc.js");
 					document.getElementById("withjs").appendChild(reqscript);
+					
+					$('#meetingHost').val('Gurpreet');
+					
 					setTimeout(function(){
 						bodyLoaded();
 					}, 3000);
