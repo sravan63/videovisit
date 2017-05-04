@@ -89,13 +89,13 @@
 										'</div>';
 					$('#pluginContainer').html(webRTCContent);
 					
-					/*var reqscript = document.createElement('script');
+					var reqscript = document.createElement('script');
 					reqscript.setAttribute( 'type',"text/javascript");
 					reqscript.setAttribute( 'src',"vidyoplayer/scripts/main-webrtc.js");
-					document.getElementById("withjs").appendChild(reqscript);*/
-					/*setTimeout(function(){
+					document.getElementById("withjs").appendChild(reqscript);
+					setTimeout(function(){
 						bodyLoaded();
-					}, 3000);*/
+					}, 3000);
 					
 				}
 			}else{
