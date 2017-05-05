@@ -72,11 +72,23 @@
 					var webRTCContent = '';
 					console.log("WEBRTC BROWSER - inside else");
 					webRTCContent += '<div class="video-frames" style="height:100%;">' +
-											'<div class="container" id="whole" style="min-height: 100px; min-width: 100px;max-height: 100px; max-width: 100px;">' + 						
+											'<div class="container" id="whole">' + 						
 												'<div class="videoWrapperSmall" id="VidyoArea" align="center">' + 
 												   	'<div id="participantDiv0" class="participant-wrapper">' + 
 												      	'<video id="remoteVideo0" autoplay="" class="remotevideo-default"></video>' +
 												      	'<span id="participant0" class="participant-title"></span>' +
+												   	'</div>' +												   
+												   	'<div id="participantDiv1" class="participant-wrapper">' +
+												      	'<video id="remoteVideo1" autoplay="" class="remotevideo-default"></video>' +
+												    	'<span id="participant1" class="participant-title"></span>' +
+												   	'</div>' +												   
+												   	'<div id="participantDiv2" class="participant-wrapper">' +
+												      	'<video id="remoteVideo2" autoplay="" class="remotevideo-default"></video>' +
+												      	'<span id="participant2" class="participant-title"></span>' +
+												   	'</div>' +												   
+												   	'<div id="participantDiv3" class="participant-wrapper">' +
+												      	'<video id="remoteVideo3" autoplay="" class="remotevideo-default"></video>' +
+												      	'<span id="participant3" class="participant-title"></span>' +
 												   	'</div>' +
 													'<div id="shareVideoDiv" class="sharevideo-wrapper">' +
 														'<video id="shareVideo0" autoplay="" class="remotevideo-default"></video>' +
@@ -84,6 +96,7 @@
 													'</div>'+												 
 													'<div id="selfViewDiv" class="local-participant-wrapper">'+
 														'<video id="localVideo" autoplay="" muted class="localvideo-default"></video>'+
+														'<span id="localNameDiv" class="local-participant-title">Self View</span>'+
 													'</div>'+
 												'</div>'+
 											'</div>'+
