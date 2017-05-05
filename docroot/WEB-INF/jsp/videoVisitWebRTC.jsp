@@ -305,7 +305,7 @@
 			</div>
 		</div>
 	</div>
-
+<link rel="stylesheet" type="text/css" href="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.css" media="screen" />
 
 	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css"> -->
 	<link rel="stylesheet" href="vidyoplayer/css/main-webrtc.css">
@@ -321,10 +321,10 @@
 	<script src="vidyoplayer/scripts/webrtc/vidyo.client.messages.js"></script>
     <script src="vidyoplayer/scripts/webrtc/vidyo.client.private.messages.js"></script>
     <script src="vidyoplayer/scripts/webrtc/vidyo.client.js"></script> 
-    <script src="vidyoplayer/libs/jquery.1.11.0.min.js"></script>
-    <script src="vidyoplayer/libs/bootstrap.min.2.3.2.js"></script>
-    <script src="vidyoplayer/libs/bootstrap-notify.1.0.js"></script>
-    <script src="vidyoplayer/libs/jnotify/jNotify.jquery.js"></script>
+    <script src="vidyoplayer/scripts/libs/jquery.1.11.0.min.js"></script>
+    <script src="vidyoplayer/scripts/libs/bootstrap.min.2.3.2.js"></script>
+    <script src="vidyoplayer/scripts/libs/bootstrap-notify.1.0.js"></script>
+    <script src="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.js"></script>
     <script src="vidyoplayer/scripts/main-webrtc.js"></script>
 
 
