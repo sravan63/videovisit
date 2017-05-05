@@ -68,7 +68,7 @@ public class GuestController extends SimplePageController {
 		ctx.setPromo(promos);
 		ctx.setIconPromo(iconpromos);
 		ctx.setVideoLink(videoLink);
-		ctx.setWebrtcSessionManager(WebService.getVidyoWebrtcSessionManger());
+		ctx.setWebrtcSessionManager(WebService.getVidyoWebrtcSessionManager());
 	}
 	
 }

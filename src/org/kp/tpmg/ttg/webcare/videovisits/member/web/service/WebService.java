@@ -107,7 +107,7 @@ public class WebService{
 	private static String kpOrgSSOUserAgentTypeHeader = null;
 	private static String kpOrgSSOAPIKeyHeader = null;
 	private static String kpOrgSSOAppNameHeader = null;
-	private static String vidyoWebrtcSessionManger = null;
+	private static String vidyoWebrtcSessionManager = null;
 	
 	//Parameters for Proxy Appts logic
 	private static String secureCodes = null;
@@ -172,9 +172,9 @@ public class WebService{
 	    		kpOrgSSOUserAgentTypeHeader = WebUtil.getBrowserDetails(request);
 	    		kpOrgSSOAPIKeyHeader = crypto.read(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
 	    		kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
-	    		vidyoWebrtcSessionManger = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-	    		if(StringUtils.isBlank(vidyoWebrtcSessionManger)){
-	    			vidyoWebrtcSessionManger = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+	    		vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
+	    		if(StringUtils.isBlank(vidyoWebrtcSessionManager)){
+	    			vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
 	    		}
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOSignOnAPIUrl:" + kpOrgSSOSignOnAPIUrl);
 	    		logger.info("webservice.initServiceProperties -> kpOrgSSOUserAgentCategoryHeader:" + kpOrgSSOUserAgentCategoryHeader + ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:" + kpOrgSSOUserAgentTypeHeader);
@@ -183,7 +183,7 @@ public class WebService{
 	    		logger.debug("webservice.initServiceProperties -> memberSSOAuthAPIUrl:" + memberSSOAuthAPIUrl);
 	    		logger.debug("webservice.initServiceProperties -> videoVisitRestServiceUrl:" + videoVisitRestServiceUrl);
 	    		logger.debug("webservice.initServiceProperties -> kpOrgSSOKeepAliveUrl:" + kpOrgSSOKeepAliveUrl);
-	    		logger.debug("webservice.initServiceProperties -> vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManger);
+	    		logger.debug("webservice.initServiceProperties -> vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManager);
 			}
 			
 			if (simulation)
@@ -292,8 +292,8 @@ public class WebService{
 	/**
 	 * @return the vidyoWebrtcSessionManger
 	 */
-	public static String getVidyoWebrtcSessionManger() {
-		return vidyoWebrtcSessionManger;
+	public static String getVidyoWebrtcSessionManager() {
+		return vidyoWebrtcSessionManager;
 	}
 
 	/**

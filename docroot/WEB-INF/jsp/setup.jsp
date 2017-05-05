@@ -13,9 +13,8 @@
 	<input type="hidden" id="caregiverId" value="" />
 	<input type="hidden" id="meetingCode" value="" />
 	<input type="hidden" id="isMember" value="" />
-	<input type="hidden" id="webrtc" value="true" />
-	<input type="hidden" id="webrtcSessionManager" value="" />
-	
+	<input type="hidden" id="webrtc" value="${webrtc}" />
+	<input type="hidden" id="webrtcSessionManager" value="${webrtcSessionManager}" />
 
 	<%@ include file="../../vidyoplayer/setupWizard.html" %>
 	

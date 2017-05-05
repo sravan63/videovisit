@@ -194,7 +194,7 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="mdohelplive" />
 	</bean>
-	<bean id="setup" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="setup" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.PreSetupWizardController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="setup" />
 		<property name="navigation" value="setup" />
