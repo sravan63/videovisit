@@ -321,7 +321,7 @@
 	<script src="vidyoplayer/scripts/webrtc/vidyo.client.messages.js"></script>
     <script src="vidyoplayer/scripts/webrtc/vidyo.client.private.messages.js"></script>
     <script src="vidyoplayer/scripts/webrtc/vidyo.client.js"></script> 
-    <script src="vidyoplayer/scripts/libs/jquery.1.11.0.min.js"></script>
+    <!-- <script src="vidyoplayer/scripts/libs/jquery.1.11.0.min.js"></script> -->
     <script src="vidyoplayer/scripts/libs/bootstrap.min.2.3.2.js"></script>
     <script src="vidyoplayer/scripts/libs/bootstrap-notify.1.0.js"></script>
     <script src="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.js"></script>
