@@ -244,6 +244,46 @@
 		            </div>
 		        </div>
 	        	<!-- END-  meeting leave yes no dialog  -->
+	        	<!-- MEMBER AND GUEST: START - Quit Meeting Dialogs  -->
+		    	<div id="quitMeetingModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
+		            <div class="modal-header">
+		                <button type="button" id="quit_modal_cross_button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		                <h3 id="">Step Away</h3>
+		            </div>
+		            <div class="modal-body">
+		                <div class="dialog-content-question">
+		                    <p id="quit_meeting_question" class="question">You are temporarily leaving this meeting.<br>
+		                    You can rejoin it.<br>
+		                    Are you sure you want to leave this meeting?</p>
+		                    <div id="quit_meeting_error" class="error " style="padding:5px;"></div>
+		                    <div class="pagination">
+		                        <ul>
+		                            <li>
+		                                <input class="button" id="quit_meeting_button_yes"  type="button"  value="Yes &rsaquo;&rsaquo;"/>
+		                            </li>
+		                            <li>
+		                                <input class="button" id="quit_meeting_button_no"  type="button"  value="No &rsaquo;&rsaquo;"/>
+		                            </li>
+		                        </ul>
+		                    </div>
+		                 </div>
+		            </div>
+		        </div>
+			    <!-- MEMBER AND GUEST: END - Quit Meeting Dialogs  -->
+			    <!-- US15318 - START [Popup displays after meeting disconnected] -->
+				<div id="dialog-block-meeting-disconnected" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
+				    <div class="modal-body">
+				        <div class="dialog-content-question">
+					        <p id="start_meeting_question" style="padding:15px;font-weight:bold;text-align:center;" class="question">
+								Your video visit has ended.
+							</p>
+				            <div class="pagination">
+				                <input type="button" style="width:150px;" value="Leave visit" id="meetingDisconnected" class="button">
+				            </div>
+				         </div>
+				    </div>
+				</div>
+				<!-- US15318 - END -->
 			</div>
 			<div id="video-sidebar">
 				<div id="video-sidebar-banner"></div>
