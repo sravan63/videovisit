@@ -128,3 +128,10 @@
     <script src="vidyoplayer/scripts/webrtc/vidyo.client.private.messages.js"></script>
     <script src="vidyoplayer/scripts/webrtc/vidyo.client.js"></script>
    <script src="vidyoplayer/scripts/main-webrtc.js"></script> --%>
+   
+   <style>
+	   	#pluginContainer, .video-frames, .container, .videoFull, #selfViewDiv, #localVideo'{
+	   		height: 100% !important;
+	    	width: 100% !important;
+	   	}
+   </style>
