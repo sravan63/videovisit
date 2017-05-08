@@ -38,7 +38,6 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String vendorConfId;
 	private String isProxyMeeting;
 	private String webrtc = "false";
-	private String webrtcSessionManager;
 
 	public String getVidyoUrl() {
 		return vidyoUrl;
@@ -296,21 +295,6 @@ public class VideoVisitParamsDTO implements Serializable {
 	}
 
 	/**
-	 * @return the webrtcSessionManager
-	 */
-	public String getWebrtcSessionManager() {
-		return webrtcSessionManager;
-	}
-
-	/**
-	 * @param webrtcSessionManager
-	 *            the webrtcSessionManager to set
-	 */
-	public void setWebrtcSessionManager(String webrtcSessionManager) {
-		this.webrtcSessionManager = webrtcSessionManager;
-	}
-
-	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -323,8 +307,7 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ isMember + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime + ", participants="
 				+ Arrays.toString(participants) + ", participant=" + participant + ", caregivers="
 				+ Arrays.toString(caregivers) + ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId
-				+ ", isProxyMeeting=" + isProxyMeeting + ", webrtc=" + webrtc + ",webrtcSessionManager= "
-				+ webrtcSessionManager + "]";
+				+ ", isProxyMeeting=" + isProxyMeeting + ", webrtc=" + webrtc + "]";
 	}
 
 }

@@ -49,7 +49,6 @@ public class VideoVisitPatientController extends SimplePageController {
 				
 				VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();	
 				videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
-				videoVisitParams.setWebrtcSessionManager(ctx.getWebrtcSessionManager());
 				List<MeetingDO> meetings = ctx.getMyMeetings();
 				for(MeetingDO meeting : meetings){
 					//MeetingWSO meeting = meetings[i];

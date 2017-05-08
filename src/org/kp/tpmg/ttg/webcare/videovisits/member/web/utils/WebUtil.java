@@ -1,9 +1,13 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
@@ -231,6 +235,31 @@ public class WebUtil {
 		}
 		logger.info("Exiting isChromeOrFFBrowser -> isChromeOrFFBrowser: " + isChromeOrFFBrowser);
 		return isChromeOrFFBrowser;
+	}
+	
+	public static String getVidyoWebrtcSessionManager() {
+		logger.info("Exntered getVidyoWebrtcSessionManager");
+		String vidyoWebrtcSessionManager = null;
+		try {
+			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+			if (rbInfo != null) {
+				logger.debug("WebService.initWebService -> configuration: resource bundle exists -> video visit external properties file location: "
+								+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				final FileInputStream fileInput = new FileInputStream(file);
+				final Properties appProp = new Properties();
+				appProp.load(fileInput);
+				vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
+				if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
+					vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+				}
+				logger.debug("getVidyoWebrtcSessionManager -> vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManager);
+			}
+		} catch (Exception e) {
+			logger.error("getVidyoWebrtcSessionManager -> Exception while reading external properties file: " + e.getMessage(), e);
+		}
+		logger.info("Exiting getVidyoWebrtcSessionManager");
+		return vidyoWebrtcSessionManager;
 	}
 
 	public static String getDeviceOs(){
