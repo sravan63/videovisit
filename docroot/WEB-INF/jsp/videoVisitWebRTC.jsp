@@ -104,9 +104,9 @@
 							<div id="btnContainer" style="position:static;">
 								<div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
 									<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
-										<a class="btn btn-large btn-hideDetails" href="#" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;"></a>
+										<a class="btn btn-large btn-hideDetails" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;cursor: pointer;"></a>
 									</span>
-									<a class="btn btn-large btn-config" href="#" title="Settings" id="inCallButtonToggleConfig" style="display:block;"></a>
+									<a class="btn btn-large btn-config" title="Settings" id="inCallButtonToggleConfig" style="display:block;cursor: pointer;"></a>
 										<!-- Configuration panel -->
 										<div class="well hide" id="configurationWrap">
 												<!-- See configurationTemplate in main.config.js-->
@@ -118,12 +118,12 @@
 											<!-- Look at the inCallLocalSharesTemplate in main.config.js 
 										</ul>-->
                                  
-									<a class="btn btn-large btn-tmv-success" href="#" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;"></a>
+									<a class="btn btn-large btn-tmv-success" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;cursor: pointer;"></a>
 										<!--US18908 Swap Microphone and Speaker in Vidyo Player Start-->
-									<a class="btn btn-large btn-tmm-success" href="#" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;"></a>
+									<a class="btn btn-large btn-tmm-success" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;cursor: pointer;"></a>
 
 
-                                      <a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;background-position:5px -290px;"></a> 
+                                      <a class="btn btn-large btn-tms-success" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;background-position:5px -290px;cursor: pointer;"></a> 
 
 
 
