@@ -49,7 +49,7 @@
 			</div>
 			
 			<div style="text-align: center; margin-top:15px; margin-bottom:20px;">
-				For more help use the Sign In Help link on the My Doctor Online App.
+				 For more help use the Sign In Help link on the My Doctor Online App.
 			</div>
 			
 			<button id="getAppButton" class="button-main getAppButton only-handsets">Get the App</button>
