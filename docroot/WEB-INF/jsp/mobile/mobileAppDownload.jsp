@@ -49,7 +49,7 @@
 <div id="content-window">
 	<div id="contents">
 		<h1> Join Your Video Visit </h1>
-		<p> Get KP Preventive Care to start your visit with your doctor. </p>
+		<p> Get My Doctor Online to start your visit with your doctor. </p>
 		<button type="button" onclick="app.launchApp();">Open</button>
 	</div>
 	<img src="images/mobile/phone.png"></img>

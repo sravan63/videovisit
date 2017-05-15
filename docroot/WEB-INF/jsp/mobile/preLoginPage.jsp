@@ -31,7 +31,7 @@
 	
 		<div class="only-tablets">
 			<p>Kaiser Permanente gives you the opportunity to meet with your doctor from your smartphone or tablet.</p>
-			<p>All you need is the KP Preventive Care app and a user ID and password.</p>
+			<p>All you need is the My Doctor Online App and a user ID and password.</p>
 			<p>
 				<span style="font-weight:bold;">Don't have an account?</span><br/>
 				<span>You can still join the visit by using Sign In Help on the app.</span>
