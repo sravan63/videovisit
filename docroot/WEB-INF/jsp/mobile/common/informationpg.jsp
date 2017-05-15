@@ -5,7 +5,7 @@
 			What do I need for my visit?
 		</h2>
 		<li><span>A strong Wi-Fi or 4G connection.</span></li>
-		<li><span>The latest version of the KP Preventive Care App.</span></li>
+		<li><span>The latest version of the My Doctor Online App.</span></li>
 		<li class="bold"><span>Return here or use the email to sign in to the Video Visit.</span></li>
 	</ol>
 </div>
@@ -18,7 +18,7 @@
 		<li><span>A strong Wi-Fi or 4G connection.</span></li>
 		<li>
 			<!-- <div class="img-connection"></div>	-->
-			<span>The latest version of the KP Preventive Care App.</span>
+			<span>The latest version of the My Doctor Online App.</span>
 		</li>
 		<li class="bold">
 			<span>Return here or use the email to sign in to the Video Visit.</span>

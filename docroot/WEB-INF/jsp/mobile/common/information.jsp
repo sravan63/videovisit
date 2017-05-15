@@ -5,7 +5,7 @@
 			What do I need for my visit?
 		</h2>
 		<li><span>A strong Wi-Fi or 4G connection.</span></li>
-		<li><span>The latest version of the KP Preventive Care App.</span></li>
+		<li><span>The latest version of the My Doctor Online App.</span></li>
 		<li><span>Your user ID and password to sign in to the app.</span></li>
 	</ol>
 </div>
@@ -16,7 +16,7 @@
 			What do I need for my visit?
 		</h2>
 		<li><span>A strong Wi-Fi or 4G connection.</span></li>
-		<li><span>The latest version of the KP Preventive Care App.</span></li>
+		<li><span>The latest version of the My Doctor Online App.</span></li>
 		<li>
 			<span>Your user ID and password to sign in to the app.
 				<span style="font-weight:bold; display:block; margin-top:10px;">If you don't have an account</span>

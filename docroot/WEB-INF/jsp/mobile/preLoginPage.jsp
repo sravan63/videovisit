@@ -21,7 +21,7 @@
 					
 						<div class="app-lockup getAppButton">
 							<div class="app-icon"></div>
-							<p>Please install and open the latest version of the KP Preventive Care App. </p>
+							<p>Please install and open the latest version of the My Doctor Online App. </p>
 						</div>
 					<button id="patientLoginGetAppButtonId" class="button-primary getAppButton">Get the App</button>
 					<button class="button-secondary" id="btn-i-have-it">I Have it Installed</button>
