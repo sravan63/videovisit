@@ -321,12 +321,15 @@
 								<a class="btn btn-large btn-tmv-success" href="#" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;"></a>
                                      <!--US18908 Swap Microphone and Speaker in Vidyo Player Start-->
 								<a class="btn btn-large btn-tmm-success" href="#" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;"></a>
-								<div style="clear:both; border-bottom:1px solid #6A6A6A;">
+
+                                <!--US20650 Remove Speaker Volume Slider for Plugin Browsers Start-->
+								<!--<div style="clear:both; border-bottom:1px solid #6A6A6A;">
 									<a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="width:40px; display:inline-block; border-bottom:none;"></a>	
 									<div id="volume-control-speaker" style="height: 35px; width: 3px; vertical-align: middle; margin: 12px; display: inline-block; background: grey;">						
 										<a id="slider-handle-speaker" class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="border:1px solid #FFFFFF; width:9px; height:2px; margin-left:-4px; position:absolute;"></a>
 									</div>
-								</div>
+									 US20650 Remove Speaker Volume Slider for Plugin Browsers End-
+								</div>-->
 								          <!--US18908 Swap Microphone and Speaker in Vidyo Player End-->
 								
 								<!--US18202 Remove Microphone Slider Start-->
