@@ -118,12 +118,12 @@
 		
 		        .btn-tms-success{
 		            background-image: url("vidyoplayer/img/sprite.png");
-		            background-position: -15px -290px;
+		            background-position: 5px -290px;
 		            /*width: 60px;	*/
 		        }
 		        .btn-tms-failure{
 		            background-image: url("vidyoplayer/img/sprite.png");
-		            background-position: -15px -345px;
+		            background-position: 5px -345px;
 		        }
 		
 		        .btn-tmm-success{
