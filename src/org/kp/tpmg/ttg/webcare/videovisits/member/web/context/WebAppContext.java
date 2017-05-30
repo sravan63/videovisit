@@ -58,6 +58,8 @@ public class WebAppContext implements Serializable {
 	private boolean isAuthenticated = false;
 	private boolean isNonMember = false;
 	private String webrtcSessionManager;
+	private String blockChrome = "true";
+	private String blockFF = "true";
 
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -353,6 +355,36 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setWebrtcSessionManager(String webrtcSessionManager) {
 		this.webrtcSessionManager = webrtcSessionManager;
+	}
+
+	/**
+	 * @return the blockChrome
+	 */
+	public String getBlockChrome() {
+		return blockChrome;
+	}
+
+	/**
+	 * @param blockChrome
+	 *            the blockChrome to set
+	 */
+	public void setBlockChrome(String blockChrome) {
+		this.blockChrome = blockChrome;
+	}
+
+	/**
+	 * @return the blockFF
+	 */
+	public String getBlockFF() {
+		return blockFF;
+	}
+
+	/**
+	 * @param blockFF
+	 *            the blockFF to set
+	 */
+	public void setBlockFF(String blockFF) {
+		this.blockFF = blockFF;
 	}
 
 }

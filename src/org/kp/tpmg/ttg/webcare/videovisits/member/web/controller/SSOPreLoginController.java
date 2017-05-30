@@ -1,8 +1,12 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +41,24 @@ public class SSOPreLoginController implements Controller {
 	private String viewName;
 	private String navigation;
 	private String subNavigation;
-		
+	private String blockChrome = null;
+	private String blockFF = null;
+	
+	public SSOPreLoginController() {
+		try {
+			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+			logger.debug("SSOPreLoginController -> configuration: resource bundle exists -> video visit external properties file location: "
+							+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			final FileInputStream fileInput = new FileInputStream(file);
+			final Properties appProp = new Properties();
+			appProp.load(fileInput);
+			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
+			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
+		} catch (Exception ex) {
+			logger.error("SSOPreLoginController -> Error while reading external properties file - " + ex.getMessage(), ex);
+		}
+	}
 		
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception 
 	{
@@ -70,6 +91,12 @@ public class SSOPreLoginController implements Controller {
 					ssoSession = ctx.getKpOrgSignOnInfo().getSsoSession();
 				}
 			}
+			if(StringUtils.isNotBlank(blockChrome)){
+				ctx.setBlockChrome(blockChrome);
+			}
+			if(StringUtils.isNotBlank(blockFF)){
+				ctx.setBlockFF(blockFF);
+			}
 			
 			logger.debug("SSOPreLoginController -> ssoSession in context=" + ssoSession);
 			
@@ -77,7 +104,7 @@ public class SSOPreLoginController implements Controller {
 			
 			if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
 			{
-				if("localhost".equalsIgnoreCase(request.getServerName()) || "ttg-dev-app-01.har.ca.kp.org".equalsIgnoreCase(request.getServerName()) || "ttg-dv-app-1.har.ca.kp.org".equalsIgnoreCase(request.getServerName()))
+				if("localhost".equalsIgnoreCase(request.getServerName()))
 				{
 					logger.info("SSOPreLoginController -> cookie validation not required for " + request.getServerName());
 				}
@@ -116,10 +143,18 @@ public class SSOPreLoginController implements Controller {
 				if("200".equalsIgnoreCase(responseCode))
 				{
 					//	 navigate to myMeetings page
-					logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
-					ctx.setAuthenticated(true);
-					modelAndView = new ModelAndView("landingready");
-					getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
+					if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))
+							|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(blockFF))) 
+					{
+						logger.info("SSOPreLoginController -> sso session token valid but browser is blocked");
+						modelAndView = new ModelAndView(getViewName());
+						getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
+					} else {
+						logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
+						ctx.setAuthenticated(true);
+						modelAndView = new ModelAndView("landingready");
+						getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
+					}
 				}
 				else
 				{

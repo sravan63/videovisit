@@ -1,7 +1,11 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -21,15 +25,33 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
 public class LogoffController extends SimplePageController {
 
 	public static Logger logger = Logger.getLogger(LogoffController.class);
+	
 	private String mobileViewName;
 	private String myMeetingsViewName;
+	private String blockChrome = null;
+	private String blockFF = null;
+	
+	public LogoffController() {
+		try {
+			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+			logger.debug("LogoffController -> configuration: resource bundle exists -> video visit external properties file location: "
+							+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			final FileInputStream fileInput = new FileInputStream(file);
+			final Properties appProp = new Properties();
+			appProp.load(fileInput);
+			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
+			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
+		} catch (Exception ex) {
+			logger.error("LogoffController -> Error while reading external properties file - " + ex.getMessage(), ex);
+		}
+	}
 	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 				
@@ -106,6 +128,14 @@ public class LogoffController extends SimplePageController {
 		}
 		else{
 			logger.info("view name = " + modelAndView.getViewName());
+			if(StringUtils.isBlank(blockChrome)){
+				blockChrome = "true";
+			}
+			if(StringUtils.isBlank(blockFF)){
+				blockFF = "true";
+			}
+			modelAndView.addObject("blockChrome", blockChrome);
+			modelAndView.addObject("blockFF", blockFF);
 			return modelAndView;
 		}
 	}

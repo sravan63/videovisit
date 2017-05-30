@@ -15,6 +15,8 @@
 	<input type="hidden" id="isMember" value="" />
 	<input type="hidden" id="webrtc" value="${webrtc}" />
 	<input type="hidden" id="webrtcSessionManager" value="${webrtcSessionManager}" />
+	<input type="hidden" id="blockChrome" value="${blockChrome}" />
+	<input type="hidden" id="blockFF" value="${blockFF}" />
 
 	<%@ include file="../../vidyoplayer/setupWizard.html" %>
 

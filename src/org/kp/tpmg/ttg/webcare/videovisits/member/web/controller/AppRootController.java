@@ -40,12 +40,13 @@ public class AppRootController implements Controller {
 	//private String megaMeetingURL = null;
 	//private String megaMeetingMobileURL = null;
 	private String clinicianSingleSignOnURL = null;
-	private String vidyoWebrtcSessionManger = null;
+	private String vidyoWebrtcSessionManager = null;
+	private String blockChrome = null;
+	private String blockFF = null;
 	
 	public AppRootController() {
 		try{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-		
 			logger.debug("AppRootController -> configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			//Read external properties file for the web service end point url
 			File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
@@ -54,15 +55,14 @@ public class AppRootController implements Controller {
     		appProp.load(fileInput);
     		clinicianSingleSignOnURL = appProp.getProperty("CLINICIAN_SINGLE_SIGNON_URL");
     		logger.info("AppRootController -> clinicianSingleSignOnURL: " + clinicianSingleSignOnURL);
-    		vidyoWebrtcSessionManger = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-    		if(StringUtils.isBlank(vidyoWebrtcSessionManger)){
-    			vidyoWebrtcSessionManger = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+    		vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
+    		if(StringUtils.isBlank(vidyoWebrtcSessionManager)){
+    			vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
     		}
-			//megaMeetingURL = rbInfo.getString ("MEGA_MEETING_URL");	
-    		//megaMeetingMobileURL = rbInfo.getString ("MEGA_MEETING_MOBILE_URL");	
-    		//clinicianSingleSignOnURL = rbInfo.getString ("CLINICIAN_SINGLE_SIGNON_URL");	
+    		blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
+    		blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
 		}catch(Exception ex){
-			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
+			logger.error("AppRootController -> Error while reading external properties file - " + ex.getMessage(), ex);
 		}
 		
 	}
@@ -94,7 +94,13 @@ public class AppRootController implements Controller {
 			//String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
 			//logger.info("AppRootController: Plugin data in context has been set: " + pluginJSON);
 		//}
-		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManger);
+		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
+		if(StringUtils.isNotBlank(blockChrome)){
+			ctx.setBlockChrome(blockChrome);
+		}
+		if(StringUtils.isNotBlank(blockFF)){
+			ctx.setBlockFF(blockFF);
+		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		return (modelAndView);

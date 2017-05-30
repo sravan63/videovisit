@@ -1,3 +1,5 @@
+<input type="hidden" id="blockChrome" value="${WebAppContext.blockChrome}" />
+<input type="hidden" id="blockFF" value="${WebAppContext.blockFF}" />
 
 <h3 class="page-title">Please sign on for your Video Visit</h3>
 <p class="login" style="margin-bottom:43px;">Children age 11 or younger must have a parent or legal guardian with them during the Video Visit.</p>

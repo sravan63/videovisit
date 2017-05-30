@@ -42,6 +42,8 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 </c:if>
 
 <input type="hidden" id="tz" value="<%=timezone%>" />
+<input type="hidden" id="blockChrome" value="${WebAppContext.blockChrome}" />
+<input type="hidden" id="blockFF" value="${WebAppContext.blockFF}" />
 
 <style>
 	input#joinNowBtn{

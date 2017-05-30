@@ -237,8 +237,38 @@ public class WebUtil {
 		return isChromeOrFFBrowser;
 	}
 	
+	public static boolean isChromeBrowser(HttpServletRequest httpRequest) {
+		logger.info("Entered isChromeBrowser");
+		boolean isChromeBrowser = false;
+		try {
+			final String browser = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browser) && browser.contains("chrome")) {
+				isChromeBrowser = true;
+			}
+		} catch (Exception ex) {
+			logger.info("isChromeBrowser -> error while checking the requested browser is chrome: ", ex);
+		}
+		logger.info("Exiting isChromeBrowser -> isChromeBrowser: " + isChromeBrowser);
+		return isChromeBrowser;
+	}
+	
+	public static boolean isFFBrowser(HttpServletRequest httpRequest) {
+		logger.info("Entered isFFBrowser");
+		boolean isFFBrowser = false;
+		try {
+			final String browser = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browser) && browser.contains("firefox")) {
+				isFFBrowser = true;
+			}
+		} catch (Exception ex) {
+			logger.info("isFFBrowser -> error while checking the requested browser is firefox: ", ex);
+		}
+		logger.info("Exiting isFFBrowser -> isFFBrowser: " + isFFBrowser);
+		return isFFBrowser;
+	}
+	
 	public static String getVidyoWebrtcSessionManager() {
-		logger.info("Exntered getVidyoWebrtcSessionManager");
+		logger.info("Entered getVidyoWebrtcSessionManager");
 		String vidyoWebrtcSessionManager = null;
 		try {
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");

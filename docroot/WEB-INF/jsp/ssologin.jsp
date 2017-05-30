@@ -1,3 +1,6 @@
+<input type="hidden" id="blockChrome" value="${WebAppContext.blockChrome != null ? WebAppContext.blockChrome : blockChrome}" />
+<input type="hidden" id="blockFF" value="${WebAppContext.blockFF != null ? WebAppContext.blockFF : blockFF}" />
+
 <h3 class="sso-page-title">Please sign on for your Video Visit</h3>
 <div  style="width: 40%; margin-left: 84px;float: left">
 <p class="sso-login">Use your kp.org user name and password</p>
