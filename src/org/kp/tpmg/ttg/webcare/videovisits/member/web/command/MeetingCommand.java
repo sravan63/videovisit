@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.WordUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -1579,16 +1580,16 @@ public class MeetingCommand {
 			}
 		  
 		  memberWso.setEmail(memberInfo.getEmail());//to do: check with Martin which email to be used...email or epic email?
-		  memberWso.setFirstName(memberInfo.getFirstName());
+		  memberWso.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
 		  memberWso.setGender(memberInfo.getGender());
-		  memberWso.setLastName(memberInfo.getLastName());
-		  memberWso.setMiddleName(memberInfo.getMiddleName());
+		  memberWso.setLastName(WordUtils.capitalizeFully(memberInfo.getLastName()));
+		  memberWso.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));
 		  
 		  memberDO.setEmail(memberInfo.getEmail());
-		  memberDO.setFirstName(memberInfo.getFirstName());
+		  memberDO.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
 		  memberDO.setGender(memberInfo.getGender());
-		  memberDO.setLastName(memberInfo.getLastName());
-		  memberDO.setMiddleName(memberInfo.getMiddleName());
+		  memberDO.setLastName(WordUtils.capitalizeFully(memberInfo.getLastName()));
+		  memberDO.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));
 		  
 		  if(StringUtils.isBlank(memberInfo.getMrn()))
 		  {
@@ -2480,5 +2481,5 @@ public static String memberLogout(HttpServletRequest request, HttpServletRespons
 		logger.info("Exiting caregiverJoinLeaveMeeting");
 		return output;
 	}
-
+	
 }
