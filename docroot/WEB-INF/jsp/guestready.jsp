@@ -42,7 +42,7 @@
 		                    <span class="timestamp">${meeting.meetingTime} </span>
 		                    <span></span>
 		                  </div>
-		                   <span>${meeting.member.firstName} ${meeting.member.lastName}</span>
+		                   <span>${meeting.member.lastName}, ${meeting.member.firstName} ${meeting.member.middleName}</span>
 		                   <div class="accord-contents" style="display:block;margin-top:30px;">
 		                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0 || meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
 		                    <h2 class="label" style="float:none;margin-bottom:10px;">Additional Participants</h2>
