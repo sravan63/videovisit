@@ -22,45 +22,20 @@
     <p id="globalError">There was an error authenticating your account. Please sign in using temporary access.</p>
 </div> 
 <!--<p class="error error-login"><a name="errors"></a></p>-->
-<!-- 
+
 <script type="text/javascript">
 
 	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
+	var blockChrome = ($("#blockChrome").val() == 'true');
+	var blockFF = ($("#blockFF").val() == 'true');
 	
 	var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
-	/*US17810*/
 	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
 	
-	if(browserInfo.isChrome) {
-		/*if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
-			$('p#globalError').html(browserNotSupportedMsgForPatient);
-			$('#ssoLoginError p').css("display", "block");
-			
-			document.getElementById("username").disabled = true;
-			document.getElementById("password").disabled = true;
-
-			$('#temp-access').css('cursor', 'default');
-            $('#temp-access').css('opacity', '0.5');
-            $('#temp-access').css('pointer-events', 'none');
-		}
-		else if(navigator.appVersion.indexOf("Win") != -1) {
-			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
-				$('p#globalError').html(browserNotSupportedMsgForPatient);
-				$('#ssoLoginError p').css("display", "block");
-				
-				document.getElementById("username").disabled = true;
-				document.getElementById("password").disabled = true;
-
-				$('#temp-access').css('cursor', 'default');
-	            $('#temp-access').css('opacity', '0.5');
-	            $('#temp-access').css('pointer-events', 'none');
-			}
-		}*/
-	}
-	/*US18393*/
-	/*else if(browserInfo.isFirefox){
+	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
+	if(browserInfo.isChrome && blockChrome) {
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$('#ssoLoginError p').css("display", "block");
 		
@@ -70,6 +45,16 @@
 		$('#temp-access').css('cursor', 'default');
         $('#temp-access').css('opacity', '0.5');
         $('#temp-access').css('pointer-events', 'none');
-	}*/
-	/*US18393*/
-</script>-->
+	}else if(browserInfo.isFirefox && blockFF){
+		$('p#globalError').html(browserNotSupportedMsgForPatient);
+		$('#ssoLoginError p').css("display", "block");
+		
+		document.getElementById("username").disabled = true;
+		document.getElementById("password").disabled = true;
+
+		$('#temp-access').css('cursor', 'default');
+        $('#temp-access').css('opacity', '0.5');
+        $('#temp-access').css('pointer-events', 'none');
+	}
+	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
+</script>

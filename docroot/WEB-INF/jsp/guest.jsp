@@ -59,38 +59,32 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	}
 </style>
 
-<!-- <script type="text/javascript">
+<script type="text/javascript">
 	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
+	var blockChrome = ($("#blockChrome").val() == 'true');
+	var blockFF = ($("#blockFF").val() == 'true');
 	
-	/*US18393*/
-	if(browserInfo.isChrome || browserInfo.isFirefox) {
-		var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
-		browserNotSupportedMsgForPatient += "<br /><br />";
-		/*US17810*/
-		browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
-
-		if(navigator.appVersion.indexOf("Mac") != -1 && browserVersion >= 39) {
-			$('p#globalError').html(browserNotSupportedMsgForPatient);
-			$("p#globalError").removeClass("hide-me");
-			
-			document.getElementById("last_name").disabled = true;
-			$('#joinNowBtn').css('pointer-events', 'none');
-            $('#joinNowBtn').css('cursor', 'default');
-            $('#joinNowBtn').css('opacity', '0.5');
-			//document.getElementById("joinNowBtn").disabled = true;
-		}
-		else if(navigator.appVersion.indexOf("Win") != -1) {
-			if((browserInfo.is32BitOS == false && browserVersion >= 40) || (browserVersion >= 42)){
-				$('p#globalError').html(browserNotSupportedMsgForPatient);
-				$("p#globalError").removeClass("hide-me");
-
-				document.getElementById("last_name").disabled = true;
-				$('#joinNowBtn').css('pointer-events', 'none');
-	            $('#joinNowBtn').css('cursor', 'default');
-	            $('#joinNowBtn').css('opacity', '0.5');
-			}
-		}
+	var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
+	browserNotSupportedMsgForPatient += "<br /><br />";
+	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
+	
+	if(browserInfo.isChrome && blockChrome) {
+		$('p#globalError').html(browserNotSupportedMsgForPatient);
+		$("p#globalError").removeClass("hide-me");
+		
+		document.getElementById("last_name").disabled = true;
+		$('#joinNowBtn').css('pointer-events', 'none');
+        $('#joinNowBtn').css('cursor', 'default');
+        $('#joinNowBtn').css('opacity', '0.5');
+	}else if(browserInfo.isFirefox && blockFF) {
+		$('p#globalError').html(browserNotSupportedMsgForPatient);
+		$("p#globalError").removeClass("hide-me");
+		
+		document.getElementById("last_name").disabled = true;
+		$('#joinNowBtn').css('pointer-events', 'none');
+        $('#joinNowBtn').css('cursor', 'default');
+        $('#joinNowBtn').css('opacity', '0.5');
 	}
 	
-</script>-->
+</script>
