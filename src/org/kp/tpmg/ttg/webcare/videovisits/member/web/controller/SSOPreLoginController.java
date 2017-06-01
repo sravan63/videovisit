@@ -104,7 +104,7 @@ public class SSOPreLoginController implements Controller {
 			
 			if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
 			{
-				if("localhost".equalsIgnoreCase(request.getServerName()))
+				if(StringUtils.containsIgnoreCase(request.getServerName(), "localhost"))
 				{
 					logger.info("SSOPreLoginController -> cookie validation not required for " + request.getServerName());
 				}
@@ -135,26 +135,24 @@ public class SSOPreLoginController implements Controller {
 			}
 			logger.info("SSOPreLoginController -> ssoSession after cookie check=" + ssoSession);
 			
+			if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))
+					|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(blockFF))) {
+				logger.info("SSOPreLoginController -> browser blocked, so navigating to ssologin page");
+				modelAndView = new ModelAndView(getViewName());
+				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
+			}
 			//read ssoSession token from either cookie or context...depending upon the flow.
 			//Pass the ssoSession token to MeetingCommand.validateKpOrgSSOSession()
-			if(StringUtils.isNotBlank(ssoSession))
+			else if(StringUtils.isNotBlank(ssoSession))
 			{
 				String responseCode = MeetingCommand.validateKpOrgSSOSession(request, response, ssoSession);
 				if("200".equalsIgnoreCase(responseCode))
 				{
 					//	 navigate to myMeetings page
-					if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))
-							|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(blockFF))) 
-					{
-						logger.info("SSOPreLoginController -> sso session token valid but browser is blocked");
-						modelAndView = new ModelAndView(getViewName());
-						getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-					} else {
-						logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
-						ctx.setAuthenticated(true);
-						modelAndView = new ModelAndView("landingready");
-						getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
-					}
+					logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
+					ctx.setAuthenticated(true);
+					modelAndView = new ModelAndView("landingready");
+					getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
 				}
 				else
 				{
@@ -164,7 +162,7 @@ public class SSOPreLoginController implements Controller {
 				}			
 			}
 			else
-			{
+			{	
 				logger.info("SSOPreLoginController -> SSO session not present, so navigating to SSO login page");
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
@@ -237,4 +235,5 @@ public class SSOPreLoginController implements Controller {
 	public void setSubNavigation(String subNavigation) {
 		this.subNavigation = subNavigation;
 	}
+	
 }

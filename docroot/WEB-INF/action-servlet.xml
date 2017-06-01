@@ -164,7 +164,7 @@
 	<!-- Controllers -->
 	<bean id="logout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LogoffController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="ssologin" />
+		<property name="viewName" value="redirect:ssologin.htm" />
 		<property name="mobileViewName" value="mLogoutPage"/>
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="ssologin" />

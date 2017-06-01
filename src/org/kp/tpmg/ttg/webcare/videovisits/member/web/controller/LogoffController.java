@@ -1,11 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.net.URLDecoder;
 import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,24 +30,6 @@ public class LogoffController extends SimplePageController {
 	
 	private String mobileViewName;
 	private String myMeetingsViewName;
-	private String blockChrome = null;
-	private String blockFF = null;
-	
-	public LogoffController() {
-		try {
-			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.debug("LogoffController -> configuration: resource bundle exists -> video visit external properties file location: "
-							+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-			final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-			final FileInputStream fileInput = new FileInputStream(file);
-			final Properties appProp = new Properties();
-			appProp.load(fileInput);
-			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
-			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
-		} catch (Exception ex) {
-			logger.error("LogoffController -> Error while reading external properties file - " + ex.getMessage(), ex);
-		}
-	}
 	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
 				
@@ -60,7 +38,6 @@ public class LogoffController extends SimplePageController {
 		logger.info("LogoffController -> session Id=" + request.getSession().getId());
 		if(!isWirelessDeviceorTablet)
 		{
-			
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if(ctx == null)
 			{
@@ -127,16 +104,8 @@ public class LogoffController extends SimplePageController {
 			return new ModelAndView(mobileViewName);				
 		}
 		else{
-			logger.info("view name = " + modelAndView.getViewName());
-			if(StringUtils.isBlank(blockChrome)){
-				blockChrome = "true";
-			}
-			if(StringUtils.isBlank(blockFF)){
-				blockFF = "true";
-			}
-			modelAndView.addObject("blockChrome", blockChrome);
-			modelAndView.addObject("blockFF", blockFF);
-			return modelAndView;
+			logger.info("view name = " + getViewName());
+			return new ModelAndView(getViewName());
 		}
 	}
 
