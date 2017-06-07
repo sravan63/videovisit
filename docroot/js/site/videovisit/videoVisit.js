@@ -165,7 +165,10 @@ var VideoVisit =
 
 		
 		/* Setting min-heights */
-		var btnGroupHeight = $("#buttonGroup").outerHeight();
+		//DE9498 Kranti--commented
+		//var btnGroupHeight = $("#buttonGroup").outerHeight();
+		//DE9498 Kranti--new line
+		var btnGroupHeight = 550;
 
 		$("#video-main").css("min-height", btnGroupHeight);
 		$("#pluginContainer").css("min-height", btnGroupHeight);
