@@ -160,64 +160,6 @@
 					<input id="sendEmailPopUpFlag" type="hidden" value="false">
 				</div>
 				<!-- End of withjs div -->
-				<!--<div class="video-frames">
-					<div class="container" id="whole">
-						<div class="videoWrapperFull" id="VidyoSplash" style="display:none;" align="center">
-							<img src="vidyoplayer/img/logo-big.jpg" style="padding-top: 75px;">
-							<div id="loaderBar"><img src="vidyoplayer/img/loader-bar.gif" alt="Loading"/></div>
-						</div>
-
-						<div class="videoWrapperSmall" id="VidyoArea" align="center">
-						   	<div id="participantDiv0" class="participant-wrapper">
-						      	<video id="remoteVideo0" autoplay="" class="remotevideo-default"></video>
-						      	<span id="participant0" class="participant-title"></span>
-						   	</div>
-						   
-						   	<div id="participantDiv1" class="participant-wrapper">
-						      	<video id="remoteVideo1" autoplay="" class="remotevideo-default"></video>
-						    	<span id="participant1" class="participant-title"></span>
-						   	</div>
-						   
-						   	<div id="participantDiv2" class="participant-wrapper">
-						      	<video id="remoteVideo2" autoplay="" class="remotevideo-default"></video>
-						      	<span id="participant2" class="participant-title"></span>
-						   	</div>
-						   
-						   	<div id="participantDiv3" class="participant-wrapper">
-						      	<video id="remoteVideo3" autoplay="" class="remotevideo-default"></video>
-						      	<span id="participant3" class="participant-title"></span>
-						   	</div>
-							<div id="shareVideoDiv" class="sharevideo-wrapper">
-								<video id="shareVideo0" autoplay="" class="remotevideo-default"></video>
-								<span id="shareName" class="participant-title"></span>
-							</div>
-						 
-							<div id="selfViewDiv" class="local-participant-wrapper">
-								<video id="localVideo" autoplay="" muted class="localvideo-default"></video>
-								<span id="localNameDiv" class="local-participant-title">Self View</span>
-							</div>
-						</div>
-					</div>
-					<div class="buttons" id="Buttons" align="center" style="display: none;">
-						<button id="img_share_b"   onclick="toggleShare()">
-							 <img id="img_share" height="15px" src="./images/share.png">
-						</button>
-						<button id="img_camera_b"   onclick="toggleCameraIcon()">
-							 <img id="img_camera" height="15px" src="./images/camera.png">
-						</button>
-						<button id="img_mic_b"       onclick="toggleMicIcon()">
-							 <img id="img_mic" height="15px" src="./images/mic.png">
-						</button>
-						<button id="img_speaker_b"   onclick="toggleSpeakerIcon()">
-							 <img id="img_speaker" height="15px" src="./images/speaker.png">
-							 </button>
-						<button id="img_disconnect_b"onclick="sendLeaveEvent()">
-							 <img id="img_speaker" height="15px" src="./images/disconnect.png">
-						</button>
-					</div>
-				</div>
-				<div class="video-controls">
-				</div>-->
 				<!-- PROVIDER: START- meeting leave yes no dialog  -->
 		        <div id="dialog-block-override-meeting-leave" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
 		            <div class="modal-header">
@@ -270,20 +212,6 @@
 		            </div>
 		        </div>
 			    <!-- MEMBER AND GUEST: END - Quit Meeting Dialogs  -->
-			    <!-- US15318 - START [Popup displays after meeting disconnected] -->
-				<div id="dialog-block-meeting-disconnected" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
-				    <div class="modal-body">
-				        <div class="dialog-content-question">
-					        <p id="start_meeting_question" style="padding:15px;font-weight:bold;text-align:center;" class="question">
-								Your video visit has ended.
-							</p>
-				            <div class="pagination">
-				                <input type="button" style="width:150px;" value="Leave visit" id="meetingDisconnected" class="button">
-				            </div>
-				         </div>
-				    </div>
-				</div>
-				<!-- US15318 - END -->
 			</div>
 			<div id="video-sidebar">
 				<div id="video-sidebar-banner"></div>
@@ -345,6 +273,20 @@
 			</div>
 		</div>
 	</div>
+	<!-- US15318 - START [Popup displays after meeting disconnected] -->
+	<div id="dialog-block-meeting-disconnected" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
+	    <div class="modal-body">
+	        <div class="dialog-content-question">
+		        <p id="start_meeting_question" style="padding:15px;font-weight:bold;text-align:center;" class="question">
+					Your video visit has ended.
+				</p>
+	            <div class="pagination">
+	                <input type="button" style="width:150px;" value="Leave visit" id="meetingDisconnected" class="button">
+	            </div>
+	         </div>
+	    </div>
+	</div>
+	<!-- US15318 - END -->
 <link rel="stylesheet" type="text/css" href="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.css" media="screen" />
 
 	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css"> -->
