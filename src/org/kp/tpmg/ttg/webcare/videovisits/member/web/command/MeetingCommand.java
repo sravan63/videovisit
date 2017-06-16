@@ -773,7 +773,7 @@ public class MeetingCommand {
 		try	{
 			String meetingCode = request.getParameter("meetingCode");
 			logger.info("Entered MeetingCommand.endCaregiverMeetingSession - meetingCode = " + meetingCode);
-			if (StringUtils.isNotBlank(meetingCode)) {
+			if (ctx != null && ctx.getVideoVisit() != null && StringUtils.isNotBlank(meetingCode)) {
 				output = WebService.endCaregiverMeetingSession(meetingCode, ctx.getVideoVisit().getPatientLastName(), false, request.getSession().getId());
 			}	
 			if ( output != null )		
@@ -786,7 +786,7 @@ public class MeetingCommand {
 		}
 		catch (Exception e) {
 			logger.error("MeetingCommand->endCaregiverMeetingSession : System Error :" + e.getMessage(), e);
-			jsonString = JSONObject.fromObject(new SystemError()).toString();
+			jsonString = JSONObject.fromObject(new SystemError()).toString();   
 		}
 		logger.info("Exit MeetingCommand -> endCaregiverMeetingSession ");
 		return jsonString;
