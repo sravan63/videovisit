@@ -2287,26 +2287,29 @@ public static String launchMeetingForMemberDesktop(HttpServletRequest request, H
 	String megaMeetingDisplayName = null;
 	String output = null;
 	WebAppContext ctx = WebAppContext.getWebAppContext(request);
-
-	try {
-		if (request.getParameter("meetingId") != null && !request.getParameter("meetingId").equals("")) {
-			meetingId = Long.parseLong(request.getParameter("meetingId"));
+	
+	if(ctx != null){
+		try {
+			if (request.getParameter("meetingId") != null && !request.getParameter("meetingId").equals("")) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			if (request.getParameter("megaMeetingDisplayName") != null
+					&& !request.getParameter("megaMeetingDisplayName").equals("")) {
+				megaMeetingDisplayName = request.getParameter("megaMeetingDisplayName");
+			}
+	
+			logger.info("MeetingCommand:launchMeetingForMemberDesktop: megaMeetingDisplayName=" + megaMeetingDisplayName
+					+ " meetingId:" + meetingId);
+			final String mrn = ctx.getMember() != null ? ctx.getMember().getMrn8Digit() : null; 
+			output = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName,
+					mrn, request.getSession().getId());
+			if (output != null) {
+				logger.info("launchMeetingForMemberDesktop: = " + output.toString());
+			}
+		} catch (Exception e) {
+			logger.error("System Error" + e.getMessage(), e);
+			output = JSONObject.fromObject(new SystemError()).toString();
 		}
-		if (request.getParameter("megaMeetingDisplayName") != null
-				&& !request.getParameter("megaMeetingDisplayName").equals("")) {
-			megaMeetingDisplayName = request.getParameter("megaMeetingDisplayName");
-		}
-
-		logger.info("MeetingCommand:launchMeetingForMemberDesktop: megaMeetingDisplayName=" + megaMeetingDisplayName
-				+ " meetingId:" + meetingId);
-		output = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName,
-				ctx.getMember().getMrn8Digit(), request.getSession().getId());
-		if (output != null) {
-			logger.info("launchMeetingForMemberDesktop: = " + output.toString());
-		}
-	} catch (Exception e) {
-		logger.error("System Error" + e.getMessage(), e);
-		output = JSONObject.fromObject(new SystemError()).toString();
 	}
 	logger.info("Exiting launchMeetingForMemberDesktop");
 	return output;
