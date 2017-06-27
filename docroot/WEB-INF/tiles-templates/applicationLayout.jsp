@@ -27,9 +27,11 @@
         <c:forEach var='item' items='${cssDependencies}'>
         <link rel="stylesheet" type="text/css" href="${item}" />
         </c:forEach>
+        <!-- DE10221 start -->
         <link rel="stylesheet" type="text/css" href="css/site/global/base.css" />
 		<link rel="stylesheet" type="text/css" href="css/site/global/structure.css" />
 		<link rel="stylesheet" type="text/css" href="css/site/global/print.css" />
+		<!-- DE10221 End -->
         <!--End CSS-->
 
         <!--Start JavaScript-->
