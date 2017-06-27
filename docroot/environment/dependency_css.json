@@ -20,11 +20,7 @@
                 	"css/site/sso/ssologin.css"
                 ],
                 "logout" : [],
-                "guestlogout" : [
-                	"css/site/global/base.css",
-			        "css/site/global/structure.css",
-			        "css/site/global/print.css"
-                ]
+                "guestlogout" : []
             }
         },
         "landingnone" : {
