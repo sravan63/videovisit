@@ -5,7 +5,10 @@
         "unminimized" : []
     },
     "global" : [
-    	"css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+    	"css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css",
+    	"css/site/global/base.css",
+        "css/site/global/structure.css",
+        "css/site/global/print.css"
     ],
     "page"   : {
         "home" : {
