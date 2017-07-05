@@ -31,7 +31,7 @@
         <c:if test="${meeting.isRunningLate == true}">
           <!--DE9375 Fix-->
           <!-- Kranti US19234 start -->
-            <div class="running-late-indicator">We're sorry, your doctor is running late. New start time is <b style="font-size:20px;" class="running-late-timestamp-${meeting.meetingId}">${meeting.runLateMeetingTime}</b>.</div>
+            <div class="running-late-indicator">We're sorry, your doctor is running late. New start time is <span style="font-size:20px;font-weight: 500;" class="running-late-timestamp-${meeting.meetingId}">${meeting.runLateMeetingTime}</span>.</div>
           <!-- Kranti US19234 end -->
             <script type="text/javascript">
               var cls = ".running-late-timestamp-"+${meeting.meetingId};
