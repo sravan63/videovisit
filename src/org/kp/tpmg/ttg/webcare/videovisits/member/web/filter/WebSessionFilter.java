@@ -22,7 +22,6 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 
 public class WebSessionFilter implements Filter
@@ -258,7 +257,7 @@ public class WebSessionFilter implements Filter
 							
 							if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
 							{
-								if("localhost".equalsIgnoreCase(req.getServerName()) || "ttg-dev-app-01.har.ca.kp.org".equalsIgnoreCase(req.getServerName()) || "ttg-dv-app-1.har.ca.kp.org".equalsIgnoreCase(req.getServerName()))
+								if("localhost".equalsIgnoreCase(req.getServerName()) || "dev2.mydoctor.kaiserpermanente.org".equalsIgnoreCase(req.getServerName()))
 								{
 									logger.info("WebSessionFilter -> cookie validation not required for " + req.getServerName());
 								}
@@ -275,6 +274,7 @@ public class WebSessionFilter implements Filter
 							{
 								try
 								{
+									logger.info("WebSessionFilter -> sso cookie before decoding: " + ssoCookie.getValue());
 									String ssoCookieVal = URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
 									logger.info("WebSessionFilter -> isAuthenticated in context: " + ctx.isAuthenticated());
 									
@@ -285,6 +285,7 @@ public class WebSessionFilter implements Filter
 									}
 									else
 									{
+										logger.info("WebSessionFilter -> sso cookie: " + ssoCookieVal);
 										String responseCode = MeetingCommand.validateKpOrgSSOSession(req, resp, ssoCookieVal);
 										if("200".equalsIgnoreCase(responseCode))
 										{
