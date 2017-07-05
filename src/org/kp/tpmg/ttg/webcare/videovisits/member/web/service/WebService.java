@@ -762,7 +762,7 @@ public class WebService{
 				scanner.close();  
 				logger.info("performKpOrgSSOSignOn -> output from service: " + output);
 				kpSsoSession = connection.getHeaderField("ssosession");
-				logger.debug("performKpOrgSSOSignOn -> kpSsoSession from response header=" + kpSsoSession);
+				logger.info("performKpOrgSSOSignOn -> kpSsoSession from response header=" + kpSsoSession);
             }
             
             if(StringUtils.isNotBlank(output))
