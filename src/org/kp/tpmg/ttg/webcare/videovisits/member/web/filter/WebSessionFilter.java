@@ -285,7 +285,7 @@ public class WebSessionFilter implements Filter
 									}
 									else
 									{
-										/*logger.info("WebSessionFilter -> sso cookie: " + ssoCookieVal);
+										logger.info("WebSessionFilter -> sso cookie: " + ssoCookieVal);
 										String responseCode = MeetingCommand.validateKpOrgSSOSession(req, resp, ssoCookieVal);
 										if("200".equalsIgnoreCase(responseCode))
 										{
@@ -298,7 +298,7 @@ public class WebSessionFilter implements Filter
 											boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(req, resp);
 											logger.info("WebSessionFilter -> isSSOSignedOff=" + isSSOSignedOff);
 											resp.sendRedirect("logout.htm");
-										}*/
+										}
 									}
 								}
 								catch(Exception ex)
