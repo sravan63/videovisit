@@ -221,5 +221,13 @@
     </servlet-mapping>
 	
 	-->
+	<servlet>
+		<servlet-name>emailAction</servlet-name>
+		<servlet-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.servlet.EmailActionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>emailAction</servlet-name>
+		<url-pattern>/emailAction.png</url-pattern>
+	</servlet-mapping>
 	
 </web-app>

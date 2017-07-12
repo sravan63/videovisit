@@ -60,6 +60,7 @@ import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
+import org.kp.tpmg.videovisit.model.meeting.provider.UpdateEmailActionInput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateInput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
@@ -1978,7 +1979,45 @@ public class WebService{
 		logger.info("Exiting caregiverJoinLeaveMeeting");
 		return jsonOutput;
 	}
+	
+	public static String updateEmailAction(String meetingId, String userType, String action, String sessionId) {
+		logger.info("Entered updateEmailAction");
+		final Gson gson = new Gson();
+		String jsonOutput = null;
+		UpdateEmailActionInput input = null;
 
+		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(userType) || StringUtils.isBlank(sessionId)) {
+			logger.warn("updateEmailAction -> missing input attributes");
+			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+			final ServiceCommonOutput service = new ServiceCommonOutput();
+			service.setName(ServiceUtil.UPDATE_EMAIL_ACTION);
+			output.setService(service);
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			service.setStatus(status);
+			jsonOutput = gson.toJson(output);
+		} else {
+			try {
+				input = new UpdateEmailActionInput();
+				input.setMeetingId(meetingId);
+				input.setUserType(userType);
+				input.setAction(action);
+				input.setClientId(WebUtil.clientId);
+				input.setSessionId(sessionId);
+				final String inputJsonStr = gson.toJson(input);
+				logger.info("updateEmailAction -> inputJsonStr: " + inputJsonStr);
+				jsonOutput = callVVRestService(ServiceUtil.UPDATE_EMAIL_ACTION, inputJsonStr);
+				logger.info("updateEmailAction -> jsonOutput: " + jsonOutput);
+
+			} catch (Exception e) {
+				logger.error("updateEmailAction -> Web Service API error", e);
+			}
+		}
+		logger.info("Exiting updateEmailAction");
+		return jsonOutput;
+	}
+	
 	public static String logVendorMeetingErrors(final long meetingId, final String userType, final String userId ,final String eventName, 
 			final String errorDescription, final String sessionId) {
 		logger.info("Entered logVendorMeetingErrors");
@@ -2020,5 +2059,4 @@ public class WebService{
 		logger.info("Exiting logVendorMeetingErrors");
 		return jsonOutput;
 	}
-
 }

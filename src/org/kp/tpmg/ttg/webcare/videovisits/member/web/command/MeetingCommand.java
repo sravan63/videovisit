@@ -21,6 +21,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionSer
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
+import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
@@ -2483,6 +2484,29 @@ public static String memberLogout(HttpServletRequest request, HttpServletRespons
 		}
 		logger.info("Exiting caregiverJoinLeaveMeeting");
 		return output;
+	}
+	
+	public static void updateEmailAction(final String meetingId, final String userType, final String action, final String sessionId){
+		logger.info("Entered updateEmailAction");
+		final Gson gson = new Gson();
+		String statusCode = "";
+		try {
+			String output = WebService.updateEmailAction(meetingId, userType, action, sessionId);
+			final ServiceCommonOutputJson outputJson = gson.fromJson(output, ServiceCommonOutputJson.class);
+			if (outputJson != null && outputJson.getService() != null && outputJson.getService().getStatus() != null) {
+				statusCode = outputJson.getService().getStatus().getCode();
+				if ("200".equalsIgnoreCase(statusCode)) {
+					logger.info("updateEmailAction : Successfully updated about email interaction for meeting : " + meetingId);
+				} else {
+					logger.info("updateEmailAction : Failed to update about email interaction for meeting : "
+							+ meetingId + ", Status from Servcie API : [Code : " + outputJson.getService().getStatus().getCode() + ", Message : "
+							+ outputJson.getService().getStatus().getMessage() + "].");
+				}
+			}
+		} catch ( Exception e) {
+			logger.error("updateEmailAction -> System Error", e);
+		}
+		logger.info("Exiting updateEmailAction");
 	}
 	
 	public static String logVendorMeetingErrors(final HttpServletRequest request, final HttpServletResponse response) {
