@@ -63,6 +63,7 @@ import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateInput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
+import org.kp.tpmg.videovisit.model.notification.VendorMeetingErrorInput;
 import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
