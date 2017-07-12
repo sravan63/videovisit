@@ -375,6 +375,7 @@ src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LaunchMeetingForMe
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LaunchMeetingForMemberDesktopController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LaunchMeetingForMemberGuestController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LaunchMemberProxyMeetingForMemberController.java -text svneol=unset#text/plain
+src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogVendorMeetingErrorsController.java -text svneol=unset#text/plain
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoffController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/LogoutController.java -text
 src/org/kp/tpmg/ttg/webcare/videovisits/member/web/controller/MobileLoginController.java -text svneol=unset#text/plain

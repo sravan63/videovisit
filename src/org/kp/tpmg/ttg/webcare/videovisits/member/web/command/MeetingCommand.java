@@ -2485,4 +2485,24 @@ public static String memberLogout(HttpServletRequest request, HttpServletRespons
 		return output;
 	}
 	
+	public static String logVendorMeetingErrors(final HttpServletRequest request, final HttpServletResponse response) {
+		logger.info("Entered logVendorMeetingErrors");
+		String output = null;
+		long meetingId = 0;
+		final String userType = request.getParameter("userType");
+		final String userId = request.getParameter("userId");
+		final String eventName = request.getParameter("eventName");
+		final String errorDescription = request.getParameter("errorDescription");
+		final String sessionId = request.getSession().getId();
+		try {
+			meetingId = Long.parseLong(request.getParameter("meetingId"));
+			output = WebService.logVendorMeetingErrors(meetingId, userType, userId, eventName, errorDescription,
+					sessionId);
+		} catch (Exception e) {
+			output = (new Gson().toJson(new SystemError()));
+			logger.error("logVendorMeetingErrors System Error", e);
+		}
+		logger.info("Exiting logVendorMeetingErrors");
+		return output;
+	}
 }

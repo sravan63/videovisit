@@ -25,5 +25,5 @@ public class ServiceUtil {
 	public static final String MEMBER_LOGOUT = "memberLogout";
 	public static final String GET_PROVIDER_RUNNING_LATE_DETAILS = "getProviderRunningLateDetails";
 	public static final String JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST = "joinLeaveMeetingForMemberGuest";
-
+	public static final String  LOG_VENDOR_MEETING_ERRORS = "logVendorMeetingErrors";
 }

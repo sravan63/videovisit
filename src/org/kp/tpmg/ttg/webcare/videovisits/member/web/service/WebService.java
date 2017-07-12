@@ -1978,4 +1978,46 @@ public class WebService{
 		return jsonOutput;
 	}
 
+	public static String logVendorMeetingErrors(final long meetingId, final String userType, final String userId ,final String eventName, 
+			final String errorDescription, final String sessionId) {
+		logger.info("Entered logVendorMeetingErrors");
+		final Gson gson = new Gson();
+		String jsonOutput = null;
+		VendorMeetingErrorInput input = null;
+
+		if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
+			logger.warn("logVendorMeetingErrors -> missing input attributes");
+			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+			final ServiceCommonOutput service = new ServiceCommonOutput();
+			service.setName(ServiceUtil.LOG_VENDOR_MEETING_ERRORS);
+			output.setService(service);
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			output.getService().setStatus(status);
+			jsonOutput = gson.toJson(output);
+		} else {
+			try {
+				input = new VendorMeetingErrorInput();
+				input.setMeetingId(meetingId);
+				input.setUserType(userType);
+				input.setUserId(userId);
+				input.setEventName(eventName);
+				input.setErrorDescription(errorDescription);
+				input.setClientId(WebUtil.clientId);
+				input.setSessionId(sessionId);
+
+				final String inputJsonStr = gson.toJson(input);
+				logger.info("logVendorMeetingErrors -> inputJsonStr: " + inputJsonStr);
+				jsonOutput = callVVRestService(ServiceUtil.LOG_VENDOR_MEETING_ERRORS, inputJsonStr);
+				logger.info("logVendorMeetingErrors -> jsonOutput: " + jsonOutput);
+
+			} catch (Exception e) {
+				logger.error("logVendorMeetingErrors -> Web Service API error", e);
+			}
+		}
+		logger.info("Exiting logVendorMeetingErrors");
+		return jsonOutput;
+	}
+
 }

@@ -24,7 +24,8 @@ VIDEO_VISITS.Path = {
         userPresentInMeeting: 'userPresentInMeeting.json',
         videoVisit: 'videoVisit.htm',
         launchMemberProxyMeeting: 'launchMemberProxyMeeting.json',
-        launchMeetingForMemberDesktop : 'launchMeetingForMemberDesktop.json'
+        launchMeetingForMemberDesktop : 'launchMeetingForMemberDesktop.json',
+        logVendorMeetingErrors : 'logVendorMeetingErrors.json'
     },    
     guestglobal : {
         error : 'guesterror.htm',
