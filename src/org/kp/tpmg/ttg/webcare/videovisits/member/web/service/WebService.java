@@ -1061,114 +1061,69 @@ public class WebService{
 		 return isSignedOff;
 	}
 	
-	public static String callVVRestService(String operationName, String input) 
-	{
-		 logger.info("Entered callVVRestService");
-		 HttpURLConnection connection = null; 
-		 InputStream content = null;	
-		 InputStream errorStream = null;		
-		 Scanner scanner = null; 
-		 OutputStream os = null;			 
-		 String output = null;		
-		  try 
-		  {
-	        	
-            URL url = new URL(videoVisitRestServiceUrl + operationName);
-            String authStr = serviceSecurityUsername + ":" + serviceSecurityPassword;
-            logger.info("callVVRestService url: " + videoVisitRestServiceUrl + operationName);
-            String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "application/json");
-            connection.setRequestProperty("Authorization", "Basic " + authEncoded.trim());
-            connection.setRequestProperty("Accept","*/*");
-            connection.setDoOutput(true);
-            
-         /*   int statusCode = connection.getResponseCode();
-            logger.info("callVVRestService -> Status code : " + statusCode);
-            if (statusCode != 200 && statusCode != 201 && statusCode != 202)
-            {
-	            errorStream = connection.getErrorStream();
-	            if (errorStream != null) 
-	            {
-	              String errorMessage = convertInputStreamToString(errorStream);
-	              logger.info("callVVRestService -> Error message :" + errorMessage);
-	            }
-	            				
-            }
-            else
-            {  */         
-	            os = connection.getOutputStream();
-	            os.write(input.getBytes());
-	            os.flush();
-	            content = connection.getInputStream();				
-				scanner = new Scanner(content);
-				scanner.useDelimiter("\\Z");
-				output = scanner.next();
-				scanner.close();
-           // }
-				
-	      }
-		  catch(Exception e) 
-		  {
-        	logger.error("callVVRestService -> Web Service API error:" + e.getMessage(), e);
-		  }
-		  finally
-		  {
-	        	
-			    try
-	        	{
-	        		if ( errorStream != null )
-	        		{
-	        			errorStream.close();	
-	        		}
-	        	}
-	        	catch(Exception e)
-	        	{
-	        		logger.warn("callVVRestService -> error while closing error inputStream.");
-	        	}
-	        	
-	        	try
-	        	{
-	        		if ( content != null )
-	        		{
-	        			content.close();	
-	        		}
-	        	}
-	        	catch(Exception e)
-	        	{
-	        		logger.warn("callVVRestService -> error while closing inputStream.");
-	        	}
-	        	
-			    try
-	        	{
-	        		if ( scanner != null )
-	        		{
-	        			scanner.close();	
-	        		}
-	        	}
-	        	catch(Exception e)
-	        	{
-	        		logger.warn("callVVRestService -> error while closing scanner.");        		
-	        	}
-	        	
-	        	try
-	        	{
-	        		if ( os != null )
-	        		{
-		        		os.close();	
-	        		}
-	        	}
-	        	catch(Exception e)
-	        	{
-	        		logger.warn("callVVRestService -> error while closing OutputStream.");
-	        	}
-	        	disconnectURLConnection(connection);
-	       }
-		   logger.info("Exiting callVVRestService");
-		   return output;
-		  
-	  }
+	/**
+	 * @param operationName
+	 * @param input
+	 * @return
+	 */
+	public static String callVVRestService(final String operationName, final String input) {
+		logger.info("Entered callVVRestService");
+		HttpURLConnection connection = null;
+		InputStream content = null;
+		Scanner scanner = null;
+		OutputStream os = null;
+		String output = null;
+		try {
+			final URL url = new URL(videoVisitRestServiceUrl + operationName);
+			final String authStr = serviceSecurityUsername + ":" + serviceSecurityPassword;
+			logger.info("callVVRestService url: " + videoVisitRestServiceUrl + operationName);
+			final String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
+			connection = (HttpURLConnection) url.openConnection();
+			connection.setRequestMethod("POST");
+			connection.setRequestProperty("Content-Type", "application/json");
+			connection.setRequestProperty("Authorization", "Basic " + authEncoded.trim());
+			connection.setRequestProperty("Accept", "*/*");
+			connection.setDoOutput(true);
+
+			os = connection.getOutputStream();
+			os.write(input.getBytes());
+			os.flush();
+			content = connection.getInputStream();
+			scanner = new Scanner(content);
+			scanner.useDelimiter("\\Z");
+			output = scanner.next();
+			scanner.close();
+		} catch (Exception e) {
+			logger.error("callVVRestService -> Web Service API error:" + e.getMessage(), e);
+		} finally {
+			try {
+				if (content != null) {
+					content.close();
+				}
+			} catch (Exception e) {
+				logger.warn("callVVRestService -> error while closing inputStream.");
+			}
+
+			try {
+				if (scanner != null) {
+					scanner.close();
+				}
+			} catch (Exception e) {
+				logger.warn("callVVRestService -> error while closing scanner.");
+			}
+
+			try {
+				if (os != null) {
+					os.close();
+				}
+			} catch (Exception e) {
+				logger.warn("callVVRestService -> error while closing OutputStream.");
+			}
+			disconnectURLConnection(connection);
+		}
+		logger.info("Exiting callVVRestService");
+		return output;
+	}
 	 
 	private static String convertInputStreamToString(InputStream content)
 	{
@@ -1196,36 +1151,24 @@ public class WebService{
 	        }
 	    }
 	  }
-
 	
-	  private static void disconnectURLConnection(URLConnection connection)
-	  {
-		  	logger.info("Entered disconnectURLConnection");
-		  	try
-			{
-				if(connection != null)
-				{
-					if ((connection instanceof HttpsURLConnection)) {
-				      HttpsURLConnection httpsConn = (HttpsURLConnection)connection;
-				      if (httpsConn != null) {
-				        httpsConn.disconnect();
-				        httpsConn = null;
-				      }
-				    } else if ((connection instanceof HttpURLConnection)) {
-				      HttpURLConnection httpConn = (HttpURLConnection)connection;
-				      if (httpConn != null) {
-				        httpConn.disconnect();
-				        httpConn = null;
-				      }
-				    }
+	private static void disconnectURLConnection(URLConnection connection) {
+		logger.info("Entered disconnectURLConnection");
+		try {
+			if (connection != null) {
+				if ((connection instanceof HttpsURLConnection)) {
+					((HttpsURLConnection) connection).disconnect();
+					connection = null;
+				} else if ((connection instanceof HttpURLConnection)) {
+					((HttpURLConnection) connection).disconnect();
+					connection = null;
 				}
 			}
-			catch(Exception ex)
-			{
-				logger.warn("disconnectURLConnection -> Error while disconnecting URL connection.");
-			}
-		  	logger.info("Exiting disconnectURLConnection");
-	  }
+		} catch (Exception ex) {
+			logger.warn("disconnectURLConnection -> Error while disconnecting URL connection.");
+		}
+		logger.info("Exiting disconnectURLConnection");
+	}
 	  
 	  /**
 	 * @param meetingId
