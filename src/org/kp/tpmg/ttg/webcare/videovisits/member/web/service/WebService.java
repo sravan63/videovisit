@@ -1945,7 +1945,7 @@ public class WebService{
 				input = new UpdateEmailActionInput();
 				input.setMeetingId(meetingId);
 				input.setUserType(userType);
-				input.setAction(action);
+				input.setUserAction(action);
 				input.setClientId(WebUtil.clientId);
 				input.setSessionId(sessionId);
 				final String inputJsonStr = gson.toJson(input);
