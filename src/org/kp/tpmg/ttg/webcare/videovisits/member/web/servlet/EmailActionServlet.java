@@ -30,11 +30,16 @@ public class EmailActionServlet extends HttpServlet {
 		response.setContentType("image/x-png");
 		ServletOutputStream out = null;
 		String meetingId = "";
+		String userType = "";
+		String userAction = "";
 		try {
 			meetingId = request.getParameter("meetingId");
-			logger.info("EmailActionServlet : Input [meetingId : " + meetingId + ", userType : " + request.getParameter("userType") + ", action : "+ request.getParameter("userAction") + ", sessionId : " + request.getSession().getId() + "]");
+			userType = request.getParameter("userType");
+			userAction = request.getParameter("userAction");
+			logger.info("EmailActionServlet : Input [meetingId : " + meetingId + ", userType : " + userType
+					+ ", userAction : " + userAction + ", sessionId : " + request.getSession().getId() + "]");
 			
-			MeetingCommand.updateEmailAction(meetingId, request.getParameter("userType"), request.getParameter("userAction"), request.getSession().getId());
+			MeetingCommand.updateEmailAction(meetingId, userType, userAction, request.getSession().getId());
 			
 			out = response.getOutputStream();
 			final int width = 1, height = 1;
@@ -44,7 +49,6 @@ public class EmailActionServlet extends HttpServlet {
 			graphics2d.fillRect(0, 0, width, height);
 			graphics2d.drawString("", width, height);
 			graphics2d.dispose();
-//			JPEGCodec.createJPEGEncoder(out).encode(image);
 			ImageIO.write(image, "png", out);
 		} catch (Exception e) {
 			logger.error("EmailActionServlet : Error updating email interation for meeting : " + meetingId, e);

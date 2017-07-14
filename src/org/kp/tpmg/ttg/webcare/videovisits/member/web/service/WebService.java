@@ -1929,7 +1929,7 @@ public class WebService{
 		String jsonOutput = null;
 		UpdateEmailActionInput input = null;
 
-		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(userType) || StringUtils.isBlank(sessionId)) {
+		if (StringUtils.isBlank(meetingId)) {
 			logger.warn("updateEmailAction -> missing input attributes");
 			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 			final ServiceCommonOutput service = new ServiceCommonOutput();
