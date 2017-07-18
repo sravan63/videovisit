@@ -24,8 +24,7 @@ VIDEO_VISITS.Path = {
         userPresentInMeeting: 'userPresentInMeeting.json',
         videoVisit: 'videoVisit.htm',
         launchMemberProxyMeeting: 'launchMemberProxyMeeting.json',
-        launchMeetingForMemberDesktop : 'launchMeetingForMemberDesktop.json',
-        logVendorMeetingErrors : 'logVendorMeetingErrors.json'
+        launchMeetingForMemberDesktop : 'launchMeetingForMemberDesktop.json'
     },    
     guestglobal : {
         error : 'guesterror.htm',
@@ -57,7 +56,8 @@ VIDEO_VISITS.Path = {
         logout : 'logout.htm',
 		setKPHCConferenceStatus: 'setKPHCConferenceStatus.json',
         providerRunningLateInfo: 'providerRunningLateInfo.json',
-        caregiverJoinMeeting: 'caregiverJoinMeeting.json'
+        caregiverJoinMeeting: 'caregiverJoinMeeting.json',
+        logVendorMeetingErrors : 'logVendorMeetingErrors.json'
     },
     logout : {
         logoutjson: 'logout.json'
