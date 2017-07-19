@@ -197,7 +197,11 @@ public class MeetingCommand {
 				}
 	
 				if (meetingId == 0) {
-					meetingId = (ctx.getMeetingId() <= 0) ? Long.parseLong(ctx.getVideoVisit().getMeetingId()) : ctx.getMeetingId();
+					if(ctx.getMeetingId() <= 0){
+						meetingId = ctx.getVideoVisit() != null ? WebUtil.convertStringToLong(ctx.getVideoVisit().getMeetingId()) : 0;
+					} else {
+						meetingId = ctx.getMeetingId();
+					}
 				}
 	
 				if (ctx.getMember() != null) {
@@ -218,7 +222,7 @@ public class MeetingCommand {
 		logger.info("Exit updateEndMeetingLogout ");
 		return jsonString;
 	}
-
+	
 	/**
 	 * Method to invokes rest retrieveMeetingForCaregiver service and adds the meeting information into the web context
 	 * and returns MeetingDetailsOutput JSOn 

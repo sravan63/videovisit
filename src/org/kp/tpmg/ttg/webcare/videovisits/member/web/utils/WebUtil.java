@@ -299,4 +299,16 @@ public class WebUtil {
 	public static String getDeviceOsVersion(){
 		return StringUtils.isBlank(System.getProperty("os.version")) ? DEFAULT_DEVICE : System.getProperty("os.version");
 	}
+	
+	public static long convertStringToLong(String value) {
+		long returnVal = 0;
+		if (StringUtils.isNotBlank(value)) {
+			try {
+				returnVal = Long.parseLong(value);
+			} catch (Exception e) {
+				logger.error("convertStringToLong -> error while converting string value to long: " + value, e);
+			}
+		}
+		return returnVal;
+	}
 }
