@@ -106,7 +106,9 @@
 									<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
 										<a class="btn btn-large btn-hideDetails" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;cursor: pointer;"></a>
 									</span>
-									<a class="btn btn-large btn-config" title="Settings" id="inCallButtonToggleConfig" style="display:block;cursor: pointer;"></a>
+									<!-- US22684 -->
+									<!-- <a class="btn btn-large btn-config" title="Settings" id="inCallButtonToggleConfig" style="display:block;cursor: pointer;"></a> -->
+									<!-- US22684 -->
 										<!-- Configuration panel -->
 										<div class="well hide" id="configurationWrap">
 												<!-- See configurationTemplate in main.config.js-->
