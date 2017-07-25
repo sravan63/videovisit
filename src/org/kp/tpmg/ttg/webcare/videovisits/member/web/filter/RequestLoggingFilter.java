@@ -27,6 +27,7 @@ public class RequestLoggingFilter implements Filter {
 		StringBuffer sb = new StringBuffer();
 		sb.append(">>>> CLIENT SIDE REQUEST: ");
 		sb.append(request.getRequestURL());
+		logger.info(sb); 
 		String queryString = request.getQueryString();
 		if (queryString != null) {
 			sb.append("?");
@@ -38,7 +39,7 @@ public class RequestLoggingFilter implements Filter {
 			sb.append(s).append("=").append(sreq.getParameter(s)).append(", ");
 		}
 		sb.append("] <<<<");
-		logger.info(sb);
+		logger.debug(sb);
 		chain.doFilter(sreq, sresp);
 	}
 }
