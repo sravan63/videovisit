@@ -1386,7 +1386,7 @@ public static String memberLogout(HttpServletRequest request, HttpServletRespons
 	public static String logVendorMeetingErrors(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info("Entered logVendorMeetingErrors");
 		String output = null;
-		final String meetingId = request.getHeader("meetingId");
+		final String meetingId = request.getParameter("meetingId");
 		final String userType = request.getParameter("userType");
 		final String userId = request.getParameter("userId");
 		final String eventName = request.getParameter("eventName");
