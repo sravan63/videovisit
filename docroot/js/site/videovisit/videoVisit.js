@@ -153,6 +153,46 @@ $(document).ready(function() {
 
 var VideoVisit =
 {
+	sendVendorErrorNotification: function(params){
+		var userId;
+		var userType;
+		var eventName = (params[1])?params[1]:'';
+		var errorDesc = (params[2])?params[2]:'';
+		var isCareGiver = ($("#caregiverId").val().trim() != "" && $("#meetingCode").val().trim() != "");
+		console.log("sendErrorNotification :: params :: "+params);
+		if(isCareGiver == true){
+			/*var guestFirstName=$("#inviteGuestForm").find("#firstNameGuest").val().trim();
+			var guestLastName=$("#inviteGuestForm").find('#lastNameGuest').val().trim();
+	       	var guestEmail=$("#inviteGuestForm").find('#inviteGuestEmail').val();*/
+	       	userType = 'caregiver';
+	       	userId = $("#caregiverId").val().trim();
+		}else{
+			userId = $("#mrn").val().trim();
+			userType = 'member';
+		}
+		var errorData = {
+			'meetingId':$("#meetingId").val(),
+			'userType': userType,
+			'userId': userId,
+			'eventName':eventName,
+			'errorDescription':errorDesc
+		};
+
+		$.ajax({
+			type: "GET",
+			url: VIDEO_VISITS.Path.visit.logVendorMeetingErrors,
+			cache: false,
+			dataType: "json",
+			data: errorData,
+			success: function(result, textStatus){
+				console.log("sendErrorNotification :: result :: "+result);
+			},
+			error: function(textStatus){
+				console.log("sendErrorNotification :: error :: "+textStatus);
+			}
+		});
+
+	},
 	setMinDimensions: function(){
 
 		var btnContainerWidth = $("#btnContainer").width();
