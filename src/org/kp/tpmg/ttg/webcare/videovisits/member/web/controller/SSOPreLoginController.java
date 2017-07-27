@@ -41,6 +41,7 @@ public class SSOPreLoginController implements Controller {
 	private String viewName;
 	private String navigation;
 	private String subNavigation;
+	private String vidyoWebrtcSessionManager = null;
 	private String blockChrome = null;
 	private String blockFF = null;
 	
@@ -53,6 +54,10 @@ public class SSOPreLoginController implements Controller {
 			final FileInputStream fileInput = new FileInputStream(file);
 			final Properties appProp = new Properties();
 			appProp.load(fileInput);
+			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
+    		if(StringUtils.isBlank(vidyoWebrtcSessionManager)){
+    			vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+    		}
 			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
 		} catch (Exception ex) {
@@ -91,6 +96,7 @@ public class SSOPreLoginController implements Controller {
 					ssoSession = ctx.getKpOrgSignOnInfo().getSsoSession();
 				}
 			}
+			ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
 			if(StringUtils.isNotBlank(blockChrome)){
 				ctx.setBlockChrome(blockChrome);
 			}
