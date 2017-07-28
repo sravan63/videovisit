@@ -161,14 +161,11 @@ var VideoVisit =
 		var isCareGiver = ($("#caregiverId").val().trim() != "" && $("#meetingCode").val().trim() != "");
 		console.log("sendErrorNotification :: params :: "+params);
 		if(isCareGiver == true){
-			/*var guestFirstName=$("#inviteGuestForm").find("#firstNameGuest").val().trim();
-			var guestLastName=$("#inviteGuestForm").find('#lastNameGuest').val().trim();
-	       	var guestEmail=$("#inviteGuestForm").find('#inviteGuestEmail').val();*/
-	       	userType = 'caregiver';
-	       	userId = $("#caregiverId").val().trim();
+	       	userType = 'Caregiver';
+	       	userId = $("#guestName").val().trim();
 		}else{
 			userId = $("#mrn").val().trim();
-			userType = 'member';
+			userType = 'Patient';
 		}
 		var errorData = {
 			'meetingId':$("#meetingId").val(),
