@@ -1061,6 +1061,29 @@ public class WebService{
 		 return isSignedOff;
 	}
 	
+	public static void initializeRestProperties() {
+		logger.info("Entered");
+		try {
+			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+			logger.info(videoVisitRestServiceUrl + " is empty. Reading it from properties file.");
+			if (rbInfo != null) {
+				logger.info("video visit external properties file location: "
+						+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				final FileInputStream fileInput = new FileInputStream(file);
+				final Properties appProp = new Properties();
+				appProp.load(fileInput);
+				final Crypto crypto = new Crypto();
+				serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
+				serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
+				logger.info("SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to get videoVisitRestServiceUrl from external properties file");
+		}
+		logger.info("Exiting -> videoVisitRestServiceUrl :  " + videoVisitRestServiceUrl);
+	}
+	
 	/**
 	 * @param operationName
 	 * @param input
@@ -1074,9 +1097,21 @@ public class WebService{
 		OutputStream os = null;
 		String output = null;
 		try {
+			logger.info("callVVRestService url: " + videoVisitRestServiceUrl + operationName);
+			if (StringUtils.isBlank(videoVisitRestServiceUrl) || StringUtils.isBlank(serviceSecurityUsername)
+					|| StringUtils.isBlank(serviceSecurityPassword)) {
+				initializeRestProperties();
+				if (StringUtils.isBlank(videoVisitRestServiceUrl)) {
+					logger.info("Hard coding value of videoVisitRestServiceUrl");
+					videoVisitRestServiceUrl = "https://vip-na-pr-z1-esb.ttgtpmg.net:48243/videovisitservice/2.0.0/videovisitapi/";
+					serviceSecurityUsername = "vv_user";
+					serviceSecurityPassword = "iv7+w03u8Lk6U4zpmlx9WQ==";
+				}
+			}
+			logger.info("callVVRestService url: " + videoVisitRestServiceUrl + operationName);
 			final URL url = new URL(videoVisitRestServiceUrl + operationName);
 			final String authStr = serviceSecurityUsername + ":" + serviceSecurityPassword;
-			logger.info("callVVRestService url: " + videoVisitRestServiceUrl + operationName);
+			
 			final String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
