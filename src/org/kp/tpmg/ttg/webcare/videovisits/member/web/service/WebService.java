@@ -1062,12 +1062,12 @@ public class WebService{
 	}
 	
 	public static void initializeRestProperties() {
-		logger.info("Entered");
+		logger.info("Entered initializeRestProperties");
 		try {
 			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.info(videoVisitRestServiceUrl + " is empty. Reading it from properties file.");
+			logger.info("initializeRestProperties -> videoVisitRestServiceUrl is empty. Reading it from properties file.");
 			if (rbInfo != null) {
-				logger.info("video visit external properties file location: "
+				logger.info("initializeRestProperties -> video visit external properties file location: "
 						+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 				final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 				final FileInputStream fileInput = new FileInputStream(file);
@@ -1077,12 +1077,12 @@ public class WebService{
 				videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
 				serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
 				serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
-				logger.info("SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
+				logger.debug("initializeRestProperties -> videoVisitRestServiceUrl : " + videoVisitRestServiceUrl + "SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
 			}
 		} catch (Exception e) {
-			logger.warn("Failed to get videoVisitRestServiceUrl from external properties file");
+			logger.warn("initializeRestProperties -> Failed to get videoVisitRestServiceUrl from external properties file");
 		}
-		logger.info("Exiting -> videoVisitRestServiceUrl :  " + videoVisitRestServiceUrl);
+		logger.info("Exiting initializeRestProperties -> videoVisitRestServiceUrl :  " + videoVisitRestServiceUrl);
 	}
 	
 	/**
@@ -1103,10 +1103,11 @@ public class WebService{
 					|| StringUtils.isBlank(serviceSecurityPassword)) {
 				initializeRestProperties();
 				if (StringUtils.isBlank(videoVisitRestServiceUrl)) {
-					logger.info("Hard coding value of videoVisitRestServiceUrl");
+					logger.info("callVVRestService -> Assigning vv rest service url to prod zone1.");
 					videoVisitRestServiceUrl = "https://vip-na-pr-z1-esb.ttgtpmg.net:48243/videovisitservice/2.0.0/videovisitapi/";
 					serviceSecurityUsername = "vv_user";
-					serviceSecurityPassword = "iv7+w03u8Lk6U4zpmlx9WQ==";
+					final Crypto crypto = new Crypto();
+					serviceSecurityPassword = crypto.read("iv7+w03u8Lk6U4zpmlx9WQ==");
 				}
 			}
 			logger.info("callVVRestService url: " + videoVisitRestServiceUrl + operationName);
