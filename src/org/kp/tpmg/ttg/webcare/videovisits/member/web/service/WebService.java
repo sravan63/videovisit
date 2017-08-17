@@ -1074,6 +1074,7 @@ public class WebService{
 				final Properties appProp = new Properties();
 				appProp.load(fileInput);
 				final Crypto crypto = new Crypto();
+				videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
 				serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
 				serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
 				logger.info("SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
