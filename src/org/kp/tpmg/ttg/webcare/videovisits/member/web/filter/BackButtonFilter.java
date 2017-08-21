@@ -67,7 +67,7 @@ public class BackButtonFilter implements Filter  {
 					try {
 						
 						if (ctx.getMember() == null && !isVideoVisitMemberMeetingPage) {
-							MeetingCommand.endCaregiverMeetingSession(ctx.getMeetingCode(), ctx.getVideoVisit().getUserName(), req.getSession().getId());
+							MeetingCommand.endCaregiverMeetingSession(ctx.getMeetingCode(), ctx.getVideoVisit().getPatientLastName(), req.getSession().getId());
 						} 
 						else if (!isVideoVisitGuestMeetingPage) {
 							if(ctx.getVideoVisit() != null && "Y".equalsIgnoreCase(ctx.getVideoVisit().getIsProxyMeeting()))
