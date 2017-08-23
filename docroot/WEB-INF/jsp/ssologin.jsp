@@ -73,9 +73,15 @@
         $('#temp-access').css('opacity', '0.5');
         $('#temp-access').css('pointer-events', 'none');
 	}else{
-		setTimeout(function(){
-			validateAutoFill();
-		},1500);
+		if(browserInfo.isFirefox){
+			setTimeout(function(){
+				validateAutoFill();
+			},1000);
+		}else if(browserInfo.isChrome){
+			setTimeout(function(){
+				validateAutoFill();
+			},2000);
+		}
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>
