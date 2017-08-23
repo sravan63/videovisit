@@ -1,5 +1,7 @@
 <input type="hidden" id="blockChrome" value="${WebAppContext.blockChrome}" />
 <input type="hidden" id="blockFF" value="${WebAppContext.blockFF}" />
+<input type="hidden" id="blockedChrome" value="false" />
+<input type="hidden" id="blockedFF" value="false" />
 
 <h3 class="sso-page-title">Please sign on for your Video Visit</h3>
 <div  style="width: 40%; margin-left: 84px;float: left">
@@ -34,17 +36,6 @@
 	browserNotSupportedMsgForPatient += "<br /><br />";
 	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
 
-    /* DE10832 - Validating autofill and enabling signon button on load */
-    var validateAutoFill = function(){
-    	console.log("====> Testing Auto Fill");
-    	 if($('#username').val() != "" && $('#password').val() != ""){
-    		 console.log("====> Auto Fill Executed");
-    	 	$('#ssologin').removeAttr('disabled');
-	        $('#ssologin').css('cursor', 'pointer');
-	        $('input#ssologin').css('opacity', '1.0');
-    	 }
-    };
-	
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
 	if(browserInfo.isChrome && blockChrome) {
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
@@ -56,6 +47,7 @@
 		$('#temp-access').css('cursor', 'default');
         $('#temp-access').css('opacity', '0.5');
         $('#temp-access').css('pointer-events', 'none');
+        $("#blockedChrome").attr("value","true");
 	}else if(browserInfo.isFirefox && blockFF){
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$('#ssoLoginError p').css("display", "block");
@@ -66,8 +58,7 @@
 		$('#temp-access').css('cursor', 'default');
         $('#temp-access').css('opacity', '0.5');
         $('#temp-access').css('pointer-events', 'none');
-	}else{
-		validateAutoFill();
+        $("#blockedFF").attr("value","true");
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>
