@@ -33,6 +33,15 @@
 	var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
 	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
+
+    /* DE10832 - Validating autofill and enabling signon button on load */
+    var validateAutoFill = function(){
+    	 if($('#username').val() != "" && $('#password').val() != ""){
+    	 	$('#ssologin').removeAttr('disabled');
+	        $('#ssologin').css('cursor', 'pointer');
+	        $('input#ssologin').css('opacity', '1.0');
+    	 }
+    };
 	
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
 	if(browserInfo.isChrome && blockChrome) {
@@ -55,6 +64,8 @@
 		$('#temp-access').css('cursor', 'default');
         $('#temp-access').css('opacity', '0.5');
         $('#temp-access').css('pointer-events', 'none');
+	}else if((browserInfo.isFirefox && blockFF == false) || (browserInfo.isChrome && blockChrome == false)){
+		validateAutoFill();
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>

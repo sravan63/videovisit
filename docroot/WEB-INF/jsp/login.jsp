@@ -92,6 +92,15 @@
 	var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
 	browserNotSupportedMsgForPatient += "Please download the <a target='_blank'  style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
+
+	/* DE10832 - Validating autofill and enabling login button on load */
+	var validateAutoFill = function(){
+		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
+			$('#login').removeAttr('disabled');
+	        $('#login').css('cursor', 'pointer');
+	        $('input#login').css('opacity', '1.0');
+		}
+	};
 	
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
 	if(browserInfo.isChrome && blockChrome) {
@@ -113,6 +122,8 @@
 		document.getElementById("birth_month").disabled = true;
 		document.getElementById("birth_year").disabled = true;
 		document.getElementById("login").disabled = true;
+	}else if((browserInfo.isFirefox && blockFF == false) || (browserInfo.isChrome && blockChrome == false)){
+		validateAutoFill();
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>
