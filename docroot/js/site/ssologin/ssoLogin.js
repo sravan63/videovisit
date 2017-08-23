@@ -1,27 +1,4 @@
 $(document).ready(function() {
-	
-	/* DE10832 - Validating autofill and enabling signon button on load */
-	if($("#blockedFF").val() == "true" || $("#blockedChrome").val() == "true"){
-		$('#username').val('');
-		$('#password').val('');
-		$('#ssologin').attr('disabled', true);
-	    $('#ssologin').css('cursor', 'default');
-	    $('input#ssologin').css('opacity', '0.5');
-	}else{
-		if($('#username').val() != "" && $('#password').val() != ""){
-	   		 console.log("====> Auto Fill Executed");
-	   	 	 $('#ssologin').removeAttr('disabled');
-		     $('#ssologin').css('cursor', 'pointer');
-		     $('input#ssologin').css('opacity', '1.0');
-	   	 }else{
-	   		$('#username').val('');
-	   		$('#password').val('');
-			$('#ssologin').attr('disabled', true);
-		    $('#ssologin').css('cursor', 'default');
-		    $('input#ssologin').css('opacity', '0.5');
-	   	 }
-	}
-	
     
 	$(":input").on('keyup', function(event){
         if($('#username').val() != "" && $('#password').val() != ""){

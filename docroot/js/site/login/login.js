@@ -1,33 +1,4 @@
 $(document).ready(function() {
-	/* DE10832 - Validating autofill and enabling signon button on load */
-	if($("#blockedFF").val() == "true" || $("#blockedChrome").val() == "true"){
-		//DE4286-Firefox fix (cache issue - it keeps the entries in the text box even after refresh)
-		$("#last_name").val("");
-		$("#mrn").val("");
-		$("#birth_month").val("");
-		$("#birth_year").val("");
-		
-		$('#login').attr('disabled', true);
-	    $('#login').css('cursor', 'default');
-	    $('input#login').css('opacity', '0.5');
-	}else{
-		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
-			console.log("====> Auto Fill Executed");
-			$('#login').removeAttr('disabled');
-	        $('#login').css('cursor', 'pointer');
-	        $('input#login').css('opacity', '1.0');
-		}else{
-			//DE4286-Firefox fix (cache issue - it keeps the entries in the text box even after refresh)
-			$("#last_name").val("");
-			$("#mrn").val("");
-			$("#birth_month").val("");
-			$("#birth_year").val("");
-			
-			$('#login').attr('disabled', true);
-		    $('#login').css('cursor', 'default');
-		    $('input#login').css('opacity', '0.5');
-		}
-	}
 	
 	//Disable the Login button unless all the fields are entered
 	$(":input").on('keyup', function(){

@@ -1,7 +1,5 @@
 <input type="hidden" id="blockChrome" value="${WebAppContext.blockChrome}" />
 <input type="hidden" id="blockFF" value="${WebAppContext.blockFF}" />
-<input type="hidden" id="blockedChrome" value="false" />
-<input type="hidden" id="blockedFF" value="false" />
 
 <h3 class="page-title">Please sign on for your Video Visit</h3>
 <p class="login" style="margin-bottom:43px;">Children age 11 or younger must have a parent or legal guardian with them during the Video Visit.</p>
@@ -94,6 +92,27 @@
 	var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
 	browserNotSupportedMsgForPatient += "Please download the <a target='_blank'  style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
+
+	/* DE10832 - Validating autofill and enabling login button on load */
+	var validateAutoFill = function(){
+		console.log("====> Testing Auto Fill");
+		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
+			console.log("====> Auto Fill Executed");
+			$('#login').removeAttr('disabled');
+	        $('#login').css('cursor', 'pointer');
+	        $('input#login').css('opacity', '1.0');
+		}else{
+			//DE4286-Firefox fix (cache issue - it keeps the entries in the text box even after refresh)
+			$("#last_name").val("");
+			$("#mrn").val("");
+			$("#birth_month").val("");
+			$("#birth_year").val("");
+			
+			$('#login').attr('disabled', true);
+		    $('#login').css('cursor', 'default');
+		    $('input#login').css('opacity', '0.5');
+		}
+	};
 	
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
 	if(browserInfo.isChrome && blockChrome) {
@@ -105,7 +124,6 @@
 		document.getElementById("birth_month").disabled = true;
 		document.getElementById("birth_year").disabled = true;
 		document.getElementById("login").disabled = true;
-		$("#blockedChrome").attr("value","true");
 	}
 	else if(browserInfo.isFirefox && blockFF){
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
@@ -116,7 +134,8 @@
 		document.getElementById("birth_month").disabled = true;
 		document.getElementById("birth_year").disabled = true;
 		document.getElementById("login").disabled = true;
-		$("#blockedFF").attr("value","true");
+	}else{
+		validateAutoFill();
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>
