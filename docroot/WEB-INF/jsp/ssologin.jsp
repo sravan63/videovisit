@@ -96,39 +96,9 @@
 				validateAutoFill();
 			},1000);
 		}else if(browserInfo.isChrome){
-			/* setTimeout(function(){
+			setTimeout(function(){
 				validateChromeAutoFill();
-			},2000); */
-			console.log(">>> Initial");
-			console.log(">>> User Name: "+$("#username").css("background-color"));
-			console.log(">>> Password: "+$("#password").css("background-color"));
-			setTimeout(function(){
-				console.log(">>> After 1 second");
-				console.log(">>> User Name: "+$("#username").css("background-color"));
-				console.log(">>> Password: "+$("#password").css("background-color"));
-				//validateAutoFill();
 			},1000);
-			setTimeout(function(){
-				console.log(">>> After 2 seconds");
-				console.log(">>> User Name: "+$("#username").css("background-color"));
-				console.log(">>> Password: "+$("#password").css("background-color"));
-				//validateAutoFill();
-			},2000);
-			setTimeout(function(){
-				console.log(">>> After 3 seconds");
-				console.log(">>> User Name: "+$("#username").css("background-color"));
-				console.log(">>> Password: "+$("#password").css("background-color"));
-			},3000);
-			setTimeout(function(){
-				console.log(">>> After 4 seconds");
-				console.log(">>> User Name: "+$("#username").css("background-color"));
-				console.log(">>> Password: "+$("#password").css("background-color"));
-			},4000);
-			setTimeout(function(){
-				console.log(">>> After 5 seconds");
-				console.log(">>> User Name: "+$("#username").css("background-color"));
-				console.log(">>> Password: "+$("#password").css("background-color"));
-			},5000);
 		}
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */

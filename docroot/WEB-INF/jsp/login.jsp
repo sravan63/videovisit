@@ -102,6 +102,28 @@
 	        $('#login').css('cursor', 'pointer');
 	        $('input#login').css('opacity', '1.0');
 		}else{
+			console.log("====> Auto Fill Not Executed");
+			//DE4286-Firefox fix (cache issue - it keeps the entries in the text box even after refresh)
+			$("#last_name").val("");
+			$("#mrn").val("");
+			$("#birth_month").val("");
+			$("#birth_year").val("");
+			
+			$('#login').attr('disabled', true);
+		    $('#login').css('cursor', 'default');
+		    $('input#login').css('opacity', '0.5');
+		}
+	};
+	
+	var validateChromeAutoFill = function(){
+		console.log("====> Testing Auto Fill");
+		if($('#last_name').css("background-color") == "rgb(250, 255, 189)" && $('#mrn').css("background-color") == "rgb(250, 255, 189)" && $('#birth_month').css("background-color") == "rgb(250, 255, 189)" && $('#birth_year').css("background-color") == "rgb(250, 255, 189)"){
+			console.log("====> Chrome Auto Fill Executed");
+			$('#login').removeAttr('disabled');
+	        $('#login').css('cursor', 'pointer');
+	        $('input#login').css('opacity', '1.0');
+		}else{
+			console.log("====> Chrome Auto Fill Not Executed");
 			//DE4286-Firefox fix (cache issue - it keeps the entries in the text box even after refresh)
 			$("#last_name").val("");
 			$("#mrn").val("");
@@ -141,8 +163,8 @@
 			},1000);
 		}else if(browserInfo.isChrome){
 			setTimeout(function(){
-				validateAutoFill();
-			},2000);
+				validateChromeAutoFill();
+			},1000);
 		}
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
