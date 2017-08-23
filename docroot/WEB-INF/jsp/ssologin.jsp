@@ -36,14 +36,14 @@
 
     /* DE10832 - Validating autofill and enabling signon button on load */
     var validateAutoFill = function(){
-    	console.log("Testing Auto Fill");
+    	//console.log("Testing Auto Fill");
     	 if($('#username').val() != "" && $('#password').val() != ""){
-    		console.log("====> Auto Fill Executed");
+    		//console.log("====> Auto Fill Executed");
     	 	$('#ssologin').removeAttr('disabled');
 	        $('#ssologin').css('cursor', 'pointer');
 	        $('input#ssologin').css('opacity', '1.0');
     	 }else{
-    		console.log("====> Auto Fill Not Executed");
+    		//console.log("====> Auto Fill Not Executed");
     		$('#username').val('');
     		$('#password').val('');
 			$('#ssologin').attr('disabled', true);
@@ -52,15 +52,16 @@
     	 }
     };
     
+    /* DE10832 - Validating autofill and enabling signon button on load */
     var validateChromeAutoFill = function(){
-    	console.log("Testing Chrome Auto Fill");
+    	//console.log("Testing Chrome Auto Fill");
     	 if($('#username').css("background-color") == "rgb(250, 255, 189)" && $('#password').css("background-color") == "rgb(250, 255, 189)"){
-    		console.log("====> Auto Fill Executed");
+    		//console.log("====> Auto Fill Executed");
     	 	$('#ssologin').removeAttr('disabled');
 	        $('#ssologin').css('cursor', 'pointer');
 	        $('input#ssologin').css('opacity', '1.0');
     	 }else{
-    		console.log("====> Chrome Auto Fill Not Executed");
+    		//console.log("====> Chrome Auto Fill Not Executed");
     		$('#username').val('');
     		$('#password').val('');
 			$('#ssologin').attr('disabled', true);
