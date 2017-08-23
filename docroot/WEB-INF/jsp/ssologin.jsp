@@ -43,6 +43,7 @@
 	        $('#ssologin').css('cursor', 'pointer');
 	        $('input#ssologin').css('opacity', '1.0');
     	 }else{
+    		console.log("====> Auto Fill Not Executed");
     		$('#username').val('');
     		$('#password').val('');
 			$('#ssologin').attr('disabled', true);
@@ -78,9 +79,36 @@
 				validateAutoFill();
 			},1000);
 		}else if(browserInfo.isChrome){
+			console.log(">>> Initial");
+			console.log(">>> User Name: "+$("#username").val());
+			console.log(">>> Password: "+$("#password").val());
 			setTimeout(function(){
-				validateAutoFill();
+				console.log(">>> After 1 second");
+				console.log(">>> User Name: "+$("#username").val());
+				console.log(">>> Password: "+$("#password").val());
+				//validateAutoFill();
+			},1000);
+			setTimeout(function(){
+				console.log(">>> After 2 seconds");
+				console.log(">>> User Name: "+$("#username").val());
+				console.log(">>> Password: "+$("#password").val());
+				//validateAutoFill();
 			},2000);
+			setTimeout(function(){
+				console.log(">>> After 3 seconds");
+				console.log(">>> User Name: "+$("#username").val());
+				console.log(">>> Password: "+$("#password").val());
+			},3000);
+			setTimeout(function(){
+				console.log(">>> After 4 seconds");
+				console.log(">>> User Name: "+$("#username").val());
+				console.log(">>> Password: "+$("#password").val());
+			},4000);
+			setTimeout(function(){
+				console.log(">>> After 5 seconds");
+				console.log(">>> User Name: "+$("#username").val());
+				console.log(">>> Password: "+$("#password").val());
+			},5000);
 		}
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
