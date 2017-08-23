@@ -135,7 +135,9 @@
 		document.getElementById("birth_year").disabled = true;
 		document.getElementById("login").disabled = true;
 	}else{
-		validateAutoFill();
+		setTimeout(function(){
+			validateAutoFill();
+		},1500);
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>
