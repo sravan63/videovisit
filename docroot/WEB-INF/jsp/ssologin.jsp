@@ -36,7 +36,9 @@
 
     /* DE10832 - Validating autofill and enabling signon button on load */
     var validateAutoFill = function(){
+    	console.log("====> Testing Auto Fill");
     	 if($('#username').val() != "" && $('#password').val() != ""){
+    		 console.log("====> Auto Fill Executed");
     	 	$('#ssologin').removeAttr('disabled');
 	        $('#ssologin').css('cursor', 'pointer');
 	        $('input#ssologin').css('opacity', '1.0');
@@ -64,7 +66,7 @@
 		$('#temp-access').css('cursor', 'default');
         $('#temp-access').css('opacity', '0.5');
         $('#temp-access').css('pointer-events', 'none');
-	}else if((browserInfo.isFirefox && blockFF == false) || (browserInfo.isChrome && blockChrome == false)){
+	}else{
 		validateAutoFill();
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */

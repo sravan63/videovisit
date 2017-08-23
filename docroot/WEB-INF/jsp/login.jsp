@@ -95,7 +95,9 @@
 
 	/* DE10832 - Validating autofill and enabling login button on load */
 	var validateAutoFill = function(){
+		console.log("====> Testing Auto Fill");
 		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
+			console.log("====> Auto Fill Executed");
 			$('#login').removeAttr('disabled');
 	        $('#login').css('cursor', 'pointer');
 	        $('input#login').css('opacity', '1.0');
@@ -122,7 +124,7 @@
 		document.getElementById("birth_month").disabled = true;
 		document.getElementById("birth_year").disabled = true;
 		document.getElementById("login").disabled = true;
-	}else if((browserInfo.isFirefox && blockFF == false) || (browserInfo.isChrome && blockChrome == false)){
+	}else{
 		validateAutoFill();
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
