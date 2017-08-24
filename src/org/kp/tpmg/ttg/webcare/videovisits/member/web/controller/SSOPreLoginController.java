@@ -97,6 +97,10 @@ public class SSOPreLoginController implements Controller {
 				}
 			}
 			ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
+			if(StringUtils.isBlank(ctx.getWebrtcSessionManager())){
+				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
+			}
+			
 			if(StringUtils.isNotBlank(blockChrome)){
 				ctx.setBlockChrome(blockChrome);
 			}

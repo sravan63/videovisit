@@ -53,7 +53,11 @@ public class SSOSubmitLoginController extends SimplePageController
 			{
 				logger.info("SSOSubmitLoginController -> Context is not null");
 				
-			}			
+			}
+			
+			if(ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())){
+				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
+			}
 			
 			//Perform SSO sign on and authorization
 			 data = MeetingCommand.performSSOSignOn(request, response);
