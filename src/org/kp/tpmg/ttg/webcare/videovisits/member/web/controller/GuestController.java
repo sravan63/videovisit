@@ -64,7 +64,11 @@ public class GuestController extends SimplePageController {
 		initializeWebappContext(request);
 		
 		String data = null;
-		try {		
+		try {	
+			
+			if(ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())){
+				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
+			}
 			
 			MeetingCommand.IsMeetingHashValid(request, response);
 			
