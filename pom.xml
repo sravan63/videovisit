@@ -9,7 +9,7 @@
    
     <groupId>org.kp.tpmg.ttg.videovisit</groupId>
     <artifactId>videovisitmember</artifactId>
-    <version>1.4.0</version>
+    <version>1.4.1-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
@@ -20,8 +20,8 @@
     </properties>
 
 	<scm>
-		 <connection>scm:svn:https://svn.tpmg.kp.org/svn/videovisit/member-facing/TAGS/videovisitmember-1.4.0</connection>
-		 <developerConnection>scm:svn:https://svn.tpmg.kp.org/svn/videovisit/member-facing/TAGS/videovisitmember-1.4.0</developerConnection>
+		 <connection>scm:svn:https://svn.tpmg.kp.org/svn/videovisit/member-facing/TRUNK/videovisit-member-webapp</connection>
+		 <developerConnection>scm:svn:https://svn.tpmg.kp.org/svn/videovisit/member-facing/TRUNK/videovisit-member-webapp</developerConnection>
 	</scm>
 
  <!-- dependencies needed during compile time -->   
