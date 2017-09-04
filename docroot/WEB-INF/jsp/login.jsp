@@ -89,9 +89,9 @@
 	var blockChrome = ($("#blockChrome").val() == 'true');
 	var blockFF = ($("#blockFF").val() == 'true');
 	
-	var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
+	var browserNotSupportedMsgForPatient = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
 	browserNotSupportedMsgForPatient += "<br /><br />";
-	browserNotSupportedMsgForPatient += "Please download the <a target='_blank'  style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
+	browserNotSupportedMsgForPatient += "<span style='font-size:14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, Internet Explorer, or Safari.</span>";
 
 	/* DE10832 - Validating autofill and enabling login button on load */
 	var validateAutoFill = function(){
