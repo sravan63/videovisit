@@ -146,6 +146,14 @@ $(document).ready(function() {
         }
         return true;
     });
+
+    /* DE7934 - restricting MM and YYYY fields in android web app*/
+	$("#birth_month, #birth_year").on("input", function(e) {
+	    var max = this.getAttribute('maxlength');
+	    if (this.value.length > max) {
+	        this.value = this.value.substring(0, max);
+	    }
+	});
 	
 	$(":input").on('keyup', function(){
 		if(isPgFlag == "true"){
