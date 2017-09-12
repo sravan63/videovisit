@@ -1,32 +1,33 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <div>
-	<p id="globalError" class="globalfailmessage hide-me" style="background-color:#686A6C;"></p>
+	<p id="globalError" class="hide-me mobile-patient-light-authentication-error"></p>
 </div>
 
-<div style="padding:10px;">
+<div class="mobile-patient-light-authentication">
 	<div id="login-form">
-		<h1>Sign In to Video Visits</h1>	
-		<form class="login-form" style="margin:10px 0 0;">
-			<ul class="form-block" style="padding-right:6px;">
-				<li><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect = "off" pattern="[a-zA-Z]+" required></li>
-				<li><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="MRN" autocorrect = "off" pattern="[0-9]*" required></li>
-				<li style="border:1px solid rgba(0,0,0,0.3); border-top:none; border-radius:0; margin-right:-6px; overflow:auto; background-color:#FFFFFF;">
-					<label style="padding-left:4px; float:left; margin-top:5px; color:#000000;">Date of Birth</label>
-					<span style="float:right; margin:3px 10px 0 0;">
-						<input type="text" name="birth_month" id="birth_month" class="birth_month" maxlength="2" tabindex="3" placeholder="mm" autocorrect="off" pattern="[0-9]*" title="mm" required style="border:none; background-color:#F1F1F1; padding:0 20px; border-radius:0;">
-						<label style="margin:0 10px;"> / </label>
-						<input type="text" name="birth_year" id="birth_year" class="birth_year" maxlength="4" tabindex="4" placeholder="yyyy" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required style="border:none; background-color:#F1F1F1; width:35px; padding:0 20px; border-radius:0;">
-					</span>
+		<p class="mobile-patient-light-authentication-sub-header"><img src="images/mobile/video-icon-blue.png" width="50" style="vertical-align:middle; padding-right:10px;">Video Visits Temporary Access</p>
+		<p class="mobile-patient-light-authentication-info">Patient's Information</p>
+		<form class="login-form" style="margin:6px 0 0;">
+			<ul class="form-block">
+				<li class="">
+					<p class="mobile-patient-light-auth-label">LAST NAME</p>
+					<input class="mobile-patient-light-auth-inputfield" type="text" name="last_name" id="last_name" tabindex="1" placeholder="i.e. Smith" autocorrect = "off" pattern="[a-zA-Z]+" required></li>
+				<li class="">
+					<p class="mobile-patient-light-auth-label">MEDICAL RECORD NO.</p>
+					<input class="mobile-patient-light-auth-inputfield" type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="########" autocorrect = "off" pattern="[0-9]*" required></li>
+				<li class="">
+					<p class="mobile-patient-light-auth-label">DATE OF BIRTH</p>
+					<input type="text" name="birth_month" id="birth_month" class="mobile-patient-light-auth-inputfield birth_month" maxlength="2" tabindex="3" placeholder="MM" autocorrect="off" pattern="[0-9]*" title="mm" required style="width: 15%;margin-right:12px;">
+					<input type="text" name="birth_year" id="birth_year" class="mobile-patient-light-auth-inputfield birth_year" maxlength="4" tabindex="4" placeholder="YYYY" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required style="width: 80%;float: right;">
 				</li>
-
-				<button id="login-submit" class="off" tabindex="6" style="width:100%; height:35px; background-color:#0061A9; color:#FFFFFF; font-weight:bold; font-size:14px; margin:10px auto; border-radius:4px;" disabled="disabled">Sign In</button>
+				<div class="mobile-patient-light-auth-sigin-container">
+					<button id="login-submit" class="off mobile-patient-light-auth-sigin-button" tabindex="6" disabled="disabled">Sign In</button>
+				</div>
 			</ul>
 		</form>
 		
-		</div>
-		<p class="disclaimer">Children age 11 and younger must have a parent present during the visit.</p>
-	 	
-	 	<%@ include file="common/informationTwo.jsp" %>
+		<p class="disclaimer mobile-patient-light-auth-disclaimer">If You're a Patient's Guest<br>Guests of patients with a video visit,<br>click the link in your email invitation.</p>
+	</div>
 </div>
 
 <style>
@@ -34,6 +35,6 @@
 		opacity: 0.5;
 	}
 	input::-webkit-input-placeholder{
-		color: #000000;
+		/*color: #000000;*/
 	}
 </style>
