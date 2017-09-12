@@ -31,7 +31,7 @@ public class WebUtil {
 	public static final String HSESSIONID_COOKIE_NAME = "HSESSIONID";
 	public static final String S_COOKIE_NAME = "S";
 	
-	public static final String VIDYO_WEBRTC_SESSION_MANGER = "nj2c-m1-wrtcsm2.webrtc.vidyo.com";
+	public static final String VIDYO_WEBRTC_SESSION_MANGER = "webrtc.health.vidyoworks.com";
 	
 	public static String getCurrentDateTimeZone()
 	{
