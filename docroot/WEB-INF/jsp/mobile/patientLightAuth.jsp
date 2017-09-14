@@ -26,7 +26,7 @@
 			</ul>
 		</form>
 		
-		<p class="disclaimer mobile-patient-light-auth-disclaimer">If You're a Patient's Guest<br>Guests of patients with a video visit,<br>click the link in your email invitation.</p>
+		<p class="disclaimer mobile-patient-light-auth-disclaimer"><span style="padding-bottom:10px;display:block;font-weight: 600;">If You're a Patient's Guest</span>Guests of patients with a video visit,<br>click the link in your email invitation.</p>
 	</div>
 </div>
 

@@ -2306,8 +2306,10 @@ and (min-width: 768px) {
 	background-color: #B63125 !important;
 	padding: 10px 16px !important;
 	color: #FFFFFF !important;
-	font-weight: 400;
+	font-weight: 600!important;
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-size: 16px!important;
+	letter-spacing: -0.2px;
 }
 .mobile-patient-light-authentication-sub-header{
 	min-height: 50px;
@@ -2322,17 +2324,23 @@ and (min-width: 768px) {
 	font-size: 18px !important;
 	font-weight: bold;
 	padding-top: 69px;
+	letter-spacing: -0.2px;
 }
 .mobile-patient-light-auth-label{
 	color: #333333 !important;
 	margin-top: 22px!important;
 	margin-bottom: 4px!important;
+	font-weight: 600;
+	font-size: 14px!important;
+	letter-spacing: 0.1px;
 }
 .mobile-patient-light-auth-inputfield{
 	border-width: 0px 0px 1px 0px !important;
     border-bottom: solid 1px #C8C7C7 !important;
     border-radius: 0px !important;
     color: #666666 !important;
+    font-size: 16px!important;
+    letter-spacing: 0.2px;
 }
 .mobile-patient-light-auth-sigin-container{
 	margin: 0 auto;
@@ -2357,5 +2365,6 @@ and (min-width: 768px) {
 	margin: 0 auto;
     margin-top: 20px;
     text-align: left!important;
+    font-size: 16px!important;
 }
 /* ======== US23591 (MDOa mobileweb to match app - sign in update) ======= */
