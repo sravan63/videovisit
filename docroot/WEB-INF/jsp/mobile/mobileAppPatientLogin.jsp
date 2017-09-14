@@ -1,53 +1,43 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <div>
-	<p id="globalError" class="globalfailmessage hide-me"></p>
+	<p id="globalError" class="hide-me mobile-patient-light-authentication-error"></p>
 </div>
 
-<div style="height:100%; width:100%; background-color:#EBEBEB;">
-	<div id="login-form" style="padding: 27px 8px 0;">
-		<h1 style="text-align:center;">Video Visits Temporary Access</h1>
-		<form class="login-form" style="margin:23px 0 0;">
-			<ul class="form-block" style="border-top-left-radius:4px; border-top-right-radius:4px; border:1px solid rgba(0,0,0,0.3); margin-bottom:2px;">
-				<li style="padding:0; height:30px; background-color:#706259;">
-					<p style="width:100%; background-color:#706259; color:#FFFFFF; text-align:center; padding:7px 0px 5px;">
-						Enter Patient&#39s Information
-					</p>
+<div class="mobile-patient-light-authentication">
+	<div id="login-form">
+		<p class="mobile-patient-light-authentication-sub-header"><img src="images/mobile/video-icon-blue.png" width="50" style="vertical-align:middle; padding-right:10px;">Video Visits Temporary Access</p>
+		<p class="mobile-patient-light-authentication-info">Patient's Information</p>
+		<form class="login-form" style="margin:6px 0 0;">
+			<ul class="form-block">
+				<li class="">
+					<p class="mobile-patient-light-auth-label">LAST NAME</p>
+					<input class="mobile-patient-light-auth-inputfield" type="text" name="last_name" id="last_name" tabindex="1" placeholder="i.e. Smith" autocorrect = "off" pattern="[a-zA-Z]+" required></li>
+				<li class="">
+					<p class="mobile-patient-light-auth-label">MEDICAL RECORD NO.</p>
+					<input class="mobile-patient-light-auth-inputfield" type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="########" autocorrect = "off" pattern="[0-9]*" required></li>
+				<li class="">
+					<p class="mobile-patient-light-auth-label">DATE OF BIRTH</p>
+					<input type="text" name="birth_month" id="birth_month" class="mobile-patient-light-auth-inputfield birth_month" maxlength="2" tabindex="3" placeholder="MM" autocorrect="off" pattern="[0-9]*" title="mm" required style="width: 15%;margin-right:12px;">
+					<input type="text" name="birth_year" id="birth_year" class="mobile-patient-light-auth-inputfield birth_year" maxlength="4" tabindex="4" placeholder="YYYY" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required style="width: 80%;float: right;">
 				</li>
-			</ul>
-			<ul class="form-block" style="border-bottom-left-radius:4px; border-bottom-right-radius:4px; border:1px solid rgba(0,0,0,0.3); background-color:#FFFFFF;">
-				<li id="li_last_name"><input type="text" name="last_name" id="last_name" tabindex="1" placeholder="Last Name" autocorrect="off" pattern="[a-zA-Z]+" required></li>
-				<li id="li_mrn"><input type="text" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="MRN" autocorrect="off" pattern="[0-9]*" required></li>
-				<li id="li_dob" style="border:0px; overflow:auto; background-color:#FFFFFF; border-bottom-left-radius:3px; border-bottom-right-radius:3px;">
-					<label style="float:left; margin-top:5px; color:#000000;">Date of Birth</label>
-					<span style="float:right; margin:3px 10px 3px 0;">
-						<input type="text" name="birth_month" id="birth_month" class="birth_month" maxlength="2" tabindex="3" placeholder="mm" autocorrect="off" pattern="[0-9]*" title="mm" required style="border:none; background-color:#F1F1F1; padding:0 20px; border-radius:0;">
-						<label style="margin:0 10px;"> / </label>
-						<input type="text" name="birth_year" id="birth_year" class="birth_year" maxlength="4" tabindex="4" placeholder="yyyy" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required style="border:none; background-color:#F1F1F1; width:35px; padding:0 20px; border-radius:0;">
-					</span>
-				</li>
-				<button id="mobile-login-submit" class="off" tabindex="6" style="width:100px; height:45px; float:right; background-color:#FFFFFF; color:#006BA6; font-size:18px; margin:10px 0px 10px; border-radius:3px; border:1px solid rgba(0,0,0,0.3); clear:both;" disabled="disabled">Sign In</button>
+				<div class="mobile-patient-light-auth-sigin-container">
+					<button id="login-submit" class="off mobile-patient-light-auth-sigin-button" tabindex="6" disabled="disabled">Sign In</button>
+				</div>
 			</ul>
 		</form>
+		
+		<p class="disclaimer mobile-patient-light-auth-disclaimer">
+			<span style="padding-bottom:10px;display:block;">If You're a Patient's Guest</span>
+			<span style="font-size:14px;"> Guests of patients with a video visit,<br>click the link in your email invitation.</span>
+		</p>
 	</div>
-	<!-- Disclaimer -->
-	<div style="padding:27px 18px 0 13px; height:98px; clear:both;">
-		<p class="disclaimer" style="text-align:left; font-weight:bold; margin-bottom:10px;">If You&#39re a Patient&#39s Guest</p>
-		<p class="disclaimer" style="text-align:left;">Guests of patients with a video visit, click the link in your email invitation.</p>
-	</div>
-	<!-- END - Disclaimer -->
-	
-	<!-- Fake Footer - to adjust the length of the Background image -->
-	<div style="visibility:hidden; margin:200px 0;">
-		<br/>
-	</div>
-	<!-- END - Fake Footer -->
 </div>
 
 <style>
-	button#mobile-login-submit{
+	button#login-submit{
 		opacity: 0.5;
 	}
 	input::-webkit-input-placeholder{
-		color: #000000;
+		/*color: #000000;*/
 	}
 </style>
