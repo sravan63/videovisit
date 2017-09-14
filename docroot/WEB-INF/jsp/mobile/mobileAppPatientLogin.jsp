@@ -21,7 +21,7 @@
 					<input type="text" name="birth_year" id="birth_year" class="mobile-patient-light-auth-inputfield birth_year" maxlength="4" tabindex="4" placeholder="YYYY" autocorrect="off" pattern="[0-9]*" title="mm/yyyy" required style="width: 80%;float: right;">
 				</li>
 				<div class="mobile-patient-light-auth-sigin-container">
-					<button id="login-submit" class="off mobile-patient-light-auth-sigin-button" tabindex="6" disabled="disabled">Sign In</button>
+					<button id="mobile-login-submit" class="off mobile-patient-light-auth-sigin-button" tabindex="6" disabled="disabled">Sign In</button>
 				</div>
 			</ul>
 		</form>
