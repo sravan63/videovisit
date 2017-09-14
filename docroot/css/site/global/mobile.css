@@ -2298,7 +2298,7 @@ and (min-width: 768px) {
 /* ======== US23591 (MDOa mobileweb to match app - sign in update) ======= */
 .mobile-patient-light-authentication{
 	background-color: #FFFFFF;
-	padding:10px 35px; 
+	padding:0px 35px 10px 35px;
 	font-size: 16px !important;
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -2318,6 +2318,7 @@ and (min-width: 768px) {
 	background-color: #F2F7FB;
 	line-height: 50px;
 	font-size: 16px !important;
+	margin: 0 -35px;
 }
 .mobile-patient-light-authentication-info{
 	color: #333333;
