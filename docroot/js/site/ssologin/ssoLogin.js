@@ -44,7 +44,9 @@ $(document).ready(function() {
 
 function loginSubmit(){
 	$("#layover").show();
-	var postdata = 'username=' + $('input[name=username]').val() + '&password=' + $('input[name=password]').val();
+	//var postdata = 'username=' + $('input[name=username]').val() + '&password=' + $('input[name=password]').val();
+	//with out encode, will cause "(unable to decode value)" error in ajax
+	var postdata = 'username=' + encodeURIComponent($('input[name=username]').val()) + '&password=' + encodeURIComponent($('input[name=password]').val());
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS.Path.login.ssologinurl,
