@@ -151,7 +151,7 @@
 <c:if test="${WebAppContext.totalmeetings<=0}">
 
   <div id="landing-portal-none">
-      <p>You have no Video Visits scheduled for Today</p>
+      <p>You have no meeting in the next 15 minutes.</p>
   </div>
 
 </c:if>
