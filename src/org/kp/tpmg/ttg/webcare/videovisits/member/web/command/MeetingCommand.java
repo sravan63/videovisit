@@ -543,6 +543,8 @@ public class MeetingCommand {
 					String userName = request.getParameter("username");
 					String password = request.getParameter("password");
 					
+					logger.info("performSSOSignOn -> userName= "+ userName + ",password=" + password);
+					
 					if(StringUtils.isNotBlank(userName) && StringUtils.isNotBlank(password))
 					{
 						//grab data from web services
@@ -557,7 +559,7 @@ public class MeetingCommand {
 						}
 						else
 						{
-							if(!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError()) || StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))
+							if(!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))
 							{
 								logger.warn("performSSOSignOn -> SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
 								strResponse = invalidateWebAppContext(ctx);
