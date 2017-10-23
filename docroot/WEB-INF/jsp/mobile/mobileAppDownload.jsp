@@ -33,7 +33,7 @@
             var os = getAppOS();
 
             if(os == "iOS"){
-                    window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+                    window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
             }
             else if(os == "Android"){
                     window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
