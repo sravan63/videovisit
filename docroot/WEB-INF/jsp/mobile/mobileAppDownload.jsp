@@ -28,7 +28,7 @@
         },
         openWebApp: function(){
             //alert('in timeout ' + new Date().valueOf() + ' ' + now);
-            if (new Date().valueOf() - now > 9000) return;
+            //if (new Date().valueOf() - now > 9000) return;
             //alert('after date check');
             var os = getAppOS();
 
