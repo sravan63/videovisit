@@ -36,7 +36,10 @@ public class QuitMeetingController extends SimplePageController {
 			}*/
 		
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			ctx.setHasJoinedMeeting(false);
+			
+			if (ctx != null) {
+				ctx.setHasJoinedMeeting(false);
+			}
 			
 
 		}
