@@ -81,8 +81,6 @@ public class WebService{
 	public static final int MAX_RETRY = 2;
 	public static int retry = 0;
 	public static boolean status = false;
-	//public static VideoVisitMemberServicesStub stub;
-	//public static ConfigurationContext axisConfig = null;
 	public static boolean simulation = true;
 	
 	private static String modulePath =  "";
@@ -119,10 +117,6 @@ public class WebService{
 	public static boolean initWebService(HttpServletRequest request)
 	{
 		logger.info("Entered initWebService");
-		long timeout = 8000l; // milliseconds default
-		String serviceURL = "";
-		boolean reuseHTTP = true;
-		boolean chunked   = false;
 		boolean ret 	= true;		
 
 		try
@@ -136,13 +130,9 @@ public class WebService{
 				FileInputStream fileInput = new FileInputStream(file);
 	    		Properties appProp = new Properties();
 	    		appProp.load(fileInput);
-	    		serviceURL = appProp.getProperty("WEBSERVICE_URL");
 				
-				timeout = Integer.parseInt(appProp.getProperty("WEBSERVICE_TIMEOUT"));
-				reuseHTTP = appProp.getProperty("WEBSERVICE_REUSE").equals("true")? true:false;
-				chunked = appProp.getProperty("WEBSERVICE_CHUNKED").equals("true")?true:false;
 				simulation = appProp.getProperty("WEBSERVICE_SIMULATION").equals("true")?true:false;
-				logger.debug("WebService.initWebService -> configuration: serviceURL="+serviceURL+" ,simulation="+simulation);
+				logger.debug("WebService.initWebService -> simulation:" + simulation);
 				modulePath = appProp.getProperty("MODULE_PATH");
 				policyPath = appProp.getProperty("POLICY_PATH");
 				Crypto crypto = new Crypto();
