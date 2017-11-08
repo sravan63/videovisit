@@ -146,14 +146,14 @@ $(document).ready(function() {
         }
         return true;
     });
-
-    /* DE7934 - restricting MM and YYYY fields in android web app*/
-	$("#birth_month, #birth_year").on("input", function(e) {
-	    var max = this.getAttribute('maxlength');
-	    if (this.value.length > max) {
-	        this.value = this.value.substring(0, max);
-	    }
-	});
+    //DE11485 Fix 
+    $("#mrn").on("keyup touchend",function(e){
+    	if(e.which != 8 && e.which !=0 && (e.which < 48 || e.which > 57))
+    	{
+    		alert("data1 >>>" + e.type);
+    		return false;
+    	}
+    });
 	
 	$(":input").on('keyup', function(){
 		if(isPgFlag == "true"){
@@ -265,7 +265,7 @@ $(document).ready(function() {
 
 	$(".getAppButton, .getAppLink").click(function(event) {
 		setCookie("APP_ALERT_COOKIE", "APP_ALERT_COOKIE");
-		var iOSUrl = 'https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339';
+		var iOSUrl = 'https://itunes.apple.com/us/app/KPPC/id497468339?mt=8';
 		var androidUrl = 'https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en';
 
 
