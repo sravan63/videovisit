@@ -14,7 +14,7 @@
 					<input class="mobile-patient-light-auth-inputfield" type="text" name="last_name" id="last_name" tabindex="1" placeholder="i.e. Smith" autocorrect = "off" pattern="[a-zA-Z]+" required></li>
 				<li class="">
 					<p class="mobile-patient-light-auth-label">MEDICAL RECORD NO.</p>
-					<input class="mobile-patient-light-auth-inputfield" type="tel" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="########" autocorrect = "off" pattern="^(0*[,.]*[0-9][0-9]*([,.][0-9]+)*|[0-9]?[,.][0-9]*[1-9][0-9]*)$" inputmode="numeric" required></li>
+					<input class="mobile-patient-light-auth-inputfield" type="tel" name="mrn" id="mrn" maxlength="8" tabindex="2" placeholder="########" autocorrect = "off" pattern="[0-9]*" inputmode="numeric" required oninput="this.value = this.value.replace(/\D+/,'');"></li>
 				<li class="">
 					<p class="mobile-patient-light-auth-label">DATE OF BIRTH</p>
 					<input type="tel" name="birth_month" id="birth_month" class="mobile-patient-light-auth-inputfield birth_month" maxlength="2" tabindex="3" placeholder="MM" autocorrect="off" pattern="[0-9]*" inputmode="numeric" title="mm" required style="width: 15%;margin-right:4px;">
