@@ -12,6 +12,10 @@ $(document).ready(function() {
 	}
 });
 
+var VideoVisit = {
+	sendVendorErrorNotification: function(params){}
+};
+
 var VideoVisitSetupWizard =
 {
 	terminateMeeting: function(meetingId, vendorConfId)
