@@ -48,7 +48,7 @@ public class AppRootController implements Controller {
 	public AppRootController() {
 		try{
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.debug("AppRootController -> configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			logger.debug("AppRootController configuration: resource bundle exists -> video visit external properties file location: " + rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			//Read external properties file for the web service end point url
 			File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			FileInputStream fileInput = new FileInputStream(file);

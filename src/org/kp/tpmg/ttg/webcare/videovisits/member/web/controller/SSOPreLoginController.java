@@ -51,7 +51,7 @@ public class SSOPreLoginController implements Controller {
 	public SSOPreLoginController() {
 		try {
 			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.debug("Configuration: resource bundle exists -> video visit external properties file location: "
+			logger.debug("Configuration: resource bundle exists video visit external properties file location: "
 					+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			final FileInputStream fileInput = new FileInputStream(file);

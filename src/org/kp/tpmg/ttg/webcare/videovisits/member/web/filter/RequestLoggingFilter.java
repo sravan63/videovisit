@@ -25,7 +25,7 @@ public class RequestLoggingFilter implements Filter {
 	public void doFilter(ServletRequest sreq, ServletResponse sresp, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) sreq;
 		StringBuffer sb = new StringBuffer();
-		sb.append(">>>> CLIENT SIDE REQUEST: ");
+		sb.append("CLIENT SIDE REQUEST: ");
 		sb.append(request.getRequestURL());
 		logger.info(sb); 
 		String queryString = request.getQueryString();
@@ -38,7 +38,7 @@ public class RequestLoggingFilter implements Filter {
 			String s = (String) e.nextElement();
 			sb.append(s).append("=").append(sreq.getParameter(s)).append(", ");
 		}
-		sb.append("] <<<<");
+		sb.append("]");
 		logger.debug(sb);
 		chain.doFilter(sreq, sresp);
 	}

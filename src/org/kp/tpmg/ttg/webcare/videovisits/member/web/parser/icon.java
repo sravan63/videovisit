@@ -2,8 +2,8 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 import java.io.Serializable;
 
-public class icon implements Serializable{
-	
+public class icon implements Serializable {
+
 	/**
 	 * 
 	 */
@@ -11,34 +11,28 @@ public class icon implements Serializable{
 	private String title;
 	private String path;
 	private String abstractText;
-	
-	public String getTitle()
-	{
+
+	public String getTitle() {
 		return title;
 	}
-	
-	public void setTitle(String title)
-	{
+
+	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	public String getPath()
-	{
+
+	public String getPath() {
 		return path;
 	}
-	
-	public void setPath(String path)
-	{
+
+	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	public String getAbstractText()
-	{
+
+	public String getAbstractText() {
 		return abstractText;
 	}
 
-	public void setAbstractText(String abstractText)
-	{
+	public void setAbstractText(String abstractText) {
 		this.abstractText = abstractText;
 	}
 }

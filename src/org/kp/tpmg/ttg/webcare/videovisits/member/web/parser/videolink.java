@@ -1,10 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
-
 import java.io.Serializable;
-import java.util.List;
 
-public class videolink implements Serializable{
+public class videolink implements Serializable {
 
 	/**
 	 * 
@@ -16,53 +14,43 @@ public class videolink implements Serializable{
 	private icon videoIcon;
 	private String id;
 
-	public String getTitle()
-	{
+	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title)
-	{
+	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	public String getHeader()
-	{
+
+	public String getHeader() {
 		return header;
 	}
 
-	public void setHeader(String header)
-	{
+	public void setHeader(String header) {
 		this.header = header;
 	}
-	
-	public void setAbstractText(String abstractText)
-	{
+
+	public void setAbstractText(String abstractText) {
 		this.abstractText = abstractText;
 	}
-	
-	public String getAbstractText()
-	{
+
+	public String getAbstractText() {
 		return abstractText;
 	}
-	
-	public icon getVideoIcon()
-	{
+
+	public icon getVideoIcon() {
 		return videoIcon;
 	}
-	
-	public void setVideoIcon(icon videoIcon)
-	{
+
+	public void setVideoIcon(icon videoIcon) {
 		this.videoIcon = videoIcon;
 	}
-	
-	public void setId(String id)
-	{
+
+	public void setId(String id) {
 		this.id = id;
 	}
-	
-	public String getId()
-	{
+
+	public String getId() {
 		return id;
 	}
 

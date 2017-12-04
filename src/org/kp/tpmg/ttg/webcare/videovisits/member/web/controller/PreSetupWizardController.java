@@ -27,7 +27,7 @@ public class PreSetupWizardController extends SimplePageController {
 	public PreSetupWizardController() {
 		try {
 			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.debug("configuration: resource bundle exists -> video visit external properties file location: "
+			logger.debug("configuration: resource bundle exists video visit external properties file location: "
 					+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			final FileInputStream fileInput = new FileInputStream(file);

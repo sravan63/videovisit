@@ -321,7 +321,7 @@ public class MeetingCommand {
 						request.getSession().getId());
 				if (output != null && output.getLaunchMeetingEnvelope().getLaunchMeeting() != null) {
 					jsonString = gson.toJson(output);
-					logger.info("json output" + jsonString.toString());
+					logger.debug("json output" + jsonString.toString());
 				}
 			}
 		} catch (Exception e) {
@@ -334,7 +334,7 @@ public class MeetingCommand {
 			jsonString = gson.toJson(output);
 		}
 
-		logger.info(LOG_EXITING + " :" + jsonString);
+		logger.info(LOG_EXITING);
 		return jsonString;
 
 	}
@@ -430,7 +430,7 @@ public class MeetingCommand {
 			if (output != null) {
 				Gson gson = new Gson();
 				jsonString = gson.toJson(output);
-				logger.info("json output" + jsonString.toString());
+				logger.debug("json output" + jsonString.toString());
 			}
 
 		} catch (Exception e) {
@@ -573,7 +573,7 @@ public class MeetingCommand {
 			logger.warn("SSO Sign on failed as Member SSO Auth API failed to return valid Member info.");
 
 		} else {
-			logger.info("Account Role from Member SSO Auth API = " + responseWrapper.getMemberInfo().getAccountRole());
+			logger.debug("Account Role from Member SSO Auth API = " + responseWrapper.getMemberInfo().getAccountRole());
 
 			if ("MBR".equalsIgnoreCase(responseWrapper.getMemberInfo().getAccountRole())
 					&& StringUtils.isBlank(responseWrapper.getMemberInfo().getMrn())) {
@@ -918,7 +918,7 @@ public class MeetingCommand {
 				}
 				Gson gson = new Gson();
 				json = gson.toJson(verifyCareGiverOutput);
-				logger.info("json output" + json.toString());
+				logger.debug("json output" + json.toString());
 			}
 		} catch (Exception e) {
 			json = JSONObject.fromObject(new SystemError()).toString();
@@ -976,7 +976,7 @@ public class MeetingCommand {
 				ctx.setCareGiver(true);
 				Gson gson = new Gson();
 				json = gson.toJson(launchMeetingForMemberGuest);
-				logger.info("json output" + json.toString());
+				logger.debug("json output" + json.toString());
 				return json;
 			}
 
@@ -1011,7 +1011,7 @@ public class MeetingCommand {
 				output = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 						request.getSession().getId());
 				if (output != null) {
-					logger.info("json output: = " + output.toString());
+					logger.debug("json output: = " + output.toString());
 				}
 			} catch (Exception e) {
 				logger.error("System Error" + e.getMessage(), e);
@@ -1090,7 +1090,7 @@ public class MeetingCommand {
 			output = WebService.getLaunchMeetingDetails(meetingId, inMeetingDisplayName, request.getSession().getId(),
 					ctx.getMember().getMrn8Digit(), deviceType, deviceOs, deviceOsVersion, isMobileflow);
 			if (output != null) {
-				logger.info("json output:" + output);
+				logger.debug("json output:" + output);
 				logger.info(LOG_EXITING);
 				return output;
 			}
