@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import java.net.URLDecoder;
 import java.util.List;
 
@@ -27,27 +30,24 @@ import org.springframework.web.servlet.ModelAndView;
 public class LogoffController extends SimplePageController {
 
 	public static Logger logger = Logger.getLogger(LogoffController.class);
-	
+
 	private String mobileViewName;
 	private String myMeetingsViewName;
-	
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {
-				
+
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
+			HttpServletResponse response) {
+		logger.info(LOG_ENTERED);
 		boolean isWirelessDeviceorTablet = DeviceDetectionService.isWirelessDeviceorTablet(request);
-		logger.info("LogoffController -> isWirelessDeviceorTablet = " + isWirelessDeviceorTablet);
-		logger.info("LogoffController -> session Id=" + request.getSession().getId());
-		if(!isWirelessDeviceorTablet)
-		{
+		logger.info("isWirelessDeviceorTablet = " + isWirelessDeviceorTablet + " ,session Id="
+				+ request.getSession().getId());
+		if (!isWirelessDeviceorTablet) {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			if(ctx == null)
-			{
-				logger.info("LogoffController -> context is null");
+			if (ctx == null) {
+				logger.info("context is null");
 				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
-											
-				if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue()))
-				{
-					try
-					{	
+
+				if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
+					try {
 						faq f = FaqParser.parse();
 						List<promo> promos = PromoParser.parse();
 						List<iconpromo> iconpromos = IconPromoParser.parse();
@@ -59,52 +59,42 @@ public class LogoffController extends SimplePageController {
 						ctx.setIconPromo(iconpromos);
 						ctx.setVideoLink(videoLink);
 						String ssoCookieVal = URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
-						
+
 						String responseCode = MeetingCommand.validateKpOrgSSOSession(request, response, ssoCookieVal);
-						if("200".equalsIgnoreCase(responseCode))
-						{
-							logger.info("LogoffController -> sso session token from request cookie valid, navigating to my meetings page");
-							//WebService.callKPKeepAliveUrl();
+						if ("200".equalsIgnoreCase(responseCode)) {
+							logger.info("sso session token from request cookie valid, navigating to my meetings page");
 							return new ModelAndView(myMeetingsViewName);
-						}
-						else
-						{
-							logger.info("LogoffController -> invalid sso session token, navigating to SSO login page");
+						} else {
+							logger.info("invalid sso session token, navigating to SSO login page");
 							boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(request, response);
-							logger.info("LogoffController -> isSSOSignedOff=" + isSSOSignedOff);
+							logger.info("isSSOSignedOff=" + isSSOSignedOff);
 							WebAppContext.setWebAppContext(request, null);
-						}									
+						}
+					} catch (Exception ex) {
+
 					}
-					catch(Exception ex)
-					{
-						
-					}
-				}			
-			}
-			else
-			{
-				logger.info("LogoffController -> context is not null");
-				try
-				{
+				}
+			} else {
+				logger.info("context is not null");
+				try {
 					boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(request, response);
-					logger.debug("LogoffController -> isSSOSignedOff=" + isSSOSignedOff);
-				} 
-				catch (Exception e) {
-					logger.warn("LogoffController -> error while SSO sign off");
+					logger.debug("isSSOSignedOff=" + isSSOSignedOff);
+				} catch (Exception e) {
+					logger.warn("error while SSO sign off");
 				}
 			}
 		}
 		request.getSession().invalidate();
-		
-		if ( request.getSession(false) == null)
-			logger.info("LogoffController session is null");
+
+		if (request.getSession(false) == null)
+			logger.info("session is null");
 		else
-			logger.info("LogoffController session is not null");
-		if(isWirelessDeviceorTablet){
-			return new ModelAndView(mobileViewName);				
-		}
-		else{
-			logger.info("view name = " + getViewName());
+			logger.info("session is not null");
+		if (isWirelessDeviceorTablet) {
+			logger.info(LOG_EXITING);
+			return new ModelAndView(mobileViewName);
+		} else {
+			logger.info(LOG_EXITING + "view name = " + getViewName());
 			return new ModelAndView(getViewName());
 		}
 	}
@@ -125,12 +115,11 @@ public class LogoffController extends SimplePageController {
 	}
 
 	/**
-	 * @param myMeetingsViewName the myMeetingsViewName to set
+	 * @param myMeetingsViewName
+	 *            the myMeetingsViewName to set
 	 */
 	public void setMyMeetingsViewName(String myMeetingsViewName) {
 		this.myMeetingsViewName = myMeetingsViewName;
 	}
-	
-	
 
 }

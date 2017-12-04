@@ -32,6 +32,8 @@ public class WebUtil {
 	public static final String S_COOKIE_NAME = "S";
 	
 	public static final String VIDYO_WEBRTC_SESSION_MANGER = "webrtc.health.vidyoworks.com";
+	public static final String LOG_ENTERED = "Entered";
+	public static final String LOG_EXITING = "Exiting";
 	
 	public static String getCurrentDateTimeZone()
 	{

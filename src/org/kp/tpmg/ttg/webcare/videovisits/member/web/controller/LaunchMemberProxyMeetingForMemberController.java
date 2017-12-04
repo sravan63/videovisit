@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,23 +14,18 @@ public class LaunchMemberProxyMeetingForMemberController extends SimplePageContr
 	public static Logger logger = Logger.getLogger(LaunchMemberProxyMeetingForMemberController.class);
 	private static String JSONMAPPING = "jsonData";
 
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
-	{	
-		logger.info("Entered LaunchMemberProxyMeetingForMemberController handlePageRequest");
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
 		String data = null;
-		try
-		{
-			 data = MeetingCommand.launchMemberOrProxyMeetingForMember(request, response);
+		try {
+			data = MeetingCommand.launchMemberOrProxyMeetingForMember(request, response);
+		} catch (Exception e) {
+			logger.error("System Error" + e.getMessage(), e);
 		}
-		catch (Exception e)
-		{
-			// log error
-			logger.error("LaunchMemberProxyMeetingForMemberController -> System Error" + e.getMessage(),e);
-		}
-		//put data into buffer
-		logger.info("Exiting LaunchMemberProxyMeetingForMemberController-handleRequest-data="+data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
+		logger.info(LOG_EXITING + "data=" + data);
 		return (modelAndView);
 	}
 }

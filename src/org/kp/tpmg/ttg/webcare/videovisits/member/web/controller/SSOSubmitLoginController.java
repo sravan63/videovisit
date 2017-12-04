@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,26 +21,22 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
-public class SSOSubmitLoginController extends SimplePageController
-{
+public class SSOSubmitLoginController extends SimplePageController {
 
 	public static Logger logger = Logger.getLogger(SSOSubmitLoginController.class);
 	private static String JSONMAPPING = "jsonData";
 
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
-	{		
-		logger.info("Entering SSOSubmitLoginController");
-		String data = null;		
-		try
-		{
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
+		String data = null;
+		try {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			if (ctx == null)
-			{
-				logger.info("SSOSubmitLoginController -> context is null, so creating new context");
+			if (ctx == null) {
+				logger.info("Context is null, so creating new context");
 				faq f = FaqParser.parse();
 				List<promo> promos = PromoParser.parse();
 				List<iconpromo> iconpromos = IconPromoParser.parse();
@@ -48,38 +47,31 @@ public class SSOSubmitLoginController extends SimplePageController
 				ctx.setPromo(promos);
 				ctx.setIconPromo(iconpromos);
 				ctx.setVideoLink(videoLink);
+			} else {
+				logger.info("Context is not null");
+
 			}
-			else
-			{
-				logger.info("SSOSubmitLoginController -> Context is not null");
-				
-			}
-			
-			if(ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())){
+
+			if (ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
 				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
 			}
-			
-			//Perform SSO sign on and authorization
-			 data = MeetingCommand.performSSOSignOn(request, response);
-			 
-			 //set ssosession token in cookie
-			 if("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null && StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession()))
-			 {
-				 logger.info("SubmitLoginController: ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
-				 WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
-				 ctx.setAuthenticated(true);
-			 }
-			 logger.info("SubmitLoginController:data:" + data);
+
+			// Perform SSO sign on and authorization
+			data = MeetingCommand.performSSOSignOn(request, response);
+
+			// set ssosession token in cookie
+			if ("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null
+					&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
+				logger.info("ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
+				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
+				ctx.setAuthenticated(true);
+			}
+		} catch (Exception e) {
+			logger.error("SSOSubmitLoginController -> System Error" + e.getMessage(), e);
 		}
-		catch (Exception e)
-		{
-			// log error
-			logger.error("SSOSubmitLoginController -> System Error" + e.getMessage(),e);
-		}
-		//put data into buffer
-		logger.info("SSOSubmitLoginController -> handleRequest-data="+data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
+		logger.info(LOG_EXITING + "data=" + data);
 		return (modelAndView);
 	}
 

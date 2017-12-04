@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +18,7 @@ public class LaunchMeetingForMemberDesktopController extends SimplePageControlle
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		String data = null;
-		logger.info("Entered LaunchMeetingForMemberDesktopController handlePageRequest");
+		logger.info(LOG_ENTERED);
 		try {
 			data = MeetingCommand.launchMeetingForMemberDesktop(request, response);
 			modelAndView.setViewName(JSONMAPPING);
@@ -23,7 +26,7 @@ public class LaunchMeetingForMemberDesktopController extends SimplePageControlle
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
-		logger.info("Exiting LaunchMeetingForMemberDesktopController-handleRequest-data=" + data);
+		logger.info(LOG_EXITING + "data=" + data);
 		return (modelAndView);
 	}
 }

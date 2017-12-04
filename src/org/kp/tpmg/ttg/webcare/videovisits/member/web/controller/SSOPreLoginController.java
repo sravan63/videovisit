@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
@@ -44,38 +47,35 @@ public class SSOPreLoginController implements Controller {
 	private String vidyoWebrtcSessionManager = null;
 	private String blockChrome = null;
 	private String blockFF = null;
-	
+
 	public SSOPreLoginController() {
 		try {
 			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.debug("SSOPreLoginController -> configuration: resource bundle exists -> video visit external properties file location: "
-							+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			logger.debug("Configuration: resource bundle exists -> video visit external properties file location: "
+					+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			final FileInputStream fileInput = new FileInputStream(file);
 			final Properties appProp = new Properties();
 			appProp.load(fileInput);
 			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-    		if(StringUtils.isBlank(vidyoWebrtcSessionManager)){
-    			vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-    		}
+			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
+				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+			}
 			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
 		} catch (Exception ex) {
-			logger.error("SSOPreLoginController -> Error while reading external properties file - " + ex.getMessage(), ex);
+			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
 	}
-		
-	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception 
-	{
-		logger.info("In SSOPreLoginController");
+
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
 		String ssoSession = null;
 		ModelAndView modelAndView = null;
-		try 
-		{
+		try {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			if (ctx == null)
-			{
-				logger.info("SSOPreLoginController -> context is null");
+			if (ctx == null) {
+				logger.info("context is null");
 				faq f = FaqParser.parse();
 				List<promo> promos = PromoParser.parse();
 				List<iconpromo> iconpromos = IconPromoParser.parse();
@@ -86,108 +86,85 @@ public class SSOPreLoginController implements Controller {
 				ctx.setPromo(promos);
 				ctx.setIconPromo(iconpromos);
 				ctx.setVideoLink(videoLink);
-			}
-			else
-			{
-				logger.info("SSOPreLoginController -> Context is not null");
-				if(ctx.getKpOrgSignOnInfo() != null && StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession()))
-				{
-					// Init service properties	
+			} else {
+				logger.info("Context is not null");
+				if (ctx.getKpOrgSignOnInfo() != null
+						&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
 					ssoSession = ctx.getKpOrgSignOnInfo().getSsoSession();
 				}
 			}
 			ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
-			if(StringUtils.isBlank(ctx.getWebrtcSessionManager())){
+			if (StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
 				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
 			}
-			
-			if(StringUtils.isNotBlank(blockChrome)){
+
+			if (StringUtils.isNotBlank(blockChrome)) {
 				ctx.setBlockChrome(blockChrome);
 			}
-			if(StringUtils.isNotBlank(blockFF)){
+			if (StringUtils.isNotBlank(blockFF)) {
 				ctx.setBlockFF(blockFF);
 			}
-			
-			logger.debug("SSOPreLoginController -> ssoSession in context=" + ssoSession);
-			
+
+			logger.debug("ssoSession in context=" + ssoSession);
+
 			Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
-			
-			if(ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue()) || StringUtils.isBlank(ssoCookie.getValue()))))
-			{
-				if(StringUtils.containsIgnoreCase(request.getServerName(), "localhost"))
-				{
-					logger.info("SSOPreLoginController -> cookie validation not required for " + request.getServerName());
-				}
-				else
-				{
-					if(StringUtils.isNotBlank(ssoSession))
-					{
+
+			if (ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
+					|| StringUtils.isBlank(ssoCookie.getValue())))) {
+				if (StringUtils.containsIgnoreCase(request.getServerName(), "localhost")) {
+					logger.info("Cookie validation not required for " + request.getServerName());
+				} else {
+					if (StringUtils.isNotBlank(ssoSession)) {
 						MeetingCommand.performSSOSignOff(request, response);
 					}
-					logger.info("SSOPreLoginController -> invalid cookie, so navigating to SSO login page");
+					logger.info("Invalid cookie, so navigating to SSO login page");
 					modelAndView = new ModelAndView(getViewName());
 					getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 				}
 			}
-			
-			if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue()))
-			{
+
+			if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
 				ssoSession = ssoCookie.getValue();
-				logger.debug("SSOPreLoginController -> ssoSession from cookie before decoding=" + ssoSession);
-				try
-				{
+				logger.debug("ssoSession from cookie before decoding=" + ssoSession);
+				try {
 					ssoSession = URLDecoder.decode(ssoSession, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					logger.warn("SSOPreLoginController -> error while decoding a coockie value="+ ssoSession);
+					logger.warn("Error while decoding a coockie value=" + ssoSession);
 				}
-				logger.debug("SSOPreLoginController -> ssoSession from cookie after decoding=" + ssoSession);
+				logger.debug("ssoSession from cookie after decoding=" + ssoSession);
 			}
-			logger.info("SSOPreLoginController -> ssoSession after cookie check=" + ssoSession);
-			
+			logger.info("ssoSession after cookie check=" + ssoSession);
+
 			if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))
 					|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(blockFF))) {
-				logger.info("SSOPreLoginController -> browser blocked, so navigating to ssologin page");
+				logger.info("Browser blocked, so navigating to ssologin page");
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-			}
-			//read ssoSession token from either cookie or context...depending upon the flow.
-			//Pass the ssoSession token to MeetingCommand.validateKpOrgSSOSession()
-			else if(StringUtils.isNotBlank(ssoSession))
-			{
+			} else if (StringUtils.isNotBlank(ssoSession)) {
 				String responseCode = MeetingCommand.validateKpOrgSSOSession(request, response, ssoSession);
-				if("200".equalsIgnoreCase(responseCode))
-				{
-					//	 navigate to myMeetings page
-					logger.info("SSOPreLoginController -> sso session token valid, so navigating to my meetings page");
+				if ("200".equalsIgnoreCase(responseCode)) {
+					logger.info("sso session token valid, so navigating to my meetings page");
 					ctx.setAuthenticated(true);
 					modelAndView = new ModelAndView("landingready");
 					getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
-				}
-				else
-				{
-					logger.info("SSOPreLoginController -> invalid SSO session, so navigating to SSO login page");
+				} else {
+					logger.info("Invalid SSO session, so navigating to SSO login page");
 					modelAndView = new ModelAndView(getViewName());
 					getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-				}			
+				}
+			} else {
+				logger.info("SSO session not present, so navigating to SSO login page");
+				modelAndView = new ModelAndView(getViewName());
+				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 			}
-			else
-			{	
-				logger.info("SSOPreLoginController -> SSO session not present, so navigating to SSO login page");
+		} catch (Exception ex) {
+			logger.error("System Error", ex);
+			if (modelAndView == null) {
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 			}
 		}
-		catch(Exception ex)
-		{
-			logger.error("Error in SSOPreLoginController", ex);
-			if(modelAndView == null)
-			{
-				modelAndView = new ModelAndView(getViewName());
-				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-			}
-		}
-				
+		logger.info(LOG_EXITING);
 		return (modelAndView);
 	}
 
@@ -222,28 +199,29 @@ public class SSOPreLoginController implements Controller {
 	public void setHomePageRedirect(String homePageRedirect) {
 		this.homePageRedirect = homePageRedirect;
 	}
+
 	public String getViewName() {
 		return viewName;
 	}
-	
+
 	public void setViewName(String viewName) {
 		this.viewName = viewName;
 	}
-	
+
 	public String getNavigation() {
 		return navigation;
 	}
-	
+
 	public void setNavigation(String navigation) {
 		this.navigation = navigation;
 	}
-	
+
 	public String getSubNavigation() {
 		return subNavigation;
 	}
-	
+
 	public void setSubNavigation(String subNavigation) {
 		this.subNavigation = subNavigation;
 	}
-	
+
 }

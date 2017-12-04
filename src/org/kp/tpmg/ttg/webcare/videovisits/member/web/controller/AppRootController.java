@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
@@ -37,8 +40,6 @@ public class AppRootController implements Controller {
 	private String viewName;
 	private String navigation;
 	private String subNavigation;
-	//private String megaMeetingURL = null;
-	//private String megaMeetingMobileURL = null;
 	private String clinicianSingleSignOnURL = null;
 	private String vidyoWebrtcSessionManager = null;
 	private String blockChrome = null;
@@ -62,13 +63,13 @@ public class AppRootController implements Controller {
     		blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
     		blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
 		}catch(Exception ex){
-			logger.error("AppRootController -> Error while reading external properties file - " + ex.getMessage(), ex);
+			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
 		
 	}
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		logger.info("In AppRootController");
+		logger.info(LOG_ENTERED);
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
 			logger.info("context is null");
@@ -78,8 +79,6 @@ public class AppRootController implements Controller {
 			videolink videoLink = VideoLinkParser.parse();
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
-			//ctx.setMegaMeetingURL(megaMeetingURL);	
-			//ctx.setMegaMeetingMobileURL(megaMeetingMobileURL);
 			ctx.setClinicianSingleSignOnURL(clinicianSingleSignOnURL);
 			ctx.setFaq(f);
 			ctx.setPromo(promos);
@@ -103,6 +102,7 @@ public class AppRootController implements Controller {
 		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
+		logger.info(LOG_EXITING);
 		return (modelAndView);
 	}
 

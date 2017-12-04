@@ -1,54 +1,44 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
-import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.StringResponseWrapper;
-
-
 
 public class MonitoringCommand {
 
 	public static Logger logger = Logger.getLogger(MonitoringCommand.class);
-	
-	
-	public static String testDbRoundTrip(HttpServletRequest request, HttpServletResponse response)
-	{
-		logger.info("MonitoringCommand.testDbRoundTrip entered");
+
+	public static String testDbRoundTrip(HttpServletRequest request, HttpServletResponse response) {
+		logger.info(LOG_ENTERED);
 		String toRet = null;
-		try
-		{
-			// Init web service 	
+		try {
 			boolean success = WebService.initWebService(request);
-			logger.info("MonitoringCommand.testDbRoundTrip -> WebService.initWebService: " + success);
-			
+			logger.info("initWebService: " + success);
+
 			ServiceCommonOutputJson result = WebService.testDbRoundTrip();
-			
-			if(result != null && result.getService() != null 
-					&& result.getService().getStatus() != null)
-			{
-				if("200".equals(result.getService().getStatus().getCode())){
+
+			if (result != null && result.getService() != null && result.getService().getStatus() != null) {
+				if ("200".equals(result.getService().getStatus().getCode())) {
 					toRet = "OK";
-				}else{
+				} else {
 					toRet = result.getService().getStatus().getMessage();
 				}
-			}
-			else{
+			} else {
 				toRet = "Failure";
-			} 
-		}
-		catch(Throwable th)
-		{
-			toRet = "failed in calling testDbRoundTrip - EXCEPTION";// + th.getMessage();
+			}
+		} catch (Throwable th) {
+			toRet = "failed in calling testDbRoundTrip - EXCEPTION";
 			logger.error(toRet, th);
 		}
-		
-		logger.info("testDbRoundTrip exited toRet=[" + toRet + "]" );
+
+		logger.info(LOG_EXITING + "[" + toRet + "]");
 		return toRet;
 	}
-	
+
 }

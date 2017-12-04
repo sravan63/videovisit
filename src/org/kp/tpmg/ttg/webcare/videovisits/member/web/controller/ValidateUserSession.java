@@ -1,94 +1,74 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import javax.servlet.http.*;
+import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.springframework.web.servlet.ModelAndView;
 
 import net.sf.json.JSONObject;
 
-import org.apache.log4j.Logger;
-
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
-
-import org.springframework.web.servlet.ModelAndView;
-
-/**
- * This class is responsible for setting the session timeout for the web application or mobile context
- * @author arunwagle
- *
- */
 public class ValidateUserSession extends SimplePageController {
 
 	public static Logger logger = Logger.getLogger(ValidateUserSession.class);
 	private static String JSONMAPPING = "jsonData";
 
-
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
-		throws Exception
-	{
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
 		String data = "success";
 		JSONObject result = new JSONObject();
-		try
-		{
+		try {
 			HttpSession session = request.getSession(false);
-			
+
 			String inAppBrowserFlag = request.getParameter("inAppBrowserFlag");
-			logger.info("ValidateUserSession: KPPC In-App Browser flow: inAppBrowserFlag=" +inAppBrowserFlag);
-			
+			logger.info("KPPC In-App Browser flow: inAppBrowserFlag=" + inAppBrowserFlag);
+
 			result.put("isValidUserSession", false);
 			result.put("success", false);
-			
-			if(session != null){	
-				if("true".equalsIgnoreCase(inAppBrowserFlag)){
+
+			if (session != null) {
+				if ("true".equalsIgnoreCase(inAppBrowserFlag)) {
 					// KPPC inAppBrowser call
-					logger.info("ValidateUserSession: KPPC In-App Browser flow");
-					
+					logger.info("KPPC In-App Browser flow");
 					result.put("isValidUserSession", true);
 					result.put("success", true);
-				}
-				else{
+				} else {
 					WebAppContext context = WebAppContext.getWebAppContext(request);
-				
-					// session is active
-					if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("member"))
-					{
+					if (request.getParameter("source") != null
+							&& request.getParameter("source").equalsIgnoreCase("member")) {
 						logger.info("in validateUserSession member");
-						if(context != null && context.getMember() != null){
-							
+						if (context != null && context.getMember() != null) {
+
 							String meetingStatus = null;//MeetingCommand.getMeetingStatus(request, response);
 							result.put("meetingStatus", meetingStatus);
 							result.put("isValidUserSession", true);
-							result.put("success", true);	
+							result.put("success", true);
 						}
 					}
-					
-					if ( request.getParameter("source") != null && request.getParameter("source").equalsIgnoreCase("caregiver"))
-					{
-						logger.info("in validateUserSession caregiver");
-						if(context != null && context.getCareGiver() == true){
+
+					if (request.getParameter("source") != null
+							&& request.getParameter("source").equalsIgnoreCase("caregiver")) {
+						if (context != null && context.getCareGiver() == true) {
 							result.put("isValidUserSession", true);
-							result.put("success", true);	
+							result.put("success", true);
 						}
 					}
 				}
 			}
+		} catch (Exception e) {
+			logger.error("System Error" + e.getMessage(), e);
 		}
-		catch (Exception e)
-		{
-			// log error
-			logger.error("System Error" + e.getMessage(),e);
-		}
-		//put data into buffer
-		
 		data = JSONObject.fromObject(result).toString();
-		logger.info("ValidateUserSession-handleRequest-data="+data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
+		logger.info(LOG_EXITING + "data=" + data);
 		return (modelAndView);
-
 	}
-
-	
 
 }

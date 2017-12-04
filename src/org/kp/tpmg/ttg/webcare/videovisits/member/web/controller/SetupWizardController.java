@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,37 +16,35 @@ import com.google.gson.Gson;
 
 import net.sf.json.JSONObject;
 
-
 public class SetupWizardController extends SimplePageController {
-	
-public static Logger logger = Logger.getLogger(SetupWizardController.class);
-private static String JSONMAPPING = "jsonData";
-	
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) throws Exception
-	{	
-		try
-		{
-			logger.info("Entered SetupWizardController.handlePageRequest");			
+
+	public static Logger logger = Logger.getLogger(SetupWizardController.class);
+	private static String JSONMAPPING = "jsonData";
+
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
+		try {
 			String hostNuid = null;
-			String participantNuid [] = null;
+			String participantNuid[] = null;
 			String memberMrn = null;
 			String meetingType = null;
 			String userName = "Test, User";
 			boolean isReady = WebService.initWebService(request);
-			if(isReady){
+			if (isReady) {
 				hostNuid = WebService.getSetupWizardHostNuid();
 				memberMrn = WebService.getSetupWizardMemberMrn();
 				meetingType = WebService.getSetupWizardMeetingType();
 				userName = WebService.getSetupWizardUserName();
 			}
-			//get JSON data from web services
-			String vendorMeetingData = MeetingCommand.createInstantVendorMeeting(request, response, hostNuid, participantNuid, memberMrn, meetingType);
-			
-			logger.debug("SetupWizardController-handleRequest-data="+vendorMeetingData);
-		    
+			String vendorMeetingData = MeetingCommand.createInstantVendorMeeting(request, response, hostNuid,
+					participantNuid, memberMrn, meetingType);
+
+			logger.debug("data=" + vendorMeetingData);
+
 			JSONObject instantMeetingJsonObject = JSONObject.fromObject(vendorMeetingData);
-			
-			logger.info("SetupWizardController-instantMeetingJsonObject="+instantMeetingJsonObject);
+
+			logger.info("instantMeetingJsonObject=" + instantMeetingJsonObject);
 			VideoVisitParamsDTO videoVisitParamsDTO = new VideoVisitParamsDTO();
 			if ("200".equals(instantMeetingJsonObject.getJSONObject("status").get("code"))) {
 				final JSONObject jsonEnvelope = instantMeetingJsonObject.getJSONObject("envelope");
@@ -58,31 +59,17 @@ private static String JSONMAPPING = "jsonData";
 								? String.valueOf(jsonVendorMeeting.get("conferenceId")) : "");
 					}
 				}
-				
+
 			}
 			videoVisitParamsDTO.setGuestName(userName);
 			videoVisitParamsDTO.setIsProvider("false");
-			//videoVisitParamsDTO.setMeetingId((instantMeetingJsonObject.get("meetingId") != null) ? String.valueOf(instantMeetingJsonObject.get("meetingId")) : "");
-			//videoVisitParamsDTO.setVidyoUrl((instantMeetingJsonObject.get("vendorConfRoomUrl") != null) ? (String) instantMeetingJsonObject.get("vendorConfRoomUrl") : "");
-			//videoVisitParamsDTO.setVendorConfId((instantMeetingJsonObject.get("vendorConferenceId") != null) ? (String) instantMeetingJsonObject.get("vendorConferenceId") : "");
-			
-			/*videoVisitParamsDTO.setMeetingId((instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("meetingId") != null) ? String.valueOf(instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("meetingId")) : "");
-			videoVisitParamsDTO.setVidyoUrl((instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("roomUrl") != null) ? (String) instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("roomUrl") : "");
-			videoVisitParamsDTO.setVendorConfId((instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("conferenceId") != null) ? (String) instantMeetingJsonObject.getJSONObject("envelope").getJSONObject("vendorMeeting").get("conferenceId") : "");
-			videoVisitParamsDTO.setGuestName(userName);
-			videoVisitParamsDTO.setIsProvider("false");*/
-			logger.info("SetupWizardController - setting vendor meeting data from service to object: " + videoVisitParamsDTO.toString());
-						
-			//put data into buffer
+			logger.debug("setting vendor meeting data from service to object: " + videoVisitParamsDTO.toString());
 			modelAndView.setViewName(JSONMAPPING);
-			modelAndView.addObject("data", new Gson().toJson(videoVisitParamsDTO));		
-			
+			modelAndView.addObject("data", new Gson().toJson(videoVisitParamsDTO));
+		} catch (Exception e) {
+			logger.error("System Error" + e.getMessage(), e);
 		}
-		catch (Exception e)
-		{
-			// log error
-			logger.error("SetupWizardController - System Error" + e.getMessage(),e);
-		}
+		logger.info(LOG_EXITING);
 		return (modelAndView);
 	}
 

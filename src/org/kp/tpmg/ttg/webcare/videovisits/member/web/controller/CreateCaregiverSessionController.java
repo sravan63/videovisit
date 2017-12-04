@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,21 +15,19 @@ public class CreateCaregiverSessionController extends SimplePageController {
 	public static Logger logger = Logger.getLogger(CreateCaregiverSessionController.class);
 	private static String JSONMAPPING = "jsonData";
 
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
-			throws Exception {	
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
 		String data = null;
-		try	{
-			logger.info("******in caregiver desktop controller**********");
+		try {
 			data = MeetingCommand.createCaregiverMeetingSession(request, response);
 		} catch (Exception e) {
-			// log error
-			logger.error("System Error" + e.getMessage(),e);
+			logger.error("System Error" + e.getMessage(), e);
 		}
-		
-		//put data into buffer
-		logger.info("CreateCaregiverSessionController-handleRequest-data="+data);
+		logger.info("data=" + data);
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
+		logger.info(LOG_EXITING);
 		return (modelAndView);
 	}
 }

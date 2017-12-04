@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.List;
@@ -28,66 +31,59 @@ import org.springframework.web.servlet.ModelAndView;
 public class GuestController extends SimplePageController {
 
 	private final static Logger logger = Logger.getLogger(GuestController.class);
-	
+
 	private final static String GUEST_PAGE = "guest";
-	
+
 	private WebAppContext ctx = null;
-	
+
 	private String vidyoWebrtcSessionManager = null;
-	
+
 	private String blockChrome = null;
-	
+
 	private String blockFF = null;
-	
+
 	public GuestController() {
 		try {
 			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.debug("GuestController -> configuration: resource bundle exists -> video visit external properties file location: "
-							+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+			logger.debug("Configuration: resource bundle exists -> video visit external properties file location: "
+					+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 			final FileInputStream fileInput = new FileInputStream(file);
 			final Properties appProp = new Properties();
 			appProp.load(fileInput);
 			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-    		if(StringUtils.isBlank(vidyoWebrtcSessionManager)){
-    			vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-    		}
+			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
+				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+			}
 			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
 		} catch (Exception ex) {
 			logger.error("GuestController -> Error while reading external properties file - " + ex.getMessage(), ex);
 		}
 	}
-	
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) 
-			throws Exception {									
+
+	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
 		initializeWebappContext(request);
-		
 		String data = null;
-		try {	
-			
-			if(ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())){
+		try {
+
+			if (ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
 				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
 			}
-			
+
 			MeetingCommand.IsMeetingHashValid(request, response);
-			
-			//Set Plugin Data to Context - uncomment this once IE activex issues is resolved for plugin upgrade
-			/**if(ctx != null && ctx.getVendorPlugin() == null){
-				String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
-				logger.info("GuestController: Plugin data in context has been set: " + pluginJSON);
-			}**/
-//			if ( ctx.getTotalmeetings() > 0)
-//				data = MeetingCommand.retrieveMeetingForCaregiver(request, response);
 		} catch (Exception e) {
-			logger.error("GuestController handleRequest error - " + e.getMessage(), e);
-		}		
-		logger.info("GuestController handleRequest data - " + data);
+			logger.error("System Error - " + e.getMessage(), e);
+		}
+		logger.info("data - " + data);
 		modelAndView.setViewName(GUEST_PAGE);
-		modelAndView.addObject("data", data);		
+		modelAndView.addObject("data", data);
+		logger.info(LOG_EXITING);
 		return modelAndView;
 	}
-	
+
 	private void initializeWebappContext(HttpServletRequest request) throws Exception {
 		ctx = WebAppContextCommand.createContext(request, "0");
 		WebAppContext.setWebAppContext(request, ctx);
@@ -100,12 +96,12 @@ public class GuestController extends SimplePageController {
 		ctx.setIconPromo(iconpromos);
 		ctx.setVideoLink(videoLink);
 		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
-		if(StringUtils.isNotBlank(blockChrome)){
+		if (StringUtils.isNotBlank(blockChrome)) {
 			ctx.setBlockChrome(blockChrome);
 		}
-		if(StringUtils.isNotBlank(blockFF)){
+		if (StringUtils.isNotBlank(blockFF)) {
 			ctx.setBlockFF(blockFF);
 		}
 	}
-	
+
 }
