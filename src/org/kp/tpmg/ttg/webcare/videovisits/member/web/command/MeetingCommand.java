@@ -178,7 +178,7 @@ public class MeetingCommand {
 				}
 			}
 		} catch (Exception e) {
-			logger.error("System Error :" + e.getMessage(), e);
+			logger.error("System Error for meeting:" + meetingId, e);
 			jsonString = JSONObject.fromObject(new SystemError()).toString();
 		}
 		logger.info(LOG_EXITING);
@@ -473,7 +473,7 @@ public class MeetingCommand {
 			}
 
 		} catch (Exception e) {
-			logger.error("System Error :" + e.getMessage(), e);
+			logger.error("System Error for meeting:" + meetingId, e);
 			jsonString = JSONObject.fromObject(new SystemError()).toString();
 		}
 		logger.info(LOG_EXITING);
@@ -766,7 +766,7 @@ public class MeetingCommand {
 						request.getSession().getId(), WebUtil.clientId);
 			}
 		} catch (Exception e) {
-			logger.error("System error:" + e.getMessage(), e);
+			logger.error("System error for meeting:" + meetingId, e);
 		}
 		if (output == null) {
 			output = new ServiceCommonOutput();
@@ -853,7 +853,7 @@ public class MeetingCommand {
 				return output;
 			}
 		} catch (Exception e) {
-			logger.error("System error:" + e.getMessage(), e);
+			logger.error("System error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 		return (JSONObject.fromObject(new SystemError()).toString());
@@ -1014,7 +1014,7 @@ public class MeetingCommand {
 					logger.debug("json output: = " + output.toString());
 				}
 			} catch (Exception e) {
-				logger.error("System Error" + e.getMessage(), e);
+				logger.error("System Error for meeting:" + meetingId, e);
 				output = JSONObject.fromObject(new SystemError()).toString();
 			}
 		}
@@ -1096,7 +1096,7 @@ public class MeetingCommand {
 			}
 
 		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("System Error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 		return (JSONObject.fromObject(new SystemError()).toString());
@@ -1143,7 +1143,7 @@ public class MeetingCommand {
 			}
 		} catch (Exception e) {
 			output = (new Gson().toJson(new SystemError()));
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("System Error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 		return output;
@@ -1167,7 +1167,7 @@ public class MeetingCommand {
 			}
 		} catch (Exception e) {
 			output = (new Gson().toJson(new SystemError()));
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("System Error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 		return output;
@@ -1192,7 +1192,7 @@ public class MeetingCommand {
 				}
 			}
 		} catch (Exception e) {
-			logger.error("System Error", e);
+			logger.error("System Error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 	}
@@ -1211,7 +1211,7 @@ public class MeetingCommand {
 					errorDescription, sessionId);
 		} catch (Exception e) {
 			output = (new Gson().toJson(new SystemError()));
-			logger.error("System Error", e);
+			logger.error("System Error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 		return output;

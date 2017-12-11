@@ -339,7 +339,7 @@ public class WebService {
 			}
 
 		} catch (Exception e) {
-			logger.error("Web Service API error :" + e.getMessage());
+			logger.error("Web Service API error for meeting:" + meetingID);
 			throw new Exception("Web Service API error :", e);
 		}
 		logger.info(LOG_EXITING + "jsonOutput : " + responseJsonStr);
@@ -590,7 +590,7 @@ public class WebService {
 
 		catch (Exception e) {
 			e.printStackTrace();
-			logger.error("Web Service API error:" + e.getMessage());
+			logger.error("Web Service API error for meeting:" + meetingId);
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
@@ -1138,7 +1138,7 @@ public class WebService {
 				output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
 			}
 		} catch (Exception e) {
-			logger.error("Web Service API error", e);
+			logger.error("Web Service API error for meeting:" + meetingId, e);
 		}
 
 		logger.info(LOG_EXITING);
@@ -1520,7 +1520,7 @@ public class WebService {
 			output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
 			logger.info("jsonResponseString : " + responseJsonStr);
 		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
 			responseJsonStr = callVVRestService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString);
 			output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
 		}
@@ -1565,7 +1565,7 @@ public class WebService {
 			logger.debug("inputJsonString : " + inputJsonString);
 			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
 		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
 			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
 		}
 		logger.info(LOG_EXITING);
@@ -1603,7 +1603,7 @@ public class WebService {
 			logger.debug("inputJsonString : " + inputJsonString);
 			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
 		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
 			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
 		}
 		logger.info(LOG_EXITING);
@@ -1680,7 +1680,7 @@ public class WebService {
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
 			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			logger.error("Web Service API error for meeting:" + meetingID + " Retrying...", e);
 			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		}
 		logger.info(LOG_EXITING);
@@ -1754,7 +1754,7 @@ public class WebService {
 			jsonOutput = callVVRestService(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS, inputJsonStr);
 			logger.info("jsonOutput " + jsonOutput);
 		} catch (Exception e) {
-			logger.error("Web Service API error ", e);
+			logger.error("Web Service API error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 		return jsonOutput;
@@ -1801,7 +1801,7 @@ public class WebService {
 			jsonOutput = callVVRestService(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST, inputJsonStr);
 			logger.info("jsonOutput " + jsonOutput);
 		} catch (Exception e) {
-			logger.error("Web Service API error ", e);
+			logger.error("Web Service API error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 		return jsonOutput;
@@ -1838,7 +1838,7 @@ public class WebService {
 				logger.info("jsonOutput: " + jsonOutput);
 
 			} catch (Exception e) {
-				logger.error("Web Service API error", e);
+				logger.error("Web Service API error for meeting:" + meetingId, e);
 			}
 		}
 		logger.info(LOG_EXITING);
@@ -1880,7 +1880,7 @@ public class WebService {
 				logger.info("jsonOutput: " + jsonOutput);
 
 			} catch (Exception e) {
-				logger.error("Web Service API error", e);
+				logger.error("Web Service API error for meeting:" + meetingId, e);
 			}
 		}
 		logger.info(LOG_EXITING);

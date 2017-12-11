@@ -27,205 +27,182 @@ public class WebUtil {
 	public static final String clientId = "vv-mbr-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
 	public static final String NON_MEMBER = "Non_Mmbr";
-	
+
 	public static final String HSESSIONID_COOKIE_NAME = "HSESSIONID";
 	public static final String S_COOKIE_NAME = "S";
-	
+
 	public static final String VIDYO_WEBRTC_SESSION_MANGER = "webrtc.health.vidyoworks.com";
 	public static final String LOG_ENTERED = "Entered";
 	public static final String LOG_EXITING = "Exiting";
-	
-	public static String getCurrentDateTimeZone()
-	{
-		logger.info("in getCurrentDateTimeZone");
-		Calendar calToday =  Calendar.getInstance();
-		calToday .setTime(new Date());
+
+	public static String getCurrentDateTimeZone() {
+		logger.info(LOG_ENTERED);
+		Calendar calToday = Calendar.getInstance();
+		calToday.setTime(new Date());
 		TimeZone tz1 = calToday.getTimeZone();
-		logger.info(" inDayLightSavings = " +tz1.inDaylightTime(new Date()) );
-		if ( tz1.inDaylightTime(new Date()) ) 
+		logger.info("inDayLightSavings = " + tz1.inDaylightTime(new Date()));
+		if (tz1.inDaylightTime(new Date()))
 			return "PDT";
 		else
 			return "PST";
 	}
-	
-	public static boolean isDOBFormat(String value)
-	{
-		if (value == null) return false;
-		else
-		{
+
+	public static boolean isDOBFormat(String value) {
+		if (value == null)
+			return false;
+		else {
 			value = value.trim();
 			java.util.regex.Matcher m = DOB_PATTERN.matcher(value);
 			return m.matches();
 		}
-		
+
 	}
-	
-	public static boolean isDOBMMYYYYFormat(String value)
-	{
-		if (value == null) return false;
-		else
-		{
+
+	public static boolean isDOBMMYYYYFormat(String value) {
+		if (value == null)
+			return false;
+		else {
 			value = value.trim();
 			java.util.regex.Matcher m = DOB_MMYYYY_PATTERN.matcher(value);
 			return m.matches();
 		}
-		
+
 	}
-	
+
 	public static String fillToLength(String src, char fillChar, int total_length) {
-		String ret=null;
-		if (StringUtils.isNotBlank(src) && src.length()<total_length) {
-			int count=total_length-src.length();
-			StringBuffer sb=new StringBuffer();
-			for (int i=0; i<count; i++) {
+		String ret = null;
+		if (StringUtils.isNotBlank(src) && src.length() < total_length) {
+			int count = total_length - src.length();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < count; i++) {
 				sb.append(fillChar);
 			}
 			sb.append(src);
-			ret=sb.toString();
+			ret = sb.toString();
 		} else {
-			ret=src;
-		}				
+			ret = src;
+		}
 		return ret;
-	}	
-	
+	}
+
 	/**
 	 * Get cookie based on the cookie name
+	 * 
 	 * @param httpRequest
 	 * @param cookieName
 	 * @return
 	 */
-	public static Cookie getCookie(HttpServletRequest httpRequest, String cookieName) 
-	{		
-		if (httpRequest.getCookies() != null && StringUtils.isNotBlank(cookieName))
-		{
-			for (Cookie cookie : httpRequest.getCookies()) 
-			{
-	        	logger.info("getCookie: cookie name="+ cookie.getName());
-	            if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) 
-	            {
-	                return cookie;
-	            }
+	public static Cookie getCookie(HttpServletRequest httpRequest, String cookieName) {
+		if (httpRequest.getCookies() != null && StringUtils.isNotBlank(cookieName)) {
+			for (Cookie cookie : httpRequest.getCookies()) {
+				logger.info("Cookie name=" + cookie.getName());
+				if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) {
+					return cookie;
+				}
 			}
 		}
-        return null;
-    }
-	
-	public static void readAllCookies(HttpServletRequest httpRequest) 
-	{		
-		if (httpRequest.getCookies() != null)
-		{
-			for (Cookie cookie : httpRequest.getCookies()) 
-			{
-	        	logger.info("getCookie: cookie name="+ cookie.getName());
-	        	logger.info("getCookie: cookie value="+ cookie.getValue());
-	        	logger.info("getCookie: cookie domain="+ cookie.getDomain());
-	        	logger.info("getCookie: cookie maxage="+ cookie.getMaxAge());
-	        	logger.info("getCookie: cookie path="+ cookie.getPath());
-	        	logger.info("getCookie: cookie secure="+ cookie.getSecure());
-	        	logger.info("getCookie: cookie version="+ cookie.getVersion());
-	        	logger.info("getCookie: cookie comment="+ cookie.getComment());
-	        	logger.info("getCookie: -------------------------");
+		return null;
+	}
+
+	public static void readAllCookies(HttpServletRequest httpRequest) {
+		if (httpRequest.getCookies() != null) {
+			for (Cookie cookie : httpRequest.getCookies()) {
+				logger.info("Cookie name=" + cookie.getName());
+				logger.info("Cookie value=" + cookie.getValue());
+				logger.info("Cookie domain=" + cookie.getDomain());
+				logger.info("Cookie maxage=" + cookie.getMaxAge());
+				logger.info("Cookie path=" + cookie.getPath());
+				logger.info("Cookie secure=" + cookie.getSecure());
+				logger.info("Cookie version=" + cookie.getVersion());
+				logger.info("Cookie comment=" + cookie.getComment());
 			}
 		}
-        
-    }
-	
-	public static void setCookie(HttpServletResponse response, String cookieName, String cookieValue)
-	{
-		 logger.info("setCookie: cookie name="+ cookieName + ", cookie value=" + cookieValue);
-		 Cookie cookie;
+
+	}
+
+	public static void setCookie(HttpServletResponse response, String cookieName, String cookieValue) {
+		logger.info("Cookie name=" + cookieName + ", cookie value=" + cookieValue);
+		Cookie cookie;
 		try {
 			cookie = new Cookie(cookieName, URLEncoder.encode(cookieValue, "UTF-8"));
 			cookie.setPath("/");
 			cookie.setDomain(".kaiserpermanente.org");
 			cookie.setSecure(true);
-		    response.addCookie(cookie);
+			response.addCookie(cookie);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			logger.warn("setCookie: error while adding a coockie="+ cookieName + ", cookie value=" + cookieValue);
+			logger.warn("Error while adding a coockie=" + cookieName + ", cookie value=" + cookieValue);
 		}
-         
+
 	}
-	
-	public static void removeCookie(HttpServletRequest httpRequest, HttpServletResponse response, String cookieName)
-	{
-		logger.info("removeCookie: cookie name="+ cookieName);
+
+	public static void removeCookie(HttpServletRequest httpRequest, HttpServletResponse response, String cookieName) {
+		logger.info("cookie name=" + cookieName);
 		Cookie[] cookies = httpRequest.getCookies();
-		if (cookies != null)
-		{
-			for (Cookie cookie : cookies) 
-			{
-				if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) 
-	            {
-	            	cookie.setValue(null);
-	            	cookie.setMaxAge(0); 
-	        		cookie.setPath("/");
-	        		cookie.setDomain(".kaiserpermanente.org");
-	        		cookie.setSecure(true);
-	        		response.addCookie(cookie);
-	        		logger.info("removeCookie: removed cookie name="+ cookie.getName());
-	            }
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (StringUtils.equalsIgnoreCase(cookie.getName(), cookieName)) {
+					cookie.setValue(null);
+					cookie.setMaxAge(0);
+					cookie.setPath("/");
+					cookie.setDomain(".kaiserpermanente.org");
+					cookie.setSecure(true);
+					response.addCookie(cookie);
+					logger.info("removed cookie name=" + cookie.getName());
+				}
 			}
 		}
-			
+
 	}
-	
-	public static String getBrowserDetails(HttpServletRequest httpRequest)
-	{
+
+	public static String getBrowserDetails(HttpServletRequest httpRequest) {
+		logger.info(LOG_ENTERED);
 		String browser = "";
-		try
-		{
-			String  browserDetails  =   httpRequest.getHeader("User-Agent");
-	        String  userAgent       =   browserDetails;
-	        String  user            =   userAgent.toLowerCase();
-		       
-	        logger.info("getBrowserDetails -> User Agent for the request is===>"+browserDetails);
-	        //===============Browser===========================
-	        if (user.contains("msie"))
-	        {
-	            String substring=userAgent.substring(userAgent.indexOf("MSIE")).split(";")[0];
-	            browser=substring.split(" ")[0].replace("MSIE", "IE")+"-"+substring.split(" ")[1];
-	        } else if (user.contains("safari") && user.contains("version"))
-	        {
-	            browser=(userAgent.substring(userAgent.indexOf("Safari")).split(" ")[0]).split("/")[0]+"-"+(userAgent.substring(userAgent.indexOf("Version")).split(" ")[0]).split("/")[1];
-	        } else if ( user.contains("opr") || user.contains("opera"))
-	        {
-	            if(user.contains("opera"))
-	                browser=(userAgent.substring(userAgent.indexOf("Opera")).split(" ")[0]).split("/")[0]+"-"+(userAgent.substring(userAgent.indexOf("Version")).split(" ")[0]).split("/")[1];
-	            else if(user.contains("opr"))
-	                browser=((userAgent.substring(userAgent.indexOf("OPR")).split(" ")[0]).replace("/", "-")).replace("OPR", "Opera");
-	        } else if (user.contains("chrome"))
-	        {
-	            browser=(userAgent.substring(userAgent.indexOf("Chrome")).split(" ")[0]).replace("/", "-");
-	        } else if ((user.indexOf("mozilla/7.0") > -1) || (user.indexOf("netscape6") != -1)  || (user.indexOf("mozilla/4.7") != -1) || (user.indexOf("mozilla/4.78") != -1) || (user.indexOf("mozilla/4.08") != -1) || (user.indexOf("mozilla/3") != -1) )
-	        {
-	            //browser=(userAgent.substring(userAgent.indexOf("MSIE")).split(" ")[0]).replace("/", "-");
-	            browser = "Netscape-?";
-	
-	        } else if (user.contains("firefox"))
-	        {
-	            browser=(userAgent.substring(userAgent.indexOf("Firefox")).split(" ")[0]).replace("/", "-");
-	        } else if(user.contains("rv"))
-	        {
-	            browser="IE";
-	        } else
-	        {
-	            browser = "UnKnown, More-Info: "+userAgent;
-	        }	        
-		}
-		catch(Exception ex)
-		{
-			if(browser == null)
-			{
+		try {
+			String browserDetails = httpRequest.getHeader("User-Agent");
+			String userAgent = browserDetails;
+			String user = userAgent.toLowerCase();
+
+			logger.info("User Agent for the request is : " + browserDetails);
+			if (user.contains("msie")) {
+				String substring = userAgent.substring(userAgent.indexOf("MSIE")).split(";")[0];
+				browser = substring.split(" ")[0].replace("MSIE", "IE") + "-" + substring.split(" ")[1];
+			} else if (user.contains("safari") && user.contains("version")) {
+				browser = (userAgent.substring(userAgent.indexOf("Safari")).split(" ")[0]).split("/")[0] + "-"
+						+ (userAgent.substring(userAgent.indexOf("Version")).split(" ")[0]).split("/")[1];
+			} else if (user.contains("opr") || user.contains("opera")) {
+				if (user.contains("opera"))
+					browser = (userAgent.substring(userAgent.indexOf("Opera")).split(" ")[0]).split("/")[0] + "-"
+							+ (userAgent.substring(userAgent.indexOf("Version")).split(" ")[0]).split("/")[1];
+				else if (user.contains("opr"))
+					browser = ((userAgent.substring(userAgent.indexOf("OPR")).split(" ")[0]).replace("/", "-"))
+							.replace("OPR", "Opera");
+			} else if (user.contains("chrome")) {
+				browser = (userAgent.substring(userAgent.indexOf("Chrome")).split(" ")[0]).replace("/", "-");
+			} else if ((user.indexOf("mozilla/7.0") > -1) || (user.indexOf("netscape6") != -1)
+					|| (user.indexOf("mozilla/4.7") != -1) || (user.indexOf("mozilla/4.78") != -1)
+					|| (user.indexOf("mozilla/4.08") != -1) || (user.indexOf("mozilla/3") != -1)) {
+				// browser=(userAgent.substring(userAgent.indexOf("MSIE")).split("
+				// ")[0]).replace("/", "-");
+				browser = "Netscape-?";
+
+			} else if (user.contains("firefox")) {
+				browser = (userAgent.substring(userAgent.indexOf("Firefox")).split(" ")[0]).replace("/", "-");
+			} else if (user.contains("rv")) {
+				browser = "IE";
+			} else {
+				browser = "UnKnown, More-Info: " + userAgent;
+			}
+		} catch (Exception ex) {
+			if (browser == null) {
 				browser = "";
 			}
 		}
-		logger.info("exiting getBrowserDetails -> Browser Name="+browser);
-        return browser;
+		logger.info(LOG_EXITING + " Browser Name=" + browser);
+		return browser;
 	}
-	
+
 	public static boolean isChromeOrFFBrowser(HttpServletRequest httpRequest) {
-		logger.info("Entered isChromeOrFFBrowser");
+		logger.info(LOG_ENTERED);
 		boolean isChromeOrFFBrowser = false;
 		try {
 			final String browser = getBrowserDetails(httpRequest).toLowerCase();
@@ -233,14 +210,14 @@ public class WebUtil {
 				isChromeOrFFBrowser = true;
 			}
 		} catch (Exception ex) {
-			logger.info("IsChromeOrFFBrowser -> error while checking the requested browser is firefox or chrome: ", ex);
+			logger.info("Error while checking the requested browser is firefox or chrome: ", ex);
 		}
-		logger.info("Exiting isChromeOrFFBrowser -> isChromeOrFFBrowser: " + isChromeOrFFBrowser);
+		logger.info(LOG_EXITING + " isChromeOrFFBrowser: " + isChromeOrFFBrowser);
 		return isChromeOrFFBrowser;
 	}
-	
+
 	public static boolean isChromeBrowser(HttpServletRequest httpRequest) {
-		logger.info("Entered isChromeBrowser");
+		logger.info(LOG_ENTERED);
 		boolean isChromeBrowser = false;
 		try {
 			final String browser = getBrowserDetails(httpRequest).toLowerCase();
@@ -248,14 +225,14 @@ public class WebUtil {
 				isChromeBrowser = true;
 			}
 		} catch (Exception ex) {
-			logger.info("isChromeBrowser -> error while checking the requested browser is chrome: ", ex);
+			logger.info("Error while checking the requested browser is chrome: ", ex);
 		}
-		logger.info("Exiting isChromeBrowser -> isChromeBrowser: " + isChromeBrowser);
+		logger.info(LOG_EXITING + " isChromeBrowser: " + isChromeBrowser);
 		return isChromeBrowser;
 	}
-	
+
 	public static boolean isFFBrowser(HttpServletRequest httpRequest) {
-		logger.info("Entered isFFBrowser");
+		logger.info(LOG_ENTERED);
 		boolean isFFBrowser = false;
 		try {
 			final String browser = getBrowserDetails(httpRequest).toLowerCase();
@@ -263,20 +240,20 @@ public class WebUtil {
 				isFFBrowser = true;
 			}
 		} catch (Exception ex) {
-			logger.info("isFFBrowser -> error while checking the requested browser is firefox: ", ex);
+			logger.info("Error while checking the requested browser is firefox: ", ex);
 		}
-		logger.info("Exiting isFFBrowser -> isFFBrowser: " + isFFBrowser);
+		logger.info(LOG_EXITING + " isFFBrowser: " + isFFBrowser);
 		return isFFBrowser;
 	}
-	
+
 	public static String getVidyoWebrtcSessionManager() {
-		logger.info("Entered getVidyoWebrtcSessionManager");
+		logger.info(LOG_ENTERED);
 		String vidyoWebrtcSessionManager = null;
 		try {
 			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
 			if (rbInfo != null) {
-				logger.debug("WebService.initWebService -> configuration: resource bundle exists -> video visit external properties file location: "
-								+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				logger.debug("Configuration: resource bundle exists video visit external properties file location: "
+						+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 				final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
 				final FileInputStream fileInput = new FileInputStream(file);
 				final Properties appProp = new Properties();
@@ -285,30 +262,31 @@ public class WebUtil {
 				if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
 					vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
 				}
-				logger.debug("getVidyoWebrtcSessionManager -> vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManager);
+				logger.debug("vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManager);
 			}
 		} catch (Exception e) {
-			logger.error("getVidyoWebrtcSessionManager -> Exception while reading external properties file: " + e.getMessage(), e);
+			logger.error("Error while reading external properties file: " + e.getMessage(), e);
 		}
-		logger.info("Exiting getVidyoWebrtcSessionManager");
+		logger.info(LOG_EXITING);
 		return vidyoWebrtcSessionManager;
 	}
 
-	public static String getDeviceOs(){
+	public static String getDeviceOs() {
 		return StringUtils.isBlank(System.getProperty("os.name")) ? DEFAULT_DEVICE : System.getProperty("os.name");
 	}
-	
-	public static String getDeviceOsVersion(){
-		return StringUtils.isBlank(System.getProperty("os.version")) ? DEFAULT_DEVICE : System.getProperty("os.version");
+
+	public static String getDeviceOsVersion() {
+		return StringUtils.isBlank(System.getProperty("os.version")) ? DEFAULT_DEVICE
+				: System.getProperty("os.version");
 	}
-	
+
 	public static long convertStringToLong(String value) {
 		long returnVal = 0;
 		if (StringUtils.isNotBlank(value)) {
 			try {
 				returnVal = Long.parseLong(value);
 			} catch (Exception e) {
-				logger.error("convertStringToLong -> error while converting string value to long: " + value, e);
+				logger.error("Error while converting string value to long: " + value, e);
 			}
 		}
 		return returnVal;
