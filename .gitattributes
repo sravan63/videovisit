@@ -31,6 +31,7 @@ conf/filters/pr/configuration.properties -text svneol=unset#text/plain
 conf/filters/qa/configuration.properties -text svneol=unset#text/plain
 conf/filters/tr/configuration.properties -text svneol=unset#text/plain
 conf/log4j.properties -text
+conf/log4j.xml -text svneol=unset#text/plain
 conf/project.init.properties -text
 conf/videovisitsmember.local.properties -text
 docroot/META-INF/MANIFEST.MF -text
