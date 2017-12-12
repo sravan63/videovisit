@@ -18,10 +18,10 @@
       <vidyoplayerVersion>1.7.0-SNAPSHOT</vidyoplayerVersion>
       <vvservice-clientVersion>1.7.0-SNAPSHOT</vvservice-clientVersion>
     </properties>
-
+	
 	<scm>
-		 <connection>scm:svn:https://svn.tpmg.kp.org/svn/videovisit/member-facing/TRUNK/videovisit-member-webapp</connection>
-		 <developerConnection>scm:svn:https://svn.tpmg.kp.org/svn/videovisit/member-facing/TRUNK/videovisit-member-webapp</developerConnection>
+		<connection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</connection>
+		<developerConnection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</developerConnection>
 	</scm>
 
  <!-- dependencies needed during compile time -->   
@@ -210,6 +210,15 @@
             </resource>
         </resources>
         <plugins>
+        	<plugin>
+				<groupId>external.atlassian.jgitflow</groupId>
+				<artifactId>jgitflow-maven-plugin</artifactId>
+				<version>1.0-m5.1</version>
+				<configuration>
+					<squash>true</squash>
+					<scmCommentPrefix>[RELEASE]</scmCommentPrefix>
+				</configuration>
+			</plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -643,9 +652,6 @@
             <plugin>
                  <groupId>org.apache.maven.plugins</groupId>
                  <artifactId>maven-release-plugin</artifactId>
-                 <configuration>
-                     <tagBase>https://svn.tpmg.kp.org/svn/videovisit/member-facing/TAGS/</tagBase>
-                 </configuration>
             </plugin>
         </plugins>
     </build>
