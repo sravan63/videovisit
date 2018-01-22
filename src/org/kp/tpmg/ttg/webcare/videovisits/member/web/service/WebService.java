@@ -990,13 +990,6 @@ public class WebService {
 			if (StringUtils.isBlank(videoVisitRestServiceUrl) || StringUtils.isBlank(serviceSecurityUsername)
 					|| StringUtils.isBlank(serviceSecurityPassword)) {
 				initializeRestProperties();
-				if (StringUtils.isBlank(videoVisitRestServiceUrl)) {
-					logger.info("Assigning vv rest service url to prod zone1.");
-					videoVisitRestServiceUrl = "https://vip-na-pr-z1-esb.ttgtpmg.net:48243/videovisitservice/2.0.0/videovisitapi/";
-					serviceSecurityUsername = "vv_user";
-					final Crypto crypto = new Crypto();
-					serviceSecurityPassword = crypto.read("iv7+w03u8Lk6U4zpmlx9WQ==");
-				}
 			}
 			logger.info("videoVisitRestServiceUrl url: " + videoVisitRestServiceUrl + operationName);
 			final URL url = new URL(videoVisitRestServiceUrl + operationName);
@@ -1676,7 +1669,7 @@ public class WebService {
 			jsonInput.setDeviceOS(deviceOS);
 			jsonInput.setDeviceOSversion(deviceOSversion);
 			jsonInput.setMobileFlow(isMobileFlow);
-			jsonInput.setClientId(WebUtil.clientId);
+			jsonInput.setClientId(WebUtil.MOB_CLIENT_ID);
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
 			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		} catch (Exception e) {
