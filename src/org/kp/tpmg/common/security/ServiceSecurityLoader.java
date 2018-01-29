@@ -16,7 +16,7 @@ import org.apache.neethi.PolicyEngine;
 
 public class ServiceSecurityLoader {
 
-	public static Logger logger = Logger.getLogger(ServiceSecurityLoader.class);
+	public static final Logger logger = Logger.getLogger(ServiceSecurityLoader.class);
 
 	private static ConfigurationContext axisConfig = null;
 

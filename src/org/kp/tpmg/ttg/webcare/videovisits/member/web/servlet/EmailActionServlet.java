@@ -21,7 +21,7 @@ public class EmailActionServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5283735648488487841L;
 
-	public static Logger logger = Logger.getLogger(EmailActionServlet.class);
+	public static final Logger logger = Logger.getLogger(EmailActionServlet.class);
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		doGet(request, response);
@@ -56,7 +56,9 @@ public class EmailActionServlet extends HttpServlet {
 			logger.error("Error updating email interation for meeting : " + meetingId, e);
 		} finally {
 			try {
-				out.close();
+				if(out != null) {
+					out.close();
+				}
 			} catch (Exception e) {
 				logger.error("Error while closing resources : ", e);
 			}

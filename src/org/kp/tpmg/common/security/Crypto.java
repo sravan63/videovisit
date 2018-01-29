@@ -9,6 +9,8 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEParameterSpec;
 
+import org.apache.log4j.Logger;
+
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.InvalidKeyException;
@@ -38,6 +40,7 @@ import java.io.IOException;
  */
 public class Crypto {
 
+	private static final Logger log = Logger.getLogger(Crypto.class);
     private static final String PASS_CODE = "x12#$der-md89&^-312ert%";
     private static final String ALGORITHM = "PBEWithMD5AndDES";
 
@@ -61,11 +64,11 @@ public class Crypto {
             _ecipher.init(Cipher.ENCRYPT_MODE, key);
             _dcipher.init(Cipher.DECRYPT_MODE, key);
         } catch (NoSuchPaddingException e) {
-            System.err.println("EXCEPTION: NoSuchPaddingException");
+        	log.error("EXCEPTION: NoSuchPaddingException", e);
         } catch (NoSuchAlgorithmException e) {
-            System.err.println("EXCEPTION: NoSuchAlgorithmException");
+        	log.error("EXCEPTION: NoSuchAlgorithmException", e);
         } catch (InvalidKeyException e) {
-            System.err.println("EXCEPTION: InvalidKeyException");
+        	log.error("EXCEPTION: InvalidKeyException", e);
         }
     }
 
@@ -85,7 +88,7 @@ public class Crypto {
 
         try {
         	if(PASS_CODE==null){
-        		System.out.println("PASS CODE IS NULL");
+        		log.info("PASS CODE IS NULL");
         	}
             KeySpec keySpec = new PBEKeySpec(PASS_CODE.toCharArray(), salt, iterationCount);
             
@@ -101,15 +104,15 @@ public class Crypto {
             _dcipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
 
         } catch (InvalidAlgorithmParameterException e) {
-            System.err.println("EXCEPTION: InvalidAlgorithmParameterException");
+        	log.error("EXCEPTION: InvalidAlgorithmParameterException", e);
         } catch (InvalidKeySpecException e) {
-            System.err.println("EXCEPTION: InvalidKeySpecException");
+        	log.error("EXCEPTION: InvalidKeySpecException", e);
         } catch (NoSuchPaddingException e) {
-            System.err.println("EXCEPTION: NoSuchPaddingException");
+        	log.error("EXCEPTION: NoSuchPaddingException", e);
         } catch (NoSuchAlgorithmException e) {
-            System.err.println("EXCEPTION: NoSuchAlgorithmException");
+        	log.error("EXCEPTION: NoSuchAlgorithmException", e);
         } catch (InvalidKeyException e) {
-            System.err.println("EXCEPTION: InvalidKeyException");
+        	log.error("EXCEPTION: InvalidKeyException", e);
         }
     }
 
@@ -131,9 +134,13 @@ public class Crypto {
             // Encode bytes to base64 to get a string
             return new sun.misc.BASE64Encoder().encode(enc);
         } catch (BadPaddingException e) {
+        	log.error("BadPaddingException", e);
         } catch (IllegalBlockSizeException e) {
+        	log.error("IllegalBlockSizeException", e);
         } catch (UnsupportedEncodingException e) {
+        	log.error("UnsupportedEncodingException", e);
         } catch (Exception e) {
+        	log.error("Exception", e);
         }
         return null;
     }
@@ -160,9 +167,13 @@ public class Crypto {
             return new String(utf8, "UTF8");
 
         } catch (BadPaddingException e) {
+        	log.error("BadPaddingException", e);
         } catch (IllegalBlockSizeException e) {
+        	log.error("IllegalBlockSizeException", e);
         } catch (UnsupportedEncodingException e) {
+        	log.error("UnsupportedEncodingException", e);
         } catch (IOException e) {
+        	log.error("IOException", e);
         }
         return null;
     }

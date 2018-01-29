@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.Controller;
 
 public class SimplePageController implements Controller {
 
-	public static Logger logger = Logger.getLogger(SimplePageController.class);
+	public static final Logger logger = Logger.getLogger(SimplePageController.class);
 
 	private String viewName;
 	private String navigation;

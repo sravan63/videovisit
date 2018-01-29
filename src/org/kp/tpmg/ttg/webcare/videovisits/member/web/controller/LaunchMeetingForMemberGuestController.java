@@ -16,13 +16,12 @@ import net.sf.json.JSONObject;
 
 public class LaunchMeetingForMemberGuestController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(LaunchMeetingForMemberGuestController.class);
-	private static String JSONMAPPING = "jsonData";
+	public static final Logger logger = Logger.getLogger(LaunchMeetingForMemberGuestController.class);
+	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
-		String data = "success";
 		StringBuilder dataResult = new StringBuilder();
 		StringBuilder validationData = new StringBuilder(",");
 		JSONObject result = new JSONObject();

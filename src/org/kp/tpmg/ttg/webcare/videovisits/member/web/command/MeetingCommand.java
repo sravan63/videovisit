@@ -49,9 +49,9 @@ import net.sourceforge.wurfl.core.Device;
 
 public class MeetingCommand {
 
-	public static Logger logger = Logger.getLogger(MeetingCommand.class);
-	public static int PAST_MINUTES = 120;
-	public static int FUTURE_MINUTES = 15;
+	public static final Logger logger = Logger.getLogger(MeetingCommand.class);
+	public static final int PAST_MINUTES = 120;
+	public static final int FUTURE_MINUTES = 15;
 
 	public static void setupGuestInfo(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
@@ -921,6 +921,7 @@ public class MeetingCommand {
 				logger.debug("json output" + json.toString());
 			}
 		} catch (Exception e) {
+			logger.error("System Error : ", e);
 			json = JSONObject.fromObject(new SystemError()).toString();
 		}
 		logger.info(LOG_EXITING);

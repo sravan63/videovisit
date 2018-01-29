@@ -13,7 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class EnvironmentCommand implements InitializingBean {
 
-	public static Logger logger = Logger.getLogger(EnvironmentCommand.class);
+	public static final Logger logger = Logger.getLogger(EnvironmentCommand.class);
 
 	private File cssDependencyFile;
 	private File jsDependencyFile;

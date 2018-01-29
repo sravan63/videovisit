@@ -12,8 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class CaregiverJoinLeaveMeetingController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(CaregiverJoinLeaveMeetingController.class);
-	private static String JSONMAPPING = "jsonData";
+	public static final Logger logger = Logger.getLogger(CaregiverJoinLeaveMeetingController.class);
+	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {

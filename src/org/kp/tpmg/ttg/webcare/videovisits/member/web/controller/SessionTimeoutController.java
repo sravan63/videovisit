@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class SessionTimeoutController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(SessionTimeoutController.class);
-	private static String JSONMAPPING = "jsonData";
+	public static final Logger logger = Logger.getLogger(SessionTimeoutController.class);
+	private static final String JSONMAPPING = "jsonData";
 
 	private int sessionTimeoutInSeconds = 0;
 

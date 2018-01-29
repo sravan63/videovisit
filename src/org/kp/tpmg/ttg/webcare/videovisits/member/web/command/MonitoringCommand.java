@@ -12,7 +12,7 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 
 public class MonitoringCommand {
 
-	public static Logger logger = Logger.getLogger(MonitoringCommand.class);
+	public static final Logger logger = Logger.getLogger(MonitoringCommand.class);
 
 	public static String testDbRoundTrip(HttpServletRequest request, HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
@@ -32,7 +32,7 @@ public class MonitoringCommand {
 			} else {
 				toRet = "Failure";
 			}
-		} catch (Throwable th) {
+		} catch (Exception th) {
 			toRet = "failed in calling testDbRoundTrip - EXCEPTION";
 			logger.error(toRet, th);
 		}

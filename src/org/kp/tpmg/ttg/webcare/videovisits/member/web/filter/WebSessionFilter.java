@@ -28,7 +28,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionSer
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 
 public class WebSessionFilter implements Filter {
-	public static Logger logger = Logger.getLogger(WebSessionFilter.class);
+	public static final Logger logger = Logger.getLogger(WebSessionFilter.class);
 
 	private List<String> excludeUrlList = null;
 
@@ -178,7 +178,7 @@ public class WebSessionFilter implements Filter {
 										}
 									}
 								} catch (Exception e) {
-
+									logger.warn("Error while validating member context");
 								}
 								break;
 							}
@@ -229,8 +229,8 @@ public class WebSessionFilter implements Filter {
 							Cookie ssoCookie = WebUtil.getCookie(req, WebUtil.SSO_COOKIE_NAME);
 
 							if (ssoCookie == null
-									|| (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
-											|| StringUtils.isBlank(ssoCookie.getValue())))) {
+									|| ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
+											|| StringUtils.isBlank(ssoCookie.getValue()))) {
 								if ("localhost".equalsIgnoreCase(req.getServerName())
 										|| "dev2.mydoctor.kaiserpermanente.org".equalsIgnoreCase(req.getServerName())) {
 									logger.info("cookie validation not required for " + req.getServerName());
@@ -267,7 +267,7 @@ public class WebSessionFilter implements Filter {
 										}
 									}
 								} catch (Exception ex) {
-
+									logger.warn("Error while validating sso cookie");
 								}
 							}
 

@@ -12,9 +12,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class VerifyGuestController extends SimplePageController {
 
-	private static Logger logger = Logger.getLogger(VerifyGuestController.class);
+	private static final Logger logger = Logger.getLogger(VerifyGuestController.class);
 
-	private static String JSONMAPPING = "jsonData";
+	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {

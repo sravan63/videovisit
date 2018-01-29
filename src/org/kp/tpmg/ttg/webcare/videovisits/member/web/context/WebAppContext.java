@@ -25,7 +25,7 @@ public class WebAppContext implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static Logger logger = Logger.getLogger(WebAppContext.class);
+	public static final Logger logger = Logger.getLogger(WebAppContext.class);
 
 	private String meetingCode;
 	private String patientLastName;

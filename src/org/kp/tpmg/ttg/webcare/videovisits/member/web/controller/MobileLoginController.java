@@ -13,8 +13,8 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.springframework.web.servlet.ModelAndView;
 
 public class MobileLoginController extends SimplePageController {
-	public static Logger logger = Logger.getLogger(MobileLoginController.class);
-	private static String JSONMAPPING = "jsonData";
+	public static final Logger logger = Logger.getLogger(MobileLoginController.class);
+	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {

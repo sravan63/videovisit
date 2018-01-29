@@ -22,7 +22,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 
 public class BackButtonFilter implements Filter {
 
-	public static Logger logger = Logger.getLogger(BackButtonFilter.class);
+	public static final Logger logger = Logger.getLogger(BackButtonFilter.class);
 
 	private String[] includeURLs = null;
 	private String[] excludeURLs = null;
@@ -97,6 +97,7 @@ public class BackButtonFilter implements Filter {
 						}
 
 					} catch (Exception ex) {
+						logger.warn("Error while ending meeting session");
 					}
 					ctx.setHasJoinedMeeting(false);
 				}

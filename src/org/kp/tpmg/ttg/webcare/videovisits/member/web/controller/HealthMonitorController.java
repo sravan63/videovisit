@@ -11,7 +11,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MonitoringCommand;
 import org.springframework.web.servlet.ModelAndView;
 
 public class HealthMonitorController extends SimplePageController {
-	public static Logger logger = Logger.getLogger(HealthMonitorController.class);
+	public static final Logger logger = Logger.getLogger(HealthMonitorController.class);
 
 	private String simpleText;
 

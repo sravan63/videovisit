@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class ProviderRunningLateInfoController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(ProviderRunningLateInfoController.class);
+	public static final Logger logger = Logger.getLogger(ProviderRunningLateInfoController.class);
 	private static String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,

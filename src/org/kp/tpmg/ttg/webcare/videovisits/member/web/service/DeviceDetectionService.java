@@ -17,7 +17,7 @@ import net.sourceforge.wurfl.core.WURFLEngine;
 
 public class DeviceDetectionService {
 
-	public static Logger logger = Logger.getLogger(DeviceDetectionService.class);
+	public static final Logger logger = Logger.getLogger(DeviceDetectionService.class);
 	private static String DEVICE_TYPE_COOKIE_NAME = "isWirelessDeviceOrTablet";
 
 	/**

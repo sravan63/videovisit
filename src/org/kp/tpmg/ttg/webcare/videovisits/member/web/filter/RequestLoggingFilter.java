@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 
 public class RequestLoggingFilter implements Filter {
 
-	public static Logger logger = Logger.getLogger(RequestLoggingFilter.class);
+	public static final Logger logger = Logger.getLogger(RequestLoggingFilter.class);
 
 	public void init(FilterConfig config) throws ServletException {}
 	

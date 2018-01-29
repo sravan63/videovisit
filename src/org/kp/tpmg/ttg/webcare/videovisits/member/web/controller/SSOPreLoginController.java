@@ -35,7 +35,7 @@ import org.springframework.web.servlet.mvc.Controller;
 
 public class SSOPreLoginController implements Controller {
 
-	public static Logger logger = Logger.getLogger(SSOPreLoginController.class);
+	public static final Logger logger = Logger.getLogger(SSOPreLoginController.class);
 
 	private WebAppContextCommand webAppContextCommand;
 	private EnvironmentCommand environmentCommand;

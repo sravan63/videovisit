@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class LogoffController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(LogoffController.class);
+	public static final Logger logger = Logger.getLogger(LogoffController.class);
 
 	private String mobileViewName;
 	private String myMeetingsViewName;
@@ -71,7 +71,7 @@ public class LogoffController extends SimplePageController {
 							WebAppContext.setWebAppContext(request, null);
 						}
 					} catch (Exception ex) {
-
+						logger.warn("Error while SSO sign off");
 					}
 				}
 			} else {
@@ -80,7 +80,7 @@ public class LogoffController extends SimplePageController {
 					boolean isSSOSignedOff = MeetingCommand.performSSOSignOff(request, response);
 					logger.debug("isSSOSignedOff=" + isSSOSignedOff);
 				} catch (Exception e) {
-					logger.warn("error while SSO sign off");
+					logger.warn("Error while SSO sign off");
 				}
 			}
 		}

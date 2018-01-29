@@ -16,8 +16,8 @@ import net.sf.json.JSONObject;
 
 public class LaunchMeetingForMemberController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(LaunchMeetingForMemberController.class);
-	private static String JSONMAPPING = "jsonData";
+	public static final Logger logger = Logger.getLogger(LaunchMeetingForMemberController.class);
+	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) {

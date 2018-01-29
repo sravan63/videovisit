@@ -81,7 +81,7 @@ public class WebService {
 	public static final Logger logger = Logger.getLogger(WebService.class);
 	public static final int MAX_RETRY = 2;
 	public static final int retry = 0;
-	public static boolean status = false;
+	public static final boolean status = false;
 	public static boolean simulation = true;
 
 	private static String modulePath = "";
@@ -197,15 +197,13 @@ public class WebService {
 					"System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
 
 		} catch (RemoteException re) {
-			re.printStackTrace();
-			String message = "Remote exception constructor failed to create axisConfig";
-			logger.error("System Error" + re.getMessage(), re);
+			final String message = "Remote exception constructor failed to create axisConfig";
+			logger.error("System Error : " + re.getMessage(), re);
 			ret = false;
 			throw new RuntimeException(message, re);
 		} catch (Exception e) {
-			e.printStackTrace();
-			String message = "Exception while reading properties file";
-			logger.error("System Error" + e.getMessage(), e);
+			final String message = "Exception while reading properties file";
+			logger.error("System Error : " + e.getMessage(), e);
 			ret = false;
 			throw new RuntimeException(message, e);
 		}
@@ -432,8 +430,7 @@ public class WebService {
 			jobject = (JsonObject) parser.parse(responseJsonStr);
 			output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Web Service API error:" + e.getMessage());
+			logger.error("Web Service API error : " + e);
 			throw new Exception("Web Service API error", e.getCause());
 		}
 		String responseCodeAndMsg = "Empty response";
@@ -485,8 +482,7 @@ public class WebService {
 			output = gson.fromJson(jobject.get("service").toString(), LaunchMeetingForMemberGuestOutput.class);
 
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Web Service API error:" + e.getMessage());
+			logger.error("Web Service API error:" + e);
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
@@ -537,8 +533,7 @@ public class WebService {
 		}
 
 		catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Web Service API error:" + e.getMessage());
+			logger.error("Web Service API error:" + e);
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
@@ -589,8 +584,7 @@ public class WebService {
 		}
 
 		catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Web Service API error for meeting:" + meetingId);
+			logger.error("Web Service API error for meeting : " + meetingId, e);
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
@@ -1302,8 +1296,7 @@ public class WebService {
 			jobject = (JsonObject) parser.parse(jsonString);
 			output = gson.fromJson(jobject.get("service").toString(), VerifyCareGiverOutput.class);
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Web Service API error:" + e.getMessage());
+			logger.error("Web Service API error:" + e);
 			throw new Exception("Web Service API error", e.getCause());
 		}
 		logger.info(LOG_EXITING);
@@ -1348,8 +1341,7 @@ public class WebService {
 			launchMeetingForMemberGuest = gson.fromJson(jobject.get("service").toString(),
 					LaunchMeetingForMemberGuestOutput.class);
 		} catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			logger.error("Web Service API error : " + e.getMessage() + " Retrying...", e);
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
@@ -1399,7 +1391,6 @@ public class WebService {
 			jobject = (JsonObject) parser.parse(jsonString);
 			verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), VerifyMemberOutput.class);
 		} catch (Exception e) {
-			e.printStackTrace();
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
 			throw new Exception("Web Service API error", e.getCause());
 		}
@@ -1446,8 +1437,7 @@ public class WebService {
 		}
 
 		catch (Exception e) {
-			e.printStackTrace();
-			logger.error("Web Service API error:" + e.getMessage());
+			logger.error("Web Service API error:" + e);
 			throw new Exception("Web Service API error", e.getCause());
 
 		}

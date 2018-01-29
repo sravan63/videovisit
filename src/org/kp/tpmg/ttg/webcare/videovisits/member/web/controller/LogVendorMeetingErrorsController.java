@@ -12,8 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class LogVendorMeetingErrorsController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(LogVendorMeetingErrorsController.class);
-	private static String JSONMAPPING = "jsonData";
+	public static final Logger logger = Logger.getLogger(LogVendorMeetingErrorsController.class);
+	private static final String JSONMAPPING = "jsonData";
 
 	@Override
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,

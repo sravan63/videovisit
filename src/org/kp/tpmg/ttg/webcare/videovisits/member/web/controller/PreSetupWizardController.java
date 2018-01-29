@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class PreSetupWizardController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(PreSetupWizardController.class);
+	public static final Logger logger = Logger.getLogger(PreSetupWizardController.class);
 
 	private String vidyoWebrtcSessionManager = null;
 	private String blockChrome = null;

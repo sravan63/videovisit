@@ -14,8 +14,8 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
 public class SubmitLoginController extends SimplePageController {
-	public static Logger logger = Logger.getLogger(SubmitLoginController.class);
-	private static String JSONMAPPING = "jsonData";
+	public static final Logger logger = Logger.getLogger(SubmitLoginController.class);
+	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {

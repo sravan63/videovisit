@@ -194,6 +194,7 @@ public class WebUtil {
 				browser = "UnKnown, More-Info: " + userAgent;
 			}
 		} catch (Exception ex) {
+			logger.warn("Error while getting browser details");
 			if (browser == null) {
 				browser = "";
 			}
