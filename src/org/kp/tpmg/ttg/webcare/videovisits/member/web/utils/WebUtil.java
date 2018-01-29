@@ -20,11 +20,12 @@ import org.apache.log4j.Logger;
 
 public class WebUtil {
 
-	public static Logger logger = Logger.getLogger(WebUtil.class);
+	public static final Logger logger = Logger.getLogger(WebUtil.class);
 	private static Pattern DOB_PATTERN = Pattern.compile("\\d\\d\\d\\d-\\d[\\d]-\\d[\\d]");
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
 	public static final String SSO_COOKIE_NAME = "ObSSOCookie";
 	public static final String clientId = "vv-mbr-web";
+	public static final String MOB_CLIENT_ID = "vv-mbr-mbl-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
 	public static final String NON_MEMBER = "Non_Mmbr";
 

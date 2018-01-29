@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class VideoVisitPatientController extends SimplePageController {
 
-	public static Logger logger = Logger.getLogger(VideoVisitPatientController.class);
+	public static final Logger logger = Logger.getLogger(VideoVisitPatientController.class);
 	private String vidyoUrl;
 	private String hostName;
 
@@ -49,26 +49,28 @@ public class VideoVisitPatientController extends SimplePageController {
 				VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
 				videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
 				List<MeetingDO> meetings = ctx.getMyMeetings();
-				for (MeetingDO meeting : meetings) {
-					if (meeting != null && meeting.getMeetingId().equals(request.getParameter("meetingId"))) {
-						videoVisitParams.setHostFirstName(meeting.getHost().getFirstName());
-						videoVisitParams.setHostLastName(meeting.getHost().getLastName());
-						if (meeting.getHost().getTitle() != null && meeting.getHost().getTitle().length() > 0) {
-							videoVisitParams.setHostTitle(meeting.getHost().getTitle());
-						} else {
-							videoVisitParams.setHostTitle("");
+				if (meetings != null) {
+					for (MeetingDO meeting : meetings) {
+						if (meeting != null && meeting.getMeetingId().equals(request.getParameter("meetingId"))) {
+							videoVisitParams.setHostFirstName(meeting.getHost().getFirstName());
+							videoVisitParams.setHostLastName(meeting.getHost().getLastName());
+							if (meeting.getHost().getTitle() != null && meeting.getHost().getTitle().length() > 0) {
+								videoVisitParams.setHostTitle(meeting.getHost().getTitle());
+							} else {
+								videoVisitParams.setHostTitle("");
+							}
+							videoVisitParams.setPatientFirstName(meeting.getMember().getFirstName());
+							videoVisitParams.setPatientLastName(meeting.getMember().getLastName());
+							videoVisitParams.setPatientMiddleName(meeting.getMember().getMiddleName());
+							videoVisitParams.setParticipant(meeting.getParticipant());
+							videoVisitParams.setCaregiver(meeting.getCaregiver());
+							Calendar cal = Calendar.getInstance();
+							cal.setTimeInMillis(Long.parseLong(meeting.getMeetingTime()));
+							SimpleDateFormat sfdate = new SimpleDateFormat("MMM dd");
+							SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
+							videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
+							videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
 						}
-						videoVisitParams.setPatientFirstName(meeting.getMember().getFirstName());
-						videoVisitParams.setPatientLastName(meeting.getMember().getLastName());
-						videoVisitParams.setPatientMiddleName(meeting.getMember().getMiddleName());
-						videoVisitParams.setParticipant(meeting.getParticipant());
-						videoVisitParams.setCaregiver(meeting.getCaregiver());
-						Calendar cal = Calendar.getInstance();
-						cal.setTimeInMillis(Long.parseLong(meeting.getMeetingTime()));
-						SimpleDateFormat sfdate = new SimpleDateFormat("MMM dd");
-						SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
-						videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
-						videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
 					}
 				}
 
@@ -100,7 +102,7 @@ public class VideoVisitPatientController extends SimplePageController {
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
-		logger.info(LOG_EXITING); 
+		logger.info(LOG_EXITING);
 		return (modelAndView);
 	}
 }
