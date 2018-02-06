@@ -15,15 +15,15 @@
     <properties>
       <env>pr</env>
       <servicesArtifactsVersion>1.5.0</servicesArtifactsVersion>
-      <vidyoplayerVersion>1.7.0</vidyoplayerVersion>
-      <vvservice-clientVersion>1.7.0</vvservice-clientVersion>
+      <vidyoplayerVersion>1.8.0-SNAPSHOT</vidyoplayerVersion>
+      <vvservice-clientVersion>1.8.0-SNAPSHOT</vvservice-clientVersion>
     </properties>
 	
 	<scm>
 		<connection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</connection>
 		<developerConnection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+	  	<tag>HEAD</tag>
+  	</scm>
 
  <!-- dependencies needed during compile time -->   
     <dependencies>
