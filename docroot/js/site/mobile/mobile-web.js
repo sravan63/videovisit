@@ -185,7 +185,8 @@ $(document).ready(function() {
 
 				$('#mobile-login-submit').attr('disabled', true);
 				$('#mobile-login-submit').css('cursor', 'default');
-	            $('button#mobile-login-submit').css('opacity', '0.5');
+				//US28334 Mobile Temp Access Sign in Page: Update color of disabled state sign in button -Fix
+	            $('button#mobile-login-submit').css('opacity', '0.7');
 			}
 		}
 	});
