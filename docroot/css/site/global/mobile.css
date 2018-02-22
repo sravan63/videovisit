@@ -2369,3 +2369,15 @@ and (min-width: 768px) {
     font-size: 16px!important;
 }
 /* ======== US23591 (MDOa mobileweb to match app - sign in update) ======= */
+::-webkit-input-placeholder {
+  color: #666666;
+}
+/* Gecko */
+::-moz-placeholder {
+  color: #666666;
+}
+/* Trident */
+:-ms-input-placeholder {
+  color: #666666;
+
+}
