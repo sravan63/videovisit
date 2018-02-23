@@ -185,8 +185,7 @@ function validate(validationObj){
  * @returns
  */
 function isAlphaNumeric(value){
-	//var re = /^[a-zA-Z-''\s]+$/i;
-	var re = /^[a-zA-Z-'’\s]+$/i;//DE12896 - Fix 
+	var re = /^[a-z-'\s]+$/i;
 	return re.test(value);
 }
 
