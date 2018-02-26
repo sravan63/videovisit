@@ -165,7 +165,7 @@ $(document).ready(function() {
 			else{
 				$('#login-submit-pg').attr('disabled', true);
 				$('#login-submit-pg').css('cursor', 'default');
-	            $('button#login-submit-pg').css('opacity', '0.5');
+	            $('button#login-submit-pg').css('opacity', '0.7');
 			}
 		}
 		else{
