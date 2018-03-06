@@ -88,8 +88,10 @@ function validate(validationObj){
                 	if(!isValid){
                 		errorMessage = "Please enter at least 2 characters."
                 	}
-                    if (isValid)
-                        isValid = isAlphaNumeric(paramValue);
+                    if (isValid){
+                        //isValid = isAlphaNumeric(paramValue);
+                        isValid = hasAllLegalCharacters(paramValue);
+                    }
 	    			isAllValid = isAllValid && isValid;
 	    			
 	    			break;
@@ -187,6 +189,23 @@ function validate(validationObj){
 function isAlphaNumeric(value){
 	var re = /^[a-z-'\s]+$/i;
 	return re.test(value);
+}
+
+/**
+ * Returns true or false based on if the value has illegal characters
+ * @param element
+ * @param value
+ * @returns
+ */
+function hasAllLegalCharacters(value){
+	var isLegal = true;
+	var illegalChars = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "{", "}", ":", ";", '"' , "<", ">", ",", ".", "/", "?", "|", "~", "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+	for(var i=0; i<value.length; i++){
+		if(illegalChars.indexOf(value[i]) > -1){
+			isLegal = false;
+		}
+	}
+	return isLegal;
 }
 
 /**
