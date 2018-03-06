@@ -36,7 +36,7 @@
 
         <!--Start JavaScript-->
         <c:forEach var='item' items='${jsDependencies}'>
-        <script src="${item}" type="text/javascript"></script>
+        <script src="${item}" type="text/javascript" charset="UTF-8"></script>
         </c:forEach>
         <!--End JavaScript-->
         
