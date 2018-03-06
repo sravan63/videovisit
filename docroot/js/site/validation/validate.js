@@ -199,7 +199,7 @@ function isAlphaNumeric(value){
  */
 function hasAllLegalCharacters(value){
 	var isLegal = true;
-	var illegalChars = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "{", "}", ":", ";", '"' , "<", ">", ",", ".", "/", "?", "|", "~", "`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+	var illegalChars = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "{", "}", ":", ";", '"' , "<", ">", ",", ".", "/", "?", "|", "~", " ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 	for(var i=0; i<value.length; i++){
 		if(illegalChars.indexOf(value[i]) > -1){
 			isLegal = false;
