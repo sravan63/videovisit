@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
@@ -15,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -292,5 +295,57 @@ public class WebUtil {
 			}
 		}
 		return returnVal;
+	}
+	
+	public static String replaceSpecialCharacters(String input) {
+		logger.info(LOG_ENTERED);
+		String specialCharStr = null;
+		final Map<String, String> map = new HashMap<String, String>();
+		try {
+			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+			if (rbInfo != null) {
+				logger.debug("Configuration: resource bundle exists video visit external properties file location: "
+						+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
+				final FileInputStream fileInput = new FileInputStream(file);
+				final Properties appProp = new Properties();
+				appProp.load(fileInput);
+				specialCharStr = appProp.getProperty("REPLACE_SPECIAL_CHARACTERS");
+			}
+		} catch (Exception e) {
+			logger.error("Error while reading external properties file: " + e.getMessage(), e);
+		}
+
+		if (StringUtils.isNotBlank(specialCharStr)) {
+			final String[] array = specialCharStr.split("\\s*,\\s*");
+			if (!ArrayUtils.isEmpty(array)) {
+				for (String specialChar : array) {
+					if (StringUtils.isNotBlank(specialChar)) {
+						final String[] symbols = specialChar.split("\\s*:\\s*");
+						if (!ArrayUtils.isEmpty(symbols)) {
+							map.put(symbols[0], symbols[1]);
+						}
+					}
+				}
+			}
+		} else {
+			map.put("\u2019", "\u0027");
+			map.put("\u2018", "\u0027");
+			map.put("\u055A", "\u0027");
+			map.put("\u201B", "\u0027");
+			map.put("\uFF07", "\u0027");
+			map.put("\u0060", "\u0027");
+			map.put("\u00B4", "\u0027");
+		}
+		logger.info("Map of special characters to be replaced with characters as follows : " + map);
+		logger.debug("Before update input :" + input);
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			if (input.contains(entry.getKey())) {
+				input = input.replace(entry.getKey(), entry.getValue());
+			}
+		}
+		logger.debug("Before update input :" + input);
+		logger.info(LOG_EXITING);
+		return input;
 	}
 }
