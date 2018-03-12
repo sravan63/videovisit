@@ -951,14 +951,14 @@ public class MeetingCommand {
 		try {
 			logger.info("meetingCode=" + request.getParameter("meetingCode") + ", isMobileFlow="
 					+ request.getParameter("isMobileFlow"));
-			logger.info("before replacement patientLastName=" + request.getParameter("patientLastName"));
+			logger.info("patientLastName before replace special characters =" + request.getParameter("patientLastName"));
 
 			meetingCode = request.getParameter("meetingCode");
 			patientLastName = request.getParameter("patientLastName");
 			if(StringUtils.isNotBlank(patientLastName)){
 				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
 			}
-			logger.info("after replacement patientLastName=" + patientLastName);
+			logger.info("patientLastName after replace special characters =" + patientLastName);
 			boolean isMobileFlow;
 			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow"))
 					&& request.getParameter("isMobileFlow").equalsIgnoreCase("true")) {
