@@ -59,6 +59,12 @@ public class MeetingCommand {
 
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = request.getParameter("patientLastName");
+			//check for null
+			//String patientLastName = replaceSpecialCharacters(request.getParameter("patientLastName");
+			if(StringUtils.isNotBlank(patientLastName)){
+				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
+			}
+			logger.info("patientLastName : " + patientLastName);
 			String nocache = request.getParameter("nocache");
 			String meetingId = request.getParameter("meetingId");
 
@@ -305,7 +311,9 @@ public class MeetingCommand {
 		try {
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = request.getParameter("patientLastName");
-
+			if(StringUtils.isNotBlank(patientLastName)){
+				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
+			}
 			boolean isMobileFlow = false;
 			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow"))
 					&& request.getParameter("isMobileFlow").equalsIgnoreCase("true")) {
@@ -894,7 +902,9 @@ public class MeetingCommand {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = request.getParameter("patientLastName");
-
+			if(StringUtils.isNotBlank(patientLastName)){
+				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
+			}
 			verifyCareGiverOutput = WebService.verifyCaregiver(meetingCode, patientLastName,
 					request.getSession().getId(), WebUtil.clientId);
 			if (verifyCareGiverOutput != null) {
@@ -945,6 +955,9 @@ public class MeetingCommand {
 
 			meetingCode = request.getParameter("meetingCode");
 			patientLastName = request.getParameter("patientLastName");
+			if(StringUtils.isNotBlank(patientLastName)){
+				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
+			}
 			boolean isMobileFlow;
 			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow"))
 					&& request.getParameter("isMobileFlow").equalsIgnoreCase("true")) {
