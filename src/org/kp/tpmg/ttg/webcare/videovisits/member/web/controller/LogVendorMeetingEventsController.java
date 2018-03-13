@@ -10,27 +10,25 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.springframework.web.servlet.ModelAndView;
 
-public class VerifyGuestController extends SimplePageController {
+public class LogVendorMeetingEventsController extends SimplePageController {
 
-	private static final Logger logger = Logger.getLogger(VerifyGuestController.class);
-
+	public static final Logger logger = Logger.getLogger(LogVendorMeetingEventsController.class);
 	private static final String JSONMAPPING = "jsonData";
 
+	@Override
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
-		String data = null;
 		try {
-			data = MeetingCommand.verifyCaregiver(request, response);
-
-			MeetingCommand.setupGuestInfo(request);
-
+			final String data = MeetingCommand.logVendorMeetingEvents(request, response);
+			modelAndView.setViewName(JSONMAPPING);
+			modelAndView.addObject("data", data);
+			logger.debug("data = " + data);
 		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("System Error : ", e);
 		}
-		modelAndView.setViewName(JSONMAPPING);
-		modelAndView.addObject("data", data);
-		logger.info(LOG_EXITING + " data=" + data);
+		logger.info(LOG_EXITING);
 		return modelAndView;
 	}
+
 }

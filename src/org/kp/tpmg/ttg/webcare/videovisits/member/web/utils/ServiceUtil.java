@@ -27,4 +27,5 @@ public class ServiceUtil {
 	public static final String JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST = "joinLeaveMeetingForMemberGuest";
 	public static final String UPDATE_EMAIL_ACTION = "updateEmailAction";
 	public static final String  LOG_VENDOR_MEETING_ERRORS = "logVendorMeetingErrors";
+	public static final String  LOG_VENDOR_MEETING_EVENTS = "logVendorMeetingEvents";
 }
