@@ -336,15 +336,16 @@ public class WebUtil {
 			map.put("\uFF07", "\u0027");
 			map.put("\u0060", "\u0027");
 			map.put("\u00B4", "\u0027");
+			map.put("\uFFFD", "\u0027");
 		}
-		logger.info("Map of special characters to be replaced with characters as follows : " + map);
+		logger.debug("Map of special characters to be replaced with characters as follows : " + map);
 		logger.debug("Before update input :" + input);
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			if (input.contains(entry.getKey())) {
 				input = input.replace(entry.getKey(), entry.getValue());
 			}
 		}
-		logger.debug("Before update input :" + input);
+		logger.debug("After update input :" + input);
 		logger.info(LOG_EXITING);
 		return input;
 	}

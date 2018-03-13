@@ -67,6 +67,7 @@ import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateInput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
 import org.kp.tpmg.videovisit.model.notification.VendorMeetingErrorInput;
+import org.kp.tpmg.videovisit.model.notification.VendorMeetingEventInput;
 import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
@@ -1864,6 +1865,49 @@ public class WebService {
 
 			} catch (Exception e) {
 				logger.error("Web Service API error for meeting:" + meetingId, e);
+			}
+		}
+		logger.info(LOG_EXITING);
+		return jsonOutput;
+	}
+	
+	public static String logVendorMeetingEvents(final long meetingId, final String userType, final String userId,
+			final String eventName, final String eventDescription, final String logType, final String sessionId) {
+		logger.info(LOG_ENTERED + " meetingId: " + meetingId + " userType: " + userType);
+		final Gson gson = new Gson();
+		String jsonOutput = null;
+		VendorMeetingEventInput input = null;
+
+		if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
+			logger.warn("Missing input attributes.");
+			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+			final ServiceCommonOutput service = new ServiceCommonOutput();
+			service.setName(ServiceUtil.LOG_VENDOR_MEETING_EVENTS);
+			output.setService(service);
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			output.getService().setStatus(status);
+			jsonOutput = gson.toJson(output);
+		} else {
+			try {
+				input = new VendorMeetingEventInput();
+				input.setMeetingId(meetingId);
+				input.setUserType(userType);
+				input.setUserId(userId);
+				input.setEventName(eventName);
+				input.setEventDescription(eventDescription);
+				input.setLogType(logType);
+				input.setClientId(WebUtil.clientId);
+				input.setSessionId(sessionId);
+
+				final String inputJsonStr = gson.toJson(input);
+				logger.debug("inputJsonStr: " + inputJsonStr);
+				jsonOutput = callVVRestService(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, inputJsonStr);
+				logger.info("jsonOutput: " + jsonOutput);
+
+			} catch (Exception e) {
+				logger.error("Web Service API error for meeting:" + meetingId + " : ", e);
 			}
 		}
 		logger.info(LOG_EXITING);
