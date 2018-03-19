@@ -1,15 +1,11 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
 
@@ -20,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 
 public class WebUtil {
 
@@ -255,20 +252,11 @@ public class WebUtil {
 		logger.info(LOG_ENTERED);
 		String vidyoWebrtcSessionManager = null;
 		try {
-			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			if (rbInfo != null) {
-				logger.debug("Configuration: resource bundle exists video visit external properties file location: "
-						+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				final FileInputStream fileInput = new FileInputStream(file);
-				final Properties appProp = new Properties();
-				appProp.load(fileInput);
-				vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-				if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
-					vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-				}
-				logger.debug("vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManager);
+			vidyoWebrtcSessionManager = AppProperties.getExtPropertiesValueByKey("VIDYO_WEBRTC_SESSION_MANAGER");
+			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
+				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
 			}
+			logger.debug("vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManager);
 		} catch (Exception e) {
 			logger.error("Error while reading external properties file: " + e.getMessage(), e);
 		}
@@ -302,16 +290,7 @@ public class WebUtil {
 		String specialCharStr = null;
 		final Map<String, String> map = new HashMap<String, String>();
 		try {
-			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			if (rbInfo != null) {
-				logger.debug("Configuration: resource bundle exists video visit external properties file location: "
-						+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				final FileInputStream fileInput = new FileInputStream(file);
-				final Properties appProp = new Properties();
-				appProp.load(fileInput);
-				specialCharStr = appProp.getProperty("REPLACE_SPECIAL_CHARACTERS");
-			}
+			specialCharStr = AppProperties.getExtPropertiesValueByKey("REPLACE_SPECIAL_CHARACTERS");
 		} catch (Exception e) {
 			logger.error("Error while reading external properties file: " + e.getMessage(), e);
 		}

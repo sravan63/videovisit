@@ -1,17 +1,15 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.parser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.mdo.xml.faqlist.FAQItemDocument.FAQItem;
 import org.kp.tpmg.ttg.mdo.xml.faqlist.FAQListDocument;
 import org.kp.tpmg.ttg.mdo.xml.faqlist.FAQListDocument.FAQList;
 import org.kp.tpmg.ttg.mdo.xml.faqlist.HyperlinkDocument.Hyperlink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 
 public class FaqParser {
 
@@ -24,15 +22,7 @@ public class FaqParser {
 	public static faq parse() {
 
 		try {
-			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.debug("configuration: resource bundle exists video visit external properties file location: "
-					+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-			// Read external properties file
-			File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-			FileInputStream fileInput = new FileInputStream(file);
-			Properties appProp = new Properties();
-			appProp.load(fileInput);
-			String faqPath = appProp.getProperty("MDO_FAQ_PATH");
+			String faqPath = AppProperties.getExtPropertiesValueByKey("MDO_FAQ_PATH");
 			// String faqPath = rbInfo.getString("MDO_FAQ_PATH");
 			File faqFile = new File(faqPath);
 			FAQList faqList;

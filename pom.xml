@@ -176,6 +176,19 @@
       <artifactId>VideoVisitPromoIntegration</artifactId>
       <version>1.0</version>
     </dependency>
+    		<!-- Dynamic Property Loader API -->
+		<dependency>
+			<groupId>org.kp.tpmg.ttg.common</groupId>
+			<artifactId>dynamicpropertyloader</artifactId>
+			<version>1.0.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>sqljdbc4</artifactId>
+					<groupId>com.microsoft.sqlserver</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+    
   </dependencies>
 
     <build>

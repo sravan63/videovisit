@@ -5,8 +5,6 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,8 +13,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.rmi.RemoteException;
-import java.util.Properties;
-import java.util.ResourceBundle;
 import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -27,8 +23,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.kp.tpmg.common.security.Crypto;
+import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.MemberLogoutInput;
@@ -121,17 +119,7 @@ public class WebService {
 		boolean ret = true;
 
 		try {
-			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			if (rbInfo != null) {
-				logger.debug("configuration: resource bundle exists video visit external properties file location: "
-						+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				// Read external properties file for the web service end point
-				// url
-				File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				FileInputStream fileInput = new FileInputStream(file);
-				Properties appProp = new Properties();
-				appProp.load(fileInput);
-
+			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 				simulation = appProp.getProperty("WEBSERVICE_SIMULATION").equals("true") ? true : false;
 				logger.debug("Simulation:" + simulation);
 				modulePath = appProp.getProperty("MODULE_PATH");
@@ -183,7 +171,6 @@ public class WebService {
 				logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl);
 				logger.debug("kpOrgSSOKeepAliveUrl : " + kpOrgSSOKeepAliveUrl);
 				logger.debug("vidyoWebrtcSessionManger : " + vidyoWebrtcSessionManager);
-			}
 
 			if (simulation)
 				return true;
@@ -197,12 +184,7 @@ public class WebService {
 			logger.debug(
 					"System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
 
-		} catch (RemoteException re) {
-			final String message = "Remote exception constructor failed to create axisConfig";
-			logger.error("System Error : " + re.getMessage(), re);
-			ret = false;
-			throw new RuntimeException(message, re);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			final String message = "Exception while reading properties file";
 			logger.error("System Error : " + e.getMessage(), e);
 			ret = false;
@@ -946,22 +928,14 @@ public class WebService {
 	public static void initializeRestProperties() {
 		logger.info(LOG_ENTERED);
 		try {
-			final ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
+			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 			logger.info("videoVisitRestServiceUrl is empty. Reading it from properties file.");
-			if (rbInfo != null) {
-				logger.info("video visit external properties file location: "
-						+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				final File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-				final FileInputStream fileInput = new FileInputStream(file);
-				final Properties appProp = new Properties();
-				appProp.load(fileInput);
-				final Crypto crypto = new Crypto();
-				videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
-				serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
-				serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
-				logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl + "SecurityUsername:"
-						+ serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
-			}
+			final Crypto crypto = new Crypto();
+			videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
+			serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
+			serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
+			logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl + "SecurityUsername:"
+					+ serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
 		} catch (Exception e) {
 			logger.warn("Failed to get videoVisitRestServiceUrl from external properties file");
 		}
