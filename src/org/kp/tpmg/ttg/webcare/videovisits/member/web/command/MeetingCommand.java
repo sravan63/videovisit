@@ -111,6 +111,9 @@ public class MeetingCommand {
 			boolean success = WebService.initWebService(request);
 
 			if (ctx != null && success == true) {
+				if(StringUtils.isNotBlank(lastName)){
+					lastName = WebUtil.replaceSpecialCharacters(lastName);
+				}
 				verifyMemberOutput = WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day,
 						request.getSession().getId(), WebUtil.clientId);
 
@@ -951,14 +954,14 @@ public class MeetingCommand {
 		try {
 			logger.info("meetingCode=" + request.getParameter("meetingCode") + ", isMobileFlow="
 					+ request.getParameter("isMobileFlow"));
-			logger.info("patientLastName before replace special characters =" + request.getParameter("patientLastName"));
+			logger.debug("patientLastName before replace special characters =" + request.getParameter("patientLastName"));
 
 			meetingCode = request.getParameter("meetingCode");
 			patientLastName = request.getParameter("patientLastName");
 			if(StringUtils.isNotBlank(patientLastName)){
 				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
 			}
-			logger.info("patientLastName after replace special characters =" + patientLastName);
+			logger.debug("patientLastName after replace special characters =" + patientLastName);
 			boolean isMobileFlow;
 			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow"))
 					&& request.getParameter("isMobileFlow").equalsIgnoreCase("true")) {
