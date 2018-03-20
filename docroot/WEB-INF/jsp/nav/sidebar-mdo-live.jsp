@@ -1,17 +1,9 @@
 <%@ page import="java.net.*"%>
 <%@ page import="java.io.*"%>
-<%@page import="java.util.ResourceBundle"%>
-<%@page import="java.util.Properties" %>
+<%@page import = "org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties"%>
 <%
 	try{
-		ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-		//Read external properties file
-		File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-		FileInputStream fileInput = new FileInputStream(file);
-		Properties appProp = new Properties();
-		appProp.load(fileInput);
-		String url = appProp.getProperty("MDO_LIVE_LEFTNAV_URL");
-		//String url = rbInfo.getString("MDO_LIVE_LEFTNAV_URL");
+		String url = AppProperties.getExtPropertiesValueByKey("MDO_LIVE_LEFTNAV_URL");
 		URL u = new URL(url);
 		BufferedReader in = new BufferedReader(
 		new InputStreamReader(u.openStream()));
