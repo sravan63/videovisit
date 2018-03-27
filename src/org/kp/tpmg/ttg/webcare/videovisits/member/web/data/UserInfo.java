@@ -5,11 +5,8 @@ import java.util.List;
 
 public class UserInfo implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = -7979788354969156371L;
+	
 	private String region;
 	private String lastName;
 	private String termsAndCondAccepted;

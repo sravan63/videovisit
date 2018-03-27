@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 public class MemberAuthResponseStatus implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4604000872943377783L;
+	
 	private String errorId;
 	private String errorCode;
 	private String errorMessage;

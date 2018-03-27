@@ -20,10 +20,7 @@ import org.apache.log4j.Logger;
 
 public class WebAppContext implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5877497198027418539L;
 
 	public static final Logger logger = Logger.getLogger(WebAppContext.class);
 

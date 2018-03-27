@@ -287,44 +287,46 @@ public class WebUtil {
 	
 	public static String replaceSpecialCharacters(String input) {
 		logger.info(LOG_ENTERED);
-		String specialCharStr = null;
-		final Map<String, String> map = new HashMap<String, String>();
-		try {
-			specialCharStr = AppProperties.getExtPropertiesValueByKey("REPLACE_SPECIAL_CHARACTERS");
-		} catch (Exception e) {
-			logger.error("Error while reading external properties file: " + e.getMessage(), e);
-		}
+		if (StringUtils.isNotBlank(input)) {
+			String specialCharStr = null;
+			final Map<String, String> map = new HashMap<String, String>();
+			try {
+				specialCharStr = AppProperties.getExtPropertiesValueByKey("REPLACE_SPECIAL_CHARACTERS");
+			} catch (Exception e) {
+				logger.error("Error while reading external properties file: " + e.getMessage(), e);
+			}
 
-		if (StringUtils.isNotBlank(specialCharStr)) {
-			final String[] array = specialCharStr.split("\\s*,\\s*");
-			if (!ArrayUtils.isEmpty(array)) {
-				for (String specialChar : array) {
-					if (StringUtils.isNotBlank(specialChar)) {
-						final String[] symbols = specialChar.split("\\s*:\\s*");
-						if (!ArrayUtils.isEmpty(symbols)) {
-							map.put(symbols[0], symbols[1]);
+			if (StringUtils.isNotBlank(specialCharStr)) {
+				final String[] array = specialCharStr.split("\\s*,\\s*");
+				if (!ArrayUtils.isEmpty(array)) {
+					for (String specialChar : array) {
+						if (StringUtils.isNotBlank(specialChar)) {
+							final String[] symbols = specialChar.split("\\s*:\\s*");
+							if (!ArrayUtils.isEmpty(symbols)) {
+								map.put(symbols[0], symbols[1]);
+							}
 						}
 					}
 				}
+			} else {
+				map.put("\u2019", "\u0027");
+				map.put("\u2018", "\u0027");
+				map.put("\u055A", "\u0027");
+				map.put("\u201B", "\u0027");
+				map.put("\uFF07", "\u0027");
+				map.put("\u0060", "\u0027");
+				map.put("\u00B4", "\u0027");
+				map.put("\uFFFD", "\u0027");
 			}
-		} else {
-			map.put("\u2019", "\u0027");
-			map.put("\u2018", "\u0027");
-			map.put("\u055A", "\u0027");
-			map.put("\u201B", "\u0027");
-			map.put("\uFF07", "\u0027");
-			map.put("\u0060", "\u0027");
-			map.put("\u00B4", "\u0027");
-			map.put("\uFFFD", "\u0027");
-		}
-		logger.debug("Map of special characters to be replaced with characters as follows : " + map);
-		logger.debug("Before update input :" + input);
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			if (input.contains(entry.getKey())) {
-				input = input.replace(entry.getKey(), entry.getValue());
+			logger.debug("Map of special characters to be replaced with characters as follows : " + map);
+			logger.debug("Before update input :" + input);
+			for (Map.Entry<String, String> entry : map.entrySet()) {
+				if (input.contains(entry.getKey())) {
+					input = input.replace(entry.getKey(), entry.getValue());
+				}
 			}
+			logger.debug("After update input :" + input);
 		}
-		logger.debug("After update input :" + input);
 		logger.info(LOG_EXITING);
 		return input;
 	}

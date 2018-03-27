@@ -58,12 +58,7 @@ public class MeetingCommand {
 		try {
 
 			String meetingCode = request.getParameter("meetingCode");
-			String patientLastName = request.getParameter("patientLastName");
-			//check for null
-			//String patientLastName = replaceSpecialCharacters(request.getParameter("patientLastName");
-			if(StringUtils.isNotBlank(patientLastName)){
-				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
-			}
+			String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
 			logger.info("patientLastName : " + patientLastName);
 			String nocache = request.getParameter("nocache");
 			String meetingId = request.getParameter("meetingId");
@@ -313,10 +308,7 @@ public class MeetingCommand {
 		Gson gson = new Gson();
 		try {
 			String meetingCode = request.getParameter("meetingCode");
-			String patientLastName = request.getParameter("patientLastName");
-			if(StringUtils.isNotBlank(patientLastName)){
-				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
-			}
+			String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
 			boolean isMobileFlow = false;
 			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow"))
 					&& request.getParameter("isMobileFlow").equalsIgnoreCase("true")) {
@@ -904,10 +896,7 @@ public class MeetingCommand {
 		try {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			String meetingCode = request.getParameter("meetingCode");
-			String patientLastName = request.getParameter("patientLastName");
-			if(StringUtils.isNotBlank(patientLastName)){
-				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
-			}
+			String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
 			verifyCareGiverOutput = WebService.verifyCaregiver(meetingCode, patientLastName,
 					request.getSession().getId(), WebUtil.clientId);
 			if (verifyCareGiverOutput != null) {
@@ -957,10 +946,7 @@ public class MeetingCommand {
 			logger.debug("patientLastName before replace special characters =" + request.getParameter("patientLastName"));
 
 			meetingCode = request.getParameter("meetingCode");
-			patientLastName = request.getParameter("patientLastName");
-			if(StringUtils.isNotBlank(patientLastName)){
-				patientLastName = WebUtil.replaceSpecialCharacters(patientLastName);
-			}
+			patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
 			logger.debug("patientLastName after replace special characters =" + patientLastName);
 			boolean isMobileFlow;
 			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow"))

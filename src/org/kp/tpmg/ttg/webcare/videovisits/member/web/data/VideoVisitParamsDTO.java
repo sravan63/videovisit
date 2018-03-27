@@ -10,10 +10,9 @@ import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
 import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 
 public class VideoVisitParamsDTO implements Serializable {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 3440770105989838012L;
+	
 	private String vidyoUrl;
 	private String meetingId;
 	private String userName;

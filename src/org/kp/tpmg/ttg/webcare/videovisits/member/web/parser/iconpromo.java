@@ -5,10 +5,8 @@ import java.util.Comparator;
 
 public class iconpromo implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1638725067008058810L;
+	
 	private String title;
 	private String header;
 	private String abstractText;

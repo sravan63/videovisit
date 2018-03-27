@@ -5,10 +5,8 @@ import java.util.Comparator;
 
 public class promo implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6813326739015946490L;
+	
 	private String title;
 	private String header;
 	private String abstractText;

@@ -6,10 +6,8 @@ import java.util.List;
 
 public class faqitem implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -586037815289272340L;
+	
 	private String header;
 	private List<hyperlink> faqHyperlink;
 	private String id;

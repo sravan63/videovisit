@@ -4,11 +4,9 @@ import java.io.Serializable;
 
 public class FailureInfo implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = -5638723208686948988L;
+	
 	private boolean authenticationfailed;
 	private boolean accountlocked;
 	private boolean unauthorized;

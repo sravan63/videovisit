@@ -5,11 +5,9 @@ import java.util.List;
 
 public class KpOrgSignOnInfo implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
+	private static final long serialVersionUID = 404822168416110740L;
+	
 	private String systemError;
 	private List<Object> interruptList;
 	private boolean success;

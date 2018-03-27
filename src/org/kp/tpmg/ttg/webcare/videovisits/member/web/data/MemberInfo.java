@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class MemberInfo implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = -4283469230181773877L;
+	
 	private String guid;
 	private String mrn;
 	private String uid;
