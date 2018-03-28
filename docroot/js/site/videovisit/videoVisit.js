@@ -153,13 +153,14 @@ $(document).ready(function() {
 
 var VideoVisit =
 {
-	sendVendorErrorNotification: function(params){
+	logVendorMeetingEvents: function(params){
 		var userId;
 		var userType;
+		var logType = params[0];
 		var eventName = (params[1])?params[1]:'';
-		var errorDesc = (params[2])?params[2]:'';
+		var eventDesc = (params[2])?params[2]:'';
 		var isCareGiver = ($("#caregiverId").val().trim() != "" && $("#meetingCode").val().trim() != "");
-		console.log("sendErrorNotification :: params :: "+params);
+		console.log("sendEventNotification :: params :: "+params);
 		if(isCareGiver == true){
 	       	userType = 'Caregiver';
 	       	userId = $("#guestName").val().trim();
@@ -167,28 +168,29 @@ var VideoVisit =
 			userId = $("#mrn").val().trim();
 			userType = 'Patient';
 		}
-		var errorData = {
+		console.log("sendEventNotification :: params :: "+params);
+		var eventData = {
+			'logType': logType,
 			'meetingId':$("#meetingId").val(),
 			'userType': userType,
 			'userId': userId,
 			'eventName':eventName,
-			'errorDescription':errorDesc
+			'eventDescription':eventDesc
 		};
 
 		$.ajax({
-			type: "GET",
-			url: VIDEO_VISITS.Path.visit.logVendorMeetingErrors,
+			type: "POST",
+			url: VIDEO_VISITS.Path.grid.meeting.logVendorMeetingEvents,
 			cache: false,
 			dataType: "json",
-			data: errorData,
+			data: eventData,
 			success: function(result, textStatus){
-				console.log("sendErrorNotification :: result :: "+result);
+				console.log("sendEventNotification :: result :: "+result);
 			},
 			error: function(textStatus){
-				console.log("sendErrorNotification :: error :: "+textStatus);
+				console.log("sendEventNotification :: error :: "+textStatus);
 			}
 		});
-
 	},
 	setMinDimensions: function(){
 
