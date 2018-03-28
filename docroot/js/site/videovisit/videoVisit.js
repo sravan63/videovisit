@@ -180,7 +180,7 @@ var VideoVisit =
 
 		$.ajax({
 			type: "POST",
-			url: VIDEO_VISITS.Path.grid.meeting.logVendorMeetingEvents,
+			url: VIDEO_VISITS.Path.visit.logVendorMeetingEvents,
 			cache: false,
 			dataType: "json",
 			data: eventData,
