@@ -43,7 +43,7 @@ public class LaunchMeetingForMemberController extends SimplePageController {
 					WebAppContext context = WebAppContext.getWebAppContext(request);
 					if (request.getParameter("source") != null
 							&& request.getParameter("source").equalsIgnoreCase("member")) {
-						if (context != null && context.getMember() != null) {
+						if (context != null && context.getMemberDO() != null) {
 							dataResult.append(MeetingCommand.getLaunchMeetingDetailsForMember(request, response));
 							dataResult.setLength(dataResult.length() - 1);
 							logger.info("dataResult " + dataResult);

@@ -11,14 +11,12 @@
 
 	<groupId>org.kp.tpmg.ttg.videovisit</groupId>
 	<artifactId>videovisitmember</artifactId>
-	<version>1.8.0-SNAPSHOT</version>
+	<version>1.9.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<properties>
-		<env>pr</env>
-		<servicesArtifactsVersion>1.5.0</servicesArtifactsVersion>
-		<vidyoplayerVersion>1.8.0-SNAPSHOT</vidyoplayerVersion>
-		<vvservice-clientVersion>1.8.0-SNAPSHOT</vvservice-clientVersion>
+		<vidyoplayerVersion>1.9.0-SNAPSHOT</vidyoplayerVersion>
+		<vvservice-clientVersion>1.9.0-SNAPSHOT</vvservice-clientVersion>
 	</properties>
 
 	<scm>
@@ -58,18 +56,29 @@
 			<artifactId>org.json</artifactId>
 			<version>20131017</version>
 		</dependency>
-		<!-- to address package org.kp.tpmg.webservice.client.videovisit.member 
-			does not exist -->
+		<!-- to address package org.apache.neethi.wso2.neethi -->
 		<dependency>
-			<groupId>org.kp.tpmg.ttg.serviceartifacts</groupId>
-			<artifactId>VideoVisitMemberServices-client</artifactId>
-			<version>${servicesArtifactsVersion}</version>
+			<groupId>org.apache.neethi.wso2</groupId>
+			<artifactId>neethi</artifactId>
+			<version>2.0.4.wso2v4</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.neethi</groupId>
 					<artifactId>neethi</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!-- to address org.apache.axis2.client missing -->
+		<dependency>
+			<groupId>org.apache.axis2.wso2</groupId>
+			<artifactId>axis2</artifactId>
+			<version>1.6.1.wso2v10</version>
+		</dependency>
+		<!-- to address org.apache.ws.commons.axiom.wso2.axiom missing -->
+		<dependency>
+			<groupId>org.apache.ws.commons.axiom.wso2</groupId>
+			<artifactId>axiom</artifactId>
+			<version>1.2.11.wso2v4</version>
 		</dependency>
 		<!-- to address ackage javax.servlet.http does not exist -->
 		<dependency>
@@ -197,36 +206,7 @@
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>
-		<!-- <testSourceDirectory>src/test</testSourceDirectory> -->
-
-		<filters>
-			<filter>${project.basedir}/conf/filters/${env}/configuration.properties</filter>
-		</filters>
-		<resources>
-			<resource>
-				<directory>${basedir}/conf</directory>
-				<includes>
-					<include>project.init.properties</include>
-				</includes>
-				<filtering>true</filtering>
-				<targetPath>${project.build.directory}/classes</targetPath>
-			</resource>
-			<resource>
-				<directory>${basedir}/docroot/WEB-INF/classes</directory>
-				<includes>
-					<include>printPdfFilter.properties</include>
-				</includes>
-				<filtering>true</filtering>
-				<targetPath>${project.build.directory}/classes</targetPath>
-			</resource>
-			<resource>
-				<directory>${project.basedir}/conf/filters/${env}</directory>
-				<includes>
-					<include>configuration.properties</include>
-				</includes>
-				<targetPath>${project.build.directory}/classes</targetPath>
-			</resource>
-		</resources>
+		
 		<plugins>
 			<plugin>
 				<groupId>external.atlassian.jgitflow</groupId>

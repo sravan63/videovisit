@@ -219,7 +219,7 @@ public class WebSessionFilter implements Filter {
 				ctx = WebAppContext.getWebAppContext(req);
 				// Timeout has not occurred, do normal processing
 				if (ctx != null) {
-					if (requestUri.contains("landingready") && ctx.getMember() == null) {
+					if (requestUri.contains("landingready") && ctx.getMemberDO() == null) {
 						logger.info(
 								"session is not null, webapp context is not null but member object in context is null, so redirecting to logout.");
 						resp.sendRedirect("logout.htm");

@@ -37,7 +37,7 @@ import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Member;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
+//import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
@@ -116,7 +116,7 @@ public class MeetingCommand {
 						&& "200".equals(verifyMemberOutput.getStatus().getCode())
 						&& verifyMemberOutput.getEnvelope() != null
 						&& verifyMemberOutput.getEnvelope().getMember() != null) {
-					final MemberWSO memberWSO = new MemberWSO();
+					/*final MemberWSO memberWSO = new MemberWSO();
 					// memberWSO.setAge(Integer.parseInt(verifyMemberOutput.getEnvelope().getMember().getAge()));
 					memberWSO.setDateofBirth(
 							Long.parseLong(verifyMemberOutput.getEnvelope().getMember().getDateOfBirth()));
@@ -128,11 +128,11 @@ public class MeetingCommand {
 					memberWSO.setMiddleName(verifyMemberOutput.getEnvelope().getMember().getMiddleName());
 					memberWSO.setMrn8Digit(verifyMemberOutput.getEnvelope().getMember().getMrn());
 
-					ctx.setMember(memberWSO);
+					ctx.setMember(memberWSO);*/
 					ctx.setMemberDO(verifyMemberOutput.getEnvelope().getMember());
 					return ("1");
 				} else {
-					ctx.setMember(null);
+//					ctx.setMember(null);
 					ctx.setMemberDO(null);
 					return ("3");
 				}
@@ -169,8 +169,8 @@ public class MeetingCommand {
 					}
 				}
 
-				if (ctx.getMember() != null) {
-					ret = WebService.memberEndMeetingLogout(ctx.getMember().getMrn8Digit(), meetingId,
+				if (ctx.getMemberDO() != null) {
+					ret = WebService.memberEndMeetingLogout(ctx.getMemberDO().getMrn(), meetingId,
 							request.getSession().getId(), memberName, notifyVideoForMeetingQuit, WebUtil.clientId);
 					if (ret != null) {
 						final String responseDesc = ret.getStatus() != null
@@ -595,19 +595,19 @@ public class MeetingCommand {
 	}
 
 	private static void setWebAppContextMemberInfo(WebAppContext ctx, MemberInfo memberInfo) {
-		MemberWSO memberWso = new MemberWSO();
+//		MemberWSO memberWso = new MemberWSO();
 		Member memberDO = new Member();
 		try {
 			String dateStr = memberInfo.getDateOfBirth();
 			if (StringUtils.isNotBlank(dateStr)) {
 				if (dateStr.endsWith("Z")) {
 					Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(dateStr);
-					memberWso.setDateofBirth(cal.getTimeInMillis());
+//					memberWso.setDateofBirth(cal.getTimeInMillis());
 					memberDO.setDateOfBirth(String.valueOf(cal.getTimeInMillis()));
 				} else {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					Date date = sdf.parse(memberInfo.getDateOfBirth());
-					memberWso.setDateofBirth(date.getTime());
+//					memberWso.setDateofBirth(date.getTime());
 					memberDO.setDateOfBirth(String.valueOf(date.getTime()));
 				}
 
@@ -617,11 +617,11 @@ public class MeetingCommand {
 			logger.warn("error while parsing string date to long.");
 		}
 
-		memberWso.setEmail(memberInfo.getEmail());
+		/*memberWso.setEmail(memberInfo.getEmail());
 		memberWso.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
 		memberWso.setGender(memberInfo.getGender());
 		memberWso.setLastName(WordUtils.capitalizeFully(memberInfo.getLastName()));
-		memberWso.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));
+		memberWso.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));*/
 
 		memberDO.setEmail(memberInfo.getEmail());
 		memberDO.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
@@ -632,16 +632,16 @@ public class MeetingCommand {
 		if (StringUtils.isBlank(memberInfo.getMrn())) {
 			ctx.setNonMember(true);
 		} else {
-			memberWso.setMrn8Digit(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
+//			memberWso.setMrn8Digit(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
 			memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
 		}
-		ctx.setMember(memberWso);
+//		ctx.setMember(memberWso);
 		ctx.setMemberDO(memberDO);
 	}
 
 	private static String invalidateWebAppContext(WebAppContext ctx) {
 		if (ctx != null) {
-			ctx.setMember(null);
+			ctx.setMemberDO(null);
 			ctx.setKpOrgSignOnInfo(null);
 			ctx.setAuthenticated(false);
 		}
@@ -749,7 +749,7 @@ public class MeetingCommand {
 		String jsonStr = null;
 		final Gson gson = new Gson();
 		try {
-			if (ctx != null && ctx.getMember() != null) {
+			if (ctx != null && ctx.getMemberDO() != null) {
 				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 					meetingId = Long.parseLong(request.getParameter("meetingId"));
 				}
@@ -790,7 +790,7 @@ public class MeetingCommand {
 		MeetingDetailsOutput output = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
-			if (ctx != null && ctx.getMember() != null) {
+			if (ctx != null && ctx.getMemberDO() != null) {
 				if (ctx.isNonMember()) {
 					output = WebService.retrieveActiveMeetingsForNonMemberProxies(
 							ctx.getKpOrgSignOnInfo().getUser().getGuid(), request.getSession().getId(),
@@ -837,7 +837,7 @@ public class MeetingCommand {
 		long meetingId = 0;
 		String output = null;
 		try {
-			if (ctx != null && ctx.getMember() != null) {
+			if (ctx != null && ctx.getMemberDO() != null) {
 				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 					meetingId = Long.parseLong(request.getParameter("meetingId"));
 					ctx.setMeetingId(meetingId);
@@ -851,7 +851,7 @@ public class MeetingCommand {
 				} else {
 					isProxyMeeting = false;
 				}
-				output = WebService.launchMemberOrProxyMeetingForMember(meetingId, ctx.getMember().getMrn8Digit(),
+				output = WebService.launchMemberOrProxyMeetingForMember(meetingId, ctx.getMemberDO().getMrn(),
 						request.getParameter("inMeetingDisplayName"), isProxyMeeting, request.getSession().getId());
 				return output;
 			}
@@ -1011,7 +1011,7 @@ public class MeetingCommand {
 
 				logger.info("meetingId:" + meetingId);
 				logger.debug("megaMeetingDisplayName=" + megaMeetingDisplayName);
-				final String mrn = ctx.getMember() != null ? ctx.getMember().getMrn8Digit() : null;
+				final String mrn = ctx.getMemberDO() != null ? ctx.getMemberDO().getMrn() : null;
 				output = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 						request.getSession().getId());
 				if (output != null) {
@@ -1031,8 +1031,8 @@ public class MeetingCommand {
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		MeetingDetailsJSON meetingDetailsJSON = null;
 		try {
-			if (ctx != null && ctx.getMember() != null) {
-				meetingDetailsJSON = WebService.retrieveMeeting(ctx.getMember().getMrn8Digit(), PAST_MINUTES,
+			if (ctx != null && ctx.getMemberDO() != null) {
+				meetingDetailsJSON = WebService.retrieveMeeting(ctx.getMemberDO().getMrn(), PAST_MINUTES,
 						FUTURE_MINUTES, request.getSession().getId());
 				if (meetingDetailsJSON != null && meetingDetailsJSON.getService() != null
 						&& meetingDetailsJSON.getService().getStatus() != null
@@ -1092,7 +1092,7 @@ public class MeetingCommand {
 				deviceType = brandName + " " + modelName;
 			}
 			output = WebService.getLaunchMeetingDetails(meetingId, inMeetingDisplayName, request.getSession().getId(),
-					ctx.getMember().getMrn8Digit(), deviceType, deviceOs, deviceOsVersion, isMobileflow);
+					ctx.getMemberDO().getMrn(), deviceType, deviceOs, deviceOsVersion, isMobileflow);
 			if (output != null) {
 				logger.debug("json output:" + output);
 				logger.info(LOG_EXITING);
@@ -1111,8 +1111,8 @@ public class MeetingCommand {
 		String output = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
-			if (ctx != null && ctx.getMember() != null) {
-				output = WebService.memberLogout(ctx.getMember().getMrn8Digit(), request.getSession().getId());
+			if (ctx != null && ctx.getMemberDO() != null) {
+				output = WebService.memberLogout(ctx.getMemberDO().getMrn(), request.getSession().getId());
 				if (output != null) {
 					logger.info("json output" + output);
 					logger.info(LOG_EXITING);

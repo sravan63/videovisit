@@ -80,7 +80,7 @@ public class BackButtonFilter implements Filter {
 				if (ctx.isHasJoinedMeeting()) {
 					try {
 
-						if (ctx.getMember() == null && !isVideoVisitMemberMeetingPage) {
+						if (ctx.getMemberDO() == null && !isVideoVisitMemberMeetingPage) {
 							MeetingCommand.endCaregiverMeetingSession(ctx.getMeetingCode(),
 									ctx.getVideoVisit().getPatientLastName(), req.getSession().getId());
 						} else if (!isVideoVisitGuestMeetingPage) {
@@ -90,8 +90,8 @@ public class BackButtonFilter implements Filter {
 								WebService.memberLeaveProxyMeeting(ctx.getVideoVisit().getMeetingId(),
 										ctx.getVideoVisit().getGuestName(), req.getSession().getId());
 							} else {
-								String memberName = ctx.getMember().getLastName() + ", "
-										+ ctx.getMember().getFirstName();
+								String memberName = ctx.getMemberDO().getLastName() + ", "
+										+ ctx.getMemberDO().getFirstName();
 								MeetingCommand.updateEndMeetingLogout(req, resp, memberName, true);
 							}
 						}
