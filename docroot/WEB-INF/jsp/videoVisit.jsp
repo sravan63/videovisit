@@ -1,5 +1,3 @@
-<%-- 	<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO" %> --%>
-<%-- 	<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO" %> --%>
 	<%@ page import="org.kp.tpmg.videovisit.model.*"%>
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>	

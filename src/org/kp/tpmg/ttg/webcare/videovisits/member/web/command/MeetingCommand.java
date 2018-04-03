@@ -37,7 +37,6 @@ import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Member;
-//import org.kp.tpmg.videovisit.webserviceobject.xsd.MemberWSO;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
@@ -116,23 +115,9 @@ public class MeetingCommand {
 						&& "200".equals(verifyMemberOutput.getStatus().getCode())
 						&& verifyMemberOutput.getEnvelope() != null
 						&& verifyMemberOutput.getEnvelope().getMember() != null) {
-					/*final MemberWSO memberWSO = new MemberWSO();
-					// memberWSO.setAge(Integer.parseInt(verifyMemberOutput.getEnvelope().getMember().getAge()));
-					memberWSO.setDateofBirth(
-							Long.parseLong(verifyMemberOutput.getEnvelope().getMember().getDateOfBirth()));
-					memberWSO.setEmail(verifyMemberOutput.getEnvelope().getMember().getEmail());
-					memberWSO.setFirstName(verifyMemberOutput.getEnvelope().getMember().getFirstName());
-					memberWSO.setGender(verifyMemberOutput.getEnvelope().getMember().getGender());
-					memberWSO.setInMeeting(verifyMemberOutput.getEnvelope().getMember().getInMeeting());
-					memberWSO.setLastName(verifyMemberOutput.getEnvelope().getMember().getLastName());
-					memberWSO.setMiddleName(verifyMemberOutput.getEnvelope().getMember().getMiddleName());
-					memberWSO.setMrn8Digit(verifyMemberOutput.getEnvelope().getMember().getMrn());
-
-					ctx.setMember(memberWSO);*/
 					ctx.setMemberDO(verifyMemberOutput.getEnvelope().getMember());
 					return ("1");
 				} else {
-//					ctx.setMember(null);
 					ctx.setMemberDO(null);
 					return ("3");
 				}
