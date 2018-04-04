@@ -46,7 +46,7 @@ public class LaunchMeetingForMemberController extends SimplePageController {
 						if (context != null && context.getMemberDO() != null) {
 							dataResult.append(MeetingCommand.getLaunchMeetingDetailsForMember(request, response));
 							dataResult.setLength(dataResult.length() - 1);
-							logger.info("dataResult " + dataResult);
+							logger.debug("dataResult " + dataResult);
 							result.put("isValidUserSession", true);
 							result.put("success", true);
 						}

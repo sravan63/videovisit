@@ -1067,7 +1067,7 @@ public class MeetingCommand {
 			Device device = DeviceDetectionService.checkForDevice(request);
 			Map<String, String> capabilities = device.getCapabilities();
 
-			logger.info("Mobile capabilities" + capabilities);
+			logger.debug("Mobile capabilities" + capabilities);
 			String brandName = capabilities.get("brand_name");
 			String modelName = capabilities.get("model_name");
 			String deviceOs = capabilities.get("device_os");
