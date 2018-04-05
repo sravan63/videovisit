@@ -580,19 +580,16 @@ public class MeetingCommand {
 	}
 
 	private static void setWebAppContextMemberInfo(WebAppContext ctx, MemberInfo memberInfo) {
-//		MemberWSO memberWso = new MemberWSO();
 		Member memberDO = new Member();
 		try {
 			String dateStr = memberInfo.getDateOfBirth();
 			if (StringUtils.isNotBlank(dateStr)) {
 				if (dateStr.endsWith("Z")) {
 					Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(dateStr);
-//					memberWso.setDateofBirth(cal.getTimeInMillis());
 					memberDO.setDateOfBirth(String.valueOf(cal.getTimeInMillis()));
 				} else {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					Date date = sdf.parse(memberInfo.getDateOfBirth());
-//					memberWso.setDateofBirth(date.getTime());
 					memberDO.setDateOfBirth(String.valueOf(date.getTime()));
 				}
 
@@ -601,12 +598,6 @@ public class MeetingCommand {
 		} catch (Exception e) {
 			logger.warn("error while parsing string date to long.");
 		}
-
-		/*memberWso.setEmail(memberInfo.getEmail());
-		memberWso.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
-		memberWso.setGender(memberInfo.getGender());
-		memberWso.setLastName(WordUtils.capitalizeFully(memberInfo.getLastName()));
-		memberWso.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));*/
 
 		memberDO.setEmail(memberInfo.getEmail());
 		memberDO.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
@@ -617,10 +608,8 @@ public class MeetingCommand {
 		if (StringUtils.isBlank(memberInfo.getMrn())) {
 			ctx.setNonMember(true);
 		} else {
-//			memberWso.setMrn8Digit(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
 			memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
 		}
-//		ctx.setMember(memberWso);
 		ctx.setMemberDO(memberDO);
 	}
 
