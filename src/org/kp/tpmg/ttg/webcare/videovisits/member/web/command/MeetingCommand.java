@@ -1185,26 +1185,6 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 	}
-
-	public static String logVendorMeetingErrors(final HttpServletRequest request, final HttpServletResponse response) {
-		logger.info(LOG_ENTERED);
-		String output = null;
-		final String meetingId = request.getParameter("meetingId");
-		final String userType = request.getParameter("userType");
-		final String userId = request.getParameter("userId");
-		final String eventName = request.getParameter("eventName");
-		final String errorDescription = request.getParameter("errorDescription");
-		final String sessionId = request.getSession().getId();
-		try {
-			output = WebService.logVendorMeetingErrors(Long.parseLong(meetingId), userType, userId, eventName,
-					errorDescription, sessionId);
-		} catch (Exception e) {
-			output = (new Gson().toJson(new SystemError()));
-			logger.error("System Error for meeting:" + meetingId, e);
-		}
-		logger.info(LOG_EXITING);
-		return output;
-	}
 	
 	public static String logVendorMeetingEvents(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
