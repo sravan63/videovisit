@@ -14,7 +14,7 @@
 
 	<div id="nav-user">
 		<ul>
-			<li>${WebAppContext.member.lastName}, ${WebAppContext.member.firstName} ${WebAppContext.member.middleName}</li>
+			<li>${WebAppContext.memberDO.lastName}, ${WebAppContext.memberDO.firstName} ${WebAppContext.memberDO.middleName}</li>
 			<li class="last"><a href="mdohelp.htm"  target="_blank">Help</a></li>
 		</ul>
 		 <!-- Below buttons are commented By Srini.P 09/12/2013 -->

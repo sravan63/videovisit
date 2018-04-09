@@ -1,6 +1,5 @@
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*" %>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*" %>
-<%@ page import="org.kp.tpmg.videovisit.webserviceobject.xsd.*" %>
 <%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.*" %>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

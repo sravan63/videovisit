@@ -57,7 +57,6 @@ VIDEO_VISITS.Path = {
 		setKPHCConferenceStatus: 'setKPHCConferenceStatus.json',
         providerRunningLateInfo: 'providerRunningLateInfo.json',
         caregiverJoinMeeting: 'caregiverJoinMeeting.json',
-        logVendorMeetingErrors : 'logVendorMeetingErrors.json',
         logVendorMeetingEvents : 'logVendorMeetingEvents.json'	
     },
     logout : {

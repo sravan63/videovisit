@@ -43,7 +43,7 @@ public class ValidateUserSession extends SimplePageController {
 					if (request.getParameter("source") != null
 							&& request.getParameter("source").equalsIgnoreCase("member")) {
 						logger.info("in validateUserSession member");
-						if (context != null && context.getMember() != null) {
+						if (context != null && context.getMemberDO() != null) {
 
 							String meetingStatus = null;//MeetingCommand.getMeetingStatus(request, response);
 							result.put("meetingStatus", meetingStatus);

@@ -79,23 +79,23 @@ public class BackButtonFilter implements Filter {
 			if (ctx != null) {
 				if (ctx.isHasJoinedMeeting()) {
 					try {
-
-						if (ctx.getMember() == null && !isVideoVisitMemberMeetingPage) {
+						if (ctx.getMemberDO() == null && isVideoVisitMemberMeetingPage) { 
+							logger.info("Calling end Caregiver meeting session");
 							MeetingCommand.endCaregiverMeetingSession(ctx.getMeetingCode(),
 									ctx.getVideoVisit().getPatientLastName(), req.getSession().getId());
-						} else if (!isVideoVisitGuestMeetingPage) {
+						} else if (ctx.getMemberDO() != null && isVideoVisitMemberMeetingPage ) {
 							if (ctx.getVideoVisit() != null
 									&& "Y".equalsIgnoreCase(ctx.getVideoVisit().getIsProxyMeeting())) {
 								logger.info("Calling member leaving proxy meeting");
 								WebService.memberLeaveProxyMeeting(ctx.getVideoVisit().getMeetingId(),
 										ctx.getVideoVisit().getGuestName(), req.getSession().getId());
 							} else {
-								String memberName = ctx.getMember().getLastName() + ", "
-										+ ctx.getMember().getFirstName();
+								logger.info("Calling member update end meeting logout");
+								String memberName = ctx.getMemberDO().getLastName() + ", "
+										+ ctx.getMemberDO().getFirstName();
 								MeetingCommand.updateEndMeetingLogout(req, resp, memberName, true);
 							}
 						}
-
 					} catch (Exception ex) {
 						logger.warn("Error while ending meeting session");
 					}

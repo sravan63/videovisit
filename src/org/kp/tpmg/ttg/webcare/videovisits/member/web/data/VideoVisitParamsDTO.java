@@ -1,13 +1,10 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.data;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.List;
 
 import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Provider;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.CaregiverWSO;
-import org.kp.tpmg.videovisit.webserviceobject.xsd.ProviderWSO;
 
 public class VideoVisitParamsDTO implements Serializable {
 
@@ -30,9 +27,7 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String isMember;
 	private String meetingDate;
 	private String meetingTime;
-	private ProviderWSO[] participants;
 	private List<Provider> participant;
-	private CaregiverWSO[] caregivers;
 	private List<Caregiver> caregiver;
 	private String vendorConfId;
 	private String isProxyMeeting;
@@ -158,36 +153,6 @@ public class VideoVisitParamsDTO implements Serializable {
 	}
 
 	/**
-	 * @return the participants
-	 */
-	public ProviderWSO[] getParticipants() {
-		return participants;
-	}
-
-	/**
-	 * @param participants
-	 *            the participants to set
-	 */
-	public void setParticipants(ProviderWSO[] participants) {
-		this.participants = participants;
-	}
-
-	/**
-	 * @return the caregivers
-	 */
-	public CaregiverWSO[] getCaregivers() {
-		return caregivers;
-	}
-
-	/**
-	 * @param caregivers
-	 *            the caregivers to set
-	 */
-	public void setCaregivers(CaregiverWSO[] caregivers) {
-		this.caregivers = caregivers;
-	}
-
-	/**
 	 * @return the meetingTime
 	 */
 	public String getMeetingTime() {
@@ -303,10 +268,9 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ patientMiddleName + ", patientLastName=" + patientLastName + ", patientFirstName=" + patientFirstName
 				+ ", hostLastName=" + hostLastName + ", hostFirstName=" + hostFirstName + ", hostTitle=" + hostTitle
 				+ ", guestName=" + guestName + ", isProvider=" + isProvider + ", guestUrl=" + guestUrl + ", isMember="
-				+ isMember + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime + ", participants="
-				+ Arrays.toString(participants) + ", participant=" + participant + ", caregivers="
-				+ Arrays.toString(caregivers) + ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId
-				+ ", isProxyMeeting=" + isProxyMeeting + ", webrtc=" + webrtc + "]";
+				+ isMember + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime + ", participant="
+				+ participant + ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId + ", isProxyMeeting="
+				+ isProxyMeeting + ", webrtc=" + webrtc + "]";
 	}
 
 }
