@@ -26,10 +26,10 @@
 			</ul>
 		</form>
 		
-		<p class="disclaimer mobile-patient-light-auth-disclaimer">
+		<p class="disclaimer mobile-patient-light-auth-disclaimer" style="padding-bottom:60px">
 			<span style="padding-bottom:10px;display:block;">If You're a Patient's Guest</span>
-			<span style="font-size:14px;"> Guests of patients with a video visit, click the link in your email invitation.Test data</span>
-		<br><br><br><br><br><!-- DE13546 -->
+			<span style="font-size:14px;"> Guests of patients with a video visit, click the link in your email invitation.</span>
+		<!-- DE13546 -->
 		</p>
 	</div>
 </div>
