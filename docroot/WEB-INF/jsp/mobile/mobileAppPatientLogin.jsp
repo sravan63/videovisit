@@ -29,7 +29,7 @@
 		<p class="disclaimer mobile-patient-light-auth-disclaimer">
 			<span style="padding-bottom:10px;display:block;">If You're a Patient's Guest</span>
 			<span style="font-size:14px;"> Guests of patients with a video visit, click the link in your email invitation.</span>
-		<br><br><br><br><br>
+		<br><br><br><br><br><!-- DE13546 -->
 		</p>
 	</div>
 </div>
