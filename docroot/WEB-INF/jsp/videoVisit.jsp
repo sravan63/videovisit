@@ -60,6 +60,8 @@
         keepALiveTimerId ='';
                 
         $(".refresh-button").click(function(){
+        	var params = ['info','videoRefreshButtonAction','User clicked on refresh button in video visit page.'];
+    		VideoVisit.logVendorMeetingEvents(params);
 			window.location.href = window.location.href;
 		});
         
