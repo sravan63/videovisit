@@ -1442,7 +1442,8 @@ public class WebService {
 		return testDbRoundTripJson;
 	}
 
-	public static JoinLeaveMeetingJSON memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId)
+	public static JoinLeaveMeetingJSON memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId,
+			boolean isFromBackButton)
 			throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
 		logger.debug("careGiverName=" + careGiverName);
@@ -1465,7 +1466,7 @@ public class WebService {
 			joinLeaveMeetingInput.setMeetingId(Long.parseLong(meetingId));
 			joinLeaveMeetingInput.setInMeetingDisplayName(careGiverName);
 			joinLeaveMeetingInput.setSessionId(sessionId);
-			joinLeaveMeetingInput.setClientId(WebUtil.clientId);
+			joinLeaveMeetingInput.setClientId(isFromBackButton ? WebUtil.VV_MBR_BACK_BUTTON : WebUtil.clientId);
 			joinLeaveMeetingInput.setIsPatient(false);
 			joinLeaveMeetingInput.setDeviceType(WebUtil.DEFAULT_DEVICE);
 			joinLeaveMeetingInput.setDeviceOs(WebUtil.getDeviceOs());

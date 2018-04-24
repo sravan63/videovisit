@@ -88,7 +88,7 @@ public class BackButtonFilter implements Filter {
 									&& "Y".equalsIgnoreCase(ctx.getVideoVisit().getIsProxyMeeting())) {
 								logger.info("Calling member leaving proxy meeting");
 								WebService.memberLeaveProxyMeeting(ctx.getVideoVisit().getMeetingId(),
-										ctx.getVideoVisit().getGuestName(), req.getSession().getId());
+										ctx.getVideoVisit().getGuestName(), req.getSession().getId(),true);
 							} else {
 								logger.info("Calling member update end meeting logout");
 								String memberName = ctx.getMemberDO().getLastName() + ", "

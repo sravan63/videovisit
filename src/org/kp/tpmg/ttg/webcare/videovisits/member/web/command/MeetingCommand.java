@@ -845,7 +845,7 @@ public class MeetingCommand {
 		try {
 			if (ctx != null) {
 				output = WebService.memberLeaveProxyMeeting(request.getParameter("meetingId"),
-						request.getParameter("memberName"), request.getSession().getId());
+						request.getParameter("memberName"), request.getSession().getId(), false);
 				if (output != null && output.getService() != null && output.getService().getStatus() != null) {
 					responseStr = output.getService().getStatus().getMessage();
 				}
