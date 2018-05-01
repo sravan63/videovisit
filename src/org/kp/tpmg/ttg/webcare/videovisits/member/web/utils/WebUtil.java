@@ -35,7 +35,7 @@ public class WebUtil {
 	public static final String VIDYO_WEBRTC_SESSION_MANGER = "webrtc.health.vidyoworks.com";
 	public static final String LOG_ENTERED = "Entered";
 	public static final String LOG_EXITING = "Exiting";
-	public static final String VV_MBR_BACK_BUTTON = "vv-mbr-back-button";
+	public static final String VV_MBR_BACK_BUTTON = "vv-mbr-back-btn";
 	
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);
