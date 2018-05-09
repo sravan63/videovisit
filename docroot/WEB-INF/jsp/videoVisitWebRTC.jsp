@@ -222,20 +222,20 @@
 					<div id="video-info">
 						<h3> Visit Details </h3>
 						<dl>
-							<dt>APPOINTMENT DATE</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
+							<dt>Appointment Date</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
 							<dd id="displayMeetingNewStartTime" style="word-wrap: break-word;"></dd>
 						</dl>
 						<dl>
-							<dt>PATIENT</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName} ${WebAppContext.videoVisit.patientMiddleName}</dd>
+							<dt>Patient</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName} ${WebAppContext.videoVisit.patientMiddleName}</dd>
 						</dl>
 						<dl>
-							<dt>MY DOCTOR</dt><dd id="meetingHost"> 
+							<dt>My Doctor</dt><dd id="meetingHost"> 
 							${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
 						</dl>
 						
 						<c:if test="${not empty WebAppContext.videoVisit.participant}">
 							<dl id="meetingParticipantContainer">
-								<dt>ADD'L CLINICIAN(S)</dt>
+								<dt>Add'l Clinicians</dt>
 								<dd id="meetingParticipant">
 									<table>     
 										<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">        
@@ -250,7 +250,7 @@
 						
 						<c:if test="${not empty WebAppContext.videoVisit.caregiver}">
 							<dl id="meetingPatientGuestContainer">
-								<dt>MY GUEST(S)</dt>
+								<dt>My Guests</dt>
 								<dd id="meetingPatientGuest">
 									 <table>   
 										<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">        

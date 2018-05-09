@@ -3,7 +3,7 @@
 	<p id="globalError" class="hide-me mobile-patient-light-authentication-error"></p>
 </div>
 
-<div class="mobile-patient-light-authentication">
+<div class="mobile-patient-light-authentication" style="height:100vh">
 	<div id="login-form">
 		<p class="mobile-patient-light-authentication-sub-header"><img src="images/mobile/video-icon-blue.png" width="50" style="vertical-align:middle; padding-right:10px;">Video Visits Temporary Access</p>
 		<p class="mobile-patient-light-authentication-info">Patient's Information</p>
@@ -26,10 +26,10 @@
 			</ul>
 		</form>
 		
-		<p class="disclaimer mobile-patient-light-auth-disclaimer">
+		<p class="disclaimer mobile-patient-light-auth-disclaimer" style="padding-bottom:50%">
 			<span style="padding-bottom:10px;display:block;">If You're a Patient's Guest</span>
 			<span style="font-size:14px;"> Guests of patients with a video visit, click the link in your email invitation.</span>
-		<br><br><br><br><br>
+		<!-- DE13546 -->
 		</p>
 	</div>
 </div>

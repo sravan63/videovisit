@@ -13,7 +13,7 @@ $(document).ready(function() {
 });
 
 var VideoVisit = {
-	sendVendorErrorNotification: function(params){}
+		logVendorMeetingEvents: function(params){}
 };
 
 var VideoVisitSetupWizard =
