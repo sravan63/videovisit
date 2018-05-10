@@ -400,6 +400,7 @@ input								{outline:none;}
   margin-bottom: 1px;
   color: black;
   word-wrap: break-word;
+  text-transform: capitalize;
 }
 .accord-ctrl-container .accord-ctrl-caret-less{
 transform: rotate(180deg);

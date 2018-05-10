@@ -55,7 +55,7 @@
                     <div class="names-container-member" style="margin:0px;">
                       <span class="names participants" style="margin-left:0;">
                         <c:forEach var="p" items="${meeting.participant}">
-                          <span>${p.firstName} ${p.lastName}<c:if test="${not empty p.title}">, ${p.title}</c:if></span>
+                          <span>${p.firstName.toLowerCase()} ${p.lastName.toLowerCase()}<c:if test="${not empty p.title}">, ${p.title}</c:if></span>
                         </c:forEach>
                       </span>
                     </div>
@@ -64,7 +64,7 @@
                     <c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
                       <span class="names patient-guests" style="margin-left:0;">
                         <c:forEach var="p" items="${meeting.caregiver}">
-                          <span>${p.firstName} ${p.lastName}</span>
+                          <span>${p.firstName.toLowerCase()} ${p.lastName.toLowerCase()}</span>
                         </c:forEach>
                       </span>
                     </c:if>
