@@ -20,7 +20,7 @@ public class LogoutController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String data = null;
 		try {
-			data = MeetingCommand.memberLogout(request, response);
+			data = MeetingCommand.memberLogout(request);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
@@ -28,6 +28,6 @@ public class LogoutController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

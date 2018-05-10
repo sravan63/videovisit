@@ -27,9 +27,9 @@ public class QuitMeetingController extends SimplePageController {
 			logger.debug("memberName=" + memberName);
 			logger.info("refreshMeetings=" + refreshMeetings + ", isProxyMeeting=" + isProxyMeeting);
 			if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
-				data = MeetingCommand.memberLeaveProxyMeeting(request, response);
+				data = MeetingCommand.memberLeaveProxyMeeting(request);
 			} else {
-				data = MeetingCommand.updateEndMeetingLogout(request, response, memberName, false);
+				data = MeetingCommand.updateEndMeetingLogout(request, memberName, false);
 			}
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 
@@ -43,6 +43,6 @@ public class QuitMeetingController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

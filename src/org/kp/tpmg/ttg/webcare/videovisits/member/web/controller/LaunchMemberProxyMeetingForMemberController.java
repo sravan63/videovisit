@@ -19,13 +19,13 @@ public class LaunchMemberProxyMeetingForMemberController extends SimplePageContr
 		logger.info(LOG_ENTERED);
 		String data = null;
 		try {
-			data = MeetingCommand.launchMemberOrProxyMeetingForMember(request, response);
+			data = MeetingCommand.launchMemberOrProxyMeetingForMember(request);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

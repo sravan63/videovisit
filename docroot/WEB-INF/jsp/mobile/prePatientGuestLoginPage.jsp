@@ -6,7 +6,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 
 <%
-	MeetingCommand.IsMeetingHashValid(request, response);
+	MeetingCommand.IsMeetingHashValid(request);
 	
 	//MeetingCommand.retrieveMeetingForCaregiver(request, response);
 	String meetingHash = request.getParameter("meetingCode");

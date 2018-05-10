@@ -53,7 +53,7 @@ public class PreSetupWizardController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 
 }

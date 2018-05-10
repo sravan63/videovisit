@@ -20,7 +20,7 @@ public class LogVendorMeetingEventsController extends SimplePageController {
 			HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
 		try {
-			final String data = MeetingCommand.logVendorMeetingEvents(request, response);
+			final String data = MeetingCommand.logVendorMeetingEvents(request);
 			modelAndView.setViewName(JSONMAPPING);
 			modelAndView.addObject("data", data);
 			logger.debug("data = " + data);

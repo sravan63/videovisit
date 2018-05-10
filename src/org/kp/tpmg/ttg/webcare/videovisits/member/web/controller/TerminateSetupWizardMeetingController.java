@@ -19,13 +19,13 @@ public class TerminateSetupWizardMeetingController extends SimplePageController 
 		logger.info(LOG_ENTERED);
 		String data = null;
 		try {
-			data = MeetingCommand.terminateSetupWizardMeeting(request, response);
+			data = MeetingCommand.terminateSetupWizardMeeting(request);
 			modelAndView.setViewName(JSONMAPPING);
 			modelAndView.addObject("data", data);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

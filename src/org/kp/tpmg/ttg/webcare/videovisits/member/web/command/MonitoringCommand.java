@@ -4,7 +4,6 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
@@ -12,9 +11,12 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 
 public class MonitoringCommand {
 
+	private MonitoringCommand() {
+	}
+	
 	public static final Logger logger = Logger.getLogger(MonitoringCommand.class);
 
-	public static String testDbRoundTrip(HttpServletRequest request, HttpServletResponse response) {
+	public static String testDbRoundTrip(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String toRet = null;
 		try {

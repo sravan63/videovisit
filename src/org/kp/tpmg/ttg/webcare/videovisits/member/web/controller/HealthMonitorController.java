@@ -20,7 +20,7 @@ public class HealthMonitorController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		boolean txtMode = "".equals(request.getParameter("text"));
 
-		String db = MonitoringCommand.testDbRoundTrip(request, response);
+		String db = MonitoringCommand.testDbRoundTrip(request);
 
 		boolean allOk = isOk(db);
 
@@ -31,7 +31,7 @@ public class HealthMonitorController extends SimplePageController {
 			}
 
 			ModelAndView toRet = new ModelAndView("simpleText");
-			toRet.addObject("simpleText", "" + statusCode);
+			toRet.addObject("simpleText", "" + Integer.toString(statusCode));
 			logger.info(LOG_EXITING);
 			return toRet;
 		} else {

@@ -38,7 +38,7 @@ public class SessionTimeoutController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 
 	}
 

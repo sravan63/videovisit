@@ -80,11 +80,6 @@ public class AppRootController implements Controller {
 		else
 			logger.info("Context is not null");
 		
-		//Set Plugin Data to Context - uncomment this once IE activex issues is resolved for plugin upgrade
-		//if(ctx != null && ctx.getVendorPlugin() == null){
-			//String pluginJSON = MeetingCommand.getVendorPluginData(request, response);
-			//logger.info("AppRootController: Plugin data in context has been set: " + pluginJSON);
-		//}
 		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
 		if(StringUtils.isNotBlank(blockChrome)){
 			ctx.setBlockChrome(blockChrome);
@@ -95,7 +90,7 @@ public class AppRootController implements Controller {
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 
 	public WebAppContextCommand getWebAppContextCommand() {

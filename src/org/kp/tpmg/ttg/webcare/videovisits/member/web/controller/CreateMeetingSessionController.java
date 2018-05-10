@@ -26,6 +26,6 @@ public class CreateMeetingSessionController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

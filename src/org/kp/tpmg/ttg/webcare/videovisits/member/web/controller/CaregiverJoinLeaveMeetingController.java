@@ -20,7 +20,7 @@ public class CaregiverJoinLeaveMeetingController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String data = null;
 		try {
-			data = MeetingCommand.caregiverJoinLeaveMeeting(request, response);
+			data = MeetingCommand.caregiverJoinLeaveMeeting(request);
 
 			modelAndView.setViewName(JSONMAPPING);
 			modelAndView.addObject("data", data);
@@ -28,7 +28,7 @@ public class CaregiverJoinLeaveMeetingController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 
 }

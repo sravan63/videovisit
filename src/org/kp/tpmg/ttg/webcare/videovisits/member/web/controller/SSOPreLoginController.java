@@ -133,7 +133,7 @@ public class SSOPreLoginController implements Controller {
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 			} else if (StringUtils.isNotBlank(ssoSession)) {
-				String responseCode = MeetingCommand.validateKpOrgSSOSession(request, response, ssoSession);
+				String responseCode = MeetingCommand.validateKpOrgSSOSession(request, ssoSession);
 				if ("200".equalsIgnoreCase(responseCode)) {
 					logger.info("sso session token valid, so navigating to my meetings page");
 					ctx.setAuthenticated(true);
@@ -157,7 +157,7 @@ public class SSOPreLoginController implements Controller {
 			}
 		}
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 
 	public WebAppContextCommand getWebAppContextCommand() {

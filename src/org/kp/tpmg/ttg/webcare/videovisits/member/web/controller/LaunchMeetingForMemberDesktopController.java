@@ -20,13 +20,13 @@ public class LaunchMeetingForMemberDesktopController extends SimplePageControlle
 		String data = null;
 		logger.info(LOG_ENTERED);
 		try {
-			data = MeetingCommand.launchMeetingForMemberDesktop(request, response);
+			data = MeetingCommand.launchMeetingForMemberDesktop(request);
 			modelAndView.setViewName(JSONMAPPING);
 			modelAndView.addObject("data", data);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

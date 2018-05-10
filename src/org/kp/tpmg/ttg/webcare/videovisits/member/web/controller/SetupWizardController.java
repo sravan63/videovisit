@@ -37,7 +37,7 @@ public class SetupWizardController extends SimplePageController {
 				meetingType = WebService.getSetupWizardMeetingType();
 				userName = WebService.getSetupWizardUserName();
 			}
-			String vendorMeetingData = MeetingCommand.createInstantVendorMeeting(request, response, hostNuid,
+			String vendorMeetingData = MeetingCommand.createInstantVendorMeeting(request, hostNuid,
 					participantNuid, memberMrn, meetingType);
 
 			logger.debug("data=" + vendorMeetingData);
@@ -70,7 +70,7 @@ public class SetupWizardController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 
 }

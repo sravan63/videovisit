@@ -60,7 +60,7 @@ public class LogoffController extends SimplePageController {
 						ctx.setVideoLink(videoLink);
 						String ssoCookieVal = URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
 
-						String responseCode = MeetingCommand.validateKpOrgSSOSession(request, response, ssoCookieVal);
+						String responseCode = MeetingCommand.validateKpOrgSSOSession(request, ssoCookieVal);
 						if ("200".equalsIgnoreCase(responseCode)) {
 							logger.info("sso session token from request cookie valid, navigating to my meetings page");
 							return new ModelAndView(myMeetingsViewName);

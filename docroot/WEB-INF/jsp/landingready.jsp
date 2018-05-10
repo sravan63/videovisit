@@ -10,7 +10,7 @@
 <input type="hidden" id="kpKeepAliveUrl" value="${WebAppContext.kpKeepAliveUrl}" /> 
 <%
 
-	MeetingCommand.retrieveActiveMeetingsForMemberAndProxies(request, response);
+	MeetingCommand.retrieveActiveMeetingsForMemberAndProxies(request);
 	String timezone = WebUtil.getCurrentDateTimeZone();
 
 %>

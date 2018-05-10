@@ -42,10 +42,9 @@ public class LaunchMeetingForMemberGuestController extends SimplePageController 
 					result.put("success", true);
 				} else {
 					WebAppContext context = WebAppContext.getWebAppContext(request);
-					if (request.getParameter("source") != null
-							&& request.getParameter("source").equalsIgnoreCase("caregiver")) {
+					if ("caregiver".equalsIgnoreCase(request.getParameter("source"))) {
 						if (context != null) {
-							dataResult.append(MeetingCommand.getLaunchMeetingDetailsForMemberGuest(request, response));
+							dataResult.append(MeetingCommand.getLaunchMeetingDetailsForMemberGuest(request));
 							dataResult.setLength(dataResult.length() - 1);
 							logger.info("dataResult " + dataResult);
 							MeetingCommand.setupGuestInfo(request);
@@ -71,7 +70,7 @@ public class LaunchMeetingForMemberGuestController extends SimplePageController 
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", dataResult);
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 
 	}
 

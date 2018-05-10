@@ -65,7 +65,7 @@ public class GuestController extends SimplePageController {
 				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
 			}
 
-			MeetingCommand.IsMeetingHashValid(request, response);
+			MeetingCommand.IsMeetingHashValid(request);
 		} catch (Exception e) {
 			logger.error("System Error - " + e.getMessage(), e);
 		}

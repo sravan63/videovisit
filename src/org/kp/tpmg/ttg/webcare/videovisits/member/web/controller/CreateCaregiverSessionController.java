@@ -20,7 +20,7 @@ public class CreateCaregiverSessionController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String data = null;
 		try {
-			data = MeetingCommand.createCaregiverMeetingSession(request, response);
+			data = MeetingCommand.createCaregiverMeetingSession(request);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
@@ -28,6 +28,6 @@ public class CreateCaregiverSessionController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

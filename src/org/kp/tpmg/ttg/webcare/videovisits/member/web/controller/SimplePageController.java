@@ -3,14 +3,11 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 public class SimplePageController implements Controller {
-
-	public static final Logger logger = Logger.getLogger(SimplePageController.class);
 
 	private String viewName;
 	private String navigation;

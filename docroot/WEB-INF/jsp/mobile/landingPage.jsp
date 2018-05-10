@@ -8,7 +8,7 @@
 
 <%
 
-	MeetingCommand.retrieveMeeting(request, response);
+	MeetingCommand.retrieveMeeting(request);
 	String timezone = WebUtil.getCurrentDateTimeZone();
 	
 	

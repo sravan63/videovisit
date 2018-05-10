@@ -26,6 +26,6 @@ public class UserPresentInMeetingController extends SimplePageController {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

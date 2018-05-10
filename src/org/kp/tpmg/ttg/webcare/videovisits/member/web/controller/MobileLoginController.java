@@ -26,7 +26,7 @@ public class MobileLoginController extends SimplePageController {
 		}
 		String data = null;
 		try {
-			data = MeetingCommand.verifyMember(request, response);
+			data = MeetingCommand.verifyMember(request);
 			logger.info("data :" + data);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
@@ -34,6 +34,6 @@ public class MobileLoginController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

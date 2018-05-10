@@ -48,6 +48,8 @@ import net.sourceforge.wurfl.core.Device;
 
 public class MeetingCommand {
 
+	private MeetingCommand() {
+	}
 	public static final Logger logger = Logger.getLogger(MeetingCommand.class);
 	public static final int PAST_MINUTES = 120;
 	public static final int FUTURE_MINUTES = 15;
@@ -75,7 +77,7 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 	}
 
-	public static String verifyMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String verifyMember(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
 
@@ -87,19 +89,19 @@ public class MeetingCommand {
 			String birth_day = "";
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 
-			if (request.getParameter("last_name") != null && !request.getParameter("last_name").equals("")) {
+			if (StringUtils.isNotBlank(request.getParameter("last_name"))) {
 				lastName = request.getParameter("last_name");
 			}
-			if (request.getParameter("mrn") != null && !request.getParameter("mrn").equals("")) {
+			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
 				mrn8Digit = fillToLength(request.getParameter("mrn"), '0', 8);
 			}
-			if (request.getParameter("birth_month") != null && !request.getParameter("birth_month").equals("")) {
+			if (StringUtils.isNotBlank(request.getParameter("birth_month"))) {
 				birth_month = request.getParameter("birth_month");
 			}
-			if (request.getParameter("birth_year") != null && !request.getParameter("birth_year").equals("")) {
+			if (StringUtils.isNotBlank(request.getParameter("birth_year"))) {
 				birth_year = request.getParameter("birth_year");
 			}
-			if (request.getParameter("birth_day") != null && !request.getParameter("birth_day").equals("")) {
+			if (StringUtils.isNotBlank(request.getParameter("birth_day"))) {
 				birth_day = request.getParameter("birth_day");
 			}
 			boolean success = WebService.initWebService(request);
@@ -116,23 +118,23 @@ public class MeetingCommand {
 						&& verifyMemberOutput.getEnvelope() != null
 						&& verifyMemberOutput.getEnvelope().getMember() != null) {
 					ctx.setMemberDO(verifyMemberOutput.getEnvelope().getMember());
-					return ("1");
+					return "1";
 				} else {
 					ctx.setMemberDO(null);
-					return ("3");
+					return "3";
 				}
 
 			} else {
-				return ("3");
+				return "3";
 			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
-			return ("3");
+			return "3";
 
 		}
 	}
 
-	public static String updateEndMeetingLogout(HttpServletRequest request, HttpServletResponse response,
+	public static String updateEndMeetingLogout(HttpServletRequest request,
 			String memberName, boolean notifyVideoForMeetingQuit) throws Exception {
 		logger.info(LOG_ENTERED + "notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
 		ServiceCommonOutput ret = null;
@@ -187,8 +189,8 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput meetingDetailsOutput = null;
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		String meetingCode = null;
-		String jsonStr = null;
+		String meetingCode;
+		String jsonStr;
 		if (ctx != null) {
 			meetingCode = ctx.getMeetingCode();
 			try {
@@ -252,13 +254,12 @@ public class MeetingCommand {
 		return isMyMeetingsAvailable;
 	}
 
-	public static String IsMeetingHashValid(HttpServletRequest request, HttpServletResponse response)
+	public static String IsMeetingHashValid(HttpServletRequest request)
 			throws RemoteException, Exception {
 		logger.info(LOG_ENTERED);
-		MeetingDetailsOutput output = null;
+		MeetingDetailsOutput output;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		String meetingCode = request.getParameter("meetingCode");
-		String nocache = request.getParameter("nocache");
 		boolean success = WebService.initWebService(request);
 		if (ctx != null && success) {
 			output = WebService.IsMeetingHashValid(meetingCode, WebUtil.clientId, request.getSession().getId());
@@ -282,10 +283,10 @@ public class MeetingCommand {
 			}
 		}
 		logger.info(LOG_EXITING);
-		return (JSONObject.fromObject(new SystemError()).toString());
+		return JSONObject.fromObject(new SystemError()).toString();
 	}
 
-	public static String createCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response)
+	public static String createCaregiverMeetingSession(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		LaunchMeetingForMemberGuestOutput output = null;
@@ -294,9 +295,8 @@ public class MeetingCommand {
 		try {
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
-			boolean isMobileFlow = false;
-			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow"))
-					&& request.getParameter("isMobileFlow").equalsIgnoreCase("true")) {
+			boolean isMobileFlow;
+			if ("true".equalsIgnoreCase(request.getParameter("isMobileFlow"))) {
 				isMobileFlow = true;
 				logger.info("mobile flow is true");
 			} else {
@@ -309,7 +309,7 @@ public class MeetingCommand {
 						request.getSession().getId());
 				if (output != null && output.getLaunchMeetingEnvelope().getLaunchMeeting() != null) {
 					jsonString = gson.toJson(output);
-					logger.debug("json output" + jsonString.toString());
+					logger.debug("json output" + jsonString);
 				}
 			}
 		} catch (Exception e) {
@@ -327,7 +327,7 @@ public class MeetingCommand {
 
 	}
 
-	public static String endCaregiverMeetingSession(HttpServletRequest request, HttpServletResponse response)
+	public static String endCaregiverMeetingSession(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		ServiceCommonOutput output = null;
@@ -343,7 +343,7 @@ public class MeetingCommand {
 			if (output != null) {
 				Gson gson = new Gson();
 				jsonString = gson.toJson(output);
-				logger.info("json output" + jsonString.toString());
+				logger.info("json output" + jsonString);
 			}
 
 		} catch (Exception e) {
@@ -382,10 +382,10 @@ public class MeetingCommand {
 	}
 
 	private static String fillToLength(String src, char fillChar, int total_length) {
-		String ret = null;
+		String ret;
 		if (src.length() < total_length) {
 			int count = total_length - src.length();
-			StringBuffer sb = new StringBuffer();
+			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < count; i++) {
 				sb.append(fillChar);
 			}
@@ -405,7 +405,7 @@ public class MeetingCommand {
 		meeting.setCaregiver(meeting.getCaregiver());
 	}
 
-	public static String createInstantVendorMeeting(HttpServletRequest request, HttpServletResponse response,
+	public static String createInstantVendorMeeting(HttpServletRequest request,
 			String hostNuid, String[] participantNuid, String memberMrn, String meetingType) throws Exception {
 		logger.info(LOG_ENTERED);
 		CreateInstantVendorMeetingOutput output = null;
@@ -418,7 +418,7 @@ public class MeetingCommand {
 			if (output != null) {
 				Gson gson = new Gson();
 				jsonString = gson.toJson(output);
-				logger.debug("json output" + jsonString.toString());
+				logger.debug("json output" + jsonString);
 			}
 
 		} catch (Exception e) {
@@ -429,7 +429,7 @@ public class MeetingCommand {
 		return jsonString;
 	}
 
-	public static String terminateSetupWizardMeeting(HttpServletRequest request, HttpServletResponse response)
+	public static String terminateSetupWizardMeeting(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		ServiceCommonOutput output = null;
@@ -448,7 +448,7 @@ public class MeetingCommand {
 				vendorConfId = request.getParameter("vendorConfId");
 			}
 
-			boolean success = WebService.initWebService(request);
+			WebService.initWebService(request);
 			String hostNuid = WebService.getSetupWizardHostNuid();
 
 			output = WebService.terminateInstantMeeting(meetingId, vendorConfId, hostNuid,
@@ -457,7 +457,7 @@ public class MeetingCommand {
 			if (output != null) {
 				Gson gson = new Gson();
 				jsonString = gson.toJson(output);
-				logger.info("json output" + jsonString.toString());
+				logger.info("json output" + jsonString);
 			}
 
 		} catch (Exception e) {
@@ -468,12 +468,12 @@ public class MeetingCommand {
 		return jsonString;
 	}
 
-	public static String performSSOSignOn(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String performSSOSignOn(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		String strResponse = null;
 		try {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			boolean success = WebService.initWebService(request);
+			WebService.initWebService(request);
 			if (ctx != null) {
 				String userName = request.getParameter("username");
 				String password = request.getParameter("password");
@@ -622,13 +622,13 @@ public class MeetingCommand {
 		return "400";
 	}
 
-	public static String validateKpOrgSSOSession(HttpServletRequest request, HttpServletResponse response,
+	public static String validateKpOrgSSOSession(HttpServletRequest request,
 			String ssoSession) throws Exception {
 		logger.info(LOG_ENTERED);
 		String strResponse = null;
 		try {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			boolean success = WebService.initWebService(request);
+			WebService.initWebService(request);
 			// Validation
 			if (ctx != null) {
 				KpOrgSignOnInfo kpOrgSignOnInfo = WebService.validateKpOrgSSOSession(ssoSession);
@@ -700,7 +700,7 @@ public class MeetingCommand {
 			if (ctx != null) {
 				if (ctx.getKpOrgSignOnInfo() != null
 						&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
-					boolean success = WebService.initWebService(request);
+					WebService.initWebService(request);
 					isSignedOff = WebService.performKpOrgSSOSignOff(ctx.getKpOrgSignOnInfo().getSsoSession());
 				}
 				invalidateWebAppContext(ctx);
@@ -715,12 +715,12 @@ public class MeetingCommand {
 		return isSignedOff;
 	}
 
-	public static String setKPHCConferenceStatus(HttpServletRequest request, HttpServletResponse response) {
+	public static String setKPHCConferenceStatus(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		ServiceCommonOutput output = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		long meetingId = 0;
-		String jsonStr = null;
+		String jsonStr;
 		final Gson gson = new Gson();
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
@@ -758,8 +758,7 @@ public class MeetingCommand {
 		return jsonStr;
 	}
 
-	public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
@@ -802,10 +801,10 @@ public class MeetingCommand {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
-		return (JSONObject.fromObject(new SystemError()).toString());
+		return JSONObject.fromObject(new SystemError()).toString();
 	}
 
-	public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request, HttpServletResponse response) {
+	public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		long meetingId = 0;
@@ -833,10 +832,10 @@ public class MeetingCommand {
 			logger.error("System error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
-		return (JSONObject.fromObject(new SystemError()).toString());
+		return JSONObject.fromObject(new SystemError()).toString();
 	}
 
-	public static String memberLeaveProxyMeeting(HttpServletRequest request, HttpServletResponse response)
+	public static String memberLeaveProxyMeeting(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		JoinLeaveMeetingJSON output = null;
@@ -861,7 +860,7 @@ public class MeetingCommand {
 		return responseStr;
 	}
 
-	public static String verifyCaregiver(HttpServletRequest request, HttpServletResponse response)
+	public static String verifyCaregiver(HttpServletRequest request)
 			throws RemoteException {
 		logger.info(LOG_ENTERED);
 		String json = "";
@@ -894,7 +893,7 @@ public class MeetingCommand {
 				}
 				Gson gson = new Gson();
 				json = gson.toJson(verifyCareGiverOutput);
-				logger.debug("json output" + json.toString());
+				logger.debug("json output" + json);
 			}
 		} catch (Exception e) {
 			logger.error("System Error : ", e);
@@ -904,7 +903,7 @@ public class MeetingCommand {
 		return json;
 	}
 
-	public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request, HttpServletResponse response)
+	public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
@@ -923,8 +922,7 @@ public class MeetingCommand {
 			patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
 			logger.debug("patientLastName after replace special characters =" + patientLastName);
 			boolean isMobileFlow;
-			if (StringUtils.isNotBlank(request.getParameter("isMobileFlow"))
-					&& request.getParameter("isMobileFlow").equalsIgnoreCase("true")) {
+			if ("true".equalsIgnoreCase(request.getParameter("isMobileFlow"))) {
 				isMobileFlow = true;
 				logger.info("mobile flow is true");
 			} else {
@@ -954,7 +952,7 @@ public class MeetingCommand {
 				ctx.setCareGiver(true);
 				Gson gson = new Gson();
 				json = gson.toJson(launchMeetingForMemberGuest);
-				logger.debug("json output" + json.toString());
+				logger.debug("json output" + json);
 				return json;
 			}
 
@@ -962,10 +960,10 @@ public class MeetingCommand {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
-		return (JSONObject.fromObject(new SystemError()).toString());
+		return JSONObject.fromObject(new SystemError()).toString();
 	}
 
-	public static String launchMeetingForMemberDesktop(HttpServletRequest request, HttpServletResponse response)
+	public static String launchMeetingForMemberDesktop(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		long meetingId = 0;
@@ -975,11 +973,10 @@ public class MeetingCommand {
 
 		if (ctx != null) {
 			try {
-				if (request.getParameter("meetingId") != null && !request.getParameter("meetingId").equals("")) {
+				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 					meetingId = Long.parseLong(request.getParameter("meetingId"));
 				}
-				if (request.getParameter("megaMeetingDisplayName") != null
-						&& !request.getParameter("megaMeetingDisplayName").equals("")) {
+				if (StringUtils.isNotBlank(request.getParameter("megaMeetingDisplayName"))) {
 					megaMeetingDisplayName = request.getParameter("megaMeetingDisplayName");
 				}
 
@@ -989,7 +986,7 @@ public class MeetingCommand {
 				output = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 						request.getSession().getId());
 				if (output != null) {
-					logger.debug("json output: = " + output.toString());
+					logger.debug("json output: = " + output);
 				}
 			} catch (Exception e) {
 				logger.error("System Error for meeting:" + meetingId, e);
@@ -1000,7 +997,7 @@ public class MeetingCommand {
 		return output;
 	}
 
-	public static String retrieveMeeting(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String retrieveMeeting(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		MeetingDetailsJSON meetingDetailsJSON = null;
@@ -1031,10 +1028,10 @@ public class MeetingCommand {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
-		return (JSONObject.fromObject(new SystemError()).toString());
+		return JSONObject.fromObject(new SystemError()).toString();
 	}
 
-	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request, HttpServletResponse response)
+	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		long meetingId = 0;
@@ -1077,10 +1074,10 @@ public class MeetingCommand {
 			logger.error("System Error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
-		return (JSONObject.fromObject(new SystemError()).toString());
+		return JSONObject.fromObject(new SystemError()).toString();
 	}
 
-	public static String memberLogout(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public static String memberLogout(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
@@ -1106,8 +1103,7 @@ public class MeetingCommand {
 	 * @param response
 	 * @return
 	 */
-	public static String getProviderRunningLateDetails(final HttpServletRequest request,
-			final HttpServletResponse response) {
+	public static String getProviderRunningLateDetails(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		String output = null;
@@ -1120,14 +1116,14 @@ public class MeetingCommand {
 				output = WebService.getProviderRunningLateDetails(meetingId, sessionId);
 			}
 		} catch (Exception e) {
-			output = (new Gson().toJson(new SystemError()));
+			output = new Gson().toJson(new SystemError());
 			logger.error("System Error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
 		return output;
 	}
 
-	public static String caregiverJoinLeaveMeeting(HttpServletRequest request, HttpServletResponse response) {
+	public static String caregiverJoinLeaveMeeting(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		String output = null;
@@ -1144,7 +1140,7 @@ public class MeetingCommand {
 				output = WebService.caregiverJoinLeaveMeeting(meetingId, meetingHash, joinOrLeave, sessionId);
 			}
 		} catch (Exception e) {
-			output = (new Gson().toJson(new SystemError()));
+			output = new Gson().toJson(new SystemError());
 			logger.error("System Error for meeting:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
@@ -1175,7 +1171,7 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 	}
 	
-	public static String logVendorMeetingEvents(final HttpServletRequest request, final HttpServletResponse response) {
+	public static String logVendorMeetingEvents(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		final String meetingId = request.getParameter("meetingId");
@@ -1189,7 +1185,7 @@ public class MeetingCommand {
 			output = WebService.logVendorMeetingEvents(Long.parseLong(meetingId), userType, userId, eventName,
 					eventDescription, logType, sessionId);
 		} catch (Exception e) {
-			output = (new Gson().toJson(new SystemError()));
+			output = new Gson().toJson(new SystemError());
 			logger.error("System Error for meeting :" + meetingId + " : ", e);
 		}
 		logger.info(LOG_EXITING);

@@ -6,7 +6,7 @@
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
 
 <%
-	MeetingCommand.retrieveMeeting(request, response);
+	MeetingCommand.retrieveMeeting(request);
 	String timezone = WebUtil.getCurrentDateTimeZone();
 %>
 

@@ -254,7 +254,7 @@ public class WebSessionFilter implements Filter {
 										ctx.setAuthenticated(false);
 									} else {
 										logger.info("sso cookie: " + ssoCookieVal);
-										String responseCode = MeetingCommand.validateKpOrgSSOSession(req, resp,
+										String responseCode = MeetingCommand.validateKpOrgSSOSession(req,
 												ssoCookieVal);
 										if ("200".equalsIgnoreCase(responseCode)) {
 											logger.info("sso session token from request cookie valid");

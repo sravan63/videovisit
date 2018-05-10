@@ -52,7 +52,7 @@ public class EnvironmentCommand implements InitializingBean {
  		
 		BufferedReader in = new BufferedReader(new FileReader(file));
 		String str;
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		while ((str = in.readLine()) != null) {
 			sb.append(str);
 		}

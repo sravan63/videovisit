@@ -21,7 +21,7 @@ public class VerifyGuestController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String data = null;
 		try {
-			data = MeetingCommand.verifyCaregiver(request, response);
+			data = MeetingCommand.verifyCaregiver(request);
 
 			MeetingCommand.setupGuestInfo(request);
 

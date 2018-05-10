@@ -27,13 +27,13 @@ public class SubmitLoginController extends SimplePageController {
 			if (ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
 				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
 			}
-			data = MeetingCommand.verifyMember(request, response);
+			data = MeetingCommand.verifyMember(request);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

@@ -19,13 +19,13 @@ public class SetKPHCConferenceStatusController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String data = null;
 		try {
-			data = MeetingCommand.setKPHCConferenceStatus(request, response);
+			data = MeetingCommand.setKPHCConferenceStatus(request);
 		} catch (Exception e) {
 			logger.error("System Error:" + e.getMessage(), e);
 		}
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 }

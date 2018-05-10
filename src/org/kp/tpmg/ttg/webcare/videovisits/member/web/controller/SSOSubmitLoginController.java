@@ -57,7 +57,7 @@ public class SSOSubmitLoginController extends SimplePageController {
 			}
 
 			// Perform SSO sign on and authorization
-			data = MeetingCommand.performSSOSignOn(request, response);
+			data = MeetingCommand.performSSOSignOn(request);
 
 			// set ssosession token in cookie
 			if ("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null
@@ -72,7 +72,7 @@ public class SSOSubmitLoginController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 
 }

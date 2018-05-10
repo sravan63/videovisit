@@ -21,7 +21,7 @@ public class ValidateUserSession extends SimplePageController {
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
-		String data = "success";
+		String data;
 		JSONObject result = new JSONObject();
 		try {
 			HttpSession session = request.getSession(false);
@@ -40,8 +40,7 @@ public class ValidateUserSession extends SimplePageController {
 					result.put("success", true);
 				} else {
 					WebAppContext context = WebAppContext.getWebAppContext(request);
-					if (request.getParameter("source") != null
-							&& request.getParameter("source").equalsIgnoreCase("member")) {
+					if ("member".equalsIgnoreCase(request.getParameter("source"))) {
 						logger.info("in validateUserSession member");
 						if (context != null && context.getMemberDO() != null) {
 
@@ -52,12 +51,10 @@ public class ValidateUserSession extends SimplePageController {
 						}
 					}
 
-					if (request.getParameter("source") != null
-							&& request.getParameter("source").equalsIgnoreCase("caregiver")) {
-						if (context != null && context.getCareGiver() == true) {
-							result.put("isValidUserSession", true);
-							result.put("success", true);
-						}
+					if (context != null && context.getCareGiver() == true
+							&& "caregiver".equalsIgnoreCase(request.getParameter("source"))) {
+						result.put("isValidUserSession", true);
+						result.put("success", true);
 					}
 				}
 			}
@@ -68,7 +65,7 @@ public class ValidateUserSession extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING + "data=" + data);
-		return (modelAndView);
+		return modelAndView;
 	}
 
 }

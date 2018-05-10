@@ -21,11 +21,11 @@ public class EndCaregiverSessionController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String data = null;
 		try {
-			data = MeetingCommand.endCaregiverMeetingSession(request, response);
+			data = MeetingCommand.endCaregiverMeetingSession(request);
 
 			String refreshMeetings = request.getParameter("refreshMeetings");
 
-			if (refreshMeetings != null && refreshMeetings.equals("true")) {
+			if ("true".equalsIgnoreCase(refreshMeetings)) {
 				MeetingCommand.retrieveMeetingForCaregiver(request, response);
 			}
 
@@ -38,6 +38,6 @@ public class EndCaregiverSessionController extends SimplePageController {
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 }
