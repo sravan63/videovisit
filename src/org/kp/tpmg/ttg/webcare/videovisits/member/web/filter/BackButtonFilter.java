@@ -93,7 +93,7 @@ public class BackButtonFilter implements Filter {
 								logger.info("Calling member update end meeting logout");
 								String memberName = ctx.getMemberDO().getLastName() + ", "
 										+ ctx.getMemberDO().getFirstName();
-								MeetingCommand.updateEndMeetingLogout(req, resp, memberName, true);
+								MeetingCommand.updateEndMeetingLogout(req, memberName, true);
 							}
 						}
 					} catch (Exception ex) {
