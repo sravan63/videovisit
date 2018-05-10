@@ -226,24 +226,20 @@
 							<dd id="displayMeetingNewStartTime" style="word-wrap: break-word;"></dd>
 						</dl>
 						<dl>
-							<dt>Patient</dt><dd id="meetingPatient">${WebAppContext.videoVisit.patientLastName}, ${WebAppContext.videoVisit.patientFirstName} ${WebAppContext.videoVisit.patientMiddleName}</dd>
+							<dt>Patient</dt><dd id="meetingPatient"><span>${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()} ${WebAppContext.videoVisit.patientMiddleName.trim()}</span><i id="patientActiveIcon" class="active-user-state"></i></dd>
 						</dl>
 						<dl>
-							<dt>My Doctor</dt><dd id="meetingHost"> 
-							${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</dd>
+							<dt>My Doctor</dt><dd id="meetingHost">
+							<span>${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</span><i id="hostActiveIcon" class="active-user-state"></i></dd>
 						</dl>
 						
 						<c:if test="${not empty WebAppContext.videoVisit.participant}">
 							<dl id="meetingParticipantContainer">
 								<dt>Add'l Clinicians</dt>
 								<dd id="meetingParticipant">
-									<table>     
-										<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">        
-											<tr>
-												<td style="padding-bottom:10px;">${Provider.lastName}, ${Provider.firstName} ${Provider.title}</td>            
-											</tr>
-										</c:forEach>
-									</table>
+									<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">        
+										<p style="padding-bottom:10px;"><span>${Provider.lastName.trim()}, ${Provider.firstName.trim()} ${Provider.title.trim()}</span><i class="active-user-state"></i></p>
+									</c:forEach>
 								</dd>
 							</dl>
 						</c:if>
@@ -252,13 +248,9 @@
 							<dl id="meetingPatientGuestContainer">
 								<dt>My Guests</dt>
 								<dd id="meetingPatientGuest">
-									 <table>   
-										<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">        
-												<tr>
-														<td style="padding-bottom:10px;">${Caregiver.lastName}, ${Caregiver.firstName}</td>            
-												</tr>
-											 </c:forEach>       
-										 </table>
+									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">        
+										<p style="padding-bottom:10px;"><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><i class="active-user-state"></i></p>
+									</c:forEach>
 								</dd>
 								</dl>
 							</c:if>

@@ -1,6 +1,8 @@
 var isRunningLate = true;
 var runningLateRecursiveCall;
 var newStartTimeRecursiveCall;
+var meetingHostName = "";
+var meetingPatientName = "";
 
 $(document).ready(function() {
 	//$('html').css('overflow-y', 'hidden');
@@ -33,6 +35,26 @@ $(document).ready(function() {
 	
 	$("#setupContents").height(calculatedHeight);
 	$("#setupContents").width(calculatedWidthPluginContainer);
+
+	var host = ($("#meetingHost span").html().indexOf('&nbsp;') > -1)?$("#meetingHost span").html().replace('&nbsp;',''):$("#meetingHost span").html();
+	var splittedHostName = host.trim().split(" ");
+	for(var c=0;c<splittedHostName.length;c++){
+		var char = splittedHostName[c].trim();
+		if(char !== ""){
+			meetingHostName += char+" ";
+		}
+	}
+	meetingHostName = meetingHostName.trim();
+
+	var patient = ($("#meetingPatient span").html().indexOf('&nbsp;') > -1)?$("#meetingPatient span").html().replace('&nbsp;',''):$("#meetingPatient span").html();
+	var splittedPatientName = patient.trim().split(" ");
+	for(var c=0;c<splittedPatientName.length;c++){
+		var char = splittedPatientName[c].trim();
+		if(char !== ""){
+			meetingPatientName += char+" ";
+		}
+	}
+	meetingPatientName = meetingPatientName.trim();
 	
 	//make ajax call to KP Keep alive url
     var keepAliveUrl = $("#kpKeepAliveUrl").val();
@@ -151,8 +173,98 @@ $(document).ready(function() {
 	
 });
 
+var getPatientGuestNameList = function(){
+	var pgNames = [];
+	var patientGuestsLength = $('#meetingPatientGuest').children('p').length;
+	for(var i=0; i<patientGuestsLength;i++){
+		var lName = $($('#meetingPatientGuest').children('p')[i]).find(".lName").text().trim();
+		var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
+		pgNames.push({fname:fName, lname:lName, index:i, isAvailable: false});
+	}
+	return pgNames;
+}
+
+var getAdditionalCliniciansNameList = function(){
+	var additionalCliniciansNames = [];
+	var additionalCliniciansLength = $('#meetingParticipant').children('p').length;
+	for(var i=0; i<additionalCliniciansLength;i++){
+		var clinicianName = $($('#meetingParticipant').children('p')[i]).find("span").text().trim();
+		additionalCliniciansNames.push({name:clinicianName, index:i, isAvailable: false});
+	}
+	return additionalCliniciansNames;
+}
+
 var VideoVisit =
 {
+	checkAndShowParticipantAvailableState: function(participants,isWebRTC){
+		if(participants){
+			var patientGuests = getPatientGuestNameList();
+			var additinalClinicians = getAdditionalCliniciansNameList();
+			var hostAvailable = false;
+			var patientAvailable = false;
+
+        	for(var i=0;i<participants.length;i++){
+        		var pData = participants[i];
+        		var pName = (isWebRTC)?participants[i].trim():pData.name.trim();
+        		// Host Availability
+        		if(meetingHostName.toLowerCase().indexOf(pName.toLowerCase()) > -1){
+        			hostAvailable = true;
+        		}
+        		// Patient Availability
+        		if(meetingPatientName.toLowerCase().indexOf(pName.toLowerCase()) > -1){
+        			patientAvailable = true;
+        		}
+        		// Patient Guests Availability
+        		for(var pg=0;pg<patientGuests.length;pg++){
+        			var guest = patientGuests[pg];
+        			if(pName.toLowerCase().indexOf(guest.fname.toLowerCase()) > -1 && pName.toLowerCase().indexOf(guest.lname.toLowerCase()) > -1){
+        				guest.isAvailable = true;
+        			}
+        		}
+	  			// Additional Clinicians Availability
+	  			for(var c=0;c<additinalClinicians.length;c++){
+        			var clinician = additinalClinicians[c];
+        			if(clinician.name.toLowerCase() == pName.toLowerCase()){
+        				clinician.isAvailable = true;
+        			}
+        		}
+        	}
+
+        	// Host icon toggle
+        	if(hostAvailable == true){
+        		$("#hostActiveIcon").css("display","inline-block");
+        	} else {
+        		$("#hostActiveIcon").css("display","none");
+        	}
+
+        	// Patient icon toggle
+        	if(patientAvailable == true){
+        		$("#patientActiveIcon").css("display","inline-block");
+        	} else {
+        		$("#patientActiveIcon").css("display","none");
+        	}
+
+        	// Patient Guests icon toggle
+    		for(var pg=0;pg<patientGuests.length;pg++){
+    			var guest = patientGuests[pg];
+    			if(guest.isAvailable == true){
+    				$($('#meetingPatientGuest').children('p')[pg]).find("i").css("display","inline-block");
+    			} else{
+    				$($('#meetingPatientGuest').children('p')[pg]).find("i").css("display","none");
+    			}
+    		}
+
+  			// Additional Clinicians icon toggle
+  			for(var c=0;c<additinalClinicians.length;c++){
+    			var clinician = additinalClinicians[c];
+    			if(clinician.isAvailable == true){
+    				$($('#meetingParticipant').children('p')[c]).find("i").css("display","inline-block");
+    			} else{
+    				$($('#meetingParticipant').children('p')[c]).find("i").css("display","none");
+    			}
+    		}
+    	}
+	},
 	logVendorMeetingEvents: function(params){
 		var userId;
 		var userType;

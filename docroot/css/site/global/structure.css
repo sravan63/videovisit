@@ -767,7 +767,15 @@ a.download-mdo:active, a.download-mdo:visited{
 }
 /*US17810 end*/
 
-
+.active-user-state{
+	background: url(../../../images/global/user-active.png) no-repeat center center;
+	display: none;
+	width: 12px;
+	height: 12px;
+	background-size: cover;
+	margin-left: 2px;
+	padding:0px!important;
+}
 
 /* ============= Satish @ US13301 & US133102 End === */
 /* ============		@BROWSER FIXES	======================== */
