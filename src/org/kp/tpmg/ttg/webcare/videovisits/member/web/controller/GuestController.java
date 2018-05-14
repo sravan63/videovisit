@@ -40,7 +40,7 @@ public class GuestController extends SimplePageController {
 
 	private String blockFF = null;
 
-	public GuestController() {
+	public void initProperties() {
 		try {
 			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
@@ -57,6 +57,7 @@ public class GuestController extends SimplePageController {
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
+		initProperties();
 		initializeWebappContext(request);
 		String data = null;
 		try {

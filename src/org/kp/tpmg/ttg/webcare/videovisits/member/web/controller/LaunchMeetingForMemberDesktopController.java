@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class LaunchMeetingForMemberDesktopController extends SimplePageController {
 
-	public static final Logger logger = Logger.getLogger(UserPresentInMeetingController.class);
+	public static final Logger logger = Logger.getLogger(LaunchMeetingForMemberDesktopController.class);
 	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
