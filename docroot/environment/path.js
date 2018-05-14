@@ -20,7 +20,6 @@ VIDEO_VISITS.Path = {
         visiturl : 'visit.htm',
         keepALive: 'keepalive.jsp',
         retrieveMeeting: 'retrievemeeting.json',
-//        userPresentInMeeting: 'userPresentInMeeting.json',
         videoVisit: 'videoVisit.htm',
         launchMemberProxyMeeting: 'launchMemberProxyMeeting.json',
         launchMeetingForMemberDesktop : 'launchMeetingForMemberDesktop.json'
