@@ -124,6 +124,7 @@
 				<prop key="/providerRunningLateInfo.json">dataProviderRunningLateInfo</prop>
 				<prop key="/readme.htm">readme</prop>
 				<prop key="/caregiverJoinMeeting.json">dataCaregiverJoinLeaveMeeting</prop>
+				<prop key="/setPeripheralsFlag.json">dataSetPeripheralsFlag</prop>
 				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
@@ -354,6 +355,10 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<bean id="dataCaregiverJoinLeaveMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CaregiverJoinLeaveMeetingController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	
+	<bean id="dataSetPeripheralsFlag" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SetPeripheralsFlagController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
