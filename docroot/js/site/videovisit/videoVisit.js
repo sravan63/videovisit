@@ -196,6 +196,22 @@ var getAdditionalCliniciansNameList = function(){
 
 var VideoVisit =
 {
+	setShowPrecallTestingFlag: function(flag){
+		var val = (flag == true)?"true":"flag";
+		$.ajax({
+			type: "POST",
+			url: VIDEO_VISITS.Path.visit.setPeripheralsFlag,
+			cache: false,
+			dataType: "json",
+			data: {"showPeripheralsPage":val},
+			success: function(result, textStatus){
+				console.log(result);
+			},
+			error: function(textStatus){
+				
+			}
+		});
+	},
 	checkAndShowParticipantAvailableState: function(participants,isWebRTC){
 		if(participants){
 			var patientGuests = getPatientGuestNameList();

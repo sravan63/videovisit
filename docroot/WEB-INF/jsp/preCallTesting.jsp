@@ -56,7 +56,7 @@
         VideoVisit.logVendorMeetingEvents(params);
 
 		// AJAX call
-		/*$.ajax({
+		$.ajax({
 			type: "POST",
 			url: VIDEO_VISITS.Path.visit.setPeripheralsFlag,
 			cache: false,
@@ -71,7 +71,7 @@
 			error: function(textStatus){
 				
 			}
-		});*/
+		});
 
 });
 
