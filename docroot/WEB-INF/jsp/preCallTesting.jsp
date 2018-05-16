@@ -52,8 +52,11 @@
 		localStorage.setItem('isPeripheralsAssigned', true);
 		localStorage.setItem('isPeripheralsAssignedAutomatically', false);
 
+		var params = ['info','preCallJoinEvent',"Pre-call screen displayed to user, who selected join"];
+        VideoVisit.logVendorMeetingEvents(params);
+
 		// AJAX call
-		$.ajax({
+		/*$.ajax({
 			type: "POST",
 			url: VIDEO_VISITS.Path.visit.setPeripheralsFlag,
 			cache: false,
@@ -68,7 +71,7 @@
 			error: function(textStatus){
 				
 			}
-		});
+		});*/
 
 });
 
