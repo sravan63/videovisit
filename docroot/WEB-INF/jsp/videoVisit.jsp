@@ -24,11 +24,17 @@
 	<!-- waiting room bg late load image issue fix start-->
 	<img src="images/global/waiting_rm_bkgd.png" class="waitingRoomBgImg" />
 	<!-- waiting room bg late load image issue fix end-->
-	
-	
+
 	<c:choose>
 	    <c:when test="${WebAppContext.videoVisit.webrtc == 'true'}">
-	        <%@ include file="videoVisitWebRTC.jsp" %>
+	        <c:choose>
+			    <c:when test="${WebAppContext.showPeripheralsPage == 'true'}">
+			        <%@ include file="preCallTesting.jsp" %>
+			    </c:when>    
+			    <c:otherwise>
+			        <%@ include file="videoVisitWebRTC.jsp" %>
+			    </c:otherwise>
+			</c:choose>
 	    </c:when>    
 	    <c:otherwise>
 	        <%@ include file="videoVisitPlugin.jsp" %>
