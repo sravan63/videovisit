@@ -8,8 +8,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.rmi.RemoteException;
@@ -69,6 +69,11 @@ import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.EsbInfo;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -112,6 +117,8 @@ public class WebService {
 	private static String secureCodes = null;
 	private static boolean isAdhoc = false;
 	private static boolean isParrs = true;
+	
+	private static RestTemplate restTemplate = new RestTemplate();
 
 	public static boolean initWebService(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
@@ -519,12 +526,12 @@ public class WebService {
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
-		String responseCodeAndMsg = "Empty response";
+		/*String responseCodeAndMsg = "Empty response";
 		if (output != null) {
 			responseCodeAndMsg = output.getStatus() != null
 					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
 					: "No rest response code & message returned from service.";
-		}
+		}*/
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -570,12 +577,12 @@ public class WebService {
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
-		String responseCodeAndMsg = "Empty response";
+		/*String responseCodeAndMsg = "Empty response";
 		if (output != null) {
 			responseCodeAndMsg = output.getStatus() != null
 					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
 					: "No rest response code & message returned from service.";
-		}
+		}*/
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -946,6 +953,7 @@ public class WebService {
 	 * @param input
 	 * @return
 	 */
+	/*
 	public static String callVVRestService(final String operationName, final String input) {
 		logger.info(LOG_ENTERED);
 		HttpURLConnection connection = null;
@@ -967,9 +975,9 @@ public class WebService {
 			connection = (HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("POST");
 			connection.setRequestProperty("Content-Type", "application/json");
-			connection.setRequestProperty("Authorization", "Basic " + authEncoded.trim());
-			connection.setRequestProperty("Accept", "*/*");
-			connection.setDoOutput(true);
+			connection.setRequestProperty("Authorization", "Basic " + authEncoded.trim());*/
+//			connection.setRequestProperty("Accept", "*/*");
+			/*connection.setDoOutput(true);
 
 			os = connection.getOutputStream();
 			os.write(input.getBytes());
@@ -1006,6 +1014,44 @@ public class WebService {
 				logger.warn("Error while closing OutputStream.");
 			}
 			disconnectURLConnection(connection);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}*/
+
+/**
+ * @param operationName
+ * @param input
+ * @return
+ */
+	public static String callVVRestService(final String operationName, final String input) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		ResponseEntity<?> responseEntity = null;
+		try {
+			logger.info("videoVisitRestServiceUrl url: " + videoVisitRestServiceUrl + operationName);
+			if (StringUtils.isBlank(videoVisitRestServiceUrl) || StringUtils.isBlank(serviceSecurityUsername)
+					|| StringUtils.isBlank(serviceSecurityPassword)) {
+				initializeRestProperties();
+			}
+			final URI uri = new URI(videoVisitRestServiceUrl + operationName);
+			logger.info("videoVisitRestServiceUrl : " + uri);
+			final String authStr = serviceSecurityUsername + ":" + serviceSecurityPassword;
+			logger.debug("authStr : " + authStr);
+			final String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
+
+			final HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.set("Accept", "*/*");
+			headers.set("Authorization", "Basic " + authEncoded.trim());
+			final HttpEntity<?> entity = new HttpEntity<Object>(input, headers);
+			responseEntity = restTemplate.postForEntity(uri, entity, String.class);
+			if (responseEntity != null) {
+				output = (String) responseEntity.getBody();
+			}
+
+		} catch (Exception e) {
+			logger.error("Web Service API error:" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
 		return output;
