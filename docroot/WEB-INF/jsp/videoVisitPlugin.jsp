@@ -72,7 +72,7 @@
 						</div>
 					</div>	-->
 					
-					<table id="setupInstructions" width="50%" style="color:#000000;">
+					<table id="setupInstructions" width="50%" style="color:#000000;margin:auto;">
 					    <tr style="vertical-align: top;">
 						    <td colspan="2"><h3>Please install the 'Vidyo Web' plug-in for your visit.</h3></td>
 						</tr>
@@ -100,6 +100,9 @@
 		                        </p>
 							</td>
 						</tr>
+						<!-- US30883 -->
+						<tr><td colspan="2" style="padding-top:35px;text-align:center;"><a id="macWinDownloadPageBackBtn" href="javascript:void(0);" onclick="backBtnClick()" class="installbutton" style="padding:5px 35px;">Back</a></td></tr>
+						<!-- US30883 -->
 					</table>
 				</div>
 			    <!-- End Plugin Install Steps -->
@@ -615,3 +618,15 @@
     </div>
 </div>
 <!-- US15318 - END -->
+<script language="javascript">
+    //US30883
+    function backBtnClick(){
+    	var memberFlg = $('#isMember').val();    	
+    	if (memberFlg == 'true' || memberFlg == true) {
+            window.location = '/videovisit/landingready.htm?explicitActionNavigation=true';
+        }else{
+            window.location = '/videovisit/guestready.htm?explicitActionNavigation=true';
+        }    	
+    }
+    //US30883
+</script>
