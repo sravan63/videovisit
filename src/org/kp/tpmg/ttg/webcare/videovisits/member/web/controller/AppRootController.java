@@ -43,25 +43,25 @@ public class AppRootController implements Controller {
 	private String blockChrome = null;
 	private String blockFF = null;
 	
-	public AppRootController() {
-		try{
+	public void initProperties() {
+		try {
 			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
-    		clinicianSingleSignOnURL = appProp.getProperty("CLINICIAN_SINGLE_SIGNON_URL");
-    		logger.info("AppRootController -> clinicianSingleSignOnURL: " + clinicianSingleSignOnURL);
-    		vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-    		if(StringUtils.isBlank(vidyoWebrtcSessionManager)){
-    			vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-    		}
-    		blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
-    		blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
-		}catch(Exception ex){
+			clinicianSingleSignOnURL = appProp.getProperty("CLINICIAN_SINGLE_SIGNON_URL");
+			logger.debug("clinicianSingleSignOnURL: " + clinicianSingleSignOnURL);
+			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
+			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
+				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+			}
+			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
+			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
+		} catch (Exception ex) {
 			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
-		
 	}
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
+		initProperties();
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
 			logger.info("context is null");

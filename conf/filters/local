@@ -1,8 +1,0 @@
-PROJECT=videovisitmember
-LOGFILE=c:/tmp/videovisitsmember.local.log
-INITFILE=c:/tmp/videovisitsmember.local.properties
-WEBSERVICE_ENDPOINT=http://localhost:9763/services/VideoVisitMemberServices 
-#http://localhost:9763/services/VideoVisitMemberServices
-LOGLEVEL=info
-MEGAMEETING_PARTICIPANT_URL=https://kaiserm3.videoconferencinginfo.com/?page=guest&conid=<mmMeetingName>&user=<guest name>&agree=1&reload=1
-MEGAMEETING_SETUP_URL=http://kaiserm3.videoconferencinginfo.com/guest/meetingSetup.swf

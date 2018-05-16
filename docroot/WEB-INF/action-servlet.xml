@@ -100,11 +100,9 @@
 				<prop key="/help.htm">help</prop>
 				<prop key="/error.htm">error</prop>
 				<prop key="/submitlogin.json">submitlogin</prop>
-				<prop key="/joinmeeting.json">joinmeeting</prop>
 				<prop key="/quitmeeting.json">quitmeeting</prop>
 				<prop key="/logout.json">logoutmeeting</prop>
 				<prop key="/retrievemeeting.json">retrievemeeting</prop>
-				<prop key="/createmeeting.json">createmeeting</prop>
 				<prop key="/healthMonitor">healthMonitor</prop>
 				<prop key="/loading.htm">loading</prop>
 				<prop key="/guest">guest</prop>	
@@ -116,9 +114,6 @@
 				<prop key="/guestlogout.htm">guestlogout</prop>		
 				<prop key="/guesterror.htm">guesterror</prop>
 				<prop key="/guesthelp.htm">guesthelp</prop>	
-				<prop key="/userPresentInMeeting.json">dataUserPresentInMeeting</prop>
-				<prop key="/createMobileMeeting.json">dataCreateMobileMeeting</prop>
-				<prop key="/createCareGiverMobileMeeting.json">dataCreateCareGiverMobileMeeting</prop>
 				<prop key="/videoVisit.htm">videoVisit</prop>
 				<prop key="/videoVisitReady.htm">videoVisitReady</prop>
 				<prop key="/videoVisitGuestReady.htm">videoVisitGuestReady</prop>
@@ -129,6 +124,7 @@
 				<prop key="/providerRunningLateInfo.json">dataProviderRunningLateInfo</prop>
 				<prop key="/readme.htm">readme</prop>
 				<prop key="/caregiverJoinMeeting.json">dataCaregiverJoinLeaveMeeting</prop>
+				<prop key="/setPeripheralsFlag.json">dataSetPeripheralsFlag</prop>
 				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
@@ -144,8 +140,6 @@
 				<prop key="/mobilepatientguestmeetings.htm">mobilePatientGuestMeetings</prop>	
 				<prop key="/sessiontimeout.json">sessionTimeout</prop>
 				<prop key="/mobilevideovisitlanding.htm">mobileVideoVisitLanding</prop>	
-				<prop key="/isValidUserSession.json">dataIsValidUserSession</prop>
-				<prop key="/isValidMeeting.json">dataIsValidMeeting</prop>
 				<prop key="/meetingexpired.htm">meetingExpired</prop>
 				<prop key="/meetingexpiredmember.htm">meetingExpiredMember</prop>
 				<prop key="/meetingexpiredmemberpg.htm">meetingExpiredMemberPG</prop>
@@ -288,12 +282,6 @@
 	<bean id="ssosubmitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SSOSubmitLoginController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
-	<bean id="joinmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.JoinMeetingController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-	</bean>
-	<bean id="createmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateMeetingSessionController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-	</bean>
 	<bean id="quitmeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.QuitMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
@@ -304,10 +292,6 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<bean id="retrievemeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.RetrieveMeetingController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-	</bean>
-	
-	<bean id="dataUserPresentInMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.UserPresentInMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
@@ -371,6 +355,10 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<bean id="dataCaregiverJoinLeaveMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CaregiverJoinLeaveMeetingController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
+	
+	<bean id="dataSetPeripheralsFlag" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SetPeripheralsFlagController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	
@@ -467,23 +455,6 @@
 		<property name="viewName" value="mobileEnableJavascript" />
 		
 	</bean>
-	
-	<bean id="dataCreateMobileMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateMobileMeetingSessionController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-	</bean>
-	<bean id="dataCreateCareGiverMobileMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.CreateCareGiverMobileMeetingController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-	</bean>
-	
-	<bean id="dataIsValidUserSession" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.ValidateUserSession">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-	</bean>
-	
-   <bean id="dataIsValidMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.ValidateUserSession">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-	</bean>
-	
-	
 	
 	<bean id="dataLaunchMeetingForMember" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LaunchMeetingForMemberController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>

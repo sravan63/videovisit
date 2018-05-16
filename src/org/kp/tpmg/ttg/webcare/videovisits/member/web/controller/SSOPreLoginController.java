@@ -46,7 +46,7 @@ public class SSOPreLoginController implements Controller {
 	private String blockChrome = null;
 	private String blockFF = null;
 
-	public SSOPreLoginController() {
+	public void initProperties() {
 		try {
 			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
@@ -64,6 +64,7 @@ public class SSOPreLoginController implements Controller {
 		logger.info(LOG_ENTERED);
 		String ssoSession = null;
 		ModelAndView modelAndView = null;
+		initProperties();
 		try {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if (ctx == null) {

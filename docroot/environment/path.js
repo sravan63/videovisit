@@ -18,10 +18,8 @@ VIDEO_VISITS.Path = {
     },
     landingready : {
         visiturl : 'visit.htm',
-        joinmeeting : 'createmeeting.json',
         keepALive: 'keepalive.jsp',
         retrieveMeeting: 'retrievemeeting.json',
-        userPresentInMeeting: 'userPresentInMeeting.json',
         videoVisit: 'videoVisit.htm',
         launchMemberProxyMeeting: 'launchMemberProxyMeeting.json',
         launchMeetingForMemberDesktop : 'launchMeetingForMemberDesktop.json'
@@ -57,7 +55,8 @@ VIDEO_VISITS.Path = {
 		setKPHCConferenceStatus: 'setKPHCConferenceStatus.json',
         providerRunningLateInfo: 'providerRunningLateInfo.json',
         caregiverJoinMeeting: 'caregiverJoinMeeting.json',
-        logVendorMeetingEvents : 'logVendorMeetingEvents.json'	
+        logVendorMeetingEvents : 'logVendorMeetingEvents.json',
+        setPeripheralsFlag : 'setPeripheralsFlag.json'
     },
     logout : {
         logoutjson: 'logout.json'

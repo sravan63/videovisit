@@ -21,7 +21,7 @@ public class PreSetupWizardController extends SimplePageController {
 	private String blockChrome = null;
 	private String blockFF = null;
 
-	public PreSetupWizardController() {
+	public void initProperties() {
 		try {
 			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
@@ -38,6 +38,7 @@ public class PreSetupWizardController extends SimplePageController {
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
+		initProperties();
 		try {
 			modelAndView.addObject("webrtc", String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
 			modelAndView.addObject("webrtcSessionManager", vidyoWebrtcSessionManager);

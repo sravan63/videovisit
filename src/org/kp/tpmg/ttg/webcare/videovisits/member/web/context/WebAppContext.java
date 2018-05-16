@@ -54,6 +54,7 @@ public class WebAppContext implements Serializable {
 	private String webrtcSessionManager;
 	private String blockChrome = "true";
 	private String blockFF = "true";
+	private boolean showPeripheralsPage = true;
 
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -363,6 +364,20 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setBlockFF(String blockFF) {
 		this.blockFF = blockFF;
+	}
+
+	/**
+	 * @return the showPeripheralsPage
+	 */
+	public boolean isShowPeripheralsPage() {
+		return showPeripheralsPage;
+	}
+
+	/**
+	 * @param showPeripheralsPage the showPeripheralsPage to set
+	 */
+	public void setShowPeripheralsPage(boolean showPeripheralsPage) {
+		this.showPeripheralsPage = showPeripheralsPage;
 	}
 
 }

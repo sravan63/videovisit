@@ -18,9 +18,7 @@ VIDEO_VISITS_MOBILE.Path = {
 	        	
 	    },
 	    sessionTimeout : {
-	        ajaxurl : 'sessiontimeout.json',
-	        isValidUserSession: 'isValidUserSession.json',
-	        isValidMeeting: 'isValidMeeting.json',
+	        ajaxurl : 'sessiontimeout.json'
 	    }
         ,
 	    createGuestSession : {
@@ -32,10 +30,7 @@ VIDEO_VISITS_MOBILE.Path = {
 	    }
         ,
 	    joinMeeting : {
-	        ajaxurl : 'joinmeeting.json',
 	        userPresentInMeeting:'userPresentInMeeting.json',
-	        mobileCreateSession:'createMobileMeeting.json',
-	        mobileCareGiverCreateSession:'createCareGiverMobileMeeting.json',
 	        launchMeetingforMember:'launchMeetingforMember.json'	        	
 	    },
 	    logout : {
@@ -428,7 +423,7 @@ $(document).ready(function() {
 	$(".refresh_button").click(function(event){
 		console.log("Refresh button clicked");
 		var postdata = "inAppBrowserFlag=" +inAppBrowserFlag;
-		
+		// This ajax call is deprecated as part of backend code cleanup in Iteration 10, 2018.
 		$.ajax({
 			async: false,
 			type: "POST",
@@ -456,93 +451,6 @@ $(document).ready(function() {
 	        }
 		});
 	});
-	
-	/*$(".button-launch-visit").click(function(event) {
-		//var inAppBrowserFlag = $('#inAppBrowserFlag').val();
-		event.preventDefault();
-
-		var megaMeetingId = $(this).attr("megameetingid");
-		var lastName = $(this).attr("lastname");
-		var firstName = $(this).attr("firstname");
-		//var name = firstName + " " + lastName;
-		var name = lastName + ", " + firstName;
-		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
-        var meetingId = $(this).attr("meetingId");
-
-		// Check if the user session is active before launching the app
-
-		var currentTime = new Date();
-	    var n = currentTime.getTime();
-		var postdata = "meetingId=" + meetingId + "&source=member&nocache=" + n;
-		$.ajax({
-			async:false,
-	        type: "POST",
-	        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidMeeting,
-	        data: postdata,
-	        success: function(returndata) {
-	        	//console.log("returndata=" + returndata);
-	        	try
-	        	{
-	        		returndata = $.parseJSON(returndata);
-	        	}
-	        	catch(e)
-	        	{
-	        		if (inAppBrowserFlag == "true")
-	            		window.location.replace("mobileAppPatientLogin.htm");
-
-	            	else
-	            		window.location.replace("logout.htm");
-	        	}
-	        	var isValidUserSession =  returndata.isValidUserSession;
-
-	        	 if(returndata.success == true && isValidUserSession == true){
-
-	        		var meetingStatus = returndata.meetingStatus;
-	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	             		window.location.replace("meetingexpiredmember.htm");
-	             	}
-	             	else{
-	             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
-		            	var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name, 'nocache=' : n};
-		            	$.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.userPresentInMeeting, postParaForUserPresentInMeeting,function(userPresentInMeetingData){
-		            		try
-		            		{
-			            		userPresentInMeetingData = jQuery.parseJSON(userPresentInMeetingData);
-
-			            		if(userPresentInMeetingData.result == "true"){
-			            			modalShow('modal-user-present');
-			            		}
-			            		else{
-				            			joinMeeting(meetingId);
-				    	        		launchVideoVisit(megaMeetingUrl, meetingId, name);
-			            			}
-		            		}
-		            		catch(e)
-		            		{
-		            			if (inAppBrowserFlag == "true")
-		    	            		window.location.replace("mobileAppPatientLogin.htm");
-		    	            	else
-		    	            		window.location.replace("logout.htm");
-		            		}
-		            	});
-	             	}
-	            }
-	            else{
-	            	if (inAppBrowserFlag == "true")
-	            		window.location.replace("mobileAppPatientLogin.htm");
-	            	else
-	            		window.location.replace("logout.htm");
-	            }
-
-	        },
-	        error: function() {
-	        	if (inAppBrowserFlag == "true")
-            		window.location.replace("mobileAppPatientLogin.htm");
-            	else
-            		window.location.replace("logout.htm");
-	        }
-	    });
-	});*/
 	
 	//temp launch video function for guest
 	
@@ -648,52 +556,6 @@ $(document).ready(function() {
 		window.location.href = "mobilepatientlightauth.htm";
 	});
 
-   /* $(".button-launch-visit-pg").click(function(event) {
-		event.preventDefault();
-
-		var megaMeetingId = $(this).attr("megameetingid");
-		var lastName = $(this).attr("lastname");
-		var firstName = $(this).attr("firstname");
-		var email = $(this).attr("email");
-		var megaMeetingUrl = $(this).attr("megaMeetingUrl");
-
-    	var currentTime = new Date();
-	    var n = currentTime.getTime();
-		var postdata = 'source=caregiver&nocache=' + n;
-		$.ajax({
-			async:false,
-	        type: "POST",
-	        url: VIDEO_VISITS_MOBILE.Path.sessionTimeout.isValidUserSession,
-	        data: postdata,
-	        success: function(returndata) {
-	        	//console.log("returndata=" + returndata);
-	        	returndata = $.parseJSON(returndata);
-	        	var isValidUserSession =  returndata.isValidUserSession;
-	        	//console.log("isValidUserSession=" + isValidUserSession);
-	            if(isValidUserSession == true){
-	            	 var delay=1000; //1 seconds
-
-                     setTimeout(function(){
-	                     //your code to be executed after 1 seconds
-	                     launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName,  email);
-                     }, delay);
-	        	}
-	            else{
-	            	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
-	            }
-	        },
-	        error: function() {
-	        	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
-	        }
-	    });
-
-
-
-
-		return false;
-	});*/
-	
-	
 	$(".button-launch-visit-pg").click(function(event) {
 		event.preventDefault();
 
@@ -836,87 +698,6 @@ function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, 
 	
 }
 
-/*function launchPG(megaMeetingUrl, megaMeetingId, firstName, lastName, email)
-{
-		var meetingCode = request.get('meetingCode');
-    	var patientLastName = request.get('patientLastName');
-	 // Parameters sent to the server
-	    var currentTime = new Date();
-	    var n = currentTime.getTime();
-	    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
-		var postdata = 'patientLastName=' + patientLastName + '&meetingCode=' + meetingCode  +  '&nocache=' + n;
-
-
-
-		$.ajax({
-	        type: "POST",
-	        url: VIDEO_VISITS_MOBILE.Path.guest.verify,
-	        data: postdata,
-	        success: function(returndata) {
-	            returndata = $.trim(returndata);
-
-	            returndata = jQuery.parseJSON(returndata);
-
-	            if(returndata.result === '1'){
-
-	            	$("#globalError").text('No matching patient found. Please try again.');
-	                 $("#globalError").removeClass("hide-me").addClass("error");
-	                 return false;
-	              }
-	            else if (returndata.result === '2') {
-
-	            	window.location.replace("meetingexpiredmemberpg.htm");
-	                return false;
-
-	            }
-	            else if (returndata.result === '3') {
-
-	            	$("#globalError").text('Some exception occurred while processing request..');
-	                 $("#globalError").removeClass("hide-me").addClass("error");
-	                 return false;
-	            }
-	            else if (returndata.result === '4') {
-	            	$("#layover").hide();
-	            	$("#globalError").text('You have already joined this video visit from another device. You must first sign off from the other device before attempting to join this visit here.');
-	                 $("#globalError").removeClass("hide-me").addClass("error");	                 
-	                 return false;
-	            }
-
-	            createGuestSession("true");
-	            $.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.mobileCareGiverCreateSession, postdata,function(data){
-	            	try
-	            	{
-	            		data = jQuery.parseJSON(data);
-	            		if ( data.errorIdentifier == 1){
-	            			window.location.replace("logout.htm");
-	            		}
-
-	            		if (data.errorMessage) {
-	            			window.location.replace("logout.htm");
-	            		}
-	            		url = data.result;
-	            		launchVideoVisitForPatientGuest(url, megaMeetingId, lastName + ', ' + firstName + ', (' + email + ')');
-	    				clearAllErrors();
-
-	            	}
-	            	catch(e)
-	            	{
-	            		window.location.replace("logout.htm");
-	            	}
-	            	});
-
-
-
-	        },
-	        error: function() {
-
-	        	//$("#globalError").text("There was an error submitting your login.");
-	 	   		//$("#globalError").removeClass("hide-me").addClass("error");
-
-
-	        }
-	    });
-}*/
 function modalShow(modalId){
 	$("#" + modalId).removeClass("hideMe").hide().fadeIn(200);
 	return false;
@@ -1112,59 +893,6 @@ function deleteCookie(c_name){
 }
 
 
-/**
- * Called on the click of the Launch button
- * @param megaMeetingId
- * @param lastName
- * @param firstName
- */
-function launchVideoVisit(megaMeetingUrl, meetingId, name){
-	//var name = lastName + " " + firstName;
-	var postPara = { meetingId: meetingId};
-	var url;
-	$.post(VIDEO_VISITS_MOBILE.Path.joinMeeting.mobileCreateSession, postPara,function(data){
-	try
-	{
-		data = jQuery.parseJSON(data);
-		if ( data.errorIdentifier == 1){
-			window.location.replace("logout.htm");
-		}
-
-		if (data.errorMessage) {
-			window.location.replace("logout.htm");
-		}
-		url = data.result;
-		//alert('kppc url = ' + url);
-		//alert('prefix = ' +url);
-		var appOS = getAppOS();
-		//if (/iP(hone|od|ad)/.test(navigator.platform)) {
-		if(appOS === 'iOS'){
-
-		    var iOSver = iOSversion();
-		    //alert('iOS ver: ' + iOSver);
-		    //Fix for the ios 7 issue with openTab function
-			if (iOSver[0] >= 7) {
-			  //alert('This is running iOS 7 or later.');
-			  window.location.replace(url);
-			}else{
-				openTab(url);
-			}
-		}
-		else{
-			openTab(url);
-
-		}
-
-
-	}
-	catch(e)
-	{
-		window.location.replace("logout.htm");
-	}
-	});
-}
-	
-	
 function launchVideoVisitMember(data){
 		//var name = lastName + " " + firstName;
 		try{
@@ -1573,29 +1301,6 @@ function createGuestSession(isMobileFlow){
         error: function() {
         	//$("#globalError").text("There was an error submitting your login.");
  	   		//$("#globalError").removeClass("hide-me").addClass("error");
-        }
-    });
-
-	return false;
-}
-
-function joinMeeting(meetingId){
-
-	var currentTime = new Date();
-    var n = currentTime.getTime();
-    // We are setting no cache in the url as safari is caching the url and returning the same results each time.
-
-	var postdata = 'meetingId=' + meetingId   +  '&nocache=' + n;
-	$.ajax({
-        type: "POST",
-        url: VIDEO_VISITS_MOBILE.Path.joinMeeting.ajaxurl,
-        data: postdata,
-        success: function(returndata) {
-           returndata = $.trim(returndata);
-        },
-        error: function() {
-        	$("#globalError").text("There was an error submitting your login.");
- 	   		$("#globalError").removeClass("hide-me").addClass("error");
         }
     });
 
