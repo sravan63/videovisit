@@ -102,11 +102,7 @@
 							</td>
 						</tr>
 						<!-- US30883 -->
-<<<<<<< HEAD
 						<tr><td colspan="2" style="padding-top:20px;text-align:center;"><a id="macWinDownloadPageBackBtn" href="javascript:void(0);" onclick="backBtnClick()" class="installbutton" style="padding:5px 35px;">Back</a></td></tr>
-=======
-						<tr><td colspan="2" style="padding-top:35px;text-align:center;"><a id="macWinDownloadPageBackBtn" href="javascript:void(0);" onclick="backBtnClick()" class="installbutton" style="padding:5px 35px;">Back</a></td></tr>
->>>>>>> branch 'master' of https://TTGSSDV0VRHCM01.TTGTPMG.NET/tpmg/videovisit/member-facing/videovisit-member-webapp.git
 						<!-- US30883 -->
 					</table>
 				</div>
