@@ -622,6 +622,7 @@
 <script language="javascript">
     //US30883
     function backBtnClick(){
+    	//$("#layover").show();
     	var memberFlg = $('#isMember').val();    	
     	if (memberFlg == 'true' || memberFlg == true) {
             window.location = '/videovisit/landingready.htm?explicitActionNavigation=true';
