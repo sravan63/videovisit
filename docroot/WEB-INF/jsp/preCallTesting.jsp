@@ -52,9 +52,6 @@
 		localStorage.setItem('isPeripheralsAssigned', true);
 		localStorage.setItem('isPeripheralsAssignedAutomatically', false);
 
-		var params = ['info','preCallJoinEvent',"Pre-call screen displayed to user, who selected join"];
-        VideoVisit.logVendorMeetingEvents(params);
-
 		// AJAX call
 		$.ajax({
 			type: "POST",
