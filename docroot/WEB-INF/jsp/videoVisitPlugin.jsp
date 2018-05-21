@@ -98,7 +98,7 @@
 		                    	<br>
 		                        <p>If you do not see an image in the video player in 10 to 15 seconds after installation, <br>please refresh your browser.<br><br>
 		                        	<!-- DE13926 -->
-							    	<p style="display:inline-block;cursor:pointer;" onclick="window.location.reload();" class="installbutton">Refresh Browser</p>
+							    	 <span style="display:inline-block;cursor:pointer;" onclick="window.location.reload();" class="installbutton">Refresh Browser</span>
 							    	<!-- DE13926 -->
 		                        </p>
 							</td>
