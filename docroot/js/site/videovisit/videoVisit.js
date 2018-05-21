@@ -36,6 +36,11 @@ $(document).ready(function() {
 	$("#setupContents").height(calculatedHeight);
 	$("#setupContents").width(calculatedWidthPluginContainer);
 
+	// Returns the code on pre call load to avoid the errors.
+	if($("#pluginContainer").length == 0){
+		return;
+	}
+
 	var host = ($("#meetingHost span").html().indexOf('&nbsp;') > -1)?$("#meetingHost span").html().replace('&nbsp;',''):$("#meetingHost span").html();
 	var splittedHostName = host.trim().split(" ");
 	for(var c=0;c<splittedHostName.length;c++){
