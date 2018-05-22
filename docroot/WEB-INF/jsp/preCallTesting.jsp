@@ -51,6 +51,7 @@
 		localStorage.setItem('peripheralsStorageObject', JSON.stringify(peripheralsStorageObject));
 		localStorage.setItem('isPeripheralsAssigned', true);
 		localStorage.setItem('isPeripheralsAssignedAutomatically', false);
+		$("#layover").show();
 
 		// AJAX call
 		$.ajax({
@@ -61,12 +62,13 @@
 			data: {"showPeripheralsPage":"false"},
 			success: function(result, textStatus){
 				console.log(result);
+				$("#layover").hide();
 				var params = ['info','preCallJoinEvent',"Pre-call screen displayed to user, who selected join"];
             	VideoVisit.logVendorMeetingEvents(params);
 				window.location.reload();
 			},
 			error: function(textStatus){
-				
+				$("#layover").hide();
 			}
 		});
 
