@@ -62,7 +62,6 @@
 			data: {"showPeripheralsPage":"false"},
 			success: function(result, textStatus){
 				console.log(result);
-				$("#layover").hide();
 				var params = ['info','preCallJoinEvent',"Pre-call screen displayed to user, who selected join"];
             	VideoVisit.logVendorMeetingEvents(params);
 				window.location.reload();
