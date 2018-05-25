@@ -986,7 +986,11 @@ function openWebApp(){
 
 function openTab(url)
 {
-	window.open(url, '_blank');
+	if($("#openUrlTagId").length){
+		$('#openUrlTagId').remove();
+	}
+	$('body').append("<a id='openUrlTagId' href='"+url+"' style='display:none;' target='_blank'></a>");
+	$("#openUrlTagId").trigger("click");
 	 /*var a = window.document.createElement("a");
 	 a.target = '_blank';
 	 a.href = url;
