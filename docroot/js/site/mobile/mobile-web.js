@@ -986,11 +986,11 @@ function openWebApp(){
 
 function openTab(url)
 {
-	if($("#openUrlTagId").length){
+	/*if($("#openUrlTagId").length){
 		$('#openUrlTagId').remove();
 	}
 	$('body').append("<a id='openUrlTagId' href='"+url+"' style='display:none;' target='_blank'></a>");
-	$("#openUrlTagId").trigger("click");
+	$("#openUrlTagId").trigger("click");*/
 	 /*var a = window.document.createElement("a");
 	 a.target = '_blank';
 	 a.href = url;
@@ -999,7 +999,10 @@ function openTab(url)
 	 var e = window.document.createEvent("MouseEvents");
 	 e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
 	 a.dispatchEvent(e);*/
-	 $("#layover").hide();
+	var anchorTag = document.getElementById("openUrlTagId");
+	anchorTag.href = url;
+	anchorTag.click();
+	$("#layover").hide();
 }
 
 /**

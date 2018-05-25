@@ -69,5 +69,5 @@
 			<%@ include file="common/informationpg.jsp" %>	
 		</c:otherwise>
 	</c:choose>
-
+<a id="openUrlTagId" href="" style="visibility:hidden;position:absolute;bottom:0px;" target="_blank"></a>
 </div>
