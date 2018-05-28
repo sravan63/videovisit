@@ -986,6 +986,13 @@ function openWebApp(){
 
 function openTab(url)
 {
+	//DE13545
+	if(navigator.platform == "iPhone" && navigator.appVersion.indexOf('iPhone OS 10_3')>-1){
+		window.open(url, '_blank');
+		$("#layover").hide();
+		return;
+	}
+	//DE13545
 	 var a = window.document.createElement("a");
 	 a.target = '_blank';
 	 a.href = url;
