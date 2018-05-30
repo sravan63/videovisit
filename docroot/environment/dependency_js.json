@@ -38,6 +38,10 @@
                 "ssologin"  :   [
                     "js/site/ssologin/ssoLogin.js",
                     "js/site/validation/validate.js"
+                ],
+                "ssoLoginSimul"  :   [
+                	"js/site/ssologin/ssoLoginSimulation.js",
+                    "js/site/validation/validate.js"
                 ]
             }
         },
