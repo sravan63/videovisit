@@ -19,6 +19,9 @@
                 "ssologin" : [
                 	"css/site/sso/ssologin.css"
                 ],
+                 "ssoLoginSimul"  :  [
+                	"css/site/sso/ssologin.css"
+                ],
                 "logout" : [],
                 "guestlogout" : []
             }

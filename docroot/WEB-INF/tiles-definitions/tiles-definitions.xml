@@ -213,6 +213,13 @@
 		<put-attribute name="content" value="/WEB-INF/jsp/readme.jsp" />
 	</definition>
 	
+	<definition name="ssoLoginSimul" extends=".standardPageTemplate">
+		<put-attribute name="title" value="Login Page" type="string" />
+		<put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />
+		<put-attribute name="userInfo" value="/WEB-INF/jsp/nav/userInfo-help.jsp" />
+		<put-attribute name="content" value="/WEB-INF/sso-simulation/ssoLoginSimulation.jsp" />
+	</definition>
+	
 	<!-- Empty Pages -->
 	<definition name="loading" template="/WEB-INF/tiles-templates/emptyLayout.jsp">
 		<put-attribute name="content" value="/WEB-INF/jsp/loading.jsp" />
