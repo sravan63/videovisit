@@ -299,7 +299,9 @@ var VideoVisit =
 	       	userId = $("#guestName").val().trim();
 		}else{
 			userId = $("#mrn").val().trim();
-			userType = 'Patient';
+			//US31271
+			userType = $('#isProxyMeeting').val() == 'Y'?(userId?'Patient_Proxy':'Non_Patient_Proxy'):'Patient';
+			//US31271
 		}
 		console.log("sendEventNotification :: params :: "+params);
 		var eventData = {
