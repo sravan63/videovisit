@@ -676,6 +676,7 @@ public class WebService {
 			statusCode = responseEntity.getStatusCodeValue();
 			logger.info("Status code : " + statusCode);
 			output = (String) responseEntity.getBody();
+			logger.debug("output from service: " + output);
 			HttpHeaders responseHeaders = responseEntity.getHeaders();
 			kpSsoSession = responseHeaders.getFirst("ssosession");
 			logger.info("kpSsoSession from response header=" + kpSsoSession);
@@ -749,6 +750,7 @@ public class WebService {
 			statusCode = responseEntity.getStatusCodeValue();
 			logger.info("Status code : " + statusCode);
 			output = (String) responseEntity.getBody();
+			logger.debug("output from service: " + output);
 			HttpHeaders responseHeaders = responseEntity.getHeaders();
 			kpSsoSession = responseHeaders.getFirst("ssosession");
 			logger.info("kpSsoSession from response header=" + kpSsoSession);
