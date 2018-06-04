@@ -17,7 +17,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
@@ -763,27 +762,16 @@ public class MeetingCommand {
 	public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
-		String ssoSimulation = "false";
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
 				//read simulation from prop file
-				final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
-				ssoSimulation = appProp.getProperty("SSO_SIMULATION");
-				if("false".equalsIgnoreCase(ssoSimulation)){
-				if (ctx.isNonMember()) {
-					output = WebService.retrieveActiveMeetingsForNonMemberProxies(
-							ctx.getKpOrgSignOnInfo().getUser().getGuid(), request.getSession().getId(),
+				final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION");
+				final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && "true".equalsIgnoreCase(ssoSimulation); 
+				if (isSsoSimulation) {
+					output = WebService.retrieveActiveMeetingsForMemberAndProxiesForSSOSimulation(
+							ctx.getMemberDO().getMrn(), Boolean.TRUE, request.getSession().getId(),
 							WebUtil.clientId);
-				} else {
-					boolean getProxyMeetings = false;
-					if (ctx.getKpOrgSignOnInfo() != null) {
-						getProxyMeetings = true;
-					}
-
-					output = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMemberDO().getMrn(),
-							getProxyMeetings, request.getSession().getId(), WebUtil.clientId);
-				}
 				} else {
 					if (ctx.isNonMember()) {
 						output = WebService.retrieveActiveMeetingsForNonMemberProxies(
@@ -795,7 +783,7 @@ public class MeetingCommand {
 							getProxyMeetings = true;
 						}
 
-						output = WebService.retrieveActiveMeetingsForMemberAndProxiesForSSOSimulation(ctx.getMemberDO().getMrn(),
+						output = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMemberDO().getMrn(),
 								getProxyMeetings, request.getSession().getId(), WebUtil.clientId);
 					}
 				}
