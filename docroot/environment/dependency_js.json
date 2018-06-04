@@ -40,7 +40,7 @@
                     "js/site/validation/validate.js"
                 ],
                 "ssoLoginSimul"  :   [
-                	"js/site/ssologin/ssoLoginSimulation.js",
+                	"js/sso-simulation/ssoLoginSimulation.js",
                     "js/site/validation/validate.js"
                 ]
             }
@@ -76,10 +76,20 @@
         },
         "landingready" : {
             "global"    :   [
-                "js/site/global/dateExtensions_loader.js",
+                "js/site/global/dateExtensions_loader.js"
             ],
             "specific"  :   {
                 "landingready"  :   [
+                    "js/site/landingready/landingready.js"
+                ]
+            }
+        },
+        "landingreadysimul" : {
+            "global"    :   [
+                "js/site/global/dateExtensions_loader.js"
+            ],
+            "specific"  :   {
+                "landingreadysimul"  :   [
                     "js/site/landingready/landingready.js"
                 ]
             }

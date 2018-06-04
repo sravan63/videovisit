@@ -16,8 +16,8 @@ public class AppProperties {
 	private static AppProperties instance;
 	private static IApplicationProperties properties = null;
 	private static final Logger logger = Logger.getLogger(AppProperties.class);
-	public static final String PROPERTY_FILE_PATH = "/usr/local/middleware/tcservervv/conf/appconf/vvm/videovisit.properties";
-	//public static final String PROPERTY_FILE_PATH = "D:/appconfigs/vv/member_webapp/videovisit.properties";
+//	public static final String PROPERTY_FILE_PATH = "/usr/local/middleware/tcservervv/conf/appconf/vvm/videovisit.properties";
+	public static final String PROPERTY_FILE_PATH = "D:/appconfigs/vv/member_webapp/videovisit.properties";
 	
 	
 	public static AppProperties getInstance() {

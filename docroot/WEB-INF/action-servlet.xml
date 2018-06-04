@@ -525,17 +525,15 @@
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
 	</bean>
-	<bean id="ssoLoginSimul" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul.controller.SSOPreLoginSimulController">
-		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+	<bean id="ssoLoginSimul" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="ssoLoginSimul" />
 		<property name="navigation" value="home" />
 		<property name="subNavigation" value="ssoLoginSimul" />
     </bean>
-    <bean id="ssosimulsubmitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul.controller.SSOSimulSubmitLoginController">
+    <bean id="ssosimulsubmitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul.SSOSimulSubmitLoginController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
-	
 
 	<!--  COMMAND classes -->
 	<bean id="webAppContextCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand" />

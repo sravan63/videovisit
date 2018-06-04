@@ -119,7 +119,7 @@ public class WebService {
 		boolean ret = true;
 
 		try {
-			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+				final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 				simulation = appProp.getProperty("WEBSERVICE_SIMULATION").equals("true") ? true : false;
 				logger.debug("Simulation:" + simulation);
 				modulePath = appProp.getProperty("MODULE_PATH");
@@ -1761,5 +1761,13 @@ public class WebService {
 		}
 		logger.info(LOG_EXITING);
 		return jsonOutput;
+	}
+
+	public static MeetingDetailsOutput retrieveActiveMeetingsForMemberAndProxiesForSSOSimulation(String mrn,
+			boolean getProxyMeetings, String id, String clientid) {
+		logger.info(LOG_ENTERED);
+		
+		logger.info(LOG_EXITING);
+		return null;
 	}
 }

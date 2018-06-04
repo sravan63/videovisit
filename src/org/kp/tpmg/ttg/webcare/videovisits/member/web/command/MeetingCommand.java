@@ -17,9 +17,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
@@ -548,7 +550,7 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return strResponse;
 	}
-
+	
 	private static boolean validateMemberSSOAuthResponse(MemberSSOAuthorizeResponseWrapper responseWrapper) {
 		logger.info(LOG_ENTERED);
 		boolean isValid = false;
@@ -761,9 +763,14 @@ public class MeetingCommand {
 	public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
+		String ssoSimulation = "false";
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
+				//read simulation from prop file
+				final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+				ssoSimulation = appProp.getProperty("SSO_SIMULATION");
+				if("false".equalsIgnoreCase(ssoSimulation)){
 				if (ctx.isNonMember()) {
 					output = WebService.retrieveActiveMeetingsForNonMemberProxies(
 							ctx.getKpOrgSignOnInfo().getUser().getGuid(), request.getSession().getId(),
@@ -776,6 +783,21 @@ public class MeetingCommand {
 
 					output = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMemberDO().getMrn(),
 							getProxyMeetings, request.getSession().getId(), WebUtil.clientId);
+				}
+				} else {
+					if (ctx.isNonMember()) {
+						output = WebService.retrieveActiveMeetingsForNonMemberProxies(
+								ctx.getKpOrgSignOnInfo().getUser().getGuid(), request.getSession().getId(),
+								WebUtil.clientId);
+					} else {
+						boolean getProxyMeetings = false;
+						if (ctx.getKpOrgSignOnInfo() != null) {
+							getProxyMeetings = true;
+						}
+
+						output = WebService.retrieveActiveMeetingsForMemberAndProxiesForSSOSimulation(ctx.getMemberDO().getMrn(),
+								getProxyMeetings, request.getSession().getId(), WebUtil.clientId);
+					}
 				}
 
 				if (output != null && "200".equals(output.getStatus().getCode())) {
@@ -803,7 +825,7 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return JSONObject.fromObject(new SystemError()).toString();
 	}
-
+	
 	public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);

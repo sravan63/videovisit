@@ -1,4 +1,4 @@
-package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul.controller;
+package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul;
 
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
@@ -68,103 +68,7 @@ public class SSOPreLoginSimulController implements Controller {
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		initProperties();
-		/*
-		try {
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			if (ctx == null) {
-				logger.info("context is null");
-				faq f = FaqParser.parse();
-				List<promo> promos = PromoParser.parse();
-				List<iconpromo> iconpromos = IconPromoParser.parse();
-				videolink videoLink = VideoLinkParser.parse();
-				ctx = WebAppContextCommand.createContext(request, "0");
-				WebAppContext.setWebAppContext(request, ctx);
-				ctx.setFaq(f);
-				ctx.setPromo(promos);
-				ctx.setIconPromo(iconpromos);
-				ctx.setVideoLink(videoLink);
-			} else {
-				logger.info("Context is not null");
-				if (ctx.getKpOrgSignOnInfo() != null
-						&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
-					ssoSession = ctx.getKpOrgSignOnInfo().getSsoSession();
-				}
-			}
-			ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
-			if (StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
-				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
-			}
-
-			if (StringUtils.isNotBlank(blockChrome)) {
-				ctx.setBlockChrome(blockChrome);
-			}
-			if (StringUtils.isNotBlank(blockFF)) {
-				ctx.setBlockFF(blockFF);
-			}
-			if (StringUtils.isNotBlank(ssoSim)) {
-				ctx.setSsoSim(ssoSim);
-			}
-				
-
-			logger.debug("ssoSession in context=" + ssoSession);
-
-			Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
-
-			if (ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
-					|| StringUtils.isBlank(ssoCookie.getValue())))) {
-				if (StringUtils.containsIgnoreCase(request.getServerName(), "localhost")) {
-					logger.info("Cookie validation not required for " + request.getServerName());
-				} else {
-					if (StringUtils.isNotBlank(ssoSession)) {
-						MeetingCommand.performSSOSignOff(request, response);
-					}
-					logger.info("Invalid cookie, so navigating to SSO login page");
-					modelAndView = new ModelAndView(getViewName());
-					getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-				}
-			}
-
-			if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
-				ssoSession = ssoCookie.getValue();
-				logger.debug("ssoSession from cookie before decoding=" + ssoSession);
-				try {
-					ssoSession = URLDecoder.decode(ssoSession, "UTF-8");
-				} catch (UnsupportedEncodingException e) {
-					logger.warn("Error while decoding a coockie value=" + ssoSession);
-				}
-				logger.debug("ssoSession from cookie after decoding=" + ssoSession);
-			}
-			logger.info("ssoSession after cookie check=" + ssoSession);
-
-			if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))
-					|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(blockFF))) {
-				logger.info("Browser blocked, so navigating to ssologin page");
-				modelAndView = new ModelAndView(getViewName());
-				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-			} else if (StringUtils.isNotBlank(ssoSession)) {
-				String responseCode = MeetingCommand.validateKpOrgSSOSession(request, ssoSession);
-				if ("200".equalsIgnoreCase(responseCode)) {
-					logger.info("sso session token valid, so navigating to my meetings page");
-					ctx.setAuthenticated(true);
-					modelAndView = new ModelAndView("landingready");
-					getEnvironmentCommand().loadDependencies(modelAndView, "landingready", "landingready");
-				} else {
-					logger.info("Invalid SSO session, so navigating to SSO login page");
-					modelAndView = new ModelAndView(getViewName());
-					getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-				}
-			} else {
-				logger.info("SSO session not present, so navigating to SSO login page");
-				modelAndView = new ModelAndView(getViewName());
-				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-			}
-		} catch (Exception ex) {
-			logger.error("System Error", ex);
-			if (modelAndView == null) {
-				modelAndView = new ModelAndView(getViewName());
-				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-			}
-		}*/
+		
 		logger.info(LOG_EXITING);
 		return modelAndView;
 	}

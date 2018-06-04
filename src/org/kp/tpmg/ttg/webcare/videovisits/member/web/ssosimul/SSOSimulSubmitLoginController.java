@@ -1,4 +1,4 @@
-package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul.controller;
+package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul;
 
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
@@ -35,7 +35,7 @@ public class SSOSimulSubmitLoginController extends SimplePageController {
 			HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		String data = null;
-		/*try {
+		try {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if (ctx == null) {
 				logger.info("Context is null, so creating new context");
@@ -59,7 +59,8 @@ public class SSOSimulSubmitLoginController extends SimplePageController {
 			}
 
 			// Perform SSO sign on and authorization
-			data = MeetingCommand.performSSOSignOn(request);
+			data = SSOSimulationCommand.performSSOSimulationSignOn(request);
+			ctx.getKpOrgSignOnInfo().setSsoSession("ssosession");
 
 			// set ssosession token in cookie
 			if ("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null
@@ -67,10 +68,13 @@ public class SSOSimulSubmitLoginController extends SimplePageController {
 				logger.info("ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
 				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
 				ctx.setAuthenticated(true);
+
+				// MeetingCommand.retrieveActiveMeetingsForMemberAndProxiesForSSOSimul(request);
 			}
 		} catch (Exception e) {
-			logger.error("SSOSubmitLoginController -> System Error" + e.getMessage(), e);
-		}*/
+			logger.error("System Error" + e.getMessage(), e);
+		}
+
 		modelAndView.setViewName(JSONMAPPING);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING + "data=" + data);
