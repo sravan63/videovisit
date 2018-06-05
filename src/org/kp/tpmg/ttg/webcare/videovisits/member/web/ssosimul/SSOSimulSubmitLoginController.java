@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SSOSubmitLoginController;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.FaqParser;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.IconPromoParser;
@@ -60,7 +58,6 @@ public class SSOSimulSubmitLoginController extends SimplePageController {
 
 			// Perform SSO sign on and authorization
 			data = SSOSimulationCommand.performSSOSimulationSignOn(request);
-			ctx.getKpOrgSignOnInfo().setSsoSession("ssosession");
 
 			// set ssosession token in cookie
 			if ("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null
@@ -68,8 +65,6 @@ public class SSOSimulSubmitLoginController extends SimplePageController {
 				logger.info("ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
 				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
 				ctx.setAuthenticated(true);
-
-				// MeetingCommand.retrieveActiveMeetingsForMemberAndProxiesForSSOSimul(request);
 			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);

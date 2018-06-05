@@ -5,6 +5,7 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -765,13 +766,33 @@ public class MeetingCommand {
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
-				//read simulation from prop file
 				final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION");
 				final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && "true".equalsIgnoreCase(ssoSimulation); 
 				if (isSsoSimulation) {
-					output = WebService.retrieveActiveMeetingsForMemberAndProxiesForSSOSimulation(
-							ctx.getMemberDO().getMrn(), Boolean.TRUE, request.getSession().getId(),
-							WebUtil.clientId);
+					final List<String> proxyMrns = new ArrayList<String>();
+					String adultProxy = null;
+					String childProxy = null;
+					String teenProxy = null;
+					if (ctx.isNonMember()) {
+						adultProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_ADULT_PROXY_MRN");
+						childProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_CHILD_PROXY_MRN");
+						teenProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_TEEN_PROXY_MRN");
+					} else {
+						adultProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_ADULT_PROXY_MRN");
+						childProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_CHILD_PROXY_MRN");
+						teenProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_TEEN_PROXY_MRN");
+					}
+					if (StringUtils.isNotBlank(adultProxy)) {
+						proxyMrns.add(adultProxy);
+					}
+					if (StringUtils.isNotBlank(childProxy)) {
+						proxyMrns.add(childProxy);
+					}
+					if (StringUtils.isNotBlank(teenProxy)) {
+						proxyMrns.add(teenProxy);
+					}
+					output = WebService.getActiveMeetingsForSSOSimulation(ctx.getMemberDO().getMrn(), proxyMrns,
+							Boolean.TRUE, request.getSession().getId(), WebUtil.clientId);
 				} else {
 					if (ctx.isNonMember()) {
 						output = WebService.retrieveActiveMeetingsForNonMemberProxies(
