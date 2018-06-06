@@ -19,7 +19,7 @@
                 "ssologin" : [
                 	"css/site/sso/ssologin.css"
                 ],
-                 "ssoLoginSimul"  :  [
+                 "ssoSimulationLogin"  :  [
                 	"css/site/sso/ssologin.css"
                 ],
                 "logout" : [],

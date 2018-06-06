@@ -49,7 +49,7 @@ function simulLoginSubmit(){
 	var postdata = 'username=' + encodeURIComponent($('input[name=username]').val()) + '&password=' + encodeURIComponent($('input[name=password]').val());
 	$.ajax({
         type: "POST",
-        url: VIDEO_VISITS.Path.login.ssologinsimulurl,
+        url: VIDEO_VISITS.Path.login.ssosimulationloginurl,
         data: postdata, // alternatively: $(data).serialize() but this adds fields we don't need
         success: function(returndata) {
             returndata = $.trim(returndata);

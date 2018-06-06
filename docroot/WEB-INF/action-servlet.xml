@@ -125,8 +125,8 @@
 				<prop key="/readme.htm">readme</prop>
 				<prop key="/caregiverJoinMeeting.json">dataCaregiverJoinLeaveMeeting</prop>
 				<prop key="/setPeripheralsFlag.json">dataSetPeripheralsFlag</prop>
-				<prop key="/ssoLoginSimulation.htm">ssoLoginSimul</prop>
-				<prop key="/ssosimulsubmitlogin.json">ssosimulsubmitlogin</prop>
+				<prop key="/ssoSimulationLogin.htm">ssoSimulationLogin</prop>
+				<prop key="/ssosimulationsubmitlogin.json">ssosimulationsubmitlogin</prop>
 				
 				<!-- New/Mobile URLs -->
 				<prop key="/mobilepatientlanding.htm">mobilePatientLanding</prop>
@@ -525,13 +525,13 @@
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
 	</bean>
-	<bean id="ssoLoginSimul" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="ssoSimulationLogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="ssoLoginSimul" />
+		<property name="viewName" value="ssoSimulationLogin" />
 		<property name="navigation" value="home" />
-		<property name="subNavigation" value="ssoLoginSimul" />
+		<property name="subNavigation" value="ssoSimulationLogin" />
     </bean>
-    <bean id="ssosimulsubmitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul.SSOSimulSubmitLoginController">
+    <bean id="ssosimulationsubmitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul.SSOSimulationSubmitLoginController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 

@@ -118,7 +118,7 @@ public class SSOSimulationCommand {
 	private static void setWebAppContextMemberInfoForSSOSimul(WebAppContext ctx, MemberInfo memberInfo) {
 		final Member memberDO = new Member();
 		try {
-			String dateStr = memberInfo.getDateOfBirth();
+			final String dateStr = memberInfo.getDateOfBirth();
 			if (StringUtils.isNotBlank(dateStr)) {
 				if (dateStr.endsWith("Z")) {
 					Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(dateStr);
@@ -128,9 +128,7 @@ public class SSOSimulationCommand {
 					Date date = sdf.parse(memberInfo.getDateOfBirth());
 					memberDO.setDateOfBirth(String.valueOf(date.getTime()));
 				}
-
 			}
-
 		} catch (Exception e) {
 			logger.warn("error while parsing string date to long.");
 		}
@@ -141,19 +139,15 @@ public class SSOSimulationCommand {
 		memberDO.setLastName(WordUtils.capitalizeFully(memberInfo.getLastName()));
 		memberDO.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));
 
+		memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
+		
 		final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION_FOR_MEMBER");
 		final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && "true".equalsIgnoreCase(ssoSimulation);
-		memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
 		if (isSsoSimulation) {
 			ctx.setNonMember(Boolean.FALSE);
 		} else {
 			ctx.setNonMember(Boolean.TRUE);
 		}
-		/*
-		 * if (StringUtils.isBlank(memberInfo.getMrn())) {
-		 * ctx.setNonMember(true); } else {
-		 * memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8)); }
-		 */
 		ctx.setMemberDO(memberDO);
 	}
 

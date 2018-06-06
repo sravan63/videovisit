@@ -24,9 +24,9 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
-public class SSOSimulSubmitLoginController extends SimplePageController {
+public class SSOSimulationSubmitLoginController extends SimplePageController {
 
-	public static final Logger logger = Logger.getLogger(SSOSimulSubmitLoginController.class);
+	public static final Logger logger = Logger.getLogger(SSOSimulationSubmitLoginController.class);
 	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,

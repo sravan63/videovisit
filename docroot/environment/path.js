@@ -15,7 +15,7 @@ VIDEO_VISITS.Path = {
     login : {
         ajaxurl : 'submitlogin.json',
         ssologinurl : 'ssosubmitlogin.json',
-        ssologinsimulurl : 	'ssosimulsubmitlogin.json'
+        ssosimulationloginurl : 	'ssosimulationsubmitlogin.json'
     },
     landingready : {
         visiturl : 'visit.htm',

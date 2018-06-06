@@ -39,8 +39,8 @@
                     "js/site/ssologin/ssoLogin.js",
                     "js/site/validation/validate.js"
                 ],
-                "ssoLoginSimul"  :   [
-                	"js/sso-simulation/ssoLoginSimulation.js",
+                "ssoSimulationLogin"  :   [
+                	"js/sso-simulation/ssoSimulationLogin.js",
                     "js/site/validation/validate.js"
                 ]
             }

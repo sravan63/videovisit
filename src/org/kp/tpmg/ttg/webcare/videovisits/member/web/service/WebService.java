@@ -1792,7 +1792,7 @@ public class WebService {
 			}
 
 			logger.debug("after split secure codes: " + secureCodes.split(","));
-			GetMeetingsForMemberAndNonMemberProxiesInput input = new GetMeetingsForMemberAndNonMemberProxiesInput();
+			final GetMeetingsForMemberAndNonMemberProxiesInput input = new GetMeetingsForMemberAndNonMemberProxiesInput();
 			input.setMemberMrn(mrn8Digit);
 			input.setProxyMrns(proxyMrns);
 			input.setSecureCodes(secureCodes.split(","));
