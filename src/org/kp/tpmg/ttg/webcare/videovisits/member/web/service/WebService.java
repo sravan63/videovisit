@@ -1767,7 +1767,7 @@ public class WebService {
 	}
 
 	public static MeetingDetailsOutput getActiveMeetingsForSSOSimulation(String mrn8Digit, List<String> proxyMrns,
-			boolean getProxyMeetings, String sessionID, String clientId) {
+			boolean getProxyMeetings, String sessionID, boolean isMember, String clientId) {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
 		String responseJsonStr = "";
@@ -1798,6 +1798,7 @@ public class WebService {
 			input.setSecureCodes(secureCodes.split(","));
 			input.setIsAdhoc(isAdhoc);
 			input.setIsParrs(isParrs);
+			input.setIsMember(isMember);
 			input.setClientId(clientId);
 			input.setSessionId(sessionID);
 

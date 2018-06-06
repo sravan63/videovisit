@@ -771,10 +771,12 @@ public class MeetingCommand {
 					String adultProxy = null;
 					String childProxy = null;
 					String teenProxy = null;
+					boolean isMember = true;
 					if (ctx.isNonMember()) {
 						adultProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_ADULT_PROXY_MRN");
 						childProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_CHILD_PROXY_MRN");
 						teenProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_TEEN_PROXY_MRN");
+						isMember = false;
 					} else {
 						adultProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_ADULT_PROXY_MRN");
 						childProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_CHILD_PROXY_MRN");
@@ -790,7 +792,7 @@ public class MeetingCommand {
 						proxyMrns.add(teenProxy);
 					}
 					output = WebService.getActiveMeetingsForSSOSimulation(ctx.getMemberDO().getMrn(), proxyMrns,
-							Boolean.TRUE, request.getSession().getId(), WebUtil.clientId);
+							Boolean.TRUE, request.getSession().getId(), isMember, WebUtil.clientId);
 				} else {
 					if (ctx.isNonMember()) {
 						output = WebService.retrieveActiveMeetingsForNonMemberProxies(

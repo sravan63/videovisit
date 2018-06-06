@@ -1,4 +1,4 @@
-package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul;
+package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimulation;
 
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;

@@ -1,4 +1,4 @@
-package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul;
+package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimulation;
 
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
@@ -62,8 +62,8 @@ public class SSOSimulationSubmitLoginController extends SimplePageController {
 			// set ssosession token in cookie
 			if ("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null
 					&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
-				logger.info("ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
-				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
+//				logger.info("ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
+//				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
 				ctx.setAuthenticated(true);
 			}
 		} catch (Exception e) {
