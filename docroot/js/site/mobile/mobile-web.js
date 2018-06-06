@@ -956,8 +956,9 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	    var iOSver = iOSversion();
 	    //Fix for the ios 7 issue with openTab function
 		if (iOSver[0] >= 7) {
-			//this.timer = setTimeout(this.openWebApp, 500);
-			window.location.replace(megaMeetingUrl);
+			this.timer = setTimeout(this.openWebApp, 500);
+			//window.location.replace(megaMeetingUrl);
+			window.location.href = megaMeetingUrl;
 		}else{
 			this.timer = setTimeout(this.openWebApp, 500);
 			openTab(megaMeetingUrl);
@@ -971,7 +972,8 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 function openWebApp(){
     var os = getAppOS();    
     if(os == "iOS"){
-        window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+        //window.location.replace("https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8");
+    	window.location.href = "https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8";
     }
     else if(os == "Android"){
         window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
