@@ -766,9 +766,7 @@ public class MeetingCommand {
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
-				final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION");
-				final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && "true".equalsIgnoreCase(ssoSimulation); 
-				if (isSsoSimulation) {
+				if (WebUtil.isSsoSimulation()) {
 					final List<String> proxyMrns = new ArrayList<String>();
 					String adultProxy = null;
 					String childProxy = null;
@@ -834,7 +832,7 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return JSONObject.fromObject(new SystemError()).toString();
 	}
-	
+
 	public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);

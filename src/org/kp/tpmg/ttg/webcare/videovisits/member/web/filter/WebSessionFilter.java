@@ -231,8 +231,7 @@ public class WebSessionFilter implements Filter {
 							if (ssoCookie == null
 									|| ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
 											|| StringUtils.isBlank(ssoCookie.getValue()))) {
-								if ("localhost".equalsIgnoreCase(req.getServerName())
-										|| "dev2.mydoctor.kaiserpermanente.org".equalsIgnoreCase(req.getServerName())) {
+								if ("localhost".equalsIgnoreCase(req.getServerName()) || WebUtil.isSsoSimulation()) {
 									logger.info("cookie validation not required for " + req.getServerName());
 								} else {
 									logger.info(

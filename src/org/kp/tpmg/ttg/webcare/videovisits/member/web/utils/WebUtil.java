@@ -331,4 +331,10 @@ public class WebUtil {
 		logger.info(LOG_EXITING);
 		return input;
 	}
+	
+	public static boolean isSsoSimulation() {
+		final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION");
+		final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && "true".equalsIgnoreCase(ssoSimulation);
+		return isSsoSimulation;
+	}
 }
