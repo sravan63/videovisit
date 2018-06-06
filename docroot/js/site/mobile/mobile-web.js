@@ -956,7 +956,7 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	    var iOSver = iOSversion();
 	    //Fix for the ios 7 issue with openTab function
 		if (iOSver[0] >= 7) {
-			this.timer = setTimeout(this.openWebApp, 500);
+			//this.timer = setTimeout(this.openWebApp, 500);
 			window.location.replace(megaMeetingUrl);
 		}else{
 			this.timer = setTimeout(this.openWebApp, 500);
