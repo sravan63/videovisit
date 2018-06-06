@@ -2,6 +2,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimul;
 
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.user.Member;
@@ -45,30 +45,28 @@ public class SSOSimulationCommand {
 				final String password = request.getParameter("password");
 
 				logger.debug("userName= " + userName + ",password=" + password);
-				final String memberName = AppProperties.getExtPropertiesValueByKey("MEMBER_USERNAME");
-				final String memberPassword = AppProperties.getExtPropertiesValueByKey("MEMBER_PASSWORD");
-				final String nonMemberName = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_USERNAME");
-				final String nonMemberPassword = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_PASSWORD");
+				final String memberName = getExtPropertiesValueByKey("MEMBER_USERNAME");
+				final String memberPassword = getExtPropertiesValueByKey("MEMBER_PASSWORD");
+				final String nonMemberName = getExtPropertiesValueByKey("NON_MEMBER_USERNAME");
+				final String nonMemberPassword = getExtPropertiesValueByKey("NON_MEMBER_PASSWORD");
 
 				if (StringUtils.isNotBlank(memberName) && StringUtils.isNotBlank(memberPassword)
 						&& memberName.equalsIgnoreCase(userName) && memberPassword.equalsIgnoreCase(password)) {
-					ebizAccountRoles.add(AppProperties.getExtPropertiesValueByKey("MEMBER_EBIZ_ACCOUNT_ROLES"));
-					interruptList.add(AppProperties.getExtPropertiesValueByKey("MEMBER_INTERRUPT_LIST"));
+					ebizAccountRoles.add(getExtPropertiesValueByKey("MEMBER_EBIZ_ACCOUNT_ROLES"));
+					interruptList.add(getExtPropertiesValueByKey("MEMBER_INTERRUPT_LIST"));
 					UserInfo user = new UserInfo();
-					user.setRegion(AppProperties.getExtPropertiesValueByKey("MEMBER_REGION"));
+					user.setRegion(getExtPropertiesValueByKey("MEMBER_REGION"));
 					user.setEbizAccountRoles(ebizAccountRoles);
-					user.setLastName(AppProperties.getExtPropertiesValueByKey("MEMBER_LAST_NAME"));
-					user.setTermsAndCondAccepted(
-							AppProperties.getExtPropertiesValueByKey("MEMBER_TERMS_AND_COND_ACCEPTED"));
-					user.setActivationStatusCode(
-							AppProperties.getExtPropertiesValueByKey("MEMBER_ACTIVATION_STATUS_CODE"));
-					user.setPreferredFirstName(AppProperties.getExtPropertiesValueByKey("MEMBER_PREFERRED_FIRST_NAME"));
-					user.setGuid(AppProperties.getExtPropertiesValueByKey("MEMBER_GUID"));
-					user.setEmail(AppProperties.getExtPropertiesValueByKey("MEMBER_EMAIL"));
-					user.setAge(Integer.parseInt(AppProperties.getExtPropertiesValueByKey("MEMBER_AGE")));
+					user.setLastName(getExtPropertiesValueByKey("MEMBER_LAST_NAME"));
+					user.setTermsAndCondAccepted(getExtPropertiesValueByKey("MEMBER_TERMS_AND_COND_ACCEPTED"));
+					user.setActivationStatusCode(getExtPropertiesValueByKey("MEMBER_ACTIVATION_STATUS_CODE"));
+					user.setPreferredFirstName(getExtPropertiesValueByKey("MEMBER_PREFERRED_FIRST_NAME"));
+					user.setGuid(getExtPropertiesValueByKey("MEMBER_GUID"));
+					user.setEmail(getExtPropertiesValueByKey("MEMBER_EMAIL"));
+					user.setAge(Integer.parseInt(getExtPropertiesValueByKey("MEMBER_AGE")));
 					user.setDisabledReasonCode(null);
-					user.setEpicEmail(AppProperties.getExtPropertiesValueByKey("MEMBER_EPIC_EMAIL"));
-					user.setFirstName(AppProperties.getExtPropertiesValueByKey("MEMBER_FIRST_NAME"));
+					user.setEpicEmail(getExtPropertiesValueByKey("MEMBER_EPIC_EMAIL"));
+					user.setFirstName(getExtPropertiesValueByKey("MEMBER_FIRST_NAME"));
 					user.setServiceArea(null);
 
 					kpSignOnInfo.setSystemError(null);
@@ -79,22 +77,24 @@ public class SSOSimulationCommand {
 					kpSignOnInfo.setFailureInfo(null);
 
 					final MemberInfo memberInfo = new MemberInfo();
-					memberInfo.setMrn(AppProperties.getExtPropertiesValueByKey("MEMBER_MRN"));
-					memberInfo.setDateOfBirth(AppProperties.getExtPropertiesValueByKey("MEMBER_DATE_OF_BIRTH"));
-					memberInfo.setFirstName(AppProperties.getExtPropertiesValueByKey("MEMBER_FIRST_NAME"));
-					memberInfo.setLastName(AppProperties.getExtPropertiesValueByKey("MEMBER_LAST_NAME"));
-					memberInfo.setMiddleName(AppProperties.getExtPropertiesValueByKey("MEMBER_MIDDLE_NAME"));
+					memberInfo.setMrn(getExtPropertiesValueByKey("MEMBER_MRN"));
+					memberInfo.setDateOfBirth(getExtPropertiesValueByKey("MEMBER_DATE_OF_BIRTH"));
+					memberInfo.setFirstName(getExtPropertiesValueByKey("MEMBER_FIRST_NAME"));
+					memberInfo.setLastName(getExtPropertiesValueByKey("MEMBER_LAST_NAME"));
+					memberInfo.setMiddleName(getExtPropertiesValueByKey("MEMBER_MIDDLE_NAME"));
 					memberInfo.setEmail("");
-					memberInfo.setGender(AppProperties.getExtPropertiesValueByKey("MEMBER_GENDER"));
+					memberInfo.setGender(getExtPropertiesValueByKey("MEMBER_GENDER"));
 
+					ctx.setNonMember(Boolean.FALSE);
 					setWebAppContextMemberInfoForSSOSimul(ctx, memberInfo);
 					ctx.setKpOrgSignOnInfo(kpSignOnInfo);
 					ctx.setKpKeepAliveUrl(WebService.getKpOrgSSOKeepAliveUrl());
-
+					
 					strResponse = "200";
 				} else if (StringUtils.isNotBlank(nonMemberName) && StringUtils.isNotBlank(nonMemberPassword)
 						&& memberName.equalsIgnoreCase(nonMemberName)
 						&& memberPassword.equalsIgnoreCase(nonMemberPassword)) {
+					ctx.setNonMember(Boolean.TRUE);
 					strResponse = "200";
 				} else {
 					strResponse = invalidateWebAppContext(ctx);
@@ -140,14 +140,7 @@ public class SSOSimulationCommand {
 		memberDO.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));
 
 		memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
-		
-		final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION_FOR_MEMBER");
-		final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && "true".equalsIgnoreCase(ssoSimulation);
-		if (isSsoSimulation) {
-			ctx.setNonMember(Boolean.FALSE);
-		} else {
-			ctx.setNonMember(Boolean.TRUE);
-		}
+
 		ctx.setMemberDO(memberDO);
 	}
 
