@@ -5,7 +5,6 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +20,6 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
@@ -767,32 +765,8 @@ public class MeetingCommand {
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
 				if (WebUtil.isSsoSimulation()) {
-					final List<String> proxyMrns = new ArrayList<String>();
-					String adultProxy = null;
-					String childProxy = null;
-					String teenProxy = null;
-					boolean isMember = true;
-					if (ctx.isNonMember()) {
-						adultProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_ADULT_PROXY_MRN");
-						childProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_CHILD_PROXY_MRN");
-						teenProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_TEEN_PROXY_MRN");
-						isMember = false;
-					} else {
-						adultProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_ADULT_PROXY_MRN");
-						childProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_CHILD_PROXY_MRN");
-						teenProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_TEEN_PROXY_MRN");
-					}
-					if (StringUtils.isNotBlank(adultProxy)) {
-						proxyMrns.add(adultProxy);
-					}
-					if (StringUtils.isNotBlank(childProxy)) {
-						proxyMrns.add(childProxy);
-					}
-					if (StringUtils.isNotBlank(teenProxy)) {
-						proxyMrns.add(teenProxy);
-					}
-					output = WebService.getActiveMeetingsForSSOSimulation(ctx.getMemberDO().getMrn(), proxyMrns,
-							Boolean.TRUE, request.getSession().getId(), isMember, WebUtil.clientId);
+					output = WebService.getActiveMeetingsForSSOSimulation(ctx.getMemberDO().getMrn(), ctx.isNonMember(),
+							request.getSession().getId());
 				} else {
 					if (ctx.isNonMember()) {
 						output = WebService.retrieveActiveMeetingsForNonMemberProxies(

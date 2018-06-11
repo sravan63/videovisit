@@ -6,6 +6,7 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 
 import java.net.URI;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -1690,8 +1691,14 @@ public class WebService {
 		return jsonOutput;
 	}
 
-	public static MeetingDetailsOutput getActiveMeetingsForSSOSimulation(String mrn8Digit, List<String> proxyMrns,
-			boolean getProxyMeetings, String sessionID, boolean isMember, String clientId) {
+	/**
+	 * @param mrn8Digit
+	 * @param isNonMember
+	 * @param sessionId
+	 * @return
+	 */
+	public static MeetingDetailsOutput getActiveMeetingsForSSOSimulation(final String mrn8Digit,
+			final boolean isNonMember, final String sessionId) {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
 		String responseJsonStr = "";
@@ -1700,8 +1707,31 @@ public class WebService {
 		JsonParser parser = new JsonParser();
 		JsonObject jobject = new JsonObject();
 		try {
-			if (StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID) || StringUtils.isBlank(clientId)
-					|| CollectionUtils.isEmpty(proxyMrns)) {
+			final List<String> proxyMrns = new ArrayList<String>();
+			String adultProxy = null;
+			String childProxy = null;
+			String teenProxy = null;
+			boolean isMember = true;
+			if (isNonMember) {
+				adultProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_ADULT_PROXY_MRN");
+				childProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_CHILD_PROXY_MRN");
+				teenProxy = AppProperties.getExtPropertiesValueByKey("NON_MEMBER_TEEN_PROXY_MRN");
+				isMember = false;
+			} else {
+				adultProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_ADULT_PROXY_MRN");
+				childProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_CHILD_PROXY_MRN");
+				teenProxy = AppProperties.getExtPropertiesValueByKey("MEMBER_TEEN_PROXY_MRN");
+			}
+			if (StringUtils.isNotBlank(adultProxy)) {
+				proxyMrns.add(adultProxy);
+			}
+			if (StringUtils.isNotBlank(childProxy)) {
+				proxyMrns.add(childProxy);
+			}
+			if (StringUtils.isNotBlank(teenProxy)) {
+				proxyMrns.add(teenProxy);
+			}
+			if (StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId) || CollectionUtils.isEmpty(proxyMrns)) {
 				logger.warn("Missing input attributes.");
 				output = new MeetingDetailsOutput();
 				final Status status = new Status();
@@ -1723,8 +1753,8 @@ public class WebService {
 			input.setIsAdhoc(isAdhoc);
 			input.setIsParrs(isParrs);
 			input.setIsMember(isMember);
-			input.setClientId(clientId);
-			input.setSessionId(sessionID);
+			input.setClientId(WebUtil.clientId);
+			input.setSessionId(sessionId);
 
 			inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
