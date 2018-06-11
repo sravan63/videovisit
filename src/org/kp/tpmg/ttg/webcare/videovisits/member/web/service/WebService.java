@@ -523,12 +523,6 @@ public class WebService {
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
-		/*String responseCodeAndMsg = "Empty response";
-		if (output != null) {
-			responseCodeAndMsg = output.getStatus() != null
-					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
-					: "No rest response code & message returned from service.";
-		}*/
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -574,83 +568,9 @@ public class WebService {
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
-		/*String responseCodeAndMsg = "Empty response";
-		if (output != null) {
-			responseCodeAndMsg = output.getStatus() != null
-					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
-					: "No rest response code & message returned from service.";
-		}*/
 		logger.info(LOG_EXITING);
 		return output;
 	}
-
-	/**
-	 * This method will upload the file contents to the database using service
-	 * API
-	 * 
-	 * @param meetingId
-	 * @param userId
-	 * @param deviceType
-	 * @param deviceOS
-	 * @param deviceOsVersion
-	 * @param callingAppName
-	 * @param fileName
-	 * @param binaryData
-	 * @param fileDatetime
-	 * @param sessionId
-	 * @return String
-	 * @throws Exception
-	 */
-	/**
-	 * public static String fileUpload(String meetingId, String userId, String
-	 * deviceType, String deviceOS, String deviceOsVersion, String
-	 * callingAppName, String fileName, Base64Binary binaryData, long
-	 * fileDatetime, String sessionId) throws Exception { logger.info(
-	 * "Enetered fileUpload -> Received input attributes [meetingId: "+
-	 * meetingId + ", userId: " + userId + ", fileName: " + fileName +
-	 * ", binaryData: " + binaryData + ", callingApp: " + callingAppName + "]");
-	 * 
-	 * org.kp.tpmg.videovisit.member.FileUpload query = new
-	 * org.kp.tpmg.videovisit.member.FileUpload(); String returnStatus = "";
-	 * 
-	 * try { String missingParam = null; if(StringUtils.isBlank(meetingId)) {
-	 * missingParam = "Meeting_Id"; }else if(StringUtils.isBlank(userId)) {
-	 * missingParam = "User_Id"; }else if(StringUtils.isBlank(callingAppName)) {
-	 * missingParam = "Calling_App_Name"; }else
-	 * if(StringUtils.isBlank(fileName)) { missingParam = "File_Name"; }else
-	 * if(binaryData == null) { missingParam = "File_Binary_Data"; }else
-	 * if(fileDatetime <= 0) { missingParam = "File_Date_Time"; }
-	 * 
-	 * if(missingParam != null) { logger.error("fileUpload -> Input parameter "
-	 * + missingParam + " is required."); JsonObject jsonObj = new JsonObject();
-	 * jsonObj.addProperty("result","failure");
-	 * jsonObj.addProperty("success","false");
-	 * jsonObj.addProperty("errorIdentifier","4000");
-	 * jsonObj.addProperty("errorMessage","Input parameter " + missingParam +
-	 * " is required"); returnStatus = GsonUtil.getJsonAsString(jsonObj);
-	 * logger.info("Exiting fileUpload -> return " + returnStatus); return
-	 * returnStatus; }
-	 * 
-	 * query.setMeetingId(meetingId); query.setUserId(userId);
-	 * query.setDeviceType(deviceType); query.setDeviceOS(deviceOS);
-	 * query.setDeviceOsVersion(deviceOsVersion);
-	 * query.setCallingAppName(callingAppName); query.setFileName(fileName);
-	 * query.setBinaryData(binaryData); query.setFileDatetime(fileDatetime);
-	 * query.setSessionId(sessionId); FileUploadResponse fileUploadResp =
-	 * stub.fileUpload(query); if(fileUploadResp != null) { returnStatus =
-	 * fileUploadResp.get_return(); }
-	 * 
-	 * } catch(Exception e) { logger.error("Error in fileUpload API", e);
-	 * if(StringUtils.isBlank(returnStatus)) { JsonObject jsonObj = new
-	 * JsonObject(); jsonObj.addProperty("result","failure");
-	 * jsonObj.addProperty("success","false");
-	 * jsonObj.addProperty("errorIdentifier","4300");
-	 * jsonObj.addProperty("errorMessage","System Error"); returnStatus =
-	 * GsonUtil.getJsonAsString(jsonObj); } } finally {
-	 * closeConnectionManager(stub); } logger.info(
-	 * "Exiting WebService.fileUpload -> returnStatus = " + returnStatus);
-	 * return returnStatus; }
-	 **/
 
 	// KP Org sign on API
 	public static KpOrgSignOnInfo performKpOrgSSOSignOn(String userId, String password) throws Exception {
@@ -669,9 +589,9 @@ public class WebService {
 		try {
 			responseEntity = callRestService(headers, uri, HttpMethod.POST, String.class);
 		} catch (HttpClientErrorException ex) {
-			logger.info("Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
+			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
 		} catch (HttpServerErrorException ex1) {
-			logger.info("Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
+			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage(), e);
 		}
@@ -686,15 +606,17 @@ public class WebService {
 			if (statusCode == 200 || statusCode == 201 || statusCode == 202) {
 				if (StringUtils.isNotBlank(output)) {
 					try {
-						Gson gson = new Gson();
+						final Gson gson = new Gson();
 						kpOrgSignOnInfo = gson.fromJson(output, KpOrgSignOnInfo.class);
-						kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+						if (kpOrgSignOnInfo != null) {
+							kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+						}
 					} catch (Exception ex) {
 						logger.warn("JSON parsing failed:" + ex.getMessage(), ex);
 						if (kpOrgSignOnInfo == null) {
 							kpOrgSignOnInfo = new KpOrgSignOnInfo();
 							kpOrgSignOnInfo.setSsoSession(kpSsoSession);
-							JSONObject obj = new JSONObject(output);
+							final JSONObject obj = new JSONObject(output);
 							if (obj != null && obj.get("user") != null && obj.get("user") instanceof JSONObject) {
 								UserInfo userInfo = new UserInfo();
 								userInfo.setGuid(obj.getJSONObject("user").getString("guid"));
@@ -710,10 +632,10 @@ public class WebService {
 		return kpOrgSignOnInfo;
 	}
 	
-	private static ResponseEntity<?> callRestService(final HttpHeaders headers, final URI uri, HttpMethod httpMethod,
+	private static ResponseEntity<?> callRestService(final HttpHeaders headers, final URI uri, final HttpMethod httpMethod,
 			final Class<?> responseType) {
 		final HttpEntity<?> entity = new HttpEntity<Object>(headers);
-		ResponseEntity<?> responseEntity = restTemplate.exchange(uri, httpMethod, entity, responseType);
+		final ResponseEntity<?> responseEntity = restTemplate.exchange(uri, httpMethod, entity, responseType);
 		return responseEntity;
 	}
 	
@@ -729,23 +651,23 @@ public class WebService {
 	}
 
 
-	public static KpOrgSignOnInfo validateKpOrgSSOSession(String ssoSession) throws Exception {
+	public static KpOrgSignOnInfo validateKpOrgSSOSession(final String ssoSession) throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		String kpSsoSession = null;
 		KpOrgSignOnInfo kpOrgSignOnInfo = null;
 		ResponseEntity<?> responseEntity = null;
 		int statusCode = 0;
-		URI uri = new URI(kpOrgSSOSignOffAPIUrl);
+		final URI uri = new URI(kpOrgSSOSignOffAPIUrl);
 		final HttpHeaders headers = getJsonHttpHeaders();
 		headers.set("Accept", "*/*");
 		headers.set("ssosession", ssoSession);
 		try {
 			responseEntity = callRestService(headers, uri, HttpMethod.GET, String.class);
 		} catch (HttpClientErrorException ex) {
-			logger.info("Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
+			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
 		} catch (HttpServerErrorException ex1) {
-			logger.info("Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
+			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage(), e);
 		}
@@ -754,15 +676,17 @@ public class WebService {
 			logger.info("Status code : " + statusCode);
 			output = (String) responseEntity.getBody();
 			logger.debug("output from service: " + output);
-			HttpHeaders responseHeaders = responseEntity.getHeaders();
+			final HttpHeaders responseHeaders = responseEntity.getHeaders();
 			kpSsoSession = responseHeaders.getFirst("ssosession");
 			logger.info("kpSsoSession from response header=" + kpSsoSession);
 			if (statusCode == 200 || statusCode == 201 || statusCode == 202) {
 				if (StringUtils.isNotBlank(output)) {
 					try {
-						Gson gson = new Gson();
+						final Gson gson = new Gson();
 						kpOrgSignOnInfo = gson.fromJson(output, KpOrgSignOnInfo.class);
-						kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+						if (kpOrgSignOnInfo != null) {
+							kpOrgSignOnInfo.setSsoSession(kpSsoSession);
+						}
 					} catch (Exception ex) {
 						logger.warn("JSON parsing failed:" + ex.getMessage(), ex);
 						if (kpOrgSignOnInfo == null) {
@@ -814,7 +738,7 @@ public class WebService {
 	}
 
 	// perform SSO sign off from Kp org API
-	public static boolean performKpOrgSSOSignOff(String ssoSession) {
+	public static boolean performKpOrgSSOSignOff(final String ssoSession) {
 		logger.info(LOG_ENTERED);
 		String kpSsoSession = null;
 		boolean isSignedOff = false;
@@ -823,12 +747,12 @@ public class WebService {
 		final HttpHeaders headers = getJsonHttpHeaders();
 		headers.set("ssosession", ssoSession);
 		try {
-			URI uri = new URI(kpOrgSSOSignOffAPIUrl);
+			final URI uri = new URI(kpOrgSSOSignOffAPIUrl);
 			responseEntity = callRestService(headers, uri, HttpMethod.DELETE, String.class);
 			if (responseEntity != null) {
 				statusCode = responseEntity.getStatusCodeValue();
 				logger.info("Status code : " + statusCode);
-				HttpHeaders responseHeaders = responseEntity.getHeaders();
+				final HttpHeaders responseHeaders = responseEntity.getHeaders();
 				kpSsoSession = responseHeaders.getFirst("ssosession");
 			}
 			if (statusCode == 200 || statusCode == 202 || statusCode == 204) {
@@ -836,9 +760,9 @@ public class WebService {
 			}
 			logger.info("ssosession token : " + kpSsoSession);
 		} catch (HttpClientErrorException ex) {
-			logger.info("Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
+			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
 		} catch (HttpServerErrorException ex1) {
-			logger.info("Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
+			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage(), e);
 		}
