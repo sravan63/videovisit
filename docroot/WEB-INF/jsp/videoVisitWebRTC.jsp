@@ -306,8 +306,6 @@
 
 	<script type="text/javascript">
 		bodyLoaded();
-		
-		VideoVisit.setShowPrecallTestingFlag(true);
 
 		$(".refresh-button").click(function(){
 			window.location.href = window.location.href;

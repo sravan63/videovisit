@@ -34,7 +34,7 @@ $(document).ready(function() {
     $(".joinNowButton").click(function(){
     	$("#layover").show();
     	//US30802
-    	setPeripheralsFlagtoFalse();
+    	setPeripheralsFlag("true");
     	//US30802
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
@@ -255,13 +255,13 @@ function initializeUserPresentInMeetingModal(){
 
 }
 //US30802
-function setPeripheralsFlagtoFalse(){
+function setPeripheralsFlag(flagVal){
     $.ajax({
         type: "POST",
         url: VIDEO_VISITS.Path.visit.setPeripheralsFlag,
         cache: false,
         dataType: "json",
-        data: {"showPeripheralsPage":"false"},
+        data: {"showPeripheralsPage":flagVal},
         success: function(result, textStatus){
             console.log(result);
             var params = ['info','preCallJoinEvent',"Pre-call screen displayed to user, who selected join"];
