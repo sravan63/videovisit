@@ -154,6 +154,7 @@
 				<prop key="/launchMeetingForMemberGuest.json">dataLaunchMeetingForMemberGuest</prop>
 				<prop key="/launchMeetingForMemberDesktop.json">dataLaunchMeetingForMemberDesktop</prop>
 				<prop key="/logVendorMeetingEvents.json">dataLogVendorMeetingEvents</prop>
+				<prop key="/guestMeeting.json">dataGuestMeeting</prop>
 			</props>
 		</property>
 	</bean>
@@ -534,7 +535,9 @@
     <bean id="ssosimulationsubmitlogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimulation.SSOSimulationSubmitLoginController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
-
+    <bean id="dataGuestMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.GuestMeetingController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+	</bean>
 	<!--  COMMAND classes -->
 	<bean id="webAppContextCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand" />
 	<bean id="environmentCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand">
