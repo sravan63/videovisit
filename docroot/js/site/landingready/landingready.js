@@ -264,8 +264,6 @@ function setPeripheralsFlag(flagVal){
         data: {"showPeripheralsPage":flagVal},
         success: function(result, textStatus){
             console.log(result);
-            var params = ['info','preCallJoinEvent',"Pre-call screen displayed to user, who selected join"];
-            VideoVisit.logVendorMeetingEvents(params);
         },
         error: function(textStatus){
             $("#layover").hide();
