@@ -1,14 +1,12 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimulation;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,8 +36,6 @@ public class SSOSimulationCommand {
 			WebService.initWebService(request);
 			final KpOrgSignOnInfo kpSignOnInfo = new KpOrgSignOnInfo();
 			kpSignOnInfo.setSsoSession(request.getSession().getId());
-			final List<Object> interruptList = new ArrayList<Object>();
-			final List<Object> ebizAccountRoles = new ArrayList<Object>();
 			if (ctx != null) {
 				final String userName = request.getParameter("username");
 				final String password = request.getParameter("password");
@@ -52,25 +48,15 @@ public class SSOSimulationCommand {
 
 				if (StringUtils.isNotBlank(memberName) && StringUtils.isNotBlank(memberPassword)
 						&& memberName.equalsIgnoreCase(userName) && memberPassword.equalsIgnoreCase(password)) {
-					ebizAccountRoles.add(getExtPropertiesValueByKey("MEMBER_EBIZ_ACCOUNT_ROLES"));
-					interruptList.add(getExtPropertiesValueByKey("MEMBER_INTERRUPT_LIST"));
 					UserInfo user = new UserInfo();
-					user.setRegion(getExtPropertiesValueByKey("MEMBER_REGION"));
-					user.setEbizAccountRoles(ebizAccountRoles);
 					user.setLastName(getExtPropertiesValueByKey("MEMBER_LAST_NAME"));
-					user.setTermsAndCondAccepted(getExtPropertiesValueByKey("MEMBER_TERMS_AND_COND_ACCEPTED"));
-					user.setActivationStatusCode(getExtPropertiesValueByKey("MEMBER_ACTIVATION_STATUS_CODE"));
-					user.setPreferredFirstName(getExtPropertiesValueByKey("MEMBER_PREFERRED_FIRST_NAME"));
 					user.setGuid(getExtPropertiesValueByKey("MEMBER_GUID"));
 					user.setEmail(getExtPropertiesValueByKey("MEMBER_EMAIL"));
 					user.setAge(Integer.parseInt(getExtPropertiesValueByKey("MEMBER_AGE")));
-					user.setDisabledReasonCode(null);
-					user.setEpicEmail(getExtPropertiesValueByKey("MEMBER_EPIC_EMAIL"));
 					user.setFirstName(getExtPropertiesValueByKey("MEMBER_FIRST_NAME"));
 					user.setServiceArea(null);
 
 					kpSignOnInfo.setSystemError(null);
-					kpSignOnInfo.setInterruptList(interruptList);
 					kpSignOnInfo.setSuccess(true);
 					kpSignOnInfo.setBusinessError(null);
 					kpSignOnInfo.setUser(user);
