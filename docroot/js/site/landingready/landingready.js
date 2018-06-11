@@ -33,6 +33,9 @@ $(document).ready(function() {
 	// Join now Click Event
     $(".joinNowButton").click(function(){
     	$("#layover").show();
+    	//US30802
+    	setPeripheralsFlagtoFalse();
+    	//US30802
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
         var isProxyMeeting = $(this).attr('isproxymeeting');
@@ -251,4 +254,22 @@ function initializeUserPresentInMeetingModal(){
 	});
 
 }
-
+//US30802
+function setPeripheralsFlagtoFalse(){
+    $.ajax({
+        type: "POST",
+        url: VIDEO_VISITS.Path.visit.setPeripheralsFlag,
+        cache: false,
+        dataType: "json",
+        data: {"showPeripheralsPage":"false"},
+        success: function(result, textStatus){
+            console.log(result);
+            var params = ['info','preCallJoinEvent',"Pre-call screen displayed to user, who selected join"];
+            VideoVisit.logVendorMeetingEvents(params);
+        },
+        error: function(textStatus){
+            $("#layover").hide();
+        }
+    });
+}
+//US30802
