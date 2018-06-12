@@ -190,7 +190,7 @@ public class MeetingCommand {
 		MeetingDetailsOutput meetingDetailsOutput = null;
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		String meetingCode;
-		String jsonStr;
+		String jsonStr = null;
 		if (ctx != null) {
 			meetingCode = ctx.getMeetingCode();
 			try {
@@ -203,9 +203,9 @@ public class MeetingCommand {
 			if (isMyMeetingsAvailable(meetingDetailsOutput)) {
 				final List<MeetingDO> myMeetings = meetingDetailsOutput.getEnvelope().getMeetings();
 				logger.info("Meetings Size: " + myMeetings.size());
-				for (MeetingDO myMeeting : myMeetings) {
+				/*for (MeetingDO myMeeting : myMeetings) {
 					normalizeMeetingData(myMeeting, meetingCode, ctx);
-				}
+				}*/
 				ctx.setTotalmeetings(myMeetings.size());
 
 				for (MeetingDO meetingDO : myMeetings) {
@@ -220,15 +220,14 @@ public class MeetingCommand {
 					}
 				}
 				ctx.setMyMeetings(myMeetings);
+				jsonStr = gson.toJson(myMeetings);
 			} else {
 				// no meeting, we should blank out cached meeting
 				ctx.setMyMeetings(null);
 				ctx.setTotalmeetings(0);
 			}
-			jsonStr = gson.toJson(meetingDetailsOutput);
 		} else {
 			logger.warn("empty web context");
-			jsonStr = JSONObject.fromObject(new SystemError()).toString();
 		}
 		logger.info(LOG_EXITING);
 		return jsonStr;
@@ -762,6 +761,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		String jsonStr = null;
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
 				if (WebUtil.isSsoSimulation()) {
@@ -784,29 +784,30 @@ public class MeetingCommand {
 				}
 
 				if (output != null && "200".equals(output.getStatus().getCode())) {
-					List<MeetingDO> memberMeetings = output.getEnvelope().getMeetings();
+					
 					if (!isMyMeetingsAvailable(output)) {
 						ctx.setTotalmeetings(0);
 					} else {
-						for (MeetingDO myMeeting : memberMeetings) {
+						/*for (MeetingDO myMeeting : memberMeetings) {
 							normalizeMeetingData(myMeeting, ctx.getMeetingCode(), ctx);
 							logger.info("Meeting ID = " + myMeeting.getMeetingId());
 							logger.debug("Vendor meeting id = " + myMeeting.getMeetingVendorId());
-						}
-						ctx.setTotalmeetings(memberMeetings.size());
+						}*/
+						final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
+						ctx.setTotalmeetings(meetings != null ? meetings.size() : 0);
+						ctx.setMyMeetings(meetings);
+						jsonStr = new Gson().toJson(meetings);
 					}
-					ctx.setMyMeetings(memberMeetings);
 				} else {
 					ctx.setMyMeetings(null);
 					ctx.setTotalmeetings(0);
 				}
-				return JSONObject.fromObject(output).toString();
 			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
-		return JSONObject.fromObject(new SystemError()).toString();
+		return jsonStr;
 	}
 
 	public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request) {
@@ -1196,4 +1197,5 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
 }
