@@ -803,3 +803,6 @@ a.download-mdo:active, a.download-mdo:visited{
   z-index:10;
   overflow-y:scroll !important;
 }
+.display-none-cls{
+	display: none;
+}
