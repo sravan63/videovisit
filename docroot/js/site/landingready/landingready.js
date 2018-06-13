@@ -291,6 +291,9 @@ function getMemberMeetings(){
         },
         error: function(error){
         	console.log(error);
+        	//updateDomWithMeetingsData({envelope:{meetings:[]}});
+            $('.my-meetings-grid').css('display', 'none');
+            $('.no-meetings-grid').css('display', 'block');
         },
         complete: function(){
             $("#layover").hide();
