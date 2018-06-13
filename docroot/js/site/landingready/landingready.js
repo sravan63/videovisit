@@ -302,7 +302,7 @@ function getMemberMeetings(){
 }
 
 function updateDomWithMeetingsData(data){
-    if(!data.envelope.meetings || data.envelope.meetings.length == 0){
+    if(!data || !data.envelope.meetings || data.envelope.meetings.length == 0){
         $('.my-meetings-grid').css('display', 'none');
         $('.no-meetings-grid').css('display', 'block');
     }else{
