@@ -302,7 +302,7 @@ function getMemberMeetings(){
 }
 
 function updateDomWithMeetingsData(data){
-    if(!data || !data.envelope.meetings || data.envelope.meetings.length == 0){
+    if(!data || data.length == 0){
         $('.my-meetings-grid').css('display', 'none');
         $('.no-meetings-grid').css('display', 'block');
     }else{
@@ -310,8 +310,8 @@ function updateDomWithMeetingsData(data){
         $('.my-meetings-grid').css('display', 'block');
         $('.my-meetings-grid').empty();
         var htmlToBeAppend = '';
-        for(var i=0;i<data.envelope.meetings.length;i++){
-            var meeting = data.envelope.meetings[i];
+        for(var i=0;i<data.length;i++){
+            var meeting = data[i];
             htmlToBeAppend += '<div class="landing-portal-single-container">';
             if(meeting.isRunningLate == true || meeting.isRunningLate == "true"){
                 var updatedTime = convertTimestampToDate(meeting.runLateMeetingTime, 'time_only');
@@ -387,11 +387,11 @@ function updateDomWithMeetingsData(data){
         }
         $('.my-meetings-grid').html(htmlToBeAppend);
         window.setTimeout(function () {
-            for(var x=0;x<data.envelope.meetings.length;x++){
-                if((data.envelope.meetings[x].participant != null && data.envelope.meetings[x].participant.length>0) || (data.envelope.meetings[x].caregiver != null && data.envelope.meetings[x].caregiver.length > 0)){
-                    $('#'+data.envelope.meetings[x].meetingId).find($(".accord-ctrl-container")).css("display", "inline-block");
+            for(var x=0;x<data.length;x++){
+                if((data[x].participant != null && data[x].participant.length>0) || (data[x].caregiver != null && data[x].caregiver.length > 0)){
+                    $('#'+data[x].meetingId).find($(".accord-ctrl-container")).css("display", "inline-block");
                 } else{
-                    $('#'+data.envelope.meetings[x].meetingId).find($(".accord-ctrl-container")).css("display", "none");
+                    $('#'+data[x].meetingId).find($(".accord-ctrl-container")).css("display", "none");
                 }
             }
         },100);
