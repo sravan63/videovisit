@@ -120,6 +120,7 @@ $(document).ready(function() {
         }
         $(this).html(convertedCamelCaseText.trim());
     });
+    getGuestMeetings();
 });
 
 
@@ -141,3 +142,30 @@ function setPeripheralsFlag(flagVal){
     });
 }
 //US30802
+
+function getGuestMeetings(){
+    $("#layover").show();
+    window.scrollTo(0, 0);
+    $.ajax({
+        type: "GET",
+        url: VIDEO_VISITS.Path.guestready.guestMeeting,
+        cache: false,
+        dataType: "json",
+        success: function(result){
+            updateDomWithMeetings(result);
+        },
+        error: function(error){
+            console.log(error);
+            //updateDomWithMeetingsData({envelope:{meetings:[]}});
+            //$('.my-meetings-grid').css('display', 'none');
+            //$('.no-meetings-grid').css('display', 'block');
+        },
+        complete: function(){
+            $("#layover").hide();
+        }
+    });
+}
+
+function updateDomWithMeetings(data){
+    console.log(data);
+}
