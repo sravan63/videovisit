@@ -1,10 +1,13 @@
+//US31768
+var getGuestMeetingsTimeoutVal;
+//US31768
 $(document).ready(function() {
 	
 	
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation,meetingId,patientLastName, verifyData;
 
 	// Join now Click Event
-    $(".btn").click(function(e){
+    $(document).delegate('.btn', 'click', function(e){
        // e.preventDefault();
     	$("#layover").show();
     	//US30802
@@ -143,9 +146,13 @@ function setPeripheralsFlag(flagVal){
 }
 //US30802
 
+
+//US31768
 function getGuestMeetings(){
     $("#layover").show();
     window.scrollTo(0, 0);
+    clearTimeout(getGuestMeetingsTimeoutVal);
+    getGuestMeetingsTimeoutVal = setTimeout(function(){getGuestMeetings();},180000);
     $.ajax({
         type: "GET",
         url: VIDEO_VISITS.Path.guestready.guestMeeting,
@@ -155,10 +162,8 @@ function getGuestMeetings(){
             updateDomWithMeetings(result);
         },
         error: function(error){
-            console.log(error);
-            //updateDomWithMeetingsData({envelope:{meetings:[]}});
-            //$('.my-meetings-grid').css('display', 'none');
-            //$('.no-meetings-grid').css('display', 'block');
+            $('.my-meetings-grid').css('display', 'none');
+            $('.no-meetings-grid').css('display', 'block');
         },
         complete: function(){
             $("#layover").hide();
@@ -166,6 +171,79 @@ function getGuestMeetings(){
     });
 }
 
-function updateDomWithMeetings(data){
-    console.log(data);
+function updateDomWithMeetings(guestData){
+    if(!guestData || guestData.length == 0){
+        $('.my-meetings-grid').css('display', 'none');
+        $('.no-meetings-grid').css('display', 'block');
+    }else{
+        $('.no-meetings-grid').css('display', 'none');
+        $('.my-meetings-grid').css('display', 'block');
+        $('.my-meetings-grid').empty();
+        var htmlToBeAppend = '';
+        for(var i=0;i<guestData.length;i++){
+            var meeting = guestData[i];
+            htmlToBeAppend += '<div class="landing-portal-single-container" style="padding-bottom:25px;">';
+            htmlToBeAppend += '<div class="meeting-details-container" style="font-size:14px;">';
+            htmlToBeAppend += '<div class="left">';
+            var updatedTime = convertTimestampToDate(meeting.meetingTime, 'time_only');
+            htmlToBeAppend += '<div class="time-display"><span class="timestamp">'+updatedTime+' </span><span></span></div>';
+            htmlToBeAppend += '<span>'+meeting.member.lastName+', '+meeting.member.firstName+' '+meeting.member.middleName+'</span>';
+            htmlToBeAppend += '<div class="accord-contents" style="display:block;margin-top:30px;">';
+            if(meeting.participant && meeting.participant.length > 0 || meeting.caregiver && meeting.caregiver.length > 0){
+                htmlToBeAppend += '<h2 class="label" style="float:none;margin-bottom:10px;">Additional Participants</h2>';
+            }
+            if(meeting.participant && meeting.participant.length > 0){
+                htmlToBeAppend += '<div class="names-container-member" style="margin:0px;"><span class="names participants" style="margin-left:0;">';
+                for(var j=0;j<meeting.participant.length;j++){
+                    htmlToBeAppend += '<span>'+meeting.participant[j].firstName.toLowerCase()+' '+meeting.participant[j].lastName.toLowerCase();
+                    if(meeting.participant[j].title){
+                        htmlToBeAppend += ', '+meeting.participant[j].title;
+                    }
+                    htmlToBeAppend += '</span>';
+                }
+                htmlToBeAppend += '</span></div>';//.names-container-member class end
+            }
+            htmlToBeAppend += '<div class="names-container-member" style="margin:0px;">';
+            if(meeting.caregiver && meeting.caregiver.length > 0){
+                htmlToBeAppend += '<span class="names patient-guests" style="margin-left:0;">';
+                for(var x=0;x<meeting.caregiver.length;x++){
+                    htmlToBeAppend += '<span>'+meeting.caregiver[x].firstName+' '+meeting.caregiver[x].lastName+'</span>';
+                }
+                htmlToBeAppend += '</span>';
+            }
+            htmlToBeAppend += '</div>';//.names-container-member class end
+            htmlToBeAppend += '</div>';//.accord-contents class end
+            htmlToBeAppend += '</div>';//.left class end
+            htmlToBeAppend += '<div class="center">';
+            htmlToBeAppend += '<img class="circle-image" src='+meeting.host.imageUrl+' alt="" />';
+            if(meeting.host.homePageUrl){
+                htmlToBeAppend += '<a target="_blank" class="name-and-details camel-case" style="font-weight:bold;" href="'+meeting.host.homePageUrl+'"><span style="text-transform:capitalize">'+meeting.host.firstName.toLowerCase()+' '+meeting.host.lastName.toLowerCase()+'</span>';
+                if(meeting.host.title){
+                    htmlToBeAppend += ', '+meeting.host.title;
+                }
+                htmlToBeAppend += '</a>';
+            }else{
+                htmlToBeAppend += '<div class="name-and-details camel-case" style="font-weight:bold;"><span style="text-transform:capitalize">'+meeting.host.firstName.toLowerCase()+' '+meeting.host.lastName.toLowerCase()+'</span>';
+                if(meeting.host.title){
+                    htmlToBeAppend += ', '+meeting.host.title;
+                }
+                htmlToBeAppend += '</div>';
+            }
+            htmlToBeAppend += '<div class="department-details camel-case" style="width: 180px;">'+meeting.host.departmentName.toLowerCase()+'</div>';
+            htmlToBeAppend += '</div>';//.center class end
+            htmlToBeAppend += '<div class="right">';
+            for(var y=0;y<meeting.caregiver.length;y++){
+                if($('#meetingCode').val() == meeting.caregiver[y].careGiverMeetingHash){
+                    htmlToBeAppend += '<button id="joinNowId" class="btn joinNowButton"userName="'+meeting.caregiver[y].lastName+', '+meeting.caregiver[y].firstName+', ('+meeting.caregiver[y].emailAddress+')" meetingid="'+meeting.meetingId+'" href="'+meeting.meetingVendorId+'" caregiverId="'+meeting.caregiver[y].careGiverId+'">Join your visit</button>';
+                }
+            }
+            htmlToBeAppend += '<p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p><p class="error error-guest-login"></p>';
+            htmlToBeAppend += '</div>';//.right class end
+            htmlToBeAppend += '</div>';//.meeting-details-container class end
+            htmlToBeAppend += '</div>';//.landing-portal-single-container class end
+
+        }
+        $('.my-meetings-grid').html(htmlToBeAppend);
+    }
 }
+//US31768

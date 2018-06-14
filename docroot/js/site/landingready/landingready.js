@@ -210,7 +210,7 @@ $(document).ready(function() {
     
     $('#join-meeting-fail-modal-refresh').click(function(){
     	$("#join-meeting-fail-modal").dialog( "close" );
-    	window.location.href = window.location.href;
+    	getMemberMeetings();
     });
     
     $('#join-meeting-fail-modal-cancel').click(function(){
@@ -277,7 +277,7 @@ function setPeripheralsFlag(flagVal){
 
 //US31767
 function getMemberMeetings(){
-    $("#layover").show();
+    $("#layover-content-main").show();
     window.scrollTo(0, 0);
     clearTimeout(getMeetingsTimeoutVal);
     getMeetingsTimeoutVal = setTimeout(function(){getMemberMeetings();},180000);
@@ -296,7 +296,7 @@ function getMemberMeetings(){
             $('.no-meetings-grid').css('display', 'block');
         },
         complete: function(){
-            $("#layover").hide();
+            $("#layover-content-main").hide();
         }
     });
 }
