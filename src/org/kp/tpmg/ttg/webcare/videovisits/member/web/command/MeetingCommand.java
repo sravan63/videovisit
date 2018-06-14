@@ -42,6 +42,7 @@ import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import net.sf.json.JSONObject;
 import net.sourceforge.wurfl.core.Device;
@@ -199,7 +200,7 @@ public class MeetingCommand {
 			} catch (Exception e) {
 				logger.error("Web Service API error:" + e.getMessage(), e);
 			}
-			final Gson gson = new Gson();
+			final Gson gson = new GsonBuilder().serializeNulls().create();
 			if (isMyMeetingsAvailable(meetingDetailsOutput)) {
 				final List<MeetingDO> myMeetings = meetingDetailsOutput.getEnvelope().getMeetings();
 				logger.info("Meetings Size: " + myMeetings.size());
@@ -761,6 +762,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final Gson gson = new GsonBuilder().serializeNulls().create();
 		String jsonStr = null;
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
@@ -796,7 +798,7 @@ public class MeetingCommand {
 						final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
 						ctx.setTotalmeetings(meetings != null ? meetings.size() : 0);
 						ctx.setMyMeetings(meetings);
-						jsonStr = new Gson().toJson(meetings);
+						jsonStr = gson.toJson(meetings);
 					}
 				} else {
 					ctx.setMyMeetings(null);
