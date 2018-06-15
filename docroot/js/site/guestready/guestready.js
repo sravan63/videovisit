@@ -148,8 +148,11 @@ function setPeripheralsFlag(flagVal){
 
 
 //US31768
-function getGuestMeetings(){
-    $("#layover").show();
+function getGuestMeetings(){	
+	$('.no-meetings-grid').css('display', 'none');
+    $('.my-meetings-grid').css('display', 'block');
+    $('.my-meetings-grid').empty();
+    $('.my-meetings-grid').html('<div style="text-align:center;"><div class="spinner-container"><img width="50px" height="50px" style="float:none;height:50px;width:50px;" src="images/global/iconLoading_small.gif"/></div></div>');
     window.scrollTo(0, 0);
     clearTimeout(getGuestMeetingsTimeoutVal);
     getGuestMeetingsTimeoutVal = setTimeout(function(){getGuestMeetings();},180000);
@@ -162,17 +165,18 @@ function getGuestMeetings(){
             updateDomWithMeetings(result);
         },
         error: function(error){
+        	$('.my-meetings-grid').empty();
             $('.my-meetings-grid').css('display', 'none');
             $('.no-meetings-grid').css('display', 'block');
         },
         complete: function(){
-            $("#layover").hide();
         }
     });
 }
 
 function updateDomWithMeetings(guestData){
     if(!guestData || guestData.length == 0){
+    	$('.my-meetings-grid').empty();
         $('.my-meetings-grid').css('display', 'none');
         $('.no-meetings-grid').css('display', 'block');
     }else{
