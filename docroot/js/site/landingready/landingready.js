@@ -325,15 +325,20 @@ function updateDomWithMeetingsData(data){
             htmlToBeAppend += '<div class="left">';
             var updatedTime = convertTimestampToDate(meeting.meetingTime, 'time_only');
             htmlToBeAppend += '<div class="time-display"><span class="hidden timestamp">'+meeting.meetingTime+' </span><span>'+updatedTime+'</span></div>';
-            htmlToBeAppend += '<span>'+meeting.member.lastName+', '+meeting.member.firstName+' '+meeting.member.middleName+'</span>';
+            var meetingLastName = meeting.member.lastName?meeting.member.lastName:'';
+            var meetingFirstName = meeting.member.firstName?meeting.member.firstName:'';
+            var meetingMiddleName = meeting.member.middleName?meeting.member.middleName:'';
+            htmlToBeAppend += '<span>'+meetingLastName+', '+meetingFirstName+' '+meetingMiddleName+'</span>';
             htmlToBeAppend += '<div class="accord-contents" style="display:block;margin-top:30px;">';
-            if(meeting.participant != null && meeting.participant.length > 0 || meeting.caregiver != null && meeting.caregiver.length > 0){
+            if(meeting.participant && meeting.participant.length > 0 || meeting.caregiver && meeting.caregiver.length > 0){
                 htmlToBeAppend += '<h2 class="label" style="float:none;margin-bottom:10px;">Additional Participants</h2>';
             }
-            if(meeting.participant != null && meeting.participant.length > 0){
+            if(meeting.participant && meeting.participant.length > 0){
                 htmlToBeAppend += '<div class="names-container-member" style="margin:0px;"><span class="names participants" style="margin-left:0;">';
                 for(var j=0;j<meeting.participant.length;j++){
-                    htmlToBeAppend += '<span>'+meeting.participant[j].firstName.toLowerCase()+' '+meeting.participant[j].lastName.toLowerCase();
+                    var fname= meeting.participant[j].firstName?meeting.participant[j].firstName.toLowerCase():'';
+                    var lname = meeting.participant[j].lastName?meeting.participant[j].lastName.toLowerCase():'';
+                    htmlToBeAppend += '<span>'+fname+' '+lname;
                     if(meeting.participant[j].title){
                         htmlToBeAppend += ', '+meeting.participant[j].title;
                     }
@@ -342,10 +347,12 @@ function updateDomWithMeetingsData(data){
                 htmlToBeAppend += '</span></div>';//.names-container-member class end
             }
             htmlToBeAppend += '<div class="names-container-member" style="margin:0px;">';
-            if(meeting.caregiver != null && meeting.caregiver.length > 0){
+            if(meeting.caregiver && meeting.caregiver.length > 0){
                 htmlToBeAppend += '<span class="names patient-guests" style="margin-left:0;">';
                 for(var j=0;j<meeting.caregiver.length;j++){
-                    htmlToBeAppend += '<span>'+meeting.caregiver[j].firstName.toLowerCase()+' '+meeting.caregiver[j].lastName.toLowerCase()+'</span>';
+                    var cgfname = meeting.caregiver[j].firstName?meeting.caregiver[j].firstName.toLowerCase():'';
+                    var cglname = meeting.caregiver[j].lastName?meeting.caregiver[j].lastName.toLowerCase():'';
+                    htmlToBeAppend += '<span>'+cgfname+' '+cglname+'</span>';
                 }
                 htmlToBeAppend += '</span>';
             }
@@ -354,12 +361,15 @@ function updateDomWithMeetingsData(data){
             htmlToBeAppend += '</div>';//.left class end
             htmlToBeAppend += '<div class="center">';
             htmlToBeAppend += '<img class="circle-image" src='+meeting.host.imageUrl+' alt="" />';
-            htmlToBeAppend += '<span class="name-and-details camel-case"><span style="text-transform:capitalize">'+meeting.host.firstName.toLowerCase()+' '+meeting.host.lastName.toLowerCase()+'</span>';
+            var hostfname = meeting.host.firstName?meeting.host.firstName.toLowerCase():'';
+            var hostlname = meeting.host.lastName?meeting.host.lastName.toLowerCase():'';
+            htmlToBeAppend += '<span class="name-and-details camel-case"><span style="text-transform:capitalize">'+hostfname+' '+hostlname+'</span>';
             if(meeting.host.title){
                 htmlToBeAppend += ', '+meeting.host.title;
             }
             htmlToBeAppend += '</span>';
-            htmlToBeAppend += '<span class="department-details camel-case">'+meeting.host.departmentName.toLowerCase()+'</span>';
+            var hostdep = meeting.host.departmentName?meeting.host.departmentName.toLowerCase():'';
+            htmlToBeAppend += '<span class="department-details camel-case">'+hostdep+'</span>';
             htmlToBeAppend += '</div>';//.center class end
             htmlToBeAppend += '<div class="right">';
             if($('#isNonMember').val() == true || $('#isNonMember').val() == 'true'){

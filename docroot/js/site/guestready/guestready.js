@@ -191,7 +191,10 @@ function updateDomWithMeetings(guestData){
             htmlToBeAppend += '<div class="left">';
             var updatedTime = convertTimestampToDate(meeting.meetingTime, 'time_only');
             htmlToBeAppend += '<div class="time-display"><span class="timestamp">'+updatedTime+' </span><span></span></div>';
-            htmlToBeAppend += '<span>'+meeting.member.lastName+', '+meeting.member.firstName+' '+meeting.member.middleName+'</span>';
+            var lname = meeting.member.lastName?meeting.member.lastName:'';
+            var fname = meeting.member.firstName?meeting.member.firstName:'';
+            var mname = meeting.member.middleName?meeting.member.middleName:'';
+            htmlToBeAppend += '<span>'+lname+', '+fname+' '+mname+'</span>';
             htmlToBeAppend += '<div class="accord-contents" style="display:block;margin-top:30px;">';
             if(meeting.participant && meeting.participant.length > 0 || meeting.caregiver && meeting.caregiver.length > 0){
                 htmlToBeAppend += '<h2 class="label" style="float:none;margin-bottom:10px;">Additional Participants</h2>';
@@ -199,7 +202,9 @@ function updateDomWithMeetings(guestData){
             if(meeting.participant && meeting.participant.length > 0){
                 htmlToBeAppend += '<div class="names-container-member" style="margin:0px;"><span class="names participants" style="margin-left:0;">';
                 for(var j=0;j<meeting.participant.length;j++){
-                    htmlToBeAppend += '<span>'+meeting.participant[j].firstName.toLowerCase()+' '+meeting.participant[j].lastName.toLowerCase();
+                    var pfname = meeting.participant[j].firstName?meeting.participant[j].firstName.toLowerCase():'';
+                    var plname = meeting.participant[j].lastName?meeting.participant[j].lastName.toLowerCase():'';
+                    htmlToBeAppend += '<span>'+pfname+' '+plname;
                     if(meeting.participant[j].title){
                         htmlToBeAppend += ', '+meeting.participant[j].title;
                     }
@@ -211,7 +216,9 @@ function updateDomWithMeetings(guestData){
             if(meeting.caregiver && meeting.caregiver.length > 0){
                 htmlToBeAppend += '<span class="names patient-guests" style="margin-left:0;">';
                 for(var x=0;x<meeting.caregiver.length;x++){
-                    htmlToBeAppend += '<span>'+meeting.caregiver[x].firstName+' '+meeting.caregiver[x].lastName+'</span>';
+                    var cgfname = meeting.caregiver[x].firstName?meeting.caregiver[x].firstName:'';
+                    var cglname = meeting.caregiver[x].lastName?meeting.caregiver[x].lastName:'';
+                    htmlToBeAppend += '<span>'+cgfname+' '+cglname+'</span>';
                 }
                 htmlToBeAppend += '</span>';
             }
@@ -221,13 +228,17 @@ function updateDomWithMeetings(guestData){
             htmlToBeAppend += '<div class="center">';
             htmlToBeAppend += '<img class="circle-image" src='+meeting.host.imageUrl+' alt="" />';
             if(meeting.host.homePageUrl){
-                htmlToBeAppend += '<a target="_blank" class="name-and-details camel-case" style="font-weight:bold;" href="'+meeting.host.homePageUrl+'"><span style="text-transform:capitalize">'+meeting.host.firstName.toLowerCase()+' '+meeting.host.lastName.toLowerCase()+'</span>';
+                var fname = meeting.host.firstName?meeting.host.firstName.toLowerCase():'';
+                var lname = meeting.host.lastName?meeting.host.lastName.toLowerCase():'';
+                htmlToBeAppend += '<a target="_blank" class="name-and-details camel-case" style="font-weight:bold;" href="'+meeting.host.homePageUrl+'"><span style="text-transform:capitalize">'+fname+' '+lname+'</span>';
                 if(meeting.host.title){
                     htmlToBeAppend += ', '+meeting.host.title;
                 }
                 htmlToBeAppend += '</a>';
             }else{
-                htmlToBeAppend += '<div class="name-and-details camel-case" style="font-weight:bold;"><span style="text-transform:capitalize">'+meeting.host.firstName.toLowerCase()+' '+meeting.host.lastName.toLowerCase()+'</span>';
+                var hostfname = meeting.host.firstName?meeting.host.firstName.toLowerCase():'';
+                var hostlname = meeting.host.lastName?meeting.host.lastName.toLowerCase():'';
+                htmlToBeAppend += '<div class="name-and-details camel-case" style="font-weight:bold;"><span style="text-transform:capitalize">'+hostfname+' '+hostlname+'</span>';
                 if(meeting.host.title){
                     htmlToBeAppend += ', '+meeting.host.title;
                 }
@@ -238,7 +249,9 @@ function updateDomWithMeetings(guestData){
             htmlToBeAppend += '<div class="right">';
             for(var y=0;y<meeting.caregiver.length;y++){
                 if($('#meetingCode').val() == meeting.caregiver[y].careGiverMeetingHash){
-                    htmlToBeAppend += '<button id="joinNowId" class="btn joinNowButton"userName="'+meeting.caregiver[y].lastName+', '+meeting.caregiver[y].firstName+', ('+meeting.caregiver[y].emailAddress+')" meetingid="'+meeting.meetingId+'" href="'+meeting.meetingVendorId+'" caregiverId="'+meeting.caregiver[y].careGiverId+'">Join your visit</button>';
+                    var cglname = meeting.caregiver[y].lastName?meeting.caregiver[y].lastName:'';
+                    var cgfname = meeting.caregiver[y].firstName?meeting.caregiver[y].firstName:'';
+                    htmlToBeAppend += '<button id="joinNowId" class="btn joinNowButton"userName="'+cglname+', '+cgfname+', ('+meeting.caregiver[y].emailAddress+')" meetingid="'+meeting.meetingId+'" href="'+meeting.meetingVendorId+'" caregiverId="'+meeting.caregiver[y].careGiverId+'">Join your visit</button>';
                 }
             }
             htmlToBeAppend += '<p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p><p class="error error-guest-login"></p>';
