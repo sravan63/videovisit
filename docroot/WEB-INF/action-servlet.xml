@@ -527,7 +527,7 @@
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />
 	</bean>
-	<bean id="ssoSimulationLogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="ssoSimulationLogin" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.ssosimulation.SSOSimulationLoginController">
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="ssoSimulationLogin" />
 		<property name="navigation" value="home" />

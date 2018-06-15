@@ -59,12 +59,10 @@ public class SSOSimulationSubmitLoginController extends SimplePageController {
 			// Perform SSO sign on and authorization
 			data = SSOSimulationCommand.performSSOSimulationSignOn(request);
 
-			// set ssosession token in cookie
 			if ("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null
 					&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
-//				logger.info("ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
-//				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
-				ctx.setAuthenticated(true);
+				ctx.setAuthenticated(false);
+				ctx.setContextId(WebUtil.SSO_SIMULATION);
 			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);

@@ -36,6 +36,7 @@ public class WebUtil {
 	public static final String LOG_ENTERED = "Entered";
 	public static final String LOG_EXITING = "Exiting";
 	public static final String VV_MBR_BACK_BUTTON = "vv-mbr-back-btn";
+	public static final String SSO_SIMULATION = "sso_simulation";
 	
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);

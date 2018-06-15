@@ -766,7 +766,7 @@ public class MeetingCommand {
 		String jsonStr = null;
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
-				if (WebUtil.isSsoSimulation()) {
+				if (WebUtil.isSsoSimulation() && WebUtil.SSO_SIMULATION.equalsIgnoreCase(ctx.getContextId())) {
 					output = WebService.getActiveMeetingsForSSOSimulation(ctx.getMemberDO().getMrn(), ctx.isNonMember(),
 							request.getSession().getId());
 				} else {
