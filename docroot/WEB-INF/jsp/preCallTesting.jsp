@@ -11,7 +11,7 @@
 				<select id="videoSource"></select>
 			</div>
 			<div class="select">
-				<label for="audioSource">Mic</label>
+				<label for="audioSource">Microphone</label>
 				<span class="caret"></span>
 				<select id="audioSource"></select>
 			</div>
@@ -27,6 +27,29 @@
 			<video id="video" playsinline autoplay></video>
 		</div>
 		<!-- webrtc video container block ends-->
+		<!-- webrtc mic container block starts-->
+		<div class="video-visit-peripherals-block mic-block">
+			<p class="note-text">Check your Microphone</p>
+			<div class="mic-bars-container">
+				<canvas id="meter1" width="20" height="100"></canvas>
+				<canvas id="meter2" width="20" height="100"></canvas>
+				<canvas id="meter3" width="20" height="100"></canvas>
+				<canvas id="meter4" width="20" height="100"></canvas>
+				<canvas id="meter5" width="20" height="100"></canvas>
+				<canvas id="meter6" width="20" height="100"></canvas>
+				<canvas id="meter7" width="20" height="100"></canvas>
+			</div>
+			<p class="note-text">Speak on your Microphone.</p>
+		</div>
+		<!-- webrtc mic container block ends-->
+		<!-- webrtc audio container block starts-->
+		<div class="video-visit-peripherals-block audio-block">
+			<p class="note-text">Check your speaker</p>
+			<a title="Play" class="audio-controls play-button" id="playAudio"></a>
+			<a title="Play" class="audio-controls pause-button" id="pauseAudio"></a>
+			<p class="note-text">Play the sound clip and adjust your speaker volume.</p>
+		</div>
+		<!-- webrtc audio container block ends-->
 	</div>
 	<div class="precall-test-button-container">
 		<button id="precall-backBtn" class="">Back</button>

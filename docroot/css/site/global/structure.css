@@ -803,6 +803,48 @@ a.download-mdo:active, a.download-mdo:visited{
   z-index:10;
   overflow-y:scroll !important;
 }
+
 .display-none-cls{
 	display: none;
+}
+
+/* Precall testing audio CSS */
+.active-user-state{
+	background: url(../../../images/new/user-active.png) no-repeat center center;
+	display: none;
+	width: 12px;
+	height: 12px;
+	background-size: cover;
+	margin-left: 2px;
+	padding:0px!important;
+}
+.audio-controls{
+	background-image: url('../../../vidyoplayer/img/setupSprite.png');
+	background-repeat: no-repeat;
+	width: 60px;
+	height: 60px;
+}
+.audio-block{
+	text-align: center;
+    border: solid 1px #0066A5;
+    padding: 15px 0px 0px;
+}
+.play-button{
+	background-position:1px -80px; margin:40px auto; display:inline-block;cursor: pointer;
+}
+.pause-button{
+	background-position:1px -152px; margin:40px auto; display:none;cursor: pointer;
+}
+.mic-block{
+	text-align: center;
+    border: solid 1px #0066A5;
+    padding: 15px 0px 0px;
+}
+.mic-bars-container{
+	margin:30px auto;
+	transform: rotate(180deg);
+}
+.note-text{
+	color: #0066A5;
+	margin: 0px;
 }
