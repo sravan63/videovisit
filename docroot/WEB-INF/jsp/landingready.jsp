@@ -16,7 +16,7 @@
 <!--US31767-->
 <%
 
-	MeetingCommand.retrieveActiveMeetingsForMemberAndProxies(request);
+	//MeetingCommand.retrieveActiveMeetingsForMemberAndProxies(request);
 	String timezone = WebUtil.getCurrentDateTimeZone();
 
 %>

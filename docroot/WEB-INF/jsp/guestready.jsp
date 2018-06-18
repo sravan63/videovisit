@@ -8,7 +8,7 @@
 <%@ page import="javax.servlet.http.*"%>
 
 <%
-	MeetingCommand.retrieveMeetingForCaregiver(request, response);
+	//MeetingCommand.retrieveMeetingForCaregiver(request, response);
 	String timezone = WebUtil.getCurrentDateTimeZone();
 	
 	WebAppContext ctx = WebAppContext.getWebAppContext(request);
