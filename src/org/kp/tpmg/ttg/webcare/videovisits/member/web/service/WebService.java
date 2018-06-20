@@ -1198,17 +1198,18 @@ public class WebService {
 			verifyMeberInput.setSessionID(sessionId);
 			verifyMeberInput.setClientId(clientId);
 
-			Gson gson = new Gson();
+			final Gson gson = new Gson();
 			String inputString = gson.toJson(verifyMeberInput);
 			logger.debug("jsonInputString " + inputString);
 
 			String jsonString = callVVRestService(ServiceUtil.VERIFY_MEMBER, inputString);
 			logger.debug("outputjsonString" + jsonString);
-
-			JsonParser parser = new JsonParser();
-			JsonObject jobject = new JsonObject();
-			jobject = (JsonObject) parser.parse(jsonString);
-			verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), VerifyMemberOutput.class);
+			if (StringUtils.isNotBlank(jsonString)) {
+				final JsonParser parser = new JsonParser();
+				JsonObject jobject = new JsonObject();
+				jobject = (JsonObject) parser.parse(jsonString);
+				verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), VerifyMemberOutput.class);
+			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
 			throw new Exception("Web Service API error", e.getCause());
