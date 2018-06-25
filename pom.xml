@@ -272,55 +272,6 @@
 									<type>jar</type>
 									<destFileName>commons-configuration-1.3.jar</destFileName>
 								</artifactItem>
-								<!-- <artifactItem>
-									<groupId>commons-dbcp</groupId>
-									<artifactId>commons-dbcp</artifactId>
-									<version>1.2.1</version>
-									<type>jar</type>
-									<destFileName>commons-dbcp.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>commons-digester</groupId>
-									<artifactId>commons-digester</artifactId>
-									<version>1.8</version>
-									<type>jar</type>
-									<destFileName>commons-digester-1.8.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>commons-el</groupId>
-									<artifactId>commons-el</artifactId>
-									<version>1.0</version>
-									<type>jar</type>
-									<destFileName>commons-el.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>commons-fileupload</groupId>
-									<artifactId>commons-fileupload</artifactId>
-									<version>1.1.1</version>
-									<type>jar</type>
-									<destFileName>commons-fileupload-1.1.1.jar.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>commons-io</groupId>
-									<artifactId>commons-io</artifactId>
-									<version>1.4</version>
-									<type>jar</type>
-									<destFileName>commons-io-1.4.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>commons-logging.uploaded</groupId>
-									<artifactId>commons-logging-api</artifactId>
-									<version>1.1.1</version>
-									<type>jar</type>
-									<destFileName>commons-logging-api-1.1.1.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>commons-pool</groupId>
-									<artifactId>commons-pool</artifactId>
-									<version>1.2</version>
-									<type>jar</type>
-									<destFileName>commons-pool.jar</destFileName>
-								</artifactItem> -->
 								<artifactItem>
 									<groupId>servlets.com</groupId>
 									<artifactId>cos</artifactId>
@@ -335,13 +286,6 @@
 									<type>jar</type>
 									<destFileName>dom4j-1.6.1.jar</destFileName>
 								</artifactItem>
-								<!-- <artifactItem>
-									<groupId>org.springbyexample.uploaded</groupId>
-									<artifactId>dynamic-tiles2</artifactId>
-									<version>1.1</version>
-									<type>jar</type>
-									<destFileName>dynamic-tiles2-1.1.jar</destFileName>
-								</artifactItem> -->
 								<artifactItem>
 									<groupId>org.apache.httpcomponents.wso2</groupId>
 									<artifactId>httpcore</artifactId>
@@ -377,13 +321,6 @@
 									<type>jar</type>
 									<destFileName>jstl.jar</destFileName>
 								</artifactItem>
-								<!-- <artifactItem>
-									<groupId>javax.transaction</groupId>
-									<artifactId>jta</artifactId>
-									<version>1.1</version>
-									<type>jar</type>
-									<destFileName>jta.jar</destFileName>
-								</artifactItem> -->
 								<artifactItem>
 									<groupId>opensymphony</groupId>
 									<artifactId>ognl</artifactId>
@@ -447,20 +384,6 @@
 									<type>jar</type>
 									<destFileName>rampart-trust_1.6.1.wso2v12.jar</destFileName>
 								</artifactItem>
-								<!-- <artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-api</artifactId>
-									<version>1.5.0</version>
-									<type>jar</type>
-									<destFileName>slf4j-api-1.5.0.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>org.slf4j</groupId>
-									<artifactId>slf4j-log4j12</artifactId>
-									<version>1.5.0</version>
-									<type>jar</type>
-									<destFileName>slf4j-log4j12-1.5.0.jar</destFileName>
-								</artifactItem> -->
 								<artifactItem>
 									<groupId>taglibs</groupId>
 									<artifactId>standard</artifactId>
