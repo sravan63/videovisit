@@ -1190,8 +1190,8 @@ public class MeetingCommand {
 		final String logType = request.getParameter("logType");
 		final String sessionId = request.getSession().getId();
 		try {
-			output = WebService.logVendorMeetingEvents(Long.parseLong(meetingId), userType, userId, eventName,
-					eventDescription, logType, sessionId);
+			output = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
+					eventName, eventDescription, logType, sessionId);
 		} catch (Exception e) {
 			output = new Gson().toJson(new SystemError());
 			logger.error("System Error for meeting :" + meetingId + " : ", e);
