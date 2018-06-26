@@ -26,7 +26,7 @@ $(document).ready(function() {
     	$("#quitMeetingModal").dialog( "close" );
     });	*/
 
-    $('#quitMeetingYes').click(function(){
+    /*$('#quitMeetingYes').click(function(){
         var quitMeetingIdData = 'meetingId=' + $(this).attr('quitmeetingid') + '&memberName=' + $(this).attr('memberName') ;
          $.ajax({
             type: 'POST',
@@ -41,7 +41,7 @@ $(document).ready(function() {
             }
         });
         return false;
-    });
+    });*/
         
 });
 
