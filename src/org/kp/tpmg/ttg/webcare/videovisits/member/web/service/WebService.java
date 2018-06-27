@@ -308,7 +308,7 @@ public class WebService {
 				input.setSessionId(sessionID);
 				input.setMrn(mrn8Digit);
 				input.setMemberName(memberName);
-				input.setClientId(clientId);
+				input.setClientId(notifyVideoForMeetingQuit ? WebUtil.getBackButtonClientId() : WebUtil.getClientId());
 				input.setNotifyVideoForMeetingQuit(notifyVideoForMeetingQuit);
 
 				final Gson gson = new Gson();
