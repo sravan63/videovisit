@@ -504,7 +504,7 @@ public class WebService {
 			input.setMeetingHash(meetingHash);
 			input.setPatientLastName(megaMeetingNameDisplayName);
 			input.setIsDeleteMeetingFromVidyo((isParticipantDel));
-			input.setClientId(WebUtil.clientId);
+			input.setClientId(isParticipantDel ? WebUtil.getBackButtonClientId() : WebUtil.getClientId());
 			input.setSessionId(sessionId);
 
 			final Gson gson = new Gson();
@@ -1312,7 +1312,8 @@ public class WebService {
 			joinLeaveMeetingInput.setMeetingId(Long.parseLong(meetingId));
 			joinLeaveMeetingInput.setInMeetingDisplayName(careGiverName);
 			joinLeaveMeetingInput.setSessionId(sessionId);
-			joinLeaveMeetingInput.setClientId(isFromBackButton ? WebUtil.VV_MBR_BACK_BUTTON : WebUtil.clientId);
+			joinLeaveMeetingInput
+					.setClientId(isFromBackButton ? WebUtil.getBackButtonClientId() : WebUtil.getClientId());
 			joinLeaveMeetingInput.setIsPatient(false);
 			joinLeaveMeetingInput.setDeviceType(WebUtil.DEFAULT_DEVICE);
 			joinLeaveMeetingInput.setDeviceOs(WebUtil.getDeviceOs());

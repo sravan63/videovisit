@@ -95,6 +95,8 @@ public class GuestController extends SimplePageController {
 		if (StringUtils.isNotBlank(blockFF)) {
 			ctx.setBlockFF(blockFF);
 		}
+		WebUtil.setClientId(WebUtil.VV_MBR_GUEST);
+		WebUtil.setBackButtonClientId(WebUtil.VV_MBR_GUEST_BACK_BTN);
 	}
 
 }
