@@ -24,7 +24,6 @@ public class WebUtil {
 	private static Pattern DOB_PATTERN = Pattern.compile("\\d\\d\\d\\d-\\d[\\d]-\\d[\\d]");
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
 	public static final String SSO_COOKIE_NAME = "ObSSOCookie";
-	public static String clientId = "vv-mbr-web";
 	public static final String MOB_CLIENT_ID = "vv-mbr-mbl-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
 	public static final String NON_MEMBER = "Non_Mmbr";
@@ -38,11 +37,12 @@ public class WebUtil {
 	public static final String VV_MBR_BACK_BUTTON = "vv-mbr-back-btn";
 	public static final String SSO_SIMULATION = "sso_simulation";
 	public static final String VV_MBR_SSO_WEB = "vv-mbr-sso-web";
+	public static final String VV_MBR_SSO_BACK_BTN = "vv-mbr-sso-back-btn";
 	public static final String VV_MBR_WEB = "vv-mbr-web";
 	public static final String VV_MBR_GUEST = "vv-mbr-guest";
 	public static final String VV_MBR_GUEST_BACK_BTN = "vv-mbr-guest-back-btn";
-	public static final String VV_MBR_SSO_BACK_BTN = "vv-mbr-sso-back-btn";
-	public static String backButtonClientId = "vv-mbr-back-btn";
+	public static final String VV_MBR_SSO_SIM_WEB = "vv-mbr-sso-sim";
+	public static final String VV_MBR_SSO_SIM_BACK_BTN = "vv-mbr-sso-sim-back-btn";
 	
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);
@@ -345,31 +345,4 @@ public class WebUtil {
 		return isSsoSimulation;
 	}
 
-	/**
-	 * @return the clientId
-	 */
-	public static String getClientId() {
-		return clientId;
-	}
-
-	/**
-	 * @param clientId the clientId to set
-	 */
-	public static void setClientId(String clientId) {
-		WebUtil.clientId = clientId;
-	}
-
-	/**
-	 * @return the backButtonClientId
-	 */
-	public static String getBackButtonClientId() {
-		return backButtonClientId;
-	}
-
-	/**
-	 * @param backButtonClientId the backButtonClientId to set
-	 */
-	public static void setBackButtonClientId(String backButtonClientId) {
-		WebUtil.backButtonClientId = backButtonClientId;
-	}
 }

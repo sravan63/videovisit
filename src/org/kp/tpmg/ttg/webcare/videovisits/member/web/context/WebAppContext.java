@@ -55,6 +55,8 @@ public class WebAppContext implements Serializable {
 	private String blockChrome = "true";
 	private String blockFF = "true";
 	private boolean showPeripheralsPage = true;
+	private String clientId = "vv-mbr-web";
+	private String backButtonClientId = "vv-mbr-back-btn";
 
 	public String getGuestMeetingId() {
 		return guestMeetingId;
@@ -378,6 +380,34 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setShowPeripheralsPage(boolean showPeripheralsPage) {
 		this.showPeripheralsPage = showPeripheralsPage;
+	}
+
+	/**
+	 * @return the clientId
+	 */
+	public String getClientId() {
+		return clientId;
+	}
+
+	/**
+	 * @param clientId the clientId to set
+	 */
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
+
+	/**
+	 * @return the backButtonClientId
+	 */
+	public String getBackButtonClientId() {
+		return backButtonClientId;
+	}
+
+	/**
+	 * @param backButtonClientId the backButtonClientId to set
+	 */
+	public void setBackButtonClientId(String backButtonClientId) {
+		this.backButtonClientId = backButtonClientId;
 	}
 
 }

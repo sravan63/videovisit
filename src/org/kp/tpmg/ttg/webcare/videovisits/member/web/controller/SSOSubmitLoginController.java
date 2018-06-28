@@ -65,8 +65,8 @@ public class SSOSubmitLoginController extends SimplePageController {
 				logger.info("ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
 				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
 				ctx.setAuthenticated(true);
-				WebUtil.setClientId(WebUtil.VV_MBR_SSO_WEB);
-				WebUtil.setBackButtonClientId(WebUtil.VV_MBR_SSO_BACK_BTN);
+				ctx.setClientId(WebUtil.VV_MBR_SSO_WEB);
+				ctx.setBackButtonClientId(WebUtil.VV_MBR_SSO_BACK_BTN);
 			}
 		} catch (Exception e) {
 			logger.error("SSOSubmitLoginController -> System Error" + e.getMessage(), e);

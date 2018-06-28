@@ -63,6 +63,8 @@ public class SSOSimulationSubmitLoginController extends SimplePageController {
 					&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
 				ctx.setAuthenticated(false);
 				ctx.setContextId(WebUtil.SSO_SIMULATION);
+				ctx.setClientId(WebUtil.VV_MBR_SSO_SIM_WEB);
+				ctx.setBackButtonClientId(WebUtil.VV_MBR_SSO_SIM_BACK_BTN);
 			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);

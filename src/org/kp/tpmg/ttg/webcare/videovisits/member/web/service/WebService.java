@@ -115,7 +115,7 @@ public class WebService {
 	private static String secureCodes = null;
 	private static boolean isAdhoc = false;
 	private static boolean isParrs = true;
-	
+
 	private static RestTemplate restTemplate = new RestTemplate();
 
 	public static boolean initWebService(HttpServletRequest request) {
@@ -123,58 +123,58 @@ public class WebService {
 		boolean ret = true;
 
 		try {
-				final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
-				simulation = appProp.getProperty("WEBSERVICE_SIMULATION").equals("true") ? true : false;
-				logger.debug("Simulation:" + simulation);
-				modulePath = appProp.getProperty("MODULE_PATH");
-				policyPath = appProp.getProperty("POLICY_PATH");
-				Crypto crypto = new Crypto();
-				serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
-				serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
-				logger.debug("SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:"
-						+ serviceSecurityPassword);
+			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+			simulation = appProp.getProperty("WEBSERVICE_SIMULATION").equals("true") ? true : false;
+			logger.debug("Simulation:" + simulation);
+			modulePath = appProp.getProperty("MODULE_PATH");
+			policyPath = appProp.getProperty("POLICY_PATH");
+			Crypto crypto = new Crypto();
+			serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
+			serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
+			logger.debug(
+					"SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
 
-				// setup wizard related values
-				setupWizardHostNuid = appProp.getProperty("SETUP_WIZARD_HOST_NUID");
-				setupWizardMemberMrn = appProp.getProperty("SETUP_WIZARD_MEMBER_MRN");
-				setupWizardMeetingType = appProp.getProperty("SETUP_WIZARD_MEETING_TYPE");
-				setupWizardUserName = appProp.getProperty("SETUP_WIZARD_USER_NAME");
-				logger.debug("setupWizardHostNuid=" + setupWizardHostNuid + ", setupWizardMemberMrn="
-						+ setupWizardMemberMrn + ", setupWizardMeetingType=" + setupWizardMeetingType
-						+ ", setupWizardUserName=" + setupWizardUserName);
+			// setup wizard related values
+			setupWizardHostNuid = appProp.getProperty("SETUP_WIZARD_HOST_NUID");
+			setupWizardMemberMrn = appProp.getProperty("SETUP_WIZARD_MEMBER_MRN");
+			setupWizardMeetingType = appProp.getProperty("SETUP_WIZARD_MEETING_TYPE");
+			setupWizardUserName = appProp.getProperty("SETUP_WIZARD_USER_NAME");
+			logger.debug("setupWizardHostNuid=" + setupWizardHostNuid + ", setupWizardMemberMrn=" + setupWizardMemberMrn
+					+ ", setupWizardMeetingType=" + setupWizardMeetingType + ", setupWizardUserName="
+					+ setupWizardUserName);
 
-				// Proxy Appts parameters
-				secureCodes = appProp.getProperty("SECURE_CODES");
-				isAdhoc = appProp.getProperty("ADHOC").equals("true") ? true : false;
-				isParrs = appProp.getProperty("PARRS").equals("true") ? true : false;
-				logger.debug("secureCodes=" + secureCodes + ", isAdhoc=" + isAdhoc + ", isParrs=" + isParrs);
+			// Proxy Appts parameters
+			secureCodes = appProp.getProperty("SECURE_CODES");
+			isAdhoc = appProp.getProperty("ADHOC").equals("true") ? true : false;
+			isParrs = appProp.getProperty("PARRS").equals("true") ? true : false;
+			logger.debug("secureCodes=" + secureCodes + ", isAdhoc=" + isAdhoc + ", isParrs=" + isParrs);
 
-				memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
-				memberSSOAuthRegionCode = appProp.getProperty("MEMBER_SSO_AUTH_REGION_CODE");
-				videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
-				kpOrgSSOSignOnAPIUrl = appProp.getProperty("KPORG_SSO_SIGNON_API_URL");
-				kpOrgSSOSignOffAPIUrl = appProp.getProperty("KPORG_SSO_SIGNOFF_API_URL");
-				kpOrgSSOKeepAliveUrl = appProp.getProperty("KPORG_SSO_KEEP_ALIVE_URL");
-				kpOrgSSOUserAgentCategoryHeader = System.getProperty("os.name");
-				kpOrgSSOOsVersionHeader = System.getProperty("os.version");
-				kpOrgSSOUserAgentTypeHeader = WebUtil.getBrowserDetails(request);
-				kpOrgSSOAPIKeyHeader = crypto.read(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
-				kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
-				vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-				if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
-					vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-				}
-				logger.debug("kpOrgSSOSignOnAPIUrl : " + kpOrgSSOSignOnAPIUrl);
-				logger.info("kpOrgSSOUserAgentCategoryHeader : " + kpOrgSSOUserAgentCategoryHeader
-						+ ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:"
-						+ kpOrgSSOUserAgentTypeHeader);
-				logger.debug("kpOrgSSOAppNameHeader : " + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:"
-						+ kpOrgSSOAPIKeyHeader);
-				logger.debug("kpOrgSSOSignOffAPIUrl : " + kpOrgSSOSignOffAPIUrl);
-				logger.debug("memberSSOAuthAPIUrl : " + memberSSOAuthAPIUrl);
-				logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl);
-				logger.debug("kpOrgSSOKeepAliveUrl : " + kpOrgSSOKeepAliveUrl);
-				logger.debug("vidyoWebrtcSessionManger : " + vidyoWebrtcSessionManager);
+			memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
+			memberSSOAuthRegionCode = appProp.getProperty("MEMBER_SSO_AUTH_REGION_CODE");
+			videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
+			kpOrgSSOSignOnAPIUrl = appProp.getProperty("KPORG_SSO_SIGNON_API_URL");
+			kpOrgSSOSignOffAPIUrl = appProp.getProperty("KPORG_SSO_SIGNOFF_API_URL");
+			kpOrgSSOKeepAliveUrl = appProp.getProperty("KPORG_SSO_KEEP_ALIVE_URL");
+			kpOrgSSOUserAgentCategoryHeader = System.getProperty("os.name");
+			kpOrgSSOOsVersionHeader = System.getProperty("os.version");
+			kpOrgSSOUserAgentTypeHeader = WebUtil.getBrowserDetails(request);
+			kpOrgSSOAPIKeyHeader = crypto.read(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
+			kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
+			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
+			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
+				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
+			}
+			logger.debug("kpOrgSSOSignOnAPIUrl : " + kpOrgSSOSignOnAPIUrl);
+			logger.info("kpOrgSSOUserAgentCategoryHeader : " + kpOrgSSOUserAgentCategoryHeader
+					+ ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:"
+					+ kpOrgSSOUserAgentTypeHeader);
+			logger.debug("kpOrgSSOAppNameHeader : " + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:"
+					+ kpOrgSSOAPIKeyHeader);
+			logger.debug("kpOrgSSOSignOffAPIUrl : " + kpOrgSSOSignOffAPIUrl);
+			logger.debug("memberSSOAuthAPIUrl : " + memberSSOAuthAPIUrl);
+			logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl);
+			logger.debug("kpOrgSSOKeepAliveUrl : " + kpOrgSSOKeepAliveUrl);
+			logger.debug("vidyoWebrtcSessionManger : " + vidyoWebrtcSessionManager);
 
 			if (simulation)
 				return true;
@@ -188,7 +188,7 @@ public class WebService {
 			logger.debug(
 					"System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			final String message = "Exception while reading properties file";
 			logger.error("System Error : " + e.getMessage(), e);
 			ret = false;
@@ -273,8 +273,8 @@ public class WebService {
 	}
 
 	/**
-	 * This method invokes updateMemberMeetingStatus rest service and updates
-	 * the member meeting status.
+	 * This method invokes updateMemberMeetingStatus rest service and updates the
+	 * member meeting status.
 	 * 
 	 * @param mrn8Digit
 	 * @param meetingID
@@ -308,7 +308,7 @@ public class WebService {
 				input.setSessionId(sessionID);
 				input.setMrn(mrn8Digit);
 				input.setMemberName(memberName);
-				input.setClientId(notifyVideoForMeetingQuit ? WebUtil.getBackButtonClientId() : WebUtil.getClientId());
+				input.setClientId(clientId);
 				input.setNotifyVideoForMeetingQuit(notifyVideoForMeetingQuit);
 
 				final Gson gson = new Gson();
@@ -431,7 +431,7 @@ public class WebService {
 	}
 
 	public static LaunchMeetingForMemberGuestOutput createCaregiverMeetingSession(String meetingHash,
-			String patientLastName, boolean isMobileFlow, String sessionId) throws Exception {
+			String patientLastName, boolean isMobileFlow, String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + "meetingHash: " + meetingHash + "isMobileFlow :" + isMobileFlow);
 		logger.debug("patientLastName: " + patientLastName);
 		LaunchMeetingForMemberGuestOutput output = null;
@@ -453,7 +453,7 @@ public class WebService {
 			input.setMeetingHash(meetingHash);
 			input.setPatientLastName(patientLastName);
 			input.setMobileFlow(isMobileFlow);
-			input.setClientId(WebUtil.clientId);
+			input.setClientId(clientId);
 			input.setSessionId(sessionId);
 
 			final Gson gson = new Gson();
@@ -484,7 +484,7 @@ public class WebService {
 	}
 
 	public static ServiceCommonOutput endCaregiverMeetingSession(String meetingHash, String megaMeetingNameDisplayName,
-			boolean isParticipantDel, String sessionId) throws Exception {
+			boolean isParticipantDel, String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " [meetingHash=" + meetingHash + ", isParticipantDel=" + isParticipantDel + "]");
 		logger.debug("megaMeetingNameDisplayName=" + megaMeetingNameDisplayName);
 		ServiceCommonOutput output = null;
@@ -504,7 +504,7 @@ public class WebService {
 			input.setMeetingHash(meetingHash);
 			input.setPatientLastName(megaMeetingNameDisplayName);
 			input.setIsDeleteMeetingFromVidyo((isParticipantDel));
-			input.setClientId(isParticipantDel ? WebUtil.getBackButtonClientId() : WebUtil.getClientId());
+			input.setClientId(clientId);
 			input.setSessionId(sessionId);
 
 			final Gson gson = new Gson();
@@ -529,7 +529,7 @@ public class WebService {
 	}
 
 	public static ServiceCommonOutput terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID,
-			String sessionId) throws Exception {
+			String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + "meetingId=" + meetingId + ", vendorConfId=" + vendorConfId);
 		logger.debug("updaterNUID=" + updaterNUID);
 		ServiceCommonOutput output = null;
@@ -549,7 +549,7 @@ public class WebService {
 			input.setMeetingVendorId(vendorConfId);
 			input.setUpdaterNuid(updaterNUID);
 			input.setSessionId(sessionId);
-			input.setClientId(WebUtil.clientId);
+			input.setClientId(clientId);
 
 			final Gson gson = new Gson();
 			final String inputJsonString = gson.toJson(input);
@@ -590,9 +590,11 @@ public class WebService {
 		try {
 			responseEntity = callRestService(headers, uri, HttpMethod.POST, String.class);
 		} catch (HttpClientErrorException ex) {
-			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
+			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : "
+					+ ex.getStatusText());
 		} catch (HttpServerErrorException ex1) {
-			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
+			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : "
+					+ ex1.getStatusText());
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage(), e);
 		}
@@ -632,14 +634,14 @@ public class WebService {
 		logger.info(LOG_EXITING);
 		return kpOrgSignOnInfo;
 	}
-	
-	private static ResponseEntity<?> callRestService(final HttpHeaders headers, final URI uri, final HttpMethod httpMethod,
-			final Class<?> responseType) {
+
+	private static ResponseEntity<?> callRestService(final HttpHeaders headers, final URI uri,
+			final HttpMethod httpMethod, final Class<?> responseType) {
 		final HttpEntity<?> entity = new HttpEntity<Object>(headers);
 		final ResponseEntity<?> responseEntity = restTemplate.exchange(uri, httpMethod, entity, responseType);
 		return responseEntity;
 	}
-	
+
 	private static HttpHeaders getJsonHttpHeaders() {
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
@@ -650,7 +652,6 @@ public class WebService {
 		headers.set("X-appName", kpOrgSSOAppNameHeader);
 		return headers;
 	}
-
 
 	public static KpOrgSignOnInfo validateKpOrgSSOSession(final String ssoSession) throws Exception {
 		logger.info(LOG_ENTERED);
@@ -666,9 +667,11 @@ public class WebService {
 		try {
 			responseEntity = callRestService(headers, uri, HttpMethod.GET, String.class);
 		} catch (HttpClientErrorException ex) {
-			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
+			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : "
+					+ ex.getStatusText());
 		} catch (HttpServerErrorException ex1) {
-			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
+			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : "
+					+ ex1.getStatusText());
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage(), e);
 		}
@@ -709,7 +712,7 @@ public class WebService {
 		return kpOrgSignOnInfo;
 
 	}
-	
+
 	// Authorize Member by passing guid to Member SSO Auth API
 	public static AuthorizeResponseVo authorizeMemberSSOByGuid(String guid, String regionCode) throws Exception {
 		logger.info(LOG_ENTERED);
@@ -761,16 +764,17 @@ public class WebService {
 			}
 			logger.info("ssosession token : " + kpSsoSession);
 		} catch (HttpClientErrorException ex) {
-			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : " + ex.getStatusText());
+			logger.info("HttpClient error, Status code : " + ex.getRawStatusCode() + ", Status text : "
+					+ ex.getStatusText());
 		} catch (HttpServerErrorException ex1) {
-			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : " + ex1.getStatusText());
+			logger.info("HttpServer error, Status code : " + ex1.getRawStatusCode() + ", Status text : "
+					+ ex1.getStatusText());
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING + " isSignedOff=" + isSignedOff);
 		return isSignedOff;
 	}
-	
 
 	public static void initializeRestProperties() {
 		logger.info(LOG_ENTERED);
@@ -789,82 +793,12 @@ public class WebService {
 		logger.info(LOG_EXITING + " videoVisitRestServiceUrl :  " + videoVisitRestServiceUrl);
 	}
 
+
 	/**
 	 * @param operationName
 	 * @param input
 	 * @return
 	 */
-	/*
-	public static String callVVRestService(final String operationName, final String input) {
-		logger.info(LOG_ENTERED);
-		HttpURLConnection connection = null;
-		InputStream content = null;
-		Scanner scanner = null;
-		OutputStream os = null;
-		String output = null;
-		try {
-			logger.info("videoVisitRestServiceUrl url: " + videoVisitRestServiceUrl + operationName);
-			if (StringUtils.isBlank(videoVisitRestServiceUrl) || StringUtils.isBlank(serviceSecurityUsername)
-					|| StringUtils.isBlank(serviceSecurityPassword)) {
-				initializeRestProperties();
-			}
-			logger.info("videoVisitRestServiceUrl url: " + videoVisitRestServiceUrl + operationName);
-			final URL url = new URL(videoVisitRestServiceUrl + operationName);
-			final String authStr = serviceSecurityUsername + ":" + serviceSecurityPassword;
-
-			final String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
-			connection = (HttpURLConnection) url.openConnection();
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("Content-Type", "application/json");
-			connection.setRequestProperty("Authorization", "Basic " + authEncoded.trim());*/
-//			connection.setRequestProperty("Accept", "*/*");
-			/*connection.setDoOutput(true);
-
-			os = connection.getOutputStream();
-			os.write(input.getBytes());
-			os.flush();
-			content = connection.getInputStream();
-			scanner = new Scanner(content);
-			scanner.useDelimiter("\\Z");
-			output = scanner.next();
-			scanner.close();
-		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage(), e);
-		} finally {
-			try {
-				if (content != null) {
-					content.close();
-				}
-			} catch (Exception e) {
-				logger.warn("Error while closing inputStream.");
-			}
-
-			try {
-				if (scanner != null) {
-					scanner.close();
-				}
-			} catch (Exception e) {
-				logger.warn("Error while closing scanner.");
-			}
-
-			try {
-				if (os != null) {
-					os.close();
-				}
-			} catch (Exception e) {
-				logger.warn("Error while closing OutputStream.");
-			}
-			disconnectURLConnection(connection);
-		}
-		logger.info(LOG_EXITING);
-		return output;
-	}*/
-
-/**
- * @param operationName
- * @param input
- * @return
- */
 	public static String callVVRestService(final String operationName, final String input) {
 		logger.info(LOG_ENTERED);
 		String output = null;
@@ -1289,8 +1223,7 @@ public class WebService {
 	}
 
 	public static JoinLeaveMeetingJSON memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId,
-			boolean isFromBackButton)
-			throws Exception {
+			boolean isFromBackButton, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
 		logger.debug("careGiverName=" + careGiverName);
 		JoinLeaveMeetingJSON output = null;
@@ -1312,8 +1245,7 @@ public class WebService {
 			joinLeaveMeetingInput.setMeetingId(Long.parseLong(meetingId));
 			joinLeaveMeetingInput.setInMeetingDisplayName(careGiverName);
 			joinLeaveMeetingInput.setSessionId(sessionId);
-			joinLeaveMeetingInput
-					.setClientId(isFromBackButton ? WebUtil.getBackButtonClientId() : WebUtil.getClientId());
+			joinLeaveMeetingInput.setClientId(clientId);
 			joinLeaveMeetingInput.setIsPatient(false);
 			joinLeaveMeetingInput.setDeviceType(WebUtil.DEFAULT_DEVICE);
 			joinLeaveMeetingInput.setDeviceOs(WebUtil.getDeviceOs());
@@ -1334,7 +1266,7 @@ public class WebService {
 	}
 
 	public static String launchMemberOrProxyMeetingForMember(long meetingId, String mrn8Digit,
-			String inMeetingDisplayName, boolean isProxyMeeting, String sessionId) throws Exception {
+			String inMeetingDisplayName, boolean isProxyMeeting, String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId + ", isProxyMeeting" + isProxyMeeting);
 		logger.debug("mrn8Digit=" + mrn8Digit + ", inMeetingDisplayName" + inMeetingDisplayName);
 		final Gson gson = new Gson();
@@ -1365,7 +1297,7 @@ public class WebService {
 			input.setInMeetingDisplayName(inMeetingDisplayName);
 			input.setGetProxyMeeting(isProxyMeeting);
 			input.setSessionId(sessionId);
-			input.setClientId(WebUtil.clientId);
+			input.setClientId(clientId);
 			inputJsonString = gson.toJson(input);
 			logger.debug("inputJsonString : " + inputJsonString);
 			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
@@ -1378,7 +1310,7 @@ public class WebService {
 	}
 
 	public static String launchMeetingForMemberDesktop(long meetingId, String inMeetingDisplayName, String mrn8Digit,
-			String sessionId) throws Exception {
+			String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
 		logger.debug("mrn8Digit=" + mrn8Digit + ", inMeetingDisplayName" + inMeetingDisplayName);
 		final Gson gson = new Gson();
@@ -1403,7 +1335,7 @@ public class WebService {
 			input.setInMeetingDisplayName(inMeetingDisplayName);
 			input.setMrn(mrn8Digit);
 			input.setSessionId(sessionId);
-			input.setClientId(WebUtil.clientId);
+			input.setClientId(clientId);
 			inputJsonString = gson.toJson(input);
 			logger.debug("inputJsonString : " + inputJsonString);
 			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
@@ -1417,7 +1349,7 @@ public class WebService {
 	}
 
 	public static MeetingDetailsJSON retrieveMeeting(String mrn8Digit, int pastMinutes, int futureMinutes,
-			String sessionID) throws Exception {
+			String sessionID, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " pastMinutes=" + pastMinutes + " pastMinutes=" + pastMinutes);
 		logger.debug("mrn8Digit=" + mrn8Digit);
 
@@ -1437,7 +1369,7 @@ public class WebService {
 				return detailsJSON;
 			}
 			jsonInput.setMrn(mrn8Digit);
-			jsonInput.setClientId(WebUtil.clientId);
+			jsonInput.setClientId(clientId);
 			jsonInput.setSessionId(sessionID);
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
 			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
@@ -1530,7 +1462,8 @@ public class WebService {
 	 * @param sessionId
 	 * @return
 	 */
-	public static String getProviderRunningLateDetails(final String meetingId, final String sessionId) {
+	public static String getProviderRunningLateDetails(final String meetingId, final String sessionId,
+			final String clientId) {
 		logger.info(LOG_ENTERED + " meetingId: " + meetingId);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
@@ -1551,7 +1484,7 @@ public class WebService {
 		try {
 			input = new MeetingRunningLateInput();
 			input.setMeetingId(meetingId);
-			input.setClientId(WebUtil.clientId);
+			input.setClientId(clientId);
 			input.setSessionId(sessionId);
 
 			final String inputJsonStr = gson.toJson(input);
@@ -1573,7 +1506,7 @@ public class WebService {
 	 * @return
 	 */
 	public static String caregiverJoinLeaveMeeting(final String meetingId, final String meetingHash,
-			final String joinOrLeave, final String sessionId) {
+			final String joinOrLeave, final String sessionId, final String clientId) {
 		logger.info(LOG_ENTERED + "meetingHash: " + meetingHash + ", meetingId :" + meetingId + ", joinOrLeave :"
 				+ joinOrLeave);
 		final Gson gson = new Gson();
@@ -1598,7 +1531,7 @@ public class WebService {
 			input.setMeetingId(meetingId);
 			input.setMeetingHash(meetingHash);
 			input.setJoinLeaveMeeting(joinOrLeave);
-			input.setClientId(WebUtil.clientId);
+			input.setClientId(clientId);
 			input.setSessionId(sessionId);
 
 			final String inputJsonStr = gson.toJson(input);
@@ -1635,7 +1568,7 @@ public class WebService {
 				input.setMeetingId(meetingId);
 				input.setUserType(userType);
 				input.setUserAction(action);
-				input.setClientId(WebUtil.clientId);
+				input.setClientId(WebUtil.VV_MBR_WEB);
 				input.setSessionId(sessionId);
 				final String inputJsonStr = gson.toJson(input);
 				logger.info("inputJsonStr: " + inputJsonStr);
@@ -1649,9 +1582,10 @@ public class WebService {
 		logger.info(LOG_EXITING);
 		return jsonOutput;
 	}
-	
+
 	public static String logVendorMeetingEvents(final long meetingId, final String userType, final String userId,
-			final String eventName, final String eventDescription, final String logType, final String sessionId) {
+			final String eventName, final String eventDescription, final String logType, final String sessionId,
+			final String clientId) {
 		logger.info(LOG_ENTERED + " meetingId: " + meetingId + " userType: " + userType);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
@@ -1677,7 +1611,7 @@ public class WebService {
 				input.setEventName(eventName);
 				input.setEventDescription(eventDescription);
 				input.setLogType(logType);
-				input.setClientId(WebUtil.clientId);
+				input.setClientId(clientId);
 				input.setSessionId(sessionId);
 
 				final String inputJsonStr = gson.toJson(input);
@@ -1700,7 +1634,7 @@ public class WebService {
 	 * @return
 	 */
 	public static MeetingDetailsOutput getActiveMeetingsForSSOSimulation(final String mrn8Digit,
-			final boolean isNonMember, final String sessionId) {
+			final boolean isNonMember, final String sessionId, final String clientId) {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
 		String responseJsonStr = "";
@@ -1733,7 +1667,8 @@ public class WebService {
 			if (StringUtils.isNotBlank(teenProxy)) {
 				proxyMrns.add(teenProxy);
 			}
-			if (StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId) || CollectionUtils.isEmpty(proxyMrns)) {
+			if (StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId)
+					|| CollectionUtils.isEmpty(proxyMrns)) {
 				logger.warn("Missing input attributes.");
 				output = new MeetingDetailsOutput();
 				final Status status = new Status();
@@ -1755,7 +1690,7 @@ public class WebService {
 			input.setIsAdhoc(isAdhoc);
 			input.setIsParrs(isParrs);
 			input.setIsMember(isMember);
-			input.setClientId(WebUtil.clientId);
+			input.setClientId(clientId);
 			input.setSessionId(sessionId);
 
 			inputJsonString = gson.toJson(input);

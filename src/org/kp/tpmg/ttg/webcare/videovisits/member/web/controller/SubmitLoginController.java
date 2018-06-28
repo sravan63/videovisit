@@ -22,8 +22,8 @@ public class SubmitLoginController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String data = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		WebUtil.setClientId(WebUtil.VV_MBR_WEB);
-		WebUtil.setBackButtonClientId(WebUtil.VV_MBR_BACK_BUTTON);
+		ctx.setClientId(WebUtil.VV_MBR_WEB);
+		ctx.setBackButtonClientId(WebUtil.VV_MBR_BACK_BUTTON);
 		try {
 			if (ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
 				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);

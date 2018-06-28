@@ -82,13 +82,13 @@ public class BackButtonFilter implements Filter {
 						if (ctx.getMemberDO() == null && !isVideoVisitMemberMeetingPage) { 
 							logger.info("Calling end Caregiver meeting session");
 							MeetingCommand.endCaregiverMeetingSession(ctx.getMeetingCode(),
-									ctx.getVideoVisit().getPatientLastName(), req.getSession().getId());
+									ctx.getVideoVisit().getPatientLastName(), req.getSession().getId(), req);
 						} else if (ctx.getMemberDO() != null && !isVideoVisitMemberMeetingPage ) {
 							if (ctx.getVideoVisit() != null
 									&& "Y".equalsIgnoreCase(ctx.getVideoVisit().getIsProxyMeeting())) {
 								logger.info("Calling member leaving proxy meeting");
 								WebService.memberLeaveProxyMeeting(ctx.getVideoVisit().getMeetingId(),
-										ctx.getVideoVisit().getGuestName(), req.getSession().getId(),true);
+										ctx.getVideoVisit().getGuestName(), req.getSession().getId(),true,ctx.getBackButtonClientId());
 							} else {
 								logger.info("Calling member update end meeting logout");
 								String memberName = ctx.getMemberDO().getLastName() + ", "
