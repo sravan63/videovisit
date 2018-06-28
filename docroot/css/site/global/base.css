@@ -93,15 +93,15 @@ button {  width: auto; overflow: visible; }
 .develop { display: none;}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+/*DE13936*/
+.center-fixed-positioned-div .modal-body .dialog-content-question #plugin_upgrade_message{
+	font-weight:bold;
+	margin: 10px 0px;
+}
+.center-fixed-positioned-div .modal-body .dialog-content-question #plugin_file_download_button{
+	padding: 4px 10px 3px 7px;
+	font-size: 15px;
+	background: none repeat scroll 0 0 #4D8993;
+	color: #ffffff;
+}
+/*DE13936*/
