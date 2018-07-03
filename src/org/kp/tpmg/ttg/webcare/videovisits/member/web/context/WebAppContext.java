@@ -55,7 +55,17 @@ public class WebAppContext implements Serializable {
 	private String blockChrome = "true";
 	private String blockFF = "true";
 	private boolean showPeripheralsPage = true;
+		
+	/**
+	 * Defaulting clientId  to "vv-mbr-web".
+	 * Other possible values vv-mbr-sso-web,vv-mbr-sso-sim,vv-mbr-guest
+	 */
 	private String clientId = "vv-mbr-web";
+	
+	/**
+	 * Defaulting backButtonClientId  to "vv-mbr-back-btn".
+	 * Other possible values vv-mbr-sso-back-btn,vv-mbr-sso-sim-back-btn,vv-mbr-guest-back-btn
+	 */
 	private String backButtonClientId = "vv-mbr-back-btn";
 
 	public String getGuestMeetingId() {

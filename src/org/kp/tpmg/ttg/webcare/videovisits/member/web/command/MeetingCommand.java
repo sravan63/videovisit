@@ -156,10 +156,10 @@ public class MeetingCommand {
 						meetingId = ctx.getMeetingId();
 					}
 				}
-
+				String clientId = notifyVideoForMeetingQuit ? ctx.getBackButtonClientId() : ctx.getClientId();
 				if (ctx.getMemberDO() != null) {
 					ret = WebService.memberEndMeetingLogout(ctx.getMemberDO().getMrn(), meetingId,
-							request.getSession().getId(), memberName, notifyVideoForMeetingQuit, notifyVideoForMeetingQuit ? ctx.getBackButtonClientId() : ctx.getClientId());
+							request.getSession().getId(), memberName, notifyVideoForMeetingQuit, clientId);
 					if (ret != null) {
 						final String responseDesc = ret.getStatus() != null
 								? ret.getStatus().getMessage() + ": " + ret.getStatus().getCode()
@@ -304,10 +304,10 @@ public class MeetingCommand {
 				isMobileFlow = false;
 				logger.info("mobile flow is false");
 			}
-
+			final String clientId = WebUtil.getClientIdFromContext(ctx);
 			if (StringUtils.isNotBlank(meetingCode)) {
 				output = WebService.createCaregiverMeetingSession(meetingCode, patientLastName, isMobileFlow,
-						request.getSession().getId(), ctx.getClientId());
+						request.getSession().getId(), clientId);
 				if (output != null && output.getLaunchMeetingEnvelope().getLaunchMeeting() != null) {
 					jsonString = gson.toJson(output);
 					logger.debug("json output" + jsonString);
@@ -362,11 +362,12 @@ public class MeetingCommand {
 		ServiceCommonOutput output = null;
 		String jsonString = null;
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final String clientId = ctx != null ? ctx.getBackButtonClientId() : WebUtil.VV_MBR_BACK_BUTTON;
 		try {
 			logger.info("meetingCode = " + meetingCode);
 			if (StringUtils.isNotBlank(meetingCode)) {
 				output = WebService.endCaregiverMeetingSession(meetingCode, megaMeetingNameDisplayName, true,
-						sessionId, ctx.getBackButtonClientId());
+						sessionId, clientId);
 			}
 			if (output != null) {
 				Gson gson = new Gson();
@@ -413,9 +414,10 @@ public class MeetingCommand {
 		CreateInstantVendorMeetingOutput output = null;
 		String jsonString = null;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final String clientId = WebUtil.getClientIdFromContext(ctx);
 		try {
 			output = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType,
-					request.getSession().getId(), ctx.getClientId());
+					request.getSession().getId(), clientId);
 
 			if (output != null) {
 				Gson gson = new Gson();
@@ -452,9 +454,9 @@ public class MeetingCommand {
 
 			WebService.initWebService(request);
 			String hostNuid = WebService.getSetupWizardHostNuid();
-
+			final String clientId = WebUtil.getClientIdFromContext(ctx);
 			output = WebService.terminateInstantMeeting(meetingId, vendorConfId, hostNuid,
-					request.getSession().getId(), ctx.getClientId());
+					request.getSession().getId(), clientId);
 
 			if (output != null) {
 				Gson gson = new Gson();
@@ -880,8 +882,9 @@ public class MeetingCommand {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
+			final String clientId = WebUtil.getClientIdFromContext(ctx);
 			verifyCareGiverOutput = WebService.verifyCaregiver(meetingCode, patientLastName,
-					request.getSession().getId(), ctx.getClientId());
+					request.getSession().getId(), clientId);
 			if (verifyCareGiverOutput != null) {
 				String statusCode = verifyCareGiverOutput.getStatus().getCode();
 				if (statusCode != "200") {
@@ -1192,9 +1195,10 @@ public class MeetingCommand {
 		final String eventDescription = request.getParameter("eventDescription");
 		final String logType = request.getParameter("logType");
 		final String sessionId = request.getSession().getId();
+		final String clientId = WebUtil.getClientIdFromContext(ctx);
 		try {
 			output = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
-					eventName, eventDescription, logType, sessionId, ctx.getClientId());
+					eventName, eventDescription, logType, sessionId, clientId);
 		} catch (Exception e) {
 			output = new Gson().toJson(new SystemError());
 			logger.error("System Error for meeting :" + meetingId + " : ", e);
