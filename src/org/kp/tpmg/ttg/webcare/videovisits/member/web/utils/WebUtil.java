@@ -146,7 +146,7 @@ public class WebUtil {
 					cookie.setValue(null);
 					cookie.setMaxAge(0);
 					cookie.setPath("/");
-					cookie.setDomain(".kaiserpermanente.org");
+					cookie.setDomain("kaiserpermanente.org");
 					cookie.setSecure(true);
 					response.addCookie(cookie);
 					logger.info("removed cookie name=" + cookie.getName());
