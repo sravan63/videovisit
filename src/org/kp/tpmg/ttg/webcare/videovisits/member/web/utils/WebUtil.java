@@ -128,7 +128,7 @@ public class WebUtil {
 		try {
 			cookie = new Cookie(cookieName, URLEncoder.encode(cookieValue, "UTF-8"));
 			cookie.setPath("/");
-			cookie.setDomain(".kaiserpermanente.org");
+			cookie.setDomain("kaiserpermanente.org");
 			cookie.setSecure(true);
 			response.addCookie(cookie);
 		} catch (UnsupportedEncodingException e) {
