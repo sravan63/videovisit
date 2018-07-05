@@ -85,6 +85,10 @@ public class LogoffController extends SimplePageController {
 			}
 		}
 		request.getSession().invalidate();
+		if (WebAppContext.getWebAppContext(request) != null) {
+			logger.info("setting context to null");
+			WebAppContext.setWebAppContext(request, null);
+		}
 
 		if (request.getSession(false) == null)
 			logger.info("session is null");
