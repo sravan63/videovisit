@@ -65,14 +65,14 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	var blockChrome = ($("#blockChrome").val() == 'true');
 	var blockFF = ($("#blockFF").val() == 'true');
 	
-	var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
+	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
 	//US32190 changes
-	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome or use Internet Explorer for Windows or Safari for Mac.";
+	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, Internet Explorer, or Safari.";
 	//US32190 changes
 	if(browserInfo.isChrome && blockChrome) {
 		//US32190 changes
-		browserNotSupportedMsgForPatient.replace(' or use Chrome', '');
+		browserNotSupportedMsgForPatient.replace(' or use Chrome,', '');
 		//US32190 changes
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$("p#globalError").removeClass("hide-me");
