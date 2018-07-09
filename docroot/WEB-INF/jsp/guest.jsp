@@ -67,9 +67,13 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	
 	var browserNotSupportedMsgForPatient = "Video Visits does not currently support your browser version.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
-	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Internet Explorer for Windows or Safari for Mac.";
-	
+	//US32190 changes
+	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome or use Internet Explorer for Windows or Safari for Mac.";
+	//US32190 changes
 	if(browserInfo.isChrome && blockChrome) {
+		//US32190 changes
+		browserNotSupportedMsgForPatient.replace(' or use Chrome', '');
+		//US32190 changes
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$("p#globalError").removeClass("hide-me");
 		

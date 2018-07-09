@@ -29,11 +29,11 @@
 	var browserVersion = (browserInfo.version).split(".")[0];
 	var blockChrome = ($("#blockChrome").val() == 'true');
 	var blockFF = ($("#blockFF").val() == 'true');
-	
-	var browserNotSupportedMsgForPatient = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
+	//US32190 changes
+	var browserNotSupportedMsgForPatient = "<span style='font-size: 14px;font-weight:normal;'><span style='font-weight:bold;'>Video Visits does not currently support your browser version.</span>";
 	browserNotSupportedMsgForPatient += "<br /><br />";
-	browserNotSupportedMsgForPatient += "<span style='font-size:14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, Internet Explorer, or Safari.</span>";
-
+	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome or use Internet Explorer for Windows or Safari for Mac.</span>";
+	//US32190 changes
     /* DE10832 - Validating autofill and enabling signon button on load */
     var validateAutoFill = function(){
     	//console.log("Testing Auto Fill");
@@ -72,6 +72,9 @@
 	
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
 	if(browserInfo.isChrome && blockChrome) {
+		//US32190 changes
+		browserNotSupportedMsgForPatient.replace(' or use Chrome', '');
+		//US32190 changes
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$('#ssoLoginError p').css("display", "block");
 		
