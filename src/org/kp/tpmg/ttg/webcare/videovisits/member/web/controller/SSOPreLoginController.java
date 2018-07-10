@@ -109,7 +109,8 @@ public class SSOPreLoginController implements Controller {
 				} else {
 					if (StringUtils.isNotBlank(ssoSession)) {
 						MeetingCommand.performSSOSignOff(request, response);
-//						ssoSession = null;
+						logger.info("Setting ssoSession to null");
+						ssoSession = null;
 					}
 					logger.info("Invalid cookie, so navigating to SSO login page");
 					modelAndView = new ModelAndView(getViewName());
