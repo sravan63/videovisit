@@ -23,7 +23,6 @@
 	<scm>
 		<connection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</connection>
 		<developerConnection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</developerConnection>
-		<tag>v1.9.0</tag>
 	</scm>
 
 	<!-- dependencies needed during compile time -->
