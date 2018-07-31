@@ -17,6 +17,7 @@
 	String patientLastName = ctx.getPatientLastName();
 	String nocache = ctx.getNocache();
 	String meetingId = ctx.getGuestMeetingId();
+  String guestName = ctx.getCareGiverName();
 
 %>
 
@@ -24,13 +25,33 @@
   <div class="heading">Your Video Visits for Today</div>
   <div class="links">
   	<!-- US31770 -->
-    <a href="javascript:getGuestMeetings();">Refresh page</a>
+    <a href="javascript:refreshGrid();">Refresh page</a>
     <!-- US31770 -->
     <span>|</span>
     <a href="mdohelp.htm" target="_blank">Help</a>
   </div>
 </div>
 <!-- US31768 -->
+<!-- UDP Test Results -->
+<div class="udp-test-container">
+  <div class="upd-test-header">
+    <span class="warning-icon"></span>
+    <p class="warning-text">Unable to establish a connection</p>
+  </div>
+  <div class="upd-test-content">
+    <div class="udp-message-container">
+      <div class="mdo-logo"></div>
+      <div class="udp-message">
+        <p>Join on your mobile device using</p>
+        <p><b>My Doctor Online</b> App</p>
+      </div>
+    </div>
+    <div class="app-store-container">
+      <span class="ios-appstore"></span><span class="android-playstore">
+    </div>
+  </div>
+</div>
+<!-- UDP Test Results -->
 <div class="my-meetings-no-meetings-grid my-meets-grid">
   <div id="landing-portal-ready" class="guestPortalReady my-meetings-grid" style="width:90%; margin-top:0px; font-family:Avenir Next, sans-serif;">
   
@@ -45,3 +66,4 @@
 <input type="hidden" id="patientLastName" value="<%=patientLastName%>" /> 
 <input type="hidden" id="nocache" value="<%=nocache%>" /> 
 <input type="hidden" id="meetingId" value="<%=meetingId%>" /> 
+<input type="hidden" id="guestName" value="<%=guestName%>" /> 

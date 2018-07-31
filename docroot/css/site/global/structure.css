@@ -839,3 +839,77 @@ a.download-mdo:active, a.download-mdo:visited{
 	color: #0066A5;
 	margin: 0px;
 }
+/* UDP Test CSS */
+.udp-test-container{
+	margin: 10px auto;
+	border-radius: 7px;
+	background-color: #F9E7E6;
+	width: 95%;
+	display: none;
+}
+.udp-test-container .upd-test-header{
+	background-color: #B63125;
+	color: #FFFFFF;
+	padding: 12px 20px;
+	border-radius: 7px 7px 0px 0px;
+	font-weight: bold;
+	font-size: 15px;
+}
+.udp-test-container .upd-test-header .warning-text{
+	display: inline-block;
+	height: 17px;
+	line-height: 19px;
+	vertical-align: middle;
+}
+.udp-test-container .upd-test-content{
+	display: flex;
+	padding: 20px;
+}
+.udp-test-container .upd-test-content .udp-message-container{
+	width: 50%;
+	display: flex;
+	font-size: 15px;
+}
+.udp-test-container .upd-test-content .udp-message-container .udp-message{
+	margin: 2px 0px;
+}
+.udp-test-container .upd-test-content .app-store-container{
+	width: 50%;
+}
+.udp-test-container .upd-test-header .warning-icon{
+	background: url(../../../images/global/warning-icon.png) no-repeat center center;
+	display: inline-block;
+	height: 17px;
+	width: 20px;
+	vertical-align: middle;
+	margin-right: 5px;
+	background-size: cover;
+}
+.udp-test-container .upd-test-content .udp-message-container .mdo-logo{
+	background: url(../../../images/global/mdo-icon.png) no-repeat center center;
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	vertical-align: middle;
+	margin-right: 20px;
+	background-size: cover;
+}
+.ios-appstore{
+	background: url(../../../images/global/appstore.png) no-repeat center center;
+	display: inline-block;
+	height: 36px;
+	width: 129px;
+	vertical-align: middle;
+	margin-right: 20px;
+	background-size: cover;
+    border-radius: 3px;
+}
+.android-playstore{
+	background: url(../../../images/global/playstore.png) no-repeat center center;
+	display: inline-block;
+	height: 36px;
+	width: 129px;
+	vertical-align: middle;
+	background-size: cover;
+    border-radius: 3px;
+}

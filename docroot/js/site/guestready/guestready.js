@@ -1,10 +1,13 @@
 //US31768
 var getGuestMeetingsTimeoutVal;
+var runUDPTest = true;
+var browserInfo;
 //US31768
 $(document).ready(function() {
 	
 	
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation,meetingId,patientLastName, verifyData;
+    browserInfo = getBrowserInfo();
 
 	// Join now Click Event
     $(document).delegate('.btn', 'click', function(e){
@@ -124,9 +127,35 @@ $(document).ready(function() {
         $(this).html(convertedCamelCaseText.trim());
     });
     getGuestMeetings();
+    
 });
 
+var refreshGrid = function(){
+    runUDPTest = true;
+    getGuestMeetings();
+}
 
+function startUDPTest(){
+    checkSTUNServer({
+      urls: 'stun:stun.l.google.com:19302'
+      }, 5000).then(function(bool){
+            if(bool){
+             console.log('Yep, the STUN server works...');
+            } else{
+             //alert('Doesn\'t work');
+             var params = ['error','UDP_STUN_FAIL','UDP test failed'];
+             logVendorMeetingEvents(params);
+             $(".udp-test-container").css("display","block");
+             $('.joinNowButton').each(function(){
+                $(this).removeClass('joinNowButton').addClass('not-available');
+            });
+          }
+        runUDPTest = false;
+      }).catch(function(e){
+         console.log(e);
+         console.log('STUN server does not work.');
+      });
+}
 
 //US30802
 function setPeripheralsFlag(flagVal){
@@ -146,6 +175,70 @@ function setPeripheralsFlag(flagVal){
 }
 //US30802
 
+function checkSTUNServer(stunConfig, timeout){ 
+    console.log('stunConfig: ', stunConfig);
+  return new Promise(function(resolve, reject){
+
+    setTimeout(function(){
+        if(promiseResolved) return;
+        resolve(false);
+        promiseResolved = true;
+    }, timeout || 5000);
+
+    var promiseResolved = false
+      , myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection   //compatibility for firefox and chrome
+      , pc = new myPeerConnection({iceServers:[stunConfig]})
+      , noop = function(){};
+    pc.createDataChannel("");    //create a bogus data channel
+    pc.createOffer(function(sdp){
+      if(sdp.sdp.indexOf('candidate:') > -1){ // sometimes sdp contains the ice candidates...
+        promiseResolved = true;
+        resolve(true);
+      }
+      pc.setLocalDescription(sdp, noop, noop);
+    }, noop);    // create offer and set local description
+    pc.onicecandidate = function(ice){  //listen for candidate events
+      if(promiseResolved || !ice || !ice.candidate || !ice.candidate.candidate || !(ice.candidate.candidate.indexOf('candidate:')>-1 && ice.candidate.candidate.indexOf('udp')>-1))  return;
+      promiseResolved = true;
+      resolve(true);
+    };
+  });   
+}
+
+var logVendorMeetingEvents = function(params){
+    var userId;
+    var userType;
+    var logType = params[0];
+    var meetingId = $("#meetingId").val().trim();
+    var eventName = (params[1])?params[1]:'';
+    var eventDesc = (params[2])?params[2]:'';
+    console.log("sendEventNotification :: params :: "+params);
+    userType = 'Caregiver';
+    userId = $("#guestName").val().trim();
+    console.log("sendEventNotification :: params :: "+params);
+    var eventData = {
+        'logType': logType,
+        'meetingId':meetingId,
+        'userType': userType,
+        'userId': userId,
+        'eventName':eventName,
+        'eventDescription':eventDesc
+    };
+
+    $.ajax({
+        type: "POST",
+        url: VIDEO_VISITS.Path.visit.logVendorMeetingEvents,
+        cache: false,
+        dataType: "json",
+        data: eventData,
+        success: function(result, textStatus){
+            console.log("sendEventNotification :: result :: "+result);
+        },
+        error: function(textStatus){
+            console.log("sendEventNotification :: error :: "+textStatus);
+        }
+    });
+};
 
 //US31768
 function getGuestMeetings(){	
@@ -261,6 +354,13 @@ function updateDomWithMeetings(guestData){
 
         }
         $('.my-meetings-grid').html(htmlToBeAppend);
+    }
+    if(browserInfo.isChrome == true){
+        if(runUDPTest == true){
+            startUDPTest();
+        } else {
+             $(".udp-test-container").css("display","none");
+        }
     }
 }
 //US31768

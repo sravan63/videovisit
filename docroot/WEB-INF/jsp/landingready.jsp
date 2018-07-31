@@ -14,6 +14,9 @@
 <input type="hidden" id="memberDOlastName" value="${WebAppContext.memberDO.lastName}" />
 <input type="hidden" id="memberDOfirstName" value="${WebAppContext.memberDO.firstName}" />
 <!--US31767-->
+<input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
+<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
+<input type="hidden" id="guestName" value="${WebAppContext.videoVisit.guestName}" />
 <%
 
 	//MeetingCommand.retrieveActiveMeetingsForMemberAndProxies(request);
@@ -25,13 +28,33 @@
   <div class="heading">Your Video Visits for Today</div>
   <div class="links">
   <!--US31767-->
-    <a href="javascript:getMemberMeetings()">Refresh page</a>
+    <a href="javascript:refreshGrid()">Refresh page</a>
   <!--US31767-->
     <span>|</span>
     <a href="mdohelp.htm" target="_blank">Help</a>
   </div>
 </div>
 <!--US31767-->
+<!-- UDP Test Results -->
+<div class="udp-test-container">
+  <div class="upd-test-header">
+    <span class="warning-icon"></span>
+    <p class="warning-text">Unable to establish a connection</p>
+  </div>
+  <div class="upd-test-content">
+    <div class="udp-message-container">
+      <div class="mdo-logo"></div>
+      <div class="udp-message">
+        <p>Join on your mobile device using</p>
+        <p><b>My Doctor Online</b> App</p>
+      </div>
+    </div>
+    <div class="app-store-container">
+      <span class="ios-appstore"></span><span class="android-playstore">
+    </div>
+  </div>
+</div>
+<!-- UDP Test Results -->
 <div class="my-meetings-no-meetings-grid my-meets-grid">
   <div id="landing-portal-ready" class="my-meetings-grid" style="width:90%; margin-top:0px; font-family:Avenir Next, sans-serif;">
   
