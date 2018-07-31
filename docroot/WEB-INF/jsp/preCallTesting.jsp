@@ -1,11 +1,32 @@
 <link rel="stylesheet" href="vidyoplayer/css/main-webrtc.css">
+<div class="pre-call-testing-header">
+	<div class="tpmg-logo">
+		<img src="vidyoplayer/img/TPMG_logo.png" alt="TPMG"/>
+		<div class="precall-logo-text">
+			<p class="precall-logo-vv-text">Video Visits</p>
+			<p class="precall-logo-group-text">The Permanente Medical Group</p>
+		</div>
+	</div>
+	<a class="help-link" href="mdohelp.htm" target="_blank">Help</a>
+</div>
 <!-- pre call testing webrtc starts -->
+<!-- <div class="connectivity-test-indicator">
+	<span class="connectivity-inprogress">Checking Video Quality...</span>
+	<span class="connectivity-weak"><b>Weak</b> Video Quality <span class="weak-signal"></span></span>
+	<span class="connectivity-strong"><b>Strong</b> Video Quality <span class="strong-signal"></span></span>
+</div>
+<div class="mdo-app-message-container">
+	<div class="mdo-logo"></div>
+	<div class="mdo-message">
+		<p>We recommend joining your visit using <b>My Doctor Online</b> App.</p>
+		<p><span class="ios-appstore"></span><span class="android-playstore"></span></p>
+	</div>
+</div> -->
 <div class="pre-call-testing-wrapper">
-	<div class="tpmg-logo"><img src="vidyoplayer/img/TPMG_logo.png" alt="TPMG"/><span class="precall-logo-vv-text">Video Visits</span></div>
 	<div class="pre-call-test-container">
 		<!-- Peripherals container block starts -->
 		<div class="video-visit-peripherals-block">
-			<div class="select">
+			<div class="select no-margin-top">
 				<label for="videoSource">Camera</label>
                 <span class="caret"></span>
 				<select id="videoSource"></select>
@@ -15,10 +36,23 @@
 				<span class="caret"></span>
 				<select id="audioSource"></select>
 			</div>
+			<!-- music nodes -->
+			<div class="mic-nodes-container">
+				<div class="background-nodes" id="playNodes"></div>
+			</div>
 			<div class="select">
 				<label for="audioOutput">Speakers</label>
                 <span class="caret"></span>
 				<select id="audioOutput"></select>
+			</div>
+			<!-- audio controls -->
+			<div class="music-button play-music" id="playAudio">
+				<span class="play-icon"></span>
+				<span class="text">Play Sound</span>
+			</div>
+			<div class="music-button pause-music" id="pauseAudio" style="display:none;">
+				<span class="pause-icon"></span>
+				<span class="text">Pause Sound</span>
 			</div>
 		</div>
 		<!-- Peripherals container block ends -->
@@ -27,30 +61,11 @@
 			<video id="video" playsinline autoplay></video>
 		</div>
 		<!-- webrtc video container block ends-->
-		<!-- webrtc mic container block starts-->
-		<div class="video-visit-peripherals-block mic-block">
-			<p class="note-text">Check your Microphone</p>
-			<div class="mic-bars-container">
-				<canvas id="meter1" width="20" height="100"></canvas>
-				<canvas id="meter2" width="20" height="100"></canvas>
-				<canvas id="meter3" width="20" height="100"></canvas>
-				<canvas id="meter4" width="20" height="100"></canvas>
-				<canvas id="meter5" width="20" height="100"></canvas>
-				<canvas id="meter6" width="20" height="100"></canvas>
-				<canvas id="meter7" width="20" height="100"></canvas>
-			</div>
-			<p class="note-text">Speak on your Microphone.</p>
-		</div>
-		<!-- webrtc mic container block ends-->
-		<!-- webrtc audio container block starts-->
-		<div class="video-visit-peripherals-block audio-block">
-			<p class="note-text">Check your speaker</p>
-			<a title="Play" class="audio-controls play-button" id="playAudio"></a>
-			<a title="Play" class="audio-controls pause-button" id="pauseAudio"></a>
-			<p class="note-text">Play the sound clip and adjust your speaker volume.</p>
-		</div>
-		<!-- webrtc audio container block ends-->
 	</div>
+	<!-- <div>
+		<iframe src="" width="500" style="border:none;display:block !important" height="500" name="iframe_a"></iframe>
+		<p><a href="https://test.webrtc.org/" target="iframe_a">Check Bandwidth</a></p>
+	</div> -->
 	<div class="precall-test-button-container">
 		<button id="precall-backBtn" class="">Back</button>
 		<button id="precall-joinBtn" class="">Join</button>
@@ -94,17 +109,17 @@
 			}
 		});
 
-});
+	});
 
-$("#precall-backBtn").on("click", function(){
-	var params = ['info','preCallBackEvent',"Pre-call screen displayed to user, who selected cancel"];
-    VideoVisit.logVendorMeetingEvents(params);
-	//window.history.back();
-	if($("#isMember").val() == "true"){
-	 window.location.href =  'landingready.htm';
-	} else {
-	 window.location.href =  'guestready.htm';
-	}
-});
+	$("#precall-backBtn").on("click", function(){
+		var params = ['info','preCallBackEvent',"Pre-call screen displayed to user, who selected cancel"];
+	    VideoVisit.logVendorMeetingEvents(params);
+		//window.history.back();
+		if($("#isMember").val() == "true"){
+		 window.location.href =  'landingready.htm';
+		} else {
+		 window.location.href =  'guestready.htm';
+		}
+	});
 
 </script>
