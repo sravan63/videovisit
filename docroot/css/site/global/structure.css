@@ -844,13 +844,13 @@ a.download-mdo:active, a.download-mdo:visited{
 	margin: 0px auto 20px;
     border-radius: 15px;
     background-color: #F9E7E6;
-    width: 105%;
+    width: 100%;
 	display: none;
 }
 .udp-test-container .upd-test-header{
 	background-color: #B63125;
 	color: #FFFFFF;
-	padding: 12px 20px;
+	padding: 11px 20px;
 	border-radius: 15px 15px 0px 0px;
 	font-weight: bold;
 	font-size: 15px;
@@ -875,6 +875,7 @@ a.download-mdo:active, a.download-mdo:visited{
 }
 .udp-test-container .upd-test-content .app-store-container{
 	width: 50%;
+	margin-left: 13px;
 }
 .udp-test-container .upd-test-header .warning-icon{
 	background: url(../../../images/global/warning-icon.png) no-repeat center center;
