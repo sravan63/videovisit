@@ -869,13 +869,13 @@ a.download-mdo:active, a.download-mdo:visited{
 	width: 50%;
 	display: flex;
 	font-size: 15px;
+	margin-right: 40px;
 }
 .udp-test-container .upd-test-content .udp-message-container .udp-message{
 	margin: 2px 0px;
 }
 .udp-test-container .upd-test-content .app-store-container{
 	width: 50%;
-	margin-left: 13px;
 }
 .udp-test-container .upd-test-header .warning-icon{
 	background: url(../../../images/global/warning-icon.png) no-repeat center center;
