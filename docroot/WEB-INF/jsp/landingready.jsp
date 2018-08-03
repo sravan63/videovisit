@@ -44,7 +44,7 @@
 	      <div class="mdo-logo"></div>
 	      <div class="udp-message">
 	        <p>Join on your mobile device using</p>
-	        <p><b>My Doctor Online</b> App</p>
+	        <p><b>My Doctor Online</b> App.</p>
 	      </div>
 	    </div>
 	    <div class="app-store-container">
