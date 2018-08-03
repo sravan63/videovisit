@@ -30,28 +30,28 @@
     <span>|</span>
     <a href="mdohelp.htm" target="_blank">Help</a>
   </div>
+  <!-- UDP Test Results -->
+  <div class="udp-test-container">
+	  <div class="upd-test-header">
+	    <span class="warning-icon"></span>
+	    <p class="warning-text">Unable to establish a connection</p>
+	  </div>
+	  <div class="upd-test-content">
+	    <div class="udp-message-container">
+	      <div class="mdo-logo"></div>
+	      <div class="udp-message">
+	        <p>Join on your mobile device using</p>
+	        <p><b>My Doctor Online</b> App</p>
+	      </div>
+	    </div>
+	    <div class="app-store-container">
+	      <span class="ios-appstore"></span><span class="android-playstore">
+	    </div>
+	  </div>
+  </div>
+  <!-- UDP Test Results -->
 </div>
 <!-- US31768 -->
-<!-- UDP Test Results -->
-<div class="udp-test-container">
-  <div class="upd-test-header">
-    <span class="warning-icon"></span>
-    <p class="warning-text">Unable to establish a connection</p>
-  </div>
-  <div class="upd-test-content">
-    <div class="udp-message-container">
-      <div class="mdo-logo"></div>
-      <div class="udp-message">
-        <p>Join on your mobile device using</p>
-        <p><b>My Doctor Online</b> App</p>
-      </div>
-    </div>
-    <div class="app-store-container">
-      <span class="ios-appstore"></span><span class="android-playstore">
-    </div>
-  </div>
-</div>
-<!-- UDP Test Results -->
 <div class="my-meetings-no-meetings-grid my-meets-grid">
   <div id="landing-portal-ready" class="guestPortalReady my-meetings-grid" style="width:90%; margin-top:0px; font-family:Avenir Next, sans-serif;">
   

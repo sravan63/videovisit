@@ -250,6 +250,13 @@ function startUDPTest(){
       }, 5000).then(function(bool){
             if(bool){
              console.log('Yep, the STUN server works...');
+             /*Remove after testing*/
+             var params = ['error','UDP_STUN_FAIL','UDP test failed'];
+             logVendorMeetingEvents(params);
+             $(".udp-test-container").css("display","block");
+             $('.joinNowButton').each(function(){
+                $(this).removeClass('joinNowButton').addClass('not-available');
+            });
             } else{
              //alert('Doesn\'t work');
              var params = ['error','UDP_STUN_FAIL','UDP test failed'];
@@ -263,6 +270,12 @@ function startUDPTest(){
       }).catch(function(e){
          console.log(e);
          console.log('STUN server does not work.');
+         var params = ['error','UDP_STUN_FAIL','UDP test failed'];
+         logVendorMeetingEvents(params);
+         $(".udp-test-container").css("display","block");
+         $('.joinNowButton').each(function(){
+            $(this).removeClass('joinNowButton').addClass('not-available');
+        });
       });
 }
 
