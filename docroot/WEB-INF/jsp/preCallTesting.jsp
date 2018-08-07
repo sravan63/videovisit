@@ -68,7 +68,7 @@
 	</div> -->
 	<div class="precall-test-button-container">
 		<button id="precall-backBtn" class="">Back</button>
-		<button id="precall-joinBtn" class="">Join</button>
+		<button id="precall-joinBtn" class="add-margin">Join</button>
 	</div>
 
 </div>
