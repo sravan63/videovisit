@@ -343,7 +343,8 @@ function updateDomWithMeetings(guestData){
                 }
                 htmlToBeAppend += '</div>';
             }
-            htmlToBeAppend += '<div class="department-details camel-case" style="width: 180px;">'+meeting.host.departmentName.toLowerCase()+'</div>';
+            var department = (meeting.host.departmentName)?meeting.host.departmentName.toLowerCase():'';
+            htmlToBeAppend += '<div class="department-details camel-case" style="width: 180px;">'+department+'</div>';
             htmlToBeAppend += '</div>';//.center class end
             htmlToBeAppend += '<div class="right">';
             for(var y=0;y<meeting.caregiver.length;y++){
