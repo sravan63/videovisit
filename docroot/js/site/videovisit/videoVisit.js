@@ -227,25 +227,30 @@ var VideoVisit =
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
         		var pName = (isWebRTC)?participants[i].trim():pData.name.trim();
+        		var participantName = pName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         		// Host Availability
-        		if(meetingHostName.toLowerCase().indexOf(pName.toLowerCase()) > -1){
+        		var hostName = meetingHostName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+        		if(hostName === participantName){
         			hostAvailable = true;
         		}
         		// Patient Availability
-        		if(meetingPatientName.toLowerCase().indexOf(pName.toLowerCase()) > -1){
+        		var patientName = meetingPatientName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+        		if(patientName === participantName){
         			patientAvailable = true;
         		}
         		// Patient Guests Availability
         		for(var pg=0;pg<patientGuests.length;pg++){
         			var guest = patientGuests[pg];
-        			if(pName.toLowerCase().indexOf(guest.fname.toLowerCase()) > -1 && pName.toLowerCase().indexOf(guest.lname.toLowerCase()) > -1){
+        			var gName = guest.fname.replace(/\s/g, '').toLowerCase()+guest.lname.replace(/\s/g, '').toLowerCase();
+        			if(participantName === gName){
         				guest.isAvailable = true;
         			}
         		}
 	  			// Additional Clinicians Availability
 	  			for(var c=0;c<additinalClinicians.length;c++){
         			var clinician = additinalClinicians[c];
-        			if(clinician.name.toLowerCase() == pName.toLowerCase()){
+        			var cName = clinician.name.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+        			if(cName === participantName){
         				clinician.isAvailable = true;
         			}
         		}
