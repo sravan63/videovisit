@@ -347,14 +347,16 @@ function updateDomWithMeetings(guestData){
             htmlToBeAppend += '<div class="department-details camel-case" style="width: 180px;">'+department+'</div>';
             htmlToBeAppend += '</div>';//.center class end
             htmlToBeAppend += '<div class="right">';
-            for(var y=0;y<meeting.caregiver.length;y++){
-                if($('#meetingCode').val() == meeting.caregiver[y].careGiverMeetingHash){
-                    var cglname = meeting.caregiver[y].lastName?meeting.caregiver[y].lastName:'';
-                    var cgfname = meeting.caregiver[y].firstName?meeting.caregiver[y].firstName:'';
-                    htmlToBeAppend += '<button id="joinNowId" class="btn joinNowButton"userName="'+cglname+', '+cgfname+', ('+meeting.caregiver[y].emailAddress+')" meetingid="'+meeting.meetingId+'" href="'+meeting.meetingVendorId+'" caregiverId="'+meeting.caregiver[y].careGiverId+'">Join your visit</button>';
+            if(meeting.caregiver && meeting.caregiver.length > 0){
+                for(var y=0;y<meeting.caregiver.length;y++){
+                    if($('#meetingCode').val() == meeting.caregiver[y].careGiverMeetingHash){
+                        var cglname = meeting.caregiver[y].lastName?meeting.caregiver[y].lastName:'';
+                        var cgfname = meeting.caregiver[y].firstName?meeting.caregiver[y].firstName:'';
+                        htmlToBeAppend += '<button id="joinNowId" class="btn joinNowButton"userName="'+cglname+', '+cgfname+', ('+meeting.caregiver[y].emailAddress+')" meetingid="'+meeting.meetingId+'" href="'+meeting.meetingVendorId+'" caregiverId="'+meeting.caregiver[y].careGiverId+'">Join your visit</button>';
+                    }
                 }
+                htmlToBeAppend += '<p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p><p class="error error-guest-login"></p>';
             }
-            htmlToBeAppend += '<p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p><p class="error error-guest-login"></p>';
             htmlToBeAppend += '</div>';//.right class end
             htmlToBeAppend += '</div>';//.meeting-details-container class end
             htmlToBeAppend += '</div>';//.landing-portal-single-container class end
