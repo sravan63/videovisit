@@ -13,6 +13,7 @@
 <input type="hidden" id="memberDOmrn" value="${WebAppContext.memberDO.mrn}" />
 <input type="hidden" id="memberDOlastName" value="${WebAppContext.memberDO.lastName}" />
 <input type="hidden" id="memberDOfirstName" value="${WebAppContext.memberDO.firstName}" />
+<input type="hidden" id="memberDOmiddleName" value="${WebAppContext.memberDO.middleName}" />
 <!--US31767-->
 <input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
 <input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />

@@ -184,7 +184,8 @@ var getPatientGuestNameList = function(){
 	for(var i=0; i<patientGuestsLength;i++){
 		var lName = $($('#meetingPatientGuest').children('p')[i]).find(".lName").text().trim();
 		var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
-		pgNames.push({fname:fName, lname:lName, index:i, isAvailable: false});
+		var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
+		pgNames.push({fname:fName, lname:lName, email:email, index:i, isAvailable: false});
 	}
 	return pgNames;
 }
@@ -241,7 +242,7 @@ var VideoVisit =
         		// Patient Guests Availability
         		for(var pg=0;pg<patientGuests.length;pg++){
         			var guest = patientGuests[pg];
-        			var gName = guest.fname.replace(/\s/g, '').toLowerCase()+guest.lname.replace(/\s/g, '').toLowerCase();
+        			var gName = guest.fname.replace(/\s/g, '').toLowerCase()+guest.lname.replace(/\s/g, '').toLowerCase()+'('+guest.email.replace(/\s/g, '').toLowerCase()+')';
         			if(participantName === gName){
         				guest.isAvailable = true;
         			}
