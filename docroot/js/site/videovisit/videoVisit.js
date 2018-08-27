@@ -242,7 +242,7 @@ var VideoVisit =
         		// Patient Guests Availability
         		for(var pg=0;pg<patientGuests.length;pg++){
         			var guest = patientGuests[pg];
-        			var gName = guest.fname.replace(/\s/g, '').toLowerCase()+guest.lname.replace(/\s/g, '').toLowerCase()+'('+guest.email.replace(/\s/g, '').toLowerCase()+')';
+        			var gName = guest.lname.replace(/\s/g, '').toLowerCase()+guest.fname.replace(/\s/g, '').toLowerCase()+'('+guest.email.replace(/\s/g, '').toLowerCase()+')';
         			if(participantName === gName){
         				guest.isAvailable = true;
         			}
