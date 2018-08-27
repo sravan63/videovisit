@@ -484,7 +484,7 @@ function updateDomWithMeetingsData(data){
                 if(meeting.meetingVendorId == null || meeting.meetingVendorId.length <= 0){
                     htmlToBeAppend += '<div style=""><p style=""><button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p></div>';
                 }else{
-                    memberDiplayName = $('#memberDOlastName').val()+', '+$('#memberDOfirstName').val()+' '+$('#memberDOmiddleName').val();
+                    memberDiplayName = meetingLastName+', '+meetingFirstName+' '+meetingMiddleName;
                     htmlToBeAppend += '<div style=""><p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p></div>';
                 }
 
@@ -494,7 +494,7 @@ function updateDomWithMeetingsData(data){
                     htmlToBeAppend += '<div style=""><p style=""><button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p></div>';
                 }else{
                     htmlToBeAppend += '<div style="">';
-                    memberDiplayName = $('#memberDOlastName').val()+', '+$('#memberDOfirstName').val()+' '+$('#memberDOmiddleName').val();
+                    memberDiplayName = meetingLastName+', '+meetingFirstName+' '+meetingMiddleName;
                     if($('#memberDOmrn').val() == meeting.member.mrn){
                         htmlToBeAppend += '<p class=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName+'" meetingid="'+meeting.meetingId+'" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
                     }else{
