@@ -224,11 +224,13 @@ var VideoVisit =
 			var additinalClinicians = getAdditionalCliniciansNameList();
 			var hostAvailable = false;
 			var patientAvailable = false;
+        	var legalCharsForPhone = /[0-9\+]/gi;
 
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
         		var pName = (isWebRTC)?participants[i].trim():pData.name.trim();
         		var participantName = pName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+				var isTelephony = (legalCharsForPhone.test(participantName));
         		// Host Availability
         		var hostName = meetingHostName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         		if(hostName === participantName){
@@ -242,9 +244,20 @@ var VideoVisit =
         		// Patient Guests Availability
         		for(var pg=0;pg<patientGuests.length;pg++){
         			var guest = patientGuests[pg];
-        			var gName = guest.lname.replace(/\s/g, '').toLowerCase()+guest.fname.replace(/\s/g, '').toLowerCase()+'('+guest.email.replace(/\s/g, '').toLowerCase()+')';
-        			if(participantName === gName){
-        				guest.isAvailable = true;
+        			var gName;
+        			var participant;
+        			if (isTelephony) {
+        				gName = guest.fname.replace(/\s/g, '').split('').reverse().join('').substr(0,10);
+        				participant = participantName.split('').reverse().join('').substr(0,10);
+        				if(participant === gName){
+	        				guest.isAvailable = true;
+	        			}
+        			} else {
+        				participant = participantName;
+        				gName = guest.lname.replace(/\s/g, '').toLowerCase()+guest.fname.replace(/\s/g, '').toLowerCase()+'('+guest.email.replace(/\s/g, '').toLowerCase()+')';
+	        			if(participant === gName){
+	        				guest.isAvailable = true;
+	        			}
         			}
         		}
 	  			// Additional Clinicians Availability
