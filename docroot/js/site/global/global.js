@@ -394,3 +394,19 @@ Modernizr.addTest('isWindowedPlugin', function(){
 	return testWindowedPlugin;
 });
 
+
+function changeFromNumberToTelephoneFormat(number){
+    var telephoneNumber = number.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+     return telephoneNumber;
+      
+}
+
+function changeFromTelePhoneToTenDigitNumber(number){
+    var tenDigitNumber = number.replace(/[- )(]/g,'');
+    return tenDigitNumber;
+}
+
+function isNumberString(str){
+    var onlyNumbers = /^\d+$/;
+    return (onlyNumbers.test(str));
+}

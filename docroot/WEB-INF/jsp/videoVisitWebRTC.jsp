@@ -243,13 +243,12 @@
 								</dd>
 							</dl>
 						</c:if>
-						
 						<c:if test="${not empty WebAppContext.videoVisit.caregiver}">
 							<dl id="meetingPatientGuestContainer">
 								<dt>My Guests</dt>
-								<dd id="meetingPatientGuest">
+								<dd id="meetingPatientGuest" style="display:none;">
 									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">        
-										<p style="padding-bottom:10px;"><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span><i class="active-user-state"></i></p>
+										<p><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span><i class="active-user-state"></i></p>
 									</c:forEach>
 								</dd>
 								</dl>

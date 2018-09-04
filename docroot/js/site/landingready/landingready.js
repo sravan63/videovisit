@@ -458,7 +458,15 @@ function updateDomWithMeetingsData(data){
                 for(var j=0;j<meeting.caregiver.length;j++){
                     var cgfname = meeting.caregiver[j].firstName?meeting.caregiver[j].firstName.toLowerCase():'';
                     var cglname = meeting.caregiver[j].lastName?meeting.caregiver[j].lastName.toLowerCase():'';
-                    htmlToBeAppend += '<span>'+cgfname+' '+cglname+'</span>';
+                    var displayname = '';
+                    if(isNumberString(cgfname)){
+                        var tele = cgfname.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
+                        var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
+                        displayname = telePhoneNumber;
+                    }else{
+                        displayname = cgfname+' '+cglname;
+                    }
+                    htmlToBeAppend += '<span>'+displayname+'</span>';
                 }
                 htmlToBeAppend += '</span>';
             }

@@ -185,7 +185,11 @@ var getPatientGuestNameList = function(){
 		var lName = $($('#meetingPatientGuest').children('p')[i]).find(".lName").text().trim();
 		var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
 		var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
-		pgNames.push({fname:fName, lname:lName, email:email, index:i, isAvailable: false});
+		var isTelephony = isNumberString(changeFromTelePhoneToTenDigitNumber(fName));
+		if(isTelephony){
+			fName = changeFromTelePhoneToTenDigitNumber(fName);
+		}
+		pgNames.push({fname:fName, lname:lName, email:email, index:i, isAvailable: false, isTelePhony: isTelephony});
 	}
 	return pgNames;
 }
@@ -202,6 +206,26 @@ var getAdditionalCliniciansNameList = function(){
 
 var VideoVisit =
 {
+	updatePatientGuestNameList: function(){
+		var pgNames = [];
+		var patientGuestsLength = $('#meetingPatientGuest').children('p').length;
+		for(var i=0; i<patientGuestsLength;i++){
+			var lName = $($('#meetingPatientGuest').children('p')[i]).find(".lName").text().trim();
+			var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
+			var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
+			if(isNumberString(fName) === true){
+				var tele = fName.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
+	            var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
+				var newFName = telePhoneNumber;
+				var newLName = "";
+				$($('#meetingPatientGuest').children('p')[i]).find(".lName").text(newLName);
+				$($('#meetingPatientGuest').children('p')[i]).find(".fName").text(newFName);
+				var str = '<p><span class="lName">'+newLName+'</span> <span class="fName">'+newFName+'</span><span class="email" style="display:none;">'+email+'</span><i class="active-user-state"></i></p>'
+				$($('#meetingPatientGuest').children('p')[i]).html(str);
+			}
+		}
+		$('#meetingPatientGuest').css('display','block');
+	},
 	setShowPrecallTestingFlag: function(flag){
 		var val = (flag == true)?"true":"flag";
 		$.ajax({
@@ -218,19 +242,170 @@ var VideoVisit =
 			}
 		});
 	},
+	addNewPartcipantsToSideBar: function(participant, isPatientGuest){
+		var data = {};
+		var userType = '';
+		if(isPatientGuest){
+			var isTelePhony = (participant.indexOf('@') === -1);
+			if (isTelePhony) {
+				var tele = participant.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
+				var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
+				userType = 'telephony';
+				data = {
+					lastName: '',
+					firstName: telePhoneNumber,
+					emailAddress: 'dummy@dummy.com',
+					careGiverId: ''
+				};
+				telephonyUserAvailable = true;
+			} else {
+				var nameWithoutSpaces = participant.replace(/\s/g, '');
+				var name = nameWithoutSpaces.split(',');
+				var lname = name[0];
+				var fname = name[1].split('(')[0];
+				var eStart = name[1].indexOf('(')+1;
+				var eEnd = name[1].indexOf(')');
+				var email = name[1].substring(eStart,eEnd);
+				userType = 'patientguest';
+				data = {
+					lastName: lname,
+					firstName: fname,
+					emailAddress: email,
+					careGiverId: ''
+				};
+			}
+
+			VideoVisit.appendInvitedGuestToSidebar(data, false, isTelePhony);
+		} else {
+			userType = 'clinician';
+			data = {
+				inMeetingDisplayName: participant
+			};
+			VideoVisit.appendAddedParticipantToSidebar(data, false);
+		}
+		// Service call
+		VideoVisit.updateContext(data, userType);
+	},
+	updateContext: function(data, userType){
+		var cData = {};
+		switch(userType){
+			case 'telephony':
+				cData = {
+					userType: userType,
+					firstName: data.firstName, 
+					lastName: data.lastName, 
+					email: data.emailAddress
+				}
+			break;
+
+			case 'patientguest':
+				cData = {
+					userType: userType,
+					firstName: data.firstName, 
+					lastName: data.lastName, 
+					email: data.emailAddress
+				}
+			break;
+
+			case 'clinician':
+				var nameWithoutSpaces = data.inMeetingDisplayName.replace(/\s/g, '');
+				var name = nameWithoutSpaces.split(',');
+				cData = {
+					userType: userType,
+					firstName: name[1], 
+					lastName: name[0], 
+					email: ''
+				}
+			break;
+		}
+		// make AJAX call here
+		/*$.ajax({
+			type: "POST",
+			url: VIDEO_VISITS.Path.grid.meeting.dialOutToParticipant,
+			cache: false,
+			dataType: "json",
+			data: cData,
+			success: function(result){
+				
+			},
+			error: function(textStatus){
+				
+			}
+		});*/
+	},
+	appendAddedParticipantToSidebar: function(data, showNotification){
+  		if($('#meetingParticipantContainer').length === 0){
+  			if($('#meetingPatientGuestContainer').length === 0){
+  				$('#video-info').append('<dl id="meetingParticipantContainer"><dt>Add\'l Clinicians</dt></dl>');
+  				$('#meetingParticipantContainer').append('<dd id="meetingParticipant" style="word-wrap: break-word;"><span>'+data.inMeetingDisplayName+'<i class="active-user-state"></i></span></dd>');
+  			}else{
+  				$('#meetingPatientGuestContainer').before('<dl id="meetingParticipantContainer"><dt>Add\'l Clinicians</dt></dl>');
+  				$('#meetingParticipantContainer').append('<dd id="meetingParticipant" style="word-wrap: break-word;"><span>'+data.inMeetingDisplayName+'<i class="active-user-state"></i></span></dd>');
+  			}
+  		}else if($('#meetingParticipantContainer').css('display') !== 'none'){
+  			$('#meetingParticipant').append('<span>'+data.inMeetingDisplayName+'<i class="active-user-state"></i></span>');
+  		}
+  	},
+  	appendInvitedGuestToSidebar: function(data, showNotification, isTelephony){
+  		var name = '';
+  		var str = '';
+  		var emailstr = '';
+  		var successMessage = '';
+  		var iconstr = (showNotification == false)?'<i class="active-user-state" style="display:inline-block;"></i>':'<i class="active-user-state"></i>';
+  		if(isTelephony == false) {
+  			successMessage="Your invitation has been sent.";
+	  		emailstr = (data.emailAddress.toLowerCase() === "dummy@dummy.com")?' <a href="javascript:void(0)" class="sendemail_patientGuest sendemail" style="display:none;" title="Email">(email)</a>':' <a href="javascript:void(0)" class="sendemail addPartcipantGuestEmail" onclick="VideoVisit.openEmailPopup(event)" title="Email">(email)</a>';
+	  		str += '<p><span class="lName">' + data.lastName + '</span>' +
+	                  ', <span class="fName">' + data.firstName + '</span>' +
+	                  ' <span class="email">' + data.emailAddress + '</span>' +
+	                  ' <span class="guestID">' + data.careGiverId + '</span>' +  emailstr + iconstr +
+	                  '</p>';
+  		} else {
+  			emailstr = '<a href="javascript:void(0)" class="sendemail_patientGuest sendemail" style="display:none;" title="Email">(email)</a>';
+	  		str += '<p><span class="lName"></span>' +
+	                  '<span class="fName">' + data.firstName + '</span>' +
+	                  ' <span class="email" style="display:none;">' + data.emailAddress + '</span>' +
+	                  ' <span class="guestID">' + data.careGiverId + '</span>' +  emailstr + iconstr +
+	                  '</p>';
+  		}
+  		if($('#meetingPatientGuestContainer').length === 0){
+  			$('#video-info').append('<dl id="meetingPatientGuestContainer"><dt>My Guests</dt></dl>');
+  			$('#meetingPatientGuestContainer').append('<dd id="meetingPatientGuest" style="word-wrap: break-word;">'+str+'</dd>');
+  		}else if($('#meetingPatientGuestContainer').css('display') !== 'none'){
+  			$('#meetingPatientGuest').append(str);
+  		}
+  	},
+  	checkTelePhonyUser: function(phonenumber){
+      	var patientGuestsLength = $('#meetingPatientGuest').children('p').length;
+      	var available = false;
+		for(var i=0; i<patientGuestsLength;i++){
+			var lName = $($('#meetingPatientGuest').children('p')[i]).find(".lName").text().trim();
+			var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
+			var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
+			var isTelephony = isNumberString(changeFromTelePhoneToTenDigitNumber(fName));
+			if(isTelephony){
+				var gName = changeFromTelePhoneToTenDigitNumber(fName).replace(/\s/g, '').split('').reverse().join('').substr(0,10);
+				var participant = phonenumber.split('').reverse().join('').substr(0,10);
+				if(participant === gName){
+    				available = true;
+					break;
+    			}
+			}
+		}
+		return available;
+      },
 	checkAndShowParticipantAvailableState: function(participants,isWebRTC){
 		if(participants){
 			var patientGuests = getPatientGuestNameList();
 			var additinalClinicians = getAdditionalCliniciansNameList();
 			var hostAvailable = false;
 			var patientAvailable = false;
-        	var legalCharsForPhone = /[0-9\+]/gi;
 
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
         		var pName = (isWebRTC)?participants[i].trim():pData.name.trim();
         		var participantName = pName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
-				var isTelephony = (legalCharsForPhone.test(participantName));
+				var isTelephony = isNumberString(participantName);
         		// Host Availability
         		var hostName = meetingHostName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         		if(hostName === participantName){
@@ -267,6 +442,14 @@ var VideoVisit =
         			if(cName === participantName){
         				clinician.isAvailable = true;
         			}
+        		}
+        		// Adding participant to side bar dynamically only for telephonic users
+        		if(isTelephony){
+					var isNumberAvailableOnSideBar = VideoVisit.checkTelePhonyUser(participantName);
+					if(isNumberAvailableOnSideBar === false){
+						VideoVisit.addNewPartcipantsToSideBar(participantName, true);
+						addedUserDynamically = true;
+					}
         		}
         	}
 

@@ -317,7 +317,15 @@ function updateDomWithMeetings(guestData){
                 for(var x=0;x<meeting.caregiver.length;x++){
                     var cgfname = meeting.caregiver[x].firstName?meeting.caregiver[x].firstName:'';
                     var cglname = meeting.caregiver[x].lastName?meeting.caregiver[x].lastName:'';
-                    htmlToBeAppend += '<span>'+cgfname+' '+cglname+'</span>';
+                    var displayname = '';
+                    if(isNumberString(cgfname)){
+                        var tele = cgfname.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
+                        var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
+                        displayname = telePhoneNumber;
+                    }else{
+                        displayname = cgfname+' '+cglname;
+                    }
+                    htmlToBeAppend += '<span>'+displayname+'</span>';
                 }
                 htmlToBeAppend += '</span>';
             }
