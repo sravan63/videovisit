@@ -6,16 +6,19 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VendorPluginDTO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
+import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Member;
-import org.apache.log4j.Logger;
 
 public class WebAppContext implements Serializable {
 
@@ -418,6 +421,46 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setBackButtonClientId(String backButtonClientId) {
 		this.backButtonClientId = backButtonClientId;
+	}
+	
+	/**
+	 * @param meetingId
+	 * @return
+	 */
+	public MeetingDO getMyMeetingByMeetingId(final String meetingId) {
+		if (StringUtils.isNotBlank(meetingId) && CollectionUtils.isNotEmpty(this.myMeetings)) {
+			for (MeetingDO meeting : this.myMeetings) {
+				if (meetingId.equalsIgnoreCase(meeting.getMeetingId())) {
+					return meeting;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * @param firstName
+	 * @param lastName
+	 * @param email
+	 * @return
+	 */
+	public boolean isCaregiverExist(final String meetingId, final String firstName, final String lastName,
+			final String email) {
+		boolean caregiverExist = false;
+		if (StringUtils.isNotBlank(firstName) && StringUtils.isNotBlank(lastName) && StringUtils.isNotBlank(email)) {
+			final MeetingDO meeting = getMyMeetingByMeetingId(meetingId);
+			if (CollectionUtils.isNotEmpty(meeting.getCaregiver())) {
+				for (Caregiver caregiver : meeting.getCaregiver()) {
+					if (firstName.equalsIgnoreCase(caregiver.getFirstName())
+							&& lastName.equalsIgnoreCase(caregiver.getLastName())
+							&& email.equalsIgnoreCase(caregiver.getEmailAddress())) {
+						caregiverExist = true;
+						break;
+					}
+				}
+			}
+		}
+		return caregiverExist;
 	}
 
 }

@@ -1,10 +1,14 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.CLINICIAN;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.PATIENT_GUEST;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.TELEPHONY;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -361,9 +365,9 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		ServiceCommonOutput output = null;
 		String jsonString = null;
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		final String clientId = ctx != null ? ctx.getBackButtonClientId() : WebUtil.VV_MBR_BACK_BUTTON;
 		try {
+			final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+			final String clientId = ctx != null ? ctx.getBackButtonClientId() : WebUtil.VV_MBR_BACK_BUTTON;
 			logger.info("meetingCode = " + meetingCode);
 			if (StringUtils.isNotBlank(meetingCode)) {
 				output = WebService.endCaregiverMeetingSession(meetingCode, megaMeetingNameDisplayName, true,
@@ -1205,6 +1209,41 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return output;
+	}
+	
+	public static void updateUserWebAppContext(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final String meetingId = request.getParameter("meetingId");
+		final String userType = request.getParameter("userType");
+		final String firstName = request.getParameter("firstName");
+		final String lastName = request.getParameter("lastName");
+		final String email = request.getParameter("email");
+		if (ctx != null && StringUtils.isNotBlank(meetingId) && StringUtils.isNotBlank(userType)) {
+			if (PATIENT_GUEST.equalsIgnoreCase(userType) || TELEPHONY.equalsIgnoreCase(userType)) {
+				final Caregiver caregiver = new Caregiver();
+				caregiver.setFirstName(firstName);
+				caregiver.setLastName(lastName);
+				caregiver.setEmailAddress(email);
+				final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
+				if (meeting != null) {
+					List<Caregiver> caregivers = meeting.getCaregiver();
+					if (!ctx.isCaregiverExist(meetingId, firstName, lastName, email)) {
+						if (CollectionUtils.isNotEmpty(caregivers)) {
+							caregivers.add(caregiver);
+						} else {
+							caregivers = new ArrayList<Caregiver>(1);
+							caregivers.add(caregiver);
+						}
+
+					}
+				}
+
+			} else if (CLINICIAN.equalsIgnoreCase(userType)) {
+
+			}
+		}
+		logger.info(LOG_EXITING);
 	}
 	
 }
