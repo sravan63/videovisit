@@ -255,7 +255,8 @@ var VideoVisit =
 					lastName: '',
 					firstName: telePhoneNumber,
 					emailAddress: 'dummy@dummy.com',
-					careGiverId: ''
+					careGiverId: '',
+					fullNumber: participant
 				};
 				telephonyUserAvailable = true;
 			} else {
@@ -287,14 +288,15 @@ var VideoVisit =
 		VideoVisit.updateContext(data, userType);
 	},
 	updateContext: function(data, userType){
-		var cData = {};
+		var cData;
 		switch(userType){
 			case 'telephony':
 				cData = {
 					userType: userType,
-					firstName: data.firstName, 
+					firstName: data.fullNumber, 
 					lastName: data.lastName, 
-					email: data.emailAddress
+					email: data.emailAddress,
+					meetingId: $('#meetingId').val()
 				}
 			break;
 
@@ -303,35 +305,37 @@ var VideoVisit =
 					userType: userType,
 					firstName: data.firstName, 
 					lastName: data.lastName, 
-					email: data.emailAddress
+					email: data.emailAddress,
+					meetingId: $('#meetingId').val()
 				}
 			break;
 
 			case 'clinician':
-				var nameWithoutSpaces = data.inMeetingDisplayName.replace(/\s/g, '');
-				var name = nameWithoutSpaces.split(',');
+				// var nameWithoutSpaces = data.inMeetingDisplayName.replace(/\s/g, '');
+				var name = data.inMeetingDisplayName.split(',');
 				cData = {
 					userType: userType,
-					firstName: name[1], 
-					lastName: name[0], 
-					email: ''
+					firstName: name[1].trim(), 
+					lastName: name[0].trim(), 
+					email: '',
+					meetingId: $('#meetingId').val()
 				}
 			break;
 		}
 		// make AJAX call here
-		/*$.ajax({
+		$.ajax({
 			type: "POST",
-			url: VIDEO_VISITS.Path.grid.meeting.dialOutToParticipant,
+			url: VIDEO_VISITS.Path.visit.updateUserContext,
 			cache: false,
 			dataType: "json",
 			data: cData,
 			success: function(result){
-				
+				console.log('SUCCESS ::: '+result);
 			},
 			error: function(textStatus){
-				
+				console.log('ERROR ::: '+error);
 			}
-		});*/
+		});
 	},
 	appendAddedParticipantToSidebar: function(data, showNotification){
   		if($('#meetingParticipantContainer').length === 0){

@@ -59,7 +59,8 @@ VIDEO_VISITS.Path = {
         providerRunningLateInfo: 'providerRunningLateInfo.json',
         caregiverJoinMeeting: 'caregiverJoinMeeting.json',
         logVendorMeetingEvents : 'logVendorMeetingEvents.json',
-        setPeripheralsFlag : 'setPeripheralsFlag.json'
+        setPeripheralsFlag : 'setPeripheralsFlag.json',
+        updateUserContext: 'updateUserContext.json'
     },
     logout : {
         logoutjson: 'logout.json'
