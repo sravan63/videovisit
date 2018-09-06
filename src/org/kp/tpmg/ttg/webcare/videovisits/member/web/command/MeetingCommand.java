@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
@@ -1217,33 +1218,40 @@ public class MeetingCommand {
 		final String meetingId = request.getParameter("meetingId");
 		final String userType = request.getParameter("userType");
 		final String firstName = request.getParameter("firstName");
-		final String lastName = request.getParameter("lastName");
+		String lastName = request.getParameter("lastName");
 		final String email = request.getParameter("email");
 		if (ctx != null && StringUtils.isNotBlank(meetingId) && StringUtils.isNotBlank(userType)) {
-			if (PATIENT_GUEST.equalsIgnoreCase(userType) || TELEPHONY.equalsIgnoreCase(userType)) {
-				final Caregiver caregiver = new Caregiver();
-				caregiver.setFirstName(firstName);
-				caregiver.setLastName(lastName);
-				caregiver.setEmailAddress(email);
-				final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
-				if (meeting != null) {
-					List<Caregiver> caregivers = meeting.getCaregiver();
-					if (!ctx.isCaregiverExist(meetingId, firstName, lastName, email)) {
-						if (CollectionUtils.isNotEmpty(caregivers)) {
-							caregivers.add(caregiver);
-						} else {
-							caregivers = new ArrayList<Caregiver>(1);
-							caregivers.add(caregiver);
-						}
-
-					}
-				}
-
+			if (TELEPHONY.equalsIgnoreCase(userType)) {
+				lastName = MemberConstants.AUDIO_PARTICIPANT;
+				addCaregiverToContext(ctx, meetingId, firstName, lastName, email);
 			} else if (CLINICIAN.equalsIgnoreCase(userType)) {
 
+			} else if (PATIENT_GUEST.equalsIgnoreCase(userType) ) {
+				addCaregiverToContext(ctx, meetingId, firstName, lastName, email);
 			}
 		}
 		logger.info(LOG_EXITING);
+	}
+
+	private static void addCaregiverToContext(final WebAppContext ctx, final String meetingId, final String firstName,
+			final String lastName, final String email) {
+		final Caregiver caregiver = new Caregiver();
+		caregiver.setFirstName(firstName);
+		caregiver.setLastName(lastName);
+		caregiver.setEmailAddress(email);
+		final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
+		if (meeting != null) {
+			List<Caregiver> caregivers = meeting.getCaregiver();
+			if (!ctx.isCaregiverExist(meetingId, firstName, lastName, email)) {
+				if (CollectionUtils.isNotEmpty(caregivers)) {
+					caregivers.add(caregiver);
+				} else {
+					caregivers = new ArrayList<Caregiver>(1);
+					caregivers.add(caregiver);
+				}
+
+			}
+		}
 	}
 	
 }
