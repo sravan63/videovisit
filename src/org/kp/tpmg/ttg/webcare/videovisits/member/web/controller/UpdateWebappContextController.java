@@ -13,9 +13,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
-public class UpdateUserContextController extends SimplePageController {
+public class UpdateWebappContextController extends SimplePageController {
 
-	public static final Logger logger = Logger.getLogger(UpdateUserContextController.class);
+	public static final Logger logger = Logger.getLogger(UpdateWebappContextController.class);
 	private static final String JSONMAPPING = "jsonData";
 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
@@ -23,7 +23,7 @@ public class UpdateUserContextController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		final Status status = new Status();
 		try {
-			MeetingCommand.updateUserWebAppContext(request);
+			MeetingCommand.updateWebappContext(request);
 			status.setCode("200");
 			status.setMessage("Success");
 		} catch (Exception e) {

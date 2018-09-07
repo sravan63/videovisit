@@ -1,7 +1,5 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.CLINICIAN;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.PATIENT_GUEST;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.TELEPHONY;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
@@ -1212,7 +1210,10 @@ public class MeetingCommand {
 		return output;
 	}
 	
-	public static void updateUserWebAppContext(final HttpServletRequest request) {
+	/**
+	 * @param request
+	 */
+	public static void updateWebappContext(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		final String meetingId = request.getParameter("meetingId");
@@ -1224,11 +1225,7 @@ public class MeetingCommand {
 			if (TELEPHONY.equalsIgnoreCase(userType)) {
 				lastName = MemberConstants.AUDIO_PARTICIPANT;
 				addCaregiverToContext(ctx, meetingId, firstName, lastName, email);
-			} else if (CLINICIAN.equalsIgnoreCase(userType)) {
-
-			} else if (PATIENT_GUEST.equalsIgnoreCase(userType) ) {
-				addCaregiverToContext(ctx, meetingId, firstName, lastName, email);
-			}
+			} 
 		}
 		logger.info(LOG_EXITING);
 	}
@@ -1242,14 +1239,13 @@ public class MeetingCommand {
 		final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
 		if (meeting != null) {
 			List<Caregiver> caregivers = meeting.getCaregiver();
-			if (!ctx.isCaregiverExist(meetingId, firstName, lastName, email)) {
-				if (CollectionUtils.isNotEmpty(caregivers)) {
-					caregivers.add(caregiver);
-				} else {
-					caregivers = new ArrayList<Caregiver>(1);
+			if (CollectionUtils.isNotEmpty(caregivers)) {
+				if (!ctx.isCaregiverExist(meetingId, firstName, lastName, email)) {
 					caregivers.add(caregiver);
 				}
-
+			} else {
+				caregivers = new ArrayList<Caregiver>(1);
+				caregivers.add(caregiver);
 			}
 		}
 	}

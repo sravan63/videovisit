@@ -543,7 +543,7 @@
     <bean id="dataGuestMeeting" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.GuestMeetingController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
-	<bean id="updateUserContext" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.UpdateUserContextController">
+	<bean id="updateUserContext" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.UpdateWebappContextController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
 	<!--  COMMAND classes -->
