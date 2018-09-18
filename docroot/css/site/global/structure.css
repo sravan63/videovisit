@@ -914,3 +914,10 @@ a.download-mdo:active, a.download-mdo:visited{
 	background-size: cover;
     border-radius: 3px;
 }
+#meetingPatient .pateint-name-with-ellipsis{
+	white-space: nowrap; 
+    width: 140px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+}
