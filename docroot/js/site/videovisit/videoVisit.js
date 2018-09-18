@@ -222,7 +222,7 @@ var VideoVisit =
 				var newLName = "";
 				$($('#meetingPatientGuest').children('p')[i]).find(".lName").text(newLName);
 				$($('#meetingPatientGuest').children('p')[i]).find(".fName").text(newFName);
-				var str = '<p><span class="lName">'+newLName+'</span> <span class="fName">'+newFName+'</span><span class="email" style="display:none;">'+email+'</span><i class="active-user-state"></i></p>'
+				var str = '<p><span class="pg-with-ellipsis"><span class="lName">'+newLName+'</span> <span class="fName">'+newFName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state"></i></p>'
 				$($('#meetingPatientGuest').children('p')[i]).html(str);
 			}
 		}

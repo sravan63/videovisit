@@ -914,7 +914,7 @@ a.download-mdo:active, a.download-mdo:visited{
 	background-size: cover;
     border-radius: 3px;
 }
-#meetingPatient .pateint-name-with-ellipsis, #meetingHost .host-name-with-ellipsis, #meetingParticipant p .additional-clinician-with-ellipsis{
+#meetingPatient .pateint-name-with-ellipsis, #meetingHost .host-name-with-ellipsis, #meetingParticipant p .additional-clinician-with-ellipsis, #meetingPatientGuest p .pg-with-ellipsis{
 	white-space: nowrap; 
     width: 140px; 
     overflow: hidden;
@@ -924,6 +924,6 @@ a.download-mdo:active, a.download-mdo:visited{
 #meetingParticipant p{
 	margin-bottom:0px;
 }
-#meetingHost .active-user-state, #meetingParticipant .active-user-state, #meetingPatient .active-user-state{
+#meetingHost .active-user-state, #meetingParticipant .active-user-state, #meetingPatient .active-user-state, #meetingPatientGuest .active-user-state{
   margin-bottom: 3px;
 }

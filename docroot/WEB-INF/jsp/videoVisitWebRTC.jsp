@@ -248,7 +248,7 @@
 								<dt>My Guests</dt>
 								<dd id="meetingPatientGuest" style="display:none;">
 									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">        
-										<p><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span><i class="active-user-state"></i></p>
+										<p><span class="pg-with-ellipsis"><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
 									</c:forEach>
 								</dd>
 								</dl>
