@@ -361,17 +361,17 @@ var VideoVisit =
   		if(isTelephony == false) {
   			successMessage="Your invitation has been sent.";
 	  		emailstr = (data.emailAddress.toLowerCase() === "dummy@dummy.com")?' <a href="javascript:void(0)" class="sendemail_patientGuest sendemail" style="display:none;" title="Email">(email)</a>':' <a href="javascript:void(0)" class="sendemail addPartcipantGuestEmail" onclick="VideoVisit.openEmailPopup(event)" title="Email">(email)</a>';
-	  		str += '<p><span class="lName">' + data.lastName + '</span>' +
+	  		str += '<p><span class="pg-with-ellipsis">'+emailstr+'<span class="lName">' + data.lastName + '</span>' +
 	                  ', <span class="fName">' + data.firstName + '</span>' +
 	                  ' <span class="email">' + data.emailAddress + '</span>' +
-	                  ' <span class="guestID">' + data.careGiverId + '</span>' +  emailstr + iconstr +
+	                  ' <span class="guestID">' + data.careGiverId + '</span></span>' +  iconstr +
 	                  '</p>';
   		} else {
   			emailstr = '<a href="javascript:void(0)" class="sendemail_patientGuest sendemail" style="display:none;" title="Email">(email)</a>';
-	  		str += '<p><span class="lName"></span>' +
+	  		str += '<p><span class="pg-with-ellipsis">'+emailstr+'<span class="lName"></span>' +
 	                  '<span class="fName">' + data.firstName + '</span>' +
 	                  ' <span class="email" style="display:none;">' + data.emailAddress + '</span>' +
-	                  ' <span class="guestID">' + data.careGiverId + '</span>' +  emailstr + iconstr +
+	                  ' <span class="guestID">' + data.careGiverId + '</span></span>' +  iconstr +
 	                  '</p>';
   		}
   		if($('#meetingPatientGuestContainer').length === 0){
