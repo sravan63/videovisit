@@ -230,7 +230,7 @@
 						</dl>
 						<dl>
 							<dt>My Doctor</dt><dd id="meetingHost">
-							<span>${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</span><i id="hostActiveIcon" class="active-user-state"></i></dd>
+							<span class="host-name-with-ellipsis">${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</span><i id="hostActiveIcon" class="active-user-state"></i></dd>
 						</dl>
 						
 						<c:if test="${not empty WebAppContext.videoVisit.participant}">
@@ -238,7 +238,7 @@
 								<dt>Add'l Clinicians</dt>
 								<dd id="meetingParticipant">
 									<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">        
-										<p style="padding-bottom:10px;"><span>${Provider.lastName.trim()}, ${Provider.firstName.trim()} ${Provider.title.trim()}</span><i class="active-user-state"></i></p>
+										<p style="padding-bottom:10px;"><span class="additional-clinician-with-ellipsis">${Provider.lastName.trim()}, ${Provider.firstName.trim()} ${Provider.title.trim()}</span><i class="active-user-state"></i></p>
 									</c:forEach>
 								</dd>
 							</dl>
