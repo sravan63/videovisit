@@ -224,10 +224,15 @@ var VideoVisit =
 				var newLName = "";
 				$($('#meetingPatientGuest').children('p')[i]).find(".lName").text(newLName);
 				$($('#meetingPatientGuest').children('p')[i]).find(".fName").text(newFName);
-				var str = '<span class="pg-with-ellipsis telephony"><span class="lName">'+newLName+'</span> <span class="fName">'+newFName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state"></i>'
+				var str = '<span class="pg-with-ellipsis telephony-pg"><span class="lName">'+newLName+'</span> <span class="fName">'+newFName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state"></i>'
 				$($('#meetingPatientGuest').children('p')[i]).html(str);
 			}else{
-				var testTxt = '<span class="pg-with-ellipsis pguest"><span class="lName">'+lName+'</span>, <span class="fName">'+fName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state" style="display: '+activeUsrStateDisplayVal+';"></i>';
+				var comStr = ', ';
+				if(!lName || !fName){
+					comStr = '';
+				}
+				
+				var testTxt = '<span class="pg-with-ellipsis pguest"><span class="lName">'+lName+'</span>'+comStr+'<span class="fName">'+fName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state" style="display: '+activeUsrStateDisplayVal+';"></i>';
 				$($('#meetingPatientGuest').children('p')[i]).html(testTxt);
 			}
 		}
