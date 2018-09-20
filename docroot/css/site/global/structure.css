@@ -920,10 +920,12 @@ a.download-mdo:active, a.download-mdo:visited{
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
+    vertical-align: middle;
 }
 #meetingParticipant p{
 	margin-bottom:0px;
 }
 #meetingHost .active-user-state, #meetingParticipant .active-user-state, #meetingPatient .active-user-state, #meetingPatientGuest .active-user-state{
-  margin-bottom: 3px;
+  margin-bottom: 0px;
+  vertical-align: middle;
 }
