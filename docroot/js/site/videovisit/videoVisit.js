@@ -215,6 +215,8 @@ var VideoVisit =
 			var lName = $($('#meetingPatientGuest').children('p')[i]).find(".lName").text().trim();
 			var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
 			var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
+			var activeUsrStateDisplayVal = $($('#meetingPatientGuest').children('p')[i]).find(".active-user-state").css('display');
+			
 			if(isNumberString(fName) === true){
 				var tele = fName.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
 	            var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
@@ -222,8 +224,11 @@ var VideoVisit =
 				var newLName = "";
 				$($('#meetingPatientGuest').children('p')[i]).find(".lName").text(newLName);
 				$($('#meetingPatientGuest').children('p')[i]).find(".fName").text(newFName);
-				var str = '<p><span class="pg-with-ellipsis"><span class="lName">'+newLName+'</span> <span class="fName">'+newFName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state"></i></p>'
+				var str = '<span class="pg-with-ellipsis telephony"><span class="lName">'+newLName+'</span> <span class="fName">'+newFName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state"></i>'
 				$($('#meetingPatientGuest').children('p')[i]).html(str);
+			}else{
+				var testTxt = '<span class="pg-with-ellipsis pguest"><span class="lName">'+lName+'</span>, <span class="fName">'+fName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state" style="display: '+activeUsrStateDisplayVal+';"></i>';
+				$($('#meetingPatientGuest').children('p')[i]).html(testTxt);
 			}
 		}
 		$('#meetingPatientGuest').css('display','block');
