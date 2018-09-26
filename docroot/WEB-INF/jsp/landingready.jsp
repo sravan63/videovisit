@@ -38,18 +38,19 @@
   <div class="udp-test-container">
 	  <div class="upd-test-header">
 	    <span class="warning-icon"></span>
-	    <p class="warning-text">Unable to establish a connection</p>
+	    <p class="warning-text">Unable to establish a connection to your visit</p>
 	  </div>
 	  <div class="upd-test-content">
 	    <div class="udp-message-container">
 	      <div class="mdo-logo"></div>
 	      <div class="udp-message">
 	        <p>Join on your mobile device using</p>
-	        <p><b>My Doctor Online</b> App.</p>
+	        <p><b>My Doctor Online</b> App using your cellular network.</p>
 	      </div>
 	    </div>
 	    <div class="app-store-container">
-	      <span class="ios-appstore"></span><span class="android-playstore">
+	      <span class="ios-appstore"><a class="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></span>
+        <span class="android-playstore"><a href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en_US" class="icon-link" target="_blank"></a></span>
 	    </div>
 	   </div>
  </div>

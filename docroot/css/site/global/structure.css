@@ -873,6 +873,7 @@ a.download-mdo:active, a.download-mdo:visited{
 }
 .udp-test-container .upd-test-content .udp-message-container .udp-message{
 	margin: 2px 0px;
+	width: 218px;
 }
 .udp-test-container .upd-test-content .app-store-container{
 	width: 50%;
@@ -892,8 +893,13 @@ a.download-mdo:active, a.download-mdo:visited{
 	height: 40px;
 	width: 40px;
 	vertical-align: middle;
-	margin-right: 20px;
+	margin: auto 20px;
 	background-size: cover;
+}
+.icon-link{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
 }
 .ios-appstore{
 	background: url(../../../images/global/appstore.png) no-repeat center center;
