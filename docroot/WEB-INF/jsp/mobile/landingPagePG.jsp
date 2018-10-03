@@ -64,7 +64,7 @@
 			                    <c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
 			                      	<span class="names patient-guests" style="margin-left:0;">
 				                        <c:forEach var="p" items="${meeting.caregiver}">
-				                          <span style="font-size:16px;">${p.firstName} ${p.lastName}</span>
+				                          <span class="${p.lastName == 'audio_participant' ? 'guest-is-ap' : 'guest-is-not-ap'}" style="font-size:16px;">${p.firstName}<c:if test="${p.lastName != 'audio_participant'}"> ${p.lastName}</c:if></span>
 				                        </c:forEach>
 			                      	</span>
 			                    </c:if>
@@ -120,3 +120,10 @@
 		<%@ include file="common/informationTwopg.jsp" %>
 	</div>
 </div>
+<script>
+	$('.guest-is-ap').each(function(e){
+		var tempNum = $(this).html().trim().split('').reverse().join('').substr(0,10).split('').reverse().join('')+'';
+		tempNum = tempNum.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
+		$(this).html(tempNum);
+	});
+</script>

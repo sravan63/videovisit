@@ -230,8 +230,7 @@ var VideoVisit =
 				var comStr = ', ';
 				if(!lName || !fName){
 					comStr = '';
-				}
-				
+				}				
 				var testTxt = '<span class="pg-with-ellipsis pguest"><span class="lName">'+lName+'</span>'+comStr+'<span class="fName">'+fName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state" style="display: '+activeUsrStateDisplayVal+';"></i>';
 				$($('#meetingPatientGuest').children('p')[i]).html(testTxt);
 			}
