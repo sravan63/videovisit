@@ -140,8 +140,15 @@
 </div>
 <script>
 	$('.guest-is-ap').each(function(e){
-		var tempNum = $(this).html().trim().split('').reverse().join('').substr(0,10).split('').reverse().join('')+'';
-		tempNum = tempNum.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
-		$(this).html(tempNum);
+		if($(this).children('a').length>0){
+			var actualNum = $(this).find('a').html();
+			var tempNum = $(this).find('a').html().trim().split('').reverse().join('').substr(0,10).split('').reverse().join('')+'';
+			tempNum = tempNum.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
+			$(this).html('<a href="tel:'+actualNum+'">'+tempNum+'</a>');
+		}else{
+			var tempNum = $(this).html().trim().split('').reverse().join('').substr(0,10).split('').reverse().join('')+'';
+			tempNum = tempNum.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
+			$(this).html(tempNum);	
+		}		
 	});
 </script>
