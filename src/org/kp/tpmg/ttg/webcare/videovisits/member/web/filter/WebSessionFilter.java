@@ -245,7 +245,7 @@ public class WebSessionFilter implements Filter {
 							if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
 								try {
 									logger.info("sso cookie before decoding: " + ssoCookie.getValue());
-									String ssoCookieVal = URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
+									String ssoCookieVal = ssoCookie.getValue();//URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
 									logger.info("isAuthenticated in context: " + ctx.isAuthenticated());
 
 									if (ctx.isAuthenticated()) {

@@ -120,14 +120,14 @@ public class SSOPreLoginController implements Controller {
 
 			if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
 				ssoSession = ssoCookie.getValue();
-				logger.debug("ssoSession from cookie before decoding=" + ssoSession);
+/*				logger.debug("ssoSession from cookie before decoding=" + ssoSession);
 				try {
 					ssoSession = URLDecoder.decode(ssoSession, "UTF-8");
 				} catch (UnsupportedEncodingException e) {
 					logger.warn("Error while decoding a coockie value=" + ssoSession);
 				}
 				logger.debug("ssoSession from cookie after decoding=" + ssoSession);
-			}
+*/			}
 			logger.info("ssoSession after cookie check=" + ssoSession);
 
 			if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))

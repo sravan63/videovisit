@@ -58,7 +58,7 @@ public class LogoffController extends SimplePageController {
 						ctx.setPromo(promos);
 						ctx.setIconPromo(iconpromos);
 						ctx.setVideoLink(videoLink);
-						String ssoCookieVal = URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
+						String ssoCookieVal = ssoCookie.getValue();//URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
 
 						String responseCode = MeetingCommand.validateKpOrgSSOSession(request, ssoCookieVal);
 						if ("200".equalsIgnoreCase(responseCode)) {
