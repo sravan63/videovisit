@@ -128,8 +128,9 @@ public class SSOPreLoginController implements Controller {
 				}
 				logger.debug("ssoSession from cookie after decoding=" + ssoSession);
 */			}
-			logger.info("ssoSession after cookie check=" + ssoSession);
-
+//			logger.info("ssoSession after cookie check=" + ssoSession);
+			
+			logger.info("ssoSession cookie: " + ssoSession);
 			if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))
 					|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(blockFF))) {
 				logger.info("Browser blocked, so navigating to ssologin page");
