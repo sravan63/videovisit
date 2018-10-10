@@ -565,7 +565,7 @@
 					    <dd id="displayMeetingNewStartTime" style="word-wrap: break-word;"></dd>
 					</dl>
 					<dl>
-						<dt>Patient</dt><dd id="meetingPatient"><span class="pateint-name-with-ellipsis">${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()} ${WebAppContext.videoVisit.patientMiddleName.trim()}</span><i id="patientActiveIcon" class="active-user-state"></i></dd>
+						<dt>Patient</dt><dd id="meetingPatient"><span class="pateint-name-with-ellipsis">${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}</span><i id="patientActiveIcon" class="active-user-state"></i></dd>
 					</dl>
 					<dl>
 						<dt>My Doctor</dt><dd id="meetingHost"> 
