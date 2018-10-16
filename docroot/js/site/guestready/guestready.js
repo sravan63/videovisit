@@ -318,7 +318,9 @@ function updateDomWithMeetings(guestData){
                     var cgfname = meeting.caregiver[x].firstName?meeting.caregiver[x].firstName:'';
                     var cglname = meeting.caregiver[x].lastName?meeting.caregiver[x].lastName:'';
                     var displayname = '';
-                    if(isNumberString(cgfname)){
+                    var isTelephony = isNumberString(cgfname);
+                    isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
+                    if(isTelephony){
                         var tele = cgfname.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
                         var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
                         displayname = telePhoneNumber;

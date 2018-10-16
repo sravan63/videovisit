@@ -123,11 +123,13 @@
 <script>
 	$('.guest-is-ap').each(function(e){
 		if($(this).children('a').length>0){
+			//ios will add anchor tag automatically based on number
 			var actualNum = $(this).find('a').html();
 			var tempNum = $(this).find('a').html().trim().split('').reverse().join('').substr(0,10).split('').reverse().join('')+'';
 			tempNum = tempNum.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
 			$(this).html('<a href="tel:'+actualNum+'">'+tempNum+'</a>');
 		}else{
+			//desktop will not add any anchor tag inside span
 			var tempNum = $(this).html().trim().split('').reverse().join('').substr(0,10).split('').reverse().join('')+'';
 			tempNum = tempNum.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3")
 			$(this).html(tempNum);	
