@@ -100,8 +100,8 @@ public class SSOPreLoginController implements Controller {
 
 			logger.debug("ssoSession in context=" + ssoSession);
 
-			Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
-
+//			Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
+			Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.getSSOCookieName());
 			if (ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
 					|| StringUtils.isBlank(ssoCookie.getValue())))) {
 				if (StringUtils.containsIgnoreCase(request.getServerName(), "localhost")) {

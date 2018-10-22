@@ -44,7 +44,8 @@ public class LogoffController extends SimplePageController {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if (ctx == null) {
 				logger.info("context is null");
-				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
+//				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
+				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.getSSOCookieName());
 
 				if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
 					try {

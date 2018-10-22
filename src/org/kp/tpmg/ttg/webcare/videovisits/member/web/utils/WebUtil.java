@@ -24,7 +24,7 @@ public class WebUtil {
 	public static final Logger logger = Logger.getLogger(WebUtil.class);
 	private static Pattern DOB_PATTERN = Pattern.compile("\\d\\d\\d\\d-\\d[\\d]-\\d[\\d]");
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
-	public static final String SSO_COOKIE_NAME = "ObSSOCookie";
+//	public static final String SSO_COOKIE_NAME = "ObSSOCookie";
 	public static final String MOB_CLIENT_ID = "vv-mbr-mbl-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
 	public static final String NON_MEMBER = "Non_Mmbr";
@@ -348,6 +348,16 @@ public class WebUtil {
 	
 	public static String getClientIdFromContext(final WebAppContext ctx) {
 		return ctx != null ? ctx.getClientId() : VV_MBR_WEB;
+	}
+	
+	public static String getSSOCookieName() {
+		logger.info(LOG_ENTERED);
+		String SSO_COOKIE_NAME = AppProperties.getExtPropertiesValueByKey("SSO_COOKIE_NAME");
+		if(StringUtils.isBlank(SSO_COOKIE_NAME)) {
+			SSO_COOKIE_NAME = "ObSSOCookie";
+		}
+		logger.info(LOG_EXITING + ", SSO_COOKIE_NAME : "+ SSO_COOKIE_NAME);
+		return SSO_COOKIE_NAME;
 	}
 
 }

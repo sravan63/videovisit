@@ -63,7 +63,8 @@ public class SSOSubmitLoginController extends SimplePageController {
 			if ("200".equalsIgnoreCase(data) && ctx.getKpOrgSignOnInfo() != null
 					&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
 				logger.info("ssosession to be set in cookie:" + ctx.getKpOrgSignOnInfo().getSsoSession());
-				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
+//				WebUtil.setCookie(response, WebUtil.SSO_COOKIE_NAME, ctx.getKpOrgSignOnInfo().getSsoSession());
+				WebUtil.setCookie(response, WebUtil.getSSOCookieName(), ctx.getKpOrgSignOnInfo().getSsoSession());
 				ctx.setAuthenticated(true);
 				ctx.setClientId(WebUtil.VV_MBR_SSO_WEB);
 				ctx.setBackButtonClientId(WebUtil.VV_MBR_SSO_BACK_BTN);

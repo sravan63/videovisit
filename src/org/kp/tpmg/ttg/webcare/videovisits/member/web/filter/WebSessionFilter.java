@@ -226,8 +226,8 @@ public class WebSessionFilter implements Filter {
 					} else {
 						// Handle the case of SSO sign off from kp.org or mdo
 						if (ctx.getKpOrgSignOnInfo() != null) {
-							Cookie ssoCookie = WebUtil.getCookie(req, WebUtil.SSO_COOKIE_NAME);
-
+//							Cookie ssoCookie = WebUtil.getCookie(req, WebUtil.SSO_COOKIE_NAME);
+							Cookie ssoCookie = WebUtil.getCookie(req, WebUtil.getSSOCookieName());
 							if (ssoCookie == null
 									|| ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
 											|| StringUtils.isBlank(ssoCookie.getValue()))) {
