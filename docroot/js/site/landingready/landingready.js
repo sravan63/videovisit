@@ -503,6 +503,7 @@ function updateDomWithMeetingsData(data){
                 if(meeting.meetingVendorId == null || meeting.meetingVendorId.length <= 0){
                     htmlToBeAppend += '<div style=""><p style=""><button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p></div>';
                 }else{
+                    //DE15381 changes
                     htmlToBeAppend += '<div style="">';
                     var memberDoLname = $('#memberDOlastName').val()?$('#memberDOlastName').val().trim():'';
                     var memberDofname = $('#memberDOfirstName').val()?$('#memberDOfirstName').val().trim():'';
@@ -518,6 +519,7 @@ function updateDomWithMeetingsData(data){
                         htmlToBeAppend += '<p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
                     }
                     htmlToBeAppend += '</div>';
+                    //DE15381 changes
                 }
             }
             htmlToBeAppend += '</div>';//.right class end
