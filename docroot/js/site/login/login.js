@@ -27,16 +27,37 @@ $(document).ready(function() {
 	// for focus on individual Input Fields
 	$("#mrn").on('focus', function() {
 		$("#mrn").css("color", "#000000");
+	}).on('input', function(){
+		var number = $(this).val().replace(/[^\d]/g, '');
+		var start = this.selectionStart;
+      	var end = this.selectionEnd;
+		$(this).val(number);
+		var el = $(this)[0];
+      	el.setSelectionRange(start, end);
 	});
 
 	// for focus on individual Input Fields
 	$("#birth_month").on('focus', function() {
 		$("#birth_month").css("color", "#000000");
+	}).on('input', function(){
+		var number = $(this).val().replace(/[^\d]/g, '');
+		var start = this.selectionStart;
+      	var end = this.selectionEnd;
+		$(this).val(number);
+		var el = $(this)[0];
+      	el.setSelectionRange(start, end);
 	});
 
 	// for focus on individual Input Fields
 	$("#birth_year").on('focus', function() {
 		$("#birth_year").css("color", "#000000");
+	}).on('input', function(){
+		var number = $(this).val().replace(/[^\d]/g, '');
+		var start = this.selectionStart;
+      	var end = this.selectionEnd;
+		$(this).val(number);
+		var el = $(this)[0];
+      	el.setSelectionRange(start, end);
 	});
 	
 	$('#login').click(function(e) {
