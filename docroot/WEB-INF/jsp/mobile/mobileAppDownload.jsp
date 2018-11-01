@@ -17,7 +17,8 @@
 			daysReminder: 0,
 			layer: false,
 			appendToSelector: '#content-window'
-		})
+		});
+		app.launchApp();//US35373: Member Redirect: Use Intermediary Page
 	});
 	
 	var now = new Date().valueOf();
@@ -41,7 +42,8 @@
             }
             else{
                     // we should never reach this condition
-                    alert("No device detected");
+                    //alert("No device detected");
+                    window.location.href = '/videovisit/';//US35373: Member Redirect: Use Intermediary Page
             }
         }
     }
