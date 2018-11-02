@@ -67,6 +67,8 @@ function getBrowserInfo(){
 		browserInfo.is32BitOS = false;
 	}
 
+    var isEdge = (navigator.appCodeName == 'Mozilla' && browserUserAgent.indexOf('Edge/') !== -1);
+
 	browserInfo.isIE = false;
 	browserInfo.isFirefox = false;
 	browserInfo.isChrome = false;
@@ -83,7 +85,7 @@ function getBrowserInfo(){
 		else{
             browserInfo.isFirefox = true;
         }
-	}else if (jqBrowserInfoObj.msie){
+	}else if (jqBrowserInfoObj.msie || isEdge == true){
 		browserInfo.isIE = true;
 	}else if (jqBrowserInfoObj.chrome){
 		browserInfo.isChrome = true;
