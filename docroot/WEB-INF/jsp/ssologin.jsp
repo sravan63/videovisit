@@ -126,13 +126,11 @@
 	    	}
 	    } else if (browserInfo.isIE){
 	    	var agent = navigator.userAgent;
-	    	var splittedVersionStr = agent.split('Version/');
-	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
 	    	var browserNotSupportedMsgForPatientInIEOrSafari = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
 			browserNotSupportedMsgForPatientInIEOrSafari += "<br /><br />";
 			browserNotSupportedMsgForPatientInIEOrSafari += "<span style='font-size: 14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, or Safari.</span>";
 	    	// Block access for EDGE
-	    	if(document.documentMode === 11){
+	    	if(agent.indexOf('Edge/') > -1){
 	    		$('p#globalError').html(browserNotSupportedMsgForPatientInIEOrSafari);
 				$('#ssoLoginError p').css("display", "block");
 				

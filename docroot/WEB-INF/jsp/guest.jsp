@@ -113,7 +113,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 			//US32190 changes
 			browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, or Safari.";
 	    	var agent = navigator.userAgent;
-	    	if(document.documentMode === 11){
+	    	if(navigator.userAgent.indexOf('Edge/') > -1){
 	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
 				

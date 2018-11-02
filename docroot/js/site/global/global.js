@@ -77,7 +77,7 @@ function getBrowserInfo(){
 	browserInfo.version = jqBrowserInfoObj.version;
 
 	if (jqBrowserInfoObj.mozilla){
-        if(browserUserAgent.indexOf("Trident") != -1){
+        if(browserUserAgent.indexOf('Edge/') !== -1 || browserUserAgent.indexOf("Trident") !== -1){
             browserInfo.isIE = true;
         }
 		else{
