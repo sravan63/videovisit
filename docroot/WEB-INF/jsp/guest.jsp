@@ -89,6 +89,40 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 		$('#joinNowBtn').css('pointer-events', 'none');
         $('#joinNowBtn').css('cursor', 'default');
         $('#joinNowBtn').css('opacity', '0.5');
+	} else{
+		if(browserInfo.isSafari){
+			var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
+			browserNotSupportedMsgForPatient += "<br /><br />";
+			//US32190 changes
+			browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, or Internet Explorer.";
+	    	var agent = navigator.userAgent;
+	    	var splittedVersionStr = agent.split('Version/');
+	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
+	    	if(versionNumber >= 12){
+	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
+				$("p#globalError").removeClass("hide-me");
+				
+				document.getElementById("last_name").disabled = true;
+				$('#joinNowBtn').css('pointer-events', 'none');
+		        $('#joinNowBtn').css('cursor', 'default');
+		        $('#joinNowBtn').css('opacity', '0.5');
+	    	}
+	    } else if (browserInfo.isIE){
+	    	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
+			browserNotSupportedMsgForPatient += "<br /><br />";
+			//US32190 changes
+			browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, or Safari.";
+	    	var agent = navigator.userAgent;
+	    	if(document.documentMode === 11){
+	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
+				$("p#globalError").removeClass("hide-me");
+				
+				document.getElementById("last_name").disabled = true;
+				$('#joinNowBtn').css('pointer-events', 'none');
+		        $('#joinNowBtn').css('cursor', 'default');
+		        $('#joinNowBtn').css('opacity', '0.5');
+	    	}
+	    }
 	}
 	
 </script>
