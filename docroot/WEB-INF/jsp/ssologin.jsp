@@ -133,6 +133,7 @@
 				$('#temp-access').css('cursor', 'default');
 		        $('#temp-access').css('opacity', '0.5');
 		        $('#temp-access').css('pointer-events', 'none');
+		        $('#temp-access').css('display', 'inline-block'); // as pointer-events doesnt work for inline elements in EDGE
 	    	}
 	    }
 	}
