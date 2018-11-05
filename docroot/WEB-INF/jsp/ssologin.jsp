@@ -73,6 +73,8 @@
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
 	if(browserInfo.isChrome && blockChrome) {
 		//US32190 changes
+		browserNotSupportedMsgForPatient.replace(' or use Chrome', '');
+		//US32190 changes
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$('#ssoLoginError p').css("display", "block");
 		
