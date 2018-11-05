@@ -68,7 +68,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
 	//US32190 changes
-	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, Internet Explorer, or Safari.";
+	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a>, or use Chrome or Internet Explorer.";
 	//US32190 changes
 	if(browserInfo.isChrome && blockChrome) {
 		//US32190 changes
@@ -91,10 +91,6 @@ String timezone = WebUtil.getCurrentDateTimeZone();
         $('#joinNowBtn').css('opacity', '0.5');
 	} else{
 		if(browserInfo.isSafari){
-			var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
-			browserNotSupportedMsgForPatient += "<br /><br />";
-			//US32190 changes
-			browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, or Internet Explorer.";
 	    	var agent = navigator.userAgent;
 	    	var splittedVersionStr = agent.split('Version/');
 	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
@@ -108,10 +104,6 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 		        $('#joinNowBtn').css('opacity', '0.5');
 	    	}
 	    } else if (browserInfo.isIE){
-	    	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
-			browserNotSupportedMsgForPatient += "<br /><br />";
-			//US32190 changes
-			browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, or Safari.";
 	    	var agent = navigator.userAgent;
 	    	if(navigator.userAgent.indexOf('Edge/') > -1){
 	    		$('p#globalError').html(browserNotSupportedMsgForPatient);

@@ -32,7 +32,7 @@
 	//US32190 changes
 	var browserNotSupportedMsgForPatient = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
 	browserNotSupportedMsgForPatient += "<br /><br />";
-	browserNotSupportedMsgForPatient += "<span style='font-size:14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, Internet Explorer, or Safari.</span>";
+	browserNotSupportedMsgForPatient += "<span style='font-size:14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a>, or use Chrome or Internet Explorer.</span>";
 	//US32190 changes
     /* DE10832 - Validating autofill and enabling signon button on load */
     var validateAutoFill = function(){
@@ -73,8 +73,6 @@
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
 	if(browserInfo.isChrome && blockChrome) {
 		//US32190 changes
-		browserNotSupportedMsgForPatient.replace(' or use Chrome,', '');
-		//US32190 changes
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$('#ssoLoginError p').css("display", "block");
 		
@@ -109,12 +107,10 @@
 	    	var agent = navigator.userAgent;
 	    	var splittedVersionStr = agent.split('Version/');
 	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
-	    	var browserNotSupportedMsgForPatientInIEOrSafari = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
-			browserNotSupportedMsgForPatientInIEOrSafari += "<br /><br />";
-			browserNotSupportedMsgForPatientInIEOrSafari += "<span style='font-size: 14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, or Internet Explorer.</span>";
+	    	
 	    	// Block access from Safari version 12.
 	    	if(versionNumber >= 12){
-	    		$('p#globalError').html(browserNotSupportedMsgForPatientInIEOrSafari);
+	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$('#ssoLoginError p').css("display", "block");
 				
 				document.getElementById("username").disabled = true;
@@ -126,12 +122,9 @@
 	    	}
 	    } else if (browserInfo.isIE){
 	    	var agent = navigator.userAgent;
-	    	var browserNotSupportedMsgForPatientInIEOrSafari = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
-			browserNotSupportedMsgForPatientInIEOrSafari += "<br /><br />";
-			browserNotSupportedMsgForPatientInIEOrSafari += "<span style='font-size: 14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, or Safari.</span>";
 	    	// Block access for EDGE
 	    	if(agent.indexOf('Edge/') > -1){
-	    		$('p#globalError').html(browserNotSupportedMsgForPatientInIEOrSafari);
+	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$('#ssoLoginError p').css("display", "block");
 				
 				document.getElementById("username").disabled = true;
