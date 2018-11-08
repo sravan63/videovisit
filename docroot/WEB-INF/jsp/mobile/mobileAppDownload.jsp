@@ -24,7 +24,11 @@
 	var now = new Date().valueOf();
     var app={
     	launchApp: function(){
-        	this.timer = setTimeout(this.openWebApp, 1700);
+    		var osDev = getAppOS();
+    		if(osDev == "iOS" || osDev == "Android"){
+    			window.location.replace("kppc://videovisit?signon=true");
+    		}
+        	this.timer = setTimeout(this.openWebApp, 2500);
             //window.location.replace("kppc://videovisit?signon=true");
 			//this.openWebApp();
         },
@@ -33,11 +37,9 @@
             //if (new Date().valueOf() - now > 9000) return;
             //alert('after date check');
             var os = getAppOS();
+
             if(os == "iOS"){
-            	setTimeout(function(){
-            		window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
-            	}, 1000);
-                window.location.replace("kppc://videovisit?signon=true");
+                    window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
             }
             else if(os == "Android"){
                     window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
