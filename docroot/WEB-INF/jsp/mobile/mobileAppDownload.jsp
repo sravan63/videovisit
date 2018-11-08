@@ -25,7 +25,7 @@
     var app={
     	launchApp: function(){
         	this.timer = setTimeout(this.openWebApp, 2000);
-            //window.location.replace("kppc://videovisit?signon=true");
+            window.location.replace("kppc://videovisit?signon=true");
 			//this.openWebApp();
         },
         openWebApp: function(){
