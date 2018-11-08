@@ -25,7 +25,7 @@
     var app={
     	launchApp: function(){
         	this.timer = setTimeout(this.openWebApp, 2000);
-            window.location.replace("kppc://videovisit?signon=true");
+            //window.location.replace("kppc://videovisit?signon=true");
 			//this.openWebApp();
         },
         openWebApp: function(){
@@ -36,6 +36,7 @@
 
             if(os == "iOS"){
                     window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
+                    //window.location.replace("kppc://videovisit?signon=true");
             }
             else if(os == "Android"){
                     window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
@@ -53,7 +54,7 @@
 	<div id="contents">
 		<h1> Join Your Video Visit </h1>
 		<p> Get My Doctor Online to start your visit with your doctor. </p>
-		<button type="button" onclick="app.launchApp();">Open</button>
+		<!-- <button type="button" onclick="app.launchApp();">Open</button> -->
 	</div>
 	<img src="images/mobile/phone.png"></img>
 </div>
