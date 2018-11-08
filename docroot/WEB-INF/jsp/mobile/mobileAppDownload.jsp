@@ -24,7 +24,7 @@
 	var now = new Date().valueOf();
     var app={
     	launchApp: function(){
-        	this.timer = setTimeout(this.openWebApp, 2000);
+        	this.timer = setTimeout(this.openWebApp, 1700);
             //window.location.replace("kppc://videovisit?signon=true");
 			//this.openWebApp();
         },
@@ -35,8 +35,10 @@
             var os = getAppOS();
 
             if(os == "iOS"){
-                    window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
-                    window.location.replace("kppc://videovisit?signon=true");
+            	setTimeout(function(){
+            		window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
+            	}, 1000);
+                window.location.replace("kppc://videovisit?signon=true");
             }
             else if(os == "Android"){
                     window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
