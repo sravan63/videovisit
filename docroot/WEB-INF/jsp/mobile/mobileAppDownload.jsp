@@ -33,7 +33,6 @@
             //if (new Date().valueOf() - now > 9000) return;
             //alert('after date check');
             var os = getAppOS();
-
             if(os == "iOS"){
             	setTimeout(function(){
             		window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
