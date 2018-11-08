@@ -24,10 +24,10 @@
 	var now = new Date().valueOf();
     var app={
     	launchApp: function(){
-    		var osDev = getAppOS();
+    		/*var osDev = getAppOS();
     		if(osDev == "iOS" || osDev == "Android"){
     			window.location.replace("kppc://videovisit?signon=true");
-    		}
+    		}*/
         	this.timer = setTimeout(this.openWebApp, 2500);
             //window.location.replace("kppc://videovisit?signon=true");
 			//this.openWebApp();
