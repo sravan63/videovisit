@@ -36,7 +36,7 @@
 
             if(os == "iOS"){
                     window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
-                    //window.location.replace("kppc://videovisit?signon=true");
+                    window.location.replace("kppc://videovisit?signon=true");
             }
             else if(os == "Android"){
                     window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
