@@ -28,9 +28,9 @@
     		if(osDev == "iOS" || osDev == "Android"){
     			window.location.replace("kppc://videovisit?signon=true");
     		}*/
-        	this.timer = setTimeout(this.openWebApp, 2500);
+        	//this.timer = setTimeout(this.openWebApp, 1000);
             //window.location.replace("kppc://videovisit?signon=true");
-			//this.openWebApp();
+			this.openWebApp();
         },
         openWebApp: function(){
             //alert('in timeout ' + new Date().valueOf() + ' ' + now);
@@ -39,15 +39,23 @@
             var os = getAppOS();
 
             if(os == "iOS"){
-                    window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
+	            	window.location.replace("kppc://videovisit?signon=true");
+	            	setTimeout(function(){
+	            		window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
+	            	}, 2000);
             }
             else if(os == "Android"){
-                    window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
+	            	window.location.replace("kppc://videovisit?signon=true");
+                    setTimeout(function(){
+                    	window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
+	            	}, 2000);
             }
             else{
                     // we should never reach this condition
                     //alert("No device detected");
-                    window.location.href = '/videovisit/';//US35373: Member Redirect: Use Intermediary Page
+                    setTimeout(function(){
+                    	window.location.href = '/videovisit/';//US35373: Member Redirect: Use Intermediary Page
+	            	}, 2000);                    
             }
         }
     }
