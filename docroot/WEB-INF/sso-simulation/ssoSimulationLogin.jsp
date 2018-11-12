@@ -1,5 +1,9 @@
 <input type="hidden" id="blockChrome" value="${WebAppContext.blockChrome}" />
 <input type="hidden" id="blockFF" value="${WebAppContext.blockFF}" />
+<!-- US35718 changes -->
+<input type="hidden" id="blockEdge" value="${WebAppContext.blockEdge}" />
+<input type="hidden" id="blockSafari" value="${WebAppContext.blockSafari}" />
+<!-- US35718 changes -->
 
 <h3 class="sso-page-title">Please sign on for your Video Visit </h3>
 <div  style="width: 40%; margin-left: 84px;float: left">
@@ -29,6 +33,8 @@
 	var browserVersion = (browserInfo.version).split(".")[0];
 	var blockChrome = ($("#blockChrome").val() == 'true');
 	var blockFF = ($("#blockFF").val() == 'true');
+	var blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
+	var blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
 	
 	var browserNotSupportedMsgForPatient = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
 	browserNotSupportedMsgForPatient += "<br /><br />";
@@ -101,6 +107,35 @@
 				validateChromeAutoFill();
 			},1000);
 		}
+		if(browserInfo.isSafari){
+	    	var agent = navigator.userAgent;
+	    	var splittedVersionStr = agent.split('Version/');
+	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
+	    	if(versionNumber >= 12 && blockSafari){//US35718 changes
+	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
+	    		$('#ssoLoginError p').css("display", "block");
+	    		
+	    		document.getElementById("username").disabled = true;
+	    		document.getElementById("password").disabled = true;
+
+	    		$('#temp-access').css('cursor', 'default');
+	            $('#temp-access').css('opacity', '0.5');
+	            $('#temp-access').css('pointer-events', 'none');
+	    	}
+	    } else if (browserInfo.isIE){
+	    	var agent = navigator.userAgent;
+	    	if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){//US35718 changes
+	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
+	    		$('#ssoLoginError p').css("display", "block");
+	    		
+	    		document.getElementById("username").disabled = true;
+	    		document.getElementById("password").disabled = true;
+
+	    		$('#temp-access').css('cursor', 'default');
+	            $('#temp-access').css('opacity', '0.5');
+	            $('#temp-access').css('pointer-events', 'none');
+	    	}
+	    }
 	}
 	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>

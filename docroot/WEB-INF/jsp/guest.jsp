@@ -44,6 +44,10 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 <input type="hidden" id="tz" value="<%=timezone%>" />
 <input type="hidden" id="blockChrome" value="${WebAppContext.blockChrome}" />
 <input type="hidden" id="blockFF" value="${WebAppContext.blockFF}" />
+<!-- US35718 changes -->
+<input type="hidden" id="blockEdge" value="${WebAppContext.blockEdge}" />
+<input type="hidden" id="blockSafari" value="${WebAppContext.blockSafari}" />
+<!-- US35718 changes -->
 
 <style>
 	input#joinNowBtn{
@@ -64,6 +68,8 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	var browserVersion = (browserInfo.version).split(".")[0];
 	var blockChrome = ($("#blockChrome").val() == 'true');
 	var blockFF = ($("#blockFF").val() == 'true');
+	var blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
+	var blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
 	
 	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
@@ -94,7 +100,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	    	var agent = navigator.userAgent;
 	    	var splittedVersionStr = agent.split('Version/');
 	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
-	    	if(versionNumber >= 12){
+	    	if(versionNumber >= 12 && blockSafari){//US35718 changes
 	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
 				
@@ -105,7 +111,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	    	}
 	    } else if (browserInfo.isIE){
 	    	var agent = navigator.userAgent;
-	    	if(navigator.userAgent.indexOf('Edge/') > -1){
+	    	if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){//US35718 changes
 	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
 				

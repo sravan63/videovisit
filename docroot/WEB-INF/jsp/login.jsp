@@ -1,5 +1,9 @@
 <input type="hidden" id="blockChrome" value="${WebAppContext.blockChrome}" />
 <input type="hidden" id="blockFF" value="${WebAppContext.blockFF}" />
+<!-- US35718 changes -->
+<input type="hidden" id="blockEdge" value="${WebAppContext.blockEdge}" />
+<input type="hidden" id="blockSafari" value="${WebAppContext.blockSafari}" />
+<!-- US35718 changes -->
 
 <h3 class="page-title">Please sign on for your Video Visit</h3>
 <p class="login" style="margin-bottom:43px;">Children age 11 or younger must have a parent or legal guardian with them during the Video Visit.</p>
@@ -88,6 +92,8 @@
 	var browserVersion = (browserInfo.version).split(".")[0];
 	var blockChrome = ($("#blockChrome").val() == 'true');
 	var blockFF = ($("#blockFF").val() == 'true');
+	var blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
+	var blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
 	//US32190 changes
 	var browserNotSupportedMsgForPatient = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
 	browserNotSupportedMsgForPatient += "<br /><br />";
@@ -176,7 +182,7 @@
 	    	var splittedVersionStr = agent.split('Version/');
 	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
 	    	// Block access from Safari version 12.
-	    	if(versionNumber >= 12){
+	    	if(versionNumber >= 12 && blockSafari){//US35718 changes
 	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
 
@@ -189,7 +195,7 @@
 	    } else if (browserInfo.isIE){
 	    	var agent = navigator.userAgent;
 	    	// Block access for EDGE
-	    	if(agent.indexOf('Edge/') > -1){
+	    	if(agent.indexOf('Edge/') > -1 && blockEdge){//US35718 changes
 	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
 
