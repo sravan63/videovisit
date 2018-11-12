@@ -44,6 +44,7 @@ public class WebUtil {
 	public static final String VV_MBR_GUEST_BACK_BTN = "vv-mbr-guest-back-btn";
 	public static final String VV_MBR_SSO_SIM_WEB = "vv-mbr-sso-sim";
 	public static final String VV_MBR_SSO_SIM_BACK_BTN = "vv-mbr-sso-sim-back-btn";
+	public static final String EDGE = "edge";
 	
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);
@@ -176,6 +177,8 @@ public class WebUtil {
 			if (user.contains("msie")) {
 				String substring = userAgent.substring(userAgent.indexOf("MSIE")).split(";")[0];
 				browser = substring.split(" ")[0].replace("MSIE", "IE") + "-" + substring.split(" ")[1];
+			} else if (user.contains(EDGE)) {
+				browser = EDGE;
 			} else if (user.contains("safari") && user.contains("version")) {
 				browser = (userAgent.substring(userAgent.indexOf("Safari")).split(" ")[0]).split("/")[0] + "-"
 						+ (userAgent.substring(userAgent.indexOf("Version")).split(" ")[0]).split("/")[1];
@@ -255,6 +258,21 @@ public class WebUtil {
 		}
 		logger.info(LOG_EXITING + " isFFBrowser: " + isFFBrowser);
 		return isFFBrowser;
+	}
+	
+	public static boolean isEdgeBrowser(HttpServletRequest httpRequest) {
+		logger.info(LOG_ENTERED);
+		boolean isEdgeBrowser = false;
+		try {
+			final String browser = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browser) && EDGE.equalsIgnoreCase(browser)) {
+				isEdgeBrowser = true;
+			}
+		} catch (Exception ex) {
+			logger.info("Error while checking the requested browser is edge: ", ex);
+		}
+		logger.info(LOG_EXITING + " isEdgeBrowser: " + isEdgeBrowser);
+		return isEdgeBrowser;
 	}
 
 	public static String getVidyoWebrtcSessionManager() {

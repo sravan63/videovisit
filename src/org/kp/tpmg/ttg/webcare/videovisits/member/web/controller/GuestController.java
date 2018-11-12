@@ -39,6 +39,8 @@ public class GuestController extends SimplePageController {
 	private String blockChrome = null;
 
 	private String blockFF = null;
+	private String blockEdge = null;
+	private String blockSafari = null;
 
 	public void initProperties() {
 		try {
@@ -49,6 +51,8 @@ public class GuestController extends SimplePageController {
 			}
 			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
+			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
+			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
 		} catch (Exception ex) {
 			logger.error("GuestController -> Error while reading external properties file - " + ex.getMessage(), ex);
 		}
@@ -94,6 +98,12 @@ public class GuestController extends SimplePageController {
 		}
 		if (StringUtils.isNotBlank(blockFF)) {
 			ctx.setBlockFF(blockFF);
+		}
+		if(StringUtils.isNotBlank(blockEdge)){
+			ctx.setBlockEdge(blockEdge);
+		}
+		if(StringUtils.isNotBlank(blockSafari)){
+			ctx.setBlockSafari(blockSafari);
 		}
 		ctx.setClientId(WebUtil.VV_MBR_GUEST);
 		ctx.setBackButtonClientId(WebUtil.VV_MBR_GUEST_BACK_BTN);

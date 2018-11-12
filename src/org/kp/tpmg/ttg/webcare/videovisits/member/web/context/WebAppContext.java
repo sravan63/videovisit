@@ -57,6 +57,8 @@ public class WebAppContext implements Serializable {
 	private String webrtcSessionManager;
 	private String blockChrome = "true";
 	private String blockFF = "true";
+	private String blockEdge = "true";
+	private String blockSafari = "true";
 	private boolean showPeripheralsPage = true;
 		
 	/**
@@ -379,6 +381,34 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setBlockFF(String blockFF) {
 		this.blockFF = blockFF;
+	}
+
+	/**
+	 * @return the blockEdge
+	 */
+	public String getBlockEdge() {
+		return blockEdge;
+	}
+
+	/**
+	 * @param blockEdge the blockEdge to set
+	 */
+	public void setBlockEdge(String blockEdge) {
+		this.blockEdge = blockEdge;
+	}
+
+	/**
+	 * @return the blockSafari
+	 */
+	public String getBlockSafari() {
+		return blockSafari;
+	}
+
+	/**
+	 * @param blockSafari the blockSafari to set
+	 */
+	public void setBlockSafari(String blockSafari) {
+		this.blockSafari = blockSafari;
 	}
 
 	/**

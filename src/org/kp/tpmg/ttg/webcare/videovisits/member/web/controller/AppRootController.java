@@ -42,6 +42,8 @@ public class AppRootController implements Controller {
 	private String vidyoWebrtcSessionManager = null;
 	private String blockChrome = null;
 	private String blockFF = null;
+	private String blockEdge = null;
+	private String blockSafari = null;
 	
 	public void initProperties() {
 		try {
@@ -54,6 +56,8 @@ public class AppRootController implements Controller {
 			}
 			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
+			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
+			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
 		} catch (Exception ex) {
 			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
@@ -86,6 +90,12 @@ public class AppRootController implements Controller {
 		}
 		if(StringUtils.isNotBlank(blockFF)){
 			ctx.setBlockFF(blockFF);
+		}
+		if(StringUtils.isNotBlank(blockEdge)){
+			ctx.setBlockEdge(blockEdge);
+		}
+		if(StringUtils.isNotBlank(blockSafari)){
+			ctx.setBlockSafari(blockSafari);
 		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
