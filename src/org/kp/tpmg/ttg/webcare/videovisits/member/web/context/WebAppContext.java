@@ -59,6 +59,7 @@ public class WebAppContext implements Serializable {
 	private String blockFF = "true";
 	private String blockEdge = "true";
 	private String blockSafari = "true";
+	private String blockSafariVersion = "12";
 	private boolean showPeripheralsPage = true;
 		
 	/**
@@ -409,6 +410,20 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setBlockSafari(String blockSafari) {
 		this.blockSafari = blockSafari;
+	}
+
+	/**
+	 * @return the blockSafariVersion
+	 */
+	public String getBlockSafariVersion() {
+		return blockSafariVersion;
+	}
+
+	/**
+	 * @param blockSafariVersion the blockSafariVersion to set
+	 */
+	public void setBlockSafariVersion(String blockSafariVersion) {
+		this.blockSafariVersion = blockSafariVersion;
 	}
 
 	/**

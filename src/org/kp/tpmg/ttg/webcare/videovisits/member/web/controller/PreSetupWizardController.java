@@ -22,6 +22,7 @@ public class PreSetupWizardController extends SimplePageController {
 	private String blockFF = null;
 	private String blockEdge = null;
 	private String blockSafari = null;
+	private String blockSafariVersion = null;
 
 	public void initProperties() {
 		try {
@@ -30,6 +31,7 @@ public class PreSetupWizardController extends SimplePageController {
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
 			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
 			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
+			blockSafariVersion = appProp.getProperty("BLOCK_SAFARI_VERSION");
 			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
 			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
 				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
@@ -58,10 +60,14 @@ public class PreSetupWizardController extends SimplePageController {
 			if (StringUtils.isBlank(blockSafari)) {
 				blockSafari = "true";
 			}
+			if (StringUtils.isBlank(blockSafariVersion)) {
+				blockSafariVersion = "12";
+			}
 			modelAndView.addObject("blockChrome", blockChrome);
 			modelAndView.addObject("blockFF", blockFF);
 			modelAndView.addObject("blockEdge", blockEdge);
 			modelAndView.addObject("blockSafari", blockSafari);
+			modelAndView.addObject("blockSafariVersion", blockSafariVersion);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}

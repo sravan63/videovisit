@@ -47,6 +47,7 @@ public class SSOPreLoginController implements Controller {
 	private String blockFF = null;
 	private String blockEdge = null;
 	private String blockSafari = null;
+	private String blockSafariVersion = null;
 
 	public void initProperties() {
 		try {
@@ -59,6 +60,7 @@ public class SSOPreLoginController implements Controller {
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
 			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
 			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
+			blockSafariVersion = appProp.getProperty("BLOCK_SAFARI_VERSION");
 		} catch (Exception ex) {
 			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
@@ -107,7 +109,9 @@ public class SSOPreLoginController implements Controller {
 			if(StringUtils.isNotBlank(blockSafari)){
 				ctx.setBlockSafari(blockSafari);
 			}
-
+			if(StringUtils.isNotBlank(blockSafariVersion)){
+				ctx.setBlockSafariVersion(blockSafariVersion);
+			}
 			logger.debug("ssoSession in context=" + ssoSession);
 
 //			Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
@@ -143,7 +147,8 @@ public class SSOPreLoginController implements Controller {
 			logger.info("ssoSession cookie: " + ssoSession);
 			if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))
 					|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(blockFF))
-					|| (WebUtil.isEdgeBrowser(request) && "true".equalsIgnoreCase(blockEdge))) {
+					|| (WebUtil.isEdgeBrowser(request) && "true".equalsIgnoreCase(blockEdge))
+					|| (WebUtil.allowSafariBrowser(request, blockSafari, blockSafariVersion))) {
 				logger.info("Browser blocked, so navigating to ssologin page");
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());

@@ -274,6 +274,21 @@ public class WebUtil {
 		logger.info(LOG_EXITING + " isEdgeBrowser: " + isEdgeBrowser);
 		return isEdgeBrowser;
 	}
+	
+	public static boolean isSafariBrowser(HttpServletRequest httpRequest) {
+		logger.info(LOG_ENTERED);
+		boolean isSafariBrowser = false;
+		try {
+			final String browser = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browser) && browser.contains("safari")) {
+				isSafariBrowser = true;
+			}
+		} catch (Exception ex) {
+			logger.info("Error while checking the requested browser is safari: ", ex);
+		}
+		logger.info(LOG_EXITING + " isSafariBrowser: " + isSafariBrowser);
+		return isSafariBrowser;
+	}
 
 	public static String getVidyoWebrtcSessionManager() {
 		logger.info(LOG_ENTERED);
@@ -376,6 +391,53 @@ public class WebUtil {
 		}
 		logger.info(LOG_EXITING + ", SSO_COOKIE_NAME : "+ SSO_COOKIE_NAME);
 		return SSO_COOKIE_NAME;
+	}
+	
+	public static String getBrowserVersion(HttpServletRequest httpRequest) {
+		logger.info(LOG_ENTERED);
+		String browserVersion = "";
+		String browserDetails = "";
+		try {
+			browserDetails = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browserDetails)) {
+				final String browserInfo[] = browserDetails.split("-");
+				if (!ArrayUtils.isEmpty(browserInfo)) {
+					if (browserInfo.length >= 2) {
+						browserVersion = browserInfo[1];
+					}
+				}
+			}
+		} catch (Exception ex) {
+			logger.warn("Error while getting browser version for browser : " + browserDetails, ex);
+		}
+		logger.info(LOG_EXITING + ", Browser version : " + browserVersion);
+		return browserVersion;
+	}
+	
+	public static boolean allowSafariBrowser(final HttpServletRequest request, final String blockSafari,
+			final String safariVersion) {
+		logger.info(LOG_ENTERED);
+		boolean allowSafariBrowser = true;
+		int browserVersion = 0;
+		try {
+			int blockSafariVersion = Integer.parseInt(safariVersion);
+			if (StringUtils.isNotBlank(safariVersion)) {
+				final String versionInfo[] = safariVersion.split("\\.");
+				if (!ArrayUtils.isEmpty(versionInfo)) {
+					if (versionInfo.length >= 1) {
+						browserVersion = Integer.parseInt(versionInfo[0]);
+					}
+				}
+			}
+			if (WebUtil.isSafariBrowser(request) && "true".equalsIgnoreCase(blockSafari)
+					&& browserVersion >= blockSafariVersion) {
+				allowSafariBrowser = false;
+			}
+		} catch (Exception e) {
+			logger.warn("Error while processing allowSafariBrowser.");
+		}
+		logger.info(LOG_EXITING + ", allowSafariBrowser : " + allowSafariBrowser);
+		return allowSafariBrowser;
 	}
 
 }

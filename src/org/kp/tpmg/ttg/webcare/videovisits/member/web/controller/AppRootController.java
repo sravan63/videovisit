@@ -44,6 +44,7 @@ public class AppRootController implements Controller {
 	private String blockFF = null;
 	private String blockEdge = null;
 	private String blockSafari = null;
+	private String blockSafariVersion = null;
 	
 	public void initProperties() {
 		try {
@@ -58,6 +59,7 @@ public class AppRootController implements Controller {
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
 			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
 			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
+			blockSafariVersion = appProp.getProperty("BLOCK_SAFARI_VERSION");
 		} catch (Exception ex) {
 			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
@@ -96,6 +98,9 @@ public class AppRootController implements Controller {
 		}
 		if(StringUtils.isNotBlank(blockSafari)){
 			ctx.setBlockSafari(blockSafari);
+		}
+		if(StringUtils.isNotBlank(blockSafariVersion)){
+			ctx.setBlockSafariVersion(blockSafariVersion);
 		}
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
