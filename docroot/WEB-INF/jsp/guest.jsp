@@ -47,6 +47,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 <!-- US35718 changes -->
 <input type="hidden" id="blockEdge" value="${WebAppContext.blockEdge}" />
 <input type="hidden" id="blockSafari" value="${WebAppContext.blockSafari}" />
+<input type="hidden" id="blockSafariVersion" value="${WebAppContext.blockSafariVersion}" />
 <!-- US35718 changes -->
 
 <style>
@@ -100,7 +101,8 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	    	var agent = navigator.userAgent;
 	    	var splittedVersionStr = agent.split('Version/');
 	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
-	    	if(versionNumber >= 12 && blockSafari){//US35718 changes
+	    	var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):12;//US35718 changes
+	    	if(versionNumber >= blockSafariVersion && blockSafari){//US35718 changes
 	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
 				$("p#globalError").removeClass("hide-me");
 				

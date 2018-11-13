@@ -20,6 +20,7 @@
 	<!-- US35718 changes -->
 	<input type="hidden" id="blockEdge" value="${blockEdge}" />
 	<input type="hidden" id="blockSafari" value="${blockSafari}" />
+	<input type="hidden" id="blockSafariVersion" value="${blockSafariVersion}" />
 	<!-- US35718 changes -->
 
 	<%@ include file="../../vidyoplayer/setupWizard.html" %>
