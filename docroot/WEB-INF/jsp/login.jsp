@@ -179,9 +179,12 @@
 		}
 		
 		if(browserInfo.isSafari){
-	    	var agent = navigator.userAgent;
-	    	var splittedVersionStr = agent.split('Version/');
-	    	var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
+			var agent = navigator.userAgent;
+	    	//var splittedVersionStr = agent.split('Version/');
+	    	//var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
+	    	var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
+	    	var majorVersion = majorMinorDot.split('.')[0];
+	    	var versionNumber = parseInt(majorVersion);
 	    	// Block access from Safari version 12.
 	    	var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):12;//US35718 changes
 	    	if(versionNumber >= blockSafariVersion && blockSafari){//US35718 changes
