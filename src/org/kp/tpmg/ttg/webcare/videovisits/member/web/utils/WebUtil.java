@@ -421,8 +421,9 @@ public class WebUtil {
 		int browserVersion = 0;
 		try {
 			int blockSafariVersion = Integer.parseInt(safariVersion);
-			if (StringUtils.isNotBlank(safariVersion)) {
-				final String versionInfo[] = safariVersion.split("\\.");
+			String bVersion = getBrowserVersion(request);
+			if (StringUtils.isNotBlank(bVersion)) {
+				final String versionInfo[] = bVersion.split("\\.");
 				if (!ArrayUtils.isEmpty(versionInfo)) {
 					browserVersion = Integer.parseInt(versionInfo[0]);
 				}
