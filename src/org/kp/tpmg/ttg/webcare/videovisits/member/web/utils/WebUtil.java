@@ -414,29 +414,30 @@ public class WebUtil {
 		return browserVersion;
 	}
 	
-	public static boolean allowSafariBrowser(final HttpServletRequest request, final String blockSafari,
+	public static boolean blockSafariBrowser(final HttpServletRequest request, final String blockSafari,
 			final String safariVersion) {
 		logger.info(LOG_ENTERED);
-		boolean allowSafariBrowser = true;
+		boolean blockSafariBrowser = false;
 		int browserVersion = 0;
 		try {
-			int blockSafariVersion = Integer.parseInt(safariVersion);
-			String bVersion = getBrowserVersion(request);
-			if (StringUtils.isNotBlank(bVersion)) {
-				final String versionInfo[] = bVersion.split("\\.");
-				if (!ArrayUtils.isEmpty(versionInfo)) {
-					browserVersion = Integer.parseInt(versionInfo[0]);
+			if (WebUtil.isSafariBrowser(request) && "true".equalsIgnoreCase(blockSafari)) {
+				int blockSafariVersion = Integer.parseInt(safariVersion);
+				String bVersion = getBrowserVersion(request);
+				if (StringUtils.isNotBlank(bVersion)) {
+					final String versionInfo[] = bVersion.split("\\.");
+					if (!ArrayUtils.isEmpty(versionInfo)) {
+						browserVersion = Integer.parseInt(versionInfo[0]);
+					}
 				}
-			}
-			if (WebUtil.isSafariBrowser(request) && "true".equalsIgnoreCase(blockSafari)
-					&& browserVersion >= blockSafariVersion) {
-				allowSafariBrowser = false;
+				if (browserVersion >= blockSafariVersion) {
+					blockSafariBrowser = true;
+				}
 			}
 		} catch (Exception e) {
 			logger.warn("Error while processing allowSafariBrowser.");
 		}
-		logger.info(LOG_EXITING + ", allowSafariBrowser : " + allowSafariBrowser);
-		return allowSafariBrowser;
+		logger.info(LOG_EXITING + ", blockSafariBrowser : " + blockSafariBrowser);
+		return blockSafariBrowser;
 	}
 
 }
