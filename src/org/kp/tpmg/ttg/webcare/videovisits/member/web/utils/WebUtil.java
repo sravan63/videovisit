@@ -434,7 +434,7 @@ public class WebUtil {
 				}
 			}
 		} catch (Exception e) {
-			logger.warn("Error while processing allowSafariBrowser.");
+			logger.warn("Error while processing blockSafariBrowser.");
 		}
 		logger.info(LOG_EXITING + ", blockSafariBrowser : " + blockSafariBrowser);
 		return blockSafariBrowser;
