@@ -42,13 +42,13 @@
 	            	window.location.replace("kppc://videovisit?signon=true");
 	            	setTimeout(function(){
 	            		window.location.replace("https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339");
-	            	}, 2000);
+	            	}, 2500);
             }
             else if(os == "Android"){
 	            	window.location.replace("kppc://videovisit?signon=true");
                     setTimeout(function(){
                     	window.location.replace("https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en");
-	            	}, 2000);
+	            	}, 2500);
             }
             else{
                     // we should never reach this condition
