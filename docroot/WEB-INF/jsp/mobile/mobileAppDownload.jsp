@@ -1,6 +1,7 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 
 <script>
+
 $(document).ready(function() {
     $("head").append("<meta name='apple-itunes-app' content='app-id=497468339'>");
 
@@ -61,6 +62,7 @@ var app = {
         }
     }
 }
+
 </script>
 
 <div id="content-window">
