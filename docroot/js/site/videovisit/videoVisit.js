@@ -188,7 +188,7 @@ var getPatientGuestNameList = function(){
 		var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
 		var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
 		var isTelephony = isNumberString(changeFromTelePhoneToTenDigitNumber(fName));
-		//commenting isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
+		isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
 		if(isTelephony){
 			fName = changeFromTelePhoneToTenDigitNumber(fName);
 		}
@@ -218,7 +218,7 @@ var VideoVisit =
 			var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
 			var activeUsrStateDisplayVal = $($('#meetingPatientGuest').children('p')[i]).find(".active-user-state").css('display');
 			var isTelephony = isNumberString(fName) === true;
-			//commenting isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
+			isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
 			if(isTelephony){
 				var tele = fName.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
 	            var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
@@ -260,7 +260,7 @@ var VideoVisit =
 		var userType = '';
 		if(isPatientGuest){
 			var isTelePhony = (participant.indexOf('@') === -1);
-			//commenting isTelePhony = false;//US35148: Telephony: Deactivate for Release 8.6
+			isTelePhony = false;//US35148: Telephony: Deactivate for Release 8.6
 			if (isTelePhony) {
 				var tele = participant.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
 				var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
@@ -401,7 +401,7 @@ var VideoVisit =
 			var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
 			var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
 			var isTelephony = isNumberString(changeFromTelePhoneToTenDigitNumber(fName));
-			//commenting isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
+			isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
 			if(isTelephony){
 				var gName = changeFromTelePhoneToTenDigitNumber(fName).replace(/\s/g, '').split('').reverse().join('').substr(0,10);
 				var participant = phonenumber.split('').reverse().join('').substr(0,10);
