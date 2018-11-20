@@ -48,7 +48,7 @@ var app = {
                 window.location.href = redirectUrl;
             }, 1500);
         } else if (os == "Android") {
-            //window.location.href = "kppc://videovisit?signon=true";
+            window.location.href = "kppc://videovisit?signon=true";
             setTimeout(function() {
                 var redirectUrl = "https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en";
                 window.location.href = redirectUrl;
