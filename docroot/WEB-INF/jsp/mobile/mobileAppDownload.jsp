@@ -39,16 +39,18 @@
             var os = getAppOS();
 
             if(os == "iOS"){
-	            	//window.location.href = "kppc://videovisit?signon=true";
+	            	window.location.href = "kppc://videovisit?signon=true";
 	            	setTimeout(function(){
-	            		window.location.href = "https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339";
-	            	}, 1000);
+	            		var redirectUrl = "https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339";
+	            		window.location.href = redirectUrl;
+	            	}, 10);
             }
             else if(os == "Android"){
-	            	//window.location.href = "kppc://videovisit?signon=true";
+	            	window.location.href = "kppc://videovisit?signon=true";
                     setTimeout(function(){
-                    	window.location.href = "https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en";
-	            	}, 1000);
+                    	var redirectUrl = "https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en";
+                    	window.location.href = redirectUrl;
+	            	}, 10);
             }
             else{
                     // we should never reach this condition
