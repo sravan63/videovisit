@@ -39,23 +39,23 @@
             var os = getAppOS();
 
             if(os == "iOS"){
-	            	window.location.href = "kppc://videovisit?signon=true";
+	            	//window.location.href = "kppc://videovisit?signon=true";
 	            	setTimeout(function(){
 	            		window.location.href = "https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339";
-	            	}, 2500);
+	            	}, 1000);
             }
             else if(os == "Android"){
-	            	window.location.href = "kppc://videovisit?signon=true";
+	            	//window.location.href = "kppc://videovisit?signon=true";
                     setTimeout(function(){
                     	window.location.href = "https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en";
-	            	}, 2500);
+	            	}, 1000);
             }
             else{
                     // we should never reach this condition
                     //alert("No device detected");
                     setTimeout(function(){
                     	window.location.href = '/videovisit/';//US35373: Member Redirect: Use Intermediary Page
-	            	}, 2000);                    
+	            	}, 1000);                    
             }
         }
     }
