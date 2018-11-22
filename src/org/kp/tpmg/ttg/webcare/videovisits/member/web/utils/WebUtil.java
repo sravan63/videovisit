@@ -398,7 +398,7 @@ public class WebUtil {
 		String browserVersion = "";
 		String browserDetails = "";
 		try {
-			browserDetails = getBrowserDetails(httpRequest).toLowerCase();
+			browserDetails = getBrowserDetails(httpRequest);
 			if (StringUtils.isNotBlank(browserDetails)) {
 				final String browserInfo[] = browserDetails.split("-");
 				if (!ArrayUtils.isEmpty(browserInfo)) {
