@@ -319,7 +319,7 @@ function updateDomWithMeetings(guestData){
                     var cglname = meeting.caregiver[x].lastName?meeting.caregiver[x].lastName:'';
                     var displayname = '';
                     var isTelephony = isNumberString(cgfname);
-                    //commenting isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
+                    isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
                     if(isTelephony){
                         var tele = cgfname.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
                         var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);

@@ -146,7 +146,7 @@ public class SSOPreLoginController implements Controller {
 			if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(blockChrome))
 					|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(blockFF))
 					|| (WebUtil.isEdgeBrowser(request) && "true".equalsIgnoreCase(blockEdge))
-					|| (WebUtil.allowSafariBrowser(request, blockSafari, blockSafariVersion))) {
+					|| (WebUtil.blockSafariBrowser(request, blockSafari, blockSafariVersion))) {
 				logger.info("Browser blocked, so navigating to ssologin page");
 				modelAndView = new ModelAndView(getViewName());
 				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());

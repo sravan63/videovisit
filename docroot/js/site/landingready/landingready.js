@@ -460,7 +460,7 @@ function updateDomWithMeetingsData(data){
                     var cglname = meeting.caregiver[j].lastName?meeting.caregiver[j].lastName.toLowerCase():'';
                     var displayname = '';
                     var isTelephony = isNumberString(cgfname);
-                    //commenting isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
+                    isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
                     if(isTelephony){
                         var tele = cgfname.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
                         var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
