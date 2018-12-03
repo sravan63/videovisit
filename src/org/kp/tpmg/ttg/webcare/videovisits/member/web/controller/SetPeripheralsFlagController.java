@@ -20,9 +20,11 @@ public class SetPeripheralsFlagController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		try {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			final String peripheralsFlag = request.getParameter("showPeripheralsPage");
-			ctx.setShowPeripheralsPage("true".equalsIgnoreCase(peripheralsFlag) ? true : false);
-			modelAndView.addObject("data", ctx.isShowPeripheralsPage());
+			if (ctx != null) {
+				final String peripheralsFlag = request.getParameter("showPeripheralsPage");
+				ctx.setShowPeripheralsPage("true".equalsIgnoreCase(peripheralsFlag) ? true : false);
+				modelAndView.addObject("data", ctx.isShowPeripheralsPage());
+			}
 		} catch (Exception e) {
 			logger.error("System Error : " + e.getMessage(), e);
 		}
