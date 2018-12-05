@@ -76,7 +76,8 @@ $(document).ready(function() {
 		            					window.location.href="videoVisitReady.htm";
 		            				}
 	            			    },
-	            		        error: function() {
+	            		        error: function(err) {
+	            					window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
 	            		        }
 	            			})
 	            		}
@@ -142,7 +143,8 @@ $(document).ready(function() {
                 					window.location.href="videoVisitReady.htm";
                 				}
             			    },
-            		        error: function() {
+            		        error: function(err) {
+            					window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
             		        }
             			})
             		
