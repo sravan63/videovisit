@@ -251,12 +251,14 @@ public class WebSessionFilter implements Filter {
 									if (ctx.isAuthenticated()) {
 										logger.info("already authenticated. validation is not required.");
 										ctx.setAuthenticated(false);
+										chain.doFilter(req, resp);
 									} else {
 										logger.info("sso cookie: " + ssoCookieVal);
 										String responseCode = MeetingCommand.validateKpOrgSSOSession(req,
 												ssoCookieVal);
 										if ("200".equalsIgnoreCase(responseCode)) {
 											logger.info("sso session token from request cookie valid");
+											chain.doFilter(req, resp);
 											// WebService.callKPKeepAliveUrl();
 										} else {
 											logger.info("invalid sso session token, navigating to SSO login page");
@@ -270,8 +272,9 @@ public class WebSessionFilter implements Filter {
 								}
 							}
 
+						} else {
+							chain.doFilter(req, resp);
 						}
-						chain.doFilter(req, resp);
 					}
 				} else {
 					/*
