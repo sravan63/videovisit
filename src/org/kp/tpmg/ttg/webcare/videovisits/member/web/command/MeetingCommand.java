@@ -496,8 +496,8 @@ public class MeetingCommand {
 						strResponse = invalidateWebAppContext(ctx);
 
 					} else {
-						if (!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
-								|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError())) {
+						if (!kpOrgSignOnInfo.isSuccess() && (StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
+								|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))) {
 							logger.warn(
 									"SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
 							strResponse = invalidateWebAppContext(ctx);
@@ -646,8 +646,8 @@ public class MeetingCommand {
 					strResponse = invalidateWebAppContext(ctx);
 
 				} else {
-					if (!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
-							|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError())) {
+					if (!kpOrgSignOnInfo.isSuccess() && (StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
+							|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))) {
 						logger.warn(
 								"SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
 						strResponse = invalidateWebAppContext(ctx);
