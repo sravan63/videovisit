@@ -456,17 +456,20 @@ function updateDomWithMeetingsData(data){
             }
             htmlToBeAppend += '<div class="names-container-member" style="margin:0px;">';
             if(meeting.caregiver && meeting.caregiver.length > 0){
+            	let phoneNumsCount = 0;
                 htmlToBeAppend += '<span class="names patient-guests" style="margin-left:0;">';
                 for(var j=0;j<meeting.caregiver.length;j++){
                     var cgfname = meeting.caregiver[j].firstName?meeting.caregiver[j].firstName.toLowerCase():'';
                     var cglname = meeting.caregiver[j].lastName?meeting.caregiver[j].lastName.toLowerCase():'';
                     var displayname = '';
                     var isTelephony = isNumberString(cgfname);
-                    isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
+                    //isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
                     if(isTelephony){
                         var tele = cgfname.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
                         var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
-                        displayname = telePhoneNumber;
+                        //displayname = telePhoneNumber;
+                        phoneNumsCount = (phoneNumsCount + 1);
+                        displayname = "Phone "+phoneNumsCount;
                     }else{
                         displayname = cgfname+' '+cglname;
                     }
