@@ -247,8 +247,15 @@
 							<dl id="meetingPatientGuestContainer">
 								<dt>My Guests</dt>
 								<dd id="meetingPatientGuest" style="display:none;">
-									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">        
-										<p><span class="pg-with-ellipsis"><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
+									<c:set var="memVidyPhNumCount" value="0" scope="page" />
+									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">
+										<c:if test="${Caregiver.lastName == 'audio_participant'}">
+											<c:set var="memVidyPhNumCount" value="${memVidyPhNumCount + 1}" scope="page"/>
+			                        		<p><span class="pg-with-ellipsis"><span class="lName" lastnameattr="${Caregiver.lastName}"></span> <span class="fName" firstnameattr="${Caregiver.firstName}">Phone ${memVidyPhNumCount}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
+			                        	</c:if>
+			                        	<c:if test="${Caregiver.lastName != 'audio_participant'}">
+			                        		<p><span class="pg-with-ellipsis"><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
+			                        	</c:if>
 									</c:forEach>
 								</dd>
 								</dl>

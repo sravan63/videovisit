@@ -62,8 +62,19 @@
 			                  <div class="names-container-member" style="margin:0px;">
 			                    <c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
 			                      <span class="names patient-guests" style="margin-left:0;font-size:16px;">
+			                      	<c:set var="phoneNumsCount" value="0" scope="page" />
 			                        <c:forEach var="p" items="${meeting.caregiver}">
-			                          <span class="${p.lastName == 'audio_participant' ? 'guest-is-ap' : 'guest-is-not-ap'}" style="font-size:16px;">${p.firstName}<c:if test="${p.lastName != 'audio_participant'}"> ${p.lastName}</c:if></span>
+			                        	<c:if test="${p.lastName == 'audio_participant'}">
+			                        		<c:set var="phoneNumsCount" value="${phoneNumsCount + 1}" scope="page"/>
+			                        	</c:if>
+			                          <span class="${p.lastName == 'audio_participant' ? 'guest-is-ap' : 'guest-is-not-ap'}" style="font-size:16px;">
+			                          	<c:if test="${p.lastName == 'audio_participant'}">
+			                        		Phone ${phoneNumsCount}
+			                        	</c:if>
+			                        	<c:if test="${p.lastName != 'audio_participant'}">
+			                        		${p.firstName} ${p.lastName}
+			                        	</c:if>
+			                          </span>
 			                        </c:forEach>
 			                      </span>
 			                    </c:if>

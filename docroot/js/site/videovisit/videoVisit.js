@@ -187,10 +187,13 @@ var getPatientGuestNameList = function(){
 		var lName = $($('#meetingPatientGuest').children('p')[i]).find(".lName").text().trim();
 		var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
 		var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
-		var isTelephony = isNumberString(changeFromTelePhoneToTenDigitNumber(fName));
+		//var isTelephony = isNumberString(changeFromTelePhoneToTenDigitNumber(fName));
 		//isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
+		var isTelephony = $($('#meetingPatientGuest').children('p')[i]).find(".lName").attr('lastnameattr') == "audio_participant";
 		if(isTelephony){
-			fName = changeFromTelePhoneToTenDigitNumber(fName);
+			//fName = changeFromTelePhoneToTenDigitNumber(fName);
+			let firstnameattr = $($('#meetingPatientGuest').children('p')[i]).find(".fName").attr('firstnameattr');
+			fName = firstnameattr.slice(-10);
 		}
 		pgNames.push({fname:fName, lname:lName, email:email, index:i, isAvailable: false, isTelePhony: isTelephony});
 	}
@@ -217,16 +220,21 @@ var VideoVisit =
 			var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
 			var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
 			var activeUsrStateDisplayVal = $($('#meetingPatientGuest').children('p')[i]).find(".active-user-state").css('display');
-			var isTelephony = isNumberString(fName) === true;
+			//var isTelephony = isNumberString(fName) === true;
+			var isTelephony = $($('#meetingPatientGuest').children('p')[i]).find(".lName").attr('lastnameattr') == 'audio_participant';
 			//isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
 			if(isTelephony){
-				var tele = fName.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
-	            var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
-				var newFName = telePhoneNumber;
-				var newLName = "";
-				$($('#meetingPatientGuest').children('p')[i]).find(".lName").text(newLName);
-				$($('#meetingPatientGuest').children('p')[i]).find(".fName").text(newFName);
-				var str = '<span class="pg-with-ellipsis telephony-pg"><span class="lName">'+newLName+'</span> <span class="fName">'+newFName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state"></i>'
+				//var tele = fName.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
+	            //var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
+				//var newFName = telePhoneNumber;
+				//var newLName = "";
+				//$($('#meetingPatientGuest').children('p')[i]).find(".lName").text(newLName);
+				//$($('#meetingPatientGuest').children('p')[i]).find(".fName").text(newFName);
+				let lastnameattr = $($('#meetingPatientGuest').children('p')[i]).find(".lName").attr('lastnameattr');
+				let firstnameattr = $($('#meetingPatientGuest').children('p')[i]).find(".fName").attr('firstnameattr');
+				lastnameattr = lastnameattr?lastnameattr:'';
+				firstnameattr = firstnameattr?firstnameattr:'';
+				var str = '<span class="pg-with-ellipsis telephony-pg"><span class="lName" lastnameattr="'+lastnameattr+'"></span> <span class="fName" firstnameattr="'+firstnameattr+'">'+fName+'</span><span class="email" style="display:none;">'+email+'</span></span><i class="active-user-state"></i>'
 				$($('#meetingPatientGuest').children('p')[i]).html(str);
 			}else{
 				var comStr = ', ';
@@ -379,9 +387,19 @@ var VideoVisit =
 	                  ' <span class="guestID">' + data.careGiverId + '</span></span>' +  iconstr +
 	                  '</p>';
   		} else {
+  			let maxPhoneNum = '';
+  			for(let i=$('#meetingPatientGuest').children('p').length;i>=0;i--){
+  				let fnameVal = $($('#meetingPatientGuest').children('p')[i]).find(".fName").attr('firstnameattr');
+  				if(fnameVal){
+  					maxPhoneNum = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text()
+  					break;
+  				}
+  			}
+  			maxPhoneNum = maxPhoneNum?parseInt(maxPhoneNum.replace('Phone ', '')):0;
+  			maxPhoneNum = maxPhoneNum + 1;
   			emailstr = '<a href="javascript:void(0)" class="sendemail_patientGuest sendemail" style="display:none;" title="Email">(email)</a>';
-	  		str += '<p><span class="pg-with-ellipsis">'+emailstr+'<span class="lName"></span>' +
-	                  '<span class="fName">' + data.firstName + '</span>' +
+	  		str += '<p><span class="pg-with-ellipsis">'+emailstr+'<span class="lName" lastnameattr="audio_participant"></span>' +
+	                  '<span class="fName" firstnameattr="09'+data.fullNumber+'">Phone ' + maxPhoneNum + '</span>' +
 	                  ' <span class="email" style="display:none;">' + data.emailAddress + '</span>' +
 	                  ' <span class="guestID">' + data.careGiverId + '</span></span>' +  iconstr +
 	                  '</p>';
@@ -400,11 +418,14 @@ var VideoVisit =
 			var lName = $($('#meetingPatientGuest').children('p')[i]).find(".lName").text().trim();
 			var fName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text().trim();
 			var email = $($('#meetingPatientGuest').children('p')[i]).find(".email").text().trim();
-			var isTelephony = isNumberString(changeFromTelePhoneToTenDigitNumber(fName));
+			//var isTelephony = isNumberString(changeFromTelePhoneToTenDigitNumber(fName));
+			var isTelephony = $($('#meetingPatientGuest').children('p')[i]).find(".lName").attr('lastnameattr') == "audio_participant";
 			//isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
 			if(isTelephony){
-				var gName = changeFromTelePhoneToTenDigitNumber(fName).replace(/\s/g, '').split('').reverse().join('').substr(0,10);
-				var participant = phonenumber.split('').reverse().join('').substr(0,10);
+				//var gName = changeFromTelePhoneToTenDigitNumber(fName).replace(/\s/g, '').split('').reverse().join('').substr(0,10);
+				//var participant = phonenumber.split('').reverse().join('').substr(0,10);
+				var gName = $($('#meetingPatientGuest').children('p')[i]).find(".fName").attr('firstnameattr').slice(-10);				
+				var participant = phonenumber.slice(-10);
 				if(participant === gName){
     				available = true;
 					break;
@@ -442,8 +463,10 @@ var VideoVisit =
         			var gName;
         			var participant;
         			if (isTelephony) {
-        				gName = guest.fname.replace(/\s/g, '').split('').reverse().join('').substr(0,10);
-        				participant = participantName.split('').reverse().join('').substr(0,10);
+        				//gName = guest.fname.replace(/\s/g, '').split('').reverse().join('').substr(0,10);
+        				//participant = participantName.split('').reverse().join('').substr(0,10);
+        				gName = guest.fname.slice(-10);
+        				participant = participantName.slice(-10);
         				if(participant === gName){
 	        				guest.isAvailable = true;
 	        			}

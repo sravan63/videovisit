@@ -313,6 +313,7 @@ function updateDomWithMeetings(guestData){
             }
             htmlToBeAppend += '<div class="names-container-member" style="margin:0px;">';
             if(meeting.caregiver && meeting.caregiver.length > 0){
+            	let phoneNumsCount = 0;
                 htmlToBeAppend += '<span class="names patient-guests" style="margin-left:0;">';
                 for(var x=0;x<meeting.caregiver.length;x++){
                     var cgfname = meeting.caregiver[x].firstName?meeting.caregiver[x].firstName:'';
@@ -323,7 +324,9 @@ function updateDomWithMeetings(guestData){
                     if(isTelephony){
                         var tele = cgfname.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
                         var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
-                        displayname = telePhoneNumber;
+                        //displayname = telePhoneNumber;
+                        phoneNumsCount = (phoneNumsCount + 1);
+                        displayname = "Phone "+phoneNumsCount;
                     }else{
                         displayname = cgfname+' '+cglname;
                     }
