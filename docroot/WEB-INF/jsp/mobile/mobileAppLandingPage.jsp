@@ -66,15 +66,11 @@
 			                        <c:forEach var="p" items="${meeting.caregiver}">
 			                        	<c:if test="${p.lastName == 'audio_participant'}">
 			                        		<c:set var="phoneNumsCount" value="${phoneNumsCount + 1}" scope="page"/>
-			                        	</c:if>
-			                          <span class="${p.lastName == 'audio_participant' ? 'guest-is-ap' : 'guest-is-not-ap'}" style="font-size:16px;">
-			                          	<c:if test="${p.lastName == 'audio_participant'}">
-			                        		Phone ${phoneNumsCount}
+			                        		<span class="guest-is-ap" style="font-size:16px;" firstnameattr="${p.firstName}">Phone ${phoneNumsCount}</span>
 			                        	</c:if>
 			                        	<c:if test="${p.lastName != 'audio_participant'}">
-			                        		${p.firstName} ${p.lastName}
+			                        		<span class="guest-is-not-ap" style="font-size:16px;">${p.firstName} ${p.lastName}</span>
 			                        	</c:if>
-			                          </span>
 			                        </c:forEach>
 			                      </span>
 			                    </c:if>
