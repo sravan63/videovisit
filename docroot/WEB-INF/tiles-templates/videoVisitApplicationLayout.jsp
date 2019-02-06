@@ -172,13 +172,41 @@
 			    }
 			    #patientTitle, #clinicianTitle{
 			    	font-family: Avenir Next, sans-serif;
-			    	color: #888888;
-			    	margin: 10px 0;
+			    	color: #4A4A4A;
 			    	line-height:1em;
+			    	margin-top: 41px;
+   					margin-left: 55px;
+   					margin-bottom: 10px;
+   					font-size: 35px;
+			    }
+			    .right-container{
+			    	color: #006BA6;
+    				margin-top: 10px;
+				    margin-right: 10px;
+				    display: flex;
+				    justify-content: flex-end;
+				    font-size: 17px;
+			    }
+			    .right-container a{
+			    	text-decoration: none;
+			    }
+			    .help{
+                    color: #006BA6;
+    				padding-right: 10px;
+			    }
+			    .reportIssue{
+			    	border-left: 1px solid;
+				    padding: 0px 10px;
+				    border-right: 1px solid;
+				    cursor: pointer;
+			    }
+			    .refresh-button{
+                   padding-left: 10px;
+                   cursor: pointer;
 			    }
 			    #vvHeader{
 			    	overflow:hidden;
-			    	border-top: 10px solid #A2A0A0;
+			    	/*border-top: 10px solid #A2A0A0;*/
 			    }
 			    #vvHeader ul{
 			    	float:left;
