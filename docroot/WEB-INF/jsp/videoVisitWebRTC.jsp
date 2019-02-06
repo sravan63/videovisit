@@ -103,9 +103,9 @@
 						
 							<div id="btnContainer" style="position:static;">
 								<div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
-									<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
+									<!-- <span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
 										<a class="btn btn-large btn-hideDetails" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;cursor: pointer;"></a>
-									</span>
+									</span> US37621 changes-->
 									<!-- US22684 -->
 									<!-- <a class="btn btn-large btn-config" title="Settings" id="inCallButtonToggleConfig" style="display:block;cursor: pointer;"></a> -->
 									<!-- US22684 -->
@@ -216,7 +216,7 @@
 			    <!-- MEMBER AND GUEST: END - Quit Meeting Dialogs  -->
 			</div>
 			<div id="video-sidebar">
-				<div id="video-sidebar-banner"></div>
+				<!-- <div id="video-sidebar-banner"></div> US37621 changes-->
 				<!-- video-sidebar-content START -->  
 				<div class="video-sidebar-content">
 					<div id="video-info">

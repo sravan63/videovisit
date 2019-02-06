@@ -309,9 +309,9 @@
 		                    </div>	-->
 
 		                    <div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
-		                    	<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
+		                    	<!-- <span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
 		                    		<a class="btn btn-large btn-hideDetails" href="#" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;"></a>
-		                    	</span>
+		                    	</span> US37621 changes-->
 		                    	<a class="btn btn-large btn-config" href="#" title="Settings" id="inCallButtonToggleConfig" style="display:block;"></a>
 			                        <!-- Configuration panel -->
 			                        <div class="well hide" id="configurationWrap">
@@ -555,7 +555,7 @@
 		
 		
 		<div id="video-sidebar">
-			<div id="video-sidebar-banner"></div>
+			<!-- <div id="video-sidebar-banner"></div> US37621 changes-->
 			<!-- video-sidebar-content START -->	
 			<div class="video-sidebar-content">
 				<div id="video-info">
