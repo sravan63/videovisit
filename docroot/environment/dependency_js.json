@@ -20,7 +20,8 @@
         	"js/site/global/commonScript.js",
             "environment/path.js",
             "js/site/global/global.js",
-            "js/site/global/plugins.js"
+            "js/site/global/plugins.js",
+            "js/library/less/less.min.js"
     ],
     "page"   : {
         "home" : {

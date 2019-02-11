@@ -19,15 +19,10 @@
               <span class="reportIssue">Report an Issue</span>
               <span class="refresh-button">Refresh</span>
 			</div>
-
-			<!-- <ul id="leaveEndBtnContainer" class="btn-group" style="float:right; list-style:none; font-size:100%; margin:4px 0;">
-				<li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;"></li>
-				<li class="btnLast" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
-			</ul> -->
 		</div>
 
-		<div id="container-video" style="clear:both;width:100%;">
-			<div id="video-main" style="clear:both; float:left;">
+		<div id="container-video"  class="conference-renderer">
+			<div id="video-main">
 				<div id="withjs" class="hide">
 					<!-- Central inCallContainer -->
 					<div id="inCallContainer" class="container hide">
@@ -109,38 +104,17 @@
 						
 							<div id="btnContainer" style="position:static;">
 								<div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
-									<!-- <span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
-										<a class="btn btn-large btn-hideDetails" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;cursor: pointer;"></a>
-									</span> US37621 changes-->
-									<!-- US22684 -->
-									<!-- <a class="btn btn-large btn-config" title="Settings" id="inCallButtonToggleConfig" style="display:block;cursor: pointer;"></a> -->
-									<!-- US22684 -->
 										<!-- Configuration panel -->
 										<div class="well hide" id="configurationWrap">
 												<!-- See configurationTemplate in main.config.js-->
 										</div>
-
-									<!--US19792 Start-->
-									<!--<a class="btn btn-large btn-local-share" data-toggle="dropdown" href="#" id="inCallButtonLocalShare" title="Share Desktop" style="display:block;"></a>
-										<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;">
-											<!-- Look at the inCallLocalSharesTemplate in main.config.js 
-										</ul>-->
                                  
 									<a class="btn btn-large btn-tmv-success" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;cursor: pointer;"></a>
 										<!--US18908 Swap Microphone and Speaker in Vidyo Player Start-->
 									<a class="btn btn-large btn-tmm-success" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;cursor: pointer;"></a>
 
 
-                                      <a class="btn btn-large btn-tms-success" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;background-position:5px -290px;cursor: pointer;"></a> 
-
-
-
-									<!--<div style="clear:both; border-bottom:1px solid #6A6A6A;">
-										
-										<div id="volume-control-speaker" style="height: 35px; width: 3px; vertical-align: middle; margin: 12px; display: inline-block; background: grey;">
-											<a id="slider-handle-speaker" class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="border:1px solid #FFFFFF; width:9px; height:2px; margin-left:-4px; position:absolute;"></a>
-										</div>
-									</div>-->
+                                      <a class="btn btn-large btn-tms-success" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;background-position:5px -290px;cursor: pointer;"></a>
 									   <!--US19792 End-->
 									<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>
 								</div>
@@ -221,61 +195,47 @@
 		        </div>
 			    <!-- MEMBER AND GUEST: END - Quit Meeting Dialogs  -->
 			</div>
-			<div id="video-sidebar">
-				<!-- <div id="video-sidebar-banner"></div> US37621 changes-->
-				<!-- video-sidebar-content START -->  
-				<div class="video-sidebar-content">
-					<div id="video-info">
-						<h3> Visit Details </h3>
-						<dl>
-							<dt>Appointment Date</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
-							<dd id="displayMeetingNewStartTime" style="word-wrap: break-word;"></dd>
-						</dl>
-						<dl>
-							<dt>Patient</dt><dd id="meetingPatient"><span class="pateint-name-with-ellipsis">${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}</span><i id="patientActiveIcon" class="active-user-state"></i></dd>
-						</dl>
-						<dl>
-							<dt>My Doctor</dt><dd id="meetingHost">
-							<span class="host-name-with-ellipsis">${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</span><i id="hostActiveIcon" class="active-user-state"></i></dd>
-						</dl>
-						
-						<c:if test="${not empty WebAppContext.videoVisit.participant}">
-							<dl id="meetingParticipantContainer">
-								<dt>Add'l Clinicians</dt>
-								<dd id="meetingParticipant">
-									<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">        
-										<p style="padding-bottom:10px;"><span class="additional-clinician-with-ellipsis">${Provider.lastName.trim()}, ${Provider.firstName.trim()} ${Provider.title.trim()}</span><i class="active-user-state"></i></p>
-									</c:forEach>
-								</dd>
-							</dl>
-						</c:if>
-						<c:if test="${not empty WebAppContext.videoVisit.caregiver}">
-							<dl id="meetingPatientGuestContainer">
-								<dt>My Guests</dt>
-								<dd id="meetingPatientGuest" style="display:none;">
-									<c:set var="memVidyPhNumCount" value="0" scope="page" />
-									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">
-										<c:if test="${Caregiver.lastName == 'audio_participant'}">
-											<c:set var="memVidyPhNumCount" value="${memVidyPhNumCount + 1}" scope="page"/>
-			                        		<p><span class="pg-with-ellipsis"><span class="lName" lastnameattr="${Caregiver.lastName}"></span> <span class="fName" firstnameattr="${Caregiver.firstName}">Phone ${memVidyPhNumCount}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
-			                        	</c:if>
-			                        	<c:if test="${Caregiver.lastName != 'audio_participant'}">
-			                        		<p><span class="pg-with-ellipsis"><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
-			                        	</c:if>
-									</c:forEach>
-								</dd>
-								</dl>
-							</c:if>
-						<!--<dl id="meetingNoteContainer">
-							<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
-						</dl> -->
+			<div class="video-details" id="video-sidebar">
+				<div class="visit-info-container">
+					<div class="visit-info">
+						<button class="leave-conference" id="inCallButtonDisconnect">Leave Room</button>
+						<h2>Visit Details</h2>
+						<div class="patient-details" id="meetingHost">${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</div>
+						<div class="meeting-time-date-info">
+						  <span class="time-display">${WebAppContext.videoVisit.meetingDate},</span>
+						  <span class="date-display">${WebAppContext.videoVisit.meetingTime}</span>
+						</div>
 					</div>
-					<!-- <div id="refreshContainer">
-						<p class="refresh-text"><span style="font-weight:bold;">Video issues?</span><br> Try refreshing</p>
-						<input name="refresh" value="Refresh" class="refresh-button" type="button">
-					</div> -->
 				</div>
-				<!-- video-sidebar-content END -->
+				<div class="participant-details">
+					<div class="participants-header">
+						<span class="guests">Guests</span>
+						<button class="invite-guest">invite</button>
+					</div>
+					<div class="participants-list">
+						<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">
+							<p class="participant">
+			                  	<span class="participant-name">${Provider.lastName.trim().toLowerCase()}, ${Provider.firstName.trim().toLowerCase()} ${Provider.title.trim().toUpperCase()}</span>
+			                  	<span class="participant-action">...</span>
+		               		</p>
+						</c:forEach>
+						<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">
+							<c:if test="${Caregiver.lastName == 'audio_participant'}">
+								<c:set var="memVidyPhNumCount" value="${memVidyPhNumCount + 1}" scope="page"/>
+                        		<p class="participant">
+				                  	<span class="participant-name">Phone ${memVidyPhNumCount}</span>
+				                  	<span class="participant-action" email="${Caregiver.emailAddress.trim()}">...</span>
+			               		</p>
+                        	</c:if>
+                        	<c:if test="${Caregiver.lastName != 'audio_participant'}">
+                        		<p class="participant">
+				                  	<span class="participant-name">${Caregiver.firstName.trim()} ${Caregiver.lastName.trim()}</span>
+				                  	<span class="participant-action" email="${Caregiver.emailAddress.trim()}">...</span>
+			               		</p>
+                        	</c:if>
+						</c:forEach>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

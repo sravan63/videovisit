@@ -5,7 +5,8 @@
         "unminimized" : []
     },
     "global" : [
-    	"css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css"
+    	"css/library/jquery/jquery-ui/smoothness/jquery-ui-1.9.2.custom.min.css",
+        "css/site/global/video-visit.less"
     ],
     "page"   : {
         "home" : {

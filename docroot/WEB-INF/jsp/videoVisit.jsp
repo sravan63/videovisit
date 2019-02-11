@@ -12,6 +12,7 @@
 	<input type="hidden" id="guestUrl" value="${WebAppContext.videoVisit.guestUrl}" />
 	<input type="hidden" id="meetingId" value="${WebAppContext.videoVisit.meetingId}" />
 	<input type="hidden" id="mrn" value="${WebAppContext.memberDO.mrn}" />
+	<input type="hidden" id="meetingPatient" value="${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}"/>
 	
 	<input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
 	<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />

@@ -10,7 +10,7 @@ $(document).ready(function() {
 	var windowWidth = $(window).width();
 	
 	var vvHeaderHeight = $("#vvHeader").outerHeight();
-	var videoSidebarWidth = $("#video-sidebar").outerWidth();
+	var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;
 	var calculatedHeight = windowHeight - vvHeaderHeight;
 	var calculatedWidth = windowWidth - videoSidebarWidth;
 	
@@ -23,7 +23,7 @@ $(document).ready(function() {
 	var calculatedWidthPluginContainer = calculatedWidth - btnContainerWidth;
 	
 	/* Mandar [DE7189] - Code changes for right side space */
-	var calWidth = windowWidth - (200 + btnContainerWidth);
+	var calWidth = windowWidth - (videoSidebarWidth + btnContainerWidth);
 	$("#pluginContainer").width(calWidth);
 	/* Mandar [DE7189] END */
 	
@@ -41,7 +41,7 @@ $(document).ready(function() {
 		return;
 	}
 
-	var host = ($("#meetingHost span").html().indexOf('&nbsp;') > -1)?$("#meetingHost span").html().replace('&nbsp;',''):$("#meetingHost span").html();
+	var host = ($("#meetingHost").val().indexOf('&nbsp;') > -1)?$("#meetingHost").val().replace('&nbsp;',''):$("#meetingHost").val();
 	var splittedHostName = host.trim().split(" ");
 	for(var c=0;c<splittedHostName.length;c++){
 		var char = splittedHostName[c].trim();
@@ -51,7 +51,7 @@ $(document).ready(function() {
 	}
 	meetingHostName = meetingHostName.trim();
 
-	var patient = ($("#meetingPatient span").html().indexOf('&nbsp;') > -1)?$("#meetingPatient span").html().replace('&nbsp;',''):$("#meetingPatient span").html();
+	var patient = ($("#meetingPatient").val().indexOf('&nbsp;') > -1)?$("#meetingPatient").val().replace('&nbsp;',''):$("#meetingPatient").val();
 	var splittedPatientName = patient.trim().split(" ");
 	for(var c=0;c<splittedPatientName.length;c++){
 		var char = splittedPatientName[c].trim();
@@ -579,8 +579,9 @@ var VideoVisit =
 
 		/* Setting min-widths */
 		$('#container-videovisit').css("min-width", calculatedMinWidth);
-		$("#video-main").css("min-width", calculatedMinWidth-200);
-		$("#pluginContainer").css("min-width", calculatedMinWidth-200-btnContainerWidth);
+		var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;
+		$("#video-main").css("min-width", calculatedMinWidth-videoSidebarWidth);
+		$("#pluginContainer").css("min-width", calculatedMinWidth-videoSidebarWidth-btnContainerWidth);
 
 		
 		/* Setting min-heights */
@@ -613,7 +614,7 @@ $(window).resize(function(){
 
 	/* Setting resize Widths */
 	var windowWidth = $(window).width();
-	var videoSidebarWidth = $("#video-sidebar").outerWidth();
+	var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;;
 	var btnContainerWidth = $("#btnContainer").outerWidth();
 
 	var width = $('#container-videovisit').width();
@@ -626,7 +627,8 @@ $(window).resize(function(){
 		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}
 	else{
-		var calculatedWidthPluginContainer = width - (200 + btnContainerWidth);
+		var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;
+		var calculatedWidthPluginContainer = width - (videoSidebarWidth + btnContainerWidth);
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
 		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}

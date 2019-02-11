@@ -8,7 +8,7 @@
 </div>
 <!-- End Splash screen -->
 <!-- =========== Mandar 11/10/2016 US15507 END ===========  -->
-<div id="container-videovisit" style="width:auto; visibility:none;">
+<div id="container-videovisit" class="container-videovisit" style="width:auto; visibility:none;">
 	<div id="vvHeader">
 		<ul id="clinician-name" style="">
 			<li>		
@@ -20,24 +20,11 @@
               <span class="reportIssue">Report an Issue</span>
               <span class="refresh-button">Refresh</span>
 		</div>
-		<!-- <ul id="leaveEndBtnContainer" class="btn-group" style="float:right; list-style:none; font-size:100%; margin:4px 0;">
-	        <li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;">
-	        <li class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;">
-	        <li class="btnLast" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
-	    </ul> -->
 	</div>
 
-	<div id="container-video">
-		<div id="video-main" style="clear:both; float:left;">
+	<div id="container-video" class="conference-renderer">
+		<div id="video-main">
 		    <div id="withjs" class="hide">
-		        <!-- Splash screen -->
-		        <!--<div class="splash" style="height:100vh;" id="splash">
-		            <div><img src="vidyoplayer/img/vv_splash.png" alt="Vidyo Logo"/></div>
-		            <div id="splashText" style="margin-top: 15px; visibility: hidden;"><h4>Video Visits - The Permanente Medical Group</h4></div>
-		            <div style="visibility: hidden;"><img src="vidyoplayer/img/loader-bar.gif"/></div>
-		        </div>-->
-		        <!-- End Splash screen -->
-		        <!-- Error view -->
 		        <div id="errorWrapper" class="alert alert-error hide"></div>
 		        <!-- End Error view -->
 		        <!-- Info view -->
@@ -45,39 +32,6 @@
 		        <!-- End Error view -->
 		        <!-- Plugin Install Steps -->
 				<div id="setupContents" class="hide">
-					
-					<!-- <div style="margin-top:50px; overflow:auto;">
-						<p id="installationTitle" style="text-align:center; font-size:18px; color:#555555;">Downloads are required for your visit</p>
-					</div>
-					<div style="margin-top:50px; overflow:auto;">
-						<div id="downloadStep1" class="downloadSteps" style="display:inline-block; margin:10px 20px; vertical-align:top;">
-							<span style="display:inline-block; margin:0 10px;">
-								<img width="50" height="60" src="vidyoplayer/img/step_1.png" style="margin-left:30px; margin-right:auto;"/>
-							</span>
-							<span class="addExtensionContainer" style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
-								<a id="addExtension" href="javascript:void(0)" class="" style="font-size:20px; color:#0088cc;" onclick="addExtension();">Download Vidyo extension</a>
-							</span>
-						</div>
-						<div id="downloadStep2" class="downloadSteps" style="display:inline-block; margin:10px 20px; vertical-align:top; opacity:0.4;">
-							<span style="display:inline-block; margin:0 10px;">
-								<img width="50" height="60" src="vidyoplayer/img/step_2.png" style="margin-left:30px; margin-right:auto;"/>
-							</span>
-							<span style="display:inline-block; width:145px; margin:0 10px; vertical-align:middle;">
-								<a id="macWinPluginFile" href="" class="" style="font-size:20px; color:#0088cc;" onclick="downloadPlugin();">Download Vidyo plug-in</a>
-								<a id="winChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-win32-1.3.1.0062.msi" class="hide" style="font-size:20px; color:#0088cc;" onclick="downloadPlugin();">Download Vidyo plug-in Win</a>
-								<a id="macChromePluginFile" href="vidyoplayer/files/VidyoClientForWeb-macosx-x86-1.3.1.0062.pkg" class="hide" style="font-size:20px; color:#0088cc;" onclick="downloadPlugin();">Download Vidyo plug-in Mac</a>
-							</span>
-						</div>
-						<div id="downloadStep3" class="downloadSteps" style="display:inline-block; margin:10px 20px; vertical-align:top; opacity:0.4;">
-							<span style="display:inline-block; margin:0 10px; vertical-align:top;">
-								<img width="50" height="60" src="vidyoplayer/img/step_3.png" style="margin-left:30px; margin-right:auto;"/>
-							</span>
-							<span style="display:inline-block; width:145px; margin:10px; vertical-align:middle; color:#555555;">
-								<p style="font-size:20px;">Find and install plug-in</p>
-							</span>
-						</div>
-					</div>	-->
-					
 					<table id="setupInstructions" width="50%" style="color:#000000;margin:auto;">
 					    <tr style="vertical-align: top;">
 						    <td colspan="2"><h3 style="text-align: center;">Please install the 'Vidyo Web' plug-in for your visit.</h3></td>
@@ -114,45 +68,6 @@
 					</table>
 				</div>
 			    <!-- End Plugin Install Steps -->
-		        <!-- Main Menu -->
-		        <!--   Below div tag is commented by Srini.P on 09/11/2013
-		
-		        <div class="hero-unit hide text-center" id="mainMenu">
-		            <h1>VidyoWeb API sample</h1>
-		            <h3>Choose the type of interaction</h3>
-		            <p>
-		                <a href="#userLoginPopup" class="btn btn-primary btn-large" role="button" data-toggle="modal">
-		                  Login as <i>Registered</i> User
-		                </a>
-		                <a href="#guestLoginPopup" class="btn btn-primary btn-large" role="button" data-toggle="modal">
-		                  Join room as a <i>Guest</i>
-		                </a>
-		            </p>
-		        </div>
-		         -->
-		        <!-- End Main Menu -->
-		
-		        <!-- Join as user modal window 
-		        <div id="preCallJoinAsUserPopup" class="modal hide fade" tabindex="-1" role="dialog">
-		            <div class="modal-header">
-		                <h3>Joining to conference...</h3>
-		            </div>
-		            <div class="modal-body">
-		                <div id="preCallJoinProgressBarContainer" class="progress progress-info progress-striped active">
-		                    <div id="preCallJoinProgressBar" class="bar" style="width: 0%;"></div>
-		                </div>
-		            </div>
-		        </div>
-		        <div id="preCallIntitePopup" class="modal hide fade" tabindex="-1" data-controls-modal="preCallIntitePopup" data-backdrop="static" data-keyboard="false">
-		            <div class="modal-header" id="preCallIntitePopupInvitee">
-		                <!-- Incoming call dialog template placeholder -->
-		            <!--</div>
-		            <div class="modal-body">
-		                <button class="btn btn-primary" id="preCallIntitePopupButtonAccept">Accept</button>
-		                <button class="btn btn-warning" id="preCallIntitePopupButtonReject">Reject</button>
-		            </div>
-		        </div>-->
-		        <!-- End join as user modal window -->
 		        <!-- Login as user modal window -->
 		        <div id="userLoginPopup" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
 		            <div class="modal-header">
@@ -304,26 +219,12 @@
 		           		<!--Satish US13301 End -->
 
 						<div id="btnContainer" style="position:static;">
-
-			                <!-- Added by Mandar A.  on 12/03/2013 to address US3549
-			                 START -->
-
-		                    <!--	<div class="btn-group">
-		                        <a class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Leave Meeting" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;"></a>
-		                        <a class="btn btn-leaveEnd btn-end-meeting" href="#" title="End Meeting" id="inCallButtonEndMeeting" style="border-right:1px solid #D4D4D4;"></a>
-		                    </div>	-->
-
 		                    <div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
-		                    	<!-- <span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
-		                    		<a class="btn btn-large btn-hideDetails" href="#" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;"></a>
-		                    	</span> US37621 changes-->
 		                    	<a class="btn btn-large btn-config" href="#" title="Settings" id="inCallButtonToggleConfig" style="display:block;"></a>
 			                        <!-- Configuration panel -->
 			                        <div class="well hide" id="configurationWrap">
 			                            <!-- See configurationTemplate in main.config.js-->
 			                        </div>
-
-			                    <!--	<a class="btn btn-large btn-toggle-preview" href="#" title="Toggle Preview ('None', 'PiP', 'Dock')" id="inCallButtonTogglePreview" style="display:block;"></a>	-->
 								<a class="btn btn-large btn-local-share" data-toggle="dropdown" href="#" id="inCallButtonLocalShare" title="Share Desktop" style="display:block;"></a>
 									<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;">
 										<!-- Look at the inCallLocalSharesTemplate in main.config.js  -->
@@ -334,20 +235,6 @@
 								<a class="btn btn-large btn-tmm-success" href="#" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;"></a>
 								<!--US20650-- Remove Speaker Volume Slider for Plugin Browsers-->
 								<a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;"></a>	
-									<!--<div id="volume-control-speaker" style="height: 35px; width: 3px; vertical-align: middle; margin: 12px; display: inline-block; background: grey;">						
-										<a id="slider-handle-speaker" class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="border:1px solid #FFFFFF; width:9px; height:2px; margin-left:-4px; position:absolute;"></a>
-									</div>
-									 US20650 Remove Speaker Volume Slider for Plugin Browsers End-->
-							
-								          <!--US18908 Swap Microphone and Speaker in Vidyo Player End-->
-								
-								<!--US18202 Remove Microphone Slider Start-->
-								<!-- <div style="clear:both; border-bottom:1px solid #6A6A6A;">
-									<a class="btn btn-large btn-tmm-success" href="#" title="Mute Mic" id="inCallButtonMuteMicrophone" style="border-bottom:none; width:40px; display:inline-block;"></a>
-									 <div id="volume-control-mic" style="height:35px; width:3px; vertical-align:middle; margin:12px; display:inline-block; background:grey;">
-										<a id="slider-handle-mic" class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="border:1px solid #FFFFFF; width:9px; height:2px; margin-left:-4px; position:absolute;"></a>
-									</div>
-								</div> -->
 								<!--US18202 Remove Microphone Slider End-->
 								
 								<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>
@@ -359,23 +246,7 @@
 		                <!-- End Plugin wrapper  -->
 	                    <!-- Chat container -->
 	                    <div id="inCallChatContainer" class="well well-small hide">
-	                        <!--<ul class="nav nav-tabs" id="inCallChatTabs">
-	                          <li data-uri="group"><a href="#" id="inCallChatMinimizeLink" data-uri="group"><i class="icon-chevron-down"></i></a></li>
-	                          <li class="active" data-uri="group" id="inCallChatGroupTab"><a href="#inCallChatGroupPane" id="inCallChatGroupTabLink" data-missed="0">Everyone&nbsp;<span class="badge badge-info hide">0</span></a></li>
-	                        </ul>
-	                        <div id="inCallChatPanes" class="tab-content">
-	                          <div class="tab-pane active" id="inCallChatGroupPane">
-	                            <ul>
-	                                <!-- Will have chat panes -->
-	                           <!-- </ul>
-	                          </div>
-	                        </div>
-	                        <div>
-	                            <form class="form-inline" id="inCallChatForm" autocomplete="off">
-	                              <input type="text" class="input-xxlarge" placeholder="Type a message" id="inCallChatTextField" autocomplete="off">
-	                              <button type="submit" class="btn" id="inCallChatTextSend">Send</button>
-	                            </form>
-	                        </div>-->
+	                        
 	                    </div>
 		                <!-- End chat container -->
 		            </div>
@@ -557,65 +428,50 @@
 		    <!-- Main application script -->
 		    <!-- <script data-main="vidyoplayer/scripts/main" src="vidyoplayer/scripts/libs/require.min.2.1.10.js"></script> -->
 	 	</div>
-		
-		
-		<div id="video-sidebar">
-			<!-- <div id="video-sidebar-banner"></div> US37621 changes-->
-			<!-- video-sidebar-content START -->	
-			<div class="video-sidebar-content">
-				<div id="video-info">
-					<h3> Visit Details </h3>
-					<dl>
-					    <dt>Appointment Date</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
-					    <dd id="displayMeetingNewStartTime" style="word-wrap: break-word;"></dd>
-					</dl>
-					<dl>
-						<dt>Patient</dt><dd id="meetingPatient"><span class="pateint-name-with-ellipsis">${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}</span><i id="patientActiveIcon" class="active-user-state"></i></dd>
-					</dl>
-					<dl>
-						<dt>My Doctor</dt><dd id="meetingHost"> 
-						<span class="host-name-with-ellipsis">${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</span><i id="hostActiveIcon" class="active-user-state"></i></dd>
-					</dl>
-					
-					<c:if test="${not empty WebAppContext.videoVisit.participant}">
-						<dl id="meetingParticipantContainer">
-							<dt>Add'l Clinicians</dt>
-							<dd id="meetingParticipant">
-							   <c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">
-						            <p style="padding-bottom:10px;"><span class="additional-clinician-with-ellipsis">${Provider.lastName.trim()}, ${Provider.firstName.trim()} ${Provider.title.trim()}</span><i class="active-user-state"></i></p>
-						       </c:forEach>
-							</dd>
-						</dl>
-					</c:if>
-					
-					<c:if test="${not empty WebAppContext.videoVisit.caregiver}">
-						<dl id="meetingPatientGuestContainer">
-							<dt>My Guests</dt>
-							<dd id="meetingPatientGuest" style="display:none;">
-								<c:set var="memVidyPhNumCount" value="0" scope="page" />
-								<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">
-									<c:if test="${Caregiver.lastName == 'audio_participant'}">
-										<c:set var="memVidyPhNumCount" value="${memVidyPhNumCount + 1}" scope="page"/>
-		                        		<p><span class="pg-with-ellipsis"><span class="lName" lastnameattr="${Caregiver.lastName}"></span> <span class="fName" firstnameattr="${Caregiver.firstName}">Phone ${memVidyPhNumCount}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
-		                        	</c:if>
-		                        	<c:if test="${Caregiver.lastName != 'audio_participant'}">
-		                        		<p><span class="pg-with-ellipsis"><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
-		                        	</c:if>
-						       </c:forEach>
-							</dd>
-			    		</dl>
-				    </c:if>
-					<!--<dl id="meetingNoteContainer">
-						<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
-					</dl>	-->
+		<div class="video-details" id="video-sidebar">
+			<div class="visit-info-container">
+				<div class="visit-info">
+					<button class="leave-conference" id="inCallButtonDisconnect">Leave Room</button>
+					<h2>Visit Details</h2>
+					<div class="patient-details" id="meetingHost">${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</div>
+					<div class="meeting-time-date-info">
+					  <span class="time-display">${WebAppContext.videoVisit.meetingDate},</span>
+					  <span class="date-display">${WebAppContext.videoVisit.meetingTime}</span>
+					</div>
 				</div>
-				<!-- <div id="refreshContainer">
-					<p class="refresh-text"><span style="font-weight:bold;">Video issues?</span><br> Try refreshing</p>
-					<input name="refresh" value="Refresh" class="refresh-button" type="button">
-				</div> -->
 			</div>
-			<!-- video-sidebar-content END -->
+			<div class="participant-details">
+				<div class="participants-header">
+					<span class="guests">Guests</span>
+					<button class="invite-guest">invite</button>
+				</div>
+				<div class="participants-list">
+					<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">
+						<p class="participant">
+		                  	<span class="participant-name">${Provider.lastName.trim().toLowerCase()}, ${Provider.firstName.trim().toLowerCase()} ${Provider.title.trim().toUpperCase()}</span>
+		                  	<span class="participant-action">...</span>
+	               		</p>
+					</c:forEach>
+					<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">
+						<c:if test="${Caregiver.lastName == 'audio_participant'}">
+							<c:set var="memVidyPhNumCount" value="${memVidyPhNumCount + 1}" scope="page"/>
+                    		<p class="participant">
+			                  	<span class="participant-name">Phone ${memVidyPhNumCount}</span>
+			                  	<span class="participant-action" email="${Caregiver.emailAddress.trim()}">...</span>
+		               		</p>
+                    	</c:if>
+                    	<c:if test="${Caregiver.lastName != 'audio_participant'}">
+                    		<p class="participant">
+			                  	<span class="participant-name">${Caregiver.firstName.trim()} ${Caregiver.lastName.trim()}</span>
+			                  	<span class="participant-action" email="${Caregiver.emailAddress.trim()}">...</span>
+		               		</p>
+                    	</c:if>
+					</c:forEach>
+				</div>
+			</div>
 		</div>
+		
+		
 	</div>
 </div>
 

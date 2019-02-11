@@ -34,6 +34,7 @@
 		    <!-- Custom css -->
 		    <link rel="stylesheet" type="text/css" href="vidyoplayer/css/vidyo-app.css">
 			<link rel="stylesheet" type="text/css" href="vidyoplayer/css/jNotify.jquery.css" media="screen" />
+			<link rel="stylesheet/less" type="text/css" href="css/site/global/video-visit.less" />
 			
 			<style type="text/css">
 		        .btn{
@@ -203,17 +204,6 @@
 			    .refresh-button{
                    padding-left: 10px;
                    cursor: pointer;
-			    }
-			    #vvHeader{
-			    	overflow:hidden;
-			    	/*border-top: 10px solid #A2A0A0;*/
-			    }
-			    #vvHeader ul{
-			    	float:left;
-			    	list-style:none;
-			    	margin-left:0;
-			    	margin-bottom:0;
-			    	height:auto;
 			    }
 			    #volume-control-speaker, #volume-control-mic{
 					border: none;
