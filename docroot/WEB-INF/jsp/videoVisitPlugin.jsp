@@ -218,29 +218,40 @@
 		           		</div>
 		           		<!--Satish US13301 End -->
 
-						<div id="btnContainer" style="position:static;">
+						<div id="btnContainer" class="member-btn-container" style="position:static;">
 		                    <div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
-		                    	<a class="btn btn-large btn-config" href="#" title="Settings" id="inCallButtonToggleConfig" style="display:block;"></a>
-			                        <!-- Configuration panel -->
+		                    	<div id="inCallButtonMuteVideo">
+		                          <div title="Disable Video" class="btns video-btn">&nbsp;</div>
+		                           <div title="Enable Video" class="btns video-muted-btn">&nbsp;</div>
+		                        </div>
+		                        <div id="inCallButtonMuteSpeaker">
+		                           <div title="Mute Speakers" class="btns speaker-btn">&nbsp;</div>
+		                           <div title="Unmute Speakers" class="btns speaker-muted-btn">&nbsp;</div>
+		                        </div>
+		                        <div id="inCallButtonMuteMicrophone">
+		                           <div title="Mute Mic" class="btns microphone-btn">&nbsp;</div>
+		                           <div title="Unmute Mic" class="btns microphone-muted-btn">&nbsp;</div>
+		                        </div>
+		                        <div id="inCallButtonLocalShare">
+		                           <div title="" class="btns smd-btn">&nbsp;</div>
+		                           <div title="" class="btns smd-muted-btn">&nbsp;</div>
+		                        </div>
+		                        <ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;">
+		                        <div id="inCallButtonExpand" style="display:none;">
+		                           <div title="Expand" class="btns expand-btn">&nbsp;</div>
+		                           <div title="Shrink" class="btns shrink-btn">&nbsp;</div>
+		                        </div>
+		                    	<!--<a class="btn btn-large btn-config" href="#" title="Settings" id="inCallButtonToggleConfig" style="display:block;"></a>
 			                        <div class="well hide" id="configurationWrap">
-			                            <!-- See configurationTemplate in main.config.js-->
 			                        </div>
 								<a class="btn btn-large btn-local-share" data-toggle="dropdown" href="#" id="inCallButtonLocalShare" title="Share Desktop" style="display:block;"></a>
 									<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;">
-										<!-- Look at the inCallLocalSharesTemplate in main.config.js  -->
 									</ul>
-
 								<a class="btn btn-large btn-tmv-success" href="#" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;"></a>
-                                     <!--US18908 Swap Microphone and Speaker in Vidyo Player Start-->
 								<a class="btn btn-large btn-tmm-success" href="#" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;"></a>
-								<!--US20650-- Remove Speaker Volume Slider for Plugin Browsers-->
-								<a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;"></a>	
-								<!--US18202 Remove Microphone Slider End-->
-								
-								<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>
+								<a class="btn btn-large btn-tms-success" href="#" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;"></a>
+								<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>-->
 							</div>
-
-							<!-- END -->
 						</div>
 
 		                <!-- End Plugin wrapper  -->

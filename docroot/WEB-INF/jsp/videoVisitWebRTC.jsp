@@ -104,22 +104,29 @@
 						
 							<div id="btnContainer" style="position:static;">
 								<div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
-										<!-- Configuration panel -->
-										<div class="well hide" id="configurationWrap">
-												<!-- See configurationTemplate in main.config.js-->
+									<div id="inCallButtonMuteVideo">
+			                          <div title="Disable Video" class="btns video-btn">&nbsp;</div>
+			                           <div title="Enable Video" class="btns video-muted-btn">&nbsp;</div>
+			                        </div>
+			                        <div id="inCallButtonMuteSpeaker">
+			                           <div title="Mute Speakers" class="btns speaker-btn">&nbsp;</div>
+			                           <div title="Unmute Speakers" class="btns speaker-muted-btn">&nbsp;</div>
+			                        </div>
+			                        <div id="inCallButtonMuteMicrophone">
+			                           <div title="Mute Mic" class="btns microphone-btn">&nbsp;</div>
+			                           <div title="Unmute Mic" class="btns microphone-muted-btn">&nbsp;</div>
+			                        </div>
+			                        <div id="inCallButtonExpand" style="display:none;">
+			                           <div title="Expand" class="btns expand-btn">&nbsp;</div>
+			                           <div title="Shrink" class="btns shrink-btn">&nbsp;</div>
+			                        </div>
+										<!--<div class="well hide" id="configurationWrap">
 										</div>
-                                 
 									<a class="btn btn-large btn-tmv-success" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;cursor: pointer;"></a>
-										<!--US18908 Swap Microphone and Speaker in Vidyo Player Start-->
 									<a class="btn btn-large btn-tmm-success" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;cursor: pointer;"></a>
-
-
                                       <a class="btn btn-large btn-tms-success" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;background-position:5px -290px;cursor: pointer;"></a>
-									   <!--US19792 End-->
-									<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>
+									<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>-->
 								</div>
-
-								<!-- END -->
 							</div>
 
 							<!-- End Plugin wrapper  -->
