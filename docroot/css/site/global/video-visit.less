@@ -1,76 +1,86 @@
-.container-videovisit{
-	.conference-renderer{
-		display: flex;
-		.video-main{
-			width: 80%;
-		}
-		.video-details{
-			width: 20%;
-			.visit-info-container{
-				background-color: #F7F7F7;
-				border-top: solid 1px #959595;
-				.visit-info{
-					margin: 0 20px 20px 20px;
-					padding: 20px 0px;
-					border-bottom: solid 1px #959595;
-					.leave-conference{
-						padding: 10px;
-						color: #FFFFFF;
-						background-color: #9D291F;
-						border-radius: 5px;
-						margin-bottom: 10px;
-						border: none;
-						width: 100%;
-					}
-					h2{
-						font-weight: normal;
-						font-size: 25px;
-					}
-					.patient-details{
+#vvHeader{
+	overflow:hidden;
+	background-color: #F7F7F7;
+ 	ul{
+		float:left;
+		list-style:none;
+		margin-left:0;
+		margin-bottom:0;
+		height:auto;
+	}
+}
+
+.conference-renderer {
+	display: flex;
+	.video-main{
+		width: 80%;
+	}
+	.video-details{
+		width: 20%;
+		.visit-info-container{
+			background-color: #F7F7F7;
+			border-top: solid 1px #959595;
+			.visit-info{
+				margin: 0 20px 20px 20px;
+				padding: 20px 0px;
+				border-bottom: solid 1px #959595;
+				.leave-conference{
+					padding: 10px;
+					color: #FFFFFF;
+					background-color: #9D291F;
+					border-radius: 5px;
+					margin-bottom: 10px;
+					border: none;
+					width: 100%;
+				}
+				h2{
+					font-weight: normal;
+					font-size: 25px;
+				}
+				.patient-details{
+					font-weight: bold;
+				}
+				.meeting-time-date-info{
+					.time-display{
 						font-weight: bold;
 					}
-					.meeting-time-date-info{
-						.time-display{
-							font-weight: bold;
-						}
-						.date-display{}
-					}
+					.date-display{}
 				}
 			}
-			.participant-details{
-				.participants-header{
+		}
+		.participant-details{
+			.participants-header{
+				display: flex;
+			    justify-content: left;
+			    vertical-align: middle;
+			    margin: 0 20px;
+				.guests{
+					font-size: 20px;
+					display: inline-block;
+					padding-top: 5px;
+				}
+				.invite-guest{
+					background-color: #006BA6;
+					padding: 5px;
+					color: #FFFFFF;
+					border-radius: 15px;
+					display: inline-block;
+					margin-left: auto;
+					border: none;
+					width: 90px;
+				}
+			}
+			.participants-list{
+				.participant{
 					display: flex;
-				    justify-content: left;
-				    vertical-align: middle;
-				    margin: 0 20px;
-					.guests{
-						font-size: 20px;
-						display: inline-block;
-						padding-top: 5px;
+					justify-content: left;
+				    margin: 10px 20px;
+					.participant-name{
+						text-transform: capitalize;
 					}
-					.invite-guest{
-						background-color: #006BA6;
-						padding: 5px;
-						color: #FFFFFF;
-						border-radius: 15px;
+					.participant-action{
 						display: inline-block;
 						margin-left: auto;
-						border: none;
-						width: 90px;
-					}
-				}
-				.participants-list{
-					.participant{
-						display: flex;
-						justify-content: left;
-					    margin: 10px 20px;
-						.participant-name{
-							text-transform: capitalize;
-						}
-						.participant-action{
-							display: inline-block;
-							margin-left: auto;
-						}
 					}
 				}
 			}
