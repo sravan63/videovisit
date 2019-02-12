@@ -220,20 +220,10 @@
 
 						<div id="btnContainer" class="member-btn-container" style="position:static;">
 		                    <div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
-		                    	<div id="inCallButtonToggleConfig">
-		                          <div title="Settings" class="btns settings-btn">&nbsp;</div>
-		                        </div>
-		                        <div class="well hide" id="configurationWrap"></div>
-			                    <div id="inCallButtonLocalShare">
-		                           <div title="" class="btns smd-btn">&nbsp;</div>
-		                           <div title="" class="btns smd-muted-btn">&nbsp;</div>
-		                        </div>
-		                        <ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;"></ul>
 		                    	<div id="inCallButtonMuteVideo">
 		                          <div title="Disable Video" class="btns video-btn">&nbsp;</div>
 		                           <div title="Enable Video" class="btns video-muted-btn">&nbsp;</div>
 		                        </div>
-
 		                        <div id="inCallButtonMuteSpeaker">
 		                           <div title="Mute Speakers" class="btns speaker-btn">&nbsp;</div>
 		                           <div title="Unmute Speakers" class="btns speaker-muted-btn">&nbsp;</div>
@@ -242,11 +232,19 @@
 		                           <div title="Mute Mic" class="btns microphone-btn">&nbsp;</div>
 		                           <div title="Unmute Mic" class="btns microphone-muted-btn">&nbsp;</div>
 		                        </div>
-
+			                    <div id="inCallButtonLocalShare">
+		                           <div title="" class="btns smd-btn">&nbsp;</div>
+		                           <div title="" class="btns smd-muted-btn">&nbsp;</div>
+		                        </div>
+		                        <ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;"></ul>
 		                        <div id="inCallButtonExpand" style="display:none;">
 		                           <div title="Expand" class="btns expand-btn">&nbsp;</div>
 		                           <div title="Shrink" class="btns shrink-btn">&nbsp;</div>
 		                        </div>
+		                        <div id="inCallButtonToggleConfig">
+		                          <div title="Settings" class="btns settings-btn">&nbsp;</div>
+		                        </div>
+		                        <div class="well hide" id="configurationWrap"></div>
 		                    	<!--<a class="btn btn-large btn-config" href="#" title="Settings" id="inCallButtonToggleConfig" style="display:block;"></a>
 			                        <div class="well hide" id="configurationWrap">
 			                        </div>

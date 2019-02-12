@@ -23,7 +23,7 @@ $(document).ready(function() {
 	var calculatedWidthPluginContainer = calculatedWidth - btnContainerWidth;
 	
 	/* Mandar [DE7189] - Code changes for right side space */
-	var calWidth = windowWidth - (videoSidebarWidth + btnContainerWidth);
+	var calWidth = windowWidth - (250 + btnContainerWidth);
 	$("#pluginContainer").width(calWidth);
 	/* Mandar [DE7189] END */
 	
@@ -580,8 +580,8 @@ var VideoVisit =
 		/* Setting min-widths */
 		$('#container-videovisit').css("min-width", calculatedMinWidth);
 		var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;
-		$("#video-main").css("min-width", calculatedMinWidth-videoSidebarWidth);
-		$("#pluginContainer").css("min-width", calculatedMinWidth-videoSidebarWidth-btnContainerWidth);
+		$("#video-main").css("min-width", calculatedMinWidth-250);
+		$("#pluginContainer").css("min-width", calculatedMinWidth-250-btnContainerWidth);
 
 		
 		/* Setting min-heights */
@@ -628,7 +628,7 @@ $(window).resize(function(){
 	}
 	else{
 		var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;
-		var calculatedWidthPluginContainer = width - (videoSidebarWidth + btnContainerWidth);
+		var calculatedWidthPluginContainer = width - (250 + btnContainerWidth);
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
 		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}
