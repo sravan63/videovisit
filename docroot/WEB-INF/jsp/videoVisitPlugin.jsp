@@ -236,7 +236,7 @@
 		                           <div title="" class="btns smd-btn">&nbsp;</div>
 		                           <div title="" class="btns smd-muted-btn">&nbsp;</div>
 		                        </div>
-		                        <ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;"></ul>
+		                        <!--<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;"></ul>-->
 		                        <div id="inCallButtonExpand" style="display:none;">
 		                           <div title="Expand" class="btns expand-btn">&nbsp;</div>
 		                           <div title="Shrink" class="btns shrink-btn">&nbsp;</div>
@@ -244,7 +244,7 @@
 		                        <div id="inCallButtonToggleConfig">
 		                          <div title="Settings" class="btns settings-btn">&nbsp;</div>
 		                        </div>
-		                        <div class="well hide" id="configurationWrap"></div>
+		                        <!--<div class="well hide" id="configurationWrap"></div>-->
 		                    	<!--<a class="btn btn-large btn-config" href="#" title="Settings" id="inCallButtonToggleConfig" style="display:block;"></a>
 			                        <div class="well hide" id="configurationWrap">
 			                        </div>
@@ -270,9 +270,8 @@
 		        <!-- End Central inCallContainer -->
 		
 		        <!-- Configuration panel -->
-		        <div class="well hide" id="configurationWrap">
-		            <!-- See configurationTemplate in main.config.js-->
-		        </div>
+		        <!--<div class="well hide" id="configurationWrap">
+		        </div>-->
 		         <!-- End of Configuration panel -->
 		        <input id="meetingExpiredTimerFlag" type="hidden" value="false">
 		        <input id="sendEmailPopUpFlag" type="hidden" value="false">
@@ -444,6 +443,8 @@
 		    <!-- <script data-main="vidyoplayer/scripts/main" src="vidyoplayer/scripts/libs/require.min.2.1.10.js"></script> -->
 	 	</div>
 		<div class="video-details" id="video-sidebar">
+			<div class="well hide" id="configurationWrap"></div>
+			<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;"></ul>
 			<div class="visit-info-container">
 				<div class="visit-info">
 					<button class="leave-conference" id="inCallButtonDisconnect">Leave Room</button>
