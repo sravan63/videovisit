@@ -207,7 +207,7 @@
 					<div class="visit-info">
 						<button class="leave-conference" id="inCallButtonDisconnect">Leave Room</button>
 						<h2>Visit Details</h2>
-						<div class="host-details" id="meetingHost">${WebAppContext.videoVisit.hostLastName.toLowerCase()} ${WebAppContext.videoVisit.hostFirstName.toLowerCase()}, ${WebAppContext.videoVisit.hostTitle}</div>
+						<div class="host-details" id="meetingHost">${WebAppContext.videoVisit.hostLastName.toLowerCase()}, ${WebAppContext.videoVisit.hostFirstName.toLowerCase()} ${WebAppContext.videoVisit.hostTitle}</div>
 						<div class="meeting-time-date-info">
 						  <span class="time-display">${WebAppContext.videoVisit.meetingTime},</span>
 						  <span class="date-display">${WebAppContext.videoVisit.meetingDate}</span>
