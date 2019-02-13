@@ -149,32 +149,6 @@
 					<input id="sendEmailPopUpFlag" type="hidden" value="false">
 				</div>
 				<!-- End of withjs div -->
-				<!-- PROVIDER: START- meeting leave yes no dialog  -->
-		        <div id="dialog-block-override-meeting-leave" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
-		            <div class="modal-header">
-		                <button type="button" id="leave_modal_cross_button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-		                <h3 id="">Step Away</h3>
-		            </div>
-		            <div class="modal-body">
-		                <div class="dialog-content-question">
-		                    <p id="leave_meeting_question" class="question">You are temporarily leaving this meeting.<br>
-		                    You can rejoin from the My Meetings page.<br>
-		                    Are you sure you want to leave this meeting?</p>
-		                    <div id="leave_meeting_error" class="error " style="padding:5px;"></div>
-		                    <div class="pagination">
-		                        <ul>
-		                            <li>
-		                            <input class="button" id="leave_meeting_button_yes"  type="button"  value="Yes &rsaquo;&rsaquo;"/>
-		                            </li>
-		                            <li>
-		                            <input class="button" id="leave_meeting_button_no"  type="button"  value="No &rsaquo;&rsaquo;"/>
-		                            </li>
-		                        </ul>
-		                    </div>
-		                 </div>
-		            </div>
-		        </div>
-	        	<!-- END-  meeting leave yes no dialog  -->
 	        	<!-- MEMBER AND GUEST: START - Quit Meeting Dialogs  -->
 		    	<div id="quitMeetingModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
 		            <div class="modal-header">
