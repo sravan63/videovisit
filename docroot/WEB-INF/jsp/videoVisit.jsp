@@ -67,9 +67,14 @@
         keepALiveTimerId ='';
                 
         $(".refresh-button").click(function(){
-        	var params = ['info','videoRefreshButtonAction','User clicked on refresh button in video visit page.'];
-    		VideoVisit.logVendorMeetingEvents(params);
-			window.location.href = window.location.href;
+        	var isWebRTC = ($('#webrtc').val() == 'true');
+		if(isWebRTC){
+			$('html').addClass("no-scroll");
+			$(".splash").css({"display":"block","z-index":"9999999"});
+		}
+		var params = ['info','videoRefreshButtonAction','User clicked on refresh button in video visit page.'];
+        VideoVisit.logVendorMeetingEvents(params);
+		window.location.reload(); 
 		});
         
         function keepALive()

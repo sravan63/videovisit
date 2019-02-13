@@ -259,10 +259,6 @@
 	<script type="text/javascript">
 		bodyLoaded();
 
-		$(".refresh-button").click(function(){
-			window.location.href = window.location.href;
-		});
-		
 		(function () {
 			/* jQuery is not available yet so use native JavaScript */
 			document.getElementById("withjs").className ="";
