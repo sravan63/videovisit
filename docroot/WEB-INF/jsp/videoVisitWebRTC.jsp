@@ -191,7 +191,6 @@
 				<div class="participant-details">
 					<div class="participants-header">
 						<span class="guests">Guests</span>
-						<button class="invite-guest">invite</button>
 					</div>
 					<div class="participants-list">
 						<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">

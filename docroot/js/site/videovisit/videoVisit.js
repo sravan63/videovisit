@@ -176,6 +176,9 @@ $(document).ready(function() {
     //DE9451 - Splash screen scroll issue fix
 	$('html').addClass("no-scroll");
 	
+	var ht = $('#video-sidebar').outerHeight() - $('.visit-info-container').outerHeight();
+	$('.participant-details').css('height',ht);
+	
 	VideoVisit.updatePatientGuestNameList();
 	
 });
