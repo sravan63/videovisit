@@ -620,8 +620,6 @@ function setSidePanParticipantsListHeight(){
     }
 
 $(window).resize(function(){
-
-    setSidePanParticipantsListHeight();
 	$('#container-videovisit').css("min-width", "900px");/*us13302*/
 
 	/* Setting resize Widths */
@@ -656,4 +654,5 @@ $(window).resize(function(){
 	$("#video-sidebar").height(calculatedHeight);
 	$(".video-sidebar-content").height(calculatedHeight - 33);
 	$("#btnContainer").height(calculatedHeight);
+	setSidePanParticipantsListHeight();
 });
