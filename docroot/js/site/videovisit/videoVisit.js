@@ -176,8 +176,7 @@ $(document).ready(function() {
     //DE9451 - Splash screen scroll issue fix
 	$('html').addClass("no-scroll");
 	
-	var ht = $('#video-sidebar').outerHeight() - $('.visit-info-container').outerHeight();
-	$('.participant-details').css('height',ht);
+	setSidePanParticipantsListHeight();
 	
 	VideoVisit.updatePatientGuestNameList();
 	
@@ -609,10 +608,20 @@ var VideoVisit =
 			$('#inCallContainer').css('margin-top', '0');
 		}
 	}
+
+	
 }
+
+function setSidePanParticipantsListHeight(){
+	var ht = $('#video-sidebar').outerHeight() - $('.visit-info-container').outerHeight();
+	$('.participant-details').css('height',ht);
+	var listHt = $('.participant-details').outerHeight() - $('.participants-header').outerHeight() - 15;
+	$('.participants-list').css('max-height',listHt);
+    }
 
 $(window).resize(function(){
 
+    setSidePanParticipantsListHeight();
 	$('#container-videovisit').css("min-width", "900px");/*us13302*/
 
 	/* Setting resize Widths */
