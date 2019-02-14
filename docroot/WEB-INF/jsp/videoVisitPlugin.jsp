@@ -17,7 +17,6 @@
 		</ul>
 		<div class="right-container">
               <a href="mdohelp.htm" target="_blank"><span class="help">Help</span></a>
-              <span class="reportIssue">Report an Issue</span>
               <span class="refresh-button">Refresh</span>
 		</div>
 	</div>
