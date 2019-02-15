@@ -194,12 +194,7 @@
 			    .help{
                     color: #006BA6;
     				padding-right: 10px;
-			    }
-			    .reportIssue{
-			    	border-left: 1px solid;
-				    padding: 0px 10px;
-				    border-right: 1px solid;
-				    cursor: pointer;
+    				border-right: 1px solid;
 			    }
 			    .refresh-button{
                    padding-left: 10px;
