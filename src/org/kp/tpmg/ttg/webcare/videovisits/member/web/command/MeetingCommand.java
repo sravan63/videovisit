@@ -1251,4 +1251,24 @@ public class MeetingCommand {
 		}
 	}
 	
+	/**
+	 * @param request
+	 *            request
+	 */
+	public static String getMeetingDetails(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final Gson gson = new GsonBuilder().serializeNulls().create();
+		final String meetingId = request.getParameter("meetingId");
+		String output = null;
+		if (StringUtils.isNotBlank(meetingId) && ctx != null) {
+			final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
+			if (meeting != null && meetingId.trim().equalsIgnoreCase(meeting.getMeetingId())) {
+				output = gson.toJson(meeting);
+			}
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
 }
