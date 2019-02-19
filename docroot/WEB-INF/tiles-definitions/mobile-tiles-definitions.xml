@@ -127,9 +127,8 @@
  		<put-attribute name="data" value="/WEB-INF/jsp/data/jsonData.jsp" />
 	</definition>
 
-	
+	<definition name="videoVisitMobilePexip" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="videoVisitMobilePexip.jsp" />
+	</definition>
 
-	
-
-	
 </tiles-definitions>
