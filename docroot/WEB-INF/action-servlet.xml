@@ -53,6 +53,7 @@
 		       <value>enablejavascript.htm</value>
 		       <value>mobileenablejavascript.htm</value>
                <value>readme.htm</value>
+               <value>mobilelaunchvv.htm</value>
 			</list>
 		</property>
 	    
@@ -160,6 +161,7 @@
                 <prop key="/meetingDetails.json">meetingDetails</prop>
                 
                 <prop key="/videoVisitDesktopReady.htm">videoVisitDesktopReadyPexip</prop>
+                <prop key="/mobilelaunchvv.htm">mobileLaunchVideoVisit</prop>
 				
 			</props>
 		</property>
@@ -561,6 +563,13 @@
 	<bean id="meetingDetails" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.MeetingDetailsController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 	</bean>
+	
+	<bean id="mobileLaunchVideoVisit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.MobileLaunchVideoVisitController">
+	    <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="videoVisit" />
+		<property name="navigation" value="videoVisit" />
+	</bean>
+	
 	<!--  COMMAND classes -->
 	<bean id="webAppContextCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand" />
 	<bean id="environmentCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand">

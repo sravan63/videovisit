@@ -28,4 +28,5 @@ public class ServiceUtil {
 	public static final String UPDATE_EMAIL_ACTION = "updateEmailAction";
 	public static final String LOG_VENDOR_MEETING_EVENTS = "logVendorMeetingEvents";
 	public static final String GET_MEETINGS_FOR_MEMBER_AND_NON_MEMBER_PROXIES = "getMeetingsForMemberAndNonMemberProxies";
+	public static final String GET_MEETING_DETAILS_FOR_MEETING_ID = "getMeetingDetailsForMeetingId";
 }

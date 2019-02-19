@@ -55,7 +55,7 @@
 
        <init-param>
 	      <param-name>excludeURLs</param-name>
-	      <param-value>mdo.htm,mdohelp.htm,mdolive.htm,mdohelplive.htm,intro.htm,setup.htm,mobileAppPatientLogin.htm</param-value>
+	      <param-value>mdo.htm,mdohelp.htm,mdolive.htm,mdohelplive.htm,intro.htm,setup.htm,mobileAppPatientLogin.htm,mobilelaunchvv.htm</param-value>
 	   </init-param>
        	    
    </filter>
