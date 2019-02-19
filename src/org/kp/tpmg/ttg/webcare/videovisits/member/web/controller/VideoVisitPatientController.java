@@ -70,6 +70,11 @@ public class VideoVisitPatientController extends SimplePageController {
 							SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
 							videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
 							videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
+							videoVisitParams.setVendor(meeting.getVendor());
+							videoVisitParams.setVendorHostPin(meeting.getVendorHostPin());
+							videoVisitParams.setVendorGuestPin(meeting.getVendorGuestPin());
+							// Need set proper value for 'participantVendorRole'
+//							videoVisitParams.setParticipantVendorRole(participantVendorRole);
 						}
 					}
 				}
@@ -83,7 +88,7 @@ public class VideoVisitPatientController extends SimplePageController {
 					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
 					videoVisitParams.setIsMember("true");
 					videoVisitParams.setIsProxyMeeting(request.getParameter("isProxyMeeting"));
-//					ctx.setVideoVisit(videoVisitParams);
+					ctx.setVideoVisit(videoVisitParams);
 				} else {
 					videoVisitParams.setVidyoUrl(request.getParameter("vidyoUrl"));
 					videoVisitParams.setMeetingId(request.getParameter("meetingId"));
@@ -95,13 +100,9 @@ public class VideoVisitPatientController extends SimplePageController {
 					videoVisitParams.setGuestUrl(request.getParameter("guestUrl"));
 					videoVisitParams.setIsMember("false");
 
-//					ctx.setVideoVisit(videoVisitParams);
+					ctx.setVideoVisit(videoVisitParams);
 				}
-//				Needs to be un-comment below 3 lines after service updated DO's with new vendor parameters
-//				videoVisitParams.setVendor(vendor);
-//				videoVisitParams.setVendorHostPin(vendorHostPin);
-//				videoVisitParams.setVendorGuestPin(vendorGuestPin);
-//				videoVisitParams.setParticipantVendorRole(participantVendorRole);
+
 				ctx.setVideoVisit(videoVisitParams);
 				logger.debug("Video Visit data:" + videoVisitParams.toString());
 			}

@@ -894,6 +894,8 @@ function deleteCookie(c_name){
 
 
 function launchVideoVisitMember(data){
+		//add logic to differentiate vidyo/pexip
+	
 		//var name = lastName + " " + firstName;
 		try{
 			//data = jQuery.parseJSON(data);
@@ -949,6 +951,8 @@ function launchVideoVisitMember(data){
  * @param firstName
  */
 function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
+	//add logic to differentiate vidyo/pexip
+	
 	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1";
 	var appOS = getAppOS();
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {

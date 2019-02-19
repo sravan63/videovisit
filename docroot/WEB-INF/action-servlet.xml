@@ -160,7 +160,8 @@
 				<prop key="/updateUserContext.json">updateUserContext</prop>
                 <prop key="/meetingDetails.json">meetingDetails</prop>
                 
-                <prop key="/videoVisitDesktopReady.htm">videoVisitDesktopReadyPexip</prop>
+                <prop key="/videovisitdesktopready.htm">videoVisitDesktopReadyPexip</prop>
+                <prop key="/videovisitmobileready.htm">videoVisitMobileReadyPexip</prop>
                 <prop key="/mobilelaunchvv.htm">mobileLaunchVideoVisit</prop>
 				
 			</props>
@@ -287,6 +288,12 @@
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="videoVisitDesktopPexip" />
 		<property name="navigation" value="videoVisitDesktopPexip" />
+	</bean>
+	
+	<bean id="videoVisitMobileReadyPexip" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="videoVisitMobilePexip" />
+		<property name="navigation" value="videoVisitMobilePexip" />
 	</bean>
 	
 	<!-- for readme file -->
@@ -566,8 +573,8 @@
 	
 	<bean id="mobileLaunchVideoVisit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.MobileLaunchVideoVisitController">
 	    <property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="videoVisit" />
-		<property name="navigation" value="videoVisit" />
+		<property name="viewName" value="videoVisitMobilePexip" />
+		<property name="navigation" value="videoVisitMobilePexip" />
 	</bean>
 	
 	<!--  COMMAND classes -->
