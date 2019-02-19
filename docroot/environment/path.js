@@ -5,7 +5,8 @@ VIDEO_VISITS.Path = {
         expired : 'logout.htm',
         guestexpired : 'guestlogout.htm',
         videovisitReady:'videoVisitReady.htm',
-        videovisitGuestReady:'videoVisitGuestReady.htm'
+        videovisitGuestReady:'videoVisitGuestReady.htm',
+        videovisitDesktopReadyPexip:'videoVisitDesktopReady.htm'
     },
     grid : {
         home : {

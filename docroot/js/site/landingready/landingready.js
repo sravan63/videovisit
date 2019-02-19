@@ -68,6 +68,7 @@ $(document).ready(function() {
 	            			    async: false,
 	            			    data: postParaVideoVisit,
 	            			    success: function(){
+	            			    	//add logic to differentiate vidyo/pexip
 	            			    	if($.browser.mozilla){
 	            			    		window.setTimeout(function(){
 	            							window.location.href="videoVisitReady.htm";
@@ -135,6 +136,7 @@ $(document).ready(function() {
             			    async: false,
             			    data: postParaVideoVisit,
             			    success: function(){
+            			    	//add logic to differentiate vidyo/pexip
             			    	if($.browser.mozilla){
             			    		window.setTimeout(function(){
             							window.location.href="videoVisitReady.htm";
