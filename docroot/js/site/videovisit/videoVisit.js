@@ -548,7 +548,7 @@ var VideoVisit =
         		if(sidePaneMeetingDetails.sortedParticipantsList[sp].availableInMeeting){
     				$('.guest-part-'+sp+' .participant-indicator').css('display', 'inline-block');
     			}else{
-    				$('.guest-part-'+sp+' .participant-indicator').css('display', 'none');
+    				//$('.guest-part-'+sp+' .participant-indicator').css('display', 'none');
     			}
         	}
 
