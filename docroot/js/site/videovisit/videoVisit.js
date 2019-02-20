@@ -3,7 +3,7 @@ var runningLateRecursiveCall;
 var newStartTimeRecursiveCall;
 var meetingHostName = "";
 var meetingPatientName = "";
-var sidePaneMeetingDetails = {};
+var sidePaneMeetingDetails = {sortedParticipantsList: []};
 
 $(document).ready(function() {
 	$.ajax({
