@@ -391,50 +391,27 @@
 		    <!-- <script data-main="vidyoplayer/scripts/main" src="vidyoplayer/scripts/libs/require.min.2.1.10.js"></script> -->
 	 	</div>
 		<div class="video-details" id="video-sidebar">
-			<div class="well hide" id="configurationWrap"></div>
-			<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;"></ul>
 			<div class="visit-info-container">
 				<div class="visit-info">
 					<button class="leave-conference" id="inCallButtonDisconnect">Leave Room</button>
-					<h2>Visit Details</h2>
-					<div class="host-details" id="meetingHost">${WebAppContext.videoVisit.hostLastName.toLowerCase()}, ${WebAppContext.videoVisit.hostFirstName.toLowerCase()} ${WebAppContext.videoVisit.hostTitle}</div>
+					<div class="visit-detail-txt">Visit Details</div>
+					<div class="host-details" id="meetingHost"></div>
 					<div class="meeting-time-date-info">
-					  <span class="time-display">${WebAppContext.videoVisit.meetingTime},</span>
-					  <span class="date-display">${WebAppContext.videoVisit.meetingDate}</span>
+					  <span class="time-display"></span>
+					  <span class="date-display"></span>
 					</div>
+					<div class="meeting-updated-time-date-info">
+	                  <span class="time-display"></span>
+	               </div>
 				</div>
 			</div>
 			<div class="participant-details">
-				<div class="participants-header">
-					<span class="guests">Guests</span>
-				</div>
-				<div class="participants-list">
-					<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">
-						<p class="participant">
-		                  	<span class="participant-name">${Provider.lastName.trim().toLowerCase()}, ${Provider.firstName.trim().toLowerCase()} ${Provider.title.trim().toUpperCase()}</span>
-		                  	<span class="participant-action">...</span>
-	               		</p>
-					</c:forEach>
-					<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">
-						<c:if test="${Caregiver.lastName == 'audio_participant'}">
-							<c:set var="memVidyPhNumCount" value="${memVidyPhNumCount + 1}" scope="page"/>
-                    		<p class="participant">
-			                  	<span class="participant-name">Phone ${memVidyPhNumCount}</span>
-			                  	<span class="participant-action" email="${Caregiver.emailAddress.trim()}">...</span>
-		               		</p>
-                    	</c:if>
-                    	<c:if test="${Caregiver.lastName != 'audio_participant'}">
-                    		<p class="participant">
-			                  	<span class="participant-name">${Caregiver.firstName.trim()} ${Caregiver.lastName.trim()}</span>
-			                  	<span class="participant-action" email="${Caregiver.emailAddress.trim()}">...</span>
-		               		</p>
-                    	</c:if>
-					</c:forEach>
-				</div>
-			</div>
-		</div>
-		
-		
+	            <div class="participants-header">
+	               <span class="guests">Guests</span>
+	            </div>
+	            <div class="participants-list"></div>
+	         </div>
+		</div>		
 	</div>
 </div>
 

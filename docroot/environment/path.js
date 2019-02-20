@@ -17,7 +17,7 @@ VIDEO_VISITS.Path = {
     login : {
         ajaxurl : 'submitlogin.json',
         ssologinurl : 'ssosubmitlogin.json',
-        ssosimulationloginurl : 	'ssosimulationsubmitlogin.json'
+        ssosimulationloginurl :     'ssosimulationsubmitlogin.json'
     },
     landingready : {
         visiturl : 'visit.htm',
@@ -46,23 +46,24 @@ VIDEO_VISITS.Path = {
         guestMeeting: 'guestMeeting.json'
     },    
     guestvisit : {
-    	quitmeeting : 'endguestsession.json',
+        quitmeeting : 'endguestsession.json',
         logout : 'guestlogout.htm'
     },    
     guestlogout : {
-    	logoutjson: 'endguestsession.json'
+        logoutjson: 'endguestsession.json'
     },    
     visit : {
         quitmeeting : 'quitmeeting.json',
         createSetupWizardMeeting: 'createSetupWizardMeeting.json',
         terminateSetupWizardMeeting : 'terminateSetupWizardMeeting.json',
         logout : 'logout.htm',
-		setKPHCConferenceStatus: 'setKPHCConferenceStatus.json',
+        setKPHCConferenceStatus: 'setKPHCConferenceStatus.json',
         providerRunningLateInfo: 'providerRunningLateInfo.json',
         caregiverJoinMeeting: 'caregiverJoinMeeting.json',
         logVendorMeetingEvents : 'logVendorMeetingEvents.json',
         setPeripheralsFlag : 'setPeripheralsFlag.json',
-        updateUserContext: 'updateUserContext.json'
+        updateUserContext: 'updateUserContext.json',
+        meetingDetails: 'meetingDetails.json'
     },
     logout : {
         logoutjson: 'logout.json'
