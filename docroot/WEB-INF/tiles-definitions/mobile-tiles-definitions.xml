@@ -128,7 +128,7 @@
 	</definition>
 
 	<definition name="videoVisitMobilePexip" extends=".mobileInAppPageTemplate">
- 		<put-attribute name="content" value="videoVisitMobilePexip.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/videoVisitMobilePexip.jsp" />
 	</definition>
 
 </tiles-definitions>

@@ -290,12 +290,6 @@
 		<property name="navigation" value="videoVisitDesktopPexip" />
 	</bean>
 	
-	<bean id="videoVisitMobileReadyPexip" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
-		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="videoVisitMobilePexip" />
-		<property name="navigation" value="videoVisitMobilePexip" />
-	</bean>
-	
 	<!-- for readme file -->
 	<bean id="readme" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
@@ -480,6 +474,14 @@
 		<property name="viewName" value="mobileEnableJavascript" />
 		
 	</bean>
+	
+	<bean id="videoVisitMobileReadyPexip" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="videoVisitMobilePexip" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
+    </bean>
 	
 	<bean id="dataLaunchMeetingForMember" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.LaunchMeetingForMemberController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>

@@ -70,7 +70,7 @@ public class VideoVisitPatientController extends SimplePageController {
 							SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
 							videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
 							videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
-							videoVisitParams.setVendor(meeting.getVendor());
+							videoVisitParams.setVendor("pexip");//need to read it from meeting object in future
 							videoVisitParams.setVendorHostPin(meeting.getVendorHostPin());
 							videoVisitParams.setVendorGuestPin(meeting.getVendorGuestPin());
 							// Need set proper value for 'participantVendorRole'
@@ -103,7 +103,7 @@ public class VideoVisitPatientController extends SimplePageController {
 					ctx.setVideoVisit(videoVisitParams);
 				}
 
-				ctx.setVideoVisit(videoVisitParams);
+//				ctx.setVideoVisit(videoVisitParams);
 				logger.debug("Video Visit data:" + videoVisitParams.toString());
 			}
 		} catch (Exception e) {
