@@ -908,6 +908,8 @@ function launchVideoVisitMember(data){
 //			}
 //			console.log("launchVideoVisitMember")
 			url = data.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
+			//window.location.href = 'videovisitmobileready.htm';
+			//return;
 //			console.log("url",url);
 		
 
@@ -927,7 +929,9 @@ function launchVideoVisitMember(data){
 				}
 			}
 			else{
-				openTab(url);
+				// openTab(url);
+				// Load Pexip here.
+				window.location.href = 'videovisitmobileready.htm';
 
 			}
 		}
