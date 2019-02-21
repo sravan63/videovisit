@@ -500,6 +500,12 @@ var VideoVisit =
         			}else if(!tPart.lastName){
         				tPartName = tPart.firstName;
         			}
+        			if(tPart.title){
+        				tPartName = tPartName + ' ' + tPart.title;//assuming title exixts only for clinician
+        			}
+        			if(tPart.careGiverId){
+        				tPartName = tPartName + ' ' + tPart.emailAddress;//assuming careGiverId exixts only for guest
+        			}
         			tPartName = tPartName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         			if(participantName == tPartName){
         				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
