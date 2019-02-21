@@ -391,6 +391,8 @@
 		    <!-- <script data-main="vidyoplayer/scripts/main" src="vidyoplayer/scripts/libs/require.min.2.1.10.js"></script> -->
 	 	</div>
 		<div class="video-details" id="video-sidebar">
+			<div class="well hide" id="configurationWrap"></div>
+        	<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;"></ul>
 			<div class="visit-info-container">
 				<div class="visit-info">
 					<button class="leave-conference" id="inCallButtonDisconnect">Leave Room</button>
