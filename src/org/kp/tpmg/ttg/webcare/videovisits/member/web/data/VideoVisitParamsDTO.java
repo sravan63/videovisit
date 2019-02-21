@@ -33,9 +33,6 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String isProxyMeeting;
 	private String webrtc = "false";
 	private String vendor;
-	private String vendorHostPin;
-	private String vendorGuestPin;
-	private String participantVendorRole;
 
 	public String getVidyoUrl() {
 		return vidyoUrl;
@@ -277,48 +274,6 @@ public class VideoVisitParamsDTO implements Serializable {
 	}
 
 	/**
-	 * @return the vendorHostPin
-	 */
-	public String getVendorHostPin() {
-		return vendorHostPin;
-	}
-
-	/**
-	 * @param vendorHostPin the vendorHostPin to set
-	 */
-	public void setVendorHostPin(String vendorHostPin) {
-		this.vendorHostPin = vendorHostPin;
-	}
-
-	/**
-	 * @return the vendorGuestPin
-	 */
-	public String getVendorGuestPin() {
-		return vendorGuestPin;
-	}
-
-	/**
-	 * @param vendorGuestPin the vendorGuestPin to set
-	 */
-	public void setVendorGuestPin(String vendorGuestPin) {
-		this.vendorGuestPin = vendorGuestPin;
-	}
-
-	/**
-	 * @return the participantVendorRole
-	 */
-	public String getParticipantVendorRole() {
-		return participantVendorRole;
-	}
-
-	/**
-	 * @param participantVendorRole the participantVendorRole to set
-	 */
-	public void setParticipantVendorRole(String participantVendorRole) {
-		this.participantVendorRole = participantVendorRole;
-	}
-
-	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -330,8 +285,7 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ ", guestName=" + guestName + ", isProvider=" + isProvider + ", guestUrl=" + guestUrl + ", isMember="
 				+ isMember + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime + ", participant="
 				+ participant + ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId + ", isProxyMeeting="
-				+ isProxyMeeting + ", webrtc=" + webrtc + ", vendor=" + vendor + ", vendorHostPin=" + vendorHostPin
-				+ ", vendorGuestPin=" + vendorGuestPin + ", participantVendorRole=" + participantVendorRole + "]";
+				+ isProxyMeeting + ", webrtc=" + webrtc + ", vendor=" + vendor + "]";
 	}
 
 }
