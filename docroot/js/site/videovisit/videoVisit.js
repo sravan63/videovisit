@@ -731,23 +731,38 @@ function updateParticipantsAndGuestsList(meetingList){
 	}
 	var participants =  [];
 	if(meetingList.participant && meetingList.caregiver){
-		participants = meetingList.participant.concat(meetingList.caregiver);
+		var nonTelephonyGuests = meetingList.caregiver.filter(function(item){
+			return item.lastName != 'audio_participant';
+		});
+		participants = meetingList.participant.concat(nonTelephonyGuests);
 	}else if(!meetingList.participant){
-		participants = meetingList.caregiver;
+		participants = meetingList.caregiver.filter(function(item){
+			return item.lastName != 'audio_participant';
+		});;
 	}else if(!meetingList.caregiver){
 		participants = meetingList.participant;
 	}
-	if(!participants || participants.length == 0){
-		sidePaneMeetingDetails.sortedParticipantsList = [];
-		return;
-	}
-	sidePaneMeetingDetails.sortedParticipantsList = participants.sort(sortObjs('firstName'));
+	//meetingList.participant.concat(meetingList.caregiver);
+	let tempSortedArr = participants.sort(sortObjs('firstName'));
+	let telephonyGuests = [];
+	if(meetingList.caregiver){
+		telephonyGuests = meetingList.caregiver.filter(function(item){
+			return item.lastName == 'audio_participant';
+		});
+	}	
+	sidePaneMeetingDetails.sortedParticipantsList = tempSortedArr.concat(telephonyGuests);	
 	var tempArr = sidePaneMeetingDetails.sortedParticipantsList;
+	var phoneNumCount = 0;
 	for(let i=0;i<tempArr.length;i++){
 		if(tempArr[i].title){
 			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 		}else{
-			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+			if(tempArr[i].lastName == 'audio_participant'){
+				phoneNumCount++;
+				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant" phonenumber="'+tempArr[i].firstName+'">Phone '+phoneNumCount+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+			}else{
+				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+			}
 		}		
 	}
 }
