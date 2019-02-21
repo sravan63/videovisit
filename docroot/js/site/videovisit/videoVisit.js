@@ -738,7 +738,11 @@ function updateParticipantsAndGuestsList(meetingList){
 	sidePaneMeetingDetails.sortedParticipantsList = participants.sort(sortObjs('firstName'));
 	var tempArr = sidePaneMeetingDetails.sortedParticipantsList;
 	for(let i=0;i<tempArr.length;i++){
-		$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+		if(tempArr[i].title){
+			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+		}else{
+			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+		}		
 	}
 }
 function sortObjs(prop){
