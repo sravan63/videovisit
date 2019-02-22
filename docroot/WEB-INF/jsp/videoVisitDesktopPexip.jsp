@@ -102,13 +102,18 @@
 	<div id="vvHeader">
 		<ul id="clinician-name" style="">
 			<li>    
-				<h3 id="patientTitle" class="page-title" style="">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
+				<h3 id="patientTitle" class="page-title" style="">Video Visits</h3>
 			</li>
 		</ul>
-		<ul id="leaveEndBtnContainer" class="btn-group" style="float:right; list-style:none; font-size:100%; margin:4px 0;">
-			<li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" onclick="disconnect();" style="border-right:1px solid #D4D4D4; cursor:pointer; display:inline-block;"></li>
+		<div class="right-container">
+              <a href="mdohelp.htm" target="_blank"><span class="help">Help</span></a>
+              <span class="refresh-button">Refresh</span>
+		</div>
+
+		<!-- <ul id="leaveEndBtnContainer" class="btn-group" style="float:right; list-style:none; font-size:100%; margin:4px 0;">
+			<li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" onclick="disconnect();" style="border-right:1px solid #D4D4D4; cursor:pointer; display:inline-block;"></li> -->
 			<!-- <li class="btnLast" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li> -->
-		</ul>
+		<!-- </ul> -->
 	</div>
 	<!-- PEXIP Container - START -->
 	<div id="container" class="site">

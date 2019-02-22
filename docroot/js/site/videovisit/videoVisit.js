@@ -696,6 +696,9 @@ function updateTimeAndDate(meetingTime){
 	var meetingTime = meetingTime?new Date(parseInt(meetingTime)):null;
 	var hours = meetingTime.getHours();
 	var minutes = meetingTime.getMinutes();
+	if(minutes<10){
+		minutes = minutes + "0";
+	}
 	var ampmval = 'AM';
 	if(hours>11){
 		ampmval = 'PM';
@@ -715,6 +718,9 @@ function updateRunningLateTime(meetingDetails){
 	var meetingTime = new Date(parseInt(meetingDetails.runLateMeetingTime));
 	var hours = meetingTime.getHours();
 	var minutes = meetingTime.getMinutes();
+	if(minutes<10){
+		minutes = minutes + "0";
+	}
 	var ampmval = 'AM';
 	if(hours>11){
 		ampmval = 'PM';
