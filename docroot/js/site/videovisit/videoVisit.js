@@ -206,8 +206,10 @@ $(document).ready(function() {
 
     //DE9451 - Splash screen scroll issue fix
 	$('html').addClass("no-scroll");
-	
-	setSidePanParticipantsListHeight();
+		
+	setTimeout(function(){
+		setSidePanParticipantsListHeight();
+	}, 2000);
 	
 	VideoVisit.updatePatientGuestNameList();
 	
@@ -664,10 +666,17 @@ var VideoVisit =
 }
 
 function setSidePanParticipantsListHeight(){
-	var ht = $('#video-sidebar').outerHeight() - $('.visit-info-container').outerHeight();
+	/*var ht = $('#video-sidebar').outerHeight() - $('.visit-info-container').outerHeight();
 	$('.participant-details').css('height',ht);
 	var listHt = $('.participant-details').outerHeight() - $('.participants-header').outerHeight() - 15;
-	$('.participants-list').css('max-height',listHt);
+	$('.participants-list').css('max-height',listHt);*/
+	let calculatedHeight = 0;
+	if($('.meeting-updated-time-date-info').outerHeight()){
+		calculatedHeight = $('#video-sidebar').outerHeight() - ($('.visit-info').outerHeight() + $('.participants-header').outerHeight() + 40);
+	}else{
+		calculatedHeight = $('#video-sidebar').outerHeight() - ($('.visit-info').outerHeight() + $('.participants-header').outerHeight() - $('.meeting-updated-time-date-info').outerHeight());
+	}
+	$('.participants-list').css('max-height',calculatedHeight);
 }
 
 function updateSideBarWithDetails(meetingDetails){
