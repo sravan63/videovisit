@@ -412,3 +412,20 @@ function isNumberString(str){
     var onlyNumbers = /^\d+$/;
     return (onlyNumbers.test(str));
 }
+
+// changes lastname, firstname to firstname lastname.
+function changeConferenceParticipantNameFormat(name){
+	var formattedName = '';
+	var narr = name.split(',');
+	var lastname = String(narr[0]).trim();
+	var firstname = narr[narr.length-1];
+	if(firstname.indexOf(' ') > -1){
+		// lastname, firstname title.
+		var fname = firstname.split(' ')[0];
+		var title = firstname.split(' ')[1];
+		formattedName = fname+' '+lastname+' ,'+title;
+	} else {
+		formattedName = firstname+' '+lastname;
+	}
+	return formattedName;
+}

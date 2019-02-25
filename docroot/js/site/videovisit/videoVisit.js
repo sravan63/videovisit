@@ -209,7 +209,7 @@ $(document).ready(function() {
 		
 	setTimeout(function(){
 		setSidePanParticipantsListHeight();
-	}, 2000);
+	}, 2500);
 	
 	VideoVisit.updatePatientGuestNameList();
 	
@@ -480,7 +480,8 @@ var VideoVisit =
 			}
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
-        		var pName = (isWebRTC)?participants[i].trim():pData.name.trim();
+        		var prName = (isWebRTC)?participants[i].trim():pData.name.trim();
+        		var pName = changeConferenceParticipantNameFormat(prName);
         		var participantName = pName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
 				//var isTelephony = isNumberString(participantName);
 				//commenting isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
@@ -690,11 +691,14 @@ function updateHostDetails(host){
 		$('#meetingHost').text('');
 		return;
 	}
-	let hostFullName = host.firstName+' '+host.lastName;
+	let hostFname = host.firstName?host.firstName.toLowerCase():'';
+	let hostLname = host.lastName?host.lastName.toLowerCase():'';
+	let hostFullName = hostFname+' '+hostLname;
+	let hostTitle = host.title?host.title.toLowerCase():'';
 	if(host.title){
-		hostFullName = hostFullName + ', ' + host.title;
+		hostFullName = hostFullName.trim() + ', ' + host.title;
 	}
-	$('#meetingHost').html('<span class="host-indicator"></span><span class="host-name">'+hostFullName+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span>');
+	$('#meetingHost').html('<span class="host-indicator"></span><span class="host-name">'+hostFullName.trim()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span>');
 }
 function updateTimeAndDate(meetingTime){
 	if(!meetingTime){
