@@ -209,7 +209,7 @@ $(document).ready(function() {
 		
 	setTimeout(function(){
 		setSidePanParticipantsListHeight();
-	}, 2500);
+	}, 1000);
 	
 	VideoVisit.updatePatientGuestNameList();
 	
@@ -671,12 +671,7 @@ function setSidePanParticipantsListHeight(){
 	$('.participant-details').css('height',ht);
 	var listHt = $('.participant-details').outerHeight() - $('.participants-header').outerHeight() - 15;
 	$('.participants-list').css('max-height',listHt);*/
-	let calculatedHeight = 0;
-	if($('.meeting-updated-time-date-info').outerHeight()){
-		calculatedHeight = $('#video-sidebar').outerHeight() - ($('.visit-info').outerHeight() + $('.participants-header').outerHeight() + 40);
-	}else{
-		calculatedHeight = $('#video-sidebar').outerHeight() - ($('.visit-info').outerHeight() + $('.participants-header').outerHeight() - $('.meeting-updated-time-date-info').outerHeight());
-	}
+	let calculatedHeight = $('#video-sidebar').outerHeight() - ($('.visit-info-container').outerHeight() + 65);
 	$('.participants-list').css('max-height',calculatedHeight);
 }
 
