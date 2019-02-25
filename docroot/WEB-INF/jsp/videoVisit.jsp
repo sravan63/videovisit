@@ -17,7 +17,7 @@
 	<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
 	<input type="hidden" id="isMember" value="${WebAppContext.videoVisit.isMember}" />
 	<input type="hidden" id="isProxyMeeting" value="${WebAppContext.videoVisit.isProxyMeeting}" />
-	
+	<input type="hidden" id="meetingHostName" value="${WebAppContext.videoVisit.hostName}"/>
 	<input type="hidden" id="kpKeepAliveUrl" value="${WebAppContext.kpKeepAliveUrl}" />
 	<input type="hidden" id="webrtc" value="${WebAppContext.videoVisit.webrtc}" />
 	<input type="hidden" id="webrtcSessionManager" value="${WebAppContext.webrtcSessionManager}" />
