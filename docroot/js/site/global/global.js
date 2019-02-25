@@ -418,11 +418,12 @@ function changeConferenceParticipantNameFormat(name){
 	var formattedName = '';
 	var narr = name.split(',');
 	var lastname = String(narr[0]).trim();
-	var firstname = narr[narr.length-1];
+	var firstname = narr[narr.length-1].trim();
 	if(firstname.indexOf(' ') > -1){
 		// lastname, firstname title.
-		var fname = firstname.split(' ')[0];
-		var title = firstname.split(' ')[1];
+		var splittedNameWithTitle = firstname.split(' ');
+		var fname = splittedNameWithTitle[0];
+		var title = splittedNameWithTitle[1];
 		formattedName = fname+' '+lastname+' ,'+title;
 	} else {
 		formattedName = firstname+' '+lastname;
