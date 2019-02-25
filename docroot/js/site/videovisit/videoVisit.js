@@ -492,7 +492,7 @@ var VideoVisit =
         		}
         		//participants availability
         		for(var pa=0;pa<sidePaneMeetingDetails.sortedParticipantsList.length;pa++){
-        			let tPart = sidePaneMeetingDetails.sortedParticipantsList[pa];
+        			/*let tPart = sidePaneMeetingDetails.sortedParticipantsList[pa];
         			let tPartName = '';
         			if(!tPart.firstName && !tPart.lastName){
         				tPartName = '';
@@ -512,7 +512,7 @@ var VideoVisit =
         			tPartName = tPartName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         			if(participantName == tPartName){
         				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
-        			}
+        			}*/
         		}
         		//participants availability
         		/*for(var pg=0;pg<patientGuests.length;pg++){
@@ -554,11 +554,11 @@ var VideoVisit =
         	}//ending of participants for loop
 
         	for(var sp=0;sp<sidePaneMeetingDetails.sortedParticipantsList.length;sp++){
-        		if(sidePaneMeetingDetails.sortedParticipantsList[sp].availableInMeeting){
+        		/*if(sidePaneMeetingDetails.sortedParticipantsList[sp].availableInMeeting){
     				$('.guest-part-'+sp+' .participant-indicator').css('display', 'inline-block');
     			}else{
     				//$('.guest-part-'+sp+' .participant-indicator').css('display', 'none');
-    			}
+    			}*/
         	}
 
         	// Host icon toggle
