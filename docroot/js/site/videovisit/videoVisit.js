@@ -140,6 +140,7 @@ $(document).ready(function() {
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
 							$('#displayMeetingNewStartTime').html('New Start '+newTime);
 							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
+							updateRunningLateTime(result.service.runningLateEnvelope);
 					}else{
 						$('#displayMeetingNewStartTime').html('');
 							$(".waitingroom-text").html("Your visit will start once your doctor joins.");
@@ -170,6 +171,7 @@ $(document).ready(function() {
 						if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
 							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
 						}
+						updateRunningLateTime(result.service.runningLateEnvelope);
 					}else{
 						$('#displayMeetingNewStartTime').html('');
 						if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
@@ -705,7 +707,7 @@ function updateTimeAndDate(meetingTime){
 	var hours = meetingTime.getHours();
 	var minutes = meetingTime.getMinutes();
 	if(minutes<10){
-		minutes = minutes + "0";
+		minutes = "0"+minutes;
 	}
 	var ampmval = 'AM';
 	if(hours>11){
@@ -727,7 +729,7 @@ function updateRunningLateTime(meetingDetails){
 	var hours = meetingTime.getHours();
 	var minutes = meetingTime.getMinutes();
 	if(minutes<10){
-		minutes = minutes + "0";
+		minutes = "0"+minutes;
 	}
 	var ampmval = 'AM';
 	if(hours>11){
