@@ -423,7 +423,7 @@ function changeConferenceParticipantNameFormat(name){
 		// lastname, firstname title.
 		var splittedNameWithTitle = firstname.split(' ');
 		var fname = splittedNameWithTitle[0];
-		var title = splittedNameWithTitle[1];
+		var title = splittedNameWithTitle[splittedNameWithTitle.length-1];
 		formattedName = fname+' '+lastname+' ,'+title;
 	} else {
 		formattedName = firstname+' '+lastname;
