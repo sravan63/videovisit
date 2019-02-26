@@ -368,9 +368,14 @@ function remoteDisconnect(reason) {
     // window.location = "index.html";
     if(isProvider == "true"){
         window.location.href =  '/videovisit/myMeetings.htm';
-    } else{
+    } 
+
+        var url = window.location.href;
+        if(url.indexOf("mobile") > -1){
+            window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
+        } else {
         window.location.href = '/videovisit/landingready.htm';
-    }
+       }
 }
 
 function handleError(reason) {
