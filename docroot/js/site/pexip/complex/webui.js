@@ -369,13 +369,14 @@ function remoteDisconnect(reason) {
     if(isProvider == "true"){
         window.location.href =  '/videovisit/myMeetings.htm';
     } 
-
+     else {
         var url = window.location.href;
         if(url.indexOf("mobile") > -1){
             window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
         } else {
         window.location.href = '/videovisit/landingready.htm';
        }
+   }
 }
 
 function handleError(reason) {
@@ -745,7 +746,11 @@ function disconnect(){
         // window.location.href =  '/videovisitproviderpexip/myMeetings.htm';
         window.location.href =  '/videovisit/myMeetings.htm';
     } else{
-    	// window.location.href = '/videovisitmemberpexip/landingready.htm';
+    	 var url = window.location.href;
+        if(url.indexOf("mobile") > -1){
+            window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
+        } else {
         window.location.href = '/videovisit/landingready.htm';
+       }
     }
 }
