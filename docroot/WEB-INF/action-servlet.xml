@@ -162,6 +162,7 @@
                 
                 <prop key="/videovisitmobileready.htm">videoVisitMobileReadyPexip</prop>
                 <prop key="/mobilelaunchvv.htm">mobileLaunchVideoVisit</prop>
+                <prop key="/autherror.htm">authTokenError</prop>
 				
 			</props>
 		</property>
@@ -567,11 +568,18 @@
 	</bean>
 	
 	<bean id="mobileLaunchVideoVisit" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.MobileLaunchVideoVisitController">
+	    <property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
 	    <property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="videoVisitMobilePexip" />
-		<property name="navigation" value="videoVisitMobilePexip" />
+		<property name="errorViewName" value="redirect:autherror.htm" />
+		<property name="navigation" value="home" />
+		<property name="subNavigation" value="login" />
 	</bean>
 	
+	<bean id="authTokenError" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
+		<property name="viewName" value="mauthError" />
+	</bean>
 	<!--  COMMAND classes -->
 	<bean id="webAppContextCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand" />
 	<bean id="environmentCommand" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand">

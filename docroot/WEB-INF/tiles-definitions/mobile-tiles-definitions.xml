@@ -130,5 +130,9 @@
 	<definition name="videoVisitMobilePexip" extends=".mobileInAppPageTemplate">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/videoVisitMobilePexip.jsp" />
 	</definition>
+	
+	<definition name="mauthError" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/authError.jsp" />
+	</definition>
 
 </tiles-definitions>

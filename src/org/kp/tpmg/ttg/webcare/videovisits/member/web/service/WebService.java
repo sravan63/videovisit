@@ -1731,14 +1731,14 @@ public class WebService {
 	 * @param sessionId
 	 * @return
 	 */
-	public static String getMeetingDetailsForMeetingId(final long meetingId, final String sessionId) {
-		logger.info("Entered getMeetingDetailsForMeetingId");
+	public static String getMeetingDetailsForMeetingId(final long meetingId, final String sessionId, final String clientId) {
+		logger.info(LOG_ENTERED);
 
 		final Gson gson = new Gson();
 		String jsonOutput = null;
 		MeetingDetailsForMeetingIdInput input = null;
-		if (meetingId <= 0) {
-			logger.warn("getMeetingDetailsForMeetingId -> missing input attributes");
+		if (meetingId <= 0 || StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)) {
+			logger.warn("Missing input attributes");
 			final MeetingDetailsForMeetingIdJSON output = new MeetingDetailsForMeetingIdJSON();
 	    	final MeetingDetailsForMeetingIdOutput service = new MeetingDetailsForMeetingIdOutput();
 			service.setName(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID);
@@ -1756,13 +1756,13 @@ public class WebService {
 			input.setSessionId(sessionId);
 
 			final String inputJsonStr = gson.toJson(input);
-			logger.info("getMeetingDetailsForMeetingId -> inputJsonStr: " + inputJsonStr);
+			logger.info("inputJsonStr: " + inputJsonStr);
 			jsonOutput = callVVRestService(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, inputJsonStr);
-			logger.info("getMeetingDetailsForMeetingId -> jsonOutput: " + jsonOutput);
+			logger.info("jsonOutput: " + jsonOutput);
 		} catch (Exception e) {
-			logger.error("getMeetingDetailsForMeetingId -> Web Service API error ", e);
+			logger.error("Web Service API error ", e);
 		}
-		logger.info("Exiting getMeetingDetailsForMeetingId");
+		logger.info(LOG_EXITING);
 		return jsonOutput;
 	}
 }
