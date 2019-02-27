@@ -32,7 +32,7 @@
 			        <%@ include file="preCallTesting.jsp" %>
 			    </c:when> 
 			    <c:when test="${WebAppContext.videoVisit.vendor == 'pexip'}">
-			        <%@ include file="videoVisitDesktopPexip.jsp" %>
+			        <%@ include file="videoVisitWebRTC.jsp" %>
 			    </c:when>     
 			    <c:otherwise>
 			        <%@ include file="videoVisitWebRTC.jsp" %>
@@ -40,7 +40,7 @@
 			</c:choose>
 	    </c:when>    
 	    <c:otherwise>
-			<%@ include file="videoVisitDesktopPexip.jsp" %>
+			<%@ include file="videoVisitPlugin.jsp" %>
 	    </c:otherwise>
 	</c:choose>
 
