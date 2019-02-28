@@ -3,9 +3,6 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +36,7 @@ import com.google.gson.Gson;
 
 public class MobileLaunchVideoVisitController implements Controller {
 
-	public static Logger logger = Logger.getLogger(MobileLaunchVideoVisitController.class);
+	public static final Logger logger = Logger.getLogger(MobileLaunchVideoVisitController.class);
 
 	private WebAppContextCommand webAppContextCommand;
 	private EnvironmentCommand environmentCommand;
@@ -189,7 +186,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 		final ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		logger.info(LOG_EXITING);
-		return (modelAndView);
+		return modelAndView;
 	}
 
 	public WebAppContextCommand getWebAppContextCommand() {
@@ -261,16 +258,5 @@ public class MobileLaunchVideoVisitController implements Controller {
 		this.subNavigation = subNavigation;
 	}
 	
-	public static Date convertStringToDate (String strDate) throws Exception {
- 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
- 		Date formattedDate = null;
- 		try {
- 			formattedDate = formatter.parse(strDate);
- 		} catch (ParseException e) {
- 			e.printStackTrace();
- 		}	 		
- 		return formattedDate;
- 	}
-
 }
 
