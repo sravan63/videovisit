@@ -5,7 +5,6 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -81,6 +80,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
+		initProperties();
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
 			logger.info("context is null");
@@ -116,45 +116,20 @@ public class MobileLaunchVideoVisitController implements Controller {
 			ctx.setBlockSafariVersion(blockSafariVersion);
 		}
 		
-		String mblLaunchToken = null;
-		long meetingId = 0;
-		String mrn = null;
-		String inMeetingDisplayName = null;
-		String output = null;
-		boolean isProxyMeeting = false;
-		String clientId = null;
 		try {
+			final String mblLaunchToken = request.getHeader("mblLaunchToken");
+			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
+			final String mrn = request.getHeader("mrn");
+			final String inMeetingDisplayName = request.getHeader("proxyName");
+			String output = null;
+			final boolean isProxyMeeting = "Y".equalsIgnoreCase(request.getHeader("isProxy")) ? true : false;
+			final String clientId = request.getHeader("clientId");
 
-			if (StringUtils.isNotBlank(request.getHeader("meetingId"))) {
-				meetingId = Long.parseLong(request.getHeader("meetingId"));
-			}
-
-			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
-				mrn = request.getHeader("mrn");
-			} 
-			
-			if (StringUtils.isNotBlank(request.getHeader("mblLaunchToken"))) {
-				mblLaunchToken = request.getHeader("mblLaunchToken");
-			} 
-			if (StringUtils.isBlank(mblLaunchToken) || !JwtUtil.validateAuthToken(mblLaunchToken, request.getHeader("meetingId"), mrn)) {
+			if (StringUtils.isBlank(mblLaunchToken) || !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
 				logger.info("Invalid auth token so sending sc_unauthorized error");
 				return new ModelAndView(errorViewName);
 			}
 
-			
-
-			if (StringUtils.isNotBlank(request.getHeader("proxyName"))) {
-				inMeetingDisplayName = request.getHeader("proxyName");
-			}
-
-			if ("Y".equalsIgnoreCase(request.getHeader("isProxy"))) {
-				isProxyMeeting = true;
-			}
-
-			if (StringUtils.isNotBlank(request.getHeader("clientId"))) {
-				clientId = request.getHeader("clientId");
-			}
-			
 			ctx.setMeetingId(meetingId);
 			ctx.setClientId(clientId);
 			
@@ -164,71 +139,53 @@ public class MobileLaunchVideoVisitController implements Controller {
 
 			WebService.initWebService(request);
 			output = WebService.getMeetingDetailsForMeetingId(meetingId, request.getSession().getId(), clientId);
-
+			
+			logger.info("Output json string : " + output);
+			Gson gson = new Gson();
+			final MeetingDetailsForMeetingIdJSON meetingDetailsForMeetingIdJSON = gson.fromJson(output, MeetingDetailsForMeetingIdJSON.class);
+	  	   
+			final VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();	
+			videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
+			
+			if(meetingDetailsForMeetingIdJSON != null && meetingDetailsForMeetingIdJSON.getService() != null && meetingDetailsForMeetingIdJSON.getService().getEnvelope() != null &&
+					meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting() != null)
+			{
+				final MeetingDO meetingDo = meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting();
+				logger.debug("MeetingDO: " + meetingDo.toString());
+				videoVisitParams.setMeetingId(meetingDo.getMeetingId());
+				videoVisitParams.setHostFirstName(meetingDo.getHost().getFirstName());
+				videoVisitParams.setHostLastName(meetingDo.getHost().getLastName());
+				if (StringUtils.isNotBlank(meetingDo.getHost().getTitle())) {
+					videoVisitParams.setHostTitle(meetingDo.getHost().getTitle());
+				} else {
+					videoVisitParams.setHostTitle("");
+				}
+				videoVisitParams.setVidyoUrl(meetingDo.getRoomJoinUrl());
+				videoVisitParams.setVendorConfId(meetingDo.getMeetingVendorId());
+				videoVisitParams.setGuestUrl(meetingDo.getRoomJoinUrl());
+				videoVisitParams.setIsProvider("false");
+				videoVisitParams.setVendor(meetingDo.getVendor());
+				
+				if (!isProxyMeeting) {						
+					videoVisitParams.setUserName(meetingDo.getMember().getInMeetingDisplayName());
+					videoVisitParams.setGuestName(meetingDo.getMember().getInMeetingDisplayName());
+					videoVisitParams.setIsMember("true");
+					videoVisitParams.setIsProxyMeeting("false");
+				} else {					
+					videoVisitParams.setUserName(inMeetingDisplayName);
+					videoVisitParams.setGuestName(inMeetingDisplayName);
+					videoVisitParams.setIsMember("false");
+					videoVisitParams.setIsProxyMeeting("true");					
+				}
+				WebUtil.addMeetingDateTime(meetingDo, videoVisitParams);
+			}
+			
+			ctx.setVideoVisit(videoVisitParams);
+			logger.debug("Video Visit param data:" + videoVisitParams.toString());
 		} catch (Exception e) {
 			logger.error("System error:" + e.getMessage(), e);
 		}
 		
-		logger.info("Output json string : " + output);
-		Gson gson = new Gson();
-		final MeetingDetailsForMeetingIdJSON meetingDetailsForMeetingIdJSON = gson.fromJson(output, MeetingDetailsForMeetingIdJSON.class);
-  	   
-		final VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();	
-		videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
-		
-		if(meetingDetailsForMeetingIdJSON != null && meetingDetailsForMeetingIdJSON.getService() != null && meetingDetailsForMeetingIdJSON.getService().getEnvelope() != null &&
-				meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting() != null)
-		{
-			MeetingDO meetingDo = meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting();
-			logger.debug("MeetingDO: " + meetingDo.toString());
-			videoVisitParams.setMeetingId(meetingDo.getMeetingId());
-			videoVisitParams.setHostFirstName(meetingDo.getHost().getFirstName());
-			videoVisitParams.setHostLastName(meetingDo.getHost().getLastName());
-			if(meetingDo.getHost().getTitle() != null && meetingDo.getHost().getTitle().trim().length() > 0){
-				videoVisitParams.setHostTitle(meetingDo.getHost().getTitle());
-			}else{
-				videoVisitParams.setHostTitle("");
-			}	
-			videoVisitParams.setVidyoUrl(meetingDo.getRoomJoinUrl());
-			videoVisitParams.setVendorConfId(meetingDo.getMeetingVendorId());
-			videoVisitParams.setGuestUrl(meetingDo.getRoomJoinUrl());
-			videoVisitParams.setIsProvider("false");
-			videoVisitParams.setVendor(meetingDo.getVendor());
-			
-			if(!isProxyMeeting){						
-				
-				videoVisitParams.setUserName(meetingDo.getMember().getInMeetingDisplayName());
-				videoVisitParams.setGuestName(meetingDo.getMember().getInMeetingDisplayName());
-				videoVisitParams.setIsMember("true");
-				videoVisitParams.setIsProxyMeeting("false");
-							
-			} else {					
-						
-				videoVisitParams.setUserName(inMeetingDisplayName);
-				videoVisitParams.setGuestName(inMeetingDisplayName);
-				videoVisitParams.setIsMember("false");
-				videoVisitParams.setIsProxyMeeting("true");					
-			}
-			
-			try {
-				if(StringUtils.isNotBlank(meetingDo.getMeetingTime())) {
-					Calendar cal = Calendar.getInstance();
-					cal.setTimeInMillis(Long.valueOf(meetingDo.getMeetingTime()));
-					SimpleDateFormat sfdate = new SimpleDateFormat("MMM dd");
-					SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
-					//Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below 
-					//SimpleDateFormat sfdate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");	
-					videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
-					videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));	
-				}
-			}catch(Exception ex) {
-				logger.error("date conversion error:" + ex.getMessage(), ex);
-			}
-		}
-		
-		ctx.setVideoVisit(videoVisitParams);		
-		logger.debug("Video Visit param data:" + videoVisitParams.toString());				
-	
 		final ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		logger.info(LOG_EXITING);
