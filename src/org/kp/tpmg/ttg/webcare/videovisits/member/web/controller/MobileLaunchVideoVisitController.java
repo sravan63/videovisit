@@ -1,20 +1,20 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Properties;
-import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -28,6 +28,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
@@ -36,9 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.google.gson.Gson;
-
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
 public class MobileLaunchVideoVisitController implements Controller {
 
@@ -56,26 +54,25 @@ public class MobileLaunchVideoVisitController implements Controller {
 	private String vidyoWebrtcSessionManager = null;
 	private String blockChrome = null;
 	private String blockFF = null;
+	private String blockEdge = null;
+	private String blockSafari = null;
+	private String blockSafariVersion = null;
 	
-	public MobileLaunchVideoVisitController() {
+	public void initProperties() {
 		logger.info(LOG_ENTERED);
 		try {
-			ResourceBundle rbInfo = ResourceBundle.getBundle("configuration");
-			logger.debug("configuration: resource bundle exists -> video visit external properties file location: "
-					+ rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-			// Read external properties file for the web service end point url
-			File file = new File(rbInfo.getString("VIDEOVISIT_EXT_PROPERTIES_FILE"));
-			FileInputStream fileInput = new FileInputStream(file);
-			Properties appProp = new Properties();
-			appProp.load(fileInput);
+			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 			clinicianSingleSignOnURL = appProp.getProperty("CLINICIAN_SINGLE_SIGNON_URL");
-			logger.info("clinicianSingleSignOnURL: " + clinicianSingleSignOnURL);
+			logger.debug("clinicianSingleSignOnURL: " + clinicianSingleSignOnURL);
 			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
 			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
 				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
 			}
 			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
 			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
+			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
+			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
+			blockSafariVersion = appProp.getProperty("BLOCK_SAFARI_VERSION");
 		} catch (Exception ex) {
 			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
@@ -102,6 +99,23 @@ public class MobileLaunchVideoVisitController implements Controller {
 			logger.info("Context is not null");
 		}	
 		
+		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
+		if (StringUtils.isNotBlank(blockChrome)) {
+			ctx.setBlockChrome(blockChrome);
+		}
+		if (StringUtils.isNotBlank(blockFF)) {
+			ctx.setBlockFF(blockFF);
+		}
+		if(StringUtils.isNotBlank(blockEdge)){
+			ctx.setBlockEdge(blockEdge);
+		}
+		if(StringUtils.isNotBlank(blockSafari)){
+			ctx.setBlockSafari(blockSafari);
+		}
+		if(StringUtils.isNotBlank(blockSafariVersion)){
+			ctx.setBlockSafariVersion(blockSafariVersion);
+		}
+		
 		String mblLaunchToken = null;
 		long meetingId = 0;
 		String mrn = null;
@@ -111,48 +125,39 @@ public class MobileLaunchVideoVisitController implements Controller {
 		String clientId = null;
 		try {
 
-			if (StringUtils.isNotBlank(request.getParameter("mblLaunchToken"))) {
-				mblLaunchToken = request.getParameter("mblLaunchToken");
-			} else if (StringUtils.isNotBlank(request.getHeader("mblLaunchToken"))) {
+			if (StringUtils.isNotBlank(request.getHeader("meetingId"))) {
+				meetingId = Long.parseLong(request.getHeader("meetingId"));
+			}
+
+			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
+				mrn = request.getHeader("mrn");
+			} 
+			
+			if (StringUtils.isNotBlank(request.getHeader("mblLaunchToken"))) {
 				mblLaunchToken = request.getHeader("mblLaunchToken");
 			} 
-			if (StringUtils.isBlank(mblLaunchToken) || !JwtUtil.validateAuthToken(mblLaunchToken)) {
+			if (StringUtils.isBlank(mblLaunchToken) || !JwtUtil.validateAuthToken(mblLaunchToken, request.getHeader("meetingId"), mrn)) {
 				logger.info("Invalid auth token so sending sc_unauthorized error");
 				return new ModelAndView(errorViewName);
 			}
 
-			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
-				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			
 
-			} else if (StringUtils.isNotBlank(request.getHeader("meetingId"))) {
-				meetingId = Long.parseLong(request.getHeader("meetingId"));
-			}
-
-			ctx.setMeetingId(meetingId);
-
-			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
-				mrn = request.getParameter("mrn");
-			} else if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
-				mrn = request.getHeader("mrn");
-			}
-
-			if (StringUtils.isNotBlank(request.getParameter("proxyName"))) {
-				inMeetingDisplayName = request.getParameter("proxyName");
-			} else if (StringUtils.isNotBlank(request.getHeader("proxyName"))) {
+			if (StringUtils.isNotBlank(request.getHeader("proxyName"))) {
 				inMeetingDisplayName = request.getHeader("proxyName");
 			}
 
-			if ("Y".equalsIgnoreCase(request.getParameter("isProxy"))) {
-				isProxyMeeting = true;
-			} else if ("Y".equalsIgnoreCase(request.getHeader("isProxy"))) {
+			if ("Y".equalsIgnoreCase(request.getHeader("isProxy"))) {
 				isProxyMeeting = true;
 			}
 
-			if (StringUtils.isNotBlank(request.getParameter("clientId"))) {
-				clientId = request.getParameter("clientId");
-			} else if (StringUtils.isNotBlank(request.getHeader("clientId"))) {
+			if (StringUtils.isNotBlank(request.getHeader("clientId"))) {
 				clientId = request.getHeader("clientId");
 			}
+			
+			ctx.setMeetingId(meetingId);
+			ctx.setClientId(clientId);
+			
 			logger.debug("Input : meetingId=" + meetingId + ", isProxyMeeting="
 					+ isProxyMeeting + ", inMeetingDisplayName=" + inMeetingDisplayName + ", mrn=" + mrn
 					+ ", mblLaunchToken=" + mblLaunchToken + ", clientId=" + clientId);
@@ -162,14 +167,6 @@ public class MobileLaunchVideoVisitController implements Controller {
 
 		} catch (Exception e) {
 			logger.error("System error:" + e.getMessage(), e);
-		}
-		
-		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
-		if(StringUtils.isNotBlank(blockChrome)){
-			ctx.setBlockChrome(blockChrome);
-		}
-		if(StringUtils.isNotBlank(blockFF)){
-			ctx.setBlockFF(blockFF);
 		}
 		
 		logger.info("Output json string : " + output);
@@ -308,21 +305,13 @@ public class MobileLaunchVideoVisitController implements Controller {
 	}
 	
 	public static Date convertStringToDate (String strDate) throws Exception {
- 		//if (StringUtil.isStringEmpty(strDate)) {
- 			//throw new Exception("Not a valid date");
- 		//}	
- 		
  		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
  		Date formattedDate = null;
- 		
  		try {
- 	 
  			formattedDate = formatter.parse(strDate);
- 	 
  		} catch (ParseException e) {
  			e.printStackTrace();
  		}	 		
- 		
  		return formattedDate;
  	}
 
