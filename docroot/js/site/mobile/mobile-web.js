@@ -929,9 +929,9 @@ function launchVideoVisitMember(data){
 				}
 			}
 			else{
-				openTab(url);
+				//openTab(url);
 				// Load Pexip here.
-				//window.location.href = 'videovisitmobileready.htm';
+				window.location.href = 'videovisitmobileready.htm';
 
 			}
 		}
