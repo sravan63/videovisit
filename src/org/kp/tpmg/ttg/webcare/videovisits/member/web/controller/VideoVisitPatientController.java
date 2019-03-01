@@ -70,7 +70,6 @@ public class VideoVisitPatientController extends SimplePageController {
 							SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
 							videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
 							videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
-							//need to read it from meeting object in future
 							videoVisitParams.setVendor(meeting.getVendor());
 							
 						}
