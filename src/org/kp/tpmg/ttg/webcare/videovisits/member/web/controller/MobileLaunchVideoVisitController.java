@@ -114,14 +114,28 @@ public class MobileLaunchVideoVisitController implements Controller {
 		}
 		
 		try {
-			final String mblLaunchToken = request.getHeader("mblLaunchToken");
-			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
-			final String mrn = request.getHeader("mrn");
+			String mblLaunchToken = request.getHeader("mblLaunchToken");
+			long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
+			String mrn = request.getHeader("mrn");
 			final String inMeetingDisplayName = request.getHeader("proxyName");
 			String output = null;
 			final boolean isProxyMeeting = "Y".equalsIgnoreCase(request.getHeader("isProxy")) ? true : false;
 			final String clientId = request.getHeader("clientId");
 
+			logger.debug("Input : meetingId=" + meetingId + ", isProxyMeeting="
+					+ isProxyMeeting + ", inMeetingDisplayName=" + inMeetingDisplayName + ", mrn=" + mrn
+					+ ", mblLaunchToken=" + mblLaunchToken + ", clientId=" + clientId);
+			
+			//TODO : need to remove below code in future. We should read values from headers only.
+			if(meetingId <= 0) {
+				meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
+			}
+			if(StringUtils.isBlank(mblLaunchToken)) {
+				mblLaunchToken = request.getParameter("mblLaunchToken");
+			}
+			if(StringUtils.isBlank(mrn)) {
+				mrn = request.getParameter("mrn");
+			}
 			if (StringUtils.isBlank(mblLaunchToken) || !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
 				logger.info("Invalid auth token so sending sc_unauthorized error");
 				return new ModelAndView(errorViewName);
@@ -184,7 +198,8 @@ public class MobileLaunchVideoVisitController implements Controller {
 		}
 		
 		final ModelAndView modelAndView = new ModelAndView(getViewName());
-		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
+		logger.info(getViewName());
+//		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		logger.info(LOG_EXITING);
 		return modelAndView;
 	}
