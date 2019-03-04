@@ -77,6 +77,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 	
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
+		ModelAndView modelAndView = new ModelAndView(getViewName());
 		initProperties();
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		if (ctx == null){
@@ -181,11 +182,13 @@ public class MobileLaunchVideoVisitController implements Controller {
 			logger.debug("Video Visit param data:" + videoVisitParams.toString());
 		} catch (Exception e) {
 			logger.error("System error:" + e.getMessage(), e);
+			if(ctx.getVideoVisit() == null || StringUtils.isBlank(ctx.getVideoVisit().getMeetingId()) 
+					|| StringUtils.isBlank(ctx.getVideoVisit().getVidyoUrl()) || StringUtils.isBlank(ctx.getVideoVisit().getVendorConfId())) {
+				modelAndView.setViewName(errorViewName);
+			}
 		}
 		
-		final ModelAndView modelAndView = new ModelAndView(getViewName());
-		logger.info(getViewName());
-//		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
+		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		logger.info(LOG_EXITING);
 		return modelAndView;
 	}
