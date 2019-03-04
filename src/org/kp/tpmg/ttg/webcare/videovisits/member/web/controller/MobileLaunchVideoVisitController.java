@@ -127,17 +127,6 @@ public class MobileLaunchVideoVisitController implements Controller {
 					+ isProxyMeeting + ", inMeetingDisplayName=" + inMeetingDisplayName + ", mrn=" + mrn
 					+ ", mblLaunchToken=" + mblLaunchToken + ", clientId=" + clientId);
 			
-			//TODO : need to remove below code in future. We should read values from headers only.
-			if(meetingId <= 0) {
-				meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
-			}
-			if(StringUtils.isBlank(mblLaunchToken)) {
-				mblLaunchToken = request.getParameter("mblLaunchToken");
-			}
-			if(StringUtils.isBlank(mrn)) {
-				mrn = request.getParameter("mrn");
-			}
-			
 			if (StringUtils.isBlank(mblLaunchToken) || !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
 				logger.info("Invalid auth token so sending sc_unauthorized error");
 				return new ModelAndView(errorViewName);
