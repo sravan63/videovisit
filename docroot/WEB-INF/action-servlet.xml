@@ -469,7 +469,7 @@
 		
 	</bean>
 	
-	<bean id="videoVisitMobileReadyPexip" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
+	<bean id="videoVisitMobileReadyPexip" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VideoVisitPatientController">
 		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="videoVisitMobilePexip" />

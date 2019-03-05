@@ -1361,3 +1361,63 @@ function iOSversion() {
 	 var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
 	 return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
 }
+
+function configurePexipVideoProperties(){
+	console.log('========>>>> PEXIP AUTO START');
+	console.log("join-conf clicked");
+
+    var reqscript1 = document.createElement('script');
+      reqscript1.src = "js/site/pexip/complex/webui.js";
+      reqscript1.type = "text/javascript";
+      document.getElementsByTagName("head")[0].appendChild(reqscript1);
+
+      //document.getElementById("container").appendChild(reqscript1);
+      //document.body.appendChild(reqscript1);
+
+    var reqscript2 = document.createElement('script');
+    	//  reqscript2.src = "js/site/pexip/complex/pexrtc.js";
+      reqscript2.src = "js/site/pexip/complex/pexrtcV20.js";
+      reqscript2.type = "text/javascript";
+      document.getElementsByTagName("head")[0].appendChild(reqscript2);
+
+    reqscript1.onload = function(){
+      	console.log("reqscript1 loaded");
+    };
+
+    reqscript2.onload = function(){
+      console.log("reqscript2 loaded");
+		// setTimeout(function(){
+			var alias =  "M.NCAL.MED.0.369638..1234";
+			var bandwidth = "1280";
+			var source = "Join+Conference";
+			var name = 'Mama Joe';//$("#guestName").val();
+	      	initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
+
+	      	
+	      	setTimeout(function(){
+		      	submitSelectRole();
+		    },1500);
+	      // },1500);
+    };
+}
+
+var toggleWaitingRoom = function(participant){
+	var isHostAvailable = validateHostAvailability(participant);
+	if(isHostAvailable){
+		$('.waiting-room').css('display','none');
+		$('#videocontainer').css('display','block');
+	} else {
+		$('.waiting-room').css('display','block');
+		$('#videocontainer').css('display','none');
+	}
+}
+
+var validateHostAvailability = function(participantName){
+	var host = $("#meetingHostName").val().replace(/,/g, '').replace(/\s/g, '');
+	var participant = participantName.replace(/,/g, '').replace(/\s/g, '');
+	if(host === participant){
+		return true;
+	}else{
+		return false;
+	}
+}

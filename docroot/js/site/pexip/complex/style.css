@@ -259,6 +259,111 @@ body {
   width: 80%;
   padding: 0 2%;
 }
+.waiting-room{
+  height: 50%;
+  background: #757575;
+  padding: 5em 0 0 0;
+}
+.waiting-room .logo{
+  background: url('../../../../images/mobile/videovisits/TPMGlogo.svg');
+  height: 110px;
+  width: 110px;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.controls-bar{
+  background: #515151;
+  height: 60px;
+  padding: 0;
+}
+.red-circle{
+  background: #CC0000;
+  border-radius: 50px;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin: 5px 0;
+}
+.white-circle{
+  background: #FFFFFF;
+  border-radius: 50px;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  margin: 5px 0;
+}
+.video-controls li{
+  width:20%;
+  height:auto;
+  display: inline-block;
+  text-align: center;
+  float: left;
+}
+.icon-holder{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+#camera{
+  background: url('../../../../images/mobile/videovisits/camera.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-top: 13px;
+}
+#cameraSwitch{
+  background: url('../../../../images/mobile/videovisits/cameraSwitch.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-top: 13px;
+}
+#endCall{
+  background: url('../../../../images/mobile/videovisits/phone.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-top: 19px;
+}
+#speaker{
+  background: url('../../../../images/mobile/videovisits/speaker.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-top: 14px;
+}
+#mic{
+  background: url('../../../../images/mobile/videovisits/mic.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-top: 12px;
+  margin-left: 14px;
+}
+.waiting-room .waiting-text{
+  color: #FFFFFF;
+  font-size: 28px;
+  margin: 1.5em 0.5em;
+  text-align: center;
+}
+.mobileconferenceview{
+  height: 50%;
+  left: 0;
+  width: 100%;
+  position: relative;
+  background: #333;
+  display: none;
+}
+.mobileconferenceview video {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.mobileselfview{
+  height: 50%;
+  position: relative;
+}
 .videocontainer video {
   position: relative;
   top: 0;
@@ -609,7 +714,7 @@ select::-ms-expand {
  ::: Custom CSS ::: 
 --------------------------------------------------*/
 @media only screen and (max-width : 550px) {
-	.page-title{
-		font-size: 1.25em;
-	}
+  .page-title{
+    font-size: 1.25em;
+  }
 }

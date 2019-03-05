@@ -443,34 +443,34 @@ function submitIVREntry() {
 }
 
 function sipDialOut() {
-	console.log("SIP Dial Out");
+    console.log("SIP Dial Out");
 
     var phone_num = $("#phone_num").val();
     console.log("phone_num: " +phone_num);
     
-	if(isProvider == "true"){
-		$.ajax({
-	        type: "POST",
-	        url: VIDEO_VISITS.Path.grid.meeting.vendorDialOut,
-	        cache: false,
-	        async: true,
-	        data: phone_num,
-	        success: function(returndata){
-	            alert("success - work in progress");
-	        },
-	        error: function(){
-	            // display error message
-	            alert("error");
-	        }
-	    });
-	} else{
-		alert("coming soon...");
-	}
+    if(isProvider == "true"){
+        $.ajax({
+            type: "POST",
+            url: VIDEO_VISITS.Path.grid.meeting.vendorDialOut,
+            cache: false,
+            async: true,
+            data: phone_num,
+            success: function(returndata){
+                alert("success - work in progress");
+            },
+            error: function(){
+                // display error message
+                alert("error");
+            }
+        });
+    } else{
+        alert("coming soon...");
+    }
 }
 
 function participantCreated(participant){
-	console.log("inside participantCreated");
-	
+    console.log("inside participantCreated");
+    
     /*var participant_name = participant.display_name;
     console.log("Participant Name: " +participant.display_name);
 
@@ -483,55 +483,61 @@ function participantCreated(participant){
     } else{
         console.log("it's not a match!!! :(");
     }*/
-	
+    
     if(isProvider == "true"){
-        var patientFirstName = $("#patientDisplayName").val().split(/[ ,]+/);
-        var participantName = participant.display_name.split(/[ ,]+/);
+        // var patientFirstName = $("#patientDisplayName").val().split(/[ ,]+/);
+        // var participantName = participant.display_name.split(/[ ,]+/);
 
-        console.log("patientFirstName: " +patientFirstName);
-        console.log("participantName: " +participantName);
+        // console.log("patientFirstName: " +patientFirstName);
+        // console.log("participantName: " +participantName);
 
-        for (var i = 0; i < patientFirstName.length; i++) {
-            for (var j = 0; j < participantName.length; j++) {
-                if (patientFirstName[i] === participantName[j]) {
-                    console.log("It's a match!!! :)");
+        // for (var i = 0; i < patientFirstName.length; i++) {
+        //     for (var j = 0; j < participantName.length; j++) {
+        //         if (patientFirstName[i] === participantName[j]) {
+        //             console.log("It's a match!!! :)");
 
-                    var uuid = participant.uuid;
-                    console.log("Participant uuid: " +participant.uuid);
+        //             var uuid = participant.uuid;
+        //             console.log("Participant uuid: " +participant.uuid);
 
-                    rtc.setParticipantSpotlight(uuid, true);
-                } else{
-                    console.log("It's not a match!!! :(");         
-                }
-            }
-        }
+        //             rtc.setParticipantSpotlight(uuid, true);
+        //         } else{
+        //             console.log("It's not a match!!! :(");         
+        //         }
+        //     }
+        // }
+        var uuid = participant.uuid;
+        rtc.setParticipantSpotlight(uuid, true);
         return false;
     } else{
-        var providerFirstName = $("#providerFirstName").val().split(",");
-        var participantName = participant.display_name.split(/[ ,]+/);
+        // var providerFirstName = $("#meetingHostName").val().split(",");
+        // var participantName = participant.display_name.split(/[ ,]+/);
 
-        console.log("providerFirstName: " +providerFirstName);
-        console.log("participantName: " +participantName);
+        // console.log("providerFirstName: " +providerFirstName);
+        // console.log("participantName: " +participantName);
 
-        for (var i = 0; i < providerFirstName.length; i++) {
-            for (var j = 0; j < participantName.length; j++) {
-                if (providerFirstName[i] === participantName[j]) {
-                    console.log("It's a match!!! :)");
+        // for (var i = 0; i < providerFirstName.length; i++) {
+        //     for (var j = 0; j < participantName.length; j++) {
+        //         if (providerFirstName[i] === participantName[j]) {
+        //             console.log("It's a match!!! :)");
 
-                    var uuid = participant.uuid;
-                    console.log("Participant uuid: " +participant.uuid);
+        //             var uuid = participant.uuid;
+        //             console.log("Participant uuid: " +participant.uuid);
 
-                    rtc.setParticipantSpotlight(uuid, true);
-                } else{
-                    console.log("It's not a match!!! :(");         
-                }
-            }
-        }
+        //             rtc.setParticipantSpotlight(uuid, true);
+        //         } else{
+        //             console.log("It's not a match!!! :(");         
+        //         }
+        //     }
+        // }
+        var uuid = participant.uuid;
+        rtc.setParticipantSpotlight(uuid, true);
         return false;
     }
 }
 
 function participantUpdated(participant){
+    // CALL BACK WHEN A PARTICIPANT JOINS OR LEAVES THE MEETING
+    toggleWaitingRoom(participant.display_name);
     console.log("inside participantUpdated");
 }
 
@@ -669,14 +675,14 @@ function connected(url) {
 function switchDevices(){
     // rtc.user_media_stream = stream;
 
-	// rtc.video_source =  cameraID;
+    // rtc.video_source =  cameraID;
     // rtc.audio_source =  microPhoneID;
     
     // if(switchingDevice==1)
-    	// rtc.renegotiate(vmrInfoData.confNode, "meet.KNW_3344556611","rads", bandwidth);
+        // rtc.renegotiate(vmrInfoData.confNode, "meet.KNW_3344556611","rads", bandwidth);
     // rtc.renegotiate("Join+Conference");
     
-	rtc.renegotiate();
+    rtc.renegotiate();
 }
 
 function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
@@ -746,7 +752,7 @@ function disconnect(){
         // window.location.href =  '/videovisitproviderpexip/myMeetings.htm';
         window.location.href =  '/videovisit/myMeetings.htm';
     } else{
-    	 var url = window.location.href;
+         var url = window.location.href;
         if(url.indexOf("mobile") > -1){
             window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
         } else {
