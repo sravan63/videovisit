@@ -13,7 +13,6 @@ $(document).ready(function() {
 		dataType: "json",
 		data: {},
 		success: function(result){
-			console.log('=====================',result);
 			if(!result || !result.host){
 				meetingHostName = '';
 				return;
@@ -25,6 +24,9 @@ $(document).ready(function() {
 				meetingHostName = result.host.firstName;
 			}else if(!result.host.firstName){
 				meetingHostName = result.host.lastName;
+			}
+			if(result.host.title){
+				meetingHostName = meetingHostName + ' ' + result.host.title;
 			}
 			meetingHostName = meetingHostName.trim();
 			sidePaneMeetingDetails = result;
@@ -473,20 +475,20 @@ var VideoVisit =
       },
 	checkAndShowParticipantAvailableState: function(participants,isWebRTC){
 		if(participants){
-			//var patientGuests = getPatientGuestNameList();
-			//var additinalClinicians = getAdditionalCliniciansNameList();
 			var hostAvailable = false;
-			//var patientAvailable = false;
 			for(var ini=0;ini<sidePaneMeetingDetails.sortedParticipantsList.length;ini++){
 				sidePaneMeetingDetails.sortedParticipantsList[ini].availableInMeeting = false;
 			}
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
         		var prName = (isWebRTC)?participants[i].trim():pData.name.trim();
-        		var pName = changeConferenceParticipantNameFormat(prName);
+        		var pName = '';
+        		if((prName.match(/,/g) || []).length == 2 && prName.indexOf('@') > 0){
+        			pName = prName;//check for guest name with email
+        		}else{
+        			pName = changeConferenceParticipantNameFormat(prName);
+        		}  
         		var participantName = pName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
-				//var isTelephony = isNumberString(participantName);
-				//commenting isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
         		// Host Availability
         		var hostName = meetingHostName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         		if(hostName === participantName){
@@ -494,7 +496,7 @@ var VideoVisit =
         		}
         		//participants availability
         		for(var pa=0;pa<sidePaneMeetingDetails.sortedParticipantsList.length;pa++){
-        			/*let tPart = sidePaneMeetingDetails.sortedParticipantsList[pa];
+        			let tPart = sidePaneMeetingDetails.sortedParticipantsList[pa];
         			let tPartName = '';
         			if(!tPart.firstName && !tPart.lastName){
         				tPartName = '';
@@ -509,84 +511,32 @@ var VideoVisit =
         				tPartName = tPartName + ' ' + tPart.title;//assuming title exixts only for clinician
         			}
         			if(tPart.careGiverId){
-        				tPartName = tPartName + ' ' + tPart.emailAddress;//assuming careGiverId exixts only for guest
+        				tPartName = tPart.lastName + ' ' + tPart.firstName + '(' + tPart.emailAddress + ')';//assuming careGiverId exixts only for guest
+        			}
+        			if(tPart.lastName == "audio_participant" && tPart.careGiverId){
+        				tPartName = "" + tPart.firstName.slice(2);//overrride if it is a telephony user.
         			}
         			tPartName = tPartName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         			if(participantName == tPartName){
         				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
-        			}*/
+        			}
         		}
         		//participants availability
-        		/*for(var pg=0;pg<patientGuests.length;pg++){
-        			var guest = patientGuests[pg];
-        			var gName;
-        			var participant;
-        			if (isTelephony) {
-        				//gName = guest.fname.replace(/\s/g, '').split('').reverse().join('').substr(0,10);
-        				//participant = participantName.split('').reverse().join('').substr(0,10);
-        				gName = guest.fname.slice(-10);
-        				participant = participantName.slice(-10);
-        				if(participant === gName){
-	        				guest.isAvailable = true;
-	        			}
-        			} else {
-        				participant = participantName;
-        				gName = guest.lname.replace(/\s/g, '').toLowerCase()+guest.fname.replace(/\s/g, '').toLowerCase()+'('+guest.email.replace(/\s/g, '').toLowerCase()+')';
-	        			if(participant === gName){
-	        				guest.isAvailable = true;
-	        			}
-        			}
-        		}*/
-	  			// Additional Clinicians Availability
-	  			/*for(var c=0;c<additinalClinicians.length;c++){
-        			var clinician = additinalClinicians[c];
-        			var cName = clinician.name.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
-        			if(cName === participantName){
-        				clinician.isAvailable = true;
-        			}
-        		}*/
-        		// Adding participant to side bar dynamically only for telephonic users
-        		/*if(isTelephony){
-					var isNumberAvailableOnSideBar = VideoVisit.checkTelePhonyUser(participantName);
-					if(isNumberAvailableOnSideBar === false){
-						VideoVisit.addNewPartcipantsToSideBar(participantName, true);
-						addedUserDynamically = true;
-					}
-        		}*/
         	}//ending of participants for loop
 
         	for(var sp=0;sp<sidePaneMeetingDetails.sortedParticipantsList.length;sp++){
-        		/*if(sidePaneMeetingDetails.sortedParticipantsList[sp].availableInMeeting){
+        		if(sidePaneMeetingDetails.sortedParticipantsList[sp].availableInMeeting){
     				$('.guest-part-'+sp+' .participant-indicator').css('display', 'inline-block');
     			}else{
-    				//$('.guest-part-'+sp+' .participant-indicator').css('display', 'none');
-    			}*/
+    				$('.guest-part-'+sp+' .participant-indicator').css('display', 'none');
+    			}
         	}
-
         	// Host icon toggle
-        	/*if(hostAvailable){
+        	if(hostAvailable){
     			$('#meetingHost .host-indicator').css('display', 'inline-block');
     		}else{
     			$('#meetingHost .host-indicator').css('display', 'none');
     		}
-    		for(var pg=0;pg<patientGuests.length;pg++){
-    			var guest = patientGuests[pg];
-    			if(guest.isAvailable == true){
-    				$($('#meetingPatientGuest').children('p')[pg]).find("i").css("display","inline-block");
-    			} else{
-    				$($('#meetingPatientGuest').children('p')[pg]).find("i").css("display","none");
-    			}
-    		}
-
-  			// Additional Clinicians icon toggle
-  			for(var c=0;c<additinalClinicians.length;c++){
-    			var clinician = additinalClinicians[c];
-    			if(clinician.isAvailable == true){
-    				$($('#meetingParticipant').children('p')[c]).find("i").css("display","inline-block");
-    			} else{
-    				$($('#meetingParticipant').children('p')[c]).find("i").css("display","none");
-    			}
-    		}*/
     	}
 	},
 	logVendorMeetingEvents: function(params){
