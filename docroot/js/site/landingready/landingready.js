@@ -512,8 +512,8 @@ function updateDomWithMeetingsData(data){
                 }else{
                     //DE15381 changes
                     htmlToBeAppend += '<div style="">';
-                    var memberDoLname = $('#memberDOlastName').val()?$('#memberDOlastName').val().trim():'';
-                    var memberDofname = $('#memberDOfirstName').val()?$('#memberDOfirstName').val().trim():'';
+                    var memberDoLname = meeting.member.lastName?meeting.member.lastName.trim():'';//$('#memberDOlastName').val()?$('#memberDOlastName').val().trim():'';
+                    var memberDofname = meeting.member.firstName?meeting.member.firstName.trim():'';$('#memberDOfirstName').val()?$('#memberDOfirstName').val().trim():'';
                     if(!memberDoLname || !memberDofname){
                         memberDiplayName = memberDoLname+' '+memberDofname;
                     }else{
