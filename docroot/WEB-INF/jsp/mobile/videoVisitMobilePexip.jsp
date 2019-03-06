@@ -102,7 +102,7 @@
 		height: 20px;
 	}
 </style>
-<h1> ${WebAppContext.videoVisit.host}</h1>
+<h1> ${WebAppContext.videoVisit.hostFirstName.toLowerCase()}</h1>
 <div id="container-videovisit" class="container-videovisit">
 	<!-- PEXIP Container - START -->
 	<div id="container" class="site">

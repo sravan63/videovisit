@@ -160,6 +160,7 @@
 				<prop key="/updateUserContext.json">updateUserContext</prop>
                 <prop key="/meetingDetails.json">meetingDetails</prop>
                 
+                <prop key="/videoVisitMobile.htm">videoVisitMobile</prop>
                 <prop key="/videovisitmobileready.htm">videoVisitMobileReadyPexip</prop>
                 <prop key="/mobilelaunchvv.htm">mobileLaunchVideoVisit</prop>
                 <prop key="/autherror.htm">authTokenError</prop>
@@ -469,8 +470,11 @@
 		
 	</bean>
 	
-	<bean id="videoVisitMobileReadyPexip" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.AppRootController">
-		<property name="webAppContextCommand"><ref bean="webAppContextCommand" /></property>
+	<bean id="videoVisitMobile" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VideoVisitMobilePatientController">
+        <property name="environmentCommand"><ref bean="environmentCommand" /></property>
+    </bean>
+    
+    <bean id="videoVisitMobileReadyPexip" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
         <property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="viewName" value="videoVisitMobilePexip" />
 		<property name="navigation" value="home" />

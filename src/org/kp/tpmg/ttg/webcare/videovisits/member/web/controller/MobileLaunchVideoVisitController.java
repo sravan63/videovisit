@@ -118,7 +118,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 			String mblLaunchToken = request.getHeader("mblLaunchToken");
 			long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
 			String mrn = request.getHeader("mrn");
-			final String inMeetingDisplayName = request.getHeader("proxyName");
+			final String inMeetingDisplayName = request.getHeader("userDisplayName");
 			String output = null;
 			final boolean isProxyMeeting = "Y".equalsIgnoreCase(request.getHeader("isProxy")) ? true : false;
 			final String clientId = request.getHeader("clientId");
@@ -138,7 +138,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 			WebService.initWebService(request);
 			output = WebService.getMeetingDetailsForMeetingId(meetingId, request.getSession().getId(), clientId);
 			
-			logger.info("Output json string : " + output);
+			logger.debug("Output json string : " + output);
 			Gson gson = new Gson();
 			final MeetingDetailsForMeetingIdJSON meetingDetailsForMeetingIdJSON = gson.fromJson(output, MeetingDetailsForMeetingIdJSON.class);
 	  	   
@@ -164,16 +164,15 @@ public class MobileLaunchVideoVisitController implements Controller {
 				videoVisitParams.setIsProvider("false");
 				videoVisitParams.setVendor(meetingDo.getVendor());
 				
-				if (!isProxyMeeting) {						
-					videoVisitParams.setUserName(meetingDo.getMember().getInMeetingDisplayName());
-					videoVisitParams.setGuestName(meetingDo.getMember().getInMeetingDisplayName());
-					videoVisitParams.setIsMember("true");
-					videoVisitParams.setIsProxyMeeting("false");
-				} else {					
-					videoVisitParams.setUserName(inMeetingDisplayName);
-					videoVisitParams.setGuestName(inMeetingDisplayName);
+				videoVisitParams.setUserName(inMeetingDisplayName);
+				videoVisitParams.setGuestName(inMeetingDisplayName);
+				
+				if (isProxyMeeting) {
 					videoVisitParams.setIsMember("false");
-					videoVisitParams.setIsProxyMeeting("true");					
+					videoVisitParams.setIsProxyMeeting("true");
+				} else {					
+					videoVisitParams.setIsMember("true");
+					videoVisitParams.setIsProxyMeeting("false");			
 				}
 				WebUtil.addMeetingDateTime(meetingDo, videoVisitParams);
 			}
