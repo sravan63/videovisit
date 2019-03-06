@@ -930,21 +930,33 @@ function launchVideoVisitMember(data){
 			}
 			else{
 				//openTab(url);
-				// Load Pexip here.
-				$.ajax({
-    			    type: 'POST',
-    			    url: VIDEO_VISITS.Path.mobile.videoVisitMobile,
-    			    cache: false,
-    			    async: false,
-    			    data: postParaVideoVisit,
-    			    success: function(){
-    			    	//add logic to differentiate vidyo/pexip
-    			    	window.location.href = 'videovisitmobileready.htm';
-    			    },
-    		        error: function(err) {
-    					window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
-    		        }
-    			});
+				var mObj = data.service.launchMeetingEnvelope.launchMeeting;
+                var mobileMeetingObj = {
+                    "meetingId": mObj.meetingId,
+                    "meetingCode": null,
+                    "caregiverId": null,
+                    "vidyoUrl": mObj.roomJoinUrl,
+                    "guestName": mObj.member.inMeetingDisplayName,
+                    "isProvider": 'false',
+                    "isMember": "Y",
+                    "isProxyMeeting": "N",
+                    "guestUrl": mObj.roomJoinUrl
+                }
+                $.ajax({
+                   type: 'POST',
+                   url: 'videoVisitMobile.htm',
+                   cache: false,
+                   async: false,
+                   data: mobileMeetingObj,
+                   success: function(){
+                       //add logic to differentiate vidyo/pexip
+                       window.location.href = 'videovisitmobileready.htm';
+                   },
+                   error: function(err) {
+                       window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
+                   }
+               });
+
 
 			}
 		}
