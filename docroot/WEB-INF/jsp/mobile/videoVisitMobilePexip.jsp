@@ -102,7 +102,7 @@
 		height: 20px;
 	}
 </style>
-<h1> ${WebAppContext.videoVisit.hostFirstName.toLowerCase()}</h1>
+
 <div id="container-videovisit" class="container-videovisit">
 	<!-- PEXIP Container - START -->
 	<div id="container" class="site">
@@ -177,12 +177,12 @@
 	      	<div class="waiting-text">Waiting for your doctor to join</div>
 	      </div>
 	      
+	      <div id="videocontainer" class="mobileconferenceview" >
+	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
+	      </div>
 	      <div id="selfview" class="mobileselfview">
 	          <video width="100%" height="100%" id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
 	          </video>
-	      </div>
-	      <div id="videocontainer" class="mobileconferenceview" >
-	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
 	      </div>
 	      
 	    </section>

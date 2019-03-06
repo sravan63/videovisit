@@ -1426,8 +1426,31 @@ function configurePexipVideoProperties(){
     };
 }
 
-var toggleWaitingRoom = function(participant){
-	var isHostAvailable = validateHostAvailability(participant);
+var participantList = [];
+var participantsData = [];
+
+var updateParticipantList = function(participant, status){
+	if(status === 'join'){
+		// Join
+		if(participantList.indexOf(participant.display_name) === -1){
+			participantList.push(participant.display_name);
+			participantsData.push(participant);
+		}
+	} else {
+		// Left
+		for(var i=0; i< participantsData.length; i++){
+			var pData = participantsData[i];
+			if(participant.uuid === pData.uuid) {
+				if(participantList.indexOf(pData.display_name) > -1){
+					participantList.splice(participantList.indexOf(pData.display_name),1);
+				}
+			}
+		}
+	}
+	toggleWaitingRoom();
+}
+var toggleWaitingRoom = function(){
+	var isHostAvailable =  validateHostAvailability();
 	if(isHostAvailable){
 		$('.waiting-room').css('display','none');
 		$('#videocontainer').css('display','block');
@@ -1437,12 +1460,15 @@ var toggleWaitingRoom = function(participant){
 	}
 }
 
-var validateHostAvailability = function(participantName){
+var validateHostAvailability = function(){
 	var host = $("#meetingHostName").val().replace(/,/g, '').replace(/\s/g, '');
-	var participant = participantName.replace(/,/g, '').replace(/\s/g, '');
-	if(host === participant){
-		return true;
-	}else{
-		return false;
+	var isAvailable = false;
+	for(var i = 0; i<participantList.length; i++){
+		var participant = participantList[i].replace(/,/g, '').replace(/\s/g, '');
+		if(host.toLowerCase() === participant.toLowerCase()){
+			isAvailable = true;
+			break;
+		}
 	}
+	return isAvailable;
 }

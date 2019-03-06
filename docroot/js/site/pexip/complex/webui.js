@@ -172,8 +172,8 @@ function presentationStartStop(setting, pres) {
             flash_button = null;
             id_presentation.classList.remove('active');
         }
-        id_presentation.textContent = trans['BUTTON_NOPRES'];
-        id_presentation.classList.add("inactive");
+        // id_presentation.textContent = trans['BUTTON_NOPRES'];
+        // id_presentation.classList.add("inactive");
     }
 }
 
@@ -292,7 +292,8 @@ function holdresume(setting) {
 /* ~~~ ROSTER LIST ~~~ */
 
 function updateRosterList(roster) {
-    rosterlist.removeChild(rosterul);
+    console.log('update roster list on participant change');
+    /*rosterlist.removeChild(rosterul);
     rosterul = document.createElement("ul");
     rosterlist.appendChild(rosterul);
 
@@ -341,7 +342,7 @@ function updateRosterList(roster) {
 
     if (video && navigator.userAgent.indexOf("Chrome") != -1 && navigator.userAgent.indexOf("Mobile") == -1 && !source) {
         id_screenshare.classList.remove("inactive");
-    }
+    }*/
 }
 
 /* ~~~ SETUP AND TEARDOWN ~~~ */
@@ -469,6 +470,8 @@ function sipDialOut() {
 }
 
 function participantCreated(participant){
+    // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
+    updateParticipantList(participant,'join');
     console.log("inside participantCreated");
     
     /*var participant_name = participant.display_name;
@@ -536,13 +539,16 @@ function participantCreated(participant){
 }
 
 function participantUpdated(participant){
-    // CALL BACK WHEN A PARTICIPANT JOINS OR LEAVES THE MEETING
-    toggleWaitingRoom(participant.display_name);
+    // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
+    // toggleWaitingRoom();
+    updateParticipantList(participant,'join');
     console.log("inside participantUpdated");
 }
 
 function participantDeleted(participant){
+    // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
     console.log("inside participantDeleted");
+    updateParticipantList(participant,'left');
 }
 
 function layoutUpdate(view){
@@ -666,7 +672,7 @@ function connected(url) {
             } else {
                 video.src = videoURL;
             } 
-            id_fullscreen.classList.remove("inactive");
+            // id_fullscreen.classList.remove("inactive");
         }
     }
 //    toggleSelfview();
