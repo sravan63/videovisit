@@ -48,6 +48,7 @@ public class WebUtil {
 	public static final String VV_MBR_SSO_SIM_WEB = "vv-mbr-sso-sim";
 	public static final String VV_MBR_SSO_SIM_BACK_BTN = "vv-mbr-sso-sim-back-btn";
 	public static final String EDGE = "edge";
+	public static final String KPPC = "KPPC";
 	
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);

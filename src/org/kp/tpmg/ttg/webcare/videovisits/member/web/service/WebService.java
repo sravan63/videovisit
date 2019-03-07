@@ -1765,4 +1765,56 @@ public class WebService {
 		logger.info(LOG_EXITING);
 		return jsonOutput;
 	}
+	
+	public static JoinLeaveMeetingJSON joinLeaveMeeting(final long meetingId, String inMeetingDisplayName,
+			boolean isPatient, final String joinLeaveMeeting, String deviceType, String deviceOS,
+			String deviceOSversion, String clientId, String sessionId) throws Exception {
+		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
+		JoinLeaveMeetingJSON output = null;
+		String responseJsonStr = null;
+		final Gson gson = new Gson();
+		String inputJsonString = null;
+		try {
+			if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
+				output = new JoinLeaveMeetingJSON();
+				JoinLeaveMeetingOutput joinLeaveMeetingOutput = new JoinLeaveMeetingOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setService(joinLeaveMeetingOutput);
+				output.getService().setStatus(status);
+				return output;
+			}
+			JoinLeaveMeetingInput joinLeaveMeetingInput = new JoinLeaveMeetingInput();
+			joinLeaveMeetingInput.setMeetingId(meetingId);
+			joinLeaveMeetingInput.setInMeetingDisplayName(inMeetingDisplayName);
+			joinLeaveMeetingInput.setSessionId(sessionId);
+			joinLeaveMeetingInput.setClientId(clientId);
+			joinLeaveMeetingInput.setIsPatient(isPatient);
+			joinLeaveMeetingInput.setDeviceType(deviceType);
+			joinLeaveMeetingInput.setDeviceOs(deviceOS);
+			joinLeaveMeetingInput.setDeviceOsVersion(deviceOSversion);
+			inputJsonString = gson.toJson(joinLeaveMeetingInput);
+			logger.debug("jsonInptString : " + inputJsonString);
+
+			if ("J".equalsIgnoreCase(joinLeaveMeeting)) {
+				responseJsonStr = callVVRestService(ServiceUtil.JOIN_MEETING, inputJsonString);
+			} else if ("L".equalsIgnoreCase(joinLeaveMeeting)) {
+				responseJsonStr = callVVRestService(ServiceUtil.LEAVE_MEETING, inputJsonString);
+			}// else part to be decided by ranjeet
+			output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+			logger.info("jsonResponseString : " + responseJsonStr);
+		} catch (Exception e) {
+			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
+			if ("J".equalsIgnoreCase(joinLeaveMeeting)) {
+				responseJsonStr = callVVRestService(ServiceUtil.JOIN_MEETING, inputJsonString);
+			} else if ("L".equalsIgnoreCase(joinLeaveMeeting)) {
+				responseJsonStr = callVVRestService(ServiceUtil.LEAVE_MEETING, inputJsonString);
+			}
+			output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
 }

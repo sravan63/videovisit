@@ -1271,4 +1271,42 @@ public class MeetingCommand {
 		return output;
 	}
 	
+	public static String joinLeaveMeeting(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		String deviceType = null;
+		JoinLeaveMeetingJSON joinLeaveMeetingJSON = null;
+		final String meetingId = request.getParameter("meetingId");
+		final String inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+		final boolean isPatient = "true".equalsIgnoreCase(request.getParameter("isPatient")) ? true : false;
+		final String joinLeaveMeeting = request.getParameter("joinLeaveMeeting");
+		final String sessionId = request.getSession().getId();
+		final String clientId = WebUtil.KPPC;
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		Device device = DeviceDetectionService.checkForDevice(request);
+		Map<String, String> capabilities = device.getCapabilities();
+		String brandName = capabilities.get("brand_name");
+		String modelName = capabilities.get("model_name");
+		String deviceOs = capabilities.get("device_os");
+		String deviceOsVersion = capabilities.get("device_os_version");
+
+		if (brandName != null && modelName != null) {
+			deviceType = brandName + " " + modelName;
+		}
+		
+		try {
+			joinLeaveMeetingJSON = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
+					isPatient,joinLeaveMeeting, deviceType, deviceOs, deviceOsVersion, clientId, sessionId);
+			if(joinLeaveMeetingJSON != null && joinLeaveMeetingJSON.getService() != null 
+					&& joinLeaveMeetingJSON.getService().getStatus() != null) {
+				output = gson.toJson(joinLeaveMeetingJSON.getService().getStatus());
+			}
+		} catch (Exception e) {
+			output = new Gson().toJson(new SystemError());
+			logger.error("System Error for meeting :" + meetingId + " : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
 }
