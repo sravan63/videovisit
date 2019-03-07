@@ -3,6 +3,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.data;
 import java.io.Serializable;
 import java.util.List;
 
+import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Provider;
 
@@ -33,6 +34,9 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String isProxyMeeting;
 	private String webrtc = "false";
 	private String vendor;
+	private String vendorHostPin;
+	private String vendorGuestPin;
+	private List<SipParticipant> sipParticipants;
 
 	public String getVidyoUrl() {
 		return vidyoUrl;
@@ -274,6 +278,48 @@ public class VideoVisitParamsDTO implements Serializable {
 	}
 
 	/**
+	 * @return the vendorHostPin
+	 */
+	public String getVendorHostPin() {
+		return vendorHostPin;
+	}
+
+	/**
+	 * @param vendorHostPin the vendorHostPin to set
+	 */
+	public void setVendorHostPin(String vendorHostPin) {
+		this.vendorHostPin = vendorHostPin;
+	}
+
+	/**
+	 * @return the vendorGuestPin
+	 */
+	public String getVendorGuestPin() {
+		return vendorGuestPin;
+	}
+
+	/**
+	 * @param vendorGuestPin the vendorGuestPin to set
+	 */
+	public void setVendorGuestPin(String vendorGuestPin) {
+		this.vendorGuestPin = vendorGuestPin;
+	}
+
+	/**
+	 * @return the sipParticipants
+	 */
+	public List<SipParticipant> getSipParticipants() {
+		return sipParticipants;
+	}
+
+	/**
+	 * @param sipParticipants the sipParticipants to set
+	 */
+	public void setSipParticipants(List<SipParticipant> sipParticipants) {
+		this.sipParticipants = sipParticipants;
+	}
+
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -285,7 +331,8 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ ", guestName=" + guestName + ", isProvider=" + isProvider + ", guestUrl=" + guestUrl + ", isMember="
 				+ isMember + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime + ", participant="
 				+ participant + ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId + ", isProxyMeeting="
-				+ isProxyMeeting + ", webrtc=" + webrtc + ", vendor=" + vendor + "]";
+				+ isProxyMeeting + ", webrtc=" + webrtc + ", vendor=" + vendor + ", vendorHostPin=" + vendorHostPin
+				+ ", vendorGuestPin=" + vendorGuestPin + ", sipParticipants=" + sipParticipants + "]";
 	}
 
 }

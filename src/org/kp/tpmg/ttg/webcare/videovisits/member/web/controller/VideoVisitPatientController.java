@@ -71,6 +71,9 @@ public class VideoVisitPatientController extends SimplePageController {
 							videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
 							videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
 							videoVisitParams.setVendor(meeting.getVendor());
+							videoVisitParams.setVendorHostPin(meeting.getVendorHostPin());
+							videoVisitParams.setVendorGuestPin(meeting.getVendorGuestPin());
+							videoVisitParams.setSipParticipants(meeting.getSipParticipants());
 							
 						}
 					}

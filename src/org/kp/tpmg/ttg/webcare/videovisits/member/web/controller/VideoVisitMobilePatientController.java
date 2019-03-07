@@ -22,6 +22,7 @@ public class VideoVisitMobilePatientController extends SimplePageController {
 	public static final Logger logger = Logger.getLogger(VideoVisitMobilePatientController.class);
 	private String vidyoUrl;
 	private String hostName;
+	private static final String JSONMAPPING = "jsonData";
 
 	public String getHostName() {
 		return hostName;
@@ -38,7 +39,7 @@ public class VideoVisitMobilePatientController extends SimplePageController {
 	public void setVidyoUrl(String vidyoUrl) {
 		this.vidyoUrl = vidyoUrl;
 	}
-	private static final String JSONMAPPING = "jsonData";
+	
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
@@ -72,6 +73,9 @@ public class VideoVisitMobilePatientController extends SimplePageController {
 							videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
 							videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
 							videoVisitParams.setVendor(meeting.getVendor());
+							videoVisitParams.setVendorHostPin(meeting.getVendorHostPin());
+							videoVisitParams.setVendorGuestPin(meeting.getVendorGuestPin());
+							videoVisitParams.setSipParticipants(meeting.getSipParticipants());
 							
 						}
 					}
@@ -101,12 +105,12 @@ public class VideoVisitMobilePatientController extends SimplePageController {
 					ctx.setVideoVisit(videoVisitParams);
 				}
 				
-				modelAndView.setViewName(JSONMAPPING);
 				logger.debug("Video Visit data:" + videoVisitParams.toString());
 			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
+		modelAndView.setViewName(JSONMAPPING);
 		logger.info(LOG_EXITING);
 		return (modelAndView);
 	}
