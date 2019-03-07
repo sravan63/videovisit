@@ -491,7 +491,7 @@ var VideoVisit =
         		var participantName = prName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         		// Host Availability
         		var hostName = meetingHostName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
-        		if(hostName === participantName){
+        		if(hostName.trim() === participantName.trim()){
         			hostAvailable = true;
         		}
         		//participants availability
@@ -521,11 +521,11 @@ var VideoVisit =
         				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
         			}*/
         			if(prName.match(/^[0-9]*$/g)){
-        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].firstName.slice(2) == prName){
+        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].firstName.slice(2).trim() == prName.trim()){
         					sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
         				}
         			}else{
-        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName == prName){
+        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName.trim() == prName.trim()){
             				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
             			}
         			}
