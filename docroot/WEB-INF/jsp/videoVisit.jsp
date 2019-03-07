@@ -40,7 +40,7 @@
 			</c:choose>
 	    </c:when>    
 	    <c:otherwise>
-			<%@ include file="videoVisitPlugin.jsp" %>
+			<%@ include file="videoVisitDesktopPexip.jsp" %>
 	    </c:otherwise>
 	</c:choose>
 
