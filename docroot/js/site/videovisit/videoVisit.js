@@ -19,7 +19,7 @@ $(document).ready(function() {
 			}else if(!result.host.lastName && !result.host.firstName){
 				meetingHostName = '';
 			}else if(result.host.lastName && result.host.firstName){
-				meetingHostName = result.host.firstName + ' ' + result.host.lastName;
+				meetingHostName = result.host.lastName + ' ' + result.host.firstName;
 			}else if(!result.host.lastName){
 				meetingHostName = result.host.firstName;
 			}else if(!result.host.firstName){
@@ -482,13 +482,13 @@ var VideoVisit =
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
         		var prName = (isWebRTC)?participants[i].trim():pData.name.trim();
-        		var pName = '';
+        		/*var pName = '';
         		if((prName.match(/,/g) || []).length == 2 && prName.indexOf('@') > 0){
         			pName = prName;//check for guest name with email
         		}else{
         			pName = changeConferenceParticipantNameFormat(prName);
-        		}  
-        		var participantName = pName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+        		}*/
+        		var participantName = prName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         		// Host Availability
         		var hostName = meetingHostName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         		if(hostName === participantName){
@@ -496,7 +496,7 @@ var VideoVisit =
         		}
         		//participants availability
         		for(var pa=0;pa<sidePaneMeetingDetails.sortedParticipantsList.length;pa++){
-        			let tPart = sidePaneMeetingDetails.sortedParticipantsList[pa];
+        			/*let tPart = sidePaneMeetingDetails.sortedParticipantsList[pa];
         			let tPartName = '';
         			if(!tPart.firstName && !tPart.lastName){
         				tPartName = '';
@@ -519,6 +519,15 @@ var VideoVisit =
         			tPartName = tPartName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         			if(participantName == tPartName){
         				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
+        			}*/
+        			if(prName.match(/^[0-9]*$/g)){
+        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].firstName.slice(2) == prName){
+        					sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
+        				}
+        			}else{
+        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName == prName){
+            				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
+            			}
         			}
         		}
         		//participants availability

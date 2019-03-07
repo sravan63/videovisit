@@ -417,14 +417,24 @@ function isNumberString(str){
 function changeConferenceParticipantNameFormat(name){
 	var formattedName = '';
 	var narr = name.split(',');
+	if(narr.length == 1){
+	    return narr[0];
+	}
 	var lastname = String(narr[0]).trim();
 	var firstname = narr[narr.length-1].trim();
 	if(firstname.indexOf(' ') > -1){
 		// lastname, firstname title.
-		var splittedNameWithTitle = firstname.split(' ');
-		var fname = splittedNameWithTitle[0];
-		var title = splittedNameWithTitle[splittedNameWithTitle.length-1];
-		formattedName = fname+' '+lastname+' ,'+title;
+		if(firstname.split(' ').length > 2){
+			var splittedNameWithTitle = firstname.split(' ');
+			var title = splittedNameWithTitle.splice(splittedNameWithTitle.length-1)
+			var fname = splittedNameWithTitle.join(' ');			
+			formattedName = fname+' '+lastname+' ,'+title;
+		}else{
+			var splittedNameWithTitle = firstname.split(' ');
+			var fname = splittedNameWithTitle[0];
+			var title = splittedNameWithTitle[splittedNameWithTitle.length-1];
+			formattedName = fname+' '+lastname+' ,'+title;
+		}		
 	} else {
 		formattedName = firstname+' '+lastname;
 	}
