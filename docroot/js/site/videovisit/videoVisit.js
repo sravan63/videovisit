@@ -535,16 +535,16 @@ var VideoVisit =
 
         	for(var sp=0;sp<sidePaneMeetingDetails.sortedParticipantsList.length;sp++){
         		if(sidePaneMeetingDetails.sortedParticipantsList[sp].availableInMeeting){
-    				$('.guest-part-'+sp+' .participant-indicator').css('display', 'inline-block');
+    				$('.guest-part-'+sp+' .participant-indicator').css('visibility', 'visible');
     			}else{
-    				$('.guest-part-'+sp+' .participant-indicator').css('display', 'none');
+    				$('.guest-part-'+sp+' .participant-indicator').css('visibility', 'hidden');
     			}
         	}
         	// Host icon toggle
         	if(hostAvailable){
-    			$('#meetingHost .host-indicator').css('display', 'inline-block');
+    			$('#meetingHost .host-indicator').css('visibility', 'visible');
     		}else{
-    			$('#meetingHost .host-indicator').css('display', 'none');
+    			$('#meetingHost .host-indicator').css('visibility', 'hidden');
     		}
     	}
 	},
@@ -654,7 +654,7 @@ function updateHostDetails(host){
 	if(host.title){
 		hostFullName = hostFullName.trim() + ', ' + host.title;
 	}
-	$('#meetingHost').html('<span class="host-indicator"></span><span class="host-name">'+hostFullName.trim()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span>');
+	$('#meetingHost').html('<img class="host-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="host-name">'+hostFullName.trim()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span>');
 }
 function updateTimeAndDate(meetingTime){
 	if(!meetingTime){
@@ -730,13 +730,13 @@ function updateParticipantsAndGuestsList(meetingList){
 	var phoneNumCount = 0;
 	for(let i=0;i<tempArr.length;i++){
 		if(tempArr[i].title){
-			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 		}else{
 			if(tempArr[i].lastName == 'audio_participant'){
 				phoneNumCount++;
-				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant" phonenumber="'+tempArr[i].firstName+'">Phone '+phoneNumCount+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant" phonenumber="'+tempArr[i].firstName+'">Phone '+phoneNumCount+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 			}else{
-				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><span class="participant-indicator"></span><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 			}
 		}		
 	}
