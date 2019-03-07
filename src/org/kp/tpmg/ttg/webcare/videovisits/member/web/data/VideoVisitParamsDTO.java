@@ -36,6 +36,7 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String vendor;
 	private String vendorHostPin;
 	private String vendorGuestPin;
+	private String vendorRole;
 	private List<SipParticipant> sipParticipants;
 
 	public String getVidyoUrl() {
@@ -306,6 +307,20 @@ public class VideoVisitParamsDTO implements Serializable {
 	}
 
 	/**
+	 * @return the vendorRole
+	 */
+	public String getVendorRole() {
+		return vendorRole;
+	}
+
+	/**
+	 * @param vendorRole the vendorRole to set
+	 */
+	public void setVendorRole(String vendorRole) {
+		this.vendorRole = vendorRole;
+	}
+
+	/**
 	 * @return the sipParticipants
 	 */
 	public List<SipParticipant> getSipParticipants() {
@@ -332,7 +347,7 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ isMember + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime + ", participant="
 				+ participant + ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId + ", isProxyMeeting="
 				+ isProxyMeeting + ", webrtc=" + webrtc + ", vendor=" + vendor + ", vendorHostPin=" + vendorHostPin
-				+ ", vendorGuestPin=" + vendorGuestPin + ", sipParticipants=" + sipParticipants + "]";
+				+ ", vendorGuestPin=" + vendorGuestPin + ", vendorRole=" + vendorRole + ", sipParticipants=" + sipParticipants + "]";
 	}
 
 }

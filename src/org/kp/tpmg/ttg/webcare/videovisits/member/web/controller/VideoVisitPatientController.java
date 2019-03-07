@@ -74,6 +74,7 @@ public class VideoVisitPatientController extends SimplePageController {
 							videoVisitParams.setVendorHostPin(meeting.getVendorHostPin());
 							videoVisitParams.setVendorGuestPin(meeting.getVendorGuestPin());
 							videoVisitParams.setSipParticipants(meeting.getSipParticipants());
+							videoVisitParams.setVendorRole(meeting.getMember().getVendorRole());
 							
 						}
 					}
