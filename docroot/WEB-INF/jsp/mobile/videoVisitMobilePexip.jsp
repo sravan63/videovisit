@@ -5,6 +5,8 @@
 <meta name="robots" content="NONE,NOARCHIVE" />
 <input type="hidden" id="guestName" value="${WebAppContext.videoVisit.guestName}" />
 <input type="hidden" id="meetingHostName" value="${WebAppContext.videoVisit.hostLastName.toLowerCase()}, ${WebAppContext.videoVisit.hostFirstName.toLowerCase()} ${WebAppContext.videoVisit.hostTitle}"/>
+<input type="hidden" id="meetingPatient" value="${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}"/>
+<input type="hidden" id="meetingId" value="${WebAppContext.videoVisit.meetingId}" />
 <link rel="stylesheet" type="text/css" href="js/site/pexip/complex/style.css" />
 <!-- <link rel="stylesheet" media="€screen and (min-width:320px) and (max-width:550px)"€œ href="€js/site/pexip/complex/style-responsive.css" />  -->
 

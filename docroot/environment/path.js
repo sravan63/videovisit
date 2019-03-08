@@ -63,7 +63,8 @@ VIDEO_VISITS.Path = {
         logVendorMeetingEvents : 'logVendorMeetingEvents.json',
         setPeripheralsFlag : 'setPeripheralsFlag.json',
         updateUserContext: 'updateUserContext.json',
-        meetingDetails: 'meetingDetails.json'
+        meetingDetails: 'meetingDetails.json',
+        joinLeaveMeeting : 'joinLeaveMeeting .json'
     },
     logout : {
         logoutjson: 'logout.json'

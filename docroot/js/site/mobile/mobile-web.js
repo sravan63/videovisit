@@ -1435,14 +1435,23 @@ var updateParticipantList = function(participant, status){
 		if(participantList.indexOf(participant.display_name) === -1){
 			participantList.push(participant.display_name);
 			participantsData.push(participant);
+			var isPatientLoggedIn = isPatient(participant.display_name);
+			if(!isHost(participant.display_name)){
+				sendUserJoinLeaveStatus(participant.display_name, isPatientLoggedIn, 'J');
+			}
 		}
 	} else {
 		// Left
-		for(var i=0; i< participantsData.length; i++){
+		for(var i=participantsData.length-1; i>=0; i--){
 			var pData = participantsData[i];
 			if(participant.uuid === pData.uuid) {
 				if(participantList.indexOf(pData.display_name) > -1){
+					var isPatientLoggedIn = isPatient(pData.display_name);
+					if(!isHost(pData.display_name)){
+						sendUserJoinLeaveStatus(pData.display_name, isPatientLoggedIn, 'L');
+					}
 					participantList.splice(participantList.indexOf(pData.display_name),1);
+					participantsData.splice(i,1);
 				}
 			}
 		}
@@ -1471,4 +1480,57 @@ var validateHostAvailability = function(){
 		}
 	}
 	return isAvailable;
+}
+
+var validatePatientAvailability = function(){
+	var patient = $("#meetingPatient").val().replace(/,/g, '').replace(/\s/g, '');
+	var isAvailable = false;
+	for(var i = 0; i<participantList.length; i++){
+		var participant = participantList[i].replace(/,/g, '').replace(/\s/g, '');
+		if(patient.toLowerCase() === participant.toLowerCase()){
+			isAvailable = true;
+			break;
+		}
+	}
+	return isAvailable;
+}
+
+var isHost = function(guestName){
+	var isHost = false;
+	var host = $("#meetingHostName").val().replace(/,/g, '').replace(/\s/g, '');
+	if(host.toLowerCase() === guestName.replace(/,/g, '').replace(/\s/g, '').toLowerCase()){
+		isHost = true;
+	}
+	return isHost;
+}
+
+var isPatient = function(guestName){
+	var isPatient = false;
+	var patient = $("#meetingPatient").val().replace(/,/g, '').replace(/\s/g, '');
+	if(patient.toLowerCase() === guestName.replace(/,/g, '').replace(/\s/g, '').toLowerCase()){
+		isPatient = true;
+	}
+	return isPatient;
+}
+
+var sendUserJoinLeaveStatus = function(guestName, isPatient, status){
+	var userData = {
+		inMeetingDisplayName : guestName,
+		isPatient : isPatient,
+		joinLeaveMeeting : status,
+		meetingId: $('#meetingId').val()
+	};
+	$.ajax({
+        type: "POST",
+        url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+        cache: false,
+        dataType: "json",
+        data: userData,
+        success: function(result, textStatus){
+            console.log("joinLeaveMeeting :: result :: "+result);
+        },
+        error: function(textStatus){
+            console.log("joinLeaveMeeting :: error :: "+textStatus);
+        }
+    });
 }
