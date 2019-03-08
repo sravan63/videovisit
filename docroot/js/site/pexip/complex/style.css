@@ -262,8 +262,8 @@ body {
 .waiting-room{
   height: 50%;
   background: #757575;
-  padding: 5em 0 0 0;
-}
+  padding-top: 44px;
+  }
 .waiting-room .logo{
   background: url('../../../../images/mobile/videovisits/TPMGlogo.svg');
   height: 110px;
@@ -345,9 +345,9 @@ body {
 .waiting-room .waiting-text{
   color: #FFFFFF;
   font-size: 28px;
-  margin: 1.5em 0.5em;
+  margin: 40px 10px 15px 10px;
   text-align: center;
-}
+  }
 .mobileconferenceview{
   height: 50%;
   left: 0;
