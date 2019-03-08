@@ -743,7 +743,7 @@ function updateParticipantsAndGuestsList(meetingList){
 }
 function sortObjs(prop){
 	return function(a, b){
-		return a[prop] < b[prop] ? -1 :(a[prop]>b[prop]) ? 1: 0;
+		return a[prop].toLowerCase() < b[prop].toLowerCase() ? -1 :(a[prop].toLowerCase()>b[prop].toLowerCase()) ? 1: 0;
 	}
 }
 
