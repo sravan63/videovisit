@@ -1275,27 +1275,26 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		String deviceType = null;
-		JoinLeaveMeetingJSON joinLeaveMeetingJSON = null;
 		final String meetingId = request.getParameter("meetingId");
 		final String inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
 		final boolean isPatient = "true".equalsIgnoreCase(request.getParameter("isPatient")) ? true : false;
 		final String joinLeaveMeeting = request.getParameter("joinLeaveMeeting");
 		final String sessionId = request.getSession().getId();
 		final String clientId = WebUtil.KPPC;
-		Gson gson = new GsonBuilder().serializeNulls().create();
-		Device device = DeviceDetectionService.checkForDevice(request);
-		Map<String, String> capabilities = device.getCapabilities();
-		String brandName = capabilities.get("brand_name");
-		String modelName = capabilities.get("model_name");
-		String deviceOs = capabilities.get("device_os");
-		String deviceOsVersion = capabilities.get("device_os_version");
-
-		if (brandName != null && modelName != null) {
-			deviceType = brandName + " " + modelName;
-		}
 		
 		try {
-			joinLeaveMeetingJSON = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
+			final Gson gson = new GsonBuilder().serializeNulls().create();
+			final Device device = DeviceDetectionService.checkForDevice(request);
+			final Map<String, String> capabilities = device.getCapabilities();
+			final String brandName = capabilities.get("brand_name");
+			final String modelName = capabilities.get("model_name");
+			final String deviceOs = capabilities.get("device_os");
+			final String deviceOsVersion = capabilities.get("device_os_version");
+
+			if (brandName != null && modelName != null) {
+				deviceType = brandName + " " + modelName;
+			}
+			final JoinLeaveMeetingJSON joinLeaveMeetingJSON = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
 					isPatient,joinLeaveMeeting, deviceType, deviceOs, deviceOsVersion, clientId, sessionId);
 			if(joinLeaveMeetingJSON != null && joinLeaveMeetingJSON.getService() != null 
 					&& joinLeaveMeetingJSON.getService().getStatus() != null) {

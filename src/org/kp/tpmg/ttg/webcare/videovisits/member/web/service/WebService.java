@@ -1766,9 +1766,9 @@ public class WebService {
 		return jsonOutput;
 	}
 	
-	public static JoinLeaveMeetingJSON joinLeaveMeeting(final long meetingId, String inMeetingDisplayName,
-			boolean isPatient, final String joinLeaveMeeting, String deviceType, String deviceOS,
-			String deviceOSversion, String clientId, String sessionId) throws Exception {
+	public static JoinLeaveMeetingJSON joinLeaveMeeting(final long meetingId, final String inMeetingDisplayName,
+			boolean isPatient, final String joinLeaveMeeting, final String deviceType, final String deviceOS,
+			final String deviceOSversion, final String clientId, final String sessionId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
 		JoinLeaveMeetingJSON output = null;
 		String responseJsonStr = null;
@@ -1777,7 +1777,7 @@ public class WebService {
 		try {
 			if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
 				output = new JoinLeaveMeetingJSON();
-				JoinLeaveMeetingOutput joinLeaveMeetingOutput = new JoinLeaveMeetingOutput();
+				final JoinLeaveMeetingOutput joinLeaveMeetingOutput = new JoinLeaveMeetingOutput();
 				final Status status = new Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
@@ -1785,7 +1785,7 @@ public class WebService {
 				output.getService().setStatus(status);
 				return output;
 			}
-			JoinLeaveMeetingInput joinLeaveMeetingInput = new JoinLeaveMeetingInput();
+			final JoinLeaveMeetingInput joinLeaveMeetingInput = new JoinLeaveMeetingInput();
 			joinLeaveMeetingInput.setMeetingId(meetingId);
 			joinLeaveMeetingInput.setInMeetingDisplayName(inMeetingDisplayName);
 			joinLeaveMeetingInput.setSessionId(sessionId);
