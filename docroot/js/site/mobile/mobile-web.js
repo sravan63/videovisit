@@ -1391,6 +1391,8 @@ function configurePexipVideoProperties(){
 	console.log('========>>>> PEXIP AUTO START');
 	console.log("join-conf clicked");
 
+	setVideoFeedHeight();
+
     var reqscript1 = document.createElement('script');
       reqscript1.src = "js/site/pexip/complex/webui.js";
       reqscript1.type = "text/javascript";
@@ -1424,6 +1426,15 @@ function configurePexipVideoProperties(){
 		    },1500);
 	      // },1500);
     };
+}
+
+function setVideoFeedHeight(){
+	var windowHeight = $(window).height();
+	var topHeight = windowHeight - 50;
+	$(".top").height(topHeight);
+	$(".waiting-room").height(topHeight/2);
+	$(".mobileconferenceview").height(topHeight/2);
+	$(".mobileselfview").height(topHeight/2);
 }
 
 var participantList = [];

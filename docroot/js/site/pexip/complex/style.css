@@ -262,7 +262,6 @@ body {
 .waiting-room{
   height: 50%;
   background: #757575;
-  padding-top: 44px;
   }
 .waiting-room .logo{
   background: url('../../../../images/mobile/videovisits/TPMGlogo.svg');
