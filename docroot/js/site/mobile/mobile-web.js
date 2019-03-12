@@ -1412,19 +1412,12 @@ function configurePexipVideoProperties(){
     };
 
     reqscript2.onload = function(){
-      console.log("reqscript2 loaded");
-		// setTimeout(function(){
-			var alias =  "M.NCAL.MED.0.369638..1234";
-			var bandwidth = "1280";
-			var source = "Join+Conference";
-			var name = 'Mama Joe';//$("#guestName").val();
-	      	initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
-
-	      	
-	      	setTimeout(function(){
-		      	submitSelectRole();
-		    },1500);
-	      // },1500);
+		console.log("reqscript2 loaded");
+		var alias =  "M.NCAL.MED.0.369638..1234";
+		var bandwidth = "1280";
+		var source = "Join+Conference";
+		var name = $("#guestName").val();
+		initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
     };
 }
 

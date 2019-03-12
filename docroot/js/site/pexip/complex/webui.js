@@ -401,7 +401,7 @@ function doneSetup(url, pin_status, conference_extension) {
     }
     console.log("PIN status: " + pin_status);
     console.log("IVR status: " + conference_extension);
-    if (pin_status == 'required') {
+    /*if (pin_status == 'required') {
         pinentry.classList.remove("hidden");
     } else if (pin_status == 'optional') {
         selectrole.classList.remove("hidden");
@@ -410,7 +410,8 @@ function doneSetup(url, pin_status, conference_extension) {
     } else {
         maincontent.classList.remove("hidden");
         rtc.connect(pin);
-    }
+    }*/
+    submitSelectRole();
 }
 
 function submitSelectRole() {
