@@ -1413,7 +1413,7 @@ function configurePexipVideoProperties(){
 
     reqscript2.onload = function(){
 		console.log("reqscript2 loaded");
-		var alias =  "M.NCAL.MED.0.369638..1234";
+		var alias =  "M.NCAL.MED.0.369640..1234";
 		var bandwidth = "1280";
 		var source = "Join+Conference";
 		var name = $("#guestName").val();
