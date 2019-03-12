@@ -262,15 +262,17 @@ body {
 .waiting-room{
   height: 50%;
   background: #757575;
-  padding-top: 10%;
+  box-sizing: border-box;
   }
 .waiting-room .logo{
   background: url('../../../../images/mobile/videovisits/TPMGlogo.svg');
   height: 110px;
-  width: 110px;
-  margin: auto;
+  width: 100%;
+  margin-top: 10%;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
 }
 .controls-bar{
   background: #515151;
