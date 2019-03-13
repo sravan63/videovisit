@@ -176,7 +176,7 @@
 	    <section class="top">
 	      <div class="waiting-room">
 	      	<div class="logo"></div>
-	      	<div class="waiting-text">Waiting for your doctor to join</div>
+	      	<div class="waiting-text">Waiting for your doctor to join.</div>
 	      </div>
 	      
 	      <div id="videocontainer" class="mobileconferenceview" >
