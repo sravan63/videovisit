@@ -31,7 +31,7 @@ public class JwtUtil {
 		try {
 			claims = JwtTokenValidator.parseToken(authToken, JwtUtil.JWT_SECRET);
 		} catch (Exception e) {
-			logger.error("error while validating token", e);
+			logger.warn("Error while validating token", e);
 		}
 		logger.info(claims);
 		if (claims != null && !claims.isEmpty() && StringUtils.isNotBlank(reqMeetingId) && StringUtils.isNotBlank(reqMrn) ) {

@@ -118,7 +118,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 			String mblLaunchToken = request.getHeader("mblLaunchToken");
 			long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
 			String mrn = request.getHeader("mrn");
-			final String inMeetingDisplayName = request.getHeader("userDisplayName");
+			String inMeetingDisplayName = request.getHeader("userDisplayName");
 			String output = null;
 			final boolean isProxyMeeting = "Y".equalsIgnoreCase(request.getHeader("isProxy")) ? true : false;
 			final String clientId = request.getHeader("clientId");
@@ -168,6 +168,9 @@ public class MobileLaunchVideoVisitController implements Controller {
 				videoVisitParams.setSipParticipants(meetingDo.getSipParticipants());
 				videoVisitParams.setVendorRole(meetingDo.getMember().getVendorRole());
 				
+				if(StringUtils.isBlank(inMeetingDisplayName)) {
+					inMeetingDisplayName = meetingDo.getMember().getLastName() + ", " + meetingDo.getMember().getFirstName();
+				}
 				videoVisitParams.setUserName(inMeetingDisplayName);
 				videoVisitParams.setGuestName(inMeetingDisplayName);
 				
