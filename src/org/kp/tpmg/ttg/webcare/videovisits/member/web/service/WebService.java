@@ -1736,7 +1736,7 @@ public class WebService {
 
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		MeetingDetailsForMeetingIdInput input = null;
+		MeetingDetailsForMeetingIdInput input;
 		if (meetingId <= 0 || StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)) {
 			logger.warn("Missing input attributes");
 			final MeetingDetailsForMeetingIdJSON output = new MeetingDetailsForMeetingIdJSON();

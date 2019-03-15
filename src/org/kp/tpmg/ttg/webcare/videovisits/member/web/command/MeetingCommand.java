@@ -51,12 +51,13 @@ import net.sf.json.JSONObject;
 import net.sourceforge.wurfl.core.Device;
 
 public class MeetingCommand {
-
-	private MeetingCommand() {
-	}
+	
 	public static final Logger logger = Logger.getLogger(MeetingCommand.class);
 	public static final int PAST_MINUTES = 120;
 	public static final int FUTURE_MINUTES = 15;
+	
+	private MeetingCommand() {
+	}
 
 	public static void setupGuestInfo(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
@@ -586,10 +587,10 @@ public class MeetingCommand {
 		return isValid;
 	}
 
-	private static void setWebAppContextMemberInfo(WebAppContext ctx, MemberInfo memberInfo) {
-		Member memberDO = new Member();
+	public static void setWebAppContextMemberInfo(WebAppContext ctx, MemberInfo memberInfo) {
+		final Member memberDO = new Member();
 		try {
-			String dateStr = memberInfo.getDateOfBirth();
+			final String dateStr = memberInfo.getDateOfBirth();
 			if (StringUtils.isNotBlank(dateStr)) {
 				if (dateStr.endsWith("Z")) {
 					Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(dateStr);
@@ -599,13 +600,10 @@ public class MeetingCommand {
 					Date date = sdf.parse(memberInfo.getDateOfBirth());
 					memberDO.setDateOfBirth(String.valueOf(date.getTime()));
 				}
-
 			}
-
 		} catch (Exception e) {
 			logger.warn("error while parsing string date to long.");
 		}
-
 		memberDO.setEmail(memberInfo.getEmail());
 		memberDO.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
 		memberDO.setGender(memberInfo.getGender());

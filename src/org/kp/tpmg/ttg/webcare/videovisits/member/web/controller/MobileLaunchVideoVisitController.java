@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -24,7 +23,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
@@ -46,41 +44,12 @@ public class MobileLaunchVideoVisitController implements Controller {
 	private String errorViewName;
 	private String navigation;
 	private String subNavigation;
-	private String clinicianSingleSignOnURL = null;
-	private String vidyoWebrtcSessionManager = null;
-	private String blockChrome = null;
-	private String blockFF = null;
-	private String blockEdge = null;
-	private String blockSafari = null;
-	private String blockSafariVersion = null;
-	
-	public void initProperties() {
-		logger.info(LOG_ENTERED);
-		try {
-			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
-			clinicianSingleSignOnURL = appProp.getProperty("CLINICIAN_SINGLE_SIGNON_URL");
-			logger.debug("clinicianSingleSignOnURL: " + clinicianSingleSignOnURL);
-			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
-				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-			}
-			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
-			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
-			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
-			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
-			blockSafariVersion = appProp.getProperty("BLOCK_SAFARI_VERSION");
-		} catch (Exception ex) {
-			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
-		}
-		logger.info(LOG_EXITING);
-	}
-	
+
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		ModelAndView modelAndView = new ModelAndView(getViewName());
-		initProperties();
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		if (ctx == null){
+		if (ctx == null) {
 			logger.info("context is null");
 			faq f = FaqParser.parse();
 			List<promo> promos = PromoParser.parse();
@@ -88,66 +57,49 @@ public class MobileLaunchVideoVisitController implements Controller {
 			videolink videoLink = VideoLinkParser.parse();
 			ctx = WebAppContextCommand.createContext(request, "0");
 			WebAppContext.setWebAppContext(request, ctx);
-			ctx.setClinicianSingleSignOnURL(clinicianSingleSignOnURL);
 			ctx.setFaq(f);
 			ctx.setPromo(promos);
 			ctx.setIconPromo(iconpromos);
 			ctx.setVideoLink(videoLink);
 		} else {
 			logger.info("Context is not null");
-		}	
-		
-		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
-		if (StringUtils.isNotBlank(blockChrome)) {
-			ctx.setBlockChrome(blockChrome);
 		}
-		if (StringUtils.isNotBlank(blockFF)) {
-			ctx.setBlockFF(blockFF);
-		}
-		if(StringUtils.isNotBlank(blockEdge)){
-			ctx.setBlockEdge(blockEdge);
-		}
-		if(StringUtils.isNotBlank(blockSafari)){
-			ctx.setBlockSafari(blockSafari);
-		}
-		if(StringUtils.isNotBlank(blockSafariVersion)){
-			ctx.setBlockSafariVersion(blockSafariVersion);
-		}
-		
 		try {
-			String mblLaunchToken = request.getHeader("mblLaunchToken");
-			long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
-			String mrn = request.getHeader("mrn");
+			final String mblLaunchToken = request.getHeader("mblLaunchToken");
+			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
+			final String mrn = request.getHeader("mrn");
 			final String inMeetingDisplayName = request.getHeader("userDisplayName");
-			String output = null;
 			final boolean isProxyMeeting = "Y".equalsIgnoreCase(request.getHeader("isProxy")) ? true : false;
 			final String clientId = request.getHeader("clientId");
 
-			logger.debug("Input : meetingId=" + meetingId + ", isProxyMeeting="
-					+ isProxyMeeting + ", inMeetingDisplayName=" + inMeetingDisplayName + ", mrn=" + mrn
-					+ ", mblLaunchToken=" + mblLaunchToken + ", clientId=" + clientId);
-			
-			if (StringUtils.isBlank(mblLaunchToken) || !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
+			logger.debug("Input : meetingId=" + meetingId + ", isProxyMeeting=" + isProxyMeeting
+					+ ", inMeetingDisplayName=" + inMeetingDisplayName + ", mrn=" + mrn + ", mblLaunchToken="
+					+ mblLaunchToken + ", clientId=" + clientId);
+
+			if (StringUtils.isBlank(mblLaunchToken)
+					|| !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
 				logger.info("Invalid auth token so sending sc_unauthorized error");
 				return new ModelAndView(errorViewName);
 			}
 
 			ctx.setMeetingId(meetingId);
 			ctx.setClientId(clientId);
-			
+
 			WebService.initWebService(request);
-			output = WebService.getMeetingDetailsForMeetingId(meetingId, request.getSession().getId(), clientId);
-			
+			final String output = WebService.getMeetingDetailsForMeetingId(meetingId, request.getSession().getId(),
+					clientId);
+
 			logger.debug("Output json string : " + output);
-			Gson gson = new Gson();
-			final MeetingDetailsForMeetingIdJSON meetingDetailsForMeetingIdJSON = gson.fromJson(output, MeetingDetailsForMeetingIdJSON.class);
-	  	   
-			final VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();	
+			final Gson gson = new Gson();
+			final MeetingDetailsForMeetingIdJSON meetingDetailsForMeetingIdJSON = gson.fromJson(output,
+					MeetingDetailsForMeetingIdJSON.class);
+
+			final VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
 			videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
-			
-			if(meetingDetailsForMeetingIdJSON != null && meetingDetailsForMeetingIdJSON.getService() != null && meetingDetailsForMeetingIdJSON.getService().getEnvelope() != null &&
-					meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting() != null)
-			{
+
+			if (meetingDetailsForMeetingIdJSON != null && meetingDetailsForMeetingIdJSON.getService() != null
+					&& meetingDetailsForMeetingIdJSON.getService().getEnvelope() != null
+					&& meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting() != null) {
 				final MeetingDO meetingDo = meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting();
 				logger.debug("MeetingDO: " + meetingDo.toString());
 				videoVisitParams.setMeetingId(meetingDo.getMeetingId());
@@ -163,78 +115,111 @@ public class MobileLaunchVideoVisitController implements Controller {
 				videoVisitParams.setGuestUrl(meetingDo.getRoomJoinUrl());
 				videoVisitParams.setIsProvider("false");
 				videoVisitParams.setVendor(meetingDo.getVendor());
-				videoVisitParams.setVendorHostPin(meetingDo.getVendorHostPin());
-				videoVisitParams.setVendorGuestPin(meetingDo.getVendorGuestPin());
-				videoVisitParams.setSipParticipants(meetingDo.getSipParticipants());
-				videoVisitParams.setVendorRole(meetingDo.getMember().getVendorRole());
-				
+
 				videoVisitParams.setUserName(inMeetingDisplayName);
 				videoVisitParams.setGuestName(inMeetingDisplayName);
-				
+
 				if (isProxyMeeting) {
 					videoVisitParams.setIsMember("false");
 					videoVisitParams.setIsProxyMeeting("true");
-				} else {					
+				} else {
 					videoVisitParams.setIsMember("true");
-					videoVisitParams.setIsProxyMeeting("false");			
+					videoVisitParams.setIsProxyMeeting("false");
 				}
 				WebUtil.addMeetingDateTime(meetingDo, videoVisitParams);
 			}
-			
+
 			ctx.setVideoVisit(videoVisitParams);
 			logger.debug("Video Visit param data:" + videoVisitParams.toString());
 		} catch (Exception e) {
 			logger.error("System error:" + e.getMessage(), e);
-			if(ctx.getVideoVisit() == null || StringUtils.isBlank(ctx.getVideoVisit().getMeetingId()) 
-					|| StringUtils.isBlank(ctx.getVideoVisit().getVidyoUrl()) || StringUtils.isBlank(ctx.getVideoVisit().getVendorConfId())) {
+			if (ctx.getVideoVisit() == null || StringUtils.isBlank(ctx.getVideoVisit().getMeetingId())
+					|| StringUtils.isBlank(ctx.getVideoVisit().getVidyoUrl())
+					|| StringUtils.isBlank(ctx.getVideoVisit().getVendorConfId())) {
 				modelAndView.setViewName(errorViewName);
 			}
 		}
-		
+
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		logger.info(LOG_EXITING);
 		return modelAndView;
 	}
 
+	/**
+	 * @return the webAppContextCommand
+	 */
 	public WebAppContextCommand getWebAppContextCommand() {
 		return webAppContextCommand;
 	}
 
+	/**
+	 * @param webAppContextCommand
+	 *            the webAppContextCommand to set
+	 */
 	public void setWebAppContextCommand(WebAppContextCommand webAppContextCommand) {
 		this.webAppContextCommand = webAppContextCommand;
 	}
 
+	/**
+	 * @return the environmentCommand
+	 */
 	public EnvironmentCommand getEnvironmentCommand() {
 		return environmentCommand;
 	}
 
+	/**
+	 * @param environmentCommand
+	 *            the environmentCommand to set
+	 */
 	public void setEnvironmentCommand(EnvironmentCommand environmentCommand) {
 		this.environmentCommand = environmentCommand;
 	}
 
+	/**
+	 * @return the contextIdParameter
+	 */
 	public String getContextIdParameter() {
 		return contextIdParameter;
 	}
 
+	/**
+	 * @param contextIdParameter
+	 *            the contextIdParameter to set
+	 */
 	public void setContextIdParameter(String contextIdParameter) {
 		this.contextIdParameter = contextIdParameter;
 	}
 
+	/**
+	 * @return the homePageRedirect
+	 */
 	public String getHomePageRedirect() {
 		return homePageRedirect;
 	}
 
+	/**
+	 * @param homePageRedirect
+	 *            the homePageRedirect to set
+	 */
 	public void setHomePageRedirect(String homePageRedirect) {
 		this.homePageRedirect = homePageRedirect;
 	}
+
+	/**
+	 * @return the viewName
+	 */
 	public String getViewName() {
 		return viewName;
 	}
-	
+
+	/**
+	 * @param viewName
+	 *            the viewName to set
+	 */
 	public void setViewName(String viewName) {
 		this.viewName = viewName;
 	}
-	
+
 	/**
 	 * @return the errorViewName
 	 */
@@ -243,27 +228,41 @@ public class MobileLaunchVideoVisitController implements Controller {
 	}
 
 	/**
-	 * @param errorViewName the errorViewName to set
+	 * @param errorViewName
+	 *            the errorViewName to set
 	 */
 	public void setErrorViewName(String errorViewName) {
 		this.errorViewName = errorViewName;
 	}
 
+	/**
+	 * @return the navigation
+	 */
 	public String getNavigation() {
 		return navigation;
 	}
-	
+
+	/**
+	 * @param navigation
+	 *            the navigation to set
+	 */
 	public void setNavigation(String navigation) {
 		this.navigation = navigation;
 	}
-	
+
+	/**
+	 * @return the subNavigation
+	 */
 	public String getSubNavigation() {
 		return subNavigation;
 	}
-	
+
+	/**
+	 * @param subNavigation
+	 *            the subNavigation to set
+	 */
 	public void setSubNavigation(String subNavigation) {
 		this.subNavigation = subNavigation;
 	}
-	
-}
 
+}

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -22,11 +21,10 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
-public class GuestController extends SimplePageController {
+public class GuestController extends CommonController {
 
 	private final static Logger logger = Logger.getLogger(GuestController.class);
 
@@ -34,34 +32,7 @@ public class GuestController extends SimplePageController {
 
 	private WebAppContext ctx = null;
 
-	private String vidyoWebrtcSessionManager = null;
-
-	private String blockChrome = null;
-
-	private String blockFF = null;
-	private String blockEdge = null;
-	private String blockSafari = null;
-	private String blockSafariVersion = null;
-
-	public void initProperties() {
-		try {
-			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
-			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
-				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-			}
-			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
-			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
-			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
-			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
-			blockSafariVersion = appProp.getProperty("BLOCK_SAFARI_VERSION");
-		} catch (Exception ex) {
-			logger.error("GuestController -> Error while reading external properties file - " + ex.getMessage(), ex);
-		}
-	}
-
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		initProperties();
 		initializeWebappContext(request);
@@ -77,6 +48,8 @@ public class GuestController extends SimplePageController {
 			logger.error("System Error - " + e.getMessage(), e);
 		}
 		logger.info("data - " + data);
+		final ModelAndView modelAndView = new ModelAndView(getViewName());
+		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		modelAndView.setViewName(GUEST_PAGE);
 		modelAndView.addObject("data", data);
 		logger.info(LOG_EXITING);
@@ -86,30 +59,15 @@ public class GuestController extends SimplePageController {
 	private void initializeWebappContext(HttpServletRequest request) throws Exception {
 		ctx = WebAppContextCommand.createContext(request, "0");
 		WebAppContext.setWebAppContext(request, ctx);
-		faq f = FaqParser.parse();
-		List<promo> promos = PromoParser.parse();
-		List<iconpromo> iconpromos = IconPromoParser.parse();
-		videolink videoLink = VideoLinkParser.parse();
+		final faq f = FaqParser.parse();
+		final List<promo> promos = PromoParser.parse();
+		final List<iconpromo> iconpromos = IconPromoParser.parse();
+		final videolink videoLink = VideoLinkParser.parse();
 		ctx.setFaq(f);
 		ctx.setPromo(promos);
 		ctx.setIconPromo(iconpromos);
 		ctx.setVideoLink(videoLink);
-		ctx.setWebrtcSessionManager(vidyoWebrtcSessionManager);
-		if (StringUtils.isNotBlank(blockChrome)) {
-			ctx.setBlockChrome(blockChrome);
-		}
-		if (StringUtils.isNotBlank(blockFF)) {
-			ctx.setBlockFF(blockFF);
-		}
-		if(StringUtils.isNotBlank(blockEdge)){
-			ctx.setBlockEdge(blockEdge);
-		}
-		if(StringUtils.isNotBlank(blockSafari)){
-			ctx.setBlockSafari(blockSafari);
-		}
-		if(StringUtils.isNotBlank(blockSafariVersion)){
-			ctx.setBlockSafariVersion(blockSafariVersion);
-		}
+		updateWebappContext(ctx);
 		ctx.setClientId(WebUtil.VV_MBR_GUEST);
 		ctx.setBackButtonClientId(WebUtil.VV_MBR_GUEST_BACK_BTN);
 	}

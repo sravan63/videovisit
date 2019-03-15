@@ -11,6 +11,11 @@ import io.jsonwebtoken.Jwts;
 
 
 public class JwtUtil {
+	
+	private JwtUtil() {
+		
+	}
+	
 	public final static String JWT_SECRET = "videovisit-jwt-secret-kaiser-ttg-tpmg-ncal-this-key";
 	public final static long JWT_TOKEN_EXPIRATION_MILLIS = 1800000;//expiration set to 30 mins
 	public static final Logger logger = Logger.getLogger(JwtUtil.class);

@@ -459,16 +459,12 @@
 	
 	<bean id="enableJavascript" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		
 		<property name="viewName" value="enableJavascript" />
-		
 	</bean>
 	
 	<bean id="mobileEnableJavascript" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		
 		<property name="viewName" value="mobileEnableJavascript" />
-		
 	</bean>
 	
 	<bean id="videoVisitMobile" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.VideoVisitMobilePatientController">
@@ -501,7 +497,6 @@
 	<bean id="mobilePatientGuestMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 	    <!--  defined in mobile-titles-definitions.xml -->
 		<property name="viewName" value="mPatientGuestLandingPage" />
-		
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
 		<property name="navigation" value="guesthelp" />
 		<property name="subNavigation" value="guesthelp" />

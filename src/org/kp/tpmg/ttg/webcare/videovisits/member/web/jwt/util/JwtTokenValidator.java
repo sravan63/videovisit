@@ -15,6 +15,10 @@ import io.jsonwebtoken.Jwts;
 public class JwtTokenValidator {
 	
 	public static final Logger logger = Logger.getLogger(JwtTokenValidator.class);
+	
+	private JwtTokenValidator() {
+		
+	}
 
     /**
      * Tries to parse specified String as a JWT token. If successful, returns User object with username, id and role prefilled (extracted from token).

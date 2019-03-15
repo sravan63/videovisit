@@ -22,15 +22,14 @@ public class LaunchMeetingForMemberGuestController extends SimplePageController 
 	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
-		StringBuilder dataResult = new StringBuilder();
 		StringBuilder validationData = new StringBuilder(",");
+		StringBuilder dataResult = new StringBuilder();
 		JSONObject result = new JSONObject();
 		try {
 			HttpSession session = request.getSession(false);
 
 			String inAppBrowserFlag = request.getParameter("inAppBrowserFlag");
 			logger.info("KPPC In-App Browser flow: inAppBrowserFlag=" + inAppBrowserFlag);
-
 			result.put("isValidUserSession", false);
 			result.put("success", false);
 
@@ -71,7 +70,6 @@ public class LaunchMeetingForMemberGuestController extends SimplePageController 
 		modelAndView.addObject("data", dataResult);
 		logger.info(LOG_EXITING);
 		return modelAndView;
-
 	}
 
 }

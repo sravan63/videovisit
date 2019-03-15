@@ -4,21 +4,15 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppPrope
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.model.user.Member;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 
 public class SSOSimulationCommand {
@@ -72,7 +66,7 @@ public class SSOSimulationCommand {
 					memberInfo.setGender(getExtPropertiesValueByKey("MEMBER_GENDER"));
 
 					ctx.setNonMember(Boolean.FALSE);
-					setWebAppContextMemberInfoForSSOSimul(ctx, memberInfo);
+					MeetingCommand.setWebAppContextMemberInfo(ctx, memberInfo);
 					ctx.setKpOrgSignOnInfo(kpSignOnInfo);
 					ctx.setKpKeepAliveUrl(WebService.getKpOrgSSOKeepAliveUrl());
 					
@@ -99,35 +93,6 @@ public class SSOSimulationCommand {
 		}
 		logger.info(LOG_EXITING);
 		return strResponse;
-	}
-
-	private static void setWebAppContextMemberInfoForSSOSimul(WebAppContext ctx, MemberInfo memberInfo) {
-		final Member memberDO = new Member();
-		try {
-			final String dateStr = memberInfo.getDateOfBirth();
-			if (StringUtils.isNotBlank(dateStr)) {
-				if (dateStr.endsWith("Z")) {
-					Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(dateStr);
-					memberDO.setDateOfBirth(String.valueOf(cal.getTimeInMillis()));
-				} else {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					Date date = sdf.parse(memberInfo.getDateOfBirth());
-					memberDO.setDateOfBirth(String.valueOf(date.getTime()));
-				}
-			}
-		} catch (Exception e) {
-			logger.warn("error while parsing string date to long.");
-		}
-
-		memberDO.setEmail(memberInfo.getEmail());
-		memberDO.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
-		memberDO.setGender(memberInfo.getGender());
-		memberDO.setLastName(WordUtils.capitalizeFully(memberInfo.getLastName()));
-		memberDO.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));
-
-		memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
-
-		ctx.setMemberDO(memberDO);
 	}
 
 	private static String invalidateWebAppContext(WebAppContext ctx) {

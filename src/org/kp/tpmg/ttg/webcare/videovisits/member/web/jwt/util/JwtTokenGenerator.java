@@ -13,6 +13,10 @@ import io.jsonwebtoken.security.Keys;
 
 public class JwtTokenGenerator {
 	public static final Logger logger = Logger.getLogger(JwtTokenGenerator.class);
+	
+	private JwtTokenGenerator() {
+		
+	}
 
     public static String generateToken(Claims claims, String secret, Long expirationMillis) {
     	

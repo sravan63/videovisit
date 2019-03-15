@@ -23,8 +23,8 @@ public class LaunchMeetingForMemberController extends SimplePageController {
 			HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
 		StringBuilder validationData = new StringBuilder(",");
-		JSONObject result = new JSONObject();
 		StringBuilder dataResult = new StringBuilder();
+		JSONObject result = new JSONObject();
 		try {
 			HttpSession session = request.getSession(false);
 
