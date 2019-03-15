@@ -63,6 +63,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 			ctx.setVideoLink(videoLink);
 		} else {
 			logger.info("Context is not null");
+			ctx.setIsNative(true);
 		}
 		try {
 			final String mblLaunchToken = request.getHeader("mblLaunchToken");

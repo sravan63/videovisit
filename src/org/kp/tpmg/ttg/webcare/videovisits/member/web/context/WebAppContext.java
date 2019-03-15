@@ -61,6 +61,7 @@ public class WebAppContext implements Serializable {
 	private String blockSafari = "true";
 	private String blockSafariVersion = "12";
 	private boolean showPeripheralsPage = true;
+	private boolean isNative = false;
 		
 	/**
 	 * Defaulting clientId  to "vv-mbr-web".
@@ -438,6 +439,20 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setShowPeripheralsPage(boolean showPeripheralsPage) {
 		this.showPeripheralsPage = showPeripheralsPage;
+	}
+
+	/**
+	 * @return the isNative
+	 */
+	public boolean getIsNative() {
+		return isNative;
+	}
+
+	/**
+	 * @param isNative the isNative to set
+	 */
+	public void setIsNative(boolean isNative) {
+		this.isNative = isNative;
 	}
 
 	/**

@@ -134,5 +134,9 @@
 	<definition name="mauthError" extends=".mobileInAppPageTemplate">
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/authError.jsp" />
 	</definition>
+	
+	<definition name="nativemymeetings" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/nativeMyMeetings.jsp" />
+	</definition>
 
 </tiles-definitions>
