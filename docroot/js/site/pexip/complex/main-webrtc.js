@@ -22,6 +22,8 @@ var webuiLoaded = false;
 var constraints;
 var globalConstraints;
 
+var mobileVideoSources = [];
+
 $(document).ready(function(){
   console.log("inside main-2");
   var videoElement = document.querySelector('video');
@@ -63,6 +65,7 @@ $(document).ready(function(){
           if(deviceInfo.label != "WebPluginVirtualCamera"){
             option.text = deviceInfo.label || 'camera ' + (videoSelect.length + 1);
             videoSelect.appendChild(option);
+            mobileVideoSources.push(option.value);
           }
       } else {
         console.log('Some other kind of source/device: ', deviceInfo);
