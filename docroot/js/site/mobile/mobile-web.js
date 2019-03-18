@@ -1418,6 +1418,15 @@ function configurePexipVideoProperties(){
 		var source = "Join+Conference";
 		var name = $("#guestName").val();
 		initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
+		var guestName = $("#guestName").val();
+		var patientName =$("#meetingPatient").val();
+		if(guestName.toLowerCase() == patientName.toLowerCase()){
+			isPatientLoggedIn = true;
+		}
+		else{
+			isPatientLoggedIn = false;
+		}
+		sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
     };
 }
 

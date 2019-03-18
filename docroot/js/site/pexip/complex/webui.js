@@ -754,18 +754,50 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
+
+
 function disconnect(){
     console.log("inside disconnect");
+    var guestName = $("#guestName").val();
+        var patientName =$("#meetingPatient").val();
+        if(guestName.toLowerCase() == patientName.toLowerCase()){
+            isPatientLoggedIn = true;
+        }
+        else{
+            isPatientLoggedIn = false;
+        }
+    var userData = {
+        inMeetingDisplayName : $("#guestName").val(),
+        isPatient : isPatientLoggedIn,
+        joinLeaveMeeting : "L",
+        meetingId: $('#meetingId').val()
+    };
+    $.ajax({
+        type: "POST",
+        url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+        cache: false,
+        dataType: "json",
+        data: userData,
+        success: function(result, textStatus){
+            console.log("joinLeaveMeeting :: result :: "+result);
+        },
+        error: function(textStatus){
+            console.log("joinLeaveMeeting :: error :: "+textStatus);
+        }
+    });
     // rtc.disconnect();
-    if(isProvider == "true"){
-        // window.location.href =  '/videovisitproviderpexip/myMeetings.htm';
-        window.location.href =  '/videovisit/myMeetings.htm';
-    } else{
-         var url = window.location.href;
+        var isNative = $("#isNative").val();
+        if(isNative=="true"){
+        window.location.href = 'nativemymeetings.htm';
+        }
+        else{
+        var url = window.location.href;
         if(url.indexOf("mobile") > -1){
             window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
-        } else {
+        } 
+        else {
         window.location.href = '/videovisit/landingready.htm';
        }
-    }
+   }
+    
 }
