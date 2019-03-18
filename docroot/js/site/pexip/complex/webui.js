@@ -223,9 +223,9 @@ function muteAudioStreams() {
         muteAudio = rtc.muteAudio();
         id_muteaudio.classList.toggle('selected');
         if (muteAudio) {
-            id_muteaudio.textContent = trans['BUTTON_UNMUTEAUDIO'];
+            //id_muteaudio.textContent = trans['BUTTON_UNMUTEAUDIO'];
         } else {
-            id_muteaudio.textContent = trans['BUTTON_MUTEAUDIO'];
+            //id_muteaudio.textContent = trans['BUTTON_MUTEAUDIO'];
         }
     }
 }
@@ -235,10 +235,12 @@ function muteVideoStreams() {
         muteVideo = rtc.muteVideo();
         id_mutevideo.classList.toggle('selected');
         if (muteVideo) {
-            id_mutevideo.textContent = trans['BUTTON_UNMUTEVIDEO'];
+            //id_mutevideo.textContent = trans['BUTTON_UNMUTEVIDEO'];
         } else {
-            id_mutevideo.textContent = trans['BUTTON_MUTEVIDEO'];
+            //id_mutevideo.textContent = trans['BUTTON_MUTEVIDEO'];
         }
+    }else{
+
     }
 }
 
@@ -702,8 +704,8 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
 
     video = document.getElementById("video");
     id_selfview = document.getElementById('id_selfview');
-    id_muteaudio = document.getElementById('id_muteaudio');
-    id_mutevideo = document.getElementById('id_mutevideo');
+    id_muteaudio = document.getElementById('mic');
+    id_mutevideo = document.getElementById('camera');
     id_fullscreen = document.getElementById('id_fullscreen');
     id_screenshare = document.getElementById('id_screenshare');
     id_presentation = document.getElementById('id_presentation');
