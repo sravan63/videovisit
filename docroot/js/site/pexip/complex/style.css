@@ -311,7 +311,6 @@ body {
   cursor: pointer;
 }
 #camera{
-  background: url('../../../../images/mobile/videovisits/camera.svg');
   background-repeat: no-repeat;
   height: 100%;
   padding: 0 20px;
@@ -333,18 +332,37 @@ body {
   background-size: contain;
 }
 #speaker{
-  background: url('../../../../images/mobile/videovisits/speaker.svg');
   background-repeat: no-repeat;
   height: 100%;
   padding: 0 20px;
   background-position: center;
 }
-#mic{
-  background: url('../../../../images/mobile/videovisits/mic.svg');
+#mic{  
   background-repeat: no-repeat;
   height: 100%;
   padding: 0 20px;
   background-position: center;
+}
+.unmutedmic{
+  background: url('../../../../images/mobile/videovisits/mic.svg');
+}
+.mutedmic{
+  background: url('../../../../vidyoplayer/img/vidyo-redesign/svg/SVG/micOff.svg');
+  background-size: 38px;
+}
+.unmutedcamera{
+  background: url('../../../../images/mobile/videovisits/camera.svg');
+}
+.mutedcamera{
+  background: url('../../../../vidyoplayer/img/vidyo-redesign/svg/SVG/cameraOff.svg');
+  background-size: 38px;
+}
+.unmutedspeaker{
+  background: url('../../../../images/mobile/videovisits/speaker.svg');
+}
+.mutedspeaker{
+  background: url('../../../../vidyoplayer/img/vidyo-redesign/svg/SVG/speakerOff.svg');
+  background-size: 38px;
 }
 .waiting-room .waiting-text{
   color: #FFFFFF;

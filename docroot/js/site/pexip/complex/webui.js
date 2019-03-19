@@ -22,6 +22,7 @@ var videoPresentation = true;
 var id_selfview;
 var id_muteaudio;
 var id_mutevideo;
+var id_mutespeaker;
 var id_fullscreen;
 var id_screenshare;
 var id_presentation;
@@ -218,14 +219,30 @@ function unpresentScreen(reason) {
 
 /* ~~~ MUTE AND HOLD/RESUME ~~~ */
 
-function muteAudioStreams() {
+function muteUnmuteSpeaker() {
+    if (!id_mutespeaker.classList.contains("inactive")) {
+        if (document.getElementById('video').volume == 1) {
+            document.getElementById('video').volume = 0;
+            id_mutespeaker.classList.remove('unmutedspeaker');
+            id_mutespeaker.classList.add('mutedspeaker');
+        } else {
+            document.getElementById('video').volume = 1;
+            id_mutespeaker.classList.remove('mutedspeaker');
+            id_mutespeaker.classList.add('unmutedspeaker');
+        }
+    }
+}
+
+function muteMicStreams() {
     if (!id_muteaudio.classList.contains("inactive")) {
         muteAudio = rtc.muteAudio();
         id_muteaudio.classList.toggle('selected');
         if (muteAudio) {
-            //id_muteaudio.textContent = trans['BUTTON_UNMUTEAUDIO'];
+            id_muteaudio.classList.remove('unmutedmic');
+            id_muteaudio.classList.add('mutedmic');
         } else {
-            //id_muteaudio.textContent = trans['BUTTON_MUTEAUDIO'];
+            id_muteaudio.classList.remove('mutedmic');
+            id_muteaudio.classList.add('unmutedmic');
         }
     }
 }
@@ -235,9 +252,11 @@ function muteVideoStreams() {
         muteVideo = rtc.muteVideo();
         id_mutevideo.classList.toggle('selected');
         if (muteVideo) {
-            //id_mutevideo.textContent = trans['BUTTON_UNMUTEVIDEO'];
+            id_mutevideo.classList.remove('unmutedcamera');
+            id_mutevideo.classList.add('mutedcamera');
         } else {
-            //id_mutevideo.textContent = trans['BUTTON_MUTEVIDEO'];
+            id_mutevideo.classList.remove('mutedcamera');
+            id_mutevideo.classList.add('unmutedcamera');
         }
     }else{
 
@@ -706,6 +725,7 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
     id_selfview = document.getElementById('id_selfview');
     id_muteaudio = document.getElementById('mic');
     id_mutevideo = document.getElementById('camera');
+    id_mutespeaker = document.getElementById('speaker');
     id_fullscreen = document.getElementById('id_fullscreen');
     id_screenshare = document.getElementById('id_screenshare');
     id_presentation = document.getElementById('id_presentation');
