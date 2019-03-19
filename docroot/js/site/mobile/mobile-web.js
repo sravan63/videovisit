@@ -1413,11 +1413,7 @@ function configurePexipVideoProperties(){
 
     reqscript2.onload = function(){
 		console.log("reqscript2 loaded");
-		var alias =  "M.NCAL.MED.0.369640..1234";
-		var bandwidth = "1280";
-		var source = "Join+Conference";
-		var name = $("#guestName").val();
-		initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
+		startPexip();
 		var guestName = $("#guestName").val();
 		var patientName =$("#meetingPatient").val();
 		if(guestName.toLowerCase() == patientName.toLowerCase()){
@@ -1428,6 +1424,14 @@ function configurePexipVideoProperties(){
 		}
 		sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
     };
+}
+
+function startPexip() {
+	var alias =  "M.NCAL.MED.0.369640..1234";
+	var bandwidth = "1280";
+	var source = "Join+Conference";
+	var name = $("#guestName").val();
+	initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
 }
 
 function setVideoFeedHeight(){
@@ -1553,7 +1557,12 @@ function toggleCamera(){
 		var videoSource = mobileVideoSources[i];
 		if(rtc.video_source !== videoSource){
 		    rtc.video_source =  videoSource;
-		    rtc.renegotiate();
+		    cameraID = videoSource;
+		    rtc.disconnect();
+		    startPexip();
+		    // rtc.renegotiate();
+		    // rtc.renegotiate("M.NCAL.MED.0.369638..1234");
+		    // rtc.renegotiate("Join+Conference");
 		    break;
 		}
 	}
