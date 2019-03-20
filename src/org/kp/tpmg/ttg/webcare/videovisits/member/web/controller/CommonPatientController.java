@@ -32,12 +32,12 @@ public abstract class CommonPatientController implements Controller {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		try {
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);
+			final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if (ctx != null) {
 
-				VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
+				final VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
 				videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
-				List<MeetingDO> meetings = ctx.getMyMeetings();
+				final List<MeetingDO> meetings = ctx.getMyMeetings();
 				if (meetings != null) {
 					for (MeetingDO meeting : meetings) {
 						if (meeting != null && meeting.getMeetingId().equals(request.getParameter("meetingId"))) {
@@ -90,9 +90,11 @@ public abstract class CommonPatientController implements Controller {
 
 				logger.debug("Video Visit data:" + videoVisitParams.toString());
 			}
+			logger.info("bandwidth:" + ctx.getBandwidth());
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
+		
 		final ModelAndView modelAndView = new ModelAndView(JSONMAPPING);
 		logger.info(LOG_EXITING);
 		return modelAndView;

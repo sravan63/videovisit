@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -23,6 +24,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.faq;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.iconpromo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.promo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.videolink;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
@@ -44,6 +46,8 @@ public class MobileLaunchVideoVisitController implements Controller {
 	private String errorViewName;
 	private String navigation;
 	private String subNavigation;
+	
+	private String mobileBandwidth;
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
@@ -63,9 +67,21 @@ public class MobileLaunchVideoVisitController implements Controller {
 			ctx.setVideoLink(videoLink);
 		} else {
 			logger.info("Context is not null");
-			ctx.setIsNative(true);
 		}
 		try {
+			ctx.setIsNative(true);
+			try {
+				final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+				mobileBandwidth = appProp.getProperty("MOBILE_BANDWIDTH");
+			} catch (Exception ex) {
+				logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
+			}
+			if(StringUtils.isNotBlank(mobileBandwidth)) {
+				ctx.setBandwidth(mobileBandwidth);
+			} else {
+				ctx.setBandwidth("512kbps");
+			}
+			logger.info("bandwith : " + ctx.getBandwidth());
 			final String mblLaunchToken = request.getHeader("mblLaunchToken");
 			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
 			final String mrn = request.getHeader("mrn");

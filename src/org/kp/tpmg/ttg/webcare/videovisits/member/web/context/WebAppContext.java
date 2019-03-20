@@ -62,6 +62,7 @@ public class WebAppContext implements Serializable {
 	private String blockSafariVersion = "12";
 	private boolean showPeripheralsPage = true;
 	private boolean isNative = false;
+	private String bandwidth;
 		
 	/**
 	 * Defaulting clientId  to "vv-mbr-web".
@@ -453,6 +454,20 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setIsNative(boolean isNative) {
 		this.isNative = isNative;
+	}
+
+	/**
+	 * @return the bandwidth
+	 */
+	public String getBandwidth() {
+		return bandwidth;
+	}
+
+	/**
+	 * @param bandwidth the bandwidth to set
+	 */
+	public void setBandwidth(String bandwidth) {
+		this.bandwidth = bandwidth;
 	}
 
 	/**
