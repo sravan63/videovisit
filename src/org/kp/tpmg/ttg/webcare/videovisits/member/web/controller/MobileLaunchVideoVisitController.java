@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.EnvironmentCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -46,13 +45,12 @@ public class MobileLaunchVideoVisitController implements Controller {
 	private String errorViewName;
 	private String navigation;
 	private String subNavigation;
-	
-	private String mobileBandwidth;
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
-		ModelAndView modelAndView = new ModelAndView(getViewName());
+		final ModelAndView modelAndView = new ModelAndView(getViewName());
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		String mobileBandwidth = null;
 		if (ctx == null) {
 			logger.info("context is null");
 			faq f = FaqParser.parse();
@@ -70,16 +68,11 @@ public class MobileLaunchVideoVisitController implements Controller {
 		}
 		try {
 			ctx.setIsNative(true);
-			try {
-				final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
-				mobileBandwidth = appProp.getProperty("MOBILE_BANDWIDTH");
-			} catch (Exception ex) {
-				logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
-			}
-			if(StringUtils.isNotBlank(mobileBandwidth)) {
+			mobileBandwidth = AppProperties.getExtPropertiesValueByKey("MOBILE_BANDWIDTH");
+			if (StringUtils.isNotBlank(mobileBandwidth)) {
 				ctx.setBandwidth(mobileBandwidth);
 			} else {
-				ctx.setBandwidth("512kbps");
+				ctx.setBandwidth(WebUtil.BANDWIDTH_512_KBPS);
 			}
 			logger.info("bandwith : " + ctx.getBandwidth());
 			final String mblLaunchToken = request.getHeader("mblLaunchToken");
@@ -132,8 +125,11 @@ public class MobileLaunchVideoVisitController implements Controller {
 				videoVisitParams.setGuestUrl(meetingDo.getRoomJoinUrl());
 				videoVisitParams.setIsProvider("false");
 				videoVisitParams.setVendor(meetingDo.getVendor());
-				if(StringUtils.isBlank(inMeetingDisplayName)) {
-					inMeetingDisplayName = meetingDo.getMember().getLastName() + ", " + meetingDo.getMember().getFirstName();
+				videoVisitParams.setVendorGuestPin(meetingDo.getVendorGuestPin());
+				videoVisitParams.setVendorHostPin(meetingDo.getVendorHostPin());
+				if (StringUtils.isBlank(inMeetingDisplayName)) {
+					inMeetingDisplayName = meetingDo.getMember().getLastName() + ", "
+							+ meetingDo.getMember().getFirstName();
 				}
 				videoVisitParams.setUserName(inMeetingDisplayName);
 				videoVisitParams.setGuestName(inMeetingDisplayName);
