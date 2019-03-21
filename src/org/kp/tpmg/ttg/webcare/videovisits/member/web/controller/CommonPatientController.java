@@ -53,13 +53,17 @@ public abstract class CommonPatientController implements Controller {
 							videoVisitParams.setPatientMiddleName(meeting.getMember().getMiddleName());
 							videoVisitParams.setParticipant(meeting.getParticipant());
 							videoVisitParams.setCaregiver(meeting.getCaregiver());
-							Calendar cal = Calendar.getInstance();
+							final Calendar cal = Calendar.getInstance();
 							cal.setTimeInMillis(Long.parseLong(meeting.getMeetingTime()));
 							SimpleDateFormat sfdate = new SimpleDateFormat("MMM dd");
 							SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
 							videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
 							videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
 							videoVisitParams.setVendor(meeting.getVendor());
+							videoVisitParams.setVendorHostPin(meeting.getVendorHostPin());
+							videoVisitParams.setVendorGuestPin(meeting.getVendorGuestPin());
+							videoVisitParams.setVendorRole(meeting.getMember().getVendorRole());
+							videoVisitParams.setVendorConfId(meeting.getMeetingVendorId());
 						}
 					}
 				}
