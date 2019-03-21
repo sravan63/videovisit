@@ -27,7 +27,7 @@ public class WebUtil {
 	public static final Logger logger = Logger.getLogger(WebUtil.class);
 	private static Pattern DOB_PATTERN = Pattern.compile("\\d\\d\\d\\d-\\d[\\d]-\\d[\\d]");
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
-//	public static final String SSO_COOKIE_NAME = "ObSSOCookie";
+	// public static final String SSO_COOKIE_NAME = "ObSSOCookie";
 	public static final String MOB_CLIENT_ID = "vv-mbr-mbl-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
 	public static final String NON_MEMBER = "Non_Mmbr";
@@ -49,7 +49,9 @@ public class WebUtil {
 	public static final String VV_MBR_SSO_SIM_BACK_BTN = "vv-mbr-sso-sim-back-btn";
 	public static final String EDGE = "edge";
 	public static final String KPPC = "KPPC";
-	
+	public static final String BANDWIDTH_512_KBPS = "512kbps";
+	public static final String BANDWIDTH_1024_KBPS = "1024kbps";
+
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);
 		Calendar calToday = Calendar.getInstance();
@@ -263,7 +265,7 @@ public class WebUtil {
 		logger.info(LOG_EXITING + " isFFBrowser: " + isFFBrowser);
 		return isFFBrowser;
 	}
-	
+
 	public static boolean isEdgeBrowser(HttpServletRequest httpRequest) {
 		logger.info(LOG_ENTERED);
 		boolean isEdgeBrowser = false;
@@ -332,7 +334,7 @@ public class WebUtil {
 		}
 		return returnVal;
 	}
-	
+
 	public static String replaceSpecialCharacters(String input) {
 		logger.info(LOG_ENTERED);
 		if (StringUtils.isNotBlank(input)) {
@@ -378,27 +380,27 @@ public class WebUtil {
 		logger.info(LOG_EXITING);
 		return input;
 	}
-	
+
 	public static boolean isSsoSimulation() {
 		final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION");
 		final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && "true".equalsIgnoreCase(ssoSimulation);
 		return isSsoSimulation;
 	}
-	
+
 	public static String getClientIdFromContext(final WebAppContext ctx) {
 		return ctx != null ? ctx.getClientId() : VV_MBR_WEB;
 	}
-	
+
 	public static String getSSOCookieName() {
 		logger.info(LOG_ENTERED);
 		String SSO_COOKIE_NAME = AppProperties.getExtPropertiesValueByKey("SSO_COOKIE_NAME");
-		if(StringUtils.isBlank(SSO_COOKIE_NAME)) {
+		if (StringUtils.isBlank(SSO_COOKIE_NAME)) {
 			SSO_COOKIE_NAME = "ObSSOCookie";
 		}
-		logger.info(LOG_EXITING + ", SSO_COOKIE_NAME : "+ SSO_COOKIE_NAME);
+		logger.info(LOG_EXITING + ", SSO_COOKIE_NAME : " + SSO_COOKIE_NAME);
 		return SSO_COOKIE_NAME;
 	}
-	
+
 	public static String getBrowserVersion(HttpServletRequest httpRequest) {
 		logger.info(LOG_ENTERED);
 		String browserVersion = "";
@@ -408,7 +410,7 @@ public class WebUtil {
 			if (StringUtils.isNotBlank(browserDetails)) {
 				final String browserInfo[] = browserDetails.split("-");
 				if (!ArrayUtils.isEmpty(browserInfo) && browserInfo.length >= 2) {
-						browserVersion = browserInfo[1];
+					browserVersion = browserInfo[1];
 				}
 			}
 		} catch (Exception ex) {
@@ -417,7 +419,7 @@ public class WebUtil {
 		logger.info(LOG_EXITING + ", Browser version : " + browserVersion);
 		return browserVersion;
 	}
-	
+
 	public static boolean blockSafariBrowser(final HttpServletRequest request, final String blockSafari,
 			final String safariVersion) {
 		logger.info(LOG_ENTERED);
@@ -443,21 +445,21 @@ public class WebUtil {
 		logger.info(LOG_EXITING + ", blockSafariBrowser : " + blockSafariBrowser);
 		return blockSafariBrowser;
 	}
-	
+
 	public static void addMeetingDateTime(final MeetingDO meetingDO, final VideoVisitParamsDTO videoVisitParams) {
 		logger.info(LOG_ENTERED);
 		try {
-			if(StringUtils.isNotBlank(meetingDO.getMeetingTime())) {
+			if (StringUtils.isNotBlank(meetingDO.getMeetingTime())) {
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(Long.valueOf(meetingDO.getMeetingTime()));
 				SimpleDateFormat sfdate = new SimpleDateFormat("MMM dd");
 				SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
-				//Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below 
-				//SimpleDateFormat sfdate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");	
+				// Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below
+				// SimpleDateFormat sfdate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");
 				videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
-				videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));	
+				videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
 			}
-		}catch(Exception ex) {
+		} catch (Exception ex) {
 			logger.error("date conversion error:" + ex.getMessage(), ex);
 		}
 		logger.info(LOG_EXITING);
