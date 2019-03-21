@@ -31,6 +31,12 @@ $(document).ready(function() {
 			meetingHostName = meetingHostName.trim();
 			sidePaneMeetingDetails = result;
 			updateSideBarWithDetails(result);
+			if($("#container-videovisit").length !== 0){
+				if($("#vendor").val() === 'pexip'){
+					configurePexipVideoProperties();
+				}
+			}
+			
 		},
 		error: function(result){
 			console.log(result);
@@ -745,6 +751,46 @@ function sortObjs(prop){
 	return function(a, b){
 		return a[prop].toLowerCase() < b[prop].toLowerCase() ? -1 :(a[prop].toLowerCase()>b[prop].toLowerCase()) ? 1: 0;
 	}
+}
+
+function configurePexipVideoProperties(){
+	console.log('========>>>> PEXIP AUTO START');
+	console.log("join-conf clicked");
+
+    var reqscript1 = document.createElement('script');
+      reqscript1.src = "js/site/pexip/complex/webui.js";
+      reqscript1.type = "text/javascript";
+      document.getElementsByTagName("head")[0].appendChild(reqscript1);
+
+      //document.getElementById("container").appendChild(reqscript1);
+      //document.body.appendChild(reqscript1);
+
+    var reqscript2 = document.createElement('script');
+    	//  reqscript2.src = "js/site/pexip/complex/pexrtc.js";
+      reqscript2.src = "js/site/pexip/complex/pexrtcV20.js";
+      reqscript2.type = "text/javascript";
+      document.getElementsByTagName("head")[0].appendChild(reqscript2);
+
+    reqscript1.onload = function(){
+      	console.log("reqscript1 loaded");
+    };
+
+    reqscript2.onload = function(){
+	    console.log("reqscript2 loaded");
+		startPexip();
+    };
+}
+
+function startPexip() {
+	console.log(sidePaneMeetingDetails);
+	var guestPin = sidePaneMeetingDetails.vendorGuestPin;
+	$('#guestPin').val(guestPin);
+	var roomUrl = $('#guestUrl').val();
+	var alias =  sidePaneMeetingDetails.meetingVendorId; // "M.NCAL.MED.0.0.419872.278914" // "M.NCAL.MED.0.369638..1234";
+	var bandwidth = "1280"; // $('#bandwidth').val();
+	var source = "Join+Conference";
+	var name = $("#guestName").val();
+	initialise(roomUrl, alias, bandwidth, name, "", source);
 }
 
 $(window).resize(function(){

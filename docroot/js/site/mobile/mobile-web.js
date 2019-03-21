@@ -1427,11 +1427,12 @@ function configurePexipVideoProperties(){
 }
 
 function startPexip() {
-	var alias =  "M.NCAL.MED.0.369640..1234";
-	var bandwidth = "1280";
+	var alias =  $("#conferenceId").val(); // "M.NCAL.MED.0.369640..1234";
+	var bandwidth = $('#bandwidth').val(); // "1280";
 	var source = "Join+Conference";
 	var name = $("#guestName").val();
-	initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
+	var roomUrl = $("#guestUrl").val();
+	initialise(roomUrl, alias, bandwidth, name, "", source);
 }
 
 function setVideoFeedHeight(){
@@ -1560,6 +1561,9 @@ function toggleCamera(){
 		    cameraID = videoSource;
 		    rtc.disconnect();
 		    startPexip();
+		    
+		    // var roomUrl = $("#guestUrl").val();
+		    // var alias =  $("#conferenceId").val();
 		    // rtc.renegotiate();
 		    // rtc.renegotiate("M.NCAL.MED.0.369638..1234");
 		    // rtc.renegotiate("Join+Conference");

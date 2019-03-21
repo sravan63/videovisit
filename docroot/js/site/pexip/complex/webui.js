@@ -432,10 +432,10 @@ function doneSetup(url, pin_status, conference_extension) {
         maincontent.classList.remove("hidden");
         rtc.connect(pin);
     }*/
-    submitSelectRole();
+    submitPinEntry();
 }
 
-function submitSelectRole() {
+/*function submitSelectRole() {
     var id_guest = document.getElementById('id_guest');
     selectrole.classList.add("hidden");
     if (id_guest.checked) {
@@ -444,13 +444,11 @@ function submitSelectRole() {
     } else {
         pinentry.classList.remove("hidden");
     }
-}
+}*/
 
 function submitPinEntry() {
-    var id_pin = document.getElementById('id_pin');
-    pinentry.classList.add("hidden");
     maincontent.classList.remove("hidden");
-    pin = id_pin.value;
+    pin = $('#guestPin').val();
     console.log("PIN is now " + pin);
     rtc.connect(pin);
     return false;

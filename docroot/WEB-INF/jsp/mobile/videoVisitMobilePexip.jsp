@@ -8,6 +8,11 @@
 <input type="hidden" id="meetingPatient" value="${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}"/>
 <input type="hidden" id="meetingId" value="${WebAppContext.videoVisit.meetingId}" />
 <input type="hidden" id="isNative" value="${WebAppContext.isNative}" />
+<input type="hidden" id="bandwidth" value="${WebAppContext.bandwidth}" />
+<input type="hidden" id="conferenceId" value="${WebAppContext.videoVisit.vendorConfId}" />
+<input type="hidden" id="guestUrl" value="${WebAppContext.videoVisit.guestUrl}" />
+<input type="hidden" id="guestPin" value="${WebAppContext.videoVisit.vendorGuestPin}" />
+
 <link rel="stylesheet" type="text/css" href="js/site/pexip/complex/style.css" />
 <!-- <link rel="stylesheet" media="€screen and (min-width:320px) and (max-width:550px)"€œ href="€js/site/pexip/complex/style-responsive.css" />  -->
 

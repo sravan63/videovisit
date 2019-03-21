@@ -126,12 +126,7 @@
 
 	    <!-- Content -->
 	    
-	  	<div id="enterDetails" class="main site join">
-		    <!-- <label for="id_alias" class="vh">Enter the conference alias</label>
-		    <input type="text" value="meet.NCAL_TEST5" name="alias" id="id_alias" placeholder="Enter the conference alias" required class="webrtcinput">
-
-		    <label for="id_name" class="vh">Enter your name</label>
-		    <input type="text" value="Guest" name="name" id="id_name" placeholder="Enter your name" required class="webrtcinput"> -->
+	  	<div id="enterDetails" class="main site join" style="display: none;">
 
 		    <select name="bandwidth" class="webrtcinput" id="id_bandwidth">
 		        <option value="1920">Maximum Bandwidth (1920kbps)</option>
@@ -143,41 +138,38 @@
 		    <input type="submit" value="Join Conference" name="join" id="join-conf" class="webrtcbutton">
 		    <input type="submit" value="Present Screen Only" name="join_pres" id="id_join_pres" class="webrtcbutton">
 		</div>
-		<div id="selectPeripheral" class="main site join">
-			<div class="select">
-		    	<label for="videoSource">Video source: </label><select id="videoSource"></select>
-		  	</div>
-			<div class="select">
-				<label for="audioSource">Mic source: </label><select id="audioSource"></select>
-			</div>
-			<div class="select">
-				<label for="speakerSource">Speaker source: </label><select id="speakerSource"></select>
-			</div>
-		<!-- <input type="submit" value="Join Conference" name="join" id="join-conf" class="webrtcbutton">
-	    <input type="submit" value="Present Screen Only" name="join_pres" id="join-conf-smd" class="webrtcbutton"> -->
-	  </div>
+		<div id="selectPeripheral" class="main site join" style="display: none;">
+				<div class="select">
+			    	<label for="videoSource">Video source: </label><select id="videoSource"></select>
+			  	</div>
+				<div class="select">
+					<label for="audioSource">Mic source: </label><select id="audioSource"></select>
+				</div>
+				<div class="select">
+					<label for="speakerSource">Speaker source: </label><select id="speakerSource"></select>
+				</div>
+		  </div>
 
 	    <!-- END Content -->
 
-	  <div id="selectrole" class="main site join hidden">
+	  <!-- <div id="selectrole" class="main site join hidden" style="display: none;">
 	    <h2>Select your role for this conference:</h2>
 	    <form>
 	    	<div class="cf">
-	            <input type="radio" value="2" name="role" id="id_host" class="webrtcinput" checked>
+	            <input type="radio" value="2" name="role" id="id_host" class="webrtcinput">
 	            <label for="id_host">Host</label>
 	        </div>
 	        <div class="cf">
-	            <input type="radio" value="1" name="role" id="id_guest" class="webrtcinput">
+	            <input type="radio" value="1" name="role" id="id_guest" class="webrtcinput" checked>
 	            <label for="id_guest">Guest</label>
 	        </div>
 
 	        <input type="button" value="Join Conference" name="join" id="id_join" class="webrtcbutton" onClick="submitSelectRole();">
-	        <!-- <input type="button" value="Join Conference" name="join" id="roleSelected" class="webrtcbutton" onClick="submitSelectRole();"> -->
 	    </form>
-	  </div>
+	  </div> -->
 
 
-	  <div id="pinentry" class="main site join hidden">
+	  <div id="pinentry" class="main site join hidden" style="display: none;">
 	    <form onSubmit="return submitPinEntry();">
 	        <label for="id_pin" class="vh">Enter the conference PIN</label>
 	        <input type="password" value="1234" name="pin" id="id_pin" placeholder="Enter the conference PIN" required class="webrtcinput">
