@@ -347,22 +347,19 @@ body {
   background: url('../../../../images/mobile/videovisits/mic.svg');
 }
 .mutedmic{
-  background: url('../../../../vidyoplayer/img/vidyo-redesign/svg/SVG/micOff.svg');
-  background-size: 38px;
+  background: url('../../../../images/mobile/videovisits/micOff.svg');
 }
 .unmutedcamera{
   background: url('../../../../images/mobile/videovisits/camera.svg');
 }
 .mutedcamera{
-  background: url('../../../../vidyoplayer/img/vidyo-redesign/svg/SVG/cameraOff.svg');
-  background-size: 38px;
+  background: url('../../../../images/mobile/videovisits/cameraOff.svg');
 }
 .unmutedspeaker{
   background: url('../../../../images/mobile/videovisits/speaker.svg');
 }
 .mutedspeaker{
-  background: url('../../../../vidyoplayer/img/vidyo-redesign/svg/SVG/speakerOff.svg');
-  background-size: 38px;
+  background: url('../../../../images/mobile/videovisits/speakerOff.svg');
 }
 .waiting-room .waiting-text{
   color: #FFFFFF;
