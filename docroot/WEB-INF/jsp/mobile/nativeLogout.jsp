@@ -6,8 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>
-<div class="container-native">
-<h1>You have left the meeting.</h1>
-</div>
+You have left the meeting.
 </body>
 </html>

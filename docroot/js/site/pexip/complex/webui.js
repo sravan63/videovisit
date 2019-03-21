@@ -807,8 +807,8 @@ function disconnect(){
     });
     // rtc.disconnect();
         var isNative = $("#isNative").val();
-        if(isNative=="true"){
-        window.location.href = 'nativemymeetings.htm';
+        if(isNative=="false"){
+        window.location.href = 'nativeLogout.htm';
         }
         else{
         var url = window.location.href;

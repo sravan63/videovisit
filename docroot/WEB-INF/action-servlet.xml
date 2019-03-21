@@ -165,7 +165,7 @@
                 <prop key="/videovisitmobileready.htm">videoVisitMobileReadyPexip</prop>
                 <prop key="/mobilelaunchvv.htm">mobileLaunchVideoVisit</prop>
                 <prop key="/autherror.htm">authTokenError</prop>
-                <prop key="/nativemymeetings.htm">nativeMyMeetings</prop>
+                <prop key="/nativeLogout.htm">nativeLogout</prop>
 				
 			</props>
 		</property>
@@ -581,9 +581,9 @@
 		<property name="subNavigation" value="login" />
 	</bean>
 	
-	<bean id="nativeMyMeetings" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
+	<bean id="nativeLogout" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
 		<property name="environmentCommand"><ref bean="environmentCommand" /></property>
-		<property name="viewName" value="nativemymeetings" />
+		<property name="viewName" value="nativeLogout" />
 	</bean>
 	
 	<bean id="authTokenError" class="org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController">
