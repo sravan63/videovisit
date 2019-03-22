@@ -1286,11 +1286,18 @@ public class MeetingCommand {
 			final Map<String, String> capabilities = device.getCapabilities();
 			final String brandName = capabilities.get("brand_name");
 			final String modelName = capabilities.get("model_name");
-			final String deviceOs = capabilities.get("device_os");
-			final String deviceOsVersion = capabilities.get("device_os_version");
+			final String deviceOs = StringUtils.isNotBlank(capabilities.get("device_os"))
+					? capabilities.get("device_os")
+					: WebUtil.getDeviceOs();
+			final String deviceOsVersion = StringUtils.isNotBlank(capabilities.get("device_os_version"))
+					? capabilities.get("device_os_version")
+					: WebUtil.getDeviceOsVersion();
 
 			if (brandName != null && modelName != null) {
 				deviceType = brandName + " " + modelName;
+			}
+			if (StringUtils.isBlank(deviceType)) {
+				deviceType = WebUtil.DEFAULT_DEVICE;
 			}
 			final JoinLeaveMeetingJSON joinLeaveMeetingJSON = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
 					isPatient,joinLeaveMeeting, deviceType, deviceOs, deviceOsVersion, clientId, sessionId);
