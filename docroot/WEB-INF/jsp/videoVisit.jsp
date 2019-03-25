@@ -42,12 +42,14 @@
 			</c:choose>
 	    </c:when>    
 	    <c:otherwise>
+	    <c:choose>
 			<c:when test="${WebAppContext.videoVisit.vendor == 'pexip'}">
 		        <%@ include file="videoVisitDesktopPexip.jsp" %>
 		   </c:when>   
           <c:otherwise>
 		          <%@ include file="videoVisitPlugin.jsp" %> 
 		  </c:otherwise> 
+		</c:choose>
 	    </c:otherwise>
 	</c:choose>
 
