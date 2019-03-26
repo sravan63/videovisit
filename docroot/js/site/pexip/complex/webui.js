@@ -806,7 +806,7 @@ function disconnect(){
     // rtc.disconnect();
         var isNative = $("#isNative").val();
         if(isNative=="true"){
-        window.location.href = 'nativeLogout.htm';
+        window.location.href = 'mobileNativeLogout.htm';
         }
         else{
         var url = window.location.href;

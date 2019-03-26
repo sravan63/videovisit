@@ -135,8 +135,8 @@
  		<put-attribute name="content" value="/WEB-INF/jsp/mobile/authError.jsp" />
 	</definition>
 	
-	<definition name="nativeLogout" extends=".mobileInAppPageTemplate">
- 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/nativeLogout.jsp" />
+	<definition name="mobileNativeLogout" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileNativeLogout.jsp" />
 	</definition>
 
 </tiles-definitions>
