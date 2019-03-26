@@ -1558,10 +1558,9 @@ function toggleCamera(){
 		var videoSource = mobileVideoSources[i];
 		if(rtc.video_source !== videoSource){
 		    rtc.video_source =  videoSource;
-		    rtc.renegotiate();
-		    //cameraID = videoSource;
-		    //rtc.disconnect();
-		    //startPexip();
+		    cameraID = videoSource;
+		    rtc.disconnect();
+		    startPexip();
 		    
 		    // var roomUrl = $("#guestUrl").val();
 		    // var alias =  $("#conferenceId").val();

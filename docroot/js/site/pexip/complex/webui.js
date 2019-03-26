@@ -805,7 +805,7 @@ function disconnect(){
     });
     // rtc.disconnect();
         var isNative = $("#isNative").val();
-        if(isNative=="true"){
+        if(isNative=="false"){
         window.location.href = 'mobileNativeLogout.htm';
         }
         else{
