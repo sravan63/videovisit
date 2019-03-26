@@ -1558,15 +1558,7 @@ function toggleCamera(){
 		var videoSource = mobileVideoSources[i];
 		if(rtc.video_source !== videoSource){
 		    rtc.video_source =  videoSource;
-		    cameraID = videoSource;
-		    rtc.disconnect();
-		    startPexip();
-		    
-		    // var roomUrl = $("#guestUrl").val();
-		    // var alias =  $("#conferenceId").val();
-		    // rtc.renegotiate();
-		    // rtc.renegotiate("M.NCAL.MED.0.369638..1234");
-		    // rtc.renegotiate("Join+Conference");
+		    rtc.renegotiate();
 		    break;
 		}
 	}
