@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.Controller;
 
 public abstract class CommonController extends CommonActionProperties implements Controller {
 
-	public final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = Logger.getLogger(getClass());
 
 	private String clinicianSingleSignOnURL = null;
 	private String vidyoWebrtcSessionManager = null;

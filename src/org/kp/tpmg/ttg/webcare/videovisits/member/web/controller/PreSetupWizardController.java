@@ -7,13 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.web.servlet.ModelAndView;
 
 public class PreSetupWizardController extends CommonController {
-
-	public static final Logger logger = Logger.getLogger(PreSetupWizardController.class);
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);

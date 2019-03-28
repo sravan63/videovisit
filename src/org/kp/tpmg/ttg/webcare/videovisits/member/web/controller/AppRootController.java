@@ -8,7 +8,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.parser.FaqParser;
@@ -23,7 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class AppRootController extends CommonController {
 
-	public static final Logger logger = Logger.getLogger(AppRootController.class);
 
 	private WebAppContextCommand webAppContextCommand;
 

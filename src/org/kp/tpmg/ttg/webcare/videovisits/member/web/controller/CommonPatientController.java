@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.Controller;
 
 public abstract class CommonPatientController implements Controller {
 
-	public final Logger logger = Logger.getLogger(getClass());
+	protected final Logger logger = Logger.getLogger(getClass());
 	
 	private static final String JSONMAPPING = "jsonData";
 

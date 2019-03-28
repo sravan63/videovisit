@@ -50,7 +50,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 		logger.info(LOG_ENTERED);
 		final ModelAndView modelAndView = new ModelAndView(getViewName());
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		String mobileBandwidth = null;
+		String mobileBandwidth;
 		if (ctx == null) {
 			logger.info("context is null");
 			faq f = FaqParser.parse();
