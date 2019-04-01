@@ -137,9 +137,10 @@ body {
 -------------------------------------------------- */
 .participants {
   float: left;
-  width: 20%;
+  /*width: 20%;*/
   line-height: 1.25em;
   border-right: 1px solid #fff;
+  position: relative;
 }
 .participants ul {
   overflow: auto;
@@ -179,6 +180,13 @@ body {
 }
 .participants p {
   font-size: 0.75em;
+}
+#btnContainer{
+  width:65px;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  height: auto;
 }
 @media only screen and (max-width : 950px) {
   .participants {
@@ -253,11 +261,14 @@ body {
 -------------------------------------------------- */
 .videocontainer {
   background: #434343;
-  position: absolute;
-  left: 20%;
+  /*position: absolute;
+  left: 20%;*/
+  float:left;
   height: 100%;
   width: 80%;
+  width:calc(100% - 325px);
   padding: 0 2%;
+  position: relative;
 }
 .waiting-room{
   height: 50%;
@@ -397,6 +408,9 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
+}
+.pexip-main-container{
+  width: 100%;
 }
 @media only screen and (max-width : 950px) {
   .videocontainer {

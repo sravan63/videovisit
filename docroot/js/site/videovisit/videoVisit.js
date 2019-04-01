@@ -67,7 +67,9 @@ $(document).ready(function() {
 	/* Mandar [DE7189] END */
 	
 	$("#pluginContainer").height(calculatedHeight);
-	$("#btnContainer").height(calculatedHeight);
+	if(!$('#container').hasClass('pexip-main-container')){
+		$("#btnContainer").height(calculatedHeight);
+	}
 	
 	$("#infoWrapper").height(calculatedHeight);
 	$("#infoWrapper").width(calculatedWidthPluginContainer);
@@ -616,7 +618,9 @@ var VideoVisit =
 		$("#video-main").css("min-height", btnGroupHeight);
 		$("#pluginContainer").css("min-height", btnGroupHeight);
 		//$("#video-sidebar").css("min-height", btnGroupHeight);
-		$("#btnContainer").css("min-height", btnGroupHeight);
+		if(!$('#container').hasClass('pexip-main-container')){
+			$("#btnContainer").css("min-height", btnGroupHeight);
+		}
 		
 		if (navigator.appName.indexOf("Internet Explorer")!=-1){
 			if(navigator.appVersion.indexOf("MSIE 8")!=-1){
@@ -827,6 +831,8 @@ $(window).resize(function(){
 	$("#pluginContainer").height(calculatedHeight);
 	$("#video-sidebar").height(calculatedHeight);
 	$(".video-sidebar-content").height(calculatedHeight - 33);
-	$("#btnContainer").height(calculatedHeight);
+	if(!$('#container').hasClass('pexip-main-container')){
+		$("#btnContainer").height(calculatedHeight);
+	}
 	setSidePanParticipantsListHeight();
 });

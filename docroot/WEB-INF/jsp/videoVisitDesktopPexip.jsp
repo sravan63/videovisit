@@ -116,7 +116,7 @@
 		<!-- </ul> -->
 	</div>
 	<!-- PEXIP Container - START -->
-	<div id="container" class="site">
+	<div id="container" class="site pexip-main-container">
 	    <!-- Header -->
 	    <!-- <header id="header" class="branding" role="banner">
 	        <img src="js/site/pexip/complex/img/logo.png" alt="Pexip">
@@ -190,33 +190,7 @@
 
 	 
 	  <div id="maincontent" class="main cf hidden">
-	    <section class="top">
-	      <aside class="participants"><!-- List of participants -->
-	        <h2 id="rosterheading">Participants</h2>
-	        <div id="rosterlist" class="rosterlist">
-	          <ul id="rosterul">
-	          </ul>
-	        </div>
-
-	        <!-- SIP Dial Out - START -->
-	        <div id="sipDialOut-container" class="site join">
-	        	<!-- <form onSubmit="return sipDialOut();"> -->
-		        <h2> Invite by Phone </h2>
-		        <input type="text" value="" name="sipDialOut" id="id_join" placeholder="Enter 10 digit phone number" maxlength="10" class="webrtcinput" style="display:block;">
-		        <input type="button" value="Call" name="join" id="id_join" class="webrtcbutton" onClick="sipDialOut();" style="display:block; width:100%;">
-			    <!-- </form> -->
-		    </div>
-	        <!-- SIP Dial Out - END -->
-
-	        <div id="info-button-container" class="site join">
-	        	<input type="button" value="Info" name="join" id="info-button" class="webrtcbutton" onClick="getMediaStats();" style="display:block; width:100%;">
-	        </div>
-
-	        <div id="selfview" class="selfview" hidden>
-	          <video id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
-	          </video>
-	        </div>
-	      </aside>
+	    <section class="top conference-renderer">
 	      <div id="videocontainer" class="videocontainer">
 	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
 	        
@@ -236,10 +210,79 @@
 		        	</tr> -->
 	        	</table>
 	        </div>
+	        <div id="selfview" class="selfview" hidden>
+	          <video id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
+	          </video>
+	        </div>
 	      </div>
+	      <div class="provider-btn-container" id="btnContainer">
+	            <div class="btn-group" id="buttonGroup" style="width: 100%; position: static;">
+	            	<div id="inCallButtonMuteVideo">
+	                  <div title="Disable Video" class="btns video-btn">&nbsp;</div>
+	                   <div title="Enable Video" class="btns video-muted-btn">&nbsp;</div>
+	                </div>
+	                <div id="inCallButtonMuteSpeaker">
+	                   <div title="Mute Speakers" class="btns speaker-btn">&nbsp;</div>
+	                   <div title="Unmute Speakers" class="btns speaker-muted-btn">&nbsp;</div>
+	                </div>
+	                <div id="inCallButtonMuteMicrophone">
+	                   <div title="Mute Mic" class="btns microphone-btn">&nbsp;</div>
+	                   <div title="Unmute Mic" class="btns microphone-muted-btn">&nbsp;</div>
+	                </div>
+	                <div id="inCallButtonLocalShare">
+	                   <div title="" class="btns smd-btn">&nbsp;</div>
+	                   <div title="" class="btns smd-muted-btn">&nbsp;</div>
+	                </div>
+	                <div id="inCallButtonExpand" style="display: none;">
+	                   <div title="Expand" class="btns expand-btn">&nbsp;</div>
+	                   <div title="Shrink" class="btns shrink-btn">&nbsp;</div>
+	                </div>
+	                <div id="inCallButtonToggleConfig">
+	                  <div title="Settings" class="btns settings-btn">&nbsp;</div>
+	                </div>
+				</div>
+			</div>
+			<aside class="participants"><!-- List of participants -->
+		      	<div class="video-details" id="video-sidebar">
+					<div class="well hide" id="configurationWrap" style="display: none;">            <a class="close" id="configurationCross" href="#" data-hide="alert">×</a>    <h3 class="text-left">Settings</h3>
+						<div class="control-group">
+							<label class="control-label" for="configurationCamera">Camera</label>
+							<div class="controls" id="configurationCamera"></div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="configurationSpeaker">Speaker</label>  <div class="controls" id="configurationSpeaker"></div>
+						</div>
+						<div class="control-group">
+							<label class="control-label" for="configurationMicrophone" onclick="muteAudioStreams();">Microphone</label>
+							<div class="controls" id="configurationMicrophone"></div>
+						</div>
+					</div>
+		        	<ul class="dropdown-menu" id="inCallLocalShareList" role="menu" style="max-height: 400px;"></ul>
+					<div class="visit-info-container">
+						<div class="visit-info">
+							<button class="leave-conference" id="inCallButtonDisconnect" onclick="disconnect();">Leave Room</button>
+							<div class="visit-detail-txt">Visit Details</div>
+							<div class="host-details" id="meetingHost"><img class="host-indicator" style="visibility: hidden;" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg"><span class="member-name">bob billy, MD</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg"></span></div>
+							<div class="meeting-time-date-info">
+							  <span class="time-display">2:15AM, </span>
+							  <span class="date-display">Mon, Apr 1</span>
+							</div>
+							<div class="meeting-updated-time-date-info">
+			                  <span class="time-display"></span>
+			               </div>
+						</div>
+					</div>
+					<div class="participant-details">
+			            <div class="participants-header">
+			               <span class="guests">Guests</span>
+			            </div>
+			            <div class="participants-list"></div>
+			         </div>
+				</div>
+		      </aside>
 	    </section>
 
-	    <footer id="controls" class="controls cf">
+	    <!--<footer id="controls" class="controls cf">
 	      <ul>
 	        <li><a id="id_selfview" class="webrtcbutton btn-selfview" onclick="toggleSelfview();">Show Selfview</a></li>
 	        <li><a id="id_muteaudio" class="webrtcbutton btn-audio" onclick="muteAudioStreams();">Mute Audio</a></li>
@@ -247,10 +290,9 @@
 	        <li><a id="id_fullscreen" class="webrtcbutton btn-fullscreen inactive" onclick="goFullscreen();">Fullscreen</a></li>
 	        <li><a id="id_screenshare" class="webrtcbutton btn-presentscreen" onclick="presentScreen();">Present Screen</a></li>
 	        <li><a id="id_presentation" class="webrtcbutton btn-presentation inactive" onclick="togglePresentation();">No Presentation Active</a></li>
-	        <!-- <li><a id="id_disconnect" class="webrtcbutton btn-disconnect" onclick="window.location='index.html';">Disconnect</a></li> -->
 	        <li><a id="id_disconnect" class="webrtcbutton btn-disconnect" onclick="disconnect();">Disconnect</a></li>
 	      </ul>
-	    </footer>
+	    </footer>-->
 	  </div>
 	</div>
 	<!-- PEXIP Container - END -->
