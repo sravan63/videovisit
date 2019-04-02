@@ -840,14 +840,14 @@ a.download-mdo:active, a.download-mdo:visited{
 	margin: 0px;
 }
 /* UDP Test CSS */
-.udp-test-container{
+.special-message-banner-container{
 	margin: 0px auto 20px;
     border-radius: 15px;
     background-color: #F9E7E6;
     width: 100%;
 	display: none;
 }
-.udp-test-container .upd-test-header{
+.special-message-banner-container .special-message-header{
 	background-color: #B63125;
 	color: #FFFFFF;
 	padding: 11px 20px;
@@ -855,30 +855,30 @@ a.download-mdo:active, a.download-mdo:visited{
 	font-weight: bold;
 	font-size: 15px;
 }
-.udp-test-container .upd-test-header .warning-text{
+.special-message-banner-container .special-message-header .warning-text{
 	display: inline-block;
 	height: 17px;
 	line-height: 19px;
 	vertical-align: middle;
 }
-.udp-test-container .upd-test-content{
+.special-message-banner-container .special-message-content{
 	display: flex;
 	padding: 20px;
 }
-.udp-test-container .upd-test-content .udp-message-container{
+.special-message-banner-container .special-message-content .special-message-container{
 	width: 50%;
 	display: flex;
 	font-size: 15px;
 	margin-right: 40px;
 }
-.udp-test-container .upd-test-content .udp-message-container .udp-message{
+.special-message-banner-container .special-message-content .special-message-container .special-message{
 	margin: 2px 0px;
 	width: 218px;
 }
-.udp-test-container .upd-test-content .app-store-container{
+.special-message-banner-container .special-message-content .app-store-container{
 	width: 50%;
 }
-.udp-test-container .upd-test-header .warning-icon{
+.special-message-banner-container .special-message-header .warning-icon{
 	background: url(../../../images/global/warning-icon.png) no-repeat center center;
 	display: inline-block;
 	height: 17px;
@@ -887,7 +887,7 @@ a.download-mdo:active, a.download-mdo:visited{
 	margin-right: 5px;
 	background-size: cover;
 }
-.udp-test-container .upd-test-content .udp-message-container .mdo-logo{
+.special-message-banner-container .special-message-content .special-message-container .mdo-logo{
 	background: url(../../../images/global/mdo-icon.png) no-repeat center center;
 	display: inline-block;
 	height: 40px;

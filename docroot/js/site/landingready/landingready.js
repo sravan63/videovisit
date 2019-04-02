@@ -2,10 +2,18 @@
 var getMeetingsTimeoutVal;
 var runUDPTest = true;
 var browserInfo;
+var blockChrome;
+var blockFF;
+var blockSafari;
+var blockEdge;
 //US31767
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
     browserInfo = getBrowserInfo();
+    blockChrome = ($("#blockChrome").val() == 'true');
+    blockFF = ($("#blockFF").val() == 'true');
+    blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
+    blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
     initializeUserPresentInMeetingModal();
     //make ajax call to KP Keep alive url
     var keepAliveUrl = $("#kpKeepAliveUrl").val();
@@ -258,7 +266,7 @@ function startUDPTest(){
              //alert('Doesn\'t work');
              var params = ['error','UDP_STUN_FAIL','UDP test failed'];
              logVendorMeetingEvents(params);
-             $(".udp-test-container").css("display","block");
+             $("#udp-test-container").css("display","block");
              $('.joinNowButton').each(function(){
                 $(this).removeClass('joinNowButton').addClass('not-available');
             });
@@ -269,7 +277,7 @@ function startUDPTest(){
          console.log('STUN server does not work.');
          var params = ['error','UDP_STUN_FAIL','UDP test failed'];
          logVendorMeetingEvents(params);
-         $(".udp-test-container").css("display","block");
+         $("#udp-test-container").css("display","block");
          $('.joinNowButton').each(function(){
             $(this).removeClass('joinNowButton').addClass('not-available');
         });
@@ -304,6 +312,54 @@ function checkSTUNServer(stunConfig, timeout){
       resolve(true);
     };
   });   
+}
+
+/*
+    Blocks the JOIN button based on browser compatibility
+*/
+function checkAndBlockMeetings(){
+    var showBlockMessage = false;
+    $('.joinNowButton').each(function(){
+        var vendor = $(this).attr('vendor');
+        var allow = allowToJoin(vendor);
+        if(allow == false){
+            showBlockMessage = true;
+            $(this).removeClass('joinNowButton').addClass('not-available');
+        }
+    });
+    if(showBlockMessage){
+        $("#blockerMessage").css("display","block");
+    }
+}
+
+function allowToJoin(vendor){
+    var allow = true;
+    if(vendor === 'pexip'){
+        allow = (browserInfo.isIE === false);
+    } else {
+        if(browserInfo.isChrome && blockChrome){
+            allow = false;
+        }else if(browserInfo.isFirefox && blockFF){
+            allow = false;
+        }else if(browserInfo.isSafari){
+            var agent = navigator.userAgent;
+            var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
+            var majorVersion = majorMinorDot.split('.')[0];
+            var versionNumber = parseInt(majorVersion);
+            // Block access from Safari version 12.
+            var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):12;//US35718 changes
+            if(versionNumber >= blockSafariVersion && blockSafari){
+                allow = false;
+            }
+        } else if (browserInfo.isIE){
+            var agent = navigator.userAgent;
+            // Block access for EDGE
+            if(agent.indexOf('Edge/') > -1 && blockEdge){
+                allow = false;
+            }
+        }
+    }
+    return allow;
 }
 
 var logVendorMeetingEvents = function(params){
@@ -521,9 +577,9 @@ function updateDomWithMeetingsData(data){
                     }
                     //memberDiplayName = meetingLastName+', '+meetingFirstName;
                     if($('#memberDOmrn').val() == meeting.member.mrn){
-                        htmlToBeAppend += '<p class=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+'" meetingid="'+meeting.meetingId+'" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
+                        htmlToBeAppend += '<p class=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+'" meetingid="'+meeting.meetingId+'" vendor="'+meeting.vendor+'" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
                     }else{
-                        htmlToBeAppend += '<p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
+                        htmlToBeAppend += '<p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" vendor="'+meeting.vendor+'" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
                     }
                     htmlToBeAppend += '</div>';
                     //DE15381 changes
@@ -544,13 +600,14 @@ function updateDomWithMeetingsData(data){
                 }
             }
         },100);
+        checkAndBlockMeetings();
     }
 
     if(browserInfo.isChrome == true){
         if(runUDPTest == true){
             startUDPTest();
         } else {
-             $(".udp-test-container").css("display","none");
+             $("#udp-test-container").css("display","none");
         }
         
     }
