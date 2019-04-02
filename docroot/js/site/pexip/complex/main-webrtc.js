@@ -71,7 +71,14 @@ $(document).ready(function(){
         console.log('Some other kind of source/device: ', deviceInfo);
       }
     }
-
+    // Testing
+      var noOfCameras = 'Number of attached Cameras '+mobileVideoSources.length;
+      var cameras = 'List of Cameras '+'\n';
+      for(var i=0; i<mobileVideoSources.length;i++){
+        cameras += (i+1)+') '+mobileVideoSources[i]+'\n';
+      }
+      alert(noOfCameras+'\n'+cameras);
+    // Testing
     selectors.forEach(function(select, selectorIndex) {
       if (Array.prototype.slice.call(select.childNodes).some(function(n) {
         return n.value === values[selectorIndex];
