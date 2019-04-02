@@ -74,9 +74,9 @@
 	            id_bandwidth.children[i].selected = true;
 	        }
 	    }
-		setTimeout(function(){
-			configurePexipVideoProperties();
-		},1500);
+		// setTimeout(function(){
+		// 	configurePexipVideoProperties();
+		// },1500);
 	}	
 </script>
 
@@ -115,7 +115,7 @@
 	<!-- PEXIP Container - START -->
 	<div id="container" class="site">
 	    
-	  	<div id="enterDetails" class="main site join" style="display: none;">
+	  	<div id="enterDetails" class="main site join" >
 
 		    <select name="bandwidth" class="webrtcinput" id="id_bandwidth">
 		        <option value="1920">Maximum Bandwidth (1920kbps)</option>
@@ -127,7 +127,7 @@
 		    <input type="submit" value="Join Conference" name="join" id="join-conf" class="webrtcbutton">
 		    <input type="submit" value="Present Screen Only" name="join_pres" id="id_join_pres" class="webrtcbutton">
 		</div>
-		<div id="selectPeripheral" class="main site join" style="display: none;">
+		<div id="selectPeripheral" class="main site join" >
 			<div class="select">
 		    	<label for="videoSource">Video source: </label><select id="videoSource"></select>
 		  	</div>

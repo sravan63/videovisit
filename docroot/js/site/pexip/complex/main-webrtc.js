@@ -108,40 +108,7 @@ $(document).ready(function(){
   $("#join-conf").on("click", function(){
     console.log("join-conf clicked");
 
-    var reqscript1 = document.createElement('script');
-      reqscript1.src = "js/site/pexip/complex/webui.js";
-      reqscript1.type = "text/javascript";
-      document.getElementsByTagName("head")[0].appendChild(reqscript1);
-
-      //document.getElementById("container").appendChild(reqscript1);
-      //document.body.appendChild(reqscript1);
-
-    var reqscript2 = document.createElement('script');
-    	//  reqscript2.src = "js/site/pexip/complex/pexrtc.js";
-      reqscript2.src = "js/site/pexip/complex/pexrtcV20.js";
-      reqscript2.type = "text/javascript";
-      document.getElementsByTagName("head")[0].appendChild(reqscript2);
-
-    reqscript1.onload = function(){
-      console.log("reqscript1 loaded");
-    };
-
-    reqscript2.onload = function(){
-      console.log("reqscript2 loaded");
-
-      // var alias = "meet.NCAL_TEST5";
-      var alias =  "M.NCAL.MED.0.369638..1234";
-      var bandwidth = "1280";
-      var source = "Join+Conference";
-      var name = $("#guestName").val();
-
-      // initialise("10.233.30.30", alias, bandwidth, name, "", source);
-      // initialise("TTGSS-PEXIP-2.TTGTPMG.NET", alias, bandwidth, name, "", source);
-      initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
-//      initialise("ivv-dev.kp.org", "meet.NCAL_1000", bandwidth, name, "", source);
-      
-      // rtc.user_media_stream = stream;
-    };
+    configurePexipVideoProperties();
   });
 
   // Attach audio output device to video element using device/sink ID.
