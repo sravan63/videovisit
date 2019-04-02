@@ -31,16 +31,7 @@
 <script type="text/javascript">
 
 	var browserInfo = getBrowserInfo();
-	var browserVersion = (browserInfo.version).split(".")[0];
-	var blockChrome = ($("#blockChrome").val() == 'true');
-	var blockFF = ($("#blockFF").val() == 'true');
-	var blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
-	var blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
-	//US32190 changes
-	var browserNotSupportedMsgForPatient = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
-	browserNotSupportedMsgForPatient += "<br /><br />";
-	browserNotSupportedMsgForPatient += "<span style='font-size:14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a>, or use Chrome or Internet Explorer.</span>";
-	//US32190 changes
+	
     /* DE10832 - Validating autofill and enabling signon button on load */
     var validateAutoFill = function(){
     	//console.log("Testing Auto Fill");
@@ -76,33 +67,8 @@
 			$('input#ssologin').css('opacity', '0.5');
     	 }
     };
-	
-	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
-	if(browserInfo.isChrome && blockChrome) {
-		//US32190 changes
-		browserNotSupportedMsgForPatient.replace(' or use Chrome', '');
-		//US32190 changes
-		$('p#globalError').html(browserNotSupportedMsgForPatient);
-		$('#ssoLoginError p').css("display", "block");
-		
-		document.getElementById("username").disabled = true;
-		document.getElementById("password").disabled = true;
 
-		$('#temp-access').css('cursor', 'default');
-        $('#temp-access').css('opacity', '0.5');
-        $('#temp-access').css('pointer-events', 'none');
-	}else if(browserInfo.isFirefox && blockFF){
-		$('p#globalError').html(browserNotSupportedMsgForPatient);
-		$('#ssoLoginError p').css("display", "block");
-		
-		document.getElementById("username").disabled = true;
-		document.getElementById("password").disabled = true;
-
-		$('#temp-access').css('cursor', 'default');
-        $('#temp-access').css('opacity', '0.5');
-        $('#temp-access').css('pointer-events', 'none');
-	}else{
-		if(browserInfo.isFirefox){
+    if(browserInfo.isFirefox){
 			setTimeout(function(){
 				validateAutoFill();
 			},1000);
@@ -110,44 +76,5 @@
 			setTimeout(function(){
 				validateChromeAutoFill();
 			},1000);
-		}
-
-		if(browserInfo.isSafari){
-			var agent = navigator.userAgent;
-	    	//var splittedVersionStr = agent.split('Version/');
-	    	//var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
-	    	var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
-	    	var majorVersion = majorMinorDot.split('.')[0];
-	    	var versionNumber = parseInt(majorVersion);
-	    	var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):12;//US35718 changes
-	    	// Block access from Safari version 12.
-	    	if(versionNumber >= blockSafariVersion && blockSafari){//US35718 changes
-	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
-				$('#ssoLoginError p').css("display", "block");
-				
-				document.getElementById("username").disabled = true;
-				document.getElementById("password").disabled = true;
-
-				$('#temp-access').css('cursor', 'default');
-		        $('#temp-access').css('opacity', '0.5');
-		        $('#temp-access').css('pointer-events', 'none');
-	    	}
-	    } else if (browserInfo.isIE){
-	    	var agent = navigator.userAgent;
-	    	// Block access for EDGE
-	    	if(agent.indexOf('Edge/') > -1 && blockEdge){//US35718 changes
-	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
-				$('#ssoLoginError p').css("display", "block");
-				
-				document.getElementById("username").disabled = true;
-				document.getElementById("password").disabled = true;
-
-				$('#temp-access').css('cursor', 'default');
-		        $('#temp-access').css('opacity', '0.5');
-		        $('#temp-access').css('pointer-events', 'none');
-		        $('#temp-access').css('display', 'inline-block'); // as pointer-events doesnt work for inline elements in EDGE
-	    	}
-	    }
 	}
-	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>

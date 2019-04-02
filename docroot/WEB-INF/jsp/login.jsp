@@ -90,17 +90,6 @@
 <script type="text/javascript">
 
 	var browserInfo = getBrowserInfo();
-	var browserVersion = (browserInfo.version).split(".")[0];
-	var blockChrome = ($("#blockChrome").val() == 'true');
-	var blockFF = ($("#blockFF").val() == 'true');
-	var blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
-	var blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
-	//US32190 changes
-	var browserNotSupportedMsgForPatient = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
-	browserNotSupportedMsgForPatient += "<br /><br />";
-	browserNotSupportedMsgForPatient += "<span style='font-size: 14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a>, or use Chrome or Internet Explorer.</span>";
-	//US32190 changes
-	/* DE10832 - Validating autofill and enabling login button on load */
 	var validateAutoFill = function(){
 		//console.log("====> Testing Auto Fill");
 		if($('#last_name').val() != "" && $('#mrn').val() != "" && $('#birth_month').val() != "" && $('#birth_year').val() != ""){
@@ -143,32 +132,8 @@
 		    $('input#login').css('opacity', '0.5');
 		}
 	};
-	
-	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
-	if(browserInfo.isChrome && blockChrome) {
-		//US32190 changes
-		browserNotSupportedMsgForPatient.replace(' or use Chrome,', '');
-		//US32190 changes
-		$('p#globalError').html(browserNotSupportedMsgForPatient);
-		$("p#globalError").removeClass("hide-me");
 
-		document.getElementById("last_name").disabled = true;
-		document.getElementById("mrn").disabled = true;
-		document.getElementById("birth_month").disabled = true;
-		document.getElementById("birth_year").disabled = true;
-		document.getElementById("login").disabled = true;
-	}
-	else if(browserInfo.isFirefox && blockFF){
-		$('p#globalError').html(browserNotSupportedMsgForPatient);
-		$("p#globalError").removeClass("hide-me");
-
-		document.getElementById("last_name").disabled = true;
-		document.getElementById("mrn").disabled = true;
-		document.getElementById("birth_month").disabled = true;
-		document.getElementById("birth_year").disabled = true;
-		document.getElementById("login").disabled = true;
-	}else{
-		if(browserInfo.isFirefox){
+	if(browserInfo.isFirefox){
 			setTimeout(function(){
 				validateAutoFill();
 			},1000);
@@ -176,41 +141,5 @@
 			setTimeout(function(){
 				validateChromeAutoFill();
 			},1000);
-		}
-		
-		if(browserInfo.isSafari){
-			var agent = navigator.userAgent;
-	    	//var splittedVersionStr = agent.split('Version/');
-	    	//var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
-	    	var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
-	    	var majorVersion = majorMinorDot.split('.')[0];
-	    	var versionNumber = parseInt(majorVersion);
-	    	// Block access from Safari version 12.
-	    	var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):12;//US35718 changes
-	    	if(versionNumber >= blockSafariVersion && blockSafari){//US35718 changes
-	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
-				$("p#globalError").removeClass("hide-me");
-
-				document.getElementById("last_name").disabled = true;
-				document.getElementById("mrn").disabled = true;
-				document.getElementById("birth_month").disabled = true;
-				document.getElementById("birth_year").disabled = true;
-				document.getElementById("login").disabled = true;
-	    	}
-	    } else if (browserInfo.isIE){
-	    	var agent = navigator.userAgent;
-	    	// Block access for EDGE
-	    	if(agent.indexOf('Edge/') > -1 && blockEdge){//US35718 changes
-	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
-				$("p#globalError").removeClass("hide-me");
-
-				document.getElementById("last_name").disabled = true;
-				document.getElementById("mrn").disabled = true;
-				document.getElementById("birth_month").disabled = true;
-				document.getElementById("birth_year").disabled = true;
-				document.getElementById("login").disabled = true;
-	    	}
-	    }
 	}
-	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>
