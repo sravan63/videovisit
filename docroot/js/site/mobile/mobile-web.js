@@ -1575,7 +1575,7 @@ function toggleCamera(){
 function updateStreamOnCameraToggle(stream) {
     console.log("inside GOT-STREAM");
     window.stream = stream; // make stream available to console
-    videoElement.srcObject = stream;
+    //videoElement.srcObject = stream;
     rtc.renegotiate();
     // Refresh button list in case labels have become available
     // return navigator.mediaDevices.enumerateDevices();
