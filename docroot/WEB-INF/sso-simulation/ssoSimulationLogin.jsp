@@ -31,16 +31,7 @@
 <script type="text/javascript">
 
 	var browserInfo = getBrowserInfo();
-	var browserVersion = (browserInfo.version).split(".")[0];
-	var blockChrome = ($("#blockChrome").val() == 'true');
-	var blockFF = ($("#blockFF").val() == 'true');
-	var blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
-	var blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
 	
-	var browserNotSupportedMsgForPatient = "<span style='font-size:14px;'>Video Visits does not support your browser.</span>";
-	browserNotSupportedMsgForPatient += "<br /><br />";
-	browserNotSupportedMsgForPatient += "<span style='font-size:14px;font-weight:normal;'>Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a> or use Chrome, Internet Explorer, or Safari.</span>";
-
     /* DE10832 - Validating autofill and enabling signon button on load */
     var validateAutoFill = function(){
     	//console.log("Testing Auto Fill");
@@ -77,28 +68,7 @@
     	 }
     };
 	
-	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) */
-	if(browserInfo.isChrome && blockChrome) {
-		$('p#globalError').html(browserNotSupportedMsgForPatient);
-		$('#ssoLoginError p').css("display", "block");
-		
-		document.getElementById("username").disabled = true;
-		document.getElementById("password").disabled = true;
 
-		$('#temp-access').css('cursor', 'default');
-        $('#temp-access').css('opacity', '0.5');
-        $('#temp-access').css('pointer-events', 'none');
-	}else if(browserInfo.isFirefox && blockFF){
-		$('p#globalError').html(browserNotSupportedMsgForPatient);
-		$('#ssoLoginError p').css("display", "block");
-		
-		document.getElementById("username").disabled = true;
-		document.getElementById("password").disabled = true;
-
-		$('#temp-access').css('cursor', 'default');
-        $('#temp-access').css('opacity', '0.5');
-        $('#temp-access').css('pointer-events', 'none');
-	}else{
 		if(browserInfo.isFirefox){
 			setTimeout(function(){
 				validateAutoFill();
@@ -108,39 +78,5 @@
 				validateChromeAutoFill();
 			},1000);
 		}
-		if(browserInfo.isSafari){
-			var agent = navigator.userAgent;
-	    	//var splittedVersionStr = agent.split('Version/');
-	    	//var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
-	    	var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
-	    	var majorVersion = majorMinorDot.split('.')[0];
-	    	var versionNumber = parseInt(majorVersion);
-	    	var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):12;//US35718 changes
-	    	if(versionNumber >= blockSafariVersion && blockSafari){//US35718 changes
-	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
-	    		$('#ssoLoginError p').css("display", "block");
-	    		
-	    		document.getElementById("username").disabled = true;
-	    		document.getElementById("password").disabled = true;
 
-	    		$('#temp-access').css('cursor', 'default');
-	            $('#temp-access').css('opacity', '0.5');
-	            $('#temp-access').css('pointer-events', 'none');
-	    	}
-	    } else if (browserInfo.isIE){
-	    	var agent = navigator.userAgent;
-	    	if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){//US35718 changes
-	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
-	    		$('#ssoLoginError p').css("display", "block");
-	    		
-	    		document.getElementById("username").disabled = true;
-	    		document.getElementById("password").disabled = true;
-
-	    		$('#temp-access').css('cursor', 'default');
-	            $('#temp-access').css('opacity', '0.5');
-	            $('#temp-access').css('pointer-events', 'none');
-	    	}
-	    }
-	}
-	/* US21400 - Browser Block Switch - front end (Externalized for Chrome and Firefox) - END */
 </script>
