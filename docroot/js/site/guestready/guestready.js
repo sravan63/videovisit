@@ -14,7 +14,11 @@ $(document).ready(function() {
        // e.preventDefault();
     	$("#layover").show();
     	//US30802
-    	setPeripheralsFlag("true");
+        if($(this).attr('vendor') == 'pexip'){
+            setPeripheralsFlag("false");
+        }else{
+            setPeripheralsFlag("true");
+        }    	
     	//US30802
         var caregiverId = $(this).attr('caregiverId');
         var name = $(this).attr('userName');
@@ -366,7 +370,8 @@ function updateDomWithMeetings(guestData){
                     if($('#meetingCode').val() == meeting.caregiver[y].careGiverMeetingHash){
                         var cglname = meeting.caregiver[y].lastName?meeting.caregiver[y].lastName:'';
                         var cgfname = meeting.caregiver[y].firstName?meeting.caregiver[y].firstName:'';
-                        htmlToBeAppend += '<button id="joinNowId" class="btn joinNowButton"userName="'+cglname+', '+cgfname+', ('+meeting.caregiver[y].emailAddress+')" meetingid="'+meeting.meetingId+'" href="'+meeting.meetingVendorId+'" caregiverId="'+meeting.caregiver[y].careGiverId+'">Join your visit</button>';
+                        var vendorVal = meeting.vendor?meeting.vendor:'';
+                        htmlToBeAppend += '<button id="joinNowId" class="btn joinNowButton"userName="'+cglname+', '+cgfname+', ('+meeting.caregiver[y].emailAddress+')" meetingid="'+meeting.meetingId+'" href="'+meeting.meetingVendorId+'" caregiverId="'+meeting.caregiver[y].careGiverId+'" vendor="'+vendorVal+'">Join your visit</button>';
                     }
                 }
                 htmlToBeAppend += '<p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p><p class="error error-guest-login"></p>';

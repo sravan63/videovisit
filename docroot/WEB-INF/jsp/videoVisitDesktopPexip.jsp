@@ -257,7 +257,7 @@
 							<div class="controls" id="configurationMicrophone"></div>
 						</div>
 					</div>
-		        	<ul class="dropdown-menu" id="inCallLocalShareList" role="menu" style="max-height: 400px;"></ul>
+		        	<ul class="dropdown-menu" id="inCallLocalShareList" role="menu" style="max-height: 400px;display:none;"></ul>
 					<div class="visit-info-container">
 						<div class="visit-info">
 							<button class="leave-conference" id="inCallButtonDisconnect" onclick="disconnect();">Leave Room</button>

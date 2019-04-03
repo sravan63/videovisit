@@ -44,7 +44,11 @@ $(document).ready(function() {
     $(document).delegate('.joinNowButton', 'click', function(){
     	$("#layover").show();
     	//US30802
-    	setPeripheralsFlag("true");
+        if($(this).attr('vendor') == 'pexip'){
+            setPeripheralsFlag("false");
+        }else{
+            setPeripheralsFlag("true");
+        }    	
     	//US30802
     	var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
@@ -555,16 +559,19 @@ function updateDomWithMeetingsData(data){
             if($('#isNonMember').val() == true || $('#isNonMember').val() == 'true'){
                 //${WebAppContext.isNonMember()}
                 if(meeting.meetingVendorId == null || meeting.meetingVendorId.length <= 0){
-                    htmlToBeAppend += '<div style=""><p style=""><button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p></div>';
+                    var vendorVal = meeting.vendor?meeting.vendor:'';
+                    htmlToBeAppend += '<div style=""><p style=""><button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;" vendor="'+vendorVal+'">Join your visit</button></p><p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p></div>';
                 }else{
                     memberDiplayName = meetingLastName+', '+meetingFirstName;
-                    htmlToBeAppend += '<div style=""><p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p></div>';
+                    var vendorVal = meeting.vendor?meeting.vendor:'';
+                    htmlToBeAppend += '<div style=""><p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" isproxymeeting="Y" href="#" style="margin-bottom:0;" vendor="'+vendorVal+'">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p></div>';
                 }
 
             }else{
                 //${not WebAppContext.isNonMember()}
                 if(meeting.meetingVendorId == null || meeting.meetingVendorId.length <= 0){
-                    htmlToBeAppend += '<div style=""><p style=""><button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p></div>';
+                    var vendorVal = meeting.vendor?meeting.vendor:'';
+                    htmlToBeAppend += '<div style=""><p style=""><button class="btn not-available" href="javascript:location.reload()" style="margin-bottom:0;" vendor="'+vendorVal+'">Join your visit</button></p><p class="" style="margin-top:20px;">Your visit will be available within 15 minutes of the start time.</p></div>';
                 }else{
                     //DE15381 changes
                     htmlToBeAppend += '<div style="">';
@@ -577,9 +584,11 @@ function updateDomWithMeetingsData(data){
                     }
                     //memberDiplayName = meetingLastName+', '+meetingFirstName;
                     if($('#memberDOmrn').val() == meeting.member.mrn){
-                        htmlToBeAppend += '<p class=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+'" meetingid="'+meeting.meetingId+'" vendor="'+meeting.vendor+'" isproxymeeting="N" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
+                        var vendorVal = meeting.vendor?meeting.vendor:'';
+                        htmlToBeAppend += '<p class=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+'" meetingid="'+meeting.meetingId+'" isproxymeeting="N" href="#" style="margin-bottom:0;" vendor="'+vendorVal+'">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
                     }else{
-                        htmlToBeAppend += '<p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" vendor="'+meeting.vendor+'" isproxymeeting="Y" href="#" style="margin-bottom:0;">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
+                        var vendorVal = meeting.vendor?meeting.vendor:'';
+                        htmlToBeAppend += '<p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" isproxymeeting="Y" href="#" style="margin-bottom:0;" vendor="'+vendorVal+'">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
                     }
                     htmlToBeAppend += '</div>';
                     //DE15381 changes
