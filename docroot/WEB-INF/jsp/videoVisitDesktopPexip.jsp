@@ -210,7 +210,7 @@
 		        	</tr> -->
 	        	</table>
 	        </div>
-	        <div id="selfview" class="selfview" hidden>
+	        <div id="selfview" class="selfview">
 	          <video id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
 	          </video>
 	        </div>
