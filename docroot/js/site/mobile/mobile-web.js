@@ -1558,8 +1558,25 @@ function toggleCamera(){
 		var videoSource = mobileVideoSources[i];
 		if(rtc.video_source !== videoSource){
 		    rtc.video_source =  videoSource;
-		    rtc.renegotiate();
+		    /* Test */
+		    cameraId = videoSource;
+		    constraints = {
+		      audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
+		      video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+		    };
+		    navigator.mediaDevices.getUserMedia(constraints).
+            then(updateStreamOnCameraToggle).catch(handleError);
+            /* Test */
 		    break;
 		}
 	}
 }
+
+function updateStreamOnCameraToggle(stream) {
+    console.log("inside GOT-STREAM");
+    window.stream = stream; // make stream available to console
+    videoElement.srcObject = stream;
+    rtc.renegotiate();
+    // Refresh button list in case labels have become available
+    // return navigator.mediaDevices.enumerateDevices();
+  }
