@@ -78,7 +78,7 @@ $(document).ready(function() {
 	$("#setupContents").width(calculatedWidthPluginContainer);
 
 	// Returns the code on pre call load to avoid the errors.
-	if($("#pluginContainer").length == 0){
+	if($("#pluginContainer").length == 0 && $('#vendor').val() != 'pexip'){
 		return;
 	}
 
