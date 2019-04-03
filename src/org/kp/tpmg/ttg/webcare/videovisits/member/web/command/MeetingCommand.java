@@ -79,24 +79,12 @@ public class MeetingCommand {
 			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
 		
-		if (StringUtils.isNotBlank(blockChrome)) {
-			ctx.setBlockChrome(blockChrome);
-		}
-		if (StringUtils.isNotBlank(blockFF)) {
-			ctx.setBlockFF(blockFF);
-		}
-		if (StringUtils.isNotBlank(blockEdge)) {
-			ctx.setBlockEdge(blockEdge);
-		}
-		if (StringUtils.isNotBlank(blockSafari)) {
-			ctx.setBlockSafari(blockSafari);
-		}
-		if (StringUtils.isNotBlank(blockSafariVersion)) {
-			ctx.setBlockSafariVersion(blockSafariVersion);
-		}
-		if (StringUtils.isNotBlank(blockPexipIE)) {
-			ctx.setBlockPexipIE(blockPexipIE);
-		}
+		ctx.setBlockChrome(blockChrome);
+		ctx.setBlockFF(blockFF);
+		ctx.setBlockEdge(blockEdge);
+		ctx.setBlockSafari(blockSafari);
+		ctx.setBlockSafariVersion(blockSafariVersion);
+		ctx.setBlockPexipIE(blockPexipIE);
 	}
 
 	public static void setupGuestInfo(HttpServletRequest request) {
@@ -304,6 +292,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		updateWebappContextWithBrowserFlags(ctx);
 		String meetingCode = request.getParameter("meetingCode");
 		boolean success = WebService.initWebService(request);
 		if (ctx != null && success) {
