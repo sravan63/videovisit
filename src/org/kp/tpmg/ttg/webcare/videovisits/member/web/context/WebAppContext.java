@@ -63,6 +63,7 @@ public class WebAppContext implements Serializable {
 	private boolean showPeripheralsPage = true;
 	private boolean isNative = false;
 	private String bandwidth;
+	private String blockPexipIE = "true";
 		
 	/**
 	 * Defaulting clientId  to "vv-mbr-web".
@@ -468,6 +469,20 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setBandwidth(String bandwidth) {
 		this.bandwidth = bandwidth;
+	}
+
+	/**
+	 * @return the blockPexipIE
+	 */
+	public String getBlockPexipIE() {
+		return blockPexipIE;
+	}
+
+	/**
+	 * @param blockPexipIE the blockPexipIE to set
+	 */
+	public void setBlockPexipIE(String blockPexipIE) {
+		this.blockPexipIE = blockPexipIE;
 	}
 
 	/**

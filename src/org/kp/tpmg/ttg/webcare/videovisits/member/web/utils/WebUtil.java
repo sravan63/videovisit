@@ -51,6 +51,10 @@ public class WebUtil {
 	public static final String KPPC = "KPPC";
 	public static final String BANDWIDTH_512_KBPS = "512kbps";
 	public static final String BANDWIDTH_1024_KBPS = "1024kbps";
+	
+	public static final String TRUE = Boolean.TRUE.toString();
+	public static final String FALSE = Boolean.FALSE.toString();
+	public static final String BLOCK_SAFARI_VERSION = "12";
 
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);

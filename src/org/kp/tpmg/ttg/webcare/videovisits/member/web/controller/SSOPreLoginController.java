@@ -89,14 +89,7 @@ public class SSOPreLoginController extends CommonController {
 			// logger.info("ssoSession after cookie check=" + ssoSession);
 
 			logger.info("ssoSession cookie: " + ssoSession);
-			if ((WebUtil.isChromeBrowser(request) && "true".equalsIgnoreCase(getBlockChrome()))
-					|| (WebUtil.isFFBrowser(request) && "true".equalsIgnoreCase(getBlockFF()))
-					|| (WebUtil.isEdgeBrowser(request) && "true".equalsIgnoreCase(getBlockEdge()))
-					|| (WebUtil.blockSafariBrowser(request, getBlockSafari(), getBlockSafariVersion()))) {
-				logger.info("Browser blocked, so navigating to ssologin page");
-				modelAndView = new ModelAndView(getViewName());
-				getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
-			} else if (StringUtils.isNotBlank(ssoSession)) {
+			if (StringUtils.isNotBlank(ssoSession)) {
 				String responseCode = MeetingCommand.validateKpOrgSSOSession(request, ssoSession);
 				if ("200".equalsIgnoreCase(responseCode)) {
 					logger.info("sso session token valid, so navigating to my meetings page");

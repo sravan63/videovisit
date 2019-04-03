@@ -14,11 +14,6 @@ public abstract class CommonController extends CommonActionProperties implements
 
 	private String clinicianSingleSignOnURL = null;
 	private String vidyoWebrtcSessionManager = null;
-	private String blockChrome = null;
-	private String blockFF = null;
-	private String blockEdge = null;
-	private String blockSafari = null;
-	private String blockSafariVersion = null;
 
 	public void initProperties() {
 		try {
@@ -29,11 +24,6 @@ public abstract class CommonController extends CommonActionProperties implements
 			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
 				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
 			}
-			blockChrome = appProp.getProperty("BLOCK_CHROME_BROWSER");
-			blockFF = appProp.getProperty("BLOCK_FIREFOX_BROWSER");
-			blockEdge = appProp.getProperty("BLOCK_EDGE_BROWSER");
-			blockSafari = appProp.getProperty("BLOCK_SAFARI_BROWSER");
-			blockSafariVersion = appProp.getProperty("BLOCK_SAFARI_VERSION");
 		} catch (Exception ex) {
 			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
 		}
@@ -43,21 +33,6 @@ public abstract class CommonController extends CommonActionProperties implements
 		ctx.setWebrtcSessionManager(getVidyoWebrtcSessionManager());
 		if (StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
 			ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
-		}
-		if (StringUtils.isNotBlank(getBlockChrome())) {
-			ctx.setBlockChrome(getBlockChrome());
-		}
-		if (StringUtils.isNotBlank(getBlockFF())) {
-			ctx.setBlockFF(getBlockFF());
-		}
-		if (StringUtils.isNotBlank(getBlockEdge())) {
-			ctx.setBlockEdge(getBlockEdge());
-		}
-		if (StringUtils.isNotBlank(getBlockSafari())) {
-			ctx.setBlockSafari(getBlockSafari());
-		}
-		if (StringUtils.isNotBlank(getBlockSafariVersion())) {
-			ctx.setBlockSafariVersion(getBlockSafariVersion());
 		}
 	}
 
@@ -89,81 +64,6 @@ public abstract class CommonController extends CommonActionProperties implements
 	 */
 	public void setVidyoWebrtcSessionManager(String vidyoWebrtcSessionManager) {
 		this.vidyoWebrtcSessionManager = vidyoWebrtcSessionManager;
-	}
-
-	/**
-	 * @return the blockChrome
-	 */
-	public String getBlockChrome() {
-		return blockChrome;
-	}
-
-	/**
-	 * @param blockChrome
-	 *            the blockChrome to set
-	 */
-	public void setBlockChrome(String blockChrome) {
-		this.blockChrome = blockChrome;
-	}
-
-	/**
-	 * @return the blockFF
-	 */
-	public String getBlockFF() {
-		return blockFF;
-	}
-
-	/**
-	 * @param blockFF
-	 *            the blockFF to set
-	 */
-	public void setBlockFF(String blockFF) {
-		this.blockFF = blockFF;
-	}
-
-	/**
-	 * @return the blockEdge
-	 */
-	public String getBlockEdge() {
-		return blockEdge;
-	}
-
-	/**
-	 * @param blockEdge
-	 *            the blockEdge to set
-	 */
-	public void setBlockEdge(String blockEdge) {
-		this.blockEdge = blockEdge;
-	}
-
-	/**
-	 * @return the blockSafari
-	 */
-	public String getBlockSafari() {
-		return blockSafari;
-	}
-
-	/**
-	 * @param blockSafari
-	 *            the blockSafari to set
-	 */
-	public void setBlockSafari(String blockSafari) {
-		this.blockSafari = blockSafari;
-	}
-
-	/**
-	 * @return the blockSafariVersion
-	 */
-	public String getBlockSafariVersion() {
-		return blockSafariVersion;
-	}
-
-	/**
-	 * @param blockSafariVersion
-	 *            the blockSafariVersion to set
-	 */
-	public void setBlockSafariVersion(String blockSafariVersion) {
-		this.blockSafariVersion = blockSafariVersion;
 	}
 
 }

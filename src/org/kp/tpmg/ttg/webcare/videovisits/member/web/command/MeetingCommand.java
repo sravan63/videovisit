@@ -3,6 +3,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.TELEPHONY;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
 
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
@@ -22,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
@@ -57,6 +59,44 @@ public class MeetingCommand {
 	public static final int FUTURE_MINUTES = 15;
 	
 	private MeetingCommand() {
+	}
+	
+	public static void updateWebappContextWithBrowserFlags(WebAppContext ctx) {
+		String blockChrome = TRUE;
+		String blockFF = TRUE;
+		String blockEdge = TRUE;
+		String blockSafari = TRUE;
+		String blockSafariVersion = WebUtil.BLOCK_SAFARI_VERSION;
+		String blockPexipIE = TRUE;
+		try {
+			blockChrome = AppProperties.getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
+			blockFF = AppProperties.getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
+			blockEdge = AppProperties.getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
+			blockSafari = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
+			blockSafariVersion = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
+			blockPexipIE = AppProperties.getExtPropertiesValueByKey("BLOCK_PEXIP_IE_BROWSER");
+		} catch (Exception ex) {
+			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
+		}
+		
+		if (StringUtils.isNotBlank(blockChrome)) {
+			ctx.setBlockChrome(blockChrome);
+		}
+		if (StringUtils.isNotBlank(blockFF)) {
+			ctx.setBlockFF(blockFF);
+		}
+		if (StringUtils.isNotBlank(blockEdge)) {
+			ctx.setBlockEdge(blockEdge);
+		}
+		if (StringUtils.isNotBlank(blockSafari)) {
+			ctx.setBlockSafari(blockSafari);
+		}
+		if (StringUtils.isNotBlank(blockSafariVersion)) {
+			ctx.setBlockSafariVersion(blockSafariVersion);
+		}
+		if (StringUtils.isNotBlank(blockPexipIE)) {
+			ctx.setBlockPexipIE(blockPexipIE);
+		}
 	}
 
 	public static void setupGuestInfo(HttpServletRequest request) {
@@ -194,6 +234,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput meetingDetailsOutput = null;
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		updateWebappContextWithBrowserFlags(ctx);
 		String meetingCode;
 		String jsonStr = null;
 		if (ctx != null) {
@@ -767,7 +808,8 @@ public class MeetingCommand {
 	public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		updateWebappContextWithBrowserFlags(ctx);
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		String jsonStr = null;
 		try {
@@ -1014,7 +1056,8 @@ public class MeetingCommand {
 
 	public static String retrieveMeeting(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		updateWebappContextWithBrowserFlags(ctx);
 		MeetingDetailsJSON meetingDetailsJSON = null;
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
@@ -1312,5 +1355,5 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return output;
 	}
-	
+
 }
