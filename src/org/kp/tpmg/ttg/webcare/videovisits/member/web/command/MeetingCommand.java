@@ -3,7 +3,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.TELEPHONY;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
 
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
@@ -62,37 +62,37 @@ public class MeetingCommand {
 	}
 	
 	public static void updateWebappContextWithBrowserFlags(WebAppContext ctx) {
-		String blockChrome = TRUE;
-		String blockFF = TRUE;
-		String blockEdge = TRUE;
-		String blockSafari = TRUE;
-		String blockSafariVersion = WebUtil.BLOCK_SAFARI_VERSION;
-		String blockPexipIE = TRUE;
-		try {
-			blockChrome = AppProperties.getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
-			blockFF = AppProperties.getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
-			blockEdge = AppProperties.getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
-			blockSafari = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
-			blockSafariVersion = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
-			blockPexipIE = AppProperties.getExtPropertiesValueByKey("BLOCK_PEXIP_IE_BROWSER");
-		} catch (Exception ex) {
-			logger.error("Error while reading external properties file - " + ex.getMessage(), ex);
+		final String blockChrome = getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
+		final String blockFF = getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
+		final String blockEdge = getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
+		final String blockSafari = getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
+		final String blockSafariVersion = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
+		final String blockPexipIE = AppProperties.getExtPropertiesValueByKey("BLOCK_PEXIP_IE_BROWSER");
+		if (StringUtils.isNotBlank(blockChrome)) {
+			ctx.setBlockChrome(blockChrome);
 		}
-		
-		ctx.setBlockChrome(blockChrome);
-		ctx.setBlockFF(blockFF);
-		ctx.setBlockEdge(blockEdge);
-		ctx.setBlockSafari(blockSafari);
-		ctx.setBlockSafariVersion(blockSafariVersion);
-		ctx.setBlockPexipIE(blockPexipIE);
+		if (StringUtils.isNotBlank(blockFF)) {
+			ctx.setBlockFF(blockFF);
+		}
+		if (StringUtils.isNotBlank(blockEdge)) {
+			ctx.setBlockEdge(blockEdge);
+		}
+		if (StringUtils.isNotBlank(blockSafari)) {
+			ctx.setBlockSafari(blockSafari);
+		}
+		if (StringUtils.isNotBlank(blockSafariVersion)) {
+			ctx.setBlockSafariVersion(blockSafariVersion);
+		}
+		if (StringUtils.isNotBlank(blockPexipIE)) {
+			ctx.setBlockPexipIE(blockPexipIE);
+		}
 	}
 
 	public static void setupGuestInfo(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		try {
-
-			String meetingCode = request.getParameter("meetingCode");
-			String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
+			final String meetingCode = request.getParameter("meetingCode");
+			final String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
 			logger.info("patientLastName : " + patientLastName);
 			String nocache = request.getParameter("nocache");
 			String meetingId = request.getParameter("meetingId");
