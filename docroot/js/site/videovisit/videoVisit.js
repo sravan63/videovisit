@@ -787,6 +787,7 @@ function configurePexipVideoProperties(){
 
 function startPexip() {
 	console.log(sidePaneMeetingDetails);
+	$('html').removeClass("no-scroll");
 	var guestPin = sidePaneMeetingDetails.vendorGuestPin;
 	$('#guestPin').val(guestPin);
 	var roomUrl = $('#guestUrl').val();

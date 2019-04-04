@@ -911,27 +911,12 @@ function launchVideoVisitMember(data){
 			//window.location.href = 'videovisitmobileready.htm';
 			//return;
 //			console.log("url",url);
-		
+		    var mObj = data.service.launchMeetingEnvelope.launchMeeting;
+		    var vendor = data.service.launchMeetingEnvelope.launchMeeting.vendor;
+            
 
-			var appOS = getAppOS();
-
-			if(appOS === 'iOS'){
-
-			    var iOSver = iOSversion();
-				if (iOSver[0] >= 7) {					
-					window.location.replace(url);
-				    setTimeout(function(){
-				    	$("#layover").hide();
-				    }, 1500);
-				    
-				}else{
-					openTab(url);
-				}
-			}
-			else{
-				//openTab(url);
-				var mObj = data.service.launchMeetingEnvelope.launchMeeting;
-                var mobileMeetingObj = {
+		    if(vendor == 'pexip'){
+              var mobileMeetingObj = {
                     "meetingId": mObj.meetingId,
                     "meetingCode": null,
                     "caregiverId": null,
@@ -956,15 +941,38 @@ function launchVideoVisitMember(data){
                        window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
                    }
                });
+		    }
 
+		    else {
+
+			var appOS = getAppOS();
+
+			if(appOS === 'iOS'){
+
+			    var iOSver = iOSversion();
+				if (iOSver[0] >= 7) {					
+					window.location.replace(url);
+				    setTimeout(function(){
+				    	$("#layover").hide();
+				    }, 1500);
+				    
+				}else{
+					openTab(url);
+				}
+			}
+			else{
+				openTab(url);
+				
 
 			}
+		}
 		}
 		catch(e)
 		{
 			window.location.replace("logout.htm");
 		}
 	}
+
 	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1";
 
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
@@ -1558,25 +1566,8 @@ function toggleCamera(){
 		var videoSource = mobileVideoSources[i];
 		if(rtc.video_source !== videoSource){
 		    rtc.video_source =  videoSource;
-		    /* Test */
-		    cameraId = videoSource;
-		    constraints = {
-		      audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-		      video: {deviceId: videoSource ? {exact: videoSource} : undefined}
-		    };
-		    navigator.mediaDevices.getUserMedia(constraints).
-            then(updateStreamOnCameraToggle).catch(handleError);
-            /* Test */
+		    rtc.renegotiate();
 		    break;
 		}
 	}
 }
-
-function updateStreamOnCameraToggle(stream) {
-    console.log("inside GOT-STREAM");
-    window.stream = stream; // make stream available to console
-    //videoElement.srcObject = stream;
-    rtc.renegotiate();
-    // Refresh button list in case labels have become available
-    // return navigator.mediaDevices.enumerateDevices();
-  }
