@@ -31,6 +31,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 			
 			<input type="hidden" id="meetingId" value="${meeting.meetingId}" />
 			<input type="hidden" id="mmMeetingName" value="${meeting.meetingVendorId}" />
+			<input type="hidden" id="vendor" value="${meeting.vendor}" />
 		</c:forEach>
 	</div>
 </c:if>
@@ -65,22 +66,21 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 </style>
 
 <script type="text/javascript">
+
 	var browserInfo = getBrowserInfo();
 	var browserVersion = (browserInfo.version).split(".")[0];
 	var blockChrome = ($("#blockChrome").val() == 'true');
 	var blockFF = ($("#blockFF").val() == 'true');
 	var blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
 	var blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
-	
+	var meetingVendor = $('#vendor').val();
+
 	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
 	//US32190 changes
 	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a>, or use Chrome or Internet Explorer.";
-	//US32190 changes
-	if(browserInfo.isChrome && blockChrome) {
-		//US32190 changes
-		browserNotSupportedMsgForPatient.replace(' or use Chrome,', '');
-		//US32190 changes
+
+	function displayBlockMessage(){
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
 		$("p#globalError").removeClass("hide-me");
 		
@@ -88,44 +88,47 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 		$('#joinNowBtn').css('pointer-events', 'none');
         $('#joinNowBtn').css('cursor', 'default');
         $('#joinNowBtn').css('opacity', '0.5');
-	}else if(browserInfo.isFirefox && blockFF) {
-		$('p#globalError').html(browserNotSupportedMsgForPatient);
-		$("p#globalError").removeClass("hide-me");
-		
-		document.getElementById("last_name").disabled = true;
-		$('#joinNowBtn').css('pointer-events', 'none');
-        $('#joinNowBtn').css('cursor', 'default');
-        $('#joinNowBtn').css('opacity', '0.5');
-	} else{
-		if(browserInfo.isSafari){
-			var agent = navigator.userAgent;
-	    	//var splittedVersionStr = agent.split('Version/');
-	    	//var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
-	    	var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
-	    	var majorVersion = majorMinorDot.split('.')[0];
-	    	var versionNumber = parseInt(majorVersion);
-	    	var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):12;//US35718 changes
-	    	if(versionNumber >= blockSafariVersion && blockSafari){//US35718 changes
-	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
-				$("p#globalError").removeClass("hide-me");
-				
-				document.getElementById("last_name").disabled = true;
-				$('#joinNowBtn').css('pointer-events', 'none');
-		        $('#joinNowBtn').css('cursor', 'default');
-		        $('#joinNowBtn').css('opacity', '0.5');
-	    	}
-	    } else if (browserInfo.isIE){
+	};
+
+	
+	if(meetingVendor == 'pexip'){
+		if (browserInfo.isIE){
 	    	var agent = navigator.userAgent;
-	    	if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){//US35718 changes
-	    		$('p#globalError').html(browserNotSupportedMsgForPatient);
-				$("p#globalError").removeClass("hide-me");
-				
-				document.getElementById("last_name").disabled = true;
-				$('#joinNowBtn').css('pointer-events', 'none');
-		        $('#joinNowBtn').css('cursor', 'default');
-		        $('#joinNowBtn').css('opacity', '0.5');
+	    	if(navigator.userAgent.indexOf('Edge/') === -1){
+	    		browserNotSupportedMsgForPatient = browserNotSupportedMsgForPatient.replace(' or Internet Explorer.', ', Safari, Firefox, or Edge.');
+	    		displayBlockMessage();
 	    	}
 	    }
+	} else {
+		//US32190 changes
+		if(browserInfo.isChrome && blockChrome) {
+			//US32190 changes
+			browserNotSupportedMsgForPatient.replace(' or use Chrome,', '');
+			//US32190 changes
+			displayBlockMessage();
+		}else if(browserInfo.isFirefox && blockFF) {
+			displayBlockMessage();
+		} else{
+			if(browserInfo.isSafari){
+				var agent = navigator.userAgent;
+		    	//var splittedVersionStr = agent.split('Version/');
+		    	//var versionNumber = parseInt(splittedVersionStr[1].substr(0,2));
+		    	var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
+		    	var majorVersion = majorMinorDot.split('.')[0];
+		    	var versionNumber = parseInt(majorVersion);
+		    	var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):12;//US35718 changes
+		    	if(versionNumber >= blockSafariVersion && blockSafari){//US35718 changes
+		    		displayBlockMessage();
+		    	}
+		    } else if (browserInfo.isIE){
+		    	var agent = navigator.userAgent;
+		    	if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){//US35718 changes
+		    		displayBlockMessage();
+		    	}
+		    }
+		}
 	}
+	
+	
 	
 </script>

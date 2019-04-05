@@ -339,7 +339,15 @@ function checkAndBlockMeetings(){
 function allowToJoin(vendor){
     var allow = true;
     if(vendor === 'pexip'){
-        allow = (browserInfo.isIE === false);
+        if (browserInfo.isIE){
+            var agent = navigator.userAgent;
+            // Do not Block access for EDGE
+            if(agent.indexOf('Edge/') > -1){
+                allow = true;
+            } else {
+                allow = false;
+            }
+        }
     } else {
         if(browserInfo.isChrome && blockChrome){
             allow = false;
