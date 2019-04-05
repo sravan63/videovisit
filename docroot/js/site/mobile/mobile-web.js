@@ -920,18 +920,18 @@ function launchVideoVisitMember(data){
                  checkIOS(url);
 			}
 			else {
-				var newUrl  = new URL(url);
-                var roomJoinkey = newUrl.searchParams.get("roomUrl");
+				var newurl = new URL(url);
+				var roomJoinPexip = newurl.searchParams.get('roomUrl');
               var mobileMeetingObj = {
                     "meetingId": mObj.meetingId,
                     "meetingCode": null,
                     "caregiverId": null,
-                    "vidyoUrl": roomJoinkey,
+                    "vidyoUrl": roomJoinPexip,
                     "guestName": mObj.member.inMeetingDisplayName,
                     "isProvider": 'false',
                     "isMember": "Y",
                     "isProxyMeeting": "N",
-                    "guestUrl": roomJoinkey
+                    "guestUrl": roomJoinPexip
                 }
                 $.ajax({
                    type: 'POST',
@@ -949,17 +949,17 @@ function launchVideoVisitMember(data){
                });
 		    }
 		}
-
 		    else {
 
-			if(appOS === 'iOS'){
-            checkIOS(url);
-			}
-			else{
-				openTab(url);
-			}
+				if(appOS === 'iOS'){
+	            checkIOS(url);
+				}
+
+				else{
+					openTab(url);
+				}
 		}
-		}
+	}
 		catch(e)
 		{
 			window.location.replace("logout.htm");
@@ -1008,10 +1008,10 @@ function checkIOS(url){
 			window.location.replace(url);
 		    setTimeout(function(){
 				$("#layover").hide();
-				}, 1500);
-				}else{
-					openTab(url);
-				}
+			}, 1500);
+		}else{
+			openTab(url);
+		}
 }
 
 function openWebApp(){
