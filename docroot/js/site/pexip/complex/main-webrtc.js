@@ -77,7 +77,7 @@ $(document).ready(function(){
       for(var i=0; i<mobileVideoSources.length;i++){
         cameras += (i+1)+') '+mobileVideoSources[i]+'\n';
       }
-      alert(noOfCameras+'\n'+cameras);
+      //alert(noOfCameras+'\n'+cameras);
     // Testing
     selectors.forEach(function(select, selectorIndex) {
       if (Array.prototype.slice.call(select.childNodes).some(function(n) {
@@ -105,11 +105,6 @@ $(document).ready(function(){
     start();
   }
 
-  $("#join-conf").on("click", function(){
-    console.log("join-conf clicked");
-
-    configurePexipVideoProperties();
-  });
 
   // Attach audio output device to video element using device/sink ID.
   function attachSinkId(element, sinkId) {
