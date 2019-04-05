@@ -913,19 +913,25 @@ function launchVideoVisitMember(data){
 //			console.log("url",url);
 		    var mObj = data.service.launchMeetingEnvelope.launchMeeting;
 		    var vendor = data.service.launchMeetingEnvelope.launchMeeting.vendor;
-            
+            var appOS = getAppOS();
 
 		    if(vendor == 'pexip'){
+		    	if(appOS === 'iOS'){
+                 checkIOS(url);
+			}
+			else {
+				var newUrl  = new URL(url);
+                var roomJoinkey = newUrl.searchParams.get("roomUrl");
               var mobileMeetingObj = {
                     "meetingId": mObj.meetingId,
                     "meetingCode": null,
                     "caregiverId": null,
-                    "vidyoUrl": mObj.roomJoinUrl,
+                    "vidyoUrl": roomJoinkey,
                     "guestName": mObj.member.inMeetingDisplayName,
                     "isProvider": 'false',
                     "isMember": "Y",
                     "isProxyMeeting": "N",
-                    "guestUrl": mObj.roomJoinUrl
+                    "guestUrl": roomJoinkey
                 }
                 $.ajax({
                    type: 'POST',
@@ -942,28 +948,15 @@ function launchVideoVisitMember(data){
                    }
                });
 		    }
+		}
 
 		    else {
 
-			var appOS = getAppOS();
-
 			if(appOS === 'iOS'){
-
-			    var iOSver = iOSversion();
-				if (iOSver[0] >= 7) {					
-					window.location.replace(url);
-				    setTimeout(function(){
-				    	$("#layover").hide();
-				    }, 1500);
-				    
-				}else{
-					openTab(url);
-				}
+            checkIOS(url);
 			}
 			else{
 				openTab(url);
-				
-
 			}
 		}
 		}
@@ -1007,6 +1000,18 @@ function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
 	else{
 		openTab(megaMeetingUrl);
 	}
+}
+
+function checkIOS(url){
+	var iOSver = iOSversion();
+		if (iOSver[0] >= 7) {					
+			window.location.replace(url);
+		    setTimeout(function(){
+				$("#layover").hide();
+				}, 1500);
+				}else{
+					openTab(url);
+				}
 }
 
 function openWebApp(){
