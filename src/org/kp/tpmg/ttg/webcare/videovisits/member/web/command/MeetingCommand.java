@@ -222,7 +222,6 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput meetingDetailsOutput = null;
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		updateWebappContextWithBrowserFlags(ctx);
 		String meetingCode;
 		String jsonStr = null;
 		if (ctx != null) {
