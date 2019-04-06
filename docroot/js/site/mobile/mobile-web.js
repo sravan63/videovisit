@@ -4,6 +4,8 @@ var VIDEO_VISITS_MOBILE = {
     jQueryWindow   : $(window)
 };
 
+var newStartTimeRecursiveCall;
+
 VIDEO_VISITS_MOBILE.Path = {
 	    global : {
 	        error : 'error.htm',
@@ -1446,6 +1448,7 @@ function startPexip() {
 	var name = $("#guestName").val();
 	var roomUrl = $("#guestUrl").val();
 	initialise(roomUrl, alias, bandwidth, name, "", source);
+	newStartTimeCheckForOneTime();
 }
 
 function setVideoFeedHeight(){
@@ -1576,3 +1579,68 @@ function toggleCamera(){
 		}
 	}
 }
+
+var newStartTimeCheck = function(){
+		var isHostAvailable =  validateHostAvailability();
+	     if(isHostAvailable){ 
+			return;
+		}
+		$.ajax({
+			type: "GET",
+			url: "providerRunningLateInfo.json",
+			cache: false,
+			dataType: "json",
+			data: {'meetingId':$("#meetingId").val()},
+			success: function(result, textStatus){
+				if(result.service.status.code == 200){
+					isRunningLate = result.service.runningLateEnvelope.isRunningLate;
+					if(isRunningLate == true){
+						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
+						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
+							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
+					}else{
+							$(".waiting-text").html("Waiting for your doctor to join.");
+					}
+				}
+			},
+			error: function(textStatus){
+				console.log("RUNNING LATE ERROR: "+textStatus);
+				$(".waiting-text").html("Waiting for your doctor to join.");
+			}
+		});
+	};
+
+	var newStartTimeCheckForOneTime = function(){
+		var isHostAvailable =  validateHostAvailability();
+		$.ajax({
+			type: "GET",
+			url: "providerRunningLateInfo.json",
+			cache: false,
+			dataType: "json",
+			data: {'meetingId':$("#meetingId").val()},
+			success: function(result, textStatus){
+				if(result != null && result.service.status.code == 200){
+					isRunningLate = result.service.runningLateEnvelope.isRunningLate;
+					if(isRunningLate == true){
+						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
+						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
+						if(isHostAvailable == false){
+							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
+						}
+					}else{
+						if(isHostAvailable == false){
+							$(".waiting-text").html("Waiting for your doctor to join.");
+						}
+					}
+				}
+			},
+			error: function(textStatus){
+				console.log("RUNNING LATE ERROR: "+textStatus);
+				$(".waiting-text").html("Waiting for your doctor to join.");
+			}
+		});
+	};
+
+	newStartTimeRecursiveCall = window.setInterval(function(){
+		newStartTimeCheck();
+    },120000);
