@@ -687,9 +687,11 @@ function launchMemberGuest(returndata,megaMeetingUrl, megaMeetingId, firstName, 
  		//if (returndata.errorMessage) {
  		//	window.location.replace("logout.htm");
  		//}
+ 		var mObj = returndata.launchMeetingEnvelope.launchMeeting;
+		var vendor = returndata.launchMeetingEnvelope.launchMeeting.vendor;
  		url = returndata.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
  		console.log("url:"+url)
- 		launchVideoVisitForPatientGuest(url, megaMeetingId, lastName + ', ' + firstName + ', (' + email + ')');
+ 		launchVideoVisitForPatientGuest(mObj,vendor,url, megaMeetingId, lastName + ', ' + firstName + ', (' + email + ')');
 			clearAllErrors();
 
  	}
@@ -982,13 +984,42 @@ function launchVideoVisitMember(data){
  * @param lastName
  * @param firstName
  */
-function launchVideoVisitForPatientGuest(megaMeetingUrl, meetingId, name){
+function launchVideoVisitForPatientGuest(mObj,vendor,megaMeetingUrl, meetingId, name){
 	//add logic to differentiate vidyo/pexip
 	
 	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1";
 	var appOS = getAppOS();
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
-	if(appOS === 'iOS'){
+	if(vendor == 'pexip' && appOS == 'iOS' ){	
+      var newurl = new URL(megaMeetingUrl);
+	  var roomJoinPexip = newurl.searchParams.get('roomUrl');
+              var mobileMeetingObj = {
+                    "meetingId": mObj.meetingId,
+                    "meetingCode": null,
+                    "caregiverId": null,
+                    "vidyoUrl": roomJoinPexip,
+                    "guestName": mObj.member.inMeetingDisplayName,
+                    "isProvider": 'false',
+                    "isMember": "Y",
+                    "isProxyMeeting": "N",
+                    "guestUrl": roomJoinPexip
+                }
+                $.ajax({
+                   type: 'POST',
+                   url: 'videoVisitMobile.htm',
+                   cache: false,
+                   async: false,
+                   data: mobileMeetingObj,
+                   success: function(){
+                       window.location.href = 'videovisitmobileready.htm';
+                   },
+                   error: function(err) {
+                       window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
+                   }
+               });
+	
+    }
+	else if(appOS === 'iOS'){
 	    var iOSver = iOSversion();
 	    //Fix for the ios 7 issue with openTab function
 		if (iOSver[0] >= 7) {
