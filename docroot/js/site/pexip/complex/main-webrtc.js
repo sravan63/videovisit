@@ -36,7 +36,7 @@ $(document).ready(function(){
 
   navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
-  audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
+  // audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
   function gotDevices(deviceInfos) {
     console.log("inside GOT-DEVICES");

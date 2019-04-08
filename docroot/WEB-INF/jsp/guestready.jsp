@@ -31,26 +31,26 @@
     <a href="mdohelp.htm" target="_blank">Help</a>
   </div>
   <!-- UDP Test Results -->
-  <div class="udp-test-container">
-	  <div class="upd-test-header">
+  <div class="special-message-banner-container" id="udp-test-container">
+	  <div class="special-message-header">
 	    <span class="warning-icon"></span>
 	    <p class="warning-text">Unable to establish a connection to your visit</p>
 	  </div>
-	  <div class="upd-test-content">
-	    <div class="udp-message-container">
+	  <div class="special-message-content">
+	    <div class="special-message-container">
 	      <div class="mdo-logo"></div>
-	      <div class="udp-message">
+	      <div class="special-message">
 	        <p>Join on your mobile device using</p>
 	        <p><b>My Doctor Online</b> App using your cellular network.</p>
 	      </div>
 	    </div>
 	    <div class="app-store-container">
-	      	<span class="ios-appstore"><a class="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></span>
-        	<span class="android-playstore"><a href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en_US" class="icon-link" target="_blank"></a></span>
+	      <span class="ios-appstore"><a class="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></span>
+        <span class="android-playstore"><a href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en_US" class="icon-link" target="_blank"></a></span>
 	    </div>
-	  </div>
-  </div>
-  <!-- UDP Test Results -->
+	   </div>
+ </div>
+ <!-- UDP Test Results -->
 </div>
 <!-- US31768 -->
 <div class="my-meetings-no-meetings-grid my-meets-grid">
