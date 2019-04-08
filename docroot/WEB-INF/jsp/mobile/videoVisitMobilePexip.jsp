@@ -6,6 +6,7 @@
 <input type="hidden" id="guestName" value="${WebAppContext.videoVisit.guestName}" />
 <input type="hidden" id="meetingHostName" value="${WebAppContext.videoVisit.hostLastName.toLowerCase()}, ${WebAppContext.videoVisit.hostFirstName.toLowerCase()} ${WebAppContext.videoVisit.hostTitle}"/>
 <input type="hidden" id="meetingPatient" value="${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}"/>
+<input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
 <input type="hidden" id="meetingId" value="${WebAppContext.videoVisit.meetingId}" />
 <input type="hidden" id="isNative" value="${WebAppContext.isNative}" />
 <input type="hidden" id="bandwidth" value="${WebAppContext.bandwidth}" />

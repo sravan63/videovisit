@@ -989,20 +989,20 @@ function launchVideoVisitForPatientGuest(mObj,vendor,megaMeetingUrl, meetingId, 
 	
 	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1";
 	var appOS = getAppOS();
+	var meetingCode = request.get('meetingCode');
+	var caregiverId = $('#caregiverId').val();
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
 	if(vendor == 'pexip' && appOS == 'iOS' ){	
-      var newurl = new URL(megaMeetingUrl);
-	  var roomJoinPexip = newurl.searchParams.get('roomUrl');
               var mobileMeetingObj = {
                     "meetingId": mObj.meetingId,
-                    "meetingCode": null,
-                    "caregiverId": null,
-                    "vidyoUrl": roomJoinPexip,
-                    "guestName": mObj.member.inMeetingDisplayName,
+                    "meetingCode": meetingCode ? meetingCode : null,
+                    "caregiverId": caregiverId ? caregiverId : null,
+                    "vidyoUrl": megaMeetingUrl,
+                    "guestName": name,
                     "isProvider": 'false',
-                    "isMember": "Y",
+                    "isMember": "N",
                     "isProxyMeeting": "N",
-                    "guestUrl": roomJoinPexip
+                    "guestUrl": megaMeetingUrl
                 }
                 $.ajax({
                    type: 'POST',
