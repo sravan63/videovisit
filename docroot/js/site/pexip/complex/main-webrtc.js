@@ -177,9 +177,9 @@ $(document).ready(function(){
     }
   }
 
-  audioInputSelect.onchange = start;
+  /*audioInputSelect.onchange = start;
   audioOutputSelect.onchange = changeAudioDestination;
-  videoSelect.onchange = start;
+  videoSelect.onchange = start;*/
 
   //start();
 
