@@ -33,7 +33,9 @@ $(document).ready(function() {
 			updateSideBarWithDetails(result);
 			if($("#container-videovisit").length !== 0){
 				if($("#vendor").val() === 'pexip'){
-					configurePexipVideoProperties();
+					setTimeout(function(){
+						configurePexipVideoProperties();
+					}, 500);					
 				}
 			}
 			
