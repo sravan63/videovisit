@@ -7,8 +7,11 @@
 <input type="hidden" id="meetingHostName" value="${WebAppContext.videoVisit.hostLastName.toLowerCase()}, ${WebAppContext.videoVisit.hostFirstName.toLowerCase()} ${WebAppContext.videoVisit.hostTitle}"/>
 <input type="hidden" id="meetingPatient" value="${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}"/>
 <input type="hidden" id="caregiverId" value="${WebAppContext.videoVisit.caregiverId}" />
+<input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
+<input type="hidden" id="patientLastName" value="${WebAppContext.videoVisit.patientLastName.trim()}"/>
 <input type="hidden" id="meetingId" value="${WebAppContext.videoVisit.meetingId}" />
 <input type="hidden" id="isNative" value="${WebAppContext.isNative}" />
+<input type="hidden" id="isMember" value="${WebAppContext.videoVisit.isMember}" />
 <input type="hidden" id="bandwidth" value="${WebAppContext.bandwidth}" />
 <input type="hidden" id="conferenceId" value="${WebAppContext.videoVisit.vendorConfId}" />
 <input type="hidden" id="guestUrl" value="${WebAppContext.videoVisit.guestUrl}" />
@@ -25,7 +28,6 @@
 <!-- <input type="hidden" id="confName" value="" />
 <input type="hidden" id="name" value="" />
 <input type="hidden" id="bandwidth" value="" /> -->
-
 <script type='text/javascript'>
 	window.onload = function(){
 	    var chrome_ver = 0;

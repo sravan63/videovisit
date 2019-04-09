@@ -804,18 +804,24 @@ function disconnect(){
         }
     });
     // rtc.disconnect();
-        var isNative = $("#isNative").val();
+        var isNative = $("#isNative").val(),
+            isMember = $("#isMember").val(),
+            meetingCode =  $("#meetingCode").val(),
+            patientLastName = $("#patientLastName").val();
         if(isNative=="true"){
-        window.location.href = 'mobileNativeLogout.htm';
+            window.location.href = 'mobileNativeLogout.htm';
+        } else {
+            var url = window.location.href;
+            var memberMobile = url.indexOf("mobile") > -1;
+            if(memberMobile){
+                if(isMember == "true"){
+                    window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
+                } else if (isMember == "false"){
+                     window.location.href="mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + patientLastName ;
+                }
+            } else {
+                window.location.href = '/videovisit/landingready.htm';
+           }
         }
-        else{
-        var url = window.location.href;
-        if(url.indexOf("mobile") > -1){
-            window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
-        } 
-        else {
-        window.location.href = '/videovisit/landingready.htm';
-       }
-   }
     
 }
