@@ -48,6 +48,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 <!-- US35718 changes -->
 <input type="hidden" id="blockEdge" value="${WebAppContext.blockEdge}" />
 <input type="hidden" id="blockSafari" value="${WebAppContext.blockSafari}" />
+<input type="hidden" id="blockPexipIE" value="${WebAppContext.blockPexipIE}" />
 <input type="hidden" id="blockSafariVersion" value="${WebAppContext.blockSafariVersion}" />
 <!-- US35718 changes -->
 
@@ -73,6 +74,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	var blockFF = ($("#blockFF").val() == 'true');
 	var blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
 	var blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
+	var blockPexipIE = ($("#blockPexipIE").val() == 'true');
 	var meetingVendor = $('#vendor').val();
 
 	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
@@ -95,8 +97,10 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 		if (browserInfo.isIE){
 	    	var agent = navigator.userAgent;
 	    	if(navigator.userAgent.indexOf('Edge/') === -1){
-	    		browserNotSupportedMsgForPatient = browserNotSupportedMsgForPatient.replace(' or Internet Explorer.', ', Safari, Firefox, or Edge.');
-	    		displayBlockMessage();
+	    		if(blockPexipIE){
+		    		browserNotSupportedMsgForPatient = browserNotSupportedMsgForPatient.replace(' or Internet Explorer.', ', Safari, Firefox, or Edge.');
+		    		displayBlockMessage();
+	    		}
 	    	}
 	    }
 	} else {
