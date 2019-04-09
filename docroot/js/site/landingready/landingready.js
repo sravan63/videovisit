@@ -6,6 +6,7 @@ var blockChrome;
 var blockFF;
 var blockSafari;
 var blockEdge;
+var allowPexipIE;
 //US31767
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
@@ -14,6 +15,7 @@ $(document).ready(function() {
     blockFF = ($("#blockFF").val() == 'true');
     blockSafari = ($("#blockSafari").val() == 'true');//US35718 changes
     blockEdge = ($("#blockEdge").val() == 'true');//US35718 changes
+    allowPexipIE = ($("#blockPexipIE").val() == 'false');
     initializeUserPresentInMeetingModal();
     //make ajax call to KP Keep alive url
     var keepAliveUrl = $("#kpKeepAliveUrl").val();
@@ -345,7 +347,7 @@ function allowToJoin(vendor){
             if(agent.indexOf('Edge/') > -1){
                 allow = true;
             } else {
-                allow = false;
+                allow = allowPexipIE; // Depends on backend flag.
             }
         }
     } else {

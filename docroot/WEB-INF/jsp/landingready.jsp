@@ -23,6 +23,7 @@
 <input type="hidden" id="blockFF" value="${WebAppContext.blockFF}" />
 <input type="hidden" id="blockEdge" value="${WebAppContext.blockEdge}" />
 <input type="hidden" id="blockSafari" value="${WebAppContext.blockSafari}" />
+<input type="hidden" id="blockPexipIE" value="${WebAppContext.blockPexipIE}" />
 <input type="hidden" id="blockSafariVersion" value="${WebAppContext.blockSafariVersion}" />
 <%
 
