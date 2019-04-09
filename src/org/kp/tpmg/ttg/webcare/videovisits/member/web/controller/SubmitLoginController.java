@@ -29,6 +29,7 @@ public class SubmitLoginController extends SimplePageController {
 				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
 			}
 			data = MeetingCommand.verifyMember(request);
+			MeetingCommand.updateWebappContextWithBrowserFlags(ctx);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}

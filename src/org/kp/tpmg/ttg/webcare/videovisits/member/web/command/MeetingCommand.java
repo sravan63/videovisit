@@ -62,29 +62,31 @@ public class MeetingCommand {
 	}
 	
 	public static void updateWebappContextWithBrowserFlags(WebAppContext ctx) {
-		final String blockChrome = getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
-		final String blockFF = getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
-		final String blockEdge = getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
-		final String blockSafari = getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
-		final String blockSafariVersion = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
-		final String blockPexipIE = AppProperties.getExtPropertiesValueByKey("BLOCK_PEXIP_IE_BROWSER");
-		if (StringUtils.isNotBlank(blockChrome)) {
-			ctx.setBlockChrome(blockChrome);
-		}
-		if (StringUtils.isNotBlank(blockFF)) {
-			ctx.setBlockFF(blockFF);
-		}
-		if (StringUtils.isNotBlank(blockEdge)) {
-			ctx.setBlockEdge(blockEdge);
-		}
-		if (StringUtils.isNotBlank(blockSafari)) {
-			ctx.setBlockSafari(blockSafari);
-		}
-		if (StringUtils.isNotBlank(blockSafariVersion)) {
-			ctx.setBlockSafariVersion(blockSafariVersion);
-		}
-		if (StringUtils.isNotBlank(blockPexipIE)) {
-			ctx.setBlockPexipIE(blockPexipIE);
+		if (ctx != null) {
+			final String blockChrome = getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
+			final String blockFF = getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
+			final String blockEdge = getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
+			final String blockSafari = getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
+			final String blockSafariVersion = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
+			final String blockPexipIE = AppProperties.getExtPropertiesValueByKey("BLOCK_PEXIP_IE_BROWSER");
+			if (StringUtils.isNotBlank(blockChrome)) {
+				ctx.setBlockChrome(blockChrome);
+			}
+			if (StringUtils.isNotBlank(blockFF)) {
+				ctx.setBlockFF(blockFF);
+			}
+			if (StringUtils.isNotBlank(blockEdge)) {
+				ctx.setBlockEdge(blockEdge);
+			}
+			if (StringUtils.isNotBlank(blockSafari)) {
+				ctx.setBlockSafari(blockSafari);
+			}
+			if (StringUtils.isNotBlank(blockSafariVersion)) {
+				ctx.setBlockSafariVersion(blockSafariVersion);
+			}
+			if (StringUtils.isNotBlank(blockPexipIE)) {
+				ctx.setBlockPexipIE(blockPexipIE);
+			}
 		}
 	}
 
@@ -797,7 +799,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		updateWebappContextWithBrowserFlags(ctx);
+//		updateWebappContextWithBrowserFlags(ctx);
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		String jsonStr = null;
 		try {

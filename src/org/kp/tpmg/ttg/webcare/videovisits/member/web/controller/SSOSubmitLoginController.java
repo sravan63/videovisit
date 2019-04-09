@@ -68,6 +68,7 @@ public class SSOSubmitLoginController extends SimplePageController {
 				ctx.setAuthenticated(true);
 				ctx.setClientId(WebUtil.VV_MBR_SSO_WEB);
 				ctx.setBackButtonClientId(WebUtil.VV_MBR_SSO_BACK_BTN);
+				MeetingCommand.updateWebappContextWithBrowserFlags(ctx);
 			}
 		} catch (Exception e) {
 			logger.error("SSOSubmitLoginController -> System Error" + e.getMessage(), e);
