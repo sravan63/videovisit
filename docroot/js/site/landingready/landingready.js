@@ -348,6 +348,9 @@ function allowToJoin(vendor){
                 allow = true;
             } else {
                 allow = allowPexipIE; // Depends on backend flag.
+                if(allow == false){
+                    $('#browser-block-message').html('Join on your mobile device using the My Doctor Online app, or use use a different browser.');
+                }
             }
         }
     } else {
