@@ -1628,7 +1628,7 @@ var newStartTimeCheck = function(){
 					if(isRunningLate == true){
 						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
-							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
+							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:0px;'>We're sorry, your doctor is running late.</span>");
 					}else{
 							$(".waiting-text").html("Waiting for your doctor to join.");
 					}
@@ -1656,7 +1656,7 @@ var newStartTimeCheck = function(){
 						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
 						if(isHostAvailable == false){
-							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
+							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:0px;'>We're sorry, your doctor is running late.</span>");
 						}
 					}else{
 						if(isHostAvailable == false){
