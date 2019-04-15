@@ -191,31 +191,7 @@
 	 
 	  <div id="maincontent" class="main cf hidden">
 	    <section class="top conference-renderer">
-	      <div id="videocontainer" class="videocontainer">
-	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
-	        
-	        <div id="stat-window-container">
-	        	<table id="stat-window">
-	        		<!-- <tr>
-		        		<th> Outgoing Audio </th>
-		        		<th> Outgoing Video </th>
-		        		<th> Input Audio </th>
-		        		<th> Input Video </th>
-		        	</tr>
-		        	<tr>
-		        		<td></td>
-		        		<td></td>
-		        		<td></td>
-		        		<td></td>
-		        	</tr> -->
-	        	</table>
-	        </div>
-	        <div id="selfview" class="selfview">
-	          <video id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
-	          </video>
-	        </div>
-	      </div>
-	      <div class="provider-btn-container" id="btnContainer">
+	    	<div class="provider-btn-container" id="btnContainer">
 	            <div class="btn-group" id="buttonGroup" style="width: 100%; position: static;">
 	            	<div id="inCallButtonMuteVideo">
 	                  <div title="Disable Video" class="btns video-btn">&nbsp;</div>
@@ -242,6 +218,31 @@
 	                </div>
 				</div>
 			</div>
+	      <div id="videocontainer" class="videocontainer">
+	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
+	        
+	        <div id="stat-window-container">
+	        	<table id="stat-window">
+	        		<!-- <tr>
+		        		<th> Outgoing Audio </th>
+		        		<th> Outgoing Video </th>
+		        		<th> Input Audio </th>
+		        		<th> Input Video </th>
+		        	</tr>
+		        	<tr>
+		        		<td></td>
+		        		<td></td>
+		        		<td></td>
+		        		<td></td>
+		        	</tr> -->
+	        	</table>
+	        </div>
+	        <div id="selfview" class="selfview">
+	          <video id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
+	          </video>
+	        </div>
+	      </div>
+	      
 			<aside class="participants"><!-- List of participants -->
 		      	<div class="video-details" id="video-sidebar">
 					<div class="well hide" id="configurationWrap" style="display: none;">            <a class="close" id="configurationCross" href="#" data-hide="alert">×</a>    <h3 class="text-left">Settings</h3>
