@@ -220,7 +220,17 @@ function unpresentScreen(reason) {
 /* ~~~ MUTE AND HOLD/RESUME ~~~ */
 
 function muteUnmuteSpeaker() {
-    if (!id_mutespeaker.classList.contains("inactive")) {
+    var video=document.getElementById("video");
+      if(video.muted){
+        video.muted = false;
+        id_mutespeaker.classList.remove('mutedspeaker');
+        id_mutespeaker.classList.add('unmutedspeaker');
+      } else {
+        video.muted = true;
+        id_mutespeaker.classList.remove('unmutedspeaker');
+        id_mutespeaker.classList.add('mutedspeaker');
+      }
+    /*if (!id_mutespeaker.classList.contains("inactive")) {
         if (document.getElementById('video').volume == 1) {
             document.getElementById('video').volume = 0;
             id_mutespeaker.classList.remove('unmutedspeaker');
@@ -230,7 +240,7 @@ function muteUnmuteSpeaker() {
             id_mutespeaker.classList.remove('mutedspeaker');
             id_mutespeaker.classList.add('unmutedspeaker');
         }
-    }
+    }*/
 }
 
 function muteMicStreams() {
