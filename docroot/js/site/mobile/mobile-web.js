@@ -1601,11 +1601,12 @@ var sendUserJoinLeaveStatus = function(guestName, isPatient, status){
 }
 
 function toggleCamera(){
+	rtc.call_type = "video";
 	for(var i=0; i<mobileVideoSources.length;i++){
 		var videoSource = mobileVideoSources[i];
 		if(rtc.video_source !== videoSource){
 		    rtc.video_source =  videoSource;
-		    rtc.renegotiate();
+		    rtc.renegotiate("video");
 		    break;
 		}
 	}
