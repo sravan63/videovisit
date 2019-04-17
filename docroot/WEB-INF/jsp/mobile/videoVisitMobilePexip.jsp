@@ -10,6 +10,7 @@
 <input type="hidden" id="meetingCode" value="${WebAppContext.videoVisit.meetingCode}" />
 <input type="hidden" id="patientLastName" value="${WebAppContext.videoVisit.patientLastName.trim()}"/>
 <input type="hidden" id="meetingId" value="${WebAppContext.videoVisit.meetingId}" />
+<input type="hidden" id="isProxyMeeting" value="${WebAppContext.videoVisit.isProxyMeeting}" />
 <input type="hidden" id="isNative" value="${WebAppContext.isNative}" />
 <input type="hidden" id="isMember" value="${WebAppContext.videoVisit.isMember}" />
 <input type="hidden" id="bandwidth" value="${WebAppContext.bandwidth}" />

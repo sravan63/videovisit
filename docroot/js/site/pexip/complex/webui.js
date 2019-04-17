@@ -789,6 +789,9 @@ function logoutFromMDOApp(){
 
 function disconnect(){
     console.log("inside disconnect");
+    var url = window.location.href;
+    var memberMobile = url.indexOf("mobile") > -1;
+    var isMember = $("#isMember").val();
     var guestName = $("#guestName").val();
         var patientName =$("#meetingPatient").val();
         if(guestName.toLowerCase() == patientName.toLowerCase()){
@@ -803,6 +806,8 @@ function disconnect(){
         joinLeaveMeeting : "L",
         meetingId: $('#meetingId').val()
     };
+
+    if(memberMobile){
     $.ajax({
         type: "POST",
         url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
@@ -816,25 +821,43 @@ function disconnect(){
             console.log("joinLeaveMeeting :: error :: "+textStatus);
         }
     });
+}
     // rtc.disconnect();
+        var refreshMeetings = false;  
         var isNative = $("#isNative").val(),
             isMember = $("#isMember").val(),
             meetingCode =  $("#meetingCode").val(),
-            patientLastName = $("#patientLastName").val();
+            patientLastName = $("#patientLastName").val(),
+            isProxyMeeting = $('#isProxyMeeting').val(),
+            caregiverId =   $("#caregiverId").val(),
+            meetingId = $('#meetingId').val();
+
         if(isNative=="true"){
             window.location.href = 'mobileNativeLogout.htm';
         } else {
-            var url = window.location.href;
-            var memberMobile = url.indexOf("mobile") > -1;
+            //var url = window.location.href;
+            //var memberMobile = url.indexOf("mobile") > -1;
             if(memberMobile){
                 if(isMember == "true"){
                     window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
                 } else if (isMember == "false"){
                      window.location.href="mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + patientLastName ;
                 }
-            } else {
-                window.location.href = '/videovisit/landingready.htm';
+            }
+            if(isMember == "true"){
+                MemberVisit.QuitMeetingActionButtonYes(meetingId, decodeURIComponent($('#guestName').val()), refreshMeetings, isProxyMeeting);
+                 window.setTimeout(function(){
+                       window.location.href = '/videovisit/landingready.htm';
+                    },2000);
+
            }
-        }
+           else{
+                GuestVisit.QuitMeetingActionButtonYes(meetingCode, caregiverId, meetingId, refreshMeetings);
+                window.setTimeout(function(){
+                       window.location.href = '/videovisit/guestready.htm';
+                    },2000);
+
+           }
     
+}
 }

@@ -797,7 +797,17 @@ function startPexip() {
 	var bandwidth = "1280"; // $('#bandwidth').val();
 	var source = "Join+Conference";
 	var name = $("#guestName").val();
+	var isMember = $("#isMember").val();
+	var meetingCode = $("#meetingCode").val();
+	var meetingId = $('#meetingId').val();
+	var isProxyMeeting = $('#isProxyMeeting').val();
 	initialise(roomUrl, alias, bandwidth, name, "", source);
+	if(isMember == 'true' || isMember == true){
+		MemberVisit.SetKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
+	}
+	else{
+		MemberVisit.CaregiverJoinMeeting(meetingId, "J", meetingCode);
+	}
 }
 
 $(window).resize(function(){
