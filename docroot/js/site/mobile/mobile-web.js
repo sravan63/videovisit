@@ -1485,11 +1485,27 @@ function startPexip() {
 	initialise(roomUrl, alias, bandwidth, name, "", source);
 	newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
-		MemberVisit.SetKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
+		setKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
 	}
-	else{
-		MemberVisit.CaregiverJoinMeeting(meetingId, "J", meetingCode);
-	}
+}
+
+function setKPHCConferenceStatus(meetingId, status, isProxyMeeting, careGiverName){
+			var postParaKPHC = 'meetingId=' + meetingId + '&status=' + status + '&isProxyMeeting=' + isProxyMeeting + '&careGiverName=' + careGiverName;
+
+	         $.ajax({
+	            type: 'POST',
+	            url: "setKPHCConferenceStatus.json",
+	            cache: false,
+			    async: true,
+	            data: postParaKPHC,
+	            success: function(returndata) {
+	            	console.log("SetKPHCConferenceStatus: success returndata=" + returndata);
+	            },
+	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+	            error: function(theRequest, textStatus, errorThrown) {
+	            	console.log("SetKPHCConferenceStatus: error");           
+	            }
+	        });
 }
 
 function setVideoFeedHeight(){
