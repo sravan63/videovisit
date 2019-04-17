@@ -782,7 +782,10 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
-
+function logoutFromMDOApp(){
+    console.log('calling from MDO');
+    disconnect();
+}
 
 function disconnect(){
     console.log("inside disconnect");

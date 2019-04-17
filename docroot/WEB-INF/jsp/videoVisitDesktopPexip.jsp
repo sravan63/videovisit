@@ -209,7 +209,7 @@
 	                   <div title="" class="btns smd-btn">&nbsp;</div>
 	                   <div title="" class="btns smd-muted-btn">&nbsp;</div>
 	                </div>
-	                <div id="inCallButtonExpand" style="display: none;">
+	                <div id="inCallButtonExpand">
 	                   <div title="Expand" class="btns expand-btn">&nbsp;</div>
 	                   <div title="Shrink" class="btns shrink-btn">&nbsp;</div>
 	                </div>
