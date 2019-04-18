@@ -706,6 +706,7 @@ function connected(url) {
         }
     }
 //    toggleSelfview();
+    VideoVisit.setMinDimensions();
 }
 
 function switchDevices(){

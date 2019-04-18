@@ -218,7 +218,7 @@
 	                </div>
 				</div>
 			</div>
-	      <div id="videocontainer" class="videocontainer">
+	      <div id="pluginContainer" class="videocontainer">
 	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
 	        
 	        <div id="stat-window-container">
