@@ -190,7 +190,7 @@
 
 	 
 	  <div id="maincontent" class="main cf hidden">
-	    <section class="top conference-renderer">
+	    <section class="conference-renderer">
 	    	<div class="provider-btn-container" id="btnContainer">
 	            <div class="btn-group" id="buttonGroup" style="width: 100%; position: static;">
 	            	<div id="inCallButtonMuteVideo">
