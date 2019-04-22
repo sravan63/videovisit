@@ -899,6 +899,38 @@ function disconnect(){
 }
 }
 
+function disconnectOnRefresh(){
+    console.log("inside disconnect");
+    disconnectAlreadyCalled = true;
+    var guestName = $("#guestName").val();
+        var patientName =$("#meetingPatient").val();
+        if(guestName.toLowerCase() == patientName.toLowerCase()){
+            isPatientLoggedIn = true;
+        }
+        else{
+            isPatientLoggedIn = false;
+        }
+    var userData = {
+        inMeetingDisplayName : $("#guestName").val(),
+        isPatient : isPatientLoggedIn,
+        joinLeaveMeeting : "L",
+        meetingId: $('#meetingId').val()
+    };
+    $.ajax({
+        type: "POST",
+        url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+        cache: false,
+        dataType: "json",
+        data: userData,
+        success: function(result, textStatus){
+            console.log("joinLeaveMeeting :: result :: "+result);
+        },
+        error: function(textStatus){
+            console.log("joinLeaveMeeting :: error :: "+textStatus);
+        }
+    });
+}
+
 //jNotify Message Priortization
 var utilityNotifyQueue = function(notify_message){
   if (notify_message != "showMessage"){
@@ -954,5 +986,5 @@ $(window).on("beforeunload", function() {
 });
 
 function leaveFromMeeting(){
-    disconnect();
+    disconnectOnRefresh();
 }
