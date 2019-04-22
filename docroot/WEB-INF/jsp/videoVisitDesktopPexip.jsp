@@ -6,6 +6,13 @@
 <link rel="stylesheet" type="text/css" href="js/site/pexip/complex/style.css" />
 <!-- <link rel="stylesheet" media="€screen and (min-width:320px) and (max-width:550px)"€œ href="€js/site/pexip/complex/style-responsive.css" />  -->
 
+<link rel="stylesheet" type="text/css" href="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.css" media="screen" />
+
+<script src="vidyoplayer/scripts/libs/bootstrap.min.2.3.2.js"></script>
+<script src="vidyoplayer/scripts/libs/bootstrap-notify.1.0.js"></script>
+<script src="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.js"></script>
+<script src="vidyoplayer/scripts/libs/jquery.countdown.min.js"></script>
+
 <script type="text/javascript" src="js/site/pexip/complex/main-webrtc.js"></script>
 <!--	<script type="text/javascript" src="js/site/pexip/complex/main.js"></script>
 <script type="text/javascript" src="js/site/pexip/complex/webui.js"></script>

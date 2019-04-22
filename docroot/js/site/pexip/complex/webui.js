@@ -51,6 +51,27 @@ trans['HEADING_ROSTER_LIST'] = "Participants";
 trans['TITLE_HOSTS'] = "Hosts";
 trans['TITLE_GUESTS'] = "Guests";
 
+var firstParticipantFlag = "";
+var jNotifyDefaults = {
+    //autoHide: true,
+    clickOverlay: false,
+    MinWidth: 250,
+    TimeShown: 3000,
+    ShowTimeEffect: 200,
+    HideTimeEffect: 200,
+    LongTrip: 20,
+    HorizontalPosition: 'center',
+    VerticalPosition: -20,
+    ShowOverlay: false,
+    ColorOverlay: '#000',
+    OpacityOverlay: 0.3
+};
+var pexipParticipantsList = [];
+var utilitiesTemp = {};
+utilitiesTemp.msgQueue = [];
+utilitiesTemp.msgInProgress = false;
+var refreshingOrSelfJoinMeeting = true;
+
 /* ~~~ PRESENTATION STUFF ~~~ */
 function presentationClosed() {
     id_presentation.textContent = trans['BUTTON_SHOWPRES'];
@@ -501,9 +522,13 @@ function sipDialOut() {
 
 function participantCreated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
-    updateParticipantList(participant,'join');
+    //updateParticipantList(participant,'join');
     console.log("inside participantCreated");
-    
+    pexipParticipantsList.push(participant);
+    var joinParticipantMsg = participant.display_name + " has joined the visit.";
+    if(!refreshingOrSelfJoinMeeting){
+        utilityNotifyQueue(joinParticipantMsg);
+    }
     /*var participant_name = participant.display_name;
     console.log("Participant Name: " +participant.display_name);
 
@@ -571,14 +596,23 @@ function participantCreated(participant){
 function participantUpdated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     // toggleWaitingRoom();
-    updateParticipantList(participant,'join');
+    //updateParticipantList(participant,'join');
     console.log("inside participantUpdated");
 }
 
 function participantDeleted(participant){
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
     console.log("inside participantDeleted");
-    updateParticipantList(participant,'left');
+    var removingParticipant = pexipParticipantsList.filter(function(user){
+        return user.uuid == participant.uuid;
+    });
+    pexipParticipantsList = pexipParticipantsList.filter(function(user){
+        return user.uuid != participant.uuid;
+    });
+    var participantMsg = removingParticipant[0].display_name + " has left the visit.";
+    utilityNotifyQueue(participantMsg);
+    
+    //updateParticipantList(participant,'left');
 }
 
 function layoutUpdate(view){
@@ -690,7 +724,7 @@ function getMediaStats(){
 
 function connected(url) {
     console.log("inside connected");
-
+    refreshingOrSelfJoinMeeting = false;
     if (source == 'screen') {
         video.poster = "img/screenshare.png";
     } else {
@@ -862,3 +896,49 @@ function disconnect(){
     
 }
 }
+
+//jNotify Message Priortization
+var utilityNotifyQueue = function(notify_message){
+  if (notify_message != "showMessage"){
+    utilitiesTemp.msgQueue.push(notify_message);
+    if (utilitiesTemp.msgInProgress == false){
+      utilityNotifyQueue("showMessage");
+    }
+  }
+  else{
+    utilitiesTemp.msgInProgress = true;
+    notify_message = utilitiesTemp.msgQueue.pop();
+    if(firstParticipantFlag == true){
+      jNotify(
+        notify_message,
+        {
+          defaults: jNotifyDefaults,
+          autoHide: true,// made this as true to fix DE8857 issue(to hide jnotification for first time joined participant)
+          onClosed: function(){
+            if (utilitiesTemp.msgQueue.length > 0){
+              utilityNotifyQueue("showMessage"); // call the next message in the queue
+            }
+            else{
+              utilitiesTemp.msgInProgress = false;
+            }
+          }
+      });
+    }
+    else{
+      jNotify(
+        notify_message,
+        {
+          defaults: jNotifyDefaults,
+          autoHide: true,
+          onClosed: function(){
+            if (utilitiesTemp.msgQueue.length > 0){
+              utilityNotifyQueue("showMessage"); // call the next message in the queue
+            }
+            else{
+              utilitiesTemp.msgInProgress = false;
+            }
+          }
+      });
+    }
+  }
+};
