@@ -71,6 +71,7 @@ var utilitiesTemp = {};
 utilitiesTemp.msgQueue = [];
 utilitiesTemp.msgInProgress = false;
 var refreshingOrSelfJoinMeeting = true;
+var disconnectAlreadyCalled = false;
 
 /* ~~~ PRESENTATION STUFF ~~~ */
 function presentationClosed() {
@@ -824,6 +825,7 @@ function logoutFromMDOApp(){
 
 function disconnect(){
     console.log("inside disconnect");
+    disconnectAlreadyCalled = true;
     var url = window.location.href;
     var memberMobile = url.indexOf("mobile") > -1;
     var isMember = $("#isMember").val();
@@ -942,3 +944,15 @@ var utilityNotifyQueue = function(notify_message){
     }
   }
 };
+
+$(window).on("beforeunload", function() {
+    console.log('browser un loading');
+    utilitiesTemp.meetingEnded = true;
+    if(!disconnectAlreadyCalled){
+        leaveFromMeeting();
+    }    
+});
+
+function leaveFromMeeting(){
+    disconnect();
+}
