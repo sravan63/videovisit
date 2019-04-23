@@ -527,7 +527,7 @@ function participantCreated(participant){
     console.log("inside participantCreated");
     pexipParticipantsList.push(participant);
     var joinParticipantMsg = participant.display_name + " has joined the visit.";
-    if(!refreshingOrSelfJoinMeeting){
+    if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
         utilityNotifyQueue(joinParticipantMsg);
     }
     /*var participant_name = participant.display_name;
@@ -611,7 +611,9 @@ function participantDeleted(participant){
         return user.uuid != participant.uuid;
     });
     var participantMsg = removingParticipant[0].display_name + " has left the visit.";
-    utilityNotifyQueue(participantMsg);
+    if(removingParticipant.display_name != $('#guestName').val()){
+        utilityNotifyQueue(participantMsg);
+    } 
     
     //updateParticipantList(participant,'left');
 }
