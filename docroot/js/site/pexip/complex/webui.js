@@ -2,6 +2,7 @@
 
 var video;
 var flash;
+var isMobileDevice = false;
 var presentation = null;
 var flash_button = null;
 var bandwidth;
@@ -523,9 +524,8 @@ function sipDialOut() {
 
 function participantCreated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
-     var url = window.location.href;
-    var memberMobile = url.indexOf("mobile") > -1;
-    if(memberMobile){
+    
+    if(isMobileDevice){
     updateParticipantList(participant,'join');
     console.log("inside participantCreated");
      }
@@ -603,9 +603,7 @@ function participantCreated(participant){
 function participantUpdated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     // toggleWaitingRoom();
-     var url = window.location.href;
-    var memberMobile = url.indexOf("mobile") > -1;
-    if(memberMobile){
+    if(isMobileDevice){
     updateParticipantList(participant,'join');
     console.log("inside participantUpdated");
 }
@@ -613,9 +611,7 @@ function participantUpdated(participant){
 
 function participantDeleted(participant){
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
-     var url = window.location.href;
-    var memberMobile = url.indexOf("mobile") > -1;
-    if(memberMobile){
+    if(isMobileDevice){
         updateParticipantList(participant,'left');
     console.log("inside participantDeleted");
      }

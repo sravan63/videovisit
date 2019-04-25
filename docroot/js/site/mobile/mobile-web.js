@@ -4,6 +4,7 @@ var VIDEO_VISITS_MOBILE = {
     jQueryWindow   : $(window)
 };
 
+var isMobileDevice;
 var newStartTimeRecursiveCall;
 
 VIDEO_VISITS_MOBILE.Path = {
@@ -1482,6 +1483,7 @@ function startPexip() {
 	var meetingId = $('#meetingId').val();
 	var meetingCode = $("#meetingCode").val();
 	var isProxyMeeting = $('#isProxyMeeting').val();
+	isMobileDevice = true;
 	initialise(roomUrl, alias, bandwidth, name, "", source);
 	newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
