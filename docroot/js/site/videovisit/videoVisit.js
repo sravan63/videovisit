@@ -4,6 +4,7 @@ var newStartTimeRecursiveCall;
 var meetingHostName = "";
 var meetingPatientName = "";
 var sidePaneMeetingDetails = {sortedParticipantsList: []};
+var isPexip = false;
 
 $(document).ready(function() {
 	$.ajax({
@@ -46,6 +47,7 @@ $(document).ready(function() {
 		complete: function(returndata) {
         }
 	});
+	isPexip = $('#vendor').val() === 'pexip';
 	//$('html').css('overflow-y', 'hidden');
 	var windowHeight = $(window).height();
 	var windowWidth = $(window).width();
@@ -220,10 +222,11 @@ $(document).ready(function() {
 
     //DE9451 - Splash screen scroll issue fix
 	$('html').addClass("no-scroll");
-		
-	setTimeout(function(){
-		setSidePanParticipantsListHeight();
-	}, 1000);
+	if(!isPexip){
+		setTimeout(function(){
+			setSidePanParticipantsListHeight();
+		}, 1000);
+	}
 	
 	VideoVisit.updatePatientGuestNameList();
 	
@@ -633,6 +636,9 @@ var VideoVisit =
 		if($('#webrtc').val() == 'true'){
 			$('#inCallContainer').css('min-width', '0');
 			$('#inCallContainer').css('margin-top', '0');
+		}
+		if(isPexip){
+			setSidePanParticipantsListHeight();
 		}
 	}
 
