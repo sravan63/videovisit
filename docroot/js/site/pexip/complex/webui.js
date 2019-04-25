@@ -611,7 +611,7 @@ function participantDeleted(participant){
         return user.uuid != participant.uuid;
     });
     var participantMsg = removingParticipant[0].display_name + " has left the visit.";
-    if(removingParticipant.display_name != $('#guestName').val()){
+    if(!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()){
         utilityNotifyQueue(participantMsg);
     } 
     
@@ -727,7 +727,9 @@ function getMediaStats(){
 
 function connected(url) {
     console.log("inside connected");
-    refreshingOrSelfJoinMeeting = false;
+    setTimeout(function(){
+        refreshingOrSelfJoinMeeting = false;
+    },5000);
     if (source == 'screen') {
         video.poster = "img/screenshare.png";
     } else {
