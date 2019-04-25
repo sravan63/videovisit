@@ -523,13 +523,19 @@ function sipDialOut() {
 
 function participantCreated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
-    //updateParticipantList(participant,'join');
+     var url = window.location.href;
+    var memberMobile = url.indexOf("mobile") > -1;
+    if(memberMobile){
+    updateParticipantList(participant,'join');
     console.log("inside participantCreated");
+     }
+     else {
     pexipParticipantsList.push(participant);
     var joinParticipantMsg = participant.display_name + " has joined the visit.";
     if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
         utilityNotifyQueue(joinParticipantMsg);
     }
+}
     /*var participant_name = participant.display_name;
     console.log("Participant Name: " +participant.display_name);
 
@@ -597,13 +603,23 @@ function participantCreated(participant){
 function participantUpdated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     // toggleWaitingRoom();
-    //updateParticipantList(participant,'join');
+     var url = window.location.href;
+    var memberMobile = url.indexOf("mobile") > -1;
+    if(memberMobile){
+    updateParticipantList(participant,'join');
     console.log("inside participantUpdated");
+}
 }
 
 function participantDeleted(participant){
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
+     var url = window.location.href;
+    var memberMobile = url.indexOf("mobile") > -1;
+    if(memberMobile){
+        updateParticipantList(participant,'left');
     console.log("inside participantDeleted");
+     }
+else {
     var removingParticipant = pexipParticipantsList.filter(function(user){
         return user.uuid == participant.uuid;
     });
@@ -614,8 +630,8 @@ function participantDeleted(participant){
     if(!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()){
         utilityNotifyQueue(participantMsg);
     } 
+}
     
-    //updateParticipantList(participant,'left');
 }
 
 function layoutUpdate(view){
