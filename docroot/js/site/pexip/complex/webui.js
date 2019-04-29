@@ -840,7 +840,7 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
 }
 
 function logoutFromMDOApp(){
-    console.log('calling from MDO');
+    console.log('calling from MDO app');
     disconnect();
 }
 
