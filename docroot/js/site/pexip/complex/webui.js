@@ -832,7 +832,7 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
 
     startTime = new Date();
     rtc.turn_server = {
-        url: sidePaneMeetingDetails.vendorConfig.turnServers[0],
+        url: sidePaneMeetingDetails.vendorConfig.turnServers,
         username: sidePaneMeetingDetails.vendorConfig.turnUserName,
         credential: sidePaneMeetingDetails.vendorConfig.turnPassword
     };
