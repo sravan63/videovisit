@@ -831,11 +831,11 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
     console.log("Conference: " + conference);
 
     startTime = new Date();
-    rtc.turnServer = {
+    /*rtc.turnServer = {
         url: sidePaneMeetingDetails.vendorConfig.turnServers,
         username: sidePaneMeetingDetails.vendorConfig.turnUserName,
         credential: sidePaneMeetingDetails.vendorConfig.turnPassword
-    };
+    };*/
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
