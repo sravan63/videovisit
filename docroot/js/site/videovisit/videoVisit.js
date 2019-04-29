@@ -486,7 +486,7 @@ var VideoVisit =
 		}
 		return available;
       },
-	checkAndShowParticipantAvailableState: function(participants,isWebRTC){
+	checkAndShowParticipantAvailableState: function(participants,vendorval){
 		if(participants){
 			var hostAvailable = false;
 			for(var ini=0;ini<sidePaneMeetingDetails.sortedParticipantsList.length;ini++){
@@ -494,7 +494,7 @@ var VideoVisit =
 			}
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
-        		var prName = (isWebRTC)?participants[i].trim():pData.name.trim();
+        		var prName = (vendorval == 'webrtc')?participants[i].trim():(vendorval == 'vidyo')?pData.name.trim(): participants[i].display_name.trim();
         		/*var pName = '';
         		if((prName.match(/,/g) || []).length == 2 && prName.indexOf('@') > 0){
         			pName = prName;//check for guest name with email

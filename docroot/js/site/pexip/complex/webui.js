@@ -526,16 +526,17 @@ function participantCreated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     
     if(isMobileDevice){
-    updateParticipantList(participant,'join');
-    console.log("inside participantCreated");
+	    updateParticipantList(participant,'join');
+	    console.log("inside participantCreated");
      }
      else {
-    pexipParticipantsList.push(participant);
-    var joinParticipantMsg = participant.display_name + " has joined the visit.";
-    if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
-        utilityNotifyQueue(joinParticipantMsg);
-    }
-}
+	    pexipParticipantsList.push(participant);
+	    var joinParticipantMsg = participant.display_name + " has joined the visit.";
+	    if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
+	        utilityNotifyQueue(joinParticipantMsg);
+	    }
+	    VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
+	}
     /*var participant_name = participant.display_name;
     console.log("Participant Name: " +participant.display_name);
 
@@ -613,21 +614,20 @@ function participantDeleted(participant){
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
     if(isMobileDevice){
         updateParticipantList(participant,'left');
-    console.log("inside participantDeleted");
-     }
-else {
-    var removingParticipant = pexipParticipantsList.filter(function(user){
-        return user.uuid == participant.uuid;
-    });
-    pexipParticipantsList = pexipParticipantsList.filter(function(user){
-        return user.uuid != participant.uuid;
-    });
-    var participantMsg = removingParticipant[0].display_name + " has left the visit.";
-    if(!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()){
-        utilityNotifyQueue(participantMsg);
-    } 
-}
-    
+        console.log("inside participantDeleted");
+     }else {
+    	 var removingParticipant = pexipParticipantsList.filter(function(user){
+    		 return user.uuid == participant.uuid;
+    	 });
+    	 pexipParticipantsList = pexipParticipantsList.filter(function(user){
+    		 return user.uuid != participant.uuid;
+    	 });
+    	 var participantMsg = removingParticipant[0].display_name + " has left the visit.";
+	    if(!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()){
+	        utilityNotifyQueue(participantMsg);
+	    }
+	    VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
+     }   
 }
 
 function layoutUpdate(view){
