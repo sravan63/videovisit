@@ -831,12 +831,28 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
     console.log("Conference: " + conference);
 
     startTime = new Date();
-    /*rtc.turnServer = {
-        url: sidePaneMeetingDetails.vendorConfig.turnServers,
-        username: sidePaneMeetingDetails.vendorConfig.turnUserName,
-        credential: sidePaneMeetingDetails.vendorConfig.turnPassword
-    };*/
+    rtc.turnServer = getTurnServersObjs();
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
+}
+
+function getTurnServersObjs(){
+    var t_servers = [];
+    if(typeof sidePaneMeetingDetails.vendorConfig.turnServers == 'string'){
+        t_servers.push({
+            url: sidePaneMeetingDetails.vendorConfig.turnServers,
+            username: sidePaneMeetingDetails.vendorConfig.turnUserName,
+            credential: sidePaneMeetingDetails.vendorConfig.turnPassword
+        });
+    }else{
+        for(let i=0;i<sidePaneMeetingDetails.vendorConfig.turnServers.length;i++){
+            t_servers.push({
+                url: sidePaneMeetingDetails.vendorConfig.turnServers[i],
+                username: sidePaneMeetingDetails.vendorConfig.turnUserName,
+                credential: sidePaneMeetingDetails.vendorConfig.turnPassword
+            });
+        }
+    }
+    return t_servers;
 }
 
 function logoutFromMDOApp(){
