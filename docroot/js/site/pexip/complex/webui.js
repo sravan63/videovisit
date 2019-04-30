@@ -831,7 +831,9 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
     console.log("Conference: " + conference);
 
     startTime = new Date();
-    rtc.turnServer = getTurnServersObjs();
+    if(sidePaneMeetingDetails.vendorConfig){
+        rtc.turnServer = getTurnServersObjs();
+    }
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
