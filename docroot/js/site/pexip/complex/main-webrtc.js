@@ -8,11 +8,15 @@
 
 'use strict';
 var cameraID;
+var audioInputSelect;
+var audioOutputSelect;
+var videoSelect;
+var selectors;
 const videoElement = document.querySelector('video');
-const audioInputSelect = document.querySelector('select#audioSource');
-const audioOutputSelect = document.querySelector('select#audioOutput');
-const videoSelect = document.querySelector('select#videoSource');
-const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+audioInputSelect = document.querySelector('select#audioSource');
+  audioOutputSelect = document.querySelector('select#speakerSource');
+  videoSelect = document.querySelector('select#videoSource');
+  selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 var mobileVideoSources = [];
 
 //audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
