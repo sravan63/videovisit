@@ -12,10 +12,10 @@ var audioInputSelect;
 var audioOutputSelect;
 var videoSelect;
 var selectors;
-const videoElement = document.querySelector('video');
-audioInputSelect = document.querySelector('select#audioSource');
-  audioOutputSelect = document.querySelector('select#speakerSource');
-  videoSelect = document.querySelector('select#videoSource');
+var videoElement = document.querySelector('video');
+audioInputSelect = document.getElementById('audioSource');
+  audioOutputSelect = document.getElementById('speakerSource');
+  videoSelect = document.getElementById('videoSource');
   selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 var mobileVideoSources = [];
 
@@ -23,36 +23,39 @@ var mobileVideoSources = [];
 
 function gotDevices(deviceInfos) {
   // Handles being called several times to update labels. Preserve values.
-  const values = selectors.map(select => select.value);
-  selectors.forEach(select => {
-    while (select.firstChild) {
-      select.removeChild(select.firstChild);
-    }
-  });
-  for (let i = 0; i !== deviceInfos.length; ++i) {
-    const deviceInfo = deviceInfos[i];
-    const option = document.createElement('option');
+  // var values = selectors.map(select => select.value);
+  // selectors.forEach(select => {
+  //   while (select.firstChild) {
+  //     select.removeChild(select.firstChild);
+  //   }
+  // });
+  for (var  i = 0; i !== deviceInfos.length; ++i) {
+    var deviceInfo = deviceInfos[i];
+    var option = document.createElement('option');
     option.value = deviceInfo.deviceId;
     if (deviceInfo.kind === 'audioinput') {
       option.text = deviceInfo.label || `microphone ${audioInputSelect.length + 1}`;
-      audioInputSelect.appendChild(option);
+      // audioInputSelect.appendChild(option);
     } else if (deviceInfo.kind === 'audiooutput') {
       option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
-      audioOutputSelect.appendChild(option);
+      // audioOutputSelect.appendChild(option);
     } else if (deviceInfo.kind === 'videoinput') {
       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
-      videoSelect.appendChild(option);
+      // videoSelect.appendChild(option);
       mobileVideoSources.push(option.value);
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
   }
-  selectors.forEach((select, selectorIndex) => {
-    if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
-      select.value = values[selectorIndex];
-    }
-  });
+  // selectors.forEach((select, selectorIndex) => {
+  //   if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+  //     select.value = values[selectorIndex];
+  //   }
+  // });
+  start();
 }
+
+
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
@@ -64,7 +67,7 @@ function attachSinkId(element, sinkId) {
         console.log(`Success, audio output device attached: ${sinkId}`);
       })
       .catch(error => {
-        let errorMessage = error;
+        var errorMessage = error;
         if (error.name === 'SecurityError') {
           errorMessage = `You need to use HTTPS for selecting audio output device: ${error}`;
         }
@@ -78,7 +81,7 @@ function attachSinkId(element, sinkId) {
 }
 
 function changeAudioDestination() {
-  const audioDestination = audioOutputSelect.value;
+  var audioDestination = audioOutputSelect.value;
   attachSinkId(videoElement, audioDestination);
 }
 
@@ -99,10 +102,10 @@ function start() {
       track.stop();
     });
   }
-  const audioSource = audioInputSelect.value;
-  const videoSource = videoSelect.value;
+  var audioSource = audioInputSelect.value;
+  var videoSource = videoSelect.value;
   cameraID = videoSource;
-  const constraints = {
+  var constraints = {
     audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
     video: {deviceId: videoSource ? {exact: videoSource} : undefined}
   };
@@ -114,4 +117,3 @@ audioOutputSelect.onchange = changeAudioDestination;
 
 videoSelect.onchange = start;*/
 
-start();
