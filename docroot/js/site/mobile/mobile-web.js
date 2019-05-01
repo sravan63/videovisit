@@ -5,6 +5,7 @@ var VIDEO_VISITS_MOBILE = {
 };
 
 var isMobileDevice;
+var isRearCamera = false;
 var newStartTimeRecursiveCall;
 
 VIDEO_VISITS_MOBILE.Path = {
@@ -1629,17 +1630,44 @@ var sendUserJoinLeaveStatus = function(guestName, isPatient, status){
 }
 
 function toggleCamera(){
-	rtc.call_type = "video";
-	for(var i=0; i<mobileVideoSources.length;i++){
+	 var videoSource, callType = 'video';
+	videoSource = isRearCamera ? mobileVideoSources[0] : mobileVideoSources[1];
+	isRearCamera = !isRearCamera;
+	updateCall(callType, videoSource);
+	/*for(var i=0; i<mobileVideoSources.length;i++){
 		var videoSource = mobileVideoSources[i];
 		if(rtc.video_source !== videoSource){
 		    rtc.video_source =  videoSource;
 		    rtc.renegotiate("video");
 		    break;
 		}
-	}
+	}*/
 }
+function updateCall(callType, videoSource = null, audioSource = null) {
+        rtc.call_type = callType;
 
+        if (videoSource) {
+            const {exact} = videoSource;
+            if (exact) {
+                rtc.video_source = exact;
+            }
+            else {
+                rtc.video_source = videoSource;
+            }
+        }
+
+        if (audioSource) {
+            const {exact} = audioSource;
+            if (exact) {
+                rtc.audio_source = exact;
+            }
+            else {
+                rtc.audio_source = audioSource;
+            }
+        }
+
+        rtc.renegotiate(callType);
+    }
 var newStartTimeCheck = function(){
 		var isHostAvailable =  validateHostAvailability();
 	     if(isHostAvailable){ 
