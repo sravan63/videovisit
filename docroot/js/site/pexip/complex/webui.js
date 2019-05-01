@@ -836,7 +836,7 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
     if(isMobileDevice){
         rtc.turnServer = getTurnServerObjsForMobile();
     }else{
-        if(sidePaneMeetingDetails.vendorConfig){
+        if(sidePaneMeetingDetails.vendorConfig && sidePaneMeetingDetails.vendorConfig.turnServers){
             rtc.turnServer = getTurnServersObjs();
         }
     }    
