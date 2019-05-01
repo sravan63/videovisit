@@ -757,7 +757,9 @@ function connected(url) {
         }
     }
 //    toggleSelfview();
-    VideoVisit.setMinDimensions();
+    if(!isMobileDevice){
+        VideoVisit.setMinDimensions();
+    }
 }
 
 function switchDevices(){
@@ -831,9 +833,13 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
     console.log("Conference: " + conference);
 
     startTime = new Date();
-    /*if(sidePaneMeetingDetails.vendorConfig){
-        rtc.turnServer = getTurnServersObjs();
-    }*/
+    if(isMobileDevice){
+        rtc.turnServer = getTurnServerObjsForMobile();
+    }else{
+        if(sidePaneMeetingDetails.vendorConfig){
+            rtc.turnServer = getTurnServersObjs();
+        }
+    }    
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
@@ -851,6 +857,21 @@ function getTurnServersObjs(){
                 url: sidePaneMeetingDetails.vendorConfig.turnServers[i],
                 username: sidePaneMeetingDetails.vendorConfig.turnUserName,
                 credential: sidePaneMeetingDetails.vendorConfig.turnPassword
+            });
+        }
+    }
+    return t_servers;
+}
+
+function getTurnServerObjsForMobile(){
+    var t_servers = [];
+    if($('#turnServers').val()){
+        var servers = $('#turnServers').val().replace('[','').replace(']','').split(',');
+        for(let i=0;i<servers.length;i++){
+            t_servers.push({
+                url: servers[i].trim(),
+                username: $('#turnUserName').val().trim(),
+                credential: $('#turnPassword').val().trim()
             });
         }
     }
