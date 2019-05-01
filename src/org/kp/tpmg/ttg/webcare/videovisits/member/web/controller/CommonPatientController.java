@@ -64,6 +64,7 @@ public abstract class CommonPatientController implements Controller {
 							videoVisitParams.setVendorGuestPin(meeting.getVendorGuestPin());
 							videoVisitParams.setVendorRole(meeting.getMember().getVendorRole());
 							videoVisitParams.setVendorConfId(meeting.getMeetingVendorId());
+							videoVisitParams.setVendorConfig(meeting.getVendorConfig());
 						}
 					}
 				}

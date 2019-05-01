@@ -3,6 +3,7 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.data;
 import java.io.Serializable;
 import java.util.List;
 
+import org.kp.tpmg.videovisit.model.VendorConfig;
 import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Provider;
@@ -38,6 +39,7 @@ public class VideoVisitParamsDTO implements Serializable {
 	private String vendorGuestPin;
 	private String vendorRole;
 	private List<SipParticipant> sipParticipants;
+	private VendorConfig vendorConfig;
 
 	public String getVidyoUrl() {
 		return vidyoUrl;
@@ -335,6 +337,20 @@ public class VideoVisitParamsDTO implements Serializable {
 	}
 
 	/**
+	 * @return the vendorConfig
+	 */
+	public VendorConfig getVendorConfig() {
+		return vendorConfig;
+	}
+
+	/**
+	 * @param vendorConfig the vendorConfig to set
+	 */
+	public void setVendorConfig(VendorConfig vendorConfig) {
+		this.vendorConfig = vendorConfig;
+	}
+
+	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -347,7 +363,8 @@ public class VideoVisitParamsDTO implements Serializable {
 				+ isMember + ", meetingDate=" + meetingDate + ", meetingTime=" + meetingTime + ", participant="
 				+ participant + ", caregiver=" + caregiver + ", vendorConfId=" + vendorConfId + ", isProxyMeeting="
 				+ isProxyMeeting + ", webrtc=" + webrtc + ", vendor=" + vendor + ", vendorHostPin=" + vendorHostPin
-				+ ", vendorGuestPin=" + vendorGuestPin + ", vendorRole=" + vendorRole + ", sipParticipants=" + sipParticipants + "]";
+				+ ", vendorGuestPin=" + vendorGuestPin + ", vendorRole=" + vendorRole + ", sipParticipants=" + sipParticipants
+				+ ", vendorConfig=" + vendorConfig +"]";
 	}
 
 }

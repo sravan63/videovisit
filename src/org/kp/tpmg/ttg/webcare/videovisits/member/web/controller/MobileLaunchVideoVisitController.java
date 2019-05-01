@@ -127,6 +127,7 @@ public class MobileLaunchVideoVisitController implements Controller {
 				videoVisitParams.setVendor(meetingDo.getVendor());
 				videoVisitParams.setVendorGuestPin(meetingDo.getVendorGuestPin());
 				videoVisitParams.setVendorHostPin(meetingDo.getVendorHostPin());
+				videoVisitParams.setVendorConfig(meetingDo.getVendorConfig());
 				if (StringUtils.isBlank(inMeetingDisplayName)) {
 					inMeetingDisplayName = meetingDo.getMember().getLastName() + ", "
 							+ meetingDo.getMember().getFirstName();
