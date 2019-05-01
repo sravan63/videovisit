@@ -19,7 +19,11 @@
 <input type="hidden" id="guestPin" value="${WebAppContext.videoVisit.vendorGuestPin}" />
 <input type="hidden" id="turnServers" value="${WebAppContext.videoVisit.vendorConfig.turnServers}" />
 <input type="hidden" id="turnUserName" value="${WebAppContext.videoVisit.vendorConfig.turnUserName}" />
+<<<<<<< HEAD
 <input type="hidden" id="turnPassword" value="${WebAppContext.videoVisit.vendorConfig.turnPassword}" />
+=======
+<input type="hidden" id="turnPassword" value="${WebAppContext.videoVisit.vendorConfig,turnPassword}" />
+>>>>>>> branch 'master' of https://TTGSSDV0VRHCM01.TTGTPMG.NET/tpmg/videovisit/member-facing/videovisit-member-webapp.git
 
 <link rel="stylesheet" type="text/css" href="js/site/pexip/complex/style.css" />
 <!-- <link rel="stylesheet" media="€screen and (min-width:320px) and (max-width:550px)"€œ href="€js/site/pexip/complex/style-responsive.css" />  -->
