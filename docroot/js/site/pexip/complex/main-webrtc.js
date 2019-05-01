@@ -13,6 +13,7 @@ const audioInputSelect = document.querySelector('select#audioSource');
 const audioOutputSelect = document.querySelector('select#audioOutput');
 const videoSelect = document.querySelector('select#videoSource');
 const selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+var mobileVideoSources = [];
 
 //audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
@@ -37,6 +38,7 @@ function gotDevices(deviceInfos) {
     } else if (deviceInfo.kind === 'videoinput') {
       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
       videoSelect.appendChild(option);
+      mobileVideoSources.push(option.value);
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
