@@ -17,6 +17,9 @@
 <input type="hidden" id="conferenceId" value="${WebAppContext.videoVisit.vendorConfId}" />
 <input type="hidden" id="guestUrl" value="${WebAppContext.videoVisit.guestUrl}" />
 <input type="hidden" id="guestPin" value="${WebAppContext.videoVisit.vendorGuestPin}" />
+<input type="hidden" id="turnServers" value="${WebAppContext.videoVisit.vendorConfig.turnServers}" />
+<input type="hidden" id="turnUserName" value="${WebAppContext.videoVisit.vendorConfig.turnUserName}" />
+<input type="hidden" id="turnPassword" value="${WebAppContext.videoVisit.vendorConfig.turnPassword}" />
 
 <link rel="stylesheet" type="text/css" href="js/site/pexip/complex/style.css" />
 <!-- <link rel="stylesheet" media="€screen and (min-width:320px) and (max-width:550px)"€œ href="€js/site/pexip/complex/style-responsive.css" />  -->
