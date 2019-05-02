@@ -128,12 +128,14 @@ public class MobileLaunchVideoVisitController implements Controller {
 				videoVisitParams.setVendorGuestPin(meetingDo.getVendorGuestPin());
 				videoVisitParams.setVendorHostPin(meetingDo.getVendorHostPin());
 				videoVisitParams.setVendorConfig(meetingDo.getVendorConfig());
+				final String guestName = meetingDo.getMember().getLastName() + ", "
+						+ meetingDo.getMember().getFirstName();
 				if (StringUtils.isBlank(inMeetingDisplayName)) {
-					inMeetingDisplayName = meetingDo.getMember().getLastName() + ", "
-							+ meetingDo.getMember().getFirstName();
+					inMeetingDisplayName = guestName;
 				}
+				
 				videoVisitParams.setUserName(inMeetingDisplayName);
-				videoVisitParams.setGuestName(inMeetingDisplayName);
+				videoVisitParams.setGuestName(guestName);
 
 				if (isProxyMeeting) {
 					videoVisitParams.setIsMember("false");
