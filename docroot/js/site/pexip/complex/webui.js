@@ -982,7 +982,6 @@ function disconnect(){
                      window.location.href="mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + patientLastName ;
                 }
             }
-            else {
             if(isMember == "true"){
                 MemberVisit.QuitMeetingActionButtonYes(meetingId, decodeURIComponent($('#guestName').val()), refreshMeetings, isProxyMeeting);
                  window.setTimeout(function(){
@@ -997,7 +996,6 @@ function disconnect(){
                     },2000);
 
            }
-       }
     
 }
 }

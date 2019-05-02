@@ -1441,21 +1441,7 @@ function configurePexipVideoProperties(){
 
 	setVideoFeedHeight();
 
-	// <script type="text/javascript" src="js/site/pexip/complex/main-webrtc.js"></script>
-
-	var reqscript = document.createElement('script');
-      reqscript.src = "js/site/pexip/complex/main-webrtc.js";
-      reqscript.type = "text/javascript";
-      document.getElementsByTagName("head")[0].appendChild(reqscript);
-
-      reqscript.onload = function(){
-      	console.log("main-webrtc.js is loaded");
-      	loadPexipFiles();
-    };
-}
-
-function loadPexipFiles(){
-	var reqscript1 = document.createElement('script');
+    var reqscript1 = document.createElement('script');
       reqscript1.src = "js/site/pexip/complex/webui.js";
       reqscript1.type = "text/javascript";
       document.getElementsByTagName("head")[0].appendChild(reqscript1);
@@ -1470,11 +1456,11 @@ function loadPexipFiles(){
       document.getElementsByTagName("head")[0].appendChild(reqscript2);
 
     reqscript1.onload = function(){
-      	console.log("webui.js is loaded");
+      	console.log("reqscript1 loaded");
     };
 
     reqscript2.onload = function(){
-		console.log("pexrtcV20.js is loaded");
+		console.log("reqscript2 loaded");
 		startPexip();
 		var guestName = $("#guestName").val();
 		var patientName =$("#meetingPatient").val();
@@ -1645,16 +1631,17 @@ var sendUserJoinLeaveStatus = function(guestName, isPatient, status){
 
 function toggleCamera(){
 	 var videoSource, callType = 'video';
-	// videoSource = isRearCamera ? mobileVideoSources[0] : mobileVideoSources[1];
-	// isRearCamera = !isRearCamera;
-	// updateCall(callType, videoSource);
-	for(var i=0; i<mobileVideoSources.length;i++){
-		videoSource = mobileVideoSources[i];
+	videoSource = isRearCamera ? mobileVideoSources[0] : mobileVideoSources[1];
+	isRearCamera = !isRearCamera;
+	updateCall(callType, videoSource);
+	/*for(var i=0; i<mobileVideoSources.length;i++){
+		var videoSource = mobileVideoSources[i];
 		if(rtc.video_source !== videoSource){
-		    updateCall(callType, videoSource);
+		    rtc.video_source =  videoSource;
+		    rtc.renegotiate("video");
 		    break;
 		}
-	}
+	}*/
 }
 function updateCall(callType, videoSource = null, audioSource = null) {
         rtc.call_type = callType;

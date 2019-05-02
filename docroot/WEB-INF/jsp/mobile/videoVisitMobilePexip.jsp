@@ -24,7 +24,7 @@
 <link rel="stylesheet" type="text/css" href="js/site/pexip/complex/style.css" />
 <!-- <link rel="stylesheet" media="€screen and (min-width:320px) and (max-width:550px)"€œ href="€js/site/pexip/complex/style-responsive.css" />  -->
 
-<!-- <script type="text/javascript" src="js/site/pexip/complex/main-webrtc.js"></script> -->
+<script type="text/javascript" src="js/site/pexip/complex/main-webrtc.js"></script>
 <!--	<script type="text/javascript" src="js/site/pexip/complex/main.js"></script>
 <script type="text/javascript" src="js/site/pexip/complex/webui.js"></script>
 <script type="text/javascript" src="js/site/pexip/complex/pexrtc.js"></script>	-->
