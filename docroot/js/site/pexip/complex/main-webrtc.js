@@ -29,7 +29,7 @@ function gotDevices(deviceInfos) {
   //     select.removeChild(select.firstChild);
   //   }
   // });
-  for (var  i = 0; i !== deviceInfos.length; ++i) {
+  for (var  i = 0; i<deviceInfos.length; i++) {
     var deviceInfo = deviceInfos[i];
     var option = document.createElement('option');
     option.value = deviceInfo.deviceId;
