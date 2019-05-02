@@ -31,10 +31,12 @@
 	
 	    if (navigator.userAgent.indexOf("Chrome") != -1) {
 	        chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+	        $('#inCallButtonLocalShare').css('display', 'block');
 	    }
 	
 	    if (navigator.userAgent.indexOf("Firefox") != -1) {
 	        firefox_ver = parseInt(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
+	        $('#inCallButtonLocalShare').css('display', 'block');
 	    }
 	
 	    if (navigator.userAgent.indexOf("Edge") != -1) {
@@ -74,6 +76,8 @@
 	}
 </script>
 
+<script type='text/javascript'>function switchImage() { document.getElementById('presimage').src.src = document.getElementById('loadimage').src; }</script>
+
 <style>
 	html{
 		padding: 0;
@@ -102,6 +106,9 @@
 	}
 	#stat-window tr{
 		height: 20px;
+	}
+	#inCallButtonLocalShare{
+		display: none;
 	}
 </style>
 
@@ -213,8 +220,8 @@
 	                   <div title="Unmute Mic" class="btns microphone-muted-btn">&nbsp;</div>
 	                </div>
 	                <div id="inCallButtonLocalShare">
-	                   <div title="" class="btns smd-btn">&nbsp;</div>
-	                   <div title="" class="btns smd-muted-btn">&nbsp;</div>
+	                   <div title="" id="id_screenshare" class="btns smd-btn" onclick="presentScreen();">&nbsp;</div>
+	                   <div title="" id="id_screen_unshare" class="btns smd-muted-btn"onclick="stopSharing();">&nbsp;</div>
 	                </div>
 	                <div id="inCallButtonExpand">
 	                   <div title="Expand" class="btns expand-btn">&nbsp;</div>
@@ -248,6 +255,7 @@
 	          <video id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
 	          </video>
 	        </div>
+	        <div id="presentation-view" class="presentation-view"></div>
 	      </div>
 	      
 			<aside class="participants"><!-- List of participants -->

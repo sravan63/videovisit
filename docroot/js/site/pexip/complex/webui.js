@@ -76,37 +76,42 @@ var disconnectAlreadyCalled = false;
 
 /* ~~~ PRESENTATION STUFF ~~~ */
 function presentationClosed() {
-    id_presentation.textContent = trans['BUTTON_SHOWPRES'];
-    if (presentation && presentation.document.getElementById('presvideo')) {
+    //id_presentation.textContent = trans['BUTTON_SHOWPRES'];
+    if (presentation && $(presentation).find('#presvideo').length>0) {
         rtc.stopPresentation();
     }
     presentation = null;
+    $('#presentation-view').css('display', 'none');
 }
 
 function remotePresentationClosed(reason) {
     if (presentation) {
-        if (reason) {
+        /*if (reason) {
             alert(reason);
-        }
-        presentation.close()
+        }*/
+        //presentation.close()
+        $(presentation).css('display', 'none');
+        presentation = null;
     }
 }
 
 function checkForBlockedPopup() {
-    id_presentation.classList.remove("inactive");
+    //id_presentation.classList.remove("inactive");
     if (!presentation || typeof presentation.innerHeight === "undefined" || (presentation.innerHeight === 0 && presentation.innerWidth === 0)) {
         // Popups blocked
         presentationClosed();
-        flash_button = setInterval(function(){id_presentation.classList.toggle('active');}, 1000);
+        flash_button = setInterval(function(){
+            //id_presentation.classList.toggle('active');
+        }, 1000);
     } else {
-        id_presentation.textContent = trans['BUTTON_HIDEPRES'];
-        presentation.document.title = decodeURIComponent(conference) + " presentation from " + presenter;
+        //id_presentation.textContent = trans['BUTTON_HIDEPRES'];
+        //presentation.document.title = decodeURIComponent(conference) + " presentation from " + presenter;
         if (flash_button) {
             clearInterval(flash_button);
             flash_button = null;
-            id_presentation.classList.remove('active');
+            //id_presentation.classList.remove('active');
         }
-        if (presentation.document.getElementById('presvideo')) {
+        if ($(presentation).find('#presvideo').length>0) {
             rtc.getPresentation();
         } else {
             loadPresentation(presentationURL);
@@ -116,6 +121,12 @@ function checkForBlockedPopup() {
 
 function createPresentationWindow() {
     if (presentation == null) {
+        $('#presentation-view').css('display', 'block');
+        setTimeout(checkForBlockedPopup, 1000);
+        presentation = $('#presentation-view');
+        $('#presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:block' width='100%' height='100%' onLoad='switchImage();'/><div width='0px' height='0px' style='overflow:auto;position:absolute;left:0;top:0;'><img src='' id='presimage' width='0px'/></div>");
+    }
+    /*if (presentation == null) {
         presentation = window.open(document.location, 'presentation', 'height=' + presHeight + ',width=' + presWidth + ',location=no,menubar=no,toolbar=no,status=no');
         setTimeout(checkForBlockedPopup, 1000);
 
@@ -131,12 +142,13 @@ function createPresentationWindow() {
             presentation.addEventListener('resize', function() { userResized = true; });
             userResized = false;
         }
-    }
+    }*/
 }
 
 function loadPresentation(url) {
-    if (presentation && presentation.document.getElementById('loadimage')) {
-        presentation.loadimage.src = url;
+    if (presentation && $(presentation).find('#loadimage').length>0) {
+        //presentation.loadimage.src = url;
+        $(presentation).find('#loadimage')[0].src = url;
         setTimeout(resizePresentationWindow, 500);
     } else {
         presentationURL = url;
@@ -144,22 +156,30 @@ function loadPresentation(url) {
 }
 
 function resizePresentationWindow() {
-    if (presentation != null && presentation.presimage.clientWidth > 640 && !userResized) {
+    /*if (presentation != null && presentation.presimage.clientWidth > 640 && !userResized) {
         presWidth = presentation.presimage.clientWidth;
         presHeight = presentation.presimage.clientHeight;
         presentation.window.resizeTo(presWidth + (presentation.outerWidth - presentation.innerWidth), presHeight + (presentation.outerHeight - presentation.innerHeight));
-    }
+    }*/
 }
 
 function loadPresentationStream(videoURL) {
-    if (presentation && presentation.document.getElementById('presvideo')) {
-        presentation.presvideo.poster = "";
-        presentation.presvideo.src = videoURL;
+    if (presentation && $(presentation).find('#loadimage').length>0) {
+        //presentation.presvideo.poster = "";
+        //presentation.presvideo.src = videoURL;
+        $('#presentation-view #presvideo').attr('src', videoURL);
     }
 }
 
 function createPresentationStreamWindow() {
     if (presentation == null) {
+        setTimeout(checkForBlockedPopup, 1000);
+        $('#presentation-view').css('display', 'block');
+        presentation = $('#presentation-view');
+        $('#presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:block' width='100%' height='100%' onLoad='switchImage();'/><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay' poster='img/spinner.gif'/><img src='' id='presimage' width='0px'/></div>");
+    }
+    //presentation-view
+    /*if (presentation == null) {
         presentation = window.open(document.location, 'presentation', 'height=' + presHeight + ',width=' + presWidth + ',location=no,menubar=no,toolbar=no,status=no');
         setTimeout(checkForBlockedPopup, 1000);
 
@@ -171,15 +191,15 @@ function createPresentationStreamWindow() {
             presentation.document.write("</body></html>");
             presentation.addEventListener('beforeunload', presentationClosed);
         }
-    }
+    }*/
 }
 
 function presentationStartStop(setting, pres) {
     if (setting == true) {
         presenter = pres;
-        if (presenting && id_presentation.classList.contains("inactive")) {
-            id_presentation.textContent = trans['BUTTON_SHOWPRES'];
-            id_presentation.classList.remove("inactive");
+        if (presenting) {
+            //id_presentation.textContent = trans['BUTTON_SHOWPRES'];
+            //id_presentation.classList.remove("inactive");
         } else if (source == 'screen') {
             rtc.disconnect();
         } else if (videoPresentation) {
@@ -194,7 +214,7 @@ function presentationStartStop(setting, pres) {
         if (flash_button) {
             clearInterval(flash_button);
             flash_button = null;
-            id_presentation.classList.remove('active');
+            //id_presentation.classList.remove('active');
         }
         // id_presentation.textContent = trans['BUTTON_NOPRES'];
         // id_presentation.classList.add("inactive");
@@ -204,7 +224,7 @@ function presentationStartStop(setting, pres) {
 function togglePresentation() {
     if (presentation) {
         presentation.close();
-    } else if (!id_presentation.classList.contains("inactive")) {
+    } else {
         if (videoPresentation) {
             createPresentationStreamWindow();
         } else {
@@ -221,7 +241,18 @@ function goFullscreen() {
 }
 
 function presentScreen() {
-    if (!id_screenshare.classList.contains("inactive")) {
+    if (!presenting) {
+        //id_screenshare.textContent = trans['BUTTON_STOPSHARE'];
+        rtc.present('screen');
+        presenting = true;
+        $('#id_screenshare').css('display', 'none');
+        $('#id_screen_unshare').css('display', 'block');
+    } else {
+        rtc.present(null);
+        $('#id_screenshare').css('display', 'block');
+        $('#id_screen_unshare').css('display', 'none');
+    }
+    /*if (!id_screenshare.classList.contains("inactive")) {
         if (!presenting) {
             id_screenshare.textContent = trans['BUTTON_STOPSHARE'];
             rtc.present('screen');
@@ -229,15 +260,23 @@ function presentScreen() {
         } else {
             rtc.present(null);
         }
-    }
+    }*/
+}
+
+function stopSharing(){
+    rtc.present(null);
+    presenting = false;
+    $('#id_screenshare').css('display', 'block');
+    $('#id_screen_unshare').css('display', 'none');
 }
 
 function unpresentScreen(reason) {
     if (reason) {
-        alert(reason);
+        //alert(reason);
     }
-    id_screenshare.textContent = trans['BUTTON_SCREENSHARE'];
     presenting = false;
+    $('#id_screenshare').css('display', 'block');
+    $('#id_screen_unshare').css('display', 'none');
 }
 
 /* ~~~ MUTE AND HOLD/RESUME ~~~ */
@@ -406,7 +445,9 @@ function cleanup(event) {
         video.src = "";
     }
     if (presentation) {
-        presentation.close();
+        //presentation.close();
+        $(presentation).css('display', 'none');
+        presentation = null;
     }
 }
 

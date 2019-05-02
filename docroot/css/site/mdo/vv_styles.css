@@ -104,8 +104,17 @@
 	padding-left: 1px;
 	width: auto;
 	border: 1px solid #CCCCCC;
+	position: relative;
 }
-
+#presentation-view{
+	height:200px;
+	width:300px;
+	position:absolute;
+	top:0px;
+	left:0px;
+	display:none;
+	z-index: 5;
+}
 #navContent{
 	width: auto;
 	margin: 15px 0 0;
