@@ -18,6 +18,7 @@ audioInputSelect = document.getElementById('audioSource');
   videoSelect = document.getElementById('videoSource');
   selectors = [audioInputSelect, audioOutputSelect, videoSelect];
 var mobileVideoSources = [];
+var gotStreamed = false;
 
 //audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
@@ -42,7 +43,9 @@ function gotDevices(deviceInfos) {
     } else if (deviceInfo.kind === 'videoinput') {
       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
       // videoSelect.appendChild(option);
-      mobileVideoSources.push(option.value);
+      if(gotStreamed){
+        mobileVideoSources.push(option.value);
+      }
     } else {
       console.log('Some other kind of source/device: ', deviceInfo);
     }
@@ -52,7 +55,11 @@ function gotDevices(deviceInfos) {
   //     select.value = values[selectorIndex];
   //   }
   // });
-  start();
+  if(!gotStreamed){
+    start();
+  } else {
+    console.log('VIDEO DEVICES FOUND '+mobileVideoSources.length);
+  }
 }
 
 
@@ -109,6 +116,7 @@ function start() {
     audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
     video: {deviceId: videoSource ? {exact: videoSource} : undefined}
   };
+  gotStreamed = true;
   navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
 }
 
