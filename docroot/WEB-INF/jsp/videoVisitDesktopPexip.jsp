@@ -13,7 +13,6 @@
 <script src="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.js"></script>
 <script src="vidyoplayer/scripts/libs/jquery.countdown.min.js"></script>
 
-<script type="text/javascript" src="js/site/pexip/complex/main-webrtc.js"></script>
 <script type="text/javascript" src="js/site/pexip/complex/desktop-main-webrtc.js"></script>
 <!--	<script type="text/javascript" src="js/site/pexip/complex/main.js"></script>
 <script type="text/javascript" src="js/site/pexip/complex/webui.js"></script>
