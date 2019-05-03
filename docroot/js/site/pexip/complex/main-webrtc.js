@@ -24,8 +24,38 @@ var globalConstraints;
 
 var mobileVideoSources = [];
 var gotStreamed = false;
+var devicesList = [];
+var checkForDevices;
+
+function devicesLoaded(deviceInfos) {
+  for (var i = 0; i < deviceInfos.length; i++) {
+    var deviceInfo = deviceInfos[i];
+    if (deviceInfo.kind === 'audioinput') {
+      mobileAudioSources.push(deviceInfo.deviceId)
+    } else if (deviceInfo.kind === 'videoinput') {
+      mobileVideoSources.push(deviceInfo.deviceId);
+    }
+  }
+
+  devicesList = deviceInfos;
+  cameraID = mobileVideoSources[0];
+}
+
+function handleError(error) {
+  console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+}
+
+navigator.mediaDevices.enumerateDevices().then(devicesLoaded).catch(handleError);
 
 window.addEventListener('load', function(){
+  checkForDevices = window.setInterval(function(){
+    if(devicesList.length > 0){
+      loadDevicesListInSelectDropdowns();
+      configurePexipVideoProperties();
+      window.clearInterval(checkForDevices);
+    }
+  },1000);
+
   console.log("inside main-2");
   var videoElement = document.querySelector('video');
   audioInputSelect = document.querySelector('select#audioSource');
@@ -34,22 +64,23 @@ window.addEventListener('load', function(){
   selectors = [audioInputSelect, audioOutputSelect, videoSelect];
   
 
-//audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
+  audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
-  function gotDevices(deviceInfos) {
+  function loadDevicesListInSelectDropdowns() {
     console.log("inside GOT-DEVICES");
-    mobileVideoSources = [];
-    // Handles being called several times to update labels. Preserve values.
+    
     var values = selectors.map(function(select) {
       return select.value;
     });
+
     selectors.forEach(function(select) {
       while (select.firstChild) {
         select.removeChild(select.firstChild);
       }
     });
-    for (var i = 0; i < deviceInfos.length; i++) {
-      var deviceInfo = deviceInfos[i];
+
+    for (var i = 0; i < devicesList.length; i++) {
+      var deviceInfo = devicesList[i];
       var option = document.createElement('option');
       option.value = deviceInfo.deviceId;
 
@@ -63,7 +94,6 @@ window.addEventListener('load', function(){
           if(deviceInfo.label != "WebPluginVirtualCamera"){
             option.text = deviceInfo.label || 'camera ' + (videoSelect.length + 1);
             videoSelect.appendChild(option);
-            mobileVideoSources.push(option.value);
           }
       } else {
         console.log('Some other kind of source/device: ', deviceInfo);
@@ -86,14 +116,8 @@ window.addEventListener('load', function(){
       }
     });
 
-    if(!gotStreamed){
-      start();
-    }else{
-      configurePexipVideoProperties();
-    }
+    start();
   }
-
-  navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
   // Attach audio output device to video element using device/sink ID.
   function attachSinkId(element, sinkId) {
@@ -125,16 +149,16 @@ window.addEventListener('load', function(){
     attachSinkId(videoElement, audioDestination);
   }
 
+  function gotDevicesOnChange(devices){
+    console.log('Devices list on change');
+  }
+
   function gotStream(stream) {
     console.log("inside GOT-STREAM");
     window.stream = stream; // make stream available to console
     videoElement.srcObject = stream;
     // Refresh button list in case labels have become available
     return navigator.mediaDevices.enumerateDevices();
-  }
-
-  function handleError(error) {
-    console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
   }
 
   function start() {
@@ -152,7 +176,7 @@ window.addEventListener('load', function(){
       audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
       video: {deviceId: videoSource ? {exact: videoSource} : undefined}
     };
-    navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
+    navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevicesOnChange).catch(handleError);
   }
 
   audioInputSelect.onchange = start;
