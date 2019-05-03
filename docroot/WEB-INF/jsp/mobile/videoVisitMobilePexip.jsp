@@ -81,9 +81,9 @@
 	            id_bandwidth.children[i].selected = true;
 	        }
 	    }
-		setTimeout(function(){
-		   configurePexipVideoProperties();
-		 },1500);
+		// setTimeout(function(){
+		// 	configurePexipVideoProperties();
+		// },1500);
 	}	
 </script>
 
