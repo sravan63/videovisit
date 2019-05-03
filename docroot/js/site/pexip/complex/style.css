@@ -212,7 +212,7 @@ body {
 -------------------------------------------------- */
 .selfview {
   position: absolute;
-  z-index: 99999;
+  z-index: 2;
   max-width: 20%;
   /* max-height: 135px; */
   bottom: 1%;
@@ -224,6 +224,7 @@ body {
   background-position: center;
 }
 .selfview video {
+  z-index: 3;
   top: 0;
   right: 0;
   bottom: 0;
@@ -403,6 +404,7 @@ body {
   background: #434343;
 }
 .videocontainer video {
+  z-index: 1;
   position: relative;
   top: 0;
   right: 0;
@@ -598,13 +600,13 @@ body {
 .site.join input[type="submit"] {
   width: 49.5%;
 }
-.site.join select {
+#videoSource,#audioSource,#speakerSource {
   width: 100%;
   padding: 20px 20px;
   font-size: 1.1em;
   background-color: #eee;
   height: 64px;
-  font-family: inherit;
+  font-family: Arial, Helvetica, sans-serif;
   color: #666;
   border-radius: 0px;
   text-indent: 0.01px;
@@ -758,4 +760,47 @@ select::-ms-expand {
   .page-title{
     font-size: 1.25em;
   }
+}
+
+#selectPeripheral1 {
+  position: absolute;
+  z-index: 4;
+  width: 100%;
+  background-color: lightgray;
+  height: 100%;
+  display: block;
+}
+
+#selectContainer {
+  width: 60%;
+  height: auto;
+  margin: auto;
+  padding-top: 10%;
+}
+
+.done-btn {
+    background-color: #006BA6;
+    font-size: 16px;
+    height: 25px;
+    width: 70px;
+    font-family: Arial;
+    color: #FFFFFF;
+    border-radius: 15px;
+    display: inline-block;
+    margin-left: 40%;
+    margin-top: 5%;
+    border: none;
+}
+
+#close-button {
+  width: 47px;
+  height: 28px;
+  cursor: pointer;
+  background: url('../../../../images/global/close-icon.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  float: right;
+  margin-top: 42px;
+  margin-right: 20%;  
 }

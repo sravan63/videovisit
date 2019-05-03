@@ -14,6 +14,7 @@
 <script src="vidyoplayer/scripts/libs/jquery.countdown.min.js"></script>
 
 <script type="text/javascript" src="js/site/pexip/complex/main-webrtc.js"></script>
+<script type="text/javascript" src="js/site/pexip/complex/desktop-main-webrtc.js"></script>
 <!--	<script type="text/javascript" src="js/site/pexip/complex/main.js"></script>
 <script type="text/javascript" src="js/site/pexip/complex/webui.js"></script>
 <script type="text/javascript" src="js/site/pexip/complex/pexrtc.js"></script>	-->
@@ -152,17 +153,6 @@
 		    <input type="submit" value="Join Conference" name="join" id="join-conf" class="webrtcbutton">
 		    <input type="submit" value="Present Screen Only" name="join_pres" id="id_join_pres" class="webrtcbutton">
 		</div>
-		<div id="selectPeripheral" class="main site join" style="display: none;">
-				<div class="select">
-			    	<label for="videoSource">Video source: </label><select id="videoSource"></select>
-			  	</div>
-				<div class="select">
-					<label for="audioSource">Mic source: </label><select id="audioSource"></select>
-				</div>
-				<div class="select">
-					<label for="speakerSource">Speaker source: </label><select id="speakerSource"></select>
-				</div>
-		  </div>
 
 	    <!-- END Content -->
 
@@ -227,12 +217,29 @@
 	                   <div title="Expand" class="btns expand-btn">&nbsp;</div>
 	                   <div title="Shrink" class="btns shrink-btn">&nbsp;</div>
 	                </div>
-	                <div id="inCallButtonToggleConfig">
+	                <div id="inCallButtonToggleConfig" onclick="togglePeripherals()">
 	                  <div title="Settings" class="btns settings-btn">&nbsp;</div>
 	                </div>
 				</div>
 			</div>
 	      <div id="pluginContainer" class="videocontainer">
+			<div id="selectPeripheral1" class="list-of-devices" style="position:absolute; display:none;">
+					<div id = "close-button"  onclick="togglePeripherals()"></div>
+				<div id = "selectContainer">
+					<div class="select">
+						<label for="videoSource" style="font-family: Arial, Helvetica, sans-serif">Video source: </label><select id="videoSource"></select>
+					</div>
+					<div class="select">
+						<label for="audioSource" style="font-family: Arial, Helvetica, sans-serif">Mic source: </label><select id="audioSource"></select>
+					</div>
+					<div class="select">
+						<label for="speakerSource" style="font-family: Arial, Helvetica, sans-serif">Speaker source: </label><select id="speakerSource"></select>
+					</div>
+						<div><button class="done-btn" onclick="togglePeripherals()">Done</button></div>
+				<!-- <input type="submit" value="Join Conference" name="join" id="join-conf" class="webrtcbutton">
+				<input type="submit" value="Present Screen Only" name="join_pres" id="join-conf-smd" class="webrtcbutton"> -->
+				</div>
+			</div>
 	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
 	        
 	        <div id="stat-window-container">
