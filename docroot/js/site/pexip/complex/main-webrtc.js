@@ -12,7 +12,7 @@ var audioInputSelect;
 var audioOutputSelect;
 var videoSelect;
 var selectors;
-
+var videoElement;
 var audioSource;
 var videoSource;
 
@@ -43,6 +43,39 @@ function handleError(error) {
   console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
 }
 
+function gotStream(stream) {
+  console.log("inside GOT-STREAM");
+  window.stream = stream; // make stream available to console
+  videoElement.srcObject = stream;
+  if(!gotStreamed) {
+    configurePexipVideoProperties();
+    gotStreamed = true;
+  }else{
+    updateCall('video', cameraID);
+  }
+  // Refresh button list in case labels have become available
+  return navigator.mediaDevices.enumerateDevices();
+}
+
+function gotDevicesOnChange(devices){
+  console.log('Devices list on change');
+}
+
+function onCameraToggle() {
+  if (window.stream) {
+    window.stream.getTracks().forEach(track => {
+      track.stop();
+    });
+  }
+  var audioSource = audioInputSelect.value;
+  var videoSource = cameraID;
+  var constraints = {
+    audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
+    video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+  };
+  navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevicesOnChange).catch(handleError);
+}
+
 navigator.mediaDevices.enumerateDevices().then(devicesLoaded).catch(handleError);
 
 window.addEventListener('load', function(){
@@ -54,7 +87,7 @@ window.addEventListener('load', function(){
   },1000);
 
   console.log("inside main-2");
-  var videoElement = document.querySelector('video');
+  videoElement = document.querySelector('video');
   audioInputSelect = document.querySelector('select#audioSource');
   audioOutputSelect = document.querySelector('select#speakerSource');
   videoSelect = document.querySelector('select#videoSource');
@@ -144,39 +177,6 @@ window.addEventListener('load', function(){
     var audioDestination = audioOutputSelect.value;
     // var videoElement = document.querySelector('video');
     attachSinkId(videoElement, audioDestination);
-  }
-
-  function gotDevicesOnChange(devices){
-    console.log('Devices list on change');
-  }
-
-  function gotStream(stream) {
-    console.log("inside GOT-STREAM");
-    window.stream = stream; // make stream available to console
-    videoElement.srcObject = stream;
-    if(!gotStreamed) {
-      configurePexipVideoProperties();
-      gotStreamed = true;
-    }else{
-      updateCall('video', cameraID);
-    }
-    // Refresh button list in case labels have become available
-    return navigator.mediaDevices.enumerateDevices();
-  }
-
-  function onCameraToggle() {
-    if (window.stream) {
-      window.stream.getTracks().forEach(track => {
-        track.stop();
-      });
-    }
-    var audioSource;
-    var videoSource = cameraID;
-    var constraints = {
-      audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-      video: {deviceId: videoSource ? {exact: videoSource} : undefined}
-    };
-    navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevicesOnChange).catch(handleError);
   }
 
   function start() {
