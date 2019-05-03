@@ -193,7 +193,7 @@
 	      </div>
 	      
 	      <div id="videocontainer" class="mobileconferenceview" >
-	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
+	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline"></video>
 	      </div>
 	      <div id="selfview" class="mobileselfview">
 	          <video width="100%" height="100%" id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
