@@ -133,17 +133,18 @@ public class MobileLaunchVideoVisitController implements Controller {
 				if (StringUtils.isBlank(inMeetingDisplayName)) {
 					inMeetingDisplayName = guestName;
 				}
-				
-				videoVisitParams.setUserName(inMeetingDisplayName);
-				videoVisitParams.setGuestName(guestName);
-
 				if (isProxyMeeting) {
 					videoVisitParams.setIsMember("false");
 					videoVisitParams.setIsProxyMeeting("true");
 				} else {
 					videoVisitParams.setIsMember("true");
 					videoVisitParams.setIsProxyMeeting("false");
+					if (!inMeetingDisplayName.equalsIgnoreCase(guestName)) {
+						inMeetingDisplayName = guestName;
+					}
 				}
+				videoVisitParams.setUserName(inMeetingDisplayName);
+				videoVisitParams.setGuestName(inMeetingDisplayName);
 				WebUtil.addMeetingDateTime(meetingDo, videoVisitParams);
 			}
 
