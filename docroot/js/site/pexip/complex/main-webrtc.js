@@ -30,9 +30,7 @@ var checkForDevices;
 function devicesLoaded(deviceInfos) {
   for (var i = 0; i < deviceInfos.length; i++) {
     var deviceInfo = deviceInfos[i];
-    if (deviceInfo.kind === 'audioinput') {
-      mobileAudioSources.push(deviceInfo.deviceId)
-    } else if (deviceInfo.kind === 'videoinput') {
+    if (deviceInfo.kind === 'videoinput') {
       mobileVideoSources.push(deviceInfo.deviceId);
     }
   }
