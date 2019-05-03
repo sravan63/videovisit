@@ -49,7 +49,6 @@ window.addEventListener('load', function(){
   checkForDevices = window.setInterval(function(){
     if(devicesList.length > 0){
       loadDevicesListInSelectDropdowns();
-      configurePexipVideoProperties();
       window.clearInterval(checkForDevices);
     }
   },1000);
@@ -155,6 +154,10 @@ window.addEventListener('load', function(){
     console.log("inside GOT-STREAM");
     window.stream = stream; // make stream available to console
     videoElement.srcObject = stream;
+    if(!gotStreamed) {
+      configurePexipVideoProperties();
+      gotStreamed = true;
+    }
     // Refresh button list in case labels have become available
     return navigator.mediaDevices.enumerateDevices();
   }
@@ -168,7 +171,6 @@ window.addEventListener('load', function(){
     var audioSource = audioInputSelect.value;
     var videoSource = videoSelect.value;
     cameraID = videoSource;
-    gotStreamed = true;
 
     var constraints = {
       audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
