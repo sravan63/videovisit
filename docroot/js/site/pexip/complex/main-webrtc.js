@@ -157,9 +157,26 @@ window.addEventListener('load', function(){
     if(!gotStreamed) {
       configurePexipVideoProperties();
       gotStreamed = true;
+    }else{
+      updateCall('video', cameraID);
     }
     // Refresh button list in case labels have become available
     return navigator.mediaDevices.enumerateDevices();
+  }
+
+  function onCameraToggle() {
+    if (window.stream) {
+      window.stream.getTracks().forEach(track => {
+        track.stop();
+      });
+    }
+    var audioSource;
+    var videoSource = cameraID;
+    var constraints = {
+      audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
+      video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+    };
+    navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevicesOnChange).catch(handleError);
   }
 
   function start() {

@@ -1633,15 +1633,8 @@ function toggleCamera(){
 	 var videoSource, callType = 'video';
 	videoSource = isRearCamera ? mobileVideoSources[0] : mobileVideoSources[1];
 	isRearCamera = !isRearCamera;
-	updateCall(callType, videoSource);
-	/*for(var i=0; i<mobileVideoSources.length;i++){
-		var videoSource = mobileVideoSources[i];
-		if(rtc.video_source !== videoSource){
-		    rtc.video_source =  videoSource;
-		    rtc.renegotiate("video");
-		    break;
-		}
-	}*/
+	cameraID = videoSource;
+	onCameraToggle();
 }
 function updateCall(callType, videoSource = null, audioSource = null) {
         rtc.call_type = callType;
