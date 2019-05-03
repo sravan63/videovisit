@@ -25,7 +25,7 @@ var globalConstraints;
 var mobileVideoSources = [];
 var gotStreamed = false;
 
-$(document).ready(function(){
+window.addEventListener('load', function(){
   console.log("inside main-2");
   var videoElement = document.querySelector('video');
   audioInputSelect = document.querySelector('select#audioSource');
