@@ -230,6 +230,17 @@ $(document).ready(function() {
 	
 	VideoVisit.updatePatientGuestNameList();
 	
+}).on('click', function (evt) {
+	if(evt.target.className == "settings-btn" || $(evt.target).closest('.settings-btn').length>0){
+		return;
+	}
+	if(evt.target.className == "videocontainer")
+		return;
+	if($(evt.target).closest('.videocontainer').length)
+		return;
+	if($('.list-of-devices').css('display') == 'block'){
+		$('.list-of-devices').toggle('slide', {direction: 'left'}, 500);
+	}		
 });
 
 var getPatientGuestNameList = function(){
@@ -855,3 +866,8 @@ $(window).resize(function(){
 	}
 	setSidePanParticipantsListHeight();
 });
+
+function togglePeripherals() {    
+    $('.list-of-devices').toggle('slide', {direction: 'left'}, 500);
+    $('#selectPeripheral1').css('display','block');
+  }
