@@ -35,9 +35,9 @@ function gotDevices(deviceInfos) {
   configurePexipVideoProperties();
 }
 
-
-
-navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+$(document).ready(function() {
+  navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+});
 
 // Attach audio output device to video element using device/sink ID.
 function attachSinkId(element, sinkId) {
