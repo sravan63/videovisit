@@ -234,10 +234,10 @@
 					<div class="select">
 						<label for="speakerSource" style="font-family: Arial, Helvetica, sans-serif">Speaker source: </label><select id="speakerSource"></select>
 					</div>
-						<div><button class="done-btn" onclick="togglePeripherals()">Done</button></div>
 				<!-- <input type="submit" value="Join Conference" name="join" id="join-conf" class="webrtcbutton">
 				<input type="submit" value="Present Screen Only" name="join_pres" id="join-conf-smd" class="webrtcbutton"> -->
 				</div>
+				<div><button class="done-btn" onclick="togglePeripherals()">Done</button></div>
 			</div>
 	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
 	        
