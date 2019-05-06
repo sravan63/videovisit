@@ -86,7 +86,7 @@
 		// },1500);
 	}	
 </script>
-
+<script type='text/javascript'>function switchImage() { document.getElementById('presimage').src.src = document.getElementById('loadimage').src; }</script>
 <style>
 	html{
 		padding: 0;
@@ -199,7 +199,7 @@
 	          <video width="100%" height="100%" id="selfvideo" autoplay="autoplay" playsinline="playsinline" muted="true">
 	          </video>
 	      </div>
-	      
+	      <div id="presentation-view" class="presentation-view"></div>
 	    </section>
 
 	    <footer id="controls" class="controls-bar">

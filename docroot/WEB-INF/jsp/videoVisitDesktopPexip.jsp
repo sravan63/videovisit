@@ -208,10 +208,10 @@
 	                   <div title="Mute Mic" class="btns microphone-btn">&nbsp;</div>
 	                   <div title="Unmute Mic" class="btns microphone-muted-btn">&nbsp;</div>
 	                </div>
-	                <div id="inCallButtonLocalShare">
+	                <!--<div id="inCallButtonLocalShare">
 	                   <div title="" id="id_screenshare" class="btns smd-btn" onclick="presentScreen();">&nbsp;</div>
 	                   <div title="" id="id_screen_unshare" class="btns smd-muted-btn"onclick="stopSharing();">&nbsp;</div>
-	                </div>
+	                </div>-->
 	                <div id="inCallButtonExpand">
 	                   <div title="Expand" class="btns expand-btn">&nbsp;</div>
 	                   <div title="Shrink" class="btns shrink-btn">&nbsp;</div>

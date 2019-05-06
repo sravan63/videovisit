@@ -209,7 +209,8 @@ function presentationStartStop(setting, pres) {
         }
     } else {
         if (presentation != null) {
-            presentation.close();
+            //presentation.close();
+            $('#presentation-view').css('display', 'none');
         }
         if (flash_button) {
             clearInterval(flash_button);
