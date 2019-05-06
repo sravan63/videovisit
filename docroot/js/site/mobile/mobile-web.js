@@ -85,6 +85,9 @@ var request = {
 	}
 /*END - AJAX Server requests  */
 
+	$( window ).on( "orientationchange", function( event ) {
+		setVideoFeedHeight();
+	});
 
 /**
  * This is the main function which gets called when the document is ready and loaded in DOM
