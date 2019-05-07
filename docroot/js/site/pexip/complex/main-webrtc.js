@@ -35,7 +35,7 @@ function gotDevices(deviceInfos) {
   configurePexipVideoProperties();
 }
 
-$(document).ready(function() {
+$(window).load(function() {
   navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 });
 
