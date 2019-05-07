@@ -120,6 +120,9 @@ public class MobileLaunchVideoVisitController implements Controller {
 				} else {
 					videoVisitParams.setHostTitle("");
 				}
+				videoVisitParams.setPatientFirstName(meetingDo.getMember().getFirstName());
+				videoVisitParams.setPatientLastName(meetingDo.getMember().getLastName());
+				videoVisitParams.setPatientMiddleName(meetingDo.getMember().getMiddleName());
 				videoVisitParams.setVidyoUrl(meetingDo.getRoomJoinUrl());
 				videoVisitParams.setVendorConfId(meetingDo.getMeetingVendorId());
 				videoVisitParams.setGuestUrl(meetingDo.getRoomJoinUrl());
