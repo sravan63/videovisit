@@ -33,6 +33,7 @@ var set_interval = "false";
 var set_interval_callback;
 var layout;
 var media_stats;
+var presenting_user = '';
 webuiLoaded = true;
 
 var trans = Array();
@@ -207,6 +208,10 @@ function presentationStartStop(setting, pres) {
         } else {
             createPresentationWindow();
         }
+        presenting_user = pres.substring(pres.indexOf('<')+1, pres.indexOf('>'));
+        if(!refreshingOrSelfJoinMeeting && !isMobileDevice){
+            utilityNotifyQueue(presenting_user + ' has initiated desktop sharing.');
+        }
     } else {
         if (presentation != null) {
             //presentation.close();
@@ -219,6 +224,10 @@ function presentationStartStop(setting, pres) {
         }
         // id_presentation.textContent = trans['BUTTON_NOPRES'];
         // id_presentation.classList.add("inactive");
+        if(!refreshingOrSelfJoinMeeting && !isMobileDevice){
+            utilityNotifyQueue(presenting_user + ' has stopped desktop sharing.');
+        }
+        presenting_user = '';
     }
 }
 
