@@ -1006,7 +1006,8 @@ PexRTCCall.prototype.connect = function() {
                     tracks[i].enabled = false;
                 }
             }
-            if(self.pc.getSenders()){
+            var senders = self.pc.getSenders();
+            if(senders.length > 0){
                 self.pc.getSenders()[0].replaceTrack(self.localStream.getTracks()[0]);
                 self.pc.getSenders()[1].replaceTrack(self.localStream.getTracks()[1]);
                 return self.ackReceived();
