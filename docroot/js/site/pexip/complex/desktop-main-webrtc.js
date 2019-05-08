@@ -92,51 +92,9 @@ $(document).ready(function(){
       audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
       video: {deviceId: videoSource ? {exact: videoSource} : undefined}
     };
-
-    // navigator.mediaDevices.getUserMedia(constraints).catch(handleError);
-    /*navigator.mediaDevices.getUserMedia(constraints).
-        then(gotStream).catch(handleError);*/
-    //start();
   }
 
-  $("#join-conf").on("click", function(){
-    console.log("join-conf clicked");
-
-    var reqscript1 = document.createElement('script');
-      reqscript1.src = "js/site/pexip/complex/webui.js";
-      reqscript1.type = "text/javascript";
-      document.getElementsByTagName("head")[0].appendChild(reqscript1);
-
-      //document.getElementById("container").appendChild(reqscript1);
-      //document.body.appendChild(reqscript1);
-
-    var reqscript2 = document.createElement('script');
-    	//  reqscript2.src = "js/site/pexip/complex/pexrtc.js";
-      reqscript2.src = "js/site/pexip/complex/pexrtcV20.js";
-      reqscript2.type = "text/javascript";
-      document.getElementsByTagName("head")[0].appendChild(reqscript2);
-
-    reqscript1.onload = function(){
-      console.log("reqscript1 loaded");
-    };
-
-    reqscript2.onload = function(){
-      console.log("reqscript2 loaded");
-
-      // var alias = "meet.NCAL_TEST5";
-      var alias =  "M.NCAL.MED.0.369640..1234";
-      var bandwidth = "1280";
-      var source = "Join+Conference";
-      var name = $("#guestName").val();
-
-      // initialise("10.233.30.30", alias, bandwidth, name, "", source);
-      // initialise("TTGSS-PEXIP-2.TTGTPMG.NET", alias, bandwidth, name, "", source);
-      initialise("ttgpexip.ttgtpmg.net", alias, bandwidth, name, "", source);
-//      initialise("ivv-dev.kp.org", "meet.NCAL_1000", bandwidth, name, "", source);
-      
-      // rtc.user_media_stream = stream;
-    };
-  });
+ 
 
   navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
@@ -175,10 +133,6 @@ $(document).ready(function(){
   function gotStream(stream) {
     console.log("inside GOT-STREAM");
     window.stream = stream; // make stream available to console
-    selfvideo.srcObject = stream;
-    
-    // Refresh button list in case labels have become available
-     return navigator.mediaDevices.enumerateDevices();
   }
 
   function start() {
@@ -197,31 +151,33 @@ $(document).ready(function(){
       audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
       video: {deviceId: videoSource ? {exact: videoSource} : undefined}
     };
-      
-    navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
-
     
-    //globalConstraints = constraints;
+    navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
     
-    // if(webuiLoaded == true){
-    //   navigator.mediaDevices.getUserMedia(constraints).
-    //         then(gotStream).catch(handleError);
-    //     // navigator.mediaDevices.getUserMedia(constraints).catch(handleError);
-    //   //switchDevices();
-    // } else{
-    //   navigator.mediaDevices.getUserMedia(constraints).
-    //         then(gotStream).catch(handleError);
-    // }
   }
 
-  audioInputSelect.onchange = start;
-  //audioOutputSelect.onchange = changeAudioDestination;
-  videoSelect.onchange = start;
-
+  
   start();
+  
+  function peripheralsVideoChange(){
+    videoSource = videoSelect.value;
+    rtc.call_type = 'video';
+    rtc.video_source = videoSource;
+    rtc.renegotiate('video');
+  }
 
+  function peripheralsAudioChange(){
+    audioSource = audioInputSelect.value;
+    rtc.call_type = 'audio';
+    rtc.audio_source = audioSource;
+    rtc.renegotiate('audio');
+  }
+  
   function handleError(error) {
     console.log('navigator.getUserMedia error: ', error);
   }
+  audioInputSelect.onchange = peripheralsAudioChange;
+  //audioOutputSelect.onchange = changeAudioDestination;
+  videoSelect.onchange = peripheralsVideoChange;
 });
 
