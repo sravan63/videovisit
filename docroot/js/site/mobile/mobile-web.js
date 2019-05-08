@@ -1494,7 +1494,7 @@ function startPexip() {
 	var isProxyMeeting = $('#isProxyMeeting').val();
 	isMobileDevice = true;
 	initialise(roomUrl, alias, bandwidth, name, "", source);
-	//newStartTimeCheckForOneTime();
+	newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
 		setKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
 	}
@@ -1730,5 +1730,5 @@ var newStartTimeCheck = function(){
 	};
 
 	newStartTimeRecursiveCall = window.setInterval(function(){
-		//newStartTimeCheck();
+	newStartTimeCheck();
     },120000);
