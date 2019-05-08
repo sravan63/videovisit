@@ -85,6 +85,12 @@ var request = {
 	}
 /*END - AJAX Server requests  */
 
+$( window ).on( "orientationchange", function( event ) {
+	setTimeout(function(){
+		setVideoFeedHeight();
+	}, 1000);
+});
+
 /**
  * This is the main function which gets called when the document is ready and loaded in DOM
  */
@@ -1468,7 +1474,9 @@ function configurePexipVideoProperties(){
 }
 
 function startPexip() {
-	setVideoFeedHeight();
+	setTimeout(function(){
+		setVideoFeedHeight();
+	}, 1500);
 	var alias =  $("#conferenceId").val(); // "M.NCAL.MED.0.369640..1234";
 	var bandwidth = $('#bandwidth').val(); // "1280";
 	var source = "Join+Conference";
