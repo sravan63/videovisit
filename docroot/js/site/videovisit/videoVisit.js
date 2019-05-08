@@ -544,15 +544,13 @@ var VideoVisit =
         			if(participantName == tPartName){
         				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
         			}*/
-        			if(prName.match(/^[0-9]*$/g)){
-        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].firstName.slice(2).trim() == prName.trim()){
-        					sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
-        				}
-        			}else{
-        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName.trim() == prName.trim()){
+        			
+
+        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName == prName || 
+                            sidePaneMeetingDetails.sortedParticipantsList[pa].displayName == prName){
             				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
             			}
-        			}
+        			
         		}
         		//participants availability
         	}//ending of participants for loop
@@ -749,11 +747,11 @@ function updateParticipantsAndGuestsList(meetingList){
 	//meetingList.participant.concat(meetingList.caregiver);
 	let tempSortedArr = participants.sort(sortObjs('firstName'));
 	let telephonyGuests = [];
-	if(meetingList.caregiver){
-		telephonyGuests = meetingList.caregiver.filter(function(item){
-			return item.lastName == 'audio_participant';
+	if(meetingList.sipParticipants){
+		telephonyGuests = meetingList.sipParticipants.filter(function(item){
+			return item.participantType == 'audio';
 		});
-	}	
+	}
 	sidePaneMeetingDetails.sortedParticipantsList = tempSortedArr.concat(telephonyGuests);	
 	var tempArr = sidePaneMeetingDetails.sortedParticipantsList;
 	var phoneNumCount = 0;
@@ -761,9 +759,9 @@ function updateParticipantsAndGuestsList(meetingList){
 		if(tempArr[i].title){
 			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 		}else{
-			if(tempArr[i].lastName == 'audio_participant'){
+			if(tempArr[i].participantType == 'audio'){
 				phoneNumCount++;
-				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant" phonenumber="'+tempArr[i].firstName+'">Phone '+phoneNumCount+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant" phonenumber="'+tempArr[i].destination+'">Phone '+phoneNumCount+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 			}else{
 				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 			}
