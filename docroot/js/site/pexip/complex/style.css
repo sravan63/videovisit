@@ -287,6 +287,7 @@ body {
   display: inline-block;
 }
 .landscape-logo-change{
+  font-size: 1em!important;
   height: 4em!important;
   margin-top: 0.25em!important;
 }
@@ -379,7 +380,7 @@ body {
 }
 .waiting-room .waiting-text{
   color: #FFFFFF;
-  font-size: 1em;
+  font-size: 28px;
   margin: 12px 10px 15px 10px;
   text-align: center;
   }
