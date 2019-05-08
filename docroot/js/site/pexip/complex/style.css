@@ -83,22 +83,6 @@ body {
   }
 }
 
-@media only screen and (min-width: 360px) and (-webkit-device-pixel-ratio: 4) and (orientation: landscape) {
-
-.top {
-  height: 100%;
-}
-.waiting-room{
-   height: 50%;
-}
-
-#videocontainer, #selfview{
-     height: 50%;
-}
-}
-
-
-
 /*
  :::  Site Header
 -------------------------------------------------- */
@@ -302,6 +286,10 @@ body {
   background-position: center;
   display: inline-block;
 }
+.landscape-logo-change{
+  height: 4em!important;
+  margin-top: 0.25em!important;
+}
 .controls-bar{
   background: #515151;
   height: 50px;
@@ -391,7 +379,7 @@ body {
 }
 .waiting-room .waiting-text{
   color: #FFFFFF;
-  font-size: 28px;
+  font-size: 1em;
   margin: 12px 10px 15px 10px;
   text-align: center;
   }
