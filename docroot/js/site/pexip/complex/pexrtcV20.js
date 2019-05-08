@@ -1006,9 +1006,11 @@ PexRTCCall.prototype.connect = function() {
                     tracks[i].enabled = false;
                 }
             }
-            self.pc.getSenders()[0].replaceTrack(self.localStream.getTracks()[0]);
-            self.pc.getSenders()[1].replaceTrack(self.localStream.getTracks()[1]);
-            return self.ackReceived();
+            if(self.pc.getSenders()){
+                self.pc.getSenders()[0].replaceTrack(self.localStream.getTracks()[0]);
+                self.pc.getSenders()[1].replaceTrack(self.localStream.getTracks()[1]);
+                return self.ackReceived();
+            }
         } else if (self.pc.addStream) {
             self.pc.addStream(self.localStream);
         } else if (self.pc.addTrack) {

@@ -1438,8 +1438,6 @@ function configurePexipVideoProperties(){
 	console.log('========>>>> PEXIP AUTO START');
 	console.log("join-conf clicked");
 
-	setVideoFeedHeight();
-
     var reqscript1 = document.createElement('script');
       reqscript1.src = "js/site/pexip/complex/webui.js";
       reqscript1.type = "text/javascript";
@@ -1470,6 +1468,7 @@ function configurePexipVideoProperties(){
 }
 
 function startPexip() {
+	setVideoFeedHeight();
 	var alias =  $("#conferenceId").val(); // "M.NCAL.MED.0.369640..1234";
 	var bandwidth = $('#bandwidth').val(); // "1280";
 	var source = "Join+Conference";
