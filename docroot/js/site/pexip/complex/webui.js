@@ -224,7 +224,7 @@ function presentationStartStop(setting, pres) {
         }
         // id_presentation.textContent = trans['BUTTON_NOPRES'];
         // id_presentation.classList.add("inactive");
-        if(!refreshingOrSelfJoinMeeting && !isMobileDevice){
+        if(!refreshingOrSelfJoinMeeting && !isMobileDevice && presenting_user){
             utilityNotifyQueue(presenting_user + ' has stopped desktop sharing.');
         }
         presenting_user = '';
