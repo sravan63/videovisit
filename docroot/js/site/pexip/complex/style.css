@@ -65,7 +65,7 @@ body {
 .site {
   margin: 0 auto;
   /*max-width: 1200px;*/
-  width: 98%;
+  width: 100%;
 }
 .main {
   width: 100%;
@@ -81,6 +81,20 @@ body {
   .top {
     height: auto;
   }
+}
+
+@media only screen and (min-width: 360px) and (-webkit-device-pixel-ratio: 4) and (orientation: landscape) {
+
+.top {
+  height: 100%;
+}
+.waiting-room{
+   height: 50%;
+}
+
+#videocontainer, #selfview{
+     height: 50%;
+}
 }
 
 
