@@ -186,7 +186,7 @@
 
 	 
 	  <div id="maincontent" class="main cf hidden">
-	    <section class="top">
+	    <section class="video-top">
 	      <div class="waiting-room">
 	      	<div class="logo"></div>
 	      	<div class="waiting-text">Waiting for your doctor to join.</div>

@@ -88,12 +88,7 @@ var request = {
 $( window ).on( "orientationchange", function( event ) {
 	setTimeout(function(){
 		setVideoFeedHeight();
-		var isLandscape = window.matchMedia("(orientation:landscape)").matches;
-		if(isLandscape){
-			$('.logo').addClass('landscape-logo-change');
-		} else {
-			$('.logo').removeClass('landscape-logo-change');
-		}
+		setOrientationMode();
 	}, 1000);
 });
 
@@ -1482,6 +1477,7 @@ function configurePexipVideoProperties(){
 function startPexip() {
 	setTimeout(function(){
 		setVideoFeedHeight();
+		setOrientationMode();
 	}, 1500);
 	var alias =  $("#conferenceId").val(); // "M.NCAL.MED.0.369640..1234";
 	var bandwidth = $('#bandwidth').val(); // "1280";
@@ -1519,10 +1515,19 @@ function setKPHCConferenceStatus(meetingId, status, isProxyMeeting, careGiverNam
 	        });
 }
 
+function setOrientationMode(){
+	var isLandscape = window.matchMedia("(orientation:landscape)").matches;
+	if(isLandscape){
+		$('.logo').addClass('landscape-logo-change');
+	} else {
+		$('.logo').removeClass('landscape-logo-change');
+	}
+}
+
 function setVideoFeedHeight(){
 	var windowHeight = $(window).height();
 	var topHeight = windowHeight - 50;
-	$(".top").height(topHeight);
+	$(".video-top").height(topHeight);
 	$(".waiting-room").height(topHeight/2);
 	$(".mobileconferenceview").height(topHeight/2);
 	$(".mobileselfview").height(topHeight/2);
