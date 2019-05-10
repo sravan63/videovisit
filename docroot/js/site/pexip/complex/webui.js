@@ -656,9 +656,9 @@ function participantUpdated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     // toggleWaitingRoom();
     if(isMobileDevice){
-    updateParticipantList(participant,'join');
-    console.log("inside participantUpdated");
-}
+        updateParticipantList(participant,'join');
+        console.log("inside participantUpdated");
+    }
 }
 
 function participantDeleted(participant){
@@ -810,6 +810,17 @@ function connected(url) {
 //    toggleSelfview();
     if(!isMobileDevice){
         VideoVisit.setMinDimensions();
+        setPatientGuestPresenceIndicatorManually();
+    }
+}
+
+function setPatientGuestPresenceIndicatorManually(){
+    if($('#isMember').val()){
+        for(var i=0;i<sidePaneMeetingDetails.sortedParticipantsList.length;i++){
+            if($('#guestName').val() == sidePaneMeetingDetails.sortedParticipantsList[i].inMeetingDisplayName){
+                $('.guest-part-'+i+' .participant-indicator').css('visibility', 'visible');
+            }
+        }
     }
 }
 
@@ -898,14 +909,14 @@ function getTurnServersObjs(){
     var t_servers = [];
     if(typeof sidePaneMeetingDetails.vendorConfig.turnServers == 'string'){
         t_servers.push({
-            url: sidePaneMeetingDetails.vendorConfig.turnServers,
+            url: 'turn:'+sidePaneMeetingDetails.vendorConfig.turnServers+'?transport=tcp',
             username: sidePaneMeetingDetails.vendorConfig.turnUserName,
             credential: sidePaneMeetingDetails.vendorConfig.turnPassword
         });
     }else{
         for(let i=0;i<sidePaneMeetingDetails.vendorConfig.turnServers.length;i++){
             t_servers.push({
-                url: sidePaneMeetingDetails.vendorConfig.turnServers[i],
+                url: 'turn:'+sidePaneMeetingDetails.vendorConfig.turnServers[i]+'?transport=tcp',
                 username: sidePaneMeetingDetails.vendorConfig.turnUserName,
                 credential: sidePaneMeetingDetails.vendorConfig.turnPassword
             });
@@ -920,7 +931,7 @@ function getTurnServerObjsForMobile(){
         var servers = $('#turnServers').val().replace('[','').replace(']','').split(',');
         for(let i=0;i<servers.length;i++){
             t_servers.push({
-                url: servers[i].trim(),
+                url: 'turn:'+servers[i].trim()+'?transport=tcp',
                 username: $('#turnUserName').val().trim(),
                 credential: $('#turnPassword').val().trim()
             });
