@@ -2175,7 +2175,7 @@ function PexRTC() {
     self.is_android = navigator.userAgent.indexOf('Android') != -1;
 
     if (navigator.userAgent.indexOf("Chrome") != -1) {
-        self.chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+        self.chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) - 1;
     } else {
         self.chrome_ver = 0;
     }
