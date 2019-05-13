@@ -896,10 +896,10 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
 
     startTime = new Date();
     if(isMobileDevice){
-        rtc.turnServer = getTurnServerObjsForMobile();
+        rtc.turn_server  = getTurnServerObjsForMobile();
     }else{
         if(sidePaneMeetingDetails.vendorConfig && sidePaneMeetingDetails.vendorConfig.turnServers){
-            rtc.turnServer = getTurnServersObjs();
+            rtc.turn_server  = getTurnServersObjs();
         }
     }    
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);

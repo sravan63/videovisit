@@ -259,7 +259,10 @@ function getGuestMeetings(){
     $('.my-meetings-grid').html('<div style="text-align:center;"><div class="spinner-container"><img width="50px" height="50px" style="float:none;height:50px;width:50px;" src="images/global/iconLoading_small.gif"/></div></div>');
     window.scrollTo(0, 0);
     clearTimeout(getGuestMeetingsTimeoutVal);
-    getGuestMeetingsTimeoutVal = setTimeout(function(){getGuestMeetings();},180000);
+    getGuestMeetingsTimeoutVal = setTimeout(function(){
+        runUDPTest = true;
+        getGuestMeetings();
+    },180000);
     $.ajax({
         type: "GET",
         url: VIDEO_VISITS.Path.guestready.guestMeeting,
@@ -383,7 +386,7 @@ function updateDomWithMeetings(guestData){
         }
         $('.my-meetings-grid').html(htmlToBeAppend);
     }
-    if(browserInfo.isChrome == true){
+    if(browserInfo.isChrome == true || browserInfo.isFirefox == true){
         if(runUDPTest == true){
             startUDPTest();
         } else {
