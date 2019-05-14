@@ -19,8 +19,7 @@
 	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings > 0}">
 			<div class="intro">
-				<h1>${WebAppContext.myMeetings.get(0)}</h1>
-			<h1>${WebAppContext.myMeetings.get(0).vendor}</h1>	
+			
 				<div class="pic-frame only-tablets">
  					<div class="pic" style="width:325px; height:225px;">
  						<img src="images/mobile/vv-patient-welcome-image.jpg" width="325" height="225">
@@ -40,8 +39,12 @@
 				</div>
 				
 			</div>
+			<c:when test="${WebAppContext.myMeetings.get(0).vendor != 'pexip'}">
 				<%@ include file="common/informationpg.jsp" %>
-			
+			</c:when>
+			<c:otherwise>
+			<h1>Hello</h1>
+			</c:otherwise>
 			<div class="only-tablets" style="text-align:center; margin-top:12px;">
 				<button id="getAppButton" class="button-main getAppButton only-tablets" >Get the App</button>
 				<button id="signInIdPG" class="button-main only-tablets" onclick="modalShow('modal-login')">Sign In</button>
@@ -55,6 +58,7 @@
 			<button id="signInIdPGHand" class="button-main only-handsets" onclick="modalShow('modal-login')">Sign In</button>
 			
 		</c:when>
+
 		<c:otherwise>
 		<!--  If no meetings are present -->
 
@@ -64,8 +68,13 @@
 					<p> The video visit you are trying to join is not currently available. </p>
 				</div>
 			</div>
-			<h1>WebAppContext.myMeetings.get(0)</h1>
-			<h1>WebAppContext.myMeetings.get(0).vendor</h1>	
+
+			<c:when test="${WebAppContext.myMeetings.get(0).vendor != 'pexip'}">
+				<%@ include file="common/informationpg.jsp" %>
+			</c:when>
+			<c:otherwise>
+			<h1>Hello</h1>
+			</c:otherwise>	
 		</c:otherwise>
 	</c:choose>
 
