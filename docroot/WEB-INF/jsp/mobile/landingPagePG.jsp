@@ -124,7 +124,11 @@
 			
 		</c:choose>
 			
-		<%@ include file="common/informationTwopg.jsp" %>
+		<c:choose>
+			<c:when test="${WebAppContext.myMeetings.get(0).vendor == null}">
+				<%@ include file="common/informationpg.jsp" %>
+			</c:when>
+		</c:choose>
 	</div>
 </div>
 <script>
