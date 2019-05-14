@@ -39,6 +39,7 @@
 				</div>
 				
 			</div>
+			<c:choose>
 			<c:when test="${WebAppContext.myMeetings.get(0).vendor == null}">
 				<h1>Test</h1>
 				<%@ include file="common/informationpg.jsp" %>
@@ -46,6 +47,7 @@
 			<c:otherwise>
 			<h1>Hello</h1>
 			</c:otherwise>
+			</c:choose>
 			<div class="only-tablets" style="text-align:center; margin-top:12px;">
 				<button id="getAppButton" class="button-main getAppButton only-tablets" >Get the App</button>
 				<button id="signInIdPG" class="button-main only-tablets" onclick="modalShow('modal-login')">Sign In</button>
@@ -69,14 +71,15 @@
 					<p> The video visit you are trying to join is not currently available. </p>
 				</div>
 			</div>
-
+			<c:choose>
 			<c:when test="${WebAppContext.myMeetings.get(0).vendor == null}">
 				<h1>Test</h1>
 				<%@ include file="common/informationpg.jsp" %>
 			</c:when>
 			<c:otherwise>
 			<h1>Hello</h1>
-			</c:otherwise>	
+			</c:otherwise>
+			</c:choose>	
 		</c:otherwise>
 	</c:choose>
 
