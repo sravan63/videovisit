@@ -1204,7 +1204,7 @@ PexRTCCall.prototype.pcOfferCreated = function(sdp) {
     var self = this;
 
     self.parent.onLog("Created offer", sdp.sdp);
-    if (self.state == 'ACTIVE' || (self.chrome_ver > 0 && self.chrome_ver < 50)) {
+    if (self.state == 'ACTIVE' || (self.chrome_ver > 0 && self.chrome_ver < 73)) {
         if (self.safari_ver >= 12 || self.firefox_ver > 65) {
             self.pc.setLocalDescription(sdp)
                             .then(function () { self.parent.onLog("Local description active"); })
@@ -2175,7 +2175,7 @@ function PexRTC() {
     self.is_android = navigator.userAgent.indexOf('Android') != -1;
 
     if (navigator.userAgent.indexOf("Chrome") != -1) {
-        self.chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10) - 1;
+        self.chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
     } else {
         self.chrome_ver = 0;
     }
