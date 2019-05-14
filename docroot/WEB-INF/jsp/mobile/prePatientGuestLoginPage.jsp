@@ -19,8 +19,8 @@
 	<c:choose>
 		<c:when test="${WebAppContext.totalmeetings > 0}">
 			<div class="intro">
-				<h1>WebAppContext.myMeetings.get(0)</h1>
-			<h1>WebAppContext.myMeetings.get(0).vendor</h1>	
+				<h1>${WebAppContext.myMeetings.get(0)}</h1>
+			<h1>${WebAppContext.myMeetings.get(0).vendor}</h1>	
 				<div class="pic-frame only-tablets">
  					<div class="pic" style="width:325px; height:225px;">
  						<img src="images/mobile/vv-patient-welcome-image.jpg" width="325" height="225">
