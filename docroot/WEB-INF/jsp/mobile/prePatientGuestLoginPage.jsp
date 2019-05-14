@@ -39,7 +39,8 @@
 				</div>
 				
 			</div>
-			<c:when test="${WebAppContext.myMeetings.get(0).vendor != 'pexip'}">
+			<c:when test="${WebAppContext.myMeetings.get(0).vendor == null}">
+				<h1>Test</h1>
 				<%@ include file="common/informationpg.jsp" %>
 			</c:when>
 			<c:otherwise>
@@ -69,7 +70,8 @@
 				</div>
 			</div>
 
-			<c:when test="${WebAppContext.myMeetings.get(0).vendor != 'pexip'}">
+			<c:when test="${WebAppContext.myMeetings.get(0).vendor == null}">
+				<h1>Test</h1>
 				<%@ include file="common/informationpg.jsp" %>
 			</c:when>
 			<c:otherwise>
