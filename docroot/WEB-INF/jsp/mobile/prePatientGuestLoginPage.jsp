@@ -39,8 +39,9 @@
 				</div>
 				
 			</div>
-		
-			<%@ include file="common/informationpg.jsp" %>
+			<c:when test="${WebAppContext.myMeetings.get(0).vendor != 'pexip'}">
+				<%@ include file="common/informationpg.jsp" %>
+			</c:when>
 			
 			<div class="only-tablets" style="text-align:center; margin-top:12px;">
 				<button id="getAppButton" class="button-main getAppButton only-tablets" >Get the App</button>
@@ -65,8 +66,11 @@
 					<p> The video visit you are trying to join is not currently available. </p>
 				</div>
 			</div>
-
-			<%@ include file="common/informationpg.jsp" %>	
+			<h1>WebAppContext.myMeetings.get(0)</h1>
+			<h1>WebAppContext.myMeetings.get(0).vendor</h1>
+			<c:when test="${WebAppContext.myMeetings.get(0).vendor != 'pexip'}">
+				<%@ include file="common/informationpg.jsp" %>
+			</c:when>	
 		</c:otherwise>
 	</c:choose>
 
