@@ -1,3 +1,10 @@
+<%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.context.*" %>
+<%@ page import="org.kp.tpmg.ttg.webcare.videovisits.member.web.command.*" %>
+
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
+
 <input type="hidden" id="isPG" value="true" />
 
 <div>

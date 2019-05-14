@@ -353,8 +353,7 @@ $(document).ready(function() {
 	$("#signInIdPG, #signInIdPGHand").click(function(event) {
 		event.preventDefault();
 		var meetingCode = $("#meetingCode").val();
-		//window.location.replace("mobilepglogin.htm?meetingCode=" +meetingCode);
-		window.location.href= "mobilepglogin.htm?meetingCode=" +meetingCode;
+		window.location.replace("mobilepglogin.htm?meetingCode=" +meetingCode);
 	});
 	
 	// END--APP ALERT handling using cookie
