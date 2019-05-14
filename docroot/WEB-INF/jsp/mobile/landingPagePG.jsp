@@ -126,9 +126,9 @@
 			
 		<c:choose>
 			<c:when test="${WebAppContext.myMeetings.get(0).vendor == null}">
-				<%@ include file="common/informationpg.jsp" %>
+				<%@ include file="common/informationTwopg.jsp" %>
 			</c:when>
-		</c:choose>
+			</c:choose>
 	</div>
 </div>
 <script>
