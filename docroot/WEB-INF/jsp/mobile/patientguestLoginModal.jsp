@@ -23,7 +23,11 @@
 		</div>
 		<p class="disclaimer" style="margin: 0 0 10px;">Children age 11 and younger must have a parent present during the visit.</p>
 
-	 	<%@ include file="common/informationpg.jsp" %>
+	 	<c:choose>
+			<c:when test="${WebAppContext.myMeetings.get(0).vendor == null}">
+				<%@ include file="common/informationpg.jsp" %>
+			</c:when>
+		</c:choose>	
 </div>
 
 <style>
