@@ -85,7 +85,14 @@
 		}
 		var params = ['info','videoRefreshButtonAction','User clicked on refresh button in video visit page.'];
         VideoVisit.logVendorMeetingEvents(params);
-		window.location.reload(); 
+        if($('#vendor').val() == "pexip"){
+        	disconnectOnRefresh();
+        	setTimeout(function(){
+        		window.location.reload();
+        	},1000);
+        }else{
+        	window.location.reload();
+        } 
 		});
         
         function keepALive()
