@@ -584,9 +584,7 @@ function participantCreated(participant){
 	    pexipParticipantsList.push(participant);
 	    var joinParticipantMsg = participant.display_name + " has joined the visit.";
 	    if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
-            setTimeout(function(){
-                utilityNotifyQueue(joinParticipantMsg);
-            },500);
+	        utilityNotifyQueue(joinParticipantMsg);
 	    }
 	    VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
 	}

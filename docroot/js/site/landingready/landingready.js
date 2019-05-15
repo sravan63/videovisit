@@ -268,6 +268,7 @@ function startUDPTest(){
       }, 5000).then(function(bool){
             if(bool){
              console.log('Yep, the STUN server works...');
+             $('#udp-test-container').css('display', 'none');
             } else{
              //alert('Doesn\'t work');
              var params = ['error','UDP_STUN_FAIL','UDP test failed'];
