@@ -146,12 +146,12 @@ function startUDPTest(){
       }, 5000).then(function(bool){
             if(bool){
              console.log('Yep, the STUN server works...');
-             $('#udp-test-container').css('display', 'none');
+             $('#blockerMessage').css('display', 'none');
             } else{
              //alert('Doesn\'t work');
              var params = ['error','UDP_STUN_FAIL','UDP test failed'];
              logVendorMeetingEvents(params);
-             $(".udp-test-container").css("display","block");
+             $("#blockerMessage").css("display","block");
              $('.joinNowButton').each(function(){
                 $(this).removeClass('joinNowButton').addClass('not-available');
             });
@@ -162,7 +162,7 @@ function startUDPTest(){
          console.log('STUN server does not work.');
          var params = ['error','UDP_STUN_FAIL','UDP test failed'];
          logVendorMeetingEvents(params);
-         $(".udp-test-container").css("display","block");
+         $("#blockerMessage").css("display","block");
          $('.joinNowButton').each(function(){
             $(this).removeClass('joinNowButton').addClass('not-available');
         });
@@ -388,10 +388,12 @@ function updateDomWithMeetings(guestData){
         $('.my-meetings-grid').html(htmlToBeAppend);
     }
     if(browserInfo.isChrome == true || browserInfo.isFirefox == true){
+        //do nothing
+    }else if(browserInfo.isSafari){
         if(runUDPTest == true){
             startUDPTest();
         } else {
-             $(".udp-test-container").css("display","none");
+             $("#blockerMessage").css("display","none");
         }
     }
 }

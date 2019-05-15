@@ -268,12 +268,12 @@ function startUDPTest(){
       }, 5000).then(function(bool){
             if(bool){
              console.log('Yep, the STUN server works...');
-             $('#udp-test-container').css('display', 'none');
+             $('#blockerMessage').css('display', 'none');
             } else{
              //alert('Doesn\'t work');
              var params = ['error','UDP_STUN_FAIL','UDP test failed'];
              logVendorMeetingEvents(params);
-             $("#udp-test-container").css("display","block");
+             $("#blockerMessage").css("display","block");
              $('.joinNowButton').each(function(){
                 $(this).removeClass('joinNowButton').addClass('not-available');
             });
@@ -284,14 +284,14 @@ function startUDPTest(){
          console.log('STUN server does not work.');
          var params = ['error','UDP_STUN_FAIL','UDP test failed'];
          logVendorMeetingEvents(params);
-         $("#udp-test-container").css("display","block");
+         $("#blockerMessage").css("display","block");
          $('.joinNowButton').each(function(){
             $(this).removeClass('joinNowButton').addClass('not-available');
         });
       });
 }
 
-function checkSTUNServer(stunConfig, timeout){ 
+function checkSTUNServer(stunConfig, timeout){
   console.log('stunConfig: ', stunConfig);
   return new Promise(function(resolve, reject){
 
@@ -302,7 +302,7 @@ function checkSTUNServer(stunConfig, timeout){
     }, timeout || 5000);
 
     var promiseResolved = false
-      , myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection   //compatibility for firefox and chrome
+      , myPeerConnection = window.webkitRTCPeerConnection || window.mozRTCPeerConnection || window.RTCPeerConnection   //compatibility for firefox and chrome
       , pc = new myPeerConnection({iceServers:[stunConfig]})
       , noop = function(){};
     pc.createDataChannel("");    //create a bogus data channel
@@ -314,7 +314,7 @@ function checkSTUNServer(stunConfig, timeout){
       pc.setLocalDescription(sdp, noop, noop);
     }, noop);    // create offer and set local description
     pc.onicecandidate = function(ice){  //listen for candidate events
-      if(promiseResolved || !ice || !ice.candidate || !ice.candidate.candidate || !(ice.candidate.candidate.indexOf('candidate:')>-1 && ice.candidate.candidate.indexOf('udp')>-1))  return;
+      if(promiseResolved || !ice || !ice.candidate || !ice.candidate.candidate || !(ice.candidate.candidate.toLowerCase().indexOf('candidate:')>-1 && ice.candidate.candidate.toLowerCase().indexOf('udp')>-1))  return;
       promiseResolved = true;
       resolve(true);
     };
@@ -628,14 +628,14 @@ function updateDomWithMeetingsData(data){
         },100);
         checkAndBlockMeetings();
     }
-
     if(browserInfo.isChrome == true || browserInfo.isFirefox == true){
+        //do nothing
+    }else if(browserInfo.isSafari){
         if(runUDPTest == true){
             startUDPTest();
         } else {
-             $("#udp-test-container").css("display","none");
+             $("#blockerMessage").css("display","none");
         }
-        
     }
 }
 //US31767

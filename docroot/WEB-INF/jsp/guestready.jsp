@@ -51,6 +51,26 @@
 	   </div>
  </div>
  <!-- UDP Test Results -->
+ <!-- Block Message -->
+ <div class="special-message-banner-container" id="blockerMessage">
+    <div class="special-message-header">
+      <span class="warning-icon"></span>
+      <p class="warning-text">Video Visits does not support your browser.</p>
+    </div>
+    <div class="special-message-content">
+      <div class="special-message-container">
+        <div class="mdo-logo"></div>
+        <div class="special-message">
+          <p><b id="browser-block-message">Join on your mobile device using the My Doctor Online app, or use Chrome or Internet Explorer.</b></p>
+        </div>
+      </div>
+      <div class="app-store-container">
+        <span class="ios-appstore"><a class="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></span>
+        <span class="android-playstore"><a href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en_US" class="icon-link" target="_blank"></a></span>
+      </div>
+     </div>
+ </div>
+ <!-- Block Message -->
 </div>
 <!-- US31768 -->
 <div class="my-meetings-no-meetings-grid my-meets-grid">
