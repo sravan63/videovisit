@@ -813,3 +813,9 @@ width: 35px;
 margin: auto;
 border-radius: 50%;
 }
+
+#inCallButtonExpand {
+  width: 35px;
+  margin: auto;
+  border-radius: 50%;
+}

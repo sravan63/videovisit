@@ -244,10 +244,8 @@ function togglePresentation() {
 }
 
 function goFullscreen() {
-    if (!id_fullscreen.classList.contains("inactive")) {
-        video.goFullscreen = ( video.webkitRequestFullscreen || video.mozRequestFullScreen );
-        video.goFullscreen();
-    }
+	video.goFullscreen = (video.webkitRequestFullscreen || video.mozRequestFullScreen);
+	video.goFullscreen();
 }
 
 function presentScreen() {
