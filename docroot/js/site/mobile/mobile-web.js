@@ -8,6 +8,7 @@ var isMobileDevice;
 var isRearCamera = false;
 var newStartTimeRecursiveCall;
 
+
 VIDEO_VISITS_MOBILE.Path = {
 	    global : {
 	        error : 'error.htm',
@@ -1445,7 +1446,7 @@ function configurePexipVideoProperties(){
 	console.log('========>>>> PEXIP AUTO START');
 	console.log("join-conf clicked");
 
-    var reqscript1 = document.createElement('script');
+    /*var reqscript1 = document.createElement('script');
       reqscript1.src = "js/site/pexip/complex/webui.js";
       reqscript1.type = "text/javascript";
       document.getElementsByTagName("head")[0].appendChild(reqscript1);
@@ -1471,7 +1472,18 @@ function configurePexipVideoProperties(){
 			isPatientLoggedIn = false;
 		}
 		sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
-    };
+    };*/
+
+    startPexip();
+	var guestName = $("#guestName").val();
+	var patientName =$("#meetingPatient").val();
+	if(guestName.toLowerCase() == patientName.toLowerCase()){
+		isPatientLoggedIn = true;
+	}
+	else{
+		isPatientLoggedIn = false;
+	}
+	sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
 }
 
 function startPexip() {
