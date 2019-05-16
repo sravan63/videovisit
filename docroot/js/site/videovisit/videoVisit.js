@@ -80,9 +80,6 @@ $(document).ready(function() {
 	
 	$("#setupContents").height(calculatedHeight);
 	$("#setupContents").width(calculatedWidthPluginContainer);
-	
-	//DE9451 - Splash screen scroll issue fix
-    $('html').addClass("no-scroll");
 
 	// Returns the code on pre call load to avoid the errors.
 	if($("#pluginContainer").length == 0 && $('#vendor').val() != 'pexip'){
@@ -810,7 +807,7 @@ function configurePexipVideoProperties(){
 
 function startPexip() {
 	console.log(sidePaneMeetingDetails);
-	$('html').removeClass("no-scroll");
+	//$('html').removeClass("no-scroll");
 	var guestPin = sidePaneMeetingDetails.vendorGuestPin;
 	$('#guestPin').val(guestPin);
 	var roomUrl = $('#guestUrl').val();
