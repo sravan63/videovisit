@@ -243,10 +243,11 @@ function togglePresentation() {
     }
 }
 
-function goFullscreen() {
-	video.goFullscreen = (video.webkitRequestFullscreen || video.mozRequestFullScreen);
-	video.goFullscreen();
-}
+//To do later - Full screen Implementation
+//function goFullscreen() {
+//video.goFullscreen = ( video.webkitRequestFullscreen || video.mozRequestFullScreen );
+//video.goFullscreen();
+//}
 
 function presentScreen() {
     if (!presenting) {

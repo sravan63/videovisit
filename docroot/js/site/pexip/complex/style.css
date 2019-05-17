@@ -814,8 +814,9 @@ margin: auto;
 border-radius: 50%;
 }
 
-#inCallButtonExpand {
+/* to do later - Full screen implementation */
+/* #inCallButtonExpand {
   width: 35px;
   margin: auto;
   border-radius: 50%;
-}
+} */

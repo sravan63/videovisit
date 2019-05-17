@@ -212,9 +212,10 @@
 	                   <div title="" id="id_screenshare" class="btns smd-btn" onclick="presentScreen();">&nbsp;</div>
 	                   <div title="" id="id_screen_unshare" class="btns smd-muted-btn"onclick="stopSharing();">&nbsp;</div>
 	                </div>-->
-	                <div id="inCallButtonExpand" onclick="goFullscreen()">
+	                <!-- To do later - Full Screen Implementation-->
+	                <!-- <div id="inCallButtonExpand" onclick="goFullscreen()">
 	                   <div title="Expand" class="btns expand-btn">&nbsp;</div>
-	                </div>
+	                </div> -->
 	                <div id="inCallButtonToggleConfig" onclick="togglePeripherals()">
 	                  <div title="Settings" class="btns settings-btn">&nbsp;</div>
 	                </div>
