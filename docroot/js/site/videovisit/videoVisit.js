@@ -791,12 +791,12 @@ function configurePexipVideoProperties(){
 
     var reqscript2 = document.createElement('script');
     	//  reqscript2.src = "js/site/pexip/complex/pexrtc.js";
-      reqscript2.src = "js/site/pexip/complex/pexrtcV20.js";
-      reqscript2.type = "text/javascript";
-      document.getElementsByTagName("head")[0].appendChild(reqscript2);
 
     reqscript1.onload = function(){
       	console.log("reqscript1 loaded");
+      reqscript2.src = "js/site/pexip/complex/pexrtcV20.js";
+      reqscript2.type = "text/javascript";
+      document.getElementsByTagName("head")[0].appendChild(reqscript2);
     };
 
     reqscript2.onload = function(){

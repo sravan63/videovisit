@@ -939,10 +939,10 @@ function getTurnServerObjsForMobile(){
     return t_servers;
 }
 
-function logoutFromMDOApp(){
-    console.log('calling from MDO app');
-    disconnect();
-}
+// function logoutFromMDOApp(){
+//     console.log('calling from MDO app');
+//     disconnect();
+// }
 
 function disconnect(){
     console.log("inside disconnect");
