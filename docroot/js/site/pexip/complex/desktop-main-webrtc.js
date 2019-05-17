@@ -15,6 +15,7 @@ var selectors;
 
 var audioSource;
 var videoSource;
+var speakerSource;
 
 var cameraID;
 
@@ -84,13 +85,15 @@ $(document).ready(function(){
     //Get the Camera &  selected in the dropdown option and pass it to the WebRTC as a c
     audioSource = audioInputSelect.value;
     videoSource = videoSelect.value;
+    speakerSource = audioOutputSelect.value;
     cameraID = videoSource;
 
     // $("#vendorPluginName").val(videoSource);
 
     constraints = {
       audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-      video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+      video: {deviceId: videoSource ? {exact: videoSource} : undefined},
+      speaker: {deviceId: speakerSource ? {exact: speakerSource} : undefined}
     };
   }
 
@@ -184,18 +187,20 @@ $(document).ready(function(){
 
     audioSource = audioInputSelect.value;
     videoSource = videoSelect.value;
+    speakerSource = audioOutputSelect.value;
     cameraID = videoSource;
 
     constraints = {
       audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-      video: {deviceId: videoSource ? {exact: videoSource} : undefined}
+      video: {deviceId: videoSource ? {exact: videoSource} : undefined},
+      speaker: {deviceId: speakerSource ? {exact: speakerSource} : undefined}
     };
       
     navigator.mediaDevices.getUserMedia(constraints).then(gotStream).then(gotDevices).catch(handleError);
   }
 
   audioInputSelect.onchange = peripheralsAudioChange;
-  //audioOutputSelect.onchange = changeAudioDestination;
+  audioOutputSelect.onchange = changeAudioDestination;
   videoSelect.onchange = peripheralsVideoChange;
 
   start();
