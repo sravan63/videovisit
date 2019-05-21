@@ -1752,7 +1752,7 @@ function logoutFromMDOApp(){
 	if(typeof webuiLoaded !== 'undefined'){
 		disconnect();
 	} else {
-		if(rtc){
+		if(typeof rtc !== 'undefined'){
 			// disconnects pexip
     		rtc.disconnect();
 		}
