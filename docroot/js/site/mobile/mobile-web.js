@@ -1749,7 +1749,7 @@ var newStartTimeCheck = function(){
 
 function logoutFromMDOApp(){
 	console.log('calling from MDO app');
-	if(webuiLoaded){
+	if(typeof webuiLoaded !== 'undefined'){
 		disconnect();
 	} else {
 		if(rtc){
