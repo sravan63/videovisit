@@ -1749,5 +1749,12 @@ var newStartTimeCheck = function(){
 
 function logoutFromMDOApp(){
 	console.log('calling from MDO app');
-	disconnect();
+	if(webuiLoaded){
+		disconnect();
+	} else {
+		if(rtc){
+			// disconnects pexip
+    		rtc.disconnect();
+		}
+	}
 }
