@@ -1747,14 +1747,41 @@ var newStartTimeCheck = function(){
 	newStartTimeCheck();
     },120000);
 
+
+
+// $(window).unload(function(){
+// 	logoutFromMDOApp();
+// });
+
+$(window).on('popstate',function(){
+	console.log('TEST');
+	logoutFromMDOApp();
+});
+
+window.onbeforeunload = function(){
+	console.log('TEST');
+}   
+
 function logoutFromMDOApp(){
 	console.log('calling from MDO app');
-	if(typeof webuiLoaded !== 'undefined'){
-		disconnect();
-	} else {
-		if(typeof rtc !== 'undefined'){
-			// disconnects pexip
-    		rtc.disconnect();
+	// if(typeof webuiLoaded !== 'undefined'){
+	// 	disconnect();
+	// } 
+	// else if(typeof rtc !== 'undefined'){
+ //    		rtc.disconnect();
+	// } else {
+		var MediaStream = window.MediaStream;
+		if (typeof MediaStream === 'undefined' && typeof webkitMediaStream !== 'undefined') {
+			MediaStream = webkitMediaStream;
 		}
-	}
+		/*global MediaStream:true */
+		if (typeof MediaStream !== 'undefined') {
+			MediaStream.prototype.stop = function() {
+				this.getTracks().forEach(function(track) {
+					track.stop();
+				});
+			};
+		}
+	// }
+	
 }
