@@ -1749,19 +1749,6 @@ var newStartTimeCheck = function(){
 
 
 
-// $(window).unload(function(){
-// 	logoutFromMDOApp();
-// });
-
-$(window).on('popstate',function(){
-	console.log('TEST');
-	logoutFromMDOApp();
-});
-
-window.onbeforeunload = function(){
-	console.log('TEST');
-}   
-
 function logoutFromMDOApp(){
 	console.log('calling from MDO app');
 	// if(typeof webuiLoaded !== 'undefined'){
