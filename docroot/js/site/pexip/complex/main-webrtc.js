@@ -31,6 +31,11 @@ function gotDevices(deviceInfos) {
       mobileVideoSources.push(option.value);
     } 
   }
+
+  // Keeps only first and last camera ids, if device has more than 2 cameras.
+  if(mobileVideoSources.length > 2){
+    mobileVideoSources.splice(1,mobileVideoSources.length-2);
+  }
   
   configurePexipVideoProperties();
 }
