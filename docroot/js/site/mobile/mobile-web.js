@@ -1009,7 +1009,7 @@ function launchVideoVisitForPatientGuest(mObj,vendor,megaMeetingUrl, meetingId, 
 	var meetingCode = request.get('meetingCode');
 	var caregiverId = $('#caregiverId').val();
 	//if (/iP(hone|od|ad)/.test(navigator.platform)) {
-	if(vendor == 'pexip' && appOS == 'iOS' ){	
+	if(vendor == 'pexip'){	
               var mobileMeetingObj = {
                     "meetingId": mObj.meetingId,
                     "meetingCode": meetingCode ? meetingCode : null,
