@@ -3,57 +3,14 @@ var runningLateRecursiveCall;
 var newStartTimeRecursiveCall;
 var meetingHostName = "";
 var meetingPatientName = "";
-var sidePaneMeetingDetails = {sortedParticipantsList: []};
-var isPexip = false;
 
 $(document).ready(function() {
-	$.ajax({
-		type: "POST",
-		url: VIDEO_VISITS.Path.visit.meetingDetails + '?meetingId=' + $('#meetingId').val(),
-		cache: false,
-		dataType: "json",
-		data: {},
-		success: function(result){
-			if(!result || !result.host){
-				meetingHostName = '';
-				return;
-			}else if(!result.host.lastName && !result.host.firstName){
-				meetingHostName = '';
-			}else if(result.host.lastName && result.host.firstName){
-				meetingHostName = result.host.lastName + ' ' + result.host.firstName;
-			}else if(!result.host.lastName){
-				meetingHostName = result.host.firstName;
-			}else if(!result.host.firstName){
-				meetingHostName = result.host.lastName;
-			}
-			if(result.host.title){
-				meetingHostName = meetingHostName + ' ' + result.host.title;
-			}
-			meetingHostName = meetingHostName.trim();
-			sidePaneMeetingDetails = result;
-			updateSideBarWithDetails(result);
-			if($("#container-videovisit").length !== 0){
-				if($("#vendor").val() === 'pexip'){
-					setTimeout(function(){
-						configurePexipVideoProperties();
-					}, 500);					
-				}
-			}
-			
-		},
-		error: function(result){
-			console.log(result);
-		},
-		complete: function(returndata) {
-        }
-	});
-	isPexip = $('#vendor').val() === 'pexip';
 	//$('html').css('overflow-y', 'hidden');
 	var windowHeight = $(window).height();
 	var windowWidth = $(window).width();
 	
 	var vvHeaderHeight = $("#vvHeader").outerHeight();
-	var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;
+	var videoSidebarWidth = $("#video-sidebar").outerWidth();
 	var calculatedHeight = windowHeight - vvHeaderHeight;
 	var calculatedWidth = windowWidth - videoSidebarWidth;
 	
@@ -66,14 +23,12 @@ $(document).ready(function() {
 	var calculatedWidthPluginContainer = calculatedWidth - btnContainerWidth;
 	
 	/* Mandar [DE7189] - Code changes for right side space */
-	var calWidth = windowWidth - (260 + btnContainerWidth);
+	var calWidth = windowWidth - (200 + btnContainerWidth);
 	$("#pluginContainer").width(calWidth);
 	/* Mandar [DE7189] END */
 	
 	$("#pluginContainer").height(calculatedHeight);
-	if(!$('#container').hasClass('pexip-main-container')){
-		$("#btnContainer").height(calculatedHeight);
-	}
+	$("#btnContainer").height(calculatedHeight);
 	
 	$("#infoWrapper").height(calculatedHeight);
 	$("#infoWrapper").width(calculatedWidthPluginContainer);
@@ -82,11 +37,11 @@ $(document).ready(function() {
 	$("#setupContents").width(calculatedWidthPluginContainer);
 
 	// Returns the code on pre call load to avoid the errors.
-	if($("#pluginContainer").length == 0 && $('#vendor').val() != 'pexip'){
+	if($("#pluginContainer").length == 0){
 		return;
 	}
 
-	/*var host = ($("#meetingHost").val().indexOf('&nbsp;') > -1)?$("#meetingHost").val().replace('&nbsp;',''):$("#meetingHost").val();
+	var host = ($("#meetingHost span").html().indexOf('&nbsp;') > -1)?$("#meetingHost span").html().replace('&nbsp;',''):$("#meetingHost span").html();
 	var splittedHostName = host.trim().split(" ");
 	for(var c=0;c<splittedHostName.length;c++){
 		var char = splittedHostName[c].trim();
@@ -94,9 +49,9 @@ $(document).ready(function() {
 			meetingHostName += char+" ";
 		}
 	}
-	meetingHostName = meetingHostName.trim();*/
+	meetingHostName = meetingHostName.trim();
 
-	var patient = ($("#meetingPatient").val().indexOf('&nbsp;') > -1)?$("#meetingPatient").val().replace('&nbsp;',''):$("#meetingPatient").val();
+	var patient = ($("#meetingPatient span").html().indexOf('&nbsp;') > -1)?$("#meetingPatient span").html().replace('&nbsp;',''):$("#meetingPatient span").html();
 	var splittedPatientName = patient.trim().split(" ");
 	for(var c=0;c<splittedPatientName.length;c++){
 		var char = splittedPatientName[c].trim();
@@ -154,7 +109,6 @@ $(document).ready(function() {
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
 							$('#displayMeetingNewStartTime').html('New Start '+newTime);
 							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
-							updateRunningLateTime(result.service.runningLateEnvelope);
 					}else{
 						$('#displayMeetingNewStartTime').html('');
 							$(".waitingroom-text").html("Your visit will start once your doctor joins.");
@@ -185,7 +139,6 @@ $(document).ready(function() {
 						if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
 							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
 						}
-						updateRunningLateTime(result.service.runningLateEnvelope);
 					}else{
 						$('#displayMeetingNewStartTime').html('');
 						if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
@@ -222,25 +175,9 @@ $(document).ready(function() {
 
     //DE9451 - Splash screen scroll issue fix
 	$('html').addClass("no-scroll");
-	if(!isPexip){
-		setTimeout(function(){
-			setSidePanParticipantsListHeight();
-		}, 1000);
-	}
 	
 	VideoVisit.updatePatientGuestNameList();
 	
-}).on('click', function (evt) {
-	if(evt.target.className == "settings-btn" || $(evt.target).closest('.settings-btn').length>0){
-		return;
-	}
-	if(evt.target.className == "videocontainer")
-		return;
-	if($(evt.target).closest('.videocontainer').length)
-		return;
-	if($('.list-of-devices').css('display') == 'block'){
-		$('.list-of-devices').toggle('slide', {direction: 'left'}, 500);
-	}		
 });
 
 var getPatientGuestNameList = function(){
@@ -497,76 +434,100 @@ var VideoVisit =
 		}
 		return available;
       },
-	checkAndShowParticipantAvailableState: function(participants,vendorval){
+	checkAndShowParticipantAvailableState: function(participants,isWebRTC){
 		if(participants){
+			var patientGuests = getPatientGuestNameList();
+			var additinalClinicians = getAdditionalCliniciansNameList();
 			var hostAvailable = false;
-			for(var ini=0;ini<sidePaneMeetingDetails.sortedParticipantsList.length;ini++){
-				sidePaneMeetingDetails.sortedParticipantsList[ini].availableInMeeting = false;
-			}
+			var patientAvailable = false;
+
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
-        		var prName = (vendorval == 'webrtc')?participants[i].trim():(vendorval == 'vidyo')?pData.name.trim(): participants[i].display_name.trim();
-        		/*var pName = '';
-        		if((prName.match(/,/g) || []).length == 2 && prName.indexOf('@') > 0){
-        			pName = prName;//check for guest name with email
-        		}else{
-        			pName = changeConferenceParticipantNameFormat(prName);
-        		}*/
-        		var participantName = prName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+        		var pName = (isWebRTC == 'webrtc')?participants[i].trim():pData.name.trim();
+        		var participantName = pName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+				var isTelephony = isNumberString(participantName);
+				//commenting isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
         		// Host Availability
         		var hostName = meetingHostName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
-        		if(hostName.trim() === participantName.trim()){
+        		if(hostName === participantName){
         			hostAvailable = true;
         		}
-        		//participants availability
-        		for(var pa=0;pa<sidePaneMeetingDetails.sortedParticipantsList.length;pa++){
-        			/*let tPart = sidePaneMeetingDetails.sortedParticipantsList[pa];
-        			let tPartName = '';
-        			if(!tPart.firstName && !tPart.lastName){
-        				tPartName = '';
-        			}else if(tPart.firstName && tPart.lastName){
-        				tPartName = tPart.firstName + ' ' + tPart.lastName;
-        			}else if(!tPart.firstName){
-        				tPartName = tPart.lastName;
-        			}else if(!tPart.lastName){
-        				tPartName = tPart.firstName;
-        			}
-        			if(tPart.title){
-        				tPartName = tPartName + ' ' + tPart.title;//assuming title exixts only for clinician
-        			}
-        			if(tPart.careGiverId){
-        				tPartName = tPart.lastName + ' ' + tPart.firstName + '(' + tPart.emailAddress + ')';//assuming careGiverId exixts only for guest
-        			}
-        			if(tPart.lastName == "audio_participant" && tPart.careGiverId){
-        				tPartName = "" + tPart.firstName.slice(2);//overrride if it is a telephony user.
-        			}
-        			tPartName = tPartName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
-        			if(participantName == tPartName){
-        				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
-        			}*/
-        			
-
-        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName == prName || 
-                            sidePaneMeetingDetails.sortedParticipantsList[pa].displayName == prName){
-            				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
-            			}
-        			
+        		// Patient Availability
+        		var patientName = meetingPatientName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+        		if(patientName === participantName){
+        			patientAvailable = true;
         		}
-        		//participants availability
-        	}//ending of participants for loop
-
-        	for(var sp=0;sp<sidePaneMeetingDetails.sortedParticipantsList.length;sp++){
-        		if(sidePaneMeetingDetails.sortedParticipantsList[sp].availableInMeeting){
-    				$('.guest-part-'+sp+' .participant-indicator').css('visibility', 'visible');
-    			}else{
-    				$('.guest-part-'+sp+' .participant-indicator').css('visibility', 'hidden');
-    			}
+        		// Patient Guests Availability
+        		for(var pg=0;pg<patientGuests.length;pg++){
+        			var guest = patientGuests[pg];
+        			var gName;
+        			var participant;
+        			if (isTelephony) {
+        				//gName = guest.fname.replace(/\s/g, '').split('').reverse().join('').substr(0,10);
+        				//participant = participantName.split('').reverse().join('').substr(0,10);
+        				gName = guest.fname.slice(-10);
+        				participant = participantName.slice(-10);
+        				if(participant === gName){
+	        				guest.isAvailable = true;
+	        			}
+        			} else {
+        				participant = participantName;
+        				gName = guest.lname.replace(/\s/g, '').toLowerCase()+guest.fname.replace(/\s/g, '').toLowerCase()+'('+guest.email.replace(/\s/g, '').toLowerCase()+')';
+	        			if(participant === gName){
+	        				guest.isAvailable = true;
+	        			}
+        			}
+        		}
+	  			// Additional Clinicians Availability
+	  			for(var c=0;c<additinalClinicians.length;c++){
+        			var clinician = additinalClinicians[c];
+        			var cName = clinician.name.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
+        			if(cName === participantName){
+        				clinician.isAvailable = true;
+        			}
+        		}
+        		// Adding participant to side bar dynamically only for telephonic users
+        		if(isTelephony){
+					var isNumberAvailableOnSideBar = VideoVisit.checkTelePhonyUser(participantName);
+					if(isNumberAvailableOnSideBar === false){
+						VideoVisit.addNewPartcipantsToSideBar(participantName, true);
+						addedUserDynamically = true;
+					}
+        		}
         	}
+
         	// Host icon toggle
-        	if(hostAvailable){
-    			$('#meetingHost .host-indicator').css('visibility', 'visible');
-    		}else{
-    			$('#meetingHost .host-indicator').css('visibility', 'hidden');
+        	if(hostAvailable == true){
+        		$("#hostActiveIcon").css("display","inline-block");
+        	} else {
+        		$("#hostActiveIcon").css("display","none");
+        	}
+
+        	// Patient icon toggle
+        	if(patientAvailable == true){
+        		$("#patientActiveIcon").css("display","inline-block");
+        	} else {
+        		$("#patientActiveIcon").css("display","none");
+        	}
+
+        	// Patient Guests icon toggle
+    		for(var pg=0;pg<patientGuests.length;pg++){
+    			var guest = patientGuests[pg];
+    			if(guest.isAvailable == true){
+    				$($('#meetingPatientGuest').children('p')[pg]).find("i").css("display","inline-block");
+    			} else{
+    				$($('#meetingPatientGuest').children('p')[pg]).find("i").css("display","none");
+    			}
+    		}
+
+  			// Additional Clinicians icon toggle
+  			for(var c=0;c<additinalClinicians.length;c++){
+    			var clinician = additinalClinicians[c];
+    			if(clinician.isAvailable == true){
+    				$($('#meetingParticipant').children('p')[c]).find("i").css("display","inline-block");
+    			} else{
+    				$($('#meetingParticipant').children('p')[c]).find("i").css("display","none");
+    			}
     		}
     	}
 	},
@@ -618,9 +579,8 @@ var VideoVisit =
 
 		/* Setting min-widths */
 		$('#container-videovisit').css("min-width", calculatedMinWidth);
-		var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;
-		$("#video-main").css("min-width", calculatedMinWidth-260);
-		$("#pluginContainer").css("min-width", calculatedMinWidth-260-btnContainerWidth);
+		$("#video-main").css("min-width", calculatedMinWidth-200);
+		$("#pluginContainer").css("min-width", calculatedMinWidth-200-btnContainerWidth);
 
 		
 		/* Setting min-heights */
@@ -628,16 +588,11 @@ var VideoVisit =
 		//var btnGroupHeight = $("#buttonGroup").outerHeight();
 		//DE9498 Kranti--new line
 		var btnGroupHeight = 550;
-		if($('#container').hasClass('pexip-main-container')){
-			btnGroupHeight = 480;//DE17110 changes
-		}
 
 		$("#video-main").css("min-height", btnGroupHeight);
 		$("#pluginContainer").css("min-height", btnGroupHeight);
 		//$("#video-sidebar").css("min-height", btnGroupHeight);
-		if(!$('#container').hasClass('pexip-main-container')){
-			$("#btnContainer").css("min-height", btnGroupHeight);
-		}
+		$("#btnContainer").css("min-height", btnGroupHeight);
 		
 		if (navigator.appName.indexOf("Internet Explorer")!=-1){
 			if(navigator.appVersion.indexOf("MSIE 8")!=-1){
@@ -649,191 +604,16 @@ var VideoVisit =
 			$('#inCallContainer').css('min-width', '0');
 			$('#inCallContainer').css('margin-top', '0');
 		}
-		if(isPexip){
-			setSidePanParticipantsListHeight();
-		}
-	}
-
-	
-}
-
-function setSidePanParticipantsListHeight(){
-	/*var ht = $('#video-sidebar').outerHeight() - $('.visit-info-container').outerHeight();
-	$('.participant-details').css('height',ht);
-	var listHt = $('.participant-details').outerHeight() - $('.participants-header').outerHeight() - 15;
-	$('.participants-list').css('max-height',listHt);*/
-	let calculatedHeight = $('#video-sidebar').outerHeight() - ($('.visit-info-container').outerHeight() + 65);
-	$('.participants-list').css('max-height',calculatedHeight);
-}
-
-function updateSideBarWithDetails(meetingDetails){
-	updateHostDetails(meetingDetails.host);
-	updateTimeAndDate(meetingDetails.meetingTime);
-	updateRunningLateTime(meetingDetails);
-	updateParticipantsAndGuestsList(meetingDetails);
-}
-function updateHostDetails(host){
-	if(!host){
-		$('#meetingHost').text('');
-		return;
-	}
-	let hostFname = host.firstName?host.firstName.toLowerCase():'';
-	let hostLname = host.lastName?host.lastName.toLowerCase():'';
-	let hostFullName = hostFname+' '+hostLname;
-	let hostTitle = host.title?host.title.toLowerCase():'';
-	if(host.title){
-		hostFullName = hostFullName.trim() + ', ' + host.title;
-	}
-	$('#meetingHost').html('<img class="host-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="host-name">'+hostFullName.trim()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span>');
-}
-function updateTimeAndDate(meetingTime){
-	if(!meetingTime){
-		$('.meeting-time-date-info .time-display').text('');
-		$('.meeting-time-date-info .date-display').text('');
-		return;
-	}
-	var meetingTime = meetingTime?new Date(parseInt(meetingTime)):null;
-	var hours = meetingTime.getHours();
-	var minutes = meetingTime.getMinutes();
-	if(minutes<10){
-		minutes = "0"+minutes;
-	}
-	var ampmval = 'AM';
-	if(hours>11){
-		ampmval = 'PM';
-		hours = hours - 12;
-	}
-	hours = (hours == 0)?12:hours;
-	$('.meeting-time-date-info .time-display').text(''+hours+':'+minutes+ampmval+', ');
-	var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-	$('.meeting-time-date-info .date-display').text(''+weeks[meetingTime.getDay()]+', '+months[meetingTime.getMonth()]+' '+meetingTime.getDate());
-}
-function updateRunningLateTime(meetingDetails){
-	if(!meetingDetails.isRunningLate || !meetingDetails.runLateMeetingTime){
-		$('.meeting-updated-time-date-info .time-display').text('');
-		return;
-	}
-	var meetingTime = new Date(parseInt(meetingDetails.runLateMeetingTime));
-	var hours = meetingTime.getHours();
-	var minutes = meetingTime.getMinutes();
-	if(minutes<10){
-		minutes = "0"+minutes;
-	}
-	var ampmval = 'AM';
-	if(hours>11){
-		ampmval = 'PM';
-		hours = hours - 12;
-	}
-	hours = (hours == 0)?12:hours;
-	$('.meeting-updated-time-date-info .time-display').text('updated: '+hours+':'+minutes+ampmval);
-	$('.meeting-updated-time-date-info').show();
-}
-function updateParticipantsAndGuestsList(meetingList){
-	if(!meetingList.participant && !meetingList.caregiver){
-		sidePaneMeetingDetails.sortedParticipantsList = [];
-		return;
-	}
-	var participants =  [];
-	if(meetingList.participant && meetingList.caregiver){
-		var nonTelephonyGuests = meetingList.caregiver.filter(function(item){
-			return item.lastName != 'audio_participant';
-		});
-		participants = meetingList.participant.concat(nonTelephonyGuests);
-	}else if(!meetingList.participant){
-		participants = meetingList.caregiver.filter(function(item){
-			return item.lastName != 'audio_participant';
-		});;
-	}else if(!meetingList.caregiver){
-		participants = meetingList.participant;
-	}
-	//meetingList.participant.concat(meetingList.caregiver);
-	let tempSortedArr = participants.sort(sortObjs('firstName'));
-	let telephonyGuests = [];
-	if(meetingList.sipParticipants){
-		telephonyGuests = meetingList.sipParticipants.filter(function(item){
-			return item.participantType == 'audio';
-		});
-	}
-	sidePaneMeetingDetails.sortedParticipantsList = tempSortedArr.concat(telephonyGuests);	
-	var tempArr = sidePaneMeetingDetails.sortedParticipantsList;
-	var phoneNumCount = 0;
-	for(let i=0;i<tempArr.length;i++){
-		if(tempArr[i].title){
-			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
-		}else{
-			if(tempArr[i].participantType == 'audio'){
-				phoneNumCount++;
-				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant" phonenumber="'+tempArr[i].destination+'">Phone '+phoneNumCount+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
-			}else{
-				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
-			}
-		}		
-	}
-}
-function sortObjs(prop){
-	return function(a, b){
-		return a[prop].toLowerCase() < b[prop].toLowerCase() ? -1 :(a[prop].toLowerCase()>b[prop].toLowerCase()) ? 1: 0;
-	}
-}
-
-function configurePexipVideoProperties(){
-	console.log('========>>>> PEXIP AUTO START');
-	console.log("join-conf clicked");
-
-    var reqscript1 = document.createElement('script');
-      reqscript1.src = "js/site/pexip/complex/webui.js";
-      reqscript1.type = "text/javascript";
-      document.getElementsByTagName("head")[0].appendChild(reqscript1);
-
-      //document.getElementById("container").appendChild(reqscript1);
-      //document.body.appendChild(reqscript1);
-
-    var reqscript2 = document.createElement('script');
-    	//  reqscript2.src = "js/site/pexip/complex/pexrtc.js";
-
-    reqscript1.onload = function(){
-      	console.log("reqscript1 loaded");
-      reqscript2.src = "js/site/pexip/complex/pexrtcV20.js";
-      reqscript2.type = "text/javascript";
-      document.getElementsByTagName("head")[0].appendChild(reqscript2);
-    };
-
-    reqscript2.onload = function(){
-	    console.log("reqscript2 loaded");
-		startPexip();
-    };
-}
-
-function startPexip() {
-	console.log(sidePaneMeetingDetails);
-	//$('html').removeClass("no-scroll");
-	var guestPin = sidePaneMeetingDetails.vendorGuestPin;
-	$('#guestPin').val(guestPin);
-	var roomUrl = $('#guestUrl').val();
-	var alias =  sidePaneMeetingDetails.meetingVendorId; // "M.NCAL.MED.0.0.419872.278914" // "M.NCAL.MED.0.369638..1234";
-	var bandwidth = "1280"; // $('#bandwidth').val();
-	var source = "Join+Conference";
-	var name = $("#guestName").val();
-	var isMember = $("#isMember").val();
-	var meetingCode = $("#meetingCode").val();
-	var meetingId = $('#meetingId').val();
-	var isProxyMeeting = $('#isProxyMeeting').val();
-	initialise(roomUrl, alias, bandwidth, name, "", source);
-	if(isMember == 'true' || isMember == true){
-		MemberVisit.SetKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
-	}
-	else{
-		MemberVisit.CaregiverJoinMeeting(meetingId, "J", meetingCode);
 	}
 }
 
 $(window).resize(function(){
+
 	$('#container-videovisit').css("min-width", "900px");/*us13302*/
 
 	/* Setting resize Widths */
 	var windowWidth = $(window).width();
-	var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;;
+	var videoSidebarWidth = $("#video-sidebar").outerWidth();
 	var btnContainerWidth = $("#btnContainer").outerWidth();
 
 	var width = $('#container-videovisit').width();
@@ -846,8 +626,7 @@ $(window).resize(function(){
 		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}
 	else{
-		var videoSidebarWidth = $("#video-sidebar").outerWidth() > 270 ? $("#video-sidebar").outerWidth()+1 : 270;
-		var calculatedWidthPluginContainer = width - (260 + btnContainerWidth);
+		var calculatedWidthPluginContainer = width - (200 + btnContainerWidth);
 		$("#pluginContainer").width(calculatedWidthPluginContainer);
 		$("#infoWrapper").width(calculatedWidthPluginContainer);
 	}
@@ -862,13 +641,5 @@ $(window).resize(function(){
 	$("#pluginContainer").height(calculatedHeight);
 	$("#video-sidebar").height(calculatedHeight);
 	$(".video-sidebar-content").height(calculatedHeight - 33);
-	if(!$('#container').hasClass('pexip-main-container')){
-		$("#btnContainer").height(calculatedHeight);
-	}
-	setSidePanParticipantsListHeight();
+	$("#btnContainer").height(calculatedHeight);
 });
-
-function togglePeripherals() {    
-    $('.list-of-devices').toggle('slide', {direction: 'left'}, 500);
-    $('#selectPeripheral1').css('display','block');
-  }

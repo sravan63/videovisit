@@ -7,21 +7,21 @@
 	</div>
 	<!-- End Splash screen -->
 
-	<div id="container-videovisit" class="container-videovisit" style="width:auto; visibility: hidden;">
+	<div id="container-videovisit" class="container-videovisit-header" style="width:auto; visibility: hidden;">
 		<div id="vvHeader">
 			<ul id="clinician-name" style="">
 				<li>    
-					<h3 id="patientTitle" class="page-title" style="">Video Visits</h3>
+					<h3 id="patientTitle" class="page-title" style="">Video Visits | ${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</h3>
 				</li>
 			</ul>
-			<div class="right-container">
-              <a href="mdohelp.htm" target="_blank"><span class="help">Help</span></a>
-              <span class="refresh-button">Refresh</span>
-			</div>
+			<ul id="leaveEndBtnContainer" class="btn-group" style="float:right; list-style:none; font-size:100%; margin:4px 0;">
+				<li class="btn btn-leaveEnd btn-leave-meeting" href="#" title="Step Away" id="inCallButtonDisconnect" style="border-right:1px solid #D4D4D4;"></li>
+				<li class="btnLast" style="display:inline-block; margin-left:10px; margin-right:10px;"><a href="mdohelp.htm" target="_blank">Help</a></li>
+			</ul>
 		</div>
 
-		<div id="container-video"  class="conference-renderer">
-			<div id="video-main">
+		<div id="container-video" style="clear:both;width:100%;">
+			<div id="video-main" style="clear:both; float:left;">
 				<div id="withjs" class="hide">
 					<!-- Central inCallContainer -->
 					<div id="inCallContainer" class="container hide">
@@ -101,31 +101,45 @@
 							<!--Satish US13301 End -->
 
 						
-							<div id="btnContainer" style="position:static;">
+							<div id="btnContainer" class="vidyo-webrtc-btn-container" style="position:static;">
 								<div id="buttonGroup" class="btn-group" style="width:100%; position:static;">
-									<div id="inCallButtonMuteVideo">
-			                          <div title="Disable Video" class="btns video-btn">&nbsp;</div>
-			                           <div title="Enable Video" class="btns video-muted-btn">&nbsp;</div>
-			                        </div>
-			                        <div id="inCallButtonMuteSpeaker">
-			                           <div title="Mute Speakers" class="btns speaker-btn">&nbsp;</div>
-			                           <div title="Unmute Speakers" class="btns speaker-muted-btn">&nbsp;</div>
-			                        </div>
-			                        <div id="inCallButtonMuteMicrophone">
-			                           <div title="Mute Mic" class="btns microphone-btn">&nbsp;</div>
-			                           <div title="Unmute Mic" class="btns microphone-muted-btn">&nbsp;</div>
-			                        </div>
-			                        <div id="inCallButtonExpand" style="display:none;">
-			                           <div title="Expand" class="btns expand-btn">&nbsp;</div>
-			                           <div title="Shrink" class="btns shrink-btn">&nbsp;</div>
-			                        </div>
-										<!--<div class="well hide" id="configurationWrap">
+									<span style="display:block; width:100%; height:auto; background-color:#6A6A6A;">
+										<a class="btn btn-large btn-hideDetails" title="Hide/Show Details" id="inCallButtonToggleDetails" style="width:100%; height:33px;cursor: pointer;"></a>
+									</span>
+									<!-- US22684 -->
+									<!-- <a class="btn btn-large btn-config" title="Settings" id="inCallButtonToggleConfig" style="display:block;cursor: pointer;"></a> -->
+									<!-- US22684 -->
+										<!-- Configuration panel -->
+										<div class="well hide" id="configurationWrap">
+												<!-- See configurationTemplate in main.config.js-->
 										</div>
+
+									<!--US19792 Start-->
+									<!--<a class="btn btn-large btn-local-share" data-toggle="dropdown" href="#" id="inCallButtonLocalShare" title="Share Desktop" style="display:block;"></a>
+										<ul class="dropdown-menu" role="menu" id="inCallLocalShareList" style="max-height:400px;">
+											<!-- Look at the inCallLocalSharesTemplate in main.config.js 
+										</ul>-->
+                                 
 									<a class="btn btn-large btn-tmv-success" title="Disable Video" id="inCallButtonMuteVideo" style="display:block;cursor: pointer;"></a>
+										<!--US18908 Swap Microphone and Speaker in Vidyo Player Start-->
 									<a class="btn btn-large btn-tmm-success" title="Mute Mic" id="inCallButtonMuteMicrophone" style="display:block;cursor: pointer;"></a>
-                                      <a class="btn btn-large btn-tms-success" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;background-position:5px -290px;cursor: pointer;"></a>
-									<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>-->
+
+
+                                      <a class="btn btn-large btn-tms-success" title="Mute Speakers" id="inCallButtonMuteSpeaker" style="display:block;background-position:5px -290px;cursor: pointer;"></a> 
+
+
+
+									<!--<div style="clear:both; border-bottom:1px solid #6A6A6A;">
+										
+										<div id="volume-control-speaker" style="height: 35px; width: 3px; vertical-align: middle; margin: 12px; display: inline-block; background: grey;">
+											<a id="slider-handle-speaker" class="ui-slider-handle ui-state-default ui-corner-all" href="#" style="border:1px solid #FFFFFF; width:9px; height:2px; margin-left:-4px; position:absolute;"></a>
+										</div>
+									</div>-->
+									   <!--US19792 End-->
+									<a class="btn btn-large btn-tmc" href="#" title="Phone-A-Friend" id="inCallButtonCall" style="visibility:hidden;"></a>
 								</div>
+
+								<!-- END -->
 							</div>
 
 							<!-- End Plugin wrapper  -->
@@ -148,6 +162,32 @@
 					<input id="sendEmailPopUpFlag" type="hidden" value="false">
 				</div>
 				<!-- End of withjs div -->
+				<!-- PROVIDER: START- meeting leave yes no dialog  -->
+		        <div id="dialog-block-override-meeting-leave" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
+		            <div class="modal-header">
+		                <button type="button" id="leave_modal_cross_button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+		                <h3 id="">Step Away</h3>
+		            </div>
+		            <div class="modal-body">
+		                <div class="dialog-content-question">
+		                    <p id="leave_meeting_question" class="question">You are temporarily leaving this meeting.<br>
+		                    You can rejoin from the My Meetings page.<br>
+		                    Are you sure you want to leave this meeting?</p>
+		                    <div id="leave_meeting_error" class="error " style="padding:5px;"></div>
+		                    <div class="pagination">
+		                        <ul>
+		                            <li>
+		                            <input class="button" id="leave_meeting_button_yes"  type="button"  value="Yes &rsaquo;&rsaquo;"/>
+		                            </li>
+		                            <li>
+		                            <input class="button" id="leave_meeting_button_no"  type="button"  value="No &rsaquo;&rsaquo;"/>
+		                            </li>
+		                        </ul>
+		                    </div>
+		                 </div>
+		            </div>
+		        </div>
+	        	<!-- END-  meeting leave yes no dialog  -->
 	        	<!-- MEMBER AND GUEST: START - Quit Meeting Dialogs  -->
 		    	<div id="quitMeetingModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
 		            <div class="modal-header">
@@ -175,27 +215,61 @@
 		        </div>
 			    <!-- MEMBER AND GUEST: END - Quit Meeting Dialogs  -->
 			</div>
-			<div class="video-details" id="video-sidebar">
-				<div class="visit-info-container">
-					<div class="visit-info">
-						<button class="leave-conference" id="inCallButtonDisconnect">Leave Room</button>
-						<div class="visit-detail-txt">Visit Details</div>
-						<div class="host-details" id="meetingHost"></div>
-						<div class="meeting-time-date-info">
-						  <span class="time-display"></span>
-						  <span class="date-display"></span>
-						</div>
-						<div class="meeting-updated-time-date-info">
-		                  <span class="time-display"></span>
-		               </div>
+			<div class="vidyo-webrtc-sidebar" id="video-sidebar">
+				<div id="video-sidebar-banner"></div>
+				<!-- video-sidebar-content START -->  
+				<div class="video-sidebar-content">
+					<div id="video-info">
+						<h3> Visit Details </h3>
+						<dl>
+							<dt>Appointment Date</dt><dd id="displayMeetingDateTime">${WebAppContext.videoVisit.meetingDate}&nbsp;&nbsp;${WebAppContext.videoVisit.meetingTime}</dd>
+							<dd id="displayMeetingNewStartTime" style="word-wrap: break-word;"></dd>
+						</dl>
+						<dl>
+							<dt>Patient</dt><dd id="meetingPatient"><span class="pateint-name-with-ellipsis">${WebAppContext.videoVisit.patientLastName.trim()}, ${WebAppContext.videoVisit.patientFirstName.trim()}</span><i id="patientActiveIcon" class="active-user-state"></i></dd>
+						</dl>
+						<dl>
+							<dt>My Doctor</dt><dd id="meetingHost">
+							<span class="host-name-with-ellipsis">${WebAppContext.videoVisit.hostLastName}, ${WebAppContext.videoVisit.hostFirstName} ${WebAppContext.videoVisit.hostTitle}</span><i id="hostActiveIcon" class="active-user-state"></i></dd>
+						</dl>
+						
+						<c:if test="${not empty WebAppContext.videoVisit.participant}">
+							<dl id="meetingParticipantContainer">
+								<dt>Add'l Clinicians</dt>
+								<dd id="meetingParticipant">
+									<c:forEach items="${WebAppContext.videoVisit.participant}" var="Provider">        
+										<p style="padding-bottom:10px;"><span class="additional-clinician-with-ellipsis">${Provider.lastName.trim()}, ${Provider.firstName.trim()} ${Provider.title.trim()}</span><i class="active-user-state"></i></p>
+									</c:forEach>
+								</dd>
+							</dl>
+						</c:if>
+						<c:if test="${not empty WebAppContext.videoVisit.caregiver}">
+							<dl id="meetingPatientGuestContainer">
+								<dt>My Guests</dt>
+								<dd id="meetingPatientGuest" style="display:none;">
+									<c:set var="memVidyPhNumCount" value="0" scope="page" />
+									<c:forEach items="${WebAppContext.videoVisit.caregiver}" var="Caregiver">
+										<c:if test="${Caregiver.lastName == 'audio_participant'}">
+											<c:set var="memVidyPhNumCount" value="${memVidyPhNumCount + 1}" scope="page"/>
+			                        		<p><span class="pg-with-ellipsis"><span class="lName" lastnameattr="${Caregiver.lastName}"></span> <span class="fName" firstnameattr="${Caregiver.firstName}">Phone ${memVidyPhNumCount}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
+			                        	</c:if>
+			                        	<c:if test="${Caregiver.lastName != 'audio_participant'}">
+			                        		<p><span class="pg-with-ellipsis"><span class="lName">${Caregiver.lastName.trim()}</span>, <span class="fName">${Caregiver.firstName.trim()}</span><span class="email" style="display:none;">${Caregiver.emailAddress.trim()}</span></span><i class="active-user-state"></i></p>
+			                        	</c:if>
+									</c:forEach>
+								</dd>
+								</dl>
+							</c:if>
+						<!--<dl id="meetingNoteContainer">
+							<dt>NOTES:</dt><dd id="meetingNote">Notes</dd>
+						</dl> -->
+					</div>
+					<div id="refreshContainer">
+						<p class="refresh-text"><span style="font-weight:bold;">Video issues?</span><br> Try refreshing</p>
+						<input name="refresh" value="Refresh" class="refresh-button" type="button">
 					</div>
 				</div>
-				<div class="participant-details">
-		            <div class="participants-header">
-		               <span class="guests">Guests</span>
-		            </div>
-		            <div class="participants-list"></div>
-		         </div>
+				<!-- video-sidebar-content END -->
 			</div>
 		</div>
 	</div>
@@ -226,6 +300,8 @@
 	<script src="./scripts/vidyowebrtc/vidyo.client.js"></script>
 	<script src="./scripts/main.js"></script> -->
 
+	<script src="js/site/videovisit/videoVisit.js" type="text/javascript"></script>
+
 	<script src="vidyoplayer/scripts/webrtc/vidyo.client.messages.js"></script>
     <script src="vidyoplayer/scripts/webrtc/vidyo.client.private.messages.js"></script>
     <script src="vidyoplayer/scripts/webrtc/vidyo.client.js"></script> 
@@ -239,6 +315,10 @@
 	<script type="text/javascript">
 		bodyLoaded();
 
+		$(".refresh-button").click(function(){
+			window.location.href = window.location.href;
+		});
+		
 		(function () {
 			/* jQuery is not available yet so use native JavaScript */
 			document.getElementById("withjs").className ="";

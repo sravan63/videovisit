@@ -180,6 +180,11 @@
    					margin-bottom: 10px;
    					font-size: 35px;
 			    }
+			    .container-videovisit-header #patientTitle, .container-videovisit-header #clinicianTitle{
+			    	color: #888888;
+				    margin: 10px 0;
+				    font-size: 24px;
+			    }
 			    .right-container{
 			    	color: #006BA6;
     				margin-top: 10px;

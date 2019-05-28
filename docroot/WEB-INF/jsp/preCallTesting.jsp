@@ -72,6 +72,8 @@
 	</div>
 
 </div>
+
+<script src="js/site/videovisit/videoVisit.js" type="text/javascript"></script>
 <!-- pre call testing webrtc ends -->
 
 <script src="vidyoplayer/scripts/webrtc/precalltesting/adapter-latest.js"></script>
