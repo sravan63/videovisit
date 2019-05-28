@@ -942,7 +942,7 @@ function launchVideoVisitMember(data){
 			}
 			else {
 				var newurl = new URL(url);
-				var roomJoinPexip = newurl.searchParams.get('roomUrl');
+				var roomJoinPexip = mObj.roomKey; // newurl.searchParams.get('roomUrl');
               var mobileMeetingObj = {
                     "meetingId": mObj.meetingId,
                     "meetingCode": null,
