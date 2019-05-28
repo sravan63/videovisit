@@ -1111,3 +1111,39 @@ $(window).on("beforeunload", function() {
 function leaveFromMeeting(){
     disconnectOnRefresh();
 }
+
+function muteSpeaker() {
+    var video=document.getElementById("video");
+      if(video.muted){
+        video.muted = false;
+        $('#id_speaker_unmute').css('display', 'none');
+        $('#id_speaker_mute').css('display', 'block');
+      } else {
+        video.muted = true;
+        $('#id_speaker_mute').css('display', 'none');
+        $('#id_speaker_unmute').css('display', 'block');
+      }
+}
+
+function muteUnmuteVideo() {
+    muteVideo = rtc.muteVideo();
+      if(muteVideo){
+        $('#id_video_unmute').css('display', 'block');
+        $('#id_video_mute').css('display', 'none');
+      } else {
+        $('#id_video_mute').css('display', 'block');
+        $('#id_video_unmute').css('display', 'none');
+      }
+}
+
+
+function muteUnmuteMic() {
+    muteAudio = rtc.muteAudio();
+      if(muteAudio){
+        $('#id_mic_unmute').css('display', 'block');
+        $('#id_mic_mute').css('display', 'none');
+      } else {
+        $('#id_mic_mute').css('display', 'block');
+        $('#id_mic_unmute').css('display', 'none');
+      }
+}

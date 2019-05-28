@@ -196,18 +196,18 @@
 	    <section class="conference-renderer">
 	    	<div class="provider-btn-container" id="btnContainer">
 	            <div class="btn-group" id="buttonGroup" style="width: 100%; position: static;">
-	            	<div id="inCallButtonMuteVideo">
-	                  <div title="Disable Video" class="btns video-btn">&nbsp;</div>
-	                   <div title="Enable Video" class="btns video-muted-btn">&nbsp;</div>
-	                </div>
-	                <div id="inCallButtonMuteSpeaker">
-	                   <div title="Mute Speakers" class="btns speaker-btn">&nbsp;</div>
-	                   <div title="Unmute Speakers" class="btns speaker-muted-btn">&nbsp;</div>
-	                </div>
-	                <div id="inCallButtonMuteMicrophone">
-	                   <div title="Mute Mic" class="btns microphone-btn">&nbsp;</div>
-	                   <div title="Unmute Mic" class="btns microphone-muted-btn">&nbsp;</div>
-	                </div>
+		            <div id="inCallButtonMuteVideo">
+					<div title="Enable Video" id="id_video_unmute" class="btns video-muted-btn" onclick="muteUnmuteVideo()">&nbsp;</div>
+					<div title="Disable Video" id="id_video_mute" class="btns video-btn" onclick="muteUnmuteVideo()">&nbsp;</div>   
+					</div>
+					<div id="inCallButtonMuteSpeaker">
+					   <div title="Mute Speakers" id="id_speaker_mute" class="btns speaker-btn" onclick="muteSpeaker()">&nbsp;</div>
+					   <div title="Unmute Speakers" id="id_speaker_unmute" class="btns speaker-muted-btn" onclick="muteSpeaker()">&nbsp;</div>
+					</div>
+					<div id="inCallButtonMuteMicrophone">
+					   <div title="Mute Mic" id="id_mic_mute"class="btns microphone-btn" onclick="muteUnmuteMic()">&nbsp;</div>
+					   <div title="Unmute Mic" id="id_mic_unmute" class="btns microphone-muted-btn" onclick="muteUnmuteMic()">&nbsp;</div>
+					</div>
 	                <!--<div id="inCallButtonLocalShare">
 	                   <div title="" id="id_screenshare" class="btns smd-btn" onclick="presentScreen();">&nbsp;</div>
 	                   <div title="" id="id_screen_unshare" class="btns smd-muted-btn"onclick="stopSharing();">&nbsp;</div>
