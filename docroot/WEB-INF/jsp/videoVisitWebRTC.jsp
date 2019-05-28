@@ -1,5 +1,4 @@
-		
-	<!-- Splash screen -->
+<!-- Splash screen -->
 	<div class="splash" style="height:100vh;display:block;" id="splash">
 			<div><img src="vidyoplayer/img/vv_splash.png" alt="Vidyo Logo"/></div>
 			<div id="splashText" style="margin-top: 15px; visibility: hidden;"><h4>Video Visits - The Permanente Medical Group</h4></div>
