@@ -36,6 +36,12 @@ var media_stats;
 var presenting_user = '';
 webuiLoaded = true;
 
+var hostName = '';
+var patientName = "";
+var isValidInteraction = false;
+var hostDirtyThisMeeting = false;
+var currentLayout = "";
+
 var trans = Array();
 trans['BUTTON_MUTEAUDIO'] = "Mute Audio";
 trans['BUTTON_UNMUTEAUDIO'] = "Unmute Audio";
@@ -585,6 +591,7 @@ function participantCreated(participant){
 	    if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
 	        utilityNotifyQueue(joinParticipantMsg);
 	    }
+        toggleWaitingRoom(pexipParticipantsList);
 	    VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
 	}
     /*var participant_name = participant.display_name;
@@ -677,6 +684,7 @@ function participantDeleted(participant){
 	        utilityNotifyQueue(participantMsg);
 	    }
 	    VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
+        toggleWaitingRoom(pexipParticipantsList);
      }   
 }
 
@@ -695,6 +703,9 @@ function layoutUpdate(view){
             break;
         case "1:0":
             console.log("Layout 1:0");
+            break;
+        case "4:0":
+            console.log("Layout 4:0");
             break;
         default:
             console.log("default case - cannot get view");
@@ -838,7 +849,7 @@ function switchDevices(){
 
 function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
     console.log("inside webui initialise");
-
+    hostName = getHostName();
     $("#selectPeripheral").detach().appendTo($("#rosterlist"));
     // $("#selectPeripheral").addClass("hidden");
     $("#enterDetails").addClass("hidden");
@@ -1021,6 +1032,111 @@ function disconnect(){
     
 }
 }
+
+function toggleWaitingRoom(pexipParticipantsList){
+    var isHostAvail = validateHostAvailability(pexipParticipantsList);
+    var participants = pexipParticipantsList.map(a => a.uuid);
+    if(!hostDirtyThisMeeting && isHostAvail){
+        hostDirtyThisMeeting = true;
+    }
+    VIDEO_VISITS.Path.IS_HOST_AVAILABLE = isHostAvail; 
+    if(isHostAvail){
+        log('info',"Mobile debugging  : **** "+isProvider+" Host Available : #### "+isHostAvail);
+        $("#fullWaitingRoom").css("display","none");
+        if(hostDirtyThisMeeting){
+            //Half waiting room
+            $("#halfWaitingRoom").css("display","none");
+            var calculatedHeight = $("#pluginContainer").height();
+            $(".remoteFeed").height(calculatedHeight);
+        }
+        // Full Height
+        // var calculatedHeight = $("#video-main").height();
+        // $("#pluginContainer").height(calculatedHeight);
+    }else{
+        if(pexipParticipantsList.length == 1){
+            $("#fullWaitingRoom").css("display","block");
+            if(hostDirtyThisMeeting){
+                $("#fullWaitingRoom").css("display","block");
+            }
+        } else if(pexipParticipantsList.length > 1){
+            if(hostDirtyThisMeeting){
+                //Half waiting room
+                var calculatedHeight = ($("#pluginContainer").height()-5) / 2;
+                $("#fullWaitingRoom").css("display","none");
+                $("#halfWaitingRoom").css("display","block");
+                $("#halfWaitingRoom").height(calculatedHeight);
+                $(".remoteFeed").height(calculatedHeight);
+            } else {
+                // Full waiting room
+                $("#fullWaitingRoom").css("display","block");
+            }
+        }
+    }
+    adjustLayout(participants, isHostAvail);
+}
+
+function adjustLayout(participants, isHostAvail){
+    var totalPartcicipants = participants.length;
+    var view = "";
+    if(isHostAvail){
+        if(totalPartcicipants == 2){
+            view = "1:0";
+        } else if(totalPartcicipants > 2){
+            view = "1:21";
+        }
+    } else {
+        if(totalPartcicipants > 1){
+          view = "4:0";
+        } else {
+            view = "1:0";
+        }
+    }
+    if(currentLayout != view){
+        rtc.transformLayout({"layout": view});
+    }
+}
+
+/* **
+    ** This will validate and returns a boolean value 
+    ** based on host's availabilty in the on going meeting
+** */
+function validateHostAvailability(participants){
+    var isHostAvailable = false;
+    if(participants){
+        console.log("Mobile debugging :##### : "+participants);
+        for(var i=0;i<participants.length;i++){
+            var pName = changeConferenceParticipantNameFormat(participants[i].display_name);
+            if(pName.toLowerCase() == hostName.toLowerCase()){
+                isHostAvailable = true;
+                console.log("Mobile debugging isHostAvailable  *** :##### : ");
+                break;
+            }
+        }
+    }
+    return isHostAvailable;
+}
+
+
+function getHostName(){
+    // This check is to fix the production issue DE9219
+    var host = '';
+    if($("#isProvider").val() == 'true'){
+        var hostname = ($("#meetingHost").val().indexOf('&nbsp;') > -1)?$("#meetingHost").val().replace('&nbsp;',''):$("#meetingHost").val();
+        host = changeConferenceParticipantNameFormat(hostname);
+    }else{
+        var hostname = ($("#meetingHostName").val().indexOf('&nbsp;') > -1)?$("#meetingHostName").val().replace('&nbsp;',''):$("#meetingHostName").val();
+        host = changeConferenceParticipantNameFormat(hostname);
+    }
+    var splittedHostName = host.trim().split(" ");
+    var hName = "";
+    for(var c=0;c<splittedHostName.length;c++){
+        var char = splittedHostName[c].trim();
+        if(char !== ""){
+            hName += char+" ";
+        }
+    }
+    return hName.trim();
+};
 
 function disconnectOnRefresh(){
     console.log("inside disconnect");

@@ -241,7 +241,21 @@
 				</div>
 				<div><button class="done-btn" onclick="togglePeripherals()">Done</button></div>
 			</div>
-	        <video width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
+			<div class="full-waiting-room" id="fullWaitingRoom">
+				<div id="waitingRoom" class="conference-waiting-room">
+                   <div class="waitingRoomMessageBlock">
+                      <img src="vidyoplayer/img/TPMG_logo.png" class="waitingroom-logo" />
+                      <span class="waitingroom-text">Your visit will start once your doctor joins.</span>
+                   </div>
+                </div>
+            </div>
+            <div id="halfWaitingRoom" class="conference-waiting-room">
+               <div class="waitingRoomMessageBlock">
+                  <img src="vidyoplayer/img/TPMG_logo.png" class="waitingroom-logo" />
+                  <span class="waitingroom-text">Your visit will start once your doctor joins.</span>
+               </div>
+            </div>
+	        <video class="remoteFeed" width="100%" height="100%" id="video" autoplay="autoplay" playsinline="playsinline" poster="img/spinner.gif"></video>
 	        
 	        <div id="stat-window-container">
 	        	<table id="stat-window">

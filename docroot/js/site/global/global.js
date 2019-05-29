@@ -428,12 +428,12 @@ function changeConferenceParticipantNameFormat(name){
 			var splittedNameWithTitle = firstname.split(' ');
 			var title = splittedNameWithTitle.splice(splittedNameWithTitle.length-1)
 			var fname = splittedNameWithTitle.join(' ');			
-			formattedName = fname+' '+lastname+' ,'+title;
+			formattedName = fname+' '+lastname+', '+title;
 		}else{
 			var splittedNameWithTitle = firstname.split(' ');
 			var fname = splittedNameWithTitle[0];
 			var title = splittedNameWithTitle[splittedNameWithTitle.length-1];
-			formattedName = fname+' '+lastname+' ,'+title;
+			formattedName = fname+' '+lastname+', '+title;
 		}		
 	} else {
 		formattedName = firstname+' '+lastname;
