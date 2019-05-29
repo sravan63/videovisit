@@ -10,9 +10,25 @@
 <div>
 	<p id="globalError" class="globalfailmessage hide-me" style="background-color:#686A6C;"></p>
 </div>
+<%
+	String vendorType = request.getParameter("vType");
+	
+%>
+<c:if test="${WebAppContext.totalmeetings == 0 && vendorType == 'p'}">
+<!--  If no meetings are present and vendor is pexip -->
 
-<div style="padding:10px;">
-	<div id="login-form">
+			<div class="alert alert-hero alert-expired">
+				<div class="alert-hero-message">
+					<div class="image"></div>
+					<p> The video visit you are trying to join is not currently available. </p>
+				</div>
+			</div>
+
+</c:if>
+
+<c:if>
+		<div style="padding:10px;">
+		<div id="login-form">
 		<h1>Sign In as a Guest</h1>	
 		<form class="login-form" style="margin:10px 0 0;">
 			<ul class="form-block" style="padding-right:6px;">
@@ -35,7 +51,8 @@
 				<%@ include file="common/informationpg.jsp" %>
 			</c:when>
 		</c:choose>	
-</div>
+		</div>
+</c:if>	
 
 <style>
 	button#login-submit-pg{

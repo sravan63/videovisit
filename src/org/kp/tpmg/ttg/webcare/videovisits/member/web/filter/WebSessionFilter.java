@@ -79,6 +79,7 @@ public class WebSessionFilter implements Filter {
 			String memberMobileHomePageUrl = homePageUrlMap.get("homepage-member-mobile");
 			String guestWebHomePageUrl = homePageUrlMap.get("homepage-guest-web");
 			String guestMobileHomePageUrl = homePageUrlMap.get("homepage-guest-mobile");
+			String guestMobileLoginPageUrl = homePageUrlMap.get("loginpage-guest-mobile");
 			String memberWebSSOLoginPageUrl = homePageUrlMap.get("homepage-member-sso-web");
 			String redirectToUrl = null;
 			// Handle patient home page URL1
@@ -107,8 +108,17 @@ public class WebSessionFilter implements Filter {
 				boolean isWirelessDeviceOrTablet = DeviceDetectionService.isWirelessDeviceorTablet(req);
 				String meetingCode = req.getParameter("meetingCode");
 				if (isWirelessDeviceOrTablet) {
-					redirectToUrl = guestMobileHomePageUrl + "?meetingCode=" + meetingCode;
-					resp.sendRedirect(redirectToUrl);
+					String meetingVendorType = req.getParameter("vType");
+					if ("v".equalsIgnoreCase(meetingVendorType)) {
+						logger.info("before mobile redirect = " + memberMobileHomePageUrl);
+						redirectToUrl = guestMobileHomePageUrl + "?meetingCode=" + meetingCode;
+						resp.sendRedirect(redirectToUrl);
+					} else {
+						logger.info("before mobile redirect = " + guestMobileLoginPageUrl);
+						redirectToUrl = guestMobileLoginPageUrl;
+						resp.sendRedirect(redirectToUrl);
+					}
+					
 				} else {
 					redirectToUrl = guestWebHomePageUrl + "?meetingCode=" + meetingCode;
 					req.getRequestDispatcher(redirectToUrl).forward(req, resp);

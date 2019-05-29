@@ -76,6 +76,7 @@
 	           <entry key="homepage-member-web4" value="login.htm"/>
 	           <entry key="homepage-member-sso-web" value="ssologin.htm"/>
 	           <entry key="homepage-guest-mobile" value="mobilepglanding.htm"/>
+	           <entry key="loginpage-guest-mobile" value="mobilepglogin.htm"/>
 	           <entry key="homepage-guest-web" value="guest"/>
 	        </map>
 		</property>
