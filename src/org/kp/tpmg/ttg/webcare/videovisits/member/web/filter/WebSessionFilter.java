@@ -110,12 +110,12 @@ public class WebSessionFilter implements Filter {
 				if (isWirelessDeviceOrTablet) {
 					String meetingVendorType = req.getParameter("vType");
 					if ("v".equalsIgnoreCase(meetingVendorType)) {
-						logger.info("before mobile redirect = " + memberMobileHomePageUrl);
+						logger.info("before mobile home page redirect = " + memberMobileHomePageUrl);
 						redirectToUrl = guestMobileHomePageUrl + "?meetingCode=" + meetingCode;
 						resp.sendRedirect(redirectToUrl);
 					} else {
-						logger.info("before mobile redirect = " + guestMobileLoginPageUrl);
-						redirectToUrl = guestMobileLoginPageUrl;
+						logger.info("before mobile login page redirect = " + guestMobileLoginPageUrl);
+						redirectToUrl = guestMobileLoginPageUrl + "?meetingCode=" + meetingCode;
 						resp.sendRedirect(redirectToUrl);
 					}
 					
