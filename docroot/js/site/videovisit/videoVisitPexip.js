@@ -7,6 +7,7 @@ var sidePaneMeetingDetails = {sortedParticipantsList: []};
 var isPexip = false;
 
 $(document).ready(function() {
+	$('body').addClass('pexip-html-body');
 	$.ajax({
 		type: "POST",
 		url: VIDEO_VISITS.Path.visit.meetingDetails + '?meetingId=' + $('#meetingId').val(),
