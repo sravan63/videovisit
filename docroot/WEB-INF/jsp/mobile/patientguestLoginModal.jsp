@@ -12,21 +12,25 @@
 </div>
 <%
 	String vendorType = request.getParameter("vType");
+	if("p".equalsIgnoreCase(vendorType)){
+		MeetingCommand.IsMeetingHashValid(request);
+	}
 	
 %>
-<c:if test="${WebAppContext.totalmeetings == 0 && vendorType == 'p'}">
+<c:choose>
+<c:when test="${WebAppContext.totalmeetings == 0}">
 <!--  If no meetings are present and vendor is pexip -->
-
+		
 			<div class="alert alert-hero alert-expired">
 				<div class="alert-hero-message">
 					<div class="image"></div>
 					<p> The video visit you are trying to join is not currently available. </p>
 				</div>
 			</div>
+			
+</c:when>
 
-</c:if>
-
-<c:if>
+<c:otherwise>
 		<div style="padding:10px;">
 		<div id="login-form">
 		<h1>Sign In as a Guest</h1>	
@@ -52,7 +56,8 @@
 			</c:when>
 		</c:choose>	
 		</div>
-</c:if>	
+</c:otherwise>
+</c:choose>
 
 <style>
 	button#login-submit-pg{

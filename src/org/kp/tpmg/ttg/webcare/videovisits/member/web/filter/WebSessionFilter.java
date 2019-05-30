@@ -115,7 +115,7 @@ public class WebSessionFilter implements Filter {
 						resp.sendRedirect(redirectToUrl);
 					} else {
 						logger.info("before mobile login page redirect = " + guestMobileLoginPageUrl);
-						redirectToUrl = guestMobileLoginPageUrl + "?meetingCode=" + meetingCode;
+						redirectToUrl = guestMobileLoginPageUrl + "?meetingCode=" + meetingCode + "&vType="+meetingVendorType;
 						resp.sendRedirect(redirectToUrl);
 					}
 					
