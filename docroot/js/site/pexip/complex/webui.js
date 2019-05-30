@@ -256,6 +256,7 @@ function togglePresentation() {
 //}
 
 function presentScreen() {
+    log("info","pexip_smd_initiate_action","console: presentScreen - on click of share my desktop button");
     if (!presenting) {
         //id_screenshare.textContent = trans['BUTTON_STOPSHARE'];
         rtc.present('screen');
@@ -279,123 +280,124 @@ function presentScreen() {
 }
 
 function stopSharing(){
+    log("info","pexip_smd_close_action","console: stopSharing - disable share button");
     rtc.present(null);
     presenting = false;
     $('#id_screenshare').css('display', 'block');
     $('#id_screen_unshare').css('display', 'none');
 }
 
-function unpresentScreen(reason) {
-    if (reason) {
-        //alert(reason);
-    }
-    presenting = false;
-    $('#id_screenshare').css('display', 'block');
-    $('#id_screen_unshare').css('display', 'none');
-}
-
-/* ~~~ MUTE AND HOLD/RESUME ~~~ */
-
-function muteUnmuteSpeaker() {
-    var video=document.getElementById("video");
-      if(video.muted){
-        video.muted = false;
-        id_mutespeaker.classList.remove('mutedspeaker');
-        id_mutespeaker.classList.add('unmutedspeaker');
-      } else {
-        video.muted = true;
-        id_mutespeaker.classList.remove('unmutedspeaker');
-        id_mutespeaker.classList.add('mutedspeaker');
-      }
-    /*if (!id_mutespeaker.classList.contains("inactive")) {
-        if (document.getElementById('video').volume == 1) {
-            document.getElementById('video').volume = 0;
-            id_mutespeaker.classList.remove('unmutedspeaker');
-            id_mutespeaker.classList.add('mutedspeaker');
-        } else {
-            document.getElementById('video').volume = 1;
-            id_mutespeaker.classList.remove('mutedspeaker');
-            id_mutespeaker.classList.add('unmutedspeaker');
-        }
-    }*/
-}
-
-function muteMicStreams() {
-    if (!id_muteaudio.classList.contains("inactive")) {
-        muteAudio = rtc.muteAudio();
-        id_muteaudio.classList.toggle('selected');
-        if (muteAudio) {
-            id_muteaudio.classList.remove('unmutedmic');
-            id_muteaudio.classList.add('mutedmic');
-        } else {
-            id_muteaudio.classList.remove('mutedmic');
-            id_muteaudio.classList.add('unmutedmic');
-        }
-    }
-}
-
-function muteVideoStreams() {
-    if (!id_mutevideo.classList.contains("inactive")) {
-        muteVideo = rtc.muteVideo();
-        id_mutevideo.classList.toggle('selected');
-        if (muteVideo) {
-            id_mutevideo.classList.remove('unmutedcamera');
-            id_mutevideo.classList.add('mutedcamera');
-        } else {
-            id_mutevideo.classList.remove('mutedcamera');
-            id_mutevideo.classList.add('unmutedcamera');
-        }
-    }else{
-
-    }
-}
-
-function toggleSelfview() {
-    console.log("toggleSelfview");
-    
-    if (!id_selfview.classList.contains("inactive")) {
-        if (flash) {
-            //flash.toggleSelfview();
-            if (id_selfview.classList.contains('selected')) {
-                flash.hideSelfview();
-                id_selfview.classList.remove('selected');
-                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
-            } else {
-                flash.showSelfview();
-                id_selfview.classList.add('selected');
-                id_selfview.textContent = trans['BUTTON_HIDESELF'];
-            }
-        } else {
-            selfview.hidden = !selfview.hidden;
-            if (selfview.hidden) {
-                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
-                id_selfview.classList.remove('selected');
-                rosterlist.classList.remove('shorter');
-            } else {
-                id_selfview.textContent = trans['BUTTON_HIDESELF'];
-                id_selfview.classList.add('selected');
-                rosterlist.classList.add('shorter');
-            }
-        }
-    }
-}
-
-function holdresume(setting) {
-    if (setting === true) {
-        video.src = "";
-        video.poster = "img/OnHold.jpg";
-        id_muteaudio.classList.add("inactive");
-        id_mutevideo.classList.add("inactive");
-    } else {
-        video.poster = "";
-        video.src = videoURL;
-        if (presentation != null) {
-            loadPresentation();
-        }
-        id_muteaudio.classList.remove("inactive");
-        id_mutevideo.classList.remove("inactive");
-    }
-}
+//function unpresentScreen(reason) {
+//    if (reason) {
+//        //alert(reason);
+//    }
+//    presenting = false;
+//    $('#id_screenshare').css('display', 'block');
+//    $('#id_screen_unshare').css('display', 'none');
+//}
+//
+///* ~~~ MUTE AND HOLD/RESUME ~~~ */
+//
+//function muteUnmuteSpeaker() {
+//    var video=document.getElementById("video");
+//      if(video.muted){
+//        video.muted = false;
+//        id_mutespeaker.classList.remove('mutedspeaker');
+//        id_mutespeaker.classList.add('unmutedspeaker');
+//      } else {
+//        video.muted = true;
+//        id_mutespeaker.classList.remove('unmutedspeaker');
+//        id_mutespeaker.classList.add('mutedspeaker');
+//      }
+//    /*if (!id_mutespeaker.classList.contains("inactive")) {
+//        if (document.getElementById('video').volume == 1) {
+//            document.getElementById('video').volume = 0;
+//            id_mutespeaker.classList.remove('unmutedspeaker');
+//            id_mutespeaker.classList.add('mutedspeaker');
+//        } else {
+//            document.getElementById('video').volume = 1;
+//            id_mutespeaker.classList.remove('mutedspeaker');
+//            id_mutespeaker.classList.add('unmutedspeaker');
+//        }
+//    }*/
+//}
+//
+//function muteMicStreams() {
+//    if (!id_muteaudio.classList.contains("inactive")) {
+//        muteAudio = rtc.muteAudio();
+//        id_muteaudio.classList.toggle('selected');
+//        if (muteAudio) {
+//            id_muteaudio.classList.remove('unmutedmic');
+//            id_muteaudio.classList.add('mutedmic');
+//        } else {
+//            id_muteaudio.classList.remove('mutedmic');
+//            id_muteaudio.classList.add('unmutedmic');
+//        }
+//    }
+//}
+//
+//function muteVideoStreams() {
+//    if (!id_mutevideo.classList.contains("inactive")) {
+//        muteVideo = rtc.muteVideo();
+//        id_mutevideo.classList.toggle('selected');
+//        if (muteVideo) {
+//            id_mutevideo.classList.remove('unmutedcamera');
+//            id_mutevideo.classList.add('mutedcamera');
+//        } else {
+//            id_mutevideo.classList.remove('mutedcamera');
+//            id_mutevideo.classList.add('unmutedcamera');
+//        }
+//    }else{
+//
+//    }
+//}
+//
+//function toggleSelfview() {
+//    console.log("toggleSelfview");
+//    
+//    if (!id_selfview.classList.contains("inactive")) {
+//        if (flash) {
+//            //flash.toggleSelfview();
+//            if (id_selfview.classList.contains('selected')) {
+//                flash.hideSelfview();
+//                id_selfview.classList.remove('selected');
+//                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
+//            } else {
+//                flash.showSelfview();
+//                id_selfview.classList.add('selected');
+//                id_selfview.textContent = trans['BUTTON_HIDESELF'];
+//            }
+//        } else {
+//            selfview.hidden = !selfview.hidden;
+//            if (selfview.hidden) {
+//                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
+//                id_selfview.classList.remove('selected');
+//                rosterlist.classList.remove('shorter');
+//            } else {
+//                id_selfview.textContent = trans['BUTTON_HIDESELF'];
+//                id_selfview.classList.add('selected');
+//                rosterlist.classList.add('shorter');
+//            }
+//        }
+//    }
+//}
+//
+//function holdresume(setting) {
+//    if (setting === true) {
+//        video.src = "";
+//        video.poster = "img/OnHold.jpg";
+//        id_muteaudio.classList.add("inactive");
+//        id_mutevideo.classList.add("inactive");
+//    } else {
+//        video.poster = "";
+//        video.src = videoURL;
+//        if (presentation != null) {
+//            loadPresentation();
+//        }
+//        id_muteaudio.classList.remove("inactive");
+//        id_mutevideo.classList.remove("inactive");
+//    }
+//}
 
 /* ~~~ ROSTER LIST ~~~ */
 
@@ -467,12 +469,14 @@ function cleanup(event) {
 }
 
 function finalise(event) {
-    console.log("inside webui finalise");
+    log("info","finalise","console: inside webui finalise event :" + event); 
+    //console.log("inside webui finalise");
     rtc.disconnect();
     cleanup();
 }
 
 function remoteDisconnect(reason) {
+    log("info","remoteDisconnect","console: inside remoteDisconnect reason :" + reason); 
     cleanup();
     alert(reason);
     window.removeEventListener('beforeunload', finalise);
@@ -491,8 +495,9 @@ function remoteDisconnect(reason) {
 }
 
 function handleError(reason) {
-    console.log("HandleError");
-    console.log(reason);
+    log("error","handleError","console: inside handleError reason :" + reason); 
+//    console.log("HandleError");
+//    console.log(reason);
     if (video && !selfvideo.src && new Date() - startTime > 30000) {
         reason = "WebSocket connection error.";
     }
@@ -553,10 +558,11 @@ function submitIVREntry() {
 }
 
 function sipDialOut() {
-    console.log("SIP Dial Out");
-
+    //console.log("SIP Dial Out");
+    log("info","sipDialOut","console: sipDialOut - inside sipDialOut"); 
     var phone_num = $("#phone_num").val();
-    console.log("phone_num: " +phone_num);
+    log("info","sipDialOut","console: sipDialOut - inside sipDialOut phone_num: " +phone_num); 
+    //console.log("phone_num: " +phone_num);
     
     if(isProvider == "true"){
         $.ajax({
@@ -567,9 +573,11 @@ function sipDialOut() {
             data: phone_num,
             success: function(returndata){
                 alert("success - work in progress");
+                log('info','sipDialOut','sipDialOut success');
             },
             error: function(){
                 // display error message
+                log('error','sipDialOut','sipDialOut failed');
                 alert("error");
             }
         });
@@ -580,7 +588,7 @@ function sipDialOut() {
 
 function participantCreated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
-    
+    log("info","participantCreated","console: participantCreated - inside participantCreated - participant:" +participant); 
     if(isMobileDevice){
 	    updateParticipantList(participant,'join');
 	    console.log("inside participantCreated");
@@ -669,6 +677,7 @@ function participantUpdated(participant){
 
 function participantDeleted(participant){
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
+    log("info","participantDeleted","console: participantDeleted - inside participantDeleted - participant:" +participant); 
     if(isMobileDevice){
         updateParticipantList(participant,'left');
         console.log("inside participantDeleted");
@@ -689,7 +698,8 @@ function participantDeleted(participant){
 }
 
 function layoutUpdate(view){
-    console.log("inside layoutUpdate - view: " +view.view);
+    log("info","layoutUpdate","console: layoutUpdate - inside layoutUpdate - view:" +view.view); 
+    //console.log("inside layoutUpdate - view: " +view.view);
 
     switch(view.view){
         case "1:7":
@@ -799,8 +809,8 @@ function getMediaStats(){
 }
 
 function connected(url) {
-    console.log("inside connected");
-    setTimeout(function(){
+    log("info","connected","console: connected - inside connected"); 
+	setTimeout(function(){
         refreshingOrSelfJoinMeeting = false;
     },5000);
     if (source == 'screen') {
@@ -956,7 +966,8 @@ function getTurnServerObjsForMobile(){
 // }
 
 function disconnect(){
-    console.log("inside disconnect");
+    log("info","disconnect","console: disconnect");
+    //console.log("inside disconnect");
     // disconnects pexip
     rtc.disconnect();
 
@@ -987,10 +998,12 @@ function disconnect(){
             dataType: "json",
             data: userData,
             success: function(result, textStatus){
-                console.log("joinLeaveMeeting :: result :: "+result);
+                log("info","console: joinLeaveMeeting:: success : result - : " +result);
+                //console.log("joinLeaveMeeting :: result :: "+result);
             },
             error: function(textStatus){
-                console.log("joinLeaveMeeting :: error :: "+textStatus);
+                log("info","console: joinLeaveMeeting:: error - : " +textStatus);
+                //console.log("joinLeaveMeeting :: error :: "+textStatus);
             }
         });
     }
@@ -1139,7 +1152,8 @@ function getHostName(){
 };
 
 function disconnectOnRefresh(){
-    console.log("inside disconnect");
+    log("info","disconnectOnRefresh","console: disconnectOnRefresh");
+	console.log("inside disconnect");
     disconnectAlreadyCalled = true;
     var guestName = $("#guestName").val();
         var patientName =$("#meetingPatient").val();
@@ -1162,10 +1176,12 @@ function disconnectOnRefresh(){
         dataType: "json",
         data: userData,
         success: function(result, textStatus){
-            console.log("joinLeaveMeeting :: result :: "+result);
+            log("info","console: joinLeaveMeeting:: result - : " +result);
+            //console.log("joinLeaveMeeting :: result :: "+result);
         },
         error: function(textStatus){
-            console.log("joinLeaveMeeting :: error :: "+textStatus);
+        	log("error","console: joinLeaveMeeting:: error - : " +textStatus);
+            //console.log("joinLeaveMeeting :: error :: "+textStatus);
         }
     });
 }
@@ -1225,16 +1241,52 @@ $(window).on("beforeunload", function() {
 });
 
 function leaveFromMeeting(){
+    log("info","leaveFromMeeting","console: leaveFromMeeting");
     disconnectOnRefresh();
 }
+
+var log = function (type, param, msg) {
+    switch (type){
+        case 'info':
+            if (useConsoleForLogging) {
+                if(msg){
+                    console.log(msg);
+                }else{
+                    console.log(param);
+                }
+            }
+            if (useAlertsForLogging) {
+                if(msg){
+                    alert(msg);
+                }else{
+                    alert(param);
+                }
+            }
+            if(msg){                	
+                if(msg.toLowerCase().indexOf("event tracked") > -1){
+                    var params = [type, param, msg];
+                    VideoVisit.logVendorMeetingEvents(params);
+                }
+            }
+        break;
+        case 'error':
+            // Notify error to backed
+            var params = [type, param, msg];
+            VideoVisit.logVendorMeetingEvents(params);
+            console.error('WebRTC ERROR :: '+param+' :: '+msg);
+        break;
+    }
+};
 
 function muteSpeaker() {
     var video=document.getElementById("video");
       if(video.muted){
+        log("info","pexip_speaker_mute_action","console: muteSpeaker - on click of mute speaker button");
         video.muted = false;
         $('#id_speaker_unmute').css('display', 'none');
         $('#id_speaker_mute').css('display', 'block');
       } else {
+        log("info","pexip_speaker_unmute_action","console: unmuteSpeaker - on click of unmute speaker button");
         video.muted = true;
         $('#id_speaker_mute').css('display', 'none');
         $('#id_speaker_unmute').css('display', 'block');
@@ -1244,9 +1296,11 @@ function muteSpeaker() {
 function muteUnmuteVideo() {
     muteVideo = rtc.muteVideo();
       if(muteVideo){
+        log("info","pexip_video_mute_action","console: muteVideo - on click of mute video button");
         $('#id_video_unmute').css('display', 'block');
         $('#id_video_mute').css('display', 'none');
       } else {
+        log("info","pexip_video_unmute_action","console: unmuteVideo - on click of unmute video  button");
         $('#id_video_mute').css('display', 'block');
         $('#id_video_unmute').css('display', 'none');
       }
@@ -1256,9 +1310,11 @@ function muteUnmuteVideo() {
 function muteUnmuteMic() {
     muteAudio = rtc.muteAudio();
       if(muteAudio){
+        log("info","pexip_microphone_mute_action","console: muteMic - on click of mute mic button");
         $('#id_mic_unmute').css('display', 'block');
         $('#id_mic_mute').css('display', 'none');
       } else {
+        log("info","pexip_microphone_unmute_action","console: unmuteMic - on click of unmute mic button");
         $('#id_mic_mute').css('display', 'block');
         $('#id_mic_unmute').css('display', 'none');
       }

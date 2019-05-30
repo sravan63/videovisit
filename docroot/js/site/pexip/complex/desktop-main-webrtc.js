@@ -140,11 +140,14 @@ $(document).ready(function(){
 
   // Attach audio output device to video element using device/sink ID.
   function attachSinkId(element, sinkId) {
-    console.log("inside ATTACH-SINK-ID");
+	log("info","attachSinkId","console: attachSinkId - on changing the peripheral speaker dropdown");
+
+    //console.log("inside ATTACH-SINK-ID");
     if (typeof element.sinkId !== 'undefined') {
       element.setSinkId(sinkId)
       .then(function() {
-        console.log('Success, audio output device attached: ' + sinkId);
+        log("info","attachSinkId","console: attachSinkId - Success, audio output device attached: " + sinkId);
+        //console.log('Success, audio output device attached: ' + sinkId);
       })
       .catch(function(error) {
         var errorMessage = error;
@@ -152,7 +155,8 @@ $(document).ready(function(){
           errorMessage = 'You need to use HTTPS for selecting audio output ' +
               'device: ' + error;
         }
-        console.error(errorMessage);
+        log("error","attachSinkId","console: attachSinkId Error : " + errorMessage);
+        //console.error(errorMessage);
         // Jump back to first output device in the list as it's the default.
         audioOutputSelect.selectedIndex = 0;
       });
@@ -162,7 +166,9 @@ $(document).ready(function(){
   }
 
   function changeAudioDestination() {
-    console.log("inside CHANGE-AUDIO-DESTINATION");
+	
+	 log("info","pexip_speaker_peripheral_change_action","console: peripheralsSpeakerChange - on changing the peripheral speaker dropdown");
+    //console.log("inside CHANGE-AUDIO-DESTINATION");
     
     var audioDestination = audioOutputSelect.value;
     // var videoElement = document.querySelector('video');
@@ -206,6 +212,7 @@ $(document).ready(function(){
   start();
 
   function peripheralsVideoChange(){
+	log("info","pexip_video_peripheral_change_action","console: peripheralsVideoChange - on changing the peripheral camera dropdown");
     videoSource = videoSelect.value;
     rtc.call_type = 'video';
     rtc.video_source = videoSource;
@@ -213,6 +220,7 @@ $(document).ready(function(){
   }
 
   function peripheralsAudioChange(){
+	log("info","pexip_Microphone_peripheral_change_action","console: peripheralsAudioChange - on changing the peripheral mic dropdown");
     audioSource = audioInputSelect.value;
     rtc.call_type = 'audio';
     rtc.audio_source = audioSource;
@@ -220,7 +228,8 @@ $(document).ready(function(){
   }
 
   function handleError(error) {
-    console.log('navigator.getUserMedia error: ', error);
+	log("info","handleError","console: Error" + error);
+    //console.log('navigator.getUserMedia error: ', error);
   }
 });
 
