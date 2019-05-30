@@ -49,7 +49,6 @@ public class AppRootController extends CommonController {
 			logger.info("Context is not null");
 		}
 		updateWebappContext(ctx);
-		logger.info("View Name : " + getViewName());
 		ModelAndView modelAndView = new ModelAndView(getViewName());
 		getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 		logger.info(LOG_EXITING);
