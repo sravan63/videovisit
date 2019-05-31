@@ -211,7 +211,7 @@ body {
 .selfview {
   position: absolute;
   z-index: 2;
-  max-width: 20%;
+  max-width: 15%;
   /* max-height: 135px; */
   bottom: 1%;
   /*left: 0;*/

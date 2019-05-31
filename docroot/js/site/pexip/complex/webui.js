@@ -607,64 +607,12 @@ function participantCreated(participant){
         toggleWaitingRoom(pexipParticipantsList);
         VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
     }
-    /*var participant_name = participant.display_name;
-    console.log("Participant Name: " +participant.display_name);
-
-    var providerFirstName = $("#providerFirstName").val();
-    console.log("Provider First Name: " +providerFirstName);
-
-    if(providerFirstName.toLowerCase().indexOf(participant_name.toLowerCase()) > -1){
-        console.log("it's a match!!!");
-        console.log("Participant uuid: " +participant.uuid);
-    } else{
-        console.log("it's not a match!!! :(");
-    }*/
     
     if(isProvider == "true"){
-        // var patientFirstName = $("#patientDisplayName").val().split(/[ ,]+/);
-        // var participantName = participant.display_name.split(/[ ,]+/);
-
-        // console.log("patientFirstName: " +patientFirstName);
-        // console.log("participantName: " +participantName);
-
-        // for (var i = 0; i < patientFirstName.length; i++) {
-        //     for (var j = 0; j < participantName.length; j++) {
-        //         if (patientFirstName[i] === participantName[j]) {
-        //             console.log("It's a match!!! :)");
-
-        //             var uuid = participant.uuid;
-        //             console.log("Participant uuid: " +participant.uuid);
-
-        //             rtc.setParticipantSpotlight(uuid, true);
-        //         } else{
-        //             console.log("It's not a match!!! :(");         
-        //         }
-        //     }
-        // }
         var uuid = participant.uuid;
         rtc.setParticipantSpotlight(uuid, true);
         return false;
     } else{
-        // var providerFirstName = $("#meetingHostName").val().split(",");
-        // var participantName = participant.display_name.split(/[ ,]+/);
-
-        // console.log("providerFirstName: " +providerFirstName);
-        // console.log("participantName: " +participantName);
-
-        // for (var i = 0; i < providerFirstName.length; i++) {
-        //     for (var j = 0; j < participantName.length; j++) {
-        //         if (providerFirstName[i] === participantName[j]) {
-        //             console.log("It's a match!!! :)");
-
-        //             var uuid = participant.uuid;
-        //             console.log("Participant uuid: " +participant.uuid);
-
-        //             rtc.setParticipantSpotlight(uuid, true);
-        //         } else{
-        //             console.log("It's not a match!!! :(");         
-        //         }
-        //     }
-        // }
         var uuid = participant.uuid;
         rtc.setParticipantSpotlight(uuid, true);
         return false;
@@ -673,7 +621,6 @@ function participantCreated(participant){
 
 function participantUpdated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
-    // toggleWaitingRoom();
     pexipParticipantsList.push(participant);
     if(isMobileDevice){
         updateParticipantList(participant,'join');
@@ -1078,9 +1025,6 @@ function toggleWaitingRoom(pexipParticipantsList){
             var calculatedHeight = $("#pluginContainer").height();
             $(".remoteFeed").height(calculatedHeight);
         }
-        // Full Height
-        // var calculatedHeight = $("#video-main").height();
-        // $("#pluginContainer").height(calculatedHeight);
     }else{
         if(pexipParticipantsList.length == 1){
             $("#fullWaitingRoom").css("display","block");
@@ -1101,7 +1045,9 @@ function toggleWaitingRoom(pexipParticipantsList){
             }
         }
     }
-    adjustLayout(participants, isHostAvail);
+    if(hostDirtyThisMeeting){
+        adjustLayout(participants, isHostAvail);
+    }
 }
 
 function adjustLayout(participants, isHostAvail){
@@ -1111,7 +1057,7 @@ function adjustLayout(participants, isHostAvail){
         if(totalPartcicipants == 2){
             view = "1:0";
         } else if(totalPartcicipants > 2){
-            view = "1:21";
+            view = "1:7";
         }
     } else {
         if(totalPartcicipants > 1){
