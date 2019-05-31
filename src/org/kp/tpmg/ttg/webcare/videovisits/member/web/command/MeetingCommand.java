@@ -1,9 +1,10 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.SIP;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.TELEPHONY;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
 
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
@@ -38,6 +39,7 @@ import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
+import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
@@ -1253,11 +1255,15 @@ public class MeetingCommand {
 		final String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 		final String email = request.getParameter("email");
+		final String displayName = request.getParameter("displayName");
+		final String destination = request.getParameter("destination");
 		if (ctx != null && StringUtils.isNotBlank(meetingId) && StringUtils.isNotBlank(userType)) {
 			if (TELEPHONY.equalsIgnoreCase(userType)) {
 				lastName = MemberConstants.AUDIO_PARTICIPANT;
 				addCaregiverToContext(ctx, meetingId, firstName, lastName, email);
-			} 
+			} else if (SIP.equalsIgnoreCase(userType)) {
+				addSipParticipantToContext(ctx, meetingId, displayName, destination);
+			}
 		}
 		logger.info(LOG_EXITING);
 	}
@@ -1280,6 +1286,48 @@ public class MeetingCommand {
 				caregivers.add(caregiver);
 			}
 		}
+	}
+	
+	private static void addSipParticipantToContext(final WebAppContext ctx, final String meetingId,
+			final String displayName, final String destination) {
+		final SipParticipant sipParticipant = new SipParticipant();
+		sipParticipant.setDestination(destination);
+		sipParticipant.setDisplayName(displayName);
+		final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
+		if (meeting != null) {
+			List<SipParticipant> sipParticipants = meeting.getSipParticipants();
+			if (CollectionUtils.isNotEmpty(sipParticipants)) {
+				final SipParticipant locSipParticipant = getSipParticipant(meeting, destination);
+				if (locSipParticipant == null) {
+					sipParticipants.add(sipParticipant);
+				} else {
+					locSipParticipant.setDisplayName(displayName);
+				}
+			} else {
+				sipParticipants = new ArrayList<SipParticipant>(1);
+				sipParticipants.add(sipParticipant);
+			}
+		}
+	}
+	
+	/**
+	 * @param meetingId
+	 * @param destination
+	 * @return
+	 */
+	private static SipParticipant getSipParticipant(final MeetingDO meeting, final String destination) {
+		SipParticipant sipParticipant = null;
+		if (StringUtils.isNotBlank(destination)) {
+			if (CollectionUtils.isNotEmpty(meeting.getSipParticipants())) {
+				for (SipParticipant locSipParticipant : meeting.getSipParticipants()) {
+					if (destination.equalsIgnoreCase(locSipParticipant.getDestination())) {
+						sipParticipant = locSipParticipant;
+						break;
+					}
+				}
+			}
+		}
+		return sipParticipant;
 	}
 	
 	/**
