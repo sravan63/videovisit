@@ -19,6 +19,8 @@ var startTime = null;
 var userResized = false;
 var presentationURL = '';
 var videoPresentation = true;
+var useConsoleForLogging = true;
+var useAlertsForLogging = false;
 
 var id_selfview;
 var id_muteaudio;
