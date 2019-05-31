@@ -396,6 +396,16 @@ var VideoVisit =
 				}
 			break;
 
+			case 'sip':
+			     cData = {
+                  userType: userType,
+                  meetingId: $('#meetingId').val(),
+                  destination: data.destination,
+                  displayName: data.displayName,
+                  participantType:"audio"
+			     }
+			break;     
+
 			case 'clinician':
 				// var nameWithoutSpaces = data.inMeetingDisplayName.replace(/\s/g, '');
 				var name = data.inMeetingDisplayName.split(',');
@@ -753,9 +763,7 @@ function updateParticipantsAndGuestsList(meetingList){
 	let tempSortedArr = participants.sort(sortObjs('firstName'));
 	let telephonyGuests = [];
 	if(meetingList.sipParticipants){
-		telephonyGuests = meetingList.sipParticipants.filter(function(item){
-			return item.participantType == 'audio';
-		});
+		telephonyGuests = meetingList.sipParticipants;
 	}
 	sidePaneMeetingDetails.sortedParticipantsList = tempSortedArr.concat(telephonyGuests);	
 	var tempArr = sidePaneMeetingDetails.sortedParticipantsList;
@@ -765,9 +773,11 @@ function updateParticipantsAndGuestsList(meetingList){
 			tempArr[i].title = tempArr[i].title ? tempArr[i].title : '';
 			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots hide"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 		}else{
-			if(tempArr[i].participantType == 'audio'){
+			if(tempArr[i].participantType == 'audio' || tempArr[i].protocol =="sip"){
 				phoneNumCount++;
-				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant" phonenumber="'+tempArr[i].destination+'">Phone '+phoneNumCount+'</span><span class="three-dots hide"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+				var phoneName = tempArr[i].displayName?tempArr[i].displayName : tempArr[i].display_name;
+				var phoneNumb = tempArr[i].destination?tempArr[i].destination : tempArr[i].uri.substring(6,16);
+				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant" phonenumber="'+phoneNumb+'">'+phoneName+'</span><span class="three-dots hide"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 			}else{
 				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots hide"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 			}

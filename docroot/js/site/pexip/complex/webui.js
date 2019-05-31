@@ -590,16 +590,51 @@ function sipDialOut() {
 
 function participantCreated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
+    pexipParticipantsList.push(participant);
     log("info","participantCreated","console: participantCreated - inside participantCreated - participant:" +participant); 
     if(isMobileDevice){
         updateParticipantList(participant,'join');
         console.log("inside participantCreated");
      }
-     else if(participant.protocol=="sip"){
-        console.log("telephony")
-     }
+     else if(participant.protocol == "sip" ){
+        var joinParticipantMsg = participant.display_name + " has joined the visit.";
+            if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
+                utilityNotifyQueue(joinParticipantMsg);
+        }
+        var data = [];
+        data.sipParticipants = [participant];
+        var alreadyAddedNumber = [];
+        var inputs =  $('.name-of-participant[phonenumber]');
+         if(inputs!=null)
+         {
+            inputs.each(function(){
+            var newdata = {
+                num:$(this).attr('phonenumber'),
+                name:$(this).text().replace(/['"]+/g,'')
+            };
+            alreadyAddedNumber.push(newdata);
+        });
+        }
+        var newName,
+            newNum;
+        var newNumber = participant.uri.substring(6,16);
+        var newVal = alreadyAddedNumber.forEach(function(val){
+            if(val.num == newNumber && val.name == participant.display_name){
+                newName = true;
+                newNum = true;
+            }
+        });
+        if(!newName || !newNum ){
+        updateParticipantsAndGuestsList(data);
+        var contextData = {
+            "destination":participant.uri.substring(6,16),
+            "displayName":participant.display_name
+        }; 
+        VideoVisit.updateContext(contextData, "sip");
+        }
+        VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
+    }
      else {
-        pexipParticipantsList.push(participant);
         var joinParticipantMsg = participant.display_name + " has joined the visit.";
         if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
             utilityNotifyQueue(joinParticipantMsg);
@@ -626,16 +661,7 @@ function participantUpdated(participant){
         updateParticipantList(participant,'join');
         console.log("inside participantUpdated");
     }
-    if(participant.protocol == "sip" ){
-        var joinParticipantMsg = participant.display_name + " has joined the visit.";
-            if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
-                utilityNotifyQueue(joinParticipantMsg);
-        }
-        var data = [];
-        data.sipParticipants = participant;
-        VideoVisit.updateParticipantsAndGuestsList(data);
-        VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
-    }
+    
 }
 
 function participantDeleted(participant){
