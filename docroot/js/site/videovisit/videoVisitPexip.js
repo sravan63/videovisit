@@ -731,7 +731,7 @@ function updateRunningLateTime(meetingDetails){
 	$('.meeting-updated-time-date-info').show();
 }
 function updateParticipantsAndGuestsList(meetingList){
-	if(!meetingList.participant && !meetingList.caregiver){
+	if(!meetingList.participant && !meetingList.caregiver && !meetingList.sipParticipants){
 		sidePaneMeetingDetails.sortedParticipantsList = [];
 		return;
 	}
@@ -741,12 +741,13 @@ function updateParticipantsAndGuestsList(meetingList){
 			return item.lastName != 'audio_participant';
 		});
 		participants = meetingList.participant.concat(nonTelephonyGuests);
-	}else if(!meetingList.participant){
+	}else if(meetingList.participant){
+		participants = meetingList.participant;
+		}
+	else if(meetingList.caregiver){
 		participants = meetingList.caregiver.filter(function(item){
 			return item.lastName != 'audio_participant';
-		});;
-	}else if(!meetingList.caregiver){
-		participants = meetingList.participant;
+	});
 	}
 	//meetingList.participant.concat(meetingList.caregiver);
 	let tempSortedArr = participants.sort(sortObjs('firstName'));
@@ -760,14 +761,15 @@ function updateParticipantsAndGuestsList(meetingList){
 	var tempArr = sidePaneMeetingDetails.sortedParticipantsList;
 	var phoneNumCount = 0;
 	for(let i=0;i<tempArr.length;i++){
-		if(tempArr[i].title){
-			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+		if(tempArr[i].nuid){
+			tempArr[i].title = tempArr[i].title ? tempArr[i].title : '';
+			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots hide"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 		}else{
 			if(tempArr[i].participantType == 'audio'){
 				phoneNumCount++;
-				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant" phonenumber="'+tempArr[i].destination+'">Phone '+phoneNumCount+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant" phonenumber="'+tempArr[i].destination+'">Phone '+phoneNumCount+'</span><span class="three-dots hide"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 			}else{
-				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
+				$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+'</span><span class="three-dots hide"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 			}
 		}		
 	}

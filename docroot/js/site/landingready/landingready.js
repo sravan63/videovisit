@@ -517,7 +517,7 @@ function updateDomWithMeetingsData(data){
             var meetingMiddleName = meeting.member.middleName?meeting.member.middleName:'';
             htmlToBeAppend += '<span>'+meetingLastName+', '+meetingFirstName+' '+meetingMiddleName+'</span>';
             htmlToBeAppend += '<div class="accord-contents" style="display:block;margin-top:30px;">';
-            if(meeting.participant && meeting.participant.length > 0 || meeting.caregiver && meeting.caregiver.length > 0){
+            if(meeting.participant && meeting.participant.length > 0 || meeting.caregiver && meeting.caregiver.length > 0 || meeting.sipParticipants && meeting.sipParticipants.length > 0){
                 htmlToBeAppend += '<h2 class="label" style="float:none;margin-bottom:10px;">Additional Participants</h2>';
             }
             if(meeting.participant && meeting.participant.length > 0){
@@ -534,16 +534,42 @@ function updateDomWithMeetingsData(data){
                 htmlToBeAppend += '</span></div>';//.names-container-member class end
             }
             htmlToBeAppend += '<div class="names-container-member" style="margin:0px;">';
-            if(meeting.caregiver && meeting.caregiver.length > 0){
+            var isGuestAvail = (meeting.caregiver && meeting.caregiver.length > 0);
+            var isSipParticipantAvail = (meeting.sipParticipants && meeting.sipParticipants.length > 0);
+            if(isGuestAvail || isSipParticipantAvail){
+                var newArray = [];
+                if(meeting.vendor=="pexip"){
+                  var videoGuests = meeting.caregiver;  
+                  var sipParticipants = meeting.sipParticipants;
+                     if(videoGuests!=null && sipParticipants!=null){
+                          newArray = videoGuests.concat(sipParticipants);
+                     }
+                     else if(sipParticipants!=null){
+                           newArray = meeting.sipParticipants;
+                     }
+                     else if(videoGuests!=null){
+                     newArray = meeting.caregiver;
+                      }
+                     }
+                else{
+                    newArray = meeting.caregiver;
+                }
             	let phoneNumsCount = 0;
                 htmlToBeAppend += '<span class="names patient-guests" style="margin-left:0;">';
-                for(var j=0;j<meeting.caregiver.length;j++){
-                    var cgfname = meeting.caregiver[j].firstName?meeting.caregiver[j].firstName.toLowerCase():'';
-                    var cglname = meeting.caregiver[j].lastName?meeting.caregiver[j].lastName.toLowerCase():'';
+                for(var j=0;j<newArray.length;j++){
+                    var cgfname = newArray[j].firstName?newArray[j].firstName.toLowerCase():'';
+                    var cglname = newArray[j].lastName?newArray[j].lastName.toLowerCase():'';
                     var displayname = '';
                     var isTelephony = isNumberString(cgfname);
+
+                    var isSip = newArray[j].destination?true:false;
+
+                    if(isSip){
+                        phoneNumsCount = (phoneNumsCount + 1);
+                        displayname = "Phone "+phoneNumsCount;
+                    }
                     //isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
-                    if(isTelephony){
+                    else if(isTelephony){
                         var tele = cgfname.trim().split('').reverse().join('').substr(0,10).split('').reverse().join('');
                         var telePhoneNumber = changeFromNumberToTelephoneFormat(tele);
                         //displayname = telePhoneNumber;

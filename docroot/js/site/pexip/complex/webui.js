@@ -287,14 +287,14 @@ function stopSharing(){
     $('#id_screen_unshare').css('display', 'none');
 }
 
-//function unpresentScreen(reason) {
-//    if (reason) {
-//        //alert(reason);
-//    }
-//    presenting = false;
-//    $('#id_screenshare').css('display', 'block');
-//    $('#id_screen_unshare').css('display', 'none');
-//}
+function unpresentScreen(reason) {
+   if (reason) {
+       //alert(reason);
+   }
+   presenting = false;
+   $('#id_screenshare').css('display', 'block');
+   $('#id_screen_unshare').css('display', 'none');
+}
 //
 ///* ~~~ MUTE AND HOLD/RESUME ~~~ */
 //
@@ -382,22 +382,22 @@ function stopSharing(){
 //    }
 //}
 //
-//function holdresume(setting) {
-//    if (setting === true) {
-//        video.src = "";
-//        video.poster = "img/OnHold.jpg";
-//        id_muteaudio.classList.add("inactive");
-//        id_mutevideo.classList.add("inactive");
-//    } else {
-//        video.poster = "";
-//        video.src = videoURL;
-//        if (presentation != null) {
-//            loadPresentation();
-//        }
-//        id_muteaudio.classList.remove("inactive");
-//        id_mutevideo.classList.remove("inactive");
-//    }
-//}
+function holdresume(setting) {
+   if (setting === true) {
+       video.src = "";
+       video.poster = "img/OnHold.jpg";
+       id_muteaudio.classList.add("inactive");
+       id_mutevideo.classList.add("inactive");
+   } else {
+       video.poster = "";
+       video.src = videoURL;
+       if (presentation != null) {
+           loadPresentation();
+       }
+       id_muteaudio.classList.remove("inactive");
+       id_mutevideo.classList.remove("inactive");
+   }
+}
 
 /* ~~~ ROSTER LIST ~~~ */
 
@@ -590,18 +590,21 @@ function participantCreated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     log("info","participantCreated","console: participantCreated - inside participantCreated - participant:" +participant); 
     if(isMobileDevice){
-	    updateParticipantList(participant,'join');
-	    console.log("inside participantCreated");
+        updateParticipantList(participant,'join');
+        console.log("inside participantCreated");
+     }
+     else if(participant.protocol=="sip"){
+        console.log("telephony")
      }
      else {
-	    pexipParticipantsList.push(participant);
-	    var joinParticipantMsg = participant.display_name + " has joined the visit.";
-	    if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
-	        utilityNotifyQueue(joinParticipantMsg);
-	    }
+        pexipParticipantsList.push(participant);
+        var joinParticipantMsg = participant.display_name + " has joined the visit.";
+        if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
+            utilityNotifyQueue(joinParticipantMsg);
+        }
         toggleWaitingRoom(pexipParticipantsList);
-	    VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
-	}
+        VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
+    }
     /*var participant_name = participant.display_name;
     console.log("Participant Name: " +participant.display_name);
 
@@ -669,9 +672,20 @@ function participantCreated(participant){
 function participantUpdated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     // toggleWaitingRoom();
+    pexipParticipantsList.push(participant);
     if(isMobileDevice){
         updateParticipantList(participant,'join');
         console.log("inside participantUpdated");
+    }
+    if(participant.protocol == "sip" ){
+        var joinParticipantMsg = participant.display_name + " has joined the visit.";
+            if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
+                utilityNotifyQueue(joinParticipantMsg);
+        }
+        var data = [];
+        data.sipParticipants = participant;
+        VideoVisit.updateParticipantsAndGuestsList(data);
+        VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
     }
 }
 
@@ -682,17 +696,17 @@ function participantDeleted(participant){
         updateParticipantList(participant,'left');
         console.log("inside participantDeleted");
      }else {
-    	 var removingParticipant = pexipParticipantsList.filter(function(user){
-    		 return user.uuid == participant.uuid;
-    	 });
-    	 pexipParticipantsList = pexipParticipantsList.filter(function(user){
-    		 return user.uuid != participant.uuid;
-    	 });
-    	 var participantMsg = removingParticipant[0].display_name + " has left the visit.";
-	    if(!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()){
-	        utilityNotifyQueue(participantMsg);
-	    }
-	    VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
+         var removingParticipant = pexipParticipantsList.filter(function(user){
+             return user.uuid == participant.uuid;
+         });
+         pexipParticipantsList = pexipParticipantsList.filter(function(user){
+             return user.uuid != participant.uuid;
+         });
+         var participantMsg = removingParticipant[0].display_name + " has left the visit.";
+        if(!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()){
+            utilityNotifyQueue(participantMsg);
+        }
+        VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
         toggleWaitingRoom(pexipParticipantsList);
      }   
 }
@@ -810,7 +824,7 @@ function getMediaStats(){
 
 function connected(url) {
     log("info","connected","console: connected - inside connected"); 
-	setTimeout(function(){
+    setTimeout(function(){
         refreshingOrSelfJoinMeeting = false;
     },5000);
     if (source == 'screen') {
@@ -1153,7 +1167,7 @@ function getHostName(){
 
 function disconnectOnRefresh(){
     log("info","disconnectOnRefresh","console: disconnectOnRefresh");
-	console.log("inside disconnect");
+    console.log("inside disconnect");
     disconnectAlreadyCalled = true;
     var guestName = $("#guestName").val();
         var patientName =$("#meetingPatient").val();
@@ -1180,7 +1194,7 @@ function disconnectOnRefresh(){
             //console.log("joinLeaveMeeting :: result :: "+result);
         },
         error: function(textStatus){
-        	log("error","console: joinLeaveMeeting:: error - : " +textStatus);
+            log("error","console: joinLeaveMeeting:: error - : " +textStatus);
             //console.log("joinLeaveMeeting :: error :: "+textStatus);
         }
     });
@@ -1262,7 +1276,7 @@ var log = function (type, param, msg) {
                     alert(param);
                 }
             }
-            if(msg){                	
+            if(msg){                    
                 if(msg.toLowerCase().indexOf("event tracked") > -1){
                     var params = [type, param, msg];
                     VideoVisit.logVendorMeetingEvents(params);
