@@ -1257,12 +1257,13 @@ public class MeetingCommand {
 		final String email = request.getParameter("email");
 		final String displayName = request.getParameter("displayName");
 		final String destination = request.getParameter("destination");
+		final String participantType = request.getParameter("participantType");
 		if (ctx != null && StringUtils.isNotBlank(meetingId) && StringUtils.isNotBlank(userType)) {
 			if (TELEPHONY.equalsIgnoreCase(userType)) {
 				lastName = MemberConstants.AUDIO_PARTICIPANT;
 				addCaregiverToContext(ctx, meetingId, firstName, lastName, email);
 			} else if (SIP.equalsIgnoreCase(userType)) {
-				addSipParticipantToContext(ctx, meetingId, displayName, destination);
+				addSipParticipantToContext(ctx, meetingId, displayName, destination, participantType);
 			}
 		}
 		logger.info(LOG_EXITING);
@@ -1289,10 +1290,11 @@ public class MeetingCommand {
 	}
 	
 	private static void addSipParticipantToContext(final WebAppContext ctx, final String meetingId,
-			final String displayName, final String destination) {
+			final String displayName, final String destination, final String participantType) {
 		final SipParticipant sipParticipant = new SipParticipant();
 		sipParticipant.setDestination(destination);
 		sipParticipant.setDisplayName(displayName);
+		sipParticipant.setParticipantType(participantType);
 		final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
 		if (meeting != null) {
 			List<SipParticipant> sipParticipants = meeting.getSipParticipants();
@@ -1395,3 +1397,4 @@ public class MeetingCommand {
 	}
 
 }
+
