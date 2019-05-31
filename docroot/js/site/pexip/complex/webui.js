@@ -282,7 +282,7 @@ function presentScreen() {
 }
 
 function stopSharing(){
-    log("info","pexip_smd_close_action","console: stopSharing - disable share button");
+    log("info","pexip_smd_close_action","event: stopSharing - disable share button");
     rtc.present(null);
     presenting = false;
     $('#id_screenshare').css('display', 'block');
@@ -497,7 +497,7 @@ function remoteDisconnect(reason) {
 }
 
 function handleError(reason) {
-    log("error","handleError","console: inside handleError reason :" + reason); 
+    log("error","handleError","event: inside handleError reason :" + reason); 
 //    console.log("HandleError");
 //    console.log(reason);
     if (video && !selfvideo.src && new Date() - startTime > 30000) {
@@ -563,7 +563,7 @@ function sipDialOut() {
     //console.log("SIP Dial Out");
     log("info","sipDialOut","console: sipDialOut - inside sipDialOut"); 
     var phone_num = $("#phone_num").val();
-    log("info","sipDialOut","console: sipDialOut - inside sipDialOut phone_num: " +phone_num); 
+    log("info","sipDialOut","event: sipDialOut - inside sipDialOut phone_num: " +phone_num); 
     //console.log("phone_num: " +phone_num);
     
     if(isProvider == "true"){
@@ -662,7 +662,6 @@ function participantDeleted(participant){
 
 function layoutUpdate(view){
     log("info","layoutUpdate","console: layoutUpdate - inside layoutUpdate - view:" +view.view); 
-    //console.log("inside layoutUpdate - view: " +view.view);
 
     switch(view.view){
         case "1:7":
@@ -687,7 +686,8 @@ function layoutUpdate(view){
 }
 
 function getMediaStats(){
-    console.log("inside getMediaStats");
+    log("info","getMediaStats","console: getMediaStats - inside getMediaStats"); 
+    //console.log("inside getMediaStats");
 
     if(set_interval == "false"){
         set_interval = "true";
@@ -772,7 +772,7 @@ function getMediaStats(){
 }
 
 function connected(url) {
-    log("info","connected","console: connected - inside connected"); 
+    log("info","connected","event: connected - inside connected"); 
     setTimeout(function(){
         refreshingOrSelfJoinMeeting = false;
     },5000);
@@ -822,6 +822,7 @@ function switchDevices(){
 
 function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
     console.log("inside webui initialise");
+    log('info','initialise' ,"event: video visit initialise - isMember=" + $('#isMember').val() + ", meetingId=" +$('#meetingId').val());
     hostName = getHostName();
     $("#selectPeripheral").detach().appendTo($("#rosterlist"));
     // $("#selectPeripheral").addClass("hidden");
@@ -929,9 +930,8 @@ function getTurnServerObjsForMobile(){
 // }
 
 function disconnect(){
-    log("info","disconnect","console: disconnect");
-    //console.log("inside disconnect");
-    // disconnects pexip
+   // console.log("inside disconnect");
+    log("info","disconnect","event: disconnect - inside disconnect.");
     rtc.disconnect();
 
     disconnectAlreadyCalled = true;
@@ -1114,7 +1114,7 @@ function getHostName(){
 };
 
 function disconnectOnRefresh(){
-    log("info","disconnectOnRefresh","console: disconnectOnRefresh");
+    log("info",'disconnectOnRefresh', "event: Refresh::click - disconnectOnRefresh before calling navigateToPage if disconnected completely : ");
     console.log("inside disconnect");
     disconnectAlreadyCalled = true;
     var guestName = $("#guestName").val();
@@ -1224,8 +1224,8 @@ var log = function (type, param, msg) {
                     alert(param);
                 }
             }
-            if(msg){                    
-                if(msg.toLowerCase().indexOf("event tracked") > -1){
+            if(msg){                	
+                if(msg.toLowerCase().indexOf("event") > -1){
                     var params = [type, param, msg];
                     VideoVisit.logVendorMeetingEvents(params);
                 }
@@ -1243,12 +1243,12 @@ var log = function (type, param, msg) {
 function muteSpeaker() {
     var video=document.getElementById("video");
       if(video.muted){
-        log("info","pexip_speaker_mute_action","console: muteSpeaker - on click of mute speaker button");
+        log("info","pexip_speaker_mute_action","event: unmuteSpeaker - on click of mute speaker button");
         video.muted = false;
         $('#id_speaker_unmute').css('display', 'none');
         $('#id_speaker_mute').css('display', 'block');
       } else {
-        log("info","pexip_speaker_unmute_action","console: unmuteSpeaker - on click of unmute speaker button");
+        log("info","pexip_speaker_unmute_action","event: muteSpeaker - on click of unmute speaker button");
         video.muted = true;
         $('#id_speaker_mute').css('display', 'none');
         $('#id_speaker_unmute').css('display', 'block');
@@ -1258,11 +1258,11 @@ function muteSpeaker() {
 function muteUnmuteVideo() {
     muteVideo = rtc.muteVideo();
       if(muteVideo){
-        log("info","pexip_video_mute_action","console: muteVideo - on click of mute video button");
+        log("info","pexip_video_mute_action","event: muteVideo - on click of mute video button");
         $('#id_video_unmute').css('display', 'block');
         $('#id_video_mute').css('display', 'none');
       } else {
-        log("info","pexip_video_unmute_action","console: unmuteVideo - on click of unmute video  button");
+        log("info","pexip_video_unmute_action","event: unmuteVideo - on click of unmute video  button");
         $('#id_video_mute').css('display', 'block');
         $('#id_video_unmute').css('display', 'none');
       }
@@ -1272,11 +1272,11 @@ function muteUnmuteVideo() {
 function muteUnmuteMic() {
     muteAudio = rtc.muteAudio();
       if(muteAudio){
-        log("info","pexip_microphone_mute_action","console: muteMic - on click of mute mic button");
+        log("info","pexip_microphone_mute_action","event: muteMic - on click of mute mic button");
         $('#id_mic_unmute').css('display', 'block');
         $('#id_mic_mute').css('display', 'none');
       } else {
-        log("info","pexip_microphone_unmute_action","console: unmuteMic - on click of unmute mic button");
+        log("info","pexip_microphone_unmute_action","event: unmuteMic - on click of unmute mic button");
         $('#id_mic_mute').css('display', 'block');
         $('#id_mic_unmute').css('display', 'none');
       }
