@@ -258,7 +258,7 @@ function togglePresentation() {
 //}
 
 function presentScreen() {
-    log("info","pexip_smd_initiate_action","console: presentScreen - on click of share my desktop button");
+    log("info","smd_initiate_action","console: presentScreen - on click of share my desktop button");
     if (!presenting) {
         //id_screenshare.textContent = trans['BUTTON_STOPSHARE'];
         rtc.present('screen');
@@ -282,7 +282,7 @@ function presentScreen() {
 }
 
 function stopSharing(){
-    log("info","pexip_smd_close_action","event: stopSharing - disable share button");
+    log("info","smd_close_action","event: stopSharing - disable share button");
     rtc.present(null);
     presenting = false;
     $('#id_screenshare').css('display', 'block');
@@ -1269,12 +1269,12 @@ var log = function (type, param, msg) {
 function muteSpeaker() {
     var video=document.getElementById("video");
       if(video.muted){
-        log("info","pexip_speaker_mute_action","event: unmuteSpeaker - on click of mute speaker button");
+        log("info","speaker_mute_action","event: unmuteSpeaker - on click of mute speaker button");
         video.muted = false;
         $('#id_speaker_unmute').css('display', 'none');
         $('#id_speaker_mute').css('display', 'block');
       } else {
-        log("info","pexip_speaker_unmute_action","event: muteSpeaker - on click of unmute speaker button");
+        log("info","speaker_unmute_action","event: muteSpeaker - on click of unmute speaker button");
         video.muted = true;
         $('#id_speaker_mute').css('display', 'none');
         $('#id_speaker_unmute').css('display', 'block');
@@ -1284,11 +1284,11 @@ function muteSpeaker() {
 function muteUnmuteVideo() {
     muteVideo = rtc.muteVideo();
       if(muteVideo){
-        log("info","pexip_video_mute_action","event: muteVideo - on click of mute video button");
+        log("info","video_mute_action","event: muteVideo - on click of mute video button");
         $('#id_video_unmute').css('display', 'block');
         $('#id_video_mute').css('display', 'none');
       } else {
-        log("info","pexip_video_unmute_action","event: unmuteVideo - on click of unmute video  button");
+        log("info","video_unmute_action","event: unmuteVideo - on click of unmute video  button");
         $('#id_video_mute').css('display', 'block');
         $('#id_video_unmute').css('display', 'none');
       }
@@ -1298,11 +1298,11 @@ function muteUnmuteVideo() {
 function muteUnmuteMic() {
     muteAudio = rtc.muteAudio();
       if(muteAudio){
-        log("info","pexip_microphone_mute_action","event: muteMic - on click of mute mic button");
+        log("info","microphone_mute_action","event: muteMic - on click of mute mic button");
         $('#id_mic_unmute').css('display', 'block');
         $('#id_mic_mute').css('display', 'none');
       } else {
-        log("info","pexip_microphone_unmute_action","event: unmuteMic - on click of unmute mic button");
+        log("info","microphone_unmute_action","event: unmuteMic - on click of unmute mic button");
         $('#id_mic_mute').css('display', 'block');
         $('#id_mic_unmute').css('display', 'none');
       }

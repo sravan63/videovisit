@@ -167,7 +167,7 @@ $(document).ready(function(){
 
   function changeAudioDestination() {
 	
-	 log("info","pexip_speaker_peripheral_change_action","event: peripheralsSpeakerChange - on changing the peripheral speaker dropdown");
+	 log("info","speaker_peripheral_change_action","event: peripheralsSpeakerChange - on changing the peripheral speaker dropdown");
     //console.log("inside CHANGE-AUDIO-DESTINATION");
     
     var audioDestination = audioOutputSelect.value;
@@ -212,7 +212,7 @@ $(document).ready(function(){
   start();
 
   function peripheralsVideoChange(){
-	log("info","pexip_video_peripheral_change_action","event: peripheralsVideoChange - on changing the peripheral camera dropdown");
+	log("info","video_peripheral_change_action","event: peripheralsVideoChange - on changing the peripheral camera dropdown");
     videoSource = videoSelect.value;
     rtc.call_type = 'video';
     rtc.video_source = videoSource;
@@ -220,7 +220,7 @@ $(document).ready(function(){
   }
 
   function peripheralsAudioChange(){
-	log("info","pexip_Microphone_peripheral_change_action","event: peripheralsAudioChange - on changing the peripheral mic dropdown");
+	log("info","Microphone_peripheral_change_action","event: peripheralsAudioChange - on changing the peripheral mic dropdown");
     audioSource = audioInputSelect.value;
     rtc.call_type = 'audio';
     rtc.audio_source = audioSource;
