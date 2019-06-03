@@ -1308,6 +1308,7 @@ public class MeetingCommand {
 			} else {
 				sipParticipants = new ArrayList<SipParticipant>(1);
 				sipParticipants.add(sipParticipant);
+				meeting.setSipParticipants(sipParticipants);
 			}
 		}
 	}
