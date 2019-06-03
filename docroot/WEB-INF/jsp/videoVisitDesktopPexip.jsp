@@ -245,7 +245,7 @@
 				<div id="waitingRoom" class="conference-waiting-room">
                    <div class="waitingRoomMessageBlock">
                       <img src="vidyoplayer/img/TPMG_logo.png" class="waitingroom-logo" />
-                      <span class="waitingroom-text">Your visit will start once your doctor joins.</span>
+                      <span class="waitingroom-text" id="lateText">Your visit will start once your doctor joins.</span>
                    </div>
                 </div>
             </div>
