@@ -86,7 +86,7 @@
 			                   <c:if test="${meeting.sipParticipants != null && fn:length(meeting.sipParticipants) > 0}">
 			                   <c:forEach var="p" items="${meeting.sipParticipants}">	
 			                   <c:set var="phoneNumsCount" value="${phoneNumsCount + 1}" scope="page"/>
-			                    <span class="guest-is-ap" style="font-size:16px;" firstnameattr="${p.destination}">${p.displayName}</span>
+			                    <span class="guest-is-ap-pexip" style="font-size:16px;" firstnameattr="${p.destination}">${p.displayName}</span>
 			                    </c:forEach>
 			                   </c:if>
 			                    </span>
