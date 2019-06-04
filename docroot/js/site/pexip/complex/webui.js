@@ -297,93 +297,93 @@ function unpresentScreen(reason) {
    $('#id_screenshare').css('display', 'block');
    $('#id_screen_unshare').css('display', 'none');
 }
-//
-///* ~~~ MUTE AND HOLD/RESUME ~~~ */
-//
-//function muteUnmuteSpeaker() {
-//    var video=document.getElementById("video");
-//      if(video.muted){
-//        video.muted = false;
-//        id_mutespeaker.classList.remove('mutedspeaker');
-//        id_mutespeaker.classList.add('unmutedspeaker');
-//      } else {
-//        video.muted = true;
-//        id_mutespeaker.classList.remove('unmutedspeaker');
-//        id_mutespeaker.classList.add('mutedspeaker');
-//      }
-//    /*if (!id_mutespeaker.classList.contains("inactive")) {
-//        if (document.getElementById('video').volume == 1) {
-//            document.getElementById('video').volume = 0;
-//            id_mutespeaker.classList.remove('unmutedspeaker');
-//            id_mutespeaker.classList.add('mutedspeaker');
-//        } else {
-//            document.getElementById('video').volume = 1;
-//            id_mutespeaker.classList.remove('mutedspeaker');
-//            id_mutespeaker.classList.add('unmutedspeaker');
-//        }
-//    }*/
-//}
-//
-//function muteMicStreams() {
-//    if (!id_muteaudio.classList.contains("inactive")) {
-//        muteAudio = rtc.muteAudio();
-//        id_muteaudio.classList.toggle('selected');
-//        if (muteAudio) {
-//            id_muteaudio.classList.remove('unmutedmic');
-//            id_muteaudio.classList.add('mutedmic');
-//        } else {
-//            id_muteaudio.classList.remove('mutedmic');
-//            id_muteaudio.classList.add('unmutedmic');
-//        }
-//    }
-//}
-//
-//function muteVideoStreams() {
-//    if (!id_mutevideo.classList.contains("inactive")) {
-//        muteVideo = rtc.muteVideo();
-//        id_mutevideo.classList.toggle('selected');
-//        if (muteVideo) {
-//            id_mutevideo.classList.remove('unmutedcamera');
-//            id_mutevideo.classList.add('mutedcamera');
-//        } else {
-//            id_mutevideo.classList.remove('mutedcamera');
-//            id_mutevideo.classList.add('unmutedcamera');
-//        }
-//    }else{
-//
-//    }
-//}
-//
-//function toggleSelfview() {
-//    console.log("toggleSelfview");
-//    
-//    if (!id_selfview.classList.contains("inactive")) {
-//        if (flash) {
-//            //flash.toggleSelfview();
-//            if (id_selfview.classList.contains('selected')) {
-//                flash.hideSelfview();
-//                id_selfview.classList.remove('selected');
-//                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
-//            } else {
-//                flash.showSelfview();
-//                id_selfview.classList.add('selected');
-//                id_selfview.textContent = trans['BUTTON_HIDESELF'];
-//            }
-//        } else {
-//            selfview.hidden = !selfview.hidden;
-//            if (selfview.hidden) {
-//                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
-//                id_selfview.classList.remove('selected');
-//                rosterlist.classList.remove('shorter');
-//            } else {
-//                id_selfview.textContent = trans['BUTTON_HIDESELF'];
-//                id_selfview.classList.add('selected');
-//                rosterlist.classList.add('shorter');
-//            }
-//        }
-//    }
-//}
-//
+
+/* ~~~ MUTE AND HOLD/RESUME ~~~ */
+
+function muteUnmuteSpeaker() {
+    var video=document.getElementById("video");
+      if(video.muted){
+        video.muted = false;
+        id_mutespeaker.classList.remove('mutedspeaker');
+        id_mutespeaker.classList.add('unmutedspeaker');
+      } else {
+        video.muted = true;
+        id_mutespeaker.classList.remove('unmutedspeaker');
+        id_mutespeaker.classList.add('mutedspeaker');
+      }
+    /*if (!id_mutespeaker.classList.contains("inactive")) {
+        if (document.getElementById('video').volume == 1) {
+            document.getElementById('video').volume = 0;
+            id_mutespeaker.classList.remove('unmutedspeaker');
+            id_mutespeaker.classList.add('mutedspeaker');
+        } else {
+            document.getElementById('video').volume = 1;
+            id_mutespeaker.classList.remove('mutedspeaker');
+            id_mutespeaker.classList.add('unmutedspeaker');
+        }
+    }*/
+}
+
+function muteMicStreams() {
+    if (!id_muteaudio.classList.contains("inactive")) {
+        muteAudio = rtc.muteAudio();
+        id_muteaudio.classList.toggle('selected');
+        if (muteAudio) {
+            id_muteaudio.classList.remove('unmutedmic');
+            id_muteaudio.classList.add('mutedmic');
+        } else {
+            id_muteaudio.classList.remove('mutedmic');
+            id_muteaudio.classList.add('unmutedmic');
+        }
+    }
+}
+
+function muteVideoStreams() {
+    if (!id_mutevideo.classList.contains("inactive")) {
+        muteVideo = rtc.muteVideo();
+        id_mutevideo.classList.toggle('selected');
+        if (muteVideo) {
+            id_mutevideo.classList.remove('unmutedcamera');
+            id_mutevideo.classList.add('mutedcamera');
+        } else {
+            id_mutevideo.classList.remove('mutedcamera');
+            id_mutevideo.classList.add('unmutedcamera');
+        }
+    }else{
+
+    }
+}
+
+function toggleSelfview() {
+    console.log("toggleSelfview");
+    
+    if (!id_selfview.classList.contains("inactive")) {
+        if (flash) {
+            //flash.toggleSelfview();
+            if (id_selfview.classList.contains('selected')) {
+                flash.hideSelfview();
+                id_selfview.classList.remove('selected');
+                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
+            } else {
+                flash.showSelfview();
+                id_selfview.classList.add('selected');
+                id_selfview.textContent = trans['BUTTON_HIDESELF'];
+            }
+        } else {
+            selfview.hidden = !selfview.hidden;
+            if (selfview.hidden) {
+                id_selfview.textContent = trans['BUTTON_SHOWSELF'];
+                id_selfview.classList.remove('selected');
+                rosterlist.classList.remove('shorter');
+            } else {
+                id_selfview.textContent = trans['BUTTON_HIDESELF'];
+                id_selfview.classList.add('selected');
+                rosterlist.classList.add('shorter');
+            }
+        }
+    }
+}
+
 function holdresume(setting) {
    if (setting === true) {
        video.src = "";
