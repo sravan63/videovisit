@@ -849,7 +849,9 @@ function switchDevices(){
 function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
     console.log("inside webui initialise");
     log('info','initialise' ,"event: video visit initialise - isMember=" + $('#isMember').val() + ", meetingId=" +$('#meetingId').val());
+    if(!isMobileDevice){
     hostName = getHostName();
+    }
     $("#selectPeripheral").detach().appendTo($("#rosterlist"));
     // $("#selectPeripheral").addClass("hidden");
     $("#enterDetails").addClass("hidden");
