@@ -314,7 +314,7 @@
 		                    	</span>
 		                    	<a class="btn btn-large btn-config" href="#" title="Settings" id="inCallButtonToggleConfig" style="display:block;"></a>
 			                        <!-- Configuration panel -->
-			                        <div class="well hide vidyo-webrtc-configuration-wrap" id="configurationWrap">
+			                        <div class="well hide" id="configurationWrap">
 			                            <!-- See configurationTemplate in main.config.js-->
 			                        </div>
 
