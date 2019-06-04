@@ -1772,3 +1772,47 @@ function logoutFromMDOApp(){
 	// }
 	
 }
+
+var VideoVisit = {
+	logVendorMeetingEvents: function(params){
+		var userId;
+		var userType;
+		var logType = params[0];
+		var eventName = (params[1])?params[1]:'';
+		var eventDesc = (params[2])?params[2]:'';
+		var isCareGiver = ($("#caregiverId").val().trim() != "" && $("#meetingCode").val().trim() != "");
+		console.log("sendEventNotification :: params :: "+params);
+		if(isCareGiver == true){
+	       	userType = 'Caregiver';
+	       	userId = $("#guestName").val().trim();
+		}else{
+			userId = $("#mrn").val().trim();
+			//US31271
+			userType = $('#isProxyMeeting').val() == 'Y'?(userId?'Patient_Proxy':'Non_Patient_Proxy'):'Patient';
+			//US31271
+		}
+		console.log("sendEventNotification :: params :: "+params);
+		var eventData = {
+			'logType': logType,
+			'meetingId':$("#meetingId").val(),
+			'userType': userType,
+			'userId': userId,
+			'eventName':eventName,
+			'eventDescription':eventDesc
+		};
+
+		$.ajax({
+			type: "POST",
+			url: VIDEO_VISITS.Path.visit.logVendorMeetingEvents,
+			cache: false,
+			dataType: "json",
+			data: eventData,
+			success: function(result, textStatus){
+				console.log("sendEventNotification :: result :: "+result);
+			},
+			error: function(textStatus){
+				console.log("sendEventNotification :: error :: "+textStatus);
+			}
+		});
+	},
+}
