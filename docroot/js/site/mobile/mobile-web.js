@@ -1572,10 +1572,10 @@ var updateParticipantList = function(participant, status){
 			}
 		}
 	}
-	toggleWaitingRoom();
+	toggleMobileWaitingRoom();
 }
-var toggleWaitingRoom = function(){
-	var isHostAvailable =  validateHostAvailability();
+var toggleMobileWaitingRoom = function(){
+	var isHostAvailable =  validateMobileHostAvailability();
 	if(isHostAvailable){
 		$('.waiting-room').css('display','none');
 		$('#videocontainer').css('display','block');
@@ -1585,7 +1585,7 @@ var toggleWaitingRoom = function(){
 	}
 }
 
-var validateHostAvailability = function(){
+var validateMobileHostAvailability = function(){
 	var host = $("#meetingHostName").val().replace(/,/g, '').replace(/\s/g, '');
 	var isAvailable = false;
 	for(var i = 0; i<participantList.length; i++){
@@ -1683,7 +1683,7 @@ function updateCall(callType, videoSource = null, audioSource = null) {
         rtc.renegotiate(callType);
     }
 var newStartTimeCheck = function(){
-		var isHostAvailable =  validateHostAvailability();
+		var isHostAvailable =  validateMobileHostAvailability();
 	     if(isHostAvailable){ 
 			return;
 		}
