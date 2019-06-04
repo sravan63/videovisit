@@ -352,8 +352,7 @@ function updateDomWithMeetings(guestData){
                     var isSip = newArray[x].destination?true:false;
 
                     if(isSip){
-                        phoneNumsCount = (phoneNumsCount + 1);
-                        displayname = "Phone "+phoneNumsCount;
+                        displayname = newArray[x].displayName;
                     }
                     //isTelephony = false;//US35148: Telephony: Deactivate for Release 8.6
                     else if(isTelephony){
