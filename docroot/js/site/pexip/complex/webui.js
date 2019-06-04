@@ -1254,7 +1254,6 @@ var log = function (type, param, msg) {
             }
             if(msg){                	
                 if(msg.toLowerCase().indexOf("event") > -1){
-                    type = isMobileDevice ? "mobile-"+ String(type) : type;
                     var params = [type, param, msg];
                     VideoVisit.logVendorMeetingEvents(params);
                 }
