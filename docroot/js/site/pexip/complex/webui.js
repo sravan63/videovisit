@@ -303,12 +303,12 @@ function unpresentScreen(reason) {
 function muteUnmuteSpeaker() {
     var video=document.getElementById("video");
       if(video.muted){
-        log("info","speaker_mute_action","event: muteSpeaker - on click of mute speaker button");
+        log("info","speaker_unmute_action","event: unmuteSpeaker - on click of mute speaker button");
         video.muted = false;
         id_mutespeaker.classList.remove('mutedspeaker');
         id_mutespeaker.classList.add('unmutedspeaker');
       } else {
-        log("info","speaker_unmute_action","event: unmuteSpeaker - on click of unmute speaker button");
+        log("info","speaker_mute_action","event: muteSpeaker - on click of unmute speaker button");
         video.muted = true;
         id_mutespeaker.classList.remove('unmutedspeaker');
         id_mutespeaker.classList.add('mutedspeaker');
@@ -1287,12 +1287,12 @@ function muteSpeaker() {
     }
     var video = document.getElementById("video");
       if(video.muted){
-        log("info","speaker_mute_action","event: muteSpeaker - on click of mute speaker button");
+        log("info","speaker_unmute_action","event: unmuteSpeaker - on click of mute speaker button");
         video.muted = false;
         $('#id_speaker_unmute').css('display', 'none');
         $('#id_speaker_mute').css('display', 'block');
       } else {
-        log("info","speaker_unmute_action","event: unmuteSpeaker - on click of unmute speaker button");
+        log("info","speaker_mute_action","event: muteSpeaker - on click of unmute speaker button");
         video.muted = true;
         $('#id_speaker_mute').css('display', 'none');
         $('#id_speaker_unmute').css('display', 'block');
