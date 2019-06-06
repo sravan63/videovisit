@@ -1037,9 +1037,15 @@ function disconnect(){
 }
 }
 
+function onlyUnique(value, index, self) { 
+    return self.indexOf(value) === index;
+}
+
 function toggleWaitingRoom(pexipParticipantsList){
     var isHostAvail = validateHostAvailability(pexipParticipantsList);
     var participants = pexipParticipantsList.map(a => a.uuid);
+    var participantsInMeeting = participants.filter( onlyUnique );
+    var remoteFeed = document.getElementsByClassName('remoteFeed')[0];
     if(!hostDirtyThisMeeting && isHostAvail){
         hostDirtyThisMeeting = true;
     }
@@ -1047,6 +1053,7 @@ function toggleWaitingRoom(pexipParticipantsList){
     if(isHostAvail){
         log('info',"Mobile debugging  : **** "+isProvider+" Host Available : #### "+isHostAvail);
         $("#fullWaitingRoom").css("display","none");
+        remoteFeed.muted = false;
         if(hostDirtyThisMeeting){
             //Half waiting room
             $("#halfWaitingRoom").css("display","none");
@@ -1054,22 +1061,22 @@ function toggleWaitingRoom(pexipParticipantsList){
             $(".remoteFeed").height(calculatedHeight);
         }
     }else{
-        if(pexipParticipantsList.length == 1){
+        if(participantsInMeeting.length == 1){
             $("#fullWaitingRoom").css("display","block");
-            if(hostDirtyThisMeeting){
-                $("#fullWaitingRoom").css("display","block");
-            }
-        } else if(pexipParticipantsList.length > 1){
+            remoteFeed.muted = true;
+        } else if(participantsInMeeting.length > 1){
             if(hostDirtyThisMeeting){
                 //Half waiting room
                 var calculatedHeight = ($("#pluginContainer").height()-5) / 2;
                 $("#fullWaitingRoom").css("display","none");
                 $("#halfWaitingRoom").css("display","block");
-                $("#halfWaitingRoom").height(calculatedHeight);
-                $(".remoteFeed").height(calculatedHeight);
+                $("#halfWaitingRoom").outerHeight(calculatedHeight);
+                $(".remoteFeed").outerHeight(calculatedHeight);
+                remoteFeed.muted = false;
             } else {
                 // Full waiting room
                 $("#fullWaitingRoom").css("display","block");
+                remoteFeed.muted = true;
             }
         }
     }
@@ -1269,7 +1276,10 @@ var log = function (type, param, msg) {
 };
 
 function muteSpeaker() {
-    var video=document.getElementById("video");
+    if($('#fullWaitingRoom').css('display') !== 'none'){
+        return;
+    }
+    var video = document.getElementById("video");
       if(video.muted){
         log("info","speaker_mute_action","event: unmuteSpeaker - on click of mute speaker button");
         video.muted = false;

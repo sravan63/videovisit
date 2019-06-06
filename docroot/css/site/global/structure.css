@@ -736,6 +736,21 @@ iframe { display: none !important; }
   float: none;
   margin-bottom: 0;
 }
+#halfWaitingRoom{
+   padding: 1.5% 0;
+   box-sizing: border-box;
+}
+
+#halfWaitingRoom .waitingRoomMessageBlock{
+  height: 100%;
+  top: 0;
+  padding: 4% 36px;
+  box-sizing: border-box;
+  display: flex;
+}
+#halfWaitingRoom .waitingRoomMessageBlock .waitingroom-logo{
+	margin-bottom: 33px;
+}
 /*waiting room bg late load image issue fix end*/
 .conference-waiting-room{
  display:none;

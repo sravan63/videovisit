@@ -154,12 +154,14 @@ $(document).ready(function() {
 						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
 							$('#displayMeetingNewStartTime').html('New Start '+newTime);
-							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
+							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;'>We're sorry, your doctor is running late.</span>");
 							$("#lateText span").css('margin','0 0 0 17%');
+							$("#halfWaitingRoom .waitingRoomMessageBlock").css('display','block');
 							updateRunningLateTime(result.service.runningLateEnvelope);
 					}else{
 						$('#displayMeetingNewStartTime').html('');
 							$(".waitingroom-text").html("Your visit will start once your doctor joins.");
+							$("#halfWaitingRoom .waitingRoomMessageBlock").css('display','flex');
 					}
 				}
 			},
@@ -167,6 +169,7 @@ $(document).ready(function() {
 				console.log("RUNNING LATE ERROR: "+textStatus);
 				$('#displayMeetingNewStartTime').html('');
 				$(".waitingroom-text").html("Your visit will start once your doctor joins.");
+				$("#halfWaitingRoom .waitingRoomMessageBlock").css('display','flex');
 			}
 		});
 	};
@@ -185,14 +188,16 @@ $(document).ready(function() {
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
 						$('#displayMeetingNewStartTime').html('New Start '+newTime);
 						if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
-							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:24px;'>We're sorry, your doctor is running late.</span>");
+							$(".waitingroom-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;'>We're sorry, your doctor is running late.</span>");
 							$("#lateText span").css('margin','0 0 0 17%');
+							$("#halfWaitingRoom .waitingRoomMessageBlock").css('display','block');
 						}
 						updateRunningLateTime(result.service.runningLateEnvelope);
 					}else{
 						$('#displayMeetingNewStartTime').html('');
 						if(VIDEO_VISITS.Path.IS_HOST_AVAILABLE == false){
 							$(".waitingroom-text").html("Your visit will start once your doctor joins.");
+							$("#halfWaitingRoom .waitingRoomMessageBlock").css('display','flex');
 						}
 					}
 				}
