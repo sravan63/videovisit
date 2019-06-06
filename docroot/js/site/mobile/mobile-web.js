@@ -1013,7 +1013,7 @@ function launchVideoVisitForPatientGuest(mObj,vendor,megaMeetingUrl, meetingId, 
               var mobileMeetingObj = {
                     "meetingId": mObj.meetingId,
                     "meetingCode": meetingCode ? meetingCode : null,
-                    "caregiverId": caregiverId ? caregiverId : null,
+                    "caregiverId": caregiverId ? caregiverId : name,
                     "vidyoUrl": megaMeetingUrl,
                     "guestName": name,
                     "isProvider": 'false',
