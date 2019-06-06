@@ -1501,7 +1501,7 @@ function startPexip() {
 	initialise(roomUrl, alias, bandwidth, name, "", source);
 	newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
-		setKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
+//		setKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
 	}
 }
 
