@@ -303,10 +303,12 @@ function unpresentScreen(reason) {
 function muteUnmuteSpeaker() {
     var video=document.getElementById("video");
       if(video.muted){
+        log("info","speaker_mute_action","event: unmuteSpeaker - on click of mute speaker button");
         video.muted = false;
         id_mutespeaker.classList.remove('mutedspeaker');
         id_mutespeaker.classList.add('unmutedspeaker');
       } else {
+        log("info","speaker_unmute_action","event: muteSpeaker - on click of unmute speaker button");
         video.muted = true;
         id_mutespeaker.classList.remove('unmutedspeaker');
         id_mutespeaker.classList.add('mutedspeaker');
@@ -329,9 +331,11 @@ function muteMicStreams() {
         muteAudio = rtc.muteAudio();
         id_muteaudio.classList.toggle('selected');
         if (muteAudio) {
+            log("info","microphone_mute_action","event: muteMic - on click of mute mic button");
             id_muteaudio.classList.remove('unmutedmic');
             id_muteaudio.classList.add('mutedmic');
         } else {
+            log("info","microphone_unmute_action","event: unmuteMic - on click of unmute mic button");
             id_muteaudio.classList.remove('mutedmic');
             id_muteaudio.classList.add('unmutedmic');
         }
@@ -343,9 +347,11 @@ function muteVideoStreams() {
         muteVideo = rtc.muteVideo();
         id_mutevideo.classList.toggle('selected');
         if (muteVideo) {
+            log("info","video_mute_action","event: muteVideo - on click of mute video button");
             id_mutevideo.classList.remove('unmutedcamera');
             id_mutevideo.classList.add('mutedcamera');
         } else {
+            log("info","video_unmute_action","event: unmuteVideo - on click of unmute video  button");
             id_mutevideo.classList.remove('mutedcamera');
             id_mutevideo.classList.add('unmutedcamera');
         }
