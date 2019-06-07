@@ -970,7 +970,7 @@ function disconnect(){
 
     disconnectAlreadyCalled = true;
     var url = window.location.href;
-    var memberMobile = url.indexOf("mobile") > -1;
+    // var memberMobile = url.indexOf("mobile") > -1;
     var isMember = $("#isMember").val();
     var guestName = $("#guestName").val();
         var patientName =$("#meetingPatient").val();
@@ -987,7 +987,7 @@ function disconnect(){
         meetingId: $('#meetingId').val()
     };
 
-    if(memberMobile){
+    if(isMobileDevice){
         $.ajax({
             type: "POST",
             url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
@@ -1026,7 +1026,7 @@ function navigateFromVVPage(){
         } else {
             //var url = window.location.href;
             //var memberMobile = url.indexOf("mobile") > -1;
-            if(memberMobile){
+            if(isMobileDevice){
                 if(isMember == "true"){
                     window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
                 } else if (isMember == "false"){
