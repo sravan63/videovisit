@@ -996,15 +996,23 @@ function disconnect(){
             data: userData,
             success: function(result, textStatus){
                 log("info","console: joinLeaveMeeting:: success : result - : " +result);
+                navigateFromVVPage();
                 //console.log("joinLeaveMeeting :: result :: "+result);
             },
             error: function(textStatus){
                 log("info","console: joinLeaveMeeting:: error - : " +textStatus);
+                navigateFromVVPage();
                 //console.log("joinLeaveMeeting :: error :: "+textStatus);
             }
         });
+    } else {
+    	navigateFromVVPage();
     }
-    var refreshMeetings = false;  
+    
+}
+
+function navigateFromVVPage(){
+	var refreshMeetings = false;  
     var isNative = $("#isNative").val(),
         isMember = $("#isMember").val(),
         meetingCode =  $("#meetingCode").val(),
@@ -1040,7 +1048,7 @@ function disconnect(){
 
            }
     
-}
+        }
 }
 
 function onlyUnique(value, index, self) { 
