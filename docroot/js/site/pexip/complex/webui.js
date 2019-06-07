@@ -995,12 +995,12 @@ function disconnect(){
             dataType: "json",
             data: userData,
             success: function(result, textStatus){
-                log("info","console: joinLeaveMeeting:: success : result - : " +result);
+                log("info","joinLeaveMeeting", "console: joinLeaveMeeting:: success : result - : " +result);
                 navigateFromVVPage();
                 //console.log("joinLeaveMeeting :: result :: "+result);
             },
             error: function(textStatus){
-                log("info","console: joinLeaveMeeting:: error - : " +textStatus);
+                log("info","joinLeaveMeeting","console: joinLeaveMeeting:: error - : " +textStatus);
                 navigateFromVVPage();
                 //console.log("joinLeaveMeeting :: error :: "+textStatus);
             }
