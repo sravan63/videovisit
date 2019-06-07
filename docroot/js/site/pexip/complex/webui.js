@@ -1187,11 +1187,11 @@ function disconnectOnRefresh(){
         dataType: "json",
         data: userData,
         success: function(result, textStatus){
-            log("info","console: joinLeaveMeeting:: result - : " +result);
+            log("info","joinLeaveMeeting","console: joinLeaveMeeting:: result - : " +result);
             //console.log("joinLeaveMeeting :: result :: "+result);
         },
         error: function(textStatus){
-            log("error","console: joinLeaveMeeting:: error - : " +textStatus);
+            log("error","joinLeaveMeeting","console: joinLeaveMeeting:: error - : " +textStatus);
             //console.log("joinLeaveMeeting :: error :: "+textStatus);
         }
     });
