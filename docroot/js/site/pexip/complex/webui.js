@@ -1000,7 +1000,7 @@ function disconnect(){
                 //console.log("joinLeaveMeeting :: result :: "+result);
             },
             error: function(textStatus){
-                log("info","joinLeaveMeeting","console: joinLeaveMeeting:: error - : " +textStatus);
+                log("error","joinLeaveMeeting","console: joinLeaveMeeting:: error - : " +textStatus);
                 navigateFromVVPage();
                 //console.log("joinLeaveMeeting :: error :: "+textStatus);
             }
