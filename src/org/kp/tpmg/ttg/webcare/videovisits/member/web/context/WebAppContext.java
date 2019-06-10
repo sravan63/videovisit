@@ -1,5 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.context;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -64,6 +66,10 @@ public class WebAppContext implements Serializable {
 	private boolean isNative = false;
 	private String bandwidth;
 	private String blockPexipIE = "true";
+	
+	private String pexMobBlockSafariVer = null;
+	private String pexMobBlockChromeVer = null;
+	private String pexMobBlockFirefoxVer = null;
 		
 	/**
 	 * Defaulting clientId  to "vv-mbr-web".
@@ -513,6 +519,48 @@ public class WebAppContext implements Serializable {
 		this.backButtonClientId = backButtonClientId;
 	}
 	
+	/**
+	 * @return the pexMobBlockSafariVer
+	 */
+	public String getPexMobBlockSafariVer() {
+		return pexMobBlockSafariVer;
+	}
+
+	/**
+	 * @param pexMobBlockSafariVer the pexMobBlockSafariVer to set
+	 */
+	public void setPexMobBlockSafariVer(String pexMobBlockSafariVer) {
+		this.pexMobBlockSafariVer = pexMobBlockSafariVer;
+	}
+
+	/**
+	 * @return the pexMobBlockChromeVer
+	 */
+	public String getPexMobBlockChromeVer() {
+		return pexMobBlockChromeVer;
+	}
+
+	/**
+	 * @param pexMobBlockChromeVer the pexMobBlockChromeVer to set
+	 */
+	public void setPexMobBlockChromeVer(String pexMobBlockChromeVer) {
+		this.pexMobBlockChromeVer = pexMobBlockChromeVer;
+	}
+
+	/**
+	 * @return the pexMobBlockFirefoxVer
+	 */
+	public String getPexMobBlockFirefoxVer() {
+		return pexMobBlockFirefoxVer;
+	}
+
+	/**
+	 * @param pexMobBlockFirefoxVer the pexMobBlockFirefoxVer to set
+	 */
+	public void setPexMobBlockFirefoxVer(String pexMobBlockFirefoxVer) {
+		this.pexMobBlockFirefoxVer = pexMobBlockFirefoxVer;
+	}
+
 	/**
 	 * @param meetingId
 	 * @return

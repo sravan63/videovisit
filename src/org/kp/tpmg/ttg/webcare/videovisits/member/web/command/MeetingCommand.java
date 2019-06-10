@@ -1396,6 +1396,24 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	public static void updateWebappContextWithPexipMobileBrowserDetails(WebAppContext ctx) {
+		if (ctx != null) {
+			final String pexMobBlockSafariVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_SAFARI_VERSION");
+			final String pexMobBlockChromeVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_CHROME_VERSION");
+			final String pexMobBlockFirefoxVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_FIREFOX_VERSION");
+			if (StringUtils.isNotBlank(pexMobBlockSafariVer)) {
+				ctx.setPexMobBlockSafariVer(pexMobBlockSafariVer);
+			}
+			if (StringUtils.isNotBlank(pexMobBlockChromeVer)) {
+				ctx.setPexMobBlockChromeVer(pexMobBlockChromeVer);
+			}
+			if (StringUtils.isNotBlank(pexMobBlockFirefoxVer)) {
+				ctx.setPexMobBlockFirefoxVer(pexMobBlockFirefoxVer);
+			}
+		}
+	}
+
 
 }
 
