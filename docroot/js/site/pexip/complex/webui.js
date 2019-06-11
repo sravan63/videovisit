@@ -663,10 +663,10 @@ function participantCreated(participant){
 function participantUpdated(participant){
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
-    if(isMobileDevice){
+    /*if(isMobileDevice){
         updateParticipantList(participant,'join');
         console.log("inside participantUpdated");
-    }
+    }*/
     
 }
 

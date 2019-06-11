@@ -1552,7 +1552,7 @@ var updateParticipantList = function(participant, status){
 			participantList.push(participant.display_name);
 			participantsData.push(participant);
 			var isPatientLoggedIn = isPatient(participant.display_name);
-			if(!isHost(participant.display_name)){
+			if(participant.role == 'guest'){
 				sendUserJoinLeaveStatus(participant.display_name, isPatientLoggedIn, 'J');
 			}
 		}
@@ -1563,7 +1563,7 @@ var updateParticipantList = function(participant, status){
 			if(participant.uuid === pData.uuid) {
 				if(participantList.indexOf(pData.display_name) > -1){
 					var isPatientLoggedIn = isPatient(pData.display_name);
-					if(!isHost(pData.display_name)){
+					if(participant.role == 'guest'){
 						sendUserJoinLeaveStatus(pData.display_name, isPatientLoggedIn, 'L');
 					}
 					participantList.splice(participantList.indexOf(pData.display_name),1);
