@@ -1094,7 +1094,7 @@ function toggleWaitingRoom(pexipParticipantsList){
         }
     }
     if(hostDirtyThisMeeting){
-        adjustLayout(participants, isHostAvail);
+        adjustLayout(participantsInMeeting, isHostAvail);
     }
 }
 
