@@ -563,9 +563,9 @@ var VideoVisit =
         				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
         			}*/
         			
-
-        				if(sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName == prName || 
-                            sidePaneMeetingDetails.sortedParticipantsList[pa].displayName == prName){
+        				let inMeetingDisplayName1 = sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName?sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName.trim():'';;
+        				let displayName1 = sidePaneMeetingDetails.sortedParticipantsList[pa].displayName?sidePaneMeetingDetails.sortedParticipantsList[pa].displayName.trim():'';
+        				if(inMeetingDisplayName1 == prName.trim() || displayName1 == prName.trim()){
             				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
             			}
         			
