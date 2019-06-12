@@ -1574,8 +1574,14 @@ var updateParticipantList = function(participant, status){
 	}
 	toggleMobileWaitingRoom();
 }
+
+function hostInMeeting(element, index, array) {
+  return element.role == 'chair';
+}
+
 var toggleMobileWaitingRoom = function(){
-	var isHostAvailable =  validateMobileHostAvailability();
+	// var isHostAvailable =  validateMobileHostAvailability();
+	var isHostAvail = participantsData.some(hostInMeeting);
 	if(isHostAvailable){
 		$('.waiting-room').css('display','none');
 		$('#videocontainer').css('display','block');
@@ -1713,7 +1719,7 @@ var newStartTimeCheck = function(){
 	};
 
 	var newStartTimeCheckForOneTime = function(){
-		var isHostAvailable =  validateHostAvailability();
+		var isHostAvailable =  validateMobileHostAvailability();
 		$.ajax({
 			type: "GET",
 			url: "providerRunningLateInfo.json",
