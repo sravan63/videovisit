@@ -1582,7 +1582,7 @@ function hostInMeeting(element, index, array) {
 var toggleMobileWaitingRoom = function(){
 	// var isHostAvailable =  validateMobileHostAvailability();
 	var isHostAvail = participantsData.some(hostInMeeting);
-	if(isHostAvailable){
+	if(isHostAvail){
 		$('.waiting-room').css('display','none');
 		$('#videocontainer').css('display','block');
 	} else {
