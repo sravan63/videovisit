@@ -630,15 +630,35 @@ function participantCreated(participant){
                 newNum = true;
             }
         });
-        if(!newName || !newNum ){
-        updateParticipantsAndGuestsList(data);
+
+         var updatedInSidePan = false;
+        if(sidePaneMeetingDetails.sortedParticipantsList) { 
+            sidePaneMeetingDetails.sortedParticipantsList.forEach(function(val, i){
+            if(val.hasOwnProperty('destination') && val.destination == newNumber) {
+                val.displayName = participant.display_name;
+                var dom = '.guest-part-'+i+' '+'.name-of-participant';
+                $(dom).html(val.displayName);
+                updatedInSidePan = true;
+            }
+            });
+        } 
+        
+        if(!updatedInSidePan && (!newName || !newNum )){
+            var sipParticipants = {};
+            sipParticipants.displayName = participant.display_name;
+            sipParticipants.participantType = "audio";  
+            sipParticipants.destination = participant.uri.substring(6,16);
+            VideoVisit.appendInvitedGuestToSidebar(sipParticipants, false, true);    
+        }else{
+            VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,"pexip");
+        }
+        
         var contextData = {
             "destination":participant.uri.substring(6,16),
             "displayName":participant.display_name
         }; 
         VideoVisit.updateContext(contextData, "sip");
-        }
-        VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
+       
     }
      else {
         var joinParticipantMsg = participant.display_name + " has joined the visit.";
@@ -1006,13 +1026,13 @@ function disconnect(){
             }
         });
     } else {
-    	navigateFromVVPage();
+        navigateFromVVPage();
     }
     
 }
 
 function navigateFromVVPage(){
-	var refreshMeetings = false;  
+    var refreshMeetings = false;  
     var isNative = $("#isNative").val(),
         isMember = $("#isMember").val(),
         meetingCode =  $("#meetingCode").val(),
@@ -1272,7 +1292,7 @@ var log = function (type, param, msg) {
                     alert(param);
                 }
             }
-            if(msg){                	
+            if(msg){                    
                 if(msg.toLowerCase().indexOf("event") > -1){
                     var params = [type, param, msg];
                     VideoVisit.logVendorMeetingEvents(params);

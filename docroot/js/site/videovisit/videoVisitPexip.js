@@ -454,43 +454,28 @@ var VideoVisit =
   		}
   	},
   	appendInvitedGuestToSidebar: function(data, showNotification, isTelephony){
-  		var name = '';
-  		var str = '';
-  		var emailstr = '';
-  		var successMessage = '';
-  		var iconstr = (showNotification == false)?'<i class="active-user-state" style="display:inline-block;"></i>':'<i class="active-user-state"></i>';
-  		if(isTelephony == false) {
-  			successMessage="Your invitation has been sent.";
-	  		emailstr = (data.emailAddress.toLowerCase() === "dummy@dummy.com")?' <a href="javascript:void(0)" class="sendemail_patientGuest sendemail" style="display:none;" title="Email">(email)</a>':' <a href="javascript:void(0)" class="sendemail addPartcipantGuestEmail" onclick="VideoVisit.openEmailPopup(event)" title="Email">(email)</a>';
-	  		str += '<p><span class="pg-with-ellipsis">'+emailstr+'<span class="lName">' + data.lastName + '</span>' +
-	                  ', <span class="fName">' + data.firstName + '</span>' +
-	                  ' <span class="email">' + data.emailAddress + '</span>' +
-	                  ' <span class="guestID">' + data.careGiverId + '</span></span>' +  iconstr +
-	                  '</p>';
+  		$('.participants-list').html('');
+  		if(data.participantType == "audio"){
+
+  		 if(sidePaneMeetingDetails.sipParticipants){
+  			sidePaneMeetingDetails.sipParticipants.push(data);
   		} else {
-  			let maxPhoneNum = '';
-  			for(let i=$('#meetingPatientGuest').children('p').length;i>=0;i--){
-  				let fnameVal = $($('#meetingPatientGuest').children('p')[i]).find(".fName").attr('firstnameattr');
-  				if(fnameVal){
-  					maxPhoneNum = $($('#meetingPatientGuest').children('p')[i]).find(".fName").text()
-  					break;
-  				}
-  			}
-  			maxPhoneNum = maxPhoneNum?parseInt(maxPhoneNum.replace('Phone ', '')):0;
-  			maxPhoneNum = maxPhoneNum + 1;
-  			emailstr = '<a href="javascript:void(0)" class="sendemail_patientGuest sendemail" style="display:none;" title="Email">(email)</a>';
-	  		str += '<p><span class="pg-with-ellipsis">'+emailstr+'<span class="lName" lastnameattr="audio_participant"></span>' +
-	                  '<span class="fName" firstnameattr="09'+data.fullNumber+'">Phone ' + maxPhoneNum + '</span>' +
-	                  ' <span class="email" style="display:none;">' + data.emailAddress + '</span>' +
-	                  ' <span class="guestID">' + data.careGiverId + '</span></span>' +  iconstr +
-	                  '</p>';
+  			sidePaneMeetingDetails.sipParticipants = [data];
   		}
-  		if($('#meetingPatientGuestContainer').length === 0){
-  			$('#video-info').append('<dl id="meetingPatientGuestContainer"><dt>My Guests</dt></dl>');
-  			$('#meetingPatientGuestContainer').append('<dd id="meetingPatientGuest" style="word-wrap: break-word;">'+str+'</dd>');
-  		}else if($('#meetingPatientGuestContainer').css('display') !== 'none'){
-  			$('#meetingPatientGuest').append(str);
+  	}
+
+  	else {
+  		if(sidePaneMeetingDetails.caregiver){
+  			sidePaneMeetingDetails.caregiver.push(data);
   		}
+  		else{
+  			sidePaneMeetingDetails.caregiver = [data];
+  		}
+  	}
+  		updateParticipantsAndGuestsList(sidePaneMeetingDetails);
+  		if(pexipParticipantsList){
+  			VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
+  		}  		
   	},
   	checkTelePhonyUser: function(phonenumber){
       	var patientGuestsLength = $('#meetingPatientGuest').children('p').length;
@@ -524,12 +509,10 @@ var VideoVisit =
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
         		var prName = (vendorval == 'webrtc')?participants[i].trim():(vendorval == 'vidyo')?pData.name.trim(): participants[i].display_name.trim();
-        		/*var pName = '';
-        		if((prName.match(/,/g) || []).length == 2 && prName.indexOf('@') > 0){
-        			pName = prName;//check for guest name with email
-        		}else{
-        			pName = changeConferenceParticipantNameFormat(prName);
-        		}*/
+        		if(vendorval == 'pexip' && participants[i].protocol=="sip"){
+        			prName = participants[i].uri.substring(6,16);
+        		}
+
         		var participantName = prName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
         		// Host Availability
         		var hostName = meetingHostName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
@@ -538,34 +521,11 @@ var VideoVisit =
         		}
         		//participants availability
         		for(var pa=0;pa<sidePaneMeetingDetails.sortedParticipantsList.length;pa++){
-        			/*let tPart = sidePaneMeetingDetails.sortedParticipantsList[pa];
-        			let tPartName = '';
-        			if(!tPart.firstName && !tPart.lastName){
-        				tPartName = '';
-        			}else if(tPart.firstName && tPart.lastName){
-        				tPartName = tPart.firstName + ' ' + tPart.lastName;
-        			}else if(!tPart.firstName){
-        				tPartName = tPart.lastName;
-        			}else if(!tPart.lastName){
-        				tPartName = tPart.firstName;
-        			}
-        			if(tPart.title){
-        				tPartName = tPartName + ' ' + tPart.title;//assuming title exixts only for clinician
-        			}
-        			if(tPart.careGiverId){
-        				tPartName = tPart.lastName + ' ' + tPart.firstName + '(' + tPart.emailAddress + ')';//assuming careGiverId exixts only for guest
-        			}
-        			if(tPart.lastName == "audio_participant" && tPart.careGiverId){
-        				tPartName = "" + tPart.firstName.slice(2);//overrride if it is a telephony user.
-        			}
-        			tPartName = tPartName.replace(/,/g, '').replace(/\s/g, '').toLowerCase();
-        			if(participantName == tPartName){
-        				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
-        			}*/
         			
         				let inMeetingDisplayName1 = sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName?sidePaneMeetingDetails.sortedParticipantsList[pa].inMeetingDisplayName.trim():'';;
         				let displayName1 = sidePaneMeetingDetails.sortedParticipantsList[pa].displayName?sidePaneMeetingDetails.sortedParticipantsList[pa].displayName.trim():'';
-        				if(inMeetingDisplayName1 == prName.trim() || displayName1 == prName.trim()){
+        				let destinationName = sidePaneMeetingDetails.sortedParticipantsList[pa].destination?sidePaneMeetingDetails.sortedParticipantsList[pa].destination.trim():'';
+        				if(inMeetingDisplayName1 == prName.trim() || displayName1 == prName.trim() || destinationName == prName.trim() ){
             				sidePaneMeetingDetails.sortedParticipantsList[pa].availableInMeeting = true;
             			}
         			
