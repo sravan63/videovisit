@@ -767,7 +767,7 @@ select::-ms-expand {
 
 #selectPeripheral1 {
   position: absolute;
-  z-index: 7;
+  z-index: 8;
   width: 100%;
   background-color: lightgray;
   height: 100%;
@@ -851,7 +851,8 @@ border-radius: 50%;
     height: 100px !important;
     z-index: 6;
     width: 117px;
-    bottom: 0;
+    bottom: 5px;
+    left:10px;
     position: absolute;
   }
 }
