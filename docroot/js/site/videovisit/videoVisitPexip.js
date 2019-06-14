@@ -238,6 +238,39 @@ $(document).ready(function() {
 	
 	VideoVisit.updatePatientGuestNameList();
 	
+		$("#selfview").on('click', function(){
+			$(this).addClass("togglesv");
+			$("#presentation-view").addClass("togglepv");
+			$("#presentation-view img").addClass("togglepvimg");
+			var zindex = $( "#presentation-view img" ).css( "z-index" );
+			var zindexsv = $(this).css( "z-index" );
+			if(zindex == 5){
+				$("#presentation-view img").css("z-index","6");
+			}
+			else if (zindex == 6){
+				$("#presentation-view img").css("z-index","7");
+			}
+			else if(zindexsv == 8){
+				$("#selfview").css("z-index","6");
+			}
+			$(".remoteFeed").css("display","none");
+		});
+		$("#presentation-view").on('click', function(){
+				$("#selfview").removeClass("togglesv");
+				var zindex1 = $( "#selfview" ).css( "z-index" );
+				var zindexpv = $( "#presentation-view img" ).css( "z-index" );
+				if(zindex1 == 6){
+				$("#selfview").css("z-index","7");
+				}
+				else if(zindexpv == 7 ){
+					$("#presentation-view img").css("z-index","6");
+				}
+				else if(zindex1 == 7 ){
+					$("#selfview").css("z-index","8");
+				}			
+				$("#presentation-view").removeClass("togglepv");
+				$("#presentation-view img").removeClass("togglepvimg");
+			});
 }).on('click', function (evt) {
 	if(evt.target.className == "settings-btn" || $(evt.target).closest('.settings-btn').length>0){
 		return;
