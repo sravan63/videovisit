@@ -1822,3 +1822,14 @@ var VideoVisit = {
 		});
 	},
 }
+
+$(function(){
+	$(window).on("orientationchange",function(event){
+		//console.log(screen.orientation.angle);
+		if(screen.orientation.angle == 90){
+			if($("#presentation-view").css('display') == "block" ){
+			$(".mobileselfview").addClass("mobilesv");
+		}
+		}
+	});
+});

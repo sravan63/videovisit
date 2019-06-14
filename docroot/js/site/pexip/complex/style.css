@@ -767,7 +767,7 @@ select::-ms-expand {
 
 #selectPeripheral1 {
   position: absolute;
-  z-index: 4;
+  z-index: 7;
   width: 100%;
   background-color: lightgray;
   height: 100%;
@@ -820,3 +820,44 @@ border-radius: 50%;
   margin: auto;
   border-radius: 50%;
 } */
+
+#selfview{
+  z-index: 6;
+  cursor: pointer;
+}
+#presimage{
+  display: none;
+}
+.togglesv{
+  width: 100%;
+  height: 98%;
+  max-width: none;
+  cursor: pointer;
+}
+.togglepv,.togglepvimg{
+  width:200px !important;
+  height: 140px !important;
+  position: absolute;
+  right:10px;
+  cursor: pointer;
+  bottom: 10px;
+}
+
+@media (orientation: landscape) {
+  .presentation-view img{
+    height:100% !important;
+  }
+  .mobilesv{
+    height: 100px !important;
+    z-index: 6;
+    width: 117px;
+    bottom: 0;
+    position: absolute;
+  }
+}
+
+@media (orientation: portrait) {
+  /* body {
+    flex-direction: column;
+  } */
+}
