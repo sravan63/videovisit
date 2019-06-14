@@ -618,7 +618,7 @@ function participantCreated(participant){
             inputs.each(function(){
             var newdata = {
                 num:$(this).attr('phonenumber'),
-                name:$(this).text().replace(/['"]+/g,'')
+                name:$(this).text()
             };
             alreadyAddedNumber.push(newdata);
         });
