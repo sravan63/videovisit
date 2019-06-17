@@ -1205,7 +1205,7 @@ PexRTCCall.prototype.pcOfferCreated = function(sdp) {
 
     self.parent.onLog("Created offer", sdp.sdp);
     if (self.state == 'ACTIVE' || (self.chrome_ver > 0 && self.chrome_ver < 73)) {
-        if (self.safari_ver >= 12 || self.firefox_ver > 65) {
+        if (self.safari_ver >= 11 || self.firefox_ver > 65) {
             self.pc.setLocalDescription(sdp)
                             .then(function () { self.parent.onLog("Local description active"); })
                             .catch(function (err) {

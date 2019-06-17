@@ -4,6 +4,10 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
+<input type="hidden" id="blockSafariVersion" value="${WebAppContext.pexMobBlockSafariVer }" />
+<input type="hidden" id="blockChromeVersion" value="${WebAppContext.pexMobBlockChromeVer }" />
+<input type="hidden" id="blockFirefoxVersion" value="${WebAppContext.pexMobBlockFirefoxVer }" />
+<input type="hidden" id="vendor" value="${meeting.vendor}" />
 
 <input type="hidden" id="isPG" value="true" />
 
@@ -55,6 +59,7 @@
 				<%@ include file="common/informationpg.jsp" %>
 			</c:when>
 		</c:choose>	
+		<p id="globalError" class="error hide-me" style="font-size:14px; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
 		</div>
 </c:otherwise>
 </c:choose>
@@ -64,3 +69,72 @@
 		opacity:0.7;
 	}
 </style>
+
+<script type="text/javascript">
+
+	var meetingVendor = $('#vendor').val();
+
+	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
+	browserNotSupportedMsgForPatient += "<br /><br />";
+	//US32190 changes
+	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a>, or use Chrome or Internet Explorer.";
+
+	function displayBlockMessage(){
+		$('p#globalError').html(browserNotSupportedMsgForPatient);
+		$("p#globalError").removeClass("hide-me");
+		
+		document.getElementById("last_name").disabled = true;
+		$('#login-submit-pg').css('pointer-events', 'none');
+        $('#login-submit-pg').css('cursor', 'default');
+        $('#login-submit-pg').css('opacity', '0.5');
+	};
+
+	var browserUserAgent = navigator.userAgent;
+	var jqBrowserInfoObj = $.browser; 
+	if (jqBrowserInfoObj.mozilla){
+        if(browserUserAgent.indexOf('Edge/') !== -1 || browserUserAgent.indexOf("Trident") !== -1){
+            var isIE = true;
+        }
+		else{
+            var isFirefox = true;
+        }
+    }
+
+	
+	if(meetingVendor == 'pexip'){
+		if (jqBrowserInfoObj.chrome){
+        	var blockChromeVersion = $("#blockChromeVersion").val()?parseInt($("#blockChromeVersion").val()):61;
+	        var chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+	        if(chrome_ver < blockChromeVersion){
+	        	displayBlockMessage();
+	        }
+        }
+        else if(isFirefox){
+        	var blockFirefoxVersion = $("#blockFirefoxVersion").val()?parseInt($("#blockFirefoxVersion").val()):67;
+        	var firefox_ver = parseInt(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
+        	if(firefox_ver < blockFirefoxVersion){
+        		displayBlockMessage();
+        	}
+        }
+        else if(jqBrowserInfoObj.safari){
+            var agent = navigator.userAgent;
+            var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
+            var majorVersion = majorMinorDot.split('.')[0];
+            var versionNumber = parseInt(majorVersion);
+            // Block access from Safari version 12.
+            var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):11.2;//US35718 changes
+            if(versionNumber < blockSafariVersion){
+                displayBlockMessage();
+            }
+        } 
+
+		
+	} 
+		//US32190 changes
+		
+	
+	
+	
+	
+</script>
+

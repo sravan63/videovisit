@@ -4,6 +4,9 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix='fn' uri='http://java.sun.com/jsp/jstl/functions' %>
+<input type="hidden" id="blockSafariVersion" value="${WebAppContext.pexMobBlockSafariVer }" />
+<input type="hidden" id="blockChromeVersion" value="${WebAppContext.pexMobBlockChromeVer }" />
+<input type="hidden" id="blockFirefoxVersion" value="${WebAppContext.pexMobBlockFirefoxVer }" />
 
 <%
 	MeetingCommand.retrieveMeeting(request);
@@ -12,10 +15,30 @@
 
 <%@ include file="userPresentInMeetingModal.jsp" %>
 
+
+
 <div class="page-content">
 	<div class="visits patient" style="overflow:hidden;">
 		<!--<h1>Video Visits You Can Join Now</h1>	-->
 		<h1> Your Video Visits for Today</h1>
+		<div class="special-message-banner-container" id="blockerMessage">
+			<div class="special-message-header">
+				<span class="warning-icon"></span>
+				<p class="warning-text">Video Visits does not support your browser.</p>
+			</div>
+			<div class="special-message-content">
+				<div class="special-message-container">
+					<div class="mdo-logo"></div>
+					<div class="special-message">
+						<p><b id="browser-block-message">Join on your mobile device using the My Doctor Online app, or use Chrome or Internet Explorer.</b></p>
+					</div>
+				</div>
+				<div class="app-store-container">
+					<span class="ios-appstore"><a class="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></span>
+					<span class="android-playstore"><a href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en_US" class="icon-link" target="_blank"></a></span>
+				</div>
+			</div>
+		</div>
 		<c:choose>
 			<c:when test="${WebAppContext.totalmeetings>0}">
 				<c:forEach var="meeting" items="${WebAppContext.myMeetings}">
@@ -106,10 +129,10 @@
 			            </div>
 			            <div class="bottom">
 			              	<div class="launch-button-handler only-tablets" style="float: none; box-shadow: none;padding:0px; min-height: 60px;text-align:right;">
-                          		<button id="joinNowId" class="button-launch-visit btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}">Join your visit</button>
+                          		<button id="joinNowId" class="button-launch-visit btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" vendor="${meeting.vendor}" meetingId="${meeting.meetingId}">Join your visit</button>
 	                        </div>
 	                        <div class="launch-button-handler only-handsets">
-	                        	<button id="joinNowId" class="button-launch-visit btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" meetingId="${meeting.meetingId}">Join your visit</button>
+	                        	<button id="joinNowId" class="button-launch-visit btn joinNowButton" megaMeetingUrl="${WebAppContext.megaMeetingMobileURL}" megameetingid="${meeting.meetingVendorId}" lastname="${meeting.member.lastName}" firstname="${meeting.member.firstName}" vendor="${meeting.vendor}" meetingId="${meeting.meetingId}">Join your visit</button>
 	                        </div>
 	                        <p class="patient-msg">You may be joining before your clinician. Please be patient.</p>
 			            </div>
@@ -120,7 +143,7 @@
 			</c:when>
 			<c:otherwise>
 			<!--  If no meetings are present -->
-				<div class="alert alert-hero alert-no-visits" style="background-color:#FFFFFF; box-shadow:none;">
+				<div class="alert alert-hero alert-no-visits" style="background-color:#FFFFFF; border-top:1px solid #D4D4D5; box-shadow:none;">
 					<div class="alert-hero-message">
 						<div class="image" style="background:url('images/mobile/video-icon-gray.png') no-repeat center; margin:-10px 15px 0 0; background-size:contain;"></div>
 						<p style=""><strong>You have no meetings in the next 15 minutes.</strong></p>
@@ -164,6 +187,9 @@
 
 </div>
 <script>
+	 $("#blockerMessage").css("display","none");
+	 $('.landing-portal-single-container:first').css("border-top","1px solid #D4D4D5");
+	checkAndBlockMeetings();
 	$('.guest-is-ap').each(function(e){
 		if($(this).children('a').length>0){
 			//ios will add anchor tag automatically based on number
@@ -178,4 +204,64 @@
 			$(this).html(tempNum);	
 		}		
 	});
+
+
+
+function checkAndBlockMeetings(){
+    var showBlockMessage = false;
+    $('.joinNowButton').each(function(){
+        var vendor = $(this).attr('vendor');
+        var allow = allowToJoin(vendor);
+        if(allow == false){
+            showBlockMessage = true;
+            $(this).removeClass('joinNowButton button-launch-visit').addClass('not-available');
+        }
+    });
+    if(showBlockMessage){
+        $("#blockerMessage").css("display","block");
+    }
+}
+
+function allowToJoin(vendor){
+	var browserUserAgent = navigator.userAgent;
+	var jqBrowserInfoObj = $.browser; 
+	if (jqBrowserInfoObj.mozilla){
+        if(browserUserAgent.indexOf('Edge/') !== -1 || browserUserAgent.indexOf("Trident") !== -1){
+            var isIE = true;
+        }
+		else{
+            var isFirefox = true;
+        }
+    }
+    var allow = true;
+    var appOS = getAppOS();
+    if(vendor === 'pexip' && appOS=='Android'){
+            if (jqBrowserInfoObj.chrome){
+        	var blockChromeVersion = $("#blockChromeVersion").val()?parseInt($("#blockChromeVersion").val()):61;
+	        var chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+	        if(chrome_ver < blockChromeVersion){
+	        	allow= false;
+	        }
+        }
+        else if(isFirefox){
+        	var blockFirefoxVersion = $("#blockFirefoxVersion").val()?parseInt($("#blockFirefoxVersion").val()):67;
+        	var firefox_ver = parseInt(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
+        	if(firefox_ver < blockFirefoxVersion){
+        		allow = false;
+        	}
+        }
+    }
+    return allow;
+}
+
+function getAppOS(){
+    p = navigator.platform;
+    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p==='iPhone Simulator' || p==='iPad Simulator'){
+        return "iOS";
+    }
+    if(navigator.userAgent.match(/Android/i)){
+    	return "Android";
+    }
+    return "desktop";
+}
 </script>

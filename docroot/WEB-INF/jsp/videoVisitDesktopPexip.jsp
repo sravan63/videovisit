@@ -241,7 +241,7 @@
 				</div>
 				<div><button class="done-btn" onclick="togglePeripherals()">Done</button></div>
 			</div>
-			<div class="full-waiting-room" id="fullWaitingRoom">
+			<div class="full-waiting-room" id="fullWaitingRoom" style="display: none;">
 				<div id="waitingRoom" class="conference-waiting-room">
                    <div class="waitingRoomMessageBlock">
                       <img src="vidyoplayer/img/TPMG_logo.png" class="waitingroom-logo" />

@@ -196,6 +196,86 @@ button {
 	background-color: #FFFFFF;
 	box-shadow: 0 1px 5px rgba(0,0,0, .4);
 }
+.special-message-banner-container{
+	margin: 0px auto 20px;
+    border-radius: 15px;
+    background-color: #F9E7E6;
+    width: 100%;
+	display: none;
+}
+.special-message-banner-container .special-message-header{
+	background-color: #B63125;
+	color: #FFFFFF;
+	padding: 11px 20px;
+	border-radius: 15px 15px 0px 0px;
+	font-weight: bold;
+	font-size: 15px;
+}
+.special-message-banner-container .special-message-header .warning-text{
+	display: inline-block;
+	height: 17px;
+	line-height: 19px;
+	vertical-align: middle;
+}
+.special-message-banner-container .special-message-content{
+	display: flex;
+	padding: 20px;
+}
+.special-message-banner-container .special-message-content .special-message-container{
+	width: 50%;
+	display: flex;
+	font-size: 15px;
+	margin-right: 40px;
+}
+.special-message-banner-container .special-message-content .special-message-container .special-message{
+	margin: 2px 0px;
+	width: 218px;
+}
+.special-message-banner-container .special-message-content .app-store-container{
+	width: 50%;
+}
+.special-message-banner-container .special-message-header .warning-icon{
+	background: url(../../../images/global/warning-icon.png) no-repeat center center;
+	display: inline-block;
+	height: 17px;
+	width: 20px;
+	vertical-align: middle;
+	margin-right: 5px;
+	background-size: cover;
+}
+.special-message-banner-container .special-message-content .special-message-container .mdo-logo{
+	background: url(../../../images/global/mdo-icon.png) no-repeat center center;
+	display: inline-block;
+	height: 40px;
+	width: 40px;
+	vertical-align: middle;
+	margin: auto 20px;
+	background-size: cover;
+}
+.icon-link{
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+}
+.ios-appstore{
+	background: url(../../../images/global/appstore.png) no-repeat center center;
+	display: inline-block;
+	height: 36px;
+	width: 129px;
+	vertical-align: middle;
+	margin-right: 20px;
+	background-size: cover;
+    border-radius: 3px;
+}
+.android-playstore{
+	background: url(../../../images/global/playstore.png) no-repeat center center;
+	display: inline-block;
+	height: 36px;
+	width: 129px;
+	vertical-align: middle;
+	background-size: cover;
+    border-radius: 3px;
+}
 
 .hideMe {
 	visibility:hidden;
@@ -895,7 +975,6 @@ li#btnPG.button-main{
 margin-top: -2px;
 margin-bottom: 8px;
 text-align:left;
-border-bottom:1px solid #D4D4D5;
 padding:0 0 20px; 
 font-size:38px;
 font-weight:normal; 
