@@ -239,6 +239,7 @@ $(document).ready(function() {
 	VideoVisit.updatePatientGuestNameList();
 	
 		$("#selfview").on('click', function(){
+			if($("#presentation-view").css("display") == "block"){
 			$(this).addClass("togglesv");
 			$("#presentation-view").addClass("togglepv");
 			$("#presentation-view img").addClass("togglepvimg");
@@ -254,6 +255,7 @@ $(document).ready(function() {
 				$("#selfview").css("z-index","6");
 			}
 			$(".remoteFeed").css("display","none");
+		}
 		});
 		$("#presentation-view").on('click', function(){
 				$("#selfview").removeClass("togglesv");

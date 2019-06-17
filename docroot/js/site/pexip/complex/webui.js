@@ -214,6 +214,8 @@ function presentationStartStop(setting, pres) {
         } else if (source == 'screen') {
             rtc.disconnect();
         } else if (videoPresentation) {
+            $("#selfview").removeClass("togglesv");
+            $("#presentation-view").removeClass("togglepv");
             createPresentationStreamWindow();
         } else {
             createPresentationWindow();
