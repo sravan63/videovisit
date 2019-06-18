@@ -1024,7 +1024,7 @@ PexRTCCall.prototype.connect = function() {
     }
 
     if (self.localStream) {
-        if (self.state == 'UPDATING' && (self.firefox_ver > 58 || self.chrome_ver > 71 || self.safari_ver >= 12.1)) {
+        if (self.state == 'UPDATING' && (self.firefox_ver > 58 || self.chrome_ver > 71 || self.safari_ver >= 11)) {
             if (self.mutedAudio) {
                 var tracks = self.localStream.getAudioTracks();
                 for (var i=0; i<tracks.length; i++) {
@@ -1037,7 +1037,7 @@ PexRTCCall.prototype.connect = function() {
                     tracks[i].enabled = false;
                 }
             }
-            if (self.safari_ver >= 12.1) {
+            if (self.safari_ver >= 11) {
                 var senders = self.pc.getSenders();
                 for (var i=0; i<senders.length; i++) {
                     if (senders[i].track && senders[i].track.kind == "audio") {
@@ -1099,7 +1099,7 @@ PexRTCCall.prototype.pcCreateOffer = function() {
             }
         }}, self.parent.ice_timeout * 1000);
 
-    if (self.safari_ver >= 12 || self.firefox_ver > 65) {
+    if (self.safari_ver >= 11 || self.firefox_ver > 65) {
         self.pc.createOffer(constraints)
                             .then(function(sdp) { self.pcOfferCreated(sdp); })
                             .catch(function(err) {
@@ -1300,7 +1300,7 @@ PexRTCCall.prototype.processAnswer = function(e) {
         var sdp = lines.join('\r\n');
         self.parent.onLog("Mutated answer", sdp);
 
-        if (self.safari_ver >= 12 || self.firefox_ver > 65) {
+        if (self.safari_ver >= 11 || self.firefox_ver > 65) {
             self.pc.setRemoteDescription(new SessionDescription({ 'type' : 'answer', 'sdp' : sdp }))
                             .then(function () { self.remoteDescriptionActive(); })
                             .catch(function (err) {
@@ -1384,7 +1384,7 @@ PexRTCCall.prototype.muteAudio = function(setting) {
         return self.mutedAudio;
     }
 
-    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 12 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
+    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 11 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
         var senders = self.pc.getSenders();
         for (var i=0; i<senders.length; i++) {
             if (senders[i].track && senders[i].track.kind == 'audio') {
@@ -1460,7 +1460,7 @@ PexRTCCall.prototype.muteVideo = function(setting) {
         return self.mutedVideo;
     }
 
-    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 12 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
+    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 11 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
         var senders = self.pc.getSenders();
         for (var i=0; i<senders.length; i++) {
             if (senders[i].track && senders[i].track.kind == 'video') {
