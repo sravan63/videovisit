@@ -30,7 +30,7 @@
 				<div class="special-message-container">
 					<div class="mdo-logo"></div>
 					<div class="special-message">
-						<p><b id="browser-block-message">Join on your mobile device using the My Doctor Online app, or use Chrome or Internet Explorer.</b></p>
+						<p><b id="browser-block-message">Join on your mobile device using the My Doctor Online app, or use Chrome.</b></p>
 					</div>
 				</div>
 				<div class="app-store-container">

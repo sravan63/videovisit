@@ -59,7 +59,7 @@
 				<%@ include file="common/informationpg.jsp" %>
 			</c:when>
 		</c:choose>	
-		<p id="globalError" class="error hide-me" style="font-size:14px; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
+		<p id="globalError" class="error hide-me" style="font-size:1rem; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
 		</div>
 </c:otherwise>
 </c:choose>
@@ -77,7 +77,7 @@
 	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
 	//US32190 changes
-	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a>, or use Chrome or Internet Explorer.";
+	browserNotSupportedMsgForPatient += "Please upgrade to the latest browser version.";
 
 	function displayBlockMessage(){
 		$('p#globalError').html(browserNotSupportedMsgForPatient);

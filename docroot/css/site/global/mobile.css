@@ -216,20 +216,22 @@ button {
 	height: 17px;
 	line-height: 19px;
 	vertical-align: middle;
+	font-size:1.2rem;
 }
 .special-message-banner-container .special-message-content{
 	display: flex;
 	padding: 20px;
 }
+#browser-block-message{
+	font-size: 1.2rem;
+}
 .special-message-banner-container .special-message-content .special-message-container{
-	width: 50%;
-	display: flex;
 	font-size: 15px;
-	margin-right: 40px;
+	margin-right: 30px;
 }
 .special-message-banner-container .special-message-content .special-message-container .special-message{
 	margin: 2px 0px;
-	width: 218px;
+	width: 100px;
 }
 .special-message-banner-container .special-message-content .app-store-container{
 	width: 50%;
@@ -262,6 +264,7 @@ button {
 	display: inline-block;
 	height: 36px;
 	width: 129px;
+	margin-bottom: 10px;
 	vertical-align: middle;
 	margin-right: 20px;
 	background-size: cover;
