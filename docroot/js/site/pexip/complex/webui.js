@@ -216,6 +216,7 @@ function presentationStartStop(setting, pres) {
         } else if (videoPresentation) {
             $("#selfview").removeClass("togglesv");
             $("#presentation-view").removeClass("togglepv");
+            $("#selfview").css("z-index","6");
             createPresentationStreamWindow();
         } else {
             createPresentationWindow();
@@ -238,6 +239,8 @@ function presentationStartStop(setting, pres) {
         // id_presentation.classList.add("inactive");
         if(!refreshingOrSelfJoinMeeting && !isMobileDevice && presenting_user){
             utilityNotifyQueue(presenting_user + ' has stopped desktop sharing.');
+            $(".remoteFeed").css("display","block");
+            $("#selfview").removeClass("togglesv");
         }
         presenting_user = '';
     }
