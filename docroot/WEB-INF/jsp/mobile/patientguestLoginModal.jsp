@@ -7,7 +7,7 @@
 <input type="hidden" id="blockSafariVersion" value="${WebAppContext.pexMobBlockSafariVer }" />
 <input type="hidden" id="blockChromeVersion" value="${WebAppContext.pexMobBlockChromeVer }" />
 <input type="hidden" id="blockFirefoxVersion" value="${WebAppContext.pexMobBlockFirefoxVer }" />
-<input type="hidden" id="vendor" value="${meeting.vendor}" />
+
 
 <input type="hidden" id="isPG" value="true" />
 
@@ -59,7 +59,7 @@
 				<%@ include file="common/informationpg.jsp" %>
 			</c:when>
 		</c:choose>	
-		<p id="globalError" class="error hide-me" style="font-size:1rem; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
+		<p id="globalErrorMsg" class="hide-me" style="font-size:1.5rem; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
 		</div>
 </c:otherwise>
 </c:choose>
@@ -72,7 +72,10 @@
 
 <script type="text/javascript">
 
-	var meetingVendor = $('#vendor').val();
+	//var meetingVendor = $('#vendor').val();
+	var url = window.location.href;
+	var newurl = new URL(url);
+	var vendor = newurl.searchParams.get('vType');
 
 	var browserNotSupportedMsgForPatient = "Video Visits does not support your browser.";
 	browserNotSupportedMsgForPatient += "<br /><br />";
@@ -80,8 +83,8 @@
 	browserNotSupportedMsgForPatient += "Please upgrade to the latest browser version.";
 
 	function displayBlockMessage(){
-		$('p#globalError').html(browserNotSupportedMsgForPatient);
-		$("p#globalError").removeClass("hide-me");
+		$('p#globalErrorMsg').html(browserNotSupportedMsgForPatient);
+		$("p#globalErrorMsg").removeClass("hide-me");
 		
 		document.getElementById("last_name").disabled = true;
 		$('#login-submit-pg').css('pointer-events', 'none');
@@ -101,7 +104,7 @@
     }
 
 	
-	if(meetingVendor == 'pexip'){
+	if(vendor == 'p'){
 		if (jqBrowserInfoObj.chrome){
         	var blockChromeVersion = $("#blockChromeVersion").val()?parseInt($("#blockChromeVersion").val()):61;
 	        var chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
