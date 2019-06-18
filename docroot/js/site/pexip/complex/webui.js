@@ -222,10 +222,17 @@ function presentationStartStop(setting, pres) {
             createPresentationWindow();
         }
         presenting_user = pres.substring(pres.indexOf('<')+1, pres.indexOf('>'));
+        
+        if(window.matchMedia("(orientation: landscape)").matches && isMobileDevice && presenting_user != null){
+            $(".mobileselfview").addClass("mobilesv");
+        }
         if(!refreshingOrSelfJoinMeeting && !isMobileDevice){
             utilityNotifyQueue(presenting_user + ' has initiated desktop sharing.');
         }
     } else {
+        if(isMobileDevice){
+            $(".mobileselfview").removeClass("mobilesv");
+        }
         if (presentation != null) {
             //presentation.close();
             $('#presentation-view').css('display', 'none');
