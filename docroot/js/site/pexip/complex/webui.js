@@ -90,7 +90,6 @@ function presentationClosed() {
         rtc.stopPresentation();
     }
     presentation = null;
-	console.log("presentationclosed");
     $('#presentation-view').css('display', 'none');
 }
 
@@ -100,6 +99,10 @@ function remotePresentationClosed(reason) {
             alert(reason);
         }*/
         //presentation.close()
+		// TODO - Need to streamline this later, it's a hack for as of now
+		if(isMobileDevice && getAppOS() == "iOS" && reason == "Failed to gather IP addresses"){
+            return;
+        }
         $(presentation).css('display', 'none');
         presentation = null;
     }
@@ -236,7 +239,6 @@ function presentationStartStop(setting, pres) {
         }
         if (presentation != null) {
             //presentation.close();
-			console.log("presentationclosed2");
             $('#presentation-view').css('display', 'none');
         }
         if (flash_button) {
