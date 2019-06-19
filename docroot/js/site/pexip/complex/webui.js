@@ -90,6 +90,7 @@ function presentationClosed() {
         rtc.stopPresentation();
     }
     presentation = null;
+	console.log("presentationclosed");
     $('#presentation-view').css('display', 'none');
 }
 
@@ -235,6 +236,7 @@ function presentationStartStop(setting, pres) {
         }
         if (presentation != null) {
             //presentation.close();
+			console.log("presentationclosed2");
             $('#presentation-view').css('display', 'none');
         }
         if (flash_button) {
