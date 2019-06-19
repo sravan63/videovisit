@@ -108,14 +108,14 @@
 		if (jqBrowserInfoObj.chrome){
         	var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
 	        var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
-	        if(chrome_ver < blockChromeVersion){
+	        if(60 < blockChromeVersion){
 	        	displayBlockMessage();
 	        }
         }
         else if(isFirefox){
         	var blockFirefoxVersion = $("#blockFirefoxVersion").val()?Number($("#blockFirefoxVersion").val()):67;
         	var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
-        	if(firefox_ver < blockFirefoxVersion){
+        	if(65 < blockFirefoxVersion){
         		displayBlockMessage();
         	}
         }
