@@ -240,6 +240,7 @@ function presentationStartStop(setting, pres) {
         if (presentation != null) {
             //presentation.close();
             $('#presentation-view').css('display', 'none');
+			presentation = null;
         }
         if (flash_button) {
             clearInterval(flash_button);
