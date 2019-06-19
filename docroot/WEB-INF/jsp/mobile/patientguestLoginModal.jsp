@@ -59,7 +59,7 @@
 				<%@ include file="common/informationpg.jsp" %>
 			</c:when>
 		</c:choose>	
-		<p id="globalErrorMsg" class="hide-me" style="font-size:1.5rem; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
+		<p id="globalErrorMsg" class="hide-me" style="font-size:1.5rem; margin-bottom:30px; text-align:center; clear:both; height:35px; color:#AC5A41; font-weight:bold;"> </p>
 		</div>
 </c:otherwise>
 </c:choose>
