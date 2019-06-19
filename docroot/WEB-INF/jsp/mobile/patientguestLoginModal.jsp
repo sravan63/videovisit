@@ -106,15 +106,15 @@
 	
 	if(vendor == 'p'){
 		if (jqBrowserInfoObj.chrome){
-        	var blockChromeVersion = $("#blockChromeVersion").val()?parseInt($("#blockChromeVersion").val()):61;
-	        var chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+        	var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
+	        var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
 	        if(chrome_ver < blockChromeVersion){
 	        	displayBlockMessage();
 	        }
         }
         else if(isFirefox){
-        	var blockFirefoxVersion = $("#blockFirefoxVersion").val()?parseInt($("#blockFirefoxVersion").val()):67;
-        	var firefox_ver = parseInt(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
+        	var blockFirefoxVersion = $("#blockFirefoxVersion").val()?Number($("#blockFirefoxVersion").val()):67;
+        	var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
         	if(firefox_ver < blockFirefoxVersion){
         		displayBlockMessage();
         	}
@@ -123,9 +123,9 @@
             var agent = navigator.userAgent;
             var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
             var majorVersion = majorMinorDot.split('.')[0];
-            var versionNumber = parseInt(majorVersion);
+            var versionNumber = Number(majorVersion);
             // Block access from Safari version 12.
-            var blockSafariVersion = $("#blockSafariVersion").val()?parseInt($("#blockSafariVersion").val()):11.2;//US35718 changes
+            var blockSafariVersion = $("#blockSafariVersion").val()?Number($("#blockSafariVersion").val()):11.2;//US35718 changes
             if(versionNumber < blockSafariVersion){
                 displayBlockMessage();
             }

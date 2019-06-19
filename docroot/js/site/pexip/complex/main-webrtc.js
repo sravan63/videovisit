@@ -22,7 +22,7 @@ var mobileVideoSources = [];
 //audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
 function gotDevices(deviceInfos) {
-  
+  // Extracts video ids.
   for (var  i = 0; i < deviceInfos.length; i++) {
     var deviceInfo = deviceInfos[i];
     var option = document.createElement('option');
@@ -41,8 +41,24 @@ function gotDevices(deviceInfos) {
 }
 
 $(window).load(function() {
-  navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+  var appOS = getAppOS();
+  if(appOS === 'iOS'){
+    navigator.mediaDevices.getUserMedia({video:true})
+     .then(function(stream){
+          console.log('Stream1 started with success');
+          setDevice();
+      })
+      .catch(function(){ 
+          console.log('Failed to start stream1')
+      });
+  }else{
+    navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+  }
 });
+
+function setDevice(){
+  navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+ }
 
 // Attach audio output device to video element using device/sink ID.
 function attachSinkId(element, sinkId) {
