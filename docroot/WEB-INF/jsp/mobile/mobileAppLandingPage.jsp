@@ -239,14 +239,14 @@ function allowToJoin(vendor){
             if (jqBrowserInfoObj.chrome){
         	var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
 	        var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
-	        if(60 < blockChromeVersion){
+	        if(chrome_ver < blockChromeVersion){
 	        	allow= false;
 	        }
         }
         else if(isFirefox){
         	var blockFirefoxVersion = $("#blockFirefoxVersion").val()?Number($("#blockFirefoxVersion").val()):67;
         	var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
-        	if(65 < blockFirefoxVersion){
+        	if(firefox_ver < blockFirefoxVersion){
         		allow = false;
         	}
         }
