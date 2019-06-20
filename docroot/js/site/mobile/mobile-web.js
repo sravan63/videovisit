@@ -1822,7 +1822,6 @@ var VideoVisit = {
 		});
 	},
 }
-
 $(function(){
 	$(window).on("orientationchange",function(event){
 		if($('.waiting-room').css('display') === 'block'){
