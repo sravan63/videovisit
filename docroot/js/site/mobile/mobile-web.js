@@ -1824,22 +1824,16 @@ var VideoVisit = {
 }
 $(function(){
 	$(window).on("orientationchange",function(event){
+		setTimeout(function(){
+			setVideoFeedHeight();
+			setOrientationMode();
+		}, 1000);
 		if(window.matchMedia("(orientation: landscape)").matches){
 			if($("#presentation-view").css('display') == "block" ){
 				setTimeout(function(){
 					$(".mobileselfview").addClass("mobilesv");
-				}, 1000);
-			}else{
-				setTimeout(function(){
-					setVideoFeedHeight();
-					setOrientationMode();
-				}, 1000);
+				}, 1010);
 			}
-		}else{
-			setTimeout(function(){
-				setVideoFeedHeight();
-				setOrientationMode();
-			}, 1000);
 		}
 	});
 });
