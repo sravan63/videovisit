@@ -94,12 +94,12 @@ var request = {
 	}
 /*END - AJAX Server requests  */
 
-$( window ).on( "orientationchange", function( event ) {
-	setTimeout(function(){
-		setVideoFeedHeight();
-		setOrientationMode();
-	}, 1000);
-});
+//$( window ).on( "orientationchange", function( event ) {
+//	setTimeout(function(){
+//		setVideoFeedHeight();
+//		setOrientationMode();
+//	}, 1000);
+//});
 
 /**
  * This is the main function which gets called when the document is ready and loaded in DOM
@@ -1826,10 +1826,17 @@ var VideoVisit = {
 $(function(){
 	$(window).on("orientationchange",function(event){
 		//console.log(screen.orientation.angle);
-		if(screen.orientation.angle == 90){
-			if($("#presentation-view").css('display') == "block" ){
-			$(".mobileselfview").addClass("mobilesv");
-		}
+		if($('.waiting-room').css('display') === 'block'){
+			setTimeout(function(){
+				setVideoFeedHeight();
+				setOrientationMode();
+			}, 1000);
+		}else{			
+			if(screen.orientation.angle == 90){
+				if($("#presentation-view").css('display') == "block" ){
+					$(".mobileselfview").addClass("mobilesv");
+				}
+			}
 		}
 	});
 });
