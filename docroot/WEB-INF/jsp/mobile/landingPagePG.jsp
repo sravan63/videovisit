@@ -48,7 +48,7 @@
 			              </div>
 			              <span style="font-size:16px;">${meeting.member.firstName} ${meeting.member.lastName}</span>
 			              <div class="accord-contents" style="display:block;margin-top:45px;">
-			                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0 || meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
+			                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0 || meeting.caregiver != null && fn:length(meeting.caregiver) > 0 || meeting.sipParticipants != null && fn:length(meeting.sipParticipants) > 0}">
 			                    <h2 class="label" style="float:none;font-size:16px;color:#333333">Additional Participants</h2>
 			                  </c:if>
 			                  <c:if test="${meeting.participant != null && fn:length(meeting.participant) > 0}">
@@ -61,7 +61,8 @@
 			                    </div>
 			                  </c:if>
 			                  <div class="names-container-member" style="margin:0px;">
-			                    <c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
+			                   <c:choose>
+			                    <c:when test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0 && meeting.vendor!='pexip'} ">
 			                      	<span class="names patient-guests" style="margin-left:0;">
 			                      		<c:set var="phoneNumsCount" value="0" scope="page" />
 				                        <c:forEach var="p" items="${meeting.caregiver}">
@@ -74,7 +75,24 @@
 				                        	</c:if>
 				                        </c:forEach>
 			                      	</span>
-			                    </c:if>
+			                    </c:when>
+			                    <c:when test="${meeting.vendor == 'pexip'}">
+			                    <span class="names patient-guests" style="margin-left:0;font-size:16px;">
+			                    <c:set var="phoneNumsCount" value="0" scope="page" />
+			                    <c:if test="${meeting.caregiver != null && fn:length(meeting.caregiver) > 0}">
+			                    <c:forEach var="p" items="${meeting.caregiver}">
+ 								<span class="guest-is-not-ap" style="font-size:16px;">${p.firstName} ${p.lastName}</span>
+ 								</c:forEach>
+			                   </c:if>
+			                   <c:if test="${meeting.sipParticipants != null && fn:length(meeting.sipParticipants) > 0}">
+			                   <c:forEach var="p" items="${meeting.sipParticipants}">	
+			                   <c:set var="phoneNumsCount" value="${phoneNumsCount + 1}" scope="page"/>
+			                    <span class="guest-is-ap-pexip" style="font-size:16px;" firstnameattr="${p.destination}">${p.displayName}</span>
+			                    </c:forEach>
+			                   </c:if>
+			                    </span>
+			                    </c:when>
+			                </c:choose>
 			                  </div>
 			              </div>
 			            </div>
