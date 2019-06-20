@@ -234,9 +234,9 @@ function presentationStartStop(setting, pres) {
             utilityNotifyQueue(presenting_user + ' has initiated desktop sharing.');
         }
     } else {
-        if(isMobileDevice){
-            $(".mobileselfview").removeClass("mobilesv");
-        }
+        // if(isMobileDevice){
+        //     $(".mobileselfview").removeClass("mobilesv");
+        // }
         if (presentation != null) {
             //presentation.close();
             $('#presentation-view').css('display', 'none');
