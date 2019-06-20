@@ -94,12 +94,12 @@ var request = {
 	}
 /*END - AJAX Server requests  */
 
-/*$( window ).on( "orientationchange", function( event ) {
+$( window ).on( "orientationchange", function( event ) {
 	setTimeout(function(){
 		setVideoFeedHeight();
 		setOrientationMode();
 	}, 1000);
-});*/
+});
 
 /**
  * This is the main function which gets called when the document is ready and loaded in DOM
@@ -1528,6 +1528,12 @@ function setOrientationMode(){
 	var isLandscape = window.matchMedia("(orientation:landscape)").matches;
 	if(isLandscape){
 		$('.logo').addClass('landscape-logo-change');
+		if($(".waiting-room").css("display") == "block"){
+            $(".waiting-room").css('height','100%');
+        }
+        if($(".mobileconferenceview").css("display") == "block"){
+            $(".mobileconferenceview").css('height','100%');
+        }
 	} else {
 		$('.logo').removeClass('landscape-logo-change');
 	}
@@ -1824,16 +1830,12 @@ var VideoVisit = {
 }
 $(function(){
 	$(window).on("orientationchange",function(event){
-		setTimeout(function(){
-			setVideoFeedHeight();
-			setOrientationMode();
-		}, 1000);
-		if(window.matchMedia("(orientation: landscape)").matches){
+		//console.log(screen.orientation.angle);
+		if(screen.orientation.angle == 90){
 			if($("#presentation-view").css('display') == "block" ){
-				setTimeout(function(){
-					$(".mobileselfview").addClass("mobilesv");
-				}, 1010);
-			}
+			$(".mobileselfview").addClass("mobilesv");
 		}
+		}
+
 	});
 });

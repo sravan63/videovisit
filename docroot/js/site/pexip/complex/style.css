@@ -845,15 +845,42 @@ border-radius: 50%;
 
 @media (orientation: landscape) {
   .presentation-view img{
-    height:100% !important;
+    height:116% !important;
   }
   .mobilesv{
     height: 100px !important;
     z-index: 6;
     width: 117px;
-    bottom: 5px;
+    bottom: -50px;
     left:10px;
     position: absolute;
+  }
+  .landscape-controlbar{
+    position: absolute;
+    z-index: 6;
+    display: block;
+    width: 60px !important;
+    height: 116% !important;
+    top: 0px;
+    right: 0px;
+    min-width:0px;
+  }
+  .landscape-controlbar ul{
+    width: 50px;
+    margin: auto;
+  }
+
+  .landscape-controlbar ul li{
+    width: 50px;
+    text-align: center;
+    float: none;
+    padding-bottom: 28px;
+  }
+  .waiting-room{
+    height:116% !important;
+  }
+  .mobileconferenceview{
+    height:116% !important;
   }
 }
 

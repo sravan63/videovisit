@@ -203,7 +203,7 @@
 	      <div id="presentation-view" class="presentation-view"></div>
 	    </section>
 
-	    <footer id="controls" class="controls-bar">
+	    <footer id="controls" class="controls-bar landscape-controlbar">
 	      <ul class="video-controls">
 	        <!-- <li><a id="id_selfview" class="webrtcbutton btn-selfview" onclick="toggleSelfview();">Show Selfview</a></li> -->
 	        <li><span class="white-circle"><span id="camera" class="icon-holder unmutedcamera" onclick="muteVideoStreams()"></span></span></li>
