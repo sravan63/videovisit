@@ -1531,9 +1531,9 @@ function setOrientationMode(){
 		if($(".waiting-room").css("display") == "block"){
             $(".waiting-room").css('height','100%');
         }
-        if($(".mobileconferenceview").css("display") == "block"){
+        //if($(".mobileconferenceview").css("display") == "block"){
             $(".mobileconferenceview").css('height','100%');
-        }
+        //}
         $(".mobileselfview").addClass("mobilesv");
         /*if($("#presentation-view").css('display') == "block" ){
 			$(".mobileselfview").addClass("mobilesv");
