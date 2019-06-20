@@ -1831,16 +1831,22 @@ $(function(){
 			}, 1000);
 		}else{			
 			if(window.matchMedia("(orientation: landscape)").matches){
-				if($("#presentation-view").css('display') == "block" ){		
-					var windowHeight = $(window).height();
-					var topHeight = windowHeight - 50;
-					$(".video-top").height(topHeight);
-					$(".mobileselfview").addClass("mobilesv");
+				if($("#presentation-view").css('display') == "block" ){
+					setTimeout(function(){
+						var windowHeight = $(window).height();
+						var topHeight = windowHeight - 50;
+						$(".video-top").height(topHeight);
+						$(".mobileselfview").addClass("mobilesv");
+					}, 1000);
 				}else{
-					setVideoFeedHeight();
+					setTimeout(function(){
+						setVideoFeedHeight();
+					}, 1000);
 				}
 			}else{
-				setVideoFeedHeight();
+				setTimeout(function(){
+					setVideoFeedHeight();
+				}, 1000);
 			}
 		}
 	});
