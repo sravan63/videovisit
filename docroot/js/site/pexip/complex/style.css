@@ -845,13 +845,13 @@ border-radius: 50%;
 
 @media (orientation: landscape) {
   .presentation-view img{
-    height:116% !important;
+    height:100% !important;
   }
   .mobilesv{
     height: 100px !important;
     z-index: 6;
     width: 117px;
-    bottom: -50px;
+    bottom: 0px;
     left:10px;
     position: absolute;
   }
@@ -860,7 +860,7 @@ border-radius: 50%;
     z-index: 6;
     display: block;
     width: 60px !important;
-    height: 116% !important;
+    height: 100% !important;
     top: 0px;
     right: 0px;
     min-width:0px;
@@ -877,10 +877,13 @@ border-radius: 50%;
     padding-bottom: 28px;
   }
   .waiting-room{
-    height:116% !important;
+    height:100% !important;
   }
   .mobileconferenceview{
-    height:116% !important;
+    height:100% !important;
+  }
+  html{
+    overflow: hidden;
   }
 }
 

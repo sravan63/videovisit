@@ -1534,18 +1534,25 @@ function setOrientationMode(){
         if($(".mobileconferenceview").css("display") == "block"){
             $(".mobileconferenceview").css('height','100%');
         }
+        $(".mobileselfview").addClass("mobilesv");
+        /*if($("#presentation-view").css('display') == "block" ){
+			$(".mobileselfview").addClass("mobilesv");
+		}*/
 	} else {
 		$('.logo').removeClass('landscape-logo-change');
 	}
 }
 
 function setVideoFeedHeight(){
+	var isLandscape = window.matchMedia("(orientation:landscape)").matches;
 	var windowHeight = $(window).height();
-	var topHeight = windowHeight - 50;
-	$(".video-top").height(topHeight);
-	$(".waiting-room").height(topHeight/2);
-	$(".mobileconferenceview").height(topHeight/2);
-	$(".mobileselfview").height(topHeight/2);
+	var topHeight = isLandscape ? windowHeight : windowHeight - 50;
+	$(".video-top").outerHeight(topHeight);
+	if(!isLandscape){
+		$(".waiting-room").height(topHeight/2);
+		$(".mobileconferenceview").height(topHeight/2);
+		$(".mobileselfview").height(topHeight/2);
+	}
 }
 
 var participantList = [];
@@ -1828,14 +1835,3 @@ var VideoVisit = {
 		});
 	},
 }
-$(function(){
-	$(window).on("orientationchange",function(event){
-		//console.log(screen.orientation.angle);
-		if(screen.orientation.angle == 90){
-			if($("#presentation-view").css('display') == "block" ){
-			$(".mobileselfview").addClass("mobilesv");
-		}
-		}
-
-	});
-});
