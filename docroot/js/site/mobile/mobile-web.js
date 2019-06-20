@@ -1832,7 +1832,7 @@ $(function(){
 				setOrientationMode();
 			}, 1000);
 		}else{			
-			if(screen.orientation.angle == 90){
+			if(window.matchMedia("(orientation: landscape)").matches){
 				if($("#presentation-view").css('display') == "block" ){
 					$(".mobileselfview").addClass("mobilesv");
 				}
