@@ -1843,10 +1843,6 @@ $(function(){
 						setVideoFeedHeight();
 					}, 1000);
 				}
-			}else{
-				setTimeout(function(){
-					setVideoFeedHeight();
-				}, 1000);
 			}
 		}
 	});
