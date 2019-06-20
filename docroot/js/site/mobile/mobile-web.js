@@ -94,12 +94,12 @@ var request = {
 	}
 /*END - AJAX Server requests  */
 
-//$( window ).on( "orientationchange", function( event ) {
-//	setTimeout(function(){
-//		setVideoFeedHeight();
-//		setOrientationMode();
-//	}, 1000);
-//});
+/*$( window ).on( "orientationchange", function( event ) {
+	setTimeout(function(){
+		setVideoFeedHeight();
+		setOrientationMode();
+	}, 1000);
+});*/
 
 /**
  * This is the main function which gets called when the document is ready and loaded in DOM
@@ -1824,26 +1824,22 @@ var VideoVisit = {
 }
 $(function(){
 	$(window).on("orientationchange",function(event){
-		if($('.waiting-room').css('display') === 'block'){
+		if(window.matchMedia("(orientation: landscape)").matches){
+			if($("#presentation-view").css('display') == "block" ){
+				setTimeout(function(){
+					$(".mobileselfview").addClass("mobilesv");
+				}, 1000);
+			}else{
+				setTimeout(function(){
+					setVideoFeedHeight();
+					setOrientationMode();
+				}, 1000);
+			}
+		}else{
 			setTimeout(function(){
 				setVideoFeedHeight();
 				setOrientationMode();
 			}, 1000);
-		}else{			
-			if(window.matchMedia("(orientation: landscape)").matches){
-				if($("#presentation-view").css('display') == "block" ){
-					setTimeout(function(){
-						var windowHeight = $(window).height();
-						var topHeight = windowHeight - 50;
-						$(".video-top").height(topHeight);
-						$(".mobileselfview").addClass("mobilesv");
-					}, 1000);
-				}else{
-					setTimeout(function(){
-						setVideoFeedHeight();
-					}, 1000);
-				}
-			}
 		}
 	});
 });
