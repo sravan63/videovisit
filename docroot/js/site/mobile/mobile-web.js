@@ -1825,7 +1825,6 @@ var VideoVisit = {
 
 $(function(){
 	$(window).on("orientationchange",function(event){
-		//console.log(screen.orientation.angle);
 		if($('.waiting-room').css('display') === 'block'){
 			setTimeout(function(){
 				setVideoFeedHeight();
@@ -1833,9 +1832,16 @@ $(function(){
 			}, 1000);
 		}else{			
 			if(window.matchMedia("(orientation: landscape)").matches){
-				if($("#presentation-view").css('display') == "block" ){
+				if($("#presentation-view").css('display') == "block" ){		
+					var windowHeight = $(window).height();
+					var topHeight = windowHeight - 50;
+					$(".video-top").height(topHeight);
 					$(".mobileselfview").addClass("mobilesv");
+				}else{
+					setVideoFeedHeight();
 				}
+			}else{
+				setVideoFeedHeight();
 			}
 		}
 	});
