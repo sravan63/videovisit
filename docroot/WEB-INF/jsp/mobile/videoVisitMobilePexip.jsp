@@ -203,7 +203,7 @@
 	      <div id="presentation-view" class="presentation-view"></div>
 	    </section>
 
-	    <footer id="controls" class="controls-bar landscape-controlbar">
+	    <footer id="controls" class="controls-bar">
 	      <ul class="video-controls">
 	        <!-- <li><a id="id_selfview" class="webrtcbutton btn-selfview" onclick="toggleSelfview();">Show Selfview</a></li> -->
 	        <li><span class="white-circle"><span id="camera" class="icon-holder unmutedcamera" onclick="muteVideoStreams()"></span></span></li>
@@ -211,6 +211,17 @@
 	        <li><span class="red-circle"><span id="endCall" class="icon-holder" onclick="disconnect();"></span></span></li>
 	        <li><span class="white-circle"><span id="speaker" class="icon-holder unmutedspeaker" onclick="muteUnmuteSpeaker()"></span></span></li>
 	        <li><span class="white-circle"><span id="mic" class="icon-holder unmutedmic" onclick="muteMicStreams()"></span></span></li>
+	        
+	      </ul>
+	    </footer>
+	    <footer id="controls" class="landscape-controlbar">
+	      <ul class="video-controls">
+	        <!-- <li><a id="id_selfview" class="webrtcbutton btn-selfview" onclick="toggleSelfview();">Show Selfview</a></li> -->
+	        <li><span class="white-circle"><span id="mic" class="icon-holder unmutedmic" onclick="muteMicStreams()"></span></span></li>
+	        <li><span class="white-circle"><span id="speaker" class="icon-holder unmutedspeaker" onclick="muteUnmuteSpeaker()"></span></span></li>
+	        <li><span class="red-circle"><span id="endCall" class="icon-holder" onclick="disconnect();"></span></span></li>
+	        <li><span class="white-circle"><span id="cameraSwitch" class="icon-holder" onclick="toggleCamera()"></span></span></li>
+	        <li><span class="white-circle"><span id="camera" class="icon-holder unmutedcamera" onclick="muteVideoStreams()"></span></span></li>
 	        
 	      </ul>
 	    </footer>

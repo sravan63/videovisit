@@ -864,6 +864,7 @@ border-radius: 50%;
     top: 0px;
     right: 0px;
     min-width:0px;
+    background: #515151;
   }
   .landscape-controlbar ul{
     width: 50px;
@@ -875,6 +876,9 @@ border-radius: 50%;
     text-align: center;
     float: none;
     padding-bottom: 28px;
+  }
+  .controls-bar{
+    display:none;
   }
   .waiting-room{
     height:100% !important;
@@ -888,7 +892,10 @@ border-radius: 50%;
 }
 
 @media (orientation: portrait) {
-  /* body {
-    flex-direction: column;
-  } */
+  .controls-bar{
+    display: block;
+  }
+  .landscape-controlbar{
+    display: none;
+  }
 }
