@@ -401,7 +401,8 @@ getControlReference(control){
     return ref;
 }
 
-changeInOtherControls(control, bool, removedClass, addedClass){
+function changeInOtherControls(control, bool, removedClass, addedClass) {
+
     var isLandscape = window.matchMedia("(orientation:landscape)").matches;
     var otherparent = (isLandscape) ? 'controls-bar' : 'landscape-controlbar';
     var dom = document.getElementsByClassName(otherparent)[0].getElementsByClassName('video-controls')[0];
@@ -417,6 +418,7 @@ changeInOtherControls(control, bool, removedClass, addedClass){
     if(!ref){
         return;
     }
+
     if(bool){
         ref.classList.remove(removedClass);
         ref.classList.add(addedClass);
