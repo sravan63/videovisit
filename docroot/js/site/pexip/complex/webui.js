@@ -320,6 +320,7 @@ function unpresentScreen(reason) {
 /* ~~~ MUTE AND HOLD/RESUME ~~~ */
 
 function muteUnmuteSpeaker() {
+    var id_mutespeaker = getControlReference('speaker');
     var video=document.getElementById("video");
       if(video.muted){
         log("info","speaker_unmute_action","event: unmuteSpeaker - on click of mute speaker button");
@@ -346,6 +347,7 @@ function muteUnmuteSpeaker() {
 }
 
 function muteMicStreams() {
+    var id_muteaudio = getControlReference('mic');
     if (!id_muteaudio.classList.contains("inactive")) {
         muteAudio = rtc.muteAudio();
         id_muteaudio.classList.toggle('selected');
@@ -362,6 +364,7 @@ function muteMicStreams() {
 }
 
 function muteVideoStreams() {
+    var id_mutevideo = getControlReference('camera');
     if (!id_mutevideo.classList.contains("inactive")) {
         muteVideo = rtc.muteVideo();
         id_mutevideo.classList.toggle('selected');
@@ -377,6 +380,22 @@ function muteVideoStreams() {
     }else{
 
     }
+}
+
+getControlReference(control){
+    var isLandscape = window.matchMedia("(orientation:landscape)").matches;
+    var parent = isLandscape ? 'landscape-controlbar' : 'controls-bar';
+    var dom = document.getElementsByClassName(parent)[0].getElementsByClassName('video-controls')[0];
+    var children = dom.getElementsByClassName('icon-holder');
+    var ref;
+    for(var i=0; i< children.length; i++){
+        var ele = children[i];
+        if(ele.id == control){
+            ref = ele;
+            break;
+        }
+    }
+    return ref;
 }
 
 function toggleSelfview() {
@@ -904,9 +923,9 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
 
     video = document.getElementById("video");
     id_selfview = document.getElementById('id_selfview');
-    id_muteaudio = document.getElementsByClassName('mic')[0];
-    id_mutevideo = document.getElementsByClassName('camera')[0];
-    id_mutespeaker = document.getElementsByClassName('speaker')[0];
+    id_muteaudio = document.getElementById('mic');
+    id_mutevideo = document.getElementById('camera');
+    id_mutespeaker = document.getElementById('speaker');
     id_fullscreen = document.getElementById('id_fullscreen');
     id_screenshare = document.getElementById('id_screenshare');
     id_presentation = document.getElementById('id_presentation');
