@@ -904,9 +904,9 @@ function initialise(confnode, conf, userbw, username, userpin, req_source, flash
 
     video = document.getElementById("video");
     id_selfview = document.getElementById('id_selfview');
-    id_muteaudio = document.getElementById('mic');
-    id_mutevideo = document.getElementById('camera');
-    id_mutespeaker = document.getElementById('speaker');
+    id_muteaudio = document.getElementsByClassName('mic')[0];
+    id_mutevideo = document.getElementsByClassName('camera')[0];
+    id_mutespeaker = document.getElementsByClassName('speaker')[0];
     id_fullscreen = document.getElementById('id_fullscreen');
     id_screenshare = document.getElementById('id_screenshare');
     id_presentation = document.getElementById('id_presentation');
