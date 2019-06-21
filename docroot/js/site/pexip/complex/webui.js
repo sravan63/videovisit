@@ -333,7 +333,7 @@ function muteUnmuteSpeaker() {
         id_mutespeaker.classList.remove('unmutedspeaker');
         id_mutespeaker.classList.add('mutedspeaker');
       }
-      changeInOtherControls('speaker', video.muted, 'mutedspeaker', 'unmutedspeaker');
+      changeInOtherControls('speaker', !video.muted, 'mutedspeaker', 'unmutedspeaker');
     /*if (!id_mutespeaker.classList.contains("inactive")) {
         if (document.getElementById('video').volume == 1) {
             document.getElementById('video').volume = 0;
