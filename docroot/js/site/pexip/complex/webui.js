@@ -333,6 +333,7 @@ function muteUnmuteSpeaker() {
         id_mutespeaker.classList.remove('unmutedspeaker');
         id_mutespeaker.classList.add('mutedspeaker');
       }
+      changeInOtherControls('speaker', video.muted, 'mutedspeaker', 'unmutedspeaker');
     /*if (!id_mutespeaker.classList.contains("inactive")) {
         if (document.getElementById('video').volume == 1) {
             document.getElementById('video').volume = 0;
@@ -360,6 +361,7 @@ function muteMicStreams() {
             id_muteaudio.classList.remove('mutedmic');
             id_muteaudio.classList.add('unmutedmic');
         }
+        changeInOtherControls('mic', muteAudio, 'unmutedmic', 'mutedmic');
     }
 }
 
@@ -377,6 +379,7 @@ function muteVideoStreams() {
             id_mutevideo.classList.remove('mutedcamera');
             id_mutevideo.classList.add('unmutedcamera');
         }
+        changeInOtherControls('camera', muteVideo, 'unmutedcamera', 'mutedcamera');
     }else{
 
     }
@@ -396,6 +399,31 @@ getControlReference(control){
         }
     }
     return ref;
+}
+
+changeInOtherControls(control, bool, removedClass, addedClass){
+    var isLandscape = window.matchMedia("(orientation:landscape)").matches;
+    var otherparent = (isLandscape) ? 'controls-bar' : 'landscape-controlbar';
+    var dom = document.getElementsByClassName(otherparent)[0].getElementsByClassName('video-controls')[0];
+    var children = dom.getElementsByClassName('icon-holder');
+    var ref;
+    for(var i=0; i< children.length; i++){
+        var ele = children[i];
+        if(ele.id == control){
+            ref = ele;
+            break;
+        }
+    }
+    if(!ref){
+        return;
+    }
+    if(bool){
+        ref.classList.remove(removedClass);
+        ref.classList.add(addedClass);
+      } else {
+        ref.classList.remove(addedClass);
+        ref.classList.add(removedClass);
+      }
 }
 
 function toggleSelfview() {
