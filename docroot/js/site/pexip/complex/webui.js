@@ -385,7 +385,7 @@ function muteVideoStreams() {
     }
 }
 
-getControlReference(control){
+function getControlReference(control){
     var isLandscape = window.matchMedia("(orientation:landscape)").matches;
     var parent = isLandscape ? 'landscape-controlbar' : 'controls-bar';
     var dom = document.getElementsByClassName(parent)[0].getElementsByClassName('video-controls')[0];
