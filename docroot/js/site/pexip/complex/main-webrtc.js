@@ -43,7 +43,7 @@ function gotDevices(deviceInfos) {
 $(window).load(function() {
   var appOS = getAppOS();
   if(appOS === 'iOS'){
-    navigator.mediaDevices.getUserMedia({video:true})
+    navigator.mediaDevices.getUserMedia({audio:true,video:true})
      .then(function(stream){
           console.log('Stream1 started with success');
           setDevice();
