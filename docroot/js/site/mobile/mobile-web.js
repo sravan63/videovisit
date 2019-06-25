@@ -1547,11 +1547,13 @@ function setVideoFeedHeight(){
 	var isLandscape = window.matchMedia("(orientation:landscape)").matches;
 	var windowHeight = $(window).height();
 	var topHeight = isLandscape ? windowHeight : windowHeight - 50;
-	$(".video-top").outerHeight(topHeight);
 	if(!isLandscape){
+		$(".video-top").outerHeight(topHeight);
 		$(".waiting-room").height(topHeight/2);
 		$(".mobileconferenceview").height(topHeight/2);
 		$(".mobileselfview").height(topHeight/2);
+	} else {
+		$(".video-top").css('height','100vh');
 	}
 }
 

@@ -865,6 +865,7 @@ border-radius: 50%;
     right: 0px;
     min-width:0px;
     background: #515151;
+    padding-left: 6px;
   }
   .landscape-controlbar ul{
     width: 50px;
