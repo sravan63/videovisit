@@ -1663,6 +1663,25 @@ var sendUserJoinLeaveStatus = function(guestName, isPatient, status){
     });
 }
 
+function setMemberOrCareGiverStatus(){
+	var isMember = $("#isMember").val();
+	if(isMember == 'true' || isMember == true){
+		var guestName = $("#guestName").val();
+	    var patientName =$("#meetingPatient").val();
+	    var isPatientLoggedIn;
+	    if(guestName.toLowerCase() == patientName.toLowerCase()){
+	        isPatientLoggedIn = true;
+	    } else {
+	        isPatientLoggedIn = false;
+	    }
+		sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
+	} else{
+		var meetingId = $('#meetingId').val();
+		var meetingCode = $('#meetingCode').val();
+		MemberVisit.CaregiverJoinMeeting(meetingId, "J", meetingCode);
+	}
+}
+
 function toggleCamera(){
 	 var videoSource, callType = 'video';
 	videoSource = isRearCamera ? mobileVideoSources[0] : mobileVideoSources[1];

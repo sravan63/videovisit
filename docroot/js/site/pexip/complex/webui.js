@@ -916,15 +916,7 @@ function connected(url) {
         setPatientGuestPresenceIndicatorManually();
         setConferenceStatus();
     } else {
-        var guestName = $("#guestName").val();
-        var patientName =$("#meetingPatient").val();
-        var isPatientLoggedIn;
-        if(guestName.toLowerCase() == patientName.toLowerCase()){
-            isPatientLoggedIn = true;
-        } else {
-            isPatientLoggedIn = false;
-        }
-        sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
+        setMemberOrCareGiverStatus();
     }
 }
 

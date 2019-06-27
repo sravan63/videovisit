@@ -630,7 +630,8 @@ function updateDomWithMeetingsData(data){
                         htmlToBeAppend += '<p class=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+'" meetingid="'+meeting.meetingId+'" isproxymeeting="N" href="#" style="margin-bottom:0;" vendor="'+vendorVal+'">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
                     }else{
                         var vendorVal = meeting.vendor?meeting.vendor:'';
-                        htmlToBeAppend += '<p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+memberDiplayName.trim()+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" isproxymeeting="Y" href="#" style="margin-bottom:0;" vendor="'+vendorVal+'">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
+                        var primaryMemberName = $('#memberDOlastName').val().trim()+, +$('#memberDOfirstName').val().trim();
+                        htmlToBeAppend += '<p style=""><button id="joinNowId" class="btn joinNowButton" userName="'+primaryMemberName.trim()+', (dummy@dummy.com)" meetingid="'+meeting.meetingId+'" isproxymeeting="Y" href="#" style="margin-bottom:0;" vendor="'+vendorVal+'">Join your visit</button></p><p class="" style="margin-top:20px;">You may be joining before your clinician. Please be patient.</p>';
                     }
                     htmlToBeAppend += '</div>';
                     //DE15381 changes
