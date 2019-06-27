@@ -1471,15 +1471,6 @@ function configurePexipVideoProperties(){
     reqscript2.onload = function(){
 		console.log("reqscript2 loaded");
 		startPexip();
-		var guestName = $("#guestName").val();
-		var patientName =$("#meetingPatient").val();
-		if(guestName.toLowerCase() == patientName.toLowerCase()){
-			isPatientLoggedIn = true;
-		}
-		else{
-			isPatientLoggedIn = false;
-		}
-		sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
     };
 }
 
@@ -1566,10 +1557,10 @@ var updateParticipantList = function(participant, status){
 		if(participantList.indexOf(participant.display_name) === -1){
 			participantList.push(participant.display_name);
 			participantsData.push(participant);
-			var isPatientLoggedIn = isPatient(participant.display_name);
-			if(participant.role == 'guest'){
-				sendUserJoinLeaveStatus(participant.display_name, isPatientLoggedIn, 'J');
-			}
+			// var isPatientLoggedIn = isPatient(participant.display_name);
+			// if(participant.role == 'guest'){
+			// 	sendUserJoinLeaveStatus(participant.display_name, isPatientLoggedIn, 'J');
+			// }
 		}
 	} else {
 		// Left
@@ -1577,10 +1568,10 @@ var updateParticipantList = function(participant, status){
 			var pData = participantsData[i];
 			if(participant.uuid === pData.uuid) {
 				if(participantList.indexOf(pData.display_name) > -1){
-					var isPatientLoggedIn = isPatient(pData.display_name);
-					if(participant.role == 'guest'){
-						sendUserJoinLeaveStatus(pData.display_name, isPatientLoggedIn, 'L');
-					}
+					// var isPatientLoggedIn = isPatient(pData.display_name);
+					// if(participant.role == 'guest'){
+					// 	sendUserJoinLeaveStatus(pData.display_name, isPatientLoggedIn, 'L');
+					// }
 					participantList.splice(participantList.indexOf(pData.display_name),1);
 					participantsData.splice(i,1);
 				}

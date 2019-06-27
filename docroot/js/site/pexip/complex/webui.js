@@ -99,8 +99,8 @@ function remotePresentationClosed(reason) {
             alert(reason);
         }*/
         //presentation.close()
-		// TODO - Need to streamline this later, it's a hack for as of now
-		if(isMobileDevice && getAppOS() == "iOS" && reason == "Failed to gather IP addresses"){
+        // TODO - Need to streamline this later, it's a hack for as of now
+        if(isMobileDevice && getAppOS() == "iOS" && reason == "Failed to gather IP addresses"){
             return;
         }
         $(presentation).css('display', 'none');
@@ -240,7 +240,7 @@ function presentationStartStop(setting, pres) {
         if (presentation != null) {
             //presentation.close();
             $('#presentation-view').css('display', 'none');
-			presentation = null;
+            presentation = null;
         }
         if (flash_button) {
             clearInterval(flash_button);
@@ -914,6 +914,17 @@ function connected(url) {
     if(!isMobileDevice){
         VideoVisit.setMinDimensions();
         setPatientGuestPresenceIndicatorManually();
+        setConferenceStatus();
+    } else {
+        var guestName = $("#guestName").val();
+        var patientName =$("#meetingPatient").val();
+        var isPatientLoggedIn;
+        if(guestName.toLowerCase() == patientName.toLowerCase()){
+            isPatientLoggedIn = true;
+        } else {
+            isPatientLoggedIn = false;
+        }
+        sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
     }
 }
 
