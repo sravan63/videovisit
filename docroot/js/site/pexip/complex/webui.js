@@ -737,7 +737,7 @@ function participantCreated(participant){
         VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList,'pexip');
     }
     
-    if(isProvider == "true"){
+    /*if(isProvider == "true"){
         var uuid = participant.uuid;
         rtc.setParticipantSpotlight(uuid, true);
         return false;
@@ -745,7 +745,7 @@ function participantCreated(participant){
         var uuid = participant.uuid;
         rtc.setParticipantSpotlight(uuid, true);
         return false;
-    }
+    }*/
 }
 
 function participantUpdated(participant){
