@@ -1079,23 +1079,47 @@ function disconnect(){
     };
 
     if(isMobileDevice){
-        $.ajax({
-            type: "POST",
-            url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
-            cache: false,
-            dataType: "json",
-            data: userData,
-            success: function(result, textStatus){
-                log("info","joinLeaveMeeting", "console: joinLeaveMeeting:: success : result - : " +result);
-                navigateFromVVPage();
-                //console.log("joinLeaveMeeting :: result :: "+result);
-            },
-            error: function(textStatus){
-                log("error","joinLeaveMeeting","console: joinLeaveMeeting:: error - : " +textStatus);
-                navigateFromVVPage();
-                //console.log("joinLeaveMeeting :: error :: "+textStatus);
-            }
-        });
+        var isMember = $("#isMember").val();
+        if(isMember == 'true' || isMember == true){
+            $.ajax({
+                type: "POST",
+                url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+                cache: false,
+                dataType: "json",
+                data: userData,
+                success: function(result, textStatus){
+                    log("info","joinLeaveMeeting", "console: joinLeaveMeeting:: success : result - : " +result);
+                    navigateFromVVPage();
+                    //console.log("joinLeaveMeeting :: result :: "+result);
+                },
+                error: function(textStatus){
+                    log("error","joinLeaveMeeting","console: joinLeaveMeeting:: error - : " +textStatus);
+                    navigateFromVVPage();
+                    //console.log("joinLeaveMeeting :: error :: "+textStatus);
+                }
+            });
+        } else {
+            var refreshMeetings = false,
+                meetingCode =  $("#meetingCode").val(),
+                caregiverId =   $("#caregiverId").val(),
+                meetingId = $('#meetingId').val();
+                
+            var quitMeetingIdData = 'meetingCode=' + meetingCode + '&caregiverId=' + caregiverId + '&meetingId=' + meetingId + '&refreshMeetings=' + refreshMeetings;
+            $.ajax({
+                type: 'POST',
+                url: VIDEO_VISITS.Path.guestvisit.quitmeeting,
+                cache: false,
+                async: false,
+                data: quitMeetingIdData,
+                success: function(returndata) {
+                    navigateFromVVPage();
+                },
+                //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+                error: function(theRequest, textStatus, errorThrown) {
+                   navigateFromVVPage();
+                }
+            });
+        }
     } else {
         navigateFromVVPage();
     }
