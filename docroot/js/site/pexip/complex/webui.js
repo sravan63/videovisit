@@ -1107,7 +1107,7 @@ function disconnect(){
             var quitMeetingIdData = 'meetingCode=' + meetingCode + '&caregiverId=' + caregiverId + '&meetingId=' + meetingId + '&refreshMeetings=' + refreshMeetings;
             $.ajax({
                 type: 'POST',
-                url: VIDEO_VISITS.Path.guestvisit.quitmeeting,
+                url: 'endguestsession.json',
                 cache: false,
                 async: false,
                 data: quitMeetingIdData,

@@ -1678,8 +1678,27 @@ function setMemberOrCareGiverStatus(){
 	} else{
 		var meetingId = $('#meetingId').val();
 		var meetingCode = $('#meetingCode').val();
-		MemberVisit.CaregiverJoinMeeting(meetingId, "J", meetingCode);
+		CaregiverJoinMeeting(meetingId, "J", meetingCode);
 	}
+}
+
+function CaregiverJoinMeeting(meetingId, status, meetingHash){
+	var postData = 'meetingId=' + meetingId + '&status=' + status + '&meetingHash=' + meetingHash;
+
+	$.ajax({
+		type: 'POST',
+		url: 'caregiverJoinMeeting.json',
+		cache: false,
+		async: true,
+		data: postData,
+		success: function(returndata) {
+			console.log("CaregiverJoinMeeting: success returndata=" + returndata);
+		},
+	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+	            error: function(theRequest, textStatus, errorThrown) {
+	            	console.log("CaregiverJoinMeeting: error");           
+	            }
+	        });
 }
 
 function toggleCamera(){
