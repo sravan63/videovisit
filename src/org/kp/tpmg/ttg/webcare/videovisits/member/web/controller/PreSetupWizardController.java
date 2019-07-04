@@ -16,6 +16,7 @@ public class PreSetupWizardController extends CommonController {
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		final ModelAndView modelAndView = new ModelAndView(getViewName());
+		initProperties();
 		try {
 			getEnvironmentCommand().loadDependencies(modelAndView, getNavigation(), getSubNavigation());
 			modelAndView.addObject("webrtc", String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
