@@ -1,7 +1,5 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.context;
 
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -70,6 +68,11 @@ public class WebAppContext implements Serializable {
 	private String pexMobBlockSafariVer = null;
 	private String pexMobBlockChromeVer = null;
 	private String pexMobBlockFirefoxVer = null;
+	
+	private String pexBlockSafariVer = null;
+	private String pexBlockChromeVer = null;
+	private String pexBlockEdgeVer = null;
+	private String pexBlockFirefoxVer = null;
 		
 	/**
 	 * Defaulting clientId  to "vv-mbr-web".
@@ -559,6 +562,62 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setPexMobBlockFirefoxVer(String pexMobBlockFirefoxVer) {
 		this.pexMobBlockFirefoxVer = pexMobBlockFirefoxVer;
+	}
+
+	/**
+	 * @return the pexBlockSafariVer
+	 */
+	public String getPexBlockSafariVer() {
+		return pexBlockSafariVer;
+	}
+
+	/**
+	 * @param pexBlockSafariVer the pexBlockSafariVer to set
+	 */
+	public void setPexBlockSafariVer(String pexBlockSafariVer) {
+		this.pexBlockSafariVer = pexBlockSafariVer;
+	}
+
+	/**
+	 * @return the pexBlockChromeVer
+	 */
+	public String getPexBlockChromeVer() {
+		return pexBlockChromeVer;
+	}
+
+	/**
+	 * @param pexBlockChromeVer the pexBlockChromeVer to set
+	 */
+	public void setPexBlockChromeVer(String pexBlockChromeVer) {
+		this.pexBlockChromeVer = pexBlockChromeVer;
+	}
+
+	/**
+	 * @return the pexBlockEdgeVer
+	 */
+	public String getPexBlockEdgeVer() {
+		return pexBlockEdgeVer;
+	}
+
+	/**
+	 * @param pexBlockEdgeVer the pexBlockEdgeVer to set
+	 */
+	public void setPexBlockEdgeVer(String pexBlockEdgeVer) {
+		this.pexBlockEdgeVer = pexBlockEdgeVer;
+	}
+
+	/**
+	 * @return the pexBlockFirefoxVer
+	 */
+	public String getPexBlockFirefoxVer() {
+		return pexBlockFirefoxVer;
+	}
+
+	/**
+	 * @param pexBlockFirefoxVer the pexBlockFirefoxVer to set
+	 */
+	public void setPexBlockFirefoxVer(String pexBlockFirefoxVer) {
+		this.pexBlockFirefoxVer = pexBlockFirefoxVer;
 	}
 
 	/**

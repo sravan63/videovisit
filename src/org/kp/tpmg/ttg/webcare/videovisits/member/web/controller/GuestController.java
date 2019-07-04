@@ -38,6 +38,7 @@ public class GuestController extends CommonController {
 
 			if (ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
 				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
+				MeetingCommand.updateWebappContextWithPexipDesktopBrowserDetails(ctx);
 			}
 
 			MeetingCommand.IsMeetingHashValid(request);

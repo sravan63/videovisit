@@ -802,6 +802,7 @@ public class MeetingCommand {
 		MeetingDetailsOutput output = null;
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 //		updateWebappContextWithBrowserFlags(ctx);
+		updateWebappContextWithPexipDesktopBrowserDetails(ctx);
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		String jsonStr = null;
 		try {
@@ -1410,6 +1411,27 @@ public class MeetingCommand {
 			}
 			if (StringUtils.isNotBlank(pexMobBlockFirefoxVer)) {
 				ctx.setPexMobBlockFirefoxVer(pexMobBlockFirefoxVer);
+			}
+		}
+	}
+	
+	public static void updateWebappContextWithPexipDesktopBrowserDetails(WebAppContext ctx) {
+		if (ctx != null) {
+			final String pexDesktopBlockSafariVer = getExtPropertiesValueByKey("PEXIP_BLOCK_SAFARI_VERSION");
+			final String pexDesktopBlockChromeVer = getExtPropertiesValueByKey("PEXIP_BLOCK_CHROME_VERSION");
+			final String pexDesktopBlockFirefoxVer = getExtPropertiesValueByKey("PEXIP_BLOCK_FIREFOX_VERSION");
+			final String pexDesktopBlockEdgeVer = getExtPropertiesValueByKey("PEXIP_BLOCK_EDGE_VERSION");
+			if (StringUtils.isNotBlank(pexDesktopBlockSafariVer)) {
+				ctx.setPexBlockSafariVer(pexDesktopBlockSafariVer);
+			}
+			if (StringUtils.isNotBlank(pexDesktopBlockChromeVer)) {
+				ctx.setPexBlockChromeVer(pexDesktopBlockChromeVer);
+			}
+			if (StringUtils.isNotBlank(pexDesktopBlockFirefoxVer)) {
+				ctx.setPexBlockFirefoxVer(pexDesktopBlockFirefoxVer);
+			}
+			if (StringUtils.isNotBlank(pexDesktopBlockEdgeVer)) {
+				ctx.setPexBlockEdgeVer(pexDesktopBlockEdgeVer);
 			}
 		}
 	}
