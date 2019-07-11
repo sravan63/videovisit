@@ -275,7 +275,10 @@ function startUDPTest(){
              logVendorMeetingEvents(params);
              $("#blockerMessage").css("display","block");
              $('.joinNowButton').each(function(){
+                var vendor = $(this).attr('vendor');
+                if(vendor!="pexip"){
                 $(this).removeClass('joinNowButton').addClass('not-available');
+                }
             });
           }
           runUDPTest = false;
