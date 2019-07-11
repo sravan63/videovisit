@@ -847,6 +847,7 @@ border-radius: 50%;
   .presentation-view img{
     height:100% !important;
     object-fit: contain;
+    width: 95vw !important;
   }
   .mobilesv{
     height: 100px !important;
