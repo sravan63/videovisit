@@ -21,38 +21,38 @@ $(document).ready(function() {
     var keepAliveUrl = $("#kpKeepAliveUrl").val();
     if(keepAliveUrl != null && keepAliveUrl != "" && keepAliveUrl.length > 0 && keepAliveUrl != "undefined")
     {
-    	try
-    	{
-    		$.ajax({
-        	    url: keepAliveUrl,
-        	    type: 'GET',
-        	    dataType: 'jsonp',
-        	    cache: false,
-        	    async: true,
-        	    crossDomain:true,
-        	    success: function(keepAliveData){    	    	
-        	    },
-                error: function() {            	
+        try
+        {
+            $.ajax({
+                url: keepAliveUrl,
+                type: 'GET',
+                dataType: 'jsonp',
+                cache: false,
+                async: true,
+                crossDomain:true,
+                success: function(keepAliveData){               
+                },
+                error: function() {             
                 }
-        	});
-    	}
-    	catch(e)
-		{
-			
-		}    	
+            });
+        }
+        catch(e)
+        {
+            
+        }       
     }
     
-	// Join now Click Event
+    // Join now Click Event
     $(document).delegate('.joinNowButton', 'click', function(){
-    	$("#layover").show();
-    	//US30802
+        $("#layover").show();
+        //US30802
         if($(this).attr('vendor') == 'pexip'){
             setPeripheralsFlag("false");
         }else{
             setPeripheralsFlag("true");
-        }    	
-    	//US30802
-    	var meetingId = $(this).attr('meetingid');
+        }       
+        //US30802
+        var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
         var isProxyMeeting = $(this).attr('isproxymeeting');
         //  <!-- Commented by Srini  08/27 -->
@@ -61,139 +61,139 @@ $(document).ready(function() {
         
         if(isProxyMeeting != null && ("Y" == isProxyMeeting || "y" == isProxyMeeting))
         {
-        	var postParaForLaunchProxyMeeting = {"meetingId": meetingId, "inMeetingDisplayName":name, "isProxyMeeting":isProxyMeeting};
-        	$.ajax({
-        		url: VIDEO_VISITS.Path.landingready.launchMemberProxyMeeting,
-        		type: 'POST',
-	            data: postParaForLaunchProxyMeeting,
-	            cache: false,
-	            success: function(returndata) {
-	            	try
-	            	{
-	            		returndata = jQuery.parseJSON(returndata);
-	        			if (returndata.service.status.code === '200')
-	            		{
-	            			hreflocation = returndata.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
-	            			var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y", guestName: name, isProvider: "false", isProxyMeeting: isProxyMeeting, guestUrl: encodeURIComponent(hreflocation)};
-	            			$.ajax({
-	            			    type: 'POST',
-	            			    url: VIDEO_VISITS.Path.landingready.videoVisit,
-	            			    cache: false,
-	            			    async: false,
-	            			    data: postParaVideoVisit,
-	            			    success: function(){
-	            			    	//add logic to differentiate vidyo/pexip
-	            			    	if($.browser.mozilla){
-	            			    		window.setTimeout(function(){
-	            							window.location.href="videoVisitReady.htm";
-	            							}, 3000);
-		            				}else{
-		            					window.location.href="videoVisitReady.htm";
-		            				}
-	            			    },
-	            		        error: function(err) {
-	            					window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
-	            		        }
-	            			})
-	            		}
-	            		else if(returndata.service.status.code === '400'){
-	    					$("#layover").hide();
-	    					 $("#user-in-meeting-modal").dialog( "open" );	
-	                    }else if(returndata.service.status.code === '510'){
-	            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
-	                        moveToit("p.error"); 
-	                        $("#layover").hide();
-	                        return false; 
-	                    }
-	            		else if(returndata.service.status.code === '520'){
-	            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has been cancelled.</label><br/>');
-	                        moveToit("p.error"); 
-	                        $("#layover").hide();
-	                        return false; 
-	                    }
-	            		else{
-	            			$("#layover").hide();
-			            	$("#join-meeting-fail-modal").dialog("open");		
-	        			}
-	            	}
-	            	catch(e)
-	    			{	    				
-	            		$("#layover").hide();
-		            	$("#join-meeting-fail-modal").dialog("open");
-	    			}					
-	            },
-	            //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-	            error: function(theRequest, textStatus, errorThrown)
-	            {
-	            	$("#layover").hide();
-	            	$("#join-meeting-fail-modal").dialog("open");
-	            }
-	        }).fail(function() {
-            	$("#layover").hide();
-            	$("#join-meeting-fail-modal").dialog("open");
+            var postParaForLaunchProxyMeeting = {"meetingId": meetingId, "inMeetingDisplayName":name, "isProxyMeeting":isProxyMeeting};
+            $.ajax({
+                url: VIDEO_VISITS.Path.landingready.launchMemberProxyMeeting,
+                type: 'POST',
+                data: postParaForLaunchProxyMeeting,
+                cache: false,
+                success: function(returndata) {
+                    try
+                    {
+                        returndata = jQuery.parseJSON(returndata);
+                        if (returndata.service.status.code === '200')
+                        {
+                            hreflocation = returndata.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
+                            var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y", guestName: name, isProvider: "false", isProxyMeeting: isProxyMeeting, guestUrl: encodeURIComponent(hreflocation)};
+                            $.ajax({
+                                type: 'POST',
+                                url: VIDEO_VISITS.Path.landingready.videoVisit,
+                                cache: false,
+                                async: false,
+                                data: postParaVideoVisit,
+                                success: function(){
+                                    //add logic to differentiate vidyo/pexip
+                                    if($.browser.mozilla){
+                                        window.setTimeout(function(){
+                                            window.location.href="videoVisitReady.htm";
+                                            }, 3000);
+                                    }else{
+                                        window.location.href="videoVisitReady.htm";
+                                    }
+                                },
+                                error: function(err) {
+                                    window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
+                                }
+                            })
+                        }
+                        else if(returndata.service.status.code === '400'){
+                            $("#layover").hide();
+                             $("#user-in-meeting-modal").dialog( "open" );  
+                        }else if(returndata.service.status.code === '510'){
+                            $("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
+                            moveToit("p.error"); 
+                            $("#layover").hide();
+                            return false; 
+                        }
+                        else if(returndata.service.status.code === '520'){
+                            $("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has been cancelled.</label><br/>');
+                            moveToit("p.error"); 
+                            $("#layover").hide();
+                            return false; 
+                        }
+                        else{
+                            $("#layover").hide();
+                            $("#join-meeting-fail-modal").dialog("open");       
+                        }
+                    }
+                    catch(e)
+                    {                       
+                        $("#layover").hide();
+                        $("#join-meeting-fail-modal").dialog("open");
+                    }                   
+                },
+                //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
+                error: function(theRequest, textStatus, errorThrown)
+                {
+                    $("#layover").hide();
+                    $("#join-meeting-fail-modal").dialog("open");
+                }
+            }).fail(function() {
+                $("#layover").hide();
+                $("#join-meeting-fail-modal").dialog("open");
              });
         }
         else
         {
-        	var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name};
+            var postParaForUserPresentInMeeting = { "meetingId": meetingId, "megaMeetingDisplayName":name};
             $.post(VIDEO_VISITS.Path.landingready.launchMeetingForMemberDesktop, postParaForUserPresentInMeeting,function(launchMeetingForMemberDesktopData){
-    			try{
-    				launchMeetingForMemberDesktopData = jQuery.parseJSON(launchMeetingForMemberDesktopData);
-        			if(launchMeetingForMemberDesktopData.service.status.code === '200'){
+                try{
+                    launchMeetingForMemberDesktopData = jQuery.parseJSON(launchMeetingForMemberDesktopData);
+                    if(launchMeetingForMemberDesktopData.service.status.code === '200'){
 
-            			hreflocation = launchMeetingForMemberDesktopData.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
-            			var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y", guestName: name, isProvider: "false", isProxyMeeting: isProxyMeeting, guestUrl: encodeURIComponent(hreflocation)};
-            			$.ajax({
-            			    type: 'POST',
-            			    url: VIDEO_VISITS.Path.landingready.videoVisit,
-            			    cache: false,
-            			    async: false,
-            			    data: postParaVideoVisit,
-            			    success: function(){
-            			    	//add logic to differentiate vidyo/pexip
-            			    	if($.browser.mozilla){
-            			    		window.setTimeout(function(){
-            							window.location.href="videoVisitReady.htm";
-            							}, 3000);
-                				}else{
-                					window.location.href="videoVisitReady.htm";
-                				}
-            			    },
-            		        error: function(err) {
-            					window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
-            		        }
-            			})
-            		
-        			}else if(launchMeetingForMemberDesktopData.service.status.code === '400'){
-        				$("#layover").hide();
-    					$("#user-in-meeting-modal").dialog( "open" );					 
-        			}else if(launchMeetingForMemberDesktopData.service.status.code === '510'){
-            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
+                        hreflocation = launchMeetingForMemberDesktopData.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
+                        var postParaVideoVisit = {vidyoUrl: hreflocation, attendeeName: name, meetingId: meetingId, isMember: "Y", guestName: name, isProvider: "false", isProxyMeeting: isProxyMeeting, guestUrl: encodeURIComponent(hreflocation)};
+                        $.ajax({
+                            type: 'POST',
+                            url: VIDEO_VISITS.Path.landingready.videoVisit,
+                            cache: false,
+                            async: false,
+                            data: postParaVideoVisit,
+                            success: function(){
+                                //add logic to differentiate vidyo/pexip
+                                if($.browser.mozilla){
+                                    window.setTimeout(function(){
+                                        window.location.href="videoVisitReady.htm";
+                                        }, 3000);
+                                }else{
+                                    window.location.href="videoVisitReady.htm";
+                                }
+                            },
+                            error: function(err) {
+                                window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
+                            }
+                        })
+                    
+                    }else if(launchMeetingForMemberDesktopData.service.status.code === '400'){
+                        $("#layover").hide();
+                        $("#user-in-meeting-modal").dialog( "open" );                    
+                    }else if(launchMeetingForMemberDesktopData.service.status.code === '510'){
+                        $("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has already ended.</label><br/>');
                         moveToit("p.error"); 
                         $("#layover").hide();
                         return false; 
-        			}else if(launchMeetingForMemberDesktopData.service.status.code === '520'){
-            			$("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has been cancelled.</label><br/>');
+                    }else if(launchMeetingForMemberDesktopData.service.status.code === '520'){
+                        $("#error_label_" + meetingId).css("display", "inline").html('<label>The meeting you are trying to join has been cancelled.</label><br/>');
                         moveToit("p.error"); 
                         $("#layover").hide();
                         return false; 
-        			}
-        			else {
-        				$("#layover").hide();
-        				$('#end_meeting_error').html('').append(launchMeetingForMemberDesktopData.service.status.message).show();		
-        			}
-    			}
-    			catch(e)
-    			{
-    				$("#layover").hide();
-	            	$("#join-meeting-fail-modal").dialog("open");
-    			}
+                    }
+                    else {
+                        $("#layover").hide();
+                        $('#end_meeting_error').html('').append(launchMeetingForMemberDesktopData.service.status.message).show();       
+                    }
+                }
+                catch(e)
+                {
+                    $("#layover").hide();
+                    $("#join-meeting-fail-modal").dialog("open");
+                }
             }).fail(function() {
-            	$("#layover").hide();
-            	$("#join-meeting-fail-modal").dialog("open");
+                $("#layover").hide();
+                $("#join-meeting-fail-modal").dialog("open");
              });
         }
-		return false;
+        return false;
     })
 
     //Get the meeting timestamp, convert it and display it. Grabs the text contents of the element with the timestamp class,
@@ -225,29 +225,29 @@ $(document).ready(function() {
     });
     
     // Ok button on user in meeting modal
-    $('#user-in-meeting-modal-ok').click(function(){    	
-    	$("#user-in-meeting-modal").dialog( "close" );    	
+    $('#user-in-meeting-modal-ok').click(function(){        
+        $("#user-in-meeting-modal").dialog( "close" );      
     });
     
     $('#join-meeting-fail-modal-refresh').click(function(){
-    	$("#join-meeting-fail-modal").dialog( "close" );
-    	getMemberMeetings();
+        $("#join-meeting-fail-modal").dialog( "close" );
+        getMemberMeetings();
     });
     
     $('#join-meeting-fail-modal-cancel').click(function(){
-    	$("#join-meeting-fail-modal").dialog( "close" );
-    	return false;
+        $("#join-meeting-fail-modal").dialog( "close" );
+        return false;
     });
 
     $(".accord-ctrl-container").on("click", function(e){
         e.preventDefault();
 
         if($(this).children($('.accord-ctrl')).hasClass("more")){
-        	$(this).find($(".accord-ctrl")).removeClass("more").addClass("less").html("less");
+            $(this).find($(".accord-ctrl")).removeClass("more").addClass("less").html("less");
             $(this).parent($('.host-name-container')).next($('.accord-contents')).toggle();
             $(this).find($(".accord-ctrl-caret")).addClass("accord-ctrl-caret-less");
         } else{
-        	$(this).find($(".accord-ctrl")).removeClass("less").addClass("more").html("more");
+            $(this).find($(".accord-ctrl")).removeClass("less").addClass("more").html("more");
             $(this).parent($('.host-name-container')).next($('.accord-contents')).toggle();
             $(this).find($(".accord-ctrl-caret")).removeClass("accord-ctrl-caret-less");
         }
@@ -329,21 +329,34 @@ function checkSTUNServer(stunConfig, timeout){
 */
 function checkAndBlockMeetings(){
     var showBlockMessage = false;
+    var vendorVal;
     $('.joinNowButton').each(function(){
         var vendor = $(this).attr('vendor');
         var allow = allowToJoin(vendor);
-        if(allow == false){
+        if(allow == false && vendor!="pexip"){
             showBlockMessage = true;
             $(this).removeClass('joinNowButton').addClass('not-available');
         }
+        if(allow == false && vendor=="pexip"){
+            showBlockMessage = true;
+            vendorVal = true;
+            $(this).removeClass('joinNowButton').addClass('not-available');
+        }
     });
-    if(showBlockMessage){
+    if(showBlockMessage && vendorVal){
+        $("#blockerMessage").css("display","block");
+        $('#browser-block-message').html('Join on your mobile device using the My Doctor Online app, or update your browser version.');
+    }
+    if(showBlockMessage && !vendorVal){
         $("#blockerMessage").css("display","block");
     }
+
 }
 
 function allowToJoin(vendor){
     var allow = true;
+    var browserUserAgent = navigator.userAgent;
+    var jqBrowserInfoObj = $.browser; 
     if(vendor === 'pexip'){
         if (browserInfo.isIE){
             var agent = navigator.userAgent;
@@ -355,6 +368,47 @@ function allowToJoin(vendor){
                 if(allow == false){
                     $('#browser-block-message').html('Join on your mobile device using the My Doctor Online app, or use a different browser.');
                 }
+            }
+        }
+
+    if (jqBrowserInfoObj.mozilla){
+        if(browserUserAgent.indexOf('Edg/') !== -1 || browserUserAgent.indexOf('Edge/') !== -1){
+            var isEdge = true;
+        }
+        else{
+            var isFirefox = true;
+        }
+    }
+            if (jqBrowserInfoObj.chrome){
+            var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
+            var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+            if(chrome_ver < blockChromeVersion){
+                allow= false;
+            }
+        }
+        else if(isFirefox){
+            var blockFirefoxVersion = $("#blockFirefoxVersion").val()?Number($("#blockFirefoxVersion").val()):60;
+            var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
+            if(firefox_ver < blockFirefoxVersion){
+                allow = false;
+            }
+        }
+        else if(jqBrowserInfoObj.safari){
+            var agent = navigator.userAgent;
+            var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
+            var majorVersion = majorMinorDot.split('.')[0];
+            var versionNumber = Number(majorVersion);
+            // Block access from Safari version 12.
+            var blockSafariVersion = $("#blockPexipSafariVersion").val()?Number($("#blockPexipSafariVersion").val()):11.1;
+            if(versionNumber < blockSafariVersion){
+                allow = false;
+            }
+        }
+        else if(isEdge){
+            var blockEdgeVersion = $("#blockEdgeVersion").val()?Number($("#blockEdgeVersion").val()):44;
+            var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
+            if(edge_ver < blockEdgeVersion){
+                allow = false;
             }
         }
     } else {
@@ -423,24 +477,24 @@ var logVendorMeetingEvents = function(params){
         });
     };
 
-function initializeUserPresentInMeetingModal(){	
-	$("#user-in-meeting-modal").dialog({
-	      autoOpen: false,
-	      width: "30%",
-	      height:165,
-	      modal: true,
-	      resizable:false,
-	      dialogClass:'hide-modal-title'
-	});
-	
-	$("#join-meeting-fail-modal").dialog({
-	      autoOpen: false,
-	      width: "30%",
-	      height:185,
-	      modal: true,
-	      resizable:false,
-	      dialogClass:'hide-modal-title'
-	});
+function initializeUserPresentInMeetingModal(){ 
+    $("#user-in-meeting-modal").dialog({
+          autoOpen: false,
+          width: "30%",
+          height:165,
+          modal: true,
+          resizable:false,
+          dialogClass:'hide-modal-title'
+    });
+    
+    $("#join-meeting-fail-modal").dialog({
+          autoOpen: false,
+          width: "30%",
+          height:185,
+          modal: true,
+          resizable:false,
+          dialogClass:'hide-modal-title'
+    });
 
 }
 //US30802
@@ -464,7 +518,7 @@ function setPeripheralsFlag(flagVal){
 
 //US31767
 function getMemberMeetings(){
-	$('.no-meetings-grid').css('display', 'none');
+    $('.no-meetings-grid').css('display', 'none');
     $('.my-meetings-grid').css('display', 'block');
     $('.my-meetings-grid').empty();
     $('.my-meetings-grid').html('<div style="text-align:center;"><div class="spinner-container"><img width="50px" height="50px" style="float:none;height:50px;width:50px;" src="images/global/iconLoading_small.gif"/></div></div>');
@@ -474,7 +528,7 @@ function getMemberMeetings(){
         runUDPTest = true;
         getMemberMeetings();
     },180000);
-	$.ajax({
+    $.ajax({
         type: "GET",
         url: VIDEO_VISITS.Path.landingready.dataMemberMeetings,
         cache: false,
@@ -483,8 +537,8 @@ function getMemberMeetings(){
             updateDomWithMeetingsData(result);
         },
         error: function(error){
-        	console.log(error);
-        	$('.my-meetings-grid').empty();
+            console.log(error);
+            $('.my-meetings-grid').empty();
             $('.my-meetings-grid').css('display', 'none');
             $('.no-meetings-grid').css('display', 'block');
         },
@@ -496,7 +550,7 @@ function getMemberMeetings(){
 
 function updateDomWithMeetingsData(data){
     if(!data || data.length == 0){
-    	$('.my-meetings-grid').empty();
+        $('.my-meetings-grid').empty();
         $('.my-meetings-grid').css('display', 'none');
         $('.no-meetings-grid').css('display', 'block');
     }else{
@@ -557,7 +611,7 @@ function updateDomWithMeetingsData(data){
                 else{
                     newArray = meeting.caregiver;
                 }
-            	let phoneNumsCount = 0;
+                let phoneNumsCount = 0;
                 htmlToBeAppend += '<span class="names patient-guests" style="margin-left:0;">';
                 for(var j=0;j<newArray.length;j++){
                     var cgfname = newArray[j].firstName?newArray[j].firstName.toLowerCase():'';

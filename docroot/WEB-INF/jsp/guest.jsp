@@ -50,6 +50,10 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 <input type="hidden" id="blockSafari" value="${WebAppContext.blockSafari}" />
 <input type="hidden" id="blockPexipIE" value="${WebAppContext.blockPexipIE}" />
 <input type="hidden" id="blockSafariVersion" value="${WebAppContext.blockSafariVersion}" />
+<input type="hidden" id="blockPexipSafariVersion" value="${WebAppContext.pexBlockSafariVer}" />
+<input type="hidden" id="blockChromeVersion" value="${WebAppContext.pexBlockChromeVer}" />
+<input type="hidden" id="blockFirefoxVersion" value="${WebAppContext.pexBlockFirefoxVer}" />
+<input type="hidden" id="blockEdgeVersion" value="${WebAppContext.pexBlockEdgeVer}" />
 <!-- US35718 changes -->
 
 <style>
@@ -82,8 +86,13 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	//US32190 changes
 	browserNotSupportedMsgForPatient += "Please download the <a target='_blank' style='text-decoration:underline;' href='https://mydoctor.kaiserpermanente.org/ncal/mdo/presentation/healthpromotionpage/index.jsp?promotion=kppreventivecare'>My Doctor Online app</a>, or use Chrome or Internet Explorer.";
 
-	function displayBlockMessage(){
+	function displayBlockMessage(val){
+		if(val=="pexip"){
+        $('p#globalError').html(browserNotSupportedMsgForPatient.replace('or use Chrome or Internet Explorer','or update your browser to the latest version.'));
+		}
+		else {
 		$('p#globalError').html(browserNotSupportedMsgForPatient);
+	    }    
 		$("p#globalError").removeClass("hide-me");
 		
 		document.getElementById("last_name").disabled = true;
@@ -92,8 +101,12 @@ String timezone = WebUtil.getCurrentDateTimeZone();
         $('#joinNowBtn').css('opacity', '0.5');
 	};
 
-	
+	/*var url = window.location.href;
+	var newurl = new URL(url);
+	var vendor = newurl.searchParams.get('vType');*/
 	if(meetingVendor == 'pexip'){
+    var browserUserAgent = navigator.userAgent;
+    var jqBrowserInfoObj = $.browser; 
 		if (browserInfo.isIE){
 	    	var agent = navigator.userAgent;
 	    	if(navigator.userAgent.indexOf('Edge/') === -1){
@@ -103,6 +116,46 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	    		}
 	    	}
 	    }
+	    if (jqBrowserInfoObj.mozilla){
+        if(browserUserAgent.indexOf('Edg/') !== -1 || browserUserAgent.indexOf('Edge/') !== -1){
+            var isEdge = true;
+        }
+        else{
+            var isFirefox = true;
+        }
+    }
+            if (jqBrowserInfoObj.chrome){
+            var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
+            var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+            if(chrome_ver < blockChromeVersion){
+		    		displayBlockMessage("pexip");
+            }
+        }
+        else if(isFirefox){
+            var blockFirefoxVersion = $("#blockFirefoxVersion").val()?Number($("#blockFirefoxVersion").val()):60;
+            var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
+            if(firefox_ver < blockFirefoxVersion){
+                displayBlockMessage("pexip");
+            }
+        }
+        else if(jqBrowserInfoObj.safari){
+            var agent = navigator.userAgent;
+            var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
+            var majorVersion = majorMinorDot.split('.')[0];
+            var versionNumber = Number(majorVersion);
+            // Block access from Safari version 12.
+            var blockSafariVersion = $("#blockPexipSafariVersion").val()?Number($("#blockPexipSafariVersion").val()):11.1;
+            if(versionNumber < blockSafariVersion){
+                displayBlockMessage("pexip");
+            }
+        }
+        else if(isEdge){
+            var blockEdgeVersion = $("#blockEdgeVersion").val()?Number($("#blockEdgeVersion").val()):44;
+            var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
+            if(edge_ver < blockEdgeVersion){
+                displayBlockMessage("pexip");
+            }
+        }
 	} else {
 		//US32190 changes
 		if(browserInfo.isChrome && blockChrome) {

@@ -25,10 +25,14 @@
 <input type="hidden" id="blockSafari" value="${WebAppContext.blockSafari}" />
 <input type="hidden" id="blockPexipIE" value="${WebAppContext.blockPexipIE}" />
 <input type="hidden" id="blockSafariVersion" value="${WebAppContext.blockSafariVersion}" />
+<input type="hidden" id="blockPexipSafariVersion" value="${WebAppContext.pexBlockSafariVer}" />
+<input type="hidden" id="blockChromeVersion" value="${WebAppContext.pexBlockChromeVer}" />
+<input type="hidden" id="blockFirefoxVersion" value="${WebAppContext.pexBlockFirefoxVer}" />
+<input type="hidden" id="blockEdgeVersion" value="${WebAppContext.pexBlockEdgeVer}" />
 <%
 
-	//MeetingCommand.retrieveActiveMeetingsForMemberAndProxies(request);
-	String timezone = WebUtil.getCurrentDateTimeZone();
+  //MeetingCommand.retrieveActiveMeetingsForMemberAndProxies(request);
+  String timezone = WebUtil.getCurrentDateTimeZone();
 
 %>
 
@@ -43,23 +47,23 @@
   </div>
   <!-- UDP Test Results -->
   <div class="special-message-banner-container" id="udp-test-container">
-	  <div class="special-message-header">
-	    <span class="warning-icon"></span>
-	    <p class="warning-text">Unable to establish a connection to your visit</p>
-	  </div>
-	  <div class="special-message-content">
-	    <div class="special-message-container">
-	      <div class="mdo-logo"></div>
-	      <div class="special-message">
-	        <p>Join on your mobile device using</p>
-	        <p><b>My Doctor Online</b> App using your cellular network.</p>
-	      </div>
-	    </div>
-	    <div class="app-store-container">
-	      <span class="ios-appstore"><a class="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></span>
+    <div class="special-message-header">
+      <span class="warning-icon"></span>
+      <p class="warning-text">Unable to establish a connection to your visit</p>
+    </div>
+    <div class="special-message-content">
+      <div class="special-message-container">
+        <div class="mdo-logo"></div>
+        <div class="special-message">
+          <p>Join on your mobile device using</p>
+          <p><b>My Doctor Online</b> App using your cellular network.</p>
+        </div>
+      </div>
+      <div class="app-store-container">
+        <span class="ios-appstore"><a class="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></span>
         <span class="android-playstore"><a href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&hl=en_US" class="icon-link" target="_blank"></a></span>
-	    </div>
-	   </div>
+      </div>
+     </div>
  </div>
  <!-- UDP Test Results -->
  <!-- Block Message -->
