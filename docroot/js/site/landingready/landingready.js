@@ -375,7 +375,13 @@ function allowToJoin(vendor){
         if(browserUserAgent.indexOf('Edge/') !== -1){
             var isEdge = true;
         }
-        else{
+        else if(browserUserAgent.indexOf('Safari/') !== -1){
+            var isSafari = true;
+        }
+        else if(browserUserAgent.indexOf('Chrome/') !== -1){
+            var isChrome = true;
+        }
+        else if(browserUserAgent.indexOf('Firefox/') !== -1){
             var isFirefox = true;
         }
     }
@@ -390,7 +396,7 @@ function allowToJoin(vendor){
             }
         }
 
-        else if (jqBrowserInfoObj.chrome){
+        else if (isChrome){
             var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
             var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
             if(chrome_ver < blockChromeVersion){
@@ -404,7 +410,7 @@ function allowToJoin(vendor){
                 allow = false;
             }
         }
-        else if(jqBrowserInfoObj.safari){
+        else if(isSafari){
             var agent = navigator.userAgent;
             var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
             var majorVersion = majorMinorDot.split('.')[0];
