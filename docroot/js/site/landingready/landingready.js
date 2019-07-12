@@ -405,9 +405,12 @@ function allowToJoin(vendor){
             }
         }
         else if(isEdge){
-            var blockEdgeVersion = $("#blockEdgeVersion").val()?Number($("#blockEdgeVersion").val()):44;
-            var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
-            if(edge_ver < blockEdgeVersion){
+            var blockEdgeVersion = $("#blockEdgeVersion").val()?Number($("#blockEdgeVersion").val()):18;
+            var agentVal = navigator.userAgent;
+            var val = agentVal.split('Edge/');
+            val[1].slice(0,2);
+            //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
+            if(val < blockEdgeVersion){
                 allow = false;
             }
         }
