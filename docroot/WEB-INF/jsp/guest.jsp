@@ -142,7 +142,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
             var agent = navigator.userAgent;
             var majorMinorDot = agent.substring(agent.indexOf('Version/')+8, agent.lastIndexOf('Safari')).trim();
             var majorVersion = majorMinorDot.split('.')[0];
-            var versionNumber = parseFloat(majorVersion);
+            var versionNumber = parseFloat(majorMinorDot);
             // Block access from Safari version 12.
             var blockSafariVersion = $("#blockPexipSafariVersion").val()?Number($("#blockPexipSafariVersion").val()):11.1;
             if(versionNumber < blockSafariVersion){
