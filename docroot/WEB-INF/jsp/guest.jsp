@@ -116,15 +116,26 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	    		}
 	    	}
 	    }
-	    if (jqBrowserInfoObj.mozilla){
-        if(browserUserAgent.indexOf('Edg/') !== -1 || browserUserAgent.indexOf('Edge/') !== -1){
+	    if (navigator.appCodeName == 'Mozilla'){
+        if(browserUserAgent.indexOf('Edge/') !== -1){
             var isEdge = true;
         }
         else{
             var isFirefox = true;
         }
     }
-            if (jqBrowserInfoObj.chrome){
+
+		if(isEdge){
+            var blockEdgeVersion = $("#blockEdgeVersion").val()?Number($("#blockEdgeVersion").val()):18;
+            var agentVal = navigator.userAgent;
+            var val = agentVal.split('Edge/');
+            var edge_ver = val[1].slice(0,2);
+            //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
+            if(edge_ver < blockEdgeVersion){
+                allow = false;
+            }
+        }    
+        else if (jqBrowserInfoObj.chrome){
             var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
             var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
             if(chrome_ver < blockChromeVersion){
@@ -149,16 +160,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
                 displayBlockMessage("pexip");
             }
         }
-        else if(isEdge){
-            var blockEdgeVersion = $("#blockEdgeVersion").val()?Number($("#blockEdgeVersion").val()):18;
-            var agentVal = navigator.userAgent;
-            var val = agentVal.split('Edge/');
-            val[1].slice(0,2);
-            //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
-            if(val < blockEdgeVersion){
-                allow = false;
-            }
-        }
+        
 	} else {
 		//US32190 changes
 		if(browserInfo.isChrome && blockChrome) {
