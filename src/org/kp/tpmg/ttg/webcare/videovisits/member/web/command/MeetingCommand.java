@@ -296,6 +296,7 @@ public class MeetingCommand {
 		MeetingDetailsOutput output;
 		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		updateWebappContextWithBrowserFlags(ctx);
+		updateWebappContextWithPexipDesktopBrowserDetails(ctx);
 		String meetingCode = request.getParameter("meetingCode");
 		boolean success = WebService.initWebService(request);
 		if (ctx != null && success) {
