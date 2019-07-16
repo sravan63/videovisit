@@ -239,7 +239,7 @@ $(document).ready(function() {
 	VideoVisit.updatePatientGuestNameList();
 	
 		$("#selfview").on('click', function(){
-			if($("#presentation-view").css("display") == "block"){
+			if($("#presentation-view img").css("display") == "block"){
 			$(this).addClass("togglesv");
 			$("#presentation-view").addClass("togglepv");
 			$("#presentation-view img").addClass("togglepvimg");
