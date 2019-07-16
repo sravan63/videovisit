@@ -391,7 +391,7 @@ function allowToJoin(vendor){
             var val = agentVal.split('Edge/');
             var edge_ver = val[1].slice(0,2);
             //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
-            if(16 < blockEdgeVersion){
+            if(edge_ver < blockEdgeVersion){
                 allow = false;
             }
         }
@@ -399,14 +399,14 @@ function allowToJoin(vendor){
         else if (isChrome){
             var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
             var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
-            if(60 < blockChromeVersion){
+            if(chrome_ver < blockChromeVersion){
                 allow= false;
             }
         }
         else if(isFirefox){
             var blockFirefoxVersion = $("#blockFirefoxVersion").val()?Number($("#blockFirefoxVersion").val()):60;
             var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
-            if(59 < blockFirefoxVersion){
+            if(firefox_ver < blockFirefoxVersion){
                 allow = false;
             }
         }
@@ -417,7 +417,7 @@ function allowToJoin(vendor){
             var versionNumber = parseFloat(majorMinorDot);
             // Block access from Safari version 12.
             var blockSafariVersion = $("#blockPexipSafariVersion").val()?Number($("#blockPexipSafariVersion").val()):11.1;
-            if(10 < blockSafariVersion){
+            if(versionNumber < blockSafariVersion){
                 allow = false;
             }
         }
