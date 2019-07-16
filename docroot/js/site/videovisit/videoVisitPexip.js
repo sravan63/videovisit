@@ -640,10 +640,9 @@ var VideoVisit =
 		//DE9498 Kranti--commented
 		//var btnGroupHeight = $("#buttonGroup").outerHeight();
 		//DE9498 Kranti--new line
-		var btnGroupHeight = 550;
-		if($('#container').hasClass('pexip-main-container')){
-			btnGroupHeight = 480;//DE17110 changes
-		}
+		var windowHeight = $(window).height();
+		var vvHeaderHeight = $("#vvHeader").outerHeight();
+		var btnGroupHeight = windowHeight - vvHeaderHeight;
 
 		$("#video-main").css("min-height", btnGroupHeight);
 		$("#pluginContainer").css("min-height", btnGroupHeight);
