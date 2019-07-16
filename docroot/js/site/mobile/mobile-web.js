@@ -1676,9 +1676,13 @@ function setMemberOrCareGiverStatus(){
 	    }
 		sendUserJoinLeaveStatus(guestName,isPatientLoggedIn,"J");
 	} else{
-		var meetingId = $('#meetingId').val();
-		var meetingCode = $('#meetingCode').val();
-		CaregiverJoinMeeting(meetingId, "J", meetingCode);
+		if($('#isProxyMeeting').val() == 'true' || $('#isProxyMeeting').val() == true){
+			sendUserJoinLeaveStatus($("#guestName").val(),false,"J");
+		} else {			
+			var meetingId = $('#meetingId').val();
+			var meetingCode = $('#meetingCode').val();
+			CaregiverJoinMeeting(meetingId, "J", meetingCode);
+		}
 	}
 }
 
