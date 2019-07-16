@@ -137,21 +137,21 @@ String timezone = WebUtil.getCurrentDateTimeZone();
             var val = agentVal.split('Edge/');
             var edge_ver = val[1].slice(0,2);
             //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
-            if(edge_ver < blockEdgeVersion){
+            if(16 < blockEdgeVersion){
                 allow = false;
             }
         }    
         else if (isChrome){
             var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
             var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
-            if(chrome_ver < blockChromeVersion){
+            if(60 < blockChromeVersion){
 		    		displayBlockMessage("pexip");
             }
         }
         else if(isFirefox){
             var blockFirefoxVersion = $("#blockFirefoxVersion").val()?Number($("#blockFirefoxVersion").val()):60;
             var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
-            if(firefox_ver < blockFirefoxVersion){
+            if(59 < blockFirefoxVersion){
                 displayBlockMessage("pexip");
             }
         }
@@ -162,7 +162,7 @@ String timezone = WebUtil.getCurrentDateTimeZone();
             var versionNumber = parseFloat(majorMinorDot);
             // Block access from Safari version 12.
             var blockSafariVersion = $("#blockPexipSafariVersion").val()?Number($("#blockPexipSafariVersion").val()):11.1;
-            if(versionNumber < blockSafariVersion){
+            if(10 < blockSafariVersion){
                 displayBlockMessage("pexip");
             }
         }
