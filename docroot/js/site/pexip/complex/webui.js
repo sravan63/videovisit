@@ -137,7 +137,7 @@ function createPresentationWindow() {
         $('#presentation-view').css('display', 'block');
         setTimeout(checkForBlockedPopup, 1000);
         presentation = $('#presentation-view');
-        mobileviewHeight = isMobileDevice ? '50%' : '100%';
+        mobileviewHeight = isMobileDevice ? '40vh' : '100%';
         $('#presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:block;z-index:5;height:"+ mobileviewHeight +" ;width:100%;' onLoad='switchImage();'/><div width='0px' height='0px' style='overflow:auto;position:absolute;left:0;top:0;'><img src='' id='presimage' width='0px'/></div>");
     }
     /*if (presentation == null) {
@@ -190,7 +190,7 @@ function createPresentationStreamWindow() {
         setTimeout(checkForBlockedPopup, 1000);
         $('#presentation-view').css('display', 'block');
         presentation = $('#presentation-view');
-        mobileviewHeight = isMobileDevice ? '50%' : '100%';        
+        mobileviewHeight = isMobileDevice ? '40vh' : '100%';        
         $('#presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:block;z-index:5;height: "+ mobileviewHeight +" ;width:100%;' onLoad='switchImage();'/><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay' poster='img/spinner.gif'/><img src='' id='presimage' width='0px'/></div>");
     }
     //presentation-view
