@@ -375,11 +375,11 @@ function allowToJoin(vendor){
         if(browserUserAgent.indexOf('Edge/') !== -1){
             var isEdge = true;
         }
-        else if(browserUserAgent.indexOf('Safari/') !== -1){
-            var isSafari = true;
-        }
         else if(browserUserAgent.indexOf('Chrome/') !== -1){
             var isChrome = true;
+        }
+        else if(browserUserAgent.indexOf('Safari/') !== -1){
+            var isSafari = true;
         }
         else if(browserUserAgent.indexOf('Firefox/') !== -1){
             var isFirefox = true;
