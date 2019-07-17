@@ -845,9 +845,9 @@ border-radius: 50%;
 
 @media (orientation: landscape) {
   .presentation-view img{
-    height:100% !important;
-    object-fit: contain;
-    width: 97vw !important;
+    height:90vh !important;
+    /*object-fit: contain;*/
+    width: 93vw !important;
   }
   .mobilesv{
     height: 100px !important;
