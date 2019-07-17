@@ -1537,7 +1537,7 @@ function setOrientationMode(){
 function setVideoFeedHeight(){
 	var isLandscape = window.matchMedia("(orientation:landscape)").matches;
 	var windowHeight = $(window).height();
-	var topHeight = isLandscape ? windowHeight : windowHeight - 50;
+	var topHeight = isLandscape ? windowHeight : windowHeight; // - 50
 	if(!isLandscape){
 		$(".video-top").outerHeight(topHeight);
 		$(".waiting-room").height(topHeight/2);
