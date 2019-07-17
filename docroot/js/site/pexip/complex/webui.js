@@ -912,7 +912,7 @@ function connected(url) {
     }
 //    toggleSelfview();
     if(!isMobileDevice){
-        VideoVisit.setMinDimensions();
+        //VideoVisit.setMinDimensions();
         setPatientGuestPresenceIndicatorManually();
         setConferenceStatus();
     } else {

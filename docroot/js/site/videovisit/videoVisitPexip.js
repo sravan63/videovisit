@@ -644,6 +644,8 @@ var VideoVisit =
 		var vvHeaderHeight = $("#vvHeader").outerHeight();
 		var btnGroupHeight = windowHeight - vvHeaderHeight;
 
+		$("#video-main").height(btnGroupHeight);
+		$("#pluginContainer").height(btnGroupHeight);
 		$("#video-main").css("min-height", btnGroupHeight);
 		$("#pluginContainer").css("min-height", btnGroupHeight);
 		//$("#video-sidebar").css("min-height", btnGroupHeight);
@@ -830,6 +832,7 @@ function startPexip() {
 	var source = "Join+Conference";
 	var name = $("#guestName").val();
 	initialise(roomUrl, alias, bandwidth, name, "", source);
+	VideoVisit.setMinDimensions();
 }
 
 function setConferenceStatus(){
@@ -876,6 +879,8 @@ $(window).resize(function(){
 	//$('#container-videovisit').height(calculatedHeight);
 	$("#video-main").height(calculatedHeight);
 	$("#pluginContainer").height(calculatedHeight);
+	$("#video-main").css("min-height", calculatedHeight);
+	$("#pluginContainer").css("min-height", calculatedHeight);
 	$("#video-sidebar").height(calculatedHeight);
 	$(".video-sidebar-content").height(calculatedHeight - 33);
 	if(!$('#container').hasClass('pexip-main-container')){
