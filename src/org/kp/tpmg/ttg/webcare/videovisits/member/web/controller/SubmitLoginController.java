@@ -21,12 +21,16 @@ public class SubmitLoginController extends SimplePageController {
 			HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		String data = null;
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		ctx.setClientId(WebUtil.VV_MBR_WEB);
-		ctx.setBackButtonClientId(WebUtil.VV_MBR_BACK_BUTTON);
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
-			if (ctx != null && StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
-				ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
+			if (ctx != null) {
+				ctx.setClientId(WebUtil.VV_MBR_WEB);
+				ctx.setBackButtonClientId(WebUtil.VV_MBR_BACK_BUTTON);
+				ctx.setNonMember(false);
+				ctx.setKpOrgSignOnInfo(null);
+				if (StringUtils.isBlank(ctx.getWebrtcSessionManager())) {
+					ctx.setWebrtcSessionManager(WebUtil.VIDYO_WEBRTC_SESSION_MANGER);
+				}
 			}
 			data = MeetingCommand.verifyMember(request);
 			MeetingCommand.updateWebappContextWithBrowserFlags(ctx);
