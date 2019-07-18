@@ -43,7 +43,6 @@ public class LogoffController extends SimplePageController {
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if (ctx == null) {
 				logger.info("context is null");
-//				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
 				Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.getSSOCookieName());
 
 				if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
@@ -58,7 +57,7 @@ public class LogoffController extends SimplePageController {
 						ctx.setPromo(promos);
 						ctx.setIconPromo(iconpromos);
 						ctx.setVideoLink(videoLink);
-						String ssoCookieVal = ssoCookie.getValue();//URLDecoder.decode(ssoCookie.getValue(), "UTF-8");
+						String ssoCookieVal = ssoCookie.getValue();
 
 						String responseCode = MeetingCommand.validateKpOrgSSOSession(request, ssoCookieVal);
 						if ("200".equalsIgnoreCase(responseCode)) {

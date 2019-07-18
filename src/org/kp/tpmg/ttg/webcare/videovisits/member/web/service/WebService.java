@@ -127,7 +127,7 @@ public class WebService {
 
 		try {
 			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
-			simulation = appProp.getProperty("WEBSERVICE_SIMULATION").equals("true") ? true : false;
+			simulation = "true".equals(appProp.getProperty("WEBSERVICE_SIMULATION")) ? true : false;
 			logger.debug("Simulation:" + simulation);
 			modulePath = appProp.getProperty("MODULE_PATH");
 			policyPath = appProp.getProperty("POLICY_PATH");
@@ -148,8 +148,8 @@ public class WebService {
 
 			// Proxy Appts parameters
 			secureCodes = appProp.getProperty("SECURE_CODES");
-			isAdhoc = appProp.getProperty("ADHOC").equals("true") ? true : false;
-			isParrs = appProp.getProperty("PARRS").equals("true") ? true : false;
+			isAdhoc = "true".equals(appProp.getProperty("ADHOC")) ? true : false;
+			isParrs = "true".equals(appProp.getProperty("PARRS")) ? true : false;
 			logger.debug("secureCodes=" + secureCodes + ", isAdhoc=" + isAdhoc + ", isParrs=" + isParrs);
 
 			memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
@@ -320,9 +320,8 @@ public class WebService {
 
 				responseJsonStr = callVVRestService(ServiceUtil.UPDATE_MEMBER_MEETING_STATUS, inputJsonString);
 
-				JsonParser parser = new JsonParser();
-				JsonObject jobject = new JsonObject();
-				jobject = (JsonObject) parser.parse(responseJsonStr);
+				final JsonParser parser = new JsonParser();
+				final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
 				output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
 			}
 
@@ -369,8 +368,7 @@ public class WebService {
 				logger.debug("jsonResponseString" + jsonString);
 
 				final JsonParser parser = new JsonParser();
-				JsonObject jobject = new JsonObject();
-				jobject = (JsonObject) parser.parse(jsonString);
+				final JsonObject jobject = (JsonObject) parser.parse(jsonString);
 				output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
 			}
 		} catch (Exception e) {
@@ -415,9 +413,8 @@ public class WebService {
 			responseJsonStr = callVVRestService(ServiceUtil.IS_MEETING_HASH_VALID, inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 
-			JsonParser parser = new JsonParser();
-			JsonObject jobject = new JsonObject();
-			jobject = (JsonObject) parser.parse(responseJsonStr);
+			final JsonParser parser = new JsonParser();
+			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
 			output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
 		} catch (Exception e) {
 			logger.error("Web Service API error : " + e);
@@ -466,9 +463,8 @@ public class WebService {
 			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 
-			JsonParser parser = new JsonParser();
-			JsonObject jobject = new JsonObject();
-			jobject = (JsonObject) parser.parse(responseJsonStr);
+			final JsonParser parser = new JsonParser();
+			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
 			output = gson.fromJson(jobject.get("service").toString(), LaunchMeetingForMemberGuestOutput.class);
 
 		} catch (Exception e) {
@@ -516,9 +512,8 @@ public class WebService {
 
 			responseJsonStr = callVVRestService(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString);
 			logger.info("jsonResponseString : " + responseJsonStr);
-			JsonParser parser = new JsonParser();
-			JsonObject jobject = new JsonObject();
-			jobject = (JsonObject) parser.parse(responseJsonStr);
+			final JsonParser parser = new JsonParser();
+			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
 			output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
 		}
 
@@ -561,9 +556,8 @@ public class WebService {
 			responseJsonStr = callVVRestService(ServiceUtil.TERMINATE_INSTANT_VENDOR_MEETING, inputJsonString);
 			logger.info("jsonResponseString : " + responseJsonStr);
 
-			JsonParser parser = new JsonParser();
-			JsonObject jobject = new JsonObject();
-			jobject = (JsonObject) parser.parse(responseJsonStr);
+			final JsonParser parser = new JsonParser();
+			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
 			output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
 		}
 
@@ -1091,9 +1085,8 @@ public class WebService {
 			String jsonString = callVVRestService(operationName, inputString);
 			logger.debug("outputjsonString" + jsonString);
 
-			JsonParser parser = new JsonParser();
-			JsonObject jobject = new JsonObject();
-			jobject = (JsonObject) parser.parse(jsonString);
+			final JsonParser parser = new JsonParser();
+			final JsonObject jobject = (JsonObject) parser.parse(jsonString);
 			launchMeetingForMemberGuest = gson.fromJson(jobject.get("service").toString(),
 					LaunchMeetingForMemberGuestOutput.class);
 		} catch (Exception e) {
@@ -1143,8 +1136,7 @@ public class WebService {
 			logger.debug("outputjsonString" + jsonString);
 			if (StringUtils.isNotBlank(jsonString)) {
 				final JsonParser parser = new JsonParser();
-				JsonObject jobject = new JsonObject();
-				jobject = (JsonObject) parser.parse(jsonString);
+				final JsonObject jobject = (JsonObject) parser.parse(jsonString);
 				verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), VerifyMemberOutput.class);
 			}
 		} catch (Exception e) {
@@ -1187,9 +1179,8 @@ public class WebService {
 			responseJsonStr = callVVRestService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 
-			JsonParser parser = new JsonParser();
-			JsonObject jobject = new JsonObject();
-			jobject = (JsonObject) parser.parse(responseJsonStr);
+			final JsonParser parser = new JsonParser();
+			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
 			output = gson.fromJson(jobject.get("service").toString(), CreateInstantVendorMeetingOutput.class);
 		}
 
@@ -1317,9 +1308,9 @@ public class WebService {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
 		logger.debug("mrn8Digit=" + mrn8Digit + ", inMeetingDisplayName" + inMeetingDisplayName);
 		final Gson gson = new Gson();
-		String responseJsonStr = null;
+		String responseJsonStr;
 		String inputJsonString = null;
-		LaunchMeetingForMemberDesktopInput input = null;
+		LaunchMeetingForMemberDesktopInput input;
 		if (meetingId <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId)
 				|| StringUtils.isBlank(inMeetingDisplayName)) {
 			logger.warn("Missing input attributes.");
@@ -1395,7 +1386,7 @@ public class WebService {
 
 		LaunchMeetingForMemberInput jsonInput = new LaunchMeetingForMemberInput();
 		Gson gson = new Gson();
-		String output = null;
+		String output;
 		if (meetingID <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID)
 				|| StringUtils.isBlank(inMeetingDisplayName)) {
 			logger.warn("Missing input attributes.");
@@ -1432,7 +1423,7 @@ public class WebService {
 		logger.debug("mrn8Digit=" + mrn8Digit);
 		MemberLogoutInput input = new MemberLogoutInput();
 		Gson gson = new Gson();
-		String output = null;
+		String output;
 		if (StringUtils.isBlank(mrn8Digit)) {
 			mrn8Digit = WebUtil.NON_MEMBER;
 		}
@@ -1470,7 +1461,7 @@ public class WebService {
 		logger.info(LOG_ENTERED + " meetingId: " + meetingId);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		MeetingRunningLateInput input = null;
+		MeetingRunningLateInput input;
 
 		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId)) {
 			logger.warn("Missing input attributes.");
@@ -1514,7 +1505,7 @@ public class WebService {
 				+ joinOrLeave);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		JoinLeaveMeetingForMemberGuestInput input = null;
+		JoinLeaveMeetingForMemberGuestInput input;
 
 		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(meetingHash) || StringUtils.isBlank(joinOrLeave)
 				|| StringUtils.isBlank(sessionId)) {
@@ -1552,7 +1543,7 @@ public class WebService {
 		logger.info(LOG_ENTERED + " meetingId: " + meetingId + ", userType :" + userType + ", action :" + action);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		UpdateEmailActionInput input = null;
+		UpdateEmailActionInput input;
 
 		if (StringUtils.isBlank(meetingId)) {
 			logger.warn("Missing input attributes.");
@@ -1592,7 +1583,7 @@ public class WebService {
 		logger.info(LOG_ENTERED + " meetingId: " + meetingId + " userType: " + userType);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		VendorMeetingEventInput input = null;
+		VendorMeetingEventInput input;
 
 		if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
 			logger.warn("Missing input attributes.");

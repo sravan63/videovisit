@@ -27,7 +27,6 @@ public class WebUtil {
 	public static final Logger logger = Logger.getLogger(WebUtil.class);
 	private static Pattern DOB_PATTERN = Pattern.compile("\\d\\d\\d\\d-\\d[\\d]-\\d[\\d]");
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
-	// public static final String SSO_COOKIE_NAME = "ObSSOCookie";
 	public static final String MOB_CLIENT_ID = "vv-mbr-mbl-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
 	public static final String NON_MEMBER = "Non_Mmbr";
@@ -91,10 +90,10 @@ public class WebUtil {
 	}
 
 	public static String fillToLength(String src, char fillChar, int total_length) {
-		String ret = null;
+		String ret;
 		if (StringUtils.isNotBlank(src) && src.length() < total_length) {
 			int count = total_length - src.length();
-			StringBuffer sb = new StringBuffer();
+			final StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < count; i++) {
 				sb.append(fillChar);
 			}
@@ -204,8 +203,6 @@ public class WebUtil {
 			} else if ((user.indexOf("mozilla/7.0") > -1) || (user.indexOf("netscape6") != -1)
 					|| (user.indexOf("mozilla/4.7") != -1) || (user.indexOf("mozilla/4.78") != -1)
 					|| (user.indexOf("mozilla/4.08") != -1) || (user.indexOf("mozilla/3") != -1)) {
-				// browser=(userAgent.substring(userAgent.indexOf("MSIE")).split("
-				// ")[0]).replace("/", "-");
 				browser = "Netscape-?";
 
 			} else if (user.contains("firefox")) {

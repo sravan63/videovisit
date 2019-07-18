@@ -240,9 +240,6 @@ public class MeetingCommand {
 			if (isMyMeetingsAvailable(meetingDetailsOutput)) {
 				final List<MeetingDO> myMeetings = meetingDetailsOutput.getEnvelope().getMeetings();
 				logger.info("Meetings Size: " + myMeetings.size());
-				/*for (MeetingDO myMeeting : myMeetings) {
-					normalizeMeetingData(myMeeting, meetingCode, ctx);
-				}*/
 				ctx.setTotalmeetings(myMeetings.size());
 
 				for (MeetingDO meetingDO : myMeetings) {
@@ -410,7 +407,7 @@ public class MeetingCommand {
 			if (output != null) {
 				Gson gson = new Gson();
 				jsonString = gson.toJson(output);
-				logger.info("json output" + jsonString.toString());
+				logger.info("json output" + jsonString);
 			}
 
 		} catch (Exception e) {
@@ -743,7 +740,6 @@ public class MeetingCommand {
 					isSignedOff = WebService.performKpOrgSSOSignOff(ctx.getKpOrgSignOnInfo().getSsoSession());
 				}
 				invalidateWebAppContext(ctx);
-//				WebUtil.removeCookie(request, response, WebUtil.SSO_COOKIE_NAME);
 				WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
 				WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);
 				WebUtil.removeCookie(request, response, WebUtil.S_COOKIE_NAME);
@@ -832,11 +828,6 @@ public class MeetingCommand {
 					if (!isMyMeetingsAvailable(output)) {
 						ctx.setTotalmeetings(0);
 					} else {
-						/*for (MeetingDO myMeeting : memberMeetings) {
-							normalizeMeetingData(myMeeting, ctx.getMeetingCode(), ctx);
-							logger.info("Meeting ID = " + myMeeting.getMeetingId());
-							logger.debug("Vendor meeting id = " + myMeeting.getMeetingVendorId());
-						}*/
 						final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
 						ctx.setTotalmeetings(meetings != null ? meetings.size() : 0);
 						ctx.setMyMeetings(meetings);
@@ -1255,15 +1246,13 @@ public class MeetingCommand {
 		final String meetingId = request.getParameter("meetingId");
 		final String userType = request.getParameter("userType");
 		final String firstName = request.getParameter("firstName");
-		String lastName = request.getParameter("lastName");
 		final String email = request.getParameter("email");
 		final String displayName = request.getParameter("displayName");
 		final String destination = request.getParameter("destination");
 		final String participantType = request.getParameter("participantType");
 		if (ctx != null && StringUtils.isNotBlank(meetingId) && StringUtils.isNotBlank(userType)) {
 			if (TELEPHONY.equalsIgnoreCase(userType)) {
-				lastName = MemberConstants.AUDIO_PARTICIPANT;
-				addCaregiverToContext(ctx, meetingId, firstName, lastName, email);
+				addCaregiverToContext(ctx, meetingId, firstName, MemberConstants.AUDIO_PARTICIPANT, email);
 			} else if (SIP.equalsIgnoreCase(userType)) {
 				addSipParticipantToContext(ctx, meetingId, displayName, destination, participantType);
 			}
@@ -1322,13 +1311,11 @@ public class MeetingCommand {
 	 */
 	private static SipParticipant getSipParticipant(final MeetingDO meeting, final String destination) {
 		SipParticipant sipParticipant = null;
-		if (StringUtils.isNotBlank(destination)) {
-			if (CollectionUtils.isNotEmpty(meeting.getSipParticipants())) {
-				for (SipParticipant locSipParticipant : meeting.getSipParticipants()) {
-					if (destination.equalsIgnoreCase(locSipParticipant.getDestination())) {
-						sipParticipant = locSipParticipant;
-						break;
-					}
+		if (StringUtils.isNotBlank(destination) && CollectionUtils.isNotEmpty(meeting.getSipParticipants())) {
+			for (SipParticipant locSipParticipant : meeting.getSipParticipants()) {
+				if (destination.equalsIgnoreCase(locSipParticipant.getDestination())) {
+					sipParticipant = locSipParticipant;
+					break;
 				}
 			}
 		}

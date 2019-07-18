@@ -70,8 +70,8 @@ public class BackButtonFilter implements Filter {
 		boolean isExclude = isExcludeUrl(req);
 
 		// User explicity clicked some button to leave the video page
-		boolean explicitUserAction = (request.getParameter("explicitActionNavigation") != null
-				&& request.getParameter("explicitActionNavigation").equals("true"));
+		boolean explicitUserAction = request.getParameter("explicitActionNavigation") != null
+				&& "true".equals(request.getParameter("explicitActionNavigation"));
 
 		if (!isExclude && !explicitUserAction) {
 			WebAppContext ctx = WebAppContext.getWebAppContext(req);
@@ -117,7 +117,7 @@ public class BackButtonFilter implements Filter {
 				if (ss == null) {
 					// session expired, return expiration message
 					logger.info("Session expired so forwarding to " + "/logout.htm");
-					RequestDispatcher rd = null;
+					RequestDispatcher rd;
 
 					if (req.getRequestURI().toUpperCase().contains("GUEST")) {
 						rd = req.getRequestDispatcher("/guestlogout.htm");
@@ -132,7 +132,7 @@ public class BackButtonFilter implements Filter {
 					// user was logged out, return empty response
 					logger.info("User is logged out, returning empty response");
 
-					RequestDispatcher rd = null;
+					RequestDispatcher rd;
 
 					if (req.getRequestURI().toUpperCase().contains("GUEST")) {
 						rd = req.getRequestDispatcher("/guestlogout.htm");

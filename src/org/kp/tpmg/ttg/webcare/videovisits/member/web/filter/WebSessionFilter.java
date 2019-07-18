@@ -75,13 +75,13 @@ public class WebSessionFilter implements Filter {
 			String memberWebHomePageUrl1 = homePageUrlMap.get("homepage-member-web1");
 			String memberWebHomePageUrl2 = homePageUrlMap.get("homepage-member-web2");
 			String memberWebHomePageUrl3 = homePageUrlMap.get("homepage-member-web3");
-			String memberWebHomePageUrl4 = homePageUrlMap.get("homepage-member-web4");
+//			String memberWebHomePageUrl4 = homePageUrlMap.get("homepage-member-web4");
 			String memberMobileHomePageUrl = homePageUrlMap.get("homepage-member-mobile");
 			String guestWebHomePageUrl = homePageUrlMap.get("homepage-guest-web");
 			String guestMobileHomePageUrl = homePageUrlMap.get("homepage-guest-mobile");
 			String guestMobileLoginPageUrl = homePageUrlMap.get("loginpage-guest-mobile");
 			String memberWebSSOLoginPageUrl = homePageUrlMap.get("homepage-member-sso-web");
-			String redirectToUrl = null;
+			String redirectToUrl;
 			// Handle patient home page URL1
 			logger.info("requesturi = " + requestUri + " memberWebHomePageUrl1 = " + memberWebHomePageUrl1
 					+ " memberWebHomePageUrl2 = " + memberWebHomePageUrl2 + "  memberWebHomePageUrl3 = "
@@ -100,7 +100,6 @@ public class WebSessionFilter implements Filter {
 					req.getRequestDispatcher(redirectToUrl).forward(req, resp);
 				}
 
-				// req.getRequestDispatcher(redirectToUrl).forward(req, resp);
 			}
 			// Handle guest home page URL
 			else if (requestUri.equals(guestWebHomePageUrl)) {
@@ -123,7 +122,6 @@ public class WebSessionFilter implements Filter {
 					redirectToUrl = guestWebHomePageUrl + "?meetingCode=" + meetingCode;
 					req.getRequestDispatcher(redirectToUrl).forward(req, resp);
 				}
-				// req.getRequestDispatcher(redirectToUrl).forward(req, resp);
 
 			} else if ("setup.htm".equalsIgnoreCase(requestUri)) {
 				logger.info("setup wizard request: " + requestUri);
@@ -149,9 +147,7 @@ public class WebSessionFilter implements Filter {
 				chain.doFilter(req, resp);
 			} else {
 				if (requestUri.contains("mobilepatientlightauth") || requestUri.contains("mobilepglightauth")) {
-					// boolean isWirelessDeviceOrTablet =
-					// DeviceDetectionService.isWirelessDeviceorTablet(req);
-					Cookie memberContextCookie = null;
+					Cookie memberContextCookie;
 					Cookie cookies[] = req.getCookies();
 					String value;
 					boolean cookieNotFound = true;
@@ -171,12 +167,12 @@ public class WebSessionFilter implements Filter {
 										String meetingCode = attrs[1];
 										String location = attrs[2];
 										logger.info(isPatientGuest + " " + meetingCode + " " + location);
-										if (isPatientGuest.equalsIgnoreCase("false")
-												&& location.equalsIgnoreCase("landingPage")) {
+										if ("false".equalsIgnoreCase(isPatientGuest)
+												&& "landingPage".equalsIgnoreCase(location)) {
 											logger.info("isPatientGuest is false and location is landingPage");
 											req.getRequestDispatcher("mobilepatientlightauth.htm").forward(req, resp);
-										} else if (isPatientGuest.equalsIgnoreCase("true")
-												&& location.equalsIgnoreCase("landingPagePG")) {
+										} else if ("true".equalsIgnoreCase(isPatientGuest)
+												&& "landingPagePG".equalsIgnoreCase(location)) {
 											logger.info("isPatientGuest is true and location is landingPage "
 													+ meetingCode);
 											if (meetingCode != null && meetingCode.length() > 0) {
@@ -363,7 +359,7 @@ public class WebSessionFilter implements Filter {
 
 		if (isWirelessDeviceOrTablet) {
 
-			if ((showFullSite != null && "true".equals(showFullSite))) {
+			if (showFullSite != null && "true".equals(showFullSite)) {
 				timeoutUrl = generateUrl(request, webMemberLoginUrl);
 			} else {
 				// Mobile Login url
@@ -381,7 +377,7 @@ public class WebSessionFilter implements Filter {
 
 	private String generateUrl(HttpServletRequest request, String prependUrl) {
 
-		StringBuffer sbUrl = new StringBuffer();
+		final StringBuilder sbUrl = new StringBuilder();
 
 		String scheme = request.getScheme();
 		String serverName = request.getServerName();

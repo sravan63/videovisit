@@ -59,7 +59,6 @@ public class SSOPreLoginController extends CommonController {
 			updateWebappContext(ctx);
 			logger.debug("ssoSession in context=" + ssoSession);
 
-			// Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.SSO_COOKIE_NAME);
 			Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.getSSOCookieName());
 			if (ssoCookie == null || (ssoCookie != null && ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
 					|| StringUtils.isBlank(ssoCookie.getValue())))) {
@@ -79,14 +78,7 @@ public class SSOPreLoginController extends CommonController {
 
 			if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
 				ssoSession = ssoCookie.getValue();
-				/*
-				 * logger.debug("ssoSession from cookie before decoding=" + ssoSession); try {
-				 * ssoSession = URLDecoder.decode(ssoSession, "UTF-8"); } catch
-				 * (UnsupportedEncodingException e) {
-				 * logger.warn("Error while decoding a coockie value=" + ssoSession); }
-				 * logger.debug("ssoSession from cookie after decoding=" + ssoSession);
-				 */ }
-			// logger.info("ssoSession after cookie check=" + ssoSession);
+			}
 
 			logger.info("ssoSession cookie: " + ssoSession);
 			if (StringUtils.isNotBlank(ssoSession)) {
