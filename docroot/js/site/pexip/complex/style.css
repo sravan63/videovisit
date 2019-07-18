@@ -311,7 +311,7 @@ body {
   border-radius: 40px;
   display: inline-block;
   width: 40px;
-  height: 40px;
+  height: 10vh;
   margin: 5px 0;
 }
 .video-controls li{
@@ -862,7 +862,7 @@ border-radius: 50%;
     z-index: 6;
     display: block;
     width: 60px !important;
-    height: 100% !important;
+    height: 100vh !important;
     top: 0px;
     right: 0px;
     min-width:0px;
