@@ -1535,6 +1535,7 @@ function setOrientationMode(){
 }
 
 function setVideoFeedHeight(){
+	document.documentElement.requestFullscreen();
 	var isLandscape = window.matchMedia("(orientation:landscape)").matches;
 	var windowHeight = $(window).height();
 	var topHeight = isLandscape ? windowHeight : top.innerHeight - 50; // 
