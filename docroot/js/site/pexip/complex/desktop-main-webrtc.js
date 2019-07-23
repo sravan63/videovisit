@@ -174,6 +174,7 @@ $(document).ready(function(){
     // var videoElement = document.querySelector('video');
     
     attachSinkId(videoElement, audioDestination);
+    // changeRespectivePeripheral(audioDestination, 'speaker');
   }
 
   function gotStream(stream) {
@@ -217,6 +218,7 @@ $(document).ready(function(){
     rtc.call_type = 'video';
     rtc.video_source = videoSource;
     rtc.renegotiate('video');
+    changeRespectivePeripheral(videoSource, 'video');
   }
 
   function peripheralsAudioChange(){
@@ -225,11 +227,71 @@ $(document).ready(function(){
     rtc.call_type = 'audio';
     rtc.audio_source = audioSource;
     rtc.renegotiate('audio');
+    // changeRespectivePeripheral(audioSource, 'mic');
   }
 
   function handleError(error) {
 	log("info","handleError","event: Error" + error);
     //console.log('navigator.getUserMedia error: ', error);
+  }
+
+  function changeRespectivePeripheral(value, type){
+    var vSource;
+    var aSource;
+    var sSource;
+    if(type == 'mic'){
+      vSource = getValueByType(value, videoSelect);
+      sSource = getValueByType(value, audioOutputSelect);
+      videoSource = vSource ? vSource : videoSource;
+      speakerSource = sSource ? sSource : videoSource;
+      // Change respective video & mic
+      if(vSource){
+        rtc.video_source = videoSource;
+        rtc.renegotiate('video');
+      }
+      if(sSource){
+        attachSinkId(videoElement, audioSource);
+      }
+    } else if(type == 'video') {
+      aSource = getValueByType(value, audioInputSelect);
+      sSource = getValueByType(value, audioOutputSelect);
+      audioSource = aSource ? aSource : audioSource;
+      speakerSource = sSource ? sSource : videoSource;
+      // Change respective audio & speaker
+      if(aSource){
+        rtc.audio_source = audioSource;
+        rtc.renegotiate('audio');
+      }
+      if(sSource){
+        attachSinkId(videoElement, audioSource);
+      }
+    } else {
+      aSource = getValueByType(value, audioInputSelect);
+      vSource = getValueByType(value, videoSelect);
+      audioSource = aSource ? aSource : audioSource;
+      videoSource = vSource ? vSource : videoSource;
+      // Change respective audio & video
+      if(aSource){
+        rtc.audio_source = audioSource;
+        rtc.renegotiate('audio');
+      }
+      if(vSource){
+        rtc.video_source = videoSource;
+        rtc.renegotiate('video');
+      }
+    }
+  }
+
+  function getValueByType(value, selectType){
+    var list = selectType.children;
+    var respectiveValue = '';
+    for(var i=0; i<list.length; i++){
+      if(list[i].value == value){
+        respectiveValue = list[i].value;
+        list[i].selected = true;
+      }
+    }
+    return respectiveValue;
   }
 });
 
