@@ -286,7 +286,7 @@ $(document).ready(function(){
     var list = selectType.children;
     var respectiveValue = '';
     for(var i=0; i<list.length; i++){
-      isInList = !isInList ? breakAndCompare(list[i][validate], value) : isInList;
+      var isInList = breakAndCompare(list[i][validate], value);
       if(list[i][validate] == value || isInList){
         respectiveValue = list[i].value;
         list[i].selected = true;
