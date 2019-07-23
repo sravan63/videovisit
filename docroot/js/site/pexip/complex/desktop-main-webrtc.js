@@ -253,18 +253,18 @@ $(document).ready(function(){
         attachSinkId(videoElement, audioSource);
       }
     } else if(type == 'video') {
-      aSource = getValueByType(value, audioInputSelect);
-      sSource = getValueByType(value, audioOutputSelect);
+      aSource = getValueByType(value, audioInputSelect, 'text');
+      // sSource = getValueByType(value, audioOutputSelect, 'text');
+      // speakerSource = sSource ? sSource : videoSource;
       audioSource = aSource ? aSource : audioSource;
-      speakerSource = sSource ? sSource : videoSource;
       // Change respective audio & speaker
       if(aSource){
         rtc.audio_source = audioSource;
         rtc.renegotiate('audio');
       }
-      if(sSource){
+      /*if(sSource){
         attachSinkId(videoElement, audioSource);
-      }
+      }*/
     } else {
       aSource = getValueByType(value, audioInputSelect);
       vSource = getValueByType(value, videoSelect);
@@ -282,16 +282,31 @@ $(document).ready(function(){
     }
   }
 
-  function getValueByType(value, selectType){
+  function getValueByType(value, selectType, validate = 'value'){
     var list = selectType.children;
     var respectiveValue = '';
     for(var i=0; i<list.length; i++){
-      if(list[i].value == value){
+      isInList = !isInList ? breakAndCompare(list[i][validate], value) : isInList;
+      if(list[i][validate] == value || isInList){
         respectiveValue = list[i].value;
         list[i].selected = true;
       }
     }
     return respectiveValue;
+  }
+
+  function breakAndCompare(lVal, rVal){
+    var lhs = lVal.split(' ');
+    var rhs = rVal.split(' ');
+    var match = false;
+    for(var l=0; l<lhs.length; l++){  
+      for(var r=0; r<rhs.length; r++){
+        if(lhs[l] == rhs[r]){
+          match = true;
+        }
+      }
+    }
+    return match;
   }
 });
 
