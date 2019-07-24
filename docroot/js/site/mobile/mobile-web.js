@@ -1490,6 +1490,10 @@ function startPexip() {
 	var isProxyMeeting = $('#isProxyMeeting').val();
 	isMobileDevice = true;
 	initialise(roomUrl, alias, bandwidth, name, "", source);
+	var os = getAppOS();
+	if(os == "iOS"){
+		$('#cameraSwitch').css('display','none');
+	}
 	newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
 //		setKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
