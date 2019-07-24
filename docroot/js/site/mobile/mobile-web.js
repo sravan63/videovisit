@@ -1492,7 +1492,7 @@ function startPexip() {
 	initialise(roomUrl, alias, bandwidth, name, "", source);
 	var os = getAppOS();
 	if(os == "iOS"){
-		$('#cameraSwitch').css('display','none');
+		$('.camera-switch-disable-ios').css('display','none');
 	}
 	newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
