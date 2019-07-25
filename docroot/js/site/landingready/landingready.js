@@ -7,6 +7,7 @@ var blockFF;
 var blockSafari;
 var blockEdge;
 var allowPexipIE;
+var vendorValue = false;
 //US31767
 $(document).ready(function() {
     var meetingTimestamp,convertedTimestamp,meetingIdData,hreflocation;
@@ -329,7 +330,6 @@ function checkSTUNServer(stunConfig, timeout){
 */
 function checkAndBlockMeetings(){
     var showBlockMessage = false;
-    var vendorVal;
     $('.joinNowButton').each(function(){
         var vendor = $(this).attr('vendor');
         var allow = allowToJoin(vendor);
@@ -339,15 +339,14 @@ function checkAndBlockMeetings(){
         }
         if(allow == false && vendor=="pexip"){
             showBlockMessage = true;
-            vendorVal = true;
             $(this).removeClass('joinNowButton').addClass('not-available');
         }
     });
-    if(showBlockMessage && vendorVal){
+    if(showBlockMessage && vendorValue){
         $("#blockerMessage").css("display","block");
         $('#browser-block-message').html('Join on your mobile device using the My Doctor Online app, or update your browser version.');
     }
-    if(showBlockMessage && !vendorVal){
+    if(showBlockMessage && !vendorValue){
         $("#blockerMessage").css("display","block");
     }
 
@@ -360,14 +359,18 @@ function allowToJoin(vendor){
     if(vendor === 'pexip'){
         if (browserInfo.isIE){
             var agent = navigator.userAgent;
-            // Do not Block access for EDGE
-            if(agent.indexOf('Edge/') > -1){
-                allow = true;
-            } else {
+            if(navigator.userAgent.indexOf('Edge/') === -1){
                 allow = allowPexipIE; // Depends on backend flag.
                 if(allow == false){
                     $('#browser-block-message').html('Join on your mobile device using the My Doctor Online app, or use a different browser.');
                 }
+            }
+            
+        }
+        else {
+            if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){
+                allow= false;
+                $('#browser-block-message').html('Join on your mobile device using the My Doctor Online app, or use a different browser.');
             }
         }
 
@@ -385,7 +388,7 @@ function allowToJoin(vendor){
             var isFirefox = true;
         }
     }
-        if(isEdge){
+        if(isEdge && !blockEdge){
             var blockEdgeVersion = $("#blockEdgeVersion").val()?Number($("#blockEdgeVersion").val()):18;
             var agentVal = navigator.userAgent;
             var val = agentVal.split('Edge/');
@@ -393,6 +396,7 @@ function allowToJoin(vendor){
             //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
             if(edge_ver < blockEdgeVersion){
                 allow = false;
+                vendorValue = true;
             }
         }
 
@@ -401,6 +405,7 @@ function allowToJoin(vendor){
             var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
             if(chrome_ver < blockChromeVersion){
                 allow= false;
+                vendorValue = true;
             }
         }
         else if(isFirefox){
@@ -408,6 +413,7 @@ function allowToJoin(vendor){
             var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
             if(firefox_ver < blockFirefoxVersion){
                 allow = false;
+                vendorValue = true;
             }
         }
         else if(isSafari){
@@ -419,6 +425,7 @@ function allowToJoin(vendor){
             var blockSafariVersion = $("#blockPexipSafariVersion").val()?Number($("#blockPexipSafariVersion").val()):11.1;
             if(versionNumber < blockSafariVersion){
                 allow = false;
+                vendorValue = true;
             }
         }
         

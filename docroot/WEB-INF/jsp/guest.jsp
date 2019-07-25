@@ -111,9 +111,15 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	    	var agent = navigator.userAgent;
 	    	if(navigator.userAgent.indexOf('Edge/') === -1){
 	    		if(blockPexipIE){
-		    		browserNotSupportedMsgForPatient = browserNotSupportedMsgForPatient.replace(' or Internet Explorer.', ', Safari, Firefox, or Edge.');
+		    		browserNotSupportedMsgForPatient = browserNotSupportedMsgForPatient.replace(' or Internet Explorer.', ', Safari, Firefox.');
 		    		displayBlockMessage();
 	    		}
+	    	}
+	    }
+	    else {
+	    	if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){
+              browserNotSupportedMsgForPatient = browserNotSupportedMsgForPatient.replace(' or Internet Explorer.', ', Safari, Firefox.');
+		    		displayBlockMessage();
 	    	}
 	    }
 	    if (navigator.appCodeName == 'Mozilla'){
@@ -131,16 +137,16 @@ String timezone = WebUtil.getCurrentDateTimeZone();
         }
     }
 
-		if(isEdge){
+		if(isEdge && !blockEdge){
             var blockEdgeVersion = $("#blockEdgeVersion").val()?Number($("#blockEdgeVersion").val()):18;
             var agentVal = navigator.userAgent;
             var val = agentVal.split('Edge/');
             var edge_ver = val[1].slice(0,2);
             //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
             if(edge_ver < blockEdgeVersion){
-                allow = false;
+                displayBlockMessage("pexip");
             }
-        }    
+        }     
         else if (isChrome){
             var blockChromeVersion = $("#blockChromeVersion").val()?Number($("#blockChromeVersion").val()):61;
             var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
