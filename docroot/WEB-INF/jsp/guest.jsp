@@ -116,11 +116,9 @@ String timezone = WebUtil.getCurrentDateTimeZone();
 	    		}
 	    	}
 	    }
-	    else {
-	    	if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){
+	    if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){
               browserNotSupportedMsgForPatient = browserNotSupportedMsgForPatient.replace(' or Internet Explorer.', ', Safari, Firefox.');
 		    		displayBlockMessage();
-	    	}
 	    }
 	    if (navigator.appCodeName == 'Mozilla'){
         if(browserUserAgent.indexOf('Edge/') !== -1){

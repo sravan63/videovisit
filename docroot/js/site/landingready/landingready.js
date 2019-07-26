@@ -367,12 +367,10 @@ function allowToJoin(vendor){
             }
             
         }
-        else {
             if(navigator.userAgent.indexOf('Edge/') > -1 && blockEdge){
                 allow= false;
                 $('#browser-block-message').html('Join on your mobile device using the My Doctor Online app, or use a different browser.');
             }
-        }
 
    if (navigator.appCodeName == 'Mozilla'){
         if(browserUserAgent.indexOf('Edge/') !== -1){
