@@ -321,6 +321,12 @@ body {
   text-align: center;
   float: left;
 }
+.moveLeft{
+  margin-left: 40px;
+}
+.moveDown{
+  margin-top: 45px;
+}
 .icon-holder{
   display: inline-block;
   width: 30px;
