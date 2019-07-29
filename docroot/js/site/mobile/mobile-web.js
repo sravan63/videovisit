@@ -1490,6 +1490,11 @@ function startPexip() {
 	var isProxyMeeting = $('#isProxyMeeting').val();
 	isMobileDevice = true;
 	initialise(roomUrl, alias, bandwidth, name, "", source);
+	var os = getAppOS();
+	if(os == "iOS"){
+		$('.camera-switch-disable-ios').css('display','none');
+		$('.video-controls li:first').addClass('moveLeft');
+	}
 	newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
 //		setKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
@@ -1519,6 +1524,10 @@ function setOrientationMode(){
 	var isLandscape = window.matchMedia("(orientation:landscape)").matches;
 	if(isLandscape){
 		$('.logo').addClass('landscape-logo-change');
+		var os = getAppOS();
+	    if(os == "iOS"){
+		$('.landscape-controlbar .video-controls li:first').addClass('moveDown');
+	    }
 		if($(".waiting-room").css("display") == "block"){
             $(".waiting-room").css('height','100%');
         }
