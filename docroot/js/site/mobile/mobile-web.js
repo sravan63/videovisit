@@ -1612,11 +1612,11 @@ var toggleMobileWaitingRoom = function(){
         }
 	} else {
 		$('.waiting-room').css('display','block');
-		if(participantsInMeeting.length == 1){
+		if(participantsData.length == 1){
 			$('#videocontainer').css('display','none');
             $('.mobileconferenceview').removeClass('float-mobileconferenceview');
             $('#videocontainer #video').removeClass('pip-mobile-view');
-        } else if(participantsInMeeting.length > 1){
+        } else if(participantsData.length > 1){
             if(hostDirtyThisMeeting){
                 //Half waiting room
                 $('.mobileconferenceview').addClass('float-mobileconferenceview');
