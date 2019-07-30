@@ -7,6 +7,7 @@ var VIDEO_VISITS_MOBILE = {
 var isMobileDevice;
 var isRearCamera = false;
 var newStartTimeRecursiveCall;
+var hostDirtyThisMeeting = false;
 
 var urlVal = window.location.href.indexOf("videovisitmobileready") > -1;
 if(!urlVal) {
@@ -1532,7 +1533,7 @@ function setOrientationMode(){
             $(".waiting-room").css('height','100%');
         }
         //if($(".mobileconferenceview").css("display") == "block"){
-            $(".mobileconferenceview").css('height','100%');
+            $(".mobileconferenceview").addClass('full-mobile-view');
         //}
         $(".mobileselfview").addClass("mobilesv");
         /*if($("#presentation-view").css('display') == "block" ){
@@ -1540,6 +1541,7 @@ function setOrientationMode(){
 		}*/
 	} else {
 		$('.logo').removeClass('landscape-logo-change');
+		$(".mobileconferenceview").removeClass('full-mobile-view');
 	}
 }
 
@@ -1597,12 +1599,34 @@ function hostInMeeting(element, index, array) {
 var toggleMobileWaitingRoom = function(){
 	// var isHostAvailable =  validateMobileHostAvailability();
 	var isHostAvail = participantsData.some(hostInMeeting);
+	if(!hostDirtyThisMeeting && isHostAvail){
+        hostDirtyThisMeeting = true;
+    }
 	if(isHostAvail){
 		$('.waiting-room').css('display','none');
 		$('#videocontainer').css('display','block');
+		if(hostDirtyThisMeeting){
+            //Half waiting room
+            $('.mobileconferenceview').removeClass('float-mobileconferenceview');
+            $('#videocontainer #video').removeClass('pip-mobile-view');
+        }
 	} else {
 		$('.waiting-room').css('display','block');
-		$('#videocontainer').css('display','none');
+		if(participantsInMeeting.length == 1){
+			$('#videocontainer').css('display','none');
+            $('.mobileconferenceview').removeClass('float-mobileconferenceview');
+            $('#videocontainer #video').removeClass('pip-mobile-view');
+        } else if(participantsInMeeting.length > 1){
+            if(hostDirtyThisMeeting){
+                //Half waiting room
+                $('.mobileconferenceview').addClass('float-mobileconferenceview');
+                $('#videocontainer #video').addClass('pip-mobile-view');
+            } else {
+                // Full waiting room
+                $('.mobileconferenceview').removeClass('float-mobileconferenceview');
+                $('#videocontainer #video').removeClass('pip-mobile-view');
+            }
+        }
 	}
 }
 
