@@ -34,7 +34,7 @@ public abstract class CommonPatientController implements Controller {
 		try {
 			final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			if (ctx != null) {
-
+				ctx.setShowPexipPrecall(WebUtil.isSafariOrFFBrowser(request));
 				final VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
 				videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
 				final List<MeetingDO> meetings = ctx.getMyMeetings();

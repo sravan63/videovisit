@@ -236,6 +236,21 @@ public class WebUtil {
 		logger.info(LOG_EXITING + " isChromeOrFFBrowser: " + isChromeOrFFBrowser);
 		return isChromeOrFFBrowser;
 	}
+	
+	public static boolean isSafariOrFFBrowser(HttpServletRequest httpRequest) {
+		logger.info(LOG_ENTERED);
+		boolean isSafariOrFFBrowser = false;
+		try {
+			final String browser = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browser) && (browser.contains("safari") || browser.contains("firefox"))) {
+				isSafariOrFFBrowser = true;
+			}
+		} catch (Exception ex) {
+			logger.info("Error while checking the requested browser is firefox or chrome: ", ex);
+		}
+		logger.info(LOG_EXITING + " -> isSafariOrFFBrowser : " + isSafariOrFFBrowser);
+		return isSafariOrFFBrowser;
+	}
 
 	public static boolean isChromeBrowser(HttpServletRequest httpRequest) {
 		logger.info(LOG_ENTERED);

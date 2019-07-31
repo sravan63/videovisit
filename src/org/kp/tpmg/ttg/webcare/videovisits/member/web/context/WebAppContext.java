@@ -73,6 +73,8 @@ public class WebAppContext implements Serializable {
 	private String pexBlockChromeVer = null;
 	private String pexBlockEdgeVer = null;
 	private String pexBlockFirefoxVer = null;
+	
+	private boolean showPexipPrecall = false;
 		
 	/**
 	 * Defaulting clientId  to "vv-mbr-web".
@@ -618,6 +620,20 @@ public class WebAppContext implements Serializable {
 	 */
 	public void setPexBlockFirefoxVer(String pexBlockFirefoxVer) {
 		this.pexBlockFirefoxVer = pexBlockFirefoxVer;
+	}
+	
+	/**
+	 * @return the showPexipPrecall
+	 */
+	public boolean isShowPexipPrecall() {
+		return showPexipPrecall;
+	}
+
+	/**
+	 * @param showPexipPrecall the showPexipPrecall to set
+	 */
+	public void setShowPexipPrecall(boolean showPexipPrecall) {
+		this.showPexipPrecall = showPexipPrecall;
 	}
 
 	/**
