@@ -554,7 +554,11 @@ function finalise(event) {
 function remoteDisconnect(reason) {
     log("info","remoteDisconnect","console: inside remoteDisconnect reason :" + reason); 
     cleanup();
+    if(reason.indexOf("get access to camera") > -1){
+        $('#dialog-block-meeting-disconnected00').modal({'backdrop': 'static'});
+    }else{
     alert(reason);
+    }
     window.removeEventListener('beforeunload', finalise);
     // window.location = "index.html";
     if(isProvider == "true"){
@@ -565,7 +569,7 @@ function remoteDisconnect(reason) {
         if(url.indexOf("mobile") > -1){
             window.location.href= '/videovisit/mobileAppPatientMeetings.htm';
         } else {
-        window.location.href = '/videovisit/landingready.htm';
+       // window.location.href = '/videovisit/landingready.htm';
        }
    }
 }

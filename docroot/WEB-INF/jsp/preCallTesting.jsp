@@ -75,12 +75,30 @@
 
 <script src="js/site/videovisit/videoVisit.js" type="text/javascript"></script>
 <!-- pre call testing webrtc ends -->
+<link rel="stylesheet" type="text/css" href="vidyoplayer/scripts/libs/jnotify/jNotify.jquery.css" media="screen" />
+<link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/fadjebjcpiiklefiadeicakcnkhgbaoo">
 
+<script src="js/site/meeting/videoVisitPexip.js" type="text/javascript"></script>
+
+<script src="vidyoplayer/scripts/libs/bootstrap.min.2.3.2.js"></script>
+<script src="vidyoplayer/scripts/libs/bootstrap-notify.1.0.js"></script>
 <script src="vidyoplayer/scripts/webrtc/precalltesting/adapter-latest.js"></script>
 <script src="vidyoplayer/scripts/webrtc/precalltesting/main_peripherals.js"></script>
 <script type="text/javascript">
 	
 	$("#precall-joinBtn").on("click",function(){
+		var browserUserAgent = navigator.userAgent;
+		if(browserUserAgent.indexOf('Safari/') > -1 && browserUserAgent.indexOf('Chrome/') == -1  ){
+            var isSafari = true;
+        }
+        else if(browserUserAgent.indexOf('Firefox/') !== -1){
+            var isFirefox = true;
+        }
+		var vendor = $("#vendor").val();
+		if(vendor == "pexip" &&  isSafari || isFirefox){
+			$('#dialog-block-meeting-browser').modal({'backdrop': 'static'});
+			return;
+		}
 		var peripheralsStorageObject = {
 		'camera': $(".video-visit-peripherals-block").find("select#videoSource  option:selected" ).text(),
 		'mic': $(".video-visit-peripherals-block").find("select#audioSource  option:selected" ).text(),
@@ -123,5 +141,22 @@
 		 window.location.href =  'guestready.htm';
 		}
 	});
+	function disconnect(){
+		window.location.href = 'landingready.htm';
+	}
 
 </script>
+
+<div id="dialog-block-meeting-browser" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
+	<div class="modal-title" style="background: #ccc;padding: 1%;">Unable to access your camera or microphone</div>
+	<div class="modal-body">
+		<div class="dialog-content-question">
+			<p id="start_meeting_question" style="padding:15px;font-weight:bold;text-align:center;" class="question">
+				Check that your camera is properly connected or not being actively used by another application.
+			</p>
+			<div class="pagination">
+				<input type="button" style="width:150px;" value="OK" onclick="return disconnect()" id="meetingDisconnected" class="button">
+			</div>
+		 </div>
+	</div>
+</div>

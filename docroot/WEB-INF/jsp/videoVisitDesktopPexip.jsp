@@ -334,5 +334,21 @@
 	  </div>
 	</div>
 	<!-- PEXIP Container - END -->
+	<div id="dialog-block-meeting-disconnected00" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="userLoginLabel" aria-hidden="true">
+	    <div class="modal-title" style="
+    background: #ccc;
+    padding: 1%;
+">Unable to access your camera or microphone</div>
+		<div class="modal-body">
+	        <div class="dialog-content-question">
+		        <p id="start_meeting_question" style="padding:15px;font-weight:bold;text-align:center;" class="question">
+					Check that your camera is properly connected or not being actively used by another application.
+				</p>
+	            <div class="pagination">
+	                <input type="button" style="width:150px;" value="OK" onclick="return disconnect()" id="meetingDisconnected" class="button">
+	            </div>
+	         </div>
+	    </div>
+	</div>
 </div>
 
