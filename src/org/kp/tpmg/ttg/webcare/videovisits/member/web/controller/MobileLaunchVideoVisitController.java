@@ -139,7 +139,8 @@ public class MobileLaunchVideoVisitController implements Controller {
 				if (isProxyMeeting) {
 					videoVisitParams.setIsMember("false");
 					videoVisitParams.setIsProxyMeeting("true");
-					if(StringUtils.isNotBlank(inMeetingDisplayName)) {
+					if (StringUtils.isNotBlank(inMeetingDisplayName)
+							&& !inMeetingDisplayName.contains("(dummy@dummy.com)")) {
 						inMeetingDisplayName = inMeetingDisplayName + ", (dummy@dummy.com)";
 					}
 				} else {
