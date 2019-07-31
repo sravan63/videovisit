@@ -280,7 +280,7 @@ body {
   background: url('../../../../images/mobile/videovisits/TPMGlogo.svg');
   height: 110px;
   width: 100%;
-  margin-top: 10%;
+  margin-top: 2%;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -846,7 +846,8 @@ border-radius: 50%;
 #selfview{
   z-index: 6;
   cursor: pointer;
-  -webkit-transform:rotateY(180deg);
+  transform: scaleX(-1);
+  -webkit-transform:scaleX(-1);
   -moz-transform:rotateY(180deg);
 }
 #presimage{
