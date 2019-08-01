@@ -96,10 +96,10 @@ $(document).ready(function(){
         cameraID = item.deviceId;
         $("#videoSource").val(item.deviceId);
          
-         var aSource = getValueByType(cameraID, audioInputSelect, 'text');
+         var aSource = getValueByType(precallevent.camera, audioInputSelect, 'text');
          var audio = aSource ? aSource : audioSource;
 
-         var sSource = getValueByType(cameraID, audioOutputSelect, 'text');
+         var sSource = getValueByType(precallevent.camera, audioOutputSelect, 'text');
          var speaker = aSource ? aSource : speakerSource;
 
          $("#audioSource").val(audio);
