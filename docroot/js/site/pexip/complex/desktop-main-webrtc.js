@@ -249,7 +249,7 @@ $(document).ready(function(){
     rtc.call_type = 'video';
     rtc.video_source = videoSource;
     rtc.renegotiate('video');
-    changeRespectivePeripheral(videoSource, 'video');
+    changeRespectivePeripheral(videoSelect.selectedOptions[0].text, 'video');
   }
 
   function peripheralsAudioChange(){
