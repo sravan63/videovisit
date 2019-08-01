@@ -97,7 +97,7 @@
              isFirefox = true;
         }
 		var vendor = $("#vendor").val();
-		if(vendor == "pexip" && !$(".video-visit-peripherals-block").find("select#videoSource  option:selected" ).text() || (isSafari || isFirefox)){
+		if(vendor == "pexip" && !$(".video-visit-peripherals-block").find("select#videoSource  option:selected" ).text() && (isSafari || isFirefox)){
 			$('#dialog-block-meeting-browser').modal({'backdrop': 'static'});
 			return;
 		}
