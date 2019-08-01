@@ -75,6 +75,18 @@
 	            id_bandwidth.children[i].selected = true;
 	        }
 	    }
+	    var browserUserAgent = navigator.userAgent;
+	    if (navigator.appCodeName == 'Mozilla'){
+        if(browserUserAgent.indexOf('Safari/') > -1 && browserUserAgent.indexOf('Chrome/') == -1  ){
+            var isSafari = true;
+        }
+        else if(browserUserAgent.indexOf('Firefox/') !== -1){
+            var isFirefox = true;
+        }
+    }
+	if(isSafari || isFirefox) {
+	  $('#inCallButtonToggleConfig').css('display', 'none');
+	}
 	}
 </script>
 

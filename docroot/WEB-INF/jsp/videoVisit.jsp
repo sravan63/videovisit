@@ -30,7 +30,7 @@
 	<c:choose>
 	    <c:when test="${WebAppContext.videoVisit.webrtc == 'true'}">
 	        <c:choose>
-			    <c:when test="${WebAppContext.showPeripheralsPage == 'true'}">
+			    <c:when test="${WebAppContext.showPeripheralsPage == 'true' && WebAppContext.showPexipPrecall == 'true'}">
 			        <%@ include file="preCallTesting.jsp" %>
 			    </c:when> 
 			    <c:when test="${WebAppContext.videoVisit.vendor == 'pexip'}">

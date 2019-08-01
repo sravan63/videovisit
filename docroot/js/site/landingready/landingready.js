@@ -47,11 +47,9 @@ $(document).ready(function() {
     $(document).delegate('.joinNowButton', 'click', function(){
         $("#layover").show();
         //US30802
-        if($(this).attr('vendor') == 'pexip'){
-            setPeripheralsFlag("false");
-        }else{
+        
             setPeripheralsFlag("true");
-        }       
+               
         //US30802
         var meetingId = $(this).attr('meetingid');
         meetingIdData = 'meetingId=' + meetingId;
