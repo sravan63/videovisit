@@ -52,6 +52,7 @@ $(document).ready(function(){
         select.removeChild(select.firstChild);
       }
     });
+    var cameras = [];
     for (var i = 0; i !== deviceInfos.length; ++i) {
       var deviceInfo = deviceInfos[i];
       var option = document.createElement('option');
@@ -68,6 +69,7 @@ $(document).ready(function(){
           if(deviceInfo.label != "WebPluginVirtualCamera"){
             option.text = deviceInfo.label || 'camera ' + (videoSelect.length + 1);
             videoSelect.appendChild(option);
+            cameras.push({"deviceId":deviceInfo.deviceId,"deviceLabel":deviceInfo.label});
           }
       } else {
         console.log('Some other kind of source/device: ', deviceInfo);
@@ -83,11 +85,40 @@ $(document).ready(function(){
     });
 
     //Get the Camera &  selected in the dropdown option and pass it to the WebRTC as a c
+    var precallevent =  JSON.parse(localStorage.getItem('peripheralsStorageObject'));
     audioSource = audioInputSelect.value;
-    videoSource = videoSelect.value;
+    
     speakerSource = audioOutputSelect.value;
-    cameraID = videoSource;
+    if(precallevent != null){
+     
+    cameras.forEach(function(item,index){
+        if(item.deviceLabel == precallevent.camera){
+        cameraID = item.deviceId;
+        $("#videoSource").val(item.deviceId);
+         
+         var aSource = getValueByType(cameraID, audioInputSelect, 'text');
+         var audio = aSource ? aSource : audioSource;
 
+         var sSource = getValueByType(cameraID, audioOutputSelect, 'text');
+         var speaker = aSource ? aSource : speakerSource;
+
+         $("#audioSource").val(audio);
+         $("#speakerSource").val(speaker);
+
+        }
+        else{
+         videoSource = videoSelect.value;
+         cameraID = videoSource;
+      }
+    }); 
+      //videoSource = precallevent.deviceId;
+  
+      
+      //peripheralsVideoChange();
+    }else{
+    videoSource = videoSelect.value;
+    cameraID = videoSource;
+    }
     // $("#vendorPluginName").val(videoSource);
 
     constraints = {
@@ -299,9 +330,9 @@ $(document).ready(function(){
     var lhs = lVal.split(' ');
     var rhs = rVal.split(' ');
     var match = false;
-    for(var l=0; l<lhs.length; l++){  
+    for(var l=0; l<lhs.length; l++){ 
       for(var r=0; r<rhs.length; r++){
-        if(lhs[l] == rhs[r]){
+      if(rhs[r].length > 2 && lhs[l] == rhs[r]){
           match = true;
         }
       }
