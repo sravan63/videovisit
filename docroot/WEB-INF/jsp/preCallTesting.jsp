@@ -88,14 +88,16 @@
 	
 	$("#precall-joinBtn").on("click",function(){
 		var browserUserAgent = navigator.userAgent;
+		var isSafari = false;
+		var isFirefox = false;
 		if(browserUserAgent.indexOf('Safari/') > -1 && browserUserAgent.indexOf('Chrome/') == -1  ){
-            var isSafari = true;
+             isSafari = true;
         }
         else if(browserUserAgent.indexOf('Firefox/') !== -1){
-            var isFirefox = true;
+             isFirefox = true;
         }
 		var vendor = $("#vendor").val();
-		if(vendor == "pexip" &&  isSafari || isFirefox){
+		if(vendor == "pexip" && !$(".video-visit-peripherals-block").find("select#videoSource  option:selected" ).text() || (isSafari || isFirefox)){
 			$('#dialog-block-meeting-browser').modal({'backdrop': 'static'});
 			return;
 		}
