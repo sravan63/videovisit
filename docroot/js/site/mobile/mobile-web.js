@@ -8,6 +8,7 @@ var isMobileDevice;
 var isRearCamera = false;
 var newStartTimeRecursiveCall;
 var hostDirtyThisMeeting = false;
+var waitingTextClass = 'wating-room-late-message';
 
 var urlVal = window.location.href.indexOf("videovisitmobileready") > -1;
 if(!urlVal) {
@@ -1611,6 +1612,7 @@ var toggleMobileWaitingRoom = function(){
             $('#videocontainer #video').removeClass('pip-mobile-view');
             $('.wating-room-late-message').removeClass('small-late-message');
             $('.wating-room').removeClass('small-waiting-room');
+            waitingTextClass = 'wating-room-late-message';
             $('.waiting-room .logo').removeClass('waiting-room-small-top-gap');
         }
 	} else {
@@ -1622,6 +1624,7 @@ var toggleMobileWaitingRoom = function(){
             $('.wating-room-late-message').removeClass('small-late-message');
             $('.wating-room').removeClass('small-waiting-room');
             $('.waiting-room .logo').removeClass('waiting-room-small-top-gap');
+            waitingTextClass = 'wating-room-late-message';
         } else if(participantsData.length > 1){
             if(hostDirtyThisMeeting){
                 //Half waiting room
@@ -1630,6 +1633,7 @@ var toggleMobileWaitingRoom = function(){
                 $('.wating-room-late-message').addClass('small-late-message');
                 $('.wating-room').addClass('small-waiting-room');
                 $('.waiting-room .logo').addClass('waiting-room-small-top-gap');
+                waitingTextClass = 'wating-room-late-message small-late-message';
             } else {
                 // Full waiting room
                 $('.mobileconferenceview').removeClass('float-mobileconferenceview');
@@ -1637,6 +1641,7 @@ var toggleMobileWaitingRoom = function(){
                 $('.wating-room-late-message').removeClass('small-late-message');
                 $('.wating-room').removeClass('small-waiting-room');
                 $('.waiting-room .logo').removeClass('waiting-room-small-top-gap');
+                waitingTextClass = 'wating-room-late-message';
             }
         }
 	}
@@ -1798,7 +1803,7 @@ var newStartTimeCheck = function(){
 					if(isRunningLate == true){
 						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
-							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span class='wating-room-late-message' style='font-size:20px;line-height:29px;display:block;margin-top:0px;'>We're sorry, your doctor is running late.</span>");
+							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span class='"+waitingTextClass+"' style='font-size:20px;line-height:29px;display:block;margin-top:0px;'>We're sorry, your doctor is running late.</span>");
 					}else{
 							$(".waiting-text").html("Waiting for your doctor to join.");
 					}
@@ -1826,7 +1831,7 @@ var newStartTimeCheck = function(){
 						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
 						if(isHostAvailable == false){
-							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span class='wating-room-late-message' style='font-size:20px;line-height:29px;display:block;margin-top:0px;'>We're sorry, your doctor is running late.</span>");
+							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span class='"+waitingTextClass+"' style='font-size:20px;line-height:29px;display:block;margin-top:0px;'>We're sorry, your doctor is running late.</span>");
 						}
 					}else{
 						if(isHostAvailable == false){
