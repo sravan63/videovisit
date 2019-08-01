@@ -280,7 +280,7 @@ body {
   background: url('../../../../images/mobile/videovisits/TPMGlogo.svg');
   height: 110px;
   width: 100%;
-  margin-top: 2% !important;
+  margin-top: 10%;
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
@@ -405,6 +405,15 @@ body {
 }
 .float-mobileconferenceview {
   display: inline-block!important; position: absolute!important; top: 0; background: rgba(0,0,0,0)!important;
+}
+.small-waiting-room{
+  font-size: 1.4rem!important;
+}
+.small-late-message{
+  font-size: 1rem!important;
+}
+.waiting-room-small-top-gap{
+  margin-top: 2%!important;
 }
 .mobileconferenceview{
   height: 50%;

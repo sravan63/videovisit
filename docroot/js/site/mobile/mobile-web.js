@@ -1609,6 +1609,9 @@ var toggleMobileWaitingRoom = function(){
             //Half waiting room
             $('.mobileconferenceview').removeClass('float-mobileconferenceview');
             $('#videocontainer #video').removeClass('pip-mobile-view');
+            $('.wating-room-late-message').removeClass('small-late-message');
+            $('.wating-room').removeClass('small-waiting-room');
+            $('.waiting-room .logo').removeClass('waiting-room-small-top-gap');
         }
 	} else {
 		$('.waiting-room').css('display','block');
@@ -1616,15 +1619,24 @@ var toggleMobileWaitingRoom = function(){
 			$('#videocontainer').css('display','none');
             $('.mobileconferenceview').removeClass('float-mobileconferenceview');
             $('#videocontainer #video').removeClass('pip-mobile-view');
+            $('.wating-room-late-message').removeClass('small-late-message');
+            $('.wating-room').removeClass('small-waiting-room');
+            $('.waiting-room .logo').removeClass('waiting-room-small-top-gap');
         } else if(participantsData.length > 1){
             if(hostDirtyThisMeeting){
                 //Half waiting room
                 $('.mobileconferenceview').addClass('float-mobileconferenceview');
                 $('#videocontainer #video').addClass('pip-mobile-view');
+                $('.wating-room-late-message').addClass('small-late-message');
+                $('.wating-room').addClass('small-waiting-room');
+                $('.waiting-room .logo').addClass('waiting-room-small-top-gap');
             } else {
                 // Full waiting room
                 $('.mobileconferenceview').removeClass('float-mobileconferenceview');
                 $('#videocontainer #video').removeClass('pip-mobile-view');
+                $('.wating-room-late-message').removeClass('small-late-message');
+                $('.wating-room').removeClass('small-waiting-room');
+                $('.waiting-room .logo').removeClass('waiting-room-small-top-gap');
             }
         }
 	}
@@ -1786,7 +1798,7 @@ var newStartTimeCheck = function(){
 					if(isRunningLate == true){
 						var newMeetingTimeStamp = result.service.runningLateEnvelope.runLateMeetingTime;
 						var newTime = convertTimestampToDate(newMeetingTimeStamp, 'time_only');
-							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span style='font-size:20px;line-height:29px;display:block;margin-top:0px;'>We're sorry, your doctor is running late.</span>");
+							$(".waiting-text").html("Your visit will now start at <b>"+newTime+"</b><span class='wating-room-late-message' style='font-size:20px;line-height:29px;display:block;margin-top:0px;'>We're sorry, your doctor is running late.</span>");
 					}else{
 							$(".waiting-text").html("Waiting for your doctor to join.");
 					}
