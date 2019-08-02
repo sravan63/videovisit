@@ -94,8 +94,8 @@ public abstract class CommonPatientController implements Controller {
 				}
 
 				logger.debug("Video Visit data:" + videoVisitParams.toString());
+				logger.info("bandwidth:" + ctx.getBandwidth());
 			}
-			logger.info("bandwidth:" + ctx.getBandwidth());
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
