@@ -481,4 +481,15 @@ public class WebUtil {
 		logger.info(LOG_EXITING);
 	}
 
+	public static boolean isStringContainsEmail(final String source) {
+		logger.info(LOG_ENTERED);
+		boolean isStringContainsEmail = false;
+		if (StringUtils.isNotBlank(source) && source.contains("@") && source.contains(".")
+				&& source.lastIndexOf(".") > source.lastIndexOf("@")) {
+			isStringContainsEmail = true;
+		}
+		logger.info(LOG_EXITING);
+		return isStringContainsEmail;
+	}
+
 }
