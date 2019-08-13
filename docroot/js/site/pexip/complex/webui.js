@@ -7,6 +7,7 @@ var presentation = null;
 var flash_button = null;
 var bandwidth;
 var conf_uri;
+var pexipInitialConnect = false;
 var conference;
 var videoURL;
 var presWidth = 1280;
@@ -100,7 +101,7 @@ function remotePresentationClosed(reason) {
         }*/
         //presentation.close()
         // TODO - Need to streamline this later, it's a hack for as of now
-        if(isMobileDevice && getAppOS() == "iOS" && reason == "Failed to gather IP addresses"){
+        if(getAppOS() == "iOS" && reason == "Failed to gather IP addresses"){
             return;
         }
         $(presentation).css('display', 'none');
@@ -917,8 +918,11 @@ function connected(url) {
 //    toggleSelfview();
     if(!isMobileDevice){
         //VideoVisit.setMinDimensions();
-        setPatientGuestPresenceIndicatorManually();
-        setConferenceStatus();
+        if(pexipInitialConnect==false){
+            setPatientGuestPresenceIndicatorManually();    
+            setConferenceStatus();
+            pexipInitialConnect=true;
+        }
     } else {
         setMemberOrCareGiverStatus();
     }
