@@ -877,9 +877,9 @@ border-radius: 50%;
   bottom: 10px;
 }
 
-@media (orientation: landscape) {
+@media (max-width: 550px) and (orientation: landscape) {
   .presentation-view img{
-    height:100vh !important;
+    height:100vh;
     /*object-fit: contain;*/
     width: 93vw !important;
   }
