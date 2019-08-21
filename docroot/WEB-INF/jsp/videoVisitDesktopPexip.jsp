@@ -236,17 +236,18 @@
 				</div>
 			</div>
 	      <div id="pluginContainer" class="videocontainer">
-			<div id="selectPeripheral1" class="list-of-devices" style="position:absolute; display:none;">
+			<div id="selectPeripheral1" class="list-of-devices" style="position:absolute;width:260px;display:none;">
 					<div id = "close-button"  onclick="togglePeripherals()"></div>
+					<div class="settings-txt">Settings</div>
 				<div id = "selectContainer">
 					<div class="select">
-						<label for="videoSource" style="font-family: Arial, Helvetica, sans-serif">Video source: </label><select id="videoSource"></select>
+						<label for="videoSource" style="font-family: Arial;font-size: 16px;">Camera: </label><select id="videoSource"></select>
 					</div>
 					<div class="select">
-						<label for="audioSource" style="font-family: Arial, Helvetica, sans-serif">Mic source: </label><select id="audioSource"></select>
+						<label for="audioSource" style="font-family: Arial;font-size: 16px;">Microphone: </label><select id="audioSource"></select>
 					</div>
 					<div class="select">
-						<label for="speakerSource" style="font-family: Arial, Helvetica, sans-serif">Speaker source: </label><select id="speakerSource"></select>
+						<label for="speakerSource" style="font-family: Arial;font-size: 16px;">Speaker: </label><select id="speakerSource"></select>
 					</div>
 				<!-- <input type="submit" value="Join Conference" name="join" id="join-conf" class="webrtcbutton">
 				<input type="submit" value="Present Screen Only" name="join_pres" id="join-conf-smd" class="webrtcbutton"> -->
