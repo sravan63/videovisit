@@ -813,7 +813,11 @@ function configurePexipVideoProperties(){
       //document.getElementById("container").appendChild(reqscript1);
       //document.body.appendChild(reqscript1);
 
-    var reqscript2 = document.createElement('script');
+	var reqscript2 = document.createElement('script');
+	var reqscript3 = document.createElement('script');
+	reqscript3.src = "js/site/pexip/complex/EventSource.js";
+	reqscript3.type = "text/javascript";
+      document.getElementsByTagName("head")[0].appendChild(reqscript3);
     	//  reqscript2.src = "js/site/pexip/complex/pexrtc.js";
 
     reqscript1.onload = function(){
@@ -826,6 +830,10 @@ function configurePexipVideoProperties(){
     reqscript2.onload = function(){
 	    console.log("reqscript2 loaded");
 		startPexip();
+	};
+	reqscript3.onload = function(){
+		console.log("reqscript3 loaded");
+		//startPexip();
     };
 }
 
