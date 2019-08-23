@@ -90,7 +90,7 @@
 		var browserUserAgent = navigator.userAgent;
 		var isSafari = false;
 		var isFirefox = false;
-		if(browserUserAgent.indexOf('Safari/') > -1 && browserUserAgent.indexOf('Chrome/') == -1  ){
+		if(/Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor)){
              isSafari = true;
         }
         else if(browserUserAgent.indexOf('Firefox/') !== -1){
