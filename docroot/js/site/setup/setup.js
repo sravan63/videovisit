@@ -10,7 +10,48 @@ $(document).ready(function() {
 		$("#mic-demo").css('color', 'black');
 		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to System Preferences > <span style='font-weight:bold; display:inline;'>Sound</span>.</li><li>Under Sound, go to the <span style='font-weight:bold; display:inline;'>Input</span> section.</li><li>Select the microphone to use and adjust the volume using your slider.</li> </ul> </span>");
 	}
+
+	VideoVisitSetupWizard.createMeeting();
 });
+
+function configurePexipVideoProperties(){
+	console.log('========>>>> PEXIP AUTO START');
+	console.log("join-conf clicked");
+
+    var reqscript1 = document.createElement('script');
+      reqscript1.src = "js/site/pexip/setup/webui.js";
+      reqscript1.type = "text/javascript";
+      document.getElementsByTagName("head")[0].appendChild(reqscript1);
+
+      //document.getElementById("container").appendChild(reqscript1);
+      //document.body.appendChild(reqscript1);
+
+    var reqscript2 = document.createElement('script');
+    	//  reqscript2.src = "js/site/pexip/complex/pexrtc.js";
+
+    reqscript1.onload = function(){
+      	console.log("reqscript1 loaded");
+      reqscript2.src = "js/site/pexip/setup/pexrtc.js";
+      reqscript2.type = "text/javascript";
+      document.getElementsByTagName("head")[0].appendChild(reqscript2);
+    };
+
+    reqscript2.onload = function(){
+	    console.log("reqscript2 loaded");
+		startPexip();
+    };
+}
+
+function startPexip() {
+	var guestPin = $("#meetingId").val().split('').reverse().join(''); // From Backend
+	$('#guestPin').val(guestPin);
+	var roomUrl = "vve-tpmg-dev.kp.org"; // $('#guestUrl').val();
+	var alias =  "m.ncal.test.1234"; 
+	var bandwidth = "1280"; // $('#bandwidth').val();
+	var source = "Join+Conference";
+	var name = $("#guestName").val();
+	initialise(roomUrl, alias, bandwidth, name, guestPin, source);
+}
 
 var VideoVisit = {
 		logVendorMeetingEvents: function(params){}
@@ -56,6 +97,7 @@ var VideoVisitSetupWizard =
 		        	$("#vendorConfId").val(data.vendorConfId);
 		        	$("#guestName").val(data.guestName);
 		        	$("#isProvider").val(data.isProvider);
+		        	configurePexipVideoProperties();
 	        	}catch(e){
 	        		console.warn("Error in the return data for Setup Wizard Create meeting: " + data);
 	        	}
