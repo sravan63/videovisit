@@ -107,7 +107,7 @@
 				<select id="speakerSource"></select>
 			</div>
 			<!-- audio controls -->
-			<div class="music-button play-music" id="playAudio">
+			<div class="music-button play-music" id="playAudio" style="display:none;">
 				<span class="play-icon"></span>
 				<span class="text">Play Sound</span>
 			</div>
