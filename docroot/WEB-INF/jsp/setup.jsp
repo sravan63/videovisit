@@ -151,6 +151,7 @@
 
 	$("#precall-retestBtn").on("click",function(){
 		// RETEST CLICK
+		location.reload();
 	});
 
 </script>
