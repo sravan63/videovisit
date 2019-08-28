@@ -11,7 +11,7 @@ $(document).ready(function() {
 		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to System Preferences > <span style='font-weight:bold; display:inline;'>Sound</span>.</li><li>Under Sound, go to the <span style='font-weight:bold; display:inline;'>Input</span> section.</li><li>Select the microphone to use and adjust the volume using your slider.</li> </ul> </span>");
 	}
 
-	VideoVisitSetupWizard.createMeeting();
+//	VideoVisitSetupWizard.createMeeting();
 });
 
 function configurePexipVideoProperties(){
