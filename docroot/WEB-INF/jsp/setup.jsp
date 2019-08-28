@@ -73,7 +73,7 @@
 	  }
 	}
 </style>
-<div class="pre-call-testing-header">
+<!-- <div class="pre-call-testing-header">
 	<div class="tpmg-logo">
 		<img src="vidyoplayer/img/TPMG_logo.png" alt="TPMG"/>
 		<div class="precall-logo-text">
@@ -82,7 +82,7 @@
 		</div>
 	</div>
 	<a class="help-link" href="mdohelp.htm" target="_blank">Help</a>
-</div>
+</div> -->
 <div class="pre-call-testing-wrapper">
 	<div class="pre-call-test-container">
 		<!-- Peripherals container block starts -->
