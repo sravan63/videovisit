@@ -133,7 +133,7 @@
 	</div> -->
 	<div class="precall-test-button-container">
 		<button id="precall-backBtn" class="">Back</button>
-		<button id="precall-retestBtn" class="">Retest</button>
+		<button id="precall-retestBtn" class="">Start Test</button>
 		<button id="precall-joinBtn" class="add-margin">Join</button>
 	</div>
 
@@ -150,7 +150,8 @@
 	});
 
 	$("#precall-retestBtn").on("click",function(){
-		// RETEST CLICK
+		// START TEST CLICK
+		VideoVisitSetupWizard.createMeeting();
 	});
 
 </script>
