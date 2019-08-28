@@ -554,10 +554,10 @@ function finalise(event) {
 function remoteDisconnect(reason) {
     log("info","remoteDisconnect","console: inside remoteDisconnect reason :" + reason); 
     cleanup();
-    alert(reason);
+    //alert(reason);
     window.removeEventListener('beforeunload', finalise);
     // window.location = "index.html";
-    if(isProvider == "true"){
+    /*if(isProvider == "true"){
         window.location.href =  '/videovisit/myMeetings.htm';
     } 
      else {
@@ -567,7 +567,7 @@ function remoteDisconnect(reason) {
         } else {
         window.location.href = '/videovisit/landingready.htm';
        }
-   }
+   }*/
 }
 
 function handleError(reason) {
