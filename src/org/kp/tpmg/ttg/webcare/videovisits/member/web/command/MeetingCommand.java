@@ -454,10 +454,13 @@ public class MeetingCommand {
 			output = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType,
 					request.getSession().getId(), clientId);
 
-			if (output != null) {
-				Gson gson = new Gson();
-				jsonString = gson.toJson(output);
-				logger.debug("json output" + jsonString);
+			final Gson gson = new Gson();
+			
+			if (output != null && output.getStatus() != null) {
+				if ("200".equalsIgnoreCase(output.getStatus().getCode())
+						&& output.getEnvelope() != null) {
+					jsonString = gson.toJson(output.getEnvelope().getMeeting());
+				}
 			}
 
 		} catch (Exception e) {
