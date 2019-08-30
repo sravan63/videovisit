@@ -454,7 +454,7 @@ public class MeetingCommand {
 			output = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType,
 					request.getSession().getId(), clientId);
 
-			final Gson gson = new Gson();
+			final Gson gson = new GsonBuilder().serializeNulls().create();
 			
 			if (output != null && output.getStatus() != null) {
 				if ("200".equalsIgnoreCase(output.getStatus().getCode())

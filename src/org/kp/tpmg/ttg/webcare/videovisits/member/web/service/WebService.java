@@ -77,6 +77,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -1172,16 +1173,21 @@ public class WebService {
 			input.setSessionId(sessionId);
 			input.setClientId(clientId);
 
-			final Gson gson = new Gson();
+			final Gson gson = new GsonBuilder().serializeNulls().create();
 			final String inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
 
 			responseJsonStr = callVVRestService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 
-			final JsonParser parser = new JsonParser();
-			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-			output = gson.fromJson(jobject.get("service").toString(), CreateInstantVendorMeetingOutput.class);
+			if (StringUtils.isNotBlank(responseJsonStr)) {
+				final JsonParser parser = new JsonParser();
+				final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
+				if(jobject != null && jobject.get("service") != null) {
+					output = gson.fromJson(jobject.get("service").toString(), CreateInstantVendorMeetingOutput.class);
+				}
+				
+			}
 		}
 
 		catch (Exception e) {
