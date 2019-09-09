@@ -128,11 +128,32 @@ $(document).ready(function(){
     };
   }
 
-  navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+  var browserUserAgent = navigator.userAgent;
+  var sendConstraints;
+  if (navigator.userAgent.indexOf('Firefox') > -1 || (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1)) {
+      sendConstraints = true;
+  }
+ //var appOS = getAppOS();
+ if(sendConstraints){
+   navigator.mediaDevices.getUserMedia({audio:true,video:false})
+    .then(function(stream){
+         console.log('Stream1 started with success');
+         setDevice();
+     })
+     .catch(function(){ 
+         console.log('Failed to start stream1')
+     });
+ }else{
+   navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+ }
+
+ function setDevice(){
+   navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
+  }
 
   // Attach audio output device to video element using device/sink ID.
   function attachSinkId(element, sinkId) {
-	log("info","attachSinkId","console: attachSinkId - on changing the peripheral speaker dropdown");
+  log("info","attachSinkId","console: attachSinkId - on changing the peripheral speaker dropdown");
 
     //console.log("inside ATTACH-SINK-ID");
     if (typeof element.sinkId !== 'undefined') {
@@ -158,8 +179,8 @@ $(document).ready(function(){
   }
 
   function changeAudioDestination() {
-	
-	 log("info","speaker_peripheral_change_action","event: peripheralsSpeakerChange - on changing the peripheral speaker dropdown");
+  
+   log("info","speaker_peripheral_change_action","event: peripheralsSpeakerChange - on changing the peripheral speaker dropdown");
     //console.log("inside CHANGE-AUDIO-DESTINATION");
     
     var audioDestination = audioOutputSelect.value;
@@ -205,19 +226,19 @@ $(document).ready(function(){
   // start();
 
   function peripheralsVideoChange(){
-	log("info","video_peripheral_change_action","event: peripheralsVideoChange - on changing the peripheral camera dropdown");
+  log("info","video_peripheral_change_action","event: peripheralsVideoChange - on changing the peripheral camera dropdown");
     videoSource = videoSelect.value;
     cameraID = videoSource;
     changeRespectivePeripheral(videoSelect.selectedOptions[0].text, 'video');
   }
 
   function peripheralsAudioChange(){
-	log("info","Microphone_peripheral_change_action","event: peripheralsAudioChange - on changing the peripheral mic dropdown");
+  log("info","Microphone_peripheral_change_action","event: peripheralsAudioChange - on changing the peripheral mic dropdown");
     audioSource = audioInputSelect.value;
   }
 
   function handleError(error) {
-	log("info","handleError","event: Error" + error);
+  log("info","handleError","event: Error" + error);
     //console.log('navigator.getUserMedia error: ', error);
   }
 
