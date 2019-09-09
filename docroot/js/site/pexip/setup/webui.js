@@ -556,6 +556,13 @@ function remoteDisconnect(reason) {
     cleanup();
     //alert(reason);
     window.removeEventListener('beforeunload', finalise);
+     if(reason == 'Test call finished'){
+        $('#precall-start').css('display', 'inline-block');
+        $('#video').css('visibility','hidden');
+        $('#selfvideo').css('visibility','hidden');
+        $('.video-preview-block').removeClass('no-background');
+        toggleDropDownAccess(true);
+    } 
     // window.location = "index.html";
     /*if(isProvider == "true"){
         window.location.href =  '/videovisit/myMeetings.htm';

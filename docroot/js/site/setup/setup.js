@@ -1,5 +1,11 @@
-$(document).ready(function() {
-
+$(document).ready(function () {
+	var reqscript3 = document.createElement('script');
+	reqscript3.src = "js/site/pexip/complex/EventSource.js";
+	reqscript3.type = "text/javascript";
+	document.getElementsByTagName("head")[0].appendChild(reqscript3);
+	reqscript3.onload = function () {
+		console.log("reqscript3 loaded");
+	};
 	var configContainerWidth = $("#setupCameraButtonToggleConfig").width();
 	$(".setupAccessoryConfigContainer").innerWidth(configContainerWidth);
 	if (Modernizr.iswindows == true){
@@ -11,10 +17,9 @@ $(document).ready(function() {
 		$("#mic-demo").html("<span style='text-align:left; padding:10px; width:auto;'> To adjust mic volume: <ul style='margin:10px 0 0;'> <li>Go to System Preferences > <span style='font-weight:bold; display:inline;'>Sound</span>.</li><li>Under Sound, go to the <span style='font-weight:bold; display:inline;'>Input</span> section.</li><li>Select the microphone to use and adjust the volume using your slider.</li> </ul> </span>");
 	}
 
-//	VideoVisitSetupWizard.createMeeting();
 });
 
-function configurePexipVideoProperties(){
+function configurePexipVideoProperties(data){
 	console.log('========>>>> PEXIP AUTO START');
 	console.log("join-conf clicked");
 
@@ -38,20 +43,21 @@ function configurePexipVideoProperties(){
 
     reqscript2.onload = function(){
 	    console.log("reqscript2 loaded");
-		startPexip();
+		startPexip(data);
     };
 }
 
-function startPexip() {
-	var guestPin = $("#meetingId").val().split('').reverse().join(''); // From Backend
-	$('#guestPin').val(guestPin);
-	var roomUrl = "vve-tpmg-dev.kp.org"; // $('#guestUrl').val();
-	var alias =  "m.ncal.test.1234"; 
+function startPexip(data) {
+	var hostPin = $("#meetingId").val(); // From Backend
+	$('#hostPin').val(hostPin);
+	var roomUrl = data.roomJoinUrl;// "vve-tpmg-dev.kp.org"; // $('#guestUrl').val();
+	var alias =  data.meetingVendorId; // "m.ncal.test.1234"; 
 	var bandwidth = "1280"; // $('#bandwidth').val();
 	var source = "Join+Conference";
-	var name = $("#guestName").val();
-	initialise(roomUrl, alias, bandwidth, name, guestPin, source);
+	var name = data.host.inMeetingDisplayName;
+	initialise(roomUrl, alias, bandwidth, name, hostPin, source);
 }
+
 
 var VideoVisit = {
 		logVendorMeetingEvents: function(params){}
@@ -92,12 +98,16 @@ var VideoVisitSetupWizard =
 	        	console.log("Setupwizard Meeting created successfully - returndata: " + data);
 	        	try{
 		        	data = jQuery.parseJSON(data);
-		        	$("#guestUrl").val(data.vidyoUrl);
-		        	$("#meetingId").val(data.meetingId);
-		        	$("#vendorConfId").val(data.vendorConfId);
-		        	$("#guestName").val(data.guestName);
-		        	$("#isProvider").val(data.isProvider);
-		        	configurePexipVideoProperties();
+		        	if(data.code) {
+		        		console.warn("Error in the return data for Setup Wizard Create meeting: " + data.message);
+		        	} else {
+		        		$("#guestUrl").val(data.vidyoUrl);
+		        		$("#meetingId").val(data.meetingId);
+		        		$("#vendorConfId").val(data.vendorConfId);
+		        		$("#guestName").val(data.guestName);
+		        		$("#isProvider").val(data.isProvider);
+		        		configurePexipVideoProperties(data);
+		        	}
 	        	}catch(e){
 	        		console.warn("Error in the return data for Setup Wizard Create meeting: " + data);
 	        	}
