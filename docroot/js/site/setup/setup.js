@@ -48,14 +48,14 @@ function configurePexipVideoProperties(data){
 }
 
 function startPexip(data) {
-	var hostPin = $("#meetingId").val(); // From Backend
-	$('#hostPin').val(hostPin);
+	var guestPin = $("#meetingId").val().split('').reverse().join(''); // From Backend
+	$('#guestPin').val(guestPin);
 	var roomUrl = data.roomJoinUrl;// "vve-tpmg-dev.kp.org"; // $('#guestUrl').val();
 	var alias =  data.meetingVendorId; // "m.ncal.test.1234"; 
 	var bandwidth = "1280"; // $('#bandwidth').val();
 	var source = "Join+Conference";
-	var name = data.host.inMeetingDisplayName;
-	initialise(roomUrl, alias, bandwidth, name, hostPin, source);
+	var name = data.member.inMeetingDisplayName;
+	initialise(roomUrl, alias, bandwidth, name, guestPin, source);
 }
 
 
