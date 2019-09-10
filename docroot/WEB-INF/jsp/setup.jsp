@@ -121,7 +121,9 @@
 		  }
 		}
 	</style>
-
+<div class="pre-call-testing-header">
+	<a class="help-link" href="mdohelp.htm" target="_blank" style="margin-top:10px; margin-right:0px; right:-65px;">Help</a>
+</div>
 <div class="provider-pre-call-testing-wrapper">
 	<div class="pre-call-test-container">
 		<!-- Peripherals container block starts -->
