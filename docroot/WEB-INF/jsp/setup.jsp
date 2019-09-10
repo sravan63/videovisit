@@ -69,6 +69,9 @@
 		.video-preview-block #video{
 			width: 440px!important;
 		}
+		.caret{
+			background: none !important;
+		}
 		.selfview {
 		  position: absolute;
 		  z-index: 2;
