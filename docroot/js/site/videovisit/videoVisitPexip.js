@@ -239,7 +239,7 @@ $(document).ready(function() {
 	VideoVisit.updatePatientGuestNameList();
 	
 		$("#selfview").on('click', function(){
-			if($("#presentation-view img").css("display") == "block"){
+			if($("#presentation-view").css("display") == "block"){
 			$(this).addClass("togglesv");
 			$("#presentation-view").addClass("togglepv");
 			$("#presentation-view img").addClass("togglepvimg");
@@ -259,6 +259,7 @@ $(document).ready(function() {
 		});
 		$("#presentation-view").on('click', function(){
 				$("#selfview").removeClass("togglesv");
+				$("#selfview").css("cursor","pointer");
 				var zindex1 = $( "#selfview" ).css( "z-index" );
 				var zindexpv = $( "#presentation-view img" ).css( "z-index" );
 				if(zindex1 == 6){

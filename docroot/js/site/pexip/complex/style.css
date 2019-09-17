@@ -866,7 +866,7 @@ border-radius: 50%;
 
 #selfview{
   z-index: 6;
-  cursor: pointer;
+  /*cursor: pointer;*/
   transform: scaleX(-1);
   -webkit-transform:scaleX(-1);
   -moz-transform:rotateY(180deg);

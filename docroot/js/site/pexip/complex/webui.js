@@ -190,6 +190,7 @@ function createPresentationStreamWindow() {
     if (presentation == null) {
         setTimeout(checkForBlockedPopup, 1000);
         $('#presentation-view').css('display', 'block');
+        $("#selfview").css("cursor","pointer");
         presentation = $('#presentation-view');
         mobileviewHeight = isMobileDevice ? '40vh' : '100%';        
         $('#presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:block;z-index:5;height: "+ mobileviewHeight +" ;width:100%;' onLoad='switchImage();'/><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay' poster='img/spinner.gif'/><img src='' id='presimage' width='0px'/></div>");
@@ -241,6 +242,7 @@ function presentationStartStop(setting, pres) {
         if (presentation != null) {
             //presentation.close();
             $('#presentation-view').css('display', 'none');
+            $("#selfview").css("cursor","default");
             presentation = null;
         }
         if (flash_button) {
@@ -254,6 +256,7 @@ function presentationStartStop(setting, pres) {
             utilityNotifyQueue(presenting_user + ' has stopped desktop sharing.');
             $(".remoteFeed").css("display","block");
             $("#selfview").removeClass("togglesv");
+            $("#selfview").css("cursor","default");
         }
         presenting_user = '';
     }
