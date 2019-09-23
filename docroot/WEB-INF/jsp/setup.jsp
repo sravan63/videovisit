@@ -161,9 +161,14 @@
 	
 
 	<script type="text/javascript">
+		var browserUserAgent = navigator.userAgent;
 	
 		$("#precall-start").click(function(){
 			// JOIN CLICK
+			if(browserUserAgent.indexOf('Firefox/') !== -1){
+			video.src='';
+			selfvideo.src = '';
+			}
 			console.log('Start Test VMR');
 			$(this).css('display','none');
 			$('#video').css('visibility','visible');
