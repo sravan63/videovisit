@@ -18,12 +18,15 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<vidyoplayerVersion>3.2.0-SNAPSHOT</vidyoplayerVersion>
 		<vvservice-clientVersion>3.2.0-SNAPSHOT</vvservice-clientVersion>
+		<frontend-plugin.version>0.0.27</frontend-plugin.version>
+		<node.version>v10.13.0</node.version>
+		<npm.version>6.12.0</npm.version>
 	</properties>
 
 	<scm>
 		<connection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</connection>
 		<developerConnection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</developerConnection>
-	  <tag>HEAD</tag>
+	  <tag>3.2.0-SNAPSHOT</tag>
   </scm>
 
 	<!-- dependencies needed during compile time -->
@@ -557,6 +560,48 @@
 				</executions>
 			</plugin>
 
+			<!-- React -->
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>${frontend-plugin.version}</version>
+				<configuration>
+					<workingDirectory>${basedir}/docroot/react/</workingDirectory>
+					<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
+					<nodeVersion>${node.version}</nodeVersion>
+					<npmVersion>${npm.version}</npmVersion>
+					<!-- <installDirectory>.</installDirectory> -->
+				</configuration>
+				<executions>
+					<execution>
+						<id>install node and npm</id>
+						<goals>
+							<goal>install-node-and-npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+					</execution>
+					<execution>
+						<id>npm install</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<configuration>
+							<arguments>install --strict-ssl=false</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>react cli build</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>run build</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -582,6 +627,7 @@
 								<exclude>WEB-INF/jsp/deprecated/**</exclude>
 								<exclude>js/deprecated/**</exclude>
 								<exclude>css/deprecated/**</exclude>
+								<exclude>react/**</exclude>
 							</excludes>
 						</resource>
 						<resource>
@@ -596,6 +642,14 @@
 								<include>**</include>
 							</includes>
 							<targetPath>WEB-INF/lib</targetPath>
+						</resource>
+						<!-- Added for React -->
+						<resource>
+							<directory>${basedir}/docroot/react/videovisit/</directory>
+							<includes>
+								<include>**</include>
+							</includes>
+							<targetPath>.</targetPath>
 						</resource>
 					</webResources>
 					<packagingExcludes>WEB-INF/lib/not-yet-commons-ssl-0.3.9.jar,WEB-INF/lib/activation-1.1.jar,WEB-INF/lib/aopalliance-1.0.jar,WEB-INF/lib/mail-1.4.jar,WEB-INF/lib/jmx*.jar,WEB-INF/lib/jms*.jar</packagingExcludes>

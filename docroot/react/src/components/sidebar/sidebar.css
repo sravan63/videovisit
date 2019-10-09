@@ -1,0 +1,78 @@
+.side-bar{
+	background-color: #E6E6E6;
+	height: auto;
+	width: 200px;
+}
+
+.tpmg-logo{
+    background: url('../../assets/tpmg-logo.jpg') no-repeat;
+    height:90px;
+    width:90px;
+    margin:20px auto;
+}
+
+.links-container ul{
+	margin:0px;
+	list-style-type:none;
+	padding: 0px;
+}
+.links-container ul li{
+	float:none;
+	font-size:18px;
+	font-weight:bold;
+	height:60px;
+	color:#006BA6;
+	margin-left:0px;
+	background:#E8E9E7;
+	cursor: pointer;
+}
+.links-container ul li:hover{
+    background-color:#cecece;
+}
+.links-container ul li.active-nav{
+	background: #006BA6;
+}
+.links-container ul li.active-nav a{
+	color:white;
+}
+.links-container ul li.active-nav:hover{
+	background: #006BA6;
+}
+.links-container ul li.active-nav a:hover{
+	background: #006BA6;
+}
+
+.links-container ul li a{
+	height:60px;
+	border-radius:0px;
+	text-decoration:none;
+	font-weight:normal;
+	padding-left:20px;
+	color:#006BA6;
+}
+
+span.navicon{
+ background: url('../../assets/vvnavbar-sprite.png') no-repeat top left;
+ width: 32px;
+ height: 32px; 
+ display:inline-block;
+ line-height:60px;
+ margin-top:12px;
+}
+span.nav-text{
+ line-height: 60px;
+ vertical-align: top;
+  margin:0px 0px 0px 18px;
+}
+span.nav-oncall{
+background-position: 0px -378px;
+}
+span.nav-phonebook{
+background-position: 0px -420px;
+}
+span.nav-favorite{
+background-position: 0px -336px;
+}
+span.nav-vv{
+background-position:0px -126px;
+}

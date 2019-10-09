@@ -1,0 +1,23 @@
+.ssologin-page #body{
+	padding: 10px;
+	width: 50%;
+	margin: auto;
+}
+.ssologin-page #body table{
+	margin: auto;
+}
+.ssologin-page #body table tr td:nth-child(1){
+	text-align: right;
+	padding:5px !important;
+}
+.ssologin-page #body table tr td:nth-child(2){
+	text-align: left;
+	padding:5px !important;
+}
+.ssologin-page #body table .tempAccess{
+	color: blue;
+}
+.ssologin-page #body table .tempAccess:hover{
+	text-decoration: underline;
+	cursor: pointer;
+}
