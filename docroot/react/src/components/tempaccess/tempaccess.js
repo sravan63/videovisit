@@ -3,7 +3,7 @@ import Header from '../header/header';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import './tempaccess.css';
+import './tempaccess.less';
 
 class TempAccess extends React.Component {
   constructor(props) {

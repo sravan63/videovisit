@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from 'react-redux';
 
-import './header.css';
+import './header.less';
 
 class header extends React.Component {
 	constructor(props) {

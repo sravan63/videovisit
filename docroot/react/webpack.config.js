@@ -1,12 +1,15 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 var path = require('path');
-module.exports = {
+
+module.exports = (env,options) => {
+  const isDev = options.mode == 'development';
+  return {
    output: {
       path: path.resolve(__dirname, "videovisit"),
       filename: "bundle.js",
       publicPath: '/videovisit/'
     },
-  devtool: "#eval-source-map",
+  devtool: isDev ? "#eval-source-map":false,
   module: {
     rules: [
       {
@@ -17,8 +20,12 @@ module.exports = {
         }
       },
       {
-                test:/\.css$/,
-                use:['style-loader','css-loader']
+        test:/\.less$/,
+        use:['style-loader','css-loader','less-loader']
+      },
+      {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
       },
        {
         test: /\.(png|svg|ico|jpg|gif)$/,
@@ -46,4 +53,5 @@ module.exports = {
       favicon: './src/assets/favicon.ico'
     })
   ]
+}
 };

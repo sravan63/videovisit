@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom';
 
 
 import App from './App';
-import './index.css';
+import './index.less';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';

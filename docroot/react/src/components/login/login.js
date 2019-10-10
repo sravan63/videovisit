@@ -5,7 +5,7 @@ import axios from 'axios';
 
 //import * as main from '../../miscellaneous/test'
 
-import './login.css';
+import './login.less';
 
 class Login extends React.Component {
 	constructor(props){
