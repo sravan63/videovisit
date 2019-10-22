@@ -1,5 +1,6 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.utils;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -19,8 +20,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class WebUtil {
 
@@ -54,6 +59,7 @@ public class WebUtil {
 	public static final String TRUE = Boolean.TRUE.toString();
 	public static final String FALSE = Boolean.FALSE.toString();
 	public static final String BLOCK_SAFARI_VERSION = "12";
+	public static final String AUTH_TOKEN = "authtoken";
 
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);
@@ -492,4 +498,20 @@ public class WebUtil {
 		return isStringContainsEmail;
 	}
 
+	public static <T> String prepareCommonOutputJson(final String operation, final String code, final String message,
+			final T result) {
+		logger.info(LOG_ENTERED);
+		final VVResponse output = new VVResponse();
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		output.setCode(code);
+		output.setMessage(message);
+		if (result == null) {
+			output.setData((Serializable) "");
+		} else {
+			output.setData((Serializable) result);
+		}
+		final String json = gson.toJson(output);
+		logger.info(LOG_EXITING);
+		return json;
+	}
 }
