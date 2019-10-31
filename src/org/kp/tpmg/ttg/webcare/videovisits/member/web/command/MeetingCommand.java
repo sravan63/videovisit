@@ -41,6 +41,7 @@ import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyMemberEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Member;
@@ -114,17 +115,16 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 	}
 
-	public static String verifyMember(HttpServletRequest request) throws Exception {
+	public static VerifyMemberEnvelope verifyMember(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
-
+		String output = null;
 		try {
 			String lastName = "";
 			String mrn8Digit = "";
 			String birth_month = "";
 			String birth_year = "";
 			String birth_day = "";
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 
 			if (StringUtils.isNotBlank(request.getParameter("last_name"))) {
 				lastName = request.getParameter("last_name");
@@ -143,34 +143,26 @@ public class MeetingCommand {
 			}
 			boolean success = WebService.initWebService(request);
 
-			if (ctx != null && success == true) {
-				if(StringUtils.isNotBlank(lastName)){
-					lastName = WebUtil.replaceSpecialCharacters(lastName);
-				}
-				verifyMemberOutput = WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day,
-						request.getSession().getId(), ctx.getClientId());
+			if (StringUtils.isNotBlank(lastName)) {
+				lastName = WebUtil.replaceSpecialCharacters(lastName);
+			}
+			verifyMemberOutput = WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day,
+					request.getSession().getId(), "react poc");
 
-				if (verifyMemberOutput != null && verifyMemberOutput.getStatus() != null
-						&& "200".equals(verifyMemberOutput.getStatus().getCode())
-						&& verifyMemberOutput.getEnvelope() != null
-						&& verifyMemberOutput.getEnvelope().getMember() != null) {
-					ctx.setMemberDO(verifyMemberOutput.getEnvelope().getMember());
-					return "1";
-				} else {
-					ctx.setMemberDO(null);
-					return "3";
-				}
-
-			} else {
-				return "3";
+			if (verifyMemberOutput != null && verifyMemberOutput.getStatus() != null
+					&& "200".equals(verifyMemberOutput.getStatus().getCode())
+					&& verifyMemberOutput.getEnvelope() != null
+					&& verifyMemberOutput.getEnvelope().getMember() != null) {
+				Gson gson = new GsonBuilder().serializeNulls().create();
+				output = gson.toJson(verifyMemberOutput.getEnvelope());
+				output = WebUtil.prepareCommonOutputJson("submitlogin", "200", "success", verifyMemberOutput.getEnvelope());
 			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
-			return "3";
-
 		}
+		return verifyMemberOutput != null ? verifyMemberOutput.getEnvelope() : null;
 	}
-
+	
 	public static String updateEndMeetingLogout(HttpServletRequest request,
 			String memberName, boolean notifyVideoForMeetingQuit) throws Exception {
 		logger.info(LOG_ENTERED + "notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
