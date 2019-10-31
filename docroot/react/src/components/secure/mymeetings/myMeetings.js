@@ -1,7 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import Header from '../../header/header';
-import './myMeetings.css';
+import './myMeetings.less';
 
 class MyMeetings extends React.Component {
     constructor(props) {
