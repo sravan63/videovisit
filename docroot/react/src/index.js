@@ -14,17 +14,6 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.less';
 
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import userDetailsReducer from './miscellaneous/userDetailsReducer';
-
-const store = createStore(userDetailsReducer);
-
 
 ReactDOM.render(
-	<Provider store={store}>
-		<App />
-	</Provider>
-	, document.getElementById('root'));
-
-
+    <App />, document.getElementById('root'));

@@ -6,35 +6,34 @@ import axios from 'axios';
 import './tempaccess.less';
 
 class TempAccess extends React.Component {
-  constructor(props) {
-    super(props);
-    localStorage.clear();
-	 this.state = {last_name: '', mrn: '', birth_month: '', birth_year: '', userDetails: {}};
-	 this.signOn = this.signOn.bind(this);
-  }
-  signOn(){
-	  localStorage.clear();
-	    axios.post('/videovisit/submitlogin.json?last_name='+this.state.last_name+'&mrn='+this.state.mrn+'&birth_month='+this.state.birth_month+'&birth_year='+this.state.birth_year, {}).then((response) => {
-	    	if(response && response.data && response.data.statusCode == '200' && response.data.data && response.data.data.member){
-	    		var data = response.data.data.member;
-	    		data.isTempAccess = true;
-	        	data.ssoSession = response.headers.authtoken;
-	        	this.props.dispatch({
-			      type:'ADD_USER_DETAILS',
-			      data});
-	        	localStorage.setItem('userDetails', JSON.stringify(data));
-		        this.props.history.push('/secure/myMeetings');
-	    	}
-	    }, (err) => {
-	        console.log(err.message);
-	    });
-}
-  handleChange(key, event){
-		this.setState({[key]: event.target.value});
-	}
-  render() {
-    return (
-      <div id='container' className="signon-page">
+    constructor(props) {
+        super(props);
+        localStorage.clear();
+        this.state = { last_name: '', mrn: '', birth_month: '', birth_year: '', userDetails: {} };
+        this.signOn = this.signOn.bind(this);
+    }
+    signOn() {
+        localStorage.clear();
+        axios.post('/videovisit/submitlogin.json?last_name=' + this.state.last_name + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year, {}).then((response) => {
+            if (response && response.data && response.data.statusCode == '200' && response.data.data && response.data.data.member) {
+                var data = response.data.data.member;
+                data.isTempAccess = true;
+                data.ssoSession = response.headers.authtoken;
+                localStorage.setItem('userDetails', JSON.stringify(data));
+                this.props.history.push('/secure/myMeetings');
+            }
+        }, (err) => {
+            console.log(err.message);
+        });
+    }
+    handleChange(key, event) {
+        this.setState({
+            [key]: event.target.value
+        });
+    }
+    render() {
+        return (
+            <div id='container' className="signon-page">
 			<Header/>
 			<div id='body'>
 				<table>
@@ -57,14 +56,9 @@ class TempAccess extends React.Component {
 					</tbody>
 				</table>
 			</div>
-       </div>    
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-    return {
-        userDetails: state
+       </div>
+        );
     }
 }
-export default connect(mapStateToProps)(TempAccess);
+
+export default TempAccess;

@@ -8,43 +8,41 @@ import axios from 'axios';
 import './login.less';
 
 class Login extends React.Component {
-	constructor(props){
-		 super(props);
-		 localStorage.clear();
-		 this.state = {username: '', password: '', userDetails: {}};
-		 this.getLoginUserDetails = this.getLoginUserDetails.bind(this);
-	}
-	getLoginUserDetails(){
-		localStorage.clear();
-		axios.post('/videovisit/ssosubmitlogin.json?username='+this.state.username+'&password='+this.state.password, {}).then((response) => {
-		        if(response && response.data && response.data.statusCode && response.data.statusCode == '200' && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession){
-		        	var data = response.data.data.memberInfo;
-		        	data.isTempAccess = false;
-		        	data.ssoSession = response.data.data.ssoSession;
-		        	this.props.dispatch({
-				      type:'ADD_USER_DETAILS',
-				      data});
-		        	localStorage.setItem('userDetails', JSON.stringify(data));
-		        	this.props.history.push('/secure/myMeetings');
-		        }
-		}, (err) => {
-		    	console.log(err);
-		});
-	}
-	redirectToTempAccessPage(){
-		//main.bodyLoaded();
-		this.props.history.push('/tempaccess');
-	}
-	handleChange(key, event){
-		//var innerObj = this.state.innerObj;
-	    //innerObj.obj2 = event.target.value;
-	    //this.setState({innerObj});//setting inner level property
-	    //this.setState({[key]: event.target.value});
-		this.setState({[key]: event.target.value});
-	}
-	render() {
-	return (
-		<div id='container' className="ssologin-page">
+    constructor(props) {
+        super(props);
+        localStorage.clear();
+        this.state = { username: '', password: '', userDetails: {} };
+        this.getLoginUserDetails = this.getLoginUserDetails.bind(this);
+    }
+    getLoginUserDetails() {
+        localStorage.clear();
+        axios.post('/videovisit/ssosubmitlogin.json?username=' + this.state.username + '&password=' + this.state.password, {}).then((response) => {
+            if (response && response.data && response.data.statusCode && response.data.statusCode == '200' && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {
+                var data = response.data.data.memberInfo;
+                data.isTempAccess = false;
+                data.ssoSession = response.data.data.ssoSession;
+                localStorage.setItem('userDetails', JSON.stringify(data));
+                this.props.history.push('/secure/myMeetings');
+            }
+        }, (err) => {
+            console.log(err);
+        });
+    }
+    redirectToTempAccessPage() {
+        //main.bodyLoaded();
+        this.props.history.push('/tempaccess');
+    }
+    handleChange(key, event) {
+        //var innerObj = this.state.innerObj;
+        //innerObj.obj2 = event.target.value;
+        //this.setState({innerObj});//setting inner level property
+        //this.setState({[key]: event.target.value});
+        this.setState({
+            [key]: event.target.value });
+    }
+    render() {
+        return (
+            <div id='container' className="ssologin-page">
 		<Header/>
 			<div id='body'>
 				<table>
@@ -66,14 +64,9 @@ class Login extends React.Component {
 					</tbody>
 				</table>
 			</div>  
-		 </div>    
-	);
-	}
-}
-
-const mapStateToProps = (state) => {
-    return {
-        userDetails: state
+		 </div>
+        );
     }
 }
-export default connect(mapStateToProps)(Login);
+
+export default Login;

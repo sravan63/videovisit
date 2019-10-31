@@ -4,25 +4,25 @@ import { connect } from 'react-redux';
 import './header.less';
 
 class header extends React.Component {
-	constructor(props) {
-	   super(props);
-	   this.state = {name: '', userDetails: {}};
-	}
-	componentWillMount() {
-		//if(this.props.userDetails && this.props.userDetails.userDetails){
-            if(localStorage.getItem('userDetails')){
+    constructor(props) {
+        super(props);
+        this.state = { name: '', userDetails: {} };
+    }
+    componentWillMount() {
+        //if(this.props.userDetails && this.props.userDetails.userDetails){
+        if (localStorage.getItem('userDetails')) {
             const data = JSON.parse(localStorage.getItem('userDetails'));
             this.state.userDetails = data;
             //const data = this.props.userDetails.userDetails;
-			this.setState({
-			      name: data.firstName.toLowerCase()+ ' ' + data.lastName.toLowerCase()
-			}); 
-		 }	    
-	}
-  render() {
-    return (
-    	<div className="header-content"> 
-    		<div className="title">Video Visits</div>
+            this.setState({
+                name: data.firstName.toLowerCase() + ' ' + data.lastName.toLowerCase()
+            });
+        }
+    }
+    render() {
+        return (
+            <div className="header-content"> 
+            <div className="title">Video Visits</div>
             { this.state.name? 
                 <div className="user-details" >
                     <ul>
@@ -35,16 +35,10 @@ class header extends React.Component {
                 </div>
              : null
         }
-    		
-    	</div>
-    );
-  }
-}
-
-
-const mapStateToProps = (state) => {
-    return {
-        userDetails: state
+            
+        </div>
+        );
     }
 }
-export default connect(mapStateToProps)(header);
+
+export default header;
