@@ -13,7 +13,7 @@ class App extends React.Component {
 	render() {
 		return (
 			<Router basename='/'>
-				<div id='container'>
+				<div className='container-fluid p-0'>
 					{routes.map((route, i) => (
 					  <RouteWithSubRoutes key={i} {...route} />
 					))}

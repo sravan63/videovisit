@@ -14,15 +14,16 @@ class header extends React.Component {
             const data = JSON.parse(localStorage.getItem('userDetails'));
             this.state.userDetails = data;
             //const data = this.props.userDetails.userDetails;
-            this.setState({
-                name: data.firstName.toLowerCase() + ' ' + data.lastName.toLowerCase()
-            });
-        }
-    }
-    render() {
-        return (
-            <div className="header-content"> 
-            <div className="title">Video Visits</div>
+			this.setState({
+			      name: data.firstName.toLowerCase()+ ' ' + data.lastName.toLowerCase()
+			}); 
+		 }	    
+	}
+  render() {
+    return (
+    	<div className="header-content"> 
+    		<div className="title">Video Visits</div>
+            <small>The Permanente Medical Group</small>
             { this.state.name? 
                 <div className="user-details" >
                     <ul>
@@ -35,10 +36,11 @@ class header extends React.Component {
                 </div>
              : null
         }
-            
-        </div>
-        );
-    }
+    		
+    	</div>
+    );
+  }
 }
+
 
 export default header;

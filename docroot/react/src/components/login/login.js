@@ -1,5 +1,7 @@
 import React from 'react';
 import Header from '../header/header';
+import Sidebar from '../sidebar/sidebar';
+import Footer from '../footer/footer';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -44,25 +46,52 @@ class Login extends React.Component {
         return (
             <div id='container' className="ssologin-page">
 		<Header/>
-			<div id='body'>
-				<table>
-					<tbody>
-						<tr>
-							<td><span>Uname:</span></td>
-							<td><input type="text" id="username" onChange={(e)=>this.handleChange('username', e)} /></td>
-						</tr>
-						<tr>
-							<td><span>Password:</span></td>
-							<td><input type="password" id="password" onChange={(e)=>this.handleChange('password', e)} /></td>
-						</tr>
-						<tr>
-							<td colSpan="2" className="text-center"><button onClick={this.getLoginUserDetails}>Sign On</button></td>
-						</tr>
-						<tr>
-							<td colSpan="2" className="text-center"><span className="tempAccess" onClick={this.redirectToTempAccessPage.bind(this)}>Temp Access</span></td>
-						</tr>
-					</tbody>
-				</table>
+		<Sidebar/>		
+			 <div className="main-content">
+						<div className="row">
+							<div className="col-12 text-right help-icon p-0">
+								<small><a href="javascript:void(0)">Help</a></small>
+							</div>
+						</div>
+						<div className="row mt-5">
+							<div className="col-12">
+								<h3 className="member-head-msg">Please sign on for your Video Visit</h3>
+								<p>Children age 11 or younger must have a parent or legal guardian with them during the Video Visit.</p>
+							</div>
+						</div>
+					<div className="row mt-1 mb-5">
+						<form class="col-sm-12">
+							<div className="form-group row">
+								<label for="lastName" className="col-md-2 col-sm-3 col-form-label">Patient's Last Name</label>
+								<div className="col-sm-4">
+								<input type="text" className="form-control rounded-0 p-0 shadow-none no-outline" id="plname" />
+								</div>
+							</div>
+							<div className="form-group row">
+								<label for="medicalRecordNumber" className="col-md-2 col-sm-3 col-form-label">Medical Record Number</label>
+								<div className="col-sm-4">
+								<input type="text" className="form-control rounded-0 p-0 shadow-none outline-no" id="mrn" />
+								</div>
+							</div>
+							<div className="form-group row">
+								<label for="dateOfBirth" className="col-md-2 col-sm-3 col-form-label">Date of Birth</label>
+								<div className="col-md-2 col-sm-3">
+									<input type="text" className="form-control rounded-0 shadow-none outline-none" id="dob-month" placeholder="mm" />
+								</div>
+								<div className="col-md-2 col-sm-3">
+									<input type="text" className="form-control rounded-0 shadow-none" id="dob-year" placeholder="yyyy" />
+								</div>
+							</div>
+							<div className="form-group row mt-5">
+								<div className="col-sm-4">
+								</div>
+								<div className="col-sm-2">
+								<input type="submit" name="login" value="Sign On" className="form-control rounded-0 p-0 shadow-none login-submit" id="login" />
+								</div>
+							</div>
+						</form>
+					</div>
+					<Footer/>
 			</div>  
 		 </div>
         );
