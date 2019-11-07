@@ -3,7 +3,6 @@ import { Route } from 'react-router-dom';
 
 import Videovisit from './components/videovisit';
 import Login from './components/login/login';
-import Ssologin from './components/ssologin/Ssologin';
 import Authentication from '../src/views/authentication/authentication';
 
 import MyMeetings from './components/secure/mymeetings/myMeetings';
