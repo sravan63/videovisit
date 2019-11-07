@@ -11,7 +11,7 @@ class Videovisit extends React.Component {
         setTimeout(this.redirectToSsoLoginPage.bind(this), 100);
     }
     redirectToSsoLoginPage() {
-        if (this.props.location.pathname == "/login" || this.props.location.pathname == "/tempaccess") {
+        if (this.props.location.pathname == "/login") {
             return;
         }
         if (this.props.location.pathname == "/") {

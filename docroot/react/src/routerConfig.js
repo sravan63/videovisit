@@ -3,7 +3,8 @@ import { Route } from 'react-router-dom';
 
 import Videovisit from './components/videovisit';
 import Login from './components/login/login';
-import TempAccess from './components/tempaccess/tempaccess';
+import Ssologin from './components/ssologin/Ssologin';
+import Authentication from '../src/views/authentication/authentication';
 
 import MyMeetings from './components/secure/mymeetings/myMeetings';
 
@@ -13,11 +14,7 @@ export const routes = [{
     },
     {
         path: '/login',
-        component: Login
-    },
-    {
-        path: '/tempaccess',
-        component: TempAccess
+        component: Authentication
     },
     {
         path: '/secure/myMeetings',

@@ -3,8 +3,8 @@ import './footer.less';
 class footer extends Component {
   render() {
     return <div className="container">
-    <div class="row mt-3">
-      <div class="col-12 text-center">
+    <div className="row mt-3">
+      <div className="col-12 text-center">
         <ul id="list-conditions">
                             <li><a href="#" target="_blank" className="pr-2 pl-2 pb-0"> Terms &amp; Conditions</a></li>
                             <li className="last b-0"><a href="#" target="_blank" className="pr-2 pl-2 pb-0">Privacy Practices</a></li>
