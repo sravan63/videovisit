@@ -506,70 +506,54 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String strResponse = null;
 		try {
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			WebService.initWebService(request);
-			if (ctx != null) {
-				String userName = request.getParameter("username");
-				String password = request.getParameter("password");
+			String userName = request.getParameter("username");
+			String password = request.getParameter("password");
 
-				logger.debug("userName= " + userName + ",password=" + password);
+			logger.debug("userName= " + userName + ",password=" + password);
 
-				if (StringUtils.isNotBlank(userName) && StringUtils.isNotBlank(password)) {
-					KpOrgSignOnInfo kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(userName, password);
-
-					if (kpOrgSignOnInfo == null) {
-						// TODO not authenticated. Clear the logged in cache.
-						logger.warn("SSO Sign on failed due to KP org signon Service unavailability.");
-						strResponse = invalidateWebAppContext(ctx);
-
+			if (StringUtils.isNotBlank(userName) && StringUtils.isNotBlank(password)) {
+				KpOrgSignOnInfo kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(userName, password);
+				if (kpOrgSignOnInfo == null) {
+					// TODO not authenticated. Clear the logged in cache.
+					logger.warn("SSO Sign on failed due to KP org signon Service unavailability.");
+				} else {
+					if (!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
+							|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError())) {
+						logger.warn(
+								"SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
+					} else if (kpOrgSignOnInfo.getUser() == null || (kpOrgSignOnInfo.getUser() != null
+							&& StringUtils.isBlank(kpOrgSignOnInfo.getUser().getGuid()))) {
+						logger.warn("SSO Sign on service failed to return GUID for a user");
+					} else if (StringUtils.isBlank(kpOrgSignOnInfo.getSsoSession())) {
+						logger.warn("SSO Sign on service failed to return SSOSESSION for a user");
 					} else {
-						if (!kpOrgSignOnInfo.isSuccess() && (StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
-								|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))) {
-							logger.warn(
-									"SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
-							strResponse = invalidateWebAppContext(ctx);
-						} else if (kpOrgSignOnInfo.getUser() == null || (kpOrgSignOnInfo.getUser() != null
-								&& StringUtils.isBlank(kpOrgSignOnInfo.getUser().getGuid()))) {
-							logger.warn("SSO Sign on service failed to return GUID for a user");
-							strResponse = invalidateWebAppContext(ctx);
-						} else if (StringUtils.isBlank(kpOrgSignOnInfo.getSsoSession())) {
-							logger.warn("SSO Sign on service failed to return SSOSESSION for a user");
-							strResponse = invalidateWebAppContext(ctx);
+
+						AuthorizeResponseVo authorizeMemberResponse = WebService
+								.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
+						if (authorizeMemberResponse == null) {
+							logger.warn("SSO Sign on failed due to unavailability of Member SSO Auth API");
 						} else {
-
-							AuthorizeResponseVo authorizeMemberResponse = WebService
-									.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
-							if (authorizeMemberResponse == null) {
-								logger.warn("SSO Sign on failed due to unavailability of Member SSO Auth API");
-								strResponse = invalidateWebAppContext(ctx);
+							// check for errors returned
+							if (authorizeMemberResponse.getResponseWrapper() == null) {
+								logger.warn("SSO Sign on failed due to Member SSO Auth API authorization failure");
 							} else {
-								// check for errors returned
-								if (authorizeMemberResponse.getResponseWrapper() == null) {
-									logger.warn("SSO Sign on failed due to Member SSO Auth API authorization failure");
-									strResponse = invalidateWebAppContext(ctx);
-								} else {
-									if (validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper())) {
-										logger.info(
-												"SSO Sign on successful and setting member info into web app context");
-										setWebAppContextMemberInfo(ctx,
-												authorizeMemberResponse.getResponseWrapper().getMemberInfo());
-										ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
-										ctx.setKpKeepAliveUrl(WebService.getKpOrgSSOKeepAliveUrl());
-										strResponse = "200";
-									} else {
-										strResponse = invalidateWebAppContext(ctx);
-									}
+								if (validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper())) {
+									logger.info("SSO Sign on successful and setting member info into web app context");
+									// strResponse = "200";
+									SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
+									signOnOutput.setMemberInfo(authorizeMemberResponse.getResponseWrapper().getMemberInfo());
+									signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+									signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
+									strResponse = WebUtil.prepareCommonOutputJson("ssosubmitlogin", "200", "success", signOnOutput);
 								}
-
 							}
+
 						}
 					}
-				} else {
-					logger.warn("SSO Sign on failed as either username or password is not available");
-					strResponse = "400";
 				}
 			} else {
-				logger.warn("SSO Sign on failed as webapp context from the rquest is null");
+				logger.warn("SSO Sign on failed as either username or password is not available");
 				strResponse = "400";
 			}
 		} catch (Exception e) {
@@ -582,6 +566,7 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return strResponse;
 	}
+
 	
 	private static boolean validateMemberSSOAuthResponse(MemberSSOAuthorizeResponseWrapper responseWrapper) {
 		logger.info(LOG_ENTERED);
