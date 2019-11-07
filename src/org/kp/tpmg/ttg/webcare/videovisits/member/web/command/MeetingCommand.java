@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
