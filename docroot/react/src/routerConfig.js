@@ -17,7 +17,7 @@ export const routes = [{
         component: Authentication
     },
     {
-        path: '/secure/myMeetings',
+        path: '/myMeetings',
         component: MyMeetings
     }
 ];

@@ -36,7 +36,7 @@ class Authentication extends React.Component {
              {this.state.tempAccessToken ? (
 							<Login data={{tempAccessToken:this.state.tempAccessToken,changeUnit:this.changeUnit.bind(this)}}/>
 						) : (
-                            <Ssologin data={{tempAccessToken:this.state.tempAccessToken,changeUnit:this.changeUnit.bind(this)}}/>
+                            <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,changeUnit:this.changeUnit.bind(this)}}/>
                         )}
             </div> 
              <Footer />

@@ -12,15 +12,15 @@ class MyMeetings extends React.Component {
         this.getMyMeetings = this.getMyMeetings.bind(this);
     }
     componentDidMount() {
-        if (localStorage.getItem('userDetails')) {
-            this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+        if (localStorage.getItem('signedIn')) {
+            var signIn = JSON.parse(localStorage.getItem('signedIn'));
             /*this.state.userDetails = this.props.userDetails.userDetails;
 			if(this.props.userDetails.userDetails){
 				this.getMyMeetings();
 			}*/
-            if (this.state.userDetails) {
+           /* if (this.state.userDetails) {
                 this.getMyMeetings();
-            }
+            }*/
         } else {
             this.props.history.push('/login');
         }

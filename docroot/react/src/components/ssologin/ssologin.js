@@ -13,12 +13,15 @@ export default class Ssologin extends React.Component {
     getLoginUserDetails() {
         localStorage.clear();
         axios.post('/videovisit/ssosubmitlogin.json?username=' + this.state.username + '&password=' + this.state.password, {}).then((response) => {
-            if (response && response.data && response.data.statusCode && response.data.statusCode == '200' && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {
-                var data = response.data.data.memberInfo;
-                data.isTempAccess = false;
-                data.ssoSession = response.data.data.ssoSession;
-                localStorage.setItem('userDetails', JSON.stringify(data));
-                this.props.history.push('/secure/myMeetings');
+           /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
+             && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
+          if(response && response.status && response.status==200){
+          	 localStorage.setItem('signedIn', true);
+                //var data = response.data.data.memberInfo;
+                //data.isTempAccess = false;
+                //data.ssoSession = response.data.data.ssoSession;
+                //localStorage.setItem('userDetails', JSON.stringify(data));
+                this.props.history.push('/myMeetings');
             }
         }, (err) => {
             console.log(err);
@@ -47,7 +50,7 @@ export default class Ssologin extends React.Component {
 							</div>
 							<div className="form-group row mt-5">
 								<div className="col-sm-4 text-right">
-								<button className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails}>Sign On</button>
+								<button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails}>Sign On</button>
 								</div>
 							</div>
 						</form>
