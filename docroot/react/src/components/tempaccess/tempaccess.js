@@ -71,7 +71,7 @@ class TempAccess extends React.Component {
                             </div>
                         </form>
                         <div className="col-sm-6 ml-5">
-                            <button className="btn btn-link" onClick={() => this.props.data.changeUnit(false)} id="temp-access">SSO access </button>
+                            <button className="btn btn-link" onClick={() => this.props.data.toggleLoginScreen(false)} id="temp-access">SSO access </button>
                         </div>
                     </div>
             </div>

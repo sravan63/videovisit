@@ -13,7 +13,7 @@ class Authentication extends React.Component {
         this.tempAccessToken = false;
         this.state = { tempAccessToken: false };
     }
-    changeUnit(item) {
+    toggleLoginScreen(item) {
         //this.setState({tempAccessToken:item});
         this.state.tempAccessToken = item;
         this.props.history.push('/login');
@@ -33,9 +33,9 @@ class Authentication extends React.Component {
                         </div>  
                                  
              {this.state.tempAccessToken ? (
-                            <Login data={{tempAccessToken:this.state.tempAccessToken,changeUnit:this.changeUnit.bind(this)}}/>
+                            <Login data={{tempAccessToken:this.state.tempAccessToken,toggleLoginScreen:this.toggleLoginScreen.bind(this)}}/>
                         ) : (
-                            <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,changeUnit:this.changeUnit.bind(this)}}/>
+                            <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,toggleLoginScreen:this.toggleLoginScreen.bind(this)}}/>
                         )}
             </div> 
              <Footer />

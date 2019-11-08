@@ -17,13 +17,13 @@ describe("Authentication View", function() {
 
     it("On tempAccessToken set to Truthy", function() {
         const instance = wrapper.instance();
-        instance.changeUnit(true);
+        instance.toggleLoginScreen(true);
         expect(wrapper.state().tempAccessToken).toEqual(true);
     });
 
     it("On tempAccessToken set to Falsy", function() {
         const instance = wrapper.instance();
-        instance.changeUnit(false);
+        instance.toggleLoginScreen(false);
         expect(wrapper.state().tempAccessToken).toEqual(false);
     });
 

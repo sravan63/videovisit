@@ -7,7 +7,14 @@ export default class Ssologin extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { username: '', password: '', userDetails: {} };
+        this.state = {
+            username: '',
+            password: '',
+                errors: {
+                    username: '',
+                    password: '',
+                }
+          };
         this.getLoginUserDetails = this.getLoginUserDetails.bind(this);
     }
     getLoginUserDetails() {
@@ -28,26 +35,62 @@ export default class Ssologin extends React.Component {
         });
     }
     handleChange(key, event) {
-        this.setState({
-            [key]: event.target.value
-        });
+        event.preventDefault();
+        const { name, value } = event.target;
+        let errors = this.state.errors;
+
+        switch (name) {
+        case 'username': 
+            errors.username = 
+            value.length < 5
+                ? 'Full Name must be 5 characters long!'
+                : '';
+            break;        
+        case 'password': 
+            errors.password = 
+            value.length < 8
+                ? 'Password must be 8 characters long!'
+                : '';
+            break;
+        default:
+            break;
+        }
+        this.setState({ errors, [name]: value });
     }
+    handleSubmit (event) {
+        console.log(this);
+        
+       // event.preventDefault();
+        // if (validateForm(this.state.errors)) {
+        //   console.info("Valid Form");
+        // } else {
+        //   console.error("Invalid Form");
+        // }
+      }
+
     render() {
+        const { errors } = this.state;
         return (
             <div className="sso-content">
 						<div className="row mt-1 ml-5 mt-4 mb-5">
 						<h3 className="member-head-msg">Please sign on for your Video Visit</h3>
-						<form className="col-sm-12 text-center mt-2 p-0">
+						<form className="col-sm-12 text-center mt-2 p-0" onSubmit={this.handleSubmit(event)}>
 							<p className="text-left">Use your kp.org user name and password</p>
 							<div className="form-group row">
 								<div className="col-sm-4">
-								<input type="text" className="form-control rounded-0 p-0 shadow-none no-outline textindent" placeholder="kp.org user name" id="uname" onChange={this.handleChange.bind(this,'username')}  />
+								<input type="text" name="username" className="form-control rounded-0 p-0 shadow-none no-outline textindent" placeholder="kp.org user name" onChange={this.handleChange.bind(this,'username')}  />
 								</div>
+                                {errors.username.length > 0 && (
+                                    <span className="error">{errors.username}</span>
+                                )}
 							</div>
 							<div className="form-group row">
 								<div className="col-sm-4">
-								<input type="password" className="form-control rounded-0 p-0 shadow-none outline-no textindent" placeholder="password" id="pwd" onChange={this.handleChange.bind(this,'password')}  />
+								<input type="password" name="password" className="form-control rounded-0 p-0 shadow-none outline-no textindent" placeholder="password" onChange={this.handleChange.bind(this,'password')}  />
 								</div>
+                                {errors.password.length > 0 && (
+                                    <span className="error">{errors.password}</span>
+                                )}
 							</div>
 							<div className="form-group row mt-5">
 								<div className="col-sm-4 text-right">
@@ -56,7 +99,7 @@ export default class Ssologin extends React.Component {
 							</div>
 						</form>
 						<div>
-							<button className="btn btn-link p-0" onClick={() => this.props.data.changeUnit(true)} id="temp-access">Temporary access </button>
+							<button className="btn btn-link p-0" onClick={() => this.props.data.toggleLoginScreen(true)} id="temp-access">Temporary access </button>
 						</div>
 					</div>					
 			</div>
