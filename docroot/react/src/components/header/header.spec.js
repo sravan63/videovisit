@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Header from './header';
 
 describe("Header Component", function() {
-    let wrapper ;
+    let wrapper;
     var data = {
         firstName: "joe",
         lastName: "mama"

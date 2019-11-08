@@ -1,9 +1,8 @@
 import React from 'react';
 import Header from '../header/header';
-import { connect } from 'react-redux';
 import axios from 'axios';
+import '../../views/authentication/authentication.less';
 
-import './tempaccess.less';
 
 class TempAccess extends React.Component {
     constructor(props) {
@@ -33,30 +32,49 @@ class TempAccess extends React.Component {
     }
     render() {
         return (
-            <div id='container' className="signon-page">
-			<Header/>
-			<div id='body'>
-				<table>
-					<tbody>
-						<tr>
-							<td><span>Patient Last Name:</span></td>
-							<td><input type="text" id="last_name" onChange={(e)=>this.handleChange('last_name', e)}/></td>
-						</tr>
-						<tr>
-							<td><span>Medical Record:</span></td>
-							<td><input type="text" id="mrn" onChange={(e)=>this.handleChange('mrn', e)}/></td>
-						</tr>
-						<tr>
-							<td><span>Date of Birth:</span></td>
-							<td><input type="number" id="birth_month" onChange={(e)=>this.handleChange('birth_month', e)} /><input type="number" id="birth_year" onChange={(e)=>this.handleChange('birth_year', e)}/></td>
-						</tr>
-						<tr>
-							<td colSpan="2" className="text-center"><button onClick={this.signOn}>Sign On</button></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-       </div>
+            <div className="temp-content">
+                    <div className="row mt-4 ml-5 mb-1">
+                        <div className="col-12 p-0">
+                            <h3 className="member-head-msg">Please sign on for your Video Visit</h3>
+                            <p>Children age 11 or younger must have a parent or legal guardian with them during the Video Visit.</p>
+                        </div>
+                    </div>
+                    <div className="row mt-1">
+                        <form className="col-sm-12 p-0">
+                            <div className="form-group row ml-5 mt-2">
+                                <label for="lastName" className="col-md-2 col-sm-3 col-form-label">Patient's Last Name</label>
+                                <div className="col-sm-4">
+                                <input type="text" className="form-control rounded-0 p-0 shadow-none no-outline" id="plname" />
+                                </div>
+                            </div>
+                            <div className="form-group row ml-5 mt-2">
+                                <label for="medicalRecordNumber" className="col-md-2 col-sm-3 col-form-label">Medical Record Number</label>
+                                <div className="col-sm-4">
+                                <input type="text" className="form-control rounded-0 p-0 shadow-none outline-no" id="mrn" />
+                                </div>
+                            </div>
+                            <div className="form-group row ml-5 mt-2">
+                                <label for="dateOfBirth" className="col-md-2 col-sm-3 col-form-label">Date of Birth</label>
+                                <div className="col-md-2 col-sm-3">
+                                    <input type="text" className="form-control rounded-0 shadow-none outline-none" id="dob-month" placeholder="mm" />
+                                </div>
+                                <div className="col-md-2 col-sm-3">
+                                    <input type="text" className="form-control rounded-0 shadow-none" id="dob-year" placeholder="yyyy" />
+                                </div>
+                            </div>
+                            <div className="form-group row ml-5 mt-5">
+                                <div className="col-sm-4">
+                                </div>
+                                <div className="col-sm-2">
+                                <button className="btn w-100 rounded-0 p-0 login-submit" id="login" >Sign On</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div className="col-sm-6 ml-5">
+                            <button className="btn btn-link" onClick={() => this.props.data.changeUnit(false)} id="temp-access">SSO access </button>
+                        </div>
+                    </div>
+            </div>
         );
     }
 }
