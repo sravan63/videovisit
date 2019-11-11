@@ -14,15 +14,15 @@ class TempAccess extends React.Component {
     signOn() {
         localStorage.clear();
         axios.post('/videovisit/submitlogin.json?last_name=' + this.state.last_name + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year, {}).then((response) => {
-            if (response && response.data && response.data.statusCode == '200' && response.data.data && response.data.data.member) {
-                var data = response.data.data.member;
-                data.isTempAccess = true;
-                data.ssoSession = response.headers.authtoken;
-                localStorage.setItem('userDetails', JSON.stringify(data));
-                this.props.history.push('/secure/myMeetings');
+            if (response && response.status && response.status == 200) {
+                //var data = response.data.data.member;
+                //data.isTempAccess = true;
+                //data.ssoSession = response.headers.authtoken;
+                //localStorage.setItem('userDetails', JSON.stringify(data));
+                this.props.history.push('/myMeetings');
             }
         }, (err) => {
-            console.log(err.message);
+            console.log(err);
         });
     }
     handleChange(key, event) {

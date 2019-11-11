@@ -1,55 +1,44 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Tempaccess from './tempaccess';
+import TempAccess from './tempAccess';
 import * as axios from "axios"
 jest.mock("axios");
 
 
-describe("Tempaccess Component", function() {
+describe("TempAccess Component", function() {
     let wrapper;
     const historyMock = { push: jest.fn() };
     beforeEach(() => {
-        wrapper = shallow(<Tempaccess history={historyMock} />);
+        wrapper = shallow(<TempAccess history={historyMock} />);
     });
 
-    it("Render Tempaccess component", function() {
+    it("Render TempAccess component", function() {
         const instance = wrapper.instance();
         expect(instance).toBeDefined();
     });
 
-    xit(" On Submit click get signOn", function() {
+    it(" On Submit click get LoginUserDetails", function() {
         const instance = wrapper.instance();
-        axios.post.mockImplementation(() => Promise.resolve({ status: 200, data: {} }));
+        axios.post.mockImplementation(() => Promise.resolve({ status: 200 }));
         instance.signOn();
         expect(axios.post).toHaveBeenCalledTimes(1);
     });
 
-    xit(" On Submit click Call fail scenario for signOn", function() {
+    it(" On Submit click Call fail scenario for LoginUserDetails", function() {
         const instance = wrapper.instance();
-        axios.post.mockImplementation(() => Promise.reject({ status: 404, data: {} }));
+        axios.post.mockImplementation(() => Promise.reject({ status: 404 }));
         instance.signOn();
     });
 
-    xit("handle onChange event for username", function() {
+    it("handle onChange event for username", function() {
         const instance = wrapper.instance();
         var obj = {
             target: {
-                value: "NC910742"
+                value: "14404080"
             }
         };
-        instance.handleChange('username', obj);
-        expect(wrapper.state().username).toEqual("NC910742");
-    });
-
-    xit("handle onChange event for password", function() {
-        const instance = wrapper.instance();
-        var obj = {
-            target: {
-                value: "@online"
-            }
-        };
-        instance.handleChange('password', obj);
-        expect(wrapper.state().password).toEqual("@online");
+        instance.handleChange('mrn', obj);
+        expect(wrapper.state().mrn).toEqual("14404080");
     });
 
 });

@@ -19,7 +19,7 @@ class Videovisit extends React.Component {
         }
         this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
         if (this.state.userDetails && this.state.userDetails.ssoSession) {
-            this.props.history.push('/secure/myMeetings');
+            this.props.history.push('/myMeetings');
         } else {
             this.props.history.push('/login');
         }
