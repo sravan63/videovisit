@@ -1,26 +1,25 @@
 package org.kp.tpmg.common.security;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-
-import java.security.spec.KeySpec;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.security.spec.AlgorithmParameterSpec;
-import javax.crypto.spec.PBEKeySpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.util.Base64;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 import org.apache.log4j.Logger;
-
-import java.security.InvalidAlgorithmParameterException;
-import java.security.NoSuchAlgorithmException;
-import java.security.InvalidKeyException;
-import java.security.spec.InvalidKeySpecException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-
-import java.io.UnsupportedEncodingException;
-import java.io.IOException;
 
 
 /**
@@ -132,7 +131,8 @@ public class Crypto {
             byte[] enc = _ecipher.doFinal(utf8);
 
             // Encode bytes to base64 to get a string
-            return new sun.misc.BASE64Encoder().encode(enc);
+            //return new sun.misc.BASE64Encoder().encode(enc);
+            return Base64.getEncoder().encodeToString(enc);
         } catch (BadPaddingException e) {
         	log.error("BadPaddingException", e);
         } catch (IllegalBlockSizeException e) {
@@ -158,7 +158,8 @@ public class Crypto {
         try {
 
             // Decode base64 to get bytes
-            byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
+            //byte[] dec = new sun.misc.BASE64Decoder().decodeBuffer(str);
+            byte[] dec = Base64.getDecoder().decode(str);
 
             // Decrypt
             byte[] utf8 = _dcipher.doFinal(dec);
