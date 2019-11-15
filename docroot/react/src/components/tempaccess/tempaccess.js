@@ -1,14 +1,14 @@
 import React from 'react';
-import Header from '../header/header';
 import axios from 'axios';
 import '../../views/authentication/authentication.less';
-
+import ReactDOM from 'react-dom';
 
 class TempAccess extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { last_name: '', mrn: '', birth_month: '', birth_year: '', userDetails: {} };
+        this.state = { lastname: '', mrn: '', birth_month: '', birth_year: '', userDetails: {} };
+        this.button = {disabled : true}
         this.signOn = this.signOn.bind(this);
     }
     signOn() {
@@ -26,9 +26,42 @@ class TempAccess extends React.Component {
         });
     }
     handleChange(key, event) {
-        this.setState({
-            [key]: event.target.value
-        });
+        event.preventDefault();
+        const { name, value } = event.target;
+        switch (name) {
+            case 'lastname':
+                    const lname_regex = event.target.value.replace(/[^a-zA-Z ]/g, "");
+                    this.lastname= lname_regex;
+                    this.setState({ [name]: this.lastname });
+                break;        
+            case 'mrn':
+                    const mrn_regex = event.target.value.replace(/[^0-9 ]/g, "");                    
+                    this.mrn= mrn_regex;
+                    this.setState({ [name]: this.mrn });   
+                break;
+            case 'birth_month':
+                    const birth_month_regex = event.target.value.replace(/[^0-9 ]/g, "");                    
+                    this.birth_month= birth_month_regex;
+                    this.setState({ [name]: this.birth_month });     
+                    break;
+            case 'birth_year':
+                    const birth_year_regex = event.target.value.replace(/[^0-9 ]/g, "");                    
+                    this.birth_year= birth_year_regex;
+                    this.setState({ [name]: this.birth_year });    
+                    break;   
+            default:
+                break;
+        }
+        
+        if("" != event.target.value){
+            if(this.state.lastname != "" && this.state.mrn != "" && this.state.birth_month != "" && this.state.birth_year != ""){
+                this.button.disabled = false;
+            }else{
+                this.button.disabled = true;
+            }
+        }else{
+            this.button.disabled = true;
+        }
     }
     render() {
         return (
@@ -44,29 +77,29 @@ class TempAccess extends React.Component {
                             <div className="form-group row ml-5 mt-2">
                                 <label for="lastName" className="col-md-2 col-sm-3 col-form-label">Patient's Last Name</label>
                                 <div className="col-sm-4">
-                                <input type="text" className="form-control rounded-0 p-0 shadow-none no-outline" id="plname" />
+                                <input type="text" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} name="lastname" className="form-control rounded-0 p-0 shadow-none no-outline" id="plname" />
                                 </div>
                             </div>
                             <div className="form-group row ml-5 mt-2">
                                 <label for="medicalRecordNumber" className="col-md-2 col-sm-3 col-form-label">Medical Record Number</label>
                                 <div className="col-sm-4">
-                                <input type="text" className="form-control rounded-0 p-0 shadow-none outline-no" id="mrn" />
+                                <input type="text" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} name="mrn"  className="form-control rounded-0 p-0 shadow-none outline-no" id="mrn" />
                                 </div>
                             </div>
                             <div className="form-group row ml-5 mt-2">
                                 <label for="dateOfBirth" className="col-md-2 col-sm-3 col-form-label">Date of Birth</label>
                                 <div className="col-md-2 col-sm-3">
-                                    <input type="text" className="form-control rounded-0 shadow-none outline-none" id="dob-month" placeholder="mm" />
+                                    <input type="text" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} name="birth_month"  className="form-control rounded-0 shadow-none outline-none" id="dob-month" placeholder="mm" />
                                 </div>
                                 <div className="col-md-2 col-sm-3">
-                                    <input type="text" className="form-control rounded-0 shadow-none" id="dob-year" placeholder="yyyy" />
+                                    <input type="text" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')}  name="birth_year" className="form-control rounded-0 shadow-none" id="dob-year" placeholder="yyyy" />
                                 </div>
                             </div>
                             <div className="form-group row ml-5 mt-5">
                                 <div className="col-sm-4">
                                 </div>
                                 <div className="col-sm-2">
-                                <button className="btn w-100 rounded-0 p-0 login-submit" id="login" >Sign On</button>
+                                <button className="btn w-100 rounded-0 p-0 login-submit" id="login" disabled={this.button.disabled} >Sign On</button>
                                 </div>
                             </div>
                         </form>

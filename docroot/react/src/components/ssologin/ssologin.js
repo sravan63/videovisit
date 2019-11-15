@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import '../../views/authentication/authentication.less';
+import ReactDOM from 'react-dom';
 
 export default class Ssologin extends React.Component {
     constructor(props) {
@@ -12,9 +13,12 @@ export default class Ssologin extends React.Component {
             password: '',
                 errors: {
                     username: '',
+                    usernameflag : '',
                     password: '',
+                    passwordflag: '',
                 }
           };
+          this.button = {disabled : true}
         this.getLoginUserDetails = this.getLoginUserDetails.bind(this);
     }
     getLoginUserDetails() {
@@ -38,34 +42,37 @@ export default class Ssologin extends React.Component {
         event.preventDefault();
         const { name, value } = event.target;
         let errors = this.state.errors;
-
         switch (name) {
         case 'username': 
             errors.username = 
             value.length < 5
                 ? 'Full Name must be 5 characters long!'
-                : '';
+                : '';   
+                errors.usernameflag = value;
             break;        
         case 'password': 
             errors.password = 
             value.length < 8
                 ? 'Password must be 8 characters long!'
                 : '';
+                errors.passwordflag = value;    
             break;
         default:
             break;
         }
         this.setState({ errors, [name]: value });
+        if("" != event.target.value){
+            if(this.state.errors.usernameflag != "" && this.state.errors.passwordflag != ""){
+                this.button.disabled = false;
+            }else{
+                this.button.disabled = true;
+            }
+        }else{
+            this.button.disabled = true;
+        }
     }
     handleSubmit (event) {
         console.log(this);
-        
-       // event.preventDefault();
-        // if (validateForm(this.state.errors)) {
-        //   console.info("Valid Form");
-        // } else {
-        //   console.error("Invalid Form");
-        // }
       }
 
     render() {
@@ -74,27 +81,27 @@ export default class Ssologin extends React.Component {
             <div className="sso-content">
 						<div className="row mt-1 ml-5 mt-4 mb-5">
 						<h3 className="member-head-msg">Please sign on for your Video Visit</h3>
-						<form className="col-sm-12 text-center mt-2 p-0" onSubmit={this.handleSubmit(event)}>
+						<form className="col-sm-12 text-center mt-2 p-0">
 							<p className="text-left">Use your kp.org user name and password</p>
 							<div className="form-group row">
 								<div className="col-sm-4">
-								<input type="text" name="username" className="form-control rounded-0 p-0 shadow-none no-outline textindent" placeholder="kp.org user name" onChange={this.handleChange.bind(this,'username')}  />
+								<input type="text" name="username" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent" placeholder="kp.org user name" onChange={this.handleChange.bind(this,'username')}  />
 								</div>
-                                {errors.username.length > 0 && (
+                                {/* {errors.username.length > 0 && (
                                     <span className="error">{errors.username}</span>
-                                )}
+                                )} */}
 							</div>
 							<div className="form-group row">
 								<div className="col-sm-4">
-								<input type="password" name="password" className="form-control rounded-0 p-0 shadow-none outline-no textindent" placeholder="password" onChange={this.handleChange.bind(this,'password')}  />
+								<input type="password" name="password" value={this.state.password} className="form-control rounded-0 p-0 shadow-none outline-no textindent" placeholder="password" onChange={this.handleChange.bind(this,'password')}  />
 								</div>
-                                {errors.password.length > 0 && (
+                                {/* {errors.password.length > 0 && (
                                     <span className="error">{errors.password}</span>
-                                )}
+                                )} */}
 							</div>
 							<div className="form-group row mt-5">
 								<div className="col-sm-4 text-right">
-								<button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails}>Sign On</button>
+								<button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign On</button>
 								</div>
 							</div>
 						</form>
