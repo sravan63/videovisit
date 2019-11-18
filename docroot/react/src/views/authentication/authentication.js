@@ -27,16 +27,17 @@ class Authentication extends React.Component {
          <Sidebar/> 
          <div className="main-content">
                 <div className="row">
-                            <div className="col-12 text-right help-icon p-0">
-                                <small><a href="#">Help</a></small>
-                            </div>
-                        </div>  
+                    <div className="col-12 text-right help-icon p-0">
+                        <small><a href="#">Help</a></small>
+                    </div>
+                </div>  
+                <div className="row mobile-tpmg-logo"></div>
                                  
-             {this.state.tempAccessToken ? (
-                            <Login data={{tempAccessToken:this.state.tempAccessToken,toggleLoginScreen:this.toggleLoginScreen.bind(this)}}/>
-                        ) : (
-                            <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,toggleLoginScreen:this.toggleLoginScreen.bind(this)}}/>
-                        )}
+                {this.state.tempAccessToken ? (
+                    <Login data={{tempAccessToken:this.state.tempAccessToken,toggleLoginScreen:this.toggleLoginScreen.bind(this)}}/>
+                ) : (
+                    <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,toggleLoginScreen:this.toggleLoginScreen.bind(this)}}/>
+                )}
             </div> 
              <Footer />
              
