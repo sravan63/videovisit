@@ -15,6 +15,9 @@ class TempAccess extends React.Component {
         localStorage.clear();
         axios.post('/videovisit/submitlogin.json?last_name=' + this.state.lastname + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year, {}).then((response) => {
             if (response && response.statusCode == 200) {
+                this.setState({
+                    errormsgs :{errorlogin : false,errormsg : ""} 
+                });
                // if(response.data != "" || response.data != null){
                 // let data = response.data.member;
                 // let fullname = data.firstName + +data.lastName;                

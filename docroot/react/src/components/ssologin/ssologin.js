@@ -27,6 +27,9 @@ export default class Ssologin extends React.Component {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
             if (response && response.status && response.status == 200) {
+                this.setState({
+                    errors :{errorlogin : false,errormsg : ""} 
+                });
                 localStorage.setItem('signedIn', true);
                 //var data = response.data.data.memberInfo;
                 //data.isTempAccess = false;
