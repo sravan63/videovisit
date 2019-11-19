@@ -14,7 +14,7 @@ class TempAccess extends React.Component {
     signOn() {
         localStorage.clear();
         axios.post('/videovisit/submitlogin.json?last_name=' + this.state.lastname + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year, {}).then((response) => {
-            if (response.data != "" && response.data != null && response && response.statusCode == 200) {
+            if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
                 this.setState({
                     errormsgs :{errorlogin : false,errormsg : ""} 
                 });
@@ -24,6 +24,8 @@ class TempAccess extends React.Component {
                 //data.isTempAccess = true;
                 //data.ssoSession = response.headers.authtoken;
                 //localStorage.setItem('userDetails', fullname);
+                //localStorage.setItem('userDetails', JSON.stringify(data));
+                this.props.data.emit({isMobileError: false});
                 this.props.history.push('/myMeetings');
                 // }else{
                 //     this.props.history.push('/myMeetings');
@@ -32,11 +34,13 @@ class TempAccess extends React.Component {
                 this.setState({
                     errormsgs :{errorlogin : true,errormsg : "We could not find this patient. Please try entering the information again."} 
                 });
+                this.props.data.emit({isMobileError: true});
             }
         }, (err) => {            
             this.setState({
                 errormsgs :{errorlogin : true,errormsg : "We could not find this patient. Please try entering the information again."} 
             });
+            this.props.data.emit({isMobileError: true});
         });
     }
     handleChange(key, event) {
@@ -134,7 +138,7 @@ class TempAccess extends React.Component {
                                 </div>
                             </form>
                             <div className="col-sm-6 ml-5">
-                                <button className="btn btn-link" onClick={() => this.props.data.toggleLoginScreen(false)} id="temp-access">SSO access </button>
+                                <button className="btn btn-link" onClick={() => this.props.data.emit({isTemp: false})} id="temp-access">SSO access </button>
                             </div>
                         </div>
                 </div>
@@ -166,13 +170,13 @@ class TempAccess extends React.Component {
                             </div> 
                         </div> 
                         <div className = "form-group mobile-submit mt-5" >
-                                <button type = "button" className = "btn w-50 rounded-0 p-0 login-submit" id="login" disabled={this.button.disabled}>Sign On</button>
+                             <button type = "button" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Sign On</button>
                         </div>
                     </form>
-                    <button type="button" className="mobile-form-toggle mt-5 btn row" onClick={() => this.props.data.toggleLoginScreen(false)} >
+                    {!this.props.data.isInApp ?(<button type="button" className="mobile-form-toggle mt-5 btn row" onClick={() => this.props.data.emit({isTemp: false})} >
                         <span className="video-icon mr-2"></span>
                         <span className="toggle-text" >Video Visit SSO Access </span>
-                    </button>
+                    </button>) : ('')}
                     
                 </div> 
             </div>

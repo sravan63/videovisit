@@ -1,7 +1,17 @@
 .main-content {
     margin: 0 1rem 0 11rem;
     padding: 5.25rem 2rem .625rem;
-
+    .error-text{
+        background-color: #C22507;
+        color: #FFFFFF;
+        margin: -1.2rem -2rem 2rem -2rem;
+        text-transform: capitalize;
+        display: none;
+        p{
+            margin: 0.5rem;
+            text-align: center;
+        }
+    }
     .mobile-tpmg-logo {
         display: none;
         background: url('../../assets/sm-TPMG-banner-logo.png') no-repeat;
@@ -70,7 +80,6 @@
         .sso-mobile,
         .temp-mobile {
             display: none;
-
             .sub-text {
                 color: #333333;
                 font-size: 1.2rem;
@@ -126,7 +135,7 @@
         padding: 1rem;
         color: #333333;
         border-top: solid 1px #C6CDD2;
-        margin: -2rem;
+        margin: -2rem -2rem -30rem -2rem;
         display: none;
         .secondary {
             font-size: 0.7rem;
@@ -139,6 +148,9 @@
     .main-content {
         margin: 0.2rem 1rem;
         padding: 1rem;
+        .error-text{
+            display: flex;
+        }
         .mobile-tpmg-logo {
             display: block;
         }
@@ -165,6 +177,20 @@
 @media only screen and (min-width: 375px) and (max-width: 660px) and (orientation: portrait){
     .main-content {
         height: calc(75vh - 105px);
+    }
+}
+
+/* Mobile Styles */
+@media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: landscape){
+    .main-content {
+        .sso-content,
+        .temp-content {
+            .sso-mobile,
+            .temp-mobile {
+                margin: 0 auto;
+                width: 65%;
+            }
+        }
     }
 }
 

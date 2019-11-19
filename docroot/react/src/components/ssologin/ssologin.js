@@ -26,7 +26,7 @@ export default class Ssologin extends React.Component {
         axios.post('/videovisit/ssosubmitlogin.json?username=' + this.state.username + '&password=' + this.state.password, {}).then((response) => {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
-            if (response.data != "" && response.data != null && response && response.status && response.status == 200) {
+            if (response.data != "" && response.data != null && response && response.status && response.data.status == 200) {
                 this.setState({
                     errors :{errorlogin : false,errormsg : ""} 
                 });
@@ -35,16 +35,19 @@ export default class Ssologin extends React.Component {
                 //data.isTempAccess = false;
                 //data.ssoSession = response.data.data.ssoSession;
                 //localStorage.setItem('userDetails', JSON.stringify(data));
+                this.props.data.emit({isMobileError: false});
                 this.props.history.push('/myMeetings');
             }else{
                 this.setState({
                     errors :{errorlogin : true,errormsg : "There was an error authenticating your account. Please sign in using temporary access."} 
                 }); 
+                this.props.data.emit({isMobileError: true});
             }
         }, (err) => {
             this.setState({
                 errors :{errorlogin : true,errormsg : "There was an error authenticating your account. Please sign in using temporary access."} 
             }); 
+            this.props.data.emit({isMobileError: true});
         });
     }
     handleChange(key, event) {
@@ -108,7 +111,7 @@ export default class Ssologin extends React.Component {
                             </div>
                         </form>
                         <div>
-                            <button className="btn btn-link p-0" onClick={() => this.props.data.toggleLoginScreen(true)} id="temp-access">Temporary access </button>
+                            <button className="btn btn-link p-0" onClick={() => this.props.data.emit({isTemp: true})} id="temp-access">Temporary access </button>
                         </div>
                     </div>   
                     {/* mobile content */}              
@@ -130,7 +133,7 @@ export default class Ssologin extends React.Component {
                                 <button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign On</button>
                             </div>
                         </form>
-                        <button type="button" className="mobile-form-toggle mt-5 btn row pr-2 pl-0" onClick={() => this.props.data.toggleLoginScreen(true)} >
+                        <button type="button" className="mobile-form-toggle mt-5 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >
                             <span className="video-icon mr-1"></span>
                             <span className="toggle-text" >Video Visit Temporary Access </span>
                         </button>
