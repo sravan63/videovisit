@@ -138,7 +138,7 @@ class TempAccess extends React.Component {
                                 </div>
                             </form>
                             <div className="col-sm-6 ml-5">
-                                <button className="btn btn-link" onClick={() => this.props.data.emit({isTemp: false})} id="temp-access">SSO access </button>
+                                <button className="btn btn-link" onClick={() => this.props.data.emit({isTemp: false})} id="temp-access">kp.org Login </button>
                             </div>
                         </div>
                 </div>
@@ -175,7 +175,7 @@ class TempAccess extends React.Component {
                     </form>
                     {!this.props.data.isInApp ?(<button type="button" className="mobile-form-toggle mt-1 btn row" onClick={() => this.props.data.emit({isTemp: false})} >
                         <span className="video-icon mr-2"></span>
-                        <span className="toggle-text" >Video Visit SSO Access </span>
+                        <span className="toggle-text" >Video Visit kp.org Login </span>
                     </button>) : ('')}
                     
                 </div> 
