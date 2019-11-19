@@ -26,7 +26,7 @@ export default class Ssologin extends React.Component {
         axios.post('/videovisit/ssosubmitlogin.json?username=' + this.state.username + '&password=' + this.state.password, {}).then((response) => {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
-            if (response && response.status && response.status == 200) {
+            if (response.data != "" && response.data != null && response && response.status && response.status == 200) {
                 this.setState({
                     errors :{errorlogin : false,errormsg : ""} 
                 });
@@ -36,6 +36,10 @@ export default class Ssologin extends React.Component {
                 //data.ssoSession = response.data.data.ssoSession;
                 //localStorage.setItem('userDetails', JSON.stringify(data));
                 this.props.history.push('/myMeetings');
+            }else{
+                this.setState({
+                    errors :{errorlogin : true,errormsg : "There was an error authenticating your account. Please sign in using temporary access."} 
+                }); 
             }
         }, (err) => {
             this.setState({

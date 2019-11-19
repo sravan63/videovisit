@@ -14,7 +14,7 @@ class TempAccess extends React.Component {
     signOn() {
         localStorage.clear();
         axios.post('/videovisit/submitlogin.json?last_name=' + this.state.lastname + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year, {}).then((response) => {
-            if (response && response.statusCode == 200) {
+            if (response.data != "" && response.data != null && response && response.statusCode == 200) {
                 this.setState({
                     errormsgs :{errorlogin : false,errormsg : ""} 
                 });
@@ -28,12 +28,15 @@ class TempAccess extends React.Component {
                 // }else{
                 //     this.props.history.push('/myMeetings');
                 // }
+            }else{
+                this.setState({
+                    errormsgs :{errorlogin : true,errormsg : "We could not find this patient. Please try entering the information again."} 
+                });
             }
         }, (err) => {            
             this.setState({
                 errormsgs :{errorlogin : true,errormsg : "We could not find this patient. Please try entering the information again."} 
             });
-            //console.log(this.state);
         });
     }
     handleChange(key, event) {
