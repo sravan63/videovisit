@@ -12,10 +12,10 @@ export default class Ssologin extends React.Component {
             username: '',
             password: '',
             errors: {
-                username: '',
-                usernameflag: '',
-                password: '',
+                usernameflag: '',                
                 passwordflag: '',
+                errorlogin: false,
+                errormsg : '',
             }
         };
         this.button = { disabled: true }
@@ -35,7 +35,9 @@ export default class Ssologin extends React.Component {
                 this.props.history.push('/myMeetings');
             }
         }, (err) => {
-            console.log(err);
+            this.setState({
+                errors :{errorlogin : true,errormsg : "There was an error authenticating your account. Please sign in using temporary access."} 
+            }); 
         });
     }
     handleChange(key, event) {
@@ -44,17 +46,9 @@ export default class Ssologin extends React.Component {
         let errors = this.state.errors;
         switch (name) {
             case 'username':
-                errors.username =
-                    value.length < 5 ?
-                    'Full Name must be 5 characters long!' :
-                    '';
                 errors.usernameflag = value;
                 break;
             case 'password':
-                errors.password =
-                    value.length < 8 ?
-                    'Password must be 8 characters long!' :
-                    '';
                 errors.passwordflag = value;
                 break;
             default:
@@ -88,17 +82,17 @@ export default class Ssologin extends React.Component {
                                 <div className="col-sm-4">
                                 <input type="text" name="username" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent" placeholder="kp.org user name" onChange={this.handleChange.bind(this,'username')}  />
                                 </div>
-                                {/* {errors.username.length > 0 && (
-                                    <span className="error">{errors.username}</span>
-                                )} */}
+                                <div className="sso-login-error ml-5">
+                                    {this.state.errors.errorlogin > 0 && (
+                                        <div className="error">{this.state.errors.errormsg}</div>
+                                    )
+                                    }
+                                </div>
                             </div>
                             <div className="form-group row">
                                 <div className="col-sm-4">
                                 <input type="password" name="password" value={this.state.password} className="form-control rounded-0 p-0 shadow-none outline-no textindent" placeholder="password" onChange={this.handleChange.bind(this,'password')}  />
                                 </div>
-                                {/* {errors.password.length > 0 && (
-                                    <span className="error">{errors.password}</span>
-                                )} */}
                             </div>
                             <div className="form-group row mt-5">
                                 <div className="col-sm-4 text-right">

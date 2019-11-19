@@ -7,7 +7,7 @@ class TempAccess extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', mrn: '', birth_month: '', birth_year: '', userDetails: {} };
+        this.state = { lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: {errorlogin : false, errormsg : ''} };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
@@ -21,8 +21,11 @@ class TempAccess extends React.Component {
                 //localStorage.setItem('userDetails', JSON.stringify(data));
                 this.props.history.push('/myMeetings');
             }
-        }, (err) => {
-            console.log(err);
+        }, (err) => {            
+            this.setState({
+                errormsgs :{errorlogin : true,errormsg : "We could not find this patient. Please try entering the information again."} 
+            });
+            console.log(this.state);
         });
     }
     handleChange(key, event) {
@@ -89,27 +92,33 @@ class TempAccess extends React.Component {
                                     <div className="col-sm-4">
                                     <input type="text" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} name="lastname" className="form-control rounded-0 p-0 shadow-none no-outline" id="plname" />
                                     </div>
+                                    <div className="temp-login-error ml-5">
+                                    {this.state.errormsgs.errorlogin && (
+                                        <div className="temp-error">{this.state.errormsgs.errormsg}</div>
+                                    )
+                                    }
+                                </div>
                                 </div>
                                 <div className="form-group row ml-5 mt-2">
                                     <label className="col-md-2 col-sm-3 col-form-label">Medical Record Number</label>
                                     <div className="col-sm-4">
-                                    <input type="text" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} name="mrn"  className="form-control rounded-0 p-0 shadow-none outline-no" id="mrn" />
+                                    <input type="text" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} name="mrn"  className="form-control rounded-0 p-0 shadow-none outline-no" id="mrn" maxLength="8" />
                                     </div>
                                 </div>
                                 <div className="form-group row ml-5 mt-2">
                                     <label className="col-md-2 col-sm-3 col-form-label">Date of Birth</label>
                                     <div className="col-md-2 col-sm-3">
-                                        <input type="text" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} name="birth_month"  className="form-control rounded-0 shadow-none outline-none" id="dob-month" placeholder="mm" />
+                                        <input type="text" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} name="birth_month"  className="form-control rounded-0 shadow-none outline-none" id="dob-month" placeholder="mm" maxLength="2" />
                                     </div>
                                     <div className="col-md-2 col-sm-3">
-                                        <input type="text" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')}  name="birth_year" className="form-control rounded-0 shadow-none" id="dob-year" placeholder="yyyy" />
+                                        <input type="text" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')}  name="birth_year" className="form-control rounded-0 shadow-none" id="dob-year" placeholder="yyyy" maxLength="4" />
                                     </div>
                                 </div>
                                 <div className="form-group row ml-5 mt-5">
                                     <div className="col-sm-4">
                                     </div>
                                     <div className="col-sm-2">
-                                    <button className="btn w-100 rounded-0 p-0 login-submit" id="login" disabled={this.button.disabled} >Sign On</button>
+                                    <button type="button" className="btn w-100 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled} >Sign On</button>
                                     </div>
                                 </div>
                             </form>
@@ -125,23 +134,23 @@ class TempAccess extends React.Component {
                         <div className="form-group">
                             <label className="col-sm-12 text-uppercase">Last Name</label>
                             <div className="col-sm-12">
-                                <input type="text" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="i.e. Smith"/>
+                                <input type="text" name="lastname" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="i.e. Smith"/>
                             </div>
                         </div>
                         <div className="form-group">
                             <label className="col-sm-12 text-uppercase">Medical Record Number.</label>
                             <div className="col-sm-12">
-                                <input type="text" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="######" />
+                                <input type="text" name="mrn" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="######" maxLength="8" />
                             </div>
                         </div>
                         <div className="form-group col">
                             <label className="col-12 p-0 text-uppercase">Date of Birth</label>
                             <div className="row">
                                 <div className="col-3">
-                                    <input type="text" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="MM" /> 
+                                    <input type="text" name="birth_month" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="MM" maxLength="2" /> 
                                 </div> 
                                 <div className = "col-9" >
-                                    <input type="text" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="YYYY" /> 
+                                    <input type="text" name="birth_year" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="YYYY" maxLength="4" /> 
                                 </div> 
                             </div> 
                         </div> 

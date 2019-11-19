@@ -14,10 +14,7 @@ class Authentication extends React.Component {
         this.state = { tempAccessToken: false };
     }
     toggleLoginScreen(item) {
-        //this.setState({tempAccessToken:item});
-        this.state.tempAccessToken = item;
-        this.props.history.push('/login');
-
+        this.setState({tempAccessToken:item});
     }
 
     render() {
