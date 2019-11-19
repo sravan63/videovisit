@@ -129,14 +129,10 @@ export default class Ssologin extends React.Component {
                                 <button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign On</button>
                             </div>
                         </form>
-                        <button type="button" className="mobile-form-toggle mt-5 btn row pr-3 pl-3" onClick={() => this.props.data.toggleLoginScreen(true)} >
-                            <span className="video-icon"></span>
+                        <button type="button" className="mobile-form-toggle mt-5 btn row pr-2 pl-0" onClick={() => this.props.data.toggleLoginScreen(true)} >
+                            <span className="video-icon mr-1"></span>
                             <span className="toggle-text" >Video Visit Temporary Access </span>
                         </button>
-                        <div className="row mobile-footer mt-5">
-                            <p className="col-12">If You're a Patient's Guest</p>
-                            <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>
-                        </div>
                     </div> 
                 </div>
 

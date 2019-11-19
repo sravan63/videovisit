@@ -150,13 +150,10 @@ class TempAccess extends React.Component {
                         </div>
                     </form>
                     <button type="button" className="mobile-form-toggle mt-5 btn row" onClick={() => this.props.data.toggleLoginScreen(false)} >
-                        <span className="video-icon"></span>
+                        <span className="video-icon mr-2"></span>
                         <span className="toggle-text" >Video Visit SSO Access </span>
                     </button>
-                    <div className="row mobile-footer mt-5">
-                        <p className="col-12">If You're a Patient's Guest</p>
-                        <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>
-                    </div>
+                    
                 </div> 
             </div>
         );

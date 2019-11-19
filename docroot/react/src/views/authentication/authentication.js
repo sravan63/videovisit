@@ -38,6 +38,10 @@ class Authentication extends React.Component {
                 ) : (
                     <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,toggleLoginScreen:this.toggleLoginScreen.bind(this)}}/>
                 )}
+                <div className="row mobile-footer mt-5">
+                    <p className="col-12">If You're a Patient's Guest</p>
+                    <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>
+                </div>
             </div> 
              <Footer />
              
