@@ -60,7 +60,7 @@ class Authentication extends React.Component {
                         </div>
                     </div>)
                 :('')}
-                {!this.state.isInApp ?(<div className="row mobile-tpmg-logo"></div>) :('')}
+                {!this.state.isInApp ?(<div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>) :('')}
                                  
                 {this.state.tempAccessToken || this.state.isInApp ? (
                     <Login data={{tempAccessToken:this.state.tempAccessToken,emit:this.emitFromChild.bind(this), isInApp: this.state.isInApp}}/>
