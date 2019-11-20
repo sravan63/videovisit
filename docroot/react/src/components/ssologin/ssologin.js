@@ -12,10 +12,10 @@ export default class Ssologin extends React.Component {
             username: '',
             password: '',
             errors: {
-                usernameflag: '',                
+                usernameflag: '',
                 passwordflag: '',
                 errorlogin: false,
-                errormsg : '',
+                errormsg: '',
             }
         };
         this.button = { disabled: true }
@@ -28,26 +28,26 @@ export default class Ssologin extends React.Component {
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
             if (response.data != "" && response.data != null && response && response.status && response.data.status == 200) {
                 this.setState({
-                    errors :{errorlogin : false,errormsg : ""} 
+                    errors: { errorlogin: false, errormsg: "" }
                 });
                 localStorage.setItem('signedIn', true);
                 //var data = response.data.data.memberInfo;
                 //data.isTempAccess = false;
                 //data.ssoSession = response.data.data.ssoSession;
                 //localStorage.setItem('userDetails', JSON.stringify(data));
-                this.props.data.emit({isMobileError: false});
+                this.props.data.emit({ isMobileError: false });
                 this.props.history.push('/myMeetings');
-            }else{
+            } else {
                 this.setState({
-                    errors :{errorlogin : true,errormsg : "There was an error authenticating your account. Please sign in using temporary access."} 
-                }); 
-                this.props.data.emit({isMobileError: true});
+                    errors: { errorlogin: true, errormsg: "There was an error authenticating your account. Please sign in using temporary access." }
+                });
+                this.props.data.emit({ isMobileError: true });
             }
         }, (err) => {
             this.setState({
-                errors :{errorlogin : true,errormsg : "There was an error authenticating your account. Please sign in using temporary access."} 
-            }); 
-            this.props.data.emit({isMobileError: true});
+                errors: { errorlogin: true, errormsg: "There was an error authenticating your account. Please sign in using temporary access." }
+            });
+            this.props.data.emit({ isMobileError: true });
         });
     }
     handleChange(key, event) {
@@ -111,7 +111,7 @@ export default class Ssologin extends React.Component {
                             </div>
                         </form>
                         <div>
-                            <button className="btn btn-link p-0" onClick={() => this.props.data.emit({isTemp: true})} id="temp-access">Temporary access </button>
+                            <button className="btn btn-link p-0 temp-login" onClick={() => this.props.data.emit({isTemp: true})} id="temp-access">Temporary access </button>
                         </div>
                     </div>   
                     {/* mobile content */}              

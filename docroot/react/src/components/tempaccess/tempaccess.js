@@ -7,7 +7,7 @@ class TempAccess extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: {errorlogin : false, errormsg : ''} };
+        this.state = { lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: { errorlogin: false, errormsg: '' } };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
@@ -16,31 +16,31 @@ class TempAccess extends React.Component {
         axios.post('/videovisit/submitlogin.json?last_name=' + this.state.lastname + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year, {}).then((response) => {
             if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
                 this.setState({
-                    errormsgs :{errorlogin : false,errormsg : ""} 
+                    errormsgs: { errorlogin: false, errormsg: "" }
                 });
-               // if(response.data != "" || response.data != null){
+                // if(response.data != "" || response.data != null){
                 // let data = response.data.member;
                 // let fullname = data.firstName + +data.lastName;                
                 //data.isTempAccess = true;
                 //data.ssoSession = response.headers.authtoken;
                 //localStorage.setItem('userDetails', fullname);
                 //localStorage.setItem('userDetails', JSON.stringify(data));
-                this.props.data.emit({isMobileError: false});
+                this.props.data.emit({ isMobileError: false });
                 this.props.history.push('/myMeetings');
                 // }else{
                 //     this.props.history.push('/myMeetings');
                 // }
-            }else{
+            } else {
                 this.setState({
-                    errormsgs :{errorlogin : true,errormsg : "We could not find this patient. Please try entering the information again."} 
+                    errormsgs: { errorlogin: true, errormsg: "We could not find this patient. Please try entering the information again." }
                 });
-                this.props.data.emit({isMobileError: true});
+                this.props.data.emit({ isMobileError: true });
             }
-        }, (err) => {            
+        }, (err) => {
             this.setState({
-                errormsgs :{errorlogin : true,errormsg : "We could not find this patient. Please try entering the information again."} 
+                errormsgs: { errorlogin: true, errormsg: "We could not find this patient. Please try entering the information again." }
             });
-            this.props.data.emit({isMobileError: true});
+            this.props.data.emit({ isMobileError: true });
         });
     }
     handleChange(key, event) {
@@ -105,7 +105,7 @@ class TempAccess extends React.Component {
                                 <div className="form-group row ml-5 mt-2">
                                     <label className="col-md-2 col-sm-3 col-form-label">Patient's Last Name</label>
                                     <div className="col-sm-4">
-                                    <input type="text" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} name="lastname" className="form-control rounded-0 p-0 shadow-none no-outline" id="plname" />
+                                    <input type="text" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} name="lastname" className="form-control lastname rounded-0 shadow-none no-outline" id="plname" />
                                     </div>
                                     <div className="temp-login-error ml-5">
                                     {this.state.errormsgs.errorlogin && (
@@ -117,16 +117,16 @@ class TempAccess extends React.Component {
                                 <div className="form-group row ml-5 mt-2">
                                     <label className="col-md-2 col-sm-3 col-form-label">Medical Record Number</label>
                                     <div className="col-sm-4">
-                                    <input type="text" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} name="mrn"  className="form-control rounded-0 p-0 shadow-none outline-no" id="mrn" maxLength="8" />
+                                    <input type="text" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} name="mrn"  className="form-control mrn rounded-0 shadow-none outline-no" id="mrn" maxLength="8" />
                                     </div>
                                 </div>
                                 <div className="form-group row ml-5 mt-2">
                                     <label className="col-md-2 col-sm-3 col-form-label">Date of Birth</label>
-                                    <div className="col-md-2 col-sm-3">
-                                        <input type="text" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} name="birth_month"  className="form-control rounded-0 shadow-none outline-none" id="dob-month" placeholder="mm" maxLength="2" />
+                                    <div className="col-md-1 col-sm-3">
+                                        <input type="text" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} name="birth_month"  className="form-control dob-mm rounded-0 shadow-none outline-none" id="dob-month" placeholder="mm" maxLength="2" />
                                     </div>
                                     <div className="col-md-2 col-sm-3">
-                                        <input type="text" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')}  name="birth_year" className="form-control rounded-0 shadow-none" id="dob-year" placeholder="yyyy" maxLength="4" />
+                                        <input type="text" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')}  name="birth_year" className="form-control dob-yy rounded-0 shadow-none" id="dob-year" placeholder="yyyy" maxLength="4" />
                                     </div>
                                 </div>
                                 <div className="form-group row ml-5 mt-5">
@@ -137,8 +137,8 @@ class TempAccess extends React.Component {
                                     </div>
                                 </div>
                             </form>
-                            <div className="col-sm-6 ml-5">
-                                <button className="btn btn-link" onClick={() => this.props.data.emit({isTemp: false})} id="temp-access">kp.org Login </button>
+                            <div className="col-sm-6 redirectToKp">
+                                <button className="btn btn-link temp-login" onClick={() => this.props.data.emit({isTemp: false})} id="temp-access">kp.org Login </button>
                             </div>
                         </div>
                 </div>
