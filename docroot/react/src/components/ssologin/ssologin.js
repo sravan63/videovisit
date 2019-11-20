@@ -90,7 +90,7 @@ export default class Ssologin extends React.Component {
                             <p className="text-left">Use your kp.org user name and password</p>
                             <div className="form-group row">
                                 <div className="col-sm-4">
-                                <input type="text" name="username" maxlength="8" value={this.state.username} className="textindent form-control rounded-0 p-0 shadow-none no-outline textindent" placeholder="kp.org user name" onChange={this.handleChange.bind(this,'username')}  />
+                                <input type="text" name="username" maxLength="8" value={this.state.username} className="textindent form-control rounded-0 p-0 shadow-none no-outline textindent" placeholder="kp.org user name" onChange={this.handleChange.bind(this,'username')}  />
                                 </div>
                                 <div className="sso-login-error ml-5">
                                     {this.state.errors.errorlogin > 0 && (
@@ -120,7 +120,7 @@ export default class Ssologin extends React.Component {
                             <div className="form-group">
                                 <label className="col-sm-12">User ID</label>
                                 <div className="col-sm-12">
-                                    <input type="text" name="username" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')}  />
+                                    <input type="text" name="username" maxLength="8" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')}  />
                                 </div>
                             </div>
                             <div className="form-group">
