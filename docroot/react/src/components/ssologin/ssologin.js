@@ -48,6 +48,7 @@ export default class Ssologin extends React.Component {
                 errors: { errorlogin: true, errormsg: "There was an error authenticating your account. Please sign in using temporary access." }
             });
             this.props.data.emit({ isMobileError: true });
+            window.scrollTo(0, -2);
         });
     }
     handleChange(key, event) {

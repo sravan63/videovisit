@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../../views/authentication/authentication.less';
-import { Route , withRouter} from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 class TempAccess extends React.Component {
     constructor(props) {
         super(props);
@@ -35,6 +35,7 @@ class TempAccess extends React.Component {
                     errormsgs: { errorlogin: true, errormsg: "We could not find this patient. Please try entering the information again." }
                 });
                 this.props.data.emit({ isMobileError: true });
+                window.scrollTo(0, -2);
             }
         }, (err) => {
             this.setState({
