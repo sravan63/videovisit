@@ -26,7 +26,7 @@ export default class Ssologin extends React.Component {
         axios.post('/videovisit/ssosubmitlogin.json?username=' + this.state.username + '&password=' + this.state.password, {}).then((response) => {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
-            if (response.data != "" && response.data != null && response && response.status && response.data.status == 200) {
+            if (response.data != "" && response.data != null && response && response.status == 200) {
                 this.setState({
                     errors: { errorlogin: false, errormsg: "" }
                 });

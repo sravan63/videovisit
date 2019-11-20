@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import '../../views/authentication/authentication.less';
-import ReactDOM from 'react-dom';
-
+import { Route , withRouter} from 'react-router-dom';
 class TempAccess extends React.Component {
     constructor(props) {
         super(props);
@@ -129,11 +128,9 @@ class TempAccess extends React.Component {
                                         <input type="text" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')}  name="birth_year" className="form-control dob-yy rounded-0 shadow-none" id="dob-year" placeholder="yyyy" maxLength="4" />
                                     </div>
                                 </div>
-                                <div className="form-group row ml-5 mt-5">
-                                    <div className="col-sm-4">
-                                    </div>
-                                    <div className="col-sm-2">
-                                    <button type="button" className="btn w-100 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled} >Sign On</button>
+                                <div className="form-group row mt-5">                                    
+                                    <div className="col-sm-5 text-right p-0">
+                                    <button type="button" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled} >Sign On</button>
                                     </div>
                                 </div>
                             </form>
@@ -184,4 +181,4 @@ class TempAccess extends React.Component {
     }
 }
 
-export default TempAccess;
+export default withRouter(TempAccess);
