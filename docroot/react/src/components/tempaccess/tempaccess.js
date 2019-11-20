@@ -10,7 +10,8 @@ class TempAccess extends React.Component {
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
-    signOn() {
+    signOn(e) {
+        e.preventDefault();
         localStorage.clear();
         axios.post('/videovisit/submitlogin.json?last_name=' + this.state.lastname + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year, {}).then((response) => {
             if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
@@ -102,7 +103,7 @@ class TempAccess extends React.Component {
                             </div>
                         </div>
                         <div className="row mt-1">
-                            <form className="col-sm-12 p-0">
+                            <form className="col-sm-12 p-0" onSubmit={this.signOn}>
                                 <div className="form-group row ml-5 mt-2">
                                     <label className="col-md-3 col-sm-3 col-form-label">Patient's Last Name</label>
                                     <div className="col-sm-4">
@@ -132,7 +133,7 @@ class TempAccess extends React.Component {
                                 </div>
                                 <div className="form-group row mt-5">                                    
                                     <div className="col-sm-7 text-right ml-4">
-                                    <button type="button" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled} >Sign On</button>
+                                    <button type="submit" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled} >Sign On</button>
                                     </div>
                                 </div>
                             </form>

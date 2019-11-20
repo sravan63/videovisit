@@ -21,7 +21,8 @@ export default class Ssologin extends React.Component {
         this.button = { disabled: true }
         this.getLoginUserDetails = this.getLoginUserDetails.bind(this);
     }
-    getLoginUserDetails() {
+    getLoginUserDetails(e) {
+        e.preventDefault();
         localStorage.clear();
         axios.post('/videovisit/ssosubmitlogin.json?username=' + this.state.username + '&password=' + this.state.password, {}).then((response) => {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
@@ -76,9 +77,6 @@ export default class Ssologin extends React.Component {
             this.button.disabled = true;
         }
     }
-    handleSubmit(event) {
-        console.log(this);
-    }
 
     render() {
         const { errors } = this.state;
@@ -87,7 +85,7 @@ export default class Ssologin extends React.Component {
                     {/* desktop content */}
                     <div className="row mt-1 ml-5 mt-4 mb-5 sso-desktop">
                         <h3 className="member-head-msg">Please sign on for your Video Visit</h3>
-                        <form className="col-sm-12 text-center mt-2 p-0">
+                        <form className="col-sm-12 text-center mt-2 p-0" onSubmit={this.getLoginUserDetails}>
                             <p className="text-left">Use your kp.org user name and password</p>
                             <div className="form-group row">
                                 <div className="col-sm-4">
@@ -107,7 +105,7 @@ export default class Ssologin extends React.Component {
                             </div>
                             <div className="form-group row mt-5">
                                 <div className="col-sm-4 text-right">
-                                <button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign On</button>
+                                <button type="submit" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign On</button>
                                 </div>
                             </div>
                         </form>
