@@ -109,7 +109,7 @@ class TempAccess extends React.Component {
                                     <div className="col-sm-4">
                                         <input type="text" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} name="lastname" className="form-control lastname rounded-0 shadow-none no-outline textindent" id="plname" />
                                     </div>
-                                    <div className="temp-login-error ml-5">
+                                    <div className="temp-login-error ml-3">
                                     {this.state.errormsgs.errorlogin && (
                                         <div className="temp-error">{this.state.errormsgs.errormsg}</div>
                                     )
