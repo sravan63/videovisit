@@ -137,9 +137,10 @@ class TempAccess extends React.Component {
                                     </div>
                                 </div>
                             </form>
+                            {!this.props.data.isInApp ?(
                             <div className="col-sm-6 redirectToKp">
                                 <button className="btn btn-link temp-login" onClick={() => this.props.data.emit({isTemp: false})} id="temp-access">kp.org Login </button>
-                            </div>
+                            </div>):('')}
                         </div>
                 </div>
                 {/* mobile content */}              
