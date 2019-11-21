@@ -47,8 +47,8 @@ class Authentication extends React.Component {
                 {this.state.isMobileError ? 
                     (<div className="row error-text">
                         {this.state.tempAccessToken ? 
-                            (<p className="col-12">Incorrect patient information</p>) 
-                           :(<p className="col-12">Invalid User ID / Password</p>)
+                            (<p className="col-sm-12">Incorrect patient information</p>) 
+                           :(<p className="col-sm-12">Invalid User ID / Password</p>)
                         }
                     </div>)
                 : ('')}
