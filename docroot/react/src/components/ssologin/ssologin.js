@@ -105,7 +105,7 @@ export default class Ssologin extends React.Component {
                             </div>
                             <div className="form-group row mt-5">
                                 <div className="col-sm-4 text-right">
-                                <button type="submit" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign On</button>
+                                <button type="submit" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign In</button>
                                 </div>
                             </div>
                         </form>
@@ -129,7 +129,7 @@ export default class Ssologin extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group mobile-submit mt-5">
-                                <button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign On</button>
+                                <button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign In</button>
                             </div>
                         </form>
                         <button type="button" className="mobile-form-toggle mt-5 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >
