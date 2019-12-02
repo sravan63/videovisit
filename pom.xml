@@ -16,7 +16,7 @@
 		<spring.version>4.3.1.RELEASE</spring.version>
 		<apachetiles.version>3.0.5</apachetiles.version>
 		<slf4j.version>1.7.25</slf4j.version>
-		<vidyoplayerVersion>3.2.0-SNAPSHOT</vidyoplayerVersion>
+		<!-- <vidyoplayerVersion>3.2.0-SNAPSHOT</vidyoplayerVersion> -->
 		<vvservice-clientVersion>3.2.0-SNAPSHOT</vvservice-clientVersion>
 		<frontend-plugin.version>0.0.27</frontend-plugin.version>
 		<node.version>v10.13.0</node.version>
@@ -545,7 +545,7 @@
 							<outputDirectory>${project.build.directory}/lib</outputDirectory>
 						</configuration>
 					</execution>
-					<execution>
+					<!-- <execution>
 						<id>unpack</id>
 						<phase>process-resources</phase>
 						<goals>
@@ -565,7 +565,7 @@
 							<overWriteReleases>false</overWriteReleases>
 							<overWriteSnapshots>true</overWriteSnapshots>
 						</configuration>
-					</execution>
+					</execution> -->
 				</executions>
 			</plugin>
 
@@ -639,12 +639,12 @@
 								<exclude>react/**</exclude>
 							</excludes>
 						</resource>
-						<resource>
+						<!-- <resource>
 							<directory>${project.build.directory}/vidyoplayer-${vidyoplayerVersion}/</directory>
 							<includes>
 								<include>vidyoplayer/**</include>
 							</includes>
-						</resource>
+						</resource> -->
 						<resource>
 							<directory>${project.build.directory}/lib</directory>
 							<includes>
