@@ -1,0 +1,223 @@
+.main-content {
+    padding: 5.25rem 2rem .625rem;
+
+    .error-text {
+        background-color: #C22507;
+        color: #FFFFFF;
+        margin: -1.2rem -2rem 1rem -2rem;
+        text-transform: capitalize;
+        display: none;
+
+        p {
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            text-align: center;
+        }
+    }
+    .mobile-help-link{
+        display: none;
+    }
+    .mobile-logo-container{
+        display: none;
+        .mobile-tpmg-logo {
+            background: url('../../assets/sm-TPMG-banner-logo.png') no-repeat;
+            height: 5.625rem;
+            width: 5.625rem;
+            margin: 0 auto;
+        }
+        .header{
+            font-size: 2rem;
+            color: #203864;
+            text-align: center;
+            margin: 0 0 0.5rem;
+        }
+    }
+
+    .guest-form-content{
+        height: 100%;
+
+        .row {
+
+            .col-form-label {
+                font-size: .8125rem;
+                font-weight: bold;
+            }
+
+            .lastname {
+                font-size: 0.6875rem;
+                margin-top: 0.2rem;
+                padding: 0 0 0 0.3rem;
+            }
+
+            .enable {
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .disable {
+                opacity: 0.5;
+                pointer-events: none;
+            }
+
+            .redirectToKp {
+                margin-left: 2rem;
+            }
+
+            .temp-login {
+                font-size: 0.875rem;
+            }
+
+            .login-submit {
+                background: #006ba6;
+                cursor: pointer;
+                color: #FFF;
+                height: calc(1.5em + .60rem + 2px);
+                width: 7rem;
+            }
+
+            .login-submit:disabled {
+                pointer-events: none;
+            }
+
+            .member-head-msg {
+                font-family: Arial, sans-serif;
+                font-size: 1.75rem;
+                font-weight: 700;
+            }
+
+            p {
+                font-size: 0.75rem;
+            }
+
+            .textindent {
+                text-indent: 0.2rem;
+            }
+            .guest-login-error {
+                word-break: break-all;
+
+                text-align: left;
+                font-weight: bold;
+                font-size: 12px;
+                color: #ac5a41;
+
+                .error {
+                    width: 17rem;
+                }
+
+                .temp-error {
+                    width: 18rem;
+                }
+            }
+        }
+
+        .guest-form {
+            .sub-text{
+                color: #333333;
+                font-size: 1.2rem;
+            }
+            .notice {
+                color: #333333;
+                font-size: 0.75rem;
+                text-align: center;
+            }
+
+            .login-form {
+                margin: 0 auto;
+
+                .form-group {
+                    .label {
+                        font-size: .8125rem;
+                        font-weight: bold;
+                    }
+
+                    .mobile-input {
+                        border: 0;
+                        border-bottom: solid 1px #C8C7C7;
+                    }
+                }
+
+                .mobile-submit {
+                    text-align: center;
+                }
+            }
+
+        }
+
+    }
+
+    .mobile-footer {
+        background-color: #F2F7FB;
+        padding: 1rem;
+        color: #333333;
+        border-top: solid 1px #C6CDD2;
+        margin: -2rem -2rem -30rem -2rem;
+        display: none;
+
+        .secondary {
+            font-size: 0.7rem;
+        }
+    }
+}
+
+/* Mobile Styles to  Tablet Styles */
+@media only screen and (max-width: 960px) {
+    .main-content {
+        margin: 0.2rem 1rem;
+        padding: 1rem;
+        .mobile-help-link{
+            display: flex;
+        }
+        .error-text {
+            display: flex;
+        }
+
+        .mobile-logo-container {
+            display: block;
+        }
+
+        .mobile-footer {
+            display: block;
+        }
+    }
+}
+
+
+/* Mobile Styles */
+@media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: landscape) {
+    .main-content {
+        .sso-content,
+        .guest-form-content {
+            .guest-form {
+                margin: 0 auto;
+                width: 65%;
+            }
+        }
+    }
+}
+
+/* Tablet Styles */
+@media only screen and (min-width: 661px) and (max-width: 960px) and (orientation: portrait) {
+    .main-content {
+        height: calc(81vh - 105px);
+        .sso-content,
+        .guest-form-content {
+            .guest-form {
+                margin: 0 auto;
+                width: 65%;
+            }
+        }
+    }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 960px) {
+    .main-content {
+        padding: 1rem;
+        .guest-form-content{
+            margin-top: 10rem;
+            .guest-form{
+                margin: 0 auto;
+                width: 35%;
+            }
+        }
+    }
+}
