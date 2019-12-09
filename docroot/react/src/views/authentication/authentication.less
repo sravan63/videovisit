@@ -1,5 +1,4 @@
 .main-content {
-    margin: 0 1rem 0 11rem;
     padding: 5.25rem 2rem .625rem;
 
     .error-text {
@@ -13,6 +12,9 @@
             margin: 0.5rem 0.5rem 0.5rem 0;
             text-align: center;
         }
+    }
+    .mobile-help-link{
+        display: none;
     }
     .mobile-logo-container{
         display: none;
@@ -117,16 +119,15 @@
             }
         }
 
-        .sso-mobile,
-        .temp-mobile {
-            display: none;
+        .sso-form,
+        .temp-form {
 
             .sub-text {
                 color: #333333;
                 font-size: 1.2rem;
             }
 
-            .mobile-form {
+            .login-form {
                 margin: 0 auto;
 
                 .form-group {
@@ -192,27 +193,15 @@
     .main-content {
         margin: 0.2rem 1rem;
         padding: 1rem;
-
+        .mobile-help-link{
+            display: flex;
+        }
         .error-text {
             display: flex;
         }
 
         .mobile-logo-container {
             display: block;
-        }
-
-        .sso-content,
-        .temp-content {
-
-            .sso-desktop,
-            .temp-desktop {
-                display: none;
-            }
-
-            .sso-mobile,
-            .temp-mobile {
-                display: block;
-            }
         }
 
         .mobile-footer {
@@ -225,12 +214,11 @@
 /* Mobile Styles */
 @media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: landscape) {
     .main-content {
-
         .sso-content,
         .temp-content {
 
-            .sso-mobile,
-            .temp-mobile {
+            .sso-form,
+            .temp-form {
                 margin: 0 auto;
                 width: 65%;
             }
@@ -242,14 +230,36 @@
 @media only screen and (min-width: 661px) and (max-width: 960px) and (orientation: portrait) {
     .main-content {
         height: calc(81vh - 105px);
-
         .sso-content,
         .temp-content {
 
-            .sso-mobile,
-            .temp-mobile {
+            .sso-form,
+            .temp-form {
                 margin: 0 auto;
                 width: 65%;
+            }
+        }
+    }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 960px) {
+    .main-content {
+        padding: 1rem;
+        .sso-content{
+            margin-top: 12rem;
+            .sso-form,
+            .temp-form{
+                margin: 0 auto;
+                width: 35%;
+            }
+        }
+        .temp-content{
+            margin-top: 6rem;
+            .sso-form,
+            .temp-form{
+                margin: 0 auto;
+                width: 35%;
             }
         }
     }

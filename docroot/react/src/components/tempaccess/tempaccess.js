@@ -94,73 +94,23 @@ class TempAccess extends React.Component {
     render() {
         return (
             <div className="temp-content">
-                {/* desktop content */}     
-                <div className="temp-desktop">
-                        <div className="row mt-4 ml-5 mb-1">
-                            <div className="col-12 p-0">
-                                <h3 className="member-head-msg">Please sign on for your Video Visit</h3>
-                                <p>Children age 11 or younger must have a parent or legal guardian with them during the Video Visit.</p>
-                            </div>
-                        </div>
-                        <div className="row mt-1">
-                            <form className="col-sm-12 p-0" onSubmit={this.signOn}>
-                                <div className="form-group row ml-5 mt-2">
-                                    <label className="col-md-3 col-sm-3 col-form-label">Patient's Last Name</label>
-                                    <div className="col-sm-4">
-                                        <input type="text" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} name="lastname" className="form-control lastname rounded-0 shadow-none no-outline textindent" id="plname" />
-                                    </div>
-                                    <div className="temp-login-error ml-3">
-                                    {this.state.errormsgs.errorlogin && (
-                                        <div className="temp-error">{this.state.errormsgs.errormsg}</div>
-                                    )
-                                    }
-                                </div>
-                                </div>
-                                <div className="form-group row ml-5 mt-2">
-                                    <label className="col-md-3 col-sm-3 col-form-label">Medical Record Number</label>
-                                    <div className="col-sm-4">
-                                        <input type="text" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} name="mrn"  className="form-control mrn rounded-0 shadow-none outline-no textindent" id="mrn" maxLength="8" />
-                                    </div>
-                                </div>
-                                <div className="form-group row ml-5 mt-2">
-                                    <label className="col-md-3 col-sm-3 col-form-label">Date of Birth</label>
-                                    <div className="col-md-2 col-sm-3">
-                                        <input type="text" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} name="birth_month"  className="form-control dob-mm rounded-0 shadow-none outline-none textindent" id="dob-month" placeholder="mm" maxLength="2" />
-                                    </div>
-                                    <div className="col-md-2 col-sm-3">
-                                        <input type="text" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')}  name="birth_year" className="form-control dob-yy rounded-0 shadow-none textindent" id="dob-year" placeholder="yyyy" maxLength="4" />
-                                    </div>
-                                </div>
-                                <div className="form-group row mt-5">                                    
-                                    <div className="col-sm-7 text-right ml-4">
-                                    <button type="submit" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled} >Sign In</button>
-                                    </div>
-                                </div>
-                            </form>
-                            {!this.props.data.isInApp ?(
-                            <div className="col-sm-6 redirectToKp">
-                                <button className="btn btn-link temp-login" onClick={() => this.props.data.emit({isTemp: false})} id="temp-access">kp.org Login </button>
-                            </div>):('')}
-                        </div>
-                </div>
-                {/* mobile content */}              
-                <div className="row temp-mobile" > 
+                <div className="row temp-form" > 
                     <p className="col-12 sub-text mt-5 font-weight-bold">Patient's Information</p>
-                    <form className="col-xs-12 mobile-form">
+                    <form className="col-xs-12 col-md-12 login-form">
                         <div className="form-group">
-                            <label className="col-sm-12 text-uppercase">Last Name</label>
+                            <label className="col-sm-12 text-capitalize">Last Name</label>
                             <div className="col-sm-12">
                                 <input type="text" pattern="[a-zA-Z]+" name="lastname" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="i.e. Smith"/>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-sm-12 text-uppercase">Medical Record No.</label>
+                            <label className="col-sm-12 text-capitalize">Medical Record Number</label>
                             <div className="col-sm-12">
                                 <input type="tel" name="mrn" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="######" maxLength="8" />
                             </div>
                         </div>
                         <div className="form-group col">
-                            <label className="col-12 p-0 text-uppercase">Date of Birth</label>
+                            <label className="col-12 p-0 text-capitalize">Date of Birth</label>
                             <div className="row">
                                 <div className="col-3">
                                     <input type="tel" name="birth_month" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="MM" maxLength="2" /> 

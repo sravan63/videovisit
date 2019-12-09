@@ -21,23 +21,27 @@ class header extends React.Component {
 	}
   render() {
     return (
-    	<div className="header-content"> 
-    		<div className="title">Video Visits</div>
-            <small>The Permanente Medical Group</small>
-            { this.state.name? 
-                <div className="user-details" >
+        <div className="container-fluid">
+        	<div className="row header-content"> 
+        		<div className="col-md-8 banner-content">
+                    <div className="logo"></div>
+                    <div className="title">
+                        <p className="m-0">Video Visits</p>
+                        <p className="text-uppercase m-0">The Permanente Medical Group</p>
+                    </div>
+                </div>
+                <div className="col-md-4 text-right user-details" >
                     <ul>
-                        <li>{this.state.name? this.state.name: ' '}</li>
+                        <li className="text-capitalize">{this.state.name? this.state.name: ''}</li>
+                        <li className="text-capitalize">{this.state.name? '|': ''}</li>
+                        <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" target="_blank">Help</a></li>
                         <li>{this.state.name? '|': ''}</li>
-                        <li>Help</li>
-                        <li>|</li>
-                        <li><span className="sign-off" onClick={this.props.signOffMethod}>Sign off</span></li>
+                        <li className="text-capitalize">{this.state.name? <a className="sign-off" onClick={this.props.signOffMethod}>Sign out</a>:''}</li>
                     </ul>
                 </div>
-             : null
-        }
-    		
-    	</div>
+        		
+        	</div>
+        </div>
     );
   }
 }
