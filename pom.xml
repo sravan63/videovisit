@@ -595,7 +595,8 @@
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>install --strict-ssl=false</arguments>
+							<arguments>install --strict-ssl=false </arguments>
+							<arguments>config set cafile /appdata/middleware/java11/lib/security/cacerts</arguments>
 						</configuration>
 					</execution>
 					<execution>
@@ -605,6 +606,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
+							<arguments>config set cafile /appdata/middleware/java11/lib/security/cacerts</arguments>
 							<arguments>run build</arguments>
 						</configuration>
 					</execution>
