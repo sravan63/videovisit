@@ -41,8 +41,7 @@ class Authentication extends React.Component {
     render() {
         return (
             <div id='container' className="authentication-page">
-             <Header/>            
-             <Sidebar/> 
+             <Header/>
              <div className="main-content">
                 {this.state.isMobileError ? 
                     (<div className="row error-text">
@@ -52,14 +51,11 @@ class Authentication extends React.Component {
                         }
                     </div>)
                 : ('')}
-
-                {!this.state.isInApp ?(
-                    <div className="row">
-                        <div className="col-12 text-right help-icon p-0">
-                            <small><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" target="_blank">Help</a></small>
-                        </div>
-                    </div>)
-                :('')}
+                <div className="row mobile-help-link">
+                    <div className="col-12 text-right help-icon p-0">
+                        <small><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" target="_blank">Help</a></small>
+                    </div>
+                </div>
                 {!this.state.isInApp ?(<div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>) :('')}
                                  
                 {this.state.tempAccessToken || this.state.isInApp ? (

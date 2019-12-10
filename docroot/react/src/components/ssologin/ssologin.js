@@ -81,41 +81,9 @@ export default class Ssologin extends React.Component {
     render() {
         const { errors } = this.state;
         return (
-            <div className="sso-content">
-                    {/* desktop content */}
-                    <div className="row mt-1 ml-5 mt-4 mb-5 sso-desktop">
-                        <h3 className="member-head-msg">Please sign on for your Video Visit</h3>
-                        <form className="col-sm-12 text-center mt-2 p-0" onSubmit={this.getLoginUserDetails}>
-                            <p className="text-left">Use your kp.org user name and password</p>
-                            <div className="form-group row">
-                                <div className="col-sm-4">
-                                <input type="text" name="username" maxLength="8" value={this.state.username} className="textindent form-control rounded-0 p-0 shadow-none no-outline textindent" placeholder="kp.org user name" onChange={this.handleChange.bind(this,'username')}  />
-                                </div>
-                                <div className="sso-login-error ml-5">
-                                    {this.state.errors.errorlogin > 0 && (
-                                        <div className="error">{this.state.errors.errormsg}</div>
-                                    )
-                                    }
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <div className="col-sm-4">
-                                <input type="password" name="password" value={this.state.password} className="textindent form-control rounded-0 p-0 shadow-none outline-no textindent" placeholder="password" onChange={this.handleChange.bind(this,'password')}  />
-                                </div>
-                            </div>
-                            <div className="form-group row mt-5">
-                                <div className="col-sm-4 text-right">
-                                <button type="submit" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign In</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div>
-                            <button className="btn btn-link p-0 temp-login" onClick={() => this.props.data.emit({isTemp: true})} id="temp-access">Temporary access </button>
-                        </div>
-                    </div>   
-                    {/* mobile content */}              
-                    <div className="row sso-mobile" > 
-                        <form className="col-xs-12 mobile-form">
+            <div className="sso-content">           
+                    <div className="row sso-form" > 
+                        <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group">
                                 <label className="col-sm-12">User ID</label>
                                 <div className="col-sm-12">

@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import Videovisit from './components/videovisit';
 import Authentication from '../src/views/authentication/authentication';
+import GuestAuthentication from '../src/views/guest-authentication/guest-authentication';
 
 import MyMeetings from './components/secure/mymeetings/myMeetings';
 
@@ -13,6 +14,10 @@ export const routes = [{
     {
         path: '/login',
         component: Authentication
+    },
+    {
+        path: '/guestlogin',
+        component: GuestAuthentication
     },
     {
         path: '/myMeetings',
