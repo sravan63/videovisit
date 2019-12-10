@@ -576,7 +576,7 @@
 				<version>${frontend-plugin.version}</version>
 				<configuration>
 					<workingDirectory>${basedir}/docroot/react/</workingDirectory>
-					<nodeDownloadRoot>http://nodejs.org/dist/</nodeDownloadRoot>
+					<nodeDownloadRoot>https://nodejs.org/dist/</nodeDownloadRoot>
 					<nodeVersion>${node.version}</nodeVersion>
 					<npmVersion>${npm.version}</npmVersion>
 					<!-- <installDirectory>.</installDirectory> -->
