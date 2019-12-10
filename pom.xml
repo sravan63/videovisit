@@ -589,7 +589,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 					</execution>
-					<!-- <execution>
+					<execution>
 						<id>npm config</id>
 						<goals>
 							<goal>npm</goal>
@@ -599,7 +599,7 @@
 								<arguments>config set cafile /appdata/middleware/java11/lib/security/cacerts</arguments>
 							</arguments>
 						</configuration>
-					</execution> -->
+					</execution>
 					<execution>
 						<id>npm install</id>
 						<goals>
