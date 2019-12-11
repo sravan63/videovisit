@@ -596,11 +596,10 @@
 						</goals>
 						<configuration>
 							<arguments>
-								<arguments>config</arguments>
-								<arguments>set cafile /appdata/middleware/java11/lib/security/cacerts</arguments>
+								<arguments>config set cafile=/appdata/middleware/java11/lib/security/cacerts</arguments>
 							</arguments>
 						</configuration>
-					</execution>
+					</execution>					
 					<execution>
 						<id>npm install</id>
 						<goals>
