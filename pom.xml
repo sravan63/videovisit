@@ -595,7 +595,7 @@
 							<goal>npm</goal>
 						</goals>
 						<configuration>
-							<arguments>config set cafile /appdata/middleware/java11/lib/security/cacerts</arguments>
+							<arguments>config set cafile=/appdata/middleware/java11/lib/security/cacerts</arguments>
 						</configuration>
 					</execution>					
 					<execution>
