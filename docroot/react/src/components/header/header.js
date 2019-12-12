@@ -34,7 +34,7 @@ class header extends React.Component {
                     <ul>
                         <li className="text-capitalize">{this.state.name? this.state.name: ''}</li>
                         <li className="text-capitalize">{this.state.name? '|': ''}</li>
-                        <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" target="_blank">Help</a></li>
+                        <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a></li>
                         <li>{this.state.name? '|': ''}</li>
                         <li className="text-capitalize">{this.state.name? <a className="sign-off" onClick={this.props.signOffMethod}>Sign out</a>:''}</li>
                     </ul>
