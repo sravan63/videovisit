@@ -10,7 +10,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: { errorlogin: false, errormsg: '' } };
+        this.state = { lastname: '', errormsgs: { errorlogin: false, errormsg: '' } };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
@@ -51,25 +51,21 @@ class Authentication extends React.Component {
         return (
             <div id='container' className="authentication-page">
              <Header/>
-             <div className="main-content">
-                {this.state.isMobileError ? 
-                    (<div className="row error-text">
-                        {this.state.tempAccessToken || this.state.isInApp ? 
-                            (<p className="col-sm-12">Incorrect patient information</p>) 
-                           :(<p className="col-sm-12">Invalid User ID / Password</p>)
-                        }
-                    </div>)
+             <div className="guest-main-content">
+                {this.state.errormsgs.errorlogin ? 
+                    <div className="row error-text">
+                         <p className="col-sm-12">The video visit you are trying to join is not currently available.</p>
+                    </div>
                 : ('')}
                 <div className="row mobile-help-link">
                     <div className="col-12 text-right help-icon p-0">
                         <small><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a></small>
                     </div>
                 </div>
-                {!this.state.isInApp ?(<div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>) :('')}
-                
+                <div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
                 <div className="guest-form-content">
+                    <div className="row notice">Children age 11 and younger must have a parent or legal guardian present during the visit.</div>
                     <div className="row guest-form" >
-                        <p className="col-12 sub-text mt-5 font-weight-bold">Sign in as a Guest</p> 
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group">
                                 <label className="col-sm-12 text-capitalize">Patient's Last Name</label>
@@ -80,7 +76,6 @@ class Authentication extends React.Component {
                             <div className = "form-group mobile-submit mt-5" >
                                  <button type = "button" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Sign In</button>
                             </div>
-                            <div className="row notice">Children age 11 and younger must have a parent or legal guardian present during the visit.</div>
                         </form>
                     </div> 
                 </div>

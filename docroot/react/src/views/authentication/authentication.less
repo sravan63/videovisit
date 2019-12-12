@@ -5,9 +5,7 @@
         background-color: #C22507;
         color: #FFFFFF;
         margin: -1.2rem -2rem 1rem -2rem;
-        text-transform: capitalize;
-        display: none;
-
+        display: flex;
         p {
             margin: 0.5rem 0.5rem 0.5rem 0;
             text-align: center;
@@ -248,7 +246,10 @@
 /* Desktop Styles */
 @media only screen and (min-width: 960px) {
     .main-content {
-        padding: 1rem;
+        padding: 0;
+        .error-text {
+            margin: 8rem 0 -8rem 0;
+        }
         .sso-content{
             margin-top: 12rem;
             .sso-form,

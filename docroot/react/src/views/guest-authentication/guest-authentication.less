@@ -1,12 +1,11 @@
-.main-content {
+.guest-main-content {
     padding: 5.25rem 2rem .625rem;
 
     .error-text {
         background-color: #C22507;
         color: #FFFFFF;
         margin: -1.2rem -2rem 1rem -2rem;
-        text-transform: capitalize;
-        display: none;
+        display: flex;
 
         p {
             margin: 0.5rem 0.5rem 0.5rem 0;
@@ -34,7 +33,12 @@
 
     .guest-form-content{
         height: 100%;
-
+        .notice {
+            color: #333333;
+            font-size: 0.825rem;
+            text-align: center;
+            margin: 2rem 2rem 3rem;
+        }
         .row {
 
             .col-form-label {
@@ -114,11 +118,6 @@
                 color: #333333;
                 font-size: 1.2rem;
             }
-            .notice {
-                color: #333333;
-                font-size: 0.75rem;
-                text-align: center;
-            }
 
             .login-form {
                 margin: 0 auto;
@@ -160,9 +159,15 @@
 
 /* Mobile Styles to  Tablet Styles */
 @media only screen and (max-width: 960px) {
-    .main-content {
+    .guest-main-content {
         margin: 0.2rem 1rem;
         padding: 1rem;
+        .guest-form-content {
+            .guest-form {
+                margin: 0 auto;
+                width: 80%;
+            }
+        }
         .mobile-help-link{
             display: flex;
         }
@@ -185,23 +190,16 @@
 
 
 /* Mobile Styles */
-@media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: landscape) {
-    .main-content {
-        .sso-content,
-        .guest-form-content {
-            .guest-form {
-                margin: 0 auto;
-                width: 65%;
-            }
-        }
+@media only screen and (min-width: 331px) and (max-width: 660px) and (orientation: portrait) {
+    .guest-main-content {
+        height: calc(70vh - 105px);
     }
 }
 
 /* Tablet Styles */
 @media only screen and (min-width: 661px) and (max-width: 960px) and (orientation: portrait) {
-    .main-content {
+    .guest-main-content {
         height: calc(81vh - 105px);
-        .sso-content,
         .guest-form-content {
             .guest-form {
                 margin: 0 auto;
@@ -213,9 +211,13 @@
 
 /* Desktop Styles */
 @media only screen and (min-width: 960px) {
-    .main-content {
-        padding: 1rem;
+    .guest-main-content {
+        padding: 0;
+        .error-text {
+            margin: 8rem 0 -8rem 0;
+        }
         .guest-form-content{
+            margin-bottom: 10rem;
             margin-top: 10rem;
             .guest-form{
                 margin: 0 auto;
