@@ -62,7 +62,7 @@ class Authentication extends React.Component {
                 : ('')}
                 <div className="row mobile-help-link">
                     <div className="col-12 text-right help-icon p-0">
-                        <small><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" target="_blank">Help</a></small>
+                        <small><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a></small>
                     </div>
                 </div>
                 {!this.state.isInApp ?(<div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>) :('')}
