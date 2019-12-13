@@ -32,10 +32,10 @@ export default class Ssologin extends React.Component {
                     errors: { errorlogin: false, errormsg: "" }
                 });
                 localStorage.setItem('signedIn', true);
-                //var data = response.data.data.memberInfo;
+                var data = response.data.data.memberInfo;
                 //data.isTempAccess = false;
                 //data.ssoSession = response.data.data.ssoSession;
-                //localStorage.setItem('userDetails', JSON.stringify(data));
+                localStorage.setItem('userDetails', JSON.stringify(data));
                 this.props.data.emit({ isMobileError: false });
                 this.props.history.push('/myMeetings');
             } else {
