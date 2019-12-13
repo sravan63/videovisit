@@ -7,21 +7,27 @@
     width: 100%;
     z-index: 1;
     top: 0;
+    user-select: none;
     .banner-content{
         display: flex;
         .title {
             font-size: 1.5rem;
-            margin: auto 1rem;
+            margin: auto 0;
+            .sub-title{
+                font-size: 1.2rem;
+                font-weight: bold;
+            }
         }
         .logo {
             background: url('../../assets/sm-TPMG-banner-logo.png') no-repeat;
             height: 5.625rem;
             width: 5.625rem;
-            margin: 1.25rem;
+            margin: 1.25rem 0.5rem 1.25rem 0;
             background-position: center;
         }
     }
     .user-details{
+        padding: 1.5rem 0;
         ul{
             list-style: none;
             padding: 0;

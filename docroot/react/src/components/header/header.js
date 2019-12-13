@@ -27,7 +27,7 @@ class header extends React.Component {
                     <div className="logo"></div>
                     <div className="title">
                         <p className="m-0">Video Visits</p>
-                        <p className="text-uppercase m-0">The Permanente Medical Group</p>
+                        <p className="text-uppercase m-0 sub-title">The Permanente Medical Group</p>
                     </div>
                 </div>
                 <div className="col-md-4 text-right user-details" >
