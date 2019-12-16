@@ -68,8 +68,9 @@ class Authentication extends React.Component {
                     <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>
                 </div>
             </div> 
-            <Footer />
-             
+            <div className="form-footer">
+                <Footer />
+            </div>
          </div>
         );
     }

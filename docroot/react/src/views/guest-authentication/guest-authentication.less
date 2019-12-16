@@ -42,35 +42,6 @@
         }
         .row {
 
-            .col-form-label {
-                font-size: .8125rem;
-                font-weight: bold;
-            }
-
-            .lastname {
-                font-size: 0.6875rem;
-                margin-top: 0.2rem;
-                padding: 0 0 0 0.3rem;
-            }
-
-            .enable {
-                opacity: 1;
-                pointer-events: all;
-            }
-
-            .disable {
-                opacity: 0.5;
-                pointer-events: none;
-            }
-
-            .redirectToKp {
-                margin-left: 2rem;
-            }
-
-            .temp-login {
-                font-size: 0.875rem;
-            }
-
             .login-submit {
                 background: #006ba6;
                 cursor: pointer;
@@ -158,6 +129,14 @@
     }
 }
 
+.form-footer{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #FFFFFF;
+}
+
 /* Mobile Styles to  Tablet Styles */
 @media only screen and (max-width: 960px) {
     .guest-main-content {
@@ -189,6 +168,9 @@
         .mobile-footer {
             display: block;
         }
+    }
+    .form-footer{
+        display: none;
     }
 }
 

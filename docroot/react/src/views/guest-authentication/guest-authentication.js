@@ -83,8 +83,9 @@ class Authentication extends React.Component {
                     <p className="col-12 secondary">Children age 11 and younger must have a parent or legal guardian present during the visit.</p>
                 </div>
             </div> 
-            <Footer />
-             
+            <div className="form-footer">
+                <Footer />
+            </div>
          </div>
         );
     }
