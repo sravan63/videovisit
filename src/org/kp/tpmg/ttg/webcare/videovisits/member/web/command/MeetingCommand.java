@@ -778,45 +778,30 @@ public class MeetingCommand {
 	public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		MeetingDetailsOutput output = null;
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-//		updateWebappContextWithBrowserFlags(ctx);
-		updateWebappContextWithPexipDesktopBrowserDetails(ctx);
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		String jsonStr = null;
+		boolean isNonMember = false;
 		try {
-			if (ctx != null && ctx.getMemberDO() != null) {
-				if (WebUtil.isSsoSimulation() && WebUtil.SSO_SIMULATION.equalsIgnoreCase(ctx.getContextId())) {
-					output = WebService.getActiveMeetingsForSSOSimulation(ctx.getMemberDO().getMrn(), ctx.isNonMember(),
-							request.getSession().getId(), ctx.getClientId());
-				} else {
-					if (ctx.isNonMember()) {
-						output = WebService.retrieveActiveMeetingsForNonMemberProxies(
-								ctx.getKpOrgSignOnInfo().getUser().getGuid(), request.getSession().getId(),
-								ctx.getClientId());
-					} else {
-						boolean getProxyMeetings = false;
-						if (ctx.getKpOrgSignOnInfo() != null) {
-							getProxyMeetings = true;
-						}
-
-						output = WebService.retrieveActiveMeetingsForMemberAndProxies(ctx.getMemberDO().getMrn(),
-								getProxyMeetings, request.getSession().getId(), ctx.getClientId());
-					}
+			String guid = request.getHeader("guid");
+			String mrn = request.getHeader("mrn");
+			isNonMember = "true".equalsIgnoreCase(request.getHeader("isNonMember"));
+			String proxyMeetings = request.getParameter("getProxyMeetings");
+			if (isNonMember) {
+				output = WebService.retrieveActiveMeetingsForNonMemberProxies(guid, request.getSession().getId(),
+						WebUtil.VV_MBR_SSO_WEB);
+			} else if (StringUtils.isNotBlank(mrn)) {
+				boolean getProxyMeetings = false;
+				if ("true".equalsIgnoreCase(proxyMeetings)) {
+					getProxyMeetings = true;
 				}
-
-				if (output != null && "200".equals(output.getStatus().getCode())) {
-					
-					if (!isMyMeetingsAvailable(output)) {
-						ctx.setTotalmeetings(0);
-					} else {
-						final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
-						ctx.setTotalmeetings(meetings != null ? meetings.size() : 0);
-						ctx.setMyMeetings(meetings);
-						jsonStr = gson.toJson(meetings);
-					}
-				} else {
-					ctx.setMyMeetings(null);
-					ctx.setTotalmeetings(0);
+				output = WebService.retrieveActiveMeetingsForMemberAndProxies(mrn, getProxyMeetings,
+						request.getSession().getId(), WebUtil.VV_MBR_SSO_WEB);
+			}
+			if (output != null && "200".equals(output.getStatus().getCode())) {
+				if (isMyMeetingsAvailable(output)) {
+					final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
+					jsonStr = gson.toJson(meetings);
+					jsonStr = WebUtil.prepareCommonOutputJson("retrieveActiveMeetingsForMemberAndProxies", "200", "success", meetings);
 				}
 			}
 		} catch (Exception e) {
@@ -825,6 +810,7 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return jsonStr;
 	}
+
 
 	public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
