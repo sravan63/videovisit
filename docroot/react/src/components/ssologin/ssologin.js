@@ -96,11 +96,11 @@ export default class Ssologin extends React.Component {
                                     <input type="password" name="password" value={this.state.password} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" onChange={this.handleChange.bind(this,'password')}  />
                                 </div>
                             </div>
-                            <div className="form-group mobile-submit mt-5">
+                            <div className="form-group mobile-submit margin-gap">
                                 <button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign In</button>
                             </div>
                         </form>
-                        <button type="button" className="mobile-form-toggle mt-5 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >
+                        <button type="button" className="mobile-form-toggle mt-1 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >
                             <span className="video-icon mr-1"></span>
                             <span className="toggle-text" >Video Visit Temporary Access </span>
                         </button>
