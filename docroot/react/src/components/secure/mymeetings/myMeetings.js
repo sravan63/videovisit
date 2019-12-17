@@ -4,13 +4,16 @@ import Header from '../../header/header';
 import './myMeetings.less';
 
 class MyMeetings extends React.Component {
+
     constructor(props) {
         super(props);
+        this.interval = '';
         this.state = { userDetails: {}, myMeetings: [] };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
     }
     componentDidMount() {
+        this.interval = setInterval(() => this.getMyMeetings(), 180000);
         if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
             /*this.state.userDetails = this.props.userDetails.userDetails;
@@ -24,6 +27,8 @@ class MyMeetings extends React.Component {
             this.props.history.push('/login');
         }
 
+
+
         /*if (localStorage.getItem('signedIn')) {
             var signIn = JSON.parse(localStorage.getItem('signedIn'));
             this.state.userDetails = this.props.userDetails.userDetails;
@@ -36,6 +41,10 @@ class MyMeetings extends React.Component {
         } else {
             
         }*/
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.interval);
     }
 
     getMyMeetings() {
@@ -63,6 +72,7 @@ class MyMeetings extends React.Component {
                 var tempState = this.state;
                 tempState.myMeetings = response.data.data ? response.data.data : [];
                 this.setState({ tempState });
+
             }
         }, (err) => {
             console.log(err);
@@ -89,10 +99,12 @@ class MyMeetings extends React.Component {
         let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
         return Hour + ':' + Minutes + " " + AMPM;
     }
+
+
     render() {
         return (
             <div id='container' className="my-meetings">
-                <Header />
+                <Header history={this.props.history}/>
                 <div className="meetings-container">
                 <h1 className="visitsToday">Your Video Visits for Today</h1>
                 {this.state.myMeetings.length > 0 ? (
