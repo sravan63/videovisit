@@ -157,7 +157,7 @@ class MyMeetings extends React.Component {
                                         </div>
                                         </div>
                                         <div className="col-md-12 mt-3 joinText">
-                                        {this.state.userDetails.isTempAccess || (item.meetingVendorId != null || item.meetingVendorId.length != 0) ?
+                                        {this.state.userDetails.isTempAccess ||item.meetingVendorId != null ?
                                         (<span>You may be joining before your clinician. Please be patient.</span>):(<span>Your visit will be available within 15 minutes of the start time.</span>)}
                                         </div>
                                     </div>
