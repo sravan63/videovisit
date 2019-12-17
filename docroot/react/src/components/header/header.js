@@ -14,16 +14,16 @@ class header extends React.Component {
             const data = JSON.parse(localStorage.getItem('userDetails'));
             this.state.userDetails = data;
             //const data = this.props.userDetails.userDetails;
-			this.setState({
-			      name: data.firstName.toLowerCase()+ ' ' + data.lastName.toLowerCase()
-			}); 
-		 }	    
-	}
-  render() {
-    return (
-        <div className="container-fluid">
-        	<div className="row header-content"> 
-        		<div className="col-md-8 banner-content">
+            this.setState({
+                name: data.firstName.toLowerCase() + ',' + ' ' + data.lastName.toLowerCase()
+            });
+        }
+    }
+    render() {
+        return (
+            <div className="container-fluid">
+            <div className="row header-content"> 
+                <div className="col-md-8 banner-content">
                     <div className="logo"></div>
                     <div className="title">
                         <p className="m-0">Video Visits</p>
@@ -39,11 +39,11 @@ class header extends React.Component {
                         <li className="text-capitalize">{this.state.name? <a className="sign-off" onClick={this.props.signOffMethod}>Sign out</a>:''}</li>
                     </ul>
                 </div>
-        		
-        	</div>
+                
+            </div>
         </div>
-    );
-  }
+        );
+    }
 }
 
 

@@ -15,7 +15,7 @@ class Authentication extends React.Component {
         this.signOn = this.signOn.bind(this);
     }
 
-    componentDidMount(){ }
+    componentDidMount() {}
 
     signOn(e) {
         console.log('CLICKED ON GUEST SIGN ON');
@@ -68,9 +68,9 @@ class Authentication extends React.Component {
                     <div className="row guest-form" >
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group">
-                                <label className="col-sm-12 text-capitalize">Patient's Last Name</label>
+                                <label className="col-sm-12 text-capitalize">Patient Last Name</label>
                                 <div className="col-sm-12">
-                                    <input type="text" pattern="[a-zA-Z]+" name="lastname" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="i.e. Smith"/>
+                                    <input type="text" pattern="[a-zA-Z]+" name="lastname" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input"/>
                                 </div>
                             </div>
                             <div className = "form-group mobile-submit mt-5" >
