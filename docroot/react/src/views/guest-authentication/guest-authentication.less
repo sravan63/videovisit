@@ -120,7 +120,7 @@
         padding: 1rem;
         color: #333333;
         border-top: solid 1px #C6CDD2;
-        margin: -2rem -2rem -30rem -2rem;
+        margin: 0 -2rem;
         display: none;
 
         .secondary {
@@ -142,6 +142,7 @@
     .guest-main-content {
         margin: 0.2rem 1rem;
         padding: 1rem;
+        height: calc(81vh - 105px);
         .guest-form-content {
             .notice {
                 display: none;
@@ -174,16 +175,15 @@
     }
 }
 
-
 /* Mobile Styles */
-@media only screen and (min-width: 331px) and (max-width: 660px) and (orientation: portrait) {
+@media only screen and (min-width: 330px) and (max-width: 660px) and (orientation: portrait) {
     .guest-main-content {
         height: calc(71vh - 105px);
     }
 }
 
 /* Tablet Styles */
-@media only screen and (min-width: 661px) and (max-width: 960px) and (orientation: portrait) {
+@media only screen and (min-width: 661px) and (max-width: 959px) and (orientation: portrait) {
     .guest-main-content {
         height: calc(81vh - 105px);
         .guest-form-content {
