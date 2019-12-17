@@ -95,8 +95,8 @@ class TempAccess extends React.Component {
         return (
             <div className="temp-content">
                 <div className="row temp-form" > 
-                    <p className="col-12 sub-text mt-5 font-weight-bold">Patient's Information</p>
                     <form className="col-xs-12 col-md-12 login-form">
+                        <p className="col-12 sub-text mt-5 font-weight-bold">Patient's Information</p>
                         <div className="form-group">
                             <label className="col-sm-12 text-capitalize">Last Name</label>
                             <div className="col-sm-12">

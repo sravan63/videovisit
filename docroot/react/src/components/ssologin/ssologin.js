@@ -84,16 +84,16 @@ export default class Ssologin extends React.Component {
             <div className="sso-content">           
                     <div className="row sso-form" > 
                         <form className="col-xs-12 col-md-12 login-form">
-                            <div className="form-group">
+                            <div className="form-group top-form-group-margin">
                                 <label className="col-sm-12">User ID</label>
                                 <div className="col-sm-12">
-                                    <input type="text" name="username" maxLength="8" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')}  />
+                                    <input type="text" name="username" placeholder="nc123456" maxLength="8" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')}  />
                                 </div>
                             </div>
                             <div className="form-group">
                                 <label className="col-sm-12">Password</label>
                                 <div className="col-sm-12">
-                                    <input type="password" name="password" value={this.state.password} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" onChange={this.handleChange.bind(this,'password')}  />
+                                    <input type="password" name="password" placeholder="######" value={this.state.password} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" onChange={this.handleChange.bind(this,'password')}  />
                                 </div>
                             </div>
                             <div className="form-group mobile-submit margin-gap">
