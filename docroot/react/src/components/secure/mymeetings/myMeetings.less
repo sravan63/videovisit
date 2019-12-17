@@ -1,18 +1,193 @@
-.my-meetings .seperator{
-	border-bottom: 1px solid black;
-	background-color: #f6f8fa;
-	padding: 5px;
+.my-meetings {
+    .meetings-container {
+        .visitsToday {
+            margin-bottom: 6rem;
+            font-size: 2rem;
+            margin-left: -1rem;
+        }
+
+        .meeting-content {
+            padding: 2rem 0;
+            border-top: #CCCCCC solid 1px;
+
+            .running-late-indicator {
+                background-color: #ffe3c2;
+                height: 3rem;
+                font-family: "Open Sans";
+                font-size: 1.2rem;
+                text-align: center;
+                line-height: 3rem;
+                color: black;
+                margin: -1rem 0 2rem 0;
+            }
+
+            .newTime {
+                font-size: 1.25rem;
+                font-weight: bold;
+            }
+
+            .time {
+                font-size: 1.5rem;
+            }
+
+            .circle-image {
+                width: 3.43rem;
+                height: 3.43rem;
+                border-radius: 3.43rem;
+            }
+
+            .clinician-name {
+                vertical-align: top;
+            }
+
+            .department-details {
+                display: block;
+                margin: -2.2rem 0 0 4.4rem;
+            }
+
+            .join-visit {
+                background: #006ba6;
+                cursor: pointer;
+                color: #FFF;
+                height: 2.5rem;
+                width: 14rem;
+            }
+
+            .joinNow-container {
+                margin-left: 6.5rem;
+            }
+
+        }
+
+        .wifi {
+            display: none;
+        }
+    }
 }
-.my-meetings .seperator{
-	display: flex;
+
+/* Desktop Styles */
+@media only screen and (min-width: 960px) {
+    .my-meetings {
+        padding: 1rem;
+
+        .meetings-container {
+            margin: 8rem 10rem 0 10rem;
+
+        }
+    }
 }
-.my-meetings .seperator:first-child{
-	border-top: 1px solid black;
+
+/* Mobile Styles */
+@media only screen and (max-width: 960px) {
+    .my-meetings {
+        .meetings-container {
+            margin: 2rem;
+
+            .visitsToday {
+                font-size: 2.4rem;
+                margin-bottom: 2rem;
+                margin-left: -1rem;
+            }
+
+            .meeting-content {
+                .running-late-indicator {
+                    height: 100%;
+                    line-height: inherit;
+                }
+
+                .runningLate {
+                    display: block;
+                }
+
+                .clinician-details {
+                    margin: 1.75rem 0;
+                }
+
+                .time {
+                    margin-bottom: -0.4rem;
+                }
+
+                .joinNow-container {
+                    margin-left: 0;
+                    margin-top: 1rem;
+                }
+
+                .videoJoin {
+                    padding-left: 0;
+                }
+
+                .join-visit {
+                    width: 100%;
+                }
+
+                .joinText {
+                    padding-left: 0;
+                }
+            }
+
+            .wifi {
+                display: block;
+                border-top: #CCCCCC solid 1px;
+                margin-left: -1rem;
+                padding: 1.5rem 0;
+                font-weight: bold;
+                width: 109%;
+            }
+        }
+    }
 }
-.my-meetings .seperator div{
-	width: 25%;
-	padding: 5px;
+
+/* Ipad Styles */
+@media only screen and (min-width: 661px) and (max-width: 960px) and (orientation: portrait) {
+
+    .my-meetings {
+        .meetings-container {
+            .meeting-content {
+                .joinNow-container {
+                    margin-top: 0;
+                }
+
+                .runningLate {
+                    display: inline;
+                }
+
+                .clinician-details {
+                    margin: 0;
+                }
+            }
+
+            .wifi {
+                display: none;
+            }
+        }
+    }
 }
-.my-meetings .nomeetingsmsg{
-	text-align: center;
+
+/* Ipad Pro Styles */
+@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
+    .my-meetings {
+        .meetings-container {
+            .meeting-content {
+                .joinNow-container {
+                    margin-left: -0.4rem;
+                }
+
+            }
+        }
+    }
+}
+
+
+/* Ipad Landscape Styles */
+@media only screen and (min-width: 1024px) and (max-width: 1300px) and (orientation: landscape) {
+    .my-meetings {
+        .meetings-container {
+            .meeting-content {
+                .joinNow-container {
+                    margin-left: -0.4rem;
+                    ;
+                }
+            }
+        }
+    }
 }

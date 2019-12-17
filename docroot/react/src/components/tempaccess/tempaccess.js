@@ -19,12 +19,12 @@ class TempAccess extends React.Component {
                     errormsgs: { errorlogin: false, errormsg: "" }
                 });
                 // if(response.data != "" || response.data != null){
-                // let data = response.data.member;
+                let data = response.data.data.member;
                 // let fullname = data.firstName + +data.lastName;                
-                //data.isTempAccess = true;
-                //data.ssoSession = response.headers.authtoken;
+                data.isTempAccess = true;
+                data.ssoSession = response.headers.authtoken;
                 //localStorage.setItem('userDetails', fullname);
-                //localStorage.setItem('userDetails', JSON.stringify(data));
+                localStorage.setItem('userDetails', JSON.stringify(data));
                 localStorage.setItem('signedIn', true);
                 this.props.data.emit({ isMobileError: false });
                 this.props.history.push('/myMeetings');

@@ -33,8 +33,8 @@ export default class Ssologin extends React.Component {
                 });
                 localStorage.setItem('signedIn', true);
                 var data = response.data.data.memberInfo;
-                //data.isTempAccess = false;
-                //data.ssoSession = response.data.data.ssoSession;
+                data.isTempAccess = false;
+                data.ssoSession = response.data.data.ssoSession;
                 localStorage.setItem('userDetails', JSON.stringify(data));
                 this.props.data.emit({ isMobileError: false });
                 this.props.history.push('/myMeetings');

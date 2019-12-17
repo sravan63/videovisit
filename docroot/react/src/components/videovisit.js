@@ -10,7 +10,7 @@ class Videovisit extends React.Component {
 
     }
     redirectToSsoLoginPage() {
-        if (this.props.location.pathname == "/login") {
+        if (this.props.location.pathname == "/login" || this.props.location.pathname == "/guestlogin") {
             return;
         }
         if (this.props.location.pathname == "/") {
