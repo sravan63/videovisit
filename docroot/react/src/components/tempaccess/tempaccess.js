@@ -13,8 +13,10 @@ class TempAccess extends React.Component {
     signOn(e) {
         e.preventDefault();
         localStorage.clear();
+        this.props.data.emit({ showLoader: true });
         axios.post('/videovisit/submitlogin.json?last_name=' + this.state.lastname + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year, {}).then((response) => {
             if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
+                this.props.data.emit({ showLoader: false });
                 this.setState({
                     errormsgs: { errorlogin: false, errormsg: "" }
                 });
@@ -36,6 +38,7 @@ class TempAccess extends React.Component {
                     errormsgs: { errorlogin: true, errormsg: "We could not find this patient. Please try entering the information again." }
                 });
                 this.props.data.emit({ isMobileError: true });
+                this.props.data.emit({ showLoader: false });
                 window.scrollTo(0, -2);
             }
         }, (err) => {
@@ -43,6 +46,7 @@ class TempAccess extends React.Component {
                 errormsgs: { errorlogin: true, errormsg: "We could not find this patient. Please try entering the information again." }
             });
             this.props.data.emit({ isMobileError: true });
+            this.props.data.emit({ showLoader: false });
         });
     }
     handleChange(key, event) {
@@ -121,7 +125,7 @@ class TempAccess extends React.Component {
                             </div> 
                         </div> 
                         <div className = "form-group mobile-submit mt-5" >
-                             <button type = "button" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Sign In</button>
+                             <button type = "submit" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Sign In</button>
                         </div>
                     </form>
                     {!this.props.data.isInApp ?(<button type="button" className="mobile-form-toggle mt-1 btn row" onClick={() => this.props.data.emit({isTemp: false})} >

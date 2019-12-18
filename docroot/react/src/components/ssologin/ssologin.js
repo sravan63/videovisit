@@ -24,6 +24,7 @@ export default class Ssologin extends React.Component {
     getLoginUserDetails(e) {
         e.preventDefault();
         localStorage.clear();
+        this.props.data.emit({ showLoader: true });
         axios.post('/videovisit/ssosubmitlogin.json?username=' + this.state.username + '&password=' + this.state.password, {}).then((response) => {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
@@ -31,6 +32,7 @@ export default class Ssologin extends React.Component {
                 this.setState({
                     errors: { errorlogin: false, errormsg: "" }
                 });
+                this.props.data.emit({ showLoader: false });
                 localStorage.setItem('signedIn', true);
                 var data = response.data.data.memberInfo;
                 data.isTempAccess = false;
@@ -43,12 +45,14 @@ export default class Ssologin extends React.Component {
                     errors: { errorlogin: true, errormsg: "There was an error authenticating your account. Please sign in using temporary access." }
                 });
                 this.props.data.emit({ isMobileError: true });
+                this.props.data.emit({ showLoader: false });
             }
         }, (err) => {
             this.setState({
                 errors: { errorlogin: true, errormsg: "There was an error authenticating your account. Please sign in using temporary access." }
             });
             this.props.data.emit({ isMobileError: true });
+            this.props.data.emit({ showLoader: false });
             window.scrollTo(0, -2);
         });
     }
@@ -97,7 +101,7 @@ export default class Ssologin extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group mobile-submit margin-gap">
-                                <button type="button" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign In</button>
+                                <button type="submit" className="btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign In</button>
                             </div>
                         </form>
                         <button type="button" className="mobile-form-toggle mt-1 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
 import Header from '../../header/header';
+import Loader from '../../loader/loader';
 import './myMeetings.less';
 
 class MyMeetings extends React.Component {
@@ -8,7 +9,7 @@ class MyMeetings extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, myMeetings: [] };
+        this.state = { userDetails: {}, myMeetings: [], showLoader: true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
     }
@@ -71,14 +72,15 @@ class MyMeetings extends React.Component {
             if (response.data && response.data.statusCode == '200') {
                 var tempState = this.state;
                 tempState.myMeetings = response.data.data ? response.data.data : [];
+                tempState.showLoader = false;
                 this.setState({ tempState });
-
             }
         }, (err) => {
             console.log(err);
             if (err.response && err.response.status == 401) {
                 alert("Un Authorised");
                 localStorage.clear();
+                this.setState({ showLoader: false });
                 this.props.history.push('/login');
             }
         });
@@ -104,6 +106,7 @@ class MyMeetings extends React.Component {
     render() {
         return (
             <div id='container' className="my-meetings">
+                {this.state.showLoader ? (<Loader />):('')}
                 <Header history={this.props.history}/>
                 <div className="meetings-container">
                 <h1 className="visitsToday">Your Video Visits for Today</h1>
