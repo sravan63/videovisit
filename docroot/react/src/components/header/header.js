@@ -16,7 +16,7 @@ class header extends React.Component {
             this.state.userDetails = data;
             //const data = this.props.userDetails.userDetails;
             this.setState({
-                name: data.firstName.toLowerCase() + ',' + ' ' + data.lastName.toLowerCase()
+                name: data.lastName.toLowerCase() + ', ' + data.firstName.toLowerCase()
             });
         }
     }
