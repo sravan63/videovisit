@@ -12,6 +12,7 @@ class MyMeetings extends React.Component {
         this.state = { userDetails: {}, myMeetings: [], showLoader: true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
+        this.getClinicianName = this.getClinicianName.bind(this);
     }
     componentDidMount() {
         this.interval = setInterval(() => this.getMyMeetings(), 180000);
@@ -85,6 +86,13 @@ class MyMeetings extends React.Component {
             }
         });
     }
+    getClinicianName(host){
+        let clinician = '';
+        clinician += host.firstName? host.firstName.toLowerCase():'';
+        clinician += host.lastName? ' '+host.lastName.toLowerCase():'';
+        clinician += host.title? ', '+host.title:'';
+        return clinician.trim();
+    }
     getHoursAndMinutes(millis) {
         let DateObj = new Date(parseInt(millis));
         let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
@@ -108,6 +116,7 @@ class MyMeetings extends React.Component {
             <div id='container' className="my-meetings">
                 {this.state.showLoader ? (<Loader />):('')}
                 <Header history={this.props.history}/>
+                <div className="mobile-header">Video Visits</div>
                 <div className="meetings-container">
                 <h1 className="visitsToday">Your Video Visits for Today</h1>
                 {this.state.myMeetings.length > 0 ? (
@@ -122,10 +131,11 @@ class MyMeetings extends React.Component {
                                         <span className="text-capitalize patient-name">{item.member.lastName?item.member.lastName.toLowerCase():''}{item.member.firstName?(', ' +item.member.firstName.toLowerCase()):''} {item.member.middleName?item.member.middleName.toLowerCase():''} </span>
                                         </div>
                                         <div className="col-md-7 clinician-details">
-                                        <img className="circle-image" src={item.host.imageUrl} alt="" />
-                                        <span className="text-capitalize clinician-name font-weight-bold ml-3">{item.host.firstName?item.host.firstName.toLowerCase():''} {item.host.lastName?item.host.lastName.toLowerCase():''}
-                                        {item.host.title? (', ' + item.host.title):''}</span>
-                                        <span className="department-details text-capitalize">{item.host.departmentName?item.host.departmentName.toLowerCase():''}</span>
+                                            <img className="circle-image" src={item.host.imageUrl} alt="" />
+                                            <div className="clinician-name-and-details">
+                                                <span className="text-capitalize clinician-name font-weight-bold ml-3">{this.getClinicianName(item.host)}</span>
+                                            <span className="department-details text-capitalize ml-3">{item.host.departmentName?item.host.departmentName.toLowerCase():''}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div>

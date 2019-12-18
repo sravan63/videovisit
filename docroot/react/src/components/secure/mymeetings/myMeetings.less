@@ -40,8 +40,8 @@
             }
 
             .department-details {
-                display: block;
-                margin: -2.2rem 0 0 4.4rem;
+                display: inline-block;
+                width: 100%;
             }
 
             .join-visit {
@@ -57,26 +57,60 @@
                 opacity: 0.5;
             }
 
-            .joinNow-container {
-                margin-left: 6.5rem;
-            }
-
         }
 
         .wifi {
             display: none;
         }
     }
+    .mobile-header{
+        width: 100%;
+        height: 3rem;
+        background: #006ba6;
+        color: #FFFFFF;
+        padding: 0.5rem;
+        font-size: 1.25rem;
+        display: none;
+        position: fixed;
+        text-align: center;
+        top: 0;
+        z-index: 999;
+    }
 }
 
 /* Desktop Styles */
 @media only screen and (min-width: 960px) {
     .my-meetings {
-        padding: 1rem;
-
         .meetings-container {
             margin: 8rem 10rem 0 10rem;
-
+            .clinician-details {
+               display: flex;
+               .clinician-name-and-details{
+                    .clinician-name{
+                        display: inline-block;
+                        width: 100%;
+                    }
+                    .department-details{
+                        display: inline-block;
+                        width: 100%;
+                    }
+               }
+            }
+            .joinNow-container {
+                .videoJoin{
+                    .video-button{
+                        justify-content: flex-end;
+                        display: flex;
+                    }
+                }
+                .joinText{
+                    display: flex;
+                    justify-content: flex-end;
+                    span{
+                        width: 14rem;
+                    }
+                }
+            }
         }
     }
 }
@@ -84,8 +118,11 @@
 /* Mobile Styles */
 @media only screen and (max-width: 960px) {
     .my-meetings {
+        .mobile-header{
+            display: block;
+        }
         .meetings-container {
-            margin: 2rem;
+            margin: 3rem 2rem 0;
 
             .visitsToday {
                 font-size: 2.4rem;
@@ -105,6 +142,7 @@
 
                 .clinician-details {
                     margin: 1.75rem 0;
+                    display: flex;
                 }
 
                 .time {
@@ -126,6 +164,7 @@
 
                 .joinText {
                     padding-left: 0;
+                    display: block;
                 }
             }
 
@@ -190,6 +229,33 @@
                 .joinNow-container {
                     margin-left: -0.4rem;
                     ;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 960px) {
+    .my-meetings{
+        .meetings-container{
+            .meeting-content{
+                .col-md-8{
+                    max-width: 100%!important;
+                    flex: 0 0 100%!important;
+                    .row{
+                        .col-md-5{
+                            max-width: 100%!important;
+                            flex: 0 0 100%!important;
+                        }
+                        .col-md-7{
+                            max-width: 100%!important;
+                            flex: 0 0 100%!important;
+                        }
+                    }
+                }
+                .col-md-4{
+                    max-width: 100%!important;
+                    flex: 0 0 100%!important;
                 }
             }
         }
