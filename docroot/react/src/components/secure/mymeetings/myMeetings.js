@@ -192,11 +192,11 @@ class MyMeetings extends React.Component {
                     }) 
 
                 ):(
-                <div className="nomeetingsmsg">You have no meetings in the next 15 minutes.</div>
+                <div className="no-meetings">{!this.state.showLoader ? (<p className="text-center">You have no meetings in the next 15 minutes.</p>):('')}</div>
                 )}
                  <div className="col-sm-12 wifi">
-                        <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
-                                </div>
+                    <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
+                 </div>
                 </div>
             </div>
         )
