@@ -503,7 +503,7 @@ public class MeetingCommand {
 		return jsonString;
 	}
 
-	public static String performSSOSignOn(HttpServletRequest request) throws Exception {
+	public static String performSSOSignOn(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		String strResponse = null;
 		try {
@@ -547,6 +547,8 @@ public class MeetingCommand {
 									signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
 									signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
 									strResponse = WebUtil.prepareCommonOutputJson("ssosubmitlogin", "200", "success", signOnOutput);
+									logger.info("ssosession to be set in cookie:" + kpOrgSignOnInfo.getSsoSession());
+									WebUtil.setCookie(response, WebUtil.getSSOCookieName(), kpOrgSignOnInfo.getSsoSession());
 								}
 							}
 
