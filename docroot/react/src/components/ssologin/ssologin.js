@@ -21,25 +21,49 @@ export default class Ssologin extends React.Component {
         this.button = { disabled: true }
         this.getLoginUserDetails = this.getLoginUserDetails.bind(this);
     }
+
+
+     componentDidMount() {
+        axios.post('/videovisit/ssoPreLogin.json?', {}).then((response) => { 
+     console.log(response);  
+     if (response.data != "" && response.data != null && response && response.status == 200) {
+        this.handleDataAfterResponse(response);
+     } 
+     else{
+        
+     }
+    }, (err) => {
+            console.log(err);
+            });
+     }
+
+    handleDataAfterResponse(response){
+        this.setState({
+            errors: { errorlogin: false, errormsg: "" }
+        });
+        this.props.data.emit({ showLoader: false });
+        localStorage.setItem('signedIn', true);
+        var data = response.data.data.memberInfo;
+        if(data!=null || data!=undefined){
+        data.isTempAccess = false;
+        data.ssoSession = response.data.data.ssoSession;
+        localStorage.setItem('userDetails', JSON.stringify(data));
+        this.props.data.emit({ isMobileError: false });
+        this.props.history.push('/myMeetings');
+        }
+        
+
+    }
+
     getLoginUserDetails(e) {
         e.preventDefault();
         localStorage.clear();
         this.props.data.emit({ showLoader: true });
-        axios.post('/videovisit/ssosubmitlogin.json?username=' + this.state.username + '&password=' + this.state.password, {}).then((response) => {
+        axios.post('/videovisit/ssoSubmitLogin.json?username=' + this.state.username + '&password=' + this.state.password + '&loginType=sso', {}).then((response) => {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
             if (response.data != "" && response.data != null && response && response.status == 200) {
-                this.setState({
-                    errors: { errorlogin: false, errormsg: "" }
-                });
-                this.props.data.emit({ showLoader: false });
-                localStorage.setItem('signedIn', true);
-                var data = response.data.data.memberInfo;
-                data.isTempAccess = false;
-                data.ssoSession = response.data.data.ssoSession;
-                localStorage.setItem('userDetails', JSON.stringify(data));
-                this.props.data.emit({ isMobileError: false });
-                this.props.history.push('/myMeetings');
+                this.handleDataAfterResponse(response);
             } else {
                 this.setState({
                     errors: { errorlogin: true, errormsg: "There was an error authenticating your account. Please sign in using temporary access." }
