@@ -3,9 +3,11 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.controller;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
@@ -20,10 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberRestController extends SimplePageController {
 
 	public static final Logger logger = Logger.getLogger(MemberRestController.class);
-
-	@RequestMapping(value = "/ssosubmitlogin.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+	
+	@RequestMapping(value = "/ssoPreLogin.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
-	public String ssosubmitlogin(final HttpServletRequest request, final HttpServletResponse response)
+	public String ssoPreLogin(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String result = null;
+		Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.getSSOCookieName());
+		if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
+			result = MeetingCommand.validateKpOrgSSOSession(request, ssoCookie.getValue());
+		}
+		logger.info(LOG_EXITING);
+		return result;
+	}
+
+	@RequestMapping(value = "/ssoSubmitLogin.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String ssoSubmitLogin(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = MeetingCommand.performSSOSignOn(request, response);
@@ -63,9 +79,9 @@ public class MemberRestController extends SimplePageController {
 		return data;
 	}
 
-	@RequestMapping(value = "/submitlogin.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+	@RequestMapping(value = "/submitLogin.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
-	public String submitlogin(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	public String submitLogin(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		VerifyMemberEnvelope verifyMemberEnvelope = null;
 		String output = null;
@@ -73,7 +89,7 @@ public class MemberRestController extends SimplePageController {
 			verifyMemberEnvelope = MeetingCommand.verifyMember(request);
 			response.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(verifyMemberEnvelope.getMember()));
 			logger.debug("data = " + verifyMemberEnvelope);
-			output = WebUtil.prepareCommonOutputJson("submitlogin", "200", "success", verifyMemberEnvelope);
+			output = WebUtil.prepareCommonOutputJson("submitLogin", "200", "success", verifyMemberEnvelope);
 		} catch (Exception e) {
 			logger.error("System Error : ", e);
 		}
@@ -81,15 +97,15 @@ public class MemberRestController extends SimplePageController {
 		return output;
 	}
 
-	@RequestMapping(value = "/ssosignoff.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+	@RequestMapping(value = "/ssoSignOff.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
-	public String ssosignoff(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	public String ssoSignOff(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		try {
 			boolean isSignedOff = MeetingCommand.performSSOSignOff(request, response);
 			if (isSignedOff) {
-				output = WebUtil.prepareCommonOutputJson("ssosignoff", "200", "success", "");
+				output = WebUtil.prepareCommonOutputJson("ssoSignOff", "200", "success", "");
 			}
 			logger.debug("output = " + output);
 		} catch (Exception e) {

@@ -15,7 +15,11 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class SSOSessionFilter implements Filter {
 	public static final Logger logger = Logger.getLogger(SSOSessionFilter.class);
@@ -42,7 +46,9 @@ public class SSOSessionFilter implements Filter {
 					String ssoSession = req.getHeader("ssoSession");
 					if (StringUtils.isNotBlank(ssoSession)) {
 						String responseCode = MeetingCommand.validateKpOrgSSOSession(req, ssoSession);
-						if ("200".equalsIgnoreCase(responseCode)) {
+						Gson gson = new GsonBuilder().serializeNulls().create();
+						final VVResponse output = gson.fromJson(responseCode, VVResponse.class);
+						if ("200".equalsIgnoreCase(output.getCode())) {
 							logger.info("sso session token from request cookie valid");
 							isValidSession = true;
 						}

@@ -516,7 +516,6 @@ public class MeetingCommand {
 			if (StringUtils.isNotBlank(userName) && StringUtils.isNotBlank(password)) {
 				KpOrgSignOnInfo kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(userName, password);
 				if (kpOrgSignOnInfo == null) {
-					// TODO not authenticated. Clear the logged in cache.
 					logger.warn("SSO Sign on failed due to KP org signon Service unavailability.");
 				} else {
 					if (!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
@@ -529,24 +528,21 @@ public class MeetingCommand {
 					} else if (StringUtils.isBlank(kpOrgSignOnInfo.getSsoSession())) {
 						logger.warn("SSO Sign on service failed to return SSOSESSION for a user");
 					} else {
-
 						AuthorizeResponseVo authorizeMemberResponse = WebService
 								.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
 						if (authorizeMemberResponse == null) {
 							logger.warn("SSO Sign on failed due to unavailability of Member SSO Auth API");
 						} else {
-							// check for errors returned
 							if (authorizeMemberResponse.getResponseWrapper() == null) {
 								logger.warn("SSO Sign on failed due to Member SSO Auth API authorization failure");
 							} else {
 								if (validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper())) {
 									logger.info("SSO Sign on successful and setting member info into web app context");
-									// strResponse = "200";
 									SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
 									signOnOutput.setMemberInfo(authorizeMemberResponse.getResponseWrapper().getMemberInfo());
 									signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
 									signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
-									strResponse = WebUtil.prepareCommonOutputJson("ssosubmitlogin", "200", "success", signOnOutput);
+									strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
 									logger.info("ssosession to be set in cookie:" + kpOrgSignOnInfo.getSsoSession());
 									WebUtil.setCookie(response, WebUtil.getSSOCookieName(), kpOrgSignOnInfo.getSsoSession());
 								}
@@ -555,16 +551,12 @@ public class MeetingCommand {
 						}
 					}
 				}
-			} else {
-				logger.warn("SSO Sign on failed as either username or password is not available");
-				strResponse = "400";
 			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
-			if (StringUtils.isBlank(strResponse)) {
-				strResponse = "400";
-			}
-
+		}
+		if(StringUtils.isBlank(strResponse)) {
+			strResponse = WebUtil.prepareCommonOutputJson("ssosubmitlogin", "400", "failure", null);
 		}
 		logger.info(LOG_EXITING);
 		return strResponse;
@@ -632,63 +624,42 @@ public class MeetingCommand {
 		ctx.setMemberDO(memberDO);
 	}
 
-	private static String invalidateWebAppContext(WebAppContext ctx) {
-		if (ctx != null) {
-			ctx.setMemberDO(null);
-			ctx.setKpOrgSignOnInfo(null);
-			ctx.setAuthenticated(false);
-		}
-		return "400";
-	}
-
 	public static String validateKpOrgSSOSession(HttpServletRequest request,
 			String ssoSession) throws Exception {
 		logger.info(LOG_ENTERED);
 		String strResponse = null;
 		try {
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 			WebService.initWebService(request);
-			// Validation
-			if (ctx != null) {
 				KpOrgSignOnInfo kpOrgSignOnInfo = WebService.validateKpOrgSSOSession(ssoSession);
 
 				if (kpOrgSignOnInfo == null) {
-					// TODO not authenticated. Clear the logged in cache.
 					logger.warn("SSO Sign on failed due to KP org signon Service unavailability.");
-					strResponse = invalidateWebAppContext(ctx);
-
 				} else {
 					if (!kpOrgSignOnInfo.isSuccess() && (StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
 							|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))) {
 						logger.warn(
 								"SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
-						strResponse = invalidateWebAppContext(ctx);
 					} else if (kpOrgSignOnInfo.getUser() == null || (kpOrgSignOnInfo.getUser() != null
 							&& StringUtils.isBlank(kpOrgSignOnInfo.getUser().getGuid()))) {
 						logger.warn("SSO Sign on service failed to return GUID for a user");
-						strResponse = invalidateWebAppContext(ctx);
 					} else {
 
 						AuthorizeResponseVo authorizeMemberResponse = WebService
 								.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
 						if (authorizeMemberResponse == null) {
 							logger.warn("SSO Sign on failed due to unavailability of Member SSO Auth API");
-							strResponse = invalidateWebAppContext(ctx);
 						} else {
 							// check for errors returned
 							if (authorizeMemberResponse.getResponseWrapper() == null) {
 								logger.warn("SSO Sign on failed due to Member SSO Auth API authorization failure");
-								strResponse = invalidateWebAppContext(ctx);
 							} else {
 								if (validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper())) {
-									logger.info("SSO Sign on successful and setting member info into web app context");
-									setWebAppContextMemberInfo(ctx,
-											authorizeMemberResponse.getResponseWrapper().getMemberInfo());
-									ctx.setKpOrgSignOnInfo(kpOrgSignOnInfo);
-									ctx.setKpKeepAliveUrl(WebService.getKpOrgSSOKeepAliveUrl());
-									strResponse = "200";
-								} else {
-									strResponse = invalidateWebAppContext(ctx);
+									logger.info("validateKpOrgSSOSession successful");
+									SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
+									signOnOutput.setMemberInfo(authorizeMemberResponse.getResponseWrapper().getMemberInfo());
+									signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+									signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
+									strResponse = WebUtil.prepareCommonOutputJson("ssoPreLogin", "200", "success", signOnOutput);
 								}
 
 							}
@@ -696,16 +667,11 @@ public class MeetingCommand {
 						}
 					}
 				}
-			} else {
-				logger.warn("SSO Sign on failed as webapp context from the rquest is null");
-				strResponse = "400";
-			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
-			if (StringUtils.isBlank(strResponse)) {
-				strResponse = "400";
-			}
-
+		}
+		if(StringUtils.isBlank(strResponse)) {
+			strResponse = WebUtil.prepareCommonOutputJson("ssoPreLogin", "400", "failure", null);
 		}
 		logger.info(LOG_EXITING);
 		return strResponse;
@@ -722,7 +688,6 @@ public class MeetingCommand {
 					WebService.initWebService(request);
 					isSignedOff = WebService.performKpOrgSSOSignOff(ctx.getKpOrgSignOnInfo().getSsoSession());
 				}
-				invalidateWebAppContext(ctx);
 				WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
 				WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);
 				WebUtil.removeCookie(request, response, WebUtil.S_COOKIE_NAME);
