@@ -36,7 +36,7 @@
 
 		<init-param>
 			<param-name>excludeURLs</param-name>
-			<param-value>ssosubmitlogin.json,submitlogin.json</param-value>
+			<param-value>ssoPreLogin.json,ssoSubmitLogin.json,submitLogin.json</param-value>
 		</init-param>
 
 	</filter>

@@ -556,7 +556,7 @@ public class MeetingCommand {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		if(StringUtils.isBlank(strResponse)) {
-			strResponse = WebUtil.prepareCommonOutputJson("ssosubmitlogin", "400", "failure", null);
+			strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "400", "failure", null);
 		}
 		logger.info(LOG_EXITING);
 		return strResponse;
