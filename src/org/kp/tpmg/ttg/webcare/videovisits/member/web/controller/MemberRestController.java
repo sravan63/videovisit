@@ -30,8 +30,8 @@ public class MemberRestController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String result = null;
 		Cookie ssoCookie = WebUtil.getCookie(request, WebUtil.getSSOCookieName());
-		logger.info("ssoCookie Value : "+ssoCookie.getValue());
 		if(ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
+			logger.info("ssoCookie Value : "+ssoCookie.getValue());
 			result = MeetingCommand.validateKpOrgSSOSession(request, ssoCookie.getValue());
 		}
 		logger.info("validateKpOrgSSOSession result : "+result);
