@@ -11,6 +11,7 @@ export default class Ssologin extends React.Component {
         this.state = {
             username: '',
             password: '',
+            NotLoggedIn: false,
             errors: {
                 usernameflag: '',
                 passwordflag: '',
@@ -23,35 +24,36 @@ export default class Ssologin extends React.Component {
     }
 
 
-     componentDidMount() {
-        axios.post('/videovisit/ssoPreLogin.json?', {}).then((response) => { 
-     console.log(response);  
-     if (response.data != "" && response.data != null && response && response.status == 200) {
-        this.handleDataAfterResponse(response);
-     } 
-     else{
-        
-     }
-    }, (err) => {
-            console.log(err);
-            });
-     }
+    componentDidMount() {
+        axios.post('/videovisit/ssoPreLogin.json?', {}).then((response) => {
+            console.log(response);
+            if (response.data != "" && response.data != null && response && response.status == 200) {
+                this.handleDataAfterResponse(response);
 
-    handleDataAfterResponse(response){
+            } else {
+                this.setState({ NotLoggedIn: true });
+            }
+        }, (err) => {
+            console.log(err);
+            this.setState({ NotLoggedIn: true });
+        });
+    }
+
+    handleDataAfterResponse(response) {
         this.setState({
             errors: { errorlogin: false, errormsg: "" }
         });
         this.props.data.emit({ showLoader: false });
         localStorage.setItem('signedIn', true);
         var data = response.data.data.memberInfo;
-        if(data!=null || data!=undefined){
-        data.isTempAccess = false;
-        data.ssoSession = response.data.data.ssoSession;
-        localStorage.setItem('userDetails', JSON.stringify(data));
-        this.props.data.emit({ isMobileError: false });
-        this.props.history.push('/myMeetings');
+        if (data != null || data != undefined) {
+            data.isTempAccess = false;
+            data.ssoSession = response.data.data.ssoSession;
+            localStorage.setItem('userDetails', JSON.stringify(data));
+            this.props.data.emit({ isMobileError: false });
+            this.props.history.push('/myMeetings');
         }
-        
+
 
     }
 
@@ -109,7 +111,8 @@ export default class Ssologin extends React.Component {
     render() {
         const { errors } = this.state;
         return (
-            <div className="sso-content">           
+            <div className="sso-content"> 
+            {this.state.NotLoggedIn ?  (        
                     <div className="row sso-form" > 
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group top-form-group-margin">
@@ -132,7 +135,7 @@ export default class Ssologin extends React.Component {
                             <span className="video-icon mr-1"></span>
                             <span className="toggle-text" >Video Visit Temporary Access </span>
                         </button>
-                    </div> 
+                    </div> ) : ('')}
                 </div>
 
         );

@@ -84,13 +84,14 @@ class MyMeetings extends React.Component {
                 this.setState({ showLoader: false });
                 this.props.history.push('/login');
             }
+            this.setState({ showLoader: false });
         });
     }
-    getClinicianName(host){
+    getClinicianName(host) {
         let clinician = '';
-        clinician += host.firstName? host.firstName.toLowerCase():'';
-        clinician += host.lastName? ' '+host.lastName.toLowerCase():'';
-        clinician += host.title? ', '+host.title:'';
+        clinician += host.firstName ? host.firstName.toLowerCase() : '';
+        clinician += host.lastName ? ' ' + host.lastName.toLowerCase() : '';
+        clinician += host.title ? ', ' + host.title : '';
         return clinician.trim();
     }
     getHoursAndMinutes(millis) {
