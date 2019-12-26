@@ -27,7 +27,11 @@ export default class Ssologin extends React.Component {
         BackendService.getPreSSO().subscribe((response) => {
             console.log(response);
             if (response.data != "" && response.data != null && response && response.status == 200) {
-                this.handleDataAfterResponse(response);
+                if (response.data.data != null && response.data.data != '') {
+                    this.handleDataAfterResponse(response);
+                } else {
+                    this.setState({ NotLoggedIn: true });
+                }
 
             } else {
                 this.setState({ NotLoggedIn: true });
@@ -64,7 +68,16 @@ export default class Ssologin extends React.Component {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
             if (response.data != "" && response.data != null && response && response.status == 200) {
-                this.handleDataAfterResponse(response);
+                if (response.data.data != null && response.data.data != '') {
+                    this.handleDataAfterResponse(response);
+                } else {
+                    this.setState({
+                        errors: { errorlogin: true, errormsg: "There was an error authenticating your account. Please sign in using temporary access." }
+                    });
+                    this.props.data.emit({ isMobileError: true });
+                    this.props.data.emit({ showLoader: false });
+                    window.scrollTo(0, -2);
+                }
             } else {
                 this.setState({
                     errors: { errorlogin: true, errormsg: "There was an error authenticating your account. Please sign in using temporary access." }
