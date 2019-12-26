@@ -1,7 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import axios from 'axios';
 import '../../views/authentication/authentication.less';
+import BackendService from '../../services/backendService.js';
 import ReactDOM from 'react-dom';
 
 export default class Ssologin extends React.Component {
@@ -25,7 +24,7 @@ export default class Ssologin extends React.Component {
 
 
     componentDidMount() {
-        axios.post('/videovisit/ssoPreLogin.json?', {}).then((response) => {
+        BackendService.getPreSSO().subscribe((response) => {
             console.log(response);
             if (response.data != "" && response.data != null && response && response.status == 200) {
                 this.handleDataAfterResponse(response);
@@ -61,7 +60,7 @@ export default class Ssologin extends React.Component {
         e.preventDefault();
         localStorage.clear();
         this.props.data.emit({ showLoader: true });
-        axios.post('/videovisit/ssoSubmitLogin.json?username=' + this.state.username + '&password=' + this.state.password + '&loginType=sso', {}).then((response) => {
+        BackendService.getSSOLogin(this.state.username, this.state.password).subscribe((response) => {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/
             if (response.data != "" && response.data != null && response && response.status == 200) {

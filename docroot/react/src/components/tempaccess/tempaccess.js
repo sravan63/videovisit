@@ -1,6 +1,6 @@
 import React from 'react';
-import axios from 'axios';
 import '../../views/authentication/authentication.less';
+import BackendService from '../../services/backendService.js';
 import { Route, withRouter } from 'react-router-dom';
 class TempAccess extends React.Component {
     constructor(props) {
@@ -14,7 +14,7 @@ class TempAccess extends React.Component {
         e.preventDefault();
         localStorage.clear();
         this.props.data.emit({ showLoader: true });
-        axios.post('/videovisit/submitLogin.json?last_name=' + this.state.lastname + '&mrn=' + this.state.mrn + '&birth_month=' + this.state.birth_month + '&birth_year=' + this.state.birth_year + '&loginType=tempAccess', {}).then((response) => {
+        BackendService.getTempLogin(this.state.lastname, this.state.mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
             if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
                 this.props.data.emit({ showLoader: false });
                 this.setState({

@@ -1,7 +1,7 @@
 import React from "react";
-import axios from 'axios';
 import Header from '../../header/header';
 import Loader from '../../loader/loader';
+import BackendService from '../../../services/backendService.js';
 import './myMeetings.less';
 
 class MyMeetings extends React.Component {
@@ -69,12 +69,14 @@ class MyMeetings extends React.Component {
             headers.guid = this.state.userDetails.guid;
             headers.ssoSession = this.state.userDetails.ssoSession;
         }
-        axios.post('/videovisit/' + myMeetingsUrl + '?getProxyMeetings=' + isProxy, {}, { headers: headers }).then((response) => {
+        BackendService.getMyMeetings(myMeetingsUrl, isProxy, headers).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 var tempState = this.state;
                 tempState.myMeetings = response.data.data ? response.data.data : [];
                 tempState.showLoader = false;
                 this.setState({ tempState });
+            } else {
+                this.state.showLoader = false;
             }
         }, (err) => {
             console.log(err);
