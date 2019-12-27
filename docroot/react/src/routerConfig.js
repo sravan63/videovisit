@@ -5,7 +5,8 @@ import Videovisit from './components/videovisit';
 import Authentication from '../src/views/authentication/authentication';
 import GuestAuthentication from '../src/views/guest-authentication/guest-authentication';
 
-import MyMeetings from './components/secure/mymeetings/myMeetings';
+import MyMeetings from './views/secure/my-meetings/my-meetings';
+import VideoVisit from './views/secure/visit/visit';
 
 export const routes = [{
         path: '/',
@@ -22,6 +23,10 @@ export const routes = [{
     {
         path: '/myMeetings',
         component: MyMeetings
+    },
+    {
+        path: '/videoVisitReady',
+        component: VideoVisit
     }
 ];
 export const RouteWithSubRoutes = (route) => (

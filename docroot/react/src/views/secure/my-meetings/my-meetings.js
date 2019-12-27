@@ -1,8 +1,8 @@
 import React from "react";
-import Header from '../../header/header';
-import Loader from '../../loader/loader';
+import Header from '../../../components/header/header';
+import Loader from '../../../components/loader/loader';
 import BackendService from '../../../services/backendService.js';
-import './myMeetings.less';
+import './my-meetings.less';
 
 class MyMeetings extends React.Component {
 
@@ -13,36 +13,18 @@ class MyMeetings extends React.Component {
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
+        // this.joinMeeting = this.joinMeeting.bind(this);
     }
     componentDidMount() {
         this.interval = setInterval(() => this.getMyMeetings(), 180000);
         if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
-            /*this.state.userDetails = this.props.userDetails.userDetails;
-            if(this.props.userDetails.userDetails){
-                this.getMyMeetings();
-            }*/
             if (this.state.userDetails) {
                 this.getMyMeetings();
             }
         } else {
             this.props.history.push('/login');
         }
-
-
-
-        /*if (localStorage.getItem('signedIn')) {
-            var signIn = JSON.parse(localStorage.getItem('signedIn'));
-            this.state.userDetails = this.props.userDetails.userDetails;
-            if(this.props.userDetails.userDetails){
-                this.getMyMeetings();
-            }
-             if (this.state.userDetails) {
-                 this.getMyMeetings();
-             }
-        } else {
-            
-        }*/
     }
 
     componentWillUnmount() {
@@ -76,7 +58,7 @@ class MyMeetings extends React.Component {
                 tempState.showLoader = false;
                 this.setState({ tempState });
             } else {
-                this.state.showLoader = false;
+                this.setState({showLoader : false});
             }
         }, (err) => {
             console.log(err);
@@ -111,6 +93,11 @@ class MyMeetings extends React.Component {
         }
         let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
         return Hour + ':' + Minutes + " " + AMPM;
+    }
+
+    joinMeeting(meeting){
+        console.log(meeting);
+        this.props.history.push('/videoVisitReady');
     }
 
 
@@ -181,7 +168,7 @@ class MyMeetings extends React.Component {
                                     <div className="row joinNow-container">
                                         <div className="col-md-12 videoJoin">
                                         <div className="video-button">
-                                          <button type="button" className="btn rounded-0 p-0 join-visit" disabled={item.meetingVendorId==null} id="join">Join your visit</button>
+                                          <button type="button" className="btn rounded-0 p-0 join-visit" disabled={item.meetingVendorId==null} onClick={this.joinMeeting.bind(this,item)}>Join your visit</button>
                                         </div>
                                         </div>
                                         <div className="col-md-12 mt-3 joinText">
