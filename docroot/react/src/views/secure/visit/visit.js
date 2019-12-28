@@ -12,11 +12,10 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, showPage: false, showPreCheck: true };
+        this.state = { userDetails: {}, showPage: false, showPreCheck: false };
     }
 
     componentDidMount() {
-        this.interval = setInterval(() => this.getMyMeetings(), 180000);
         if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
             if (this.state.userDetails) {
@@ -27,13 +26,10 @@ class Visit extends React.Component {
         }
     }
 
-    
-
-
     render() {
         return (
             <div>
-                {this.state.showPreCheck ? (<PreCallCheck />): (<Conference />)}
+                {this.state.showPreCheck ? (<PreCallCheck history={this.props.history} />): (<Conference history={this.props.history} />)}
             </div>
         )
     }

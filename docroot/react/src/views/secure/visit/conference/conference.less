@@ -1,256 +1,115 @@
-.my-meetings {
-    .meetings-container {
-        .visitsToday {
-            margin-bottom: 6rem;
-            font-size: 2rem;
-            margin-left: -1rem;
-        }
-
-        .meeting-content {
-            padding: 2rem 0;
-            border-top: #CCCCCC solid 1px;
-
-            .running-late-indicator {
-                background-color: #ffe3c2;
-                height: 3rem;
-                font-size: 1.2rem;
-                text-align: center;
-                line-height: 3rem;
-                color: black;
-                margin: -1rem 0 2rem 0;
-            }
-
-            .newTime {
-                font-size: 1.25rem;
-                font-weight: bold;
-            }
-
-            .time {
-                font-size: 1.5rem;
-            }
-
-            .circle-image {
-                width: 3.43rem;
-                height: 3.43rem;
-                border-radius: 3.43rem;
-            }
-
-            .clinician-name {
-                vertical-align: top;
-            }
-
-            .department-details {
-                display: inline-block;
-                width: 100%;
-            }
-
-            .join-visit {
-                background: #006ba6;
-                cursor: pointer;
-                color: #FFF;
-                height: 2.5rem;
-                width: 14rem;
-            }
-
-            .join-visit:disabled {
-                pointer-events: none;
-                opacity: 0.5;
-            }
-
-        }
-
-        .no-meetings{
-            font-size: 1.25rem;
-        }
-
-        .wifi {
-            display: none;
-        }
-    }
-    .mobile-header{
+.conference-page{
+    .conference-header{
+        min-height: 4.90rem;
+        background-color: #FFFFFF;
+        color: #4272C1;
+        padding: 0 0.625rem;
         width: 100%;
-        height: 3rem;
-        background: #006ba6;
-        color: #FFFFFF;
-        padding: 0.5rem;
-        font-size: 1.25rem;
-        display: none;
-        position: fixed;
-        text-align: center;
-        top: 0;
+        user-select: none;
         z-index: 999;
-    }
-}
+        position: relative;
+        .banner-content {
+            display: flex;
 
-/* Desktop Styles */
-@media only screen and (min-width: 960px) {
-    .my-meetings {
-        .meetings-container {
-            margin: 8rem 10rem 0 10rem;
-            .clinician-details {
-               display: flex;
-               .clinician-name-and-details{
-                    .clinician-name{
-                        display: inline-block;
-                        width: 100%;
-                    }
-                    .department-details{
-                        display: inline-block;
-                        width: 100%;
-                    }
-               }
-            }
-            .joinNow-container {
-                .videoJoin{
-                    .video-button{
-                        justify-content: flex-end;
-                        display: flex;
-                    }
+            .title {
+                font-size: 1.5rem;
+                margin: auto 0;
+
+                .sub-title {
+                    font-size: 1.2rem;
+                    font-weight: bold;
                 }
-                .joinText{
-                    display: flex;
-                    justify-content: flex-end;
-                    span{
-                        width: 14rem;
+            }
+
+            .logo {
+                background: url('../../../../assets/sm-TPMG-banner-logo.png') no-repeat;
+                height: 5.625rem;
+                width: 5.625rem;
+                margin: 1.25rem 0.5rem 1.25rem 0;
+                background-position: center;
+            }
+        }
+        .links {
+            margin-left: -2rem;
+            padding: 0.5rem 0 3rem;
+
+            ul {
+                list-style: none;
+                padding: 0;
+
+                li {
+                    display: inline-block;
+                    padding: 0 0.5rem;
+
+                    .help-link {
+                        color: #006ba6;
+                    }
+
+                    .sign-off {
+                        cursor: pointer;
                     }
                 }
             }
         }
     }
-}
-
-/* Mobile Styles */
-@media only screen and (max-width: 960px) {
-    .my-meetings {
-        .mobile-header{
-            display: block;
-        }
-        .meetings-container {
-            margin: 5rem 2rem 0;
-
-            .visitsToday {
-                font-size: 2.4rem;
-                margin-bottom: 2rem;
-                margin-left: -1rem;
+    .video-conference-container{
+        height: calc(100vh - 130px);
+        .video-conference{
+            height: 100%;
+            background: #000000;
+            display: flex;
+            .button-container{
+                width: 4rem;
+                background: #323232;
+                height: 100%;
             }
-
-            .meeting-content {
-                .running-late-indicator {
-                    height: 100%;
-                    line-height: inherit;
+            .stream-container{
+                width: calc(100% - 4rem);
+                height: 100%;
+                position: relative;
+                .self-view{
+                    background: red;
+                    position: absolute;
+                    height: 7rem;
+                    width: 10rem;
+                    bottom: 0;
+                    right: 0;
                 }
-
-                .runningLate {
-                    display: block;
-                }
-
-                .clinician-details {
-                    margin: 1.75rem 0;
-                    display: flex;
-                }
-
-                .time {
-                    margin-bottom: -0.4rem;
-                }
-
-                .joinNow-container {
-                    margin-left: 0;
-                    margin-top: 1rem;
-                }
-
-                .videoJoin {
-                    padding-left: 0;
-                }
-
-                .join-visit {
+            }
+        }
+        .conference-details{
+            height: 100%;
+            background: #FFFFFF;
+            .clinician-information{
+                background: #F7F7F7;
+                min-height: 10rem;
+                padding: 1rem;
+                border: solid 1px #CFCFCF;
+                border-width: 1px 0 1px 0;
+                .leave-button{
+                    background: #9D291F;
+                    color: #FFFFFF;
+                    font-weight: 500;
                     width: 100%;
+                    font-size: 0.91rem;
                 }
-
-                .joinText {
-                    padding-left: 0;
-                    display: block;
-                }
-            }
-
-            .wifi {
-                display: block;
-                border-top: #CCCCCC solid 1px;
-                margin-left: -1rem;
-                padding: 1.5rem 0;
-                font-weight: bold;
-                width: 109%;
-            }
-        }
-    }
-}
-
-/* Ipad Styles */
-@media only screen and (min-width: 661px) and (max-width: 960px) and (orientation: portrait) {
-
-    .my-meetings {
-        .meetings-container {
-            .meeting-content {
-
-                .runningLate {
-                    display: inline;
-                }
-
-            }
-
-        }
-    }
-}
-
-/* Ipad Pro Styles */
-@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: portrait) {
-    .my-meetings {
-        .meetings-container {
-            .meeting-content {
-                .joinNow-container {
-                    margin-left: -0.4rem;
-                }
-
-            }
-        }
-    }
-}
-
-
-/* Ipad Landscape Styles */
-@media only screen and (min-width: 1024px) and (max-width: 1300px) and (orientation: landscape) {
-    .my-meetings {
-        .meetings-container {
-            .meeting-content {
-                .joinNow-container {
-                    margin-left: -0.4rem;
-                    ;
-                }
-            }
-        }
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 960px) {
-    .my-meetings{
-        .meetings-container{
-            .meeting-content{
-                .col-md-8{
-                    max-width: 100%!important;
-                    flex: 0 0 100%!important;
-                    .row{
-                        .col-md-5{
-                            max-width: 100%!important;
-                            flex: 0 0 100%!important;
-                        }
-                        .col-md-7{
-                            max-width: 100%!important;
-                            flex: 0 0 100%!important;
-                        }
+                .visit-details{
+                    p{
+                        font-size: 1.45rem;
+                    }
+                    .clinician-info{
+                        font-weight: bold;
                     }
                 }
-                .col-md-4{
-                    max-width: 100%!important;
-                    flex: 0 0 100%!important;
+            }
+            .participants-information{
+                padding: 1rem;
+                .header{
+                    font-size: 1.25rem;
+                    font-weight: 500;
+                }
+                .participant-details{
+
                 }
             }
         }

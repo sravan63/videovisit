@@ -97,6 +97,7 @@ class MyMeetings extends React.Component {
 
     joinMeeting(meeting){
         console.log(meeting);
+        localStorage.setItem('meetingDetails', JSON.stringify(meeting));
         this.props.history.push('/videoVisitReady');
     }
 
