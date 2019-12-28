@@ -70,5 +70,13 @@ class MediaService extends React.Component {
       return navigator.mediaDevices.enumerateDevices();
     }
 
+    stop(){
+      if (window.stream) {
+        window.stream.getTracks().forEach(function(track) {
+          track.stop();
+        });
+      }
+    }
+
 }
 export default new MediaService();

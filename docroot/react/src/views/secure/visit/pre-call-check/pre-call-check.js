@@ -61,10 +61,12 @@ class PreCallCheck extends React.Component {
     }
 
     goBack(){
+      MediaService.stop();
       this.props.history.push('/myMeetings');
     }
 
     joinVisit(){
+      MediaService.stop();
       this.props.data.togglePrecheck();
     }
 
