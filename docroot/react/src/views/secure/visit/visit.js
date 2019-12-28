@@ -12,7 +12,7 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, showPage: false, showPreCheck: false };
+        this.state = { userDetails: {}, showPage: false, showPreCheck: true };
     }
 
     componentDidMount() {
@@ -26,10 +26,18 @@ class Visit extends React.Component {
         }
     }
 
+    togglePrecheck(){
+        this.setState({
+            showPreCheck: false
+        });
+    }
+
     render() {
         return (
             <div>
-                {this.state.showPreCheck ? (<PreCallCheck history={this.props.history} />): (<Conference history={this.props.history} />)}
+                {this.state.showPreCheck ? 
+                  (<PreCallCheck history={this.props.history} data={{togglePrecheck: this.togglePrecheck.bind(this)}}/>)
+                : (<Conference history={this.props.history} />)}
             </div>
         )
     }

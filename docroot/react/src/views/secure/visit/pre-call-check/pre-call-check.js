@@ -17,7 +17,9 @@ class PreCallCheck extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { userDetails: {}, showPage: false, showLoader: true, data:{}, media:{} };
+        this.state = { userDetails: {}, showPage: false, showLoader: true, data:{}, media:{}, constrains : {} };
+        this.goBack = this.goBack.bind(this);
+        this.joinVisit = this.joinVisit.bind(this);
     }
 
     componentDidMount() {
@@ -32,6 +34,12 @@ class PreCallCheck extends React.Component {
         }
         this.list = MediaService.getMediaList();
         this.setState({media : this.list});
+        this.setState({constrains : {
+          audioSource : this.list.audioinput[0],
+          videoSource : this.list.videoinput[0],
+          micSource : this.list.audiooutput[0]
+        }});
+        MediaService.start(this.state.constrains);
         console.log(this.list);
     }
 
@@ -46,6 +54,18 @@ class PreCallCheck extends React.Component {
 
     selectPeripheral(media){
         console.log('SELECTED MEDIA IS :: '+media);
+        this.setState({constrains : {
+          audioSource : media,
+          videoSource : media
+        }});
+    }
+
+    goBack(){
+      this.props.history.push('/myMeetings');
+    }
+
+    joinVisit(){
+      this.props.data.togglePrecheck();
     }
 
 
@@ -54,11 +74,12 @@ class PreCallCheck extends React.Component {
             <div id='container' className="pre-call-check-page">
                  <Header/>
                  <div className="pre-call-check-content">
-                     <div className="col-md-8 pre-call-check">
-                         <div className="col-md-6 options p-0">
+                     <div className="row pre-call-check">
+                         <div className="col-md-5 options p-0">
+                             <div className="label">Camera</div>
                              <div className="dropdown show">
                                   <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
-                                    Camera
+                                    {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
                                   </a>
                                   <div className={this.state.data.isVideo ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
                                     { this.state.media.videoinput && this.state.media.videoinput.length > 0 ? 
@@ -71,9 +92,10 @@ class PreCallCheck extends React.Component {
                                     }
                                   </div>
                              </div>
+                             <div className="label">Microphone</div>
                              <div className="dropdown show">
                                   <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
-                                    Microphone
+                                    {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
                                   </a>
                                   <div className={this.state.data.isAudio ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
                                     { this.state.media.audioinput && this.state.media.audioinput.length > 0 ? 
@@ -86,9 +108,10 @@ class PreCallCheck extends React.Component {
                                     }
                                   </div>
                              </div>
+                             <div className="label">Speaker</div>
                              <div className="dropdown show">
                                   <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
-                                    Speakers
+                                    {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
                                   </a>
                                   <div className={this.state.data.isSpeaker ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
                                     { this.state.media.audiooutput && this.state.media.audiooutput.length > 0 ? 
@@ -102,7 +125,11 @@ class PreCallCheck extends React.Component {
                                   </div>
                              </div>
                          </div>
-                         <div className="col-md-6 p-0"></div>
+                         <div className="col-md-5 video-preview"><video playsInline autoPlay></video></div>
+                         <div className="col-md-12 button-controls text-center">
+                           <button className="btn rounded-0 mr-3" onClick={this.goBack}>Back</button>
+                           <button className="btn rounded-0" onClick={this.joinVisit}>Join</button>
+                         </div>
                      </div>
                  </div>
             </div>

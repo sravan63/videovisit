@@ -1,11 +1,13 @@
 .pre-call-check-page{
 	.pre-call-check-content{
 		background: #F0F4F7;
-		height: 100vh;
-		padding-top: 9rem;
+		height: calc(100vh - 9rem);
+		margin-top: 9rem;
 		.pre-call-check{
-			margin: 6rem auto;
+			margin: 0 auto;
 			min-height: 1rem;
+			width: 75%;
+			padding-top: 3rem;
 			.options{
 				.dropdown{
 					color: #333333;
@@ -15,7 +17,23 @@
 					background: #FFFFFF;
 					.btn{
 						text-align: left;
+						overflow: hidden;
+					    text-overflow: ellipsis;
+					    white-space: nowrap;
 					}
+				}
+			}
+			.video-preview{
+				margin-left: auto;
+				video{
+					width: 100%;
+				}
+			}
+			.button-controls{
+				.btn{
+					background: #006ba6;
+					width: 7rem;
+					color: #FFF;
 				}
 			}
 		}
