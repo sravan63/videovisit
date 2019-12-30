@@ -35,8 +35,10 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
@@ -44,6 +46,7 @@ import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
+import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
 import org.kp.tpmg.videovisit.model.user.Member;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
@@ -318,7 +321,6 @@ public class MeetingCommand {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		LaunchMeetingForMemberGuestOutput output = null;
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		String jsonString = null;
 		Gson gson = new Gson();
 		try {
@@ -332,7 +334,7 @@ public class MeetingCommand {
 				isMobileFlow = false;
 				logger.info("mobile flow is false");
 			}
-			final String clientId = WebUtil.getClientIdFromContext(ctx);
+			final String clientId = request.getParameter("clientId");
 			if (StringUtils.isNotBlank(meetingCode)) {
 				output = WebService.createCaregiverMeetingSession(meetingCode, patientLastName, isMobileFlow,
 						request.getSession().getId(), clientId);
@@ -702,17 +704,16 @@ public class MeetingCommand {
 	public static String setKPHCConferenceStatus(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		ServiceCommonOutput output = null;
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		long meetingId = 0;
-		String jsonStr;
+		String jsonStr = null;
 		final Gson gson = new Gson();
+		String clientId = null;
 		try {
-			if (ctx != null && ctx.getMemberDO() != null) {
 				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 					meetingId = Long.parseLong(request.getParameter("meetingId"));
 				}
-				if (meetingId == 0) {
-					meetingId = ctx.getMeetingId();
+				if (StringUtils.isNotBlank(request.getParameter("clientId"))) {
+					clientId = request.getParameter("clientId");
 				}
 				final String status = request.getParameter("status");
 				final String careGiverName = request.getParameter("careGiverName");
@@ -722,22 +723,20 @@ public class MeetingCommand {
 				if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
 					isProxyMeeting = true;
 				}
-
+			if (meetingId != 0) {
 				output = WebService.setKPHCConferenceStatus(meetingId, status, isProxyMeeting, careGiverName,
-						request.getSession().getId(), ctx.getClientId());
+						request.getSession().getId(), clientId);
+				jsonStr = WebUtil.prepareCommonOutputJson(output.getName(),
+						output.getStatus().getCode(), output.getStatus().getMessage(),
+						"");
 			}
+
 		} catch (Exception e) {
 			logger.error("System error for meeting:" + meetingId, e);
 		}
 		if (output == null) {
-			output = new ServiceCommonOutput();
-			output.setName("SetKPHCConferenceStatus");
-			final Status status = new Status();
-			status.setCode("900");
-			status.setMessage("System error");
-			output.setStatus(status);
+			jsonStr = WebUtil.prepareCommonOutputJson("SetKPHCConferenceStatus", "900", "failure", null);
 		}
-		jsonStr = gson.toJson(output);
 		logger.info(LOG_EXITING + "Result: " + jsonStr);
 		return jsonStr;
 	}
@@ -788,7 +787,6 @@ public class MeetingCommand {
 			if (ctx != null && ctx.getMemberDO() != null) {
 				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 					meetingId = Long.parseLong(request.getParameter("meetingId"));
-					ctx.setMeetingId(meetingId);
 				}
 
 				logger.info("meetingId=" + meetingId + ", isProxyMeeting=" + request.getParameter("isProxyMeeting"));
@@ -944,10 +942,12 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		long meetingId = 0;
 		String megaMeetingDisplayName = null;
-		String output = null;
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
+		String mrn = null;
+		String strResponse = null;
+		String responseJsonStr = null;
+		final Gson gson = new Gson();
 
-		if (ctx != null) {
 			try {
 				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 					meetingId = Long.parseLong(request.getParameter("meetingId"));
@@ -955,22 +955,31 @@ public class MeetingCommand {
 				if (StringUtils.isNotBlank(request.getParameter("megaMeetingDisplayName"))) {
 					megaMeetingDisplayName = request.getParameter("megaMeetingDisplayName");
 				}
+				if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
+					mrn = request.getParameter("mrn");
+				}
+			if (meetingId != 0 && StringUtils.isNotBlank(megaMeetingDisplayName)
+					&& StringUtils.isNotBlank(mrn)) {
+				responseJsonStr = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
+						request.getSession().getId(), WebUtil.VV_MBR_WEB);
+				output = gson.fromJson(responseJsonStr, LaunchMeetingForMemberGuestJSON.class);
+				responseJsonStr = WebUtil.prepareCommonOutputJson(output.getService().getName(),
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
+						output.getService().getLaunchMeetingEnvelope().toString());
 
-				logger.info("meetingId:" + meetingId);
-				logger.debug("megaMeetingDisplayName=" + megaMeetingDisplayName);
-				final String mrn = ctx.getMemberDO() != null ? ctx.getMemberDO().getMrn() : null;
-				output = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
-						request.getSession().getId(), ctx.getClientId());
+			}
 				if (output != null) {
 					logger.debug("json output: = " + output);
 				}
 			} catch (Exception e) {
 				logger.error("System Error for meeting:" + meetingId, e);
-				output = JSONObject.fromObject(new SystemError()).toString();
+			strResponse = JSONObject.fromObject(new SystemError()).toString();
 			}
+		if (StringUtils.isBlank(strResponse)) {
+			responseJsonStr = WebUtil.prepareCommonOutputJson("launchMeetingForMemberDesktop", "900", "failure", null);
 		}
 		logger.info(LOG_EXITING);
-		return output;
+		return strResponse;
 	}
 
 	public static String retrieveMeeting(HttpServletRequest request) throws Exception {
@@ -1015,8 +1024,8 @@ public class MeetingCommand {
 		String deviceType = null;
 		boolean isMobileflow = true;
 		String output = null;
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		String inMeetingDisplayName = null;
+		String mrn = null;
 		try {
 			logger.info("meetingid=" + request.getParameter("meetingId"));
 			logger.debug("In meetingdisplayname=" + request.getParameter("inMeetingDisplayName"));
@@ -1026,6 +1035,9 @@ public class MeetingCommand {
 
 			if (StringUtils.isNotBlank(request.getParameter("inMeetingDisplayName"))) {
 				inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+			}
+			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
+				inMeetingDisplayName = request.getParameter("mrn");
 			}
 			Device device = DeviceDetectionService.checkForDevice(request);
 			Map<String, String> capabilities = device.getCapabilities();
@@ -1040,7 +1052,7 @@ public class MeetingCommand {
 				deviceType = brandName + " " + modelName;
 			}
 			output = WebService.getLaunchMeetingDetails(meetingId, inMeetingDisplayName, request.getSession().getId(),
-					ctx.getMemberDO().getMrn(), deviceType, deviceOs, deviceOsVersion, isMobileflow);
+					mrn, deviceType, deviceOs, deviceOsVersion, isMobileflow);
 			if (output != null) {
 				logger.debug("json output:" + output);
 				logger.info(LOG_EXITING);
@@ -1082,39 +1094,49 @@ public class MeetingCommand {
 	 */
 	public static String getProviderRunningLateDetails(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		String output = null;
-
 		final String meetingId = request.getParameter("meetingId");
 		final String sessionId = request.getSession().getId();
-
+		final String clientId = request.getParameter("clientId");
+		final Gson gson = new Gson();
+		String responseJsonStr = null;
+		String strResponse = null;
+		MeetingRunningLateOutputJson output = new MeetingRunningLateOutputJson();
 		try {
-			if (ctx != null) {
-				output = WebService.getProviderRunningLateDetails(meetingId, sessionId, ctx.getClientId());
+			if (StringUtils.isNotBlank(meetingId) && StringUtils.isNotBlank(sessionId)
+					&& StringUtils.isNotBlank(clientId)) {
+				responseJsonStr = WebService.getProviderRunningLateDetails(meetingId, sessionId, clientId);
+				output = gson.fromJson(responseJsonStr, MeetingRunningLateOutputJson.class);
+				responseJsonStr = WebUtil.prepareCommonOutputJson(output.getService().getName(),
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
+						output.getService().getRunningLateEnvelope().toString());
 			}
 		} catch (Exception e) {
-			output = new Gson().toJson(new SystemError());
+			strResponse = new Gson().toJson(new SystemError());
 			logger.error("System Error for meeting:" + meetingId, e);
 		}
+		if (StringUtils.isBlank(strResponse)) {
+			responseJsonStr = WebUtil.prepareCommonOutputJson("launchMeetingForMemberDesktop", "400", "failure", null);
+		}
 		logger.info(LOG_EXITING);
-		return output;
+		return responseJsonStr;
 	}
 
 	public static String caregiverJoinLeaveMeeting(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		String output = null;
 
 		final String meetingId = request.getParameter("meetingId");
 		final String meetingHash = request.getParameter("meetingHash");
 		String joinOrLeave = request.getParameter("status");
 		final String sessionId = request.getSession().getId();
+		final String clientId = request.getParameter("clientId");
 		if (StringUtils.isNotEmpty(joinOrLeave)) {
 			joinOrLeave = joinOrLeave.trim();
 		}
 		try {
-			if (ctx != null) {
-				output = WebService.caregiverJoinLeaveMeeting(meetingId, meetingHash, joinOrLeave, sessionId, ctx.getClientId());
+			if (StringUtils.isNotBlank(meetingId) && StringUtils.isNotBlank(meetingHash)
+					&& StringUtils.isNotBlank(sessionId) && StringUtils.isNotBlank(clientId)) {
+				output = WebService.caregiverJoinLeaveMeeting(meetingId, meetingHash, joinOrLeave, sessionId, clientId);
 			}
 		} catch (Exception e) {
 			output = new Gson().toJson(new SystemError());
@@ -1151,7 +1173,6 @@ public class MeetingCommand {
 	public static String logVendorMeetingEvents(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		final String meetingId = request.getParameter("meetingId");
 		final String userType = request.getParameter("userType");
 		final String userId = request.getParameter("userId");
@@ -1159,10 +1180,16 @@ public class MeetingCommand {
 		final String eventDescription = request.getParameter("eventDescription");
 		final String logType = request.getParameter("logType");
 		final String sessionId = request.getSession().getId();
-		final String clientId = WebUtil.getClientIdFromContext(ctx);
+		final String clientId = request.getParameter("clientId");
+		ServiceCommonOutputJson outputJson = new ServiceCommonOutputJson();
+		final Gson gson = new Gson();
 		try {
 			output = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
 					eventName, eventDescription, logType, sessionId, clientId);
+			outputJson = gson.fromJson(output, ServiceCommonOutputJson.class);
+			output = WebUtil.prepareCommonOutputJson(outputJson.getService().getName(),
+					outputJson.getService().getStatus().getCode(), outputJson.getService().getStatus().getMessage(),
+					"");
 		} catch (Exception e) {
 			output = new Gson().toJson(new SystemError());
 			logger.error("System Error for meeting :" + meetingId + " : ", e);
@@ -1263,14 +1290,19 @@ public class MeetingCommand {
 	public static String getMeetingDetails(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		final Gson gson = new GsonBuilder().serializeNulls().create();
 		final String meetingId = request.getParameter("meetingId");
+		String clientId = null;
+		String responseJsonStr = null;
 		String output = null;
+		MeetingDetailsForMeetingIdJSON outputJson = new MeetingDetailsForMeetingIdJSON();
+		final Gson gson = new Gson();
 		if (StringUtils.isNotBlank(meetingId) && ctx != null) {
-			final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
-			if (meeting != null && meetingId.trim().equalsIgnoreCase(meeting.getMeetingId())) {
-				output = gson.toJson(meeting);
-			}
+			responseJsonStr = WebService.getMeetingDetailsForMeetingId(Long.parseLong(meetingId),
+					request.getSession().getId(), clientId);
+			outputJson = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
+			responseJsonStr = WebUtil.prepareCommonOutputJson(outputJson.getService().getName(),
+					outputJson.getService().getStatus().getCode(), outputJson.getService().getStatus().getMessage(),
+					outputJson.getService().getEnvelope().toString());
 		}
 		logger.info(LOG_EXITING);
 		return output;
