@@ -1,0 +1,950 @@
+/*
+ :::  Reset
+-------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, main, nav, section {
+  display: block;
+}
+ol, ul {
+  list-style: none;
+}
+
+
+
+/*
+ :::  Fonts
+-------------------------------------------------- */
+
+@font-face {
+  font-family: 'pexip';
+  src: url('fonts/pexip.eot');
+  src: url('fonts/pexip.eot?#iefix') format('embedded-opentype'),
+    url('fonts/pexip.woff') format('woff'),
+    url('fonts/pexip.ttf') format('truetype'),
+    url('fonts/pexip.svg#$icon-font') format('svg');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('fonts/opensans-regular-webfont.eot') format('embedded-opentype'),
+    url('fonts/opensans-regular-webfont.woff') format('woff'),
+    url('fonts/opensans-regular-webfont.ttf') format('truetype'),
+    url('fonts/opensans-regular-webfont.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+/*
+ :::  Site
+-------------------------------------------------- */
+html {
+  min-height: 100%;
+  font-size: 100%;
+  position: relative;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  padding: 30px;
+}
+body {
+  font-family: 'Open Sans', Helvetica, sans-serif;
+  color: #333;
+  line-height: 1;
+  background-color: #fff;
+}
+.site {
+  margin: 0 auto;
+  /*max-width: 1200px;*/
+  width: 100%;
+}
+.main {
+  width: 100%;
+  display: block;
+}
+.top {
+  background: #f2f2f2;
+  height: 700px;
+  position: relative;
+  overflow: hidden;
+}
+@media only screen and (max-width : 550px) {
+  .top {
+    height: auto;
+  }
+}
+
+/*
+ :::  Site Header
+-------------------------------------------------- */
+.branding {
+  width: 100%;
+  position: relative;
+}
+.branding img {
+  display: inline-block;
+  width: 112px;
+  height: 112px;
+}
+.branding h1 {
+/*  position: absolute;
+  right: 0;
+  top: 0; */
+  position: relative;
+  left: 140px;
+  top: -75px;
+  font-weight: 600;
+  color: #999;
+}
+
+.rosterlist {
+  /*height: 545px;*/
+  min-height: 150px;
+  overflow: auto;
+}
+.rosterlist.shorter {
+  /*height: 410px;*/
+  min-height: 150px;
+  overflow: auto;
+}
+
+/*
+@media only screen and (max-width : 950px) {
+  #selectPeripheral {
+    display: none;
+  }
+}
+@media only screen and (max-width : 550px) {
+  #selectPeripheral {
+    display: none;
+  }
+}
+*/
+
+/*
+ :::  .participants <aside>
+-------------------------------------------------- */
+.participants {
+  float: left;
+  /*width: 20%;*/
+  width:260px;
+  line-height: 1.25em;
+  border-right: 1px solid #fff;
+  position: relative;
+  background-color: #FFF;
+}
+.participants ul {
+  overflow: auto;
+  height: 100%;
+}
+.participants h2 {
+  padding: 15px 5%;
+  background: #d5d5d5;
+  font-weight: 400;
+  border-bottom: 1px solid #fff;
+}
+.participants li {
+  padding: 10px 5%;
+  width: 100%;
+  border-bottom: 1px solid #fff;
+  transition: background .3s, color .3s;
+}
+.participants li:hover {
+  background: #f38b3c;
+  color: #fff;
+}
+.participants h3 {
+  font-weight: 600;
+  font-size: 1em;
+}
+.participants h3:before {
+  position: relative;
+  content: '\e185';
+  font-family: 'pexip';
+  margin-right: 10px;
+}
+.participants h3.presenting:before {
+  position: relative;
+  content: '\e120';
+  font-family: 'pexip';
+  margin-right: 10px;
+}
+.participants p {
+  font-size: 0.75em;
+}
+#btnContainer{
+  width:65px;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  height: auto;
+}
+@media only screen and (max-width : 950px) {
+  .participants {
+    /*width: 33.333333%;*/
+  }
+}
+@media only screen and (max-width : 550px) {
+  .participants {
+    float: none;
+    width: 100%;
+    border-right: none;
+  }
+  .participants ul {
+    padding-bottom: 0;
+  }
+}
+
+
+/*
+ :::  .selfview <div>
+-------------------------------------------------- */
+.selfview {
+  position: absolute;
+  z-index: 2;
+  max-width: 15%;
+  /* max-height: 135px; */
+  bottom: 1%;
+  /*left: 0;*/
+  right: 1%;
+  /*border-top: 1px solid #fff;
+  border-right: 1px solid #fff;*/
+  background-size: cover;
+  background-position: center;
+}
+.selfview video {
+  z-index: 3;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+@media only screen and (max-width : 950px) {
+  .selfview {
+    max-width: 33.333333%;
+    max-height: 161px;
+    
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    width: 20%;
+    height: 20%;
+  }
+}
+@media only screen and (max-width : 550px) {
+  .selfview {
+    /* position: relative;
+    max-width: 100%;
+    border-right: none; */
+    
+    position: absolute;
+    bottom: 0;
+    right: 1%;
+    width: 20%;
+    height: auto;
+  }
+}
+
+
+/*
+ :::  .videocontainer <div>
+-------------------------------------------------- */
+.videocontainer {
+  background: #434343;
+  /*position: absolute;
+  left: 20%;*/
+  float:left;
+  /*height: 100%;*/
+  width: 80%;
+  width:calc(100% - 325px);
+  padding: 0 2%;
+  position: relative;
+}
+.waiting-room{
+  height: 50%;
+  background: #757575;
+  box-sizing: border-box;
+  }
+.waiting-room .logo{
+  background: url('../../../../images/mobile/videovisits/TPMGlogo.svg');
+  height: 110px;
+  width: 100%;
+  margin-top: 10%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+}
+.landscape-logo-change{
+  font-size: 1em!important;
+  height: 4em!important;
+  margin-top: 0.25em!important;
+}
+.controls-bar{
+  background: #515151;
+  height: 50px;
+  padding: 0;
+}
+.red-circle{
+  background: #B81125;
+  box-shadow: 0px 2px 4px;
+  border-radius: 40px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 5px 0;
+}
+.white-circle{
+  background: #FDFDFD;
+  box-shadow: 0px 2px 4px;
+  border-radius: 40px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 5px 0;
+}
+.video-controls li{
+  width:20%;
+  height:auto;
+  display: inline-block;
+  text-align: center;
+  float: left;
+}
+.moveLeft{
+  margin-left: 40px;
+}
+.moveDown{
+  margin-top: 40px;
+}
+.icon-holder{
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+#camera{
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0 20px;
+  background-position: center;
+}
+#cameraSwitch{
+  background: url('../../../../images/mobile/videovisits/cameraSwitch.svg');
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0 20px;
+  background-position: center;
+}
+#endCall{
+  background: url('../../../../images/mobile/videovisits/phone.svg');
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0 15px;
+  background-position: center;
+  background-size: contain;
+}
+#speaker{
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0 20px;
+  background-position: center;
+}
+#mic{  
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0 20px;
+  background-position: center;
+}
+.unmutedmic{
+  background: url('../../../../images/mobile/videovisits/mic.svg');
+}
+.mutedmic{
+  background: url('../../../../images/mobile/videovisits/micOff.svg');
+}
+.unmutedcamera{
+  background: url('../../../../images/mobile/videovisits/camera.svg');
+}
+.mutedcamera{
+  background: url('../../../../images/mobile/videovisits/cameraOff.svg');
+}
+.unmutedspeaker{
+  background: url('../../../../images/mobile/videovisits/speaker.svg');
+}
+.mutedspeaker{
+  background: url('../../../../images/mobile/videovisits/speakerOff.svg');
+}
+.waiting-room .waiting-text{
+  color: #FFFFFF;
+  font-size: 28px;
+  margin: 12px 10px 15px 10px;
+  text-align: center;
+}
+.pip-mobile-view {
+  position: absolute!important;
+  bottom: 0px;
+  top: auto!important;
+  display: inline-block!important;
+  width: 30%!important;
+  height: 90px!important;
+  margin: 0px auto;
+  z-index: 7;
+}
+.full-mobile-view{
+  height: 100%!important;
+}
+.float-mobileconferenceview {
+  display: inline-block!important; position: absolute!important; top: 0; background: rgba(0,0,0,0)!important;
+}
+.small-waiting-room{
+  font-size: 1.4rem!important;
+}
+.small-late-message{
+  font-size: 1rem!important;
+}
+.waiting-room-small-top-gap{
+  margin-top: 2%!important;
+}
+.mobileconferenceview{
+  height: 50%;
+  left: 0;
+  width: 100%;
+  position: relative;
+  background: #434343;
+  display: none;
+}
+.mobileconferenceview video {
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.mobileselfview{
+  height: 50%;
+  position: relative;
+  background: #434343;
+}
+.videocontainer video {
+  z-index: 1;
+  position: relative;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.pexip-main-container{
+  width: 100%;
+}
+@media only screen and (max-width : 950px) {
+  .videocontainer {
+    /*width: 66.666666%;
+    left: 33.333333%;*/
+  }
+}
+@media only screen and (max-width : 550px) {
+  .videocontainer {
+    position: relative;
+    width: 100%;
+    padding: 0;
+    left: 0;
+  }
+  .videocontainer video {
+    /*height: auto;*/
+  }
+}
+
+
+/*
+ :::  Controls [.controls] <footer>
+-------------------------------------------------- */
+.controls {
+  border-top: 1px solid #fff;
+}
+.controls li {
+  float: left;
+  display: inline-block;
+  width: 14%;
+  border-right: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  vertical-align: center;
+}
+.controls li:nth-child(4) {
+  width: 12%;
+}
+.controls li:nth-child(6) {
+  width: 18%;
+}
+.controls li:last-child {
+  border-right: none !important;
+}
+@media only screen and (max-width : 1050px) {
+  .controls li,
+  .controls li:nth-child(4),
+  .controls li:nth-child(6) {
+    width: 14.25%;
+  }
+  .controls li:nth-child(3n) {
+    border-right: none;
+  }
+  /* .controls li:last-child {
+    width: 100%;
+  } */
+}
+@media only screen and (max-width : 550px) {
+  .controls li,
+  .controls li:nth-child(4),
+  .controls li:nth-child(6) {
+    width: 14.25%;
+    border-right: none;
+  }
+}
+
+.controls a {
+  font-family: 'Open Sans', sans-serif;
+  display: block;
+  width: 100%;
+  padding: 20px 10px;
+  text-align: center;
+  font-weight: 400;
+  font-size: 0.9em;
+  cursor: pointer;
+  background: #d5d5d5;
+  height: 56px;
+  -webkit-transition: background .3s, color .3s;
+  transition: background .3s, color .3s;
+  vertical-align: middle;
+}
+.controls a:hover,
+.controls a.active { /* active state */
+  background: #f38b3c;
+  color: #fff;
+  font-weight: 400;
+}
+
+/* Inactive State */
+.controls .inactive {
+  color: #888;
+  cursor: default;
+}
+.controls .inactive:hover {
+  color: #888;
+  background: #d5d5d5;
+}
+
+
+
+/*
+ :::  Controls [.controls] -> Icons
+ :::  You can call the .active class in your JS to switch the icons for an active state
+-------------------------------------------------- */
+.controls a:before {
+  position: relative;
+  font-family: 'pexip';
+  margin-right: 10px;
+  font-size: 1.1em;
+  top: 2px;
+  font-weight: 300;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Show Selfview */
+.controls .btn-selfview:before {
+  content: '\e18c';
+}
+
+/* Mute Audio */
+.controls .btn-audio:before {
+  content: '\e38f';
+}
+.controls .btn-audio.selected:before {
+  content: '\e3a4';
+}
+
+/* Mute Video */
+.controls .btn-video:before {
+  content: '\e2d9';
+}
+.controls .btn-video.selected:before {
+  content: '\e2da';
+}
+
+/* Present Screen */
+.controls .btn-presentscreen:before {
+  content: '\e120';
+}
+
+/* Presentation */
+.controls .btn-presentation:before {
+  content: '\e121';
+}
+
+/* Go Fullscreen */
+.controls .btn-fullscreen:before {
+  content: '\e1bf';
+}
+
+/* Disconnect */
+.controls .btn-disconnect:before {
+  content: '\e290';
+}
+
+
+
+/*
+ :::  Join / Login Page -> Add the .join class to the .site container!
+-------------------------------------------------- */
+.site.join {
+  max-width: 500px;
+}
+.site.join input[type="text"],
+.site.join input[type="password"],
+.site.join input[type="button"],
+.site.join input[type="submit"] {
+  width: 100%;
+  padding: 20px;
+  font-size: 1.1em;
+  font-family: inherit;
+  color: #666;
+  border-radius: 0px;
+  background: #eee;
+  margin-bottom: 1px;
+  font-weight: 300;
+  -webkit-transition: background .3s, color .3s, border .3s;
+  transition: background .3s, color .3s, border .3s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.site.join input[type="button"],
+.site.join input[type="submit"] {
+  width: 49.5%;
+}
+#videoSource,#audioSource,#speakerSource {
+  padding: 20px 50px 20px 20px;
+  font-size: 1.1em;
+  background-color: #eee;
+  height: 64px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #666;
+  border-radius: 0px;
+  text-indent: 0.01px;
+  text-overflow: '';
+  cursor: pointer;
+  font-weight: 300;
+  background-image: url(img/select.png);
+  background-repeat: no-repeat;
+  background-size: 60px 64px;
+  background-position: center right;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: relative;
+}
+select::-ms-expand {
+    display: none;
+}
+
+/* Some Retina Love... */
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .site.join select {
+    background-image: url(img/select@2x.png);
+  }
+}
+
+
+
+/*
+ :::  Role Page -> Add the .join class to the .site container!
+-------------------------------------------------- */
+.site.join h2 {
+  margin-bottom: 30px;
+  font-weight: 600;
+  font-size: 1.4em;
+}
+.site.join form div {
+  width: 100%;
+  padding: 0 20px;
+  background: #eee;
+  line-height: 50px;
+  border-bottom: 1px solid #fff;
+}
+.site.join input[type="radio"] {
+  float: left;
+  margin-right: 10px;
+  background: #fff;
+  color: #666;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 0;
+  border: none;
+  position: relative;
+  top: 15px;
+  font-family: inherit;
+  box-shadow: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-align: center;
+  line-height: 15px;
+}
+.site.join input[type="radio"]:checked:before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: #999;
+  display: block;
+  position: relative;
+  top: 3px;
+  left: 3px;
+}
+.site.join label {
+  float: left;
+}
+
+
+/* Form Submit button */
+.site.join input[type="button"],
+.site.join input[type="submit"] {
+  background: #555;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.site.join input[type="button"]:hover,
+.site.join input[type="submit"]:hover {
+  background: #f38b3c;
+}
+
+
+/* Let the placeholder text disappear on focus */
+[placeholder]:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
+
+/* Form error */
+.site.join .webrtcerror {
+  color: #fff;
+  background: #cf4326;
+  font-size: 1em;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 0px;
+}
+
+
+
+/*
+ :::  Clearfix [cf]
+-------------------------------------------------- */
+.cf:before,
+.cf:after {
+  content: ' ';
+  display: table;
+}
+.cf:after {
+  clear: both;
+}
+
+
+
+/*
+ :::  Visually hidden [vh]
+ :::  For better accessibility --> <label>
+-------------------------------------------------- */
+.vh {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+
+.hidden {
+  display: none;
+}
+
+
+/* 
+ ::: Custom CSS ::: 
+--------------------------------------------------*/
+@media only screen and (max-width : 550px) {
+  .page-title{
+    font-size: 1.25em;
+  }
+}
+
+#selectPeripheral1 {
+  position: absolute;
+  z-index: 8;
+  width: 100%;
+  background-color: white;
+  height: 100%;
+  display: block;
+}
+
+#selectContainer {
+  width: 60%;
+  height: auto;
+  margin-left: 20px;
+  padding-top: 10%;
+  margin-top: 20%;
+}
+
+.settings-txt {
+  font-size: 24px;
+  color: #333333;
+  font-family: Arial;
+  font-weight: normal;
+  position: relative;
+  top: 50px;
+  left: 25px;
+  text-align: center;
+}
+
+
+.done-btn {
+  background-color: #006BA6;
+  font-size: 16px;
+  height: 25px;
+  width: 70px;
+  font-family: Arial;
+  color: #FFFFFF;
+  border-radius: 15px;
+  margin-top: 5%;
+  border: none;
+  float: right;
+  margin-right: 35%;
+}
+
+#close-button {
+width: 47px;
+height: 28px;
+cursor: pointer;
+background: url('../../../../images/global/close-icon.png');
+background-position: center;
+background-repeat: no-repeat;
+background-size: contain;
+float: right;
+margin-top: 20px;
+margin-right: 20px;  
+}
+
+#inCallButtonToggleConfig {
+width: 35px;
+margin: auto;
+border-radius: 50%;
+}
+
+/* to do later - Full screen implementation */
+/* #inCallButtonExpand {
+  width: 35px;
+  margin: auto;
+  border-radius: 50%;
+} */
+
+#selfview{
+  z-index: 6;
+  /*cursor: pointer;*/
+  transform: scaleX(-1);
+  -webkit-transform:scaleX(-1);
+  -moz-transform:rotateY(180deg);
+}
+#presimage{
+  display: none;
+}
+.togglesv{
+  width: 100%;
+  height: 98%;
+  max-width: none;
+  cursor: pointer;
+}
+.togglepv,.togglepvimg{
+  width:200px !important;
+  height: 140px !important;
+  position: absolute;
+  right:10px;
+  cursor: pointer;
+  bottom: 10px;
+}
+
+@media (max-width: 950px) and (orientation: landscape) {
+  .presentation-view img{
+    height:100vh !important;
+    /*object-fit: contain;*/
+    width: 93vw !important;
+  }
+  .mobilesv{
+    height: 100px !important;
+    z-index: 6;
+    width: 117px;
+    bottom: 0px;
+    left:10px;
+    position: absolute;
+  }
+  .landscape-controlbar{
+    position: absolute;
+    z-index: 6;
+    display: block;
+    width: 60px !important;
+    height: 100% !important;
+    top: 0px;
+    right: 0px;
+    min-width:0px;
+    background: #515151;
+    padding-left: 6px;
+  }
+  .landscape-controlbar ul{
+    width: 50px;
+    margin: auto;
+  }
+
+  .landscape-controlbar ul li{
+    width: 50px;
+    text-align: center;
+    float: none;
+    padding-bottom: 28px;
+  }
+  .controls-bar{
+    display:none;
+  }
+  .waiting-room{
+    height:100% !important;
+  }
+  .mobileconferenceview{
+    height:100% !important;
+  }
+  html{
+    overflow: hidden;
+  }
+}
+
+@media (orientation: portrait) {
+  .controls-bar{
+    display: block;
+  }
+  .landscape-controlbar{
+    display: none;
+  }
+}

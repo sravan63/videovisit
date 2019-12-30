@@ -17,7 +17,7 @@ class PreCallCheck extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { userDetails: {}, showPage: false, showLoader: true, data:{}, media:{}, constrains : {} };
+        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {} };
         this.goBack = this.goBack.bind(this);
         this.joinVisit = this.joinVisit.bind(this);
     }
@@ -27,47 +27,57 @@ class PreCallCheck extends React.Component {
         if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
             if (this.state.userDetails) {
-                this.setState({showPage : true});
+                this.setState({ showPage: true });
             }
         } else {
             this.props.history.push('/login');
         }
         this.list = MediaService.getMediaList();
-        this.setState({media : this.list});
-        this.setState({constrains : {
-          audioSource : this.list.audioinput[0],
-          videoSource : this.list.videoinput[0],
-          micSource : this.list.audiooutput[0]
-        }});
+        var self = this;
+        setTimeout(function() {
+            self.setState({ media: self.list });
+            self.setState({
+                constrains: {
+                    audioSource: self.list.audioinput[0],
+                    videoSource: self.list.videoinput[0],
+                    micSource: self.list.audiooutput[0]
+                }
+            });
+        }, 1000);
+
         MediaService.start(this.state.constrains);
         console.log(this.list);
     }
 
-    toggleOpen(type){
-        console.log('DD :: '+ type);
-        this.setState({data:{
-            isVideo: type == 'video',
-            isAudio: type == 'audio',
-            isSpeaker: type == 'speaker',
-        }});
+    toggleOpen(type) {
+        console.log('DD :: ' + type);
+        this.setState({
+            data: {
+                isVideo: type == 'video',
+                isAudio: type == 'audio',
+                isSpeaker: type == 'speaker',
+            }
+        });
     }
 
-    selectPeripheral(media){
-        console.log('SELECTED MEDIA IS :: '+media);
-        this.setState({constrains : {
-          audioSource : media,
-          videoSource : media
-        }});
+    selectPeripheral(media) {
+        console.log('SELECTED MEDIA IS :: ' + media);
+        this.setState({
+            constrains: {
+                audioSource: media,
+                videoSource: media
+            }
+        });
     }
 
-    goBack(){
-      MediaService.stop();
-      this.props.history.push('/myMeetings');
+    goBack() {
+        MediaService.stop();
+        this.props.history.push('/myMeetings');
     }
 
-    joinVisit(){
-      MediaService.stop();
-      this.props.data.togglePrecheck();
+    joinVisit() {
+        MediaService.stop();
+        this.props.data.togglePrecheck();
     }
 
 

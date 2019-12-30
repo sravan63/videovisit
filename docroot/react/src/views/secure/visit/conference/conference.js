@@ -1,18 +1,24 @@
 import React from "react";
+/*import * as mainWebrtc from '../../../../pexip/complex/desktop-main-webrtc.js';*/
 import Header from '../../../../components/header/header';
 import Loader from '../../../../components/loader/loader';
 import BackendService from '../../../../services/backendService.js';
 import './conference.less';
+import * as pexip from '../../../../pexip/complex/pexrtcV20.js';
+import * as WebUI from '../../../../pexip/complex/webui.js';
+import * as eventSource from '../../../../pexip/complex/EventSource.js';
+
 
 class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, meetingDetails: {}, participants : [], showLoader: true };
+        this.state = { userDetails: {}, meetingDetails: {}, participants: [], showLoader: true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
+        this.startPexip = this.startPexip.bind(this);
     }
 
     componentDidMount() {
@@ -23,21 +29,42 @@ class Conference extends React.Component {
             });
             this.state.meetingDetails = JSON.parse(localStorage.getItem('meetingDetails'));
             this.state.participants = this.setSortedParticipantList();
+            this.startPexip(this.state.meetingDetails);
+
         } else {
             this.props.history.push('/login');
         }
+    }
+
+
+    startPexip(meeting) {
+
+        //console.log(sidePaneMeetingDetails);
+        //$('html').removeClass("no-scroll");
+        var guestPin = meeting.vendorGuestPin;
+        localStorage.setItem('guestPin', guestPin);
+        //$('#guestPin').val(guestPin);
+        //var roomUrl = $('#guestUrl').val(); //vve-tpmg-dev.kp.org
+        var roomUrl = "vve-tpmg-dev.kp.org";
+        var alias = meeting.meetingVendorId; // "M.NCAL.MED.0.0.419872.278914" // "M.NCAL.MED.0.369638..1234";
+        var bandwidth = "1280"; // $('#bandwidth').val();
+        var source = "Join+Conference";
+        //var name = $("#guestName").val();
+        var name = meeting.member.inMeetingDisplayName;
+        WebUI.initialise(roomUrl, alias, bandwidth, name, guestPin, source);
+        //VideoVisit.setMinDimensions();
     }
 
     componentWillUnmount() {
         // clear on component unmount
     }
 
-    setSortedParticipantList(){
+    setSortedParticipantList() {
         let list = [];
         let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
         let guests = this.state.meetingDetails.caregiver ? this.state.meetingDetails.caregiver.slice(0) : [];
         let participants = clinicians.concat(guests);
-        if(participants){
+        if (participants) {
             participants.map(guest => {
                 let name = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase();
                 name += guest.hasOwnProperty('title') ? ' ' + guest.title : ' ';
@@ -49,7 +76,7 @@ class Conference extends React.Component {
     }
 
     getClinicianName(host) {
-        if(!host){
+        if (!host) {
             return;
         }
         let clinician = '';
@@ -60,12 +87,12 @@ class Conference extends React.Component {
     }
 
     getHoursAndMinutes(millis, type) {
-        if(!millis){
+        if (!millis) {
             return;
         }
         let DateObj = new Date(parseInt(millis));
         let str = '';
-        if(type == 'time'){
+        if (type == 'time') {
             let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
             if (Hour == 0) {
                 Hour = 12;
@@ -80,13 +107,13 @@ class Conference extends React.Component {
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
             str = Hour + ':' + Minutes + AMPM + ', ';
         } else {
-            str = String(DateObj).substr(0,10);
+            str = String(DateObj).substr(0, 10);
         }
-        
+
         return str;
     }
 
-    leaveMeeting(){
+    leaveMeeting() {
         this.props.history.push('/myMeetings');
     }
 
@@ -116,8 +143,12 @@ class Conference extends React.Component {
                         <div className="col-md-10 p-0 video-conference">
                             <div className="button-container"></div>
                             <div className="stream-container">
-                                <div className="self-view"></div>
+                             <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline" poster="img/spinner.gif"></video>
                             </div>
+                            <div id="selfview" className="self-view">
+                           <video id="selfvideo" autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                        </video>
+                        </div>
                         </div>
                         <div className="col-md-2 p-0 conference-details">
                             <div className="clinician-information">

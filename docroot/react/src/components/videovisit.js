@@ -6,7 +6,7 @@ class Videovisit extends React.Component {
     constructor(props) {
         super(props);
         this.state = { userDetails: {} };
-        setTimeout(this.redirectToSsoLoginPage.bind(this), 100);
+        //setTimeout(this.redirectToSsoLoginPage.bind(this), 100);
 
     }
     redirectToSsoLoginPage() {
