@@ -325,7 +325,7 @@ public class MeetingCommand {
 		Gson gson = new Gson();
 		try {
 			String meetingCode = request.getParameter("meetingCode");
-			String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
+			String patientLastName = WebUtil.replaceSpecialCharacters(request.getHeader("patientLastName"));
 			boolean isMobileFlow;
 			if ("true".equalsIgnoreCase(request.getParameter("isMobileFlow"))) {
 				isMobileFlow = true;
@@ -705,23 +705,22 @@ public class MeetingCommand {
 		long meetingId = 0;
 		String jsonStr = null;
 		try {
-				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
-					meetingId = Long.parseLong(request.getParameter("meetingId"));
-				}
-				final String status = request.getParameter("status");
-				final String careGiverName = request.getParameter("careGiverName");
-				logger.info("meetingId=" + meetingId + ", status=" + status);
+			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			final String status = request.getParameter("status");
+			final String careGiverName = request.getHeader("careGiverName");
+			logger.info("meetingId=" + meetingId + ", status=" + status);
 
-				boolean isProxyMeeting = false;
-				if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
-					isProxyMeeting = true;
-				}
+			boolean isProxyMeeting = false;
+			if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
+				isProxyMeeting = true;
+			}
 			if (meetingId != 0) {
 				output = WebService.setKPHCConferenceStatus(meetingId, status, isProxyMeeting, careGiverName,
 						request.getSession().getId(), WebUtil.VV_MBR_WEB);
-				jsonStr = WebUtil.prepareCommonOutputJson(output.getName(),
-						output.getStatus().getCode(), output.getStatus().getMessage(),
-						"");
+				jsonStr = WebUtil.prepareCommonOutputJson(output.getName(), output.getStatus().getCode(),
+						output.getStatus().getMessage(), "");
 			}
 
 		} catch (Exception e) {
@@ -776,12 +775,17 @@ public class MeetingCommand {
 		String mrn = null;
 		String responseJsonStr = null;
 		final Gson gson = new Gson();
+		String inMeetingDisplayName = null;
 		try {
 				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 					meetingId = Long.parseLong(request.getParameter("meetingId"));
+				if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
 				mrn = request.getHeader("mrn");
+				}
+				if (StringUtils.isNotBlank(request.getHeader("inMeetingDisplayName"))) {
+				inMeetingDisplayName = request.getHeader("inMeetingDisplayName");
+				}
 				logger.info("meetingId=" + meetingId + ", isProxyMeeting=" + request.getParameter("isProxyMeeting"));
-				logger.debug("inMeetingDisplayName=" + request.getParameter("inMeetingDisplayName"));
 				boolean isProxyMeeting;
 				if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
 					isProxyMeeting = true;
@@ -789,7 +793,7 @@ public class MeetingCommand {
 					isProxyMeeting = false;
 				}
 				responseJsonStr = WebService.launchMemberOrProxyMeetingForMember(meetingId, mrn,
-						request.getParameter("inMeetingDisplayName"), isProxyMeeting, request.getSession().getId(),
+						inMeetingDisplayName, isProxyMeeting, request.getSession().getId(),
 						WebUtil.VV_MBR_WEB);
 				outputJson = gson.fromJson(responseJsonStr, LaunchMeetingForMemberGuestJSON.class);
 				responseJsonStr = WebUtil.prepareCommonOutputJson(outputJson.getService().getName(),
@@ -943,15 +947,14 @@ public class MeetingCommand {
 		String megaMeetingDisplayName = null;
 		LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
 		String mrn = null;
-		String strResponse = null;
 		String responseJsonStr = null;
 		final Gson gson = new Gson();
 			try {
 				if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 					meetingId = Long.parseLong(request.getParameter("meetingId"));
 				}
-				if (StringUtils.isNotBlank(request.getParameter("megaMeetingDisplayName"))) {
-					megaMeetingDisplayName = request.getParameter("megaMeetingDisplayName");
+			if (StringUtils.isNotBlank(request.getHeader("megaMeetingDisplayName"))) {
+				megaMeetingDisplayName = request.getHeader("megaMeetingDisplayName");
 				}
 			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
 				mrn = request.getHeader("mrn");
@@ -963,7 +966,7 @@ public class MeetingCommand {
 				output = gson.fromJson(responseJsonStr, LaunchMeetingForMemberGuestJSON.class);
 				responseJsonStr = WebUtil.prepareCommonOutputJson(output.getService().getName(),
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
-						output.getService().getLaunchMeetingEnvelope().toString());
+						output.getService().getLaunchMeetingEnvelope().getLaunchMeeting());
 			}
 				if (output != null) {
 					logger.debug("json output: = " + output);
@@ -973,7 +976,7 @@ public class MeetingCommand {
 			responseJsonStr = WebUtil.prepareCommonOutputJson("launchMeetingForMemberDesktop", "900", "failure", null);
 			}
 		logger.info(LOG_EXITING);
-		return strResponse;
+		return responseJsonStr;
 	}
 
 	public static String retrieveMeeting(HttpServletRequest request) throws Exception {
@@ -1099,7 +1102,7 @@ public class MeetingCommand {
 				output = gson.fromJson(responseJsonStr, MeetingRunningLateOutputJson.class);
 				responseJsonStr = WebUtil.prepareCommonOutputJson(output.getService().getName(),
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
-						output.getService().getRunningLateEnvelope().toString());
+						output.getService().getRunningLateEnvelope());
 			}
 		} catch (Exception e) {
 			responseJsonStr = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS, "900",
@@ -1296,7 +1299,7 @@ public class MeetingCommand {
 			outputJson = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
 			responseJsonStr = WebUtil.prepareCommonOutputJson(outputJson.getService().getName(),
 					outputJson.getService().getStatus().getCode(), outputJson.getService().getStatus().getMessage(),
-					outputJson.getService().getEnvelope().toString());
+						outputJson.getService().getEnvelope().getMeeting());
 		}
 		}
 		catch (Exception e) {
