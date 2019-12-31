@@ -98,30 +98,34 @@ class MyMeetings extends React.Component {
     joinMeeting(meeting) {
         console.log(meeting);
         localStorage.setItem('meetingDetails', JSON.stringify(meeting));
-        var headers = {};
-        if (this.state.userDetails.isTempAccess) {
-            headers.authtoken = this.state.userDetails.ssoSession;
-        } else {
-            headers.ssoSession = this.state.userDetails.ssoSession;
-        }
-        BackendService.launchMemberVisit(meeting.meetingId, meeting.member.inMeetingDisplayName, headers).subscribe((response) => {
-            if (response.data && response.data.statusCode == '200') {
-                this.props.history.push('/videoVisitReady');
-                console.log(response);
-            } else {
-                this.setState({ showLoader: false });
-            }
-        }, (err) => {
-            console.log(err);
-            this.setState({ showLoader: false });
-        });
-
+        this.props.history.push('/videoVisitReady');
+        /*var headers = {
+    "Content-Type": "application/json",
+    "mrn": this.state.userDetails.mrn
+};
+if (this.state.userDetails.isTempAccess) {
+    headers.authtoken = this.state.userDetails.ssoSession;
+} else {
+    headers.ssoSession = this.state.userDetails.ssoSession;
+}
+BackendService.launchMemberVisit(meeting.meetingId, meeting.member.inMeetingDisplayName, headers).subscribe((response) => {
+    if (response.data && response.data.statusCode == '200') {
+        this.props.history.push('/videoVisitReady');
+        console.log(response);
+    } else {
+        this.setState({ showLoader: false });
     }
+}, (err) => {
+    console.log(err);
+    this.setState({ showLoader: false });
+});*/
+
+}
 
 
-    render() {
+render() {
         return (
-            <div id='container' className="my-meetings">
+                <div id='container' className="my-meetings">
                 {this.state.showLoader ? (<Loader />):('')}
                 <Header history={this.props.history}/>
                 <div className="mobile-header">Video Visits</div>
