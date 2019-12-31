@@ -337,12 +337,10 @@ public class MeetingCommand {
 			if (StringUtils.isNotBlank(meetingCode)) {
 				output = WebService.createCaregiverMeetingSession(meetingCode, patientLastName, isMobileFlow,
 						request.getSession().getId(), WebUtil.VV_MBR_GUEST);
-				jsonString = WebUtil.prepareCommonOutputJson(output.getName(),
-						output.getStatus().getCode(), output.getStatus().getMessage(),
-						output.getLaunchMeetingEnvelope().toString());
-				if (output != null && output.getLaunchMeetingEnvelope().getLaunchMeeting() != null) {
-					jsonString = gson.toJson(output);
-					logger.debug("json output" + jsonString);
+				if (output.getLaunchMeetingEnvelope() != null
+						&& output.getLaunchMeetingEnvelope().getLaunchMeeting() != null) {
+					jsonString = WebUtil.prepareCommonOutputJson(output.getName(), output.getStatus().getCode(),
+							output.getStatus().getMessage(), output.getLaunchMeetingEnvelope().getLaunchMeeting());
 				}
 			}
 		} catch (Exception e) {
@@ -796,9 +794,12 @@ public class MeetingCommand {
 						inMeetingDisplayName, isProxyMeeting, request.getSession().getId(),
 						WebUtil.VV_MBR_WEB);
 				outputJson = gson.fromJson(responseJsonStr, LaunchMeetingForMemberGuestJSON.class);
+				if (outputJson.getService().getLaunchMeetingEnvelope() != null
+						&& outputJson.getService().getLaunchMeetingEnvelope().getLaunchMeeting() != null) {
 				responseJsonStr = WebUtil.prepareCommonOutputJson(outputJson.getService().getName(),
 						outputJson.getService().getStatus().getCode(), outputJson.getService().getStatus().getMessage(),
-						outputJson.getService().getLaunchMeetingEnvelope().toString());
+						outputJson.getService().getLaunchMeetingEnvelope().getLaunchMeeting());
+				}
 				return responseJsonStr;
 			}
 		} catch (Exception e) {
@@ -964,9 +965,12 @@ public class MeetingCommand {
 				responseJsonStr = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 						request.getSession().getId(), WebUtil.VV_MBR_WEB);
 				output = gson.fromJson(responseJsonStr, LaunchMeetingForMemberGuestJSON.class);
+				if (output.getService().getLaunchMeetingEnvelope() != null
+						&& output.getService().getLaunchMeetingEnvelope().getLaunchMeeting() != null) {
 				responseJsonStr = WebUtil.prepareCommonOutputJson(output.getService().getName(),
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
 						output.getService().getLaunchMeetingEnvelope().getLaunchMeeting());
+				}
 			}
 				if (output != null) {
 					logger.debug("json output: = " + output);
@@ -1100,9 +1104,11 @@ public class MeetingCommand {
 				responseJsonStr = WebService.getProviderRunningLateDetails(meetingId, request.getSession().getId(),
 						WebUtil.VV_MBR_WEB);
 				output = gson.fromJson(responseJsonStr, MeetingRunningLateOutputJson.class);
+				if (output.getService().getRunningLateEnvelope() != null) {
 				responseJsonStr = WebUtil.prepareCommonOutputJson(output.getService().getName(),
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
 						output.getService().getRunningLateEnvelope());
+				}
 			}
 		} catch (Exception e) {
 			responseJsonStr = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS, "900",
