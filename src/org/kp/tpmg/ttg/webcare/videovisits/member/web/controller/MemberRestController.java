@@ -14,11 +14,13 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberEnvelope;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@CrossOrigin
 public class MemberRestController extends SimplePageController {
 
 	public static final Logger logger = Logger.getLogger(MemberRestController.class);
@@ -117,4 +119,135 @@ public class MemberRestController extends SimplePageController {
 		return output;
 	}
 
+	@RequestMapping(value = "/launchMeetingForMemberDesktop.json", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String launchMeetingForMemberDesktop(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			output = MeetingCommand.launchMeetingForMemberDesktop(request);
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/providerRunningLateInfo.json", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
+	public String providerRunningLateInfo(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			output = MeetingCommand.getProviderRunningLateDetails(request);
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/logVendorMeetingEvents.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String logVendorMeetingEvents(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			output = MeetingCommand.logVendorMeetingEvents(request);
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/setKPHCConferenceStatus.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String setKPHCConferenceStatus(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			output = MeetingCommand.setKPHCConferenceStatus(request);
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/meetingDetails.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String meetingDetails(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			output = MeetingCommand.getMeetingDetails(request);
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/launchMemberProxyMeeting.json", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
+	public String launchMemberProxyMeeting(final HttpServletRequest request,
+			final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			output = MeetingCommand.launchMemberOrProxyMeetingForMember(request);
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/createguestsession.json", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
+	public String createguestsession(final HttpServletRequest request,
+			final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			output = MeetingCommand.createCaregiverMeetingSession(request);
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/caregiverJoinMeeting.json", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
+	public String caregiverJoinMeeting(final HttpServletRequest request,
+			final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			output = MeetingCommand.caregiverJoinLeaveMeeting(request);
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }
