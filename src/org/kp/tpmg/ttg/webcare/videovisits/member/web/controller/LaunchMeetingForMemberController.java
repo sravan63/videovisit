@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.sf.json.JSONObject;
@@ -39,6 +40,9 @@ public class LaunchMeetingForMemberController extends SimplePageController {
 					result.put("isValidUserSession", true);
 					result.put("success", true);
 				} else {
+					WebAppContext context = WebAppContext.getWebAppContext(request);
+					if (context != null && context.getMemberDO() != null
+							&& "member".equalsIgnoreCase(request.getParameter("source"))) {
 						dataResult.append(MeetingCommand.getLaunchMeetingDetailsForMember(request));
 						dataResult.setLength(dataResult.length() - 1);
 						logger.debug("dataResult " + dataResult);
@@ -46,6 +50,7 @@ public class LaunchMeetingForMemberController extends SimplePageController {
 						result.put("success", true);
 					}
 				}
+			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
