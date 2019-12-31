@@ -58,7 +58,7 @@ class MyMeetings extends React.Component {
                 tempState.showLoader = false;
                 this.setState({ tempState });
             } else {
-                this.setState({showLoader : false});
+                this.setState({ showLoader: false });
             }
         }, (err) => {
             console.log(err);
@@ -95,10 +95,27 @@ class MyMeetings extends React.Component {
         return Hour + ':' + Minutes + " " + AMPM;
     }
 
-    joinMeeting(meeting){
+    joinMeeting(meeting) {
         console.log(meeting);
         localStorage.setItem('meetingDetails', JSON.stringify(meeting));
-        this.props.history.push('/videoVisitReady');
+        var headers = {};
+        if (this.state.userDetails.isTempAccess) {
+            headers.authtoken = this.state.userDetails.ssoSession;
+        } else {
+            headers.ssoSession = this.state.userDetails.ssoSession;
+        }
+        BackendService.launchMemberVisit(meeting.meetingId, meeting.member.inMeetingDisplayName, headers).subscribe((response) => {
+            if (response.data && response.data.statusCode == '200') {
+                this.props.history.push('/videoVisitReady');
+                console.log(response);
+            } else {
+                this.setState({ showLoader: false });
+            }
+        }, (err) => {
+            console.log(err);
+            this.setState({ showLoader: false });
+        });
+
     }
 
 
