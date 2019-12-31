@@ -1287,7 +1287,6 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		final String meetingId = request.getParameter("meetingId");
 		String responseJsonStr = null;
-		String output = null;
 		MeetingDetailsForMeetingIdJSON outputJson = new MeetingDetailsForMeetingIdJSON();
 		final Gson gson = new Gson();
 		try {
@@ -1303,11 +1302,12 @@ public class MeetingCommand {
 		}
 		catch (Exception e) {
 			logger.error("System error for meeting:" + meetingId, e);
-			output = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, "900", "failure",
+			responseJsonStr = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, "900",
+					"failure",
 					null);
 		}
 		logger.info(LOG_EXITING);
-		return output;
+		return responseJsonStr;
 	}
 	
 	public static String joinLeaveMeeting(final HttpServletRequest request) {
