@@ -17,13 +17,12 @@ class PreCallCheck extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {} };
+        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn : false };
         this.goBack = this.goBack.bind(this);
         this.joinVisit = this.joinVisit.bind(this);
     }
 
     componentDidMount() {
-        // this.interval = setInterval(() => this.getMyMeetings(), 180000);
         if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
             if (this.state.userDetails) {
@@ -46,11 +45,9 @@ class PreCallCheck extends React.Component {
         }, 1000);
 
         MediaService.start(this.state.constrains);
-        console.log(this.list);
     }
 
     toggleOpen(type) {
-        console.log('DD :: ' + type);
         this.setState({
             data: {
                 isVideo: type == 'video',
@@ -60,14 +57,23 @@ class PreCallCheck extends React.Component {
         });
     }
 
-    selectPeripheral(media) {
-        console.log('SELECTED MEDIA IS :: ' + media);
-        this.setState({
-            constrains: {
-                audioSource: media,
-                videoSource: media
-            }
-        });
+    selectPeripheral(media, type) {
+        if(type == 'camera'){
+            this.state.constrains.videoSource = media;
+            MediaService.start(this.state.constrains);
+        } else if(type == 'speaker'){
+            this.state.constrains.audioSource = media;
+            MediaService.changeAudioDestination(media);
+            this.setState({musicOn : false});
+        } else if(type == 'mic') {
+            this.state.constrains.micSource = media;
+            MediaService.start(this.state.constrains);
+        }
+    }
+
+    toggleMusic(bool){
+        this.setState({musicOn : bool});
+        MediaService.toggleMusic(bool);
     }
 
     goBack() {
@@ -84,60 +90,97 @@ class PreCallCheck extends React.Component {
     render() {
         return (
             <div id='container' className="pre-call-check-page">
-                 <Header/>
+                 <div className="pre-call-check-header row m-0">
+                    <div className="col-md-8 banner-content">
+                        <div className="logo"></div>
+                        <div className="title">
+                            <p className="m-0">Video Visits</p>
+                            <p className="text-uppercase m-0 sub-title">The Permanente Medical Group</p>
+                        </div>
+                    </div>
+                    <div className="col-md-4 links text-right">
+                        <ul>
+                            <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a></li>
+                        </ul>
+                    </div>
+                  </div>
+                  <div className="row mobile-logo-container m-0"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
                  <div className="pre-call-check-content">
                      <div className="row pre-call-check">
-                         <div className="col-md-5 options p-0">
-                             <div className="label">Camera</div>
-                             <div className="dropdown show">
-                                  <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
-                                    {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
-                                  </a>
-                                  <div className={this.state.data.isVideo ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
-                                    { this.state.media.videoinput && this.state.media.videoinput.length > 0 ? 
-                                        this.state.media.videoinput.map((item,key) =>{
-                                        return (
-                                            <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item)}>{item.label}</a>
-                                        )
-                                    }) 
-                                     : ('') 
-                                    }
-                                  </div>
+                         <div className="col-md-5 peripheral-options p-0">
+                             <div className="periheral-container">
+                                 <div className="label">Camera</div>
+                                 <div className="dropdown show">
+                                      <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
+                                        {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
+                                      </a>
+                                      <div className={this.state.data.isVideo ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
+                                        { this.state.media.videoinput && this.state.media.videoinput.length > 0 ? 
+                                            this.state.media.videoinput.map((item,key) =>{
+                                            return (
+                                                <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item, 'camera')}>{item.label}</a>
+                                            )
+                                        }) 
+                                         : ('') 
+                                        }
+                                      </div>
+                                 </div>
                              </div>
-                             <div className="label">Microphone</div>
-                             <div className="dropdown show">
-                                  <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
-                                    {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
-                                  </a>
-                                  <div className={this.state.data.isAudio ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
-                                    { this.state.media.audioinput && this.state.media.audioinput.length > 0 ? 
-                                        this.state.media.audioinput.map((item,key) =>{
-                                        return (
-                                            <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item)}>{item.label}</a>
-                                        )
-                                    }) 
-                                     : ('') 
-                                    }
-                                  </div>
+                             <div className="periheral-container">
+                                 <div className="label">Microphone</div>
+                                 <div className="dropdown show">
+                                      <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
+                                        {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
+                                      </a>
+                                      <div className={this.state.data.isAudio ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
+                                        { this.state.media.audioinput && this.state.media.audioinput.length > 0 ? 
+                                            this.state.media.audioinput.map((item,key) =>{
+                                            return (
+                                                <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item, 'mic')}>{item.label}</a>
+                                            )
+                                        }) 
+                                         : ('') 
+                                        }
+                                      </div>
+                                 </div>
+                                 <div className="mic-nodes-container">
+                                    <div className="background-nodes" id="playNodes"></div>
+                                 </div>
                              </div>
-                             <div className="label">Speaker</div>
-                             <div className="dropdown show">
-                                  <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
-                                    {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
-                                  </a>
-                                  <div className={this.state.data.isSpeaker ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
-                                    { this.state.media.audiooutput && this.state.media.audiooutput.length > 0 ? 
-                                        this.state.media.audiooutput.map((item,key) =>{
-                                        return (
-                                            <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item)}>{item.label}</a>
-                                        )
-                                    }) 
-                                     : ('') 
-                                    }
-                                  </div>
+                             <div className="periheral-container">
+                                 <div className="label">Speaker</div>
+                                 <div className="dropdown show">
+                                      <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
+                                        {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
+                                      </a>
+                                      <div className={this.state.data.isSpeaker ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
+                                        { this.state.media.audiooutput && this.state.media.audiooutput.length > 0 ? 
+                                            this.state.media.audiooutput.map((item,key) =>{
+                                            return (
+                                                <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item, 'speaker')}>{item.label}</a>
+                                            )
+                                        }) 
+                                         : ('') 
+                                        }
+                                      </div>
+                                 </div>
+                                 <div className="speaker-playback">
+                                     <audio id="playBackAudioFile"></audio>
+                                     {this.state.musicOn ? (
+                                         <button className="btn playback-button pause" onClick={this.toggleMusic.bind(this, false)}>
+                                             <span className="pause-icon"></span>
+                                             <span className="text">Pause Sound</span>
+                                         </button>
+                                    ) : (
+                                         <button className="btn playback-button play" onClick={this.toggleMusic.bind(this, true)}>
+                                             <span className="play-icon"></span>
+                                             <span className="text">Play Sound</span>
+                                         </button>
+                                    )}
+                                 </div>
                              </div>
                          </div>
-                         <div className="col-md-5 video-preview"><video playsInline autoPlay></video></div>
+                         <div className="col-md-5 video-preview"><video id="preview" playsInline autoPlay></video></div>
                          <div className="col-md-12 button-controls text-center">
                            <button className="btn rounded-0 mr-3" onClick={this.goBack}>Back</button>
                            <button className="btn rounded-0" onClick={this.joinVisit}>Join</button>

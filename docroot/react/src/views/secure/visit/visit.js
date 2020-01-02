@@ -24,6 +24,12 @@ class Visit extends React.Component {
         } else {
             this.props.history.push('/login');
         }
+        var browserInfo = Utilities.getBrowserInformation();
+        if(browserInfo.isSafari || browserInfo.isFireFox){
+            this.setState({showPreCheck : true});
+        } else {
+            this.setState({showPreCheck : false});
+        }
     }
 
     togglePrecheck(){
