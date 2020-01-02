@@ -29,7 +29,7 @@ public class SSOSessionFilter implements Filter {
 	}
 
 	private String[] excludeURLs = null;
-	private String[] ssoURLs = { "retrieveActiveMeetingsForMemberAndProxies.json", "ssosignoff.json" };
+	private String[] ssoURLs = { "retrieveActiveMeetingsForMemberAndProxies.json", "ssosignoff.json", "launchMemberProxyMeeting.json" };
 
 	@Override
 	public void doFilter(ServletRequest sreq, ServletResponse sresp, FilterChain chain)
