@@ -1,5 +1,6 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 var path = require('path');
+const SRC = path.resolve(__dirname, './src/assets/audio');
 
 module.exports = (env,options) => {
   const isDev = options.mode == 'development';
@@ -40,6 +41,11 @@ module.exports = (env,options) => {
             loader: "html-loader"
           }
         ]
+      },
+      {
+          test: /\.(mp3|ogg|wav)$/,
+          include: SRC,
+          loader: "file-loader"
       }
     ]
   },
