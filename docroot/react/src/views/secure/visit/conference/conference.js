@@ -38,20 +38,14 @@ class Conference extends React.Component {
 
 
     startPexip(meeting) {
-
-        //console.log(sidePaneMeetingDetails);
-        //$('html').removeClass("no-scroll");
-        var guestPin = meeting.vendorGuestPin;
-        localStorage.setItem('guestPin', guestPin);
-        //$('#guestPin').val(guestPin);
-        //var roomUrl = $('#guestUrl').val(); //vve-tpmg-dev.kp.org
-        var roomUrl = "vve-tpmg-dev.kp.org";
-        var alias = meeting.meetingVendorId; // "M.NCAL.MED.0.0.419872.278914" // "M.NCAL.MED.0.369638..1234";
-        var bandwidth = "1280"; // $('#bandwidth').val();
-        var source = "Join+Conference";
-        //var name = $("#guestName").val();
-        var name = meeting.member.inMeetingDisplayName;
-        WebUI.initialise(roomUrl, alias, bandwidth, name, guestPin, source);
+        localStorage.setItem('guestPin', meeting.vendorGuestPin);
+        var guestPin = meeting.vendorGuestPin,
+            roomJoinUrl = localStorage.getItem('roomUrl'),
+            alias = meeting.meetingVendorId,
+            bandwidth = "1280",
+            source = "Join+Conference",
+            name = meeting.member.inMeetingDisplayName;
+        WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);
         //VideoVisit.setMinDimensions();
     }
 

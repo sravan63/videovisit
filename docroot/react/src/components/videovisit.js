@@ -6,7 +6,7 @@ class Videovisit extends React.Component {
     constructor(props) {
         super(props);
         this.state = { userDetails: {} };
-        //setTimeout(this.redirectToSsoLoginPage.bind(this), 100);
+        setTimeout(this.redirectToSsoLoginPage.bind(this), 100);
 
     }
     redirectToSsoLoginPage() {
@@ -17,12 +17,12 @@ class Videovisit extends React.Component {
             this.props.history.push('/login');
             return;
         }
-        this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+        /*this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
         if (this.state.userDetails && this.state.userDetails.ssoSession) {
             this.props.history.push('/myMeetings');
         } else {
             this.props.history.push('/login');
-        }
+        }*/
     }
     render() {
         return (

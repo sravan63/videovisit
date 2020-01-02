@@ -98,34 +98,45 @@ class MyMeetings extends React.Component {
     joinMeeting(meeting) {
         console.log(meeting);
         localStorage.setItem('meetingDetails', JSON.stringify(meeting));
-        this.props.history.push('/videoVisitReady');
-        /*var headers = {
-    "Content-Type": "application/json",
-    "mrn": this.state.userDetails.mrn
-};
-if (this.state.userDetails.isTempAccess) {
-    headers.authtoken = this.state.userDetails.ssoSession;
-} else {
-    headers.ssoSession = this.state.userDetails.ssoSession;
-}
-BackendService.launchMemberVisit(meeting.meetingId, meeting.member.inMeetingDisplayName, headers).subscribe((response) => {
-    if (response.data && response.data.statusCode == '200') {
-        this.props.history.push('/videoVisitReady');
-        console.log(response);
-    } else {
-        this.setState({ showLoader: false });
+        this.setState({ showLoader: true });
+        //this.props.history.push('/videoVisitReady');
+        var myMeetingsUrl = "launchMeetingForMemberDesktop.json";
+        var meetingId = meeting.meetingId;
+        var headers = {
+            "Content-Type": "application/json",
+            "mrn": this.state.userDetails.mrn
+        };
+        if (this.state.userDetails.isTempAccess) {
+            headers.authtoken = this.state.userDetails.ssoSession;
+            headers.megaMeetingDisplayName = meeting.member.inMeetingDisplayName;
+
+        } else {
+            myMeetingsUrl = "launchMemberProxyMeeting.json";
+            headers.ssoSession = this.state.userDetails.ssoSession;
+            headers.inMeetingDisplayName = meeting.member.inMeetingDisplayName;
+        }
+        BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers).subscribe((response) => {
+            if (response.data && response.data.statusCode == '200') {
+                if (response.data.data != null && response.data.data != '') {
+                    this.props.history.push('/videoVisitReady');
+                    var roomJoin = response.data.data.roomJoinUrl;
+                    localStorage.setItem('roomUrl', roomJoin);
+                } else {
+                    this.setState({ showLoader: false });
+                }
+            } else {
+                this.setState({ showLoader: false });
+            }
+        }, (err) => {
+            console.log(err);
+            this.setState({ showLoader: false });
+        });
     }
-}, (err) => {
-    console.log(err);
-    this.setState({ showLoader: false });
-});*/
-
-}
 
 
-render() {
+    render() {
         return (
-                <div id='container' className="my-meetings">
+            <div id='container' className="my-meetings">
                 {this.state.showLoader ? (<Loader />):('')}
                 <Header history={this.props.history}/>
                 <div className="mobile-header">Video Visits</div>
