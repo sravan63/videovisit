@@ -8,7 +8,7 @@ class BackendService extends React.Component {
         super();
         this.state = { basePath: '' };
         if (window.location.origin.indexOf('localhost') > -1) {
-            this.state.basePath = window.location.origin;
+            this.state.basePath = "https://localhost.kp.org";
         } else {
             this.state.basePath = '';
         }
