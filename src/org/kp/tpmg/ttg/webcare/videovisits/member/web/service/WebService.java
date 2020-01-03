@@ -38,8 +38,6 @@ import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopInput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestDesktopInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
@@ -1284,8 +1282,8 @@ public class WebService {
 			if ((!isNonMember && StringUtils.isBlank(mrn8Digit)) || meetingId <= 0 || StringUtils.isBlank(sessionId)
 					|| StringUtils.isBlank(inMeetingDisplayName)) {
 				logger.warn("Missing input attributes.");
-				LaunchMeetingForMemberDesktopJSON output = new LaunchMeetingForMemberDesktopJSON();
-				output.setService(new LaunchMeetingForMemberDesktopOutput());
+				LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
+				output.setService(new LaunchMeetingForMemberGuestOutput());
 				final Status status = new Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
@@ -1315,21 +1313,22 @@ public class WebService {
 			String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
 		logger.debug("mrn8Digit=" + mrn8Digit + ", inMeetingDisplayName" + inMeetingDisplayName);
-		Gson gson = new GsonBuilder().serializeNulls().create();
+		final Gson gson = new Gson();
 		String responseJsonStr;
 		String inputJsonString = null;
 		LaunchMeetingForMemberDesktopInput input;
-		LaunchMeetingForMemberDesktopJSON output = new LaunchMeetingForMemberDesktopJSON();
 		if (meetingId <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId)
 				|| StringUtils.isBlank(inMeetingDisplayName)) {
 			logger.warn("Missing input attributes.");
-			output.setService(new LaunchMeetingForMemberDesktopOutput());
+			LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
+			output.setService(new LaunchMeetingForMemberGuestOutput());
 			final Status status = new Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			output.getService().setStatus(status);
 			return gson.toJson(output);
 		}
+
 		try {
 			input = new LaunchMeetingForMemberDesktopInput();
 			input.setMeetingId(meetingId);
@@ -1346,6 +1345,7 @@ public class WebService {
 		}
 		logger.info(LOG_EXITING);
 		return responseJsonStr;
+
 	}
 
 	public static MeetingDetailsJSON retrieveMeeting(String mrn8Digit, int pastMinutes, int futureMinutes,
