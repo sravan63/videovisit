@@ -505,6 +505,7 @@ public class WebUtil {
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		output.setCode(code);
 		output.setMessage(message);
+		output.setName(operation);
 		if (result == null) {
 			output.setData((Serializable) "");
 		} else {
