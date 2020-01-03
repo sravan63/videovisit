@@ -3,6 +3,9 @@ import Axios from 'axios-observable';
 import DeviceService from './device-peripheral-service.js';
 import Utilities from './utilities-service.js';
 
+import { range } from 'rxjs';
+import { map, filter } from 'rxjs/operators';
+
 class MediaService extends React.Component {
 
     constructor() {
@@ -21,8 +24,6 @@ class MediaService extends React.Component {
         navigator.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
              console.log('Stream1 started with success');
              this.setDevice();
-         }).then((list)=>{
-           this.gotDevices(list);
          }).catch((error)=>{ 
              this.handleError(error);
              console.log('Failed to start stream1');
@@ -39,7 +40,11 @@ class MediaService extends React.Component {
     }
 
     setDevice(){
-     navigator.mediaDevices.enumerateDevices().then(gotDevicesList).catch(this.handleError);
+     navigator.mediaDevices.enumerateDevices().then((list)=>{
+       this.gotDevicesList(list)
+     }).catch((error)=>{
+       this.handleError(error)
+     });
     }
 
     // Gets the list of devices on load.

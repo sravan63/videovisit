@@ -24,7 +24,7 @@ var presentationURL = '';
 var videoPresentation = true;
 var useConsoleForLogging = true;
 var useAlertsForLogging = false;
-
+var cameraID;
 
 var id_selfview;
 var id_muteaudio;
@@ -992,10 +992,16 @@ $("#selectrole").removeClass("hidden");*/
     bandwidth = parseInt(userbw);
     name = decodeURIComponent(username).replace('+', ' ');
     source = req_source;
-
     var camID = [];
-    camID = MediaService.getMediaList();
-    var cameraID = camID.videoinput[0].deviceId;
+    if(localStorage.getItem('selectedPeripherals')){
+        var peripherals = JSON.parse(localStorage.getItem('selectedPeripherals'));
+        cameraID = peripherals.videoSource.deviceId;
+    } else {
+        setTimeout(function() {
+            camID = MediaService.getMediaList();
+            cameraID = camID.videoinput[0].deviceId;
+        }, 2000);
+    }
     rtc.video_source = cameraID; //cameraID
     //rtc.audio_source =  audioSource;    //microPhoneID
 
@@ -1070,6 +1076,10 @@ export function getTurnServerObjsForMobile() {
 //     console.log('calling from MDO app');
 //     disconnect();
 // }
+
+export function pexipDisconnect(){
+    rtc.disconnect();
+}
 
 export function disconnect() {
     // console.log("inside disconnect");

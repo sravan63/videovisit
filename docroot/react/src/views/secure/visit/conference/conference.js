@@ -3,6 +3,7 @@ import React from "react";
 import Header from '../../../../components/header/header';
 import Loader from '../../../../components/loader/loader';
 import BackendService from '../../../../services/backendService.js';
+import Utilities from '../../../../services/utilities-service.js';
 import './conference.less';
 import * as pexip from '../../../../pexip/complex/pexrtcV20.js';
 import * as WebUI from '../../../../pexip/complex/webui.js';
@@ -108,6 +109,11 @@ class Conference extends React.Component {
     }
 
     leaveMeeting() {
+        WebUI.pexipDisconnect();
+        var browserInfo = Utilities.getBrowserInformation();
+        if(browserInfo.isSafari || browserInfo.isFireFox){
+            localStorage.removeItem('selectedPeripherals');
+        }
         this.props.history.push('/myMeetings');
     }
 
