@@ -20,7 +20,7 @@ class PreCallCheck extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn : false };
+        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false };
         this.goBack = this.goBack.bind(this);
         this.joinVisit = this.joinVisit.bind(this);
     }
@@ -34,19 +34,20 @@ class PreCallCheck extends React.Component {
         } else {
             this.props.history.push('/login');
         }
+
         var self = this;
         setTimeout(function() {
             self.list = MediaService.getMediaList();
             self.setState({ media: self.list });
             self.setState({
                 constrains: {
-                    audioSource: self.list.audioinput[0],
-                    videoSource: self.list.videoinput[0],
-                    micSource: self.list.audiooutput[0]
+                    audioSource: self.list.audioinput ? self.list.audioinput[0] : null,
+                    videoSource: self.list.videoinput ? self.list.videoinput[0] : null,
+                    micSource: self.list.audiooutput ? self.list.audiooutput[0] : null,
                 }
             });
             MediaService.start(self.state.constrains);
-        }, 2000);
+        }, 3000);
     }
 
     toggleOpen(type) {
@@ -60,14 +61,14 @@ class PreCallCheck extends React.Component {
     }
 
     selectPeripheral(media, type) {
-        if(type == 'camera'){
+        if (type == 'camera') {
             this.state.constrains.videoSource = media;
             MediaService.start(this.state.constrains);
-        } else if(type == 'speaker'){
+        } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media);
-            this.setState({musicOn : false});
-        } else if(type == 'mic') {
+            this.setState({ musicOn: false });
+        } else if (type == 'mic') {
             this.state.constrains.micSource = media;
             MediaService.start(this.state.constrains);
         }
@@ -81,8 +82,8 @@ class PreCallCheck extends React.Component {
         });
     }
 
-    toggleMusic(bool){
-        this.setState({musicOn : bool});
+    toggleMusic(bool) {
+        this.setState({ musicOn: bool });
         MediaService.toggleMusic(bool);
     }
 
@@ -124,7 +125,7 @@ class PreCallCheck extends React.Component {
                              <div className="periheral-container">
                                  <div className="label">Camera</div>
                                  <div className="dropdown show">
-                                      <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
+                                      <a className={this.state.constrains.videoSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
                                         {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isVideo ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
@@ -142,7 +143,7 @@ class PreCallCheck extends React.Component {
                              <div className="periheral-container">
                                  <div className="label">Microphone</div>
                                  <div className="dropdown show">
-                                      <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
+                                      <a className={this.state.constrains.micSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
                                         {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isAudio ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
@@ -163,7 +164,7 @@ class PreCallCheck extends React.Component {
                              <div className="periheral-container">
                                  <div className="label">Speaker</div>
                                  <div className="dropdown show">
-                                      <a className="btn col-md-12 dropdown-toggle rounded-0" href="#" role="button" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
+                                      <a className={this.state.constrains.audioSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
                                         {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isSpeaker ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">

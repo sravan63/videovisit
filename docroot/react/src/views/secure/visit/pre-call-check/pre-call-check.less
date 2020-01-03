@@ -1,8 +1,9 @@
-.pre-call-check-page{
-	background: #F0F4F7;
-	min-height: 1px;
-	.pre-call-check-header{
-		min-height: 4.90rem;
+.pre-call-check-page {
+    background: #F0F4F7;
+    min-height: 1px;
+
+    .pre-call-check-header {
+        min-height: 4.90rem;
         background-color: #FFFFFF;
         color: #4272C1;
         padding: 0 0.625rem;
@@ -55,128 +56,154 @@
                 }
             }
         }
-	}
-	.mobile-logo-container{
+    }
+
+    .mobile-logo-container {
         display: none;
+
         .mobile-tpmg-logo {
             background: url('../../../../assets/sm-TPMG-banner-logo.png') no-repeat;
             height: 5.625rem;
             width: 5.625rem;
             margin: 0 auto;
         }
-        .header{
+
+        .header {
             font-size: 2rem;
             color: #203864;
             text-align: center;
             margin: 0 0 0.5rem;
         }
     }
-	.pre-call-check-content{
-		height: calc(100vh - 130px);
-		.pre-call-check{
-			margin: 0 auto;
-			min-height: 1rem;
-			width: 75%;
-			padding-top: 3rem;
-			.peripheral-options{
-				.periheral-container{
-					margin-bottom: 2rem;
-					.dropdown{
-						color: #333333;
-						font-size: 0.875rem;
-						border: 1px solid #003B71;
-						background: #FFFFFF;
-						.btn{
-							text-align: left;
-							overflow: hidden;
-						    text-overflow: ellipsis;
-						    white-space: nowrap;
-						    padding-right: 1rem;
-						}
-						.dropdown-menu{
-							min-width: 100%;
-							.dropdown-item{
-								cursor: pointer;
-							}
-						}
-						.dropdown-toggle::after {
-						    top: 15px;
-						    position: absolute;
-						    right: 5px;
-						}
-					}
-					.speaker-playback{
-						.playback-button{
-							padding: 0.312rem 0.75rem 0.312rem 0.812rem;
-							color: #FFFFFF;
-							background-color: #677083;
-							margin: 0.5rem 0 0 0;
-							display: inline-block;
-							border-radius: 2px;
-							cursor: pointer;
-							font-size: 0.875rem;
-						}
-						.play{
-							.play-icon{
-								background: url(../../../../assets/play.png);
-								display: inline-block;
-								height: 0.812rem;
-								width: 0.687rem;
-								vertical-align: middle;
-								margin-right: 0.437rem;
-							}
-						}
-						.pause{
-							.pause-icon{
-								background: url(../../../../assets/pause.png);
-								display: inline-block;
-								height: 0.812rem;
-								width: 0.687rem;
-								vertical-align: middle;
-								margin-right: 0.437rem;;
-							}
-						}
-					}
-				}
-			}
-			.video-preview{
-				margin-left: auto;
-				video{
-					width: 100%;
-				}
-			}
-			.button-controls{
-				.btn{
-					background: #006ba6;
-					width: 7rem;
-					color: #FFF;
-				}
-			}
-		}
-	}
+
+    .pre-call-check-content {
+        height: calc(100vh - 130px);
+
+        .pre-call-check {
+            margin: 0 auto;
+            min-height: 1rem;
+            width: 75%;
+            padding-top: 3rem;
+
+            .peripheral-options {
+                .periheral-container {
+                    margin-bottom: 2rem;
+
+                    .dropdown {
+                        color: #333333;
+                        font-size: 0.875rem;
+                        border: 1px solid #003B71;
+                        background: #FFFFFF;
+
+                        .btn {
+                            text-align: left;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                            padding-right: 1rem;
+                        }
+
+                        .disabled {
+                            opacity: 0.5;
+                            pointer-events: none;
+                            min-height: 2.1rem;
+                        }
+
+                        .dropdown-menu {
+                            min-width: 100%;
+
+                            .dropdown-item {
+                                cursor: pointer;
+                            }
+                        }
+
+                        .dropdown-toggle::after {
+                            top: 15px;
+                            position: absolute;
+                            right: 5px;
+                        }
+                    }
+
+                    .speaker-playback {
+                        .playback-button {
+                            padding: 0.312rem 0.75rem 0.312rem 0.812rem;
+                            color: #FFFFFF;
+                            background-color: #677083;
+                            margin: 0.5rem 0 0 0;
+                            display: inline-block;
+                            border-radius: 2px;
+                            cursor: pointer;
+                            font-size: 0.875rem;
+                        }
+
+                        .play {
+                            .play-icon {
+                                background: url(../../../../assets/play.png);
+                                display: inline-block;
+                                height: 0.812rem;
+                                width: 0.687rem;
+                                vertical-align: middle;
+                                margin-right: 0.437rem;
+                            }
+                        }
+
+                        .pause {
+                            .pause-icon {
+                                background: url(../../../../assets/pause.png);
+                                display: inline-block;
+                                height: 0.812rem;
+                                width: 0.687rem;
+                                vertical-align: middle;
+                                margin-right: 0.437rem;
+                                ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .video-preview {
+                margin-left: auto;
+
+                video {
+                    width: 100%;
+                }
+            }
+
+            .button-controls {
+                .btn {
+                    background: #006ba6;
+                    width: 7rem;
+                    color: #FFF;
+                }
+            }
+        }
+    }
 }
 
 /* Mobile Styles to  Tablet Styles */
 @media only screen and (max-width: 960px) {
-	.pre-call-check-page{
-		padding: 2rem 0;
-		.pre-call-check-header{
-			display: none;
-		}
-		.mobile-logo-container{
-			display: block;
-		}
-		.pre-call-check-content{
-			height: 100%;
-			min-height: 1px;
-			.button-controls{
-				margin-top: 1rem;
-			}
-		}
-	}
+    .pre-call-check-page {
+        padding: 2rem 0;
+
+        .pre-call-check-header {
+            display: none;
+        }
+
+        .mobile-logo-container {
+            display: block;
+        }
+
+        .pre-call-check-content {
+            height: 100%;
+            min-height: 1px;
+
+            .button-controls {
+                margin-top: 1rem;
+            }
+        }
+    }
 }
 
 /* Desktop Styles */
-@media only screen and (min-width: 960px) {
-	
-}
+@media only screen and (min-width: 960px) {}
