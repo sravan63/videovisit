@@ -41,12 +41,16 @@ class PreCallCheck extends React.Component {
             self.setState({ media: self.list });
             self.setState({
                 constrains: {
-                    audioSource: self.list.audioinput ? self.list.audioinput[0] : null,
+                    audioSource: self.list.audiooutput ? self.list.audiooutput[0] : null,
                     videoSource: self.list.videoinput ? self.list.videoinput[0] : null,
-                    micSource: self.list.audiooutput ? self.list.audiooutput[0] : null,
+                    micSource: self.list.audioinput ? self.list.audioinput[0] : null,
                 }
             });
-            MediaService.start(self.state.constrains);
+            const constrains = {
+                audioSource: self.list.audioinput ? self.list.audioinput[0] : null,
+                videoSource: self.list.videoinput ? self.list.videoinput[0] : null,
+            };
+            MediaService.start(constrains);
         }, 3000);
     }
 
@@ -63,14 +67,22 @@ class PreCallCheck extends React.Component {
     selectPeripheral(media, type) {
         if (type == 'camera') {
             this.state.constrains.videoSource = media;
-            MediaService.start(this.state.constrains);
+            const constrains = {
+                videoSource: this.state.constrains.videoSource,
+                audioSource: this.state.constrains.micSource,
+            };
+            MediaService.start(constrains);
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media);
             this.setState({ musicOn: false });
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
-            MediaService.start(this.state.constrains);
+            const constrains = {
+                videoSource: this.state.constrains.videoSource,
+                audioSource: this.state.constrains.micSource,
+            };
+            MediaService.start(constrains);
         }
         // Sets the constrains in dropdowns.
         this.setState({
