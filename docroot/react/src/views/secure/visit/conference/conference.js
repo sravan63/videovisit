@@ -41,7 +41,7 @@ class Conference extends React.Component {
     startPexip(meeting) {
         localStorage.setItem('guestPin', meeting.vendorGuestPin);
         var guestPin = meeting.vendorGuestPin,
-            roomJoinUrl = localStorage.getItem('roomUrl'),
+            roomJoinUrl = "vve-tpmg-dev.kp.org",
             alias = meeting.meetingVendorId,
             bandwidth = "1280",
             source = "Join+Conference",
@@ -111,7 +111,7 @@ class Conference extends React.Component {
     leaveMeeting() {
         WebUI.pexipDisconnect();
         var browserInfo = Utilities.getBrowserInformation();
-        if(browserInfo.isSafari || browserInfo.isFireFox){
+        if (browserInfo.isSafari || browserInfo.isFireFox) {
             localStorage.removeItem('selectedPeripherals');
         }
         this.props.history.push('/myMeetings');
