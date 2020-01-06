@@ -1,11 +1,12 @@
-import React from "react";
+import React, { Suspense, lazy } from 'react';
 import Header from '../../../components/header/header';
 import Loader from '../../../components/loader/loader';
-import PreCallCheck from './pre-call-check/pre-call-check';
-import Conference from './conference/conference';
 import BackendService from '../../../services/backendService.js';
 import Utilities from '../../../services/utilities-service.js';
 import './visit.less';
+
+const PreCallCheck = React.lazy(() => import('./pre-call-check/pre-call-check'));
+const Conference = React.lazy(() => import('./conference/conference'));
 
 class Visit extends React.Component {
 
@@ -43,9 +44,11 @@ class Visit extends React.Component {
     render() {
         return (
             <div>
-                {this.state.showPreCheck ? 
-                  (<PreCallCheck history={this.props.history} data={{togglePrecheck: this.togglePrecheck.bind(this)}}/>)
-                : (<Conference history={this.props.history} />)}
+                <Suspense fallback={<Loader />}>
+                    {this.state.showPreCheck ? 
+                      (<PreCallCheck history={this.props.history} data={{togglePrecheck: this.togglePrecheck.bind(this)}}/>)
+                    : (<Conference history={this.props.history} />)}
+                </Suspense>
             </div>
         )
     }
