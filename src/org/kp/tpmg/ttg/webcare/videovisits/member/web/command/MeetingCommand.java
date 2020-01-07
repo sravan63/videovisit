@@ -435,30 +435,28 @@ public class MeetingCommand {
 			String hostNuid, String[] participantNuid, String memberMrn, String meetingType) throws Exception {
 		logger.info(LOG_ENTERED);
 		CreateInstantVendorMeetingOutput output = null;
-		String result = null;
+		String jsonString = null;
+		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final String clientId = WebUtil.getClientIdFromContext(ctx);
 		try {
 			output = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType,
-					request.getSession().getId(), WebUtil.VV_MBR_WEB);
+					request.getSession().getId(), clientId);
 
-			if (output != null && output.getStatus() != null && "200".equals(output.getStatus().getCode())
-					&& output.getEnvelope() != null && output.getEnvelope().getMeeting() != null) {
-				result = WebUtil.prepareCommonOutputJson(output.getName(), output.getStatus().getCode(),
-						output.getStatus().getMessage(), output.getEnvelope().getMeeting());
-			} else if (output != null && output.getStatus() != null
-					&& StringUtils.isNotBlank(output.getStatus().getCode())
-					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
-				result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP,
-						output.getStatus().getCode(), output.getStatus().getMessage(), null);
+			final Gson gson = new GsonBuilder().serializeNulls().create();
+			
+			if (output != null && output.getStatus() != null) {
+				if ("200".equalsIgnoreCase(output.getStatus().getCode())
+						&& output.getEnvelope() != null) {
+					jsonString = gson.toJson(output.getEnvelope().getMeeting());
+				}
 			}
 
 		} catch (Exception e) {
 			logger.error("System Error :" + e.getMessage(), e);
-		}
-		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, "900", "failure", null);
+			jsonString = JSONObject.fromObject(new SystemError()).toString();
 		}
 		logger.info(LOG_EXITING);
-		return result;
+		return jsonString;
 	}
 
 	public static String terminateSetupWizardMeeting(HttpServletRequest request)
