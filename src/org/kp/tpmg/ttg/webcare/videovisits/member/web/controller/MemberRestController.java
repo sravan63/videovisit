@@ -249,4 +249,31 @@ public class MemberRestController extends SimplePageController {
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	@RequestMapping(value = "/createSetupWizardMeeting.json", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
+	public String createSetupWizardMeeting(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			String hostNuid = null;
+			String participantNuid[] = null;
+			String memberMrn = null;
+			String meetingType = null;
+			boolean isReady = WebService.initWebService(request);
+			if (isReady) {
+				hostNuid = WebService.getSetupWizardHostNuid();
+				memberMrn = WebService.getSetupWizardMemberMrn();
+				meetingType = WebService.getSetupWizardMeetingType();
+			}
+			output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid,
+					memberMrn, meetingType);
+			;
+			logger.debug("output = " + output);
+		} catch (Exception e) {
+			logger.error("System Error : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }
