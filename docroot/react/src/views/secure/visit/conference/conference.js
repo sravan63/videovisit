@@ -87,6 +87,8 @@ class Conference extends React.Component {
         }
         let DateObj = new Date(parseInt(millis));
         let str = '';
+        let week = '';
+        let month = '';
         if (type == 'time') {
             let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
             if (Hour == 0) {
@@ -102,7 +104,9 @@ class Conference extends React.Component {
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
             str = Hour + ':' + Minutes + AMPM + ', ';
         } else {
-            str = String(DateObj).substr(0, 10);
+            week = String(DateObj).substring(0, 3);
+            month = String(DateObj).substr(4, 6);
+            str = week + ', ' + month;
         }
 
         return str;
