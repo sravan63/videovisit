@@ -116,6 +116,9 @@ class Conference extends React.Component {
         }
         this.props.history.push('/myMeetings');
     }
+    refreshPage() {
+        window.location.reload(false);
+      }
 
 
     render() {
@@ -134,14 +137,32 @@ class Conference extends React.Component {
                         <ul>
                             <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a></li>
                             <li className="text-capitalize">|</li>
-                            <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Refresh</a></li>
+                            <li><a href="javascript:void(0)" className="help-link" onClick={this.refreshPage} >Refresh</a></li>
                         </ul>
                     </div>
                 </div>
                 {this.state.meetingDetails ? (
                     <div className="row video-conference-container">
                         <div className="col-md-10 p-0 video-conference">
-                            <div className="button-container"></div>
+                            <div className="button-container">
+                            <div className="button-group" id="buttonGroup" >
+                                <div id="inCallButtonMuteVideo">
+                                    <div title="Enable Video" id="id_video_unmute" className="btns video-btn">&nbsp;</div>
+                                    <div title="Disable Video" id="id_video_mute" className="btns video-muted-btn">&nbsp;</div>   
+                                </div>
+                                <div id="inCallButtonMuteSpeaker">
+                                    <div title="Mute Speakers" id="id_speaker_mute" className="btns speaker-btn">&nbsp;</div>
+                                    <div title="Unmute Speakers" id="id_speaker_unmute" className="btns speaker-muted-btn">&nbsp;</div>
+                                </div>
+                                <div id="inCallButtonMuteMicrophone">
+                                    <div title="Mute Mic" id="id_mic_mute"className="btns microphone-btn">&nbsp;</div>
+                                    <div title="Unmute Mic" id="id_mic_unmute" className="btns microphone-muted-btn">&nbsp;</div>
+                                </div>
+                                <div id="inCallButtonToggleConfig">
+                                    <div title="Settings" className="btns settings-btn">&nbsp;</div>
+                                </div>
+				            </div>
+                            </div>
                             <div className="stream-container">
                              <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline" poster="img/spinner.gif"></video>
                             </div>
