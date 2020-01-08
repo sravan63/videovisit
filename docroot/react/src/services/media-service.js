@@ -14,8 +14,6 @@ class MediaService extends React.Component {
         this.state = { mediaData: {}, selectedConstrain : {} };
         this.mediaData = {};
         this.drawNewCanvas = true;
-        this.loadDeviceMediaData = this.loadDeviceMediaData.bind(this);
-        this.loadDeviceMediaData();
     }
     
     // Initiates the device load

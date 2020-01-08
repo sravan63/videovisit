@@ -30,6 +30,7 @@ class Setup extends React.Component {
     }
 
     componentDidMount() {
+        MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             if (message.text == 'Test call finished') {
                 this.doneSetupTest();

@@ -31,6 +31,7 @@ class PreCallCheck extends React.Component {
             this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
             if (this.state.userDetails) {
                 this.setState({ showPage: true });
+                MediaService.loadDeviceMediaData();
             }
         } else {
             this.props.history.push('/login');
@@ -51,6 +52,7 @@ class PreCallCheck extends React.Component {
                     audioSource: this.list.audioinput ? this.list.audioinput[0] : null,
                     videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
                 };
+                MediaService.start(constrains);
             }
         });
     }
