@@ -175,7 +175,7 @@ class PreCallCheck extends React.Component {
                              </div>
                              <div className="periheral-container">
                                  <div className="label">Speaker</div>
-                                 <div className="dropdown show">
+                                 {this.state.constrains.audioSource ? (<div className="dropdown show">
                                       <a className={this.state.constrains.audioSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
                                         {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
                                       </a>
@@ -189,7 +189,7 @@ class PreCallCheck extends React.Component {
                                          : ('') 
                                         }
                                       </div>
-                                 </div>
+                                 </div>) : ('')}
                                  <div className="speaker-playback">
                                      <audio id="playBackAudioFile"></audio>
                                      {this.state.musicOn ? (
