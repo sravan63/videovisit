@@ -175,7 +175,7 @@ class Setup extends React.Component {
                                       </div>
                                  </div>
                              </div>
-                             <div className="periheral-container">
+                             {this.state.constrains.audioSource ? (<div className="periheral-container">
                                  <div className="label">Speaker</div>
                                  <div className="dropdown show">
                                       <a className={this.state.constrains.audioSource && !this.state.loadingSetup ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
@@ -192,7 +192,7 @@ class Setup extends React.Component {
                                         }
                                       </div>
                                  </div>
-                             </div>
+                             </div>) : ('')}
                          </div>
                          <div className="col-md-5 p-0 video-preview">
                              {!this.state.startTest ? (
