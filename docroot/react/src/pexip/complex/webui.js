@@ -2,6 +2,8 @@
 import { PexRTC } from './pexrtcV20.js';
 import MediaService from '../../services/media-service.js';
 import $ from 'jquery';
+import MessageService from '../../services/message-service';
+
 var video;
 var flash;
 var isMobileDevice = false;
@@ -566,7 +568,10 @@ export function remoteDisconnect(reason) {
     if (reason.indexOf("get access to camera") > -1) {
         $('#dialog-block-meeting-disconnected00').modal({ 'backdrop': 'static' });
     } else {
-        alert(reason);
+        // alert(reason);
+        if(reason == 'Test call finished'){
+            MessageService.sendMessage('Test call finished', null);
+        } 
     }
     window.removeEventListener('beforeunload', finalise);
     // window.location = "index.html";

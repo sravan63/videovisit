@@ -2,6 +2,7 @@ import React from 'react';
 import Axios from 'axios-observable';
 import DeviceService from './device-peripheral-service.js';
 import Utilities from './utilities-service.js';
+import { MessageService } from './message-service';
 
 import { range } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
@@ -21,7 +22,7 @@ class MediaService extends React.Component {
     loadDeviceMediaData(){
       var browserInfo = Utilities.getBrowserInformation();
       if(browserInfo.isSafari || browserInfo.isFireFox) {
-        navigator.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
+        navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
              console.log('Stream1 started with success');
              this.setDevice();
          }).catch((error)=>{ 
@@ -54,6 +55,7 @@ class MediaService extends React.Component {
             this.mediaData[media.kind].push(media);
         });
         console.log('Media Service - List Of Media Devices :: ' + this.mediaData);
+        MessageService.sendMessage('Media Data Ready', this.mediaData);
     }
   
   // Error call back.

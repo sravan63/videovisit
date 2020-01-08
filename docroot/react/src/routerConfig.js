@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import Videovisit from './components/videovisit';
 import Authentication from '../src/views/authentication/authentication';
 import GuestAuthentication from '../src/views/guest-authentication/guest-authentication';
-
+import Setup from '../src/views/setup/setup';
 import MyMeetings from './views/secure/my-meetings/my-meetings';
 import VideoVisit from './views/secure/visit/visit';
 
@@ -19,6 +19,10 @@ export const routes = [{
     {
         path: '/guestlogin',
         component: GuestAuthentication
+    },
+    {
+        path: '/setup',
+        component: Setup
     },
     {
         path: '/myMeetings',

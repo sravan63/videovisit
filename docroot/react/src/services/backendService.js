@@ -38,5 +38,9 @@ class BackendService extends React.Component {
         return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId, {}, { headers: headers });
     }
 
+    getSetupMeeting(url) {
+        return Axios.post(this.state.basePath + '/videovisit/' + url);
+    }
+
 }
 export default new BackendService();
