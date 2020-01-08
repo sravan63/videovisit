@@ -12,6 +12,7 @@ import Header from '../../../../components/header/header';
 import Loader from '../../../../components/loader/loader';
 import BackendService from '../../../../services/backendService.js';
 import MediaService from '../../../../services/media-service.js';
+import { MessageService } from '../../../../services/message-service';
 import './pre-call-check.less';
 
 class PreCallCheck extends React.Component {
@@ -35,23 +36,23 @@ class PreCallCheck extends React.Component {
             this.props.history.push('/login');
         }
 
-        var self = this;
-        setTimeout(function() {
-            self.list = MediaService.getMediaList();
-            self.setState({ media: self.list });
-            self.setState({
-                constrains: {
-                    audioSource: self.list.audiooutput ? self.list.audiooutput[0] : null,
-                    videoSource: self.list.videoinput ? self.list.videoinput[0] : null,
-                    micSource: self.list.audioinput ? self.list.audioinput[0] : null,
-                }
-            });
-            const constrains = {
-                audioSource: self.list.audioinput ? self.list.audioinput[0] : null,
-                videoSource: self.list.videoinput ? self.list.videoinput[0] : null,
-            };
-            MediaService.start(constrains);
-        }, 3000);
+        this.subscription = MessageService.getMessage().subscribe((message, data) => {
+            if(message.text == 'Media Data Ready'){
+                this.list = message.data;
+                this.setState({ media: this.list });
+                this.setState({
+                    constrains: {
+                        audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
+                        videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                        micSource: this.list.audioinput ? this.list.audioinput[0] : null,
+                    }
+                });
+                const constrains = {
+                    audioSource: this.list.audioinput ? this.list.audioinput[0] : null,
+                    videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                };
+            }
+        });
     }
 
     toggleOpen(type) {
