@@ -143,7 +143,7 @@ class Conference extends React.Component {
                         <ul>
                             <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a></li>
                             <li className="text-capitalize">|</li>
-                            <li><a href="javascript:void(0)" className="help-link" onClick={this.refreshPage} >Refresh</a></li>
+                            <li><button type="button" className="btn btn-link help-link m-0 p-0" onClick={this.refreshPage}>Refresh</button></li>
                         </ul>
                     </div>
                 </div>
