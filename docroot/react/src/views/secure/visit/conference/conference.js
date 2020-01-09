@@ -113,12 +113,14 @@ class Conference extends React.Component {
     }
 
     leaveMeeting() {
+        
         WebUI.pexipDisconnect();
         var browserInfo = Utilities.getBrowserInformation();
         if (browserInfo.isSafari || browserInfo.isFireFox) {
             localStorage.removeItem('selectedPeripherals');
         }
         this.props.history.push('/myMeetings');
+        window.location.reload(false);
     }
     refreshPage() {
         window.location.reload(false);
