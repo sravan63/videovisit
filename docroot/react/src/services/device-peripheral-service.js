@@ -79,7 +79,8 @@ class DeviceService extends React.Component {
     }
 
     micTest(){
-    	this.audioContext= new AudioContext();
+    	var AudioContext = window.AudioContext || window.webkitAudioContext; // Default or Safari and old versions of Chrome
+    	this.audioContext = new AudioContext();
         this.mediaStreamSource = this.audioContext.createMediaStreamSource(stream);
         // Create a new volume meter and connect it.
         this.meter = this.createAudioMeter(this.audioContext);
