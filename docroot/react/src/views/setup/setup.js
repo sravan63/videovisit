@@ -112,8 +112,8 @@ class Setup extends React.Component {
             if (response.data && response.data.statusCode == '200') {
                 this.setState({ startTest: true});
                 const meeting = response.data.data;
-                var guestPin = meeting.meetingId.split('').reverse().join(''),// meeting.vendorGuestPin,
-                    roomJoinUrl = meeting.roomJoinUrl, //"vve-tpmg-dev.kp.org",
+                var guestPin = meeting.meetingId.split('').reverse().join(''),
+                    roomJoinUrl = meeting.roomJoinUrl,
                     alias = meeting.meetingVendorId,
                     bandwidth = "1280",
                     source = "Join+Conference",

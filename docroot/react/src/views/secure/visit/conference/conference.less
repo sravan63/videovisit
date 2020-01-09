@@ -45,6 +45,10 @@
 
                     .help-link {
                         color: #006ba6;
+                        cursor: pointer;
+                        &:hover {
+                            text-decoration: none;
+                        }
                     }
 
                     .sign-off {
@@ -68,86 +72,48 @@
                 background: #323232;
                 height: 100%;
                 .button-group{
-                    .video-btn{
-                        background-image: url('../../../../../../images/conference/svg/SVG/camera.svg');
-                        background-size: 2.18rem 2.18rem;
-                        height: 2.18rem;
-                        width: 2.18rem;
-                        margin: 0 1.7rem;
-                        border-radius: 50%;
-                        margin-bottom: 2.5rem;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                        
-                    }
-                    .video-muted-btn{
-                        background-image: url('../../../../../../images/conference/svg/SVG/cameraOff.svg');
-                        background-size: 2.18rem 2.18rem;
-                        height: 2.18rem;
-                        width: 2.18rem;
-                        margin: 0 1.7rem;
-                        border-radius: 50%;
-                        margin-bottom: 2.5rem;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                        display: none; /* for temporary use */
-                    }
-                    .speaker-btn{
-                        background-image: url('../../../../../../images/conference/svg/SVG/speaker.svg');
-                        background-size: 2.18rem 2.18rem;
-                        height: 2.18rem;
-                        width: 2.18rem;
-                        margin: 0 1.7rem;
-                        border-radius: 50%;
-                        margin-bottom: 2.5rem;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                    }
-                    .speaker-muted-btn{
-                        background-image: url('../../../../../../images/conference/svg/SVG/speakerOff.svg');
-                        background-size: 2.18rem 2.18rem;
-                        height: 2.18rem;
-                        width: 2.18rem;
-                        margin: 0 1.7rem;
-                        border-radius: 50%;
-                        margin-bottom: 2.5rem;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                        display: none; /* for temporary use */
-                    }
-                    .microphone-btn{
-                        background-image: url('../../../../../../images/conference/svg/SVG/mic.svg');
-                        background-size: 2.18rem 2.18rem;
-                        height: 2.18rem;
-                        width: 2.18rem;
-                        margin: 0 1.7rem;
-                        border-radius: 50%;
-                        margin-bottom: 2.5rem;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                    }
-                    .microphone-muted-btn{
-                        background-image: url('../../../../../../images/conference/svg/SVG/micOff.svg');
-                        background-size: 2.18rem 2.18rem;
-                        height: 2.18rem;
-                        width: 2.18rem;
-                        margin: 0 1.7rem;
-                        border-radius: 50%;
-                        margin-bottom: 2.5rem;
-                        margin-top: 1rem;
-                        cursor: pointer;
-                        display: none; /* for temporary use */
-                    }
-                    .settings-btn{
-                        background-image: url('../../../../../../images/conference/svg/SVG/Settings.svg');
-                        background-size: 2.18rem 2.18rem;
-                        height: 2.18rem;
-                        width: 2.18rem;
-                        margin: 0 1.7rem;
-                        border-radius: 50%;
-                        margin-bottom: 2.5rem;
-                        margin-top: 1rem;
-                        cursor: pointer;
+                    .media-toggle{
+                        .media-controls{
+                            height: 2.18rem;
+                            width: 2.18rem;
+                            margin: 0 1.8rem;
+                            border-radius: 50%;
+                            margin-bottom: 2.5rem;
+                            margin-top: 1rem;
+                            cursor: pointer;
+                        }
+                        .video-btn{
+                            background-image: url('../../../../../../images/conference/svg/SVG/camera.svg');
+                            background-size: 2.18rem 2.18rem;
+                            
+                        }
+                        .video-muted-btn{
+                            background-image: url('../../../../../../images/conference/svg/SVG/cameraOff.svg');
+                            background-size: 2.18rem 2.18rem;
+                            display: none; /* for temporary use */
+                        }
+                        .speaker-btn{
+                            background-image: url('../../../../../../images/conference/svg/SVG/speaker.svg');
+                            background-size: 2.18rem 2.18rem;
+                        }
+                        .speaker-muted-btn{
+                            background-image: url('../../../../../../images/conference/svg/SVG/speakerOff.svg');
+                            background-size: 2.18rem 2.18rem;
+                            display: none; /* for temporary use */
+                        }
+                        .microphone-btn{
+                            background-image: url('../../../../../../images/conference/svg/SVG/mic.svg');
+                            background-size: 2.18rem 2.18rem;
+                        }
+                        .microphone-muted-btn{
+                            background-image: url('../../../../../../images/conference/svg/SVG/micOff.svg');
+                            background-size: 2.18rem 2.18rem;
+                            display: none; /* for temporary use */
+                        }
+                        .settings-btn{
+                            background-image: url('../../../../../../images/conference/svg/SVG/Settings.svg');
+                            background-size: 2.18rem 2.18rem;
+                        }
                     }
 
                 }
