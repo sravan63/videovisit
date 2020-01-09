@@ -266,9 +266,8 @@ public class MemberRestController extends SimplePageController {
 				memberMrn = WebService.getSetupWizardMemberMrn();
 				meetingType = WebService.getSetupWizardMeetingType();
 			}
-			output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid,
-					memberMrn, meetingType);
-			;
+			output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid, memberMrn,
+					meetingType);
 			logger.debug("output = " + output);
 		} catch (Exception e) {
 			logger.error("System Error : ", e);

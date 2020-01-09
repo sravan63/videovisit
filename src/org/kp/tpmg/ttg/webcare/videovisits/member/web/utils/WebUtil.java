@@ -503,6 +503,7 @@ public class WebUtil {
 		logger.info(LOG_ENTERED);
 		final VVResponse output = new VVResponse();
 		Gson gson = new GsonBuilder().serializeNulls().create();
+		output.setName(operation);
 		output.setCode(code);
 		output.setMessage(message);
 		if (result == null) {

@@ -8,11 +8,17 @@ public class VVResponse<T extends Serializable> implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8525796355472485515L;
-	
+	private String name;
 	private String statusCode;
 	private String message;
 	private T data;
-	
+
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	/**
 	 * @return the code
 	 */
@@ -50,14 +56,11 @@ public class VVResponse<T extends Serializable> implements Serializable{
 	public void setData(T data) {
 		this.data = data;
 	}
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
+
 	@Override
 	public String toString() {
-		return "VVResponse [statusCode=" + statusCode + ", message=" + message + ", data=" + data + "]";
+		return "VVResponse [name=" + name + ", statusCode=" + statusCode + ", message=" + message + ", data=" + data
+				+ "]";
 	}
-	
-	
+
 }

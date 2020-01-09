@@ -1195,13 +1195,7 @@ public class WebService {
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
-		String responseCodeAndMsg = "Empty reponse";
-		if (output != null) {
-			responseCodeAndMsg = output.getStatus() != null
-					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
-					: "No rest response code & message returned from service.";
-		}
-		logger.info(LOG_EXITING + "Rest response message & code: " + responseCodeAndMsg);
+		logger.info(LOG_EXITING);
 		return output;
 	}
 
