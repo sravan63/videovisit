@@ -62,7 +62,7 @@ class Conference extends React.Component {
         if (participants) {
             participants.map(guest => {
                 let name = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase();
-                name += guest.hasOwnProperty('title') ? ' ' + guest.title : ' ';
+                name += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : ' ' : ' ';
                 list.push({ name: name.trim() });
             });
             list.sort((a, b) => (a.name > b.name) ? 1 : -1);
