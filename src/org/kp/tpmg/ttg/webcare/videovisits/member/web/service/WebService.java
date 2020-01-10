@@ -1172,21 +1172,17 @@ public class WebService {
 			input.setMeetingType(meetingType);
 			input.setSessionId(sessionId);
 			input.setClientId(clientId);
-
 			final Gson gson = new GsonBuilder().serializeNulls().create();
 			final String inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
-
 			responseJsonStr = callVVRestService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
-
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				final JsonParser parser = new JsonParser();
 				final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-				if(jobject != null && jobject.get("service") != null) {
+				if (jobject != null && jobject.get("service") != null) {
 					output = gson.fromJson(jobject.get("service").toString(), CreateInstantVendorMeetingOutput.class);
 				}
-				
 			}
 		}
 
