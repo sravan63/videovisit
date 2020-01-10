@@ -171,7 +171,7 @@ class Conference extends React.Component {
                                 </div>
 				            </div>
                             </div>
-                            <WaitingRoom  history={this.props.history} />
+                            {/* <WaitingRoom  history={this.props.history} /> */}
                             <div className="stream-container">
                              <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                             </div>
