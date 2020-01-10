@@ -3,6 +3,7 @@ import { PexRTC } from './pexrtcV20.js';
 import MediaService from '../../services/media-service.js';
 import $ from 'jquery';
 import MessageService from '../../services/message-service';
+import BackendService from '../../services/backendService';
 
 var video;
 var flash;
@@ -569,9 +570,9 @@ export function remoteDisconnect(reason) {
         $('#dialog-block-meeting-disconnected00').modal({ 'backdrop': 'static' });
     } else {
         // alert(reason);
-        if(reason == 'Test call finished'){
+        if (reason == 'Test call finished') {
             MessageService.sendMessage('Test call finished', null);
-        } 
+        }
     }
     window.removeEventListener('beforeunload', finalise);
     // window.location = "index.html";
@@ -683,7 +684,7 @@ export function sipDialOut() {
     }
 }
 
-export function participantCreated(participant) {
+function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
     log("info", "participantCreated", "console: participantCreated - inside participantCreated - participant:" + participant);
@@ -766,7 +767,7 @@ export function participantCreated(participant) {
     }*/
 }
 
-export function participantUpdated(participant) {
+function participantUpdated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
     /*if(isMobileDevice){
@@ -776,7 +777,7 @@ export function participantUpdated(participant) {
 
 }
 
-export function participantDeleted(participant) {
+function participantDeleted(participant) {
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
     log("info", "participantDeleted", "console: participantDeleted - inside participantDeleted - participant:" + participant);
     if (isMobileDevice) {
@@ -933,7 +934,9 @@ export function connected(url) {
         //VideoVisit.setMinDimensions();
         if (pexipInitialConnect == false) {
             setPatientGuestPresenceIndicatorManually();
-            //setConferenceStatus();
+            var meetingId = JSON.parse(localStorage.getItem('meetingId'));
+            var memberName = JSON.parse(localStorage.getItem('memberName'));
+            BackendService.setConferenceStatus(meetingId, memberName);
             pexipInitialConnect = true;
         }
     } else {
@@ -966,7 +969,7 @@ export function switchDevices() {
 
 export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
     console.log("inside webui initialise");
-    //log('info', 'initialise', "event: video visit initialise - isMember=" + $('#isMember').val() + ", meetingId=" + $('#meetingId').val());
+    log('info', 'initialise', "event: video visit initialise");
     /*if (!isMobileDevice) {
     hostName = getHostName();
 }
@@ -998,14 +1001,17 @@ $("#selectrole").removeClass("hidden");*/
     name = decodeURIComponent(username).replace('+', ' ');
     source = req_source;
     var camID = [];
-    if(localStorage.getItem('selectedPeripherals')){
+    if (localStorage.getItem('selectedPeripherals')) {
         var peripherals = JSON.parse(localStorage.getItem('selectedPeripherals'));
         cameraID = peripherals.videoSource.deviceId;
     } else {
-        setTimeout(function() {
-            camID = MediaService.getMediaList();
-            cameraID = camID.videoinput[0].deviceId;
-        }, 2000);
+        MediaService.loadDeviceMediaData();
+        this.subscription = MessageService.getMessage().subscribe((message, data) => {
+            if (message.text == 'Media Data Ready') {
+                this.list = message.data;
+                cameraID = this.list.videoinput[0].deviceId;
+            }
+        });
     }
     rtc.video_source = cameraID; //cameraID
     //rtc.audio_source =  audioSource;    //microPhoneID
@@ -1082,7 +1088,7 @@ export function getTurnServerObjsForMobile() {
 //     disconnect();
 // }
 
-export function pexipDisconnect(){
+export function pexipDisconnect() {
     rtc.disconnect();
 }
 
@@ -1435,7 +1441,10 @@ export var log = function(type, param, msg) {
             }
             if (msg) {
                 if (msg.toLowerCase().indexOf("event") > -1) {
-                    var params = [type, param, msg];
+                    var data = {};
+                    data = JSON.parse(localStorage.getItem('vendorDetails'));
+                    var params = [type, param, msg, data.meetingId, data.userType, data.userId];
+                    BackendService.logVendorMeetingEvents(params);
                     //VideoVisit.logVendorMeetingEvents(params);
                 }
             }
@@ -1443,7 +1452,7 @@ export var log = function(type, param, msg) {
         case 'error':
             // Notify error to backed
             var params = [type, param, msg];
-            VideoVisit.logVendorMeetingEvents(params);
+            //VideoVisit.logVendorMeetingEvents(params);
             console.error('WebRTC ERROR :: ' + param + ' :: ' + msg);
             break;
     }

@@ -41,6 +41,49 @@ class BackendService extends React.Component {
     getSetupMeeting(url) {
         return Axios.post(this.state.basePath + '/videovisit/' + url);
     }
+    getMeetingDetails(url, meetingId) {
+        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId, {}, );
+    }
+    getRunningLateInfo(url, meetingId) {
+        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId, {}, );
+    }
+    logVendorMeetingEvents(params) {
+        var logType = params[0],
+            eventName = (params[1]) ? params[1] : '',
+            eventDesc = (params[2]) ? params[2] : '',
+            meetingId = (params[3]) ? params[3] : '',
+            userType = (params[4]) ? params[4] : '',
+            userId = (params[5]) ? params[5] : '',
+            eventData = {
+                'logType': logType,
+                'meetingId': meetingId,
+                'userType': userType,
+                'userId': userId,
+                'eventName': eventName,
+                'eventDescription': eventDesc
+            };
+        Axios.post(this.state.basePath + '/videovisit/' + "logVendorMeetingEvents.json", eventData).subscribe((response) => {
+                console.log("success");
+            },
+            (err) => {
+                console.log("Error");
+            });
+    }
+    setConferenceStatus(meetingId, careGiverName) {
+        var payloadData = {
+            meetingId: meetingId,
+            status: "J",
+            isProxyMeeting: "N",
+            careGiverName: careGiverName
+        };
+        Axios.post(this.state.basePath + '/videovisit/' + "setKPHCConferenceStatus.json", payloadData).subscribe((response) => {
+                console.log("success");
+            },
+            (err) => {
+                console.log("Error");
+            });
+
+    }
 
 }
 export default new BackendService();

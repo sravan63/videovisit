@@ -97,7 +97,7 @@ class MyMeetings extends React.Component {
 
     joinMeeting(meeting) {
         console.log(meeting);
-        localStorage.setItem('meetingDetails', JSON.stringify(meeting));
+        localStorage.setItem('meetingId', JSON.stringify(meeting.meetingId));
         this.setState({ showLoader: true });
         //this.props.history.push('/videoVisitReady');
         var myMeetingsUrl = "launchMeetingForMemberDesktop.json";

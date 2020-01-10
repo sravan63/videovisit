@@ -14,7 +14,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, meetingDetails: {}, participants: [], showLoader: true };
+        this.state = { userDetails: {}, isRunningLate: false, runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
@@ -24,30 +24,85 @@ class Conference extends React.Component {
 
     componentDidMount() {
         // Make AJAX call for meeting details
-        if (localStorage.getItem('meetingDetails')) {
+        if (localStorage.getItem('meetingId')) {
             this.setState({
                 showLoader: false,
             });
-            this.state.meetingDetails = JSON.parse(localStorage.getItem('meetingDetails'));
-            this.state.participants = this.setSortedParticipantList();
-            this.startPexip(this.state.meetingDetails);
+            this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
+            this.getInMeetingDetails();
+            this.getRunningLateInfo();
+            window.setInterval(() => {
+                this.getRunningLateInfo();
+            }, 120000);
 
         } else {
             this.props.history.push('/login');
         }
     }
 
+    getInMeetingDetails() {
+        var meetingId = this.state.meetingId,
+            url = "meetingDetails.json";
+        BackendService.getMeetingDetails(url, meetingId).subscribe((response) => {
+            if (response.data && response.data.statusCode == '200') {
+                var data = response.data.data;
+                this.setState({
+                    meetingDetails: data
+                });
+                var sortedParticipants = this.setSortedParticipantList();
+                this.setState({
+                    participants: sortedParticipants
+                });
+                this.startPexip(this.state.meetingDetails);
+
+            } else {
+
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+
+    }
+
+    getRunningLateInfo() {
+        var meetingId = this.state.meetingId,
+            url = "providerRunningLateInfo.json";
+        BackendService.getRunningLateInfo(url, meetingId).subscribe((response) => {
+            if (response.data && response.data.statusCode == '200') {
+                var data = response.data.data;
+                if (data.isRunningLate == true) {
+                    this.setState({
+                        isRunningLate: true,
+                        runLateMeetingTime: data.runLateMeetingTime
+                    });
+
+                }
+            } else {
+
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+    }
+
 
     startPexip(meeting) {
         localStorage.setItem('guestPin', meeting.vendorGuestPin);
+        localStorage.setItem('memberName', JSON.stringify(meeting.member.inMeetingDisplayName));
         var guestPin = meeting.vendorGuestPin,
             roomJoinUrl = "vve-tpmg-dev.kp.org",
             alias = meeting.meetingVendorId,
             bandwidth = "1280",
             source = "Join+Conference",
             name = meeting.member.inMeetingDisplayName;
+        var vendorDetails = {
+            "meetingId": meeting.meetingId,
+            "userType": "Patient",
+            "userId": meeting.member.mrn
+        };
+        localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);
-        //VideoVisit.setMinDimensions();
+        //Visit.setMinDimensions();
     }
 
     componentWillUnmount() {
@@ -127,12 +182,12 @@ class Conference extends React.Component {
     }
     refreshPage() {
         window.location.reload(false);
-      }
+    }
 
 
     render() {
-        return (
-            <div className="conference-page pl-0 container-fluid">
+            return (
+                <div className="conference-page pl-0 container-fluid">
                 {this.state.showLoader ? (<Loader />):('')}
                 <div className="conference-header row">
                     <div className="col-md-8 banner-content">
@@ -170,7 +225,7 @@ class Conference extends React.Component {
                                 <div className="media-toggle">
                                     <div title="Settings" className="btns media-controls settings-btn"></div>
                                 </div>
-				            </div>
+                            </div>
                             </div>
                             {/* <WaitingRoom  history={this.props.history} /> */}
                             <div className="stream-container">
@@ -208,10 +263,11 @@ class Conference extends React.Component {
                             </div>
                         </div>
                     </div>
-                    ) : ('')}
-            </div>
-        )
-    }
+            ): ('')
+        } <
+        /div>
+)
+}
 }
 
 export default Conference;
