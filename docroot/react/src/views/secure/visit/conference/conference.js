@@ -171,7 +171,13 @@ class Conference extends React.Component {
     }
 
     leaveMeeting() {
-        
+        var meetingId = this.state.meetingDetails.meetingId,
+            memberName = this.state.meetingDetails.member.inMeetingDisplayName;
+        BackendService.quitMeeting(meetingId, memberName).subscribe((response) => {
+                console.log("Success");
+            }, (err) => {
+                console.log("Error");
+        });
         WebUI.pexipDisconnect();
         var browserInfo = Utilities.getBrowserInformation();
         if (browserInfo.isSafari || browserInfo.isFireFox) {

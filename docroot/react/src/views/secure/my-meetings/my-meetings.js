@@ -38,9 +38,11 @@ class MyMeetings extends React.Component {
         };
         let myMeetingsUrl = "retrieveActiveMeetingsForMemberAndProxies.json";
         let isProxy = true;
+        let loginType = "sso";
         if (this.state.userDetails.isTempAccess) {
             headers.authtoken = this.state.userDetails.ssoSession;
             isProxy = false;
+            loginType = "tempAccess";
             myMeetingsUrl = "retrieveActiveMeetingsForMember.json";
         } else {
             if (this.state.userDetails.mrn) {
@@ -51,7 +53,7 @@ class MyMeetings extends React.Component {
             headers.guid = this.state.userDetails.guid;
             headers.ssoSession = this.state.userDetails.ssoSession;
         }
-        BackendService.getMyMeetings(myMeetingsUrl, isProxy, headers).subscribe((response) => {
+        BackendService.getMyMeetings(myMeetingsUrl, isProxy, headers, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 var tempState = this.state;
                 tempState.myMeetings = response.data.data ? response.data.data : [];
@@ -106,16 +108,18 @@ class MyMeetings extends React.Component {
             "Content-Type": "application/json",
             "mrn": this.state.userDetails.mrn
         };
+        var loginType = "sso";
         if (this.state.userDetails.isTempAccess) {
             headers.authtoken = this.state.userDetails.ssoSession;
             headers.megaMeetingDisplayName = meeting.member.inMeetingDisplayName;
+            loginType = "tempAccess";
 
         } else {
             myMeetingsUrl = "launchMemberProxyMeeting.json";
             headers.ssoSession = this.state.userDetails.ssoSession;
             headers.inMeetingDisplayName = meeting.member.inMeetingDisplayName;
         }
-        BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers).subscribe((response) => {
+        BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 if (response.data.data != null && response.data.data != '') {
                     this.props.history.push('/videoVisitReady');

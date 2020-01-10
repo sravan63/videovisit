@@ -30,12 +30,12 @@ class BackendService extends React.Component {
             birth_month + '&birth_year=' + birth_year + '&loginType=tempAccess', {});
     }
 
-    getMyMeetings(url, isProxy, headers) {
-        return Axios.post(this.state.basePath + '/videovisit/' + url + '?getProxyMeetings=' + isProxy, {}, { headers: headers });
+    getMyMeetings(url, isProxy, headers, loginType) {
+        return Axios.post(this.state.basePath + '/videovisit/' + url + '?getProxyMeetings=' + isProxy + '&loginType=' + loginType, {}, { headers: headers });
     }
 
-    launchMemberVisit(url, meetingId, headers) {
-        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId, {}, { headers: headers });
+    launchMemberVisit(url, meetingId, headers, loginType) {
+        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType, {}, { headers: headers });
     }
 
     getSetupMeeting(url) {
@@ -83,6 +83,16 @@ class BackendService extends React.Component {
                 console.log("Error");
             });
 
+    }
+
+    quitMeeting(meetingId, memberName) {
+        var data = {
+            meetingId: meetingId,
+            memberName: memberName,
+            refreshMeetings: false,
+            isProxyMeeting: "N"
+        };
+        return Axios.post(this.state.basePath + '/videovisit/' + "quitmeeting.json", data);
     }
 
 }
