@@ -8,7 +8,7 @@ import './conference.less';
 import * as pexip from '../../../../pexip/complex/pexrtcV20.js';
 import * as WebUI from '../../../../pexip/complex/webui.js';
 import * as eventSource from '../../../../pexip/complex/EventSource.js';
-
+import WaitingRoom from '../../../waiting-room/waiting-room.js';
 
 class Conference extends React.Component {
 
@@ -89,6 +89,7 @@ class Conference extends React.Component {
         let str = '';
         let week = '';
         let month = '';
+        let monthstr = '';
         if (type == 'time') {
             let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
             if (Hour == 0) {
@@ -105,7 +106,8 @@ class Conference extends React.Component {
             str = Hour + ':' + Minutes + AMPM + ', ';
         } else {
             week = String(DateObj).substring(0, 3);
-            month = String(DateObj).substr(4, 6);
+            monthstr = String(DateObj).substr(4, 6);
+            month = monthstr.replace("0","");
             str = week + ', ' + month;
         }
 
@@ -169,6 +171,7 @@ class Conference extends React.Component {
                                 </div>
 				            </div>
                             </div>
+                            <WaitingRoom  history={this.props.history} />
                             <div className="stream-container">
                              <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                             </div>
