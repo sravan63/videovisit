@@ -1184,12 +1184,9 @@ public class WebService {
 					output = gson.fromJson(jobject.get("service").toString(), CreateInstantVendorMeetingOutput.class);
 				}
 			}
-		}
-
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Web Service API error:" + e);
 			throw new Exception("Web Service API error", e.getCause());
-
 		}
 		logger.info(LOG_EXITING);
 		return output;
