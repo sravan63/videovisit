@@ -103,7 +103,8 @@ class Conference extends React.Component {
                 Minutes = "0" + Minutes;
             }
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
-            str = Hour + ':' + Minutes + AMPM + ', ';
+            let HourStr = Hour.replace("0","");
+            str = HourStr + ':' + Minutes + AMPM + ', ';
         } else {
             week = String(DateObj).substring(0, 3);
             monthstr = String(DateObj).substr(4, 6);
