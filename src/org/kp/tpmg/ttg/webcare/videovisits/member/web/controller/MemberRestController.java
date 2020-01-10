@@ -255,23 +255,18 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
-			String hostNuid = null;
-			String participantNuid[] = null;
-			String memberMrn = null;
-			String meetingType = null;
-			boolean isReady = WebService.initWebService(request);
-			if (isReady) {
-				hostNuid = WebService.getSetupWizardHostNuid();
-				memberMrn = WebService.getSetupWizardMemberMrn();
-				meetingType = WebService.getSetupWizardMeetingType();
-			}
-			output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid, memberMrn,
-					meetingType);
-			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
+		String hostNuid = null;
+		String participantNuid[] = null;
+		String memberMrn = null;
+		String meetingType = null;
+		boolean isReady = WebService.initWebService(request);
+		if (isReady) {
+			hostNuid = WebService.getSetupWizardHostNuid();
+			memberMrn = WebService.getSetupWizardMemberMrn();
+			meetingType = WebService.getSetupWizardMeetingType();
 		}
+		output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid, memberMrn, meetingType);
+		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
