@@ -438,7 +438,6 @@ public class MeetingCommand {
 		String result = null;
 		output = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType,
 				request.getSession().getId(), WebUtil.VV_MBR_WEB);
-
 		if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
 				&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
 			result = WebUtil.prepareCommonOutputJson(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING,
