@@ -8,7 +8,7 @@ import './conference.less';
 import * as pexip from '../../../../pexip/complex/pexrtcV20.js';
 import * as WebUI from '../../../../pexip/complex/webui.js';
 import * as eventSource from '../../../../pexip/complex/EventSource.js';
-import WaitingRoom from '../../../waiting-room/waiting-room.js';
+// import WaitingRoom from '../../../waiting-room/waiting-room.js';
 
 class Conference extends React.Component {
 
