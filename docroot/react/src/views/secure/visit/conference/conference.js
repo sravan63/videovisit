@@ -8,8 +8,8 @@ import './conference.less';
 import * as pexip from '../../../../pexip/complex/pexrtcV20.js';
 import * as WebUI from '../../../../pexip/complex/webui.js';
 import * as eventSource from '../../../../pexip/complex/EventSource.js';
-// import WaitingRoom from '../../../waiting-room/waiting-room.js';
-// import { MessageService } from '../../../../services/message-service.js';
+import WaitingRoom from '../../../waiting-room/waiting-room.js';
+import { MessageService } from '../../../../services/message-service.js';
 
 class Conference extends React.Component {
 
@@ -21,7 +21,7 @@ class Conference extends React.Component {
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
         this.startPexip = this.startPexip.bind(this);
-        //this.state = {waitingroommsg: ''};
+        this.state = {hostavail: false};
     }
 
     componentDidMount() {
@@ -41,15 +41,15 @@ class Conference extends React.Component {
             this.props.history.push('/login');
         }
 
-        // this.subscription = MessageService.getMessage().subscribe((message, data) => {
-        //     console.log(message);            
-        //     if(message.text == 'Host Availble'){
-        //         //this.waitingroomdata= message.data;
-        //         console.log(message);
-                
-        //         //this.setState({ waitingroommsg: this.waitingroomdata}); 
-        //     }
-        // });
+        this.subscription = MessageService.getMessage().subscribe((message, data) => {
+            console.log(message);            
+            if(message.text == 'Host Availble'){
+                this.setState({ hostavail: true}); 
+            }
+            else if(message.text == 'Host left'){
+                this.setState({ hostavail: false}); 
+            }
+        });
         //console.log(this.state.waitingroommsg);
     }
 
@@ -252,8 +252,8 @@ class Conference extends React.Component {
                                 </div>
                             </div>
                             </div>
-                            {/* <WaitingRoom  history={this.props.history} /> */}
-                            <div className="stream-container">
+                            <WaitingRoom  waitingroom={this.state.hostavail} />
+                            <div className="stream-container" style={{display: this.state.hostavail ? 'block' : 'none' }}>
                              <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                             </div>
                             <div id="selfview" className="self-view">

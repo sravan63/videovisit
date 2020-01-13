@@ -1,10 +1,9 @@
 // **** WEBUI **** //
 import { PexRTC } from './pexrtcV20.js';
 import MediaService from '../../services/media-service.js';
+import { MessageService } from '../../services/message-service.js'
 import $ from 'jquery';
-import MessageService from '../../services/message-service';
 import BackendService from '../../services/backendService';
-
 var video;
 var flash;
 var isMobileDevice = false;
@@ -102,7 +101,7 @@ export function presentationClosed() {
     $('#presentation-view').css('display', 'none');
 }
 
-export function remotePresentationClosed(reason) {
+ function remotePresentationClosed(reason) {
     if (presentation) {
         /*if (reason) {
             alert(reason);
@@ -168,7 +167,7 @@ export function createPresentationWindow() {
     }*/
 }
 
-export function loadPresentation(url) {
+ function loadPresentation(url) {
     if (presentation && $(presentation).find('#loadimage').length > 0) {
         //presentation.loadimage.src = url;
         $(presentation).find('#loadimage')[0].src = url;
@@ -186,7 +185,7 @@ export function resizePresentationWindow() {
     }*/
 }
 
-export function loadPresentationStream(videoURL) {
+function loadPresentationStream(videoURL) {
     if (presentation && $(presentation).find('#loadimage').length > 0) {
         //presentation.presvideo.poster = "";
         //presentation.presvideo.src = videoURL;
@@ -219,7 +218,7 @@ export function createPresentationStreamWindow() {
     }*/
 }
 
-export function presentationStartStop(setting, pres) {
+ function presentationStartStop(setting, pres) {
     if (setting == true) {
         presenter = pres;
         if (presenting) {
@@ -320,7 +319,7 @@ export function stopSharing() {
     $('#id_screen_unshare').css('display', 'none');
 }
 
-export function unpresentScreen(reason) {
+ function unpresentScreen(reason) {
     if (reason) {
         //alert(reason);
     }
@@ -470,7 +469,7 @@ export function toggleSelfview() {
     }
 }
 
-export function holdresume(setting) {
+ function holdresume(setting) {
     if (setting === true) {
         video.src = "";
         video.poster = "img/OnHold.jpg";
@@ -489,7 +488,7 @@ export function holdresume(setting) {
 
 /* ~~~ ROSTER LIST ~~~ */
 
-export function updateRosterList(roster) {
+ function updateRosterList(roster) {
     console.log('update roster list on participant change');
     /*rosterlist.removeChild(rosterul);
     rosterul = document.createElement("ul");
@@ -563,16 +562,13 @@ export function finalise(event) {
     cleanup();
 }
 
-export function remoteDisconnect(reason) {
+ function remoteDisconnect(reason) {
     log("info", "remoteDisconnect", "console: inside remoteDisconnect reason :" + reason);
     cleanup();
     if (reason.indexOf("get access to camera") > -1) {
         $('#dialog-block-meeting-disconnected00').modal({ 'backdrop': 'static' });
     } else {
-        // alert(reason);
-        if (reason == 'Test call finished') {
-            MessageService.sendMessage('Test call finished', null);
-        }
+        alert(reason);
     }
     window.removeEventListener('beforeunload', finalise);
     // window.location = "index.html";
@@ -591,7 +587,7 @@ export function remoteDisconnect(reason) {
     }
 }
 
-export function handleError(reason) {
+ function handleError(reason) {
     log("error", "handleError", "event: inside handleError reason :" + reason);
     //    console.log("HandleError");
     //    console.log(reason);
@@ -601,7 +597,7 @@ export function handleError(reason) {
     remoteDisconnect(reason);
 }
 
-export function doneSetup(url, pin_status, conference_extension) {
+ function doneSetup(url, pin_status, conference_extension) {
     console.log("inside doneSetup");
 
     if (url) {
@@ -684,77 +680,78 @@ export function sipDialOut() {
     }
 }
 
-function participantCreated(participant) {
+ function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
     log("info", "participantCreated", "console: participantCreated - inside participantCreated - participant:" + participant);
-    if (isMobileDevice) {
-        updateParticipantList(participant, 'join');
-        console.log("inside participantCreated");
-    } else if (participant.protocol == "sip") {
-        var joinParticipantMsg = participant.display_name + " has joined the visit.";
-        if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
-            utilityNotifyQueue(joinParticipantMsg);
-        }
-        var data = [];
-        data.sipParticipants = [participant];
-        var alreadyAddedNumber = [];
-        var inputs = $('.name-of-participant[phonenumber]');
-        if (inputs != null) {
-            inputs.each(function() {
-                var newdata = {
-                    num: $(this).attr('phonenumber'),
-                    name: $(this).text()
-                };
-                alreadyAddedNumber.push(newdata);
-            });
-        }
-        var newName,
-            newNum;
-        var newNumber = participant.uri.substring(6, 16);
-        var newVal = alreadyAddedNumber.forEach(function(val) {
-            if (val.num == newNumber && val.name == participant.display_name) {
-                newName = true;
-                newNum = true;
-            }
-        });
+    toggleWaitingRoom(pexipParticipantsList);
+    // if (isMobileDevice) {
+    //     updateParticipantList(participant, 'join');
+    //     console.log("inside participantCreated");
+    // } else if (participant.protocol == "sip") {
+    //     var joinParticipantMsg = participant.display_name + " has joined the visit.";
+    //     if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
+    //         utilityNotifyQueue(joinParticipantMsg);
+    //     }
+    //     var data = [];
+    //     data.sipParticipants = [participant];
+    //     var alreadyAddedNumber = [];
+    //     var inputs = $('.name-of-participant[phonenumber]');
+    //     if (inputs != null) {
+    //         inputs.each(function() {
+    //             var newdata = {
+    //                 num: $(this).attr('phonenumber'),
+    //                 name: $(this).text()
+    //             };
+    //             alreadyAddedNumber.push(newdata);
+    //         });
+    //     }
+    //     var newName,
+    //         newNum;
+    //     var newNumber = participant.uri.substring(6, 16);
+    //     var newVal = alreadyAddedNumber.forEach(function(val) {
+    //         if (val.num == newNumber && val.name == participant.display_name) {
+    //             newName = true;
+    //             newNum = true;
+    //         }
+    //     });
 
-        var updatedInSidePan = false;
-        if (sidePaneMeetingDetails.sortedParticipantsList) {
-            sidePaneMeetingDetails.sortedParticipantsList.forEach(function(val, i) {
-                if (val.hasOwnProperty('destination') && val.destination == newNumber) {
-                    val.displayName = participant.display_name;
-                    var dom = '.guest-part-' + i + ' ' + '.name-of-participant';
-                    $(dom).html(val.displayName);
-                    updatedInSidePan = true;
-                }
-            });
-        }
+    //     var updatedInSidePan = false;
+    //     if (sidePaneMeetingDetails.sortedParticipantsList) {
+    //         sidePaneMeetingDetails.sortedParticipantsList.forEach(function(val, i) {
+    //             if (val.hasOwnProperty('destination') && val.destination == newNumber) {
+    //                 val.displayName = participant.display_name;
+    //                 var dom = '.guest-part-' + i + ' ' + '.name-of-participant';
+    //                 $(dom).html(val.displayName);
+    //                 updatedInSidePan = true;
+    //             }
+    //         });
+    //     }
 
-        if (!updatedInSidePan && (!newName || !newNum)) {
-            var sipParticipants = {};
-            sipParticipants.displayName = participant.display_name;
-            sipParticipants.participantType = "audio";
-            sipParticipants.destination = participant.uri.substring(6, 16);
-            VideoVisit.appendInvitedGuestToSidebar(sipParticipants, false, true);
-        } else {
-            VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, "pexip");
-        }
+    //     if (!updatedInSidePan && (!newName || !newNum)) {
+    //         var sipParticipants = {};
+    //         sipParticipants.displayName = participant.display_name;
+    //         sipParticipants.participantType = "audio";
+    //         sipParticipants.destination = participant.uri.substring(6, 16);
+    //         VideoVisit.appendInvitedGuestToSidebar(sipParticipants, false, true);
+    //     } else {
+    //         VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, "pexip");
+    //     }
 
-        var contextData = {
-            "destination": participant.uri.substring(6, 16),
-            "displayName": participant.display_name
-        };
-        VideoVisit.updateContext(contextData, "sip");
+    //     var contextData = {
+    //         "destination": participant.uri.substring(6, 16),
+    //         "displayName": participant.display_name
+    //     };
+    //     VideoVisit.updateContext(contextData, "sip");
 
-    } else {
-        var joinParticipantMsg = participant.display_name + " has joined the visit.";
-        if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
-            utilityNotifyQueue(joinParticipantMsg);
-        }
-        toggleWaitingRoom(pexipParticipantsList);
-        VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
-    }
+    // } else {
+    //     var joinParticipantMsg = participant.display_name + " has joined the visit.";
+    //     if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
+    //         utilityNotifyQueue(joinParticipantMsg);
+    //     }
+       // toggleWaitingRoom(pexipParticipantsList);
+        //VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
+    //}
 
     /*if(isProvider == "true"){
         var uuid = participant.uuid;
@@ -767,7 +764,7 @@ function participantCreated(participant) {
     }*/
 }
 
-function participantUpdated(participant) {
+ function participantUpdated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
     /*if(isMobileDevice){
@@ -777,7 +774,7 @@ function participantUpdated(participant) {
 
 }
 
-function participantDeleted(participant) {
+ function participantDeleted(participant) {
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
     log("info", "participantDeleted", "console: participantDeleted - inside participantDeleted - participant:" + participant);
     if (isMobileDevice) {
@@ -794,12 +791,12 @@ function participantDeleted(participant) {
         if (!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()) {
             utilityNotifyQueue(participantMsg);
         }
-        VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
+        //VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
         toggleWaitingRoom(pexipParticipantsList);
     }
 }
 
-export function layoutUpdate(view) {
+ function layoutUpdate(view) {
     log("info", "layoutUpdate", "console: layoutUpdate - inside layoutUpdate - view:" + view.view);
 
     switch (view.view) {
@@ -910,7 +907,7 @@ export function getMediaStats() {
     }
 }
 
-export function connected(url) {
+ function connected(url) {
     log("info", "connected", "event: connected - inside connected");
     setTimeout(function() {
         refreshingOrSelfJoinMeeting = false;
@@ -968,6 +965,7 @@ export function switchDevices() {
 }
 
 export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
+    MessageService.sendMessage('Member Ready', 'Your visit will start once your doctor joins.');
     console.log("inside webui initialise");
     log('info', 'initialise', "event: video visit initialise");
     /*if (!isMobileDevice) {
@@ -1240,9 +1238,10 @@ export function toggleWaitingRoom(pexipParticipantsList) {
     if (!hostDirtyThisMeeting && isHostAvail) {
         hostDirtyThisMeeting = true;
     }
-    VIDEO_VISITS.Path.IS_HOST_AVAILABLE = isHostAvail;
+    //VIDEO_VISITS.Path.IS_HOST_AVAILABLE = isHostAvail;
     if (isHostAvail) {
-        log('info', "Mobile debugging  : **** " + isProvider + " Host Available : #### " + isHostAvail);
+        //log('info', "Mobile debugging  : **** " + isProvider + " Host Available : #### " + isHostAvail);
+        MessageService.sendMessage('Host Availble', null);
         $("#fullWaitingRoom").css("display", "none");
         if (hostDirtyThisMeeting) {
             //Half waiting room
@@ -1252,6 +1251,7 @@ export function toggleWaitingRoom(pexipParticipantsList) {
         }
     } else {
         if (participantsInMeeting.length == 1) {
+            MessageService.sendMessage('Host left', null);
             $("#fullWaitingRoom").css("display", "block");
         } else if (participantsInMeeting.length > 1) {
             if (hostDirtyThisMeeting) {
