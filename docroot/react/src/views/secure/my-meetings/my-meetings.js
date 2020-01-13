@@ -118,6 +118,16 @@ class MyMeetings extends React.Component {
             myMeetingsUrl = "launchMemberProxyMeeting.json";
             headers.ssoSession = this.state.userDetails.ssoSession;
             headers.inMeetingDisplayName = meeting.member.inMeetingDisplayName;
+            var isProxyMeeting,
+                loginMrn = this.state.userDetails.mrn;
+            if(loginMrn == meeting.member.mrn){
+                isProxyMeeting = "N";
+            }
+            else{
+                isProxyMeeting = "Y";
+            }
+            headers.isProxyMeeting = isProxyMeeting;
+            localStorage.setItem('isProxyMeeting',JSON.stringify(isProxyMeeting));
         }
         BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {

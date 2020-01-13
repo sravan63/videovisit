@@ -15,7 +15,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRunningLate: false, runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true };
+        this.state = { userDetails: {}, isRunningLate: false, isProxyMeeting:'', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
@@ -39,6 +39,10 @@ class Conference extends React.Component {
 
         } else {
             this.props.history.push('/login');
+        }
+
+        if (localStorage.getItem('isProxyMeeting')) {
+            this.state.isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         }
 
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
@@ -108,9 +112,10 @@ class Conference extends React.Component {
             bandwidth = "1280",
             source = "Join+Conference",
             name = meeting.member.inMeetingDisplayName;
+        var userType = this.state.isProxyMeeting == 'Y'?(meeting.member.mrn?'Patient_Proxy':'Non_Patient_Proxy'):'Patient';    
         var vendorDetails = {
             "meetingId": meeting.meetingId,
-            "userType": "Patient",
+            "userType": userType,
             "userId": meeting.member.mrn
         };
         localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
@@ -191,8 +196,9 @@ class Conference extends React.Component {
 
     leaveMeeting() {
         var meetingId = this.state.meetingDetails.meetingId,
-            memberName = this.state.meetingDetails.member.inMeetingDisplayName;
-        BackendService.quitMeeting(meetingId, memberName).subscribe((response) => {
+            memberName = this.state.meetingDetails.member.inMeetingDisplayName,
+            isProxyMeeting = this.state.isProxyMeeting;
+        BackendService.quitMeeting(meetingId, memberName, isProxyMeeting).subscribe((response) => {
                 console.log("Success");
             }, (err) => {
                 console.log("Error");

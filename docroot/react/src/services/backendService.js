@@ -69,11 +69,11 @@ class BackendService extends React.Component {
                 console.log("Error");
             });
     }
-    setConferenceStatus(meetingId, careGiverName) {
+    setConferenceStatus(meetingId, careGiverName,isProxyMeeting) {
         var payloadData = {
             meetingId: meetingId,
             status: "J",
-            isProxyMeeting: "N",
+            isProxyMeeting: isProxyMeeting,
             careGiverName: careGiverName
         };
         Axios.post(this.state.basePath + '/videovisit/' + "setKPHCConferenceStatus.json", payloadData).subscribe((response) => {
@@ -85,12 +85,12 @@ class BackendService extends React.Component {
 
     }
 
-    quitMeeting(meetingId, memberName) {
+    quitMeeting(meetingId, memberName,isProxyMeeting) {
         var data = {
             meetingId: meetingId,
             memberName: memberName,
             refreshMeetings: false,
-            isProxyMeeting: "N"
+            isProxyMeeting: isProxyMeeting
         };
         return Axios.post(this.state.basePath + '/videovisit/' + "quitmeeting.json", data);
     }

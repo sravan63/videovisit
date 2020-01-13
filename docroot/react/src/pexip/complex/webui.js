@@ -933,7 +933,8 @@ export function getMediaStats() {
             setPatientGuestPresenceIndicatorManually();
             var meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var memberName = JSON.parse(localStorage.getItem('memberName'));
-            BackendService.setConferenceStatus(meetingId, memberName);
+            var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+            BackendService.setConferenceStatus(meetingId, memberName,isProxyMeeting);
             pexipInitialConnect = true;
         }
     } else {
