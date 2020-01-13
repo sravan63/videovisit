@@ -36,7 +36,7 @@
 
 		<init-param>
 			<param-name>excludeURLs</param-name>
-			<param-value>ssoPreLogin.json,ssoSubmitLogin.json,submitLogin.json,createSetupWizardMeeting.json</param-value>
+			<param-value>ssoPreLogin.json,ssoSubmitLogin.json,submitLogin.json,createSetupWizardMeeting.json,providerRunningLateInfo.json,meetingDetails.json,logVendorMeetingEvents.json,setKPHCConferenceStatus.json,quitmeeting.json</param-value>
 		</init-param>
 
 	</filter>
