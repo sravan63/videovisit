@@ -8,7 +8,8 @@ import './conference.less';
 import * as pexip from '../../../../pexip/complex/pexrtcV20.js';
 import * as WebUI from '../../../../pexip/complex/webui.js';
 import * as eventSource from '../../../../pexip/complex/EventSource.js';
-// import WaitingRoom from '../../../waiting-room/waiting-room.js';
+import WaitingRoom from '../../../waiting-room/waiting-room.js';
+import { MessageService } from '../../../../services/message-service.js'
 
 class Conference extends React.Component {
 
@@ -20,6 +21,7 @@ class Conference extends React.Component {
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
         this.startPexip = this.startPexip.bind(this);
+        //this.state = {waitingroommsg: ''};
     }
 
     componentDidMount() {
@@ -38,6 +40,17 @@ class Conference extends React.Component {
         } else {
             this.props.history.push('/login');
         }
+
+        this.subscription = MessageService.getMessage().subscribe((message, data) => {
+            console.log(message);            
+            if(message.text == 'Host Availble'){
+                //this.waitingroomdata= message.data;
+                console.log(message);
+                
+                //this.setState({ waitingroommsg: this.waitingroomdata}); 
+            }
+        });
+        //console.log(this.state.waitingroommsg);
     }
 
     getInMeetingDetails() {
@@ -145,6 +158,7 @@ class Conference extends React.Component {
         let week = '';
         let month = '';
         let monthstr = '';
+        let HourStr = '';
         if (type == 'time') {
             let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
             if (Hour == 0) {
@@ -158,7 +172,12 @@ class Conference extends React.Component {
                 Minutes = "0" + Minutes;
             }
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
-            let HourStr = Hour.replace("0","");
+            if(Hour >= 10){
+                 HourStr = Hour;
+            }else{
+                 HourStr = Hour.replace("0","");
+            }
+            //let HourStr =  ? Hour : Hour.replace("0","");
             str = HourStr + ':' + Minutes + AMPM + ', ';
         } else {
             week = String(DateObj).substring(0, 3);
@@ -233,7 +252,7 @@ class Conference extends React.Component {
                                 </div>
                             </div>
                             </div>
-                            {/* <WaitingRoom  history={this.props.history} /> */}
+                            <WaitingRoom  history={this.props.history} />
                             <div className="stream-container">
                              <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                             </div>
