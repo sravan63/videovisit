@@ -74,17 +74,14 @@ class Setup extends React.Component {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            //MediaService.start(constrains);
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
-            MediaService.changeAudioDestination(media);
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
             const constrains = {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            //MediaService.start(constrains);
         }
         // Sets the constrains in dropdowns.
         this.setState({
@@ -97,7 +94,6 @@ class Setup extends React.Component {
     }
 
     joinVisit() {
-        //MediaService.stop();
         localStorage.removeItem('selectedPeripherals');
         if (localStorage.getItem('userDetails')) {
             this.props.history.push('/myMeetings');
