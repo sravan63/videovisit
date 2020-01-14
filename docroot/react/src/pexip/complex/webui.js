@@ -27,6 +27,7 @@ var videoPresentation = true;
 var useConsoleForLogging = true;
 var useAlertsForLogging = false;
 var cameraID;
+var audioSource;
 
 var id_selfview;
 var id_muteaudio;
@@ -1007,17 +1008,19 @@ $("#selectrole").removeClass("hidden");*/
     if (localStorage.getItem('selectedPeripherals')) {
         var peripherals = JSON.parse(localStorage.getItem('selectedPeripherals'));
         cameraID = peripherals.videoSource.deviceId;
+        audioSource = peripherals.audioSource.deviceId;
     } else {
         MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             if (message.text == 'Media Data Ready') {
                 this.list = message.data;
                 cameraID = this.list.videoinput[0].deviceId;
+                audioSource = this.list.audiooutput[0].deviceId;
             }
         });
     }
     rtc.video_source = cameraID; //cameraID
-    //rtc.audio_source =  audioSource;    //microPhoneID
+    rtc.audio_source =  audioSource;    //microPhoneID
 
     window.addEventListener('beforeunload', finalise);
 
