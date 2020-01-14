@@ -74,7 +74,7 @@ class Setup extends React.Component {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            MediaService.start(constrains);
+            //MediaService.start(constrains);
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media);
@@ -84,7 +84,7 @@ class Setup extends React.Component {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            MediaService.start(constrains);
+            //MediaService.start(constrains);
         }
         // Sets the constrains in dropdowns.
         this.setState({
@@ -97,7 +97,8 @@ class Setup extends React.Component {
     }
 
     joinVisit() {
-        MediaService.stop();
+        //MediaService.stop();
+        localStorage.removeItem('selectedPeripherals');
         if (localStorage.getItem('userDetails')) {
             this.props.history.push('/myMeetings');
         } else {
@@ -107,6 +108,8 @@ class Setup extends React.Component {
 
     startTest() {
         this.setState({ loadingSetup: true });
+        const data = this.state.constrains;
+        localStorage.setItem('selectedPeripherals', JSON.stringify(data));
         const url = 'createSetupWizardMeeting.json';
         BackendService.getSetupMeeting(url).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
