@@ -15,13 +15,13 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRunningLate: false, isProxyMeeting:'', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true };
+        this.state = { userDetails: {}, isRunningLate: false, isProxyMeeting:'',runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true,runningLatemsg:'',runningLateUpdatedTime:'' };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
         this.startPexip = this.startPexip.bind(this);
-        this.state = {hostavail: false};
+        this.state = {hostavail: false,moreparticpants: false};
     }
 
     componentDidMount() {
@@ -52,6 +52,9 @@ class Conference extends React.Component {
             }
             else if(message.text == 'Host left'){
                 this.setState({ hostavail: false}); 
+            }
+            else if(message.text == 'More participants'){
+                this.setState({ moreparticpants: true}); 
             }
         });
         //console.log(this.state.waitingroommsg);
@@ -90,9 +93,11 @@ class Conference extends React.Component {
                 if (data.isRunningLate == true) {
                     this.setState({
                         isRunningLate: true,
-                        runLateMeetingTime: data.runLateMeetingTime
+                        runLateMeetingTime: data.runLateMeetingTime,
+                        runningLatemsg:"We're sorry, your doctor is running late."
                     });
-
+                    this.updateRunningLateTime();
+                    //MessageService.sendMessage("running late", "We're sorry, your doctor is running late.");
                 }
             } else {
 
@@ -193,6 +198,30 @@ class Conference extends React.Component {
 
         return str;
     }
+    updateRunningLateTime() {
+        if (!this.state.isRunningLate || !this.state.runLateMeetingTime) {            
+            return;
+        }
+        var meetingTime = new Date(parseInt(this.state.runLateMeetingTime));
+        var hours = meetingTime.getHours();
+        var minutes = meetingTime.getMinutes();
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        var ampmval = 'AM';
+        if (hours > 11) {
+            ampmval = 'PM';
+            hours = hours - 12;
+        }
+        hours = (hours == 0) ? 12 : hours;
+        this.setState({
+            runningLateUpdatedTime:  hours + ':' + minutes +' ' + ampmval
+        });
+        //console.log(this.state.runningLateUpdatedTime);
+        
+        // $('.meeting-updated-time-date-info .time-display').text('updated: ' + hours + ':' + minutes + ampmval);
+        // $('.meeting-updated-time-date-info').show();
+    }
 
     leaveMeeting() {
         var meetingId = this.state.meetingDetails.meetingId,
@@ -258,7 +287,7 @@ class Conference extends React.Component {
                                 </div>
                             </div>
                             </div>
-                            <WaitingRoom  waitingroom={this.state.hostavail} />
+                            <WaitingRoom  waitingroom={this.state} />
                             <div className="stream-container" style={{display: this.state.hostavail ? 'block' : 'none' }}>
                              <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                             </div>
@@ -277,6 +306,9 @@ class Conference extends React.Component {
                                         <b>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}</b>
                                         <span>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'date')}</span>
                                     </div>
+                                    <div style={{display: this.state.isRunningLate ? 'block' : 'none' }}>
+										<span className="time-display">updated: {this.state.runningLateUpdatedTime}</span>
+									</div>
                                 </div>
                             </div>
                             <div className="participants-information">

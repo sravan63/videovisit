@@ -1264,6 +1264,7 @@ export function toggleWaitingRoom(pexipParticipantsList) {
         } else if (participantsInMeeting.length > 1) {
             if (hostDirtyThisMeeting) {
                 //Half waiting room
+                MessageService.sendMessage('More participants', null);
                 var calculatedHeight = ($("#pluginContainer").height() - 5) / 2;
                 $("#fullWaitingRoom").css("display", "none");
                 $("#halfWaitingRoom").css("display", "block");
