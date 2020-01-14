@@ -567,15 +567,19 @@ export function finalise(event) {
     cleanup();
     if (reason.indexOf("get access to camera") > -1) {
         $('#dialog-block-meeting-disconnected00').modal({ 'backdrop': 'static' });
-    } else {
-        alert(reason);
+    } else  {
+        if (reason == 'Test call finished') {
+            MessageService.sendMessage('Test call finished', null);
+        }
+
+        //alert(reason);
     }
     window.removeEventListener('beforeunload', finalise);
     // window.location = "index.html";
     /*if (isProvider == "true") {
         window.location.href = '/videovisit/myMeetings.htm';
     }*/
-    if (true) {
+   /* if (true) {
         console.log("disconnected");
     } else {
         var url = window.location.href;
@@ -584,7 +588,7 @@ export function finalise(event) {
         } else {
             // window.location.href = '/videovisit/landingready.htm';
         }
-    }
+    }*/
 }
 
  function handleError(reason) {

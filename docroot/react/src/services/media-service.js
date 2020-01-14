@@ -51,7 +51,7 @@ class MediaService extends React.Component {
         this.sergigateMediaByKind(devices);
         devices.map(mData => {
             const media = {};
-            if( mData.label !== '' ){
+            if( mData.label == '' ){
               var dummy = mData.kind == 'videoinput' ? 'Camera ' : mData.kind == 'audioinput' ? 'Microphone ' : 'Speaker ';
               dummy += this.mediaData[mData.kind].length + 1;
               media['label'] = dummy;
