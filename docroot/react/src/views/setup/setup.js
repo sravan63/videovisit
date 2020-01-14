@@ -110,6 +110,9 @@ class Setup extends React.Component {
         BackendService.getSetupMeeting(url).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 this.setState({ startTest: true});
+                setTimeout(()=>{
+                    MediaService.changeAudioDestination(data.audioSource, 'video');
+                }, 1000);
                 const meeting = response.data.data;
                 var guestPin = meeting.meetingId.split('').reverse().join(''),
                     roomJoinUrl = meeting.roomJoinUrl,

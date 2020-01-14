@@ -93,9 +93,9 @@ class MediaService extends React.Component {
     }
 
     // Chages the microphone on dropdown change.
-    changeAudioDestination(speaker) {
+    changeAudioDestination(speaker, dom='preview') {
       var audioDestination = speaker.deviceId;
-      var videoElement = document.getElementById('preview');
+      var videoElement = document.getElementById(dom);
       DeviceService.helperRingtoneStop();
       this.attachSinkId(videoElement, audioDestination);
     }

@@ -1020,7 +1020,7 @@ $("#selectrole").removeClass("hidden");*/
         });
     }
     rtc.video_source = cameraID; //cameraID
-    rtc.audio_source =  audioSource;    //microPhoneID
+    // rtc.audio_source =  audioSource;    //microPhoneID
 
     window.addEventListener('beforeunload', finalise);
 
