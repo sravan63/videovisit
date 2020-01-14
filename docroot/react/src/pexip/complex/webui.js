@@ -1446,7 +1446,9 @@ export var log = function(type, param, msg) {
             }
             if (msg) {
                 if (msg.toLowerCase().indexOf("event") > -1) {
-                    var data = {};
+                    var data = {},
+                        meetingId,
+                        userType,userId;
                      if (localStorage.getItem('vendorDetails')) {
                     data = JSON.parse(localStorage.getItem('vendorDetails')),
                     meetingId = data.meetingId?data.meetingId:'',
