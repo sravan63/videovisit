@@ -40,7 +40,7 @@ class MediaService extends React.Component {
 
     setDevice(){
      navigator.mediaDevices.enumerateDevices().then((list)=>{
-       this.gotDevicesList(list)
+       this.gotDevicesList(list.slice(0));
      }).catch((error)=>{
        this.handleError(error)
      });
@@ -49,7 +49,17 @@ class MediaService extends React.Component {
     // Gets the list of devices on load.
     gotDevicesList(devices){
         this.sergigateMediaByKind(devices);
-        devices.map(media => {
+        devices.map(mData => {
+            const media = {};
+            if( mData.label !== '' ){
+              var dummy = mData.kind == 'videoinput' ? 'Camera ' : mData.kind == 'audioinput' ? 'Microphone ' : 'Speaker ';
+              dummy += this.mediaData[mData.kind].length + 1;
+              media['label'] = dummy;
+            } else {
+              media['label'] = mData.label;
+            }
+            media['deviceId'] = mData.deviceId;
+            media['kind'] = mData.kind;
             this.mediaData[media.kind].push(media);
         });
         console.log('Media Service - List Of Media Devices :: ' + this.mediaData);
