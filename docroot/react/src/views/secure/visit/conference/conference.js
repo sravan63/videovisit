@@ -48,16 +48,33 @@ class Conference extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             console.log(message);            
             if(message.text == 'Host Availble'){
-                this.setState({ hostavail: true}); 
+                this.setState({ hostavail: true});
+                this.toggleDockView(false);
             }
             else if(message.text == 'Host left'){
-                this.setState({ hostavail: false}); 
+                this.setState({ hostavail: false});
+                this.toggleDockView(false);
             }
             else if(message.text == 'More participants'){
-                this.setState({ moreparticpants: true}); 
+                this.setState({ moreparticpants: true});
+                this.toggleDockView(true);
             }
         });
         //console.log(this.state.waitingroommsg);
+    }
+
+    toggleDockView(isDock){
+        if(isDock){
+            var ele = document.getElementsByClassName('video-conference')[0];
+            var dockHeight = ele.offsetHeight/2;
+            var wRoom = document.getElementsByClassName('waiting-room-body')[0];
+            wRoom.style.height = dockHeight;
+            var remoteFeed = document.getElementsByClassName('remoteFeed')[0];
+            remoteFeed.style.height = dockHeight;
+        } else {
+            var wRoom = document.getElementsByClassName('waiting-room-body')[0];
+            wRoom.style.height = '100%';
+        }
     }
 
     getInMeetingDetails() {
@@ -287,9 +304,11 @@ class Conference extends React.Component {
                                 </div>
                             </div>
                             </div>
-                            <WaitingRoom  waitingroom={this.state} />
-                            <div className="stream-container" style={{display: this.state.hostavail ? 'block' : 'none' }}>
-                             <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                            <div className="col p-0">
+                                <WaitingRoom waitingroom={this.state} />
+                                <div className="stream-container" style={{display: this.state.hostavail ? 'block' : 'none' }}>
+                                 <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                </div>
                             </div>
                             <div id="selfview" className="self-view">
                            <video id="selfvideo" autoPlay="autoplay" playsInline="playsinline" muted={true}>

@@ -1253,26 +1253,18 @@ export function toggleWaitingRoom(pexipParticipantsList) {
         $("#fullWaitingRoom").css("display", "none");
         if (hostDirtyThisMeeting) {
             //Half waiting room
-            $("#halfWaitingRoom").css("display", "none");
-            var calculatedHeight = $("#pluginContainer").height();
-            $(".remoteFeed").height(calculatedHeight);
+            MessageService.sendMessage('More participants', null);
         }
     } else {
         if (participantsInMeeting.length == 1) {
             MessageService.sendMessage('Host left', null);
-            $("#fullWaitingRoom").css("display", "block");
         } else if (participantsInMeeting.length > 1) {
             if (hostDirtyThisMeeting) {
                 //Half waiting room
                 MessageService.sendMessage('More participants', null);
-                var calculatedHeight = ($("#pluginContainer").height() - 5) / 2;
-                $("#fullWaitingRoom").css("display", "none");
-                $("#halfWaitingRoom").css("display", "block");
-                $("#halfWaitingRoom").outerHeight(calculatedHeight);
-                $(".remoteFeed").outerHeight(calculatedHeight);
             } else {
                 // Full waiting room
-                $("#fullWaitingRoom").css("display", "block");
+                MessageService.sendMessage('Host left', null);
             }
         }
     }
