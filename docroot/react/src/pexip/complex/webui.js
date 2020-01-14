@@ -934,7 +934,7 @@ export function getMediaStats() {
             var meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var memberName = JSON.parse(localStorage.getItem('memberName'));
             var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-            BackendService.setConferenceStatus(meetingId, memberName,isProxyMeeting);
+            //BackendService.setConferenceStatus(meetingId, memberName,isProxyMeeting);
             pexipInitialConnect = true;
         }
     } else {
@@ -1443,9 +1443,15 @@ export var log = function(type, param, msg) {
             if (msg) {
                 if (msg.toLowerCase().indexOf("event") > -1) {
                     var data = {};
-                    data = JSON.parse(localStorage.getItem('vendorDetails'));
-                    var params = [type, param, msg, data.meetingId, data.userType, data.userId];
+                     if (localStorage.getItem('vendorDetails')) {
+                    data = JSON.parse(localStorage.getItem('vendorDetails')),
+                    meetingId = data.meetingId?data.meetingId:'',
+                    userType = data.userType?userType:'',
+                    userId = data.userId?data.userId:'';
+
+                    var params = [type, param, msg, meetingId, userType, userId];
                     BackendService.logVendorMeetingEvents(params);
+                    }
                     //VideoVisit.logVendorMeetingEvents(params);
                 }
             }
