@@ -32,8 +32,8 @@ class WaitingRoom extends React.Component {
 
     render() {
         return (
-            <div className="waiting-room-body" style={{width: this.props.waitingroom.hostavail ? '0' : '100%' }}>
-                <div className="full-waiting-room" style={{display: this.props.waitingroom.hostavail ? 'none' : 'block' }}>
+            <div className="waiting-room-body" style={{width: this.props.waitingroom.hostavail ? '0' : '100%', display:this.props.waitingroom.hostavail ? "none" : "block",height: this.props.waitingroom.moreparticpants ? 'auto' : '100%' }}>
+                <div className="full-waiting-room" style={{display: this.props.waitingroom.moreparticpants ? 'none' : 'block' }}>
     				<div className="conference-waiting-room">
     					<div className="waitingRoomMessageBlock">
                             <div className="tpmg-logo float-left m-0"></div>
@@ -44,7 +44,7 @@ class WaitingRoom extends React.Component {
     				</div>
     			</div>
                 <div className="half-waiting-room" style={{display: this.props.waitingroom.moreparticpants ? 'block' : 'none' }}>
-    				<div className="conference-waiting-room">
+    				<div className="conference-waiting-room" style={{ height: '15rem' }}>
     					<div className="waitingRoomMessageBlock">
                             <div className="tpmg-logo float-left m-0"></div>
     						<span className="waitingroom-text" style={{display: this.props.waitingroom.isRunningLate ? 'none' : 'block' }}>{this.state.waitingroommsg}</span>

@@ -22,6 +22,7 @@ class Conference extends React.Component {
         this.leaveMeeting = this.leaveMeeting.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.state = {hostavail: false,moreparticpants: false};
+         this.videofeedflag = false;
     }
 
     componentDidMount() {
@@ -53,11 +54,19 @@ class Conference extends React.Component {
             }
             else if(message.text == 'Host left'){
                 this.setState({ hostavail: false});
+                this.setState({ moreparticpants: false});
                 this.toggleDockView(false);
             }
             else if(message.text == 'More participants'){
+                this.setState({ hostavail: false});
                 this.setState({ moreparticpants: true});
                 this.toggleDockView(true);
+            }
+            if(!this.state.hostavail && this.state.moreparticpants){
+                this.videofeedflag = true; 
+            }
+            else if(this.state.hostavail && !this.state.moreparticpants){
+                this.videofeedflag = true;
             }
         });
         //console.log(this.state.waitingroommsg);
@@ -306,7 +315,7 @@ class Conference extends React.Component {
                             </div>
                             <div className="col p-0">
                                 <WaitingRoom waitingroom={this.state} />
-                                <div className="stream-container" style={{display: this.state.hostavail ? 'block' : 'none' }}>
+                                <div className="stream-container" style={{display: this.videofeedflag ? 'block' : 'none',height: this.state.moreparticpants ? '283px' : '100%' }}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                 </div>
                             </div>

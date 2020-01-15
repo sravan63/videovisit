@@ -1253,7 +1253,7 @@ export function toggleWaitingRoom(pexipParticipantsList) {
         $("#fullWaitingRoom").css("display", "none");
         if (hostDirtyThisMeeting) {
             //Half waiting room
-            MessageService.sendMessage('More participants', null);
+          //  MessageService.sendMessage('More participants', null);
         }
     } else {
         if (participantsInMeeting.length == 1) {
