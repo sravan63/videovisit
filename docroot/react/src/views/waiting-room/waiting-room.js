@@ -44,7 +44,7 @@ class WaitingRoom extends React.Component {
     				</div>
     			</div>
                 <div className="half-waiting-room" style={{display: this.props.waitingroom.moreparticpants ? 'block' : 'none' }}>
-    				<div className="conference-waiting-room" style={{ height: '15rem' }}>
+    				<div className="conference-waiting-room">
     					<div className="waitingRoomMessageBlock">
                             <div className="tpmg-logo float-left m-0"></div>
     						<span className="waitingroom-text" style={{display: this.props.waitingroom.isRunningLate ? 'none' : 'block' }}>{this.state.waitingroommsg}</span>

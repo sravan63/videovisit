@@ -76,10 +76,10 @@ class Conference extends React.Component {
         if(isDock){
             var ele = document.getElementsByClassName('video-conference')[0];
             var dockHeight = ele.offsetHeight/2;
-            var wRoom = document.getElementsByClassName('waiting-room-body')[0];
-            wRoom.style.height = dockHeight;
-            var remoteFeed = document.getElementsByClassName('remoteFeed')[0];
-            remoteFeed.style.height = dockHeight;
+            var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
+            wRoom.style.height = dockHeight/16+'rem';
+            var remoteFeed = document.getElementsByClassName('stream-container')[0];
+            remoteFeed.style.height = dockHeight/16+'rem';
         } else {
             var wRoom = document.getElementsByClassName('waiting-room-body')[0];
             wRoom.style.height = '100%';
@@ -315,7 +315,7 @@ class Conference extends React.Component {
                             </div>
                             <div className="col p-0">
                                 <WaitingRoom waitingroom={this.state} />
-                                <div className="stream-container" style={{display: this.videofeedflag ? 'block' : 'none',height: this.state.moreparticpants ? '283px' : '100%' }}>
+                                <div className="stream-container" style={{display: this.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                 </div>
                             </div>
