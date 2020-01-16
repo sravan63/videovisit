@@ -1008,14 +1008,14 @@ $("#selectrole").removeClass("hidden");*/
     if (localStorage.getItem('selectedPeripherals')) {
         var peripherals = JSON.parse(localStorage.getItem('selectedPeripherals'));
         cameraID = peripherals.videoSource.deviceId;
-        audioSource = peripherals.audioSource.deviceId;
+        //audioSource = peripherals.audioSource.deviceId;
     } else {
         MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             if (message.text == 'Media Data Ready') {
                 this.list = message.data;
                 cameraID = this.list.videoinput[0].deviceId;
-                audioSource = this.list.audiooutput[0].deviceId;
+                //audioSource = this.list.audiooutput[0].deviceId;
             }
         });
     }
