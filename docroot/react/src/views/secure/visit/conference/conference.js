@@ -52,7 +52,6 @@ class Conference extends React.Component {
                 this.setState({ hostavail: true});
                 this.toggleDockView(false);
                 this.setState({ videofeedflag: true});
-                // this.state.videofeedflag = true;
             }
             else if(message.text == 'Host left'){
                 this.setState({ hostavail: false});
@@ -65,22 +64,8 @@ class Conference extends React.Component {
                 this.setState({ moreparticpants: true});
                 this.toggleDockView(true);
             }
-            else if(message.text == 'Host left' && message.text == 'More participants'){
-                this.setState({ videofeedflag: true});
-                this.toggleDockView(false);
-            }
             
         });
-        // if(!this.state.hostavail && this.state.moreparticpants){
-        //     this.videofeedflag = true; 
-        // }
-        // else if(this.state.hostavail && !this.state.moreparticpants){
-        //     this.videofeedflag = true;
-        // }
-        // else if(!this.state.hostavail && !this.state.moreparticpants){
-        //     this.videofeedflag = false;
-        // }
-        //console.log(this.state.waitingroommsg);
     }
 
     toggleDockView(isDock){
@@ -92,7 +77,7 @@ class Conference extends React.Component {
             var remoteFeed = document.getElementsByClassName('stream-container')[0];
             remoteFeed.style.height = dockHeight/16+'rem';
         } else {
-            var wRoom = document.getElementsByClassName('waiting-room-body')[0];
+            var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
             wRoom.style.height = '100%';
         }
     }
