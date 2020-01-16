@@ -15,14 +15,14 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRunningLate: false, isProxyMeeting:'',runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true,runningLatemsg:'',runningLateUpdatedTime:'' };
+        this.state = { userDetails: {}, isRunningLate: false, isProxyMeeting:'',runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true,runningLatemsg:'',runningLateUpdatedTime:'' ,hostavail: false,moreparticpants: false,videofeedflag: false};
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
         this.startPexip = this.startPexip.bind(this);
-        this.state = {hostavail: false,moreparticpants: false};
-         this.videofeedflag = false;
+        // this.state = {hostavail: false,moreparticpants: false,videofeedflag: false;};
+        //  this.videofeedflag = false;
     }
 
     componentDidMount() {
@@ -51,24 +51,35 @@ class Conference extends React.Component {
             if(message.text == 'Host Availble'){
                 this.setState({ hostavail: true});
                 this.toggleDockView(false);
+                this.setState({ videofeedflag: true});
+                // this.state.videofeedflag = true;
             }
             else if(message.text == 'Host left'){
                 this.setState({ hostavail: false});
                 this.setState({ moreparticpants: false});
                 this.toggleDockView(false);
+                this.setState({ videofeedflag: false});
             }
             else if(message.text == 'More participants'){
                 this.setState({ hostavail: false});
                 this.setState({ moreparticpants: true});
                 this.toggleDockView(true);
             }
-            if(!this.state.hostavail && this.state.moreparticpants){
-                this.videofeedflag = true; 
+            else if(message.text == 'Host left' && message.text == 'More participants'){
+                this.setState({ videofeedflag: true});
+                this.toggleDockView(false);
             }
-            else if(this.state.hostavail && !this.state.moreparticpants){
-                this.videofeedflag = true;
-            }
+            
         });
+        // if(!this.state.hostavail && this.state.moreparticpants){
+        //     this.videofeedflag = true; 
+        // }
+        // else if(this.state.hostavail && !this.state.moreparticpants){
+        //     this.videofeedflag = true;
+        // }
+        // else if(!this.state.hostavail && !this.state.moreparticpants){
+        //     this.videofeedflag = false;
+        // }
         //console.log(this.state.waitingroommsg);
     }
 
@@ -315,7 +326,7 @@ class Conference extends React.Component {
                             </div>
                             <div className="col p-0">
                                 <WaitingRoom waitingroom={this.state} />
-                                <div className="stream-container" style={{display: this.videofeedflag ? 'block' : 'none'}}>
+                                <div className="stream-container" style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                 </div>
                             </div>
