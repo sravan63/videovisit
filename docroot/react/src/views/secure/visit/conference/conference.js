@@ -79,6 +79,8 @@ class Conference extends React.Component {
         } else {
             var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
             wRoom.style.height = '100%';
+            var wRoom = document.getElementsByClassName('stream-container')[0];
+            wRoom.style.height = '100%';
         }
     }
 
