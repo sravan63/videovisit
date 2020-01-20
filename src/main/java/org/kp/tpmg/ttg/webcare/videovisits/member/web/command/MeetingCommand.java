@@ -668,23 +668,31 @@ public class MeetingCommand {
 		return strResponse;
 	}
 
-	public static boolean performSSOSignOff(HttpServletRequest request, HttpServletResponse response) {
+	public static String logout(HttpServletRequest request, HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
-		boolean isSignedOff = false;
+		String output = null;
 		try {
-			if ("sso".equalsIgnoreCase(request.getParameter("loginType"))
-					&& StringUtils.isNotBlank(request.getHeader("ssoSession"))) {
+			if (WebUtil.SSO.equalsIgnoreCase(request.getParameter(WebUtil.LOGIN_TYPE))
+					&& StringUtils.isNotBlank(request.getHeader(WebUtil.SSO_SESSION))) {
 				WebService.initWebService(request);
-				isSignedOff = WebService.performKpOrgSSOSignOff(request.getHeader("ssoSession"));
+				WebService.performKpOrgSSOSignOff(request.getHeader(WebUtil.SSO_SESSION));
 			}
 			WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
 			WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);
 			WebUtil.removeCookie(request, response, WebUtil.S_COOKIE_NAME);
+			output = WebUtil.prepareCommonOutputJson("logout", "200", "success", "");
+			final String loginType = request.getParameter(WebUtil.LOGIN_TYPE);
+			if (WebUtil.SSO.equalsIgnoreCase(loginType) || WebUtil.TEMP_ACCESS.equalsIgnoreCase(loginType)) {
+				memberLogout(request);
+			}
 		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("Error while logout : ", e);
+		}
+		if (StringUtils.isBlank(output)) {
+			output = WebUtil.prepareCommonOutputJson("logout", "900", "failure", "");
 		}
 		logger.info(LOG_EXITING);
-		return isSignedOff;
+		return output;
 	}
 
 	public static String setKPHCConferenceStatus(HttpServletRequest request) {
@@ -1059,7 +1067,7 @@ public class MeetingCommand {
 		try {
 			output = WebService.memberLogout(request.getParameter("mrn"), request.getSession().getId());
 		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("Error while memberLogout", e);
 		}
 		logger.info(LOG_EXITING);
 		return output;

@@ -61,6 +61,10 @@ public class WebUtil {
 	public static final String BLOCK_SAFARI_VERSION = "12";
 	public static final String AUTH_TOKEN = "authtoken";
 	public static final String SSO_SESSION = "ssoSession";
+	public static final String GUEST = "guest";
+	public static final String LOGIN_TYPE = "loginType";
+	public static final String SSO = "sso";
+	public static final String TEMP_ACCESS = "tempAccess";
 
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);

@@ -1411,16 +1411,15 @@ public class WebService {
 		return output;
 	}
 
-	public static String memberLogout(String mrn8Digit, String sessionID) throws Exception {
+	public static String memberLogout(String mrn, String sessionId) throws Exception {
 		logger.info(LOG_ENTERED);
-		logger.debug("mrn8Digit=" + mrn8Digit);
 		MemberLogoutInput input = new MemberLogoutInput();
 		Gson gson = new Gson();
 		String output;
-		if (StringUtils.isBlank(mrn8Digit)) {
-			mrn8Digit = WebUtil.NON_MEMBER;
+		if (StringUtils.isBlank(mrn)) {
+			mrn = WebUtil.NON_MEMBER;
 		}
-		if (StringUtils.isBlank(sessionID)) {
+		if (StringUtils.isBlank(sessionId)) {
 			logger.warn("Missing input attributes.");
 			ServiceCommonOutputJson memberLogoutOutput = new ServiceCommonOutputJson();
 			memberLogoutOutput.setService(new ServiceCommonOutput());
@@ -1432,8 +1431,8 @@ public class WebService {
 		}
 
 		try {
-			input.setMrn8Digit(mrn8Digit);
-			input.setSessionId(sessionID);
+			input.setMrn8Digit(mrn);
+			input.setSessionId(sessionId);
 			logger.debug("inputJsonString : " + gson.toJson(input));
 			output = callVVRestService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input));
 		} catch (Exception e) {
