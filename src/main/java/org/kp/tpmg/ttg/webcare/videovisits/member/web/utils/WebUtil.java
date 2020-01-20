@@ -26,6 +26,9 @@ import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class WebUtil {
 
@@ -519,5 +522,17 @@ public class WebUtil {
 		final String json = gson.toJson(output);
 		logger.info(LOG_EXITING);
 		return json;
+	}
+	
+	public static String setBandWidth(String result, String desktopBandwidth, String data) {
+		JsonElement jelement = new JsonParser().parse(result);
+		JsonObject jobject = jelement.getAsJsonObject();
+		if (StringUtils.isNotBlank(data)) {
+			jobject.getAsJsonObject(data).addProperty("desktopBandwidth", desktopBandwidth);
+		} else {
+			jobject.addProperty("desktopBandwidth", desktopBandwidth);
+		}
+		result = jobject.toString();
+		return result;
 	}
 }

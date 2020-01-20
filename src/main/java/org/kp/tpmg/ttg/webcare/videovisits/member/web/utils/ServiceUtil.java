@@ -31,4 +31,9 @@ public class ServiceUtil {
 	public static final String GET_MEETING_DETAILS_FOR_MEETING_ID = "getMeetingDetailsForMeetingId";
 	public static final String JOIN_MEETING = "joinMeeting";
 	public static final String LEAVE_MEETING = "leaveMeeting";
+	
+	public static final String SUCCESS_200 = "200";
+	public static final String FAILURE_900 = "900";
+	public static final String FAILURE = "Failure";
+	public static final String SUCCESS = "Success";
 }

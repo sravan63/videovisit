@@ -10,8 +10,6 @@ import org.springframework.web.client.RestTemplate;
 
 import mockit.Mocked;
 
-
-
 public class AbstractVideoVisitMemberApiTest {
 
 	@Mocked
@@ -23,8 +21,8 @@ public class AbstractVideoVisitMemberApiTest {
 	@Mocked
 	RestTemplate restTemplate;
 
-	MemberRestController memberRestController = new MemberRestController();
-
 	WebService webService = new WebService();
+
+	MemberRestController memberRestController = new MemberRestController();
 
 }

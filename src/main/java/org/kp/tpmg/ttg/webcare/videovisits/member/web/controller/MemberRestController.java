@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
@@ -116,12 +117,8 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
-			output = MeetingCommand.launchMeetingForMemberDesktop(request);
-			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
+		output = MeetingCommand.launchMeetingForMemberDesktop(request);
+		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -132,12 +129,8 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
-			output = MeetingCommand.getProviderRunningLateDetails(request);
-			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
+		output = MeetingCommand.getProviderRunningLateDetails(request);
+		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -148,12 +141,8 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
-			output = MeetingCommand.logVendorMeetingEvents(request);
-			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
+		output = MeetingCommand.logVendorMeetingEvents(request);
+		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -164,12 +153,8 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
 			output = MeetingCommand.setKPHCConferenceStatus(request);
 			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -180,12 +165,8 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
 			output = MeetingCommand.getMeetingDetails(request);
 			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -197,12 +178,8 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
 			output = MeetingCommand.launchMemberOrProxyMeetingForMember(request);
 			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -214,12 +191,8 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
-			output = MeetingCommand.createCaregiverMeetingSession(request);
-			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
+		output = MeetingCommand.createCaregiverMeetingSession(request);
+		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -231,15 +204,53 @@ public class MemberRestController extends SimplePageController {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		try {
 			output = MeetingCommand.caregiverJoinLeaveMeeting(request);
 			logger.debug("output = " + output);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	@RequestMapping(value = "/quitmeeting.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String quitMeeting(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		String memberName = request.getHeader("memberName");
+		logger.debug("memberName=" + memberName);
+		if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
+			output = MeetingCommand.memberLeaveProxyMeeting(request);
+		} else {
+			output = MeetingCommand.updateEndMeetingLogout(request, memberName, false);
+		}
+		logger.debug("output = " + output);
+
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/endGuestSession.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String endGuestSession(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		output = MeetingCommand.endCaregiverMeetingSession(request);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	@RequestMapping(value = "/guestmeeting.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String guestmeeting(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		output = MeetingCommand.retrieveMeetingForCaregiver(request, response);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
 	@RequestMapping(value = "/createSetupWizardMeeting.json", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
 	public String createSetupWizardMeeting(final HttpServletRequest request, final HttpServletResponse response)
@@ -261,4 +272,5 @@ public class MemberRestController extends SimplePageController {
 		logger.info(LOG_EXITING);
 		return output;
 	}
+
 }
