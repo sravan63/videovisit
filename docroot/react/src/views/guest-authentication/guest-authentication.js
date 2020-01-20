@@ -37,13 +37,9 @@ class Authentication extends React.Component {
         }
 
         if ("" != event.target.value) {
-            if (this.state.lastname != "" && this.state.mrn != "" && this.state.birth_month != "" && this.state.birth_year != "") {
+            if (this.state.lastname != "") {
                 this.button.disabled = false;
-            } else {
-                this.button.disabled = true;
             }
-        } else {
-            this.button.disabled = true;
         }
     }
 

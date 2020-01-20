@@ -109,11 +109,15 @@ class MyMeetings extends React.Component {
             "Content-Type": "application/json",
             "mrn": this.state.userDetails.mrn
         };
+        var sessionInfo = {};
         var loginType = "sso";
         if (this.state.userDetails.isTempAccess) {
             headers.authtoken = this.state.userDetails.ssoSession;
             headers.megaMeetingDisplayName = meeting.member.inMeetingDisplayName;
             loginType = "tempAccess";
+            sessionInfo.loginType = loginType;
+            sessionInfo.accessToken = headers.authtoken;
+            localStorage.setItem('sessionInfo', JSON.stringify(sessionInfo));
 
         } else {
             myMeetingsUrl = "launchMemberProxyMeeting.json";
@@ -121,14 +125,16 @@ class MyMeetings extends React.Component {
             headers.inMeetingDisplayName = meeting.member.inMeetingDisplayName;
             var isProxyMeeting,
                 loginMrn = this.state.userDetails.mrn;
-            if(loginMrn == meeting.member.mrn){
+            if (loginMrn == meeting.member.mrn) {
                 isProxyMeeting = "N";
-            }
-            else{
+            } else {
                 isProxyMeeting = "Y";
             }
             headers.isProxyMeeting = isProxyMeeting;
-            localStorage.setItem('isProxyMeeting',JSON.stringify(isProxyMeeting));
+            sessionInfo.loginType = loginType;
+            sessionInfo.accessToken = headers.ssoSession;
+            localStorage.setItem('sessionInfo', JSON.stringify(sessionInfo));
+            localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
         }
         BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {

@@ -33,10 +33,10 @@ class Setup extends React.Component {
     componentDidMount() {
         MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            switch(message.text){
+            switch (message.text) {
                 case GlobalConfig.TEST_CALL_FINISHED:
                     this.doneSetupTest();
-                break;
+                    break;
 
                 case GlobalConfig.MEDIA_DATA_READY:
                     this.list = message.data;
@@ -47,8 +47,8 @@ class Setup extends React.Component {
                             videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
                             micSource: this.list.audioinput ? this.list.audioinput[0] : null,
                         }
-                    });       
-                break;
+                    });
+                    break;
             }
         });
     }
@@ -110,8 +110,8 @@ class Setup extends React.Component {
         const url = 'createSetupWizardMeeting.json';
         BackendService.getSetupMeeting(url).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
-                this.setState({ startTest: true});
-                setTimeout(()=>{
+                this.setState({ startTest: true });
+                setTimeout(() => {
                     MediaService.changeAudioDestination(data.audioSource, 'video');
                 }, 1000);
                 const meeting = response.data.data;
@@ -121,6 +121,7 @@ class Setup extends React.Component {
                     bandwidth = "1280",
                     source = "Join+Conference",
                     name = meeting.member.inMeetingDisplayName;
+                localStorage.setItem('isSetupPage', true);
                 WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);
             } else {
                 this.setState({ loadingSetup: false });

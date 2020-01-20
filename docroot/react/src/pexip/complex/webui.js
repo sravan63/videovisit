@@ -30,6 +30,7 @@ var useConsoleForLogging = true;
 var useAlertsForLogging = false;
 var cameraID;
 var audioSource;
+var isSetup;
 
 var id_selfview;
 var id_muteaudio;
@@ -104,7 +105,7 @@ export function presentationClosed() {
     $('#presentation-view').css('display', 'none');
 }
 
- function remotePresentationClosed(reason) {
+function remotePresentationClosed(reason) {
     if (presentation) {
         /*if (reason) {
             alert(reason);
@@ -170,7 +171,7 @@ export function createPresentationWindow() {
     }*/
 }
 
- function loadPresentation(url) {
+function loadPresentation(url) {
     if (presentation && $(presentation).find('#loadimage').length > 0) {
         //presentation.loadimage.src = url;
         $(presentation).find('#loadimage')[0].src = url;
@@ -221,7 +222,7 @@ export function createPresentationStreamWindow() {
     }*/
 }
 
- function presentationStartStop(setting, pres) {
+function presentationStartStop(setting, pres) {
     if (setting == true) {
         presenter = pres;
         if (presenting) {
@@ -322,7 +323,7 @@ export function stopSharing() {
     $('#id_screen_unshare').css('display', 'none');
 }
 
- function unpresentScreen(reason) {
+function unpresentScreen(reason) {
     if (reason) {
         //alert(reason);
     }
@@ -472,7 +473,7 @@ export function toggleSelfview() {
     }
 }
 
- function holdresume(setting) {
+function holdresume(setting) {
     if (setting === true) {
         video.src = "";
         video.poster = "img/OnHold.jpg";
@@ -491,7 +492,7 @@ export function toggleSelfview() {
 
 /* ~~~ ROSTER LIST ~~~ */
 
- function updateRosterList(roster) {
+function updateRosterList(roster) {
     console.log('update roster list on participant change');
     /*rosterlist.removeChild(rosterul);
     rosterul = document.createElement("ul");
@@ -565,12 +566,12 @@ export function finalise(event) {
     cleanup();
 }
 
- function remoteDisconnect(reason) {
+function remoteDisconnect(reason) {
     log("info", "remoteDisconnect", "console: inside remoteDisconnect reason :" + reason);
     cleanup();
     if (reason.indexOf("get access to camera") > -1) {
         $('#dialog-block-meeting-disconnected00').modal({ 'backdrop': 'static' });
-    } else  {
+    } else {
         if (reason == 'Test call finished') {
             MessageService.sendMessage(GlobalConfig.TEST_CALL_FINISHED, null);
         }
@@ -582,19 +583,19 @@ export function finalise(event) {
     /*if (isProvider == "true") {
         window.location.href = '/videovisit/myMeetings.htm';
     }*/
-   /* if (true) {
-        console.log("disconnected");
-    } else {
-        var url = window.location.href;
-        if (url.indexOf("mobile") > -1) {
-            window.location.href = '/videovisit/mobileAppPatientMeetings.htm';
-        } else {
-            // window.location.href = '/videovisit/landingready.htm';
-        }
-    }*/
+    /* if (true) {
+         console.log("disconnected");
+     } else {
+         var url = window.location.href;
+         if (url.indexOf("mobile") > -1) {
+             window.location.href = '/videovisit/mobileAppPatientMeetings.htm';
+         } else {
+             // window.location.href = '/videovisit/landingready.htm';
+         }
+     }*/
 }
 
- function handleError(reason) {
+function handleError(reason) {
     log("error", "handleError", "event: inside handleError reason :" + reason);
     //    console.log("HandleError");
     //    console.log(reason);
@@ -604,7 +605,7 @@ export function finalise(event) {
     remoteDisconnect(reason);
 }
 
- function doneSetup(url, pin_status, conference_extension) {
+function doneSetup(url, pin_status, conference_extension) {
     console.log("inside doneSetup");
 
     if (url) {
@@ -687,11 +688,12 @@ export function sipDialOut() {
     }
 }
 
- function participantCreated(participant) {
+function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
     log("info", "participantCreated", "console: participantCreated - inside participantCreated - participant:" + participant);
     toggleWaitingRoom(pexipParticipantsList);
+
 
     if (participant.protocol == "sip") {
         var joinParticipantMsg = participant.display_name + " has joined the visit.";
@@ -771,7 +773,7 @@ export function sipDialOut() {
     }*/
 }
 
- function participantUpdated(participant) {
+function participantUpdated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
     /*if(isMobileDevice){
@@ -781,7 +783,7 @@ export function sipDialOut() {
 
 }
 
- function participantDeleted(participant) {
+function participantDeleted(participant) {
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
     log("info", "participantDeleted", "console: participantDeleted - inside participantDeleted - participant:" + participant);
     if (isMobileDevice) {
@@ -803,7 +805,7 @@ export function sipDialOut() {
     }
 }
 
- function layoutUpdate(view) {
+function layoutUpdate(view) {
     log("info", "layoutUpdate", "console: layoutUpdate - inside layoutUpdate - view:" + view.view);
 
     switch (view.view) {
@@ -914,7 +916,7 @@ export function getMediaStats() {
     }
 }
 
- function connected(url) {
+function connected(url) {
     log("info", "connected", "event: connected - inside connected");
     setTimeout(function() {
         refreshingOrSelfJoinMeeting = false;
@@ -933,20 +935,23 @@ export function getMediaStats() {
             // id_fullscreen.classList.remove("inactive");
         }
     }
-    //    toggleSelfview();
-    if (!isMobileDevice) {
-        //VideoVisit.setMinDimensions();
-        if (pexipInitialConnect == false) {
-            setPatientGuestPresenceIndicatorManually();
-            var meetingId = JSON.parse(localStorage.getItem('meetingId'));
-            var memberName = JSON.parse(localStorage.getItem('memberName'));
-            var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-            //BackendService.setConferenceStatus(meetingId, memberName,isProxyMeeting);
-            pexipInitialConnect = true;
-        }
-    } else {
-        setMemberOrCareGiverStatus();
+    var isSetup = localStorage.getItem('isSetupPage');
+    if (isSetup == null) {
+        var meetingId = JSON.parse(localStorage.getItem('meetingId')),
+            memberName = JSON.parse(localStorage.getItem('memberName')),
+            isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+        BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
     }
+    //    toggleSelfview();
+    /*if (!isMobileDevice) {
+    VideoVisit.setMinDimensions();
+    if (pexipInitialConnect == false) {
+        setPatientGuestPresenceIndicatorManually();
+        pexipInitialConnect = true;
+    }
+} else {
+    setMemberOrCareGiverStatus();
+}*/
 }
 
 export function setPatientGuestPresenceIndicatorManually() {
@@ -1254,7 +1259,7 @@ export function toggleWaitingRoom(pexipParticipantsList) {
         MessageService.sendMessage(GlobalConfig.HOST_AVAIL, null);
         if (hostDirtyThisMeeting) {
             //Half waiting room
-          //  MessageService.sendMessage('More participants', null);
+            //  MessageService.sendMessage('More participants', null);
         }
     } else {
         if (participantsInMeeting.length == 1) {
@@ -1445,15 +1450,18 @@ export var log = function(type, param, msg) {
                 if (msg.toLowerCase().indexOf("event") > -1) {
                     var data = {},
                         meetingId,
-                        userType,userId;
-                     if (localStorage.getItem('vendorDetails')) {
-                    data = JSON.parse(localStorage.getItem('vendorDetails')),
-                    meetingId = data.meetingId?data.meetingId:'',
-                    userType = data.userType?userType:'',
-                    userId = data.userId?data.userId:'';
+                        userType, userId;
+                    if (localStorage.getItem('vendorDetails')) {
+                        data = JSON.parse(localStorage.getItem('vendorDetails')),
+                            meetingId = data.meetingId ? data.meetingId : '',
+                            userType = data.userType ? data.userType : '',
+                            userId = data.userId ? data.userId : '';
 
-                    var params = [type, param, msg, meetingId, userType, userId];
-                    BackendService.logVendorMeetingEvents(params);
+                        var params = [type, param, msg, meetingId, userType, userId];
+                        var isSetup = localStorage.getItem('isSetupPage');
+                        if (isSetup == null) {
+                            BackendService.logVendorMeetingEvents(params);
+                        }
                     }
                     //VideoVisit.logVendorMeetingEvents(params);
                 }

@@ -17,7 +17,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRunningLate: false, isProxyMeeting:'',runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true,runningLatemsg:'',runningLateUpdatedTime:'' ,hostavail: false,moreparticpants: false,videofeedflag: false};
+        this.state = { userDetails: {}, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
@@ -34,6 +34,11 @@ class Conference extends React.Component {
                 showLoader: false,
             });
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
+            var sessionInfo = JSON.parse(localStorage.getItem('sessionInfo'));
+            if (sessionInfo != null) {
+                this.state.loginType = sessionInfo.loginType;
+                this.state.accessToken = sessionInfo.accessToken;
+            }
             this.getInMeetingDetails();
             this.getRunningLateInfo();
             window.setInterval(() => {
@@ -49,39 +54,40 @@ class Conference extends React.Component {
         }
 
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            switch(message.text){ 
+            switch (message.text) {
                 case GlobalConfig.HOST_AVAIL:
-                    this.setState({ hostavail: true});
+                    this.setState({ hostavail: true });
                     this.toggleDockView(false);
-                    this.setState({ videofeedflag: true});
-                break;
+                    this.setState({ videofeedflag: true });
+                    break;
                 case GlobalConfig.HOST_LEFT:
-                    this.setState({ hostavail: false});
-                    this.setState({ moreparticpants: false});
+                    this.setState({ hostavail: false });
+                    this.setState({ moreparticpants: false });
                     this.toggleDockView(false);
-                    this.setState({ videofeedflag: false});
-                break;
+                    this.setState({ videofeedflag: false });
+                    break;
                 case GlobalConfig.HAS_MORE_PARTICIPANTS:
-                    this.setState({ hostavail: false});
-                    this.setState({ moreparticpants: true});
+                    this.setState({ hostavail: false });
+                    this.setState({ moreparticpants: true });
                     this.toggleDockView(true);
-                break;
+                    break;
+
             }
-            
+
         });
         // setTimeout(()=>{
         //     MessageService.sendMessage(GlobalConfig.NOTIFY_USER, 'Phani has joined the visit.');
         // }, 1000);
     }
 
-    toggleDockView(isDock){
-        if(isDock){
+    toggleDockView(isDock) {
+        if (isDock) {
             var ele = document.getElementsByClassName('video-conference')[0];
-            var dockHeight = ele.offsetHeight/2;
+            var dockHeight = ele.offsetHeight / 2;
             var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
-            wRoom.style.height = dockHeight/16+'rem';
+            wRoom.style.height = dockHeight / 16 + 'rem';
             var remoteFeed = document.getElementsByClassName('stream-container')[0];
-            remoteFeed.style.height = dockHeight/16+'rem';
+            remoteFeed.style.height = dockHeight / 16 + 'rem';
         } else {
             var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
             wRoom.style.height = '100%';
@@ -92,8 +98,9 @@ class Conference extends React.Component {
 
     getInMeetingDetails() {
         var meetingId = this.state.meetingId,
+            loginType = this.state.loginType,
             url = "meetingDetails.json";
-        BackendService.getMeetingDetails(url, meetingId).subscribe((response) => {
+        BackendService.getMeetingDetails(url, meetingId, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
                 this.setState({
@@ -116,15 +123,16 @@ class Conference extends React.Component {
 
     getRunningLateInfo() {
         var meetingId = this.state.meetingId,
+            loginType = this.state.loginType,
             url = "providerRunningLateInfo.json";
-        BackendService.getRunningLateInfo(url, meetingId).subscribe((response) => {
+        BackendService.getRunningLateInfo(url, meetingId, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
                 if (data.isRunningLate == true) {
                     this.setState({
                         isRunningLate: true,
                         runLateMeetingTime: data.runLateMeetingTime,
-                        runningLatemsg:"We're sorry, your doctor is running late."
+                        runningLatemsg: "We're sorry, your doctor is running late."
                     });
                     this.updateRunningLateTime();
                     //MessageService.sendMessage("running late", "We're sorry, your doctor is running late.");
@@ -142,12 +150,12 @@ class Conference extends React.Component {
         localStorage.setItem('guestPin', meeting.vendorGuestPin);
         localStorage.setItem('memberName', JSON.stringify(meeting.member.inMeetingDisplayName));
         var guestPin = meeting.vendorGuestPin,
-            roomJoinUrl = "vve-tpmg-dev.kp.org",
+            roomJoinUrl = meeting.roomJoinUrl,
             alias = meeting.meetingVendorId,
             bandwidth = "1280",
             source = "Join+Conference",
             name = meeting.member.inMeetingDisplayName;
-        var userType = this.state.isProxyMeeting == 'Y'?(meeting.member.mrn?'Patient_Proxy':'Non_Patient_Proxy'):'Patient';    
+        var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
         var vendorDetails = {
             "meetingId": meeting.meetingId,
             "userType": userType,
@@ -212,24 +220,24 @@ class Conference extends React.Component {
                 Minutes = "0" + Minutes;
             }
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
-            if(Hour >= 10){
-                 HourStr = Hour;
-            }else{
-                 HourStr = Hour.replace("0","");
+            if (Hour >= 10) {
+                HourStr = Hour;
+            } else {
+                HourStr = Hour.replace("0", "");
             }
             //let HourStr =  ? Hour : Hour.replace("0","");
             str = HourStr + ':' + Minutes + AMPM + ', ';
         } else {
             week = String(DateObj).substring(0, 3);
             monthstr = String(DateObj).substr(4, 6);
-            month = monthstr.replace("0","");
+            month = monthstr.replace("0", "");
             str = week + ', ' + month;
         }
 
         return str;
     }
     updateRunningLateTime() {
-        if (!this.state.isRunningLate || !this.state.runLateMeetingTime) {            
+        if (!this.state.isRunningLate || !this.state.runLateMeetingTime) {
             return;
         }
         var meetingTime = new Date(parseInt(this.state.runLateMeetingTime));
@@ -245,22 +253,31 @@ class Conference extends React.Component {
         }
         hours = (hours == 0) ? 12 : hours;
         this.setState({
-            runningLateUpdatedTime:  hours + ':' + minutes +' ' + ampmval
+            runningLateUpdatedTime: hours + ':' + minutes + ' ' + ampmval
         });
         //console.log(this.state.runningLateUpdatedTime);
-        
+
         // $('.meeting-updated-time-date-info .time-display').text('updated: ' + hours + ':' + minutes + ampmval);
         // $('.meeting-updated-time-date-info').show();
     }
 
     leaveMeeting() {
+        var headers = {},
+            loginType = this.state.loginType;
+        if (loginType == 'tempAccess') {
+            headers.authtoken = this.state.accessToken;
+        } else {
+            headers.ssoSession = this.state.accessToken;
+        }
         var meetingId = this.state.meetingDetails.meetingId,
             memberName = this.state.meetingDetails.member.inMeetingDisplayName,
             isProxyMeeting = this.state.isProxyMeeting;
-        BackendService.quitMeeting(meetingId, memberName, isProxyMeeting).subscribe((response) => {
-                console.log("Success");
-            }, (err) => {
-                console.log("Error");
+        BackendService.quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType).subscribe((response) => {
+            console.log("Success");
+            window.location.reload(false);
+        }, (err) => {
+            console.log("Error");
+            window.location.reload(false);
         });
         WebUI.pexipDisconnect();
         var browserInfo = Utilities.getBrowserInformation();
@@ -268,7 +285,7 @@ class Conference extends React.Component {
             localStorage.removeItem('selectedPeripherals');
         }
         this.props.history.push(GlobalConfig.MEETINGS_URL);
-        window.location.reload(false);
+
     }
     refreshPage() {
         window.location.reload(false);
@@ -276,8 +293,8 @@ class Conference extends React.Component {
 
 
     render() {
-            return (
-                <div className="conference-page pl-0 container-fluid">
+        return (
+            <div className="conference-page pl-0 container-fluid">
                 <Notifier />
                 {this.state.showLoader ? (<Loader />):('')}
                 <div className="conference-header row">
@@ -340,8 +357,8 @@ class Conference extends React.Component {
                                         <span>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'date')}</span>
                                     </div>
                                     <div style={{display: this.state.isRunningLate ? 'block' : 'none' }}>
-										<span className="time-display">updated: {this.state.runningLateUpdatedTime}</span>
-									</div>
+                                        <span className="time-display">updated: {this.state.runningLateUpdatedTime}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="participants-information">
@@ -361,8 +378,8 @@ class Conference extends React.Component {
                     </div>
             ): ('')
         } </div>
-)
-}
+        )
+    }
 }
 
 export default Conference;

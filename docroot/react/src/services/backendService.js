@@ -41,13 +41,18 @@ class BackendService extends React.Component {
     getSetupMeeting(url) {
         return Axios.post(this.state.basePath + '/videovisit/' + url);
     }
-    getMeetingDetails(url, meetingId) {
-        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId, {}, );
+    getMeetingDetails(url, meetingId, loginType) {
+        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType, {}, );
     }
-    getRunningLateInfo(url, meetingId) {
-        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId, {}, );
+    getRunningLateInfo(url, meetingId, loginType) {
+        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType, {}, );
     }
     logVendorMeetingEvents(params) {
+        var loginType,
+            sessionInfo = JSON.parse(localStorage.getItem('sessionInfo'));
+        if (sessionInfo != null) {
+            loginType = sessionInfo.loginType;
+        }
         var logType = params[0],
             eventName = (params[1]) ? params[1] : '',
             eventDesc = (params[2]) ? params[2] : '',
@@ -62,21 +67,26 @@ class BackendService extends React.Component {
                 'eventName': eventName,
                 'eventDescription': eventDesc
             };
-        Axios.post(this.state.basePath + '/videovisit/' + "logVendorMeetingEvents.json", eventData).subscribe((response) => {
+        Axios.post(this.state.basePath + '/videovisit/' + 'logVendorMeetingEvents.json' + '?loginType=' + loginType, eventData).subscribe((response) => {
                 console.log("success");
             },
             (err) => {
                 console.log("Error");
             });
     }
-    setConferenceStatus(meetingId, careGiverName,isProxyMeeting) {
+    setConferenceStatus(meetingId, careGiverName, isProxyMeeting) {
+        var loginType,
+            sessionInfo = JSON.parse(localStorage.getItem('sessionInfo'));
+        if (sessionInfo != null) {
+            loginType = sessionInfo.loginType;
+        }
         var payloadData = {
             meetingId: meetingId,
             status: "J",
             isProxyMeeting: isProxyMeeting,
             careGiverName: careGiverName
         };
-        Axios.post(this.state.basePath + '/videovisit/' + "setKPHCConferenceStatus.json", payloadData).subscribe((response) => {
+        Axios.post(this.state.basePath + '/videovisit/' + 'setKPHCConferenceStatus.json' + '?loginType=' + loginType, payloadData).subscribe((response) => {
                 console.log("success");
             },
             (err) => {
@@ -85,14 +95,14 @@ class BackendService extends React.Component {
 
     }
 
-    quitMeeting(meetingId, memberName,isProxyMeeting) {
+    quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType) {
         var data = {
             meetingId: meetingId,
             memberName: memberName,
             refreshMeetings: false,
             isProxyMeeting: isProxyMeeting
         };
-        return Axios.post(this.state.basePath + '/videovisit/' + "quitmeeting.json", data);
+        return Axios.post(this.state.basePath + '/videovisit/' + 'quitmeeting.json' + '&loginType=' + loginType, data, { headers: headers });
     }
 
 }
