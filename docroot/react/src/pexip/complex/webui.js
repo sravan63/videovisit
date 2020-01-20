@@ -4,6 +4,8 @@ import MediaService from '../../services/media-service.js';
 import { MessageService } from '../../services/message-service.js'
 import $ from 'jquery';
 import BackendService from '../../services/backendService';
+import GlobalConfig from '../../services/global.config';
+
 var video;
 var flash;
 var isMobileDevice = false;
@@ -570,7 +572,7 @@ export function finalise(event) {
         $('#dialog-block-meeting-disconnected00').modal({ 'backdrop': 'static' });
     } else  {
         if (reason == 'Test call finished') {
-            MessageService.sendMessage('Test call finished', null);
+            MessageService.sendMessage(GlobalConfig.TEST_CALL_FINISHED, null);
         }
 
         //alert(reason);
@@ -690,73 +692,73 @@ export function sipDialOut() {
     pexipParticipantsList.push(participant);
     log("info", "participantCreated", "console: participantCreated - inside participantCreated - participant:" + participant);
     toggleWaitingRoom(pexipParticipantsList);
-    // if (isMobileDevice) {
-    //     updateParticipantList(participant, 'join');
-    //     console.log("inside participantCreated");
-    // } else if (participant.protocol == "sip") {
-    //     var joinParticipantMsg = participant.display_name + " has joined the visit.";
-    //     if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
-    //         utilityNotifyQueue(joinParticipantMsg);
-    //     }
-    //     var data = [];
-    //     data.sipParticipants = [participant];
-    //     var alreadyAddedNumber = [];
-    //     var inputs = $('.name-of-participant[phonenumber]');
-    //     if (inputs != null) {
-    //         inputs.each(function() {
-    //             var newdata = {
-    //                 num: $(this).attr('phonenumber'),
-    //                 name: $(this).text()
-    //             };
-    //             alreadyAddedNumber.push(newdata);
-    //         });
-    //     }
-    //     var newName,
-    //         newNum;
-    //     var newNumber = participant.uri.substring(6, 16);
-    //     var newVal = alreadyAddedNumber.forEach(function(val) {
-    //         if (val.num == newNumber && val.name == participant.display_name) {
-    //             newName = true;
-    //             newNum = true;
-    //         }
-    //     });
 
-    //     var updatedInSidePan = false;
-    //     if (sidePaneMeetingDetails.sortedParticipantsList) {
-    //         sidePaneMeetingDetails.sortedParticipantsList.forEach(function(val, i) {
-    //             if (val.hasOwnProperty('destination') && val.destination == newNumber) {
-    //                 val.displayName = participant.display_name;
-    //                 var dom = '.guest-part-' + i + ' ' + '.name-of-participant';
-    //                 $(dom).html(val.displayName);
-    //                 updatedInSidePan = true;
-    //             }
-    //         });
-    //     }
+    if (participant.protocol == "sip") {
+        var joinParticipantMsg = participant.display_name + " has joined the visit.";
+        if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
+            // utilityNotifyQueue(joinParticipantMsg);
+            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
+        }
+        /*var data = [];
+        data.sipParticipants = [participant];
+        var alreadyAddedNumber = [];
+        var inputs = $('.name-of-participant[phonenumber]');
+        if (inputs != null) {
+            inputs.each(function() {
+                var newdata = {
+                    num: $(this).attr('phonenumber'),
+                    name: $(this).text()
+                };
+                alreadyAddedNumber.push(newdata);
+            });
+        }
+        var newName,
+            newNum;
+        var newNumber = participant.uri.substring(6, 16);
+        var newVal = alreadyAddedNumber.forEach(function(val) {
+            if (val.num == newNumber && val.name == participant.display_name) {
+                newName = true;
+                newNum = true;
+            }
+        });
 
-    //     if (!updatedInSidePan && (!newName || !newNum)) {
-    //         var sipParticipants = {};
-    //         sipParticipants.displayName = participant.display_name;
-    //         sipParticipants.participantType = "audio";
-    //         sipParticipants.destination = participant.uri.substring(6, 16);
-    //         VideoVisit.appendInvitedGuestToSidebar(sipParticipants, false, true);
-    //     } else {
-    //         VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, "pexip");
-    //     }
+        var updatedInSidePan = false;
+        if (sidePaneMeetingDetails.sortedParticipantsList) {
+            sidePaneMeetingDetails.sortedParticipantsList.forEach(function(val, i) {
+                if (val.hasOwnProperty('destination') && val.destination == newNumber) {
+                    val.displayName = participant.display_name;
+                    var dom = '.guest-part-' + i + ' ' + '.name-of-participant';
+                    $(dom).html(val.displayName);
+                    updatedInSidePan = true;
+                }
+            });
+        }
 
-    //     var contextData = {
-    //         "destination": participant.uri.substring(6, 16),
-    //         "displayName": participant.display_name
-    //     };
-    //     VideoVisit.updateContext(contextData, "sip");
+        if (!updatedInSidePan && (!newName || !newNum)) {
+            var sipParticipants = {};
+            sipParticipants.displayName = participant.display_name;
+            sipParticipants.participantType = "audio";
+            sipParticipants.destination = participant.uri.substring(6, 16);
+            VideoVisit.appendInvitedGuestToSidebar(sipParticipants, false, true);
+        } else {
+            VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, "pexip");
+        }
 
-    // } else {
-    //     var joinParticipantMsg = participant.display_name + " has joined the visit.";
-    //     if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
-    //         utilityNotifyQueue(joinParticipantMsg);
-    //     }
-       // toggleWaitingRoom(pexipParticipantsList);
-        //VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
-    //}
+        var contextData = {
+            "destination": participant.uri.substring(6, 16),
+            "displayName": participant.display_name
+        };
+        VideoVisit.updateContext(contextData, "sip");*/
+
+    } else {
+        var joinParticipantMsg = participant.display_name + " has joined the visit.";
+        if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
+            // utilityNotifyQueue(joinParticipantMsg);
+            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
+        }
+        toggleWaitingRoom(pexipParticipantsList);
+        // VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
+    }
 
     /*if(isProvider == "true"){
         var uuid = participant.uuid;
@@ -971,7 +973,7 @@ export function switchDevices() {
 }
 
 export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
-    MessageService.sendMessage('Member Ready', 'Your visit will start once your doctor joins.');
+    MessageService.sendMessage(GlobalConfig.MEMBER_READY, 'Your visit will start once your doctor joins.');
     console.log("inside webui initialise");
     log('info', 'initialise', "event: video visit initialise");
     /*if (!isMobileDevice) {
@@ -1236,7 +1238,7 @@ export function onlyUnique(value, index, self) {
 }
 
 export function hostInMeeting(element, index, array) {
-    return element.role == 'chair';
+    return element.role == GlobalConfig.CHAIR_ROLE;
 }
 
 export function toggleWaitingRoom(pexipParticipantsList) {
@@ -1249,22 +1251,21 @@ export function toggleWaitingRoom(pexipParticipantsList) {
     //VIDEO_VISITS.Path.IS_HOST_AVAILABLE = isHostAvail;
     if (isHostAvail) {
         //log('info', "Mobile debugging  : **** " + isProvider + " Host Available : #### " + isHostAvail);
-        MessageService.sendMessage('Host Availble', null);
-        $("#fullWaitingRoom").css("display", "none");
+        MessageService.sendMessage(GlobalConfig.HOST_AVAIL, null);
         if (hostDirtyThisMeeting) {
             //Half waiting room
           //  MessageService.sendMessage('More participants', null);
         }
     } else {
         if (participantsInMeeting.length == 1) {
-            MessageService.sendMessage('Host left', null);
+            MessageService.sendMessage(GlobalConfig.HOST_LEFT, null);
         } else if (participantsInMeeting.length > 1) {
             if (hostDirtyThisMeeting) {
                 //Half waiting room
-                MessageService.sendMessage('More participants', null);
+                MessageService.sendMessage(GlobalConfig.HAS_MORE_PARTICIPANTS, null);
             } else {
                 // Full waiting room
-                MessageService.sendMessage('Host left', null);
+                MessageService.sendMessage(GlobalConfig.HOST_LEFT, null);
             }
         }
     }

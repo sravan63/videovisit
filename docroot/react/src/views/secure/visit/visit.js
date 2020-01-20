@@ -3,6 +3,7 @@ import Header from '../../../components/header/header';
 import Loader from '../../../components/loader/loader';
 import BackendService from '../../../services/backendService.js';
 import Utilities from '../../../services/utilities-service.js';
+import GlobalConfig from '../../../services/global.config';
 import './visit.less';
 
 const PreCallCheck = React.lazy(() => import('./pre-call-check/pre-call-check'));
@@ -23,7 +24,7 @@ class Visit extends React.Component {
                 this.setState({showPage: true});
             }
         } else {
-            this.props.history.push('/login');
+            this.props.history.push(GlobalConfig.LOGIN_URL);
         }
         var browserInfo = Utilities.getBrowserInformation();
         var peripheralsSelected = localStorage.getItem('selectedPeripherals');

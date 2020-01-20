@@ -2,6 +2,7 @@ import React from "react";
 import Header from '../../../components/header/header';
 import Loader from '../../../components/loader/loader';
 import BackendService from '../../../services/backendService.js';
+import GlobalConfig from '../../../services/global.config';
 import './my-meetings.less';
 
 class MyMeetings extends React.Component {
@@ -16,14 +17,14 @@ class MyMeetings extends React.Component {
         // this.joinMeeting = this.joinMeeting.bind(this);
     }
     componentDidMount() {
-        this.interval = setInterval(() => this.getMyMeetings(), 180000);
+        this.interval = setInterval(() => this.getMyMeetings(), GlobalConfig.AUTO_REFRESH_TIMER);
         if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
             if (this.state.userDetails) {
                 this.getMyMeetings();
             }
         } else {
-            this.props.history.push('/login');
+            this.props.history.push(GlobalConfig.LOGIN_URL);
         }
     }
 
@@ -42,7 +43,7 @@ class MyMeetings extends React.Component {
         if (this.state.userDetails.isTempAccess) {
             headers.authtoken = this.state.userDetails.ssoSession;
             isProxy = false;
-            loginType = "tempAccess";
+            loginType = GlobalConfig.LOGIN_TYPE.TEMP; // "tempAccess";
             myMeetingsUrl = "retrieveActiveMeetingsForMember.json";
         } else {
             if (this.state.userDetails.mrn) {
@@ -65,10 +66,10 @@ class MyMeetings extends React.Component {
         }, (err) => {
             console.log(err);
             if (err.response && err.response.status == 401) {
-                alert("Un Authorised");
+                // alert("Un Authorised");
                 localStorage.clear();
                 this.setState({ showLoader: false });
-                this.props.history.push('/login');
+                this.props.history.push(GlobalConfig.LOGIN_URL);
             }
             this.setState({ showLoader: false });
         });
@@ -132,7 +133,7 @@ class MyMeetings extends React.Component {
         BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 if (response.data.data != null && response.data.data != '') {
-                    this.props.history.push('/videoVisitReady');
+                    this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                     var roomJoin = response.data.data.roomJoinUrl;
                     localStorage.setItem('roomUrl', roomJoin);
                 } else {

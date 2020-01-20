@@ -13,6 +13,7 @@ import Loader from '../../../../components/loader/loader';
 import BackendService from '../../../../services/backendService.js';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service';
+import GlobalConfig from '../../../../services/global.config';
 import './pre-call-check.less';
 
 class PreCallCheck extends React.Component {
@@ -34,25 +35,27 @@ class PreCallCheck extends React.Component {
                 MediaService.loadDeviceMediaData();
             }
         } else {
-            this.props.history.push('/login');
+            this.props.history.push(GlobalConfig.LOGIN_URL);
         }
 
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            if(message.text == 'Media Data Ready'){
-                this.list = message.data;
-                this.setState({ media: this.list });
-                this.setState({
-                    constrains: {
-                        audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
+            switch(message.text) {
+                case GlobalConfig.MEDIA_DATA_READY:
+                    this.list = message.data;
+                    this.setState({ media: this.list });
+                    this.setState({
+                        constrains: {
+                            audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
+                            videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                            micSource: this.list.audioinput ? this.list.audioinput[0] : null,
+                        }
+                    });
+                    const constrains = {
+                        audioSource: this.list.audioinput ? this.list.audioinput[0] : null,
                         videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
-                        micSource: this.list.audioinput ? this.list.audioinput[0] : null,
-                    }
-                });
-                const constrains = {
-                    audioSource: this.list.audioinput ? this.list.audioinput[0] : null,
-                    videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
-                };
-                MediaService.start(constrains);
+                    };
+                    MediaService.start(constrains);
+                break;
             }
         });
     }

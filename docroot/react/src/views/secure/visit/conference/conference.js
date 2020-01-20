@@ -8,7 +8,9 @@ import './conference.less';
 import * as pexip from '../../../../pexip/complex/pexrtcV20.js';
 import * as WebUI from '../../../../pexip/complex/webui.js';
 import * as eventSource from '../../../../pexip/complex/EventSource.js';
-import WaitingRoom from '../../../waiting-room/waiting-room.js';
+import WaitingRoom from '../../../../components/waiting-room/waiting-room';
+import Notifier from '../../../../components/notifier/notifier';
+import GlobalConfig from '../../../../services/global.config';
 import { MessageService } from '../../../../services/message-service.js';
 
 class Conference extends React.Component {
@@ -36,10 +38,10 @@ class Conference extends React.Component {
             this.getRunningLateInfo();
             window.setInterval(() => {
                 this.getRunningLateInfo();
-            }, 120000);
+            }, GlobalConfig.RUNNING_LATE_TIMER);
 
         } else {
-            this.props.history.push('/login');
+            this.props.history.push(GlobalConfig.LOGIN_URL);
         }
 
         if (localStorage.getItem('isProxyMeeting')) {
@@ -47,25 +49,29 @@ class Conference extends React.Component {
         }
 
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            console.log(message);            
-            if(message.text == 'Host Availble'){
-                this.setState({ hostavail: true});
-                this.toggleDockView(false);
-                this.setState({ videofeedflag: true});
-            }
-            else if(message.text == 'Host left'){
-                this.setState({ hostavail: false});
-                this.setState({ moreparticpants: false});
-                this.toggleDockView(false);
-                this.setState({ videofeedflag: false});
-            }
-            else if(message.text == 'More participants'){
-                this.setState({ hostavail: false});
-                this.setState({ moreparticpants: true});
-                this.toggleDockView(true);
+            switch(message.text){ 
+                case GlobalConfig.HOST_AVAIL:
+                    this.setState({ hostavail: true});
+                    this.toggleDockView(false);
+                    this.setState({ videofeedflag: true});
+                break;
+                case GlobalConfig.HOST_LEFT:
+                    this.setState({ hostavail: false});
+                    this.setState({ moreparticpants: false});
+                    this.toggleDockView(false);
+                    this.setState({ videofeedflag: false});
+                break;
+                case GlobalConfig.HAS_MORE_PARTICIPANTS:
+                    this.setState({ hostavail: false});
+                    this.setState({ moreparticpants: true});
+                    this.toggleDockView(true);
+                break;
             }
             
         });
+        // setTimeout(()=>{
+        //     MessageService.sendMessage(GlobalConfig.NOTIFY_USER, 'Phani has joined the visit.');
+        // }, 1000);
     }
 
     toggleDockView(isDock){
@@ -261,7 +267,7 @@ class Conference extends React.Component {
         if (browserInfo.isSafari || browserInfo.isFireFox) {
             localStorage.removeItem('selectedPeripherals');
         }
-        this.props.history.push('/myMeetings');
+        this.props.history.push(GlobalConfig.MEETINGS_URL);
         window.location.reload(false);
     }
     refreshPage() {
@@ -272,6 +278,7 @@ class Conference extends React.Component {
     render() {
             return (
                 <div className="conference-page pl-0 container-fluid">
+                <Notifier />
                 {this.state.showLoader ? (<Loader />):('')}
                 <div className="conference-header row">
                     <div className="col-md-8 banner-content">

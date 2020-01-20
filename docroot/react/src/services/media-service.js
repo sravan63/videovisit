@@ -3,7 +3,7 @@ import Axios from 'axios-observable';
 import DeviceService from './device-peripheral-service.js';
 import Utilities from './utilities-service.js';
 import { MessageService } from './message-service';
-
+import GlobalConfig from './global.config';
 import { range } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
@@ -63,7 +63,7 @@ class MediaService extends React.Component {
             this.mediaData[media.kind].push(media);
         });
         console.log('Media Service - List Of Media Devices :: ' + this.mediaData);
-        MessageService.sendMessage('Media Data Ready', this.mediaData);
+        MessageService.sendMessage(GlobalConfig.MEDIA_DATA_READY, this.mediaData);
     }
   
   // Error call back.

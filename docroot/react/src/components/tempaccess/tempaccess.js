@@ -1,6 +1,7 @@
 import React from 'react';
 import '../../views/authentication/authentication.less';
 import BackendService from '../../services/backendService.js';
+import GlobalConfig from '../../services/global.config';
 import { Route, withRouter } from 'react-router-dom';
 class TempAccess extends React.Component {
     constructor(props) {
@@ -20,7 +21,6 @@ class TempAccess extends React.Component {
                 this.setState({
                     errormsgs: { errorlogin: false, errormsg: "" }
                 });
-                // if(response.data != "" || response.data != null){
                 let data = response.data.data.member;
                 // let fullname = data.firstName + +data.lastName;                
                 data.isTempAccess = true;
@@ -29,10 +29,7 @@ class TempAccess extends React.Component {
                 localStorage.setItem('userDetails', JSON.stringify(data));
                 localStorage.setItem('signedIn', true);
                 this.props.data.emit({ isMobileError: false });
-                this.props.history.push('/myMeetings');
-                // }else{
-                //     this.props.history.push('/myMeetings');
-                // }
+                this.props.history.push(GlobalConfig.MEETINGS_URL);
             } else {
                 this.setState({
                     errormsgs: { errorlogin: true, errormsg: "We could not find this patient. Please try entering the information again." }
