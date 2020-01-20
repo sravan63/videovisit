@@ -60,6 +60,7 @@ public class WebUtil {
 	public static final String FALSE = Boolean.FALSE.toString();
 	public static final String BLOCK_SAFARI_VERSION = "12";
 	public static final String AUTH_TOKEN = "authtoken";
+	public static final String SSO_SESSION = "ssoSession";
 
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);

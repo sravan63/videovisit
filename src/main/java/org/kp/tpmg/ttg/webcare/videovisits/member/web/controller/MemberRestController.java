@@ -100,15 +100,19 @@ public class MemberRestController extends SimplePageController {
 		return output;
 	}
 
-	@RequestMapping(value = "/ssoSignOff.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+	@RequestMapping(value = "/logout.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
 	public String ssoSignOff(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		try {
 			boolean isSignedOff = MeetingCommand.performSSOSignOff(request, response);
+			MeetingCommand.memberLogout(request);
 			if (isSignedOff) {
-				output = WebUtil.prepareCommonOutputJson("ssoSignOff", "200", "success", "");
+				output = WebUtil.prepareCommonOutputJson("logout", "200", "success", "");
+			}
+			if(StringUtils.isBlank(output)) {
+				output = WebUtil.prepareCommonOutputJson("logout", "900", "failure", "");
 			}
 			logger.debug("output = " + output);
 		} catch (Exception e) {

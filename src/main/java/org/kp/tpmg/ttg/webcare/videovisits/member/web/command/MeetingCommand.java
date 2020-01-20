@@ -672,17 +672,14 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		boolean isSignedOff = false;
 		try {
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			if (ctx != null) {
-				if (ctx.getKpOrgSignOnInfo() != null
-						&& StringUtils.isNotBlank(ctx.getKpOrgSignOnInfo().getSsoSession())) {
-					WebService.initWebService(request);
-					isSignedOff = WebService.performKpOrgSSOSignOff(ctx.getKpOrgSignOnInfo().getSsoSession());
-				}
-				WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
-				WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);
-				WebUtil.removeCookie(request, response, WebUtil.S_COOKIE_NAME);
+			if ("sso".equalsIgnoreCase(request.getParameter("loginType"))
+					&& StringUtils.isNotBlank(request.getHeader("ssoSession"))) {
+				WebService.initWebService(request);
+				isSignedOff = WebService.performKpOrgSSOSignOff(request.getHeader("ssoSession"));
 			}
+			WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
+			WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);
+			WebUtil.removeCookie(request, response, WebUtil.S_COOKIE_NAME);
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
@@ -1059,22 +1056,13 @@ public class MeetingCommand {
 	public static String memberLogout(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		try {
-			if (ctx != null && ctx.getMemberDO() != null) {
-				output = WebService.memberLogout(ctx.getMemberDO().getMrn(), request.getSession().getId());
-				if (output != null) {
-					logger.info("json output" + output);
-					logger.info(LOG_EXITING);
-					return output;
-				}
-
-			}
+			output = WebService.memberLogout(request.getParameter("mrn"), request.getSession().getId());
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
-		return JSONObject.fromObject(new SystemError()).toString();
+		return output;
 	}
 
 	/**
