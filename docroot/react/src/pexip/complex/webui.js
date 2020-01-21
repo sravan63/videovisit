@@ -244,7 +244,12 @@ function presentationStartStop(setting, pres) {
             $(".mobileselfview").addClass("mobilesv");
         }
         if (!refreshingOrSelfJoinMeeting && !isMobileDevice) {
-            utilityNotifyQueue(presenting_user + ' has initiated desktop sharing.');
+            // utilityNotifyQueue(presenting_user + ' '+GlobalConfig.PRESENTATION_ON);
+            const data = {
+                message: presenting_user + ' '+GlobalConfig.PRESENTATION_ON,
+                name: presenting_user
+            };
+            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, data);
         }
     } else {
         // if(isMobileDevice){
@@ -264,7 +269,12 @@ function presentationStartStop(setting, pres) {
         // id_presentation.textContent = trans['BUTTON_NOPRES'];
         // id_presentation.classList.add("inactive");
         if (!refreshingOrSelfJoinMeeting && !isMobileDevice && presenting_user) {
-            utilityNotifyQueue(presenting_user + ' has stopped desktop sharing.');
+            // utilityNotifyQueue(presenting_user + ' '+GlobalConfig.PRESENTATION_OFF);
+            const data = {
+                message: presenting_user + ' '+GlobalConfig.PRESENTATION_OFF,
+                name: presenting_user
+            };
+            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, data);
             $(".remoteFeed").css("display", "block");
             $("#selfview").removeClass("togglesv");
             $("#selfview").css("cursor", "default");
@@ -696,11 +706,15 @@ function participantCreated(participant) {
 
 
     if (participant.protocol == "sip") {
-        var joinParticipantMsg = participant.display_name + " has joined the visit.";
-        if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
+        var joinParticipantMsg = {
+            message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
+            name: participant.display_name
+        };
+        // if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
             // utilityNotifyQueue(joinParticipantMsg);
-            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
-        }
+        // }
+        MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
+
         /*var data = [];
         data.sipParticipants = [participant];
         var alreadyAddedNumber = [];
@@ -753,11 +767,14 @@ function participantCreated(participant) {
         VideoVisit.updateContext(contextData, "sip");*/
 
     } else {
-        var joinParticipantMsg = participant.display_name + " has joined the visit.";
-        if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
+        var joinParticipantMsg = {
+            message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
+            name: participant.display_name
+        };
+        // if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
             // utilityNotifyQueue(joinParticipantMsg);
-            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
-        }
+        // }
+        MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
         toggleWaitingRoom(pexipParticipantsList);
         // VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
     }
@@ -796,10 +813,16 @@ function participantDeleted(participant) {
         pexipParticipantsList = pexipParticipantsList.filter(function(user) {
             return user.uuid != participant.uuid;
         });
-        var participantMsg = removingParticipant[0].display_name + " has left the visit.";
-        if (!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()) {
-            utilityNotifyQueue(participantMsg);
-        }
+        // var participantMsg = removingParticipant[0].display_name + " "+GlobalConfig.LEFT_VISIT;
+        // if (!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()) {
+        //     utilityNotifyQueue(participantMsg);
+        // }
+        var participantMsg = {
+            message : removingParticipant[0].display_name + " "+GlobalConfig.LEFT_VISIT,
+            name: removingParticipant[0].display_name
+        };
+        MessageService.sendMessage(GlobalConfig.NOTIFY_USER, participantMsg);
+        
         //VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
         toggleWaitingRoom(pexipParticipantsList);
     }
@@ -1019,7 +1042,7 @@ $("#selectrole").removeClass("hidden");*/
     } else {
         MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            if (message.text == 'Media Data Ready') {
+            if (message.text == GlobalConfig.MEDIA_DATA_READY) {
                 this.list = message.data;
                 cameraID = this.list.videoinput[0].deviceId;
                 //audioSource = this.list.audiooutput[0].deviceId;
@@ -1494,13 +1517,9 @@ export function muteUnmuteVideo() {
     if (muteVideo) {
         log("info", "video_mute_action", "event: muteVideo - on click of mute video button");
         MessageService.sendMessage(GlobalConfig.VIDEO_MUTE, null);
-        // $('#id_video_unmute').css('display', 'block');
-        // $('#id_video_mute').css('display', 'none');
     } else {
         log("info", "video_unmute_action", "event: unmuteVideo - on click of unmute video  button");
         MessageService.sendMessage(GlobalConfig.VIDEO_UNMUTE, null);
-        // $('#id_video_mute').css('display', 'block');
-        // $('#id_video_unmute').css('display', 'none');
     }
 }
 

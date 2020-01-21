@@ -11,18 +11,22 @@ import GlobalConfig from '../../services/global.config';
 class Notifier extends React.Component {
     constructor(props) {
         super(props);
-        this.waitingroomdata = {};
+        this.userDetails = {};
         this.state = {message: 'Testing', showNotifier: false};
     }
 
     componentDidMount() {
-        this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            switch(message.text){
+        this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+        this.subscription = MessageService.getMessage().subscribe((notification) => {
+            switch(notification.text){
                 case GlobalConfig.NOTIFY_USER:
-                    this.setState({ message: message.data, showNotifier: true });
-                    setTimeout(()=>{
-                        this.setState({ showNotifier: false });
-                    }, 2500);
+                const loggedInUserName = this.userDetails.lastName.toLowerCase() + ', ' + this.userDetails.firstName.toLowerCase()
+                    if(loggedInUserName !== notification.data.name.toLowerCase()){
+                        this.setState({ message: notification.data.message, showNotifier: true });
+                        setTimeout(()=>{
+                            this.setState({ showNotifier: false });
+                        }, 2500);
+                    }
                 break;
             }
         });

@@ -37,6 +37,10 @@ const GlobalConfig = {
     HOST_AVAIL: 'Host Availble',
     HOST_LEFT: 'Host left',
     HAS_MORE_PARTICIPANTS: 'More participants',
+    JOINED_VISIT: 'has joined the visit.',
+    LEFT_VISIT: 'has left the visit.',
+    PRESENTATION_ON: 'has initiated desktop sharing.',
+    PRESENTATION_OFF: 'has stopped desktop sharing.',
     LOGIN_TYPE: {
         TEMP: 'tempAccess',
         SSO: 'sso',

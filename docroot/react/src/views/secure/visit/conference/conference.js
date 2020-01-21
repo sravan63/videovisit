@@ -90,9 +90,6 @@ class Conference extends React.Component {
             }
 
         });
-        // setTimeout(()=>{
-        //     MessageService.sendMessage(GlobalConfig.NOTIFY_USER, 'Phani has joined the visit.');
-        // }, 1000);
     }
 
     toggleDockView(isDock) {
@@ -269,10 +266,6 @@ class Conference extends React.Component {
         this.setState({
             runningLateUpdatedTime: hours + ':' + minutes + ' ' + ampmval
         });
-        //console.log(this.state.runningLateUpdatedTime);
-
-        // $('.meeting-updated-time-date-info .time-display').text('updated: ' + hours + ':' + minutes + ampmval);
-        // $('.meeting-updated-time-date-info').show();
     }
 
     leaveMeeting() {

@@ -5,7 +5,8 @@ import 'bootstrap/dist/js/bootstrap.js';
 import './waiting-room.less';
 import * as WebUI from '../../pexip/complex/webui.js';
 import { range } from 'rxjs';
-import { MessageService } from '../../services/message-service.js'
+import { MessageService } from '../../services/message-service.js';
+import GlobalConfig from '../../services/global.config';
 
 class WaitingRoom extends React.Component {
     constructor(props) {
@@ -16,10 +17,11 @@ class WaitingRoom extends React.Component {
 
     componentDidMount() {
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            console.log(message);            
-            if(message.text == 'Member Ready'){
-                this.waitingroomdata= message.data;
-                this.setState({ waitingroommsg: this.waitingroomdata}); 
+            switch(message.text) {
+                case GlobalConfig.MEMBER_READY:
+                    this.waitingroomdata = message.data;
+                    this.setState({ waitingroommsg: this.waitingroomdata}); 
+                break;
             }
         });
         
