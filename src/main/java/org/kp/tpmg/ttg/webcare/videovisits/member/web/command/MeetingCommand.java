@@ -1414,6 +1414,33 @@ public class MeetingCommand {
 			}
 		}
 	}
+	
+	public static String isMeetingHashValid(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
+		String result = null;
+		final String meetingCode = request.getParameter("meetingCode");
+		try {
+			final MeetingDetailsOutput output = WebService.IsMeetingHashValid(meetingCode, WebUtil.VV_MBR_GUEST,
+					request.getSession().getId());
+			if (output != null && output.getStatus() != null
+					&& WebUtil.SUCCESS_CODE_200.equalsIgnoreCase(output.getStatus().getCode())
+					&& output.getEnvelope() != null && CollectionUtils.isNotEmpty(output.getEnvelope().getMeetings())) {
+
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.IS_MEETING_HASH_VALID,
+						output.getStatus().getCode(), output.getStatus().getMessage(),
+						output.getEnvelope().getMeetings());
+
+			}
+		} catch (Exception e) {
+			logger.error("Error while isMeetingHashValid for meetingCode : " + meetingCode, e);
+		}
+
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.IS_MEETING_HASH_VALID, WebUtil.FAILURE_CODE_900, WebUtil.FAILURE_MESSAGE, null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
+	}
 
 
 }

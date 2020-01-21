@@ -11,10 +11,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.model.meeting.VerifyMemberEnvelope;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -259,6 +257,17 @@ public class MemberRestController extends SimplePageController {
 			meetingType = WebService.getSetupWizardMeetingType();
 		}
 		output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid, memberMrn, meetingType);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
+	@RequestMapping(value = "/isMeetingHashValid.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String guestLogin(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		output = MeetingCommand.isMeetingHashValid(request, response);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;

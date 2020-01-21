@@ -70,6 +70,11 @@ public class WebUtil {
 	public static final String TEMP_ACCESS = "tempAccess";
 	public static final String SUBMIT_LOGIN = "submitLogin";
 
+	public static final String SUCCESS_CODE_200 = "200";
+	public static final String FAILURE_CODE_900 = "900";
+	public static final String FAILURE_MESSAGE = "failure";
+	
+	
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);
 		Calendar calToday = Calendar.getInstance();
