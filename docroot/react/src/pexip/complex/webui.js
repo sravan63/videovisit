@@ -1477,43 +1477,41 @@ export var log = function(type, param, msg) {
 };
 
 export function muteSpeaker() {
-    var video = document.getElementById("video");
+    var video = document.getElementsByClassName('remoteFeed')[0];
     if (video.muted) {
         log("info", "speaker_unmute_action", "event: unmuteSpeaker - on click of mute speaker button");
+        MessageService.sendMessage(GlobalConfig.AUDIO_UNMUTE, null);
         video.muted = false;
-        $('#id_speaker_unmute').css('display', 'none');
-        $('#id_speaker_mute').css('display', 'block');
     } else {
         log("info", "speaker_mute_action", "event: muteSpeaker - on click of unmute speaker button");
+        MessageService.sendMessage(GlobalConfig.AUDIO_MUTE, null);
         video.muted = true;
-        $('#id_speaker_mute').css('display', 'none');
-        $('#id_speaker_unmute').css('display', 'block');
     }
 }
 
 export function muteUnmuteVideo() {
-    muteVideo = rtc.muteVideo();
+    let muteVideo = rtc.muteVideo();
     if (muteVideo) {
         log("info", "video_mute_action", "event: muteVideo - on click of mute video button");
-        $('#id_video_unmute').css('display', 'block');
-        $('#id_video_mute').css('display', 'none');
+        MessageService.sendMessage(GlobalConfig.VIDEO_MUTE, null);
+        // $('#id_video_unmute').css('display', 'block');
+        // $('#id_video_mute').css('display', 'none');
     } else {
         log("info", "video_unmute_action", "event: unmuteVideo - on click of unmute video  button");
-        $('#id_video_mute').css('display', 'block');
-        $('#id_video_unmute').css('display', 'none');
+        MessageService.sendMessage(GlobalConfig.VIDEO_UNMUTE, null);
+        // $('#id_video_mute').css('display', 'block');
+        // $('#id_video_unmute').css('display', 'none');
     }
 }
 
 
 export function muteUnmuteMic() {
-    muteAudio = rtc.muteAudio();
+    let muteAudio = rtc.muteAudio();
     if (muteAudio) {
+        MessageService.sendMessage(GlobalConfig.MICROPHONE_MUTE, null);
         log("info", "microphone_mute_action", "event: muteMic - on click of mute mic button");
-        $('#id_mic_unmute').css('display', 'block');
-        $('#id_mic_mute').css('display', 'none');
     } else {
+        MessageService.sendMessage(GlobalConfig.MICROPHONE_UNMUTE, null);
         log("info", "microphone_unmute_action", "event: unmuteMic - on click of unmute mic button");
-        $('#id_mic_mute').css('display', 'block');
-        $('#id_mic_unmute').css('display', 'none');
     }
 }

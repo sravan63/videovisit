@@ -41,7 +41,16 @@ const GlobalConfig = {
         TEMP: 'tempAccess',
         SSO: 'sso',
         GUEST: 'guest'
-    }
+    },
+    VIDEO_MUTE : 'Mute Video',
+    VIDEO_UNMUTE : 'Unmute Video',
+    AUDIO_MUTE:'Mute Audio',
+    AUDIO_UNMUTE:'Unmute Audio',
+    VIDEO: 'video',
+    AUDIO:'audio',
+    MICROPHONE:'microphone',
+    MICROPHONE_MUTE : 'Mute Microphone',
+    MICROPHONE_UNMUTE : 'Unmute Microphone'
 };
 
 export default GlobalConfig;

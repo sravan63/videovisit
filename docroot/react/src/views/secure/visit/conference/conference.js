@@ -17,14 +17,12 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false };
+        this.state = { userDetails: {}, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false,showvideoIcon:true,showaudioIcon:true,showmicIcon:true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
         this.startPexip = this.startPexip.bind(this);
-        // this.state = {hostavail: false,moreparticpants: false,videofeedflag: false;};
-        //  this.videofeedflag = false;
     }
 
     componentDidMount() {
@@ -71,7 +69,24 @@ class Conference extends React.Component {
                     this.setState({ moreparticpants: true });
                     this.toggleDockView(true);
                     break;
-
+               case GlobalConfig.VIDEO_MUTE:
+                   this.setState({showvideoIcon: false});
+                   break;
+               case GlobalConfig.VIDEO_UNMUTE:
+                   this.setState({showvideoIcon: true});
+                   break;
+               case GlobalConfig.AUDIO_MUTE:             
+                   this.setState({showaudioIcon:false});
+                   break;
+               case GlobalConfig.AUDIO_UNMUTE:             
+                   this.setState({showaudioIcon:true});
+                   break;
+                case GlobalConfig.MICROPHONE_MUTE:             
+                   this.setState({showmicIcon:false});
+                   break;
+               case GlobalConfig.MICROPHONE_UNMUTE:             
+                   this.setState({showmicIcon:true});
+                   break;        
             }
 
         });
@@ -134,8 +149,7 @@ class Conference extends React.Component {
                         runLateMeetingTime: data.runLateMeetingTime,
                         runningLatemsg: "We're sorry, your doctor is running late."
                     });
-                    this.updateRunningLateTime();
-                    //MessageService.sendMessage("running late", "We're sorry, your doctor is running late.");
+                    this.updateRunningLateTime();                    
                 }
             } else {
 
@@ -290,6 +304,20 @@ class Conference extends React.Component {
     refreshPage() {
         window.location.reload(false);
     }
+    disablecontrols(cntrlname){
+        switch (cntrlname) {
+            case GlobalConfig.VIDEO:
+                WebUI.muteUnmuteVideo();
+                break;
+            case GlobalConfig.AUDIO:
+                WebUI.muteSpeaker();
+                break;
+            case GlobalConfig.MICROPHONE:
+                WebUI.muteUnmuteMic();
+                break;    
+                
+        }                
+    }
 
 
     render() {
@@ -319,16 +347,16 @@ class Conference extends React.Component {
                             <div className="button-container">
                             <div className="button-group" >
                                 <div className="media-toggle">
-                                    <div title="Enable Video" className="btns media-controls video-btn"></div>
-                                    <div title="Disable Video" className="btns media-controls video-muted-btn"></div>   
+                                    <div title="Enable Video" style={{display: this.state.showvideoIcon ? 'block' : 'none'}} className="btns media-controls video-btn" onClick={()=>this.disablecontrols('video')}></div>
+                                    <div title="Disable Video" style={{display: this.state.showvideoIcon ? 'none' : 'block'}} className="btns media-controls video-muted-btn" onClick={()=>this.disablecontrols('video')}></div>   
                                 </div>
                                 <div className="media-toggle">
-                                    <div title="Mute Speakers" className="btns media-controls speaker-btn"></div>
-                                    <div title="Unmute Speakers" className="btns media-controls speaker-muted-btn"></div>
+                                    <div title="Mute Speakers" style={{display: this.state.showaudioIcon ? 'block' : 'none'}}  className="btns media-controls speaker-btn" onClick={()=>this.disablecontrols('audio')}></div>
+                                    <div title="Unmute Speakers" style={{display: this.state.showaudioIcon ? 'none' : 'block'}} className="btns media-controls speaker-muted-btn" onClick={()=>this.disablecontrols('audio')}></div>
                                 </div>
                                 <div className="media-toggle">
-                                    <div title="Mute Mic" className="btns media-controls microphone-btn"></div>
-                                    <div title="Unmute Mic" className="btns media-controls microphone-muted-btn"></div>
+                                    <div title="Mute Mic" style={{display: this.state.showmicIcon ? 'block' : 'none'}} className="btns media-controls microphone-btn" onClick={()=>this.disablecontrols('microphone')}></div>
+                                    <div title="Unmute Mic" style={{display: this.state.showmicIcon ? 'none' : 'block'}} className="btns media-controls microphone-muted-btn" onClick={()=>this.disablecontrols('microphone')}></div>
                                 </div>
                                 <div className="media-toggle">
                                     <div title="Settings" className="btns media-controls settings-btn"></div>
