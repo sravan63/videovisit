@@ -29,7 +29,6 @@ public class SSOSessionFilter implements Filter {
 	}
 
 	private String[] excludeURLs = null;
-	private String[] ssoURLs = { "retrieveActiveMeetingsForMemberAndProxies.json", "ssosignoff.json", "launchMemberProxyMeeting.json" };
 
 	@Override
 	public void doFilter(ServletRequest sreq, ServletResponse sresp, FilterChain chain)
@@ -41,9 +40,9 @@ public class SSOSessionFilter implements Filter {
 		resp = (HttpServletResponse) sresp;
 		boolean isValidSession = false;
 		if (!isExcludeUrl(req)) {
-			if (isSSOUrls(req)) {
+			if (WebUtil.SSO.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
 				try {
-					String ssoSession = req.getHeader("ssoSession");
+					String ssoSession = req.getHeader(WebUtil.SSO_SESSION);
 					if (StringUtils.isNotBlank(ssoSession)) {
 						String responseCode = MeetingCommand.validateKpOrgSSOSession(req, ssoSession);
 						Gson gson = new GsonBuilder().serializeNulls().create();
@@ -95,17 +94,4 @@ public class SSOSessionFilter implements Filter {
 		return isExclude;
 	}
 
-	private boolean isSSOUrls(HttpServletRequest req) {
-		boolean isExclude = false;
-		if (ssoURLs != null && ssoURLs.length > 0 && ssoURLs[0] != null) {
-			for (int i = 0; i < ssoURLs.length; i++) {
-				boolean isMatch = req.getRequestURI().contains(ssoURLs[i]);
-				if (isMatch) {
-					isExclude = isMatch;
-					break;
-				}
-			}
-		}
-		return isExclude;
-	}
 }
