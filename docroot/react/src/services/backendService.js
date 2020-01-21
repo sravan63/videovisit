@@ -8,7 +8,7 @@ class BackendService extends React.Component {
         super();
         this.state = { basePath: '' };
         if (window.location.origin.indexOf('localhost') > -1) {
-            this.state.basePath = "https://localhost.kp.org";
+            this.state.basePath = "http://localhost:8080";
         } else {
             this.state.basePath = '';
         }
@@ -16,6 +16,10 @@ class BackendService extends React.Component {
 
     getPreSSO() {
         return Axios.post(this.state.basePath + '/videovisit/ssoPreLogin.json', {});
+    }
+
+    logout(headers) {
+        return Axios.post(this.state.basePath + '/videovisit/logout.json', {}, { headers: headers });
     }
 
     getSSOLogin(username, password) {

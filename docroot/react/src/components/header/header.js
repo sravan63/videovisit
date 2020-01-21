@@ -1,7 +1,5 @@
 import React from "react";
-import {
-    connect
-} from 'react-redux';
+import BackendService from '../../services/backendService.js';
 
 import './header.less';
 
@@ -27,52 +25,60 @@ class header extends React.Component {
         }
         signOffMethod() {
             localStorage.clear();
-            this.props.history.push('/login');
+            var headers = {},
+                data = this.state.userDetails;
+            if (data.isTempAccess) {
+                headers.authtoken = data.ssoSession;
+            } else {
+                headers.ssoSession = data.ssoSession;
+            }
+            BackendService.logout(headers).subscribe((response) => {
+                if (response.data != "" && response.data != null && response && response.status == 200) {
+                    this.props.history.push('/login');
+                } else {
+                    this.props.history.push('/login');
+                }
+            }, (err) => {
+                this.props.history.push('/login');
+
+            });
+
+
         }
         render() {
-            return ( <
-                div className = "container-fluid" >
-                <
-                div className = "row header-content" >
-                <
-                div className = "col-md-8 banner-content" >
-                <
-                div className = "logo" > < /div> <
-                div className = "title" >
-                <
-                p className = "m-0" > Video Visits < /p> <
-                p className = "text-uppercase m-0 sub-title" > The Permanente Medical Group < /p> < /
-                div > <
-                /div> <
-                div className = "col-md-4 text-right user-details" >
-                <
-                ul >
-                <
-                li className = "text-capitalize" > {
-                    this.state.name ? this.state.name : ''
-                } < /li> <
-                li className = "text-capitalize" > {
-                    this.state.name ? '|' : ''
-                } < /li> <
-                li > < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
+                return (
+                        <div className = "container-fluid">
+                <div className = "row header-content">
+                <div className = "col-md-8 banner-content">
+                <div className = "logo"> 
+                </div> 
+                <div className = "title" >
+                <p className = "m-0" >Video Visits< /p> 
+                <p className = "text-uppercase m-0 sub-title" >The Permanente Medical Group< /p> 
+                < /div > 
+                </div> 
+                <div className = "col-md-4 text-right user-details" >
+                <ul >
+                <li className = "text-capitalize" > 
+                {this.state.name ? this.state.name : ''} 
+                </li>
+                 <li className = "text-capitalize" > 
+                 {this.state.name ? '|' : ''} 
+                 < /li> 
+                 <li > 
+                 < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
                 className = "help-link"
-                target = "_blank" > Help < /a></li >
-                <
-                li > {
-                    this.state.name ? '|' : ''
-                } < /li> <
-                li className = "text-capitalize" > {
-                    this.state.name ? < a className = "sign-off"
-                    onClick = {
-                        this.signOffMethod
-                    } > Sign out < /a>:''}</li >
-                    <
-                    /ul> < /
-                    div >
-
-                    <
-                    /div> < /
-                    div >
+                target = "_blank" >Help< /a>
+                </li >
+                <li > 
+                {this.state.name ? '|' : ''} < /li> 
+                <li className = "text-capitalize" > 
+                {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>Sign out< /a> :''}
+                </li >
+                </ul> 
+                < /div >
+                </div> 
+                < /div >
                 );
             }
         }
