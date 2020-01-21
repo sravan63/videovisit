@@ -34,6 +34,6 @@ public class ServiceUtil {
 	
 	public static final String SUCCESS_200 = "200";
 	public static final String FAILURE_900 = "900";
-	public static final String FAILURE = "Failure";
-	public static final String SUCCESS = "Success";
+	public static final String FAILURE = "failure";
+	public static final String SUCCESS = "success";
 }

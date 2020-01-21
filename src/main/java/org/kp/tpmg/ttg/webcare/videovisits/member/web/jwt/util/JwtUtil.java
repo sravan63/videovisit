@@ -24,11 +24,6 @@ public class JwtUtil {
 		return Jwts.claims().setSubject(userName);
 	}
 
-	public static String generateJwtToken(final String name) {
-		Claims claims = JwtUtil.createClaims(name);
-		return JwtTokenGenerator.generateToken(claims, JWT_SECRET, JWT_TOKEN_EXPIRATION_MILLIS);
-	}
-
 	public static boolean validateAuthToken(final String authToken, final String reqMeetingId, final String reqMrn) {
 		logger.info(LOG_ENTERED);
 		boolean isValid = false;
@@ -72,9 +67,9 @@ public class JwtUtil {
 		return isValid;
 	}
 
-	public static String generateJwtToken(Member memberInfo) {
+	public static String generateJwtToken(String mrn) {
 		logger.info(LOG_ENTERED);
-		Claims claims = JwtUtil.createClaims(memberInfo.getMrn());
+		Claims claims = JwtUtil.createClaims(mrn);
 		logger.info(LOG_EXITING);
 		return JwtTokenGenerator.generateToken(claims, JWT_SECRET, JWT_TOKEN_EXPIRATION_MILLIS);
 	}

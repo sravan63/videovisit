@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants;
@@ -36,7 +37,6 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
@@ -45,7 +45,6 @@ import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
-import org.kp.tpmg.videovisit.model.meeting.VerifyMemberEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
@@ -120,52 +119,44 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 	}
 
-	public static VerifyMemberEnvelope verifyMember(HttpServletRequest request) throws Exception {
+	public static String verifyMember(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
 		String output = null;
 		try {
-			String lastName = "";
+			String lastName = request.getParameter("last_name");
+			String birth_month = request.getParameter("birth_month");
+			String birth_year = request.getParameter("birth_year");
+			String birth_day = request.getParameter("birth_day");
 			String mrn8Digit = "";
-			String birth_month = "";
-			String birth_year = "";
-			String birth_day = "";
 
-			if (StringUtils.isNotBlank(request.getParameter("last_name"))) {
-				lastName = request.getParameter("last_name");
-			}
 			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
 				mrn8Digit = fillToLength(request.getParameter("mrn"), '0', 8);
 			}
-			if (StringUtils.isNotBlank(request.getParameter("birth_month"))) {
-				birth_month = request.getParameter("birth_month");
-			}
-			if (StringUtils.isNotBlank(request.getParameter("birth_year"))) {
-				birth_year = request.getParameter("birth_year");
-			}
-			if (StringUtils.isNotBlank(request.getParameter("birth_day"))) {
-				birth_day = request.getParameter("birth_day");
-			}
-			boolean success = WebService.initWebService(request);
 
 			if (StringUtils.isNotBlank(lastName)) {
 				lastName = WebUtil.replaceSpecialCharacters(lastName);
 			}
 			verifyMemberOutput = WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day,
-					request.getSession().getId(), "react poc");
+					request.getSession().getId(), WebUtil.VV_MBR_WEB);
 
 			if (verifyMemberOutput != null && verifyMemberOutput.getStatus() != null
-					&& "200".equals(verifyMemberOutput.getStatus().getCode())
+					&& ServiceUtil.SUCCESS_200.equals(verifyMemberOutput.getStatus().getCode())
 					&& verifyMemberOutput.getEnvelope() != null
 					&& verifyMemberOutput.getEnvelope().getMember() != null) {
-				Gson gson = new GsonBuilder().serializeNulls().create();
-				output = gson.toJson(verifyMemberOutput.getEnvelope());
-				output = WebUtil.prepareCommonOutputJson("submitlogin", "200", "success", verifyMemberOutput.getEnvelope());
+				output = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_MEMBER, ServiceUtil.SUCCESS_200, ServiceUtil.SUCCESS, verifyMemberOutput.getEnvelope().getMember());
+				if(StringUtils.isNotBlank(verifyMemberOutput.getEnvelope().getMember().getMrn())) {
+					response.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(verifyMemberOutput.getEnvelope().getMember().getMrn()));
+				}
+			}
+			if (StringUtils.isBlank(output)) {
+				output = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_MEMBER,
+						ServiceUtil.FAILURE_900, ServiceUtil.FAILURE, null);
 			}
 		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
+			logger.error("Error while verifyMember", e);
 		}
-		return verifyMemberOutput != null ? verifyMemberOutput.getEnvelope() : null;
+		return output;
 	}
 	
 	public static String updateEndMeetingLogout(HttpServletRequest request,

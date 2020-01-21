@@ -68,6 +68,7 @@ public class WebUtil {
 	public static final String LOGIN_TYPE = "loginType";
 	public static final String SSO = "sso";
 	public static final String TEMP_ACCESS = "tempAccess";
+	public static final String SUBMIT_LOGIN = "submitLogin";
 
 	public static String getCurrentDateTimeZone() {
 		logger.info(LOG_ENTERED);

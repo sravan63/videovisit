@@ -87,16 +87,7 @@ public class MemberRestController extends SimplePageController {
 			RequestMethod.POST, RequestMethod.GET })
 	public String submitLogin(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
-		VerifyMemberEnvelope verifyMemberEnvelope = null;
-		String output = null;
-		try {
-			verifyMemberEnvelope = MeetingCommand.verifyMember(request);
-			response.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(verifyMemberEnvelope.getMember()));
-			logger.debug("data = " + verifyMemberEnvelope);
-			output = WebUtil.prepareCommonOutputJson("submitLogin", "200", "success", verifyMemberEnvelope);
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-		}
+		String	output = MeetingCommand.verifyMember(request, response);
 		logger.info(LOG_EXITING);
 		return output;
 	}
