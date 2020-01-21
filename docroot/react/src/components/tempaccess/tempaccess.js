@@ -21,7 +21,7 @@ class TempAccess extends React.Component {
                 this.setState({
                     errormsgs: { errorlogin: false, errormsg: "" }
                 });
-                let data = response.data.data.member;
+                let data = response.data.data;
                 // let fullname = data.firstName + +data.lastName;                
                 data.isTempAccess = true;
                 data.ssoSession = response.headers.authtoken;
