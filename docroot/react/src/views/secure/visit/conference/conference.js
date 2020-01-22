@@ -174,11 +174,11 @@ class Conference extends React.Component {
         };
         localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);
-        //Visit.setMinDimensions();
     }
 
     componentWillUnmount() {
         // clear on component unmount
+        this.subscription.unsubscribe();
     }
 
     setSortedParticipantList() {
