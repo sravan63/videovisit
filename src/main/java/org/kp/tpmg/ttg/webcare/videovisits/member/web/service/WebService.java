@@ -54,6 +54,7 @@ import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForNonMemberPr
 import org.kp.tpmg.videovisit.model.meeting.SetKPHCConferenceStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.TerminateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.UpdateMemberMeetingStatusInput;
+import org.kp.tpmg.videovisit.model.meeting.VerifyAndLaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
@@ -1789,6 +1790,53 @@ public class WebService {
 				responseJsonStr = callVVRestService(ServiceUtil.LEAVE_MEETING, inputJsonString);
 			}
 			output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	public static MeetingDetailsForMeetingIdJSON guestLoginJoinMeeting(final String meetingHash,
+			final String patientLastName, final boolean isMobileFlow, final String deviceType, final String deviceOS,
+			final String deviceOSversion, final String clientId, final String sessionId) throws Exception {
+		logger.info(LOG_ENTERED + " meetingHash=" + meetingHash);
+		MeetingDetailsForMeetingIdJSON output = null;
+		String responseJsonStr = null;
+		final Gson gson = new GsonBuilder().serializeNulls().create();
+		String inputJsonString = null;
+		try {
+			if (StringUtils.isBlank(meetingHash) || StringUtils.isBlank(patientLastName)
+					|| StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId)) {
+				output = new MeetingDetailsForMeetingIdJSON();
+				final MeetingDetailsForMeetingIdOutput meetingDetailsForMeetingIdOutput = new MeetingDetailsForMeetingIdOutput();
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				output.setService(meetingDetailsForMeetingIdOutput);
+				output.getService().setStatus(status);
+				return output;
+			}
+			final VerifyAndLaunchMeetingForMemberGuestInput input = new VerifyAndLaunchMeetingForMemberGuestInput();
+			input.setMeetingHash(meetingHash);
+			input.setPatientLastName(patientLastName);
+			input.setMobileFlow(isMobileFlow);
+			input.setDeviceType(deviceType);
+			input.setDeviceOs(deviceOS);
+			input.setDeviceOsVersion(deviceOSversion);
+			input.setClientId(clientId);
+			input.setSessionId(sessionId);
+			inputJsonString = gson.toJson(input);
+			logger.debug("jsonInptString : " + inputJsonString);
+			responseJsonStr = callVVRestService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
+					inputJsonString);
+			output = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
+			logger.debug("jsonResponseString : " + responseJsonStr);
+		} catch (Exception e) {
+			logger.error(
+					"Web Service API error for guestLoginJoinMeeting for meetingHash:" + meetingHash + " Retrying...",
+					e);
+			responseJsonStr = callVVRestService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
+					inputJsonString);
+			output = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
 		}
 		logger.info(LOG_EXITING);
 		return output;

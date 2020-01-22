@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.SimplePageController;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.http.MediaType;
@@ -273,4 +272,13 @@ public class MemberRestController extends SimplePageController {
 		return output;
 	}
 
+	@RequestMapping(value = "/guestLoginJoinMeeting.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String guestLoginJoinMeeting(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = MeetingCommand.guestLoginJoinMeeting(request, response);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }

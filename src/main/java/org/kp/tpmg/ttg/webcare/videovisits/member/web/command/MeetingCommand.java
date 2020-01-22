@@ -6,7 +6,6 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberCo
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
-import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,11 +39,9 @@ import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
-import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
 import org.kp.tpmg.videovisit.model.user.Caregiver;
@@ -1264,6 +1261,57 @@ public class MeetingCommand {
 		return result;
 	}
 
+	public static String guestLoginJoinMeeting(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String result = null;
+		String deviceType = null;
+		String brandName = null;
+		String modelName = null;
+		String deviceOs = null;
+		String deviceOsVersion = null;
+		final String meetingCode = request.getParameter("meetingCode");
+		final String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
+		boolean isMobileFlow = false;
+		try {
+			Device device = DeviceDetectionService.checkForDevice(request);
+			Map<String, String> capabilities = device.getCapabilities();
+			if (WebUtil.TRUE.equals(capabilities.get("is_wireless_device"))
+					|| WebUtil.TRUE.equals(capabilities.get("is_tablet"))) {
+				isMobileFlow = true;
+				logger.info("isMobileFlow is true");
+				brandName = capabilities.get("brand_name");
+				modelName = capabilities.get("model_name");
+				deviceOs = capabilities.get("device_os");
+				deviceOsVersion = capabilities.get("device_os_version");
+
+				if (StringUtils.isNotBlank(brandName) && StringUtils.isNotBlank(modelName)) {
+					deviceType = brandName + " " + modelName;
+				}
+			}
+
+			final MeetingDetailsForMeetingIdJSON outputJson = WebService.guestLoginJoinMeeting(meetingCode,
+					patientLastName, isMobileFlow, deviceType, deviceOs, deviceOsVersion, WebUtil.VV_MBR_GUEST,
+					request.getSession().getId());
+			if (outputJson != null && outputJson.getService() != null && outputJson.getService().getStatus() != null
+					&& outputJson.getService().getStatus().getCode() != null) {
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
+						outputJson.getService().getStatus().getCode(), outputJson.getService().getStatus().getMessage(),
+						outputJson.getService().getEnvelope() != null
+								? outputJson.getService().getEnvelope().getMeeting()
+								: null);
+			}
+		} catch (Exception e) {
+			logger.error("Error while verifyAndLaunchMeetingForMemberGuest for meetingCode : " + meetingCode, e);
+		}
+
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST, WebUtil.FAILURE_900,
+					WebUtil.FAILURE, null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
+	}
 
 }
 

@@ -31,5 +31,6 @@ public class ServiceUtil {
 	public static final String GET_MEETING_DETAILS_FOR_MEETING_ID = "getMeetingDetailsForMeetingId";
 	public static final String JOIN_MEETING = "joinMeeting";
 	public static final String LEAVE_MEETING = "leaveMeeting";
+	public static final String VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST = "verifyAndLaunchMeetingForMemberGuest";
 
 }
