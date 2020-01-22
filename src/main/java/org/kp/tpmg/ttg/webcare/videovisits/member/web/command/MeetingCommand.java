@@ -732,50 +732,6 @@ public class MeetingCommand {
 		return result;
 	}
 
-	public static String verifyCaregiver(HttpServletRequest request)
-			throws RemoteException {
-		logger.info(LOG_ENTERED);
-		String json = "";
-		VerifyCareGiverOutput verifyCareGiverOutput = new VerifyCareGiverOutput();
-
-		try {
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			String meetingCode = request.getParameter("meetingCode");
-			String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
-			final String clientId = WebUtil.getClientIdFromContext(ctx);
-			verifyCareGiverOutput = WebService.verifyCaregiver(meetingCode, patientLastName,
-					request.getSession().getId(), clientId);
-			if (verifyCareGiverOutput != null) {
-				String statusCode = verifyCareGiverOutput.getStatus().getCode();
-				if (statusCode != "200") {
-					ctx.setCareGiver(false);
-				}
-				ctx.setCareGiver(true);
-				if (verifyCareGiverOutput.getEnvelope() != null
-						&& verifyCareGiverOutput.getEnvelope().getMeeting() != null) {
-					List<Caregiver> caregivers = verifyCareGiverOutput.getEnvelope().getMeeting().getCaregiver();
-					if (CollectionUtils.isNotEmpty(caregivers)) {
-						for (Caregiver caregiver : caregivers) {
-							if (StringUtils.isNotBlank(meetingCode)
-									&& meetingCode.equalsIgnoreCase(caregiver.getCareGiverMeetingHash())) {
-								ctx.setCareGiverName(caregiver.getLastName() + ", " + caregiver.getFirstName());
-								break;
-							}
-						}
-					}
-				}
-				Gson gson = new Gson();
-				json = gson.toJson(verifyCareGiverOutput);
-				logger.debug("json output" + json);
-			}
-		} catch (Exception e) {
-			logger.error("System Error : ", e);
-			json = JSONObject.fromObject(new SystemError()).toString();
-		}
-		logger.info(LOG_EXITING);
-		return json;
-	}
-
 	public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);

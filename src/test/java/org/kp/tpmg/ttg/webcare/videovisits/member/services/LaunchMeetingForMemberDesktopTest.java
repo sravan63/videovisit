@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,7 +114,7 @@ public class LaunchMeetingForMemberDesktopTest extends AbstractVideoVisitMemberA
 		final String outputStr = memberRestController.launchMeetingForMemberDesktop(request, response);
 		output = gson.fromJson(outputStr, VVResponse.class);
 		assertEquals("900",output.getCode());
-		assertEquals(ServiceUtil.FAILURE,output.getMessage());
+		assertEquals(WebUtil.FAILURE,output.getMessage());
 		
 
 	}
