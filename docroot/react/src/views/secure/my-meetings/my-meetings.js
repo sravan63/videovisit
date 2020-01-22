@@ -151,6 +151,7 @@ class MyMeetings extends React.Component {
         }, (err) => {
             console.log(err);
             this.setState({ showLoader: false });
+            this.props.history.push(GlobalConfig.LOGIN_URL);
         });
     }
 

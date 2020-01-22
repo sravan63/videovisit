@@ -5,17 +5,37 @@ import Footer from '../../components/footer/footer';
 import Ssologin from '../../components/ssologin/ssologin';
 import Login from '../../components/tempaccess/tempaccess';
 import './guest-authentication.less';
+import BackendService from '../../services/backendService.js';
 
 class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', errormsgs: { errorlogin: false, errormsg: '' } };
+        this.state = { lastname: '', NotLoggedIn: false, inputDisable: false, errormsgs: { errorlogin: false, errormsg: '' } };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        var meetingCode;
+        if (window.location.hash.includes('meetingcode')) {
+            meetingCode = window.location.hash.slice(25).split('&');
+            meetingCode = meetingCode[0];
+        }
+        BackendService.isMeetingValidGuest(meetingCode).subscribe((response) => {
+            if (response.data != "" && response.data != null && response.data.statusCode == 200) {
+                this.setState({ NotLoggedIn: true });
+            } else {
+                this.setState({ errormsgs: { errorlogin: true } });
+                this.setState({ inputDisable: true });
+                this.setState({ NotLoggedIn: true });
+            }
+        }, (err) => {
+            this.setState({ errormsgs: { errorlogin: true } });
+            this.setState({ NotLoggedIn: true });
+
+        });
+    }
 
     signOn(e) {
         console.log('CLICKED ON GUEST SIGN ON');
@@ -47,6 +67,8 @@ class Authentication extends React.Component {
         return (
             <div id='container' className="authentication-page">
              <Header/>
+              {this.state.NotLoggedIn ?  (  
+                <div>
              <div className="guest-main-content">
                 {this.state.errormsgs.errorlogin ? 
                     <div className="row error-text">
@@ -66,7 +88,7 @@ class Authentication extends React.Component {
                             <div className="form-group">
                                 <label className="col-sm-12 text-capitalize">Patient Last Name</label>
                                 <div className="col-sm-12">
-                                    <input type="text" pattern="[a-zA-Z]+" name="lastname" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input"/>
+                                    <input type="text" pattern="[a-zA-Z]+" name="lastname" disabled = {this.state.inputDisable} value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input"/>
                                 </div>
                             </div>
                             <div className = "form-group mobile-submit mt-5" >
@@ -81,7 +103,8 @@ class Authentication extends React.Component {
             </div> 
             <div className="form-footer">
                 <Footer />
-            </div>
+            </div> 
+            </div> ) : ('')}
          </div>
         );
     }
