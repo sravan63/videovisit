@@ -54,38 +54,8 @@ var isValidInteraction = false;
 var hostDirtyThisMeeting = false;
 var currentLayout = "";
 var mobileviewHeight;
-var trans = Array();
-trans['BUTTON_MUTEAUDIO'] = "Mute Audio";
-trans['BUTTON_UNMUTEAUDIO'] = "Unmute Audio";
-trans['BUTTON_MUTEVIDEO'] = "Mute Video";
-trans['BUTTON_UNMUTEVIDEO'] = "Unmute Video";
-trans['BUTTON_FULLSCREEN'] = "Fullscreen";
-trans['BUTTON_NOPRES'] = "No Presentation Active";
-trans['BUTTON_SHOWPRES'] = "View Presentation";
-trans['BUTTON_HIDEPRES'] = "Hide Presentation";
-trans['BUTTON_SHOWSELF'] = "Show Selfview";
-trans['BUTTON_HIDESELF'] = "Hide Selfview";
-trans['BUTTON_SCREENSHARE'] = "Share Screen";
-trans['BUTTON_STOPSHARE'] = "Stop Sharing";
-trans['HEADING_ROSTER_LIST'] = "Participants";
-trans['TITLE_HOSTS'] = "Hosts";
-trans['TITLE_GUESTS'] = "Guests";
 
 var firstParticipantFlag = "";
-var jNotifyDefaults = {
-    //autoHide: true,
-    clickOverlay: false,
-    MinWidth: 250,
-    TimeShown: 3000,
-    ShowTimeEffect: 200,
-    HideTimeEffect: 200,
-    LongTrip: 20,
-    HorizontalPosition: 'center',
-    VerticalPosition: -20,
-    ShowOverlay: false,
-    ColorOverlay: '#000',
-    OpacityOverlay: 0.3
-};
 var pexipParticipantsList = [];
 var utilitiesTemp = {};
 utilitiesTemp.msgQueue = [];
@@ -97,7 +67,6 @@ var rtc = new PexRTC();
 
 /* ~~~ PRESENTATION STUFF ~~~ */
 export function presentationClosed() {
-    //id_presentation.textContent = trans['BUTTON_SHOWPRES'];
     if (presentation && $(presentation).find('#presvideo').length > 0) {
         rtc.stopPresentation();
     }
@@ -344,72 +313,6 @@ function unpresentScreen(reason) {
 
 /* ~~~ MUTE AND HOLD/RESUME ~~~ */
 
-export function muteUnmuteSpeaker() {
-    var id_mutespeaker = getControlReference('speaker');
-    var video = document.getElementById("video");
-    if (video.muted) {
-        log("info", "speaker_unmute_action", "event: unmuteSpeaker - on click of mute speaker button");
-        video.muted = false;
-        id_mutespeaker.classList.remove('mutedspeaker');
-        id_mutespeaker.classList.add('unmutedspeaker');
-    } else {
-        log("info", "speaker_mute_action", "event: muteSpeaker - on click of unmute speaker button");
-        video.muted = true;
-        id_mutespeaker.classList.remove('unmutedspeaker');
-        id_mutespeaker.classList.add('mutedspeaker');
-    }
-    changeInOtherControls('speaker', !video.muted, 'mutedspeaker', 'unmutedspeaker');
-    /*if (!id_mutespeaker.classList.contains("inactive")) {
-        if (document.getElementById('video').volume == 1) {
-            document.getElementById('video').volume = 0;
-            id_mutespeaker.classList.remove('unmutedspeaker');
-            id_mutespeaker.classList.add('mutedspeaker');
-        } else {
-            document.getElementById('video').volume = 1;
-            id_mutespeaker.classList.remove('mutedspeaker');
-            id_mutespeaker.classList.add('unmutedspeaker');
-        }
-    }*/
-}
-
-export function muteMicStreams() {
-    var id_muteaudio = getControlReference('mic');
-    if (!id_muteaudio.classList.contains("inactive")) {
-        muteAudio = rtc.muteAudio();
-        id_muteaudio.classList.toggle('selected');
-        if (muteAudio) {
-            log("info", "microphone_mute_action", "event: muteMic - on click of mute mic button");
-            id_muteaudio.classList.remove('unmutedmic');
-            id_muteaudio.classList.add('mutedmic');
-        } else {
-            log("info", "microphone_unmute_action", "event: unmuteMic - on click of unmute mic button");
-            id_muteaudio.classList.remove('mutedmic');
-            id_muteaudio.classList.add('unmutedmic');
-        }
-        changeInOtherControls('mic', muteAudio, 'unmutedmic', 'mutedmic');
-    }
-}
-
-export function muteVideoStreams() {
-    var id_mutevideo = getControlReference('camera');
-    if (!id_mutevideo.classList.contains("inactive")) {
-        muteVideo = rtc.muteVideo();
-        id_mutevideo.classList.toggle('selected');
-        if (muteVideo) {
-            log("info", "video_mute_action", "event: muteVideo - on click of mute video button");
-            id_mutevideo.classList.remove('unmutedcamera');
-            id_mutevideo.classList.add('mutedcamera');
-        } else {
-            log("info", "video_unmute_action", "event: unmuteVideo - on click of unmute video  button");
-            id_mutevideo.classList.remove('mutedcamera');
-            id_mutevideo.classList.add('unmutedcamera');
-        }
-        changeInOtherControls('camera', muteVideo, 'unmutedcamera', 'mutedcamera');
-    } else {
-
-    }
-}
-
 export function getControlReference(control) {
     var isLandscape = window.matchMedia("(orientation:landscape)").matches;
     var parent = isLandscape ? 'landscape-controlbar' : 'controls-bar';
@@ -504,56 +407,6 @@ function holdresume(setting) {
 
 function updateRosterList(roster) {
     console.log('update roster list on participant change');
-    /*rosterlist.removeChild(rosterul);
-    rosterul = document.createElement("ul");
-    rosterlist.appendChild(rosterul);
-
-    var state = "";
-    if (roster.length > 0 && 'role' in roster[0]) {
-        var h2 = document.createElement("h2");
-        h2.innerHTML = trans['TITLE_HOSTS'];
-        rosterul.appendChild(h2);
-        state = "HOSTS";
-    }
-
-    rosterheading.textContent = trans['HEADING_ROSTER_LIST'] + " (" + roster.length + ")";
-
-    for (var i = 0; i < roster.length; i++) {
-        if (roster[i]['role'] == "unknown") {
-            continue;
-        } else if (roster[i]['role'] == "guest" && state == "HOSTS") {
-            var h2 = document.createElement("h2");
-            h2.innerHTML = trans['TITLE_GUESTS'];
-            rosterul.appendChild(h2);
-            state = "GUESTS";
-        }
-
-        var li = document.createElement("li");
-        if (roster[i]['display_name'] != "" && roster[i]['display_name'] != roster[i]['uri']) {
-            var subtitle = document.createElement("p");
-            subtitle.innerHTML = roster[i]['uri'];
-            var surtitle = document.createElement("h3");
-            surtitle.innerHTML = roster[i]['display_name'];
-            if (roster[i]['is_presenting'] == "YES") {
-                surtitle.classList.add("presenting");
-            }
-            li.appendChild(surtitle);
-            li.appendChild(subtitle);
-        } else {
-            var surtitle = document.createElement("h3");
-            surtitle.innerHTML = roster[i]['uri'];
-            li.appendChild(surtitle);
-            if (roster[i]['is_presenting'] == "YES") {
-                surtitle.classList.add("presenting");
-            }
-        }
-
-        rosterul.appendChild(li);
-    }
-
-    if (video && navigator.userAgent.indexOf("Chrome") != -1 && navigator.userAgent.indexOf("Mobile") == -1 && !source) {
-        id_screenshare.classList.remove("inactive");
-    }*/
 }
 
 /* ~~~ SETUP AND TEARDOWN ~~~ */
@@ -585,24 +438,8 @@ function remoteDisconnect(reason) {
         if (reason == 'Test call finished') {
             MessageService.sendMessage(GlobalConfig.TEST_CALL_FINISHED, null);
         }
-
-        //alert(reason);
     }
     window.removeEventListener('beforeunload', finalise);
-    // window.location = "index.html";
-    /*if (isProvider == "true") {
-        window.location.href = '/videovisit/myMeetings.htm';
-    }*/
-    /* if (true) {
-         console.log("disconnected");
-     } else {
-         var url = window.location.href;
-         if (url.indexOf("mobile") > -1) {
-             window.location.href = '/videovisit/mobileAppPatientMeetings.htm';
-         } else {
-             // window.location.href = '/videovisit/landingready.htm';
-         }
-     }*/
 }
 
 function handleError(reason) {
@@ -627,29 +464,8 @@ function doneSetup(url, pin_status, conference_extension) {
     }
     console.log("PIN status: " + pin_status);
     console.log("IVR status: " + conference_extension);
-    /*if (pin_status == 'required') {
-        pinentry.classList.remove("hidden");
-    } else if (pin_status == 'optional') {
-        selectrole.classList.remove("hidden");
-    } else if (conference_extension) {
-        ivrentry.classList.remove("hidden");
-    } else {
-        maincontent.classList.remove("hidden");
-        rtc.connect(pin);
-    }*/
     submitPinEntry();
 }
-
-/*function submitSelectRole() {
-    var id_guest = document.getElementById('id_guest');
-    selectrole.classList.add("hidden");
-    if (id_guest.checked) {
-        maincontent.classList.remove("hidden");
-        rtc.connect('');
-    } else {
-        pinentry.classList.remove("hidden");
-    }
-}*/
 
 export function submitPinEntry() {
     //maincontent.classList.remove("hidden");
@@ -924,12 +740,6 @@ export function getMediaStats() {
         $("#stat-window-container").toggle();
         $("#info-button").css("background", "#f38b3c");
 
-        /*if ($("#stat-window-container").style.display === "none") {
-            $("#stat-window-container").style.display = "block";
-        } else {
-            $("#stat-window-container").style.display = "none";
-        }*/
-
     } else if (set_interval == "true") {
         console.log("Stop Info");
         set_interval = "false";
@@ -955,7 +765,6 @@ function connected(url) {
             } else {
                 video.src = videoURL;
             }
-            // id_fullscreen.classList.remove("inactive");
         }
     }
     var isSetup = localStorage.getItem('isSetupPage');
@@ -965,16 +774,6 @@ function connected(url) {
             isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
     }
-    //    toggleSelfview();
-    /*if (!isMobileDevice) {
-    VideoVisit.setMinDimensions();
-    if (pexipInitialConnect == false) {
-        setPatientGuestPresenceIndicatorManually();
-        pexipInitialConnect = true;
-    }
-} else {
-    setMemberOrCareGiverStatus();
-}*/
 }
 
 export function setPatientGuestPresenceIndicatorManually() {
@@ -988,15 +787,6 @@ export function setPatientGuestPresenceIndicatorManually() {
 }
 
 export function switchDevices() {
-    // rtc.user_media_stream = stream;
-
-    // rtc.video_source =  cameraID;
-    // rtc.audio_source =  microPhoneID;
-
-    // if(switchingDevice==1)
-    // rtc.renegotiate(vmrInfoData.confNode, "meet.KNW_3344556611","rads", bandwidth);
-    // rtc.renegotiate("Join+Conference");
-
     rtc.renegotiate();
 }
 
@@ -1004,13 +794,6 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     MessageService.sendMessage(GlobalConfig.MEMBER_READY, 'Your visit will start once your doctor joins.');
     console.log("inside webui initialise");
     log('info', 'initialise', "event: video visit initialise");
-    /*if (!isMobileDevice) {
-    hostName = getHostName();
-}
-$("#selectPeripheral").detach().appendTo($("#rosterlist"));
-// $("#selectPeripheral").addClass("hidden");
-$("#enterDetails").addClass("hidden");
-$("#selectrole").removeClass("hidden");*/
 
     video = document.getElementById("video");
     id_selfview = document.getElementById('id_selfview');
@@ -1119,146 +902,8 @@ export function getTurnServerObjsForMobile() {
     return t_servers;
 }
 
-// function logoutFromMDOApp(){
-//     console.log('calling from MDO app');
-//     disconnect();
-// }
-
 export function pexipDisconnect() {
     rtc.disconnect();
-}
-
-export function disconnect() {
-    // console.log("inside disconnect");
-    log("info", "disconnect", "event: disconnect - inside disconnect.");
-    rtc.disconnect();
-
-    disconnectAlreadyCalled = true;
-    var url = window.location.href;
-    // var memberMobile = url.indexOf("mobile") > -1;
-    var isMember = $("#isMember").val();
-    var guestName = $("#guestName").val();
-    var patientName = $("#meetingPatient").val();
-    if (guestName.toLowerCase() == patientName.toLowerCase()) {
-        isPatientLoggedIn = true;
-    } else {
-        isPatientLoggedIn = false;
-    }
-    var userData = {
-        inMeetingDisplayName: $("#guestName").val(),
-        isPatient: isPatientLoggedIn,
-        joinLeaveMeeting: "L",
-        meetingId: $('#meetingId').val()
-    };
-
-    if (isMobileDevice) {
-        var isMember = $("#isMember").val();
-        if (isMember == 'true' || isMember == true) {
-            $.ajax({
-                type: "POST",
-                url: 'joinLeaveMeeting.json', // VIDEO_VISITS.Path.visit.joinLeaveMeeting,
-                cache: false,
-                dataType: "json",
-                data: userData,
-                success: function(result, textStatus) {
-                    log("info", "joinLeaveMeeting", "console: joinLeaveMeeting:: success : result - : " + result);
-                    navigateFromVVPage();
-                    //console.log("joinLeaveMeeting :: result :: "+result);
-                },
-                error: function(textStatus) {
-                    log("error", "joinLeaveMeeting", "console: joinLeaveMeeting:: error - : " + textStatus);
-                    navigateFromVVPage();
-                    //console.log("joinLeaveMeeting :: error :: "+textStatus);
-                }
-            });
-        } else {
-            if ($('#isProxyMeeting').val() == 'true' || $('#isProxyMeeting').val() == true) {
-                var userData = {
-                    inMeetingDisplayName: $('#guestName').val(),
-                    isPatient: false,
-                    joinLeaveMeeting: 'L',
-                    meetingId: $('#meetingId').val()
-                };
-                $.ajax({
-                    type: "POST",
-                    url: 'joinLeaveMeeting.json', // VIDEO_VISITS.Path.visit.joinLeaveMeeting,
-                    cache: false,
-                    dataType: "json",
-                    data: userData,
-                    success: function(result, textStatus) {
-                        navigateFromVVPage();
-                    },
-                    error: function(textStatus) {
-                        console.log("joinLeaveMeeting :: error :: " + textStatus);
-                    }
-                });
-            } else {
-                var refreshMeetings = false,
-                    meetingCode = $("#meetingCode").val(),
-                    caregiverId = $("#caregiverId").val(),
-                    meetingId = $('#meetingId').val();
-
-                var quitMeetingIdData = 'meetingCode=' + meetingCode + '&caregiverId=' + caregiverId + '&meetingId=' + meetingId + '&refreshMeetings=' + refreshMeetings;
-                $.ajax({
-                    type: 'POST',
-                    url: 'endguestsession.json',
-                    cache: false,
-                    async: false,
-                    data: quitMeetingIdData,
-                    success: function(returndata) {
-                        navigateFromVVPage();
-                    },
-                    //error receives the XMLHTTPRequest object, a string describing the type of error and an exception object if one exists
-                    error: function(theRequest, textStatus, errorThrown) {
-                        navigateFromVVPage();
-                    }
-                });
-            }
-        }
-    } else {
-        navigateFromVVPage();
-    }
-
-}
-
-export function navigateFromVVPage() {
-    var refreshMeetings = false;
-    var isNative = $("#isNative").val(),
-        isMember = $("#isMember").val(),
-        meetingCode = $("#meetingCode").val(),
-        patientLastName = $("#patientLastName").val(),
-        isProxyMeeting = $('#isProxyMeeting').val(),
-        caregiverId = $("#caregiverId").val(),
-        meetingId = $('#meetingId').val();
-
-    if (isNative == "true") {
-        window.location.href = 'mobileNativeLogout.htm';
-    } else {
-        //var url = window.location.href;
-        //var memberMobile = url.indexOf("mobile") > -1;
-        if (isMobileDevice) {
-            if (isMember == "true") {
-                window.location.href = '/videovisit/mobileAppPatientMeetings.htm';
-            } else if (isMember == "false") {
-                window.location.href = "mobilepatientguestmeetings.htm?meetingCode=" + meetingCode + "&patientLastName=" + patientLastName;
-            }
-            return;
-        }
-        if (isMember == "true") {
-            MemberVisit.QuitMeetingActionButtonYes(meetingId, decodeURIComponent($('#guestName').val()), refreshMeetings, isProxyMeeting);
-            window.setTimeout(function() {
-                window.location.href = '/videovisit/landingready.htm';
-            }, 2000);
-
-        } else {
-            GuestVisit.QuitMeetingActionButtonYes(meetingCode, caregiverId, meetingId, refreshMeetings);
-            window.setTimeout(function() {
-                window.location.href = '/videovisit/guestready.htm';
-            }, 2000);
-
-        }
-
-    }
 }
 
 export function onlyUnique(value, index, self) {
@@ -1276,14 +921,8 @@ export function toggleWaitingRoom(pexipParticipantsList) {
     if (!hostDirtyThisMeeting && isHostAvail) {
         hostDirtyThisMeeting = true;
     }
-    //VIDEO_VISITS.Path.IS_HOST_AVAILABLE = isHostAvail;
     if (isHostAvail) {
-        //log('info', "Mobile debugging  : **** " + isProvider + " Host Available : #### " + isHostAvail);
         MessageService.sendMessage(GlobalConfig.HOST_AVAIL, null);
-        if (hostDirtyThisMeeting) {
-            //Half waiting room
-            //  MessageService.sendMessage('More participants', null);
-        }
     } else {
         if (participantsInMeeting.length == 1) {
             MessageService.sendMessage(GlobalConfig.HOST_LEFT, null);
@@ -1323,48 +962,6 @@ export function adjustLayout(participants, isHostAvail) {
     }
 }
 
-/* **
- ** This will validate and returns a boolean value 
- ** based on host's availabilty in the on going meeting
- ** */
-export function validateHostAvailability(participants) {
-    var isHostAvailable = false;
-    if (participants) {
-        console.log("Mobile debugging :##### : " + participants);
-        for (var i = 0; i < participants.length; i++) {
-            var pName = changeConferenceParticipantNameFormat(participants[i].display_name);
-            if (pName.toLowerCase() == hostName.toLowerCase()) {
-                isHostAvailable = true;
-                console.log("Mobile debugging isHostAvailable  *** :##### : ");
-                break;
-            }
-        }
-    }
-    return isHostAvailable;
-}
-
-
-export function getHostName() {
-    // This check is to fix the production issue DE9219
-    var host = '';
-    if ($("#isProvider").val() == 'true') {
-        var hostname = ($("#meetingHost").val().indexOf('&nbsp;') > -1) ? $("#meetingHost").val().replace('&nbsp;', '') : $("#meetingHost").val();
-        host = changeConferenceParticipantNameFormat(hostname);
-    } else {
-        var hostname = ($("#meetingHostName").val().indexOf('&nbsp;') > -1) ? $("#meetingHostName").val().replace('&nbsp;', '') : $("#meetingHostName").val();
-        host = changeConferenceParticipantNameFormat(hostname);
-    }
-    var splittedHostName = host.trim().split(" ");
-    var hName = "";
-    for (var c = 0; c < splittedHostName.length; c++) {
-        var char = splittedHostName[c].trim();
-        if (char !== "") {
-            hName += char + " ";
-        }
-    }
-    return hName.trim();
-};
-
 export function disconnectOnRefresh() {
     log("info", 'disconnectOnRefresh', "event: Refresh::click - disconnectOnRefresh before calling navigateToPage if disconnected completely : ");
     console.log("inside disconnect");
@@ -1390,54 +987,12 @@ export function disconnectOnRefresh() {
         data: userData,
         success: function(result, textStatus) {
             log("info", "joinLeaveMeeting", "console: joinLeaveMeeting:: result - : " + result);
-            //console.log("joinLeaveMeeting :: result :: "+result);
         },
         error: function(textStatus) {
             log("error", "joinLeaveMeeting", "console: joinLeaveMeeting:: error - : " + textStatus);
-            //console.log("joinLeaveMeeting :: error :: "+textStatus);
         }
     });
 }
-
-//jNotify Message Priortization
-export var utilityNotifyQueue = function(notify_message) {
-    if (notify_message != "showMessage") {
-        utilitiesTemp.msgQueue.push(notify_message);
-        if (utilitiesTemp.msgInProgress == false) {
-            utilityNotifyQueue("showMessage");
-        }
-    } else {
-        utilitiesTemp.msgInProgress = true;
-        notify_message = utilitiesTemp.msgQueue.pop();
-        if (firstParticipantFlag == true) {
-            jNotify(
-                notify_message, {
-                    defaults: jNotifyDefaults,
-                    autoHide: true, // made this as true to fix DE8857 issue(to hide jnotification for first time joined participant)
-                    onClosed: function() {
-                        if (utilitiesTemp.msgQueue.length > 0) {
-                            utilityNotifyQueue("showMessage"); // call the next message in the queue
-                        } else {
-                            utilitiesTemp.msgInProgress = false;
-                        }
-                    }
-                });
-        } else {
-            jNotify(
-                notify_message, {
-                    defaults: jNotifyDefaults,
-                    autoHide: true,
-                    onClosed: function() {
-                        if (utilitiesTemp.msgQueue.length > 0) {
-                            utilityNotifyQueue("showMessage"); // call the next message in the queue
-                        } else {
-                            utilitiesTemp.msgInProgress = false;
-                        }
-                    }
-                });
-        }
-    }
-};
 
 /*$(window).on("beforeunload", function() {
     console.log('browser un loading');
