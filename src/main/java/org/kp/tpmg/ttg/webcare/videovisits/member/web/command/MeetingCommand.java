@@ -1271,9 +1271,9 @@ public class MeetingCommand {
 		String deviceOs = null;
 		String deviceOsVersion = null;
 		final String meetingCode = request.getParameter("meetingCode");
-		final String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
-		boolean isMobileFlow = false;
 		try {
+			final String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
+			boolean isMobileFlow = false;
 			Device device = DeviceDetectionService.checkForDevice(request);
 			Map<String, String> capabilities = device.getCapabilities();
 			if (WebUtil.TRUE.equals(capabilities.get("is_wireless_device"))
