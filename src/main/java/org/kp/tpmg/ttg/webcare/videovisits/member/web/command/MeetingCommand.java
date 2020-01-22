@@ -67,57 +67,6 @@ public class MeetingCommand {
 	
 	private MeetingCommand() {
 	}
-	
-	public static void updateWebappContextWithBrowserFlags(WebAppContext ctx) {
-		if (ctx != null) {
-			final String blockChrome = getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
-			final String blockFF = getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
-			final String blockEdge = getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
-			final String blockSafari = getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
-			final String blockSafariVersion = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
-			final String blockPexipIE = AppProperties.getExtPropertiesValueByKey("BLOCK_PEXIP_IE_BROWSER");
-			if (StringUtils.isNotBlank(blockChrome)) {
-				ctx.setBlockChrome(blockChrome);
-			}
-			if (StringUtils.isNotBlank(blockFF)) {
-				ctx.setBlockFF(blockFF);
-			}
-			if (StringUtils.isNotBlank(blockEdge)) {
-				ctx.setBlockEdge(blockEdge);
-			}
-			if (StringUtils.isNotBlank(blockSafari)) {
-				ctx.setBlockSafari(blockSafari);
-			}
-			if (StringUtils.isNotBlank(blockSafariVersion)) {
-				ctx.setBlockSafariVersion(blockSafariVersion);
-			}
-			if (StringUtils.isNotBlank(blockPexipIE)) {
-				ctx.setBlockPexipIE(blockPexipIE);
-			}
-		}
-	}
-
-	public static void setupGuestInfo(HttpServletRequest request) {
-		logger.info(LOG_ENTERED);
-		try {
-			final String meetingCode = request.getParameter("meetingCode");
-			final String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
-			logger.info("patientLastName : " + patientLastName);
-			String nocache = request.getParameter("nocache");
-			String meetingId = request.getParameter("meetingId");
-
-			WebAppContext ctx = WebAppContext.getWebAppContext(request);
-
-			ctx.setMeetingCode(meetingCode);
-			ctx.setPatientLastName(patientLastName);
-			ctx.setNocache(nocache);
-			ctx.setGuestMeetingId(meetingId);
-
-		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
-		}
-		logger.info(LOG_EXITING);
-	}
 
 	public static String verifyMember(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
@@ -255,40 +204,6 @@ public class MeetingCommand {
 		return isMyMeetingsAvailable;
 	}
 
-	public static String IsMeetingHashValid(HttpServletRequest request)
-			throws RemoteException, Exception {
-		logger.info(LOG_ENTERED);
-		MeetingDetailsOutput output;
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		updateWebappContextWithBrowserFlags(ctx);
-		updateWebappContextWithPexipDesktopBrowserDetails(ctx);
-		String meetingCode = request.getParameter("meetingCode");
-		boolean success = WebService.initWebService(request);
-		if (ctx != null && success) {
-			output = WebService.IsMeetingHashValid(meetingCode, ctx.getClientId(), request.getSession().getId());
-			if (output != null && output.getEnvelope() != null) {
-				List<MeetingDO> meetings = output.getEnvelope().getMeetings();
-				if (meetings != null) {
-					if (!isMyMeetingsAvailable(output)) {
-						logger.info("setting total meetings = 0");
-						ctx.setTotalmeetings(0);
-					} else {
-						logger.info("setting total meetings = " + meetings.size());
-						for (MeetingDO meeting : meetings) {
-							normalizeMeetingData(meeting, meetingCode, ctx);
-						}
-						ctx.setTotalmeetings(meetings.size());
-						ctx.setMyMeetings(meetings);
-					}
-				}
-
-				return JSONObject.fromObject(output).toString();
-			}
-		}
-		logger.info(LOG_EXITING);
-		return JSONObject.fromObject(new SystemError()).toString();
-	}
-
 	public static String createCaregiverMeetingSession(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
@@ -398,14 +313,6 @@ public class MeetingCommand {
 			ret = src;
 		}
 		return ret;
-	}
-
-	private static void normalizeMeetingData(MeetingDO meeting, String meetingHash, WebAppContext ctx) {
-		if (meeting == null) {
-			return;
-		}
-		meeting.setParticipant(meeting.getParticipant());
-		meeting.setCaregiver(meeting.getCaregiver());
 	}
 
 	public static String createInstantVendorMeeting(HttpServletRequest request,
@@ -980,40 +887,6 @@ public class MeetingCommand {
 		return result;
 	}
 
-	public static String retrieveMeeting(HttpServletRequest request) throws Exception {
-		logger.info(LOG_ENTERED);
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		updateWebappContextWithBrowserFlags(ctx);
-		MeetingDetailsJSON meetingDetailsJSON = null;
-		try {
-			if (ctx != null && ctx.getMemberDO() != null) {
-				meetingDetailsJSON = WebService.retrieveMeeting(ctx.getMemberDO().getMrn(), PAST_MINUTES,
-						FUTURE_MINUTES, request.getSession().getId(), ctx.getClientId());
-				if (meetingDetailsJSON != null && meetingDetailsJSON.getService() != null
-						&& meetingDetailsJSON.getService().getStatus() != null
-						&& "200".equals(meetingDetailsJSON.getService().getStatus().getCode())
-						&& meetingDetailsJSON.getService().getEnvelope() != null
-						&& meetingDetailsJSON.getService().getEnvelope().getMeetings() != null) {
-					List<MeetingDO> myMeetings = meetingDetailsJSON.getService().getEnvelope().getMeetings();
-					if (myMeetings.size() == 1 && myMeetings.get(0) == null) {
-						ctx.setTotalmeetings(0);
-					} else {
-						ctx.setTotalmeetings(myMeetings.size());
-					}
-					ctx.setMyMeetings(myMeetings);
-				} else {
-					ctx.setMyMeetings(null);
-					ctx.setTotalmeetings(0);
-				}
-				logger.info(LOG_EXITING);
-				return JSONObject.fromObject(meetingDetailsJSON).toString();
-			}
-		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
-		}
-		logger.info(LOG_EXITING);
-		return JSONObject.fromObject(new SystemError()).toString();
-	}
 
 	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request)
 			throws Exception {
