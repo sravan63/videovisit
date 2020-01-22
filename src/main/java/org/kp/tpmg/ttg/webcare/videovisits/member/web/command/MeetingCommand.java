@@ -141,17 +141,17 @@ public class MeetingCommand {
 					request.getSession().getId(), WebUtil.VV_MBR_WEB);
 
 			if (verifyMemberOutput != null && verifyMemberOutput.getStatus() != null
-					&& ServiceUtil.SUCCESS_200.equals(verifyMemberOutput.getStatus().getCode())
+					&& WebUtil.SUCCESS_200.equals(verifyMemberOutput.getStatus().getCode())
 					&& verifyMemberOutput.getEnvelope() != null
 					&& verifyMemberOutput.getEnvelope().getMember() != null) {
-				output = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_MEMBER, ServiceUtil.SUCCESS_200, ServiceUtil.SUCCESS, verifyMemberOutput.getEnvelope().getMember());
+				output = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_MEMBER, WebUtil.SUCCESS_200, WebUtil.SUCCESS, verifyMemberOutput.getEnvelope().getMember());
 				if(StringUtils.isNotBlank(verifyMemberOutput.getEnvelope().getMember().getMrn())) {
 					response.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(verifyMemberOutput.getEnvelope().getMember().getMrn()));
 				}
 			}
 			if (StringUtils.isBlank(output)) {
 				output = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_MEMBER,
-						ServiceUtil.FAILURE_900, ServiceUtil.FAILURE, null);
+						WebUtil.FAILURE_900, WebUtil.FAILURE, null);
 			}
 		} catch (Exception e) {
 			logger.error("Error while verifyMember", e);
@@ -960,25 +960,21 @@ public class MeetingCommand {
 			output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
 
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
-					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
-					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
+					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP,
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
 						output.getService().getLaunchMeetingEnvelope() != null
 								? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
 								: null);
 				result = WebUtil.setBandWidth(result, desktopBandwidth, "data");
-
 			}
-			if (output != null) {
-				logger.debug("json output: = " + output);
-			}
+			logger.debug("json output: = " + output);
 		} catch (Exception e) {
 			logger.error("Error while launchMeetingForMemberDesktop for meetingId:" + meetingId, e);
 		}
 		if (StringUtils.isBlank(result)) {
 			result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP,
-					ServiceUtil.FAILURE_900, ServiceUtil.FAILURE, null);
+					WebUtil.FAILURE_900, WebUtil.FAILURE, null);
 		}
 		logger.info(LOG_EXITING);
 		return result;
@@ -1422,21 +1418,18 @@ public class MeetingCommand {
 		try {
 			final MeetingDetailsOutput output = WebService.IsMeetingHashValid(meetingCode, WebUtil.VV_MBR_GUEST,
 					request.getSession().getId());
-			if (output != null && output.getStatus() != null
-					&& WebUtil.SUCCESS_CODE_200.equalsIgnoreCase(output.getStatus().getCode())
-					&& output.getEnvelope() != null && CollectionUtils.isNotEmpty(output.getEnvelope().getMeetings())) {
-
+			if (output != null && output.getStatus() != null && output.getStatus().getCode() != null) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.IS_MEETING_HASH_VALID,
 						output.getStatus().getCode(), output.getStatus().getMessage(),
-						output.getEnvelope().getMeetings());
-
+						output.getEnvelope() != null ? output.getEnvelope().getMeetings() : null);
 			}
 		} catch (Exception e) {
 			logger.error("Error while isMeetingHashValid for meetingCode : " + meetingCode, e);
 		}
 
 		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.IS_MEETING_HASH_VALID, WebUtil.FAILURE_CODE_900, WebUtil.FAILURE_MESSAGE, null);
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.IS_MEETING_HASH_VALID, WebUtil.FAILURE_900,
+					WebUtil.FAILURE, null);
 		}
 		logger.info(LOG_EXITING);
 		return result;

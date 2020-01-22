@@ -264,7 +264,7 @@ public class MemberRestController extends SimplePageController {
 	
 	@RequestMapping(value = "/isMeetingHashValid.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
-	public String guestLogin(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	public String isMeetingHashValid(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		output = MeetingCommand.isMeetingHashValid(request, response);

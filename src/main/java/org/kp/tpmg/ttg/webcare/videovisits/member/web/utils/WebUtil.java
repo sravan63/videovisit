@@ -69,10 +69,12 @@ public class WebUtil {
 	public static final String SSO = "sso";
 	public static final String TEMP_ACCESS = "tempAccess";
 	public static final String SUBMIT_LOGIN = "submitLogin";
-
-	public static final String SUCCESS_CODE_200 = "200";
-	public static final String FAILURE_CODE_900 = "900";
-	public static final String FAILURE_MESSAGE = "failure";
+	
+	public static final String SUCCESS_200 = "200";
+	public static final String FAILURE_900 = "900";
+	public static final String FAILURE = "failure";
+	public static final String SUCCESS = "success";
+	public static final String MRN = "mrn";
 	
 	
 	public static String getCurrentDateTimeZone() {
