@@ -112,7 +112,7 @@ class Authentication extends React.Component {
                                 </div>
                             </div>
                             <div className = "form-group mobile-submit mt-5" >
-                                 <button type = "button" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Sign In</button>
+                                 <button type = "button" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Join</button>
                             </div>
                         </form>
                     </div> 

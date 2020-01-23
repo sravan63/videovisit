@@ -293,29 +293,35 @@ class Conference extends React.Component {
     }
 
     leaveMeeting() {
-        var headers = {},
-            loginType = this.state.loginType;
-        if (loginType == 'tempAccess') {
-            headers.authtoken = this.state.accessToken;
+        if (this.state.isGuest == false) {
+            var headers = {},
+                loginType = this.state.loginType;
+            if (loginType == 'tempAccess') {
+                headers.authtoken = this.state.accessToken;
+            } else {
+                headers.ssoSession = this.state.accessToken;
+            }
+            var meetingId = this.state.meetingDetails.meetingId,
+                memberName = this.state.meetingDetails.member.inMeetingDisplayName,
+                isProxyMeeting = this.state.isProxyMeeting;
+            BackendService.quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType).subscribe((response) => {
+                console.log("Success");
+                window.location.reload(false);
+            }, (err) => {
+                console.log("Error");
+                window.location.reload(false);
+            });
+            WebUI.pexipDisconnect();
+            var browserInfo = Utilities.getBrowserInformation();
+            if (browserInfo.isSafari || browserInfo.isFireFox) {
+                localStorage.removeItem('selectedPeripherals');
+            }
+            this.props.history.push(GlobalConfig.MEETINGS_URL);
         } else {
-            headers.ssoSession = this.state.accessToken;
+            WebUI.pexipDisconnect();
+            var data = JSON.parse(localStorage.getItem('userDetails'));
+            this.props.history.push('/guestlogin?meetingcode=' + data.meetingCode);
         }
-        var meetingId = this.state.meetingDetails.meetingId,
-            memberName = this.state.meetingDetails.member.inMeetingDisplayName,
-            isProxyMeeting = this.state.isProxyMeeting;
-        BackendService.quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType).subscribe((response) => {
-            console.log("Success");
-            window.location.reload(false);
-        }, (err) => {
-            console.log("Error");
-            window.location.reload(false);
-        });
-        WebUI.pexipDisconnect();
-        var browserInfo = Utilities.getBrowserInformation();
-        if (browserInfo.isSafari || browserInfo.isFireFox) {
-            localStorage.removeItem('selectedPeripherals');
-        }
-        this.props.history.push(GlobalConfig.MEETINGS_URL);
 
     }
     refreshPage() {
