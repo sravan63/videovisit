@@ -20,7 +20,7 @@ class Notifier extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((notification) => {
             switch(notification.text){
                 case GlobalConfig.NOTIFY_USER:
-                const loggedInUserName = this.userDetails.lastName.toLowerCase() + ', ' + this.userDetails.firstName.toLowerCase()
+                const loggedInUserName = this.userDetails.lastName.toLowerCase() + ', ' + this.userDetails.firstName.toLowerCase();
                     if(loggedInUserName !== notification.data.name.toLowerCase()){
                         this.setState({ message: notification.data.message, showNotifier: true });
                         setTimeout(()=>{

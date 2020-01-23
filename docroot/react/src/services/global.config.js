@@ -54,7 +54,8 @@ const GlobalConfig = {
     AUDIO:'audio',
     MICROPHONE:'microphone',
     MICROPHONE_MUTE : 'Mute Microphone',
-    MICROPHONE_UNMUTE : 'Unmute Microphone'
+    MICROPHONE_UNMUTE : 'Unmute Microphone',
+    STRING_FORMAT:['capitalize', 'uppercase', 'lowercase'],
 };
 
 export default GlobalConfig;
