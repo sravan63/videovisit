@@ -116,6 +116,14 @@ public class MeetingCommand {
 			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
 			}
+			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
+				mrn = request.getHeader("mrn");
+			}
+			
+			if (StringUtils.isNotBlank(request.getHeader("memberName"))) {
+				memberName = request.getHeader("memberName");
+			}
+			
 //					String clientId = notifyVideoForMeetingQuit ? ctx.getBackButtonClientId() : ctx.getClientId();
 			output = WebService.memberEndMeetingLogout(mrn, meetingId, request.getSession().getId(), memberName,
 					notifyVideoForMeetingQuit, WebUtil.VV_MBR_WEB);
