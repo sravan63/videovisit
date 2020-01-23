@@ -4,6 +4,7 @@ import Sidebar from '../../components/sidebar/sidebar';
 import Footer from '../../components/footer/footer';
 import Ssologin from '../../components/ssologin/ssologin';
 import Login from '../../components/tempaccess/tempaccess';
+import Loader from '../../components/loader/loader';
 import './guest-authentication.less';
 import BackendService from '../../services/backendService.js';
 import GlobalConfig from '../../services/global.config';
@@ -12,7 +13,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', NotLoggedIn: false, meetingCode: null, inputDisable: false, errormsgs: { errorlogin: false, errormsg: '' } };
+        this.state = { lastname: '', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errormsgs: { errorlogin: false, errormsg: '' } };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
@@ -22,17 +23,21 @@ class Authentication extends React.Component {
         if (window.location.hash.includes('meetingcode')) {
             this.state.meetingCode = window.location.hash.slice(25);
         }
+        this.setState({ showLoader: true });
         BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 this.setState({ NotLoggedIn: true });
+                this.setState({ showLoader: false });
             } else {
                 this.setState({ errormsgs: { errorlogin: true } });
                 this.setState({ inputDisable: true });
                 this.setState({ NotLoggedIn: true });
+                this.setState({ showLoader: false });
             }
         }, (err) => {
             this.setState({ errormsgs: { errorlogin: true } });
             this.setState({ NotLoggedIn: true });
+            this.setState({ showLoader: false });
 
         });
     }
@@ -40,6 +45,7 @@ class Authentication extends React.Component {
 
     signOn(e) {
         localStorage.clear();
+        this.setState({ showLoader: true });
         BackendService.guestLogin(this.state.meetingCode, this.state.lastname).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 if (response.data.data != null && response.data.data != '') {
@@ -49,14 +55,17 @@ class Authentication extends React.Component {
                     localStorage.setItem('meetingId', JSON.stringify(data.meetingId));
                     localStorage.setItem('userDetails', JSON.stringify(data));
                     localStorage.setItem('isGuest', true);
+                    this.setState({ showLoader: false });
                     this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                 }
             } else {
                 this.setState({ errormsgs: { errorlogin: true } });
+                this.setState({ showLoader: false });
 
             }
         }, (err) => {
             this.setState({ errormsgs: { errorlogin: true } });
+            this.setState({ showLoader: false });
 
         });
     }
@@ -87,6 +96,7 @@ class Authentication extends React.Component {
         return (
             <div id='container' className="authentication-page">
              <Header/>
+             {this.state.showLoader ? (<Loader />):('')}
               {this.state.NotLoggedIn ?  (  
                 <div>
              <div className="guest-main-content">
