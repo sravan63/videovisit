@@ -18,8 +18,8 @@ class BackendService extends React.Component {
         return Axios.post(this.state.basePath + '/videovisit/ssoPreLogin.json', {});
     }
 
-    logout(headers) {
-        return Axios.post(this.state.basePath + '/videovisit/logout.json', {}, { headers: headers });
+    logout(headers, loginType) {
+        return Axios.post(this.state.basePath + '/videovisit/logout.json?loginType=' + loginType, {}, { headers: headers });
     }
 
     isMeetingValidGuest(meetingCode) {

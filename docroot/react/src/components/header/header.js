@@ -25,15 +25,18 @@ class header extends React.Component {
         }
         signOffMethod() {
             localStorage.clear();
+            var loginType;
             var headers = {},
                 data = this.state.userDetails;
             if (data.isTempAccess) {
                 headers.authtoken = data.ssoSession;
+                loginType = "tempAccess"
             } else {
                 headers.ssoSession = data.ssoSession;
+                loginType = "sso";
             }
-            BackendService.logout(headers).subscribe((response) => {
-                if (response.data != "" && response.data != null && response && response.status == 200) {
+            BackendService.logout(headers, loginType).subscribe((response) => {
+                if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                     this.props.history.push('/login');
                 } else {
                     this.props.history.push('/login');
