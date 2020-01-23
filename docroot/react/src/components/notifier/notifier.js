@@ -11,27 +11,29 @@ import GlobalConfig from '../../services/global.config';
 class Notifier extends React.Component {
     constructor(props) {
         super(props);
-        this.userDetails = {};
-        this.state = {message: 'Testing', showNotifier: false};
+        this.loggedInUserName = '';
+        this.state = { message: 'Testing', showNotifier: false };
     }
 
     componentDidMount() {
-        this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
         this.subscription = MessageService.getMessage().subscribe((notification) => {
-            switch(notification.text){
+            switch (notification.text) {
                 case GlobalConfig.NOTIFY_USER:
-                const loggedInUserName = this.userDetails.lastName.toLowerCase() + ', ' + this.userDetails.firstName.toLowerCase();
-                    if(loggedInUserName !== notification.data.name.toLowerCase()){
+                    if (this.loggedInUserName.toLowerCase() !== notification.data.name.toLowerCase()) {
                         this.setState({ message: notification.data.message, showNotifier: true });
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             this.setState({ showNotifier: false });
                         }, 2500);
                     }
-                break;
+                    break;
+
+                case GlobalConfig.ACCESS_MEMBER_NAME:
+                    this.loggedInUserName = JSON.parse(localStorage.getItem('memberName'));
+                    break;
             }
         });
-        
-    }    
+
+    }
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
         this.subscription.unsubscribe();
@@ -40,9 +42,9 @@ class Notifier extends React.Component {
 
     render() {
         return (
-           <div className={this.state.showNotifier ? "notifier show-message" : "notifier hide-message"}>
+            <div className={this.state.showNotifier ? "notifier show-message" : "notifier hide-message"}>
                <p>{this.state.message}</p>                             
-           </div> 
+           </div>
         );
     }
 }

@@ -17,9 +17,10 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false,showvideoIcon:true,showaudioIcon:true,showmicIcon:true };
+        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false, showvideoIcon: true, showaudioIcon: true, showmicIcon: true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
+        this.getInMeetingDisplayName = this.getInMeetingDisplayName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
         this.startPexip = this.startPexip.bind(this);
@@ -31,6 +32,10 @@ class Conference extends React.Component {
             this.setState({
                 showLoader: false,
             });
+            if (localStorage.getItem('isGuest')) {
+                this.state.isGuest = true;
+                this.state.loginType = "guest";
+            }
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var sessionInfo = JSON.parse(localStorage.getItem('sessionInfo'));
             if (sessionInfo != null) {
@@ -69,24 +74,24 @@ class Conference extends React.Component {
                     this.setState({ moreparticpants: true });
                     this.toggleDockView(true);
                     break;
-               case GlobalConfig.VIDEO_MUTE:
-                   this.setState({showvideoIcon: false});
-                   break;
-               case GlobalConfig.VIDEO_UNMUTE:
-                   this.setState({showvideoIcon: true});
-                   break;
-               case GlobalConfig.AUDIO_MUTE:             
-                   this.setState({showaudioIcon:false});
-                   break;
-               case GlobalConfig.AUDIO_UNMUTE:             
-                   this.setState({showaudioIcon:true});
-                   break;
-                case GlobalConfig.MICROPHONE_MUTE:             
-                   this.setState({showmicIcon:false});
-                   break;
-               case GlobalConfig.MICROPHONE_UNMUTE:             
-                   this.setState({showmicIcon:true});
-                   break;        
+                case GlobalConfig.VIDEO_MUTE:
+                    this.setState({ showvideoIcon: false });
+                    break;
+                case GlobalConfig.VIDEO_UNMUTE:
+                    this.setState({ showvideoIcon: true });
+                    break;
+                case GlobalConfig.AUDIO_MUTE:
+                    this.setState({ showaudioIcon: false });
+                    break;
+                case GlobalConfig.AUDIO_UNMUTE:
+                    this.setState({ showaudioIcon: true });
+                    break;
+                case GlobalConfig.MICROPHONE_MUTE:
+                    this.setState({ showmicIcon: false });
+                    break;
+                case GlobalConfig.MICROPHONE_UNMUTE:
+                    this.setState({ showmicIcon: true });
+                    break;
             }
 
         });
@@ -146,7 +151,7 @@ class Conference extends React.Component {
                         runLateMeetingTime: data.runLateMeetingTime,
                         runningLatemsg: "We're sorry, your doctor is running late."
                     });
-                    this.updateRunningLateTime();                    
+                    this.updateRunningLateTime();
                 }
             } else {
 
@@ -156,23 +161,42 @@ class Conference extends React.Component {
         });
     }
 
+    getInMeetingDisplayName(caregiver) {
+        var details = JSON.parse(localStorage.getItem('userDetails'));
+        var guestName;
+        caregiver.forEach(function(val, index) {
+            if (val.careGiverMeetingHash == details.meetingCode) {
+                guestName = val.lastName + ', ' + val.firstName;
+            }
+        });
+        return guestName;
+    }
+
 
     startPexip(meeting) {
         localStorage.setItem('guestPin', meeting.vendorGuestPin);
-        localStorage.setItem('memberName', JSON.stringify(meeting.member.inMeetingDisplayName));
         var guestPin = meeting.vendorGuestPin,
             roomJoinUrl = meeting.roomJoinUrl,
             alias = meeting.meetingVendorId,
             bandwidth = "1280",
             source = "Join+Conference",
-            name = meeting.member.inMeetingDisplayName;
-        var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
-        var vendorDetails = {
-            "meetingId": meeting.meetingId,
-            "userType": userType,
-            "userId": meeting.member.mrn
-        };
-        localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
+            name;
+        if (this.state.isGuest == false) {
+            localStorage.setItem('memberName', JSON.stringify(meeting.member.inMeetingDisplayName));
+            name = Utilities.formatStringTo(meeting.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
+            var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
+            var vendorDetails = {
+                "meetingId": meeting.meetingId,
+                "userType": userType,
+                "userId": meeting.member.mrn
+            };
+            localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
+        } else {
+            var guestName = this.getInMeetingDisplayName(meeting.caregiver);
+            localStorage.setItem('memberName', JSON.stringify(guestName));
+            name = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
+        }
+        MessageService.sendMessage(GlobalConfig.ACCESS_MEMBER_NAME, null);
         WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);
     }
 
@@ -297,7 +321,7 @@ class Conference extends React.Component {
     refreshPage() {
         window.location.reload(false);
     }
-    disablecontrols(cntrlname){
+    disablecontrols(cntrlname) {
         switch (cntrlname) {
             case GlobalConfig.VIDEO:
                 WebUI.muteUnmuteVideo();
@@ -307,9 +331,9 @@ class Conference extends React.Component {
                 break;
             case GlobalConfig.MICROPHONE:
                 WebUI.muteUnmuteMic();
-                break;    
-                
-        }                
+                break;
+
+        }
     }
 
 

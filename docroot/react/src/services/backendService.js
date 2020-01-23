@@ -26,6 +26,10 @@ class BackendService extends React.Component {
         return Axios.post(this.state.basePath + '/videovisit/isMeetingHashValid.json?meetingCode=' + meetingCode, {});
     }
 
+    guestLogin(meetingCode, patientLastName) {
+        return Axios.post(this.state.basePath + '/videovisit/guestLoginJoinMeeting.json?meetingCode=' + meetingCode + '&patientLastName=' + patientLastName + '&loginType=' + loginType, {});
+    }
+
     getSSOLogin(username, password) {
         return Axios.post(this.state.basePath + '/videovisit/ssoSubmitLogin.json?username=' +
             username + '&password=' + password + '&loginType=sso', {});

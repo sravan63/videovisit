@@ -6,22 +6,23 @@ import Ssologin from '../../components/ssologin/ssologin';
 import Login from '../../components/tempaccess/tempaccess';
 import './guest-authentication.less';
 import BackendService from '../../services/backendService.js';
+import GlobalConfig from '../../services/global.config';
 
 class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', NotLoggedIn: false, inputDisable: false, errormsgs: { errorlogin: false, errormsg: '' } };
+        this.state = { lastname: '', NotLoggedIn: false, meetingCode: null, inputDisable: false, errormsgs: { errorlogin: false, errormsg: '' } };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
 
     componentDidMount() {
-        var meetingCode;
+        //var meetingCode;
         if (window.location.hash.includes('meetingcode')) {
-            meetingCode = window.location.hash.slice(25);
+            this.state.meetingCode = window.location.hash.slice(25);
         }
-        BackendService.isMeetingValidGuest(meetingCode).subscribe((response) => {
+        BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 this.setState({ NotLoggedIn: true });
             } else {
@@ -36,8 +37,28 @@ class Authentication extends React.Component {
         });
     }
 
+
     signOn(e) {
-        console.log('CLICKED ON GUEST SIGN ON');
+        localStorage.clear();
+        BackendService.isMeetingValidGuest(this.state.meetingCode, this.state.lastname).subscribe((response) => {
+            if (response.data != "" && response.data != null && response.data.statusCode == 200) {
+                if (response.data.data != null && response.data.data != '') {
+                    var data = {};
+                    data = response.data.data[0] ? response.data.data[0] : '';
+                    data.meetingCode = this.state.meetingCode;
+                    localStorage.setItem('meetingId', JSON.stringify(data.meetingId));
+                    localStorage.setItem('userDetails', JSON.stringify(data));
+                    localStorage.setItem('isGuest', true);
+                    this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
+                }
+            } else {
+                this.setState({ errormsgs: { errorlogin: true } });
+
+            }
+        }, (err) => {
+            this.setState({ errormsgs: { errorlogin: true } });
+
+        });
     }
 
     handleChange(key, event) {
