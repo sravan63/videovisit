@@ -48,6 +48,7 @@ public class SSOSessionFilter implements Filter {
 									|| StringUtils.isBlank(ssoCookie.getValue()))) {
 						if ("localhost".equalsIgnoreCase(req.getServerName()) || WebUtil.isSsoSimulation()) {
 							logger.info("cookie validation not required for " + req.getServerName());
+							chain.doFilter(req, resp);
 						} else {
 							logger.info(
 									"Member signed on using SSO - session is not null, cookie in request is not valid due to SSO sign off either from KP.org or MDO");
