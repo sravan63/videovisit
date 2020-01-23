@@ -40,7 +40,7 @@ class Authentication extends React.Component {
 
     signOn(e) {
         localStorage.clear();
-        BackendService.isMeetingValidGuest(this.state.meetingCode, this.state.lastname).subscribe((response) => {
+        BackendService.guestLogin(this.state.meetingCode, this.state.lastname).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 if (response.data.data != null && response.data.data != '') {
                     var data = {};
