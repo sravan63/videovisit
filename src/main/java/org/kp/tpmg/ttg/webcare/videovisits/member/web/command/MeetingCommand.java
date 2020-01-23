@@ -583,6 +583,20 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	public static void performSSOSignOff(HttpServletRequest request, HttpServletResponse response, final String ssoSession) {
+		logger.info(LOG_ENTERED);
+		try {
+			WebService.initWebService(request);
+			WebService.performKpOrgSSOSignOff(ssoSession);
+			WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
+			WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);
+			WebUtil.removeCookie(request, response, WebUtil.S_COOKIE_NAME);
+		} catch (Exception e) {
+			logger.error("Error while performSSOSignOff : ", e);
+		}
+		logger.info(LOG_EXITING);
+	}
 
 	public static String setKPHCConferenceStatus(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
