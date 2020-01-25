@@ -56,7 +56,10 @@ const GlobalConfig = {
     MICROPHONE_MUTE: 'Mute Microphone',
     MICROPHONE_UNMUTE: 'Unmute Microphone',
     STRING_FORMAT: ['capitalize', 'uppercase', 'lowercase'],
-    ACCESS_MEMBER_NAME: 'send member name'
+    ACCESS_MEMBER_NAME: 'send member name',
+    GUEST_VALIDATE_MEETING_ERROR_MSG: 'The video visit you are trying to join is not currently available.',
+    GUEST_LOGIN_ERROR_MSG: 'Some exception occurred while processing request.',
+    GUEST_LOGIN_VALIDATION_MSG: 'No matching patient found. Please try again.'
 };
 
 export default GlobalConfig;

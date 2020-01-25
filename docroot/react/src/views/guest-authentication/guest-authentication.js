@@ -13,9 +13,11 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errormsgs: { errorlogin: false, errormsg: '' } };
+        this.state = { lastname: '', displayErrorMsg: '', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
+        this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
+        this.errorCompForGuestLogin = this.errorCompForGuestLogin.bind(this);
     }
 
     componentDidMount() {
@@ -26,19 +28,24 @@ class Authentication extends React.Component {
         this.setState({ showLoader: true });
         BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
-                this.setState({ NotLoggedIn: true });
-                this.setState({ showLoader: false });
+                this.setState({ NotLoggedIn: true, showLoader: false });
             } else {
-                this.setState({ errormsgs: { errorlogin: true } });
-                this.setState({ inputDisable: true });
-                this.setState({ NotLoggedIn: true });
-                this.setState({ showLoader: false });
+                this.renderErrorCompValidation();
+
             }
         }, (err) => {
-            this.setState({ errormsgs: { errorlogin: true } });
-            this.setState({ NotLoggedIn: true });
-            this.setState({ showLoader: false });
+            this.renderErrorCompValidation();
 
+        });
+    }
+
+    renderErrorCompValidation() {
+        this.setState({
+            errorlogin: true,
+            displayErrorMsg: GlobalConfig.GUEST_VALIDATE_MEETING_ERROR_MSG,
+            inputDisable: true,
+            NotLoggedIn: true,
+            showLoader: false
         });
     }
 
@@ -58,16 +65,21 @@ class Authentication extends React.Component {
                     this.setState({ showLoader: false });
                     this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                 }
+            } else if (response.data.statusCode == 300 || response.data.statusCode == 900) {
+                this.errorCompForGuestLogin();
+            } else if (response.data.statusCode == 510 || response.data.statusCode == 500) {
+                this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_VALIDATION_MSG, showLoader: false });
             } else {
-                this.setState({ errormsgs: { errorlogin: true } });
-                this.setState({ showLoader: false });
-
+                this.errorCompForGuestLogin();
             }
         }, (err) => {
-            this.setState({ errormsgs: { errorlogin: true } });
-            this.setState({ showLoader: false });
+            this.errorCompForGuestLogin();
 
         });
+    }
+
+    errorCompForGuestLogin() {
+        this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_ERROR_MSG, showLoader: false });
     }
 
     handleChange(key, event) {
@@ -100,9 +112,9 @@ class Authentication extends React.Component {
               {this.state.NotLoggedIn ?  (  
                 <div>
              <div className="guest-main-content">
-                {this.state.errormsgs.errorlogin ? 
+                {this.state.errorlogin ? 
                     <div className="row error-text">
-                         <p className="col-sm-12">The video visit you are trying to join is not currently available.</p>
+                         <p className="col-sm-12">{this.state.displayErrorMsg}</p>
                     </div>
                 : ('')}
                 <div className="row mobile-help-link">
