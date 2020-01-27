@@ -238,7 +238,6 @@ function presentationStartStop(setting, pres) {
         // id_presentation.textContent = trans['BUTTON_NOPRES'];
         // id_presentation.classList.add("inactive");
         if (!refreshingOrSelfJoinMeeting && !isMobileDevice && presenting_user) {
-            // utilityNotifyQueue(presenting_user + ' '+GlobalConfig.PRESENTATION_OFF);
             const data = {
                 message: presenting_user + ' '+GlobalConfig.PRESENTATION_OFF,
                 name: presenting_user
@@ -526,10 +525,9 @@ function participantCreated(participant) {
             message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
             name: participant.display_name
         };
-        // if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
-            // utilityNotifyQueue(joinParticipantMsg);
-        // }
-        MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
+        if(!refreshingOrSelfJoinMeeting){
+            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
+        }
 
         /*var data = [];
         data.sipParticipants = [participant];
@@ -590,7 +588,9 @@ function participantCreated(participant) {
         // if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
             // utilityNotifyQueue(joinParticipantMsg);
         // }
-        MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
+        if(!refreshingOrSelfJoinMeeting){
+            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
+        }
         toggleWaitingRoom(pexipParticipantsList);
         // VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
     }
@@ -633,12 +633,13 @@ function participantDeleted(participant) {
         // if (!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()) {
         //     utilityNotifyQueue(participantMsg);
         // }
-        var participantMsg = {
-            message : removingParticipant[0].display_name + " "+GlobalConfig.LEFT_VISIT,
-            name: removingParticipant[0].display_name
-        };
-        MessageService.sendMessage(GlobalConfig.NOTIFY_USER, participantMsg);
-        
+        if(!refreshingOrSelfJoinMeeting){
+            var participantMsg = {
+                message : removingParticipant[0].display_name + " "+GlobalConfig.LEFT_VISIT,
+                name: removingParticipant[0].display_name
+            };
+            MessageService.sendMessage(GlobalConfig.NOTIFY_USER, participantMsg);
+        }
         //VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
         toggleWaitingRoom(pexipParticipantsList);
     }
