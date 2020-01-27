@@ -1,0 +1,61 @@
+.setting-peripherals{
+    height: calc(100vh - 130px);
+    position: absolute;
+    top:0;
+    background: #FFF;    
+        .settings-page {
+            padding: 1rem 0 0 3rem;
+            .close-button{
+                background: url('../../../../images/global/close-icon.png') no-repeat;
+                background-position: right;
+                height: 35px;
+                cursor: pointer;
+            }
+            .periheral-container {
+                margin-bottom: 2rem;
+                .dropdown {
+                    color: #333333;
+                    font-size: 0.875rem;
+                    border: 1px solid #003B71;
+                    background: #FFFFFF;
+
+                    .btn {
+                        text-align: left;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        padding-right: 1rem;
+                    }
+
+                    .disabled {
+                        opacity: 0.5;
+                        pointer-events: none;
+                        min-height: 2.1rem;
+                    }
+
+                    .dropdown-menu {
+                        min-width: 100%;
+
+                        .dropdown-item {
+                            cursor: pointer;
+                        }
+                    }
+
+                    .dropdown-toggle::after {
+                        top: 15px;
+                        position: absolute;
+                        right: 5px;
+                    }
+                }
+                
+            }   
+            .button-controls {
+                .btn {
+                    background: #006ba6;
+                    width: 7rem;
+                    color: #FFF;
+                }
+            }
+        }    
+        
+}

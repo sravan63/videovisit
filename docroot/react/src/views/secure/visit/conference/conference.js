@@ -9,6 +9,7 @@ import * as pexip from '../../../../pexip/complex/pexrtcV20.js';
 import * as WebUI from '../../../../pexip/complex/webui.js';
 import * as eventSource from '../../../../pexip/complex/EventSource.js';
 import WaitingRoom from '../../../../components/waiting-room/waiting-room';
+import Settings from '../../../../components/settings/settings.js';
 import Notifier from '../../../../components/notifier/notifier';
 import GlobalConfig from '../../../../services/global.config';
 import { MessageService } from '../../../../services/message-service.js';
@@ -17,7 +18,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false, showvideoIcon: true, showaudioIcon: true, showmicIcon: true };
+        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false, showvideoIcon: true, showaudioIcon: true, showmicIcon: true,isbrowsercheck : false,isHidden: true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.getInMeetingDisplayName = this.getInMeetingDisplayName.bind(this);
@@ -55,6 +56,10 @@ class Conference extends React.Component {
         if (localStorage.getItem('isProxyMeeting')) {
             this.state.isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         }
+        var browserInfo = Utilities.getBrowserInformation();
+        if (browserInfo.isSafari || browserInfo.isFireFox) {
+            this.setState({isbrowsercheck :true})
+        }
 
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             switch (message.text) {
@@ -73,24 +78,6 @@ class Conference extends React.Component {
                     this.setState({ hostavail: false });
                     this.setState({ moreparticpants: true });
                     this.toggleDockView(true);
-                    break;
-                case GlobalConfig.VIDEO_MUTE:
-                    this.setState({ showvideoIcon: false });
-                    break;
-                case GlobalConfig.VIDEO_UNMUTE:
-                    this.setState({ showvideoIcon: true });
-                    break;
-                case GlobalConfig.AUDIO_MUTE:
-                    this.setState({ showaudioIcon: false });
-                    break;
-                case GlobalConfig.AUDIO_UNMUTE:
-                    this.setState({ showaudioIcon: true });
-                    break;
-                case GlobalConfig.MICROPHONE_MUTE:
-                    this.setState({ showmicIcon: false });
-                    break;
-                case GlobalConfig.MICROPHONE_UNMUTE:
-                    this.setState({ showmicIcon: true });
                     break;
             }
 
@@ -330,19 +317,39 @@ class Conference extends React.Component {
     disablecontrols(cntrlname) {
         switch (cntrlname) {
             case GlobalConfig.VIDEO:
+                this.setState({
+                    showvideoIcon: !this.state.showvideoIcon
+                  })
                 WebUI.muteUnmuteVideo();
                 break;
             case GlobalConfig.AUDIO:
+                this.setState({
+                    showaudioIcon: !this.state.showaudioIcon
+                  })
                 WebUI.muteSpeaker();
                 break;
             case GlobalConfig.MICROPHONE:
+                this.setState({
+                    showmicIcon: !this.state.showmicIcon
+                  })
                 WebUI.muteUnmuteMic();
-                break;
-
+                break;              
         }
     }
-
-
+    toggleHidden () {
+        this.setState({
+          isHidden: !this.state.isHidden
+        })
+        console.log(this.state.isHidden);
+        
+      }
+      closeSetting() {
+        console.log("togglesetting");
+        this.setState({
+            isHidden: true
+          })
+       }
+      
     render() {
         return (
             <div className="conference-page pl-0 container-fluid">
@@ -382,7 +389,7 @@ class Conference extends React.Component {
                                     <div title="Unmute Mic" style={{display: this.state.showmicIcon ? 'none' : 'block'}} className="btns media-controls microphone-muted-btn" onClick={()=>this.disablecontrols('microphone')}></div>
                                 </div>
                                 <div className="media-toggle">
-                                    <div title="Settings" className="btns media-controls settings-btn"></div>
+                                    <div title="Settings" style={{display:this.state.isbrowsercheck ? 'none':'block'}} className="btns media-controls settings-btn" onClick={this.toggleHidden.bind(this)}></div>                                    
                                 </div>
                             </div>
                             </div>
@@ -391,6 +398,7 @@ class Conference extends React.Component {
                                 <div className="stream-container" style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                 </div>
+                                {<Settings settingstoggle={this.state.isHidden} close={this.closeSetting.bind(this)} />}
                             </div>
                             <div id="selfview" className="self-view">
                            <video id="selfvideo" autoPlay="autoplay" playsInline="playsinline" muted={true}>

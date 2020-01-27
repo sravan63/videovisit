@@ -1058,11 +1058,9 @@ export function muteSpeaker() {
     var video = document.getElementsByClassName('remoteFeed')[0];
     if (video.muted) {
         log("info", "speaker_unmute_action", "event: unmuteSpeaker - on click of mute speaker button");
-        MessageService.sendMessage(GlobalConfig.AUDIO_UNMUTE, null);
         video.muted = false;
     } else {
         log("info", "speaker_mute_action", "event: muteSpeaker - on click of unmute speaker button");
-        MessageService.sendMessage(GlobalConfig.AUDIO_MUTE, null);
         video.muted = true;
     }
 }
@@ -1071,10 +1069,8 @@ export function muteUnmuteVideo() {
     let muteVideo = rtc.muteVideo();
     if (muteVideo) {
         log("info", "video_mute_action", "event: muteVideo - on click of mute video button");
-        MessageService.sendMessage(GlobalConfig.VIDEO_MUTE, null);
     } else {
-        log("info", "video_unmute_action", "event: unmuteVideo - on click of unmute video  button");
-        MessageService.sendMessage(GlobalConfig.VIDEO_UNMUTE, null);
+        log("info", "video_unmute_action", "event: unmuteVideo - on click of unmute video  button");        
     }
 }
 
@@ -1082,10 +1078,8 @@ export function muteUnmuteVideo() {
 export function muteUnmuteMic() {
     let muteAudio = rtc.muteAudio();
     if (muteAudio) {
-        MessageService.sendMessage(GlobalConfig.MICROPHONE_MUTE, null);
         log("info", "microphone_mute_action", "event: muteMic - on click of mute mic button");
     } else {
-        MessageService.sendMessage(GlobalConfig.MICROPHONE_UNMUTE, null);
         log("info", "microphone_unmute_action", "event: unmuteMic - on click of unmute mic button");
     }
 }
