@@ -98,8 +98,8 @@ class Authentication extends React.Component {
                 break;
         }
 
-        if ("" != event.target.value) {
-            if (this.state.lastname != "") {
+        if ("" != event.target.value.trim()) {
+            if (this.lastname != "") {
                 this.button.disabled = false;
             } else {
                 this.button.disabled = true;
