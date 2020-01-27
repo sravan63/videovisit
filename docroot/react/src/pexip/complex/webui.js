@@ -787,7 +787,10 @@ export function setPatientGuestPresenceIndicatorManually() {
     }
 }
 
-export function switchDevices() {
+export function switchDevices(constrain, device = null) {
+    if(constrain == 'video'){
+        rtc.video_source = device;
+    }
     rtc.renegotiate();
 }
 
@@ -1056,12 +1059,12 @@ export var log = function(type, param, msg) {
 };
 
 export function muteSpeaker() {
-    var video = document.getElementsByClassName('remoteFeed')[0];
+    var video = document.getElementById("video");
     if (video.muted) {
-        log("info", "speaker_unmute_action", "event: unmuteSpeaker - on click of mute speaker button");
+        log("info", "speaker_unmute_action", "event: muteSpeaker - on click of mute speaker button");
         video.muted = false;
     } else {
-        log("info", "speaker_mute_action", "event: muteSpeaker - on click of unmute speaker button");
+        log("info", "speaker_mute_action", "event: unmuteSpeaker - on click of unmute speaker button");
         video.muted = true;
     }
 }
