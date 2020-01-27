@@ -58,7 +58,7 @@ class Authentication extends React.Component {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 if (response.data.data != null && response.data.data != '') {
                     var data = {};
-                    data = response.data.data[0] ? response.data.data[0] : '';
+                    data = response.data.data ? response.data.data : '';
                     data.meetingCode = this.state.meetingCode;
                     localStorage.setItem('meetingId', JSON.stringify(data.meetingId));
                     localStorage.setItem('userDetails', JSON.stringify(data));

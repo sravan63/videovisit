@@ -18,7 +18,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false, showvideoIcon: true, showaudioIcon: true, showmicIcon: true,isbrowsercheck : false,isHidden: true };
+        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false, showvideoIcon: true, showaudioIcon: true, showmicIcon: true, isbrowsercheck: false, isHidden: true };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.getInMeetingDisplayName = this.getInMeetingDisplayName.bind(this);
@@ -58,7 +58,7 @@ class Conference extends React.Component {
         }
         var browserInfo = Utilities.getBrowserInformation();
         if (browserInfo.isSafari || browserInfo.isFireFox) {
-            this.setState({isbrowsercheck :true})
+            this.setState({ isbrowsercheck: true })
         }
 
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
@@ -308,6 +308,7 @@ class Conference extends React.Component {
             WebUI.pexipDisconnect();
             var data = JSON.parse(localStorage.getItem('userDetails'));
             this.props.history.push('/guestlogin?meetingcode=' + data.meetingCode);
+            window.location.reload(false);
         }
 
     }
@@ -319,37 +320,37 @@ class Conference extends React.Component {
             case GlobalConfig.VIDEO:
                 this.setState({
                     showvideoIcon: !this.state.showvideoIcon
-                  })
+                })
                 WebUI.muteUnmuteVideo();
                 break;
             case GlobalConfig.AUDIO:
                 this.setState({
                     showaudioIcon: !this.state.showaudioIcon
-                  })
+                })
                 WebUI.muteSpeaker();
                 break;
             case GlobalConfig.MICROPHONE:
                 this.setState({
                     showmicIcon: !this.state.showmicIcon
-                  })
+                })
                 WebUI.muteUnmuteMic();
-                break;              
+                break;
         }
     }
-    toggleHidden () {
+    toggleHidden() {
         this.setState({
-          isHidden: !this.state.isHidden
+            isHidden: !this.state.isHidden
         })
         console.log(this.state.isHidden);
-        
-      }
-      closeSetting() {
+
+    }
+    closeSetting() {
         console.log("togglesetting");
         this.setState({
             isHidden: true
-          })
-       }
-      
+        })
+    }
+
     render() {
         return (
             <div className="conference-page pl-0 container-fluid">
