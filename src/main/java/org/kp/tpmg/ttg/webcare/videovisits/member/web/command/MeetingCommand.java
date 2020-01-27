@@ -250,7 +250,6 @@ public class MeetingCommand {
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		ServiceCommonOutput output = null;
-		String jsonString = null;
 		String result = null;
 		try {
 			String meetingCode = request.getParameter("meetingCode");
@@ -261,12 +260,11 @@ public class MeetingCommand {
 
 			if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
-				result = WebUtil.prepareCommonOutputJson(output.getName(), output.getStatus().getCode(),
-						output.getStatus().getMessage(), "");
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP,
+						output.getStatus().getCode(), output.getStatus().getMessage(), "");
 			}
 		} catch (Exception e) {
 			logger.error("Error while endMeetingForMemberGuestDesktop : " + e.getMessage(), e);
-			jsonString = JSONObject.fromObject(new SystemError()).toString();
 		}
 		if (StringUtils.isBlank(result)) {
 			result = WebUtil.prepareCommonOutputJson(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP, "900", "failure",
@@ -1262,7 +1260,7 @@ public class MeetingCommand {
 	public static String isMeetingHashValid(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		String result = null;
-		final String meetingCode = request.getParameter("meetingCode");
+		final String meetingCode = request.getHeader("meetingCode");
 		try {
 			final MeetingDetailsOutput output = WebService.IsMeetingHashValid(meetingCode, WebUtil.VV_MBR_GUEST,
 					request.getSession().getId());
