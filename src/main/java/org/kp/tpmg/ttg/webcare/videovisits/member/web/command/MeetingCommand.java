@@ -1296,22 +1296,25 @@ public class MeetingCommand {
 		try {
 			final String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
 			boolean isMobileFlow = false;
-			Device device = DeviceDetectionService.checkForDevice(request);
-			Map<String, String> capabilities = device.getCapabilities();
-			if (WebUtil.TRUE.equals(capabilities.get("is_wireless_device"))
-					|| WebUtil.TRUE.equals(capabilities.get("is_tablet"))) {
-				isMobileFlow = true;
-				logger.info("isMobileFlow is true");
-				brandName = capabilities.get("brand_name");
-				modelName = capabilities.get("model_name");
-				deviceOs = capabilities.get("device_os");
-				deviceOsVersion = capabilities.get("device_os_version");
+			try {
+				Device device = DeviceDetectionService.checkForDevice(request);
+				Map<String, String> capabilities = device.getCapabilities();
+				if (WebUtil.TRUE.equals(capabilities.get("is_wireless_device"))
+						|| WebUtil.TRUE.equals(capabilities.get("is_tablet"))) {
+					isMobileFlow = true;
+					logger.info("isMobileFlow is true");
+					brandName = capabilities.get("brand_name");
+					modelName = capabilities.get("model_name");
+					deviceOs = capabilities.get("device_os");
+					deviceOsVersion = capabilities.get("device_os_version");
 
-				if (StringUtils.isNotBlank(brandName) && StringUtils.isNotBlank(modelName)) {
-					deviceType = brandName + " " + modelName;
+					if (StringUtils.isNotBlank(brandName) && StringUtils.isNotBlank(modelName)) {
+						deviceType = brandName + " " + modelName;
+					}
 				}
+			} catch (Exception e) {
+				logger.warn("Error while detecting device type for meetingCode : " + meetingCode, e);
 			}
-
 			final MeetingDetailsForMeetingIdJSON outputJson = WebService.guestLoginJoinMeeting(meetingCode,
 					patientLastName, isMobileFlow, deviceType, deviceOs, deviceOsVersion, WebUtil.VV_MBR_GUEST,
 					request.getSession().getId());
