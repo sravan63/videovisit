@@ -1260,7 +1260,7 @@ public class MeetingCommand {
 	public static String isMeetingHashValid(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
 		String result = null;
-		final String meetingCode = request.getHeader("meetingCode");
+		final String meetingCode = request.getParameter("meetingCode");
 		try {
 			final MeetingDetailsOutput output = WebService.IsMeetingHashValid(meetingCode, WebUtil.VV_MBR_GUEST,
 					request.getSession().getId());
