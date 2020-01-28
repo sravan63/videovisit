@@ -11,6 +11,7 @@ import * as eventSource from '../../../../pexip/complex/EventSource.js';
 import WaitingRoom from '../../../../components/waiting-room/waiting-room';
 import Settings from '../../../../components/settings/settings.js';
 import Notifier from '../../../../components/notifier/notifier';
+import ConferenceDetails from '../../../../components/conference-details/conference-details';
 import GlobalConfig from '../../../../services/global.config';
 import { MessageService } from '../../../../services/message-service.js';
 
@@ -18,12 +19,9 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', runLateMeetingTime: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', runningLateUpdatedTime: '', hostavail: false, moreparticpants: false, videofeedflag: false, showvideoIcon: true, showaudioIcon: true, showmicIcon: true, isbrowsercheck: false, isHidden: true };
-        this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
-        this.getClinicianName = this.getClinicianName.bind(this);
+        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, showvideoIcon: true, showaudioIcon: true, showmicIcon: true, isbrowsercheck: false, isHidden: true };
         this.getInMeetingDisplayName = this.getInMeetingDisplayName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
-        this.leaveMeeting = this.leaveMeeting.bind(this);
         this.startPexip = this.startPexip.bind(this);
     }
 
@@ -79,6 +77,9 @@ class Conference extends React.Component {
                     this.setState({ moreparticpants: true });
                     this.toggleDockView(true);
                     break;
+                case GlobalConfig.LEAVE_VISIT:
+                    this.leaveMeeting();
+                    break;
             }
 
         });
@@ -111,13 +112,13 @@ class Conference extends React.Component {
                     meetingDetails: data
                 });
                 var sortedParticipants = this.setSortedParticipantList();
-                this.setState({
+                MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS , {
+                    meetingDetails: this.state.meetingDetails, 
                     participants: sortedParticipants
                 });
                 this.startPexip(this.state.meetingDetails);
-
             } else {
-
+                // Do nothing
             }
         }, (err) => {
             console.log("Error");
@@ -134,14 +135,12 @@ class Conference extends React.Component {
                 var data = response.data.data;
                 if (data.isRunningLate == true) {
                     this.setState({
-                        isRunningLate: true,
-                        runLateMeetingTime: data.runLateMeetingTime,
                         runningLatemsg: "We're sorry, your doctor is running late."
                     });
-                    this.updateRunningLateTime();
+                    MessageService.sendMessage(GlobalConfig.UPDATE_RUNNING_LATE, data);
                 }
             } else {
-
+                // Do nothing
             }
         }, (err) => {
             console.log("Error");
@@ -206,32 +205,6 @@ class Conference extends React.Component {
             list.sort((a, b) => (a.name > b.name) ? 1 : -1);
         }
         return list;
-    }
-
-    getClinicianName(host) {
-        if (!host) {
-            return;
-        }
-        let clinician = '';
-        clinician += host.firstName ? host.firstName.toLowerCase() : '';
-        clinician += host.lastName ? ' ' + host.lastName.toLowerCase() : '';
-        clinician += host.title ? ', ' + host.title : '';
-        return clinician.trim();
-    }
-
-    getHoursAndMinutes(millis, type) {
-        if (!millis) {
-            return;
-        }
-        return Utilities.formatInMeetingDateAndTime(new Date(parseInt(millis)), type);
-    }
-    updateRunningLateTime() {
-        if (!this.state.isRunningLate || !this.state.runLateMeetingTime) {
-            return;
-        }
-        this.setState({
-            runningLateUpdatedTime: Utilities.formatInMeetingRunningLateTime(this.state.runLateMeetingTime)
-        });
     }
 
     leaveMeeting() {
@@ -328,23 +301,23 @@ class Conference extends React.Component {
                     <div className="row video-conference-container">
                         <div className="col-md-10 p-0 video-conference">
                             <div className="button-container">
-                            <div className="button-group" >
-                                <div className="media-toggle">
-                                    <div title="Enable Video" style={{display: this.state.showvideoIcon ? 'block' : 'none'}} className="btns media-controls video-btn" onClick={()=>this.disablecontrols('video')}></div>
-                                    <div title="Disable Video" style={{display: this.state.showvideoIcon ? 'none' : 'block'}} className="btns media-controls video-muted-btn" onClick={()=>this.disablecontrols('video')}></div>   
+                                <div className="button-group" >
+                                    <div className="media-toggle">
+                                        <div title="Enable Video" style={{display: this.state.showvideoIcon ? 'block' : 'none'}} className="btns media-controls video-btn" onClick={()=>this.disablecontrols('video')}></div>
+                                        <div title="Disable Video" style={{display: this.state.showvideoIcon ? 'none' : 'block'}} className="btns media-controls video-muted-btn" onClick={()=>this.disablecontrols('video')}></div>   
+                                    </div>
+                                    <div className="media-toggle">
+                                        <div title="Mute Speakers" style={{display: this.state.showaudioIcon ? 'block' : 'none'}}  className="btns media-controls speaker-btn" onClick={()=>this.disablecontrols('audio')}></div>
+                                        <div title="Unmute Speakers" style={{display: this.state.showaudioIcon ? 'none' : 'block'}} className="btns media-controls speaker-muted-btn" onClick={()=>this.disablecontrols('audio')}></div>
+                                    </div>
+                                    <div className="media-toggle">
+                                        <div title="Mute Mic" style={{display: this.state.showmicIcon ? 'block' : 'none'}} className="btns media-controls microphone-btn" onClick={()=>this.disablecontrols('microphone')}></div>
+                                        <div title="Unmute Mic" style={{display: this.state.showmicIcon ? 'none' : 'block'}} className="btns media-controls microphone-muted-btn" onClick={()=>this.disablecontrols('microphone')}></div>
+                                    </div>
+                                    <div className="media-toggle">
+                                        <div title="Settings" style={{display:this.state.isbrowsercheck ? 'none':'block'}} className="btns media-controls settings-btn" onClick={this.toggleHidden.bind(this)}></div>                                    
+                                    </div>
                                 </div>
-                                <div className="media-toggle">
-                                    <div title="Mute Speakers" style={{display: this.state.showaudioIcon ? 'block' : 'none'}}  className="btns media-controls speaker-btn" onClick={()=>this.disablecontrols('audio')}></div>
-                                    <div title="Unmute Speakers" style={{display: this.state.showaudioIcon ? 'none' : 'block'}} className="btns media-controls speaker-muted-btn" onClick={()=>this.disablecontrols('audio')}></div>
-                                </div>
-                                <div className="media-toggle">
-                                    <div title="Mute Mic" style={{display: this.state.showmicIcon ? 'block' : 'none'}} className="btns media-controls microphone-btn" onClick={()=>this.disablecontrols('microphone')}></div>
-                                    <div title="Unmute Mic" style={{display: this.state.showmicIcon ? 'none' : 'block'}} className="btns media-controls microphone-muted-btn" onClick={()=>this.disablecontrols('microphone')}></div>
-                                </div>
-                                <div className="media-toggle">
-                                    <div title="Settings" style={{display:this.state.isbrowsercheck ? 'none':'block'}} className="btns media-controls settings-btn" onClick={this.toggleHidden.bind(this)}></div>                                    
-                                </div>
-                            </div>
                             </div>
                             <div className="col p-0">
                                 <WaitingRoom waitingroom={this.state} />
@@ -358,35 +331,7 @@ class Conference extends React.Component {
                         </video>
                         </div>
                         </div>
-                        <div className="col-md-2 p-0 conference-details">
-                            <div className="clinician-information">
-                                <button className="btn leave-button" onClick={this.leaveMeeting}>Leave Room</button>
-                                <div className="visit-details">
-                                    <p className="text-capitalize mt-1 mb-1">Visit details</p>
-                                    <div className="clinician-info text-capitalize">{this.getClinicianName(this.state.meetingDetails.host)}</div>
-                                    <div className="visit-time text-capitalize">
-                                        <b>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}</b>
-                                        <span>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'date')}</span>
-                                    </div>
-                                    <div style={{display: this.state.isRunningLate ? 'block' : 'none' }}>
-                                        <span className="time-display">updated: {this.state.runningLateUpdatedTime}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="participants-information">
-                                <p className="header mb-0">Guests</p>
-                                <div className="participant-details" aria-labelledby="dropdownMenuButton">
-                                    { this.state.participants && this.state.participants.length > 0 ? 
-                                        this.state.participants.map((item,key) =>{
-                                        return (
-                                            <div className="participant text-capitalize mt-2" key={key}>{item.name}</div>
-                                        )
-                                    }) 
-                                     : ('') 
-                                    }
-                               </div>
-                            </div>
-                        </div>
+                        <ConferenceDetails/>
                     </div>
             ): ('')
         } </div>

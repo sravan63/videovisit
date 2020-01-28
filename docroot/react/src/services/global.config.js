@@ -59,7 +59,10 @@ const GlobalConfig = {
     ACCESS_MEMBER_NAME: 'send member name',
     GUEST_VALIDATE_MEETING_ERROR_MSG: 'The video visit you are trying to join is not currently available.',
     GUEST_LOGIN_ERROR_MSG: 'Some exception occurred while processing request.',
-    GUEST_LOGIN_VALIDATION_MSG: 'No matching patient found. Please try again.'
+    GUEST_LOGIN_VALIDATION_MSG: 'No matching patient found. Please try again.',
+    SHOW_CONFERENCE_DETAILS: 'show conference details',
+    UPDATE_RUNNING_LATE: 'update running late in sidebar',
+    LEAVE_VISIT: 'leave meeting'
 };
 
 export default GlobalConfig;
