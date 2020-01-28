@@ -7,11 +7,12 @@ import * as WebUI from '../../pexip/complex/webui.js';
 import { range } from 'rxjs';
 import { MessageService } from '../../services/message-service.js';
 import GlobalConfig from '../../services/global.config';
+import Utilities from '../../services/utilities-service.js';
 
 class WaitingRoom extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {waitingroommsg: ''};
+        this.state = {waitingroommsg: '',runningLateUpdatedTime:'',isRunningLate:''};
     }
 
     componentDidMount() {
@@ -21,8 +22,8 @@ class WaitingRoom extends React.Component {
                     this.setState({ waitingroommsg: message.data}); 
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
-                    this.setState({waitingroommsg: message.data.runningLatemsg});
-                    break;
+                    this.setState({isRunningLate: message.data.isRunningLate,waitingroommsg: message.data.runningLatemsg,runningLateUpdatedTime:Utilities.formatInMeetingRunningLateTime(message.data.runLateMeetingTime)});
+                break;
             }
         });
         
@@ -40,9 +41,9 @@ class WaitingRoom extends React.Component {
     				<div className="conference-waiting-room">
     					<div className="waitingRoomMessageBlock">
                             <div className="tpmg-logo float-left m-0"></div>
-    						<span className="waitingroom-text" style={{display: this.props.waitingroom.isRunningLate ? 'none' : 'block' }}>{this.state.waitingroommsg}</span>
-                            <span className="waitingroom-text" style={{display: this.props.waitingroom.isRunningLate ? 'block' : 'none' }}>Your visit will now start at <b>{this.props.waitingroom.runningLateUpdatedTime}</b></span>
-                            <div className="runninglate-msg mt-2" style={{display: this.props.waitingroom.isRunningLate ? 'block' : 'none' }}>{this.props.waitingroom.runningLatemsg}</div>                                    
+    						<span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'none' : 'block' }}>{this.state.waitingroommsg}</span>
+                            <span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>Your visit will now start at <b>{this.state.runningLateUpdatedTime}</b></span>
+                            <div className="runninglate-msg mt-2" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{this.state.waitingroommsg}</div>                                    
     					</div>
     				</div>
     			</div>
@@ -50,9 +51,9 @@ class WaitingRoom extends React.Component {
     				<div className="conference-waiting-room">
     					<div className="waitingRoomMessageBlock">
                             <div className="tpmg-logo float-left m-0"></div>
-    						<span className="waitingroom-text" style={{display: this.props.waitingroom.isRunningLate ? 'none' : 'block' }}>{this.state.waitingroommsg}</span>
-                            <span className="waitingroom-text" style={{display: this.props.waitingroom.isRunningLate ? 'block' : 'none' }}>Your visit will now start at <b>{this.props.waitingroom.runningLateUpdatedTime}</b></span>
-                            <div className="runninglate-msg mt-2" style={{display: this.props.waitingroom.isRunningLate ? 'block' : 'none' }}>{this.props.waitingroom.runningLatemsg}</div>                                    
+    						<span className="waitingroom-text" style={{display: this.state.isRunningLate  ? 'none' : 'block' }}>{this.state.waitingroommsg}</span>
+                            <span className="waitingroom-text" style={{display: this.state.isRunningLate  ? 'block' : 'none' }}>Your visit will now start at <b>{this.state.runningLateUpdatedTime}</b></span>
+                            <div className="runninglate-msg mt-2" style={{display: this.state.isRunningLate  ? 'block' : 'none' }}>{this.state.waitingroommsg}</div>                                    
     					</div>
     				</div>
     			</div>                                  
