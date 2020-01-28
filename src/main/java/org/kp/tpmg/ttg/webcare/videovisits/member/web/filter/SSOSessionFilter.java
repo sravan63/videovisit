@@ -76,6 +76,7 @@ public class SSOSessionFilter implements Filter {
 			} else {
 				String authToken = req.getHeader(WebUtil.AUTH_TOKEN);
 				if (JwtUtil.validateAuthToken(authToken)) {
+					chain.doFilter(req, resp);
 					if (WebUtil.TEMP_ACCESS.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
 						final String mrn = req.getHeader(WebUtil.MRN);
 						if (StringUtils.isNotBlank(mrn)) {
@@ -87,7 +88,6 @@ public class SSOSessionFilter implements Filter {
 							resp.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(meetingHash));
 						}
 					}
-					chain.doFilter(req, resp);
 				} else {
 					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 				}
