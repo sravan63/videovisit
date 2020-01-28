@@ -795,7 +795,6 @@ export function switchDevices(constrain, device = null) {
 }
 
 export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
-    MessageService.sendMessage(GlobalConfig.MEMBER_READY, 'Your visit will start once your doctor joins.');
     console.log("inside webui initialise");
     log('info', 'initialise', "event: video visit initialise");
 

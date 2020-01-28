@@ -29,9 +29,7 @@ class Conference extends React.Component {
     componentDidMount() {
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
-            this.setState({
-                showLoader: false,
-            });
+            this.setState({showLoader: false});
             if (localStorage.getItem('isGuest')) {
                 this.state.isGuest = true;
                 this.state.loginType = "guest";
@@ -41,7 +39,7 @@ class Conference extends React.Component {
             if (sessionInfo != null) {
                 this.state.loginType = sessionInfo.loginType;
                 this.state.accessToken = sessionInfo.accessToken;
-            }
+            }            
             this.getInMeetingDetails();
             this.getRunningLateInfo();
             window.setInterval(() => {
@@ -59,19 +57,15 @@ class Conference extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.HOST_AVAIL:
-                    this.setState({ hostavail: true });
+                    this.setState({ hostavail: true, videofeedflag: true });
                     this.toggleDockView(false);
-                    this.setState({ videofeedflag: true });
                     break;
                 case GlobalConfig.HOST_LEFT:
-                    this.setState({ hostavail: false });
-                    this.setState({ moreparticpants: false });
+                    this.setState({ hostavail: false,moreparticpants: false, videofeedflag: false});
                     this.toggleDockView(false);
-                    this.setState({ videofeedflag: false });
                     break;
                 case GlobalConfig.HAS_MORE_PARTICIPANTS:
-                    this.setState({ hostavail: false });
-                    this.setState({ moreparticpants: true });
+                    this.setState({ hostavail: false,moreparticpants: true });
                     this.toggleDockView(true);
                     break;
                 case GlobalConfig.LEAVE_VISIT:
@@ -105,9 +99,7 @@ class Conference extends React.Component {
         BackendService.getMeetingDetails(url, meetingId, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
-                this.setState({
-                    meetingDetails: data
-                });
+                this.setState({meetingDetails: data});
                 var sortedParticipants = this.setSortedParticipantList();
                 MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS , {
                     meetingDetails: this.state.meetingDetails, 
@@ -131,14 +123,12 @@ class Conference extends React.Component {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
                 if (data.isRunningLate == true) {
-                    this.setState({
-                        runningLatemsg: "We're sorry, your doctor is running late."
-                    });
+                    data['runningLatemsg'] = "We're sorry, your doctor is running late.";
                     MessageService.sendMessage(GlobalConfig.UPDATE_RUNNING_LATE, data);
+                }else {
+                    MessageService.sendMessage(GlobalConfig.MEMBER_READY, 'Your visit will start once your doctor joins.');
                 }
-            } else {
-                // Do nothing
-            }
+            } 
         }, (err) => {
             console.log("Error");
         });
@@ -187,7 +177,7 @@ class Conference extends React.Component {
         // clear on component unmount
         this.subscription.unsubscribe();
     }
-
+    
     setSortedParticipantList() {
         let list = [];
         let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];

@@ -11,7 +11,6 @@ import GlobalConfig from '../../services/global.config';
 class WaitingRoom extends React.Component {
     constructor(props) {
         super(props);
-        this.waitingroomdata = {};
         this.state = {waitingroommsg: ''};
     }
 
@@ -19,9 +18,11 @@ class WaitingRoom extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             switch(message.text) {
                 case GlobalConfig.MEMBER_READY:
-                    this.waitingroomdata = message.data;
-                    this.setState({ waitingroommsg: this.waitingroomdata}); 
+                    this.setState({ waitingroommsg: message.data}); 
                 break;
+                case GlobalConfig.UPDATE_RUNNING_LATE:
+                    this.setState({waitingroommsg: message.data.runningLatemsg});
+                    break;
             }
         });
         
