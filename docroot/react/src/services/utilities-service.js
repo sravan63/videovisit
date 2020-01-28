@@ -48,5 +48,31 @@ class UtilityService extends React.Component {
         return formatedStr;
     }
 
+    formatInMeetingDateAndTime(DateObj, type){
+        let str = '';
+        if (type == 'time') {
+            let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
+            let Minutes = (DateObj.getMinutes() <= 9) ? "0" + DateObj.getMinutes() : DateObj.getMinutes();
+            let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
+            Hour = (Hour == 0) ? 12 : Hour;
+            str = Hour + ':' + Minutes + AMPM + ', ';
+        } else {
+            let week = String(DateObj).substring(0, 3);
+            let monthstr = String(DateObj).substr(4, 6);
+            let month = monthstr.replace("0", "");
+            str = week + ', ' + month;
+        }
+        return str;
+    }
+
+    formatInMeetingRunningLateTime(runLateMeetingTime){
+        var meetingTime = new Date(parseInt(runLateMeetingTime));
+        var minutes = (meetingTime.getMinutes() < 10) ? "0" + minutes : meetingTime.getMinutes();
+        var ampmval = (hours > 11) ? 'PM' : 'AM';
+        var hours = (meetingTime.getHours() > 11) ? meetingTime.getHours() - 12 : meetingTime.getHours();
+        hours = (hours == 0) ? 12 : hours;
+        return hours + ':' + minutes + ' ' + ampmval
+    }
+
 }
 export default new UtilityService();

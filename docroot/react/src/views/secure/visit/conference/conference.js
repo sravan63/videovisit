@@ -223,59 +223,14 @@ class Conference extends React.Component {
         if (!millis) {
             return;
         }
-        let DateObj = new Date(parseInt(millis));
-        let str = '';
-        let week = '';
-        let month = '';
-        let monthstr = '';
-        let HourStr = '';
-        if (type == 'time') {
-            let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
-            if (Hour == 0) {
-                Hour = 12;
-            }
-            if (Hour <= 9) {
-                Hour = "0" + Hour;
-            }
-            let Minutes = DateObj.getMinutes();
-            if (Minutes <= 9) {
-                Minutes = "0" + Minutes;
-            }
-            let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
-            if (Hour >= 10) {
-                HourStr = Hour;
-            } else {
-                HourStr = Hour.replace("0", "");
-            }
-            //let HourStr =  ? Hour : Hour.replace("0","");
-            str = HourStr + ':' + Minutes + AMPM + ', ';
-        } else {
-            week = String(DateObj).substring(0, 3);
-            monthstr = String(DateObj).substr(4, 6);
-            month = monthstr.replace("0", "");
-            str = week + ', ' + month;
-        }
-
-        return str;
+        return Utilities.formatInMeetingDateAndTime(new Date(parseInt(millis)), type);
     }
     updateRunningLateTime() {
         if (!this.state.isRunningLate || !this.state.runLateMeetingTime) {
             return;
         }
-        var meetingTime = new Date(parseInt(this.state.runLateMeetingTime));
-        var hours = meetingTime.getHours();
-        var minutes = meetingTime.getMinutes();
-        if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-        var ampmval = 'AM';
-        if (hours > 11) {
-            ampmval = 'PM';
-            hours = hours - 12;
-        }
-        hours = (hours == 0) ? 12 : hours;
         this.setState({
-            runningLateUpdatedTime: hours + ':' + minutes + ' ' + ampmval
+            runningLateUpdatedTime: Utilities.formatInMeetingRunningLateTime(this.state.runLateMeetingTime)
         });
     }
 
@@ -340,15 +295,12 @@ class Conference extends React.Component {
     toggleHidden() {
         this.setState({
             isHidden: !this.state.isHidden
-        })
-        console.log(this.state.isHidden);
-
+        });
     }
     closeSetting() {
-        console.log("togglesetting");
         this.setState({
             isHidden: true
-        })
+        });
     }
 
     render() {
