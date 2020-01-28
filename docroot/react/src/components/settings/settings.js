@@ -13,16 +13,14 @@ class Settings extends React.Component {
     constructor(props) {
         super(props);       
         this.list = [];
-        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false };
+        this.state = { data: {}, media: {}, constrains: {} };
     }
 
     componentDidMount() {
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             switch(message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
-                    this.list = message.data;
-                    console.log(this.list);
-                    
+                    this.list = message.data;                    
                     this.setState({ media: this.list });
                     this.setState({
                         constrains: {
@@ -31,11 +29,6 @@ class Settings extends React.Component {
                             micSource: this.list.audioinput ? this.list.audioinput[0] : null,
                         }
                     });
-                    // const constrains = {
-                    //     audioSource: this.list.audioinput ? this.list.audioinput[0] : null,
-                    //     videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
-                    // };
-                    MediaService.start(constrains);
                 break;
             }
         });
@@ -63,7 +56,6 @@ class Settings extends React.Component {
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media,'video');
-            this.setState({ musicOn: false });
             WebUI.switchDevices('speaker');
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
@@ -83,13 +75,6 @@ class Settings extends React.Component {
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
         this.subscription.unsubscribe();
-    }
-    donesetting(){
-        // this.props.settingstoggle = true
-        this.props = ({ settingstoggle: false });
-        this.setState({ settingstoggle: this.state.settingstoggle });
-       // console.log(this.props.settingstoggle);
-        
     }
     componentWillReceiveProps(nextProps) {
         // This will erase any local state updates!
