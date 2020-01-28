@@ -31,10 +31,10 @@ class Settings extends React.Component {
                             micSource: this.list.audioinput ? this.list.audioinput[0] : null,
                         }
                     });
-                    const constrains = {
-                        audioSource: this.list.audioinput ? this.list.audioinput[0] : null,
-                        videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
-                    };
+                    // const constrains = {
+                    //     audioSource: this.list.audioinput ? this.list.audioinput[0] : null,
+                    //     videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                    // };
                     MediaService.start(constrains);
                 break;
             }
