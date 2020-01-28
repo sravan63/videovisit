@@ -13,11 +13,11 @@ class Settings extends React.Component {
     constructor(props) {
         super(props);       
         this.list = [];
-        this.state = { data: {}, media: {}, constrains: {} };
+        this.state = { data: {}, media: {}, constrains: {}, settingstoggle: true };
     }
 
     componentDidMount() {
-        this.subscription = MessageService.getMessage().subscribe((message, data) => {
+        this.subscription = MessageService.getMessage().subscribe((message) => {
             switch(message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
                     this.list = message.data;                    
@@ -30,6 +30,10 @@ class Settings extends React.Component {
                         }
                     });
                 break;
+                case GlobalConfig.TOGGLE_SETTINGS:
+                    this.setState({ settingstoggle: message.data });
+                    this.state.settingstoggle = message.data;
+                    break;
             }
         });
         
@@ -76,17 +80,18 @@ class Settings extends React.Component {
         // unsubscribe to ensure no memory leaks
         this.subscription.unsubscribe();
     }
-    componentWillReceiveProps(nextProps) {
-        // This will erase any local state updates!
-        // Do not do this.
-        this.setState({ settingstoggle: nextProps.settingstoggle });
-      }
+
+    close() {
+        this.setState({ settingstoggle: true });
+        MessageService.sendMessage(GlobalConfig.CLOSE_SETTINGS, true);
+    }
+
     render() {
         return (
             <div className="setting-peripherals" style={{left : this.state.settingstoggle ? '-527px' : '0',transition: '1s'}}>
                 <div className="row settings-page">
                     <div className="col-md-10 peripheral-options p-0">
-                                <div className="close-button" onClick={() => this.props.close(this)}></div>
+                                <div className="close-button" onClick={() => this.close(this)}></div>
                                 <div className="text-center"><h4>Settings</h4></div>
                                     <div className="periheral-container">
                                         <div className="label">Camera</div>
@@ -143,7 +148,7 @@ class Settings extends React.Component {
                                         </div>) : ('')}                                 
                                     </div>
                                     <div className="col-md-12 button-controls text-center">
-                                        <button className="btn rounded-0" onClick={() => this.props.close(this)}>Done</button>
+                                        <button className="btn rounded-0" onClick={() => this.close(this)}>Done</button>
                                     </div>
                                 </div>
                             </div>

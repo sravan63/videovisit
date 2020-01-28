@@ -62,7 +62,9 @@ const GlobalConfig = {
     GUEST_LOGIN_VALIDATION_MSG: 'No matching patient found. Please try again.',
     SHOW_CONFERENCE_DETAILS: 'show conference details',
     UPDATE_RUNNING_LATE: 'update running late in sidebar',
-    LEAVE_VISIT: 'leave meeting'
+    LEAVE_VISIT: 'leave meeting',
+    TOGGLE_SETTINGS: 'toggle settings',
+    CLOSE_SETTINGS: 'closed settings'
 };
 
 export default GlobalConfig;

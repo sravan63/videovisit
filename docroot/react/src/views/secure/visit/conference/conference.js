@@ -12,6 +12,7 @@ import WaitingRoom from '../../../../components/waiting-room/waiting-room';
 import Settings from '../../../../components/settings/settings.js';
 import Notifier from '../../../../components/notifier/notifier';
 import ConferenceDetails from '../../../../components/conference-details/conference-details';
+import ConferenceControls from '../../../../components/conference-controls/conference-controls';
 import GlobalConfig from '../../../../services/global.config';
 import { MessageService } from '../../../../services/message-service.js';
 
@@ -19,8 +20,8 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, showvideoIcon: true, showaudioIcon: true, showmicIcon: true, isbrowsercheck: false, isHidden: true };
-        this.getInMeetingDisplayName = this.getInMeetingDisplayName.bind(this);
+        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false };
+        this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.startPexip = this.startPexip.bind(this);
     }
@@ -54,12 +55,8 @@ class Conference extends React.Component {
         if (localStorage.getItem('isProxyMeeting')) {
             this.state.isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         }
-        var browserInfo = Utilities.getBrowserInformation();
-        if (browserInfo.isSafari || browserInfo.isFireFox) {
-            this.setState({ isbrowsercheck: true })
-        }
 
-        this.subscription = MessageService.getMessage().subscribe((message, data) => {
+        this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.HOST_AVAIL:
                     this.setState({ hostavail: true });
@@ -147,7 +144,7 @@ class Conference extends React.Component {
         });
     }
 
-    getInMeetingDisplayName(caregiver) {
+    getInMeetingGuestName(caregiver) {
         var details = JSON.parse(localStorage.getItem('userDetails'));
         var guestName;
         caregiver.forEach(function(val, index) {
@@ -178,7 +175,7 @@ class Conference extends React.Component {
             };
             localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         } else {
-            var guestName = this.getInMeetingDisplayName(meeting.caregiver);
+            var guestName = this.getInMeetingGuestName(meeting.caregiver);
             localStorage.setItem('memberName', JSON.stringify(guestName));
             name = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
         }
@@ -240,40 +237,9 @@ class Conference extends React.Component {
         }
 
     }
+
     refreshPage() {
         window.location.reload(false);
-    }
-    disablecontrols(cntrlname) {
-        switch (cntrlname) {
-            case GlobalConfig.VIDEO:
-                this.setState({
-                    showvideoIcon: !this.state.showvideoIcon
-                })
-                WebUI.muteUnmuteVideo();
-                break;
-            case GlobalConfig.AUDIO:
-                this.setState({
-                    showaudioIcon: !this.state.showaudioIcon
-                })
-                WebUI.muteSpeaker();
-                break;
-            case GlobalConfig.MICROPHONE:
-                this.setState({
-                    showmicIcon: !this.state.showmicIcon
-                })
-                WebUI.muteUnmuteMic();
-                break;
-        }
-    }
-    toggleHidden() {
-        this.setState({
-            isHidden: !this.state.isHidden
-        });
-    }
-    closeSetting() {
-        this.setState({
-            isHidden: true
-        });
     }
 
     render() {
@@ -300,36 +266,18 @@ class Conference extends React.Component {
                 {this.state.meetingDetails ? (
                     <div className="row video-conference-container">
                         <div className="col-md-10 p-0 video-conference">
-                            <div className="button-container">
-                                <div className="button-group" >
-                                    <div className="media-toggle">
-                                        <div title="Enable Video" style={{display: this.state.showvideoIcon ? 'block' : 'none'}} className="btns media-controls video-btn" onClick={()=>this.disablecontrols('video')}></div>
-                                        <div title="Disable Video" style={{display: this.state.showvideoIcon ? 'none' : 'block'}} className="btns media-controls video-muted-btn" onClick={()=>this.disablecontrols('video')}></div>   
-                                    </div>
-                                    <div className="media-toggle">
-                                        <div title="Mute Speakers" style={{display: this.state.showaudioIcon ? 'block' : 'none'}}  className="btns media-controls speaker-btn" onClick={()=>this.disablecontrols('audio')}></div>
-                                        <div title="Unmute Speakers" style={{display: this.state.showaudioIcon ? 'none' : 'block'}} className="btns media-controls speaker-muted-btn" onClick={()=>this.disablecontrols('audio')}></div>
-                                    </div>
-                                    <div className="media-toggle">
-                                        <div title="Mute Mic" style={{display: this.state.showmicIcon ? 'block' : 'none'}} className="btns media-controls microphone-btn" onClick={()=>this.disablecontrols('microphone')}></div>
-                                        <div title="Unmute Mic" style={{display: this.state.showmicIcon ? 'none' : 'block'}} className="btns media-controls microphone-muted-btn" onClick={()=>this.disablecontrols('microphone')}></div>
-                                    </div>
-                                    <div className="media-toggle">
-                                        <div title="Settings" style={{display:this.state.isbrowsercheck ? 'none':'block'}} className="btns media-controls settings-btn" onClick={this.toggleHidden.bind(this)}></div>                                    
-                                    </div>
-                                </div>
-                            </div>
+                            <ConferenceControls/>
                             <div className="col p-0">
                                 <WaitingRoom waitingroom={this.state} />
                                 <div className="stream-container" style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                 </div>
-                                {<Settings settingstoggle={this.state.isHidden} close={this.closeSetting.bind(this)} />}
+                                <Settings />
                             </div>
                             <div id="selfview" className="self-view">
-                           <video id="selfvideo" autoPlay="autoplay" playsInline="playsinline" muted={true}>
-                        </video>
-                        </div>
+                               <video id="selfvideo" autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                               </video>
+                            </div>
                         </div>
                         <ConferenceDetails/>
                     </div>
