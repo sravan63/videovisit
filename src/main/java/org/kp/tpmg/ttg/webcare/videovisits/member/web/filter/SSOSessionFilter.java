@@ -1,5 +1,8 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.filter;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -41,53 +44,12 @@ public class SSOSessionFilter implements Filter {
 		resp = (HttpServletResponse) sresp;
 		if (!isExcludeUrl(req)) {
 			if (WebUtil.SSO.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
-				try {
-					Cookie ssoCookie = WebUtil.getCookie(req, WebUtil.getSSOCookieName());
-					if (ssoCookie == null
-							|| ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
-									|| StringUtils.isBlank(ssoCookie.getValue()))) {
-						if ("localhost".equalsIgnoreCase(req.getServerName()) || WebUtil.isSsoSimulation()) {
-							logger.info("cookie validation not required for " + req.getServerName());
-							chain.doFilter(req, resp);
-						} else {
-							logger.info(
-									"Member signed on using SSO - session is not null, cookie in request is not valid due to SSO sign off either from KP.org or MDO");
-							if (StringUtils.isNotBlank(req.getHeader(WebUtil.SSO_SESSION))) {
-								MeetingCommand.performSSOSignOff(req, resp, req.getHeader(WebUtil.SSO_SESSION));
-							}
-							resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-						}
-					}
-					if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
-						String responseCode = MeetingCommand.validateKpOrgSSOSession(req, ssoCookie.getValue());
-						Gson gson = new GsonBuilder().serializeNulls().create();
-						final VVResponse output = gson.fromJson(responseCode, VVResponse.class);
-						if ("200".equalsIgnoreCase(output.getCode())) {
-							logger.info("sso session token from request cookie valid");
-							chain.doFilter(req, resp);
-						}else {
-							MeetingCommand.performSSOSignOff(req, resp, ssoCookie.getValue());
-							resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-						}
-					}
-				} catch (Exception e) {
-					logger.error("Error while validating signon info");
-				}
+				validateSSOCookie(req, resp, chain);
 			} else {
 				String authToken = req.getHeader(WebUtil.AUTH_TOKEN);
 				if (JwtUtil.validateAuthToken(authToken)) {
 					chain.doFilter(req, resp);
-					if (WebUtil.TEMP_ACCESS.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
-						final String mrn = req.getHeader(WebUtil.MRN);
-						if (StringUtils.isNotBlank(mrn)) {
-							resp.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(mrn));
-						}
-					} else if (WebUtil.GUEST.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
-						final String meetingHash = req.getParameter("meetingHash");
-						if (StringUtils.isNotBlank(meetingHash)) {
-							resp.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(meetingHash));
-						}
-					}
+					updateAuthToken(req, resp);
 				} else {
 					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 				}
@@ -104,6 +66,7 @@ public class SSOSessionFilter implements Filter {
 	}
 
 	private boolean isExcludeUrl(HttpServletRequest req) {
+		logger.info(LOG_ENTERED);
 		boolean isExclude = false;
 		if (excludeURLs != null && excludeURLs.length > 0 && excludeURLs[0] != null) {
 			for (int i = 0; i < excludeURLs.length; i++) {
@@ -115,7 +78,60 @@ public class SSOSessionFilter implements Filter {
 				}
 			}
 		}
+		logger.info(LOG_EXITING);
 		return isExclude;
 	}
 
+	private void updateAuthToken(final HttpServletRequest req, final HttpServletResponse resp) {
+		logger.info(LOG_ENTERED);
+		if (WebUtil.TEMP_ACCESS.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
+			final String mrn = req.getHeader(WebUtil.MRN);
+			if (StringUtils.isNotBlank(mrn)) {
+				resp.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(mrn));
+			}
+		} else if (WebUtil.GUEST.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
+			final String meetingHash = req.getParameter("meetingHash");
+			if (StringUtils.isNotBlank(meetingHash)) {
+				resp.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(meetingHash));
+			}
+		}
+		logger.info(LOG_EXITING);
+	}
+
+	private void validateSSOCookie(final HttpServletRequest req, final HttpServletResponse resp,
+			final FilterChain chain) {
+		logger.info(LOG_ENTERED);
+		try {
+			Cookie ssoCookie = WebUtil.getCookie(req, WebUtil.getSSOCookieName());
+			if (ssoCookie == null || ("loggedout".equalsIgnoreCase(ssoCookie.getValue())
+					|| StringUtils.isBlank(ssoCookie.getValue()))) {
+				if ("localhost".equalsIgnoreCase(req.getServerName()) || WebUtil.isSsoSimulation()) {
+					logger.info("cookie validation not required for " + req.getServerName());
+					chain.doFilter(req, resp);
+				} else {
+					logger.info(
+							"Member signed on using SSO - session is not null, cookie in request is not valid due to SSO sign off either from KP.org or MDO");
+					if (StringUtils.isNotBlank(req.getHeader(WebUtil.SSO_SESSION))) {
+						MeetingCommand.performSSOSignOff(req, resp, req.getHeader(WebUtil.SSO_SESSION));
+					}
+					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+				}
+			}
+			if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
+				String responseCode = MeetingCommand.validateKpOrgSSOSession(req, ssoCookie.getValue());
+				Gson gson = new GsonBuilder().serializeNulls().create();
+				final VVResponse output = gson.fromJson(responseCode, VVResponse.class);
+				if ("200".equalsIgnoreCase(output.getCode())) {
+					logger.info("sso session token from request cookie valid");
+					chain.doFilter(req, resp);
+				} else {
+					MeetingCommand.performSSOSignOff(req, resp, ssoCookie.getValue());
+					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+				}
+			}
+		} catch (Exception e) {
+			logger.error("Error while validating signon info");
+		}
+		logger.info(LOG_EXITING);
+	}
 }
