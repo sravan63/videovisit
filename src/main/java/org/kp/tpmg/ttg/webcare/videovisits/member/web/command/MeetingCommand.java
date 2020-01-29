@@ -227,8 +227,8 @@ public class MeetingCommand {
 			}
 			output = WebService.createCaregiverMeetingSession(meetingCode, patientLastName, isMobileFlow,
 					request.getSession().getId(), WebUtil.VV_MBR_GUEST);
-			if (output != null && output.getStatus() != null && output.getStatus().getCode() != null
-					&& output.getStatus().getMessage() != null && output.getLaunchMeetingEnvelope() != null) {
+			if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
+					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_GUEST_DESKTOP,
 						output.getStatus().getCode(), output.getStatus().getMessage(),
 						output.getLaunchMeetingEnvelope() != null ? output.getLaunchMeetingEnvelope().getLaunchMeeting()
@@ -601,9 +601,15 @@ public class MeetingCommand {
 		ServiceCommonOutput output = null;
 		long meetingId = 0;
 		String result = null;
+		String clientId = null;
+		final String loginType = request.getParameter("loginType");
 		try {
 			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+			if (StringUtils.isNotBlank(loginType)) {
+				clientId = loginType.equalsIgnoreCase("guest") ? WebUtil.VV_MBR_GUEST
+						: loginType.equalsIgnoreCase("sso") ? WebUtil.VV_MBR_SSO_WEB : WebUtil.VV_MBR_WEB;
 			}
 			final String status = request.getParameter("status");
 			final String careGiverName = request.getHeader("careGiverName");
@@ -615,7 +621,7 @@ public class MeetingCommand {
 			}
 
 			output = WebService.setKPHCConferenceStatus(meetingId, status, isProxyMeeting, careGiverName,
-					request.getSession().getId(), WebUtil.VV_MBR_WEB);
+					request.getSession().getId(), clientId);
 			if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.SET_KPHC_CONFERENCE_STATUS,
@@ -736,7 +742,7 @@ public class MeetingCommand {
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
-				result = WebUtil.prepareCommonOutputJson(output.getService().getName(),
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING,
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(), "");
 			}
 		} catch (Exception e) {
@@ -1027,6 +1033,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String jsonOutput = null;
 		String result = null;
+		String clientId=null;
 		final String meetingId = request.getParameter("meetingId");
 		final String userType = request.getParameter("userType");
 		final String userId = request.getParameter("userId");
@@ -1034,11 +1041,16 @@ public class MeetingCommand {
 		final String eventDescription = request.getParameter("eventDescription");
 		final String logType = request.getParameter("logType");
 		final String sessionId = request.getSession().getId();
+		final String loginType=request.getParameter("loginType");
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 		final Gson gson = new Gson();
 		try {
+			if (StringUtils.isNotBlank(loginType)) {
+				clientId = loginType.equalsIgnoreCase("guest") ? WebUtil.VV_MBR_GUEST
+						: loginType.equalsIgnoreCase("sso") ? WebUtil.VV_MBR_SSO_WEB : WebUtil.VV_MBR_WEB;
+			}
 			jsonOutput = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
-					eventName, eventDescription, logType, sessionId, WebUtil.VV_MBR_WEB);
+					eventName, eventDescription, logType, sessionId, clientId);
 			output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
@@ -1151,10 +1163,16 @@ public class MeetingCommand {
 		String result = null;
 		String jsonOutput = null;
 		MeetingDetailsForMeetingIdJSON output = new MeetingDetailsForMeetingIdJSON();
+		String clientId = null;
+		String loginType = request.getParameter("loginType");
 		final Gson gson = new Gson();
 		try {
+			if (StringUtils.isNotBlank(loginType)) {
+				clientId = loginType.equalsIgnoreCase("guest") ? WebUtil.VV_MBR_GUEST
+						: loginType.equalsIgnoreCase("sso") ? WebUtil.VV_MBR_SSO_WEB : WebUtil.VV_MBR_WEB;
+			}
 			jsonOutput = WebService.getMeetingDetailsForMeetingId(Long.parseLong(meetingId),
-					request.getSession().getId(), WebUtil.VV_MBR_WEB);
+					request.getSession().getId(), clientId);
 			output = gson.fromJson(jsonOutput, MeetingDetailsForMeetingIdJSON.class);
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
