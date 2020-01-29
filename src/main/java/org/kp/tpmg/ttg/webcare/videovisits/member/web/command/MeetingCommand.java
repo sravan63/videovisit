@@ -695,37 +695,37 @@ public class MeetingCommand {
 		try {
 			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
-				if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
-					mrn = request.getHeader("mrn");
-				}
-				if (StringUtils.isNotBlank(request.getHeader("inMeetingDisplayName"))) {
-					inMeetingDisplayName = request.getHeader("inMeetingDisplayName");
-				}
-				logger.info("meetingId=" + meetingId + ", isProxyMeeting=" + request.getParameter("isProxyMeeting"));
-				boolean isProxyMeeting;
-				if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
-					isProxyMeeting = true;
-				} else {
-					isProxyMeeting = false;
-				}
-				if (AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH") != null) {
-					desktopBandwidth = AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH");
-				} else {
-					desktopBandwidth = WebUtil.BANDWIDTH_1024_KBPS;
-				}
-				jsonOutput = WebService.launchMemberOrProxyMeetingForMember(meetingId, mrn, inMeetingDisplayName,
-						isProxyMeeting, request.getSession().getId(), WebUtil.VV_MBR_WEB);
-				output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
-				if (output != null && output.getService() != null && output.getService().getStatus() != null
-						&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
-						&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
-					result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER,
-							output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
-							output.getService().getLaunchMeetingEnvelope() != null
-									? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
-									: null);
-					result = WebUtil.setBandWidth(result, desktopBandwidth, "data");
-				}
+			}
+			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
+				mrn = request.getHeader("mrn");
+			}
+			if (StringUtils.isNotBlank(request.getHeader("inMeetingDisplayName"))) {
+				inMeetingDisplayName = request.getHeader("inMeetingDisplayName");
+			}
+			logger.info("meetingId=" + meetingId + ", isProxyMeeting=" + request.getParameter("isProxyMeeting"));
+			boolean isProxyMeeting;
+			if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
+				isProxyMeeting = true;
+			} else {
+				isProxyMeeting = false;
+			}
+			if (AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH") != null) {
+				desktopBandwidth = AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH");
+			} else {
+				desktopBandwidth = WebUtil.BANDWIDTH_1024_KBPS;
+			}
+			jsonOutput = WebService.launchMemberOrProxyMeetingForMember(meetingId, mrn, inMeetingDisplayName,
+					isProxyMeeting, request.getSession().getId(), WebUtil.VV_MBR_WEB);
+			output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
+			if (output != null && output.getService() != null && output.getService().getStatus() != null
+					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
+					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER,
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
+						output.getService().getLaunchMeetingEnvelope() != null
+								? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
+								: null);
+				result = WebUtil.setBandWidth(result, desktopBandwidth, "data");
 			}
 		} catch (Exception e) {
 			logger.error("Error while launchMemberOrProxyMeetingForMember for meetingId:" + meetingId, e);
@@ -948,21 +948,19 @@ public class MeetingCommand {
 		String result = null;
 		MeetingRunningLateOutputJson output = new MeetingRunningLateOutputJson();
 		try {
-			if (StringUtils.isNotBlank(meetingId)) {
-				jsonOutput = WebService.getProviderRunningLateDetails(meetingId, request.getSession().getId(),
-						WebUtil.VV_MBR_WEB);
-				output = gson.fromJson(jsonOutput, MeetingRunningLateOutputJson.class);
-				if (output != null && output.getService() != null && output.getService().getStatus() != null
-						&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
-						&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
-					result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS,
-							output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
-							output.getService().getRunningLateEnvelope() != null
-									? output.getService().getRunningLateEnvelope()
-									: null);
-				}
-
+			jsonOutput = WebService.getProviderRunningLateDetails(meetingId, request.getSession().getId(),
+					WebUtil.VV_MBR_WEB);
+			output = gson.fromJson(jsonOutput, MeetingRunningLateOutputJson.class);
+			if (output != null && output.getService() != null && output.getService().getStatus() != null
+					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
+					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS,
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
+						output.getService().getRunningLateEnvelope() != null
+								? output.getService().getRunningLateEnvelope()
+								: null);
 			}
+
 		} catch (Exception e) {
 			logger.error("Error while getProviderRunningLateDetails for meeting:" + meetingId, e);
 		}
