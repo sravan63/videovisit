@@ -112,6 +112,8 @@ public class MeetingCommand {
 		String result = null;
 		long meetingId = 0;
 		String mrn = null;
+		String clientId = null;
+		String loginType = null;
 		try {
 			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
@@ -119,14 +121,19 @@ public class MeetingCommand {
 			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
 				mrn = request.getHeader("mrn");
 			}
-			
+			if (StringUtils.isNotBlank(request.getParameter("loginType"))) {
+				loginType = request.getParameter("loginType");
+			}
+			if (StringUtils.isNotBlank(loginType)) {
+				clientId = loginType.equalsIgnoreCase("guest") ? WebUtil.VV_MBR_GUEST
+						: loginType.equalsIgnoreCase("sso") ? WebUtil.VV_MBR_SSO_WEB : WebUtil.VV_MBR_WEB;
+			}
 			if (StringUtils.isNotBlank(request.getHeader("memberName"))) {
 				memberName = request.getHeader("memberName");
 			}
-			
 //					String clientId = notifyVideoForMeetingQuit ? ctx.getBackButtonClientId() : ctx.getClientId();
 			output = WebService.memberEndMeetingLogout(mrn, meetingId, request.getSession().getId(), memberName,
-					notifyVideoForMeetingQuit, WebUtil.VV_MBR_WEB);
+					notifyVideoForMeetingQuit, clientId);
 			if (output != null) {
 				final String responseDesc = output.getStatus() != null
 						? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
