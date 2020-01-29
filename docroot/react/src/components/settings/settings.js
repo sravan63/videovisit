@@ -8,7 +8,8 @@ import { range } from 'rxjs';
 import { MessageService } from '../../services/message-service.js';
 import GlobalConfig from '../../services/global.config';
 import MediaService from '../../services/media-service.js';
-
+import Popper from 'popper.js';
+import ReactDOM from 'react-dom';
 class Settings extends React.Component {
     constructor(props) {
         super(props);       
@@ -32,12 +33,22 @@ class Settings extends React.Component {
                 break;
                 case GlobalConfig.TOGGLE_SETTINGS:
                     this.setState({ settingstoggle: message.data });
-                    this.state.settingstoggle = message.data;
+                   // this.state.settingstoggle = message.data;
                     break;
             }
         });
-        document.addEventListener('click', this.close.bind(this), true);
+        document.addEventListener('click', this.handleClickOutside.bind(this), true);
     } 
+    handleClickOutside(event){
+        const domNode = ReactDOM.findDOMNode(this);
+        const settingsNode = event.target.className.indexOf('settings-btn') > -1;
+        
+        if (!domNode || !domNode.contains(event.target)) {
+            if(!settingsNode && !this.state.settingstoggle){
+                this.close(this);
+            }
+        }
+    }
     toggleOpen(type) {
         this.setState({
             data: {
@@ -77,7 +88,7 @@ class Settings extends React.Component {
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
-        document.removeEventListener('click', this.close.bind(this), true);
+        document.removeEventListener('click', this.handleClickOutside.bind(this), true);
         this.subscription.unsubscribe();
     }
 
