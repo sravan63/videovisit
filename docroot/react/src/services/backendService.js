@@ -109,7 +109,7 @@ class BackendService extends React.Component {
             refreshMeetings: false,
             isProxyMeeting: isProxyMeeting
         };
-        return Axios.post(this.state.basePath + '/videovisit/' + 'quitmeeting.json' + '&loginType=' + loginType, data, { headers: headers });
+        return Axios.post(this.state.basePath + '/videovisit/' + 'quitmeeting.json' + '?loginType=' + loginType, data, { headers: headers });
     }
 
 }

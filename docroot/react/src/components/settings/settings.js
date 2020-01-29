@@ -36,9 +36,8 @@ class Settings extends React.Component {
                     break;
             }
         });
-        
+        document.addEventListener('click', this.close.bind(this), true);
     } 
-    
     toggleOpen(type) {
         this.setState({
             data: {
@@ -78,6 +77,7 @@ class Settings extends React.Component {
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
+        document.removeEventListener('click', this.close.bind(this), true);
         this.subscription.unsubscribe();
     }
 
