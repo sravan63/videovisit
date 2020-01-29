@@ -20,7 +20,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isGuest: false, isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false };
+        this.state = { userDetails: {}, isGuest: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.startPexip = this.startPexip.bind(this);
@@ -29,17 +29,21 @@ class Conference extends React.Component {
     componentDidMount() {
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
-            this.setState({showLoader: false});
+            this.setState({ showLoader: false });
             if (localStorage.getItem('isGuest')) {
                 this.state.isGuest = true;
                 this.state.loginType = "guest";
             }
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
+            var userDetails = JSON.parse(localStorage.getItem('userDetails'));
+            if (userDetails != null) {
+                this.state.meetingCode = userDetails.meetingCode;
+            }
             var sessionInfo = JSON.parse(localStorage.getItem('sessionInfo'));
             if (sessionInfo != null) {
                 this.state.loginType = sessionInfo.loginType;
                 this.state.accessToken = sessionInfo.accessToken;
-            }            
+            }
             this.getInMeetingDetails();
             this.getRunningLateInfo();
             window.setInterval(() => {
@@ -61,11 +65,11 @@ class Conference extends React.Component {
                     this.toggleDockView(false);
                     break;
                 case GlobalConfig.HOST_LEFT:
-                    this.setState({ hostavail: false,moreparticpants: false, videofeedflag: false});
+                    this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
                     this.toggleDockView(false);
                     break;
                 case GlobalConfig.HAS_MORE_PARTICIPANTS:
-                    this.setState({ hostavail: false,moreparticpants: true });
+                    this.setState({ hostavail: false, moreparticpants: true });
                     this.toggleDockView(true);
                     break;
                 case GlobalConfig.LEAVE_VISIT:
@@ -99,10 +103,10 @@ class Conference extends React.Component {
         BackendService.getMeetingDetails(url, meetingId, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
-                this.setState({meetingDetails: data});
+                this.setState({ meetingDetails: data });
                 var sortedParticipants = this.setSortedParticipantList();
-                MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS , {
-                    meetingDetails: this.state.meetingDetails, 
+                MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
+                    meetingDetails: this.state.meetingDetails,
                     participants: sortedParticipants
                 });
                 this.startPexip(this.state.meetingDetails);
@@ -125,10 +129,10 @@ class Conference extends React.Component {
                 if (data.isRunningLate == true) {
                     data['runningLatemsg'] = "We're sorry, your doctor is running late.";
                     MessageService.sendMessage(GlobalConfig.UPDATE_RUNNING_LATE, data);
-                }else {
+                } else {
                     MessageService.sendMessage(GlobalConfig.MEMBER_READY, 'Your visit will start once your doctor joins.');
                 }
-            } 
+            }
         }, (err) => {
             console.log("Error");
         });
@@ -176,8 +180,11 @@ class Conference extends React.Component {
     componentWillUnmount() {
         // clear on component unmount
         this.subscription.unsubscribe();
+        if (this.state.leaveMeeting == false) {
+            this.leaveMeeting();
+        }
     }
-    
+
     setSortedParticipantList() {
         let list = [];
         let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
@@ -195,6 +202,7 @@ class Conference extends React.Component {
     }
 
     leaveMeeting() {
+        this.setState({ leaveMeeting: true });
         if (this.state.isGuest == false) {
             var headers = {},
                 loginType = this.state.loginType;
@@ -206,23 +214,25 @@ class Conference extends React.Component {
             var meetingId = this.state.meetingDetails.meetingId,
                 memberName = this.state.meetingDetails.member.inMeetingDisplayName,
                 isProxyMeeting = this.state.isProxyMeeting;
+            WebUI.pexipDisconnect();
             BackendService.quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType).subscribe((response) => {
                 console.log("Success");
+                this.props.history.push(GlobalConfig.MEETINGS_URL);
                 window.location.reload(false);
             }, (err) => {
                 console.log("Error");
+                this.props.history.push(GlobalConfig.MEETINGS_URL);
                 window.location.reload(false);
             });
-            WebUI.pexipDisconnect();
+
             var browserInfo = Utilities.getBrowserInformation();
             if (browserInfo.isSafari || browserInfo.isFireFox) {
                 localStorage.removeItem('selectedPeripherals');
             }
-            this.props.history.push(GlobalConfig.MEETINGS_URL);
+
         } else {
             WebUI.pexipDisconnect();
-            var data = JSON.parse(localStorage.getItem('userDetails'));
-            this.props.history.push('/guestlogin?meetingcode=' + data.meetingCode);
+            this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
             window.location.reload(false);
         }
 
