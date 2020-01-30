@@ -770,9 +770,15 @@ function connected(url) {
     }
     var isSetup = localStorage.getItem('isSetupPage');
     if (isSetup == null) {
-        var meetingId = JSON.parse(localStorage.getItem('meetingId')),
-            memberName = JSON.parse(localStorage.getItem('memberName')),
-            isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+        var meetingId = JSON.parse(localStorage.getItem('meetingId'));
+            var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+            var memberName;
+            if(isProxyMeeting == 'Y'){
+                memberName = JSON.parse(localStorage.getItem('userDetails'))['lastName'] +','+ JSON.parse(localStorage.getItem('userDetails'))['firstName'];                
+            }else{
+                memberName = JSON.parse(localStorage.getItem('memberName'));
+            }            
+            
         BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
     }
 }
