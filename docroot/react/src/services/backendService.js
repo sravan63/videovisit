@@ -87,13 +87,7 @@ class BackendService extends React.Component {
         if (sessionInfo != null) {
             loginType = sessionInfo.loginType;
         }
-        var payloadData = {
-            meetingId: meetingId,
-            status: "J",
-            isProxyMeeting: isProxyMeeting,
-            careGiverName: careGiverName
-        };
-        Axios.post(this.state.basePath + '/videovisit/' + 'setKPHCConferenceStatus.json' + '?loginType=' + loginType, payloadData).subscribe((response) => {
+        Axios.post(this.state.basePath + '/videovisit/' + 'setKPHCConferenceStatus.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&status=J' + '&isProxyMeeting=' + isProxyMeeting + '&careGiverName=' + careGiverName, {}).subscribe((response) => {
                 console.log("success");
             },
             (err) => {
@@ -103,13 +97,8 @@ class BackendService extends React.Component {
     }
 
     quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType) {
-        var data = {
-            meetingId: meetingId,
-            memberName: memberName,
-            refreshMeetings: false,
-            isProxyMeeting: isProxyMeeting
-        };
-        return Axios.post(this.state.basePath + '/videovisit/' + 'quitmeeting.json' + '?loginType=' + loginType, data, { headers: headers });
+
+        return Axios.post(this.state.basePath + '/videovisit/' + 'quitmeeting.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&memberName=' + memberName + '&refreshMeetings=false' + '&isProxyMeeting=' + isProxyMeeting, {}, { headers: headers });
     }
 
 }
