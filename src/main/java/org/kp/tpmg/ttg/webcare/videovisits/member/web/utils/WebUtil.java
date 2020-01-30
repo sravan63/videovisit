@@ -543,4 +543,16 @@ public class WebUtil {
 		result = jobject.toString();
 		return result;
 	}
+	
+	public static String getClientIdByLoginType(final String loginType) {
+		String clientId = "";
+		if (WebUtil.GUEST.equalsIgnoreCase(loginType)) {
+			clientId = WebUtil.VV_MBR_GUEST;
+		} else if (WebUtil.SSO.equalsIgnoreCase(loginType)) {
+			clientId = WebUtil.VV_MBR_SSO_WEB;
+		} else if (WebUtil.TEMP_ACCESS.equalsIgnoreCase(loginType)) {
+			clientId = WebUtil.VV_MBR_WEB;
+		}
+		return clientId;
+	}
 }

@@ -222,6 +222,10 @@ public class MemberRestController extends SimplePageController {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		output = MeetingCommand.endCaregiverMeetingSession(request);
+		String refreshMeetings = request.getParameter("refreshMeetings");
+		if (WebUtil.TRUE.equalsIgnoreCase(refreshMeetings)) {
+			MeetingCommand.retrieveMeetingForCaregiver(request, response);
+		}
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
