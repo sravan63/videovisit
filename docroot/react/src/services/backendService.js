@@ -87,7 +87,10 @@ class BackendService extends React.Component {
         if (sessionInfo != null) {
             loginType = sessionInfo.loginType;
         }
-        Axios.post(this.state.basePath + '/videovisit/' + 'setKPHCConferenceStatus.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&status=J' + '&isProxyMeeting=' + isProxyMeeting + '&careGiverName=' + careGiverName, {}).subscribe((response) => {
+        let headers = {
+            "careGiverName": careGiverName
+        };
+        Axios.post(this.state.basePath + '/videovisit/' + 'setKPHCConferenceStatus.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&status=J' + '&isProxyMeeting=' + isProxyMeeting, {}, { headers: headers }).subscribe((response) => {
                 console.log("success");
             },
             (err) => {
