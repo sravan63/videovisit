@@ -1,5 +1,6 @@
 import React from "react";
 import BackendService from '../../services/backendService.js';
+import { MessageService } from '../../services/message-service.js';
 
 import './header.less';
 
@@ -24,28 +25,7 @@ class header extends React.Component {
             }
         }
         signOffMethod() {
-            localStorage.clear();
-            var loginType;
-            var headers = {},
-                data = this.state.userDetails;
-            if (data.isTempAccess) {
-                headers.authtoken = data.ssoSession;
-                loginType = "tempAccess"
-            } else {
-                headers.ssoSession = data.ssoSession;
-                loginType = "sso";
-            }
-            BackendService.logout(headers, loginType).subscribe((response) => {
-                if (response.data != "" && response.data != null && response.data.statusCode == 200) {
-                    this.props.history.push('/login');
-                } else {
-                    this.props.history.push('/login');
-                }
-            }, (err) => {
-                this.props.history.push('/login');
-
-            });
-
+            MessageService.sendMessage("User Signed Out", null)
 
         }
         render() {

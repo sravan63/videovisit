@@ -1,28 +1,34 @@
 .main-content {
     padding: 5.25rem 2rem .625rem;
     margin-bottom: 4.5rem;
+
     .error-text {
         background-color: #C22507;
         color: #FFFFFF;
         margin: -1.2rem -2rem 1rem -2rem;
         display: flex;
+
         p {
             margin: 0.5rem 0.5rem 0.5rem 0;
             text-align: center;
         }
     }
-    .mobile-help-link{
+
+    .mobile-help-link {
         display: none;
     }
-    .mobile-logo-container{
+
+    .mobile-logo-container {
         display: none;
+
         .mobile-tpmg-logo {
             background: url('../../assets/sm-TPMG-banner-logo.png') no-repeat;
             height: 5.625rem;
             width: 5.625rem;
             margin: 0 auto;
         }
-        .header{
+
+        .header {
             font-size: 2rem;
             color: #203864;
             text-align: center;
@@ -139,12 +145,15 @@
                         border-bottom: solid 1px #C8C7C7;
                     }
                 }
-                .top-form-group-margin{
+
+                .top-form-group-margin {
                     margin-top: -0.25rem;
                 }
-                .margin-gap{
+
+                .margin-gap {
                     margin-top: 8.35rem;
                 }
+
                 .mobile-submit {
                     text-align: center;
                     height: 2.312rem;
@@ -191,7 +200,7 @@
     }
 }
 
-.form-footer{
+.form-footer {
     display: block;
     position: fixed;
     bottom: 0;
@@ -205,15 +214,19 @@
     .main-content {
         margin: 0.2rem 1rem;
         padding: 1rem;
-        .sso-content{
+
+        .sso-content {
             margin-top: 6.45rem;
         }
-        .mobile-help-link{
+
+        .mobile-help-link {
             display: flex;
         }
-        .help-link{
-            color:#006ba6;
+
+        .help-link {
+            color: #006ba6;
         }
+
         .error-text {
             display: flex;
         }
@@ -226,7 +239,8 @@
             display: block;
         }
     }
-    .form-footer{
+
+    .form-footer {
         display: none;
     }
 }
@@ -235,6 +249,7 @@
 /* Mobile Styles */
 @media only screen and (min-width: 375px) and (max-width: 812px) and (orientation: landscape) {
     .main-content {
+
         .sso-content,
         .temp-content {
 
@@ -251,6 +266,7 @@
 @media only screen and (min-width: 661px) and (max-width: 960px) and (orientation: portrait) {
     .main-content {
         height: calc(80vh - 105px);
+
         .sso-content,
         .temp-content {
 
@@ -267,21 +283,27 @@
 @media only screen and (min-width: 960px) {
     .main-content {
         padding: 0;
+
         .error-text {
-            margin: 8rem 0 -8rem 0;
+            margin: 8rem auto -8rem auto;
+            width: 33%;
         }
-        .sso-content{
+
+        .sso-content {
             margin-top: 11rem;
+
             .sso-form,
-            .temp-form{
+            .temp-form {
                 margin: 0 auto;
                 width: 35%;
             }
         }
-        .temp-content{
+
+        .temp-content {
             margin-top: 5rem;
+
             .sso-form,
-            .temp-form{
+            .temp-form {
                 margin: 0 auto;
                 width: 35%;
             }

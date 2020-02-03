@@ -2,6 +2,7 @@ import React from "react";
 import Header from '../../../components/header/header';
 import Loader from '../../../components/loader/loader';
 import BackendService from '../../../services/backendService.js';
+import { MessageService } from '../../../services/message-service.js';
 import GlobalConfig from '../../../services/global.config';
 import './my-meetings.less';
 
@@ -14,6 +15,7 @@ class MyMeetings extends React.Component {
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
+        this.signOff = this.signOff.bind(this);
         // this.joinMeeting = this.joinMeeting.bind(this);
     }
     componentDidMount() {
@@ -26,6 +28,11 @@ class MyMeetings extends React.Component {
         } else {
             this.props.history.push(GlobalConfig.LOGIN_URL);
         }
+        this.subscription = MessageService.getMessage().subscribe((notification) => {
+            if (notification.text == 'User Signed Out') {
+                this.signOff();
+            }
+        });
     }
 
     componentWillUnmount() {
@@ -80,6 +87,30 @@ class MyMeetings extends React.Component {
         clinician += host.lastName ? ' ' + host.lastName.toLowerCase() : '';
         clinician += host.title ? ', ' + host.title : '';
         return clinician.trim();
+    }
+
+    signOff() {
+        localStorage.clear();
+        var loginType;
+        var headers = {},
+            data = this.state.userDetails;
+        if (data.isTempAccess) {
+            headers.authtoken = data.ssoSession;
+            loginType = "tempAccess"
+        } else {
+            headers.ssoSession = data.ssoSession;
+            loginType = "sso";
+        }
+        BackendService.logout(headers, loginType).subscribe((response) => {
+            if (response.data != "" && response.data != null && response.data.statusCode == 200) {
+                this.props.history.push('/login');
+            } else {
+                this.props.history.push('/login');
+            }
+        }, (err) => {
+            this.props.history.push('/login');
+
+        });
     }
     getHoursAndMinutes(millis) {
         let DateObj = new Date(parseInt(millis));
@@ -161,7 +192,12 @@ class MyMeetings extends React.Component {
             <div id='container' className="my-meetings">
                 {this.state.showLoader ? (<Loader />):('')}
                 <Header history={this.props.history}/>
-                <div className="mobile-header">Video Visits</div>
+                <div className="mobile-header">
+                < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
+                className = "helpMobile"
+                target = "_blank" >Help< /a>
+               <a className="sign-off" onClick = {this.signOff}>Sign Out</a>
+                </div>
                 <div className="meetings-container">
                 <h1 className="visitsToday">Your Video Visits for Today</h1>
                 {this.state.myMeetings.length > 0 ? (

@@ -130,8 +130,8 @@ class Authentication extends React.Component {
                 </div>
                 <div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
                 <div className="guest-form-content">
-                    <div className="row notice">Children age 11 and younger must have a parent or legal guardian present during the visit.</div>
                     <div className="row guest-form" >
+                    <div className="row notice">Children age 11 and younger must have a parent or legal guardian present during the visit.</div>
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group">
                                 <label className="col-sm-12 text-capitalize">Patient Last Name</label>
