@@ -39,7 +39,7 @@ class PreCallCheck extends React.Component {
         }
 
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            switch(message.text) {
+            switch (message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
                     this.list = message.data;
                     this.setState({ media: this.list });
@@ -55,7 +55,7 @@ class PreCallCheck extends React.Component {
                         videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
                     };
                     MediaService.start(constrains);
-                break;
+                    break;
             }
         });
     }
@@ -68,6 +68,10 @@ class PreCallCheck extends React.Component {
                 isSpeaker: type == 'speaker',
             }
         });
+    }
+
+    componentWillUnmount() {
+        window.location.reload(false);
     }
 
     selectPeripheral(media, type) {
@@ -107,7 +111,12 @@ class PreCallCheck extends React.Component {
 
     goBack() {
         MediaService.stop();
-        this.props.history.push('/myMeetings');
+        var isGuest = localStorage.getItem('isGuest');
+        if (isGuest == "true") {
+            this.props.history.push('/guestlogin?meetingcode=' + this.state.userDetails.meetingCode);
+        } else {
+            this.props.history.push('/myMeetings');
+        }
     }
 
     joinVisit() {
