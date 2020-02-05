@@ -35,7 +35,7 @@ class Conference extends React.Component {
                 this.state.loginType = "guest";
             }
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
-            var userDetails = JSON.parse(localStorage.getItem('userDetails'));
+            var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             if (userDetails != null) {
                 this.state.meetingCode = userDetails.meetingCode;
             }

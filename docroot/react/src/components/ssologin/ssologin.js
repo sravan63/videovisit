@@ -2,6 +2,7 @@ import React from 'react';
 import '../../views/authentication/authentication.less';
 import BackendService from '../../services/backendService.js';
 import GlobalConfig from '../../services/global.config';
+import UtilityService from '../../services/utilities-service.js';
 import ReactDOM from 'react-dom';
 
 export default class Ssologin extends React.Component {
@@ -53,7 +54,7 @@ export default class Ssologin extends React.Component {
         if (data != null || data != undefined) {
             data.isTempAccess = false;
             data.ssoSession = response.data.data.ssoSession;
-            localStorage.setItem('userDetails', JSON.stringify(data));
+            localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(data)));
             this.props.data.emit({ isMobileError: false });
             this.props.history.push(GlobalConfig.MEETINGS_URL);
         }

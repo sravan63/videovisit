@@ -19,7 +19,7 @@ class Visit extends React.Component {
 
     componentDidMount() {
         if (localStorage.getItem('userDetails')) {
-            this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+            this.state.userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             if (this.state.userDetails) {
                 this.setState({showPage: true});
             }

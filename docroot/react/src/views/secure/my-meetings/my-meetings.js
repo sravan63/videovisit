@@ -4,6 +4,7 @@ import Loader from '../../../components/loader/loader';
 import BackendService from '../../../services/backendService.js';
 import { MessageService } from '../../../services/message-service.js';
 import GlobalConfig from '../../../services/global.config';
+import UtilityService from '../../../services/utilities-service.js';
 import './my-meetings.less';
 
 class MyMeetings extends React.Component {
@@ -21,7 +22,8 @@ class MyMeetings extends React.Component {
     componentDidMount() {
         this.interval = setInterval(() => this.getMyMeetings(), GlobalConfig.AUTO_REFRESH_TIMER);
         if (localStorage.getItem('userDetails')) {
-            this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+            const udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+            this.state.userDetails = udata;
             if (this.state.userDetails) {
                 this.getMyMeetings();
             }

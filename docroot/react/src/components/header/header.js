@@ -1,6 +1,7 @@
 import React from "react";
 import BackendService from '../../services/backendService.js';
 import { MessageService } from '../../services/message-service.js';
+import UtilityService from '../../services/utilities-service.js';
 
 import './header.less';
 
@@ -16,7 +17,7 @@ class header extends React.Component {
         componentWillMount() {
             //if(this.props.userDetails && this.props.userDetails.userDetails){
             if (localStorage.getItem('userDetails')) {
-                const data = JSON.parse(localStorage.getItem('userDetails'));
+                const data = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
                 this.state.userDetails = data;
                 //const data = this.props.userDetails.userDetails;
                 this.setState({

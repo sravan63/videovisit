@@ -2,6 +2,8 @@ import React from 'react';
 import Axios from 'axios-observable';
 import GlobalConfig from './global.config';
 
+var CryptoJS = require("crypto-js");
+
 class UtilityService extends React.Component {
 
     constructor() {
@@ -72,6 +74,16 @@ class UtilityService extends React.Component {
         var hours = (meetingTime.getHours() > 11) ? meetingTime.getHours() - 12 : meetingTime.getHours();
         hours = (hours == 0) ? 12 : hours;
         return hours + ':' + minutes + ' ' + ampmval
+    }
+
+    encrypt(actual){
+        var ciphertext = CryptoJS.AES.encrypt(actual, '');
+        return ciphertext.toString();
+    }
+
+    decrypt(encrypted){
+        var bytes  = CryptoJS.AES.decrypt(encrypted.toString(), '');
+        return bytes.toString(CryptoJS.enc.Utf8);
     }
 
 }
