@@ -97,7 +97,7 @@ class TempAccess extends React.Component {
     render() {
         return (
             <div className="temp-content">
-                <div className="row temp-form" > 
+                <div className="row temp-form" style={{width: window.innerWidth < 787 && window.orientation == 0 ? 'auto' : 'fit-content',margin:window.innerWidth < 787 && window.orientation == 0 ? '0' : '0 auto'}}> 
                     <form className="col-xs-12 col-md-12 login-form">
                         <p className="col-12 sub-text mt-5 font-weight-bold">Patient's Information</p>
                         <div className="form-group">
