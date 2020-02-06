@@ -206,7 +206,7 @@ class Conference extends React.Component {
                 loginType = this.state.loginType;
             if (loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                 headers.authtoken = this.state.accessToken;
-                 headers.mrn = this.state.userDetails.mrn;
+                headers.mrn = this.state.userDetails.mrn;
             } else {
                 headers.ssoSession = this.state.accessToken;
             }
@@ -216,7 +216,7 @@ class Conference extends React.Component {
             WebUI.pexipDisconnect();
             BackendService.quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType).subscribe((response) => {
                 console.log("Success");
-                if(this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP){
+                if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                     this.resetSessionToken(response.headers.authtoken);
                 }
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
@@ -240,10 +240,10 @@ class Conference extends React.Component {
 
     }
 
-    resetSessionToken(token){
+    resetSessionToken(token) {
         this.state.accessToken = token;
         this.state.userDetails.ssoSession = token;
-        localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
+        localStorage.setItem('userDetails', Utilities.encrypt(JSON.stringify(this.state.userDetails)));
     }
 
     refreshPage() {
