@@ -37,12 +37,10 @@ class Conference extends React.Component {
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             if (userDetails != null) {
-                this.state.meetingCode = userDetails.meetingCode;
-            }
-            var sessionInfo = JSON.parse(localStorage.getItem('sessionInfo'));
-            if (sessionInfo != null) {
-                this.state.loginType = sessionInfo.loginType;
-                this.state.accessToken = sessionInfo.accessToken;
+                this.state.meetingCode = this.state.isGuest ? userDetails.meetingCode : null;
+                this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO;
+                this.state.accessToken = userDetails.ssoSession;
+                this.state.userDetails = userDetails;
             }
             this.getInMeetingDetails();
             this.getRunningLateInfo();
@@ -206,8 +204,9 @@ class Conference extends React.Component {
         if (this.state.isGuest == false) {
             var headers = {},
                 loginType = this.state.loginType;
-            if (loginType == 'tempAccess') {
+            if (loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                 headers.authtoken = this.state.accessToken;
+                 headers.mrn = this.state.userDetails.mrn;
             } else {
                 headers.ssoSession = this.state.accessToken;
             }
@@ -217,6 +216,9 @@ class Conference extends React.Component {
             WebUI.pexipDisconnect();
             BackendService.quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType).subscribe((response) => {
                 console.log("Success");
+                if(this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP){
+                    this.resetSessionToken(response.headers.authtoken);
+                }
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
                 window.location.reload(false);
             }, (err) => {
@@ -236,6 +238,12 @@ class Conference extends React.Component {
             window.location.reload(false);
         }
 
+    }
+
+    resetSessionToken(token){
+        this.state.accessToken = token;
+        this.state.userDetails.ssoSession = token;
+        localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
     }
 
     refreshPage() {

@@ -70,7 +70,7 @@ class ConferenceDetails extends React.Component {
     }
 
     leaveMeeting(){
-        MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null)
+        MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
     }
 
     render() {

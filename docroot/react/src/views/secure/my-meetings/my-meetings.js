@@ -41,6 +41,11 @@ class MyMeetings extends React.Component {
         clearTimeout(this.interval);
     }
 
+    resetSessionToken(token){
+        this.state.userDetails.ssoSession = token;
+        localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
+    }
+
     getMyMeetings() {
         let headers = {
             "Content-Type": "application/json",
@@ -69,6 +74,9 @@ class MyMeetings extends React.Component {
                 tempState.myMeetings = response.data.data ? response.data.data : [];
                 tempState.showLoader = false;
                 this.setState({ tempState });
+                if (this.state.userDetails.isTempAccess){
+                    this.resetSessionToken(response.headers.authtoken);
+                }
             } else {
                 this.setState({ showLoader: false });
             }
@@ -98,10 +106,10 @@ class MyMeetings extends React.Component {
             data = this.state.userDetails;
         if (data.isTempAccess) {
             headers.authtoken = data.ssoSession;
-            loginType = "tempAccess"
+            loginType = GlobalConfig.LOGIN_TYPE.TEMP;
         } else {
             headers.ssoSession = data.ssoSession;
-            loginType = "sso";
+            loginType = GlobalConfig.LOGIN_TYPE.SSO;
         }
         BackendService.logout(headers, loginType).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
@@ -135,7 +143,6 @@ class MyMeetings extends React.Component {
         console.log(meeting);
         localStorage.setItem('meetingId', JSON.stringify(meeting.meetingId));
         this.setState({ showLoader: true });
-        //this.props.history.push('/videoVisitReady');
         var myMeetingsUrl = "launchMeetingForMemberDesktop.json";
         var meetingId = meeting.meetingId;
         var headers = {
@@ -143,14 +150,11 @@ class MyMeetings extends React.Component {
             "mrn": this.state.userDetails.mrn
         };
         var sessionInfo = {};
-        var loginType = "sso";
+        var loginType = GlobalConfig.LOGIN_TYPE.SSO;
         if (this.state.userDetails.isTempAccess) {
             headers.authtoken = this.state.userDetails.ssoSession;
             headers.megaMeetingDisplayName = meeting.member.inMeetingDisplayName;
-            loginType = "tempAccess";
-            sessionInfo.loginType = loginType;
-            sessionInfo.accessToken = headers.authtoken;
-            localStorage.setItem('sessionInfo', JSON.stringify(sessionInfo));
+            loginType = GlobalConfig.LOGIN_TYPE.TEMP;
 
         } else {
             myMeetingsUrl = "launchMemberProxyMeeting.json";
@@ -164,14 +168,14 @@ class MyMeetings extends React.Component {
                 isProxyMeeting = "Y";
             }
             headers.isProxyMeeting = isProxyMeeting;
-            sessionInfo.loginType = loginType;
-            sessionInfo.accessToken = headers.ssoSession;
-            localStorage.setItem('sessionInfo', JSON.stringify(sessionInfo));
             localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
         }
         BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers, loginType).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 if (response.data.data != null && response.data.data != '') {
+                    if (this.state.userDetails.isTempAccess){
+                        this.resetSessionToken(response.headers.authtoken);
+                    }
                     this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                     var roomJoin = response.data.data.roomJoinUrl;
                     localStorage.setItem('roomUrl', roomJoin);
