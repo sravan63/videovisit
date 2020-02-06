@@ -13,6 +13,7 @@ export default class Ssologin extends React.Component {
             username: '',
             password: '',
             NotLoggedIn: false,
+            screenOrientation:'',
             errors: {
                 usernameflag: '',
                 passwordflag: '',
@@ -42,8 +43,16 @@ export default class Ssologin extends React.Component {
             console.log(err);
             this.setState({ NotLoggedIn: true });
         });
+        window.addEventListener('orientationchange', this.setScreenOrientation);
     }
-
+    setScreenOrientation(){
+        var isLandscape = window.matchMedia("(orientation:landscape)").matches;
+        if(isLandscape) {  
+            this.setState({  screenOrientation: 'landscape' });
+        } else {  
+            this.setState({  screenOrientation: 'portrait' });
+        }
+    }
     handleDataAfterResponse(response) {
         this.setState({
             errors: { errorlogin: false, errormsg: "" }
@@ -127,7 +136,7 @@ export default class Ssologin extends React.Component {
         return (
             <div className="sso-content"> 
             {this.state.NotLoggedIn ?  (        
-                    <div className="row sso-form" > 
+                    <div className="row sso-form" style={{width: this.state.screenOrientation == 'landscape' ? 'auto' : '65%'}}> 
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group top-form-group-margin">
                                 <label className="col-sm-12">User ID</label>
