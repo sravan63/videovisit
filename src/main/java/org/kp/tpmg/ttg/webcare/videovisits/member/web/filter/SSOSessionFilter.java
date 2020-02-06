@@ -48,8 +48,8 @@ public class SSOSessionFilter implements Filter {
 			} else {
 				String authToken = req.getHeader(WebUtil.AUTH_TOKEN);
 				if (JwtUtil.validateAuthToken(authToken)) {
-					chain.doFilter(req, resp);
 					updateAuthToken(req, resp);
+					chain.doFilter(req, resp);
 				} else {
 					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
 				}
