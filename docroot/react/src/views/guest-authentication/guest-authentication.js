@@ -7,6 +7,7 @@ import Login from '../../components/tempaccess/tempaccess';
 import Loader from '../../components/loader/loader';
 import './guest-authentication.less';
 import BackendService from '../../services/backendService.js';
+import UtilityService from '../../services/utilities-service.js';
 import GlobalConfig from '../../services/global.config';
 
 class Authentication extends React.Component {
@@ -61,7 +62,7 @@ class Authentication extends React.Component {
                     data = response.data.data ? response.data.data : '';
                     data.meetingCode = this.state.meetingCode;
                     localStorage.setItem('meetingId', JSON.stringify(data.meetingId));
-                    localStorage.setItem('userDetails', JSON.stringify(data));
+                    localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(data)));
                     localStorage.setItem('isGuest', true);
                     this.setState({ showLoader: false });
                     this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
