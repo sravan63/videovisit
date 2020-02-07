@@ -11,6 +11,7 @@ import { map, filter } from 'rxjs/operators';
 import Header from '../../../../components/header/header';
 import Loader from '../../../../components/loader/loader';
 import BackendService from '../../../../services/backendService.js';
+import Utilities from '../../../../services/utilities-service.js';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service';
 import GlobalConfig from '../../../../services/global.config';
@@ -29,7 +30,7 @@ class PreCallCheck extends React.Component {
 
     componentDidMount() {
         if (localStorage.getItem('userDetails')) {
-            this.state.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+            this.state.userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             if (this.state.userDetails) {
                 this.setState({ showPage: true });
                 MediaService.loadDeviceMediaData();
