@@ -137,7 +137,7 @@ class Conference extends React.Component {
     }
 
     getInMeetingGuestName(caregiver) {
-        var details = JSON.parse(localStorage.getItem('userDetails'));
+        var details = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
         var guestName;
         caregiver.forEach(function(val, index) {
             if (val.careGiverMeetingHash == details.meetingCode) {
