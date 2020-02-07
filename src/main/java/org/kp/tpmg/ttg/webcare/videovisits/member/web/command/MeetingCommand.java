@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
@@ -390,32 +391,31 @@ public class MeetingCommand {
 		return jsonString;
 	}
 
-	public static String performSSOSignOn(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
-		logger.info(LOG_ENTERED);
-		String strResponse = null;
-		try {
-			WebService.initWebService(request);
-			String userName = request.getParameter("username");
-			String password = request.getParameter("password");
+	public static String performSSOSignOn(final HttpServletRequest request, final HttpServletResponse response) throws Exception {logger.info(LOG_ENTERED);
+	String strResponse = null;
+	try {
+		WebService.initWebService(request);
+		String userName = request.getParameter("username");
+		String password = request.getParameter("password");
 
-			logger.debug("userName= " + userName + ",password=" + password);
-
-			if (StringUtils.isNotBlank(userName) && StringUtils.isNotBlank(password)) {
-				KpOrgSignOnInfo kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(userName, password);
+		logger.debug("userName= " + userName + ",password=" + password);
+		KpOrgSignOnInfo kpOrgSignOnInfo = null;
+		if (StringUtils.isNotBlank(userName) && StringUtils.isNotBlank(password)) {
+			if (!WebUtil.isSsoSimulation()) {
+				kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(userName, password);
 				if (kpOrgSignOnInfo == null) {
 					logger.warn("SSO Sign on failed due to KP org signon Service unavailability.");
 				} else {
 					if (!kpOrgSignOnInfo.isSuccess() || StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
 							|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError())) {
-						logger.warn(
-								"SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
+						logger.warn("SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
 					} else if (kpOrgSignOnInfo.getUser() == null || (kpOrgSignOnInfo.getUser() != null
 							&& StringUtils.isBlank(kpOrgSignOnInfo.getUser().getGuid()))) {
 						logger.warn("SSO Sign on service failed to return GUID for a user");
 					} else if (StringUtils.isBlank(kpOrgSignOnInfo.getSsoSession())) {
 						logger.warn("SSO Sign on service failed to return SSOSESSION for a user");
 					} else {
-						AuthorizeResponseVo authorizeMemberResponse = WebService
+						final AuthorizeResponseVo authorizeMemberResponse = WebService
 								.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
 						if (authorizeMemberResponse == null) {
 							logger.warn("SSO Sign on failed due to unavailability of Member SSO Auth API");
@@ -425,7 +425,7 @@ public class MeetingCommand {
 							} else {
 								if (validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper())) {
 									logger.info("SSO Sign on successful and setting member info into web app context");
-									SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
+									final SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
 									signOnOutput.setMemberInfo(authorizeMemberResponse.getResponseWrapper().getMemberInfo());
 									signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
 									signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
@@ -438,16 +438,54 @@ public class MeetingCommand {
 						}
 					}
 				}
+			} else {
+				final String memberName = getExtPropertiesValueByKey("MEMBER_USERNAME");
+				final String memberPassword = getExtPropertiesValueByKey("MEMBER_PASSWORD");
+				kpOrgSignOnInfo = new KpOrgSignOnInfo();
+				kpOrgSignOnInfo.setSsoSession(request.getSession().getId());
+				final MemberInfo memberInfo = new MemberInfo();
+				if (StringUtils.isNotBlank(memberName) && StringUtils.isNotBlank(memberPassword)
+						&& memberName.equalsIgnoreCase(userName) && memberPassword.equalsIgnoreCase(password)) {
+					final UserInfo user = new UserInfo();
+					user.setLastName(getExtPropertiesValueByKey("MEMBER_LAST_NAME"));
+					user.setGuid(getExtPropertiesValueByKey("MEMBER_GUID"));
+					user.setEmail(getExtPropertiesValueByKey("MEMBER_EMAIL"));
+					user.setAge(Integer.parseInt(getExtPropertiesValueByKey("MEMBER_AGE")));
+					user.setFirstName(getExtPropertiesValueByKey("MEMBER_FIRST_NAME"));
+					user.setServiceArea(null);
+
+					kpOrgSignOnInfo.setSystemError(null);
+					kpOrgSignOnInfo.setSuccess(true);
+					kpOrgSignOnInfo.setBusinessError(null);
+					kpOrgSignOnInfo.setUser(user);
+					kpOrgSignOnInfo.setFailureInfo(null);
+
+					memberInfo.setMrn(getExtPropertiesValueByKey("MEMBER_MRN"));
+					memberInfo.setDateOfBirth(getExtPropertiesValueByKey("MEMBER_DATE_OF_BIRTH"));
+					memberInfo.setFirstName(getExtPropertiesValueByKey("MEMBER_FIRST_NAME"));
+					memberInfo.setLastName(getExtPropertiesValueByKey("MEMBER_LAST_NAME"));
+					memberInfo.setMiddleName(getExtPropertiesValueByKey("MEMBER_MIDDLE_NAME"));
+					memberInfo.setEmail("");
+					memberInfo.setGender(getExtPropertiesValueByKey("MEMBER_GENDER"));
+
+				} 
+				final SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
+				signOnOutput.setMemberInfo(memberInfo);
+				signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+				signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
+				strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
+				logger.info("ssosession to be set in cookie:" + kpOrgSignOnInfo.getSsoSession());
+				WebUtil.setCookie(response, WebUtil.getSSOCookieName(), kpOrgSignOnInfo.getSsoSession());
 			}
-		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
 		}
-		if(StringUtils.isBlank(strResponse)) {
-			strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "400", "failure", null);
-		}
-		logger.info(LOG_EXITING);
-		return strResponse;
+	} catch (Exception e) {
+		logger.error("System Error" + e.getMessage(), e);
 	}
+	if(StringUtils.isBlank(strResponse)) {
+		strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "400", "failure", null);
+	}
+	logger.info(LOG_EXITING);
+	return strResponse;}
 
 	
 	private static boolean validateMemberSSOAuthResponse(MemberSSOAuthorizeResponseWrapper responseWrapper) {
@@ -647,41 +685,41 @@ public class MeetingCommand {
 		return result;
 	}
 
-	public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request) throws Exception {
-		logger.info(LOG_ENTERED);
-		MeetingDetailsOutput output = null;
-		final Gson gson = new GsonBuilder().serializeNulls().create();
-		String jsonStr = null;
-		boolean isNonMember = false;
-		try {
-			String guid = request.getHeader("guid");
-			String mrn = request.getHeader("mrn");
-			isNonMember = "true".equalsIgnoreCase(request.getHeader("isNonMember"));
-			String proxyMeetings = request.getParameter("getProxyMeetings");
+	public static String retrieveActiveMeetingsForMemberAndProxies(HttpServletRequest request) throws Exception {logger.info(LOG_ENTERED);
+	MeetingDetailsOutput output = null;
+	String jsonStr = null;
+	try {
+		final String guid = request.getHeader("guid");
+		final String mrn = request.getHeader("mrn");
+		final boolean isNonMember = "true".equalsIgnoreCase(request.getHeader("isNonMember"));
+		final String proxyMeetings = request.getParameter("getProxyMeetings");
+		if (WebUtil.isSsoSimulation()) {
+			output = WebService.getActiveMeetingsForSSOSimulation(mrn, isNonMember,
+					request.getSession().getId(), WebUtil.VV_MBR_SSO_SIM_WEB);
+		} else {
 			if (isNonMember) {
-				output = WebService.retrieveActiveMeetingsForNonMemberProxies(guid, request.getSession().getId(),
-						WebUtil.VV_MBR_SSO_WEB);
+				output = WebService.retrieveActiveMeetingsForNonMemberProxies(guid, request.getSession().getId(), WebUtil.VV_MBR_SSO_WEB);
 			} else if (StringUtils.isNotBlank(mrn)) {
 				boolean getProxyMeetings = false;
 				if ("true".equalsIgnoreCase(proxyMeetings)) {
 					getProxyMeetings = true;
 				}
-				output = WebService.retrieveActiveMeetingsForMemberAndProxies(mrn, getProxyMeetings,
-						request.getSession().getId(), WebUtil.VV_MBR_SSO_WEB);
+				output = WebService.retrieveActiveMeetingsForMemberAndProxies(mrn, getProxyMeetings, request.getSession().getId(), WebUtil.VV_MBR_SSO_WEB);
 			}
-			if (output != null && "200".equals(output.getStatus().getCode())) {
-				if (isMyMeetingsAvailable(output)) {
-					final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
-					jsonStr = gson.toJson(meetings);
-					jsonStr = WebUtil.prepareCommonOutputJson("retrieveActiveMeetingsForMemberAndProxies", "200", "success", meetings);
-				}
-			}
-		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
 		}
-		logger.info(LOG_EXITING);
-		return jsonStr;
+		if (output != null && "200".equals(output.getStatus().getCode())) {
+			if (isMyMeetingsAvailable(output)) {
+				final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
+				final Gson gson = new GsonBuilder().serializeNulls().create();
+				jsonStr = gson.toJson(meetings);
+				jsonStr = WebUtil.prepareCommonOutputJson("retrieveActiveMeetingsForMemberAndProxies", "200", "success", meetings);
+			}
+		}
+	} catch (Exception e) {
+		logger.error("System Error" + e.getMessage(), e);
 	}
+	logger.info(LOG_EXITING);
+	return jsonStr;}
 
 
 	public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request) {
