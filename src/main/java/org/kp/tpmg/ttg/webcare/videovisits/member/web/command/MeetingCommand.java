@@ -473,8 +473,6 @@ public class MeetingCommand {
 					signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
 					signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
 					strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
-					logger.info("ssosession to be set in cookie:" + kpOrgSignOnInfo.getSsoSession());
-					WebUtil.setCookie(response, WebUtil.getSSOCookieName(), kpOrgSignOnInfo.getSsoSession());
 				} 
 				
 			}
