@@ -468,14 +468,15 @@ public class MeetingCommand {
 					memberInfo.setEmail("");
 					memberInfo.setGender(getExtPropertiesValueByKey("MEMBER_GENDER"));
 
+					final SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
+					signOnOutput.setMemberInfo(memberInfo);
+					signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+					signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
+					strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
+					logger.info("ssosession to be set in cookie:" + kpOrgSignOnInfo.getSsoSession());
+					WebUtil.setCookie(response, WebUtil.getSSOCookieName(), kpOrgSignOnInfo.getSsoSession());
 				} 
-				final SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
-				signOnOutput.setMemberInfo(memberInfo);
-				signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
-				signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
-				strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
-				logger.info("ssosession to be set in cookie:" + kpOrgSignOnInfo.getSsoSession());
-				WebUtil.setCookie(response, WebUtil.getSSOCookieName(), kpOrgSignOnInfo.getSsoSession());
+				
 			}
 		}
 	} catch (Exception e) {
