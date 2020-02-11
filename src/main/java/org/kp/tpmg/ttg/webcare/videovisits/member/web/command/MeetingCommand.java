@@ -1329,6 +1329,9 @@ public class MeetingCommand {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.IS_MEETING_HASH_VALID,
 						output.getStatus().getCode(), output.getStatus().getMessage(),
 						output.getEnvelope() != null ? output.getEnvelope().getMeetings() : null);
+				if(StringUtils.isNotBlank(meetingCode)) {
+					response.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(meetingCode));
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error while isMeetingHashValid for meetingCode : " + meetingCode, e);

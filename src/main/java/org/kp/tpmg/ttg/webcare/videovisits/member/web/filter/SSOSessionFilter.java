@@ -90,7 +90,7 @@ public class SSOSessionFilter implements Filter {
 				resp.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(mrn));
 			}
 		} else if (WebUtil.GUEST.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
-			final String meetingHash = req.getParameter("meetingHash");
+			final String meetingHash = req.getParameter("meetingCode");
 			if (StringUtils.isNotBlank(meetingHash)) {
 				resp.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(meetingHash));
 			}
