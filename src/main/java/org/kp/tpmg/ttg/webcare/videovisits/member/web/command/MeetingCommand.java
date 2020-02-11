@@ -7,6 +7,9 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE_900;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS_200;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_SUBMIT_LOGIN;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -429,7 +432,7 @@ public class MeetingCommand {
 									signOnOutput.setMemberInfo(authorizeMemberResponse.getResponseWrapper().getMemberInfo());
 									signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
 									signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
-									strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
+									strResponse = WebUtil.prepareCommonOutputJson(SSO_SUBMIT_LOGIN, SUCCESS_200, SUCCESS, signOnOutput);
 									logger.info("ssosession to be set in cookie:" + kpOrgSignOnInfo.getSsoSession());
 									WebUtil.setCookie(response, WebUtil.getSSOCookieName(), kpOrgSignOnInfo.getSsoSession());
 								}
@@ -472,7 +475,7 @@ public class MeetingCommand {
 					signOnOutput.setMemberInfo(memberInfo);
 					signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
 					signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
-					strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
+					strResponse = WebUtil.prepareCommonOutputJson(SSO_SUBMIT_LOGIN, SUCCESS_200, SUCCESS, signOnOutput);
 				} 
 				
 			}
@@ -481,7 +484,7 @@ public class MeetingCommand {
 		logger.error("System Error" + e.getMessage(), e);
 	}
 	if(StringUtils.isBlank(strResponse)) {
-		strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "400", "failure", null);
+		strResponse = WebUtil.prepareCommonOutputJson(SSO_SUBMIT_LOGIN, "400", FAILURE, null);
 	}
 	logger.info(LOG_EXITING);
 	return strResponse;}

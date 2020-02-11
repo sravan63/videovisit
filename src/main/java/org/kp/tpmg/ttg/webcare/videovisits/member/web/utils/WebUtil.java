@@ -69,6 +69,7 @@ public class WebUtil {
 	public static final String SSO = "sso";
 	public static final String TEMP_ACCESS = "tempAccess";
 	public static final String SUBMIT_LOGIN = "submitLogin";
+	public static final String SSO_SUBMIT_LOGIN = "ssoSubmitLogin";
 	
 	public static final String SUCCESS_200 = "200";
 	public static final String FAILURE_900 = "900";
@@ -421,7 +422,7 @@ public class WebUtil {
 
 	public static boolean isSsoSimulation() {
 		final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION");
-		final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && "true".equalsIgnoreCase(ssoSimulation);
+		final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && TRUE.equalsIgnoreCase(ssoSimulation);
 		return isSsoSimulation;
 	}
 
