@@ -7,6 +7,11 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE_900;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS_200;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_SUBMIT_LOGIN;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -429,7 +434,7 @@ public class MeetingCommand {
 									signOnOutput.setMemberInfo(authorizeMemberResponse.getResponseWrapper().getMemberInfo());
 									signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
 									signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
-									strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
+									strResponse = WebUtil.prepareCommonOutputJson(SSO_SUBMIT_LOGIN, SUCCESS_200, SUCCESS, signOnOutput);
 									logger.info("ssosession to be set in cookie:" + kpOrgSignOnInfo.getSsoSession());
 									WebUtil.setCookie(response, WebUtil.getSSOCookieName(), kpOrgSignOnInfo.getSsoSession());
 								}
@@ -472,7 +477,7 @@ public class MeetingCommand {
 					signOnOutput.setMemberInfo(memberInfo);
 					signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
 					signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
-					strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "200", "success", signOnOutput);
+					strResponse = WebUtil.prepareCommonOutputJson(SSO_SUBMIT_LOGIN, SUCCESS_200, SUCCESS, signOnOutput);
 				} 
 				
 			}
@@ -481,7 +486,7 @@ public class MeetingCommand {
 		logger.error("System Error" + e.getMessage(), e);
 	}
 	if(StringUtils.isBlank(strResponse)) {
-		strResponse = WebUtil.prepareCommonOutputJson("ssoSubmitLogin", "400", "failure", null);
+		strResponse = WebUtil.prepareCommonOutputJson(SSO_SUBMIT_LOGIN, "400", FAILURE, null);
 	}
 	logger.info(LOG_EXITING);
 	return strResponse;}
@@ -692,7 +697,8 @@ public class MeetingCommand {
 		final String mrn = request.getHeader("mrn");
 		final boolean isNonMember = "true".equalsIgnoreCase(request.getHeader("isNonMember"));
 		final String proxyMeetings = request.getParameter("getProxyMeetings");
-		if (WebUtil.isSsoSimulation()) {
+		final String loginType = request.getParameter(WebUtil.LOGIN_TYPE);
+		if (WebUtil.isSsoSimulation() && SSO.equalsIgnoreCase(loginType)) {
 			output = WebService.getActiveMeetingsForSSOSimulation(mrn, isNonMember,
 					request.getSession().getId(), WebUtil.VV_MBR_SSO_SIM_WEB);
 		} else {
@@ -700,18 +706,18 @@ public class MeetingCommand {
 				output = WebService.retrieveActiveMeetingsForNonMemberProxies(guid, request.getSession().getId(), WebUtil.VV_MBR_SSO_WEB);
 			} else if (StringUtils.isNotBlank(mrn)) {
 				boolean getProxyMeetings = false;
-				if ("true".equalsIgnoreCase(proxyMeetings)) {
+				if (TRUE.equalsIgnoreCase(proxyMeetings)) {
 					getProxyMeetings = true;
 				}
 				output = WebService.retrieveActiveMeetingsForMemberAndProxies(mrn, getProxyMeetings, request.getSession().getId(), WebUtil.VV_MBR_SSO_WEB);
 			}
 		}
-		if (output != null && "200".equals(output.getStatus().getCode())) {
+		if (output != null && SUCCESS_200.equals(output.getStatus().getCode())) {
 			if (isMyMeetingsAvailable(output)) {
 				final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
 				final Gson gson = new GsonBuilder().serializeNulls().create();
 				jsonStr = gson.toJson(meetings);
-				jsonStr = WebUtil.prepareCommonOutputJson("retrieveActiveMeetingsForMemberAndProxies", "200", "success", meetings);
+				jsonStr = WebUtil.prepareCommonOutputJson("retrieveActiveMeetingsForMemberAndProxies", SUCCESS_200, SUCCESS, meetings);
 			}
 		}
 	} catch (Exception e) {
