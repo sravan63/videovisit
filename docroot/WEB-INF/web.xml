@@ -30,6 +30,17 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
+	<!--  Listener used to detect devices: mobile, tablet or desktop -->
+	<listener>
+	  <listener-class>
+	     net.sourceforge.wurfl.core.web.WURFLServletContextListener
+	  </listener-class>
+	</listener>
+	<context-param>
+		<param-name>wurfl</param-name>
+		<param-value>/WEB-INF/lib/wurfl.zip</param-value>
+	</context-param>
+	
 	<filter>
 		<filter-name>SSOSessionFilter</filter-name>
 		<filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.SSOSessionFilter</filter-class>
