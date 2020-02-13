@@ -23,8 +23,6 @@
 		<frontend-plugin.version>0.0.27</frontend-plugin.version>
 		<node.version>v10.13.0</node.version>
 		<npm.version>6.12.0</npm.version>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
 		<junit.jupiter.version>5.5.2</junit.jupiter.version>
 		<junit.platform.version>1.5.2</junit.platform.version>
 		<maven.compiler.source>11</maven.compiler.source>
