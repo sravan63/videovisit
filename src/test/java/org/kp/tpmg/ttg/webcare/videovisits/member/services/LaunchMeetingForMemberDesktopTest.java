@@ -1,12 +1,13 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.services;
 
-import static org.junit.Assert.assertNotNull;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.net.URI;
 
-import org.junit.Test;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
@@ -24,8 +25,8 @@ public class LaunchMeetingForMemberDesktopTest extends AbstractVideoVisitMemberA
 	static String megaMeetingDisplayName = null;
 	final Gson gson = new Gson();
 
-	@BeforeAll
-	static void setup() {
+	@BeforeEach
+	void setup() {
 		meetingId = "291307";
 		mrn = "14404080";
 		megaMeetingDisplayName = "Joe Mama";
@@ -84,7 +85,7 @@ public class LaunchMeetingForMemberDesktopTest extends AbstractVideoVisitMemberA
 		};
 		String outputStr = memberRestController.launchMeetingForMemberDesktop(request, response);
 		output = gson.fromJson(outputStr, VVResponse.class);
-		assertEquals("300",output.getCode());
+		assertEquals("300", output.getCode());
 		assertEquals("Missing input attributes.", output.getMessage());
 
 	}
@@ -113,9 +114,8 @@ public class LaunchMeetingForMemberDesktopTest extends AbstractVideoVisitMemberA
 
 		final String outputStr = memberRestController.launchMeetingForMemberDesktop(request, response);
 		output = gson.fromJson(outputStr, VVResponse.class);
-		assertEquals("900",output.getCode());
-		assertEquals(WebUtil.FAILURE,output.getMessage());
-		
+		assertEquals("900", output.getCode());
+		assertEquals(WebUtil.FAILURE, output.getMessage());
 
 	}
 

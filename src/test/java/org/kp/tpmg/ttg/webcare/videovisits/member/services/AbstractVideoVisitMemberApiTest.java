@@ -8,7 +8,9 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.controller.MemberRestContr
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.springframework.web.client.RestTemplate;
 
+import mockit.Injectable;
 import mockit.Mocked;
+import mockit.Tested;
 
 public class AbstractVideoVisitMemberApiTest {
 
@@ -21,8 +23,11 @@ public class AbstractVideoVisitMemberApiTest {
 	@Mocked
 	RestTemplate restTemplate;
 
-	WebService webService = new WebService();
+	@Tested
+	@Injectable
+	WebService webService;
 
-	MemberRestController memberRestController = new MemberRestController();
+	@Tested
+	MemberRestController memberRestController;
 
 }
