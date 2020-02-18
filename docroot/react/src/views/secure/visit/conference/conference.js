@@ -76,8 +76,20 @@ class Conference extends React.Component {
             }
 
         });
+        window.addEventListener('resize', this.handleResize)
     }
-
+    handleResize(){
+            
+            var ele = document.getElementsByClassName('video-conference-container')[0];
+            var dockHeight = ele.offsetHeight / 2;
+            var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
+            var wRoomattr = document.getElementsByClassName('full-waiting-room')[0];
+            wRoom.style.height = dockHeight + 'px';
+            wRoomattr.style.padding = window.innerWidth > 960 ? '10% 0' :'0px';
+            var remoteFeed = document.getElementsByClassName('self-view')[0];
+            remoteFeed.style.height = dockHeight + 'px';
+            console.log("resize event trigger"+ dockHeight);
+    }
     toggleDockView(isDock) {
         if (isDock) {
             var ele = document.getElementsByClassName('video-conference')[0];
