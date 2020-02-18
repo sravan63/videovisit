@@ -275,7 +275,7 @@ class Conference extends React.Component {
                     <div className="row video-conference-container">
                         <div className="col-md-10 p-0 video-conference">
                             <ConferenceControls/>
-                            <div className="col p-0">
+                            <div className="col p-0 remote-feed-container">
                                 <WaitingRoom waitingroom={this.state} />
                                 <div className="stream-container" style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
