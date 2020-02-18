@@ -31,7 +31,7 @@ class MyMeetings extends React.Component {
             this.props.history.push(GlobalConfig.LOGIN_URL);
         }
         this.subscription = MessageService.getMessage().subscribe((notification) => {
-            if (notification.text == 'User Signed Out') {
+            if (notification.text == GlobalConfig.LOGOUT) {
                 this.signOff();
             }
         });

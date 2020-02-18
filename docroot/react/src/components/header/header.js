@@ -2,7 +2,7 @@ import React from "react";
 import BackendService from '../../services/backendService.js';
 import { MessageService } from '../../services/message-service.js';
 import UtilityService from '../../services/utilities-service.js';
-
+import GlobalConfig from '../../services/global.config';
 import './header.less';
 
 class header extends React.Component {
@@ -26,7 +26,7 @@ class header extends React.Component {
             }
         }
         signOffMethod() {
-            MessageService.sendMessage("User Signed Out", null)
+            MessageService.sendMessage(GlobalConfig.LOGOUT, null);
 
         }
         render() {

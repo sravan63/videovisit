@@ -64,7 +64,8 @@ const GlobalConfig = {
     UPDATE_RUNNING_LATE: 'update running late in sidebar',
     LEAVE_VISIT: 'leave meeting',
     TOGGLE_SETTINGS: 'toggle settings',
-    CLOSE_SETTINGS: 'closed settings'
+    CLOSE_SETTINGS: 'closed settings',
+    LOGOUT: 'User Signed Out'
 };
 
 export default GlobalConfig;
