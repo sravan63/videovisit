@@ -15,7 +15,8 @@
             .title {
                 font-size: 1.5rem;
                 margin: auto 0;
-                p{
+
+                p {
                     font-size: 2rem;
                 }
 
@@ -50,6 +51,7 @@
                         color: #006ba6;
                         outline: none;
                         cursor: pointer;
+
                         &:hover {
                             text-decoration: none;
                         }
@@ -75,7 +77,7 @@
                 width: 100%;
                 height: 100%;
                 position: relative;
-                display:none; // For temporary use
+                display: none; // For temporary use
             }
 
             #selfvideo {
@@ -85,11 +87,23 @@
                 bottom: 0;
                 right: 0;
                 background-size: cover;
-                background-position: center;                
+                background-position: center;
                 transform: scaleX(-1);
                 -webkit-transform: scaleX(-1);
             }
 
+
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 960px) {
+    .conference-page {
+        .video-conference-container {
+            .col-md-10 {
+                max-width: 100% !important;
+                flex: 0 0 100% !important;
+            }
 
         }
     }
@@ -100,24 +114,141 @@
         .conference-header {
             display: none !important;
         }
+
         .video-conference-container {
             height: calc(100vh - 50px);
+
+            .controls-bar {
+                background: #515151;
+                height: 50px;
+                padding: 0;
+            }
+
+            .red-circle {
+                background: #B81125;
+                box-shadow: 0px 2px 4px;
+                border-radius: 40px;
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                margin: 5px 0;
+            }
+
+            .white-circle {
+                background: #FDFDFD;
+                box-shadow: 0px 2px 4px;
+                border-radius: 40px;
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                margin: 5px 0;
+            }
+
+            .video-controls li {
+                width: 20%;
+                height: auto;
+                display: inline-block;
+                text-align: center;
+                float: left;
+            }
+
+            .moveLeft {
+                margin-left: 40px;
+            }
+
+            .moveDown {
+                margin-top: 40px;
+            }
+
+            .icon-holder {
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                cursor: pointer;
+            }
+
+            #camera {
+                background-repeat: no-repeat;
+                height: 100%;
+                padding: 0 20px;
+                background-position: center;
+            }
+
+            #cameraSwitch {
+                background: url('../../../../assets/cameraSwitch.svg');
+                background-repeat: no-repeat;
+                height: 100%;
+                padding: 0 20px;
+                background-position: center;
+            }
+
+            #endCall {
+                background: url('../../../../assets/phone.svg');
+                background-repeat: no-repeat;
+                height: 100%;
+                padding: 0 15px;
+                background-position: center;
+                background-size: contain;
+            }
+
+            #speaker {
+                background-repeat: no-repeat;
+                height: 100%;
+                padding: 0 20px;
+                background-position: center;
+            }
+
+            #mic {
+                background-repeat: no-repeat;
+                height: 100%;
+                padding: 0 20px;
+                background-position: center;
+            }
+
+            .unmutedmic {
+                background: url('../../../../assets/mic.svg');
+            }
+
+            .mutedmic {
+                background: url('../../../../assets/micOff.svg');
+            }
+
+            .unmutedcamera {
+                background: url('../../../../assets/camera.svg');
+            }
+
+            .mutedcamera {
+                background: url('../../../../assets/cameraOff.svg');
+            }
+
+            .unmutedspeaker {
+                background: url('../../../../assets/speaker.svg');
+            }
+
+            .mutedspeaker {
+                background: url('../../../../assets/speakerOff.svg');
+            }
+
             .video-conference {
-                width: 100%!important;
+                width: 100% !important;
                 display: block;
+
                 .remote-feed-container {
                     height: 50%;
                     width: 100%;
                     position: relative;
-                    .mobile-waiting-room{
+
+                    .mobile-waiting-room {
                         width: 100%;
                         height: 100%;
                         background: red;
                     }
                 }
-                .self-view{
+
+                .self-view {
                     height: 50%;
                     width: 100%;
+
                     #selfvideo {
                         height: 100%;
                         width: 100%;
@@ -126,6 +257,7 @@
                     }
                 }
             }
+
         }
     }
 }
