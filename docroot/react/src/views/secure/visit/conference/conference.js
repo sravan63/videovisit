@@ -20,8 +20,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isGuest: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false };
-        this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
+        this.state = { userDetails: {}, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false };
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.startPexip = this.startPexip.bind(this);
     }
@@ -56,6 +55,21 @@ class Conference extends React.Component {
             this.state.isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         }
 
+        var browserInfo = Utilities.getBrowserInformation();
+        if (browserInfo.isSafari || browserInfo.isFireFox) {
+            this.setState({ isbrowsercheck: true })
+        }
+
+        var isMobile = Utilities.isMobileDevice();
+        if (isMobile) {
+            this.setState({ isMobile: true });
+        }
+
+        var os = Utilities.getAppOS();
+        if (os == 'iOS') {
+            this.setState({ isIOS: true });
+        }
+
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.HOST_AVAIL:
@@ -78,17 +92,17 @@ class Conference extends React.Component {
         });
         window.addEventListener('resize', this.handleResize)
     }
-    handleResize(){
-            
-            var ele = document.getElementsByClassName('video-conference-container')[0];
-            var dockHeight = ele.offsetHeight / 2;
-            var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
-            var wRoomattr = document.getElementsByClassName('full-waiting-room')[0];
-            wRoom.style.height = dockHeight + 'px';
-            wRoomattr.style.padding = window.innerWidth > 960 ? '10% 0' :'0px';
-            var remoteFeed = document.getElementsByClassName('self-view')[0];
-            remoteFeed.style.height = dockHeight + 'px';
-            console.log("resize event trigger"+ dockHeight);
+    handleResize() {
+
+        var ele = document.getElementsByClassName('video-conference-container')[0];
+        var dockHeight = ele.offsetHeight / 2;
+        var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
+        var wRoomattr = document.getElementsByClassName('full-waiting-room')[0];
+        wRoom.style.height = dockHeight + 'px';
+        wRoomattr.style.padding = window.innerWidth > 960 ? '10% 0' : '0px';
+        var remoteFeed = document.getElementsByClassName('self-view')[0];
+        remoteFeed.style.height = dockHeight + 'px';
+        console.log("resize event trigger" + dockHeight);
     }
     toggleDockView(isDock) {
         if (isDock) {
@@ -301,7 +315,10 @@ class Conference extends React.Component {
                             <div id="controls" className="controls-bar">
                               <ul className="video-controls m-0">
                                 <li><span className="white-circle"><span id="camera" className="icon-holder unmutedcamera"></span></span></li>
-                                <li className="camera-switch-disable-ios"><span className="white-circle"><span id="cameraSwitch" className="icon-holder"></span></span></li>
+                                {!this.state.isbrowsercheck && !this.state.isMobile ? (
+                                <li><span className="white-circle"><span id="settings" className="icon-holder"></span></span></li>):('')}
+                                {this.state.isMobile && !this.state.isIOS ? (
+                                <li className="camera-switch-disable-ios"><span className="white-circle"><span id="cameraSwitch" className="icon-holder"></span></span></li> ):('')}
                                 <li><span className="red-circle"><span id="endCall" className="icon-holder" ></span></span></li>
                                 <li><span className="white-circle"><span id="speaker" className="icon-holder unmutedspeaker" ></span></span></li>
                                 <li><span className="white-circle"><span id="mic" className="icon-holder unmutedmic" ></span></span></li>
