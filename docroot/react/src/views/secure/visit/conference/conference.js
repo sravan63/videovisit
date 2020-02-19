@@ -199,6 +199,7 @@ class Conference extends React.Component {
         }
         MessageService.sendMessage(GlobalConfig.ACCESS_MEMBER_NAME, null);
         WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);
+        this.handleResize();
     }
 
     componentWillUnmount() {
