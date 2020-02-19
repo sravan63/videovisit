@@ -299,14 +299,14 @@ class Conference extends React.Component {
                                </video>
                             </div>
                             <div id="controls" className="controls-bar">
-          <ul className="video-controls m-0">
-            <li><span className="white-circle"><span id="camera" className="icon-holder unmutedcamera"></span></span></li>
-            <li className="camera-switch-disable-ios"><span className="white-circle"><span id="cameraSwitch" className="icon-holder"></span></span></li>
-            <li><span className="red-circle"><span id="endCall" className="icon-holder" ></span></span></li>
-            <li><span className="white-circle"><span id="speaker" className="icon-holder unmutedspeaker" ></span></span></li>
-            <li><span className="white-circle"><span id="mic" className="icon-holder unmutedmic" ></span></span></li>
-          </ul>
-        </div>
+                              <ul className="video-controls m-0">
+                                <li><span className="white-circle"><span id="camera" className="icon-holder unmutedcamera"></span></span></li>
+                                <li className="camera-switch-disable-ios"><span className="white-circle"><span id="cameraSwitch" className="icon-holder"></span></span></li>
+                                <li><span className="red-circle"><span id="endCall" className="icon-holder" ></span></span></li>
+                                <li><span className="white-circle"><span id="speaker" className="icon-holder unmutedspeaker" ></span></span></li>
+                                <li><span className="white-circle"><span id="mic" className="icon-holder unmutedmic" ></span></span></li>
+                              </ul>
+                            </div>
                         </div>
                         <ConferenceDetails/>
                     </div>

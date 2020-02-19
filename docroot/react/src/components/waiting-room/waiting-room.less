@@ -23,6 +23,7 @@
                 opacity: 0.6;
                 border-radius: 0.6rem;
                 padding: 6%;
+                display: block;
                 .tpmg-logo{
                     background-image: url('../../../../images/conference/TPMG_logo.png') no-repeat 100% 100%;
                 }
@@ -58,6 +59,7 @@
                 opacity: 0.6;
                 border-radius: 0.6rem;
                 padding: 6%;
+                display: block;
                 .tpmg-logo{
                     background-image: url('../../../../images/conference/TPMG_logo.png') no-repeat 100% 100%;
                 }
@@ -69,6 +71,32 @@
                 }
                 .runninglate-msg{
                     font-size: 1.25rem;
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .waiting-room-body{
+        .full-waiting-room, .half-waiting-room {
+            .conference-waiting-room{
+                background: #757575;
+                .waitingRoomMessageBlock{
+                    padding: 0;
+                    text-align: center;
+                    background: #757575;
+                    .waitingroom-text{
+                        width: 100%;
+                    }
+                    .tpmg-logo{
+                        width: 100%;
+                        background-position: center;
+                    }
+                    .runninglate-msg{
+                        width: 100%;
+                        text-align: center;
+                    }
                 }
             }
         }

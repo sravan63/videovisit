@@ -73,6 +73,13 @@
             background: #000000;
             display: flex;
 
+            .controls-bar {
+                background: #515151;
+                height: 50px;
+                padding: 0;
+                display: none;
+            }
+
             .stream-container {
                 width: 100%;
                 height: 100%;
@@ -117,11 +124,10 @@
 
         .video-conference-container {
             height: calc(100vh - 50px);
-
-            .controls-bar {
-                background: #515151;
-                height: 50px;
-                padding: 0;
+            .video-conference{
+                .controls-bar {
+                    display: block;
+                }
             }
 
             .red-circle {
@@ -237,28 +243,6 @@
                     height: 50%;
                     width: 100%;
                     position: relative;
-
-                    .mobile-waiting-room {
-                        width: 100%;
-                        height: 100%;
-                        background: red;
-                    }
-                    .conference-waiting-room{
-                        background: #757575;
-                        .waitingRoomMessageBlock{
-                            padding: 0;
-                            text-align: center;
-                            background: #757575;
-                            .tpmg-logo{
-                                width: 100%;
-                                background-position: center;
-                            }
-                            .runninglate-msg{
-                                width: 100%;
-                                text-align: center;
-                            }
-                        }
-                    }
                 }
 
                 .self-view {
