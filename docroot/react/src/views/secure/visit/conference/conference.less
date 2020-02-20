@@ -141,8 +141,8 @@
         }
 
         .video-conference-container {
-            height: calc(100vh - 50px);
-
+            height: 100vh;
+            overflow: hidden;
             .video-conference {
                 .controls-bar {
                     display: block;
@@ -267,7 +267,7 @@
                 display: block;
 
                 .remote-feed-container {
-                    height: 50%;
+                    height: calc(50% - 25px);
                     width: 100%;
                     position: relative;
                     .presentation-view {
@@ -278,7 +278,7 @@
                 .self-view {
                    // height: 50%;
                     width: 100%;
-                    height: calc(50%-25px);
+                    height: calc(50% - 25px);
                     #selfvideo {
                         height: 100%;
                         width: 100%;
@@ -308,7 +308,7 @@
                 }
                 .remote-feed-container {
                     // height: 100%;
-                    height: calc(50%-25px);
+                    height: calc(50% - 25px);
                     width: 100%;
                     position: relative;
                     .presentation-view {
