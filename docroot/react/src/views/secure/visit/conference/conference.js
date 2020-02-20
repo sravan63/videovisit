@@ -100,7 +100,7 @@ class Conference extends React.Component {
         window.addEventListener('resize', this.handleResize)
     }
     handleResize() {
-        if(window.orientation == 0 ){
+        if(window.orientation == 0  && !this.state.isMobile){
             var ele = document.getElementsByClassName('video-conference-container')[0];
             var dockHeight = (ele.offsetHeight - 110) / 2;
             var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
@@ -109,7 +109,7 @@ class Conference extends React.Component {
             wRoomattr.style.padding = window.innerWidth > 960 ? '10% 0' : '0px';
             var remoteFeed = document.getElementsByClassName('self-view')[0];
             remoteFeed.style.height = dockHeight/16 + 'rem';
-            console.log("resize event trigger" + dockHeight);
+            //console.log("resize event trigger" + dockHeight);
         }
     }
     toggleDockView(isDock) {
