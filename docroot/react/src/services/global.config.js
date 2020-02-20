@@ -65,7 +65,9 @@ const GlobalConfig = {
     LEAVE_VISIT: 'leave meeting',
     TOGGLE_SETTINGS: 'toggle settings',
     CLOSE_SETTINGS: 'closed settings',
-    LOGOUT: 'User Signed Out'
+    LOGOUT: 'User Signed Out',
+    START_SCREENSHARE: 'start screenshare',
+    STOP_SCREENSHARE: 'stop screenshare'
 };
 
 export default GlobalConfig;

@@ -20,7 +20,8 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false };
+        this.state = { userDetails: {}, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false };
+        this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.startPexip = this.startPexip.bind(this);
     }
@@ -86,6 +87,12 @@ class Conference extends React.Component {
                     break;
                 case GlobalConfig.LEAVE_VISIT:
                     this.leaveMeeting();
+                    break;
+                case GlobalConfig.START_SCREENSHARE:
+                    this.setState({showSharedContent : true});
+                    break;
+                case GlobalConfig.STOP_SCREENSHARE:
+                    this.setState({showSharedContent : false});
                     break;
             }
 
@@ -304,6 +311,7 @@ class Conference extends React.Component {
                             <ConferenceControls/>
                             <div className="col p-0 remote-feed-container">
                                 <WaitingRoom waitingroom={this.state} />
+                                <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'block' : 'none', paddingTop: this.state.isMobile ? '20%' : '2%' }}></div>
                                 <div className="stream-container" style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                 </div>

@@ -40,7 +40,6 @@ var id_fullscreen;
 var id_screenshare;
 var id_presentation;
 
-//var isProvider = $("#isProvider").val();
 var set_interval = "false";
 var set_interval_callback;
 var layout;
@@ -71,15 +70,12 @@ export function presentationClosed() {
         rtc.stopPresentation();
     }
     presentation = null;
-    $('#presentation-view').css('display', 'none');
+    MessageService.sendMessage(GlobalConfig.STOP_SCREENSHARE, null);
 }
 
 function remotePresentationClosed(reason) {
     if (presentation) {
-        /*if (reason) {
-            alert(reason);
-        }*/
-        //presentation.close()
+        presentation.close();
         // TODO - Need to streamline this later, it's a hack for as of now
         if (getAppOS() == "iOS" && reason == "Failed to gather IP addresses") {
             return;
@@ -89,8 +85,7 @@ function remotePresentationClosed(reason) {
     }
 }
 
-export function checkForBlockedPopup() {
-    //id_presentation.classList.remove("inactive");
+function checkForBlockedPopup() {
     if (!presentation || typeof presentation.innerHeight === "undefined" || (presentation.innerHeight === 0 && presentation.innerWidth === 0)) {
         // Popups blocked
         presentationClosed();
@@ -98,8 +93,6 @@ export function checkForBlockedPopup() {
             //id_presentation.classList.toggle('active');
         }, 1000);
     } else {
-        //id_presentation.textContent = trans['BUTTON_HIDEPRES'];
-        //presentation.document.title = decodeURIComponent(conference) + " presentation from " + presenter;
         if (flash_button) {
             clearInterval(flash_button);
             flash_button = null;
@@ -115,105 +108,64 @@ export function checkForBlockedPopup() {
 
 export function createPresentationWindow() {
     if (presentation == null) {
-        $('#presentation-view').css('display', 'block');
-        setTimeout(checkForBlockedPopup, 1000);
-        presentation = $('#presentation-view');
-        mobileviewHeight = isMobileDevice ? '40vh' : '100%';
-        $('#presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:block;z-index:5;height:" + mobileviewHeight + " ;width:100%;' onLoad='switchImage();'/><div width='0px' height='0px' style='overflow:auto;position:absolute;left:0;top:0;'><img src='' id='presimage' width='0px'/></div>");
+        MessageService.sendMessage(GlobalConfig.START_SCREENSHARE, null);
+        presentation = document.getElementById('presentation-view');
+        presentation.innerHTML = "<img src='' id='loadimage' /><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay'/><img src='' id='presimage' width='0px'/></div>";
+        // setTimeout(checkForBlockedPopup, 1000);
     }
-    /*if (presentation == null) {
-        presentation = window.open(document.location, 'presentation', 'height=' + presHeight + ',width=' + presWidth + ',location=no,menubar=no,toolbar=no,status=no');
-        setTimeout(checkForBlockedPopup, 1000);
-
-        if (presentation != null) {
-            presentation.document.write("<html><body bgcolor='#000000'>");
-            presentation.document.write("<script type='text/javascript'>function switchImage() { presimage.src = loadimage.src; }</script>");
-            presentation.document.write("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:none' width='0px' height='0px' onLoad='switchImage();'/>");
-            presentation.document.write("<div width='100%' height='100%' style='overflow:auto;position:absolute;left:0;right:0;top:0;bottom:0'>");
-            presentation.document.write("<img src='' id='presimage' width='100%'/>");
-            presentation.document.write("</div>");
-            presentation.document.write("</body></html>");
-            presentation.addEventListener('beforeunload', presentationClosed);
-            presentation.addEventListener('resize', function() { userResized = true; });
-            userResized = false;
-        }
-    }*/
 }
 
 function loadPresentation(url) {
-    if (presentation && $(presentation).find('#loadimage').length > 0) {
-        //presentation.loadimage.src = url;
-        $(presentation).find('#loadimage')[0].src = url;
-        setTimeout(resizePresentationWindow, 500);
+    if (presentation && document.querySelectorAll('.presentation-view #loadimage')[0]) {
+        document.querySelectorAll('.presentation-view #loadimage')[0].setAttribute('src', url);
+        // setTimeout(resizePresentationWindow, 500);
     } else {
         presentationURL = url;
     }
 }
 
 export function resizePresentationWindow() {
-    /*if (presentation != null && presentation.presimage.clientWidth > 640 && !userResized) {
+    if (presentation != null && presentation.presimage.clientWidth > 640 && !userResized) {
         presWidth = presentation.presimage.clientWidth;
         presHeight = presentation.presimage.clientHeight;
         presentation.window.resizeTo(presWidth + (presentation.outerWidth - presentation.innerWidth), presHeight + (presentation.outerHeight - presentation.innerHeight));
-    }*/
+    }
 }
 
 function loadPresentationStream(videoURL) {
-    if (presentation && $(presentation).find('#loadimage').length > 0) {
-        //presentation.presvideo.poster = "";
-        //presentation.presvideo.src = videoURL;
-        $('#presentation-view #presvideo').attr('src', videoURL);
+    if (presentation && document.querySelectorAll('.presentation-view #loadimage')) {
+        presentation.presvideo.poster = "";
+        presentation.presvideo.src = videoURL;
+        presentation.presvideo.setAttribute('src', videoURL);
     }
 }
 
 export function createPresentationStreamWindow() {
-    if (presentation == null) {
-        setTimeout(checkForBlockedPopup, 1000);
-        $('#presentation-view').css('display', 'block');
-        $("#selfview").css("cursor", "pointer");
-        presentation = $('#presentation-view');
-        mobileviewHeight = isMobileDevice ? '40vh' : '100%';
-        $('#presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:block;z-index:5;height: " + mobileviewHeight + " ;width:100%;' onLoad='switchImage();'/><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay' poster='img/spinner.gif'/><img src='' id='presimage' width='0px'/></div>");
-    }
     //presentation-view
-    /*if (presentation == null) {
-        presentation = window.open(document.location, 'presentation', 'height=' + presHeight + ',width=' + presWidth + ',location=no,menubar=no,toolbar=no,status=no');
-        setTimeout(checkForBlockedPopup, 1000);
-
-        if (presentation != null) {
-            presentation.document.write("<html><body bgcolor='#333333'>");
-            presentation.document.write("<div width='100%' height='100%' style='overflow:auto;position:absolute;left:0;right:0;top:0;bottom:0'>");
-            presentation.document.write("<video id='presvideo' width='100%' autoplay='autoplay' poster='img/spinner.gif'/>");
-            presentation.document.write("</div>");
-            presentation.document.write("</body></html>");
-            presentation.addEventListener('beforeunload', presentationClosed);
-        }
-    }*/
+    if (presentation == null) {
+        MessageService.sendMessage(GlobalConfig.START_SCREENSHARE, null);
+        presentation = document.getElementById('presentation-view');
+        mobileviewHeight = isMobileDevice ? '40vh' : '100%';
+        presentation.innerHTML = "<img src='' id='loadimage' /><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay'/><img src='' id='presimage' width='0px'/></div>";
+        // setTimeout(checkForBlockedPopup, 1000);
+    }
 }
 
 function presentationStartStop(setting, pres) {
     if (setting == true) {
         presenter = pres;
         if (presenting) {
-            //id_presentation.textContent = trans['BUTTON_SHOWPRES'];
-            //id_presentation.classList.remove("inactive");
+            // Do Nothing
         } else if (source == 'screen') {
             rtc.disconnect();
         } else if (videoPresentation) {
-            $("#selfview").removeClass("togglesv");
-            $("#presentation-view").removeClass("togglepv");
-            $("#selfview").css("z-index", "6");
             createPresentationStreamWindow();
         } else {
             createPresentationWindow();
         }
         presenting_user = pres.substring(pres.indexOf('<') + 1, pres.indexOf('>'));
 
-        if (window.matchMedia("(orientation: landscape)").matches && isMobileDevice && presenting_user != null) {
-            $(".mobileselfview").addClass("mobilesv");
-        }
         if (!refreshingOrSelfJoinMeeting && !isMobileDevice) {
-            // utilityNotifyQueue(presenting_user + ' '+GlobalConfig.PRESENTATION_ON);
             const data = {
                 message: presenting_user + ' '+GlobalConfig.PRESENTATION_ON,
                 name: presenting_user
@@ -221,31 +173,20 @@ function presentationStartStop(setting, pres) {
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, data);
         }
     } else {
-        // if(isMobileDevice){
-        //     $(".mobileselfview").removeClass("mobilesv");
-        // }
         if (presentation != null) {
-            //presentation.close();
-            $('#presentation-view').css('display', 'none');
-            $("#selfview").css("cursor", "default");
+            MessageService.sendMessage(GlobalConfig.STOP_SCREENSHARE, null);
             presentation = null;
         }
         if (flash_button) {
             clearInterval(flash_button);
             flash_button = null;
-            //id_presentation.classList.remove('active');
         }
-        // id_presentation.textContent = trans['BUTTON_NOPRES'];
-        // id_presentation.classList.add("inactive");
         if (!refreshingOrSelfJoinMeeting && !isMobileDevice && presenting_user) {
             const data = {
                 message: presenting_user + ' '+GlobalConfig.PRESENTATION_OFF,
                 name: presenting_user
             };
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, data);
-            $(".remoteFeed").css("display", "block");
-            $("#selfview").removeClass("togglesv");
-            $("#selfview").css("cursor", "default");
         }
         presenting_user = '';
     }
@@ -272,7 +213,6 @@ export function togglePresentation() {
 export function presentScreen() {
     log("info", "smd_initiate_action", "console: presentScreen - on click of share my desktop button");
     if (!presenting) {
-        //id_screenshare.textContent = trans['BUTTON_STOPSHARE'];
         rtc.present('screen');
         presenting = true;
         $('#id_screenshare').css('display', 'none');
@@ -282,7 +222,7 @@ export function presentScreen() {
         $('#id_screenshare').css('display', 'block');
         $('#id_screen_unshare').css('display', 'none');
     }
-    /*if (!id_screenshare.classList.contains("inactive")) {
+    if (!id_screenshare.classList.contains("inactive")) {
         if (!presenting) {
             id_screenshare.textContent = trans['BUTTON_STOPSHARE'];
             rtc.present('screen');
@@ -290,7 +230,7 @@ export function presentScreen() {
         } else {
             rtc.present(null);
         }
-    }*/
+    }
 }
 
 export function stopSharing() {
@@ -629,10 +569,6 @@ function participantDeleted(participant) {
         pexipParticipantsList = pexipParticipantsList.filter(function(user) {
             return user.uuid != participant.uuid;
         });
-        // var participantMsg = removingParticipant[0].display_name + " "+GlobalConfig.LEFT_VISIT;
-        // if (!refreshingOrSelfJoinMeeting && removingParticipant.display_name != $('#guestName').val()) {
-        //     utilityNotifyQueue(participantMsg);
-        // }
         if(!refreshingOrSelfJoinMeeting){
             var participantMsg = {
                 message : removingParticipant[0].display_name + " "+GlobalConfig.LEFT_VISIT,
@@ -1002,14 +938,6 @@ export function disconnectOnRefresh() {
         }
     });
 }
-
-/*$(window).on("beforeunload", function() {
-    console.log('browser un loading');
-    utilitiesTemp.meetingEnded = true;
-    if (!disconnectAlreadyCalled) {
-        leaveFromMeeting();
-    }
-});*/
 
 export function leaveFromMeeting() {
     log("info", "leaveFromMeeting", "console: leaveFromMeeting");
