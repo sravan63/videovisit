@@ -1,62 +1,75 @@
-.setting-peripherals{
+.setting-peripherals {
     height: calc(100vh - 130px);
     position: absolute;
-    top:0;
+    top: 0;
     width: 25rem;
-    background: #FFF;    
-        .settings-page {
-            padding: 1rem 0 0 3rem;
-            .close-button{
-                background: url('../../../../images/global/close-icon.png') no-repeat;
-                background-position: right;
-                height: 35px;
-                cursor: pointer;
-            }
-            .periheral-container {
-                margin-bottom: 2rem;
-                .dropdown {
-                    color: #333333;
-                    font-size: 0.875rem;
-                    border: 1px solid #003B71;
-                    background: #FFFFFF;
+    background: #FFF;
 
-                    .btn {
-                        text-align: left;
-                        overflow: hidden;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        padding-right: 1rem;
-                    }
+    .settings-page {
+        padding: 1rem 0 0 3rem;
 
-                    .disabled {
-                        opacity: 0.5;
-                        pointer-events: none;
-                        min-height: 2.1rem;
-                    }
+        .close-button {
+            background: url('../../../../images/global/close-icon.png') no-repeat;
+            background-position: right;
+            height: 35px;
+            cursor: pointer;
+        }
 
-                    .dropdown-menu {
-                        min-width: 100%;
+        .periheral-container {
+            margin-bottom: 2rem;
 
-                        .dropdown-item {
-                            cursor: pointer;
-                        }
-                    }
+            .dropdown {
+                color: #333333;
+                font-size: 0.875rem;
+                border: 1px solid #003B71;
+                background: #FFFFFF;
 
-                    .dropdown-toggle::after {
-                        top: 15px;
-                        position: absolute;
-                        right: 5px;
-                    }
-                }
-                
-            }   
-            .button-controls {
                 .btn {
-                    background: #006ba6;
-                    width: 7rem;
-                    color: #FFF;
+                    text-align: left;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    padding-right: 1rem;
+                }
+
+                .disabled {
+                    opacity: 0.5;
+                    pointer-events: none;
+                    min-height: 2.1rem;
+                }
+
+                .dropdown-menu {
+                    min-width: 100%;
+
+                    .dropdown-item {
+                        cursor: pointer;
+                    }
+                }
+
+                .dropdown-toggle::after {
+                    top: 15px;
+                    position: absolute;
+                    right: 5px;
                 }
             }
-        }    
-        
+
+        }
+
+        .button-controls {
+            .btn {
+                background: #006ba6;
+                width: 7rem;
+                color: #FFF;
+            }
+        }
+    }
+
+}
+
+@media only screen and (max-width: 960px) and (orientation: portrait) {
+    .setting-peripherals {
+        height: calc(100vh - 50px);
+        z-index: 3;
+        width: 28rem;
+    }
 }

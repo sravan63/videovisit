@@ -20,10 +20,11 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false };
+        this.state = { userDetails: {}, showvideoIcon: true, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.startPexip = this.startPexip.bind(this);
+        this.hideSettings = true;
     }
 
     componentDidMount() {
@@ -89,10 +90,10 @@ class Conference extends React.Component {
                     this.leaveMeeting();
                     break;
                 case GlobalConfig.START_SCREENSHARE:
-                    this.setState({showSharedContent : true});
+                    this.setState({ showSharedContent: true });
                     break;
                 case GlobalConfig.STOP_SCREENSHARE:
-                    this.setState({showSharedContent : false});
+                    this.setState({ showSharedContent: false });
                     break;
             }
 
@@ -100,15 +101,15 @@ class Conference extends React.Component {
         window.addEventListener('resize', this.handleResize)
     }
     handleResize() {
-        if(window.orientation == 0  && !this.state.isMobile){
+        if (window.orientation == 0 && !this.state.isMobile) {
             var ele = document.getElementsByClassName('video-conference-container')[0];
-            var dockHeight = ele.offsetHeight  / 2;
+            var dockHeight = ele.offsetHeight / 2;
             var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
             var wRoomattr = document.getElementsByClassName('full-waiting-room')[0];
-            wRoom.style.height = dockHeight/16 + 'rem';
+            wRoom.style.height = dockHeight / 16 + 'rem';
             wRoomattr.style.padding = window.innerWidth > 960 ? '10% 0' : '0px';
             var remoteFeed = document.getElementsByClassName('self-view')[0];
-            remoteFeed.style.height = dockHeight/16 + 'rem';
+            remoteFeed.style.height = dockHeight / 16 + 'rem';
             //console.log("resize event trigger" + dockHeight);
         }
     }
@@ -214,6 +215,34 @@ class Conference extends React.Component {
         this.subscription.unsubscribe();
         if (this.state.leaveMeeting == false) {
             this.leaveMeeting();
+        }
+    }
+
+    toggleSettings() {
+        this.hideSettings = !this.hideSettings;
+        MessageService.sendMessage(GlobalConfig.TOGGLE_SETTINGS, this.hideSettings);
+    }
+
+    toggleControls(cntrlname) {
+        switch (cntrlname) {
+            case GlobalConfig.VIDEO:
+                this.setState({
+                    showvideoIcon: !this.state.showvideoIcon
+                })
+                WebUI.muteUnmuteVideo();
+                break;
+            case GlobalConfig.AUDIO:
+                this.setState({
+                    showaudioIcon: !this.state.showaudioIcon
+                })
+                WebUI.muteSpeaker();
+                break;
+            case GlobalConfig.MICROPHONE:
+                this.setState({
+                    showmicIcon: !this.state.showmicIcon
+                })
+                WebUI.muteUnmuteMic();
+                break;
         }
     }
 
@@ -323,14 +352,17 @@ class Conference extends React.Component {
                             </div>
                             <div id="controls" className="controls-bar">
                               <ul className="video-controls m-0">
-                                <li><span className="white-circle"><span id="camera" className="icon-holder unmutedcamera"></span></span></li>
+                                <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
+                                <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                                 {!this.state.isbrowsercheck && !this.state.isMobile ? (
-                                <li><span className="white-circle"><span id="settings" className="icon-holder"></span></span></li>):('')}
+                                <li><span className="white-circle"><span id="settings" className="icon-holder" onClick={this.toggleSettings.bind(this)}></span></span></li>):('')}
                                 {this.state.isMobile && !this.state.isIOS ? (
-                                <li className="camera-switch-disable-ios"><span className="white-circle"><span id="cameraSwitch" className="icon-holder"></span></span></li> ):('')}
-                                <li><span className="red-circle"><span id="endCall" className="icon-holder" ></span></span></li>
-                                <li><span className="white-circle"><span id="speaker" className="icon-holder unmutedspeaker" ></span></span></li>
-                                <li><span className="white-circle"><span id="mic" className="icon-holder unmutedmic" ></span></span></li>
+                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder"></span></span></li> ):('')}
+                                <li><span className="red-circle"><span id="endCall" className="icon-holder" onClick={()=>this.leaveMeeting('mobile')} ></span></span></li>
+                                <li style={{display: this.state.showaudioIcon ? 'block' : 'none'}}><span className="white-circle"><span id="speaker" className="icon-holder unmutedspeaker" onClick={()=>this.toggleControls('audio')} ></span></span></li>
+                                <li style={{display: this.state.showaudioIcon ? 'none' : 'block'}}><span className="white-circle"><span id="speaker" className="icon-holder mutedspeaker" onClick={()=>this.toggleControls('audio')}></span></span></li>
+                                <li style={{display: this.state.showmicIcon ? 'block' : 'none'}}><span className="white-circle"><span id="mic" className="icon-holder unmutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
+                                <li style={{display: this.state.showmicIcon ? 'none' : 'block'}}><span className="white-circle"><span id="mic" className="icon-holder mutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
                               </ul>
                             </div>
                         </div>

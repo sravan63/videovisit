@@ -19,9 +19,9 @@ class Settings extends React.Component {
 
     componentDidMount() {
         this.subscription = MessageService.getMessage().subscribe((message) => {
-            switch(message.text) {
+            switch (message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
-                    this.list = message.data;                    
+                    this.list = message.data;
                     this.setState({ media: this.list });
                     this.setState({
                         constrains: {
@@ -30,21 +30,21 @@ class Settings extends React.Component {
                             micSource: this.list.audioinput ? this.list.audioinput[0] : null,
                         }
                     });
-                break;
+                    break;
                 case GlobalConfig.TOGGLE_SETTINGS:
                     this.setState({ settingstoggle: message.data });
-                   // this.state.settingstoggle = message.data;
+                    // this.state.settingstoggle = message.data;
                     break;
             }
         });
         document.addEventListener('click', this.handleClickOutside.bind(this), true);
-    } 
-    handleClickOutside(event){
+    }
+    handleClickOutside(event) {
         const domNode = ReactDOM.findDOMNode(this);
         const settingsNode = event.target.className.indexOf('settings-btn') > -1;
-        
+
         if (!domNode || !domNode.contains(event.target)) {
-            if(!settingsNode && !this.state.settingstoggle){
+            if (!settingsNode && !this.state.settingstoggle) {
                 this.close(this);
             }
         }
@@ -66,14 +66,14 @@ class Settings extends React.Component {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            WebUI.switchDevices('video',media.deviceId);
+            WebUI.switchDevices('video', media.deviceId);
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
-            MediaService.changeAudioDestination(media,'video');
+            MediaService.changeAudioDestination(media, 'video');
             WebUI.switchDevices('speaker');
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
-            MediaService.changeAudioDestination(media,'video');
+            MediaService.changeAudioDestination(media, 'video');
             WebUI.switchDevices('mic');
         }
         // Sets the constrains in dropdowns.
@@ -101,7 +101,7 @@ class Settings extends React.Component {
         return (
             <div className="setting-peripherals" style={{left : this.state.settingstoggle ? '-527px' : '0',transition: '1s'}}>
                 <div className="row settings-page">
-                    <div className="col-md-10 peripheral-options p-0">
+                    <div className="col-xs-5 peripheral-options p-0">
                                 <div className="close-button" onClick={() => this.close(this)}></div>
                                 <div className="text-center"><h4>Settings</h4></div>
                                     <div className="periheral-container">
@@ -163,7 +163,7 @@ class Settings extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                         </div>   
+                         </div>
         );
     }
 }
