@@ -80,76 +80,8 @@
                 display: none;
             }
 
-            .stream-container {
-                width: 100%;
-                height: 100%;
-                position: relative;
-                display: none; // For temporary use
-            }
-
-            #selfvideo {
-                position: absolute;
-                z-index: 2;
-                max-width: 15%;
-                bottom: 0;
-                right: 0;
-                background-size: cover;
-                background-position: center;
-                transform: scaleX(-1);
-                -webkit-transform: scaleX(-1);
-            }
-
-            .presentation-view {
-                width: 100%;
-                height: 100%;
-                padding: 2% 0;
-                position: absolute;
-                left: 7px;
-                top: 0;
-                z-index: 1;
-                background: black;
-
-                img {
-                    display: block;
-                    max-width: 95%;
-                    max-height: 100%;
-                    width: auto;
-                    height: auto;
-                    margin: 0% auto;
-                }
-            }
-
-
-        }
-    }
-}
-
-@media only screen and (min-width: 768px) and (max-width: 960px) {
-    .conference-page {
-        .video-conference-container {
-            .col-md-10 {
-                max-width: 100% !important;
-                flex: 0 0 100% !important;
-            }
-
-        }
-    }
-}
-
-@media only screen and (max-width: 960px) and (orientation: portrait) {
-    .conference-page {
-        .conference-header {
-            display: none !important;
-        }
-
-        .video-conference-container {
-            height: 100vh;
-            overflow: hidden;
-
-            .video-conference {
-                .controls-bar {
-                    display: block;
-                }
+            .landscape-controlbar {
+                display: none;
             }
 
             .red-circle {
@@ -178,14 +110,6 @@
                 display: inline-block;
                 text-align: center;
                 float: left;
-            }
-
-            .moveLeft {
-                margin-left: 40px;
-            }
-
-            .moveDown {
-                margin-top: 40px;
             }
 
             .icon-holder {
@@ -265,6 +189,82 @@
                 background: url('../../../../assets/speakerOff.svg');
             }
 
+            .stream-container {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                display: none; // For temporary use
+            }
+
+            #selfvideo {
+                position: absolute;
+                z-index: 2;
+                max-width: 15%;
+                bottom: 0;
+                right: 0;
+                background-size: cover;
+                background-position: center;
+                transform: scaleX(-1);
+                -webkit-transform: scaleX(-1);
+            }
+
+            .presentation-view {
+                width: 100%;
+                height: 100%;
+                padding: 2% 0;
+                position: absolute;
+                left: 7px;
+                top: 0;
+                z-index: 1;
+                background: black;
+
+                img {
+                    display: block;
+                    max-width: 95%;
+                    max-height: 100%;
+                    width: auto;
+                    height: auto;
+                    margin: 0% auto;
+                }
+            }
+
+
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 960px) {
+    .conference-page {
+        .video-conference-container {
+            .col-md-10 {
+                max-width: 100% !important;
+                flex: 0 0 100% !important;
+            }
+
+        }
+    }
+}
+
+@media only screen and (max-width: 960px) and (orientation: portrait) {
+    .conference-page {
+        .conference-header {
+            display: none !important;
+        }
+
+        .video-conference-container {
+            height: 100vh;
+            overflow: hidden;
+
+            .video-conference {
+                .controls-bar {
+                    display: block;
+                }
+
+                .landscape-controlbar {
+                    display: none;
+                }
+            }
+
             .video-conference {
                 width: 100% !important;
                 display: block;
@@ -314,6 +314,39 @@
                 .controls-bar {
                     display: none;
                 }
+
+                .landscape-controlbar {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    position: absolute;
+                    z-index: 6;
+                    width: 3.75rem !important;
+                    height: 100% !important;
+                    top: 0px;
+                    right: 0px;
+                    min-width: 0px;
+                    background: #515151;
+                    padding-left: 6px;
+
+
+                    ul {
+                        width: 3.125rem;
+                        margin: auto;
+
+                        li {
+                            width: 3.125rem;
+                            text-align: center;
+                            float: none;
+                            padding-bottom: 1rem;
+                        }
+
+                        li.cam {
+                            padding-top: 0.75rem;
+                        }
+                    }
+                }
+
 
                 .remote-feed-container {
                     height: 100%;
