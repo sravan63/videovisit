@@ -20,11 +20,12 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, showvideoIcon: true, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false };
+        this.state = { userDetails: {}, isRearCamera:false, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
+        this.list = [];
     }
 
     componentDidMount() {
@@ -95,6 +96,9 @@ class Conference extends React.Component {
                 case GlobalConfig.STOP_SCREENSHARE:
                     this.setState({ showSharedContent: false });
                     break;
+                case GlobalConfig.MEDIA_DATA_READY:  
+                this.list = message.data;
+                this.setState({ media: this.list }); 
             }
 
         });
@@ -301,6 +305,18 @@ class Conference extends React.Component {
         window.location.reload(false);
     }
 
+    toggleCamera(){
+        var camID = this.state.media["videoinput"];
+        var videoSource;
+        videoSource = this.state.isRearCamera ? camID[0].deviceId : camID[1].deviceId;
+        this.setState({
+            isRearCamera: !this.state.isRearCamera
+            });
+        WebUI.switchDevices('video', videoSource);
+    }
+
+    
+
     render() {
         return (
             <div className="conference-page pl-0 container-fluid">
@@ -345,7 +361,7 @@ class Conference extends React.Component {
                                 {!this.state.isbrowsercheck && !this.state.isMobile ? (
                                 <li><span className="white-circle"><span id="settings" className="icon-holder" onClick={this.toggleSettings.bind(this)}></span></span></li>):('')}
                                 {this.state.isMobile && !this.state.isIOS ? (
-                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder"></span></span></li> ):('')}
+                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder" onClick={()=>this.toggleCamera()}></span></span></li>):('')}
                                 <li><span className="red-circle"><span id="endCall" className="icon-holder" onClick={()=>this.leaveMeeting('mobile')} ></span></span></li>
                                 <li style={{display: this.state.showaudioIcon ? 'block' : 'none'}}><span className="white-circle"><span id="speaker" className="icon-holder unmutedspeaker" onClick={()=>this.toggleControls('audio')} ></span></span></li>
                                 <li style={{display: this.state.showaudioIcon ? 'none' : 'block'}}><span className="white-circle"><span id="speaker" className="icon-holder mutedspeaker" onClick={()=>this.toggleControls('audio')}></span></span></li>
@@ -363,7 +379,7 @@ class Conference extends React.Component {
                                 {!this.state.isbrowsercheck && !this.state.isMobile ? (
                                 <li><span className="white-circle"><span id="settings" className="icon-holder" onClick={this.toggleSettings.bind(this)}></span></span></li>):('')}
                                 {this.state.isMobile && !this.state.isIOS ? (
-                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder"></span></span></li> ):('')}
+                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder" onClick={()=>this.toggleCamera()}></span></span></li> ):('')}
                                 <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                                 <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                               </ul>
