@@ -12,7 +12,7 @@ import Popper from 'popper.js';
 import ReactDOM from 'react-dom';
 class Settings extends React.Component {
     constructor(props) {
-        super(props);       
+        super(props);
         this.list = [];
         this.state = { data: {}, media: {}, constrains: {}, settingstoggle: true };
     }
@@ -101,7 +101,7 @@ class Settings extends React.Component {
         return (
             <div className="setting-peripherals" style={{left : this.state.settingstoggle ? '-527px' : '0',transition: '1s'}}>
                 <div className="row settings-page">
-                    <div className="col-xs-5 peripheral-options p-0">
+                    <div className="col-xs-12 col-md-14 peripheral-options p-0">
                                 <div className="close-button" onClick={() => this.close(this)}></div>
                                 <div className="text-center"><h4>Settings</h4></div>
                                     <div className="periheral-container">
