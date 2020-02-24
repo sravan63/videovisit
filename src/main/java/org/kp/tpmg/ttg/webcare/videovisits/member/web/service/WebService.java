@@ -133,9 +133,8 @@ public class WebService {
 			logger.debug("Simulation:" + simulation);
 			modulePath = appProp.getProperty("MODULE_PATH");
 			policyPath = appProp.getProperty("POLICY_PATH");
-			Crypto crypto = new Crypto();
 			serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
-			serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
+			serviceSecurityPassword = Crypto.decrypt(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
 			logger.debug(
 					"SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
 
@@ -163,7 +162,7 @@ public class WebService {
 			kpOrgSSOUserAgentCategoryHeader = System.getProperty("os.name");
 			kpOrgSSOOsVersionHeader = System.getProperty("os.version");
 			kpOrgSSOUserAgentTypeHeader = WebUtil.getBrowserDetails(request);
-			kpOrgSSOAPIKeyHeader = crypto.read(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
+			kpOrgSSOAPIKeyHeader = Crypto.decrypt(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
 			kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
 			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
 			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
@@ -768,10 +767,9 @@ public class WebService {
 		try {
 			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 			logger.info("videoVisitRestServiceUrl is empty. Reading it from properties file.");
-			final Crypto crypto = new Crypto();
 			videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
 			serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
-			serviceSecurityPassword = crypto.read(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
+			serviceSecurityPassword = Crypto.decrypt(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
 			logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl + "SecurityUsername:"
 					+ serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
 		} catch (Exception e) {
