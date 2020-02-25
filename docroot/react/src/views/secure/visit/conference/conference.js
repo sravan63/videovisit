@@ -308,6 +308,10 @@ class Conference extends React.Component {
     toggleCamera(){
         var camID = this.state.media["videoinput"];
         var videoSource;
+        // Keeps only first and last camera ids, if device has more than 2 cameras.
+        if(camID.length > 2){
+            camID.splice(1,camID.length-2);
+        }
         videoSource = this.state.isRearCamera ? camID[0].deviceId : camID[1].deviceId;
         this.setState({
             isRearCamera: !this.state.isRearCamera
