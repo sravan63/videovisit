@@ -270,6 +270,11 @@
             .video-conference {
                 .controls-bar {
                     display: block;
+                    ul {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 0 0.5rem;
+                    }
                 }
 
                 .landscape-controlbar {
@@ -329,8 +334,6 @@
 
                 .landscape-controlbar {
                     display: flex;
-                    flex-direction: column;
-                    justify-content: space-around;
                     position: absolute;
                     z-index: 6;
                     width: 3.75rem !important;
@@ -345,16 +348,15 @@
                     ul {
                         width: 3.125rem;
                         margin: auto;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        padding: 0.5rem 0;
 
                         li {
                             width: 3.125rem;
                             text-align: center;
                             float: none;
-                            padding-bottom: 1rem;
-                        }
-
-                        li.cam {
-                            padding-top: 0.75rem;
                         }
                     }
                 }
