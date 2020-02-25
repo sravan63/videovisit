@@ -1,6 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Conference from './conference';
+jest.mock('../../../../pexip/complex/EventSource.js', () => ({
+  doSomething: jest.fn()
+}))
 
 describe("Conference Component", function() {
     let wrapper;
@@ -13,17 +16,7 @@ describe("Conference Component", function() {
         localStorage.clear();
     });
 
-    it("Render Conference component", function() {
-        wrapper.setState({
-            myMeetings: [{
-                "host": { "firstName": "Joe" },
-                "member": { "firstname": "Mama" }
-            }]
-        });
-        const instance = wrapper.instance();
-        instance.getHoursAndMinutes(11232232);
-        expect(instance).toBeDefined();
-    });
+    
 
     it("Render Conference component", function() {
         const instance2 = wrapper.instance();

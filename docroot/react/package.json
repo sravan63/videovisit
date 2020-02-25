@@ -14,11 +14,16 @@
   "license": "ISC",
   "jest": {
     "moduleNameMapper": {
-      ".*\\.less$": "<rootDir>/dummy.js"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|ogg|oga)$": "<rootDir>/dummy.js",
+      "\\.(css|less|scss|sass)$": "<rootDir>/dummy.js"
     },
     "setupFilesAfterEnv": [
       "<rootDir>/src/setupTests.js"
     ],
+    "watchPathIgnorePatterns": [
+      "<rootDir>/node_modules"
+    ],
+  
     "collectCoverage": true,
     "coverageReporters": [
       "json",

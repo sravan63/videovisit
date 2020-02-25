@@ -1,31 +1,24 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import PreCheck from './pre-call-check';
+import Setup from './setup';
+jest.mock('../../pexip/complex/EventSource.js', () => ({
+  doSomething: jest.fn()
+}))
 
-describe("PreCheck Component", function() {
+xdescribe("Setup Component", function() {
     let wrapper;
     const historyMock = { push: jest.fn() };
     localStorage.setItem('signedIn', true);
     beforeEach(() => {
-        wrapper = shallow(<PreCheck history={historyMock} />);
+        wrapper = shallow(<Setup history={historyMock} />);
     });
     afterEach(() => {
         localStorage.clear();
     });
 
-    it("Render PreCheck component", function() {
-        wrapper.setState({
-            myMeetings: [{
-                "host": { "firstName": "Joe" },
-                "member": { "firstname": "Mama" }
-            }]
-        });
-        const instance = wrapper.instance();
-        instance.getHoursAndMinutes(11232232);
-        expect(instance).toBeDefined();
-    });
 
-    it("Render PreCheck component", function() {
+
+    it("Render Setup component", function() {
         const instance2 = wrapper.instance();
         expect(instance2.props.history.push).toHaveBeenCalled();
     });

@@ -13,17 +13,7 @@ describe("PreCheck Component", function() {
         localStorage.clear();
     });
 
-    it("Render PreCheck component", function() {
-        wrapper.setState({
-            myMeetings: [{
-                "host": { "firstName": "Joe" },
-                "member": { "firstname": "Mama" }
-            }]
-        });
-        const instance = wrapper.instance();
-        instance.getHoursAndMinutes(11232232);
-        expect(instance).toBeDefined();
-    });
+    
 
     it("Render PreCheck component", function() {
         const instance2 = wrapper.instance();

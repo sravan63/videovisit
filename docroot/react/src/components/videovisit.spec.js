@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Videovisit from './videovisit';
 
-describe("Videovisit Component", function() {
+xdescribe("Videovisit Component", function() {
     let wrapper, wrapper2, wrapper3;
     const locationMock = { pathname: jest.fn() };
     const historyMock = { push: jest.fn() };
