@@ -100,6 +100,22 @@ class Conference extends React.Component {
                 case GlobalConfig.MEDIA_DATA_READY:  
                 this.list = message.data;
                 this.setState({ media: this.list }); 
+                break;
+                case GlobalConfig.VIDEO_MUTE:
+                this.setState({
+                    showvideoIcon: message.data
+                });
+                break;
+                case GlobalConfig.AUDIO_MUTE:
+                this.setState({
+                    showaudioIcon: message.data
+                });
+                break;
+                case GlobalConfig.MICROPHONE_MUTE:
+                this.setState({
+                    showmicIcon: message.data
+                });
+                break;
             }
 
         });
@@ -354,7 +370,7 @@ class Conference extends React.Component {
                 {this.state.meetingDetails ? (
                     <div className="row video-conference-container">
                         <div className="col-md-10 p-0 video-conference">
-                            <ConferenceControls/>
+                            <ConferenceControls controls={this.state}/>
                             <div className="col p-0 remote-feed-container">
                                 <WaitingRoom waitingroom={this.state} />
                                 <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'block' : 'none', paddingTop: this.state.isMobile ? '20%' : '2%' }}></div>
