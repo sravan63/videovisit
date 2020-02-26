@@ -26,7 +26,19 @@ class WaitingRoom extends React.Component {
                 break;
             }
         });
-        
+        window.addEventListener('resize', this.handleResize.bind(this));
+    }
+    handleResize(){
+        var halfwaitingroom = document.getElementsByClassName("half-waiting-room")[0];
+        var fullwaitingroom = document.getElementsByClassName("full-waiting-room")[0];
+        if(this.props.waitingroom.moreparticpants && window.innerWidth > 1024){            
+                halfwaitingroom.style.display = "block";
+                fullwaitingroom.style.display = "none";
+        }else if(this.props.waitingroom.moreparticpants && window.innerWidth <= 1024){
+                fullwaitingroom.style.display = "block";
+                halfwaitingroom.style.display = "none";
+        }
+
     }    
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
@@ -37,7 +49,7 @@ class WaitingRoom extends React.Component {
     render() {
         return (
             <div className="waiting-room-body" style={{width: this.props.waitingroom.hostavail ? '0' : '100%', display:this.props.waitingroom.hostavail ? "none" : "block",height: this.props.waitingroom.moreparticpants ? 'auto' : '100%' }}>
-                <div className="full-waiting-room" style={{display: this.props.waitingroom.moreparticpants ? 'none' : 'block' }}>
+                <div className="full-waiting-room" style={{display: this.props.waitingroom.moreparticpants &&  window.innerWidth > 1024 ? 'none' : 'block' }}>
     				<div className="conference-waiting-room">
     					<div className="waitingRoomMessageBlock row">
                             <div className="tpmg-logo float-left p-0 m-0"></div>

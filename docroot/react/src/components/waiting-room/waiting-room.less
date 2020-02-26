@@ -79,7 +79,7 @@
 
 @media only screen and (max-width: 960px) and (orientation: portrait) {
     .waiting-room-body{
-        .full-waiting-room, .half-waiting-room {
+        .full-waiting-room {
             padding: 0;
             .conference-waiting-room{
                 height: 100%;
@@ -104,12 +104,15 @@
                 }
             }
         }
+        .half-waiting-room{
+            display: none!important;
+        }
     }
 }
 
 @media only screen and (max-width: 1024px) and (orientation: landscape) {
     .waiting-room-body{
-        .full-waiting-room, .half-waiting-room {
+        .full-waiting-room {
             padding: 0;
             .conference-waiting-room{
                 height: 100%!important;
@@ -131,6 +134,9 @@
                     }
                 }
             }
+        }
+        .half-waiting-room{
+            display: none!important;
         }
     }
 }
