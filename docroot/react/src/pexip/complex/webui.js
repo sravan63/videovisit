@@ -5,6 +5,7 @@ import { MessageService } from '../../services/message-service.js'
 import $ from 'jquery';
 import BackendService from '../../services/backendService';
 import GlobalConfig from '../../services/global.config';
+import UtilityService from '../../services/utilities-service.js';
 
 var video;
 var flash;
@@ -708,9 +709,10 @@ function connected(url) {
     if (isSetup == null) {
         var meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+            var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
             var memberName;
             if(isProxyMeeting == 'Y'){
-                memberName = JSON.parse(localStorage.getItem('userDetails'))['lastName'] +','+ JSON.parse(localStorage.getItem('userDetails'))['firstName'];                
+                memberName = udata.lastName +','+ udata.firstName;                
             }else{
                 memberName = JSON.parse(localStorage.getItem('memberName'));
             }            
