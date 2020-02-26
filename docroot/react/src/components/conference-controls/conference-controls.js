@@ -25,8 +25,13 @@ class ConferenceControls extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((notification) => {
             switch(notification.text) {
                 case GlobalConfig.CLOSE_SETTINGS:
-                this.hideSettings = notification.data;
-                break;
+                    this.hideSettings = notification.data;
+                    break;
+                case GlobalConfig.TOGGLE_SETTINGS:
+                    if(this.hideSettings !== notification.data){
+                        this.hideSettings = notification.data;
+                    }
+                    break;
             }
         });
         
