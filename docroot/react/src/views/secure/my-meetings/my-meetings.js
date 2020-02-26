@@ -155,6 +155,8 @@ class MyMeetings extends React.Component {
             headers.authtoken = this.state.userDetails.ssoSession;
             headers.megaMeetingDisplayName = meeting.member.inMeetingDisplayName;
             loginType = GlobalConfig.LOGIN_TYPE.TEMP;
+            sessionInfo.loginType = loginType;
+            localStorage.setItem('sessionInfo', JSON.stringify(sessionInfo));
 
         } else {
             myMeetingsUrl = "launchMemberProxyMeeting.json";
