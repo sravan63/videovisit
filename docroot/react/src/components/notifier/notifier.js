@@ -7,12 +7,13 @@ import * as WebUI from '../../pexip/complex/webui.js';
 import { range } from 'rxjs';
 import { MessageService } from '../../services/message-service.js'
 import GlobalConfig from '../../services/global.config';
+import Utilities from '../../services/utilities-service.js';
 
 class Notifier extends React.Component {
     constructor(props) {
         super(props);
         this.loggedInUserName = '';
-        this.state = { message: 'Testing', showNotifier: false };
+        this.state = { message: 'Testing', isMobile:false, showNotifier: false };
     }
 
     componentDidMount() {
@@ -32,6 +33,10 @@ class Notifier extends React.Component {
                     break;
             }
         });
+        var isMobile = Utilities.isMobileDevice();
+        if (isMobile) {
+            this.setState({ isMobile: true });
+        }
 
     }
     componentWillUnmount() {
@@ -42,7 +47,7 @@ class Notifier extends React.Component {
 
     render() {
         return (
-            <div className={this.state.showNotifier ? "notifier show-message" : "notifier hide-message"}>
+            <div className={this.state.showNotifier && !this.state.isMobile ? "notifier show-message" : "notifier hide-message"}>
                <p>{this.state.message}</p>                             
            </div>
         );
