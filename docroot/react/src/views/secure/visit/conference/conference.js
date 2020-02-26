@@ -76,7 +76,7 @@ class Conference extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.HOST_AVAIL:
-                    this.setState({ hostavail: true, videofeedflag: true });
+                    this.setState({ hostavail: true, videofeedflag: true, moreparticpants: false });
                     this.toggleDockView(false);
                     break;
                 case GlobalConfig.HOST_LEFT:
