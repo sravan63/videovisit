@@ -29,7 +29,7 @@
     }
 
     .participants-information {
-        padding: 1rem;
+        padding: 1rem 0 0 1rem;
 
         .header {
             font-size: 1.25rem;
@@ -37,6 +37,8 @@
         }
 
         .participant-details {
+            max-height: calc(100vh - 336px);
+            overflow-y: auto;
             .text-capitalize {
                 text-overflow: ellipsis;
                 overflow: hidden;

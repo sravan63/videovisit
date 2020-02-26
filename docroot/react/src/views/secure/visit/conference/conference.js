@@ -134,10 +134,11 @@ class Conference extends React.Component {
         if (isDock) {
             var ele = document.getElementsByClassName('video-conference')[0];
             var dockHeight = ele.offsetHeight / 2;
-            var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
-            wRoom.style.height = dockHeight / 16 + 'rem';
+            // var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
+            var wRoom = document.querySelectorAll('.half-waiting-room .conference-waiting-room')[0];
+            wRoom.style.height = '50%';// dockHeight / 16 + 'rem';
             var remoteFeed = document.getElementsByClassName('stream-container')[0];
-            remoteFeed.style.height = dockHeight / 16 + 'rem';
+            remoteFeed.style.height = '50%';//dockHeight / 16 + 'rem';
         } else {
             var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
             //wRoom.style.height = '100%';
