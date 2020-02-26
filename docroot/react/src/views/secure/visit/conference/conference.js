@@ -140,7 +140,7 @@ class Conference extends React.Component {
             remoteFeed.style.height = dockHeight / 16 + 'rem';
         } else {
             var wRoom = document.getElementsByClassName('conference-waiting-room')[0];
-            wRoom.style.height = '100%';
+            //wRoom.style.height = '100%';
             var wRoom1 = document.getElementsByClassName('stream-container')[0];
             wRoom1.style.height = '100%';
         }
@@ -373,7 +373,7 @@ class Conference extends React.Component {
                             <ConferenceControls controls={this.state}/>
                             <div className="col p-0 remote-feed-container">
                                 <WaitingRoom waitingroom={this.state} />
-                                <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'block' : 'none', paddingTop: this.state.isMobile ? '20%' : '2%' }}></div>
+                                <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                 <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                 </div>
