@@ -14,7 +14,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', displayErrorMsg: '', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false };
+        this.state = { lastname: '', displayErrorMsg: '', authToken:'', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -29,7 +29,7 @@ class Authentication extends React.Component {
         this.setState({ showLoader: true });
         BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
-                this.setState({ NotLoggedIn: true, showLoader: false });
+                this.setState({ NotLoggedIn: true, showLoader: false, authToken:response.headers.authtoken });
             } else {
                 this.renderErrorCompValidation();
 
@@ -55,12 +55,16 @@ class Authentication extends React.Component {
         e.preventDefault();
         localStorage.clear();
         this.setState({ showLoader: true });
-        BackendService.guestLogin(this.state.meetingCode, this.state.lastname).subscribe((response) => {
+        let headers = {
+            "authToken": this.state.authToken
+        };
+        BackendService.guestLogin(this.state.meetingCode, this.state.lastname,headers).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 if (response.data.data != null && response.data.data != '') {
                     var data = {};
                     data = response.data.data ? response.data.data : '';
                     data.meetingCode = this.state.meetingCode;
+                    data.authToken = response.headers.authtoken;
                     localStorage.setItem('meetingId', JSON.stringify(data.meetingId));
                     localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(data)));
                     localStorage.setItem('isGuest', true);
