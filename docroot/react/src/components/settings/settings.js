@@ -10,11 +10,12 @@ import GlobalConfig from '../../services/global.config';
 import MediaService from '../../services/media-service.js';
 import Popper from 'popper.js';
 import ReactDOM from 'react-dom';
+import Utilities from '../../services/utilities-service.js';
 class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.list = [];
-        this.state = { data: {}, media: {}, constrains: {}, settingstoggle: true };
+        this.state = { data: {}, media: {}, constrains: {}, settingstoggle: true , isbrowsercheck: false};
     }
 
     componentDidMount() {
@@ -38,6 +39,10 @@ class Settings extends React.Component {
             }
         });
         document.addEventListener('click', this.handleClickOutside.bind(this), true);
+        var browserInfo = Utilities.getBrowserInformation();
+        if (browserInfo.isSafari || browserInfo.isFireFox) {
+            this.setState({ isbrowsercheck: true })
+        }
     }
     handleClickOutside(event) {
         const domNode = ReactDOM.findDOMNode(this);
@@ -98,8 +103,8 @@ class Settings extends React.Component {
     }
 
     render() {
-        return (
-            <div className={ this.state.settingstoggle ? 'setting-peripherals hide-peripherals' : 'setting-peripherals show-peripherals'}>
+        return (<div>
+            {!this.state.isbrowsercheck ? (<div className={ this.state.settingstoggle ? 'setting-peripherals hide-peripherals' : 'setting-peripherals show-peripherals'}>
                 <div className="row settings-page p-0">
                     <div className="col-xs-12 col-md-12 peripheral-options p-0">
                                 <div className="close-button" onClick={() => this.close(this)}></div>
@@ -163,7 +168,7 @@ class Settings extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                         </div>
+                         </div>) : ('')}</div>
         );
     }
 }
