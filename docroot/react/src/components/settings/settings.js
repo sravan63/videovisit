@@ -99,9 +99,9 @@ class Settings extends React.Component {
 
     render() {
         return (
-            <div className="setting-peripherals" style={{left : this.state.settingstoggle ? '-527px' : '0',transition: '1s'}}>
-                <div className="row settings-page">
-                    <div className="col-xs-12 col-md-14 peripheral-options p-0">
+            <div className={ this.state.settingstoggle ? 'setting-peripherals hide-peripherals' : 'setting-peripherals show-peripherals'}>
+                <div className="row settings-page p-0">
+                    <div className="col-xs-12 col-md-12 peripheral-options p-0">
                                 <div className="close-button" onClick={() => this.close(this)}></div>
                                 <div className="text-center"><h4>Settings</h4></div>
                                     <div className="periheral-container">

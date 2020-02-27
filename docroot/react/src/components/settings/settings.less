@@ -7,7 +7,10 @@
     background: #FFF;
 
     .settings-page {
-        padding: 1rem 0 0 3rem;
+        margin: 1rem auto;
+        width: 90%;
+        justify-content: center;
+        flex-direction: column;
         .periheral-container {
                 max-width: 20rem;
         }
@@ -69,16 +72,45 @@
     }
 
 }
+.show-peripherals{
+    left: 0;
+    transition: 1s;
+}
+.hide-peripherals{
+    left: -527px;
+    transition: 1s;
+}
 
 @media only screen and (max-width: 960px) and (orientation: portrait) {
     .setting-peripherals {
         height: calc(100vh - 50px);
         z-index: 2;
-        width: 28rem;
+        width: 100%;
+        .close-button{
+            right: 2rem;
+            position: relative;
+        }
         .settings-page {
             .periheral-container {
                 max-width: 20rem;
+                margin: 2rem auto;
             }
         }
+    }
+}
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+    .setting-peripherals {
+        height: calc(100vh);
+        
+    }
+    .show-peripherals{
+        left: auto;
+        transition: 1s;
+        right: 3rem;
+    }
+    .hide-peripherals{
+        left: auto;
+        transition: 1s;
+        right: -527px;
     }
 }
