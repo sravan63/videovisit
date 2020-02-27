@@ -30,7 +30,8 @@ class DeviceService extends React.Component {
 
 	// MIC related logic
     addCanvas(){
-      for(var j=0; j<25; j++){
+      const count = window.innerWidth > 1024 ? 25 : 18;
+      for(var j=0; j<count; j++){
         var canv = document.createElement('canvas');
         canv.width = 10;
         canv.height = 10;
