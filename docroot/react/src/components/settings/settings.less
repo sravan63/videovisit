@@ -74,11 +74,15 @@
 }
 .show-peripherals{
     left: 0;
-    transition: 1s;
+    transition: 0.45s;
+    opacity: 1;
+    transition-timing-function: linear;
 }
 .hide-peripherals{
     left: -527px;
-    transition: 1s;
+    transition: 0.45s;
+    opacity: 0;
+    transition-timing-function: linear;
 }
 
 @media only screen and (max-width: 960px) and (orientation: portrait) {
@@ -99,11 +103,15 @@
     }
     .show-peripherals{
         left: 0;
-        transition: 1.5s;
+        transition: 0.45s;
+        opacity: 1;
+        transition-timing-function: linear;
     }
     .hide-peripherals{
         left: -850px;
-        transition: 1.5s;
+        transition: 0.45s;
+        opacity: 0;
+        transition-timing-function: linear;
     }
 }
 @media only screen and (max-width: 1024px) and (orientation: landscape) {
@@ -113,12 +121,16 @@
     }
     .show-peripherals{
         left: auto;
-        transition: 1s;
+        transition: 0.45s;
         right: 3rem;
+        opacity: 1;
+        transition-timing-function: linear;
     }
     .hide-peripherals{
         left: auto;
-        transition: 1s;
+        transition: 0.45s;
         right: -527px;
+        opacity: 0;
+        transition-timing-function: linear;
     }
 }
