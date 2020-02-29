@@ -21,8 +21,8 @@ class MyMeetings extends React.Component {
     }
     componentDidMount() {
         this.interval = setInterval(() => this.getMyMeetings(), GlobalConfig.AUTO_REFRESH_TIMER);
-        if (localStorage.getItem('userDetails')) {
-            const udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+        if (localStorage.getItem('LoginUserDetails')) {
+            const udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('LoginUserDetails')));
             this.state.userDetails = udata;
             if (this.state.userDetails) {
                 this.getMyMeetings();

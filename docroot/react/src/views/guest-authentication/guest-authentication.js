@@ -13,8 +13,8 @@ import GlobalConfig from '../../services/global.config';
 class Authentication extends React.Component {
     constructor(props) {
         super(props);
-        localStorage.clear();
-        this.state = { lastname: '', displayErrorMsg: '', authToken:'', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false };
+        localStorage.removeItem('LoginUserDetails');
+        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -38,7 +38,10 @@ class Authentication extends React.Component {
             this.renderErrorCompValidation();
 
         });
-    }
+         if (localStorage.getItem('guestLeave')) {
+             this.setState({ ReJoin: true});
+             }
+     }
 
     renderErrorCompValidation() {
         this.setState({
@@ -88,6 +91,18 @@ class Authentication extends React.Component {
         this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_ERROR_MSG, showLoader: false });
     }
 
+    SignOut(){
+        localStorage.removeItem('guestLeave');
+        this.setState({ReJoin:false});
+        //Ajax call
+    }
+
+    reJoinMeeting(){
+        localStorage.removeItem('guestLeave');
+        this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
+    }
+
+
     handleChange(key, event) {
         event.preventDefault();
         const { name, value } = event.target;
@@ -128,6 +143,7 @@ class Authentication extends React.Component {
                          <p className="col-sm-12">{this.state.displayErrorMsg}</p>
                     </div>
                 : ('')}
+                
                 <div className="row mobile-help-link">
                     <div className="col-12 text-right help-icon p-0">
                         <a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a>
@@ -135,6 +151,13 @@ class Authentication extends React.Component {
                 </div>
                 <div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
                 <div className="guest-form-content">
+                {this.state.ReJoin ? (
+                   <div className="guest-form rejoinComp">
+                      <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} >ReJoin</button>
+                      <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()}>SignOut</button>
+                    </div>
+                ):
+                 (    
                     <div className="row guest-form" >
                     <div className="row notice">Children age 11 and younger must have a parent or legal guardian present during the visit.</div>
                         <form className="col-xs-12 col-md-12 login-form">
@@ -148,7 +171,7 @@ class Authentication extends React.Component {
                                  <button type = "submit" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Join</button>
                             </div>
                         </form>
-                    </div> 
+                    </div> )}
                 </div>
                 <div className="row mobile-footer mt-5">
                     <p className="col-12 secondary">Children age 11 and younger must have a parent or legal guardian present during the visit.</p>
