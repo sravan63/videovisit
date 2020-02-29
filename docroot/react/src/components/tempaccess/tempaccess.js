@@ -28,7 +28,7 @@ class TempAccess extends React.Component {
                 data.isTempAccess = true;
                 data.ssoSession = response.headers.authtoken;
                 //localStorage.setItem('userDetails', fullname);
-                localStorage.setItem('LoginUserDetails', UtilityService.encrypt(JSON.stringify(data)));
+                localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(data)));
                 localStorage.setItem('signedIn', true);
                 this.props.data.emit({ isMobileError: false });
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
