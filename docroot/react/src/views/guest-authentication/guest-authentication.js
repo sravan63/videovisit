@@ -38,7 +38,7 @@ class Authentication extends React.Component {
             this.renderErrorCompValidation();
 
         });
-         if (localStorage.getItem('guestLeave')) {
+         if (sessionStorage.getItem('guestLeave')) {
              this.setState({ ReJoin: true});
              }
      }
@@ -92,13 +92,13 @@ class Authentication extends React.Component {
     }
 
     SignOut(){
-        localStorage.removeItem('guestLeave');
+        sessionStorage.removeItem('guestLeave');
         this.setState({ReJoin:false});
         //Ajax call
     }
 
     reJoinMeeting(){
-        localStorage.removeItem('guestLeave');
+        sessionStorage.removeItem('guestLeave');
         this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
     }
 
