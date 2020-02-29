@@ -23,8 +23,12 @@ class Authentication extends React.Component {
 
     componentDidMount() {
         //var meetingCode;
+        if(sessionStorage.getItem('meetingCodeval') != window.location.hash.slice(25)){
+            sessionStorage.clear();
+        }
         if (window.location.hash.includes('meetingcode')) {
             this.state.meetingCode = window.location.hash.slice(25);
+            sessionStorage.setItem('meetingCodeval',this.state.meetingCode);
         }
         this.setState({ showLoader: true });
         BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
