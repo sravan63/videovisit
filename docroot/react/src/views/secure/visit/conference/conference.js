@@ -322,7 +322,7 @@ class Conference extends React.Component {
             }
 
         } else {
-            sessionStorage.setItem('guestLeave',true);
+            localStorage.setItem('guestLeave',true);
             WebUI.pexipDisconnect();
             this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
             window.location.reload(false);

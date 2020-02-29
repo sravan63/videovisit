@@ -63,7 +63,7 @@ export default class Ssologin extends React.Component {
         if (data != null || data != undefined) {
             data.isTempAccess = false;
             data.ssoSession = response.data.data.ssoSession;
-            localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(data)));
+            localStorage.setItem('LoginUserDetails', UtilityService.encrypt(JSON.stringify(data)));
             this.props.data.emit({ isMobileError: false });
             this.props.history.push(GlobalConfig.MEETINGS_URL);
         }

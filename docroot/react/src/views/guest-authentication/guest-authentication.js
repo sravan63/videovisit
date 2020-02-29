@@ -13,7 +13,7 @@ import GlobalConfig from '../../services/global.config';
 class Authentication extends React.Component {
     constructor(props) {
         super(props);
-        localStorage.clear();
+        localStorage.removeItem('LoginUserDetails');
         this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
@@ -38,7 +38,7 @@ class Authentication extends React.Component {
             this.renderErrorCompValidation();
 
         });
-         if (sessionStorage.getItem('guestLeave')) {
+         if (localStorage.getItem('guestLeave')) {
              this.setState({ ReJoin: true});
              }
      }
@@ -92,13 +92,13 @@ class Authentication extends React.Component {
     }
 
     SignOut(){
-        sessionStorage.removeItem('guestLeave');
+        localStorage.removeItem('guestLeave');
         this.setState({ReJoin:false});
         //Ajax call
     }
 
     reJoinMeeting(){
-        sessionStorage.removeItem('guestLeave');
+        localStorage.removeItem('guestLeave');
         this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
     }
 
