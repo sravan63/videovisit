@@ -157,8 +157,8 @@ class Authentication extends React.Component {
                 <div className="guest-form-content">
                 {this.state.ReJoin ? (
                    <div className="guest-form rejoinComp">
-                      <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} >ReJoin</button>
-                      <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()}>SignOut</button>
+                      <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} >Rejoin</button>
+                      <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()}>Sign out</button>
                     </div>
                 ):
                  (    

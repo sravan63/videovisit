@@ -17,7 +17,7 @@ class header extends React.Component {
         componentWillMount() {
             //if(this.props.userDetails && this.props.userDetails.userDetails){
             if (localStorage.getItem('LoginUserDetails')) {
-                const data = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+                const data = JSON.parse(UtilityService.decrypt(localStorage.getItem('LoginUserDetails')));
                 this.state.userDetails = data;
                 //const data = this.props.userDetails.userDetails;
                 this.setState({
