@@ -236,6 +236,12 @@ class Conference extends React.Component {
             var guestName = this.getInMeetingGuestName(meeting.caregiver);
             localStorage.setItem('memberName', JSON.stringify(guestName));
             name = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
+            var vendorDetails = {
+                "meetingId": meeting.meetingId,
+                "userType": "Caregiver",
+                "userId": name
+            };
+            localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         }
         MessageService.sendMessage(GlobalConfig.ACCESS_MEMBER_NAME, null);
         WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);

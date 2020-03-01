@@ -65,16 +65,17 @@ class BackendService extends React.Component {
         if (sessionInfo != null) {
             loginType = sessionInfo.loginType;
         }
+        else{
+            loginType="guest";
+        }
         var logType = params[0],
-            eventData = {
-                'logType': logType,
-                'meetingId': (params[3]) ? params[3] : '',
-                'userType': (params[4]) ? params[4] : '',
-                'userId': (params[5]) ? params[5] : '',
-                'eventName': (params[1]) ? params[1] : '',
-                'eventDescription': (params[2]) ? params[2] : ''
-            };
-        Axios.post(this.state.basePath + '/videovisit/' + 'logVendorMeetingEvents.json' + '?loginType=' + loginType, eventData).subscribe((response) => {
+            meetingId = (params[3]) ? params[3] : '',
+            userType = (params[4]) ? params[4] : '',
+            userId =  (params[5]) ? params[5] : '',
+            eventName = (params[1]) ? params[1] : '',
+            eventDescription =  (params[2]) ? params[2] : ''
+        
+        Axios.post(this.state.basePath + '/videovisit/' + 'logVendorMeetingEvents.json' + '?loginType=' + loginType + '&logType=' + logType + '&meetingId=' + meetingId+ '&userType=' + userType + '&userId=' + userId + '&eventName=' + eventName + '&eventDescription=' + eventDescription,{}).subscribe((response) => {
                 console.log("success");
             },
             (err) => {
