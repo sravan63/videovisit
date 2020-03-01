@@ -40,7 +40,12 @@ class Conference extends React.Component {
             var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             if (userDetails != null) {
                 this.state.meetingCode = this.state.isGuest ? userDetails.meetingCode : null;
-                this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO;
+                if(this.state.isGuest == true){
+                    this.state.loginType = "guest";
+                }
+                else{
+                this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO
+                }                
                 this.state.accessToken = userDetails.ssoSession;
                 this.state.userDetails = userDetails;
             }

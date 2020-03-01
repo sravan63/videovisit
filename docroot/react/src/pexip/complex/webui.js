@@ -716,8 +716,13 @@ function connected(url) {
             }else{
                 memberName = JSON.parse(localStorage.getItem('memberName'));
             }            
-            
-        BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
+           if (localStorage.getItem('isGuest')) {
+            var meetingCode= udata.meetingCode;
+              BackendService.CaregiverJoinMeeting(meetingId, meetingCode);  
+            }  
+            else{
+              BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
+            }
     }
 }
 

@@ -98,6 +98,15 @@ class BackendService extends React.Component {
             });
 
     }
+    CaregiverJoinMeeting(meetingId,meetingCode){
+        Axios.post(this.state.basePath + '/videovisit/' + 'caregiverJoinMeeting.json' + '?loginType=guest' + '&meetingId=' + meetingId + '&status=J' + '&meetingHash=' + meetingCode, {}).subscribe((response) => {
+                console.log("success");
+            },
+            (err) => {
+                console.log("Error");
+            });
+
+    }
 
     quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType) {
 
