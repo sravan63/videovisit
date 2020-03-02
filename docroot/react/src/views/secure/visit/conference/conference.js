@@ -250,7 +250,8 @@ class Conference extends React.Component {
     componentWillUnmount() {
         // clear on component unmount
         this.subscription.unsubscribe();
-        if (this.state.leaveMeeting == false) {
+        var isGuestLeave = sessionStorage.getItem('guestLeave');
+        if (!isGuestLeave) {
             this.leaveMeeting();
         }
     }
@@ -334,9 +335,18 @@ class Conference extends React.Component {
 
         } else {
             sessionStorage.setItem('guestLeave',true);
-            WebUI.pexipDisconnect();
-            this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
-            window.location.reload(false);
+             WebUI.pexipDisconnect();
+            let headers = {};
+                headers.authtoken = this.state.userDetails.authToken;
+            BackendService.guestLogout(this.state.meetingCode,this.state.userDetails.lastname,headers).subscribe((response) => {
+                console.log("Success");
+                this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
+                window.location.reload(false);
+            }, (err) => {
+                console.log("Error");
+                this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
+                window.location.reload(false);
+            });
         }
 
     }

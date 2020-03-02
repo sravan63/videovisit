@@ -109,9 +109,13 @@ class BackendService extends React.Component {
 
     }
 
+    guestLogout(meetingCode,lastname,headers){
+      return  Axios.post(this.state.basePath + '/videovisit/' + 'endGuestSession.json' + '?loginType=guest' +  '&meetingCode=' + meetingCode + '&patientLastName=' + lastname, {}, { headers: headers });
+    }
+
     quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType) {
 
-        return Axios.post(this.state.basePath + '/videovisit/' + 'quitmeeting.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&memberName=' + memberName + '&refreshMeetings=false' + '&isProxyMeeting=' + isProxyMeeting, {}, { headers: headers });
+        return Axios.post(this.state.basePath + '/videovisit/' + 'quitmeeting.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&memberName=' + memberName  + '&isProxyMeeting=' + isProxyMeeting, {}, { headers: headers });
     }
 
 }

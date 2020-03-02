@@ -72,6 +72,7 @@ class Authentication extends React.Component {
                     data = response.data.data ? response.data.data : '';
                     data.meetingCode = this.state.meetingCode;
                     data.authToken = response.headers.authtoken;
+                    data.lastname = this.state.lastname;
                     localStorage.setItem('meetingId', JSON.stringify(data.meetingId));
                     localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(data)));
                     localStorage.setItem('isGuest', true);
@@ -98,7 +99,6 @@ class Authentication extends React.Component {
     SignOut(){
         sessionStorage.removeItem('guestLeave');
         this.setState({ReJoin:false});
-        //Ajax call
     }
 
     reJoinMeeting(){
