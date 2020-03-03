@@ -34,17 +34,17 @@ class Authentication extends React.Component {
         BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 this.setState({ NotLoggedIn: true, showLoader: false, authToken:response.headers.authtoken });
+            if (sessionStorage.getItem('guestLeave')) {
+                this.setState({ ReJoin: true});
+             }
             } else {
                 this.renderErrorCompValidation();
-
             }
         }, (err) => {
             this.renderErrorCompValidation();
 
         });
-         if (sessionStorage.getItem('guestLeave')) {
-             this.setState({ ReJoin: true});
-             }
+         
      }
 
     renderErrorCompValidation() {
