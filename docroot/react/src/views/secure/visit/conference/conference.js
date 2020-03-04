@@ -297,7 +297,18 @@ class Conference extends React.Component {
             });
             list.sort((a, b) => (a.name > b.name) ? 1 : -1);
         }
-        return list;
+        // Add Telephony guest to the participant's list.
+        if(this.state.meetingDetails.sipParticipants){
+            let telephonyGuests = [];
+            this.state.meetingDetails.sipParticipants.map(guest => {
+                let name = guest.displayName.toLowerCase();
+                let number = guest.destination ? guest.destination : guest.uri.substring(6,16);
+                telephonyGuests.push({ name: name.trim(), number: number});
+            });
+            return list.concat(telephonyGuests);
+        } else {
+            return list;
+        }
     }
 
     leaveMeeting() {
