@@ -47,7 +47,7 @@
 
 		<init-param>
 			<param-name>excludeURLs</param-name>
-			<param-value>ssoPreLogin.json,ssoSubmitLogin.json,submitLogin.json,createSetupWizardMeeting.json,providerRunningLateInfo.json,meetingDetails.json,logVendorMeetingEvents.json,setKPHCConferenceStatus.json,logout.json,isMeetingHashValid.json,caregiverJoinMeeting.json</param-value>
+			<param-value>ssoPreLogin.json,ssoSubmitLogin.json,submitLogin.json,createSetupWizardMeeting.json,providerRunningLateInfo.json,meetingDetails.json,logVendorMeetingEvents.json,setKPHCConferenceStatus.json,logout.json,isMeetingHashValid.json,caregiverJoinMeeting.json,loadPropertiesByName.json,*.htm</param-value>
 		</init-param>
 
 	</filter>
@@ -66,6 +66,10 @@
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
