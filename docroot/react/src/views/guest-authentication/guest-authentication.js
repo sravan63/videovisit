@@ -99,6 +99,7 @@ class Authentication extends React.Component {
     SignOut(){
         sessionStorage.removeItem('guestLeave');
         this.setState({ReJoin:false});
+        localStorage.clear();
     }
 
     reJoinMeeting(){
