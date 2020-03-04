@@ -556,4 +556,53 @@ public class WebUtil {
 		}
 		return clientId;
 	}
+	
+	public static void loadAllMobileProperties(final Map<String, String> properties) {
+		
+	}
+	
+	public static void loadAllBrowserBlockProperties(final Map<String, String> properties) {
+		final String BLOCK_CHROME_BROWSER = AppProperties.getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
+		properties.put("BLOCK_CHROME_BROWSER", BLOCK_CHROME_BROWSER);
+		final String BLOCK_FIREFOX_BROWSER = AppProperties.getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
+		properties.put("BLOCK_FIREFOX_BROWSER", BLOCK_FIREFOX_BROWSER);
+		final String BLOCK_EDGE_BROWSER = AppProperties.getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
+		properties.put("BLOCK_EDGE_BROWSER", BLOCK_EDGE_BROWSER);
+		final String BLOCK_SAFARI_BROWSER = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
+		properties.put("BLOCK_SAFARI_BROWSER", BLOCK_SAFARI_BROWSER);
+		final String BLOCK_PEXIP_IE_BROWSER = AppProperties.getExtPropertiesValueByKey("BLOCK_IE_BROWSER");
+		properties.put("BLOCK_IE_BROWSER", BLOCK_PEXIP_IE_BROWSER);
+		final String BLOCK_CHROME_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_CHROME_VERSION");
+		properties.put("BLOCK_CHROME_VERSION", BLOCK_CHROME_VERSION);
+		final String BLOCK_FIREFOX_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_FIREFOX_VERSION");
+		properties.put("BLOCK_FIREFOX_VERSION", BLOCK_FIREFOX_VERSION);
+		final String BLOCK_EDGE_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_EDGE_VERSION");
+		properties.put("BLOCK_EDGE_VERSION", BLOCK_EDGE_VERSION);
+		final String BLOCK_SAFARI_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
+		properties.put("BLOCK_SAFARI_VERSION", BLOCK_SAFARI_VERSION);
+		final String BLOCK_IE_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_IE_VERSION");
+		properties.put("BLOCK_IE_VERSION", BLOCK_IE_VERSION);
+		
+		final String MOBILE_BLOCK_CHROME_BROWSER = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_CHROME_BROWSER");
+		properties.put("MOBILE_BLOCK_CHROME_BROWSER", MOBILE_BLOCK_CHROME_BROWSER);
+		final String MOBILE_BLOCK_FIREFOX_BROWSER = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_FIREFOX_BROWSER");
+		properties.put("MOBILE_BLOCK_FIREFOX_BROWSER", MOBILE_BLOCK_FIREFOX_BROWSER);
+		final String MOBILE_BLOCK_EDGE_BROWSER = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_EDGE_BROWSER");
+		properties.put("MOBILE_BLOCK_EDGE_BROWSER", MOBILE_BLOCK_EDGE_BROWSER);
+		final String MOBILE_BLOCK_SAFARI_BROWSER = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_SAFARI_BROWSER");
+		properties.put("MOBILE_BLOCK_SAFARI_BROWSER", MOBILE_BLOCK_SAFARI_BROWSER);
+		final String MOBILE_BLOCK_PEXIP_IE_BROWSER = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_IE_BROWSER");
+		properties.put("MOBILE_BLOCK_IE_BROWSER", MOBILE_BLOCK_PEXIP_IE_BROWSER);
+		final String MOBILE_BLOCK_CHROME_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_CHROME_VERSION");
+		properties.put("MOBILE_BLOCK_CHROME_VERSION", MOBILE_BLOCK_CHROME_VERSION);
+		final String MOBILE_BLOCK_FIREFOX_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_FIREFOX_VERSION");
+		properties.put("MOBILE_BLOCK_FIREFOX_VERSION", MOBILE_BLOCK_FIREFOX_VERSION);
+		final String MOBILE_BLOCK_EDGE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_EDGE_VERSION");
+		properties.put("MOBILE_BLOCK_EDGE_VERSION", MOBILE_BLOCK_EDGE_VERSION);
+		final String MOBILE_BLOCK_SAFARI_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_SAFARI_VERSION");
+		properties.put("MOBILE_BLOCK_SAFARI_VERSION", MOBILE_BLOCK_SAFARI_VERSION);
+		final String MOBILE_BLOCK_IE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_IE_VERSION");
+		properties.put("MOBILE_BLOCK_IE_VERSION", MOBILE_BLOCK_IE_VERSION);
+		
+	}
 }

@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
 import org.apache.log4j.Logger;
@@ -37,6 +39,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.GsonUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
@@ -1404,6 +1407,38 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
+	}
+
+	public static String loadPropertiesByName(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String result = null;
+		Map<String, String> properties = null;
+		final String propertyName = request.getParameter("propertyName");
+		if (StringUtils.isNotBlank(propertyName)) {
+			properties = new LinkedHashMap<>();
+			if ("mobile".equalsIgnoreCase(propertyName)) {
+				WebUtil.loadAllMobileProperties(properties);
+			} else if ("browser".equalsIgnoreCase(propertyName)) {
+				WebUtil.loadAllBrowserBlockProperties(properties);
+			}
+		} else {
+			logger.warn("propertyName is blank/empty.");
+		}
+		if (MapUtils.isNotEmpty(properties)) {
+			result = GsonUtil.convertMapToJsonString(properties);
+		}
+		logger.info(LOG_EXITING);
+		return result;
+	}
+	
+	public static String handleHtmRequest(HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String redirectUrl = "/videovisit/#/login";
+		if(request.getRequestURI().contains("setup")) {
+			redirectUrl = "/videovisit/#/setup";
+		}
+		logger.info(LOG_EXITING);
+		return redirectUrl;
 	}
 
 }

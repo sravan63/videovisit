@@ -1,11 +1,21 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.utils;
 
+import java.util.Map;
+
+import org.apache.commons.collections.MapUtils;
+import org.apache.log4j.Logger;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 public class GsonUtil {
+	
+	private static final Logger logger = Logger.getLogger(GsonUtil.class);
 	
 	public static JsonObject getJsonAsObject (String json) {
 		
@@ -81,5 +91,16 @@ public class GsonUtil {
 		}		
 		return returnJsonStr;
 	}	
+	
+	public static String convertMapToJsonString(final Map<String, String> map) {
+		logger.info(LOG_ENTERED);
+		String jsonString = null;
+		final Gson gson = new Gson();
+		if(MapUtils.isNotEmpty(map)) {
+			jsonString = gson.toJson(map);
+		}
+		logger.info(LOG_EXITING);
+		return jsonString;
+	}
 	
 }

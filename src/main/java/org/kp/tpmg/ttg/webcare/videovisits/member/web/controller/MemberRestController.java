@@ -13,11 +13,14 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
+@CrossOrigin(exposedHeaders = { WebUtil.AUTH_TOKEN })
 public class MemberRestController extends SimplePageController {
 
 	public static final Logger logger = Logger.getLogger(MemberRestController.class);
@@ -284,5 +287,23 @@ public class MemberRestController extends SimplePageController {
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
+	}
+	
+	@RequestMapping(value = "/*.htm", method = { RequestMethod.POST, RequestMethod.GET })
+	public RedirectView handleHtmRequest(final HttpServletRequest request) throws Exception {
+		logger.info(LOG_ENTERED);
+		final String redirectUrl = MeetingCommand.handleHtmRequest(request);
+		logger.info(LOG_EXITING);
+		return new RedirectView(redirectUrl);
+	}
+
+	@RequestMapping(value = "/loadPropertiesByName.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String loadPropertiesByName(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		final String resJsonStr = MeetingCommand.loadPropertiesByName(request);
+		logger.debug("Result in json string format " + resJsonStr);
+		logger.info(LOG_EXITING);
+		return resJsonStr;
 	}
 }
