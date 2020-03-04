@@ -53,9 +53,5 @@ public class Crypto {
 		return result;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(Crypto.encrypt("kpncalvv99352123308926828544"));
-		System.out.println(Crypto.decrypt(Crypto.encrypt("kpncalvv99352123308926828544")));
-	}
 	
 }
