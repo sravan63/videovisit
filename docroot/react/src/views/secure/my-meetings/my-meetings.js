@@ -179,10 +179,10 @@ class MyMeetings extends React.Component {
                     if (this.state.userDetails.isTempAccess){
                         this.resetSessionToken(response.headers.authtoken);
                     }
-                    this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                     var roomJoin = response.data.data.roomJoinUrl;
                     localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
                     localStorage.setItem('roomUrl', roomJoin);
+                    this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                 } else {
                     this.setState({ showLoader: false });
                 }
