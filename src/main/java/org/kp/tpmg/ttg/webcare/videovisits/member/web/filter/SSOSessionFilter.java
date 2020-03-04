@@ -48,7 +48,7 @@ public class SSOSessionFilter implements Filter {
 				validateSSOCookie(req, resp, chain);
 			} else {
 				String authToken = req.getHeader(WebUtil.AUTH_TOKEN);
-				if (JwtUtil.validateAuthToken(authToken)) {
+				if (StringUtils.isNotBlank(authToken) && JwtUtil.validateAuthToken(authToken)) {
 					updateAuthToken(req, resp);
 					chain.doFilter(req, resp);
 				} else {

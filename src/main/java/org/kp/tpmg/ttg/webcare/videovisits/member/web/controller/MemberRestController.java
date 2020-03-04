@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(exposedHeaders = { "authtoken" })
+@CrossOrigin(exposedHeaders = { WebUtil.AUTH_TOKEN })
 public class MemberRestController extends SimplePageController {
 
 	public static final Logger logger = Logger.getLogger(MemberRestController.class);
