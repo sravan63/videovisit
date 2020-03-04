@@ -181,6 +181,7 @@ class MyMeetings extends React.Component {
                     }
                     this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                     var roomJoin = response.data.data.roomJoinUrl;
+                    localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
                     localStorage.setItem('roomUrl', roomJoin);
                 } else {
                     this.setState({ showLoader: false });
