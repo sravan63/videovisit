@@ -260,12 +260,14 @@ class Conference extends React.Component {
         if(this.state.isGuest == true){
             var isGuestLeave = sessionStorage.getItem('guestLeave');
             if(!isGuestLeave) {
-            this.leaveMeeting();
+            var isFromBackButton = "true";
+            this.leaveMeeting(isFromBackButton);
             }
         }
         else {
             if(this.state.leaveMeeting == false){
-            this.leaveMeeting();
+            var isFromBackButton = "true";    
+            this.leaveMeeting(isFromBackButton);
             }
        }
     }
@@ -325,22 +327,23 @@ class Conference extends React.Component {
         }
     }
 
-    leaveMeeting() {
+    leaveMeeting(isFromBackButton) {
         this.setState({ leaveMeeting: true });
         if (this.state.isGuest == false) {
             var headers = {},
                 loginType = this.state.loginType;
             if (loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                 headers.authtoken = this.state.accessToken;
-                headers.mrn = this.state.userDetails.mrn;
             } else {
                 headers.ssoSession = this.state.accessToken;
             }
+            headers.memberName = this.state.meetingDetails.member.inMeetingDisplayName;
+            headers.mrn = this.state.userDetails.mrn;
             var meetingId = this.state.meetingDetails.meetingId,
-                memberName = this.state.meetingDetails.member.inMeetingDisplayName,
-                isProxyMeeting = this.state.isProxyMeeting;
+                isProxyMeeting = this.state.isProxyMeeting,
+                backButton = isFromBackButton ? isFromBackButton : false;  
             WebUI.pexipDisconnect();
-            BackendService.quitMeeting(meetingId, memberName, isProxyMeeting, headers, loginType).subscribe((response) => {
+            BackendService.quitMeeting(meetingId, isProxyMeeting, headers, loginType, backButton).subscribe((response) => {
                 console.log("Success");
                 if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                     this.resetSessionToken(response.headers.authtoken);
@@ -363,7 +366,9 @@ class Conference extends React.Component {
              WebUI.pexipDisconnect();
             let headers = {};
                 headers.authtoken = this.state.userDetails.authToken;
-            BackendService.guestLogout(this.state.meetingCode,this.state.userDetails.lastname,headers).subscribe((response) => {
+                headers.patientLastName = this.state.userDetails.lastname;
+            var backButton = isFromBackButton ? isFromBackButton : false;    
+            BackendService.guestLogout(this.state.meetingCode,headers,backButton).subscribe((response) => {
                 console.log("Success");
                 this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
                 // window.location.reload(false);
