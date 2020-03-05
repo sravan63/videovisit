@@ -98,6 +98,7 @@ class Authentication extends React.Component {
 
     SignOut(){
         sessionStorage.removeItem('guestLeave');
+        sessionStorage.setItem('guestCode',JSON.stringify(this.state.meetingCode));
         this.setState({ReJoin:false});
         localStorage.clear();
     }

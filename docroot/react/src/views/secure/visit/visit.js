@@ -24,7 +24,13 @@ class Visit extends React.Component {
                 this.setState({ showPage: true });
             }
         } else {
+            if(sessionStorage.getItem('guestCode')){
+                var meetingCode = JSON.parse(sessionStorage.getItem('guestCode'));
+                this.props.history.push('/guestlogin?meetingcode=' + meetingCode);
+            }
+            else{
             this.props.history.push(GlobalConfig.LOGIN_URL);
+        }
         }
         var isMobile = Utilities.isMobileDevice();
         if (isMobile) {

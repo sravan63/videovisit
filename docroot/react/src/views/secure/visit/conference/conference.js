@@ -35,6 +35,7 @@ class Conference extends React.Component {
             if (localStorage.getItem('isGuest')) {
                 this.state.isGuest = true;
                 this.state.loginType = "guest";
+                sessionStorage.removeItem('guestLeave');
             }
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
@@ -56,7 +57,13 @@ class Conference extends React.Component {
             }, GlobalConfig.RUNNING_LATE_TIMER);
 
         } else {
+            if(sessionStorage.getItem('guestCode')){
+                var meetingCode = JSON.parse(sessionStorage.getItem('guestCode'));
+                this.props.history.push('/guestlogin?meetingcode=' + meetingCode);
+            }
+            else{
             this.props.history.push(GlobalConfig.LOGIN_URL);
+            }
         }
 
         if (localStorage.getItem('isProxyMeeting')) {
@@ -352,7 +359,7 @@ class Conference extends React.Component {
             BackendService.guestLogout(this.state.meetingCode,this.state.userDetails.lastname,headers).subscribe((response) => {
                 console.log("Success");
                 this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
-                window.location.reload(false);
+                // window.location.reload(false);
             }, (err) => {
                 console.log("Error");
                 this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
