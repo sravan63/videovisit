@@ -257,10 +257,17 @@ class Conference extends React.Component {
     componentWillUnmount() {
         // clear on component unmount
         this.subscription.unsubscribe();
-        var isGuestLeave = sessionStorage.getItem('guestLeave');
-        if (!isGuestLeave) {
+        if(this.state.isGuest == true){
+            var isGuestLeave = sessionStorage.getItem('guestLeave');
+            if(!isGuestLeave) {
             this.leaveMeeting();
+            }
         }
+        else {
+            if(this.state.leaveMeeting == false){
+            this.leaveMeeting();
+            }
+       }
     }
 
     toggleSettings() {
@@ -339,11 +346,11 @@ class Conference extends React.Component {
                     this.resetSessionToken(response.headers.authtoken);
                 }
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
-                window.location.reload(false);
+                //window.location.reload(false);
             }, (err) => {
                 console.log("Error");
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
-                window.location.reload(false);
+                //window.location.reload(false);
             });
 
             var browserInfo = Utilities.getBrowserInformation();
@@ -363,7 +370,7 @@ class Conference extends React.Component {
             }, (err) => {
                 console.log("Error");
                 this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
-                window.location.reload(false);
+                //window.location.reload(false);
             });
         }
 
