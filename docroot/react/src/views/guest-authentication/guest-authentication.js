@@ -101,6 +101,10 @@ class Authentication extends React.Component {
         sessionStorage.setItem('guestCode',JSON.stringify(this.state.meetingCode));
         this.setState({ReJoin:false});
         localStorage.clear();
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+           history.go(1);
+        };
     }
 
     reJoinMeeting(){
