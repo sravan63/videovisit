@@ -20,7 +20,8 @@ class UtilityService extends React.Component {
             isSafari: /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor),
             isFireFox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
             isIE: /MSIE|Trident/.test(navigator.userAgent),
-            isEdge: /Edge/.test(navigator.userAgent)
+            isEdge: /Edge/.test(navigator.userAgent),
+            isChrome:/Chrome/.test(navigator.userAgent)
         }
         this.browserInfo = bObj;
     }

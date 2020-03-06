@@ -59,6 +59,9 @@ class BackendService extends React.Component {
     getRunningLateInfo(url, meetingId, loginType) {
         return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType, {}, );
     }
+    getBrowserBlockDetails(url,propertyName){
+        return Axios.post(this.state.basePath + '/videovisit/' + url + '?propertyName=' + propertyName);
+    }
     logVendorMeetingEvents(params) {
         var loginType,
             sessionInfo = JSON.parse(localStorage.getItem('sessionInfo'));
