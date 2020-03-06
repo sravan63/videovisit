@@ -32,7 +32,7 @@ class Authentication extends React.Component {
 
     componentDidMount() {
         this.validateInAppAccess();
-        this.getBrowserBlockInfo();
+        //this.getBrowserBlockInfo();
     }
     getBrowserBlockInfo(){
         var propertyName = 'browser',
@@ -42,6 +42,10 @@ class Authentication extends React.Component {
             if (response.data && response.status == '200') {
                  browserNames = response.data;                 
                  this.browserBlockCheckVersions(browserNames);
+                //  var browserInfo = Utilities.getBrowserInformation();
+                //  if (browserInfo.isIE && (browserNames.BLOCK_IE_BROWSER == 'true')) {
+                //     this.setState({ isBrowserBlockError: true });
+                // }
             } else {
                 // Do nothing
             }
@@ -51,24 +55,19 @@ class Authentication extends React.Component {
 
     }
     browserBlockCheckVersions(browserNames){
-        var browserInfo = Utilities.getBrowserInformation();
-        let blockIE = (browserNames.BLOCK_IE_BROWSER == 'true');
-        let blockChrome = (browserNames.BLOCK_CHROME_BROWSER == 'true');
-        let blockFF = (browserNames.BLOCK_FIREFOX_BROWSER == 'true');
-        let blockSafari = (browserNames.BLOCK_SAFARI_BROWSER == 'true');
-        let blockEdge  = (browserNames.BLOCK_EDGE_BROWSER == 'true');
-        let blockChromeVersion = browserNames.BLOCK_CHROME_VERSION;
-        let blockFirefoxVersion  = browserNames.BLOCK_FIREFOX_VERSION;
-        let blockEdgeVersion  = browserNames.BLOCK_EDGE_VERSION;
-        let blockSafariVersion  = browserNames.BLOCK_SAFARI_VERSION;
         var isMobile = Utilities.isMobileDevice();
-        if (isMobile) {
-            this.setState({ isMobile: true });
-        }
-        console.log(this.state.isMobile);
+        var browserInfo = Utilities.getBrowserInformation();
+        let blockIE = isMobile ? (browserNames.MOBILE_BLOCK_IE_BROWSER == 'true') : (browserNames.BLOCK_IE_BROWSER == 'true');
+        let blockChrome = isMobile ? (browserNames.MOBILE_BLOCK_CHROME_BROWSER == 'true') : (browserNames.BLOCK_CHROME_BROWSER == 'true');
+        let blockFF = isMobile ? (browserNames.MOBILE_BLOCK_FIREFOX_BROWSER == 'true') : (browserNames.BLOCK_FIREFOX_BROWSER == 'true');
+        let blockSafari = isMobile ? (browserNames.MOBILE_BLOCK_SAFARI_BROWSER == 'true') : (browserNames.BLOCK_SAFARI_BROWSER == 'true');
+        let blockEdge  = isMobile ? (browserNames.MOBILE_BLOCK_EDGE_BROWSER == 'true') : (browserNames.BLOCK_EDGE_BROWSER == 'true');
+        let blockChromeVersion = isMobile ? MOBILE_BLOCK_CHROME_VERSION : browserNames.BLOCK_CHROME_VERSION;
+        let blockFirefoxVersion  = isMobile ? MOBILE_BLOCK_FIREFOX_VERSION : browserNames.BLOCK_FIREFOX_VERSION;
+        let blockEdgeVersion  = isMobile ? MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
+        let blockSafariVersion  = isMobile ? MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
         if (browserInfo.isIE && blockIE) {
             this.setState({ isBrowserBlockError: true });
-            return;            
         }
         if (browserInfo.isChrome) {
             if (blockChrome) {
