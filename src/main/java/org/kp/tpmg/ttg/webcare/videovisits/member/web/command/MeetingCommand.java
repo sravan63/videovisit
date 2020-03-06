@@ -3,21 +3,21 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.SIP;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.TELEPHONY;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE_900;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE_900;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_SUBMIT_LOGIN;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS_200;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_SUBMIT_LOGIN;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -1415,14 +1415,13 @@ public class MeetingCommand {
 		Map<String, String> properties = null;
 		final String propertyName = request.getParameter("propertyName");
 		if (StringUtils.isNotBlank(propertyName)) {
-			properties = new LinkedHashMap<>();
-			if ("mobile".equalsIgnoreCase(propertyName)) {
-				WebUtil.loadAllMobileProperties(properties);
-			} else if ("browser".equalsIgnoreCase(propertyName)) {
+			properties = new HashMap<>();
+			if ("browser".equalsIgnoreCase(propertyName)) {
 				WebUtil.loadAllBrowserBlockProperties(properties);
 			}
 		} else {
 			logger.warn("propertyName is blank/empty.");
+			WebUtil.loadAllBrowserBlockProperties(properties);
 		}
 		if (MapUtils.isNotEmpty(properties)) {
 			result = GsonUtil.convertMapToJsonString(properties);
@@ -1434,7 +1433,7 @@ public class MeetingCommand {
 	public static String handleHtmRequest(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String redirectUrl = "/videovisit/#/login";
-		if(request.getRequestURI().contains("setup")) {
+		if(request.getRequestURI().contains("setup.htm")) {
 			redirectUrl = "/videovisit/#/setup";
 		}
 		logger.info(LOG_EXITING);

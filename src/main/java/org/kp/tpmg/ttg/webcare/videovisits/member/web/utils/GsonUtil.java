@@ -6,6 +6,7 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -95,7 +96,7 @@ public class GsonUtil {
 	public static String convertMapToJsonString(final Map<String, String> map) {
 		logger.info(LOG_ENTERED);
 		String jsonString = null;
-		final Gson gson = new Gson();
+		final Gson gson = new GsonBuilder().serializeNulls().create();
 		if(MapUtils.isNotEmpty(map)) {
 			jsonString = gson.toJson(map);
 		}
