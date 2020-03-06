@@ -19,6 +19,7 @@ class Authentication extends React.Component {
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
         this.errorCompForGuestLogin = this.errorCompForGuestLogin.bind(this);
+        this.guestLogin = this.guestLogin.bind(this);
     }
 
     componentDidMount() {
@@ -65,7 +66,22 @@ class Authentication extends React.Component {
         let headers = {
             "authToken": this.state.authToken
         };
-        BackendService.guestLogin(this.state.meetingCode, this.state.lastname,headers).subscribe((response) => {
+        sessionStorage.setItem('lastname',this.state.lastname);
+        this.guestLogin(this.state.meetingCode, this.state.lastname,headers);
+    }
+
+    reJoinMeeting(){
+        sessionStorage.removeItem('guestLeave');
+        let headers = {
+            "authToken": this.state.authToken
+        };
+        var pname = sessionStorage.getItem('lastname');
+        this.guestLogin(this.state.meetingCode,pname,headers);
+        //this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
+    }
+
+    guestLogin(meetingCode,lastname,headers){
+        BackendService.guestLogin(meetingCode,lastname,headers).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 if (response.data.data != null && response.data.data != '') {
                     var data = {};
@@ -107,10 +123,7 @@ class Authentication extends React.Component {
         };
     }
 
-    reJoinMeeting(){
-        sessionStorage.removeItem('guestLeave');
-        this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
-    }
+    
 
 
     handleChange(key, event) {
