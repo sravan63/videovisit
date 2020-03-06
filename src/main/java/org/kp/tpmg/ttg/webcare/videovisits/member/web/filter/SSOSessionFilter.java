@@ -21,7 +21,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,7 +42,7 @@ public class SSOSessionFilter implements Filter {
 
 		req = (HttpServletRequest) sreq;
 		resp = (HttpServletResponse) sresp;
-		if (!isExcludeUrl(req) && !RequestMethod.OPTIONS.toString().equalsIgnoreCase(req.getMethod())) {
+		if (!isExcludeUrl(req)) {
 			if (WebUtil.SSO.equalsIgnoreCase(req.getParameter(WebUtil.LOGIN_TYPE))) {
 				validateSSOCookie(req, resp, chain);
 			} else {
