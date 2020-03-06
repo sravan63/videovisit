@@ -356,11 +356,6 @@ class Conference extends React.Component {
                 //window.location.reload(false);
             });
 
-            var browserInfo = Utilities.getBrowserInformation();
-            if (browserInfo.isSafari || browserInfo.isFireFox) {
-                localStorage.removeItem('selectedPeripherals');
-            }
-
         } else {
             sessionStorage.setItem('guestLeave',true);
              WebUI.pexipDisconnect();
@@ -378,6 +373,10 @@ class Conference extends React.Component {
                 //window.location.reload(false);
             });
         }
+        var browserInfo = Utilities.getBrowserInformation();
+            if (browserInfo.isSafari || browserInfo.isFireFox) {
+                localStorage.removeItem('selectedPeripherals');
+            }
 
     }
 
