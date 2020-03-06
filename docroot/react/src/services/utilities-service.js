@@ -40,6 +40,9 @@ class UtilityService extends React.Component {
         let blockEdgeVersion  = this.isMobileDevice() ? MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
         let blockSafariVersion  = this.isMobileDevice() ? MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
         let isBrowserBlockError = false;
+        if (this.getBrowserInformation().isIE) {
+            isBrowserBlockError = true;
+        }
         if (this.getBrowserInformation().isChrome) {
             if (blockChrome) {
                    isBrowserBlockError = true;
