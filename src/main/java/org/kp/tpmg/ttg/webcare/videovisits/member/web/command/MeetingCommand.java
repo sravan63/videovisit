@@ -1421,6 +1421,7 @@ public class MeetingCommand {
 			}
 		} else {
 			logger.warn("propertyName is blank/empty.");
+			properties = new HashMap<>();
 			WebUtil.loadAllBrowserBlockProperties(properties);
 		}
 		if (MapUtils.isNotEmpty(properties)) {
