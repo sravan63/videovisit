@@ -30,7 +30,64 @@ class UtilityService extends React.Component {
     getBrowserInformation() {
         return this.browserInfo;
     }
+    validateBrowserBlock(browserNames){
+        let blockChrome = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_CHROME_BROWSER == 'true') : (browserNames.BLOCK_CHROME_BROWSER == 'true');
+        let blockFF = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_FIREFOX_BROWSER == 'true') : (browserNames.BLOCK_FIREFOX_BROWSER == 'true');
+        let blockSafari = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_SAFARI_BROWSER == 'true') : (browserNames.BLOCK_SAFARI_BROWSER == 'true');
+        let blockEdge  = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_EDGE_BROWSER == 'true') : (browserNames.BLOCK_EDGE_BROWSER == 'true');
+        let blockChromeVersion = this.isMobileDevice() ? MOBILE_BLOCK_CHROME_VERSION : browserNames.BLOCK_CHROME_VERSION;
+        let blockFirefoxVersion  = this.isMobileDevice() ? MOBILE_BLOCK_FIREFOX_VERSION : browserNames.BLOCK_FIREFOX_VERSION;
+        let blockEdgeVersion  = this.isMobileDevice() ? MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
+        let blockSafariVersion  = this.isMobileDevice() ? MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
+        let isBrowserBlockError = false;
+        if (this.getBrowserInformation().isChrome) {
+            if (blockChrome) {
+                   isBrowserBlockError = true;
+            } else {                
+                var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
+                if (chrome_ver < blockChromeVersion) {
+                   isBrowserBlockError = true;
+                }
+            }
+        }
+        if (this.getBrowserInformation().isFirefox) {
+            if (blockFF) {
+                isBrowserBlockError = true;
+            } else {
+                var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
+                if (firefox_ver < blockFirefoxVersion) {
+                    isBrowserBlockError = true;
+                }
+            }
+        }
 
+        if (this.getBrowserInformation().isSafari) {
+            if (blockSafari) {
+                isBrowserBlockError = true;
+            } else {
+                var majorMinorDot = navigator.userAgent.substring(agent.indexOf('Version/') + 8, agent.lastIndexOf('Safari')).trim();                
+                var versionNumber = parseFloat(majorMinorDot);
+                // Block access from Safari version 12.                
+                if (versionNumber < blockSafariVersion) {
+                    isBrowserBlockError = true;
+                }
+            }
+        }
+        
+        if (this.getBrowserInformation().isEdge) {
+            if (blockEdge) {
+                isBrowserBlockError = true;
+            } else {
+                var val = navigator.userAgent.split('Edge/');
+                var edge_ver = val[1].slice(0, 2);
+                //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
+                if (edge_ver < blockEdgeVersion) {
+                    isBrowserBlockError = true;
+                }
+            }
+        }
+        return isBrowserBlockError;
+    }
     isMobileDevice() {
         var isMobile = false; //initiate as false
         // device detection

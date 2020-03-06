@@ -6,13 +6,13 @@ import { MessageService } from '../../../services/message-service.js';
 import GlobalConfig from '../../../services/global.config';
 import UtilityService from '../../../services/utilities-service.js';
 import './my-meetings.less';
-
+import BrowserBlock from '../../../components/browser-block/browser-block';
 class MyMeetings extends React.Component {
 
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, myMeetings: [], showLoader: true };
+        this.state = { userDetails: {}, myMeetings: [], showLoader: true, isBrowserBlockError: false };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
@@ -35,12 +35,31 @@ class MyMeetings extends React.Component {
                 this.signOff();
             }
         });
+        this.getBrowserBlockInfo();       
+        
     }
 
     componentWillUnmount() {
         clearTimeout(this.interval);
     }
+    getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                 browserNames = response.data; 
+                 if(UtilityService.validateBrowserBlock(browserNames)){
+                    this.setState({ isBrowserBlockError: true });
+                 }
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
 
+    }
     resetSessionToken(token){
         this.state.userDetails.ssoSession = token;
         localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
@@ -203,13 +222,30 @@ class MyMeetings extends React.Component {
                 {this.state.showLoader ? (<Loader />):('')}
                 <Header history={this.props.history}/>
                 <div className="mobile-header">
-                < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
-                className = "helpMobile"
-                target = "_blank" >Help< /a>
-               <a className="sign-off" onClick = {this.signOff}>Sign Out</a>
+                    < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className = "helpMobile" target = "_blank" >Help</a>
+                    <a className="sign-off" onClick = {this.signOff}>Sign Out</a>
                 </div>
                 <div className="meetings-container">
                 <h1 className="visitsToday">Your Video Visits for Today</h1>
+                <BrowserBlock browserblockinfo = {this.state}/>
+                {/* <div className="container browser-block-container pb-4" style={{display: this.state.isBrowserBlockError ? 'block' : 'none'}}>
+                    <div className="row browser-block-header">
+                        <div className="mt-2 ml-3 p-0  warning-icon"></div>
+                        <div className="warning-text">Video Visits does not support your browser.</div>
+                    </div>
+                    <div className="row browser-block-content ml-0 mt-4">
+                        <div className="col-lg-1 col-md-2 col-sm-3 float-left mt-3 mdo-logo"></div>
+                            <div className="col-lg-5 col-md-6 special-message col-sm-8">
+                                <b>Join on your mobile device using the My Doctor Online app, or try a
+                                        different browser.</b>
+                            </div>
+                            <div className="col-lg-6 col-md-10 pl-0 app-store-container">
+                                <span className="ios-appstore mt-2 ml-1"><a className="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></span>
+                                <span className="android-playstore mt-2"><a className="icon-link" href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&amp;hl=en_US" target="_blank"></a></span>
+		                    </div>
+                    </div>
+                </div> */}
+
                 {this.state.myMeetings.length > 0 ? (
                     this.state.myMeetings.map((item,key) =>{
                         return (
@@ -269,7 +305,7 @@ class MyMeetings extends React.Component {
                                     <div className="row joinNow-container">
                                         <div className="col-md-12 videoJoin">
                                         <div className="video-button">
-                                          <button type="button" className="btn rounded-0 p-0 join-visit" disabled={item.meetingVendorId==null} onClick={this.joinMeeting.bind(this,item)}>Join your visit</button>
+                                          <button type="button" className="btn rounded-0 p-0 join-visit" disabled={item.meetingVendorId==null || this.state.isBrowserBlockError} onClick={this.joinMeeting.bind(this,item)}>Join your visit</button>
                                         </div>
                                         </div>
                                         <div className="col-md-12 mt-3 joinText">

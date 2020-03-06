@@ -40,12 +40,11 @@ class Authentication extends React.Component {
             browserNames = '';
         BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
             if (response.data && response.status == '200') {
-                 browserNames = response.data;                 
-                 this.browserBlockCheckVersions(browserNames);
-                //  var browserInfo = Utilities.getBrowserInformation();
-                //  if (browserInfo.isIE && (browserNames.BLOCK_IE_BROWSER == 'true')) {
-                //     this.setState({ isBrowserBlockError: true });
-                // }
+                 browserNames = response.data;
+                 var browserInfo = Utilities.getBrowserInformation();
+                 if (browserInfo.isIE && (browserNames.BLOCK_IE_BROWSER == 'true')) {
+                    this.setState({ isBrowserBlockError: true });
+                }
             } else {
                 // Do nothing
             }
@@ -54,71 +53,7 @@ class Authentication extends React.Component {
         });
 
     }
-    browserBlockCheckVersions(browserNames){
-        var isMobile = Utilities.isMobileDevice();
-        var browserInfo = Utilities.getBrowserInformation();
-        let blockIE = isMobile ? (browserNames.MOBILE_BLOCK_IE_BROWSER == 'true') : (browserNames.BLOCK_IE_BROWSER == 'true');
-        let blockChrome = isMobile ? (browserNames.MOBILE_BLOCK_CHROME_BROWSER == 'true') : (browserNames.BLOCK_CHROME_BROWSER == 'true');
-        let blockFF = isMobile ? (browserNames.MOBILE_BLOCK_FIREFOX_BROWSER == 'true') : (browserNames.BLOCK_FIREFOX_BROWSER == 'true');
-        let blockSafari = isMobile ? (browserNames.MOBILE_BLOCK_SAFARI_BROWSER == 'true') : (browserNames.BLOCK_SAFARI_BROWSER == 'true');
-        let blockEdge  = isMobile ? (browserNames.MOBILE_BLOCK_EDGE_BROWSER == 'true') : (browserNames.BLOCK_EDGE_BROWSER == 'true');
-        let blockChromeVersion = isMobile ? MOBILE_BLOCK_CHROME_VERSION : browserNames.BLOCK_CHROME_VERSION;
-        let blockFirefoxVersion  = isMobile ? MOBILE_BLOCK_FIREFOX_VERSION : browserNames.BLOCK_FIREFOX_VERSION;
-        let blockEdgeVersion  = isMobile ? MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
-        let blockSafariVersion  = isMobile ? MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
-        if (browserInfo.isIE && blockIE) {
-            this.setState({ isBrowserBlockError: true });
-        }
-        if (browserInfo.isChrome) {
-            if (blockChrome) {
-                this.setState({ isBrowserBlockError: true });
-            } else {                
-                var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
-                if (chrome_ver < blockChromeVersion) {
-                    this.setState({ isBrowserBlockError: true });
-                }
-            }
-        }
-        if (browserInfo.isFirefox) {
-            if (blockFF) {
-                this.setState({ isBrowserBlockError: true });
-            } else {
-                var firefox_ver = Number(window.navigator.userAgent.match(/Firefox\/(\d+)\./)[1], 10);
-                if (firefox_ver < blockFirefoxVersion) {
-                    this.setState({ isBrowserBlockError: true });
-                }
-            }
-        }
-
-        if (browserInfo.isSafari) {
-            if (blockSafari) {
-                this.setState({ isBrowserBlockError: true });
-            } else {
-                var majorMinorDot = navigator.userAgent.substring(agent.indexOf('Version/') + 8, agent.lastIndexOf('Safari')).trim();                
-                var versionNumber = parseFloat(majorMinorDot);
-                // Block access from Safari version 12.                
-                if (versionNumber < blockSafariVersion) {
-                    this.setState({ isBrowserBlockError: true });
-                }
-            }
-        }
-        
-        if (browserInfo.isEdge) {
-            if (blockEdge) {
-                this.setState({ isBrowserBlockError: true });
-            } else {
-                var val = navigator.userAgent.split('Edge/');
-                var edge_ver = val[1].slice(0, 2);
-                //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
-                if (edge_ver < blockEdgeVersion) {
-                    this.setState({ isBrowserBlockError: true });
-                }
-            }
-        }
     
-    
-    
-    }
     validateInAppAccess() {
         var urlStr = window.location.href;
         var url = new URL(urlStr);

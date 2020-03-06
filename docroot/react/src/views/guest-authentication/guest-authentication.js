@@ -9,12 +9,13 @@ import './guest-authentication.less';
 import BackendService from '../../services/backendService.js';
 import UtilityService from '../../services/utilities-service.js';
 import GlobalConfig from '../../services/global.config';
+import BrowserBlock from '../../components/browser-block/browser-block';
 
 class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false };
+        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -45,9 +46,25 @@ class Authentication extends React.Component {
             this.renderErrorCompValidation();
 
         });
-         
+        this.getBrowserBlockInfo();
      }
-
+     getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                 browserNames = response.data; 
+                 if(UtilityService.validateBrowserBlock(browserNames)){
+                    this.setState({ isBrowserBlockError: true });
+                 }
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+    }
     renderErrorCompValidation() {
         this.setState({
             errorlogin: true,
@@ -173,6 +190,7 @@ class Authentication extends React.Component {
                     </div>
                 </div>
                 <div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
+                <BrowserBlock browserblockinfo = {this.state}/>
                 <div className="guest-form-content">
                 {this.state.ReJoin ? (
                    <div className="guest-form rejoinComp">
@@ -191,7 +209,7 @@ class Authentication extends React.Component {
                                 </div>
                             </div>
                             <div className = "form-group mobile-submit mt-5" >
-                                 <button type = "submit" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Join</button>
+                                 <button type = "submit" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled || this.state.isBrowserBlockError}>Join</button>
                             </div>
                         </form>
                     </div> )}

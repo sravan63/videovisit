@@ -17,6 +17,8 @@ import GlobalConfig from '../../services/global.config';
 import * as pexip from '../../pexip/complex/pexrtcV20.js';
 import * as WebUI from '../../pexip/complex/webui.js';
 import * as eventSource from '../../pexip/complex/EventSource.js';
+import UtilityService from '../../services/utilities-service';
+import BrowserBlock from '../../components/browser-block/browser-block';
 import './setup.less';
 
 class Setup extends React.Component {
@@ -25,7 +27,7 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {}, media: {}, constrains: {}, startTest: false, loadingSetup: false };
+        this.state = { data: {}, media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
     }
@@ -51,13 +53,30 @@ class Setup extends React.Component {
                     break;
             }
         });
+        this.getBrowserBlockInfo();
     }
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
         this.subscription.unsubscribe();
     }
-
+    getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                 browserNames = response.data; 
+                 if(UtilityService.validateBrowserBlock(browserNames)){
+                    this.setState({ isBrowserBlockError: true });
+                 }
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+    }
     toggleOpen(type) {
         this.setState({
             data: {
@@ -141,8 +160,10 @@ class Setup extends React.Component {
             <div id='container' className="setup-page">
                  <Header />
                  <div className="row mobile-logo-container m-0"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
+                 
                  <div className="setup-content">
                      <div className="row setup">
+                     <BrowserBlock browserblockinfo = {this.state}/>
                          <div className="col-md-5 peripheral-options p-0">
                              <div className="periheral-container">
                                  <div className="label">Camera</div>
@@ -202,7 +223,7 @@ class Setup extends React.Component {
                          <div className="col-md-5 p-0 video-preview">
                              {!this.state.startTest ? (
                                  <div className="start-test">
-                                     <button className="btn rounded-0 btn-primary" onClick={this.startTest}>Start</button>
+                                     <button className="btn rounded-0 btn-primary" onClick={this.startTest} disabled={this.state.isBrowserBlockError}>Start</button>
                                  </div>
                              ) : (
                              <div className="preview">
@@ -215,7 +236,7 @@ class Setup extends React.Component {
                              )}
                          </div>
                          <div className="col-md-12 mt-5 button-controls text-center">
-                           <button className="btn rounded-0" onClick={this.joinVisit} disabled={this.state.loadingSetup}>Join</button>
+                           <button className="btn rounded-0" onClick={this.joinVisit} disabled={this.state.loadingSetup || this.state.isBrowserBlockError}>Join</button>
                          </div>
                      </div>
                  </div>
