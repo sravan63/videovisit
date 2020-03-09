@@ -159,6 +159,11 @@ class Setup extends React.Component {
         return (
             <div id='container' className="setup-page">
                  <Header />
+                 <div className="row mobile-help-link">
+                    <div className="col-12 text-right help-icon p-0">
+                        <a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a>
+                    </div>
+                </div>
                  <div className="row mobile-logo-container m-0"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
                  
                  <div className="setup-content">
