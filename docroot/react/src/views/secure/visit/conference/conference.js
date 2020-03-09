@@ -22,7 +22,6 @@ class Conference extends React.Component {
         super(props);
         this.state = { userDetails: {}, isRearCamera:false, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
-        this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
         this.list = [];
@@ -175,10 +174,8 @@ class Conference extends React.Component {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
                 this.setState({ meetingDetails: data });
-                var sortedParticipants = this.setSortedParticipantList();
                 MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
-                    meetingDetails: this.state.meetingDetails,
-                    participants: sortedParticipants
+                    meetingDetails: this.state.meetingDetails
                 });
                 this.startPexip(this.state.meetingDetails);
             } else {
@@ -297,33 +294,6 @@ class Conference extends React.Component {
                 })
                 WebUI.muteUnmuteMic();
                 break;
-        }
-    }
-
-    setSortedParticipantList() {
-        let list = [];
-        let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
-        let guests = this.state.meetingDetails.caregiver ? this.state.meetingDetails.caregiver.slice(0) : [];
-        let participants = clinicians.concat(guests);
-        if (participants) {
-            participants.map(guest => {
-                let name = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase();
-                name += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : ' ' : ' ';
-                list.push({ name: name.trim() });
-            });
-            list.sort((a, b) => (a.name > b.name) ? 1 : -1);
-        }
-        // Add Telephony guest to the participant's list.
-        if(this.state.meetingDetails.sipParticipants){
-            let telephonyGuests = [];
-            this.state.meetingDetails.sipParticipants.map(guest => {
-                let name = guest.displayName.toLowerCase();
-                let number = guest.destination ? guest.destination : guest.uri.substring(6,16);
-                telephonyGuests.push({ name: name.trim(), number: number});
-            });
-            return list.concat(telephonyGuests);
-        } else {
-            return list;
         }
     }
 

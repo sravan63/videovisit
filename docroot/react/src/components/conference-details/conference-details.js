@@ -13,6 +13,7 @@ class ConferenceDetails extends React.Component {
         super(props);       
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
+        this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.state = { isRunningLate: false, runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [] };
     }
 
@@ -21,8 +22,10 @@ class ConferenceDetails extends React.Component {
             switch(notification.text) {
                 case GlobalConfig.SHOW_CONFERENCE_DETAILS:
                     this.setState({
-                        meetingDetails: notification.data.meetingDetails,
-                        participants: notification.data.participants
+                        meetingDetails: notification.data.meetingDetails
+                    });
+                    this.setState({
+                        participants: this.setSortedParticipantList()
                     });
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
@@ -32,10 +35,95 @@ class ConferenceDetails extends React.Component {
                     });
                     this.updateRunningLateTime();
                 break;
+                case GlobalConfig.USER_JOINED:
+                    this.validatePresence(GlobalConfig.USER_JOINED, notification.data);
+                break;
+                case GlobalConfig.USER_LEFT:
+                    this.validatePresence(GlobalConfig.USER_LEFT, notification.data);
+                break;
             }
         });
         
-    } 
+    }
+
+    setSortedParticipantList() {
+        let list = [];
+        let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
+        let guests = this.state.meetingDetails.caregiver ? this.state.meetingDetails.caregiver.slice(0) : [];
+        let participants = clinicians.concat(guests);
+        if (participants) {
+            participants.map(guest => {
+                let name = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase();
+                name += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : ' ' : ' ';
+                let backupName = guest.lastName.toLowerCase() + ', ' + guest.firstName.toLowerCase();
+                backupName += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : ' ' : ' ';
+                list.push({ name: name.trim(), inCall: false, isTelephony: false, backupName: backupName });
+            });
+            list.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        }
+        // Add Telephony guest to the participant's list.
+        if(this.state.meetingDetails.sipParticipants){
+            let telephonyGuests = [];
+            this.state.meetingDetails.sipParticipants.map(guest => {
+                let name = guest.displayName.toLowerCase();
+                let number = guest.destination ? guest.destination : guest.uri.substring(6,16);
+                telephonyGuests.push({ name: name.trim(), number: number, inCall: false, isTelephony: true});
+            });
+            return list.concat(telephonyGuests);
+        } else {
+            return list;
+        }
+    }
+
+    validatePresence(type, data){
+        var participantInList = false;
+        var hasJoined = type == GlobalConfig.USER_JOINED;
+        var participant = hasJoined ? 
+                          data.protocol == "sip" ? participant.uri.substring(6, 16) : data.display_name 
+                          : data.uuid;
+        var isTelephony = hasJoined ? data.protocol == "sip" : false;
+        this.state.participants.map(function(p){
+            if(hasJoined){
+                if(isTelephony){
+                    if(p.number.toLowerCase() == participant.toLowerCase()){
+                        participantInList = true;
+                        p.inCall = hasJoined;
+                        p.uuid = data.uuid;
+                    }
+                } else {
+                    if(p.name.toLowerCase() == participant.toLowerCase() || p.backupName.toLowerCase() == participant.toLowerCase()){
+                        participantInList = true;
+                        p.inCall = hasJoined;
+                        p.uuid = data.uuid;
+                    }
+                }
+            } else {
+                if(p.uuid == participant.uuid){
+                    p.inCall = false;
+                }
+            }
+        });
+        // For a new participant
+        if(!participantInList && hasJoined){
+            if(isTelephony){
+                this.state.meetingDetails.sipParticipants.push(data);
+            } else if(data.role == "guest") {
+                var lName = data.split(',')[0].trim();
+                var fName = data.split(',')[1].trim();
+                this.state.meetingDetails.caregiver.push({firstName: fName, lastName: lName});
+            } else {
+                var nArr = data.split(',');
+                var lName = nArr[0].trim();
+                var title = nArr[1].trim().split(' ').reverse().splice(0,1)[0].trim();
+                var fName = nArr[1].split(' ')[1].trim();
+                this.state.meetingDetails.participant.push({firstName: fName, lastName: lName, title: title});
+            }
+            // Re-itrating participants list
+            this.setState({
+                participants: this.setSortedParticipantList()
+            });
+        }
+    }
 
     getClinicianName(host) {
         if (!host) {
@@ -96,7 +184,7 @@ class ConferenceDetails extends React.Component {
                         { this.state.participants && this.state.participants.length > 0 ? 
                             this.state.participants.map((item,key) =>{
                             return (
-                                <div className="participant text-capitalize mt-2" key={key}>{item.name}</div>
+                                <div className="participant mt-2" key={key}><span className={item.inCall ? "presence-indicator show" : "presence-indicator hide" }></span><span className="name text-capitalize">{item.name}</span></div>
                             )
                         }) 
                          : ('') 

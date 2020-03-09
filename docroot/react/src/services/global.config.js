@@ -67,7 +67,9 @@ const GlobalConfig = {
     CLOSE_SETTINGS: 'closed settings',
     LOGOUT: 'User Signed Out',
     START_SCREENSHARE: 'start screenshare',
-    STOP_SCREENSHARE: 'stop screenshare'
+    STOP_SCREENSHARE: 'stop screenshare',
+    USER_JOINED: 'user joined',
+    USER_LEFT: 'user left'
 };
 
 export default GlobalConfig;

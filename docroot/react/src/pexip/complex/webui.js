@@ -526,34 +526,24 @@ function participantCreated(participant) {
             message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
             name: participant.display_name
         };
-        // if (!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()) {
-            // utilityNotifyQueue(joinParticipantMsg);
-        // }
+        
         if(!refreshingOrSelfJoinMeeting){
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
         }
-        toggleWaitingRoom(pexipParticipantsList);
-        // VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
-    }
 
-    /*if(isProvider == "true"){
-        var uuid = participant.uuid;
-        rtc.setParticipantSpotlight(uuid, true);
-        return false;
-    } else{
-        var uuid = participant.uuid;
-        rtc.setParticipantSpotlight(uuid, true);
-        return false;
-    }*/
+        var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+        var memberName = udata.lastName +', '+ udata.firstName;
+        if(participant.display_name != memberName){
+            MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
+        }
+
+        toggleWaitingRoom(pexipParticipantsList);
+    }
 }
 
 function participantUpdated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
-    /*if(isMobileDevice){
-        updateParticipantList(participant,'join');
-        console.log("inside participantUpdated");
-    }*/
 
 }
 
@@ -578,6 +568,7 @@ function participantDeleted(participant) {
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, participantMsg);
         }
         //VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
+        MessageService.sendMessage(GlobalConfig.USER_LEFT, participant);
         toggleWaitingRoom(pexipParticipantsList);
     }
 }
