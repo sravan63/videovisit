@@ -190,12 +190,12 @@ class Authentication extends React.Component {
                     </div>
                 </div>
                 <div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
-                <BrowserBlock browserblockinfo = {this.state}/>
                 <div className="guest-form-content">
+                <BrowserBlock browserblockinfo = {this.state}/>
                 {this.state.ReJoin ? (
                    <div className="guest-form rejoinComp">
-                      <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} >Rejoin</button>
-                      <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()}>Sign out</button>
+                      <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError} >Rejoin</button>
+                      <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()} disabled={this.state.isBrowserBlockError} >Sign out</button>
                     </div>
                 ):
                  (    
@@ -205,7 +205,7 @@ class Authentication extends React.Component {
                             <div className="form-group">
                                 <label className="col-sm-12 text-capitalize">Patient Last Name</label>
                                 <div className="col-sm-12">
-                                    <input type="text" pattern="[a-zA-Z]+" name="lastname" disabled = {this.state.inputDisable} value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input"/>
+                                    <input type="text" pattern="[a-zA-Z]+" name="lastname" disabled = {this.state.inputDisable} value={this.state.lastname} disabled={this.state.isBrowserBlockError} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input"/>
                                 </div>
                             </div>
                             <div className = "form-group mobile-submit mt-5" >
