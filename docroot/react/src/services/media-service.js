@@ -19,23 +19,26 @@ class MediaService extends React.Component {
     // Initiates the device load
     loadDeviceMediaData(){
       var browserInfo = Utilities.getBrowserInformation();
-      if(browserInfo.isSafari || browserInfo.isFireFox) {
-        navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
-             console.log('Stream1 started with success');
-             this.setDevice();
-         }).catch((error)=>{ 
-             this.handleError(error);
-             console.log('Failed to start stream1');
-         });
-      } else {
-        navigator.mediaDevices.enumerateDevices().then((list)=>{
-            this.gotDevicesList(list);
-        }).catch((error)=>{
-            this.handleError(error);
-        });
-      }
+      if(!browserInfo.isIE){
+        if(browserInfo.isSafari || browserInfo.isFireFox) {
+          navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
+              console.log('Stream1 started with success');
+              this.setDevice();
+          }).catch((error)=>{ 
+              this.handleError(error);
+              console.log('Failed to start stream1');
+          });
+        } else {
+          navigator.mediaDevices.enumerateDevices().then((list)=>{
+              this.gotDevicesList(list);
+          }).catch((error)=>{
+              this.handleError(error);
+          });
+        }
+      
       // Registers the devie change handler.
       navigator.mediaDevices.ondevicechange = this.onDeviceChange;
+      }
     }
 
     setDevice(){
