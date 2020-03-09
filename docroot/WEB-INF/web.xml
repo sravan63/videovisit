@@ -7,7 +7,7 @@
 	<display-name>Video Visits Member</display-name>
 
 	<!-- Log4jConfigListener -->
-	<context-param>
+	<!-- <context-param>
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>file:/usr/local/middleware/tcservervv/conf/appconf/vvm/log4j.xml</param-value>
 	</context-param>
@@ -17,18 +17,18 @@
 	</context-param>
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
-	</listener>
+	</listener> -->
 
-	<context-param>
+	<!-- <context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value> 
 			/WEB-INF/action-servlet.xml
 		</param-value>
-	</context-param>
+	</context-param> -->
 
-	<listener>
+	<!-- <listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+	</listener> -->
 
 	<!--  Listener used to detect devices: mobile, tablet or desktop -->
 	<listener>
@@ -58,7 +58,7 @@
 	</filter-mapping>
 
 	<!-- Main Dispatcher Controller -->
-	<servlet>
+	<!-- <servlet>
 		<servlet-name>action</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -70,7 +70,7 @@
 	<servlet-mapping>
 		<servlet-name>action</servlet-name>
 		<url-pattern>*.htm</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping> -->
 	
 	<servlet>
 		<servlet-name>emailAction</servlet-name>
