@@ -25,6 +25,7 @@ class Conference extends React.Component {
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
         this.list = [];
+        this.handle = 0;
     }
 
     componentDidMount() {
@@ -89,19 +90,25 @@ class Conference extends React.Component {
                 case GlobalConfig.HOST_AVAIL:
                     this.setState({ hostavail: true, videofeedflag: true, moreparticpants: false });
                     this.toggleDockView(false);
+                    this.handleTimer(false);
                     break;
                 case GlobalConfig.HOST_LEFT:
                     this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
                     this.toggleDockView(false);
+                    this.handleTimer(true);
                     break;
                 case GlobalConfig.HAS_MORE_PARTICIPANTS:
                     this.setState({ hostavail: false, moreparticpants: true });
                     const isDock = window.innerWidth > 1024; // passes true only for desktop
                     this.toggleDockView(isDock);
+                    this.handleTimer(false);
                     break;
                 case GlobalConfig.LEAVE_VISIT:
                     this.leaveMeeting();
                     break;
+                case GlobalConfig.MEMBER_READY:
+                    this.handleTimer(true);
+                    break;       
                 case GlobalConfig.START_SCREENSHARE:
                     this.setState({ showSharedContent: true });
                     break;
@@ -148,6 +155,17 @@ class Conference extends React.Component {
         }
 
     } 
+
+    handleTimer(param){
+        if(param){
+        this.handle = setInterval(() => {
+                this.leaveMeeting();
+            }, GlobalConfig.SIGNOUT_MEMBER_ALONE);
+        }
+        else{
+            window.clearInterval(this.handle);
+        }
+    }
 
     toggleDockView(isDock) {
         if (isDock) {
@@ -253,6 +271,7 @@ class Conference extends React.Component {
 
     componentWillUnmount() {
         // clear on component unmount
+        window.clearInterval(this.handle);
         this.subscription.unsubscribe();
         if(this.state.isGuest == true){
             var isGuestLeave = sessionStorage.getItem('guestLeave');
