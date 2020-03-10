@@ -68,10 +68,20 @@ class UtilityService extends React.Component {
             if (blockSafari) {
                 isBrowserBlockError = true;
             } else {
-                var majorMinorDot = navigator.userAgent.substring(agent.indexOf('Version/') + 8, agent.lastIndexOf('Safari')).trim();                
-                var versionNumber = parseFloat(majorMinorDot);
+                // var majorMinorDot = navigator.userAgent.substring(agent.indexOf('Version/') + 8, agent.lastIndexOf('Safari')).trim();                
+                // var versionNumber = parseFloat(majorMinorDot);
+                // var nAgt = navigator.userAgent;
+                var fullVersion  = ''+parseFloat(navigator.appVersion);
+                var majorVersion = parseInt(navigator.appVersion,10);
+                var verOffset;
+                if ((verOffset=navigator.userAgent.indexOf("Safari"))!=-1) {
+                    fullVersion = navigator.userAgent.substring(verOffset+7);
+                if ((verOffset=navigator.userAgent.indexOf("Version"))!=-1)
+                    fullVersion = navigator.userAgent.substring(verOffset+8);
+                }
+                majorVersion = parseInt(''+fullVersion,10);
                 // Block access from Safari version 12.                
-                if (versionNumber <= blockSafariVersion) {
+                if (majorVersion <= blockSafariVersion) {
                     isBrowserBlockError = true;
                 }
             }
