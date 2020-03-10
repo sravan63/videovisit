@@ -211,7 +211,7 @@ class Conference extends React.Component {
         var guestName;
         caregiver.forEach(function(val, index) {
             if (val.careGiverMeetingHash == details.meetingCode) {
-                guestName = val.lastName + ', ' + val.firstName;
+                guestName = val.lastName + ', ' + val.firstName + ' (' + val.emailAddress + ')';
             }
         });
         return guestName;
