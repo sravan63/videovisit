@@ -599,7 +599,7 @@ public class WebUtil {
 		properties.put("MOBILE_BLOCK_FIREFOX_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_FIREFOX_VERSION) ? MOBILE_BLOCK_FIREFOX_VERSION : "67");
 		final String MOBILE_BLOCK_EDGE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_EDGE_VERSION");
 		properties.put("MOBILE_BLOCK_EDGE_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_EDGE_VERSION) ? MOBILE_BLOCK_EDGE_VERSION : "18");
-		final String MOBILE_BLOCK_SAFARI_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_SAFRI_VERSION");
+		final String MOBILE_BLOCK_SAFARI_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_SAFARI_VERSION");
 		properties.put("MOBILE_BLOCK_SAFARI_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_SAFARI_VERSION) ? MOBILE_BLOCK_SAFARI_VERSION : "12.2");
 		final String MOBILE_BLOCK_IE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_IE_VERSION");
 		properties.put("MOBILE_BLOCK_IE_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_IE_VERSION) ? MOBILE_BLOCK_IE_VERSION : "");
