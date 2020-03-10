@@ -71,7 +71,7 @@ class UtilityService extends React.Component {
                 var majorMinorDot = navigator.userAgent.substring(agent.indexOf('Version/') + 8, agent.lastIndexOf('Safari')).trim();                
                 var versionNumber = parseFloat(majorMinorDot);
                 // Block access from Safari version 12.                
-                if (versionNumber < blockSafariVersion) {
+                if (versionNumber <= blockSafariVersion) {
                     isBrowserBlockError = true;
                 }
             }
