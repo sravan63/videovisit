@@ -24,6 +24,28 @@
 
             .clinician-info {
                 font-weight: bold;
+                .presence-indicator {
+                    display: inline-block;
+                    background: url('../../assets/SVG/Connected.svg') no-repeat;
+                    height: 0.375rem;
+                    width: 0.375rem;
+                    margin: 0 0 0.5rem -0.68rem;
+                    background-position: center;
+                }
+                .show{
+                    opacity: 1;
+                }
+                .hide{
+                    opacity: 0;
+                }
+                .name{
+                    display: inline-block;
+                    width: calc(100% - 0.375rem);
+                    margin-left: 0.43rem;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                }
             }
         }
     }

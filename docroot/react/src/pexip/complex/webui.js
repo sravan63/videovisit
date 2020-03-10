@@ -470,56 +470,7 @@ function participantCreated(participant) {
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
         }
 
-        /*var data = [];
-        data.sipParticipants = [participant];
-        var alreadyAddedNumber = [];
-        var inputs = $('.name-of-participant[phonenumber]');
-        if (inputs != null) {
-            inputs.each(function() {
-                var newdata = {
-                    num: $(this).attr('phonenumber'),
-                    name: $(this).text()
-                };
-                alreadyAddedNumber.push(newdata);
-            });
-        }
-        var newName,
-            newNum;
-        var newNumber = participant.uri.substring(6, 16);
-        var newVal = alreadyAddedNumber.forEach(function(val) {
-            if (val.num == newNumber && val.name == participant.display_name) {
-                newName = true;
-                newNum = true;
-            }
-        });
-
-        var updatedInSidePan = false;
-        if (sidePaneMeetingDetails.sortedParticipantsList) {
-            sidePaneMeetingDetails.sortedParticipantsList.forEach(function(val, i) {
-                if (val.hasOwnProperty('destination') && val.destination == newNumber) {
-                    val.displayName = participant.display_name;
-                    var dom = '.guest-part-' + i + ' ' + '.name-of-participant';
-                    $(dom).html(val.displayName);
-                    updatedInSidePan = true;
-                }
-            });
-        }
-
-        if (!updatedInSidePan && (!newName || !newNum)) {
-            var sipParticipants = {};
-            sipParticipants.displayName = participant.display_name;
-            sipParticipants.participantType = "audio";
-            sipParticipants.destination = participant.uri.substring(6, 16);
-            VideoVisit.appendInvitedGuestToSidebar(sipParticipants, false, true);
-        } else {
-            VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, "pexip");
-        }
-
-        var contextData = {
-            "destination": participant.uri.substring(6, 16),
-            "displayName": participant.display_name
-        };
-        VideoVisit.updateContext(contextData, "sip");*/
+        MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
 
     } else {
         var joinParticipantMsg = {
@@ -533,7 +484,7 @@ function participantCreated(participant) {
 
         var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
         var memberName = udata.lastName +', '+ udata.firstName;
-        if(participant.display_name != memberName){
+        if(participant.display_name != memberName && !localStorage.getItem('isGuest')){
             MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
         }
 
@@ -568,7 +519,11 @@ function participantDeleted(participant) {
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, participantMsg);
         }
         //VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
-        MessageService.sendMessage(GlobalConfig.USER_LEFT, participant);
+        var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+        var memberName = udata.lastName +', '+ udata.firstName;
+        if( removingParticipant[0].display_name != memberName && !localStorage.getItem('isGuest')){
+           MessageService.sendMessage(GlobalConfig.USER_LEFT, participant);
+        }
         toggleWaitingRoom(pexipParticipantsList);
     }
 }
