@@ -153,7 +153,7 @@ class UtilityService extends React.Component {
         } else {
             let week = String(DateObj).substring(0, 3);
             let monthstr = String(DateObj).substr(4, 6);
-            let month = monthstr.replace("0", "");
+            let month = DateObj.getDate() < 10 ? monthstr.replace("0", "") : monthstr;
             str = week + ', ' + month;
         }
         return str;
