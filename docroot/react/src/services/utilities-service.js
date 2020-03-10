@@ -81,7 +81,7 @@ class UtilityService extends React.Component {
                 }
                 majorVersion = parseInt(''+fullVersion,10);
                 // Block access from Safari version 12.                
-                if (majorVersion <= blockSafariVersion) {
+                if (majorVersion < blockSafariVersion) {
                     isBrowserBlockError = true;
                 }
             }
@@ -94,7 +94,7 @@ class UtilityService extends React.Component {
                 var val = navigator.userAgent.split('Edge/');
                 var edge_ver = val[1].slice(0, 2);
                 //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
-                if (edge_ver < blockEdgeVersion) {
+                if (edge_ver <= blockEdgeVersion) {
                     isBrowserBlockError = true;
                 }
             }
