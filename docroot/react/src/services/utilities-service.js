@@ -35,10 +35,10 @@ class UtilityService extends React.Component {
         let blockFF = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_FIREFOX_BROWSER == 'true') : (browserNames.BLOCK_FIREFOX_BROWSER == 'true');
         let blockSafari = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_SAFARI_BROWSER == 'true') : (browserNames.BLOCK_SAFARI_BROWSER == 'true');
         let blockEdge  = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_EDGE_BROWSER == 'true') : (browserNames.BLOCK_EDGE_BROWSER == 'true');
-        let blockChromeVersion = this.isMobileDevice() ? MOBILE_BLOCK_CHROME_VERSION : browserNames.BLOCK_CHROME_VERSION;
-        let blockFirefoxVersion  = this.isMobileDevice() ? MOBILE_BLOCK_FIREFOX_VERSION : browserNames.BLOCK_FIREFOX_VERSION;
-        let blockEdgeVersion  = this.isMobileDevice() ? MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
-        let blockSafariVersion  = this.isMobileDevice() ? MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
+        let blockChromeVersion = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_CHROME_VERSION : browserNames.BLOCK_CHROME_VERSION;
+        let blockFirefoxVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_FIREFOX_VERSION : browserNames.BLOCK_FIREFOX_VERSION;
+        let blockEdgeVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
+        let blockSafariVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
         let isBrowserBlockError = false;
         if (this.getBrowserInformation().isIE) {
             isBrowserBlockError = true;
