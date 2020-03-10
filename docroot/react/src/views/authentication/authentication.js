@@ -45,10 +45,9 @@ class Authentication extends React.Component {
         BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
             if (response.data && response.status == '200') {
                  browserNames = response.data;
-                 var browserInfo = Utilities.getBrowserInformation();
-                 if (browserInfo.isIE && (browserNames.BLOCK_IE_BROWSER == 'true')) {
+                 if(Utilities.validateBrowserBlock(browserNames)){
                     this.setState({ isBrowserBlockError: true });
-                }
+                 }
             } else {
                 // Do nothing
             }
