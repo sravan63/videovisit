@@ -484,7 +484,7 @@ function participantCreated(participant) {
 
         var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
         var memberName = udata.lastName +', '+ udata.firstName;
-        if(participant.display_name != memberName && !localStorage.getItem('isGuest')){
+        if(participant.display_name.toLowerCase() != memberName.toLowerCase() && !localStorage.getItem('isGuest')){
             MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
         }
 
