@@ -481,11 +481,20 @@ function participantCreated(participant) {
         if(!refreshingOrSelfJoinMeeting){
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
         }
-
-        var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-        var memberName = udata.lastName +', '+ udata.firstName;
-        if(participant.display_name.toLowerCase() != memberName.toLowerCase() && !localStorage.getItem('isGuest')){
-            MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
+        // TODO: Should change this logic after provider React Development.
+        var isGuest = localStorage.getItem('isGuest') && localStorage.getItem('isGuest') == 'true';
+        if(isGuest){
+            var mdata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+            var memberName = mdata.member.lastName +', '+ mdata.member.firstName;
+            if(participant.display_name.trim().toLowerCase() != memberName.trim().toLowerCase()){
+                MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
+            }
+        } else {
+            var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+            var memberName = udata.lastName +', '+ udata.firstName;
+            if(participant.display_name.trim().toLowerCase() != memberName.trim().toLowerCase()){
+                MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
+            }
         }
 
         toggleWaitingRoom(pexipParticipantsList);
