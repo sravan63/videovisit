@@ -105,7 +105,7 @@ class Authentication extends React.Component {
                     data = response.data.data ? response.data.data : '';
                     data.meetingCode = this.state.meetingCode;
                     data.authToken = response.headers.authtoken;
-                    data.lastname = this.state.lastname;
+                    data.lastname = lastname;
                     localStorage.setItem('meetingId', JSON.stringify(data.meetingId));
                     localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(data)));
                     localStorage.setItem('isGuest', true);
