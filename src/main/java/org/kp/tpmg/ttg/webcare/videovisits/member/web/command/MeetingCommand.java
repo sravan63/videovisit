@@ -115,40 +115,19 @@ public class MeetingCommand {
 		return output;
 	}
 	
-	public static String updateEndMeetingLogout(HttpServletRequest request,
-			String memberName, boolean notifyVideoForMeetingQuit) throws Exception {
-		logger.info(LOG_ENTERED + "notifyVideoForMeetingQuit=" + notifyVideoForMeetingQuit + "]");
+	public static String updateEndMeetingLogout(HttpServletRequest request, String memberName,
+			boolean notifyVideoForMeetingQuit) throws Exception {
+		logger.info(LOG_ENTERED);
 		ServiceCommonOutput output = null;
 		String result = null;
 		long meetingId = 0;
-		String mrn = null;
-		String clientId = null;
-		String loginType = null;
 		try {
-			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
-				meetingId = Long.parseLong(request.getParameter("meetingId"));
-			}
-			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
-				mrn = request.getHeader("mrn");
-			}
-			if (StringUtils.isNotBlank(request.getParameter("loginType"))) {
-				loginType = request.getParameter("loginType");
-			}
-			if (StringUtils.isNotBlank(loginType)) {
-				clientId = WebUtil.getClientIdByLoginType(loginType);
-			}
-			if (StringUtils.isNotBlank(request.getHeader("memberName"))) {
-				memberName = request.getHeader("memberName");
-			}
-//					String clientId = notifyVideoForMeetingQuit ? ctx.getBackButtonClientId() : ctx.getClientId();
+			meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
+			String mrn = request.getHeader("mrn");
+			String clientId = WebUtil.getClientIdByLoginTypeAndBackButtonAction(request);
+			memberName = request.getHeader("memberName");
 			output = WebService.memberEndMeetingLogout(mrn, meetingId, request.getSession().getId(), memberName,
 					notifyVideoForMeetingQuit, clientId);
-			if (output != null) {
-				final String responseDesc = output.getStatus() != null
-						? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
-						: "No reponse from rest service";
-				logger.debug("response : " + responseDesc);
-			}
 			if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(output.getName(), output.getStatus().getCode(),
@@ -156,7 +135,6 @@ public class MeetingCommand {
 			}
 		} catch (Exception e) {
 			logger.error("System Error for meeting:" + meetingId, e);
-			result = JSONObject.fromObject(new SystemError()).toString();
 		}
 		if (StringUtils.isBlank(result)) {
 			result = WebUtil.prepareCommonOutputJson(ServiceUtil.UPDATE_MEMBER_MEETING_STATUS, FAILURE_900, FAILURE,
@@ -272,9 +250,13 @@ public class MeetingCommand {
 			String meetingCode = request.getParameter("meetingCode");
 			String patientLastName = request.getHeader("patientLastName");
 			logger.info("meetingCode = " + meetingCode);
-			output = WebService.endCaregiverMeetingSession(meetingCode, patientLastName, false,
-					request.getSession().getId(), WebUtil.VV_MBR_GUEST);
-
+			if (TRUE.equalsIgnoreCase(request.getParameter("isFromBackButton"))) {
+				output = WebService.endCaregiverMeetingSession(meetingCode, patientLastName, true,
+						request.getSession().getId(), WebUtil.VV_MBR_GUEST_BACK_BTN);
+			} else {
+				output = WebService.endCaregiverMeetingSession(meetingCode, patientLastName, false,
+						request.getSession().getId(), WebUtil.VV_MBR_GUEST);
+			}
 			if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP,
@@ -763,7 +745,7 @@ public class MeetingCommand {
 				desktopBandwidth = WebUtil.BANDWIDTH_1024_KBPS;
 			}
 			jsonOutput = WebService.launchMemberOrProxyMeetingForMember(meetingId, mrn, inMeetingDisplayName,
-					isProxyMeeting, request.getSession().getId(), WebUtil.VV_MBR_WEB);
+					isProxyMeeting, request.getSession().getId(), WebUtil.VV_MBR_SSO_WEB);
 			output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
@@ -792,8 +774,9 @@ public class MeetingCommand {
 		JoinLeaveMeetingJSON output = null;
 		String result = null;
 		try {
+			String clientId = WebUtil.getClientIdByLoginTypeAndBackButtonAction(request);
 			output = WebService.memberLeaveProxyMeeting(request.getHeader("meetingId"), request.getHeader("memberName"),
-					request.getSession().getId(), false, WebUtil.VV_MBR_WEB);
+					request.getSession().getId(), clientId);
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {

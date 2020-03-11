@@ -546,16 +546,35 @@ public class WebUtil {
 	}
 	
 	public static String getClientIdByLoginType(final String loginType) {
+		logger.info(LOG_ENTERED);
 		String clientId = "";
-		if (WebUtil.GUEST.equalsIgnoreCase(loginType)) {
-			clientId = WebUtil.VV_MBR_GUEST;
-		} else if (WebUtil.SSO.equalsIgnoreCase(loginType)) {
-			clientId = WebUtil.VV_MBR_SSO_WEB;
-		} else if (WebUtil.TEMP_ACCESS.equalsIgnoreCase(loginType)) {
-			clientId = WebUtil.VV_MBR_WEB;
+		if (GUEST.equalsIgnoreCase(loginType)) {
+			clientId = VV_MBR_GUEST;
+		} else if (SSO.equalsIgnoreCase(loginType)) {
+			clientId = VV_MBR_SSO_WEB;
+		} else {
+			clientId = VV_MBR_WEB;
 		}
+		logger.info(LOG_EXITING);
 		return clientId;
 	}
+	
+	public static String getClientIdByLoginTypeAndBackButtonAction(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String clientId = "";
+		final String loginType = request.getParameter(LOGIN_TYPE);
+		final String isFromBackButton = request.getParameter("isFromBackButton");
+		if (GUEST.equalsIgnoreCase(loginType)) {
+			clientId = TRUE.equalsIgnoreCase(isFromBackButton) ? VV_MBR_GUEST_BACK_BTN : VV_MBR_GUEST;
+		} else if (SSO.equalsIgnoreCase(loginType)) {
+			clientId = TRUE.equalsIgnoreCase(isFromBackButton) ? VV_MBR_SSO_BACK_BTN : VV_MBR_SSO_WEB;
+		} else {
+			clientId = TRUE.equalsIgnoreCase(isFromBackButton) ? VV_MBR_BACK_BUTTON : VV_MBR_WEB;
+		}
+		logger.info(LOG_EXITING);
+		return clientId;
+	}
+
 	
 	public static void loadAllBrowserBlockProperties(final Map<String, String> properties) {
 		//Browser blocks for desktop

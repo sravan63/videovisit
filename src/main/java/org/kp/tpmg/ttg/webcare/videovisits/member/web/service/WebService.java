@@ -1197,7 +1197,7 @@ public class WebService {
 	}
 
 	public static JoinLeaveMeetingJSON memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId,
-			boolean isFromBackButton, String clientId) throws Exception {
+			String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
 		logger.debug("careGiverName=" + careGiverName);
 		JoinLeaveMeetingJSON output = null;
