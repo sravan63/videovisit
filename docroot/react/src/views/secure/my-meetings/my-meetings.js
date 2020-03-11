@@ -157,16 +157,15 @@ class MyMeetings extends React.Component {
             
 
         } else {
+            myMeetingsUrl = "launchMemberProxyMeeting.json";
             headers.ssoSession = this.state.userDetails.ssoSession;
             headers.inMeetingDisplayName = meeting.member.inMeetingDisplayName;
             var isProxyMeeting,
                 loginMrn = this.state.userDetails.mrn;
             if (loginMrn == meeting.member.mrn) {
                 isProxyMeeting = "N";
-                 myMeetingsUrl = "launchMeetingForMemberDesktop.json";
             } else {
                 isProxyMeeting = "Y";
-                myMeetingsUrl = "launchMemberProxyMeeting.json";
             }
             headers.isProxyMeeting = isProxyMeeting;
             localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
