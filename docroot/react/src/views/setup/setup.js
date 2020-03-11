@@ -173,7 +173,7 @@ class Setup extends React.Component {
                              <div className="periheral-container">
                                  <div className="label">Camera</div>
                                  <div className="dropdown show">
-                                      <a className={this.state.constrains.videoSource && !this.state.loadingSetup ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
+                                      <a className={this.state.constrains.videoSource && !this.state.loadingSetup && !this.state.isBrowserBlockError ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
                                         {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isVideo ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
@@ -191,7 +191,7 @@ class Setup extends React.Component {
                              <div className="periheral-container">
                                  <div className="label">Microphone</div>
                                  <div className="dropdown show">
-                                      <a className={this.state.constrains.micSource && !this.state.loadingSetup ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
+                                      <a className={this.state.constrains.micSource && !this.state.loadingSetup && !this.state.isBrowserBlockError ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
                                         {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isAudio ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
@@ -209,7 +209,7 @@ class Setup extends React.Component {
                              {this.state.constrains.audioSource ? (<div className="periheral-container">
                                  <div className="label">Speaker</div>
                                  <div className="dropdown show">
-                                      <a className={this.state.constrains.audioSource && !this.state.loadingSetup ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
+                                      <a className={this.state.constrains.audioSource && !this.state.loadingSetup && !this.state.isBrowserBlockError ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
                                         {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isSpeaker ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">

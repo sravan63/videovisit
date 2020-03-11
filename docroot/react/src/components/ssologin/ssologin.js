@@ -151,10 +151,10 @@ export default class Ssologin extends React.Component {
                                 </div>
                             </div>
                             <div className="form-group mobile-submit margin-gap">
-                                <button type="submit" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled}>Sign In</button>
+                                <button type="submit" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled || this.props.data.browserBlock}>Sign In</button>
                             </div>
                         </form>
-                        <button type="button" className="mobile-form-toggle mt-1 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >
+                        <button type="button" disabled={this.props.data.browserBlock} className="mobile-form-toggle mt-1 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >
                             <span className="video-icon mr-1"></span>
                             <span className="toggle-text" >Video Visit Temporary Access </span>
                         </button>
