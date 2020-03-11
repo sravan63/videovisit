@@ -48,7 +48,7 @@ class WaitingRoom extends React.Component {
 
     render() {
         return (
-            <div className="waiting-room-body" style={{width: this.props.waitingroom.hostavail ? '0' : '100%', display:this.props.waitingroom.hostavail ? "none" : "block",height: this.props.waitingroom.moreparticpants ? 'auto' : '100%' }}>
+            <div className="waiting-room-body" style={{width: this.props.waitingroom.hostavail ? '0' : '100%', display:this.props.waitingroom.hostavail ? "none" : "block",height: this.props.waitingroom.moreparticpants ? '50%' : '100%' }}>
                 <div className="full-waiting-room" style={{display: this.props.waitingroom.moreparticpants &&  window.innerWidth > 1024 ? 'none' : 'flex' }}>
     				<div className="conference-waiting-room">
     					<div className="waitingRoomMessageBlock row">
