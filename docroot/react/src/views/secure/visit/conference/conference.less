@@ -285,8 +285,10 @@
             }
 
             .video-conference {
-                width: 100% !important;
+                // width: 100% !important;
                 display: block;
+                overflow: hidden;
+                position: fixed;
 
                 .remote-feed-container {
                     height: calc(50% - 25px);
@@ -341,10 +343,8 @@
             overflow: hidden;
 
             .video-conference {
-                //width: 100% !important;
+                width: 100% !important;
                 display: block;
-                overflow: hidden;
-                position: fixed;
 
                 .controls-bar {
                     display: none;
