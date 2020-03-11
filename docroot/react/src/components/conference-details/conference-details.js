@@ -25,6 +25,11 @@ class ConferenceDetails extends React.Component {
                         meetingDetails: notification.data.meetingDetails
                     });
                     this.setSortedParticipantList();
+                    var isGuest = localStorage.getItem('isGuest') && localStorage.getItem('isGuest') == 'true';
+                    if(isGuest){
+                        var name = JSON.parse(localStorage.getItem('memberName'));
+                        this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api'});
+                    }
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
                     this.setState({
@@ -92,7 +97,7 @@ class ConferenceDetails extends React.Component {
                 if(isTelephony){
                     if(p.number == participant){
                         participantInList = true;
-                        p.inCall = hasJoined;
+                        p.inCall = true;
                         p.uuid = data.uuid;
                     }
                 } else {
@@ -101,7 +106,7 @@ class ConferenceDetails extends React.Component {
                         || p.backupName.toLowerCase() == participant.toLowerCase()
                     ) ){
                         participantInList = true;
-                        p.inCall = hasJoined;
+                        p.inCall = true;
                         p.uuid = data.uuid;
                     }
                 }

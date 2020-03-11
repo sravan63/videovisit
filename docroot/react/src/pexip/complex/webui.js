@@ -490,10 +490,18 @@ function participantCreated(participant) {
                 MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
             }
         } else {
-            var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-            var memberName = udata.lastName +', '+ udata.firstName;
-            if(participant.display_name.trim().toLowerCase() != memberName.trim().toLowerCase()){
-                MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
+            var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+            if(isProxyMeeting == 'Y'){
+                var mName = JSON.parse(localStorage.getItem('memberName'));
+                if(participant.display_name.trim().toLowerCase() != mName.trim().toLowerCase()){
+                    MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
+                }
+            } else {
+                var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+                var memberName = udata.lastName +', '+ udata.firstName;
+                if(participant.display_name.trim().toLowerCase() != memberName.trim().toLowerCase()){
+                    MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
+                }
             }
         }
 
@@ -527,12 +535,9 @@ function participantDeleted(participant) {
             };
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, participantMsg);
         }
-        //VideoVisit.checkAndShowParticipantAvailableState(pexipParticipantsList, 'pexip');
-        var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-        var memberName = udata.lastName +', '+ udata.firstName;
-        if( removingParticipant[0].display_name != memberName && !localStorage.getItem('isGuest')){
-           MessageService.sendMessage(GlobalConfig.USER_LEFT, participant);
-        }
+
+        MessageService.sendMessage(GlobalConfig.USER_LEFT, participant);
+
         toggleWaitingRoom(pexipParticipantsList);
     }
 }
