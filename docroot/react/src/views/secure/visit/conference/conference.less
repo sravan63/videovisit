@@ -266,8 +266,10 @@
         }
 
         .video-conference-container {
-            height: 100vh;
-            overflow: hidden;
+            height: auto;
+            position: fixed;
+            top: 0;
+            bottom: 0;
 
             .video-conference {
                 .controls-bar {
@@ -285,11 +287,9 @@
             }
 
             .video-conference {
-                // width: 100% !important;
+                width: 100% !important;
                 display: block;
-                overflow: hidden;
-                position: fixed;
-                width: auto;
+
                 .remote-feed-container {
                     height: calc(50% - 25px);
                     width: 100%;
