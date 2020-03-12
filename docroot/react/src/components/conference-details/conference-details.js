@@ -26,7 +26,8 @@ class ConferenceDetails extends React.Component {
                     });
                     this.setSortedParticipantList();
                     var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
-                    if(isGuest){
+                    var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+                    if( isGuest || isProxyMeeting == 'Y' ){
                         var name = JSON.parse(localStorage.getItem('memberName'));
                         this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api'});
                     }
