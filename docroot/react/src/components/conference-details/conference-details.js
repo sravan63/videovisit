@@ -95,12 +95,7 @@ class ConferenceDetails extends React.Component {
             }
         } else {
             var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-            if( isProxyMeeting == 'Y' ) {
-                var mName = JSON.parse(localStorage.getItem('memberName'));
-                if(participant.display_name.toLowerCase().trim() == mName.toLowerCase().trim()){
-                    showIndicator = false;
-                }
-            } else {
+            if( isProxyMeeting == 'N' ) {
                 var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
                 var memberName = udata.lastName +', '+ udata.firstName;
                 if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim()){
