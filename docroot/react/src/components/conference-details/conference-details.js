@@ -29,7 +29,7 @@ class ConferenceDetails extends React.Component {
                     var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
                     if( isGuest || isProxyMeeting == 'Y' ){
                         var name = JSON.parse(localStorage.getItem('memberName'));
-                        this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api'});
+                        this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
                     }
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
