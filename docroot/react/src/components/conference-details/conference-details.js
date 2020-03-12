@@ -27,9 +27,16 @@ class ConferenceDetails extends React.Component {
                     this.setSortedParticipantList();
                     var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
                     var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-                    if( isGuest || isProxyMeeting == 'Y' ){
+                    if( isGuest ){
                         var name = JSON.parse(localStorage.getItem('memberName'));
                         this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
+                    } else if( isProxyMeeting == 'Y' ){
+                        var patient = this.state.meetingDetails.member.lastName+', '+this.state.meetingDetails.member.firstName;
+                        var name = JSON.parse(localStorage.getItem('memberName'));
+                        // Satisfies only for child proxy.
+                        if( name !== patient ){
+                            this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
+                        }
                     }
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
@@ -100,6 +107,11 @@ class ConferenceDetails extends React.Component {
                 var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
                 var memberName = udata.lastName +', '+ udata.firstName;
                 if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim()){
+                    showIndicator = false;
+                }
+            } else {
+                var patient = this.state.meetingDetails.member.lastName+', '+this.state.meetingDetails.member.firstName;
+                if( participant.display_name.toLowerCase().trim() == patient.toLowerCase().trim() ){
                     showIndicator = false;
                 }
             }
