@@ -245,12 +245,12 @@ class Conference extends React.Component {
             source = "Join+Conference",
             name;
         if (this.state.isGuest == false) {
-            localStorage.setItem('memberName', JSON.stringify(meeting.member.inMeetingDisplayName));
             if(this.state.isProxyMeeting == 'Y'){
                 name = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;
             } else {
                 name = Utilities.formatStringTo(meeting.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
             }
+            localStorage.setItem('memberName', JSON.stringify(name));
             var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
             var vendorDetails = {
                 "meetingId": meeting.meetingId,
