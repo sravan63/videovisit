@@ -59,6 +59,7 @@ const GlobalConfig = {
     STRING_FORMAT: ['capitalize', 'uppercase', 'lowercase'],
     ACCESS_MEMBER_NAME: 'send member name',
     GUEST_VALIDATE_MEETING_ERROR_MSG: 'The video visit you are trying to join is not currently available.',
+    GUEST_FUTURE_MEETING:'Your visit is not ready yet, try again closer to the scheduled time.',
     GUEST_LOGIN_ERROR_MSG: 'Some exception occurred while processing request.',
     GUEST_LOGIN_VALIDATION_MSG: 'No matching patient found. Please try again.',
     SHOW_CONFERENCE_DETAILS: 'show conference details',

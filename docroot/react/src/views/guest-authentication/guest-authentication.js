@@ -39,8 +39,12 @@ class Authentication extends React.Component {
             if (sessionStorage.getItem('guestLeave')) {
                 this.setState({ ReJoin: true});
              }
-            } else {
-                this.renderErrorCompValidation();
+            } 
+            else if (response.data.statusCode == 510 || response.data.statusCode == 500){
+                this.renderErrorCompValidation(true);
+            }
+            else {
+                this.renderErrorCompValidation(false);
             }
         }, (err) => {
             this.renderErrorCompValidation();
@@ -65,10 +69,10 @@ class Authentication extends React.Component {
             console.log("Error");
         });
     }
-    renderErrorCompValidation() {
+    renderErrorCompValidation(param) {
         this.setState({
             errorlogin: true,
-            displayErrorMsg: GlobalConfig.GUEST_VALIDATE_MEETING_ERROR_MSG,
+            displayErrorMsg: param ? GlobalConfig.GUEST_FUTURE_MEETING : GlobalConfig.GUEST_VALIDATE_MEETING_ERROR_MSG,
             inputDisable: true,
             NotLoggedIn: true,
             showLoader: false

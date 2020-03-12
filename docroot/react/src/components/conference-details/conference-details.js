@@ -188,7 +188,7 @@ class ConferenceDetails extends React.Component {
         if(isTelephony){
             this.state.telephonyGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
         } else if(data.role == "guest") { // In 'Lastname, Firstname (email)' format.
-            var gName = participant.split('(')[0];
+            var gName = participant.indexOf('(') > -1 ? participant.split('(')[0] : participant;
             var lName = participant.split(',')[0].trim();
             var fName = participant.split(',')[1].trim();
             let name = fName.toLowerCase() + ' ' + lName.toLowerCase();
