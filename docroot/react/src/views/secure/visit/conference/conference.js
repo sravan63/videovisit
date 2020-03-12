@@ -192,10 +192,10 @@ class Conference extends React.Component {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
                 this.setState({ meetingDetails: data });
+                this.startPexip(this.state.meetingDetails);
                 MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
                     meetingDetails: this.state.meetingDetails
                 });
-                this.startPexip(this.state.meetingDetails);
             } else {
                 // Do nothing
             }

@@ -458,9 +458,7 @@ function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
     log("info", "participantCreated", "console: participantCreated - inside participantCreated - participant:" + participant);
-    toggleWaitingRoom(pexipParticipantsList);
-
-
+    
     if (participant.protocol == "sip") {
         var joinParticipantMsg = {
             message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
@@ -473,40 +471,16 @@ function participantCreated(participant) {
         MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
 
     } else {
-        var joinParticipantMsg = {
-            message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
-            name: participant.display_name
-        };
-        
         if(!refreshingOrSelfJoinMeeting){
+            var joinParticipantMsg = {
+                message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
+                name: participant.display_name
+            };
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
         }
-        // TODO: Should change this logic after provider React Development.
-        var isGuest = localStorage.getItem('isGuest') && localStorage.getItem('isGuest') == 'true';
-        if(isGuest){
-            var mdata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-            var memberName = mdata.member.lastName +', '+ mdata.member.firstName;
-            if(participant.display_name.trim().toLowerCase() != memberName.trim().toLowerCase()){
-                MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
-            }
-        } else {
-            var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-            if(isProxyMeeting == 'Y'){
-                var mName = JSON.parse(localStorage.getItem('memberName'));
-                if(participant.display_name.trim().toLowerCase() != mName.trim().toLowerCase()){
-                    MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
-                }
-            } else {
-                var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-                var memberName = udata.lastName +', '+ udata.firstName;
-                if(participant.display_name.trim().toLowerCase() != memberName.trim().toLowerCase()){
-                    MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
-                }
-            }
-        }
-
-        toggleWaitingRoom(pexipParticipantsList);
+        MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
     }
+    toggleWaitingRoom(pexipParticipantsList);
 }
 
 function participantUpdated(participant) {

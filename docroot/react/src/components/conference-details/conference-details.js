@@ -25,7 +25,7 @@ class ConferenceDetails extends React.Component {
                         meetingDetails: notification.data.meetingDetails
                     });
                     this.setSortedParticipantList();
-                    var isGuest = localStorage.getItem('isGuest') && localStorage.getItem('isGuest') == 'true';
+                    var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
                     if(isGuest){
                         var name = JSON.parse(localStorage.getItem('memberName'));
                         this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api'});
@@ -39,7 +39,10 @@ class ConferenceDetails extends React.Component {
                     this.updateRunningLateTime();
                 break;
                 case GlobalConfig.USER_JOINED:
-                    this.validateGuestPresence(GlobalConfig.USER_JOINED, notification.data);
+                    var canShowPresenceIndicator = this.validateUser(notification.data);
+                    if( canShowPresenceIndicator ){
+                        this.validateGuestPresence(GlobalConfig.USER_JOINED, notification.data);
+                    }
                 break;
                 case GlobalConfig.USER_LEFT:
                     this.validateGuestPresence(GlobalConfig.USER_LEFT, notification.data);
@@ -79,6 +82,33 @@ class ConferenceDetails extends React.Component {
         this.setState({
             participants: this.state.videoGuests.concat(this.state.telephonyGuests)
         });
+    }
+
+    validateUser(participant){
+        var showIndicator = true;
+        // TODO: Should change this logic after provider React Development.
+        var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
+        if(isGuest){
+            var memberName = this.state.meetingDetails.member.lastName +', '+ this.state.meetingDetails.member.firstName;
+            if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim()){
+                showIndicator = false;
+            }
+        } else {
+            var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+            if( isProxyMeeting == 'Y' ) {
+                var mName = JSON.parse(localStorage.getItem('memberName'));
+                if(participant.display_name.toLowerCase().trim() == mName.toLowerCase().trim()){
+                    showIndicator = false;
+                }
+            } else {
+                var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
+                var memberName = udata.lastName +', '+ udata.firstName;
+                if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim()){
+                    showIndicator = false;
+                }
+            }
+        }
+        return showIndicator;
     }
 
     validateGuestPresence(type, data){
