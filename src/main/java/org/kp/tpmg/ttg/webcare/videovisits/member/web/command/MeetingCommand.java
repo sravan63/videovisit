@@ -12,6 +12,8 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_S
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS_200;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOGIN_TYPE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_SESSION;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
+import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
@@ -544,47 +547,49 @@ public class MeetingCommand {
 		String strResponse = null;
 		try {
 			WebService.initWebService(request);
-				KpOrgSignOnInfo kpOrgSignOnInfo = WebService.validateKpOrgSSOSession(ssoSession);
+			KpOrgSignOnInfo kpOrgSignOnInfo = WebService.validateKpOrgSSOSession(ssoSession);
 
-				if (kpOrgSignOnInfo == null) {
-					logger.warn("SSO Sign on failed due to KP org signon Service unavailability.");
+			if (kpOrgSignOnInfo == null) {
+				logger.warn("SSO Sign on failed due to KP org signon Service unavailability.");
+			} else {
+				if (!kpOrgSignOnInfo.isSuccess() && (StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
+						|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))) {
+					logger.warn(
+							"SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
+				} else if (kpOrgSignOnInfo.getUser() == null || (kpOrgSignOnInfo.getUser() != null
+						&& StringUtils.isBlank(kpOrgSignOnInfo.getUser().getGuid()))) {
+					logger.warn("SSO Sign on service failed to return GUID for a user");
 				} else {
-					if (!kpOrgSignOnInfo.isSuccess() && (StringUtils.isNotBlank(kpOrgSignOnInfo.getSystemError())
-							|| StringUtils.isNotBlank(kpOrgSignOnInfo.getBusinessError()))) {
-						logger.warn(
-								"SSO Sign on failed either due to Signon service returned success as false or System or Business Error.");
-					} else if (kpOrgSignOnInfo.getUser() == null || (kpOrgSignOnInfo.getUser() != null
-							&& StringUtils.isBlank(kpOrgSignOnInfo.getUser().getGuid()))) {
-						logger.warn("SSO Sign on service failed to return GUID for a user");
+
+					AuthorizeResponseVo authorizeMemberResponse = WebService
+							.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
+					if (authorizeMemberResponse == null) {
+						logger.warn("SSO Sign on failed due to unavailability of Member SSO Auth API");
 					} else {
-
-						AuthorizeResponseVo authorizeMemberResponse = WebService
-								.authorizeMemberSSOByGuid(kpOrgSignOnInfo.getUser().getGuid(), null);
-						if (authorizeMemberResponse == null) {
-							logger.warn("SSO Sign on failed due to unavailability of Member SSO Auth API");
+						// check for errors returned
+						if (authorizeMemberResponse.getResponseWrapper() == null) {
+							logger.warn("SSO Sign on failed due to Member SSO Auth API authorization failure");
 						} else {
-							// check for errors returned
-							if (authorizeMemberResponse.getResponseWrapper() == null) {
-								logger.warn("SSO Sign on failed due to Member SSO Auth API authorization failure");
-							} else {
-								if (validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper())) {
-									logger.info("validateKpOrgSSOSession successful");
-									SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
-									signOnOutput.setMemberInfo(authorizeMemberResponse.getResponseWrapper().getMemberInfo());
-									signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
-									signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
-									strResponse = WebUtil.prepareCommonOutputJson("ssoPreLogin", "200", "success", signOnOutput);
-								}
-
+							if (validateMemberSSOAuthResponse(authorizeMemberResponse.getResponseWrapper())) {
+								logger.info("validateKpOrgSSOSession successful");
+								SSOSignOnInfo signOnOutput = new SSOSignOnInfo();
+								signOnOutput
+										.setMemberInfo(authorizeMemberResponse.getResponseWrapper().getMemberInfo());
+								signOnOutput.setKpOrgSignOnInfo(kpOrgSignOnInfo);
+								signOnOutput.setSsoSession(kpOrgSignOnInfo.getSsoSession());
+								strResponse = WebUtil.prepareCommonOutputJson("ssoPreLogin", "200", "success",
+										signOnOutput);
 							}
 
 						}
+
 					}
 				}
+			}
 		} catch (Exception e) {
 			logger.error("System Error" + e.getMessage(), e);
 		}
-		if(StringUtils.isBlank(strResponse)) {
+		if (StringUtils.isBlank(strResponse)) {
 			strResponse = WebUtil.prepareCommonOutputJson("ssoPreLogin", "400", "failure", null);
 		}
 		logger.info(LOG_EXITING);
@@ -595,16 +600,16 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		try {
-			if (WebUtil.SSO.equalsIgnoreCase(request.getParameter(WebUtil.LOGIN_TYPE))
-					&& StringUtils.isNotBlank(request.getHeader(WebUtil.SSO_SESSION))) {
+			if (WebUtil.SSO.equalsIgnoreCase(request.getParameter(LOGIN_TYPE))
+					&& StringUtils.isNotBlank(request.getHeader(SSO_SESSION))) {
 				WebService.initWebService(request);
-				WebService.performKpOrgSSOSignOff(request.getHeader(WebUtil.SSO_SESSION));
+				WebService.performKpOrgSSOSignOff(request.getHeader(SSO_SESSION));
 			}
 			WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
 			WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);
 			WebUtil.removeCookie(request, response, WebUtil.S_COOKIE_NAME);
 			output = WebUtil.prepareCommonOutputJson("logout", "200", "success", "");
-			final String loginType = request.getParameter(WebUtil.LOGIN_TYPE);
+			final String loginType = request.getParameter(LOGIN_TYPE);
 			if (WebUtil.SSO.equalsIgnoreCase(loginType) || WebUtil.TEMP_ACCESS.equalsIgnoreCase(loginType)) {
 				memberLogout(request);
 			}
@@ -638,14 +643,9 @@ public class MeetingCommand {
 		long meetingId = 0;
 		String result = null;
 		String clientId = null;
-		final String loginType = request.getParameter("loginType");
 		try {
-			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
-				meetingId = Long.parseLong(request.getParameter("meetingId"));
-			}
-			if (StringUtils.isNotBlank(loginType)) {
-				clientId = WebUtil.getClientIdByLoginType(loginType);
-			}
+			meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
+			clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
 			final String status = request.getParameter("status");
 			final String careGiverName = request.getHeader("careGiverName");
 			logger.info("meetingId=" + meetingId + ", status=" + status);
@@ -654,13 +654,14 @@ public class MeetingCommand {
 			if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
 				isProxyMeeting = true;
 			}
-
 			output = WebService.setKPHCConferenceStatus(meetingId, status, isProxyMeeting, careGiverName,
 					request.getSession().getId(), clientId);
-			if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
-					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
-				result = WebUtil.prepareCommonOutputJson(ServiceUtil.SET_KPHC_CONFERENCE_STATUS,
-						output.getStatus().getCode(), output.getStatus().getMessage(), "");
+			if (output != null && output.getStatus() != null) {
+				Status outputStatus = output.getStatus();
+				if (StringUtils.isNotBlank(outputStatus.getCode())) {
+					result = WebUtil.prepareCommonOutputJson(ServiceUtil.SET_KPHC_CONFERENCE_STATUS,
+							outputStatus.getCode(), outputStatus.getMessage(), "");
+				}
 			}
 
 		} catch (Exception e) {
@@ -682,7 +683,7 @@ public class MeetingCommand {
 		final String mrn = request.getHeader("mrn");
 		final boolean isNonMember = "true".equalsIgnoreCase(request.getHeader("isNonMember"));
 		final String proxyMeetings = request.getParameter("getProxyMeetings");
-		final String loginType = request.getParameter(WebUtil.LOGIN_TYPE);
+		final String loginType = request.getParameter(LOGIN_TYPE);
 		if (WebUtil.isSsoSimulation() && SSO.equalsIgnoreCase(loginType)) {
 			output = WebService.getActiveMeetingsForSSOSimulation(mrn, isNonMember,
 					request.getSession().getId(), WebUtil.VV_MBR_SSO_SIM_WEB);
@@ -857,41 +858,33 @@ public class MeetingCommand {
 	public static String launchMeetingForMemberDesktop(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		long meetingId = 0;
-		String megaMeetingDisplayName = null;
 		LaunchMeetingForMemberDesktopJSON output = new LaunchMeetingForMemberDesktopJSON();
-		String mrn = null;
 		String jsonOutput = null;
 		String result = null;
 		Gson gson = new GsonBuilder().serializeNulls().create();
-		String desktopBandwidth = null;
+		long meetingId = 0;
 		try {
-			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
-				meetingId = Long.parseLong(request.getParameter("meetingId"));
-			}
-			if (StringUtils.isNotBlank(request.getHeader("megaMeetingDisplayName"))) {
-				megaMeetingDisplayName = request.getHeader("megaMeetingDisplayName");
-			}
-			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
-				mrn = request.getHeader("mrn");
-			}
-			if (AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH") != null) {
-				desktopBandwidth = AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH");
-			} else {
-				desktopBandwidth = WebUtil.BANDWIDTH_1024_KBPS;
-			}
+			meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
+			String megaMeetingDisplayName = request.getHeader("megaMeetingDisplayName");
+			String mrn = request.getHeader("mrn");
+			String desktopBandwidth = AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH");
+			desktopBandwidth = StringUtils.isNotBlank(desktopBandwidth) ? desktopBandwidth
+					: WebUtil.BANDWIDTH_1024_KBPS;
+			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
 			jsonOutput = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
-					request.getSession().getId(), WebUtil.VV_MBR_WEB);
+					request.getSession().getId(), clientId);
 			output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
 
-			if (output != null && output.getService() != null && output.getService().getStatus() != null
-					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())) {
-				result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP,
-						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
-						output.getService().getLaunchMeetingEnvelope() != null
-								? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
-								: null);
-				result = WebUtil.setBandWidth(result, desktopBandwidth, "data");
+			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
+				Status status = output.getService().getStatus();
+				if (StringUtils.isNotBlank(status.getCode())) {
+					result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP,
+							status.getCode(), status.getMessage(),
+							output.getService().getLaunchMeetingEnvelope() != null
+									? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
+									: null);
+					result = WebUtil.setBandWidth(result, desktopBandwidth, "data");
+				}
 			}
 			logger.debug("json output: = " + output);
 		} catch (Exception e) {
@@ -974,23 +967,24 @@ public class MeetingCommand {
 	 */
 	public static String getProviderRunningLateDetails(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
-		final String meetingId = request.getParameter("meetingId");
-		final Gson gson = new Gson();
 		String jsonOutput = null;
 		String result = null;
 		MeetingRunningLateOutputJson output = new MeetingRunningLateOutputJson();
+		final Gson gson = new Gson();
+		final String meetingId = request.getParameter("meetingId");
 		try {
-			jsonOutput = WebService.getProviderRunningLateDetails(meetingId, request.getSession().getId(),
-					WebUtil.VV_MBR_WEB);
+			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
+			jsonOutput = WebService.getProviderRunningLateDetails(meetingId, request.getSession().getId(), clientId);
 			output = gson.fromJson(jsonOutput, MeetingRunningLateOutputJson.class);
-			if (output != null && output.getService() != null && output.getService().getStatus() != null
-					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
-					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
-				result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS,
-						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
-						output.getService().getRunningLateEnvelope() != null
-								? output.getService().getRunningLateEnvelope()
-								: null);
+			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
+				Status status = output.getService().getStatus();
+				if (StringUtils.isNotBlank(status.getCode())) {
+					result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS,
+							status.getCode(), status.getMessage(),
+							output.getService().getRunningLateEnvelope() != null
+									? output.getService().getRunningLateEnvelope()
+									: null);
+				}
 			}
 
 		} catch (Exception e) {
@@ -1070,7 +1064,6 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String jsonOutput = null;
 		String result = null;
-		String clientId = null;
 		final String meetingId = request.getParameter("meetingId");
 		final String userType = request.getParameter("userType");
 		final String userId = request.getParameter("userId");
@@ -1078,21 +1071,20 @@ public class MeetingCommand {
 		final String eventDescription = request.getParameter("eventDescription");
 		final String logType = request.getParameter("logType");
 		final String sessionId = request.getSession().getId();
-		final String loginType = request.getParameter("loginType");
+		final String loginType = request.getParameter(LOGIN_TYPE);
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
-		final Gson gson = new Gson();
+		final Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
-			if (StringUtils.isNotBlank(loginType)) {
-				clientId = WebUtil.getClientIdByLoginType(loginType);
-			}
+			String clientId = WebUtil.getClientIdByLoginType(loginType);
 			jsonOutput = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
 					eventName, eventDescription, logType, sessionId, clientId);
 			output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
-			if (output != null && output.getService() != null && output.getService().getStatus() != null
-					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
-					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
-				result = WebUtil.prepareCommonOutputJson(ServiceUtil.LOG_VENDOR_MEETING_EVENTS,
-						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(), "");
+			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
+				Status status = output.getService().getStatus();
+				if (StringUtils.isNotBlank(status.getCode())) {
+					result = WebUtil.prepareCommonOutputJson(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, status.getCode(),
+							status.getMessage(), "");
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error while logVendorMeetingEvents for meeting :" + meetingId + " : ", e);
@@ -1195,34 +1187,30 @@ public class MeetingCommand {
 	 */
 	public static String getMeetingDetails(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
-		final String meetingId = request.getParameter("meetingId");
+		final long meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
 		String result = null;
 		String jsonOutput = null;
 		MeetingDetailsForMeetingIdJSON output = new MeetingDetailsForMeetingIdJSON();
-		String clientId = null;
-		String loginType = request.getParameter("loginType");
 		final Gson gson = new Gson();
 		try {
-			if (StringUtils.isNotBlank(loginType)) {
-				clientId = WebUtil.getClientIdByLoginType(loginType);
-			}
-			jsonOutput = WebService.getMeetingDetailsForMeetingId(Long.parseLong(meetingId),
-					request.getSession().getId(), clientId);
+			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
+			jsonOutput = WebService.getMeetingDetailsForMeetingId(meetingId, request.getSession().getId(), clientId);
 			output = gson.fromJson(jsonOutput, MeetingDetailsForMeetingIdJSON.class);
-			if (output != null && output.getService() != null && output.getService().getStatus() != null
-					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
-					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
-				result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID,
-						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
-						output.getService().getEnvelope() != null ? output.getService().getEnvelope().getMeeting()
-								: null);
+			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
+				Status status = output.getService().getStatus();
+				if (StringUtils.isNotBlank(status.getCode())) {
+					result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID,
+							status.getCode(), status.getMessage(),
+							output.getService().getEnvelope() != null ? output.getService().getEnvelope().getMeeting()
+									: null);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error while getMeetingDetailsForMeetingId for meeting:" + meetingId, e);
 		}
 		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, FAILURE_900, FAILURE,
-					null);
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, FAILURE_900,
+					FAILURE, null);
 		}
 		logger.info(LOG_EXITING);
 		return result;

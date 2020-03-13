@@ -105,8 +105,7 @@ public class MemberRestController extends SimplePageController {
 	public String launchMeetingForMemberDesktop(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-		output = MeetingCommand.launchMeetingForMemberDesktop(request);
+		String output = MeetingCommand.launchMeetingForMemberDesktop(request);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
@@ -117,8 +116,7 @@ public class MemberRestController extends SimplePageController {
 	public String providerRunningLateInfo(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-		output = MeetingCommand.getProviderRunningLateDetails(request);
+		String output = MeetingCommand.getProviderRunningLateDetails(request);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
@@ -129,8 +127,7 @@ public class MemberRestController extends SimplePageController {
 	public String logVendorMeetingEvents(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-		output = MeetingCommand.logVendorMeetingEvents(request);
+		String output = MeetingCommand.logVendorMeetingEvents(request);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
@@ -141,9 +138,8 @@ public class MemberRestController extends SimplePageController {
 	public String setKPHCConferenceStatus(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-			output = MeetingCommand.setKPHCConferenceStatus(request);
-			logger.debug("output = " + output);
+		String output = MeetingCommand.setKPHCConferenceStatus(request);
+		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -153,52 +149,35 @@ public class MemberRestController extends SimplePageController {
 	public String meetingDetails(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-			output = MeetingCommand.getMeetingDetails(request);
-			logger.debug("output = " + output);
+		String output = MeetingCommand.getMeetingDetails(request);
+		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
 
 	@RequestMapping(value = "/launchMemberProxyMeeting.json", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
-	public String launchMemberProxyMeeting(final HttpServletRequest request,
-			final HttpServletResponse response)
+	public String launchMemberProxyMeeting(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-			output = MeetingCommand.launchMemberOrProxyMeetingForMember(request);
-			logger.debug("output = " + output);
-		logger.info(LOG_EXITING);
-		return output;
-	}
-
-	@RequestMapping(value = "/createguestsession.json", produces = {
-			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
-	public String createguestsession(final HttpServletRequest request,
-			final HttpServletResponse response)
-			throws Exception {
-		logger.info(LOG_ENTERED);
-		String output = null;
-		output = MeetingCommand.createCaregiverMeetingSession(request);
+		String output = MeetingCommand.launchMemberOrProxyMeetingForMember(request);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
 
-	@RequestMapping(value = "/caregiverJoinMeeting.json", produces = {
-			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
-	public String caregiverJoinMeeting(final HttpServletRequest request,
-			final HttpServletResponse response)
+	@RequestMapping(value = "/caregiverJoinMeeting.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String caregiverJoinMeeting(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-			output = MeetingCommand.caregiverJoinLeaveMeeting(request);
-			logger.debug("output = " + output);
+		String output = MeetingCommand.caregiverJoinLeaveMeeting(request);
+		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
 	}
-	@RequestMapping(value = "/quitmeeting.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+	
+	@RequestMapping(value = "/quitMeeting.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
 	public String quitMeeting(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
@@ -211,7 +190,6 @@ public class MemberRestController extends SimplePageController {
 			output = MeetingCommand.updateEndMeetingLogout(request, memberName, false);
 		}
 		logger.debug("output = " + output);
-
 		logger.info(LOG_EXITING);
 		return output;
 	}
@@ -221,20 +199,7 @@ public class MemberRestController extends SimplePageController {
 	public String endGuestSession(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-		output = MeetingCommand.endCaregiverMeetingSession(request);
-		logger.debug("output = " + output);
-		logger.info(LOG_EXITING);
-		return output;
-	}
-
-	@RequestMapping(value = "/guestmeeting.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
-			RequestMethod.POST, RequestMethod.GET })
-	public String guestmeeting(final HttpServletRequest request, final HttpServletResponse response)
-			throws Exception {
-		logger.info(LOG_ENTERED);
-		String output = null;
-		output = MeetingCommand.retrieveMeetingForCaregiver(request, response);
+		String output = MeetingCommand.endCaregiverMeetingSession(request);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
@@ -245,7 +210,6 @@ public class MemberRestController extends SimplePageController {
 	public String createSetupWizardMeeting(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
 		String hostNuid = null;
 		String participantNuid[] = null;
 		String memberMrn = null;
@@ -256,7 +220,7 @@ public class MemberRestController extends SimplePageController {
 			memberMrn = WebService.getSetupWizardMemberMrn();
 			meetingType = WebService.getSetupWizardMeetingType();
 		}
-		output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid, memberMrn, meetingType);
+		String output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid, memberMrn, meetingType);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
@@ -266,8 +230,7 @@ public class MemberRestController extends SimplePageController {
 			RequestMethod.POST, RequestMethod.GET })
 	public String isMeetingHashValid(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = null;
-		output = MeetingCommand.isMeetingHashValid(request, response);
+		String output = MeetingCommand.isMeetingHashValid(request, response);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;

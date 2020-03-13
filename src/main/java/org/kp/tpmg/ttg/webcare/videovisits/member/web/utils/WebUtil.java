@@ -534,6 +534,7 @@ public class WebUtil {
 	}
 	
 	public static String setBandWidth(String result, String desktopBandwidth, String data) {
+		logger.info(LOG_ENTERED);
 		JsonElement jelement = new JsonParser().parse(result);
 		JsonObject jobject = jelement.getAsJsonObject();
 		if (StringUtils.isNotBlank(data)) {
@@ -542,6 +543,7 @@ public class WebUtil {
 			jobject.addProperty("desktopBandwidth", desktopBandwidth);
 		}
 		result = jobject.toString();
+		logger.info(LOG_EXITING);
 		return result;
 	}
 	
