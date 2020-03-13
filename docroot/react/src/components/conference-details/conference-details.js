@@ -218,7 +218,7 @@ class ConferenceDetails extends React.Component {
             var lName = nArr[0].trim();
             var title = '';
             var fName = '';
-            if( nArr[1].trim().indexOf(' ') ) {
+            if( nArr[1].trim().indexOf(' ') > -1) {
                 title = nArr[1].trim().split(' ').reverse().splice(0,1)[0].trim();
                 fName = nArr[1].split(title)[0].trim();
             } else {

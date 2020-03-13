@@ -118,7 +118,7 @@ class BackendService extends React.Component {
 
     quitMeeting(meetingId, isProxyMeeting, headers, loginType, isFromBackButton) {
 
-        return Axios.post(this.state.basePath + '/videovisit/' + 'quitmeeting.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&isProxyMeeting=' + isProxyMeeting + '&isFromBackButton=' + isFromBackButton, {}, { headers: headers });
+        return Axios.post(this.state.basePath + '/videovisit/' + 'quitMeeting.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&isProxyMeeting=' + isProxyMeeting + '&isFromBackButton=' + isFromBackButton, {}, { headers: headers });
     }
 
 }

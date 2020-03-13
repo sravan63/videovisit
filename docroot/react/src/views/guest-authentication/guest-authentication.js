@@ -40,7 +40,7 @@ class Authentication extends React.Component {
                 this.setState({ ReJoin: true});
              }
             } 
-            else if (response.data.statusCode == 510 || response.data.statusCode == 500){
+            else if (response.data.statusCode == 510){
                 this.renderErrorCompValidation(true);
             }
             else {
