@@ -13,7 +13,6 @@ class ConferenceDetails extends React.Component {
         super(props);       
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
-        this.setSortedParticipantList = this.setSortedParticipantList.bind(this);
         this.state = { isRunningLate: false, runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [], hostDetails: {hostInCall: false, uuid: null} };
     }
 
@@ -25,19 +24,7 @@ class ConferenceDetails extends React.Component {
                         meetingDetails: notification.data.meetingDetails
                     });
                     this.setSortedParticipantList();
-                    var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
-                    var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-                    if( isGuest ){
-                        var name = JSON.parse(localStorage.getItem('memberName'));
-                        this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
-                    } else if( isProxyMeeting == 'Y' ){
-                        var patient = this.state.meetingDetails.member.lastName+', '+this.state.meetingDetails.member.firstName;
-                        var name = JSON.parse(localStorage.getItem('memberName'));
-                        // Satisfies only for child proxy.
-                        if( name !== patient ){
-                            this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
-                        }
-                    }
+                    this.indicateUserOnJoin();
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
                     this.setState({
@@ -70,7 +57,7 @@ class ConferenceDetails extends React.Component {
             participants.map(guest => {
                 let name = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase();
                 name += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : '' : '';
-                // remove this later
+                // TODO: Should remove this after UID implementation
                 let backupName = guest.lastName.toLowerCase() + ', ' + guest.firstName.toLowerCase();
                 backupName += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : '' : '';
                 list.push({ name: name.trim(), inCall: false, isTelephony: false, backupName: backupName });
@@ -78,7 +65,7 @@ class ConferenceDetails extends React.Component {
             list.sort((a, b) => (a.name > b.name) ? 1 : -1);
         }
         this.setState({ videoGuests: list });
-        // Add Telephony guest to the participant's list.
+        // Adding Telephony guest to the participant's list.
         if(this.state.meetingDetails.sipParticipants){
             this.state.meetingDetails.sipParticipants.map(guest => {
                 let name = guest.displayName.toLowerCase();
@@ -92,9 +79,26 @@ class ConferenceDetails extends React.Component {
         });
     }
 
-    validateUser(participant){
+    indicateUserOnJoin() {
+        // TODO: Should change this logic after UID implementation
+        var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
+        var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+        if( isGuest ){
+            var name = JSON.parse(localStorage.getItem('memberName'));
+            this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
+        } else if( isProxyMeeting == 'Y' ){
+            var patient = this.state.meetingDetails.member.lastName+', '+this.state.meetingDetails.member.firstName;
+            var name = JSON.parse(localStorage.getItem('memberName'));
+            // Satisfies only for child proxy scenario.
+            if( name !== patient ){
+                this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
+            }
+        }
+    }
+
+    validateUser(participant) {
         var showIndicator = true;
-        // TODO: Should change this logic after provider React Development.
+        // TODO: Should change this logic after UID implementation
         var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
         if(isGuest){
             var memberName = this.state.meetingDetails.member.lastName +', '+ this.state.meetingDetails.member.firstName;
@@ -111,7 +115,7 @@ class ConferenceDetails extends React.Component {
                 }
             } else {
                 var patient = this.state.meetingDetails.member.lastName+', '+this.state.meetingDetails.member.firstName;
-                if( participant.display_name.toLowerCase().trim() == patient.toLowerCase().trim() ){
+                if( participant.display_name.toLowerCase().trim() == patient.toLowerCase().trim() ) {
                     showIndicator = false;
                 }
             }
@@ -119,17 +123,19 @@ class ConferenceDetails extends React.Component {
         return showIndicator;
     }
 
-    validateGuestPresence(type, data){
+    validateGuestPresence(type, data) {
         var participantInList = false;
         var hasJoined = type == GlobalConfig.USER_JOINED;
         var participant = hasJoined ? 
                           data.protocol == "sip" ? data.uri.substring(6, 16) : data.display_name 
                           : data.uuid;
         var isTelephony = hasJoined ? data.protocol == "sip" : false;
-        // Remove this later
+
+        // TODO: Should remove this after UID implementation
         if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
             participant = participant.split('(')[0].trim();
         }
+
         this.state.participants.map(function(p){
             if(hasJoined){
                 if(isTelephony){
@@ -156,24 +162,23 @@ class ConferenceDetails extends React.Component {
             }
         });
         if(!participantInList){
-            let isHost = this.validateHost(data, hasJoined);
-            // For a new participant
-            if(hasJoined && !isHost){
+            let isHostInCall = this.validateHostPresence(data, hasJoined);
+            if(hasJoined && !isHostInCall){
                 this.appendParticipantToTheList(data, participant, isTelephony);
             }
         }
     }
 
-    validateHost(data, hasJoined){
+    validateHostPresence(data, hasJoined) {
         let isHostValidation = false;
-        if(hasJoined){
+        if(hasJoined) {
             let hClinician = this.state.meetingDetails.host;
             let host = '';
             host += hClinician.firstName ? hClinician.firstName.toLowerCase() : '';
             host += hClinician.lastName ? ' ' + hClinician.lastName.toLowerCase() : '';
             host += hClinician.title ? ', ' + hClinician.title : '';
 
-            // remove this later
+            // TODO: Should remove this after UID implementation
             let hostclinician = '';
             hostclinician += hClinician.lastName ? hClinician.lastName.toLowerCase() : '';
             hostclinician += hClinician.firstName ? ', ' + hClinician.firstName.toLowerCase() : '';
@@ -196,7 +201,7 @@ class ConferenceDetails extends React.Component {
         return isHostValidation;
     }
 
-    appendParticipantToTheList(data, participant, isTelephony){
+    appendParticipantToTheList(data, participant, isTelephony) {
         if(isTelephony){
             this.state.telephonyGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
         } else if(data.role == "guest") { // In 'Lastname, Firstname (email)' format.
@@ -204,18 +209,24 @@ class ConferenceDetails extends React.Component {
             var lName = participant.split(',')[0].trim();
             var fName = participant.split(',')[1].trim();
             let name = fName.toLowerCase() + ' ' + lName.toLowerCase();
-            // remove this later
+            // TODO: Should remove this after UID implementation
             let backupName = lName.toLowerCase() + ', ' + fName.toLowerCase();
             this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
             this.state.videoGuests.sort((a, b) => (a.name > b.name) ? 1 : -1);
         } else { // In 'Lastname, Firstname Title' format.
             var nArr = participant.split(',');
             var lName = nArr[0].trim();
-            var title = nArr[1].trim().split(' ').reverse().splice(0,1)[0].trim();
-            var fName = nArr[1].split(' ')[1].trim();
+            var title = '';
+            var fName = '';
+            if( nArr[1].trim().indexOf(' ') ) {
+                title = nArr[1].trim().split(' ').reverse().splice(0,1)[0].trim();
+                fName = nArr[1].split(title)[0].trim();
+            } else {
+                fName = nArr[1].trim();
+            }
             let name = fName.toLowerCase() + ' ' + lName.toLowerCase();
             name += title ? ' ' + title : '';
-            // remove this later
+            // TODO: Should remove this after UID implementation
             let backupName = lName.toLowerCase() + ', ' + fName.toLowerCase();
             backupName += title ? ' ' + title : '';
             this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
@@ -259,7 +270,7 @@ class ConferenceDetails extends React.Component {
         this.subscription.unsubscribe();
     }
 
-    leaveMeeting(){
+    leaveMeeting() {
         MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
     }
 
