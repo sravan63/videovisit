@@ -1,24 +1,18 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.command;
 
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.SIP;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants.TELEPHONY;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.FAILURE_900;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOGIN_TYPE;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_SESSION;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_SUBMIT_LOGIN;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS_200;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOGIN_TYPE;
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_SESSION;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,16 +23,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.WordUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.MemberConstants;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.GsonUtil;
@@ -50,16 +41,12 @@ import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
-import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
-import org.kp.tpmg.videovisit.model.user.Caregiver;
-import org.kp.tpmg.videovisit.model.user.Member;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
@@ -67,7 +54,6 @@ import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import net.sf.json.JSONObject;
 import net.sourceforge.wurfl.core.Device;
 
 public class MeetingCommand {
@@ -148,46 +134,6 @@ public class MeetingCommand {
 	}
 
 	/**
-	 * Method to invokes rest retrieveMeetingForCaregiver service and adds the
-	 * meeting information into the web context and returns MeetingDetailsOutput
-	 * JSOn
-	 * 
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	public static String retrieveMeetingForCaregiver(HttpServletRequest request, HttpServletResponse response) {
-		logger.info(LOG_ENTERED);
-		MeetingDetailsOutput output = null;
-		String meetingCode;
-		String result = null;
-		meetingCode = request.getHeader("meetingHash");
-		try {
-			output = WebService.retrieveMeetingForCaregiver(meetingCode, request.getSession().getId(),
-					WebUtil.VV_MBR_GUEST);
-			if (isMyMeetingsAvailable(output)) {
-				final List<MeetingDO> myMeetings = output.getEnvelope().getMeetings();
-				logger.info("Meetings Size: " + myMeetings.size());
-				if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
-						&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
-					result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_CAREGIVER,
-							output.getStatus().getCode(), output.getStatus().getMessage(),
-							output.getEnvelope() != null ? myMeetings : null);
-				}
-			}
-
-		} catch (Exception e) {
-			logger.error("Error while getActiveMeetingsForCaregiver : " + e.getMessage(), e);
-		}
-		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_CAREGIVER, FAILURE_900,
-					FAILURE, null);
-		}
-		logger.info(LOG_EXITING);
-		return result;
-	}
-
-	/**
 	 * Check and return true if meetings present. If not return false
 	 * 
 	 * @param meetingDetails
@@ -205,43 +151,6 @@ public class MeetingCommand {
 			}
 		}
 		return isMyMeetingsAvailable;
-	}
-
-	public static String createCaregiverMeetingSession(HttpServletRequest request)
-			throws Exception {
-		logger.info(LOG_ENTERED);
-		LaunchMeetingForMemberGuestOutput output = null;
-		String result = null;
-		try {
-			String meetingCode = request.getParameter("meetingCode");
-			String patientLastName = WebUtil.replaceSpecialCharacters(request.getHeader("patientLastName"));
-			boolean isMobileFlow;
-			if (WebUtil.TRUE.equalsIgnoreCase(request.getParameter("isMobileFlow"))) {
-				isMobileFlow = true;
-				logger.info("mobile flow is true");
-			} else {
-				isMobileFlow = false;
-				logger.info("mobile flow is false");
-			}
-			output = WebService.createCaregiverMeetingSession(meetingCode, patientLastName, isMobileFlow,
-					request.getSession().getId(), WebUtil.VV_MBR_GUEST);
-			if (output != null && output.getStatus() != null && StringUtils.isNotBlank(output.getStatus().getCode())
-					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
-				result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_GUEST_DESKTOP,
-						output.getStatus().getCode(), output.getStatus().getMessage(),
-						output.getLaunchMeetingEnvelope() != null ? output.getLaunchMeetingEnvelope().getLaunchMeeting()
-								: null);
-			}
-		} catch (Exception e) {
-			logger.error("Error while launchMeetingForMemberGuestDesktop : " + e.getMessage(), e);
-		}
-		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_GUEST_DESKTOP, FAILURE_900,
-					FAILURE, null);
-		}
-		logger.info(LOG_EXITING);
-		return result;
-
 	}
 
 	public static String endCaregiverMeetingSession(HttpServletRequest request)
@@ -274,34 +183,6 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
-	}
-
-	public static String endCaregiverMeetingSession(String meetingCode, String megaMeetingNameDisplayName,
-			String sessionId, HttpServletRequest request) throws Exception {
-		logger.info(LOG_ENTERED);
-		ServiceCommonOutput output = null;
-		String jsonString = null;
-		try {
-			final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-			final String clientId = ctx != null ? ctx.getBackButtonClientId() : WebUtil.VV_MBR_BACK_BUTTON;
-			logger.info("meetingCode = " + meetingCode);
-			if (StringUtils.isNotBlank(meetingCode)) {
-				output = WebService.endCaregiverMeetingSession(meetingCode, megaMeetingNameDisplayName, true,
-						sessionId, clientId);
-			}
-			if (output != null) {
-				Gson gson = new Gson();
-				jsonString = gson.toJson(output);
-				logger.info("json output" + jsonString);
-			}
-
-		} catch (Exception e) {
-			logger.error("System Error :" + e.getMessage(), e);
-			jsonString = JSONObject.fromObject(new SystemError()).toString();
-		}
-		logger.info(LOG_EXITING);
-		return jsonString;
-
 	}
 
 	private static String fillToLength(String src, char fillChar, int total_length) {
@@ -343,45 +224,6 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
-	}
-
-	public static String terminateSetupWizardMeeting(HttpServletRequest request)
-			throws Exception {
-		logger.info(LOG_ENTERED);
-		ServiceCommonOutput output = null;
-		String jsonString = null;
-		long meetingId = 0;
-		String vendorConfId = null;
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		try {
-			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
-				meetingId = Long.parseLong(request.getParameter("meetingId"));
-			} else {
-				return "MeetingCommand.terminateSetupWizardMeeting -> Validation Error: Meeting Id can not be null or blank.";
-			}
-
-			if (StringUtils.isNotBlank(request.getParameter("vendorConfId"))) {
-				vendorConfId = request.getParameter("vendorConfId");
-			}
-
-			WebService.initWebService(request);
-			String hostNuid = WebService.getSetupWizardHostNuid();
-			final String clientId = WebUtil.getClientIdFromContext(ctx);
-			output = WebService.terminateInstantMeeting(meetingId, vendorConfId, hostNuid,
-					request.getSession().getId(), clientId);
-
-			if (output != null) {
-				Gson gson = new Gson();
-				jsonString = gson.toJson(output);
-				logger.info("json output" + jsonString);
-			}
-
-		} catch (Exception e) {
-			logger.error("System Error for meeting:" + meetingId, e);
-			jsonString = JSONObject.fromObject(new SystemError()).toString();
-		}
-		logger.info(LOG_EXITING);
-		return jsonString;
 	}
 
 	public static String performSSOSignOn(final HttpServletRequest request, final HttpServletResponse response) throws Exception {logger.info(LOG_ENTERED);
@@ -508,37 +350,6 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING + "isValid =" + isValid);
 		return isValid;
-	}
-
-	public static void setWebAppContextMemberInfo(WebAppContext ctx, MemberInfo memberInfo) {
-		final Member memberDO = new Member();
-		try {
-			final String dateStr = memberInfo.getDateOfBirth();
-			if (StringUtils.isNotBlank(dateStr)) {
-				if (dateStr.endsWith("Z")) {
-					Calendar cal = javax.xml.bind.DatatypeConverter.parseDateTime(dateStr);
-					memberDO.setDateOfBirth(String.valueOf(cal.getTimeInMillis()));
-				} else {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-					Date date = sdf.parse(memberInfo.getDateOfBirth());
-					memberDO.setDateOfBirth(String.valueOf(date.getTime()));
-				}
-			}
-		} catch (Exception e) {
-			logger.warn("error while parsing string date to long.");
-		}
-		memberDO.setEmail(memberInfo.getEmail());
-		memberDO.setFirstName(WordUtils.capitalizeFully(memberInfo.getFirstName()));
-		memberDO.setGender(memberInfo.getGender());
-		memberDO.setLastName(WordUtils.capitalizeFully(memberInfo.getLastName()));
-		memberDO.setMiddleName(WordUtils.capitalizeFully(memberInfo.getMiddleName()));
-
-		if (StringUtils.isBlank(memberInfo.getMrn())) {
-			ctx.setNonMember(true);
-		} else {
-			memberDO.setMrn(WebUtil.fillToLength(memberInfo.getMrn(), '0', 8));
-		}
-		ctx.setMemberDO(memberDO);
 	}
 
 	public static String validateKpOrgSSOSession(HttpServletRequest request,
@@ -795,66 +606,6 @@ public class MeetingCommand {
 		return result;
 	}
 
-	public static String getLaunchMeetingDetailsForMemberGuest(HttpServletRequest request)
-			throws Exception {
-		logger.info(LOG_ENTERED);
-		WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		LaunchMeetingForMemberGuestOutput launchMeetingForMemberGuest = new LaunchMeetingForMemberGuestOutput();
-		String meetingCode = null;
-		String patientLastName = null;
-		String json = "";
-		String deviceType = null;
-
-		try {
-			logger.info("meetingCode=" + request.getParameter("meetingCode") + ", isMobileFlow="
-					+ request.getParameter("isMobileFlow"));
-			logger.debug("patientLastName before replace special characters =" + request.getParameter("patientLastName"));
-
-			meetingCode = request.getParameter("meetingCode");
-			patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
-			logger.debug("patientLastName after replace special characters =" + patientLastName);
-			boolean isMobileFlow;
-			if ("true".equalsIgnoreCase(request.getParameter("isMobileFlow"))) {
-				isMobileFlow = true;
-				logger.info("mobile flow is true");
-			} else {
-				isMobileFlow = false;
-				logger.info("mobile flow is false");
-			}
-			Device device = DeviceDetectionService.checkForDevice(request);
-			Map<String, String> capabilities = device.getCapabilities();
-
-			String brandName = capabilities.get("brand_name");
-			String modelName = capabilities.get("model_name");
-			String deviceOs = capabilities.get("device_os");
-			String deviceOsVersion = capabilities.get("device_os_version");
-
-			if (brandName != null && modelName != null) {
-				deviceType = brandName + " " + modelName;
-			}
-			launchMeetingForMemberGuest = WebService.getMeetingDetailsForMemberGuest(meetingCode, patientLastName,
-					deviceType, deviceOs, deviceOsVersion, isMobileFlow, request.getSession().getId(),
-					ctx.getClientId());
-			if (launchMeetingForMemberGuest != null) {
-				String statusCode = launchMeetingForMemberGuest.getStatus().getCode();
-				if (statusCode != "200") {
-					ctx.setCareGiver(false);
-
-				}
-				ctx.setCareGiver(true);
-				Gson gson = new Gson();
-				json = gson.toJson(launchMeetingForMemberGuest);
-				logger.debug("json output" + json);
-				return json;
-			}
-
-		} catch (Exception e) {
-			logger.error("System Error" + e.getMessage(), e);
-		}
-		logger.info(LOG_EXITING);
-		return JSONObject.fromObject(new SystemError()).toString();
-	}
-
 	public static String launchMeetingForMemberDesktop(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
@@ -896,56 +647,6 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
-	}
-
-
-	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request)
-			throws Exception {
-		logger.info(LOG_ENTERED);
-		long meetingId = 0;
-		String deviceType = null;
-		boolean isMobileflow = true;
-		String output = null;
-		String inMeetingDisplayName = null;
-		String mrn = null;
-		try {
-			logger.info("meetingid=" + request.getParameter("meetingId"));
-			logger.debug("In meetingdisplayname=" + request.getParameter("inMeetingDisplayName"));
-			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
-				meetingId = Long.parseLong(request.getParameter("meetingId"));
-			}
-
-			if (StringUtils.isNotBlank(request.getParameter("inMeetingDisplayName"))) {
-				inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
-			}
-			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
-				inMeetingDisplayName = request.getParameter("mrn");
-			}
-			Device device = DeviceDetectionService.checkForDevice(request);
-			Map<String, String> capabilities = device.getCapabilities();
-
-			logger.debug("Mobile capabilities" + capabilities);
-			String brandName = capabilities.get("brand_name");
-			String modelName = capabilities.get("model_name");
-			String deviceOs = capabilities.get("device_os");
-			String deviceOsVersion = capabilities.get("device_os_version");
-
-			if (brandName != null && modelName != null) {
-				deviceType = brandName + " " + modelName;
-			}
-			output = WebService.getLaunchMeetingDetails(meetingId, inMeetingDisplayName, request.getSession().getId(),
-					mrn, deviceType, deviceOs, deviceOsVersion, isMobileflow);
-			if (output != null) {
-				logger.debug("json output:" + output);
-				logger.info(LOG_EXITING);
-				return output;
-			}
-
-		} catch (Exception e) {
-			logger.error("System Error for meeting:" + meetingId, e);
-		}
-		logger.info(LOG_EXITING);
-		return JSONObject.fromObject(new SystemError()).toString();
 	}
 
 	public static String memberLogout(HttpServletRequest request) throws Exception {
@@ -1096,91 +797,7 @@ public class MeetingCommand {
 		return result;
 	}
 	
-	/**
-	 * @param request
-	 */
-	public static void updateWebappContext(final HttpServletRequest request) {
-		logger.info(LOG_ENTERED);
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		final String meetingId = request.getParameter("meetingId");
-		final String userType = request.getParameter("userType");
-		final String firstName = request.getParameter("firstName");
-		final String email = request.getParameter("email");
-		final String displayName = request.getParameter("displayName");
-		final String destination = request.getParameter("destination");
-		final String participantType = request.getParameter("participantType");
-		if (ctx != null && StringUtils.isNotBlank(meetingId) && StringUtils.isNotBlank(userType)) {
-			if (TELEPHONY.equalsIgnoreCase(userType)) {
-				addCaregiverToContext(ctx, meetingId, firstName, MemberConstants.AUDIO_PARTICIPANT, email);
-			} else if (SIP.equalsIgnoreCase(userType)) {
-				addSipParticipantToContext(ctx, meetingId, displayName, destination, participantType);
-			}
-		}
-		logger.info(LOG_EXITING);
-	}
 
-	private static void addCaregiverToContext(final WebAppContext ctx, final String meetingId, final String firstName,
-			final String lastName, final String email) {
-		final Caregiver caregiver = new Caregiver();
-		caregiver.setFirstName(firstName);
-		caregiver.setLastName(lastName);
-		caregiver.setEmailAddress(email);
-		final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
-		if (meeting != null) {
-			List<Caregiver> caregivers = meeting.getCaregiver();
-			if (CollectionUtils.isNotEmpty(caregivers)) {
-				if (!ctx.isCaregiverExist(meetingId, firstName, lastName, email)) {
-					caregivers.add(caregiver);
-				}
-			} else {
-				caregivers = new ArrayList<Caregiver>(1);
-				caregivers.add(caregiver);
-			}
-		}
-	}
-	
-	private static void addSipParticipantToContext(final WebAppContext ctx, final String meetingId,
-			final String displayName, final String destination, final String participantType) {
-		final SipParticipant sipParticipant = new SipParticipant();
-		sipParticipant.setDestination(destination);
-		sipParticipant.setDisplayName(displayName);
-		sipParticipant.setParticipantType(participantType);
-		final MeetingDO meeting = ctx.getMyMeetingByMeetingId(meetingId);
-		if (meeting != null) {
-			List<SipParticipant> sipParticipants = meeting.getSipParticipants();
-			if (CollectionUtils.isNotEmpty(sipParticipants)) {
-				final SipParticipant locSipParticipant = getSipParticipant(meeting, destination);
-				if (locSipParticipant == null) {
-					sipParticipants.add(sipParticipant);
-				} else {
-					locSipParticipant.setDisplayName(displayName);
-				}
-			} else {
-				sipParticipants = new ArrayList<SipParticipant>(1);
-				sipParticipants.add(sipParticipant);
-				meeting.setSipParticipants(sipParticipants);
-			}
-		}
-	}
-	
-	/**
-	 * @param meetingId
-	 * @param destination
-	 * @return
-	 */
-	private static SipParticipant getSipParticipant(final MeetingDO meeting, final String destination) {
-		SipParticipant sipParticipant = null;
-		if (StringUtils.isNotBlank(destination) && CollectionUtils.isNotEmpty(meeting.getSipParticipants())) {
-			for (SipParticipant locSipParticipant : meeting.getSipParticipants()) {
-				if (destination.equalsIgnoreCase(locSipParticipant.getDestination())) {
-					sipParticipant = locSipParticipant;
-					break;
-				}
-			}
-		}
-		return sipParticipant;
-	}
-	
 	/**
 	 * @param request
 	 *            request
@@ -1258,44 +875,6 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return output;
-	}
-	
-	public static void updateWebappContextWithPexipMobileBrowserDetails(WebAppContext ctx) {
-		if (ctx != null) {
-			final String pexMobBlockSafariVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_SAFARI_VERSION");
-			final String pexMobBlockChromeVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_CHROME_VERSION");
-			final String pexMobBlockFirefoxVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_FIREFOX_VERSION");
-			if (StringUtils.isNotBlank(pexMobBlockSafariVer)) {
-				ctx.setPexMobBlockSafariVer(pexMobBlockSafariVer);
-			}
-			if (StringUtils.isNotBlank(pexMobBlockChromeVer)) {
-				ctx.setPexMobBlockChromeVer(pexMobBlockChromeVer);
-			}
-			if (StringUtils.isNotBlank(pexMobBlockFirefoxVer)) {
-				ctx.setPexMobBlockFirefoxVer(pexMobBlockFirefoxVer);
-			}
-		}
-	}
-	
-	public static void updateWebappContextWithPexipDesktopBrowserDetails(WebAppContext ctx) {
-		if (ctx != null) {
-			final String pexDesktopBlockSafariVer = getExtPropertiesValueByKey("PEXIP_BLOCK_SAFARI_VERSION");
-			final String pexDesktopBlockChromeVer = getExtPropertiesValueByKey("PEXIP_BLOCK_CHROME_VERSION");
-			final String pexDesktopBlockFirefoxVer = getExtPropertiesValueByKey("PEXIP_BLOCK_FIREFOX_VERSION");
-			final String pexDesktopBlockEdgeVer = getExtPropertiesValueByKey("PEXIP_BLOCK_EDGE_VERSION");
-			if (StringUtils.isNotBlank(pexDesktopBlockSafariVer)) {
-				ctx.setPexBlockSafariVer(pexDesktopBlockSafariVer);
-			}
-			if (StringUtils.isNotBlank(pexDesktopBlockChromeVer)) {
-				ctx.setPexBlockChromeVer(pexDesktopBlockChromeVer);
-			}
-			if (StringUtils.isNotBlank(pexDesktopBlockFirefoxVer)) {
-				ctx.setPexBlockFirefoxVer(pexDesktopBlockFirefoxVer);
-			}
-			if (StringUtils.isNotBlank(pexDesktopBlockEdgeVer)) {
-				ctx.setPexBlockEdgeVer(pexDesktopBlockEdgeVer);
-			}
-		}
 	}
 	
 	public static String isMeetingHashValid(HttpServletRequest request, HttpServletResponse response) throws Exception {

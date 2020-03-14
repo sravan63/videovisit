@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
@@ -424,10 +423,6 @@ public class WebUtil {
 		final String ssoSimulation = AppProperties.getExtPropertiesValueByKey("SSO_SIMULATION");
 		final boolean isSsoSimulation = StringUtils.isNotBlank(ssoSimulation) && TRUE.equalsIgnoreCase(ssoSimulation);
 		return isSsoSimulation;
-	}
-
-	public static String getClientIdFromContext(final WebAppContext ctx) {
-		return ctx != null ? ctx.getClientId() : VV_MBR_WEB;
 	}
 
 	public static String getSSOCookieName() {

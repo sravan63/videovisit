@@ -5,7 +5,6 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.videovisit.model.user.Member;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -33,7 +32,7 @@ public class JwtUtil {
 		} catch (Exception e) {
 			logger.warn("Error while validating token", e);
 		}
-		logger.info(claims);
+		logger.debug(claims);
 		if (claims != null && !claims.isEmpty() && StringUtils.isNotBlank(reqMeetingId)
 				&& StringUtils.isNotBlank(reqMrn)) {
 			final String meetingId = (String) claims.get("meetingId");
@@ -59,7 +58,7 @@ public class JwtUtil {
 		} catch (Exception e) {
 			logger.error("error while validating token", e);
 		}
-		logger.info(claims);
+		logger.debug(claims);
 		if (claims != null && !claims.isEmpty()) {
 			isValid = true;
 		}
@@ -70,7 +69,8 @@ public class JwtUtil {
 	public static String generateJwtToken(String mrn) {
 		logger.info(LOG_ENTERED);
 		Claims claims = JwtUtil.createClaims(mrn);
+		String authToken = JwtTokenGenerator.generateToken(claims, JWT_SECRET, JWT_TOKEN_EXPIRATION_MILLIS);
 		logger.info(LOG_EXITING);
-		return JwtTokenGenerator.generateToken(claims, JWT_SECRET, JWT_TOKEN_EXPIRATION_MILLIS);
+		return authToken;
 	}
 }

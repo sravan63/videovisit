@@ -1,6 +1,5 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.service;
 
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil.GET_ACTIVE_MEETINGS_FOR_CAREGIVER;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
@@ -28,7 +27,6 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
-import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.EndMeetingForMemberGuestDesktopInput;
@@ -38,8 +36,6 @@ import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopInput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestDesktopInput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestInput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberInput;
@@ -47,16 +43,12 @@ import org.kp.tpmg.videovisit.model.meeting.LaunchMemberOrProxyMeetingForMemberI
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdInput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdOutput;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForMemberAndProxiesInput;
 import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForNonMemberProxiesInput;
 import org.kp.tpmg.videovisit.model.meeting.SetKPHCConferenceStatusInput;
-import org.kp.tpmg.videovisit.model.meeting.TerminateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.UpdateMemberMeetingStatusInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyAndLaunchMeetingForMemberGuestInput;
-import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverInput;
-import org.kp.tpmg.videovisit.model.meeting.VerifyCareGiverOutput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
 import org.kp.tpmg.videovisit.model.meeting.provider.UpdateEmailActionInput;
@@ -334,52 +326,6 @@ public class WebService {
 		return output;
 	}
 
-	/**
-	 * Retrieve meetings for caregiver
-	 * 
-	 * @param meetingHash
-	 * @param sessionId
-	 * @param clientId
-	 * @return
-	 * @throws Exception
-	 */
-	public static MeetingDetailsOutput retrieveMeetingForCaregiver(final String meetingHash, final String sessionId,
-			final String clientId) throws Exception {
-		logger.info(LOG_ENTERED + "meetingHash:" + meetingHash);
-		String jsonString = "";
-		MeetingDetailsOutput output = null;
-		try {
-			if (StringUtils.isBlank(meetingHash) || StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)) {
-				logger.warn("Missing input attributes.");
-				output = new MeetingDetailsOutput();
-				final Status status = new Status();
-				status.setCode("300");
-				status.setMessage("Missing input attributes.");
-				output.setStatus(status);
-			} else {
-				final Gson gson = new Gson();
-				final ActiveMeetingsForCaregiverInput input = new ActiveMeetingsForCaregiverInput();
-				input.setMeetingHash(meetingHash);
-				input.setClientId(clientId);
-				input.setSessionId(sessionId);
-				final String inputJsonStr = gson.toJson(input);
-				logger.info("jsonInputString " + inputJsonStr);
-
-				jsonString = callVVRestService(GET_ACTIVE_MEETINGS_FOR_CAREGIVER, inputJsonStr);
-				logger.debug("jsonResponseString" + jsonString);
-
-				final JsonParser parser = new JsonParser();
-				final JsonObject jobject = (JsonObject) parser.parse(jsonString);
-				output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
-			}
-		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage(), e);
-			throw new Exception("Web Service API error", e);
-		}
-		logger.info(LOG_EXITING);
-		return output;
-	}
-
 	public static MeetingDetailsOutput IsMeetingHashValid(String meetingHash, String clientId, String sessionId)
 			throws RemoteException, Exception {
 		logger.info(LOG_ENTERED + "meetingHash:" + meetingHash);
@@ -416,58 +362,6 @@ public class WebService {
 			throw new Exception("Web Service API error", e.getCause());
 		}
 		logger.info(LOG_EXITING);
-		return output;
-	}
-
-	public static LaunchMeetingForMemberGuestOutput createCaregiverMeetingSession(String meetingHash,
-			String patientLastName, boolean isMobileFlow, String sessionId, String clientId) throws Exception {
-		logger.info(LOG_ENTERED + "meetingHash: " + meetingHash + "isMobileFlow :" + isMobileFlow);
-		logger.debug("patientLastName: " + patientLastName);
-		LaunchMeetingForMemberGuestOutput output = null;
-		String responseJsonStr = "";
-		try {
-			if (StringUtils.isBlank(meetingHash) || StringUtils.isBlank(patientLastName)
-					|| StringUtils.isBlank(sessionId)) {
-				logger.warn("Missing input attributes.");
-				output = new LaunchMeetingForMemberGuestOutput();
-				final Status status = new Status();
-				status.setCode("300");
-				status.setMessage("Missing input attributes.");
-				output.setStatus(status);
-				return output;
-
-			}
-
-			LaunchMeetingForMemberGuestDesktopInput input = new LaunchMeetingForMemberGuestDesktopInput();
-			input.setMeetingHash(meetingHash);
-			input.setPatientLastName(patientLastName);
-			input.setMobileFlow(isMobileFlow);
-			input.setClientId(clientId);
-			input.setSessionId(sessionId);
-
-			final Gson gson = new Gson();
-			final String inputJsonString = gson.toJson(input);
-			logger.debug("jsonInptString : " + inputJsonString);
-
-			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString);
-			logger.debug("jsonResponseString : " + responseJsonStr);
-
-			final JsonParser parser = new JsonParser();
-			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-			output = gson.fromJson(jobject.get("service").toString(), LaunchMeetingForMemberGuestOutput.class);
-
-		} catch (Exception e) {
-			logger.error("Web Service API error:" + e);
-			throw new Exception("Web Service API error", e.getCause());
-
-		}
-		String responseCodeAndMsg = "Empty response";
-		if (output != null) {
-			responseCodeAndMsg = output.getStatus() != null
-					? output.getStatus().getMessage() + ": " + output.getStatus().getCode()
-					: "No rest response code & message returned from service.";
-		}
-		logger.info(LOG_EXITING + "Rest response message & code: " + responseCodeAndMsg);
 		return output;
 	}
 
@@ -508,50 +402,6 @@ public class WebService {
 
 		catch (Exception e) {
 			logger.error("Web Service API error:" + e);
-			throw new Exception("Web Service API error", e.getCause());
-
-		}
-		logger.info(LOG_EXITING);
-		return output;
-	}
-
-	public static ServiceCommonOutput terminateInstantMeeting(long meetingId, String vendorConfId, String updaterNUID,
-			String sessionId, String clientId) throws Exception {
-		logger.info(LOG_ENTERED + "meetingId=" + meetingId + ", vendorConfId=" + vendorConfId);
-		logger.debug("updaterNUID=" + updaterNUID);
-		ServiceCommonOutput output = null;
-		String responseJsonStr = "";
-		try {
-			if (meetingId <= 0 || StringUtils.isBlank(updaterNUID) || StringUtils.isBlank(sessionId)) {
-				logger.warn("Missing input attributes.");
-				output = new ServiceCommonOutput();
-				final Status status = new Status();
-				status.setCode("300");
-				status.setMessage("Missing input attributes.");
-				output.setStatus(status);
-				return output;
-			}
-			TerminateInstantVendorMeetingInput input = new TerminateInstantVendorMeetingInput();
-			input.setMeetingId(meetingId);
-			input.setMeetingVendorId(vendorConfId);
-			input.setUpdaterNuid(updaterNUID);
-			input.setSessionId(sessionId);
-			input.setClientId(clientId);
-
-			final Gson gson = new Gson();
-			final String inputJsonString = gson.toJson(input);
-			logger.debug("jsonInptString : " + inputJsonString);
-
-			responseJsonStr = callVVRestService(ServiceUtil.TERMINATE_INSTANT_VENDOR_MEETING, inputJsonString);
-			logger.info("jsonResponseString : " + responseJsonStr);
-
-			final JsonParser parser = new JsonParser();
-			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-			output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
-		}
-
-		catch (Exception e) {
-			logger.error("Web Service API error for meeting : " + meetingId, e);
 			throw new Exception("Web Service API error", e.getCause());
 
 		}
@@ -999,93 +849,6 @@ public class WebService {
 		return output;
 	}
 
-	/* verifyCaregiver calling the new rest API */
-
-	public static VerifyCareGiverOutput verifyCaregiver(String meetingHash, String patientLastName, String sessionId,
-			String clientId) throws Exception {
-		logger.info(LOG_ENTERED + " meetingHash=" + meetingHash);
-		logger.debug("patientLastName = " + patientLastName);
-		VerifyCareGiverOutput output = new VerifyCareGiverOutput();
-		Status status = new Status();
-		try {
-			if (meetingHash == null || patientLastName == null) {
-				status.setCode("500");
-				status.setMessage("Missing Inputs");
-				output.setStatus(status);
-				return output;
-			}
-			VerifyCareGiverInput input = new VerifyCareGiverInput();
-			input.setMeetingHash(meetingHash);
-			input.setSessionId(sessionId);
-			input.setClientId(clientId);
-			input.setPatientLastName(patientLastName);
-
-			String operationName = "verifyCaregiver";
-
-			Gson gson = new Gson();
-			String inputString = gson.toJson(input);
-			logger.debug("jsonInptString " + inputString);
-
-			String jsonString = callVVRestService(operationName, inputString);
-			logger.debug("jsonString" + jsonString);
-
-			JsonParser parser = new JsonParser();
-			JsonObject jobject = new JsonObject();
-			jobject = (JsonObject) parser.parse(jsonString);
-			output = gson.fromJson(jobject.get("service").toString(), VerifyCareGiverOutput.class);
-		} catch (Exception e) {
-			logger.error("Web Service API error:" + e);
-			throw new Exception("Web Service API error", e.getCause());
-		}
-		logger.info(LOG_EXITING);
-		return output;
-	}
-
-	/* launchMeetingForMemberGuest calling the new REst API */
-
-	public static LaunchMeetingForMemberGuestOutput getMeetingDetailsForMemberGuest(String meetingHash,
-			String patientLastName, String deviceType, String deviceOS, String deviceOSVersion, boolean isMobileFlow,
-			String sessionId, String clientId) throws Exception {
-
-		logger.info(LOG_ENTERED + "meetingHash: " + meetingHash + ", isMobileFlow :" + isMobileFlow + ", deviceType :"
-				+ deviceType + ", deviceOS :" + deviceOS + ", deviceOSVersion :" + deviceOSVersion);
-		logger.debug("patientLastName: " + patientLastName);
-
-		LaunchMeetingForMemberGuestOutput launchMeetingForMemberGuest = new LaunchMeetingForMemberGuestOutput();
-
-		LaunchMeetingForMemberGuestInput launchMeetingForMemberGuestInput = new LaunchMeetingForMemberGuestInput();
-		try {
-			launchMeetingForMemberGuestInput.setMeetingHash(meetingHash);
-			launchMeetingForMemberGuestInput.setPatientLastName(patientLastName);
-			launchMeetingForMemberGuestInput.setDeviceOs(deviceOS);
-			launchMeetingForMemberGuestInput.setDeviceType(deviceType);
-			launchMeetingForMemberGuestInput.setDeviceOsVersion(deviceOSVersion);
-			launchMeetingForMemberGuestInput.setMobileFlow(isMobileFlow);
-			launchMeetingForMemberGuestInput.setClientId(clientId);
-			launchMeetingForMemberGuestInput.setSessionId(sessionId);
-
-			String operationName = "launchMeetingForMemberGuest";
-
-			Gson gson = new Gson();
-			String inputString = gson.toJson(launchMeetingForMemberGuestInput);
-			logger.debug("jsonInputString " + inputString);
-
-			String jsonString = callVVRestService(operationName, inputString);
-			logger.debug("outputjsonString" + jsonString);
-
-			final JsonParser parser = new JsonParser();
-			final JsonObject jobject = (JsonObject) parser.parse(jsonString);
-			launchMeetingForMemberGuest = gson.fromJson(jobject.get("service").toString(),
-					LaunchMeetingForMemberGuestOutput.class);
-		} catch (Exception e) {
-			logger.error("Web Service API error : " + e.getMessage() + " Retrying...", e);
-			throw new Exception("Web Service API error", e.getCause());
-
-		}
-		logger.info(LOG_EXITING);
-		return launchMeetingForMemberGuest;
-	}
-
 	/**
 	 * @param lastName
 	 * @param mrn
@@ -1320,41 +1083,6 @@ public class WebService {
 		logger.info(LOG_EXITING);
 		return responseJsonStr;
 
-	}
-
-	public static MeetingDetailsJSON retrieveMeeting(String mrn8Digit, int pastMinutes, int futureMinutes,
-			String sessionID, String clientId) throws Exception {
-		logger.info(LOG_ENTERED + " pastMinutes=" + pastMinutes + " pastMinutes=" + pastMinutes);
-		logger.debug("mrn8Digit=" + mrn8Digit);
-
-		MeetingDetailsJSON meetingDetailsJSON = null;
-		Gson gson = new Gson();
-		String output = null;
-		ActiveMeetingsForMemberInput jsonInput = new ActiveMeetingsForMemberInput();
-		try {
-			if (mrn8Digit == null || sessionID == null) {
-				logger.warn("Missing input attributes.");
-				MeetingDetailsJSON detailsJSON = new MeetingDetailsJSON();
-				detailsJSON.setService(new MeetingDetailsOutput());
-				final Status status = new Status();
-				status.setCode("300");
-				status.setMessage("Missing input attributes.");
-				detailsJSON.getService().setStatus(status);
-				return detailsJSON;
-			}
-			jsonInput.setMrn(mrn8Digit);
-			jsonInput.setClientId(clientId);
-			jsonInput.setSessionId(sessionID);
-			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
-			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
-			meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
-		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
-			meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
-		}
-		logger.info(LOG_EXITING);
-		return meetingDetailsJSON;
 	}
 
 	public static String getLaunchMeetingDetails(long meetingID, String inMeetingDisplayName, String sessionID,
