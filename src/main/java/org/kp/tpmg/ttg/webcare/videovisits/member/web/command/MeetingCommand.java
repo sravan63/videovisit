@@ -227,7 +227,6 @@ public class MeetingCommand {
 	public static String performSSOSignOn(final HttpServletRequest request, final HttpServletResponse response) throws Exception {logger.info(LOG_ENTERED);
 	String strResponse = null;
 	try {
-		WebService.initWebService(request);
 		String userName = request.getParameter("username");
 		String password = request.getParameter("password");
 
@@ -235,6 +234,7 @@ public class MeetingCommand {
 		KpOrgSignOnInfo kpOrgSignOnInfo = null;
 		if (StringUtils.isNotBlank(userName) && StringUtils.isNotBlank(password)) {
 			if (!WebUtil.isSsoSimulation()) {
+				WebService.initializekpOrgSSOHeaders(request);
 				kpOrgSignOnInfo = WebService.performKpOrgSSOSignOn(userName, password);
 				if (kpOrgSignOnInfo == null) {
 					logger.warn("SSO Sign on failed due to KP org signon Service unavailability.");
@@ -355,7 +355,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String strResponse = null;
 		try {
-			WebService.initWebService(request);
+			WebService.initializekpOrgSSOHeaders(request);
 			KpOrgSignOnInfo kpOrgSignOnInfo = WebService.validateKpOrgSSOSession(ssoSession);
 
 			if (kpOrgSignOnInfo == null) {
@@ -411,7 +411,7 @@ public class MeetingCommand {
 		try {
 			if (WebUtil.SSO.equalsIgnoreCase(request.getParameter(LOGIN_TYPE))
 					&& StringUtils.isNotBlank(request.getHeader(SSO_SESSION))) {
-				WebService.initWebService(request);
+				WebService.initializekpOrgSSOHeaders(request);
 				WebService.performKpOrgSSOSignOff(request.getHeader(SSO_SESSION));
 			}
 			WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
@@ -435,7 +435,7 @@ public class MeetingCommand {
 	public static void performSSOSignOff(HttpServletRequest request, HttpServletResponse response, final String ssoSession) {
 		logger.info(LOG_ENTERED);
 		try {
-			WebService.initWebService(request);
+			WebService.initializekpOrgSSOHeaders(request);
 			WebService.performKpOrgSSOSignOff(ssoSession);
 			WebUtil.removeCookie(request, response, WebUtil.getSSOCookieName());
 			WebUtil.removeCookie(request, response, WebUtil.HSESSIONID_COOKIE_NAME);

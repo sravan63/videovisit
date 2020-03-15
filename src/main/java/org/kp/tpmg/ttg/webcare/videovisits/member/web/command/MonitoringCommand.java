@@ -20,9 +20,6 @@ public class MonitoringCommand {
 		logger.info(LOG_ENTERED);
 		String toRet = null;
 		try {
-			boolean success = WebService.initWebService(request);
-			logger.info("initWebService: " + success);
-
 			ServiceCommonOutputJson result = WebService.testDbRoundTrip();
 
 			if (result != null && result.getService() != null && result.getService().getStatus() != null) {

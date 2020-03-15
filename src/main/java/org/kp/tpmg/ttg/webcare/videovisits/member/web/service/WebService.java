@@ -77,7 +77,6 @@ import com.google.gson.JsonParser;
 public class WebService {
 
 	public static final Logger logger = Logger.getLogger(WebService.class);
-	public static boolean simulation = true;
 
 	private static String serviceSecurityUsername = null;
 	private static String serviceSecurityPassword = null;
@@ -86,7 +85,6 @@ public class WebService {
 	private static String setupWizardHostNuid;
 	private static String setupWizardMemberMrn;
 	private static String setupWizardMeetingType;
-	private static String setupWizardUserName;
 
 	private static String videoVisitRestServiceUrl = null;
 
@@ -95,7 +93,6 @@ public class WebService {
 	private static String memberSSOAuthRegionCode = null;
 	private static String kpOrgSSOSignOnAPIUrl = null;
 	private static String kpOrgSSOSignOffAPIUrl = null;
-	private static String kpOrgSSOKeepAliveUrl = null;
 	private static String kpOrgSSOUserAgentCategoryHeader = null;
 	private static String kpOrgSSOOsVersionHeader = null;
 	private static String kpOrgSSOUserAgentTypeHeader = null;
@@ -108,69 +105,6 @@ public class WebService {
 	private static boolean isParrs = true;
 
 	private static RestTemplate restTemplate = new RestTemplate();
-
-	public static boolean initWebService(HttpServletRequest request) {
-		logger.info(LOG_ENTERED);
-		boolean ret = true;
-
-		try {
-			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
-			simulation = "true".equals(appProp.getProperty("WEBSERVICE_SIMULATION")) ? true : false;
-			logger.debug("Simulation:" + simulation);
-			serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
-			serviceSecurityPassword = Crypto.decrypt(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
-			logger.debug(
-					"SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
-
-			// setup wizard related values
-			setupWizardHostNuid = appProp.getProperty("SETUP_WIZARD_HOST_NUID");
-			setupWizardMemberMrn = appProp.getProperty("SETUP_WIZARD_MEMBER_MRN");
-			setupWizardMeetingType = appProp.getProperty("SETUP_WIZARD_MEETING_TYPE");
-			setupWizardUserName = appProp.getProperty("SETUP_WIZARD_USER_NAME");
-			logger.debug("setupWizardHostNuid=" + setupWizardHostNuid + ", setupWizardMemberMrn=" + setupWizardMemberMrn
-					+ ", setupWizardMeetingType=" + setupWizardMeetingType + ", setupWizardUserName="
-					+ setupWizardUserName);
-
-			// Proxy Appts parameters
-			secureCodes = appProp.getProperty("SECURE_CODES");
-			isAdhoc = "true".equals(appProp.getProperty("ADHOC")) ? true : false;
-			isParrs = "true".equals(appProp.getProperty("PARRS")) ? true : false;
-			logger.debug("secureCodes=" + secureCodes + ", isAdhoc=" + isAdhoc + ", isParrs=" + isParrs);
-
-			memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
-			memberSSOAuthRegionCode = appProp.getProperty("MEMBER_SSO_AUTH_REGION_CODE");
-			videoVisitRestServiceUrl = appProp.getProperty("VIDEOVISIT_REST_URL");
-			kpOrgSSOSignOnAPIUrl = appProp.getProperty("KPORG_SSO_SIGNON_API_URL");
-			kpOrgSSOSignOffAPIUrl = appProp.getProperty("KPORG_SSO_SIGNOFF_API_URL");
-			kpOrgSSOKeepAliveUrl = appProp.getProperty("KPORG_SSO_KEEP_ALIVE_URL");
-			kpOrgSSOUserAgentCategoryHeader = System.getProperty("os.name");
-			kpOrgSSOOsVersionHeader = System.getProperty("os.version");
-			kpOrgSSOUserAgentTypeHeader = WebUtil.getBrowserDetails(request);
-			kpOrgSSOAPIKeyHeader = Crypto.decrypt(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
-			kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
-
-			logger.debug("kpOrgSSOSignOnAPIUrl : " + kpOrgSSOSignOnAPIUrl);
-			logger.info("kpOrgSSOUserAgentCategoryHeader : " + kpOrgSSOUserAgentCategoryHeader
-					+ ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:"
-					+ kpOrgSSOUserAgentTypeHeader);
-			logger.debug("kpOrgSSOAppNameHeader : " + kpOrgSSOAppNameHeader + ",  kpOrgSSOAPIKeyHeader:"
-					+ kpOrgSSOAPIKeyHeader);
-			logger.debug("kpOrgSSOSignOffAPIUrl : " + kpOrgSSOSignOffAPIUrl);
-			logger.debug("memberSSOAuthAPIUrl : " + memberSSOAuthAPIUrl);
-			logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl);
-			logger.debug("kpOrgSSOKeepAliveUrl : " + kpOrgSSOKeepAliveUrl);
-
-			if (simulation)
-				return true;
-		} catch (Exception e) {
-			final String message = "Exception while reading properties file";
-			logger.error("System Error : " + e.getMessage(), e);
-			ret = false;
-			throw new RuntimeException(message, e);
-		}
-		logger.info(LOG_EXITING);
-		return ret;
-	}
 
 	/**
 	 * @return the setupWizardHostNuid
@@ -215,28 +149,6 @@ public class WebService {
 	 */
 	public static void setSetupWizardMeetingType(String setupWizardMeetingType) {
 		WebService.setupWizardMeetingType = setupWizardMeetingType;
-	}
-
-	/**
-	 * @return the setupWizardUserName
-	 */
-	public static String getSetupWizardUserName() {
-		return setupWizardUserName;
-	}
-
-	/**
-	 * @param setupWizardUserName
-	 *            the setupWizardUserName to set
-	 */
-	public static void setSetupWizardUserName(String setupWizardUserName) {
-		WebService.setupWizardUserName = setupWizardUserName;
-	}
-
-	/**
-	 * @return the kpOrgSSOKeepAliveUrl
-	 */
-	public static String getKpOrgSSOKeepAliveUrl() {
-		return kpOrgSSOKeepAliveUrl;
 	}
 
 	/**
@@ -388,6 +300,9 @@ public class WebService {
 		KpOrgSignOnInfo kpOrgSignOnInfo = null;
 		int statusCode = 0;
 		ResponseEntity<?> responseEntity = null;
+		if (StringUtils.isBlank(kpOrgSSOSignOnAPIUrl)) {
+			kpOrgSSOSignOnAPIUrl = AppProperties.getExtPropertiesValueByKey("KPORG_SSO_SIGNON_API_URL");
+		}
 		URI uri = new URI(kpOrgSSOSignOnAPIUrl);
 		String authStr = userId + ":" + password;
 		String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
@@ -467,6 +382,7 @@ public class WebService {
 		KpOrgSignOnInfo kpOrgSignOnInfo = null;
 		ResponseEntity<?> responseEntity = null;
 		int statusCode = 0;
+		initializeKpOrgSSOSignOffProperty();
 		final URI uri = new URI(kpOrgSSOSignOffAPIUrl);
 		final HttpHeaders headers = getJsonHttpHeaders();
 		headers.set("Accept", "*/*");
@@ -527,6 +443,7 @@ public class WebService {
 				"guid=" + guid + ", regionCode=" + regionCode + ", memberSSOAuthRegionCode=" + memberSSOAuthRegionCode);
 		AuthorizeResponseVo response = null;
 		try {
+			initializeMemberSSOAuthProperties();
 			EsbInfo esbInfo = new EsbInfo();
 			esbInfo.setEndpoint(memberSSOAuthAPIUrl);
 			esbInfo.setUserName(serviceSecurityUsername);
@@ -558,6 +475,7 @@ public class WebService {
 		final HttpHeaders headers = getJsonHttpHeaders();
 		headers.set("ssosession", ssoSession);
 		try {
+			initializeKpOrgSSOSignOffProperty();
 			final URI uri = new URI(kpOrgSSOSignOffAPIUrl);
 			responseEntity = callRestService(headers, uri, HttpMethod.DELETE, String.class);
 			if (responseEntity != null) {
@@ -583,6 +501,19 @@ public class WebService {
 		return isSignedOff;
 	}
 
+	public static void initializeKpOrgSSOSignOffProperty() {
+		logger.info(LOG_ENTERED);
+		try {
+			if (StringUtils.isBlank(kpOrgSSOSignOffAPIUrl)) {
+				kpOrgSSOSignOffAPIUrl = AppProperties.getExtPropertiesValueByKey("KPORG_SSO_SIGNOFF_API_URL");
+				logger.debug("kpOrgSSOSignOffAPIUrl : " + kpOrgSSOSignOffAPIUrl);
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to get initializeKpOrgSSOSignOffProperty from external properties file");
+		}
+		logger.info(LOG_EXITING);
+	}
+	
 	public static void initializeRestProperties() {
 		logger.info(LOG_ENTERED);
 		try {
@@ -598,7 +529,80 @@ public class WebService {
 		}
 		logger.info(LOG_EXITING + " videoVisitRestServiceUrl :  " + videoVisitRestServiceUrl);
 	}
+	
+	public static void initializeSetupWizardProperties() {
+		logger.info(LOG_ENTERED);
+		try {
+			if (StringUtils.isBlank(setupWizardHostNuid) || StringUtils.isBlank(setupWizardMemberMrn)
+					|| StringUtils.isBlank(setupWizardMeetingType)) {
+				final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+				setupWizardHostNuid = appProp.getProperty("SETUP_WIZARD_HOST_NUID");
+				setupWizardMemberMrn = appProp.getProperty("SETUP_WIZARD_MEMBER_MRN");
+				setupWizardMeetingType = appProp.getProperty("SETUP_WIZARD_MEETING_TYPE");
+				logger.debug("setupWizardHostNuid=" + setupWizardHostNuid + ", setupWizardMemberMrn=" + setupWizardMemberMrn
+						+ ", setupWizardMeetingType=" + setupWizardMeetingType);
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to initializeSetupWizardProperties from external properties file");
+		}
+		logger.info(LOG_EXITING);
+	}
+	
+	public static void initializeProxyProperties() {
+		logger.info(LOG_ENTERED);
+		try {
+			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+			secureCodes = appProp.getProperty("SECURE_CODES");
+			isAdhoc = "true".equals(appProp.getProperty("ADHOC")) ? true : false;
+			isParrs = "true".equals(appProp.getProperty("PARRS")) ? true : false;
+			logger.debug("secureCodes=" + secureCodes + ", isAdhoc=" + isAdhoc + ", isParrs=" + isParrs);
+		} catch (Exception e) {
+			logger.warn("Failed to initializeProxyProperties from external properties file");
+		}
+		logger.info(LOG_EXITING);
+	}
 
+	public static void initializeMemberSSOAuthProperties() {
+		logger.info(LOG_ENTERED);
+		try {
+			if (StringUtils.isBlank(memberSSOAuthAPIUrl) || StringUtils.isBlank(memberSSOAuthRegionCode)
+					|| StringUtils.isBlank(serviceSecurityUsername) || StringUtils.isBlank(serviceSecurityPassword)) {
+				final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+				memberSSOAuthAPIUrl = appProp.getProperty("MEMBER_SSO_AUTH_API_URL");
+				memberSSOAuthRegionCode = appProp.getProperty("MEMBER_SSO_AUTH_REGION_CODE");
+				serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
+				serviceSecurityPassword = Crypto.decrypt(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
+				logger.debug("memberSSOAuthAPIUrl : " + memberSSOAuthAPIUrl + ", memberSSOAuthRegionCode : "
+						+ memberSSOAuthRegionCode + "SecurityUsername:" + serviceSecurityUsername + ", SecurityPassword:"
+						+ serviceSecurityPassword);
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to initializeMemberSSOAuthProperties from external properties file");
+		}
+		logger.info(LOG_EXITING);
+	}
+	
+	public static void initializekpOrgSSOHeaders(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		try {
+			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+			kpOrgSSOUserAgentTypeHeader = WebUtil.getBrowserDetails(request);
+			if (StringUtils.isBlank(kpOrgSSOUserAgentCategoryHeader) || StringUtils.isBlank(kpOrgSSOOsVersionHeader)
+					|| StringUtils.isBlank(kpOrgSSOAPIKeyHeader) || StringUtils.isBlank(kpOrgSSOAppNameHeader)) {
+				kpOrgSSOUserAgentCategoryHeader = System.getProperty("os.name");
+				kpOrgSSOOsVersionHeader = System.getProperty("os.version");
+				kpOrgSSOAPIKeyHeader = Crypto.decrypt(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
+				kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
+				logger.debug("kpOrgSSOUserAgentTypeHeader : " + kpOrgSSOUserAgentTypeHeader
+						+ ", kpOrgSSOUserAgentCategoryHeader : " + kpOrgSSOUserAgentCategoryHeader
+						+ "kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOAPIKeyHeader:"
+						+ kpOrgSSOAPIKeyHeader + ", kpOrgSSOAppNameHeader:" + kpOrgSSOAppNameHeader);
+			}
+		} catch (Exception e) {
+			logger.warn("Failed to initializekpOrgSSOHeaders from external properties file");
+		}
+		logger.info(LOG_EXITING);
+	}
 
 	/**
 	 * @param operationName
@@ -711,7 +715,7 @@ public class WebService {
 				output.setStatus(status);
 				return output;
 			}
-
+			initializeProxyProperties();
 			if (secureCodes == null) {
 				secureCodes = "";
 			}
@@ -776,7 +780,7 @@ public class WebService {
 				output.setStatus(status);
 				return output;
 			}
-
+			initializeProxyProperties();
 			if (secureCodes == null) {
 				secureCodes = "";
 			}
@@ -1349,7 +1353,7 @@ public class WebService {
 				output.setStatus(status);
 				return output;
 			}
-
+			initializeProxyProperties();
 			if (secureCodes == null) {
 				secureCodes = "";
 			}

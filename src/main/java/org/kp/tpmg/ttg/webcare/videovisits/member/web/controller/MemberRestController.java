@@ -214,13 +214,12 @@ public class MemberRestController{
 		String participantNuid[] = null;
 		String memberMrn = null;
 		String meetingType = null;
-		boolean isReady = WebService.initWebService(request);
-		if (isReady) {
-			hostNuid = WebService.getSetupWizardHostNuid();
-			memberMrn = WebService.getSetupWizardMemberMrn();
-			meetingType = WebService.getSetupWizardMeetingType();
-		}
-		String output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid, memberMrn, meetingType);
+		WebService.initializeSetupWizardProperties();
+		hostNuid = WebService.getSetupWizardHostNuid();
+		memberMrn = WebService.getSetupWizardMemberMrn();
+		meetingType = WebService.getSetupWizardMeetingType();
+		String output = MeetingCommand.createInstantVendorMeeting(request, hostNuid, participantNuid, memberMrn,
+				meetingType);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
