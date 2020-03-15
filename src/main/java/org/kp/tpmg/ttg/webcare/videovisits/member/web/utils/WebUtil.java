@@ -1,27 +1,25 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.utils;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_ENTERED;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
+
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -32,7 +30,6 @@ import com.google.gson.JsonParser;
 public class WebUtil {
 
 	public static final Logger logger = Logger.getLogger(WebUtil.class);
-	private static Pattern DOB_PATTERN = Pattern.compile("\\d\\d\\d\\d-\\d[\\d]-\\d[\\d]");
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
 	public static final String MOB_CLIENT_ID = "vv-mbr-mbl-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
@@ -41,7 +38,6 @@ public class WebUtil {
 	public static final String HSESSIONID_COOKIE_NAME = "HSESSIONID";
 	public static final String S_COOKIE_NAME = "S";
 
-	public static final String VIDYO_WEBRTC_SESSION_MANGER = "webrtc.health.vidyoworks.com";
 	public static final String LOG_ENTERED = "Entered";
 	public static final String LOG_EXITING = "Exiting";
 	public static final String VV_MBR_BACK_BUTTON = "vv-mbr-back-btn";
@@ -77,29 +73,6 @@ public class WebUtil {
 	public static final String MRN = "mrn";
 	
 	
-	public static String getCurrentDateTimeZone() {
-		logger.info(LOG_ENTERED);
-		Calendar calToday = Calendar.getInstance();
-		calToday.setTime(new Date());
-		TimeZone tz1 = calToday.getTimeZone();
-		logger.info("inDayLightSavings = " + tz1.inDaylightTime(new Date()));
-		if (tz1.inDaylightTime(new Date()))
-			return "PDT";
-		else
-			return "PST";
-	}
-
-	public static boolean isDOBFormat(String value) {
-		if (value == null)
-			return false;
-		else {
-			value = value.trim();
-			java.util.regex.Matcher m = DOB_PATTERN.matcher(value);
-			return m.matches();
-		}
-
-	}
-
 	public static boolean isDOBMMYYYYFormat(String value) {
 		if (value == null)
 			return false;
@@ -109,22 +82,6 @@ public class WebUtil {
 			return m.matches();
 		}
 
-	}
-
-	public static String fillToLength(String src, char fillChar, int total_length) {
-		String ret;
-		if (StringUtils.isNotBlank(src) && src.length() < total_length) {
-			int count = total_length - src.length();
-			final StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < count; i++) {
-				sb.append(fillChar);
-			}
-			sb.append(src);
-			ret = sb.toString();
-		} else {
-			ret = src;
-		}
-		return ret;
 	}
 
 	/**
@@ -146,21 +103,6 @@ public class WebUtil {
 		return null;
 	}
 
-	public static void readAllCookies(HttpServletRequest httpRequest) {
-		if (httpRequest.getCookies() != null) {
-			for (Cookie cookie : httpRequest.getCookies()) {
-				logger.info("Cookie name=" + cookie.getName());
-				logger.info("Cookie value=" + cookie.getValue());
-				logger.info("Cookie domain=" + cookie.getDomain());
-				logger.info("Cookie maxage=" + cookie.getMaxAge());
-				logger.info("Cookie path=" + cookie.getPath());
-				logger.info("Cookie secure=" + cookie.getSecure());
-				logger.info("Cookie version=" + cookie.getVersion());
-				logger.info("Cookie comment=" + cookie.getComment());
-			}
-		}
-
-	}
 
 	public static void setCookie(HttpServletResponse response, String cookieName, String cookieValue) {
 		logger.info("Cookie name=" + cookieName + ", cookie value=" + cookieValue);
@@ -244,114 +186,6 @@ public class WebUtil {
 		return browser;
 	}
 
-	public static boolean isChromeOrFFBrowser(HttpServletRequest httpRequest) {
-		logger.info(LOG_ENTERED);
-		boolean isChromeOrFFBrowser = false;
-		try {
-			final String browser = getBrowserDetails(httpRequest).toLowerCase();
-			if (StringUtils.isNotBlank(browser) && (browser.contains("firefox") || browser.contains("chrome"))) {
-				isChromeOrFFBrowser = true;
-			}
-		} catch (Exception ex) {
-			logger.info("Error while checking the requested browser is firefox or chrome: ", ex);
-		}
-		logger.info(LOG_EXITING + " isChromeOrFFBrowser: " + isChromeOrFFBrowser);
-		return isChromeOrFFBrowser;
-	}
-	
-	public static boolean isSafariOrFFBrowser(HttpServletRequest httpRequest) {
-		logger.info(LOG_ENTERED);
-		boolean isSafariOrFFBrowser = false;
-		try {
-			final String browser = getBrowserDetails(httpRequest).toLowerCase();
-			if (StringUtils.isNotBlank(browser) && (browser.contains("safari") || browser.contains("firefox"))) {
-				isSafariOrFFBrowser = true;
-			}
-		} catch (Exception ex) {
-			logger.info("Error while checking the requested browser is firefox or chrome: ", ex);
-		}
-		logger.info(LOG_EXITING + " -> isSafariOrFFBrowser : " + isSafariOrFFBrowser);
-		return isSafariOrFFBrowser;
-	}
-
-	public static boolean isChromeBrowser(HttpServletRequest httpRequest) {
-		logger.info(LOG_ENTERED);
-		boolean isChromeBrowser = false;
-		try {
-			final String browser = getBrowserDetails(httpRequest).toLowerCase();
-			if (StringUtils.isNotBlank(browser) && browser.contains("chrome")) {
-				isChromeBrowser = true;
-			}
-		} catch (Exception ex) {
-			logger.info("Error while checking the requested browser is chrome: ", ex);
-		}
-		logger.info(LOG_EXITING + " isChromeBrowser: " + isChromeBrowser);
-		return isChromeBrowser;
-	}
-
-	public static boolean isFFBrowser(HttpServletRequest httpRequest) {
-		logger.info(LOG_ENTERED);
-		boolean isFFBrowser = false;
-		try {
-			final String browser = getBrowserDetails(httpRequest).toLowerCase();
-			if (StringUtils.isNotBlank(browser) && browser.contains("firefox")) {
-				isFFBrowser = true;
-			}
-		} catch (Exception ex) {
-			logger.info("Error while checking the requested browser is firefox: ", ex);
-		}
-		logger.info(LOG_EXITING + " isFFBrowser: " + isFFBrowser);
-		return isFFBrowser;
-	}
-
-	public static boolean isEdgeBrowser(HttpServletRequest httpRequest) {
-		logger.info(LOG_ENTERED);
-		boolean isEdgeBrowser = false;
-		try {
-			String browser = getBrowserDetails(httpRequest);
-			browser = StringUtils.isNotBlank(browser) ? browser.toLowerCase() : "";
-			if (EDGE.equalsIgnoreCase(browser)) {
-				isEdgeBrowser = true;
-			}
-		} catch (Exception ex) {
-			logger.info("Error while checking the requested browser is edge: ", ex);
-		}
-		logger.info(LOG_EXITING + " isEdgeBrowser: " + isEdgeBrowser);
-		return isEdgeBrowser;
-	}
-
-	public static boolean isSafariBrowser(HttpServletRequest httpRequest) {
-		logger.info(LOG_ENTERED);
-		boolean isSafariBrowser = false;
-		try {
-			String browser = getBrowserDetails(httpRequest);
-			browser = StringUtils.isNotBlank(browser) ? browser.toLowerCase() : "";
-			if (browser.contains("safari")) {
-				isSafariBrowser = true;
-			}
-		} catch (Exception ex) {
-			logger.info("Error while checking the requested browser is safari: ", ex);
-		}
-		logger.info(LOG_EXITING + " isSafariBrowser: " + isSafariBrowser);
-		return isSafariBrowser;
-	}
-
-	public static String getVidyoWebrtcSessionManager() {
-		logger.info(LOG_ENTERED);
-		String vidyoWebrtcSessionManager = null;
-		try {
-			vidyoWebrtcSessionManager = AppProperties.getExtPropertiesValueByKey("VIDYO_WEBRTC_SESSION_MANAGER");
-			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
-				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-			}
-			logger.debug("vidyoWebrtcSessionManger:" + vidyoWebrtcSessionManager);
-		} catch (Exception e) {
-			logger.error("Error while reading external properties file: " + e.getMessage(), e);
-		}
-		logger.info(LOG_EXITING);
-		return vidyoWebrtcSessionManager;
-	}
-
 	public static String getDeviceOs() {
 		return StringUtils.isBlank(System.getProperty("os.name")) ? DEFAULT_DEVICE : System.getProperty("os.name");
 	}
@@ -433,81 +267,6 @@ public class WebUtil {
 		}
 		logger.info(LOG_EXITING + ", SSO_COOKIE_NAME : " + SSO_COOKIE_NAME);
 		return SSO_COOKIE_NAME;
-	}
-
-	public static String getBrowserVersion(HttpServletRequest httpRequest) {
-		logger.info(LOG_ENTERED);
-		String browserVersion = "";
-		String browserDetails = "";
-		try {
-			browserDetails = getBrowserDetails(httpRequest);
-			if (StringUtils.isNotBlank(browserDetails)) {
-				final String browserInfo[] = browserDetails.split("-");
-				if (!ArrayUtils.isEmpty(browserInfo) && browserInfo.length >= 2) {
-					browserVersion = browserInfo[1];
-				}
-			}
-		} catch (Exception ex) {
-			logger.warn("Error while getting browser version for browser : " + browserDetails, ex);
-		}
-		logger.info(LOG_EXITING + ", Browser version : " + browserVersion);
-		return browserVersion;
-	}
-
-	public static boolean blockSafariBrowser(final HttpServletRequest request, final String blockSafari,
-			final String safariVersion) {
-		logger.info(LOG_ENTERED);
-		boolean blockSafariBrowser = false;
-		int browserVersion = 0;
-		try {
-			if (WebUtil.isSafariBrowser(request) && "true".equalsIgnoreCase(blockSafari)) {
-				int blockSafariVersion = Integer.parseInt(safariVersion);
-				String bVersion = getBrowserVersion(request);
-				if (StringUtils.isNotBlank(bVersion)) {
-					final String versionInfo[] = bVersion.split("\\.");
-					if (!ArrayUtils.isEmpty(versionInfo)) {
-						browserVersion = Integer.parseInt(versionInfo[0]);
-					}
-				}
-				if (browserVersion >= blockSafariVersion) {
-					blockSafariBrowser = true;
-				}
-			}
-		} catch (Exception e) {
-			logger.warn("Error while processing blockSafariBrowser.");
-		}
-		logger.info(LOG_EXITING + ", blockSafariBrowser : " + blockSafariBrowser);
-		return blockSafariBrowser;
-	}
-
-	public static void addMeetingDateTime(final MeetingDO meetingDO, final VideoVisitParamsDTO videoVisitParams) {
-		logger.info(LOG_ENTERED);
-		try {
-			if (StringUtils.isNotBlank(meetingDO.getMeetingTime())) {
-				Calendar cal = Calendar.getInstance();
-				cal.setTimeInMillis(Long.valueOf(meetingDO.getMeetingTime()));
-				SimpleDateFormat sfdate = new SimpleDateFormat("MMM dd");
-				SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
-				// Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below
-				// SimpleDateFormat sfdate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");
-				videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
-				videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
-			}
-		} catch (Exception ex) {
-			logger.error("date conversion error:" + ex.getMessage(), ex);
-		}
-		logger.info(LOG_EXITING);
-	}
-
-	public static boolean isStringContainsEmail(final String source) {
-		logger.info(LOG_ENTERED);
-		boolean isStringContainsEmail = false;
-		if (StringUtils.isNotBlank(source) && source.contains("@") && source.contains(".")
-				&& source.lastIndexOf(".") > source.lastIndexOf("@")) {
-			isStringContainsEmail = true;
-		}
-		logger.info(LOG_EXITING);
-		return isStringContainsEmail;
 	}
 
 	public static <T> String prepareCommonOutputJson(final String operation, final String code, final String message,
@@ -619,5 +378,16 @@ public class WebUtil {
 		properties.put("MOBILE_BLOCK_SAFARI_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_SAFARI_VERSION) ? MOBILE_BLOCK_SAFARI_VERSION : "12.2");
 		final String MOBILE_BLOCK_IE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_IE_VERSION");
 		properties.put("MOBILE_BLOCK_IE_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_IE_VERSION) ? MOBILE_BLOCK_IE_VERSION : "");
+	}
+	
+	public static String convertMapToJsonString(final Map<String, String> map) {
+		logger.info(LOG_ENTERED);
+		String jsonString = null;
+		final Gson gson = new GsonBuilder().serializeNulls().create();
+		if(MapUtils.isNotEmpty(map)) {
+			jsonString = gson.toJson(map);
+		}
+		logger.info(LOG_EXITING);
+		return jsonString;
 	}
 }

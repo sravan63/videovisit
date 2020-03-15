@@ -24,7 +24,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
@@ -32,7 +31,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.GsonUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
@@ -870,7 +868,6 @@ public class MeetingCommand {
 				output = gson.toJson(joinLeaveMeetingJSON.getService().getStatus());
 			}
 		} catch (Exception e) {
-			output = new Gson().toJson(new SystemError());
 			logger.error("System Error for meeting :" + meetingId + " : ", e);
 		}
 		logger.info(LOG_EXITING);
@@ -975,7 +972,7 @@ public class MeetingCommand {
 			WebUtil.loadAllBrowserBlockProperties(properties);
 		}
 		if (MapUtils.isNotEmpty(properties)) {
-			result = GsonUtil.convertMapToJsonString(properties);
+			result = WebUtil.convertMapToJsonString(properties);
 		}
 		logger.info(LOG_EXITING);
 		return result;

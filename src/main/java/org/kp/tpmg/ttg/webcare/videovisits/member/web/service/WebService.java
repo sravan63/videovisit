@@ -77,13 +77,8 @@ import com.google.gson.JsonParser;
 public class WebService {
 
 	public static final Logger logger = Logger.getLogger(WebService.class);
-	public static final int MAX_RETRY = 2;
-	public static final int retry = 0;
-	public static final boolean status = false;
 	public static boolean simulation = true;
 
-	private static String modulePath = "";
-	private static String policyPath = "";
 	private static String serviceSecurityUsername = null;
 	private static String serviceSecurityPassword = null;
 
@@ -106,7 +101,6 @@ public class WebService {
 	private static String kpOrgSSOUserAgentTypeHeader = null;
 	private static String kpOrgSSOAPIKeyHeader = null;
 	private static String kpOrgSSOAppNameHeader = null;
-	private static String vidyoWebrtcSessionManager = null;
 
 	// Parameters for Proxy Appts logic
 	private static String secureCodes = null;
@@ -123,8 +117,6 @@ public class WebService {
 			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 			simulation = "true".equals(appProp.getProperty("WEBSERVICE_SIMULATION")) ? true : false;
 			logger.debug("Simulation:" + simulation);
-			modulePath = appProp.getProperty("MODULE_PATH");
-			policyPath = appProp.getProperty("POLICY_PATH");
 			serviceSecurityUsername = appProp.getProperty("SERVICE_SECURITY_USERNAME");
 			serviceSecurityPassword = Crypto.decrypt(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
 			logger.debug(
@@ -156,10 +148,7 @@ public class WebService {
 			kpOrgSSOUserAgentTypeHeader = WebUtil.getBrowserDetails(request);
 			kpOrgSSOAPIKeyHeader = Crypto.decrypt(appProp.getProperty("KPORG_SSO_API_KEY_HEADER"));
 			kpOrgSSOAppNameHeader = appProp.getProperty("KPORG_SSO_APP_NAME_HEADER");
-			vidyoWebrtcSessionManager = appProp.getProperty("VIDYO_WEBRTC_SESSION_MANAGER");
-			if (StringUtils.isBlank(vidyoWebrtcSessionManager)) {
-				vidyoWebrtcSessionManager = WebUtil.VIDYO_WEBRTC_SESSION_MANGER;
-			}
+
 			logger.debug("kpOrgSSOSignOnAPIUrl : " + kpOrgSSOSignOnAPIUrl);
 			logger.info("kpOrgSSOUserAgentCategoryHeader : " + kpOrgSSOUserAgentCategoryHeader
 					+ ", kpOrgSSOOsVersionHeader:" + kpOrgSSOOsVersionHeader + ", kpOrgSSOUserAgentTypeHeader:"
@@ -170,20 +159,9 @@ public class WebService {
 			logger.debug("memberSSOAuthAPIUrl : " + memberSSOAuthAPIUrl);
 			logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl);
 			logger.debug("kpOrgSSOKeepAliveUrl : " + kpOrgSSOKeepAliveUrl);
-			logger.debug("vidyoWebrtcSessionManger : " + vidyoWebrtcSessionManager);
 
 			if (simulation)
 				return true;
-
-			String policyFilePath = request.getSession().getServletContext().getRealPath(policyPath);
-			logger.debug("policyFilePath : " + policyFilePath);
-			String moduleFilePath = request.getSession().getServletContext().getRealPath(modulePath);
-			logger.debug("modulePath: " + moduleFilePath);
-
-			logger.debug("System property trustStore: " + System.getProperty("javax.net.ssl.trustStore"));
-			logger.debug(
-					"System property trustStorePassword: " + System.getProperty("javax.net.ssl.trustStorePassword"));
-
 		} catch (Exception e) {
 			final String message = "Exception while reading properties file";
 			logger.error("System Error : " + e.getMessage(), e);
@@ -259,13 +237,6 @@ public class WebService {
 	 */
 	public static String getKpOrgSSOKeepAliveUrl() {
 		return kpOrgSSOKeepAliveUrl;
-	}
-
-	/**
-	 * @return the vidyoWebrtcSessionManger
-	 */
-	public static String getVidyoWebrtcSessionManager() {
-		return vidyoWebrtcSessionManager;
 	}
 
 	/**
