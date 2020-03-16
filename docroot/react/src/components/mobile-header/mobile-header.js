@@ -40,6 +40,10 @@ class MobileHeader extends React.Component {
             var mHeader = document.getElementsByClassName('header-controls')[0];
             if(!this.state.hidePromotion && window.scrollY >= mHeader.offsetTop) {
                 this.setState({ hidePromotion: true });
+                // Re-positions the page to the top.
+                setTimeout(()=>{ 
+                    window.scrollTo(0, 20); 
+                }, 200);
             } else if(this.state.hidePromotion && window.scrollY <= 0){
                 this.setState({ hidePromotion: false });
             }
