@@ -1,5 +1,6 @@
 import React from "react";
 import Header from '../../../components/header/header';
+import MobileHeader from '../../../components/mobile-header/mobile-header';
 import Loader from '../../../components/loader/loader';
 import BackendService from '../../../services/backendService.js';
 import { MessageService } from '../../../services/message-service.js';
@@ -201,10 +202,7 @@ class MyMeetings extends React.Component {
             <div id='container' className="my-meetings">
                 {this.state.showLoader ? (<Loader />):('')}
                 <Header history={this.props.history}/>
-                <div className="mobile-header">
-                    < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className = "helpMobile" target = "_blank" >Help</a>
-                    <a className="sign-off" onClick = {this.signOff}>Sign Out</a>
-                </div>
+                <MobileHeader />
                 <div className="meetings-container">
                 <h1 className="visitsToday">Your Video Visits for Today</h1>
                 {this.state.myMeetings.length > 0 ? (
