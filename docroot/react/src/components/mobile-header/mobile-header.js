@@ -32,7 +32,7 @@ class MobileHeader extends React.Component {
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
-        this.subscription.unsubscribe();
+        // this.subscription.unsubscribe();
     }
 
     scrollHandler(){
