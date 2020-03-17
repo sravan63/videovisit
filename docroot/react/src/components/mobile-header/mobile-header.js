@@ -53,6 +53,7 @@ class MobileHeader extends React.Component {
     } 
 
     signOff() {
+        Utilities.setPromotionFlag(false);
         MessageService.sendMessage(GlobalConfig.LOGOUT, null);
     }
 

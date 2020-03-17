@@ -19,16 +19,18 @@
                 }
             }
             .message-container {
-                height: 50%;
+                height: 40%;
                 background-color: #FFFFFF;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                margin-top: 3.56rem;
                 .wrapper {
-                    margin: 1.562rem 1.25rem 1.562rem 1.562rem;
+                    margin: 0 1.562rem;
                     border: solid 1px #E0E7EB;
                     height: calc(100% - 1.75rem);
                     padding: 1.562rem 1.25rem 1.562rem 1.562rem;
                     .message {
-                        height: 50%;
-                        margin-bottom: 1.562rem;
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
@@ -36,7 +38,7 @@
                     .badgets {
                         display: flex;
                         justify-content: space-evenly;
-                        height: 50%;
+                        height: calc(100% - 72px);
                         margin: auto 0;
                         padding: 10% 0;
                         .android {
@@ -68,6 +70,27 @@
         height: 0;
         opacity: 0;
         margin: -2px;
+        .promotion {
+            .banner {
+                padding: 0;
+            }
+            .message-container {
+                margin-top: 0;
+                .wrapper {
+                    height: 0;
+                    padding: 0;
+                    margin: 0;
+                    .message {
+                        height: 0;
+                        margin: 0;
+                    }
+                    .badgets {
+                        height: 0;
+                        padding: 0;
+                    }
+                }
+            }
+        }
     }
     .show-promotion {
         height: calc(100% - 3rem);
@@ -117,24 +140,24 @@
     }
 }
 
-@media only screen and (max-width: 960px) and (orientation: portrait) {}
+@media only screen and (max-width: 960px) and (orientation: portrait) {
+    .mobile-header {
+        .hide-promotion {
+            margin: -2px;
+        }
+    }
+}
 
 @media only screen and (max-width: 1024px) and (orientation: landscape) {
     .mobile-header {
         .promotion-container{
-            .promotion{
+            .promotion {
                 .banner {
                     height: 75%;
-                    .image-holder {
-                        background: url('../../assets/promotion/banner-image.png');
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        background-position: center;
-                        height: 100%;
-                    }
                 }
                 .message-container {
                     height: 25%;
+                    margin-top: 1rem;
                     .wrapper {
                         padding: 0;
                         border: none;
@@ -152,6 +175,32 @@
                     }
                 }
             }
-    }
+        }
+        .hide-promotion {
+            height: 0;
+            opacity: 0;
+            margin: -4px;
+            .promotion {
+                .banner {
+                    padding: 0;
+                }
+                .message-container {
+                    margin-top: 0;
+                    .wrapper {
+                        height: 0;
+                        padding: 0;
+                        margin: 0;
+                        .message {
+                            height: 0;
+                            margin: 0;
+                        }
+                        .badgets {
+                            height: 0;
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
