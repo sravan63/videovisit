@@ -9,7 +9,8 @@ class UtilityService extends React.Component {
     constructor() {
         super();
         this.browserInfo = {};
-
+        this.isInApp = false;
+        this.showPromotion = false;
         this.validateBrowser = this.validateBrowser.bind(this);
         this.validateBrowser();
     }
@@ -30,6 +31,7 @@ class UtilityService extends React.Component {
     getBrowserInformation() {
         return this.browserInfo;
     }
+
     validateBrowserBlock(browserNames){
         let blockChrome = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_CHROME_BROWSER == 'true') : (browserNames.BLOCK_CHROME_BROWSER == 'true');
         let blockFF = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_FIREFOX_BROWSER == 'true') : (browserNames.BLOCK_FIREFOX_BROWSER == 'true');
@@ -101,6 +103,7 @@ class UtilityService extends React.Component {
         }
         return isBrowserBlockError;
     }
+
     isMobileDevice() {
         var isMobile = false; //initiate as false
         // device detection
@@ -109,6 +112,14 @@ class UtilityService extends React.Component {
             isMobile = true;
         }
         return isMobile;
+    }
+
+    setInAppAccessFlag(flag){
+        this.isInApp = flag;
+    }
+
+    getInAppAccessFlag(){
+        return this.isInApp;
     }
 
     getAppOS() {
@@ -176,6 +187,14 @@ class UtilityService extends React.Component {
     decrypt(encrypted) {
         var bytes = CryptoJS.AES.decrypt(encrypted.toString(), '');
         return bytes.toString(CryptoJS.enc.Utf8);
+    }
+
+    setPromotionFlag(flag){
+        this.showPromotion = flag;
+    }
+
+    getPromotionFlag(){
+        return this.showPromotion;
     }
 
 }

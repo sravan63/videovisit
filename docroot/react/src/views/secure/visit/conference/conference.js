@@ -341,10 +341,12 @@ class Conference extends React.Component {
                 if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                     this.resetSessionToken(response.headers.authtoken);
                 }
+                Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
                 //window.location.reload(false);
             }, (err) => {
                 console.log("Error");
+                Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
                 //window.location.reload(false);
             });

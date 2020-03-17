@@ -63,6 +63,7 @@ class Authentication extends React.Component {
         if ((url.search !== '' || url.href.indexOf('?') > -1) && this.state.tempAccessToken == false) {
             // VIA IN APP BROWSER
             this.setState({ isInApp: true });
+            Utilities.setInAppAccessFlag(true);
         }
 
     }
