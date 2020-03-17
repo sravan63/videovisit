@@ -10,6 +10,7 @@ class UtilityService extends React.Component {
         super();
         this.browserInfo = {};
         this.isInApp = false;
+        this.showPromotion = false;
         this.validateBrowser = this.validateBrowser.bind(this);
         this.validateBrowser();
     }
@@ -186,6 +187,14 @@ class UtilityService extends React.Component {
     decrypt(encrypted) {
         var bytes = CryptoJS.AES.decrypt(encrypted.toString(), '');
         return bytes.toString(CryptoJS.enc.Utf8);
+    }
+
+    setPromotionFlag(flag){
+        this.showPromotion = flag;
+    }
+
+    getPromotionFlag(){
+        return this.showPromotion;
     }
 
 }

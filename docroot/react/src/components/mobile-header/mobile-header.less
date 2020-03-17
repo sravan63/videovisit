@@ -2,13 +2,66 @@
     display: none;
     height: 100vh;
     .promotion-container{
-        background: #DDDDDD;
-        border: dashed 1px #CCCCCC;
         height: calc(100% - 3rem);
         .promotion{
             height: 100%;
             text-align: center;
-            padding: calc(25% - 20px) 0px;
+            .banner {
+                background-color: #F0F3F5;
+                height: 50%;
+                padding: 1rem;
+                .image-holder {
+                    background: url('../../assets/promotion/banner-image.png');
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    height: 100%;
+                }
+            }
+            .message-container {
+                height: 50%;
+                background-color: #FFFFFF;
+                .wrapper {
+                    margin: 1.562rem 1.25rem 1.562rem 1.562rem;
+                    border: solid 1px #E0E7EB;
+                    height: calc(100% - 1.75rem);
+                    padding: 1.562rem 1.25rem 1.562rem 1.562rem;
+                    .message {
+                        height: 50%;
+                        margin-bottom: 1.562rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                    }
+                    .badgets {
+                        display: flex;
+                        justify-content: space-evenly;
+                        height: 50%;
+                        margin: auto 0;
+                        padding: 10% 0;
+                        .android {
+                            background: url('../../assets/playstore.png');
+                            height: 100%;
+                        }
+                        .ios {
+                            background: url('../../assets/appstore.png');
+                            height: 100%
+                        }
+                        .icon {
+                            width: 50%;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                            margin: 0 0.1rem;
+                            a {
+                                display: inline-block;
+                                height: 100%;
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
     .hide-promotion {
@@ -61,5 +114,44 @@
 @media only screen and (max-width: 960px) {
     .mobile-header {
         display: block;
+    }
+}
+
+@media only screen and (max-width: 960px) and (orientation: portrait) {}
+
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+    .mobile-header {
+        .promotion-container{
+            .promotion{
+                .banner {
+                    height: 75%;
+                    .image-holder {
+                        background: url('../../assets/promotion/banner-image.png');
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        height: 100%;
+                    }
+                }
+                .message-container {
+                    height: 25%;
+                    .wrapper {
+                        padding: 0;
+                        border: none;
+                        margin: 0.5rem;
+                        .message {
+                            margin-bottom: 0.5rem;
+                            height: auto;
+                        }
+                        .badgets {
+                            height: 100%;
+                            margin: 0 auto;
+                            width: 35%;
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+    }
     }
 }

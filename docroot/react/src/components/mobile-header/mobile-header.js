@@ -20,10 +20,11 @@ class MobileHeader extends React.Component {
     componentDidMount() {
         var isMobile = Utilities.isMobileDevice();
         var isInAppAccess = Utilities.getInAppAccessFlag();
-        if (isMobile & !isInAppAccess) {
+        var showPromotion = Utilities.getPromotionFlag();
+        if (isMobile & !isInAppAccess && showPromotion) { 
             this.setState({ isMobile: true, hidePromotion: false, isInApp: false });
-        } else if(isMobile) {
-            this.setState({ isMobile: true, isInApp: true });
+        } else {
+            this.setState({ isMobile: isMobile, isInApp: isInAppAccess });
         }
 
         window.addEventListener('scroll', this.scrollHandler.bind(this));
@@ -44,7 +45,7 @@ class MobileHeader extends React.Component {
                 setTimeout(()=>{ 
                     window.scrollTo(0, 20); 
                 }, 200);
-            } else if(this.state.hidePromotion && window.scrollY <= 0){
+            } else if(this.state.hidePromotion && window.scrollY <= 0) {
                 this.setState({ hidePromotion: false });
             }
         }
@@ -61,7 +62,18 @@ class MobileHeader extends React.Component {
                 { !this.state.isInApp ? (<div className={this.state.hidePromotion ? "mobile-header fix-to-top" : "mobile-header"}>
                     { this.state.isMobile ? 
                     (<div className={this.state.hidePromotion ? "promotion-container hide-promotion" : "promotion-container show-promotion"} ref={this.promoContainer}>
-                        <div className="promotion">Banner Here</div>
+                        <div className="promotion">
+                            <div className="banner"><div className="image-holder"></div></div>
+                            <div className="message-container">
+                                <div className="wrapper">
+                                    <div className="message">Next time you want to see your doctor, try a video visit from our My Doctor Online mobile app.</div>
+                                    <div className="badgets">
+                                        <div className="ios icon"><a className="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></div>
+                                        <div className="android icon"><a className="icon-link" href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&amp;hl=en_US" target="_blank"></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>) : ('') }
                     <div className={this.state.hidePromotion ? "header-controls" : "header-controls"}>
                         < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className = "helpMobile" target = "_blank" >Help</a>
