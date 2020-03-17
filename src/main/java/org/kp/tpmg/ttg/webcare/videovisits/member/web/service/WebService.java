@@ -1060,17 +1060,17 @@ public class WebService {
 
 	}
 
-	public static String getLaunchMeetingDetails(long meetingID, String inMeetingDisplayName, String sessionID,
-			String mrn8Digit, String deviceType, String deviceOS, String deviceOSversion, boolean isMobileFlow)
+	public static String launchMeetingForMember(long meetingId, String inMeetingDisplayName, String sessionId,
+			String mrn, String deviceType, String deviceOS, String deviceOSversion, boolean isMobileFlow)
 			throws Exception {
-		logger.info(LOG_ENTERED + " meetingID: " + meetingID + ", isMobileFlow :" + isMobileFlow + ", deviceType :"
+		logger.info(LOG_ENTERED + " meetingID: " + meetingId + ", isMobileFlow :" + isMobileFlow + ", deviceType :"
 				+ deviceType + ", deviceOS :" + deviceOS + ", deviceOSversion :" + deviceOSversion);
-		logger.debug("mrn8Digit=" + mrn8Digit + ", inMeetingDisplayName" + inMeetingDisplayName);
+		logger.debug("mrn=" + mrn + ", inMeetingDisplayName" + inMeetingDisplayName);
 
 		LaunchMeetingForMemberInput jsonInput = new LaunchMeetingForMemberInput();
 		Gson gson = new Gson();
 		String output;
-		if (meetingID <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID)
+		if (meetingId <= 0 || StringUtils.isBlank(mrn) || StringUtils.isBlank(sessionId)
 				|| StringUtils.isBlank(inMeetingDisplayName)) {
 			logger.warn("Missing input attributes.");
 			LaunchMeetingForMemberGuestJSON memberOutput = new LaunchMeetingForMemberGuestJSON();
@@ -1082,9 +1082,9 @@ public class WebService {
 			return gson.toJson(memberOutput);
 		}
 		try {
-			jsonInput.setMrn(mrn8Digit);
-			jsonInput.setMeetingID(meetingID);
-			jsonInput.setSessionId(sessionID);
+			jsonInput.setMrn(mrn);
+			jsonInput.setMeetingID(meetingId);
+			jsonInput.setSessionId(sessionId);
 			jsonInput.setInMeetingDisplayName(inMeetingDisplayName);
 			jsonInput.setDeviceType(deviceType);
 			jsonInput.setDeviceOS(deviceOS);
@@ -1094,7 +1094,7 @@ public class WebService {
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
 			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		} catch (Exception e) {
-			logger.error("Web Service API error for meeting:" + meetingID + " Retrying...", e);
+			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
 			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		}
 		logger.info(LOG_EXITING);

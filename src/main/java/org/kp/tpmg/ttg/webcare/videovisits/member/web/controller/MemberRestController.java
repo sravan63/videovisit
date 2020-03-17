@@ -262,4 +262,15 @@ public class MemberRestController{
 		logger.info(LOG_EXITING);
 		return resJsonStr;
 	}
+	
+	@RequestMapping(value = "/launchMeetingForMember.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String launchMeetingForMember(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = MeetingCommand.launchMeetingForMember(request);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }

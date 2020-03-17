@@ -39,6 +39,7 @@ import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
@@ -622,7 +623,9 @@ public class MeetingCommand {
 			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
 			jsonOutput = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 					request.getSession().getId(), clientId);
-			output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
+			if (jsonOutput != null) {
+				output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
+			}
 
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
 				Status status = output.getService().getStatus();
@@ -986,6 +989,56 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return redirectUrl;
+	}
+
+	public static String launchMeetingForMember(HttpServletRequest request) throws Exception {
+		logger.info(LOG_ENTERED);
+		long meetingId = 0;
+		String deviceType = null;
+		LaunchMeetingForMemberGuestJSON output = null;
+		String jsonRes = null;
+		String result = null;
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		try {
+			meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
+			String inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+			String mrn = request.getHeader("mrn");
+			Device device = DeviceDetectionService.checkForDevice(request);
+			Map<String, String> capabilities = device.getCapabilities();
+
+			logger.debug("Mobile capabilities" + capabilities);
+			String brandName = capabilities.get("brand_name");
+			String modelName = capabilities.get("model_name");
+			String deviceOs = capabilities.get("device_os");
+			String deviceOsVersion = capabilities.get("device_os_version");
+
+			if (brandName != null && modelName != null) {
+				deviceType = brandName + " " + modelName;
+			}
+			jsonRes = WebService.launchMeetingForMember(meetingId, inMeetingDisplayName, request.getSession().getId(),
+					mrn, deviceType, deviceOs, deviceOsVersion, true);
+			if (jsonRes != null) {
+				output = gson.fromJson(jsonRes, LaunchMeetingForMemberGuestJSON.class);
+			}
+			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
+				Status status = output.getService().getStatus();
+				if (StringUtils.isNotBlank(status.getCode())) {
+					result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, status.getCode(),
+							status.getMessage(),
+							output.getService().getLaunchMeetingEnvelope() != null
+									? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
+									: null);
+				}
+			}
+			logger.debug("json output: = " + output);
+		} catch (Exception e) {
+			logger.error("Error while launchMeetingForMember for meetingId:" + meetingId, e);
+		}
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, FAILURE_900, FAILURE, null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
 	}
 
 }
