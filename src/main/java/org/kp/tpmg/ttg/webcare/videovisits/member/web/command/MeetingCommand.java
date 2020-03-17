@@ -1001,7 +1001,7 @@ public class MeetingCommand {
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
 			meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
-			String inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+			String inMeetingDisplayName = request.getHeader("inMeetingDisplayName");
 			String mrn = request.getHeader("mrn");
 			Device device = DeviceDetectionService.checkForDevice(request);
 			Map<String, String> capabilities = device.getCapabilities();
