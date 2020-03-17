@@ -14,7 +14,7 @@ class MobileHeader extends React.Component {
         super(props);
         this.loggedInUserName = '';
         this.promoContainer = React.createRef();
-        this.state = { message: 'Testing', isMobile:false, hidePromotion: true, isInApp: false };
+        this.state = { message: 'Testing', isMobile:false, hidePromotion: true, isInApp: false, showPromotion: false };
     }
 
     componentDidMount() {
@@ -22,9 +22,9 @@ class MobileHeader extends React.Component {
         var isInAppAccess = Utilities.getInAppAccessFlag();
         var showPromotion = Utilities.getPromotionFlag();
         if (isMobile & !isInAppAccess && showPromotion) { 
-            this.setState({ isMobile: true, hidePromotion: false, isInApp: false });
+            this.setState({ isMobile: true, hidePromotion: false, isInApp: false, showPromotion: true });
         } else {
-            this.setState({ isMobile: isMobile, isInApp: isInAppAccess });
+            this.setState({ isMobile: isMobile, isInApp: isInAppAccess, showPromotion: showPromotion });
         }
 
         window.addEventListener('scroll', this.scrollHandler.bind(this));
@@ -37,7 +37,7 @@ class MobileHeader extends React.Component {
     }
 
     scrollHandler(){
-        if(this.promoContainer.current) {
+        if(this.promoContainer.current && this.state.showPromotion) {
             var mHeader = document.getElementsByClassName('header-controls')[0];
             if(!this.state.hidePromotion && window.scrollY >= mHeader.offsetTop) {
                 this.setState({ hidePromotion: true });
