@@ -143,7 +143,7 @@ class MyMeetings extends React.Component {
         console.log(meeting);
         localStorage.setItem('meetingId', JSON.stringify(meeting.meetingId));
         this.setState({ showLoader: true });
-        var myMeetingsUrl = "launchMeetingForMemberDesktop.json";
+        var myMeetingsUrl;
         var meetingId = meeting.meetingId;
         var headers = {
             "Content-Type": "application/json",
@@ -152,21 +152,23 @@ class MyMeetings extends React.Component {
         var sessionInfo = {};
         var loginType = GlobalConfig.LOGIN_TYPE.SSO;
         if (this.state.userDetails.isTempAccess) {
+            myMeetingsUrl = "launchMeetingForMemberDesktop.json";
             headers.authtoken = this.state.userDetails.ssoSession;
             headers.megaMeetingDisplayName = meeting.member.inMeetingDisplayName;
             loginType = GlobalConfig.LOGIN_TYPE.TEMP;
-            
-
         } else {
-            myMeetingsUrl = "launchMemberProxyMeeting.json";
-            headers.ssoSession = this.state.userDetails.ssoSession;
-            headers.inMeetingDisplayName = meeting.member.inMeetingDisplayName;
             var isProxyMeeting,
                 loginMrn = this.state.userDetails.mrn;
             if (loginMrn == meeting.member.mrn) {
                 isProxyMeeting = "N";
+                myMeetingsUrl = "launchMeetingForMemberDesktop.json";
+                headers.ssoSession = this.state.userDetails.ssoSession;
+                headers.megaMeetingDisplayName = meeting.member.inMeetingDisplayName;
             } else {
                 isProxyMeeting = "Y";
+                myMeetingsUrl = "launchMemberProxyMeeting.json";
+                headers.ssoSession = this.state.userDetails.ssoSession;
+                headers.inMeetingDisplayName = meeting.member.inMeetingDisplayName;
             }
             headers.isProxyMeeting = isProxyMeeting;
             localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));

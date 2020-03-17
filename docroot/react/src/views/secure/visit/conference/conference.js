@@ -26,6 +26,7 @@ class Conference extends React.Component {
         this.hideSettings = true;
         this.list = [];
         this.handle = 0;
+        this.runningLate = 0;
     }
 
     componentDidMount() {
@@ -52,7 +53,7 @@ class Conference extends React.Component {
             }
             this.getInMeetingDetails();
             this.getRunningLateInfo();
-            window.setInterval(() => {
+            this.runningLate = setInterval(() => {
                 this.getRunningLateInfo();
             }, GlobalConfig.RUNNING_LATE_TIMER);
 
@@ -276,6 +277,7 @@ class Conference extends React.Component {
     componentWillUnmount() {
         // clear on component unmount
         window.clearInterval(this.handle);
+        window.clearInterval(this.runningLate);
         this.subscription.unsubscribe();
         if(this.state.isGuest == true){
             var isGuestLeave = sessionStorage.getItem('guestLeave');

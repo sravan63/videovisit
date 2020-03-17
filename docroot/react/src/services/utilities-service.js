@@ -115,11 +115,14 @@ class UtilityService extends React.Component {
     }
 
     setInAppAccessFlag(flag){
-        this.isInApp = flag;
+        //this.isInApp = flag;
+        sessionStorage.setItem('inApp',flag);
     }
 
     getInAppAccessFlag(){
-        return this.isInApp;
+        this.isInApp = sessionStorage.getItem('inApp');
+        var inAppFlag = (this.isInApp == 'true');
+        return inAppFlag;
     }
 
     getAppOS() {
