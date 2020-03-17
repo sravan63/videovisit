@@ -39,6 +39,7 @@ import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
+import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
@@ -565,7 +566,7 @@ public class MeetingCommand {
 						output.getService().getLaunchMeetingEnvelope() != null
 								? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
 								: null);
-				result = WebUtil.setBandWidth(result, desktopBandwidth, "data");
+				result = WebUtil.setBandWidth(result, desktopBandwidth);
 			}
 		} catch (Exception e) {
 			logger.error("Error while launchMemberOrProxyMeetingForMember for meetingId:" + meetingId, e);
@@ -622,7 +623,9 @@ public class MeetingCommand {
 			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
 			jsonOutput = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 					request.getSession().getId(), clientId);
-			output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
+			if (jsonOutput != null) {
+				output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
+			}
 
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
 				Status status = output.getService().getStatus();
@@ -632,7 +635,7 @@ public class MeetingCommand {
 							output.getService().getLaunchMeetingEnvelope() != null
 									? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
 									: null);
-					result = WebUtil.setBandWidth(result, desktopBandwidth, "data");
+					result = WebUtil.setBandWidth(result, desktopBandwidth);
 				}
 			}
 			logger.debug("json output: = " + output);
@@ -722,7 +725,7 @@ public class MeetingCommand {
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST,
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(), "");
-				result = WebUtil.setBandWidth(result, desktopBandwidth, "");
+				result = WebUtil.setBandWidth(result, desktopBandwidth);
 			}
 		} catch (Exception e) {
 			logger.error("Error while joinLeaveMeetingForMemberGuest for meeting:" + meetingId, e);
@@ -981,11 +984,160 @@ public class MeetingCommand {
 	public static String handleHtmRequest(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String redirectUrl = "/videovisit/#/login";
-		if(request.getRequestURI().contains("setup.htm")) {
+		if (request.getRequestURI().contains("setup.htm")) {
 			redirectUrl = "/videovisit/#/setup";
 		}
 		logger.info(LOG_EXITING);
 		return redirectUrl;
+	}
+
+	public static String mobileLaunchVV(HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String redirectView = "/videovisit/#/videoVisitReady";
+		boolean isValidToken = true;
+		try {
+			
+			final String mblLaunchToken = request.getHeader("mblLaunchToken");
+			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
+			final String mrn = request.getHeader("mrn");
+			String inMeetingDisplayName = request.getHeader("userDisplayName");
+			final boolean isProxyMeeting = "Y".equalsIgnoreCase(request.getHeader("isProxy")) ? true : false;
+			final String clientId = request.getHeader("clientId");
+
+			logger.debug("Input : meetingId=" + meetingId + ", isProxyMeeting=" + isProxyMeeting
+					+ ", inMeetingDisplayName=" + inMeetingDisplayName + ", mrn=" + mrn + ", mblLaunchToken="
+					+ mblLaunchToken + ", clientId=" + clientId);
+
+			if (StringUtils.isBlank(mblLaunchToken)
+					|| !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
+				logger.info("Invalid auth token.");
+				isValidToken = false;
+			}
+			redirectView = redirectView + "?isValidToken=" + isValidToken + "&isDirectLaunch=true&meetingId=" + meetingId + "&userDisplayName=" + inMeetingDisplayName + "&isProxy=" + isProxyMeeting;
+		} catch (Exception e) {
+			logger.error("System error:" + e.getMessage(), e);
+		}
+		return redirectView;
+	}
+
+	public static String mobileLaunchRedirect(HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String redirectUrl = "/videovisit/#/login";
+		boolean isAndroidSDK = false;
+		final String mobileOs = StringUtils.isNotBlank(request.getParameter("os")) ? request.getParameter("os").trim()
+				: null;
+		String mobileAppVersion = StringUtils.isNotBlank(request.getParameter("appVersion"))
+				? request.getParameter("appVersion").trim()
+				: null;
+		String queryString = request.getQueryString();
+		logger.info(
+				"Request parameters from mdo app, mobileOs : " + mobileOs + "mobileAppVersion : " + mobileAppVersion);
+		try {
+			if (StringUtils.isNotBlank(mobileAppVersion) && WebUtil.ANDROID.equalsIgnoreCase(mobileOs)) {
+				String mdoAppLatestVersion = getExtPropertiesValueByKey("MDO_APP_ANDROID_SDK_VERSION");
+				if (StringUtils.isBlank(mobileAppVersion)) {
+					logger.info("Setting android SDK to false");
+				} else if (!mobileAppVersion.equalsIgnoreCase(mdoAppLatestVersion)) {
+					String entered[] = mobileAppVersion.split("\\.");
+					String latest[] = mdoAppLatestVersion.split("\\.");
+
+					if (entered.length != latest.length) {
+						if (entered.length > latest.length) {
+							mdoAppLatestVersion = mdoAppLatestVersion + ".0";
+							latest = mdoAppLatestVersion.split("\\.");
+						} else {
+							mobileAppVersion = mobileAppVersion + ".0";
+							entered = mobileAppVersion.split("\\.");
+						}
+					}
+					if (!mobileAppVersion.equalsIgnoreCase(mdoAppLatestVersion) && entered.length == latest.length) {
+						for (int i = 0; i < entered.length; i++) {
+							if (WebUtil.convertStringToInteger(entered[i]) > WebUtil.convertStringToInteger(latest[i])) {
+								isAndroidSDK = true;
+								logger.info("Setting android SDK to true");
+								break;
+							} else if (WebUtil.convertStringToInteger(latest[i]) > WebUtil.convertStringToInteger(entered[i])) {
+								logger.info("Setting android SDK to false");
+								break;
+							}
+						}
+					} else {
+						isAndroidSDK = true;
+						logger.info("Setting android SDK to true");
+					}
+				} else {
+					isAndroidSDK = true;
+					logger.info("Setting android SDK to true");
+				}
+
+			}
+			queryString = queryString + "&isAndroidSDK" + isAndroidSDK; 
+			/*final String mblLaunchToken = request.getHeader("mblLaunchToken");
+			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
+			final String mrn = request.getHeader("mrn");
+			logger.debug(
+					"Input -> mblLaunchToken : " + mblLaunchToken + ", meetingId : " + meetingId + ", mrn : " + mrn);
+			if (StringUtils.isBlank(mblLaunchToken)
+					|| !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
+				logger.info("Invalid auth token so sending sc_unauthorized error");
+				redirectUrl = "/videovisit/#/autherror";
+			}*/
+		} catch (Exception e) {
+			logger.error("Error while mobile launch redirection : " + e.getMessage(), e);
+		}
+		redirectUrl = redirectUrl + "?" + queryString;
+		logger.info(LOG_EXITING);
+		return redirectUrl;
+	}
+	
+	public static String launchMeetingForMember(HttpServletRequest request) throws Exception {
+		logger.info(LOG_ENTERED);
+		long meetingId = 0;
+		String deviceType = null;
+		LaunchMeetingForMemberGuestJSON output = null;
+		String jsonRes = null;
+		String result = null;
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		try {
+			meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
+			String inMeetingDisplayName = request.getHeader("inMeetingDisplayName");
+			String mrn = request.getHeader("mrn");
+			Device device = DeviceDetectionService.checkForDevice(request);
+			Map<String, String> capabilities = device.getCapabilities();
+
+			logger.debug("Mobile capabilities" + capabilities);
+			String brandName = capabilities.get("brand_name");
+			String modelName = capabilities.get("model_name");
+			String deviceOs = capabilities.get("device_os");
+			String deviceOsVersion = capabilities.get("device_os_version");
+
+			if (brandName != null && modelName != null) {
+				deviceType = brandName + " " + modelName;
+			}
+			jsonRes = WebService.launchMeetingForMember(meetingId, inMeetingDisplayName, request.getSession().getId(),
+					mrn, deviceType, deviceOs, deviceOsVersion, true);
+			if (jsonRes != null) {
+				output = gson.fromJson(jsonRes, LaunchMeetingForMemberGuestJSON.class);
+			}
+			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
+				Status status = output.getService().getStatus();
+				if (StringUtils.isNotBlank(status.getCode())) {
+					result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, status.getCode(),
+							status.getMessage(),
+							output.getService().getLaunchMeetingEnvelope() != null
+									? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
+									: null);
+				}
+			}
+			logger.debug("json output: = " + output);
+		} catch (Exception e) {
+			logger.error("Error while launchMeetingForMember for meetingId:" + meetingId, e);
+		}
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, FAILURE_900, FAILURE, null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
 	}
 
 }

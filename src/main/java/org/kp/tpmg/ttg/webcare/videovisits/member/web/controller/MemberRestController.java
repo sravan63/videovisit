@@ -245,14 +245,6 @@ public class MemberRestController{
 		return output;
 	}
 	
-	@RequestMapping(value = "/*.htm", method = { RequestMethod.POST, RequestMethod.GET })
-	public RedirectView handleHtmRequest(final HttpServletRequest request) throws Exception {
-		logger.info(LOG_ENTERED);
-		final String redirectUrl = MeetingCommand.handleHtmRequest(request);
-		logger.info(LOG_EXITING);
-		return new RedirectView(redirectUrl);
-	}
-
 	@RequestMapping(value = "/loadPropertiesByName.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
 	public String loadPropertiesByName(final HttpServletRequest request) {
@@ -261,5 +253,41 @@ public class MemberRestController{
 		logger.debug("Result in json string format " + resJsonStr);
 		logger.info(LOG_EXITING);
 		return resJsonStr;
+	}
+	
+	@RequestMapping(value = "/mobileAppPatientLogin.htm", method = { RequestMethod.GET, RequestMethod.POST })
+	public RedirectView mobileAppPatientLogin(final HttpServletRequest request, final HttpServletResponse response) {
+		logger.info(LOG_ENTERED);
+		final String redirectUrl = MeetingCommand.mobileLaunchRedirect(request);
+//		final String redirectUrl = "/videovisit/#/";
+		logger.info(LOG_EXITING);
+		return new RedirectView(redirectUrl);
+	}
+	
+	@RequestMapping(value = "/mobilelaunchvv.htm", method = { RequestMethod.POST, RequestMethod.GET })
+	public RedirectView mobileLaunchVV(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		final String redirectUrl = MeetingCommand.mobileLaunchVV(request);
+		logger.info(LOG_EXITING);
+		return new RedirectView(redirectUrl);
+	}
+	
+	@RequestMapping(value = "/*.htm", method = { RequestMethod.POST, RequestMethod.GET })
+	public RedirectView handleHtmRequest(final HttpServletRequest request) throws Exception {
+		logger.info(LOG_ENTERED);
+		final String redirectUrl = MeetingCommand.handleHtmRequest(request);
+		logger.info(LOG_EXITING);
+		return new RedirectView(redirectUrl);
+	}
+	
+	@RequestMapping(value = "/launchMeetingForMember.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String launchMeetingForMember(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = MeetingCommand.launchMeetingForMember(request);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
 	}
 }

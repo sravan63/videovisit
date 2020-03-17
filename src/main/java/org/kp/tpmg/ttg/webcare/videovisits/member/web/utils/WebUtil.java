@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
@@ -28,6 +29,7 @@ public class WebUtil {
 
 	public static final Logger logger = Logger.getLogger(WebUtil.class);
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
+	public static final String EMAIL_PATTERN ="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
 	public static final String MOB_CLIENT_ID = "vv-mbr-mbl-web";
 	public static final String DEFAULT_DEVICE = "Desktop";
 	public static final String NON_MEMBER = "Non_Mmbr";
@@ -68,6 +70,8 @@ public class WebUtil {
 	public static final String FAILURE = "failure";
 	public static final String SUCCESS = "success";
 	public static final String MRN = "mrn";
+	
+	public static final String ANDROID = "android";
 	
 	
 	public static boolean isDOBMMYYYYFormat(String value) {
@@ -284,14 +288,12 @@ public class WebUtil {
 		return json;
 	}
 	
-	public static String setBandWidth(String result, String desktopBandwidth, String data) {
+	public static String setBandWidth(String result, String desktopBandwidth) {
 		logger.info(LOG_ENTERED);
 		JsonElement jelement = new JsonParser().parse(result);
 		JsonObject jobject = jelement.getAsJsonObject();
-		if (StringUtils.isNotBlank(data)) {
-			jobject.getAsJsonObject(data).addProperty("desktopBandwidth", desktopBandwidth);
-		} else {
-			jobject.addProperty("desktopBandwidth", desktopBandwidth);
+		if (jobject != null && jobject.get("data") != null && jobject.get("data").isJsonObject()) {
+			jobject.getAsJsonObject("data").addProperty("desktopBandwidth", desktopBandwidth);
 		}
 		result = jobject.toString();
 		logger.info(LOG_EXITING);
@@ -386,5 +388,34 @@ public class WebUtil {
 		}
 		logger.info(LOG_EXITING);
 		return jsonString;
+	}
+	
+	public static boolean isOk(String val) {
+		return "OK".equalsIgnoreCase(val);
+	}
+	
+	public static boolean isStringContainsEmail(final String source) {
+		logger.info(LOG_ENTERED);
+		boolean isStringContainsEmail = false;
+		Matcher m = Pattern.compile(EMAIL_PATTERN).matcher(source);
+		isStringContainsEmail = m.find();
+		logger.info(LOG_EXITING);
+		return isStringContainsEmail;
+	}
+	
+	/**
+	 * @param value String value
+	 * @return integer value
+	 */
+	public static int convertStringToInteger(final String value) {
+		int returnVal = 0;
+		if (StringUtils.isNotBlank(value)) {
+			try {
+				returnVal = Integer.parseInt(value);
+			} catch (Exception e) {
+				logger.warn("Error while converting string value to integer: " + value, e);
+			}
+		}
+		return returnVal;
 	}
 }
