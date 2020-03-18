@@ -402,6 +402,10 @@ public class WebUtil {
 		properties.put("MOBILE_BLOCK_SAFARI_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_SAFARI_VERSION) ? MOBILE_BLOCK_SAFARI_VERSION : "12.2");
 		final String MOBILE_BLOCK_IE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_IE_VERSION");
 		properties.put("MOBILE_BLOCK_IE_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_IE_VERSION) ? MOBILE_BLOCK_IE_VERSION : "");
+
+		//		OS version for ipad
+		final String IPAD_OS_VERSION = AppProperties.getExtPropertiesValueByKey("IPAD_OS_VERSION");
+		properties.put("IPAD_OS_VERSION", StringUtils.isNotBlank(IPAD_OS_VERSION) ? IPAD_OS_VERSION : "12");
 	}
 	
 	public static String convertMapToJsonString(final Map<String, String> map) {
