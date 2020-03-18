@@ -1084,20 +1084,11 @@ public class MeetingCommand {
 
 			}
 			queryString = queryString + "&isAndroidSDK=" + isAndroidSDK; 
-			/*final String mblLaunchToken = request.getHeader("mblLaunchToken");
-			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
-			final String mrn = request.getHeader("mrn");
-			logger.debug(
-					"Input -> mblLaunchToken : " + mblLaunchToken + ", meetingId : " + meetingId + ", mrn : " + mrn);
-			if (StringUtils.isBlank(mblLaunchToken)
-					|| !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
-				logger.info("Invalid auth token so sending sc_unauthorized error");
-				redirectUrl = "/videovisit/#/autherror";
-			}*/
 		} catch (Exception e) {
 			logger.error("Error while mobile launch redirection : " + e.getMessage(), e);
 		}
 		redirectUrl = redirectUrl + "?" + queryString;
+		logger.debug("redirectUrl : " + redirectUrl);
 		logger.info(LOG_EXITING);
 		return redirectUrl;
 	}
