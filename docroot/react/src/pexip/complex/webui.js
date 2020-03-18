@@ -373,10 +373,14 @@ function remoteDisconnect(reason) {
     log("info", "remoteDisconnect", "console: inside remoteDisconnect reason :" + reason);
     cleanup();
     if (reason.indexOf("get access to camera") > -1) {
-        $('#dialog-block-meeting-disconnected00').modal({ 'backdrop': 'static' });
+        MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
+        alert(reason);
     } else {
         if (reason == 'Test call finished') {
             MessageService.sendMessage(GlobalConfig.TEST_CALL_FINISHED, null);
+        } else if( reason.indexOf("Out of transcoding resource") > -1 ){
+            MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
+            alert('Video visit failed, please try again.');
         }
     }
     window.removeEventListener('beforeunload', finalise);
@@ -431,27 +435,6 @@ export function sipDialOut() {
     var phone_num = $("#phone_num").val();
     log("info", "sipDialOut", "event: sipDialOut - inside sipDialOut phone_num: " + phone_num);
     //console.log("phone_num: " +phone_num);
-
-    if (isProvider == "true") {
-        $.ajax({
-            type: "POST",
-            url: VIDEO_VISITS.Path.grid.meeting.vendorDialOut,
-            cache: false,
-            async: true,
-            data: phone_num,
-            success: function(returndata) {
-                alert("success - work in progress");
-                log('info', 'sipDialOut', 'sipDialOut success');
-            },
-            error: function() {
-                // display error message
-                log('error', 'sipDialOut', 'sipDialOut failed');
-                alert("error");
-            }
-        });
-    } else {
-        alert("coming soon...");
-    }
 }
 
 function participantCreated(participant) {
