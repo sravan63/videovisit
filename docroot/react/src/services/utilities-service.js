@@ -41,6 +41,7 @@ class UtilityService extends React.Component {
         let blockFirefoxVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_FIREFOX_VERSION : browserNames.BLOCK_FIREFOX_VERSION;
         let blockEdgeVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
         let blockSafariVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
+        let blockIosChromeVersion = browserNames.BLOCK_CHROME_BROWSER_IPAD == 'true';
         let isBrowserBlockError = false;
         if (this.getBrowserInformation().isIE) {
             isBrowserBlockError = true;
@@ -101,6 +102,11 @@ class UtilityService extends React.Component {
                 }
             }
         }
+        if(this.isMobileDevice() && this.getAppOS() == 'iOS'){
+            if(blockIosChromeVersion){
+                isBrowserBlockError = true;
+            }
+        }
         return isBrowserBlockError;
     }
 
@@ -132,9 +138,6 @@ class UtilityService extends React.Component {
 
         if (p === 'iPad' || p === 'iPhone' || p === 'iPod' || p === 'iPhone Simulator' || p === 'iPad Simulator') {
             return "iOS";
-        }
-        if(navigator.userAgent.match(/Android/i)){
-        return "Android";
         }
     }
 
