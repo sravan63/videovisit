@@ -533,6 +533,7 @@ public class MeetingCommand {
 		String inMeetingDisplayName = null;
 		String result = null;
 		String desktopBandwidth = null;
+		String clientId = null;
 		try {
 			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
 				meetingId = Long.parseLong(request.getParameter("meetingId"));
@@ -555,8 +556,13 @@ public class MeetingCommand {
 			} else {
 				desktopBandwidth = WebUtil.BANDWIDTH_1024_KBPS;
 			}
+			if (TRUE.equalsIgnoreCase(request.getParameter("isFromMobile"))) {
+				clientId = WebUtil.VV_MBR_SSO_WEB_MOBILE;
+			} else {
+				clientId = WebUtil.VV_MBR_SSO_WEB;
+			}
 			jsonOutput = WebService.launchMemberOrProxyMeetingForMember(meetingId, mrn, inMeetingDisplayName,
-					isProxyMeeting, request.getSession().getId(), WebUtil.VV_MBR_SSO_WEB);
+					isProxyMeeting, request.getSession().getId(), clientId);
 			output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
@@ -620,7 +626,7 @@ public class MeetingCommand {
 			String desktopBandwidth = AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH");
 			desktopBandwidth = StringUtils.isNotBlank(desktopBandwidth) ? desktopBandwidth
 					: WebUtil.BANDWIDTH_1024_KBPS;
-			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
+			String clientId = WebUtil.getClientId(request.getParameter(LOGIN_TYPE), request.getParameter("isFromMobile"));
 			jsonOutput = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 					request.getSession().getId(), clientId);
 			if (jsonOutput != null) {
@@ -913,6 +919,7 @@ public class MeetingCommand {
 		String modelName = null;
 		String deviceOs = null;
 		String deviceOsVersion = null;
+		String clientId = null;
 		final String meetingCode = request.getParameter("meetingCode");
 		try {
 			final String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
@@ -936,8 +943,13 @@ public class MeetingCommand {
 			} catch (Exception e) {
 				logger.warn("Error while detecting device type for meetingCode : " + meetingCode, e);
 			}
+			if (isMobileFlow) {
+				clientId = WebUtil.VV_MBR_GUEST_MOBILE;
+			} else {
+				clientId = WebUtil.VV_MBR_GUEST;
+			}
 			final MeetingDetailsForMeetingIdJSON outputJson = WebService.guestLoginJoinMeeting(meetingCode,
-					patientLastName, isMobileFlow, deviceType, deviceOs, deviceOsVersion, WebUtil.VV_MBR_GUEST,
+					patientLastName, isMobileFlow, deviceType, deviceOs, deviceOsVersion, clientId,
 					request.getSession().getId());
 			if (outputJson != null && outputJson.getService() != null && outputJson.getService().getStatus() != null
 					&& outputJson.getService().getStatus().getCode() != null) {
@@ -1100,7 +1112,7 @@ public class MeetingCommand {
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
 			meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
-			String inMeetingDisplayName = request.getHeader("inMeetingDisplayName");
+			String inMeetingDisplayName = request.getHeader("megaMeetingDisplayName");
 			String mrn = request.getHeader("mrn");
 			Device device = DeviceDetectionService.checkForDevice(request);
 			Map<String, String> capabilities = device.getCapabilities();

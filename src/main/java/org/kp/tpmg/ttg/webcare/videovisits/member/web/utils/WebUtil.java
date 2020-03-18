@@ -1,5 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.utils;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
+
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -42,9 +44,12 @@ public class WebUtil {
 	public static final String VV_MBR_BACK_BUTTON = "vv-mbr-back-btn";
 	public static final String SSO_SIMULATION = "sso_simulation";
 	public static final String VV_MBR_SSO_WEB = "vv-mbr-sso-web";
+	public static final String VV_MBR_SSO_WEB_MOBILE = "vv-mbr-mbl-sso-web";
 	public static final String VV_MBR_SSO_BACK_BTN = "vv-mbr-sso-back-btn";
 	public static final String VV_MBR_WEB = "vv-mbr-web";
+	public static final String VV_MBR_WEB_MOBILE = "vv-mbr-mbl-web";
 	public static final String VV_MBR_GUEST = "vv-mbr-guest";
+	public static final String VV_MBR_GUEST_MOBILE = "vv-mbr-guest-mbl";
 	public static final String VV_MBR_GUEST_BACK_BTN = "vv-mbr-guest-back-btn";
 	public static final String VV_MBR_SSO_SIM_WEB = "vv-mbr-sso-sim";
 	public static final String VV_MBR_SSO_SIM_BACK_BTN = "vv-mbr-sso-sim-back-btn";
@@ -309,6 +314,26 @@ public class WebUtil {
 			clientId = VV_MBR_SSO_WEB;
 		} else {
 			clientId = VV_MBR_WEB;
+		}
+		logger.info(LOG_EXITING);
+		return clientId;
+	}
+	
+	public static String getClientId(final String loginType, final String isFromMobile) {
+		logger.info(LOG_ENTERED);
+		String clientId = VV_MBR_WEB;
+		if (SSO.equalsIgnoreCase(loginType)) {
+			if (TRUE.equalsIgnoreCase(isFromMobile)) {
+				clientId = VV_MBR_SSO_WEB_MOBILE;
+			} else {
+				clientId = VV_MBR_SSO_WEB;
+			}
+		} else {
+			if (TRUE.equalsIgnoreCase(isFromMobile)) {
+				clientId = VV_MBR_WEB_MOBILE;
+			} else {
+				clientId = VV_MBR_WEB;
+			}
 		}
 		logger.info(LOG_EXITING);
 		return clientId;
