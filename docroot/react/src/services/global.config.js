@@ -71,7 +71,8 @@ const GlobalConfig = {
     START_SCREENSHARE: 'start screenshare',
     STOP_SCREENSHARE: 'stop screenshare',
     USER_JOINED: 'user joined',
-    USER_LEFT: 'user left'
+    USER_LEFT: 'user left',
+    ERROR_PAGE: _rootUrl + 'authenticationFailed'
 };
 
 export default GlobalConfig;

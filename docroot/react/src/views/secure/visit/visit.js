@@ -18,19 +18,21 @@ class Visit extends React.Component {
     }
 
     componentDidMount() {
+        var isDirectLaunch = window.location.href.indexOf('isDirectLaunch') > -1;
         if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             if (this.state.userDetails) {
                 this.setState({ showPage: true });
             }
+        } else if( isDirectLaunch ) {
+            this.launchVisit();
         } else {
             if(sessionStorage.getItem('guestCode')){
                 var meetingCode = JSON.parse(sessionStorage.getItem('guestCode'));
                 this.props.history.push('/guestlogin?meetingcode=' + meetingCode);
+            } else {
+                this.props.history.push(GlobalConfig.LOGIN_URL);
             }
-            else{
-            this.props.history.push(GlobalConfig.LOGIN_URL);
-        }
         }
         var isMobile = Utilities.isMobileDevice();
         if (isMobile) {
@@ -43,6 +45,32 @@ class Visit extends React.Component {
             this.setState({ showPreCheck: true });
         } else {
             this.setState({ showPreCheck: false });
+        }
+    }
+
+    launchVisit() {
+        var browserInfo = Utilities.getBrowserInformation();
+        if( browserInfo.isIE ) {
+            this.props.history.push(GlobalConfig.ERROR_PAGE);
+            return;
+        }
+        const params = window.location.href.split('?')[1];
+        const urlParams = new URLSearchParams( params );
+        const isValidToken = urlParams.has('isValidToken') && JSON.parse(urlParams.get('isValidToken'));
+        if( isValidToken ) {
+            var isProxy = JSON.parse(urlParams.get('isProxy')) ? 'Y' : 'N';
+            var userName = decodeURIComponent(urlParams.get('userDisplayName'));
+            var meetingId = decodeURIComponent(urlParams.get('meetingId'));
+            var userDetails = { isTempAccess: false, lastName : userName.split(',')[0].trim(), firstName : userName.split(',')[1].trim(), mrn : '', ssoSession: '' }
+            localStorage.setItem('userDetails', Utilities.encrypt(JSON.stringify(userDetails)));
+            localStorage.setItem('meetingId', JSON.stringify(meetingId));
+            localStorage.setItem('isProxyMeeting', JSON.stringify(isProxy))
+            localStorage.setItem('isDirectLaunch', true);
+            this.setState({ showPage: true });
+            this.setState({ isMobile: true });
+            this.setState({ showPreCheck: false });
+        } else {
+            this.props.history.push(GlobalConfig.ERROR_PAGE);
         }
     }
 
