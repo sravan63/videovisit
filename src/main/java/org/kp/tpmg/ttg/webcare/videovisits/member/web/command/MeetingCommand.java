@@ -592,7 +592,7 @@ public class MeetingCommand {
 		String result = null;
 		try {
 			String clientId = WebUtil.getClientIdByLoginTypeAndBackButtonAction(request);
-			output = WebService.memberLeaveProxyMeeting(request.getHeader("meetingId"), request.getHeader("memberName"),
+			output = WebService.memberLeaveProxyMeeting(request.getParameter("meetingId"), request.getHeader("memberName"),
 					request.getSession().getId(), clientId);
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
