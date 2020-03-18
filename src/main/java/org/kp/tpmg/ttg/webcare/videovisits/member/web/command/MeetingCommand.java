@@ -1083,7 +1083,7 @@ public class MeetingCommand {
 				}
 
 			}
-			queryString = queryString + "&isAndroidSDK" + isAndroidSDK; 
+			queryString = queryString + "&isAndroidSDK=" + isAndroidSDK; 
 			/*final String mblLaunchToken = request.getHeader("mblLaunchToken");
 			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
 			final String mrn = request.getHeader("mrn");
