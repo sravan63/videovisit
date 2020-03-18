@@ -22,7 +22,8 @@ class UtilityService extends React.Component {
             isFireFox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
             isIE: /MSIE|Trident/.test(navigator.userAgent),
             isEdge: /Edge/.test(navigator.userAgent),
-            isChrome:/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
+            isChrome:/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor),
+            isMobileChrome:  /iPad|iPhone|iPod/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor) 
         }
         this.browserInfo = bObj;
     }
@@ -102,11 +103,17 @@ class UtilityService extends React.Component {
                 }
             }
         }
-        if(this.isMobileDevice() && this.getAppOS() == 'iOS' && this.getBrowserInformation().isChrome){
+        if(this.isMobileDevice() && this.getBrowserInformation().isMobileChrome){
             if(blockIosChromeVersion){
                 isBrowserBlockError = true;
             }
         }
+        var iOSver = this.iOSversion();
+        var iosFullversion = iOSver[0] + '.'+ iOSver[1];
+        if(iosFullversion < browserNames.IPAD_OS_VERSION){
+            isBrowserBlockError = true;
+        }
+        
         return isBrowserBlockError;
     }
 
