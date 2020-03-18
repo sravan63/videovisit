@@ -290,4 +290,15 @@ public class MemberRestController{
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	@RequestMapping(value = "/joinLeaveMeeting.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String joinLeaveMeeting(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = MeetingCommand.joinLeaveMeeting(request);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }

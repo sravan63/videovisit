@@ -842,15 +842,15 @@ public class MeetingCommand {
 	
 	public static String joinLeaveMeeting(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
-		String output = null;
 		String deviceType = null;
 		final String meetingId = request.getParameter("meetingId");
-		final String inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+		final String inMeetingDisplayName = request.getHeader("inMeetingDisplayName");
 		final boolean isPatient = "true".equalsIgnoreCase(request.getParameter("isPatient")) ? true : false;
 		final String joinLeaveMeeting = request.getParameter("joinLeaveMeeting");
 		final String sessionId = request.getSession().getId();
 		final String clientId = WebUtil.KPPC;
-		
+		String result = null;
+		String operationName = null;
 		try {
 			final Gson gson = new GsonBuilder().serializeNulls().create();
 			final Device device = DeviceDetectionService.checkForDevice(request);
@@ -870,17 +870,29 @@ public class MeetingCommand {
 			if (StringUtils.isBlank(deviceType)) {
 				deviceType = WebUtil.DEFAULT_DEVICE;
 			}
-			final JoinLeaveMeetingJSON joinLeaveMeetingJSON = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
+			if ("J".equalsIgnoreCase(joinLeaveMeeting)) {
+				operationName = ServiceUtil.JOIN_MEETING;
+			} else if ("L".equalsIgnoreCase(joinLeaveMeeting)) {
+				operationName = ServiceUtil.LEAVE_MEETING;
+			}
+			final JoinLeaveMeetingJSON output = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
 					isPatient,joinLeaveMeeting, deviceType, deviceOs, deviceOsVersion, clientId, sessionId);
-			if(joinLeaveMeetingJSON != null && joinLeaveMeetingJSON.getService() != null 
-					&& joinLeaveMeetingJSON.getService().getStatus() != null) {
-				output = gson.toJson(joinLeaveMeetingJSON.getService().getStatus());
+			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
+				Status status = output.getService().getStatus();
+				if (StringUtils.isNotBlank(status.getCode())) {
+					result = WebUtil.prepareCommonOutputJson(operationName,
+							status.getCode(), status.getMessage(),output.getService().getStatus());
+				}
+			}
+			if (StringUtils.isBlank(result)) {
+				result = WebUtil.prepareCommonOutputJson(operationName, FAILURE_900,
+						FAILURE, null);
 			}
 		} catch (Exception e) {
-			logger.error("System Error for meeting :" + meetingId + " : ", e);
+			logger.error("Error while joinLeaveMeeting for meetingId:" + meetingId, e);
 		}
 		logger.info(LOG_EXITING);
-		return output;
+		return result;
 	}
 	
 	public static String isMeetingHashValid(HttpServletRequest request, HttpServletResponse response) throws Exception {
