@@ -132,8 +132,9 @@ class UtilityService extends React.Component {
 
         if (p === 'iPad' || p === 'iPhone' || p === 'iPod' || p === 'iPhone Simulator' || p === 'iPad Simulator') {
             return "iOS";
-        }else{
-            return iOS;
+        }
+        if(navigator.userAgent.match(/Android/i)){
+        return "Android";
         }
     }
 

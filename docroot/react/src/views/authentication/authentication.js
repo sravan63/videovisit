@@ -60,7 +60,7 @@ class Authentication extends React.Component {
     validateInAppAccess() {
         var urlStr = window.location.href;
         var url = new URL(urlStr);
-        if ((url.search !== '' || url.href.indexOf('useragentType') > -1) && this.state.tempAccessToken == false) {
+        if ((url.search !== '' || url.href.indexOf('isAndroidSDK') > -1) && this.state.tempAccessToken == false) {
             // VIA IN APP BROWSER
             this.setState({ isInApp: true });
             Utilities.setInAppAccessFlag(true);
