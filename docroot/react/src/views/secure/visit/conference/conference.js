@@ -46,7 +46,7 @@ class Conference extends React.Component {
                     this.state.loginType = "guest";
                 }
                 else{
-                this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO
+                    this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO
                 }                
                 this.state.accessToken = userDetails.ssoSession;
                 this.state.userDetails = userDetails;
@@ -194,9 +194,12 @@ class Conference extends React.Component {
                 var data = response.data.data;
                 this.setState({ meetingDetails: data });
                 this.startPexip(this.state.meetingDetails);
-                MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
-                    meetingDetails: this.state.meetingDetails
-                });
+                var isDirectLaunch = localStorage.getItem('isDirectLaunch');
+                if( !isDirectLaunch ) {
+                    MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
+                        meetingDetails: this.state.meetingDetails
+                    });
+                }
             } else {
                 // Do nothing
             }
@@ -348,7 +351,7 @@ class Conference extends React.Component {
                 //window.location.reload(false);
             }, (err) => {
                 console.log("Error");
-                Utilities.setPromotionFlag(true);
+                Utilities.setPromotionFlag(false);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
                 //window.location.reload(false);
             });

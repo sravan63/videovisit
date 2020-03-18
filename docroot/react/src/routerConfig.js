@@ -7,6 +7,7 @@ import GuestAuthentication from '../src/views/guest-authentication/guest-authent
 import Setup from '../src/views/setup/setup';
 import MyMeetings from './views/secure/my-meetings/my-meetings';
 import VideoVisit from './views/secure/visit/visit';
+import FailedAuthentication from './components/authentication-failed/authentication-failed';
 
 export const routes = [{
         path: '/',
@@ -31,6 +32,10 @@ export const routes = [{
     {
         path: '/videoVisitReady',
         component: VideoVisit
+    },
+    {
+        path: '/authenticationFailed',
+        component: FailedAuthentication
     }
 ];
 export const RouteWithSubRoutes = (route) => (
