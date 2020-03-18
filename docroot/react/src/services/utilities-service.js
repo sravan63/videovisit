@@ -22,7 +22,7 @@ class UtilityService extends React.Component {
             isFireFox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
             isIE: /MSIE|Trident/.test(navigator.userAgent),
             isEdge: /Edge/.test(navigator.userAgent),
-            isChrome:/Chrome/.test(navigator.userAgent)
+            isChrome:/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)
         }
         this.browserInfo = bObj;
     }
@@ -139,6 +139,15 @@ class UtilityService extends React.Component {
         if (p === 'iPad' || p === 'iPhone' || p === 'iPod' || p === 'iPhone Simulator' || p === 'iPad Simulator') {
             return "iOS";
         }
+        if(navigator.userAgent.match(/Android/i)){
+        return "Android";
+        }
+    }
+
+    iOSversion() {
+     // supports iOS 2.0 and later
+        var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+        return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
     }
 
     // Returns formatted string based on (capitalize, upper and lower case).

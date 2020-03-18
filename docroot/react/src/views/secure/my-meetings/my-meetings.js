@@ -140,6 +140,25 @@ class MyMeetings extends React.Component {
         return Hour + ':' + Minutes + " " + AMPM;
     }
 
+    checkIOS(url){
+        var iOSver = UtilityService.iOSversion();
+        if (iOSver[0] >= 7) {                   
+            window.location.replace(url);
+        }else{
+            this.openTab(url);
+        }
+    }
+
+    openTab(url){
+        var a = window.document.createElement("a");
+        a.target = '_blank';
+        a.href = url;
+        // Dispatch fake click
+        var e = window.document.createEvent("MouseEvents");
+        e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        a.dispatchEvent(e);
+    }
+
     joinMeeting(meeting) {
         console.log(meeting);
         localStorage.setItem('meetingId', JSON.stringify(meeting.meetingId));
@@ -151,12 +170,18 @@ class MyMeetings extends React.Component {
             "mrn": this.state.userDetails.mrn
         };
         var sessionInfo = {};
+        var isInAppAccess = UtilityService.getInAppAccessFlag();
         var loginType = GlobalConfig.LOGIN_TYPE.SSO;
         if (this.state.userDetails.isTempAccess) {
-            myMeetingsUrl = "launchMeetingForMemberDesktop.json";
             headers.authtoken = this.state.userDetails.ssoSession;
             headers.megaMeetingDisplayName = meeting.member.inMeetingDisplayName;
             loginType = GlobalConfig.LOGIN_TYPE.TEMP;
+            if(isInAppAccess){
+                myMeetingsUrl = "launchMeetingForMember.json";
+            }
+            else{
+                myMeetingsUrl = "launchMeetingForMemberDesktop.json";
+            }
         } else {
             var isProxyMeeting,
                 loginMrn = this.state.userDetails.mrn;
@@ -176,7 +201,8 @@ class MyMeetings extends React.Component {
         }
         sessionInfo.loginType = loginType;
         localStorage.setItem('sessionInfo', JSON.stringify(sessionInfo));
-        BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers, loginType).subscribe((response) => {
+        var isMobile = UtilityService.isMobileDevice();
+        BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers, loginType, isMobile).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
                 if (response.data.data != null && response.data.data != '') {
                     if (this.state.userDetails.isTempAccess){
@@ -185,6 +211,30 @@ class MyMeetings extends React.Component {
                     var roomJoin = response.data.data.roomJoinUrl;
                     localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
                     localStorage.setItem('roomUrl', roomJoin);
+                    //InApp logic
+                    var isInAppAccess = UtilityService.getInAppAccessFlag();
+                    if(isInAppAccess){
+                    var os = UtilityService.getAppOS();
+                    if(os=='iOS'){
+                      this.checkIOS(roomJoin);
+                      this.setState({ showLoader: false });
+                      return false;
+                        }
+                    else {
+                    var isAndroidSDK = sessionStorage.getItem('isAndroidSDK');    
+                        if(isAndroidSDK=="true"){
+                            this.openTab(roomJoin);
+                            this.setState({ showLoader: false });
+                            return false;
+                        }
+                        else{
+                            this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
+                            this.setState({ showLoader: false });
+                            return false;
+                            }
+                        }
+                    }
+                    // inapp logic ends
                     this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                 } else {
                     this.setState({ showLoader: false });

@@ -64,6 +64,10 @@ class Authentication extends React.Component {
             // VIA IN APP BROWSER
             this.setState({ isInApp: true });
             Utilities.setInAppAccessFlag(true);
+            const params = window.location.href.split('?')[1];
+            const urlParams = new URLSearchParams( params );
+            var isSDK = decodeURIComponent(urlParams.get('isAndroidSDK'));
+            sessionStorage.setItem('isAndroidSDK', isSDK);
         }
 
     }
