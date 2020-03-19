@@ -109,7 +109,6 @@ class UtilityService extends React.Component {
                 isBrowserBlockError = true;
             }
         }
-        alert('Firefox user agent' + navigator.userAgent);
         if(!this.getBrowserInformation().isIE){
             if(this.getBrowserInformation().isAlliPadCheck){
                 var iOSver = this.iOSversion();
@@ -118,9 +117,8 @@ class UtilityService extends React.Component {
                     isBrowserBlockError = true;
                 }
             }
-            alert("Firefox load "+ this.getBrowserInformation().isFirefox);
-            if(iosFullversion != '' && blockIosFFVersion && this.getBrowserInformation().isFirefox){
-                alert('Firefox inside');
+            var iosFF = /Mozilla/.test(navigator.userAgent);
+            if(iosFullversion != '' && blockIosFFVersion && iosFF){
                 isBrowserBlockError = true;
             }
         }
