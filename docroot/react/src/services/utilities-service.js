@@ -117,7 +117,7 @@ class UtilityService extends React.Component {
                     isBrowserBlockError = true;
                 }
             }
-            var iosFF = /Mozilla/.test(navigator.userAgent);
+            var iosFF = navigator.userAgent.match("FxiOS");
             if(iosFullversion != '' && blockIosFFVersion && iosFF){
                 isBrowserBlockError = true;
             }
