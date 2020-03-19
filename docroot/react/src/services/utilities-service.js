@@ -103,7 +103,7 @@ class UtilityService extends React.Component {
                 }
             }
         }
-        if(this.isMobileDevice() && this.getBrowserInformation().isMobileChrome){
+        if(this.getBrowserInformation().isMobileChrome){
             if(blockIosChromeVersion){
                 isBrowserBlockError = true;
             }
