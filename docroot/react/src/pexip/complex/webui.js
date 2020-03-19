@@ -624,21 +624,25 @@ function connected(url) {
     }
     var isSetup = localStorage.getItem('isSetupPage');
     if (isSetup == null) {
+        var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         var meetingId = JSON.parse(localStorage.getItem('meetingId'));
-            var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-            var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-            var memberName;
-            if(isProxyMeeting == 'Y'){
-                memberName = udata.lastName +','+ udata.firstName;                
-            }else{
-                memberName = JSON.parse(localStorage.getItem('memberName'));
-            }            
-           if (localStorage.getItem('isGuest')) {
-            var meetingCode= udata.meetingCode;
-              BackendService.CaregiverJoinMeeting(meetingId, meetingCode);  
-            }  
-            else{
-              BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
+        var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+        var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+            if(isDirectLaunch){
+                JoinLeaveMobileCall("J");
+            } else {
+                var memberName;
+                if(isProxyMeeting == 'Y'){
+                    memberName = udata.lastName +','+ udata.firstName;                
+                } else {
+                    memberName = JSON.parse(localStorage.getItem('memberName'));
+                }            
+               if(localStorage.getItem('isGuest')) {
+                    var meetingCode= udata.meetingCode;
+                    BackendService.CaregiverJoinMeeting(meetingId, meetingCode);  
+                } else {
+                    BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
+                }
             }
     }
 }
@@ -773,7 +777,42 @@ export function getTurnServerObjsForMobile() {
 
 export function pexipDisconnect() {
     rtc.disconnect();
+    var isDirectLaunch = localStorage.getItem('isDirectLaunch');
+    if(isDirectLaunch){
+        JoinLeaveMobileCall("L");
+    }
 }
+
+
+export function JoinLeaveMobileCall(status){
+    var meetingId = JSON.parse(localStorage.getItem('meetingId'));
+    var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+    var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+    var userLoggedIn = udata.lastName +', '+ udata.firstName;  
+    var inMeetingName = JSON.parse(localStorage.getItem('memberName'));
+    var isPatient;
+    var inMeetingDisplayName;
+        if(userLoggedIn == inMeetingName){
+            isPatient = true;
+            inMeetingDisplayName = inMeetingName;
+        }
+        else if(isProxyMeeting == 'Y'){
+            isPatient = false;
+            inMeetingDisplayName = userLoggedIn;
+        }
+        else{
+            isPatient = false;
+            inMeetingDisplayName = userLoggedIn;
+        }
+        BackendService.sendUserJoinLeaveStatus(meetingId,isPatient,status,inMeetingDisplayName).subscribe((response) => {
+            console.log("Success");
+            if(status == "L"){
+                window.location.href = 'mobileNativeLogout.htm';
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+    }
 
 export function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;

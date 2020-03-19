@@ -327,6 +327,11 @@ class Conference extends React.Component {
 
     leaveMeeting(isFromBackButton) {
         this.setState({ leaveMeeting: true });
+        var isDirectLaunch = localStorage.getItem('isDirectLaunch');
+        if(isDirectLaunch){
+            WebUI.pexipDisconnect();
+            return false;
+        }
         if (this.state.isGuest == false) {
             var headers = {},
                 loginType = this.state.loginType;
