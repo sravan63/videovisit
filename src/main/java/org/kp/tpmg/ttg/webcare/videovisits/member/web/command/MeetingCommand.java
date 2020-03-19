@@ -629,7 +629,7 @@ public class MeetingCommand {
 			String clientId = WebUtil.getClientId(request.getParameter(LOGIN_TYPE), request.getParameter("isFromMobile"));
 			jsonOutput = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 					request.getSession().getId(), clientId);
-			if (jsonOutput != null) {
+			if (StringUtils.isNotBlank(jsonOutput)) {
 				output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
 			}
 
@@ -641,7 +641,9 @@ public class MeetingCommand {
 							output.getService().getLaunchMeetingEnvelope() != null
 									? output.getService().getLaunchMeetingEnvelope().getLaunchMeeting()
 									: null);
-					result = WebUtil.setBandWidth(result, desktopBandwidth);
+					if (StringUtils.isNotBlank(result)) {
+						result = WebUtil.setBandWidth(result, desktopBandwidth);
+					}
 				}
 			}
 			logger.debug("json output: = " + output);
@@ -683,7 +685,9 @@ public class MeetingCommand {
 		try {
 			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
 			jsonOutput = WebService.getProviderRunningLateDetails(meetingId, request.getSession().getId(), clientId);
-			output = gson.fromJson(jsonOutput, MeetingRunningLateOutputJson.class);
+			if (StringUtils.isNotBlank(jsonOutput)) {
+				output = gson.fromJson(jsonOutput, MeetingRunningLateOutputJson.class);
+			}
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
 				Status status = output.getService().getStatus();
 				if (StringUtils.isNotBlank(status.getCode())) {
@@ -722,7 +726,9 @@ public class MeetingCommand {
 		try {
 			jsonOutput = WebService.caregiverJoinLeaveMeeting(meetingId, meetingHash, joinOrLeave,
 					request.getSession().getId(), WebUtil.VV_MBR_GUEST);
-			output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+			if (StringUtils.isNotBlank(jsonOutput)) {
+				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+			}
 			if (AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH") != null) {
 				desktopBandwidth = AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH");
 			}
@@ -786,7 +792,9 @@ public class MeetingCommand {
 			String clientId = WebUtil.getClientIdByLoginType(loginType);
 			jsonOutput = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
 					eventName, eventDescription, logType, sessionId, clientId);
-			output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+			if (StringUtils.isNotBlank(jsonOutput)) {
+				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+			}
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
 				Status status = output.getService().getStatus();
 				if (StringUtils.isNotBlank(status.getCode())) {
@@ -852,7 +860,6 @@ public class MeetingCommand {
 		String result = null;
 		String operationName = null;
 		try {
-			final Gson gson = new GsonBuilder().serializeNulls().create();
 			final Device device = DeviceDetectionService.checkForDevice(request);
 			final Map<String, String> capabilities = device.getCapabilities();
 			final String brandName = capabilities.get("brand_name");

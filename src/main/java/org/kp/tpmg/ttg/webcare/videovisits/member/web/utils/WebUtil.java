@@ -407,6 +407,10 @@ public class WebUtil {
 		final String BLOCK_CHROME_BROWSER_IPAD = AppProperties.getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER_IPAD");
 		properties.put("BLOCK_CHROME_BROWSER_IOS",
 				StringUtils.isNotBlank(BLOCK_CHROME_BROWSER_IPAD) ? BLOCK_CHROME_BROWSER_IPAD : "true");
+		final String BLOCK_FIREFOX_BROWSER_IOS = AppProperties.getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER_IOS");
+		properties.put("BLOCK_FIREFOX_BROWSER_IOS",
+				StringUtils.isNotBlank(BLOCK_FIREFOX_BROWSER_IOS) ? BLOCK_FIREFOX_BROWSER_IOS : "true");
+		
 
 		// OS version for ipad
 		final String IPAD_OS_VERSION = AppProperties.getExtPropertiesValueByKey("IPAD_OS_VERSION");
