@@ -204,10 +204,10 @@ class UtilityService extends React.Component {
 
     formatInMeetingRunningLateTime(runLateMeetingTime) {
         var meetingTime = new Date(parseInt(runLateMeetingTime));
-        var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();
-        var ampmval = (hours > 11) ? 'PM' : 'AM';
+        var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();        
         var hours = (meetingTime.getHours() > 11) ? meetingTime.getHours() - 12 : meetingTime.getHours();
         hours = (hours == 0) ? 12 : hours;
+        var ampmval = (hours > 11) ? 'PM' : 'AM';
         return hours + ':' + minutes + ' ' + ampmval
     }
 
