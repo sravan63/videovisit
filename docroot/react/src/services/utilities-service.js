@@ -120,7 +120,7 @@ class UtilityService extends React.Component {
             }
             alert("Firefox load "+ this.getBrowserInformation().isFirefox);
             if(iosFullversion != '' && blockIosFFVersion && this.getBrowserInformation().isFirefox){
-                alert('Firefox user agent inside');
+                alert('Firefox inside');
                 isBrowserBlockError = true;
             }
         }
