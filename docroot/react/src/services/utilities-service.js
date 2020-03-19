@@ -42,7 +42,8 @@ class UtilityService extends React.Component {
         let blockFirefoxVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_FIREFOX_VERSION : browserNames.BLOCK_FIREFOX_VERSION;
         let blockEdgeVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
         let blockSafariVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
-        let blockIosChromeVersion = browserNames.BLOCK_CHROME_BROWSER_IPAD == 'true';
+        let blockIosChromeVersion = browserNames.BLOCK_CHROME_BROWSER_IOS == 'true';
+        alert('blockIosChromeVersion' + blockIosChromeVersion);
         let isBrowserBlockError = false;
         if (this.getBrowserInformation().isIE) {
             isBrowserBlockError = true;
@@ -103,7 +104,10 @@ class UtilityService extends React.Component {
                 }
             }
         }
+        
+        alert('isMobileChrome' + this.getBrowserInformation().isMobileChrome);
         if(this.getBrowserInformation().isMobileChrome){
+            alert('chrome inside if');
             if(blockIosChromeVersion){
                 isBrowserBlockError = true;
             }
