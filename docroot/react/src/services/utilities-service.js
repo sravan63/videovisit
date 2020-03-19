@@ -193,7 +193,7 @@ class UtilityService extends React.Component {
             let Minutes = (DateObj.getMinutes() <= 9) ? "0" + DateObj.getMinutes() : DateObj.getMinutes();
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
             Hour = (Hour == 0) ? 12 : Hour;
-            str = Hour + ':' + Minutes + AMPM + ', ';
+            str = Hour + ':' + Minutes + " " + AMPM + ', ';
         } else {
             let week = String(DateObj).substring(0, 3);
             let monthstr = String(DateObj).substr(4, 6);
@@ -208,7 +208,7 @@ class UtilityService extends React.Component {
         var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();        
         var hours = (meetingTime.getHours() > 11) ? meetingTime.getHours() - 12 : meetingTime.getHours();
         hours = (hours == 0) ? 12 : hours;
-        var ampmval = (hours > 11) ? 'PM' : 'AM';
+        var ampmval = (meetingTime.getHours() > 11) ? 'PM' : 'AM';
         return hours + ':' + minutes + ' ' + ampmval
     }
 
