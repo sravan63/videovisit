@@ -110,7 +110,7 @@ class UtilityService extends React.Component {
             }
         }
         if(!this.getBrowserInformation().isIE){
-            if(isAlliPadCheck){
+            if(this.getBrowserInformation().isAlliPadCheck){
                 var iOSver = this.iOSversion();
                 var iosFullversion = iOSver[0] + '.'+ iOSver[1];
                 if(iosFullversion < browserNames.IPAD_OS_VERSION){
