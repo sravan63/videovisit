@@ -1095,7 +1095,11 @@ public class MeetingCommand {
 				}
 
 			}
-			queryString = queryString + "&isAndroidSDK=" + isAndroidSDK; 
+			if(StringUtils.isNotBlank(queryString)) {
+				queryString = queryString + "&isAndroidSDK=" + isAndroidSDK;
+			} else {
+				queryString = "isAndroidSDK=" + isAndroidSDK;
+			}
 		} catch (Exception e) {
 			logger.error("Error while mobile launch redirection : " + e.getMessage(), e);
 		}

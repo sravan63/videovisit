@@ -405,12 +405,12 @@ public class WebUtil {
 		
 		// Browser version for ipad
 		final String BLOCK_CHROME_BROWSER_IPAD = AppProperties.getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER_IPAD");
-		properties.put("BLOCK_CHROME_BROWSER_IPAD",
+		properties.put("BLOCK_CHROME_BROWSER_IOS",
 				StringUtils.isNotBlank(BLOCK_CHROME_BROWSER_IPAD) ? BLOCK_CHROME_BROWSER_IPAD : "true");
 
 		// OS version for ipad
 		final String IPAD_OS_VERSION = AppProperties.getExtPropertiesValueByKey("IPAD_OS_VERSION");
-		properties.put("IPAD_OS_VERSION", StringUtils.isNotBlank(IPAD_OS_VERSION) ? IPAD_OS_VERSION : "12");
+		properties.put("IPAD_OS_VERSION", StringUtils.isNotBlank(IPAD_OS_VERSION) ? IPAD_OS_VERSION : "13");
 	}
 	
 	public static String convertMapToJsonString(final Map<String, String> map) {
