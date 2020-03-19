@@ -23,7 +23,7 @@ class UtilityService extends React.Component {
             isIE: /MSIE|Trident/.test(navigator.userAgent),
             isEdge: /Edge/.test(navigator.userAgent),
             isChrome:/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor),
-            isMobileChrome:  /iPad|iPhone|iPod/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor) 
+            isAlliPadCheck:  /iPad/.test(navigator.userAgent) 
         }
         this.browserInfo = bObj;
     }
@@ -43,6 +43,7 @@ class UtilityService extends React.Component {
         let blockEdgeVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
         let blockSafariVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
         let blockIosChromeVersion = browserNames.BLOCK_CHROME_BROWSER_IOS == 'true';
+        let blockIosFFVersion = browserNames.BLOCK_FIREFOX_BROWSER_IOS == 'true';
         let isBrowserBlockError = false;
         if (this.getBrowserInformation().isIE) {
             isBrowserBlockError = true;
@@ -103,18 +104,23 @@ class UtilityService extends React.Component {
                 }
             }
         }
-        alert("userAGent" + navigator.userAgent);
         if(navigator.userAgent.match('CriOS')){
             if(blockIosChromeVersion){
                 isBrowserBlockError = true;
             }
         }
-        var iOSver = this.iOSversion();
-        var iosFullversion = iOSver[0] + '.'+ iOSver[1];
-        if(iosFullversion < browserNames.IPAD_OS_VERSION){
-            isBrowserBlockError = true;
+        if(!this.getBrowserInformation().isIE){
+            if(isAlliPadCheck){
+                var iOSver = this.iOSversion();
+                var iosFullversion = iOSver[0] + '.'+ iOSver[1];
+                if(iosFullversion < browserNames.IPAD_OS_VERSION){
+                    isBrowserBlockError = true;
+                }
+            }
+            if(iosFullversion != '' && blockIosFFVersion){
+                isBrowserBlockError = true;
+            }
         }
-        
         return isBrowserBlockError;
     }
 

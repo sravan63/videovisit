@@ -36,7 +36,10 @@ class Authentication extends React.Component {
         if(!browserInfo.isIE){
             this.validateInAppAccess();
         }
-        this.getBrowserBlockInfo();
+        var inAppAccess = Utilities.getInAppAccessFlag();
+        if(!inAppAccess){
+            this.getBrowserBlockInfo();
+        }
     }
     getBrowserBlockInfo(){
         var propertyName = 'browser',
