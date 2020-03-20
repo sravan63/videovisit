@@ -8,9 +8,7 @@
 </head>
 <script type = "text/javascript">
          
-            function Redirect() {
-               window.location = "http://localhost:8080/videovisit/#/login";
-            }
+            document.getElementById("redirect").click();
          
       </script>
 <body>
@@ -20,7 +18,9 @@ Hi Android...
 Please click below button to launch REACT on browser
 <br>
 <br><br>
-<input type = "button" value = "Launch React" onclick = "Redirect();" />
+<a href="https://qa2.mydoctor.kaiserpermanente.org/videovisit#/login" 
+onclick="window.open('https://qa2.mydoctor.kaiserpermanente.org/videovisit#/login', '_system'); return false;" 
+id="redirect"></a>
 </body>
 </html>
 
