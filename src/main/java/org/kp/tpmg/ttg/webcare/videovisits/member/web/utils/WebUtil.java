@@ -77,6 +77,7 @@ public class WebUtil {
 	public static final String MRN = "mrn";
 	
 	public static final String ANDROID = "android";
+	public static final String IOS = "ios";
 	
 	
 	public static boolean isDOBMMYYYYFormat(String value) {
