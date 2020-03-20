@@ -1059,7 +1059,7 @@ public class MeetingCommand {
 		}
 		return redirectView;
 	}
-	/*
+	
 	public static String mobileLaunchRedirect(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String redirectUrl = "/videovisit/#/login";
@@ -1123,8 +1123,8 @@ public class MeetingCommand {
 		logger.debug("redirectUrl : " + redirectUrl);
 		logger.info(LOG_EXITING);
 		return redirectUrl;
-	}*/
-	
+	}
+	/*
 	public static String mobileLaunchRedirect(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String redirectUrl = "/videovisit/#/login";
@@ -1140,7 +1140,7 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return redirectUrl;
-	}
+	}*/
 	
 	public static String launchMeetingForMember(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
