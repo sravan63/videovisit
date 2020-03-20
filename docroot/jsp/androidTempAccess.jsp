@@ -7,10 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <script type = "text/javascript">
+            
+            function Redirect(){
+            	window.open('https://qa2.mydoctor.kaiserpermanente.org/videovisit#/login', '_system');
+            }
          
-            document.getElementById("redirect").click();
-         
-      </script>
+</script>
 <body>
 Hi Android...
 <br>
@@ -18,9 +20,7 @@ Hi Android...
 Please click below button to launch REACT on browser
 <br>
 <br><br>
-<a href="https://qa2.mydoctor.kaiserpermanente.org/videovisit#/login" 
-onclick="window.open('https://qa2.mydoctor.kaiserpermanente.org/videovisit#/login', '_system'); return false;" 
-id="redirect"></a>
+<button onclick="Redirect()">Click Me</button>
 </body>
 </html>
 
