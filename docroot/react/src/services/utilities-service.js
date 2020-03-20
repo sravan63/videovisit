@@ -73,20 +73,37 @@ class UtilityService extends React.Component {
             if (blockSafari) {
                 isBrowserBlockError = true;
             } else {
-                // var majorMinorDot = navigator.userAgent.substring(agent.indexOf('Version/') + 8, agent.lastIndexOf('Safari')).trim();                
-                // var versionNumber = parseFloat(majorMinorDot);
-                // var nAgt = navigator.userAgent;
-                var fullVersion  = ''+parseFloat(navigator.appVersion);
+                var nAgt = navigator.userAgent;
+                var browserName = navigator.appName;
+                var fullVersion = ''+parseFloat(navigator.appVersion);
                 var majorVersion = parseInt(navigator.appVersion,10);
-                var verOffset;
-                if ((verOffset=navigator.userAgent.indexOf("Safari"))!=-1) {
-                    fullVersion = navigator.userAgent.substring(verOffset+7);
-                if ((verOffset=navigator.userAgent.indexOf("Version"))!=-1)
-                    fullVersion = navigator.userAgent.substring(verOffset+8);
+                var nameOffset,verOffset,ix;
+                
+                // In Safari, the true version is after "Safari" or after "Version"
+                if ((verOffset=nAgt.indexOf("Safari"))!=-1) {
+                browserName = "Safari";
+                fullVersion = nAgt.substring(verOffset+7);
+                if ((verOffset=nAgt.indexOf("Version"))!=-1)
+                fullVersion = nAgt.substring(verOffset+8);
                 }
-                majorVersion = parseInt(''+fullVersion,10);
-                // Block access from Safari version 12.                
-                if (majorVersion < blockSafariVersion) {
+                // In most other browsers, "name/version" is at the end of userAgent
+                else if ( (nameOffset=nAgt.lastIndexOf(' ')+1) <
+                (verOffset=nAgt.lastIndexOf('/')) )
+                {
+                browserName = nAgt.substring(nameOffset,verOffset);
+                fullVersion = nAgt.substring(verOffset+1);
+                if (browserName.toLowerCase()==browserName.toUpperCase()) {
+                browserName = navigator.appName;
+                }
+                }
+                // trim the fullVersion string at semicolon/space if present
+                if ((ix=fullVersion.indexOf(";"))!=-1)
+                fullVersion=fullVersion.substring(0,ix);
+                if ((ix=fullVersion.indexOf(" "))!=-1)
+                fullVersion=fullVersion.substring(0,ix);
+                // Block access from Safari version 12.  
+                //console.log(fullVersion.substring(0, 4));              
+                if (fullVersion.substring(0, 4) < blockSafariVersion) {
                     isBrowserBlockError = true;
                 }
             }
