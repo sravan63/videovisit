@@ -28,6 +28,7 @@ class MyMeetings extends React.Component {
                 this.getMyMeetings();
             }
         } else {
+            alert('On Did mount Alert');
             this.props.history.push(GlobalConfig.LOGIN_URL);
         }
         this.subscription = MessageService.getMessage().subscribe((notification) => {
@@ -44,6 +45,7 @@ class MyMeetings extends React.Component {
     resetSessionToken(token){
         this.state.userDetails.ssoSession = token;
         localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
+        localStorage.setItem('LoginUserDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
     }
 
     getMyMeetings() {
@@ -87,6 +89,7 @@ class MyMeetings extends React.Component {
                 localStorage.clear();
                 this.setState({ showLoader: false });
                 Utilities.setPromotionFlag(false);
+                alert('On my meetings Alert');
                 this.props.history.push(GlobalConfig.LOGIN_URL);
             }
             this.setState({ showLoader: false });
@@ -219,8 +222,7 @@ class MyMeetings extends React.Component {
                       this.checkIOS(roomJoin);
                       this.setState({ showLoader: false });
                       return false;
-                        }
-                    else {
+                    } else {
                     var isAndroidSDK = sessionStorage.getItem('isAndroidSDK');    
                         if(isAndroidSDK=="true"){
                             this.openTab(roomJoin);
