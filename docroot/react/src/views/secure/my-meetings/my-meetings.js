@@ -88,7 +88,6 @@ class MyMeetings extends React.Component {
                 localStorage.clear();
                 this.setState({ showLoader: false });
                 Utilities.setPromotionFlag(false);
-                alert('On my meetings Alert');
                 this.props.history.push(GlobalConfig.LOGIN_URL);
             }
             this.setState({ showLoader: false });
