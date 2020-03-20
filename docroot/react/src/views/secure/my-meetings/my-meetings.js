@@ -28,17 +28,7 @@ class MyMeetings extends React.Component {
                 this.getMyMeetings();
             }
         } else {
-            var isAndroidSDK = window.location.href.indexOf('isAndroidSDK') > -1;
-            if( isAndroidSDK ) {
-                var params = '?' + window.location.href.split('?')[1];
-                this.props.history.push({
-                  pathname: GlobalConfig.LOGIN_URL,
-                  search: params,
-                  state: null
-                });
-            } else {
-                this.props.history.push(GlobalConfig.LOGIN_URL);
-            }
+            this.props.history.push(GlobalConfig.LOGIN_URL);
         }
         this.subscription = MessageService.getMessage().subscribe((notification) => {
             if (notification.text == GlobalConfig.LOGOUT) {
@@ -98,6 +88,7 @@ class MyMeetings extends React.Component {
                 localStorage.clear();
                 this.setState({ showLoader: false });
                 Utilities.setPromotionFlag(false);
+                alert('On my meetings Alert');
                 this.props.history.push(GlobalConfig.LOGIN_URL);
             }
             this.setState({ showLoader: false });
