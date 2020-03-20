@@ -1062,7 +1062,7 @@ public class MeetingCommand {
 	
 	public static String mobileLaunchRedirect(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
-		String redirectUrl = "/videovisit/#/login";
+		String redirectUrl = "/videovisit/#/myMeetings";
 		boolean isAndroidSDK = false;
 		final String mobileOs = StringUtils.isNotBlank(request.getParameter("os")) ? request.getParameter("os").trim()
 				: null;
