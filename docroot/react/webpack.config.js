@@ -51,7 +51,7 @@ module.exports = (env,options) => {
   },
    devServer: {
     contentBase: path.join(__dirname, '/videovisit/'),
-    historyApiFallback: false
+    historyApiFallback: true
   },
   plugins: [
     new HtmlWebPackPlugin({
