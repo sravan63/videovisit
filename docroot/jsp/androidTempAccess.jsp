@@ -9,8 +9,20 @@
 <script type = "text/javascript">
             
             function Redirect(){
-            	window.open('https://qa2.mydoctor.kaiserpermanente.org/videovisit#/login', '_system');
+            	var url = "https://qa1.mydoctor.kaiserpermanente.org/videovisit/#/login";
+            	window.open("googlechrome://navigate?url=" + url,"_system");
             }
+
+            function blankRedirect(){
+            	var url = "https://qa1.mydoctor.kaiserpermanente.org/videovisit/#/login";
+            	window.open("googlechrome://navigate?url=" + url,"_blank");
+            }
+
+            function oldone(){
+            	window.open('https://qa2.mydoctor.kaiserpermanente.org/videovisit#/login', '_blank');
+            }
+
+            
          
 </script>
 <body>
@@ -21,6 +33,8 @@ Please click below button to launch REACT on browser
 <br>
 <br><br>
 <button onclick="Redirect()">Click Me</button>
+<button onclick="blankRedirect()">Blank Click Me</button>
+<button onclick="oldone()">Oldone Click Me</button>
 </body>
 </html>
 
