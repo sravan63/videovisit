@@ -71,6 +71,8 @@ class Authentication extends React.Component {
             const urlParams = new URLSearchParams( params );
             var isSDK = decodeURIComponent(urlParams.get('isAndroidSDK'));
             sessionStorage.setItem('isAndroidSDK', isSDK);
+        } else if( Utilities.getInAppAccessFlag() ) {
+            this.setState({ isInApp: true });
         }
 
     }

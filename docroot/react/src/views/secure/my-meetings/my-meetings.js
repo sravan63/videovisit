@@ -28,8 +28,17 @@ class MyMeetings extends React.Component {
                 this.getMyMeetings();
             }
         } else {
-            alert('On Did mount Alert');
-            this.props.history.push(GlobalConfig.LOGIN_URL);
+            var isAndroidSDK = window.location.href.indexOf('isAndroidSDK') > -1;
+            if( isAndroidSDK ) {
+                var params = '?' + window.location.href.split('?')[1];
+                this.props.history.push({
+                  pathname: GlobalConfig.LOGIN_URL,
+                  search: params,
+                  state: null
+                });
+            } else {
+                this.props.history.push(GlobalConfig.LOGIN_URL);
+            }
         }
         this.subscription = MessageService.getMessage().subscribe((notification) => {
             if (notification.text == GlobalConfig.LOGOUT) {
@@ -89,7 +98,6 @@ class MyMeetings extends React.Component {
                 localStorage.clear();
                 this.setState({ showLoader: false });
                 Utilities.setPromotionFlag(false);
-                alert('On my meetings Alert');
                 this.props.history.push(GlobalConfig.LOGIN_URL);
             }
             this.setState({ showLoader: false });
@@ -217,22 +225,21 @@ class MyMeetings extends React.Component {
                     //InApp logic
                     var isInAppAccess = UtilityService.getInAppAccessFlag();
                     if(isInAppAccess){
-                    var os = UtilityService.getAppOS();
-                    if(os=='iOS'){
-                      this.checkIOS(roomJoin);
-                      this.setState({ showLoader: false });
-                      return false;
-                    } else {
-                    var isAndroidSDK = sessionStorage.getItem('isAndroidSDK');    
-                        if(isAndroidSDK=="true"){
-                            this.openTab(roomJoin);
-                            this.setState({ showLoader: false });
-                            return false;
-                        }
-                        else{
-                            this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
-                            this.setState({ showLoader: false });
-                            return false;
+                        var os = UtilityService.getAppOS();
+                        if(os=='iOS'){
+                          this.checkIOS(roomJoin);
+                          this.setState({ showLoader: false });
+                          return false;
+                        } else {
+                            var isAndroidSDK = sessionStorage.getItem('isAndroidSDK');    
+                            if(isAndroidSDK=="true") {
+                                this.openTab(roomJoin);
+                                this.setState({ showLoader: false });
+                                return false;
+                            } else {
+                                this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
+                                this.setState({ showLoader: false });
+                                return false;
                             }
                         }
                     }
