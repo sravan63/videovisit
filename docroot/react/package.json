@@ -23,7 +23,6 @@
     "watchPathIgnorePatterns": [
       "<rootDir>/node_modules"
     ],
-  
     "collectCoverage": true,
     "coverageReporters": [
       "json",

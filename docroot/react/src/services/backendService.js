@@ -46,8 +46,8 @@ class BackendService extends React.Component {
         return Axios.post(this.state.basePath + '/videovisit/' + url + '?getProxyMeetings=' + isProxy + '&loginType=' + loginType, {}, { headers: headers });
     }
 
-    launchMemberVisit(url, meetingId, headers, loginType) {
-        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType, {}, { headers: headers });
+    launchMemberVisit(url, meetingId, headers, loginType, isFromMobile) {
+        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType + '&isFromMobile=' + isFromMobile, {}, { headers: headers });
     }
 
     getSetupMeeting(url) {
@@ -110,6 +110,12 @@ class BackendService extends React.Component {
                 console.log("Error");
             });
 
+    }
+    sendUserJoinLeaveStatus(meetingId,isPatient,joinLeaveMeeting,inMeetingDisplayName){
+        let headers = {
+            "inMeetingDisplayName": inMeetingDisplayName
+        };
+        return Axios.post(this.state.basePath + '/videovisit/' + 'joinLeaveMeeting.json' + '?loginType=sso' + '&meetingId=' + meetingId + '&isPatient=' + isPatient + '&joinLeaveMeeting=' + joinLeaveMeeting, {},{ headers: headers });
     }
 
     guestLogout(meetingCode,headers,isFromBackButton){

@@ -36,7 +36,10 @@ class Authentication extends React.Component {
         if(!browserInfo.isIE){
             this.validateInAppAccess();
         }
-        this.getBrowserBlockInfo();
+        var inAppAccess = Utilities.getInAppAccessFlag();
+        if(!inAppAccess){
+            this.getBrowserBlockInfo();
+        }
     }
     getBrowserBlockInfo(){
         var propertyName = 'browser',
@@ -60,10 +63,14 @@ class Authentication extends React.Component {
     validateInAppAccess() {
         var urlStr = window.location.href;
         var url = new URL(urlStr);
-        if ((url.search !== '' || url.href.indexOf('useragentType') > -1) && this.state.tempAccessToken == false) {
+        if ((url.search !== '' || url.href.indexOf('isAndroidSDK') > -1) && this.state.tempAccessToken == false) {
             // VIA IN APP BROWSER
             this.setState({ isInApp: true });
             Utilities.setInAppAccessFlag(true);
+            const params = window.location.href.split('?')[1];
+            const urlParams = new URLSearchParams( params );
+            var isSDK = decodeURIComponent(urlParams.get('isAndroidSDK'));
+            sessionStorage.setItem('isAndroidSDK', isSDK);
         }
 
     }

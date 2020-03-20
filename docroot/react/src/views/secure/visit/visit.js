@@ -70,7 +70,8 @@ class Visit extends React.Component {
             this.setState({ isMobile: true });
             this.setState({ showPreCheck: false });
         } else {
-            this.props.history.push(GlobalConfig.ERROR_PAGE);
+            // this.props.history.push(GlobalConfig.ERROR_PAGE);
+            window.location.href = 'autherror.htm';
         }
     }
 

@@ -22,7 +22,8 @@ class UtilityService extends React.Component {
             isFireFox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
             isIE: /MSIE|Trident/.test(navigator.userAgent),
             isEdge: /Edge/.test(navigator.userAgent),
-            isChrome:/Chrome/.test(navigator.userAgent)
+            isChrome:/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor),
+            isAlliPadCheck:  /iPad/.test(navigator.userAgent) 
         }
         this.browserInfo = bObj;
     }
@@ -41,6 +42,8 @@ class UtilityService extends React.Component {
         let blockFirefoxVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_FIREFOX_VERSION : browserNames.BLOCK_FIREFOX_VERSION;
         let blockEdgeVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_EDGE_VERSION : browserNames.BLOCK_EDGE_VERSION;
         let blockSafariVersion  = this.isMobileDevice() ? browserNames.MOBILE_BLOCK_SAFARI_VERSION : browserNames.BLOCK_SAFARI_VERSION;
+        let blockIosChromeVersion = browserNames.BLOCK_CHROME_BROWSER_IOS == 'true';
+        let blockIosFFVersion = browserNames.BLOCK_FIREFOX_BROWSER_IOS == 'true';
         let isBrowserBlockError = false;
         if (this.getBrowserInformation().isIE) {
             isBrowserBlockError = true;
@@ -101,6 +104,24 @@ class UtilityService extends React.Component {
                 }
             }
         }
+        if(navigator.userAgent.match('CriOS')){
+            if(blockIosChromeVersion){
+                isBrowserBlockError = true;
+            }
+        }
+        if(!this.getBrowserInformation().isIE){
+            if(this.getBrowserInformation().isAlliPadCheck){
+                var iOSver = this.iOSversion();
+                var iosFullversion = iOSver[0] + '.'+ iOSver[1];
+                if(iosFullversion < browserNames.IPAD_OS_VERSION){
+                    isBrowserBlockError = true;
+                }
+            }
+            var iosFF = navigator.userAgent.match("FxiOS");
+            if(iosFullversion != '' && blockIosFFVersion && iosFF){
+                isBrowserBlockError = true;
+            }
+        }
         return isBrowserBlockError;
     }
 
@@ -132,9 +153,16 @@ class UtilityService extends React.Component {
 
         if (p === 'iPad' || p === 'iPhone' || p === 'iPod' || p === 'iPhone Simulator' || p === 'iPad Simulator') {
             return "iOS";
-        }else{
-            return iOS;
         }
+        if(navigator.userAgent.match(/Android/i)){
+        return "Android";
+        }
+    }
+
+    iOSversion() {
+     // supports iOS 2.0 and later
+        var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+        return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
     }
 
     // Returns formatted string based on (capitalize, upper and lower case).
@@ -165,7 +193,7 @@ class UtilityService extends React.Component {
             let Minutes = (DateObj.getMinutes() <= 9) ? "0" + DateObj.getMinutes() : DateObj.getMinutes();
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
             Hour = (Hour == 0) ? 12 : Hour;
-            str = Hour + ':' + Minutes + AMPM + ', ';
+            str = Hour + ':' + Minutes + " " + AMPM + ', ';
         } else {
             let week = String(DateObj).substring(0, 3);
             let monthstr = String(DateObj).substr(4, 6);
@@ -177,10 +205,10 @@ class UtilityService extends React.Component {
 
     formatInMeetingRunningLateTime(runLateMeetingTime) {
         var meetingTime = new Date(parseInt(runLateMeetingTime));
-        var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();
-        var ampmval = (hours > 11) ? 'PM' : 'AM';
+        var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();        
         var hours = (meetingTime.getHours() > 11) ? meetingTime.getHours() - 12 : meetingTime.getHours();
         hours = (hours == 0) ? 12 : hours;
+        var ampmval = (meetingTime.getHours() > 11) ? 'PM' : 'AM';
         return hours + ':' + minutes + ' ' + ampmval
     }
 

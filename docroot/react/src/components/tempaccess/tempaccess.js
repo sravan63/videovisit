@@ -100,8 +100,6 @@ class TempAccess extends React.Component {
             width += 'auto';
         }else if(window.innerWidth > 787 && window.orientation == 0){
             width += '65%';
-        }else{
-            width += '35%';
         }
         return width;
 
