@@ -371,9 +371,9 @@ public class WebUtil {
 		properties.put("BLOCK_IE_BROWSER", StringUtils.isNotBlank(BLOCK_IE_BROWSER) ? BLOCK_IE_BROWSER : "true");
 		//Browser versions for desktop
 		final String BLOCK_CHROME_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_CHROME_VERSION");
-		properties.put("BLOCK_CHROME_VERSION", StringUtils.isNotBlank(BLOCK_CHROME_VERSION) ? BLOCK_CHROME_VERSION : "61");
+		properties.put("BLOCK_CHROME_VERSION", StringUtils.isNotBlank(BLOCK_CHROME_VERSION) ? BLOCK_CHROME_VERSION : "70");
 		final String BLOCK_FIREFOX_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_FIREFOX_VERSION");
-		properties.put("BLOCK_FIREFOX_VERSION", StringUtils.isNotBlank(BLOCK_FIREFOX_VERSION) ? BLOCK_FIREFOX_VERSION : "60");
+		properties.put("BLOCK_FIREFOX_VERSION", StringUtils.isNotBlank(BLOCK_FIREFOX_VERSION) ? BLOCK_FIREFOX_VERSION : "67");
 		final String BLOCK_EDGE_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_EDGE_VERSION");
 		properties.put("BLOCK_EDGE_VERSION", StringUtils.isNotBlank(BLOCK_EDGE_VERSION) ? BLOCK_EDGE_VERSION : "18");
 		final String BLOCK_SAFARI_VERSION = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
@@ -394,13 +394,13 @@ public class WebUtil {
 		properties.put("MOBILE_BLOCK_IE_BROWSER", StringUtils.isNotBlank(MOBILE_BLOCK_IE_BROWSER) ? MOBILE_BLOCK_IE_BROWSER : "true");
 		//Browser versions for mobile
 		final String MOBILE_BLOCK_CHROME_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_CHROME_VERSION");
-		properties.put("MOBILE_BLOCK_CHROME_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_CHROME_VERSION) ? MOBILE_BLOCK_CHROME_VERSION : "61");
+		properties.put("MOBILE_BLOCK_CHROME_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_CHROME_VERSION) ? MOBILE_BLOCK_CHROME_VERSION : "70");
 		final String MOBILE_BLOCK_FIREFOX_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_FIREFOX_VERSION");
 		properties.put("MOBILE_BLOCK_FIREFOX_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_FIREFOX_VERSION) ? MOBILE_BLOCK_FIREFOX_VERSION : "67");
 		final String MOBILE_BLOCK_EDGE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_EDGE_VERSION");
 		properties.put("MOBILE_BLOCK_EDGE_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_EDGE_VERSION) ? MOBILE_BLOCK_EDGE_VERSION : "18");
 		final String MOBILE_BLOCK_SAFARI_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_SAFARI_VERSION");
-		properties.put("MOBILE_BLOCK_SAFARI_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_SAFARI_VERSION) ? MOBILE_BLOCK_SAFARI_VERSION : "12.2");
+		properties.put("MOBILE_BLOCK_SAFARI_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_SAFARI_VERSION) ? MOBILE_BLOCK_SAFARI_VERSION : "12");
 		final String MOBILE_BLOCK_IE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_IE_VERSION");
 		properties.put("MOBILE_BLOCK_IE_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_IE_VERSION) ? MOBILE_BLOCK_IE_VERSION : "");
 		
