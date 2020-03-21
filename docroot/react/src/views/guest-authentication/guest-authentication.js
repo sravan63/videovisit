@@ -117,7 +117,13 @@ class Authentication extends React.Component {
                     this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                 }
             } else if (response.data.statusCode == 300 || response.data.statusCode == 900) {
+                if(rejoin){
+                this.setState({ showLoader: false });    
+                this.SignOut();    
+                }
+                else{
                 this.errorCompForGuestLogin();
+                }
             } else if (response.data.statusCode == 510 || response.data.statusCode == 500) {
                 this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_VALIDATION_MSG, showLoader: false });
             } else {
@@ -130,8 +136,13 @@ class Authentication extends React.Component {
                 }
             }
         }, (err) => {
-            this.errorCompForGuestLogin();
-
+            if(rejoin){
+                this.setState({ showLoader: false });    
+                this.SignOut();    
+                }
+                else{
+                this.errorCompForGuestLogin();
+                }
         });
     }
 
@@ -148,6 +159,7 @@ class Authentication extends React.Component {
         window.onpopstate = function(event) {
            history.go(1);
         };
+        window.location.reload(false);
     }
 
     
