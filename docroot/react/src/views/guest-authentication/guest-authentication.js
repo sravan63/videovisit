@@ -88,7 +88,7 @@ class Authentication extends React.Component {
             "authToken": this.state.authToken
         };
         sessionStorage.setItem('lastname',this.state.lastname);
-        this.guestLogin(this.state.meetingCode, this.state.lastname,headers);
+        this.guestLogin(this.state.meetingCode, this.state.lastname,headers,false);
     }
 
     reJoinMeeting(){
@@ -97,11 +97,11 @@ class Authentication extends React.Component {
             "authToken": this.state.authToken
         };
         var pname = sessionStorage.getItem('lastname');
-        this.guestLogin(this.state.meetingCode,pname,headers);
+        this.guestLogin(this.state.meetingCode,pname,headers,true);
         //this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
     }
 
-    guestLogin(meetingCode,lastname,headers){
+    guestLogin(meetingCode,lastname,headers,rejoin){
         BackendService.guestLogin(meetingCode,lastname,headers).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 if (response.data.data != null && response.data.data != '') {
@@ -121,7 +121,13 @@ class Authentication extends React.Component {
             } else if (response.data.statusCode == 510 || response.data.statusCode == 500) {
                 this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_VALIDATION_MSG, showLoader: false });
             } else {
+                if(rejoin){
+                this.setState({ showLoader: false });    
+                this.SignOut();    
+                }
+                else{
                 this.errorCompForGuestLogin();
+                }
             }
         }, (err) => {
             this.errorCompForGuestLogin();
