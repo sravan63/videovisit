@@ -119,7 +119,8 @@ class Authentication extends React.Component {
             } else if (response.data.statusCode == 300 || response.data.statusCode == 900) {
                 if(rejoin){
                 this.setState({ showLoader: false });    
-                this.SignOut();    
+                this.SignOut();  
+                window.location.reload(false);  
                 }
                 else{
                 this.errorCompForGuestLogin();
@@ -129,7 +130,8 @@ class Authentication extends React.Component {
             } else {
                 if(rejoin){
                 this.setState({ showLoader: false });    
-                this.SignOut();    
+                this.SignOut();  
+                window.location.reload(false);  
                 }
                 else{
                 this.errorCompForGuestLogin();
@@ -138,7 +140,8 @@ class Authentication extends React.Component {
         }, (err) => {
             if(rejoin){
                 this.setState({ showLoader: false });    
-                this.SignOut();    
+                this.SignOut();   
+                window.location.reload(false); 
                 }
                 else{
                 this.errorCompForGuestLogin();
@@ -159,7 +162,6 @@ class Authentication extends React.Component {
         window.onpopstate = function(event) {
            history.go(1);
         };
-        window.location.reload(false);
     }
 
     
