@@ -136,7 +136,7 @@ class Authentication extends React.Component {
     SignOut(){
         sessionStorage.removeItem('guestLeave');
         sessionStorage.setItem('guestCode',JSON.stringify(this.state.meetingCode));
-        this.setState({ReJoin:false});
+        this.setState({ReJoin:false, errorlogin: false});
         localStorage.clear();
         history.pushState(null, null, location.href);
         window.onpopstate = function(event) {

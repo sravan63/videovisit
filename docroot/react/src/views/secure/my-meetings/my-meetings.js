@@ -87,7 +87,7 @@ class MyMeetings extends React.Component {
                 // alert("Un Authorised");
                 localStorage.clear();
                 this.setState({ showLoader: false });
-                Utilities.setPromotionFlag(false);
+                UtilityService.setPromotionFlag(false);
                 this.props.history.push(GlobalConfig.LOGIN_URL);
             }
             this.setState({ showLoader: false });
