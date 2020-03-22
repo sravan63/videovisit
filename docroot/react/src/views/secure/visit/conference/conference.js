@@ -339,12 +339,17 @@ class Conference extends React.Component {
             } else {
                 headers.ssoSession = this.state.accessToken;
             }
-            headers.memberName = this.state.meetingDetails.member.inMeetingDisplayName;
             headers.mrn = this.state.userDetails.mrn;
             var meetingId = this.state.meetingDetails.meetingId,
                 isProxyMeeting = this.state.isProxyMeeting,
                 backButton = isFromBackButton ? isFromBackButton : false;  
             WebUI.pexipDisconnect();
+            if(isProxyMeeting == 'Y'){
+                headers.memberName = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;                
+            }
+            else{
+                headers.memberName = Utilities.formatStringTo(this.state.meetingDetails.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
+            }
             BackendService.quitMeeting(meetingId, isProxyMeeting, headers, loginType, backButton).subscribe((response) => {
                 console.log("Success");
                 if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {

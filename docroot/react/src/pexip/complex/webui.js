@@ -633,7 +633,7 @@ function connected(url) {
             } else {
                 var memberName;
                 if(isProxyMeeting == 'Y'){
-                    memberName = udata.lastName +','+ udata.firstName;                
+                    memberName = udata.lastName +', '+ udata.firstName;                
                 } else {
                     memberName = JSON.parse(localStorage.getItem('memberName'));
                 }            
