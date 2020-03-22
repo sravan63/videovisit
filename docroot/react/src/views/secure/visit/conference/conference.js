@@ -288,11 +288,10 @@ class Conference extends React.Component {
             var isFromBackButton = "true";
             this.leaveMeeting(isFromBackButton);
             }
-        }
-        else {
+        } else {
             if(this.state.leaveMeeting == false){
-            var isFromBackButton = "true";    
-            this.leaveMeeting(isFromBackButton);
+                var isFromBackButton = "true";    
+                this.leaveMeeting(isFromBackButton);
             }
        }
     }
@@ -389,6 +388,7 @@ class Conference extends React.Component {
         this.state.accessToken = token;
         this.state.userDetails.ssoSession = token;
         localStorage.setItem('userDetails', Utilities.encrypt(JSON.stringify(this.state.userDetails)));
+        localStorage.setItem('LoginUserDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
     }
 
     refreshPage() {
