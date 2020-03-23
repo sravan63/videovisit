@@ -10,12 +10,19 @@ class header extends React.Component {
             super(props);
             this.state = {
                 name: '',
+                isInApp: false,
+                isLogin: false,
                 userDetails: {}
             };
             this.signOffMethod = this.signOffMethod.bind(this);
         }
         componentWillMount() {
             //if(this.props.userDetails && this.props.userDetails.userDetails){
+            var isInAppAccess = UtilityService.getInAppAccessFlag(); 
+            if(isInAppAccess){
+                var url = window.location.href.indexOf('login') > -1;
+                this.setState({isInApp: true, isLogin:url});
+            }  
             if (localStorage.getItem('LoginUserDetails')) {
                 const data = JSON.parse(UtilityService.decrypt(localStorage.getItem('LoginUserDetails')));
                 this.state.userDetails = data;
@@ -32,6 +39,7 @@ class header extends React.Component {
         render() {
                 return (
                         <div className = "container-fluid">
+                        { !this.state.isInApp ? (
                 <div className = "row header-content">
                 <div className = "col-md-8 banner-content">
                 <div className = "logo"> 
@@ -61,7 +69,20 @@ class header extends React.Component {
                 </li >
                 </ul> 
                 < /div >
-                </div> 
+                </div> ) :( <div className = "row header-content" style={{display: this.state.isLogin ? 'flex' : 'none'}}>
+                <div className = "col-md-8 banner-content">
+                </div>
+                <div className = "col-md-4 text-right user-details" >
+                <ul>
+                <li > 
+                 < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
+                className = "help-link"
+                target = "_blank" >Help< /a>
+                </li >
+                </ul>
+                </div>
+                </div>
+                )}
                 < /div >
                 );
             }
