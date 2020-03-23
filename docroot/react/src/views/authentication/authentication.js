@@ -71,10 +71,7 @@ class Authentication extends React.Component {
             const urlParams = new URLSearchParams( params );
             var isSDK = decodeURIComponent(urlParams.get('isAndroidSDK'));
             sessionStorage.setItem('isAndroidSDK', isSDK);
-        } else if( Utilities.getInAppAccessFlag() ) {
-            this.setState({ isInApp: true });
         }
-
     }
 
     render() {
@@ -82,7 +79,7 @@ class Authentication extends React.Component {
             <div id='container' className="authentication-page">
             {this.state.showLoader ? (<Loader />):('')}
              <Header/>
-             <div className="main-content">
+             <div className={this.state.isInApp && window.window.innerWidth >= 1024 ? "main-content occupy-space" : "main-content"}>
                 {this.state.isMobileError ? 
                     (<div className="row error-text">
                         {this.state.tempAccessToken || this.state.isInApp ? 
@@ -104,14 +101,14 @@ class Authentication extends React.Component {
                 ) : (
                     <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this),browserBlock:this.state.isBrowserBlockError}}/>
                 )}
-                <div className="row mobile-footer mt-5">
+                <div className="row mobile-footer mt-5" style={{display: this.state.isInApp ? 'block' : 'auto', margin: this.state.isInApp && window.window.innerWidth >= 1024 ? '0' : ''}}>
                     <p className="col-12 font-weight-bold">If You're a Patient's Guest</p>
                     <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>
                 </div>
             </div> 
-            <div className="form-footer">
+            {!this.state.isInApp ?(<div className="form-footer">
                 <Footer />
-            </div>
+            </div>) : ('')}
          </div>
         );
     }

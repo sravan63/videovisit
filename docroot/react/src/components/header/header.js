@@ -38,53 +38,50 @@ class header extends React.Component {
         }
         render() {
                 return (
-                        <div className = "container-fluid">
-                        { !this.state.isInApp ? (
-                <div className = "row header-content">
-                <div className = "col-md-8 banner-content">
-                <div className = "logo"> 
-                </div> 
-                <div className = "title" >
-                <p className = "m-0" >Video Visits< /p> 
-                <p className = "text-uppercase m-0 sub-title" >The Permanente Medical Group< /p> 
-                < /div > 
-                </div> 
-                <div className = "col-md-4 text-right user-details" >
-                <ul >
-                <li className = "text-capitalize" > 
-                {this.state.name ? this.state.name : ''} 
-                </li>
-                 <li className = "text-capitalize" > 
-                 {this.state.name ? '|' : ''} 
-                 < /li> 
-                 <li > 
-                 < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
-                className = "help-link"
-                target = "_blank" >Help< /a>
-                </li >
-                <li > 
-                {this.state.name ? '|' : ''} < /li> 
-                <li className = "text-capitalize" > 
-                {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>Sign out< /a> :''}
-                </li >
-                </ul> 
-                < /div >
-                </div> ) :( <div className = "row header-content" style={{display: this.state.isLogin ? 'flex' : 'none'}}>
-                <div className = "col-md-8 banner-content">
-                </div>
-                <div className = "col-md-4 text-right user-details" >
-                <ul>
-                <li > 
-                 < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
-                className = "help-link"
-                target = "_blank" >Help< /a>
-                </li >
-                </ul>
-                </div>
-                </div>
-                )}
-                < /div >
-                );
+                <div className = "container-fluid">
+                    { !this.state.isInApp ? (
+                        <div className = "row header-content">
+                            <div className = "col-md-8 banner-content">
+                                <div className = "logo"> 
+                            </div> 
+                            <div className = "title">
+                                <p className = "m-0" >Video Visits< /p> 
+                                <p className = "text-uppercase m-0 sub-title" >The Permanente Medical Group< /p> 
+                            </div> 
+                        </div> 
+                        <div className = "col-md-4 text-right user-details" >
+                            <ul >
+                                <li className = "text-capitalize" > 
+                                {this.state.name ? this.state.name : ''} 
+                                </li>
+                                 <li className = "text-capitalize" > 
+                                 {this.state.name ? '|' : ''} 
+                                 </li> 
+                                 <li > 
+                                 <a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
+                                className = "help-link"
+                                target = "_blank" >Help</a>
+                                </li>
+                                <li> {this.state.name ? '|' : ''} </li> 
+                                <li className = "text-capitalize"> 
+                                    {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>Sign out</a> :''}
+                                </li>                        
+                            </ul> 
+                        </div>
+                    </div>) : 
+                    (<div className = "row header-content" style={{display: this.state.isLogin ? 'flex' : 'none'}}>
+                        <div className = "col-md-8 banner-content"></div>
+                        <div className = "col-md-4 text-right user-details">
+                            <ul>
+                                <li > 
+                                     < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
+                                    className = "help-link"
+                                    target = "_blank" >Help< /a>
+                                </li >
+                            </ul>
+                        </div>
+                    </div>)}
+                </div> );
             }
         }
 
