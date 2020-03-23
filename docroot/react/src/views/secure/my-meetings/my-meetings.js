@@ -12,7 +12,7 @@ class MyMeetings extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, myMeetings: [], showLoader: true};
+        this.state = { userDetails: {}, myMeetings: [], showLoader: true,isInApp: false};
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
@@ -35,7 +35,8 @@ class MyMeetings extends React.Component {
                 this.signOff();
             }
         });      
-        
+        var isInAppAccess = UtilityService.getInAppAccessFlag();
+        this.setState({isInApp: isInAppAccess});
     }
 
     componentWillUnmount() {
@@ -332,7 +333,7 @@ class MyMeetings extends React.Component {
                 ):(
                 <div className="no-meetings">{!this.state.showLoader ? (<p className="text-center">You have no meetings in the next 15 minutes.</p>):('')}</div>
                 )}
-                 <div className="col-sm-12 wifi">
+                 <div className="col-sm-12 col-lg-12 col-md-12" className={this.state.isInApp && window.window.innerWidth >= 1024 ? "wifi inapp-wifi" : "wifi"}>
                     <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
                  </div>
                 </div>
