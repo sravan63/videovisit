@@ -1,7 +1,5 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.utils;
 
-import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
-
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -400,7 +398,7 @@ public class WebUtil {
 		final String MOBILE_BLOCK_EDGE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_EDGE_VERSION");
 		properties.put("MOBILE_BLOCK_EDGE_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_EDGE_VERSION) ? MOBILE_BLOCK_EDGE_VERSION : "18");
 		final String MOBILE_BLOCK_SAFARI_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_SAFARI_VERSION");
-		properties.put("MOBILE_BLOCK_SAFARI_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_SAFARI_VERSION) ? MOBILE_BLOCK_SAFARI_VERSION : "12");
+		properties.put("MOBILE_BLOCK_SAFARI_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_SAFARI_VERSION) ? MOBILE_BLOCK_SAFARI_VERSION : "13");
 		final String MOBILE_BLOCK_IE_VERSION = AppProperties.getExtPropertiesValueByKey("MOBILE_BLOCK_IE_VERSION");
 		properties.put("MOBILE_BLOCK_IE_VERSION", StringUtils.isNotBlank(MOBILE_BLOCK_IE_VERSION) ? MOBILE_BLOCK_IE_VERSION : "");
 		
@@ -415,7 +413,7 @@ public class WebUtil {
 
 		// OS version for ipad
 		final String IPAD_OS_VERSION = AppProperties.getExtPropertiesValueByKey("IPAD_OS_VERSION");
-		properties.put("IPAD_OS_VERSION", StringUtils.isNotBlank(IPAD_OS_VERSION) ? IPAD_OS_VERSION : "13");
+		properties.put("IPAD_OS_VERSION", StringUtils.isNotBlank(IPAD_OS_VERSION) ? IPAD_OS_VERSION : "13.1");
 	}
 	
 	public static String convertMapToJsonString(final Map<String, String> map) {
