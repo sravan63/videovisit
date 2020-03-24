@@ -259,7 +259,6 @@ public class MemberRestController{
 	public RedirectView mobileAppPatientLogin(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
 		final String redirectUrl = MeetingCommand.mobileLaunchRedirect(request);
-//		final String redirectUrl = "/videovisit/jsp/authError.jsp";
 		logger.info(LOG_EXITING);
 		return new RedirectView(redirectUrl);
 	}

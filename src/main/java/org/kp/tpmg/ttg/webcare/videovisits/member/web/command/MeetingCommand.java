@@ -1124,23 +1124,6 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return redirectUrl;
 	}
-	/*
-	public static String mobileLaunchRedirect(HttpServletRequest request) {
-		logger.info(LOG_ENTERED);
-		String redirectUrl = "/videovisit/#/login";
-		final String mobileOs = StringUtils.isNotBlank(request.getParameter("os")) ? request.getParameter("os").trim()
-				: null;
-		String mobileAppVersion = StringUtils.isNotBlank(request.getParameter("appVersion"))
-				? request.getParameter("appVersion").trim()
-				: null;
-		logger.info(
-				"Request parameters from mdo app, mobileOs : " + mobileOs + "mobileAppVersion : " + mobileAppVersion);
-		if(!WebUtil.IOS.equalsIgnoreCase(mobileOs)) {
-			redirectUrl = "/videovisit/jsp/androidTempAccess.jsp";
-		}
-		logger.info(LOG_EXITING);
-		return redirectUrl;
-	}*/
 	
 	public static String launchMeetingForMember(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
