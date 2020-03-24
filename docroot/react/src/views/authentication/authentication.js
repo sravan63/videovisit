@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import Header from '../../components/header/header';
 import Sidebar from '../../components/sidebar/sidebar';
 import Footer from '../../components/footer/footer';
-import Ssologin from '../../components/ssologin/ssologin';
-import Login from '../../components/tempaccess/tempaccess';
 import Loader from '../../components/loader/loader';
 import './authentication.less';
 import BackendService from '../../services/backendService.js';
 import Utilities from '../../services/utilities-service.js';
 import BrowserBlock from '../../components/browser-block/browser-block';
+
+const Ssologin = React.lazy(() => import('../../components/ssologin/ssologin'));
+const Login = React.lazy(() => import('../../components/tempaccess/tempaccess'));
 
 class Authentication extends React.Component {
     constructor(props) {
@@ -95,12 +96,16 @@ class Authentication extends React.Component {
                 </div>
                 
                 {!this.state.isInApp ?(<div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>) :('')}
-                <BrowserBlock browserblockinfo = {this.state}/>             
-                {this.state.tempAccessToken || this.state.isInApp ? (
-                    <Login data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this), isInApp: this.state.isInApp,browserBlock:this.state.isBrowserBlockError}}/>
-                ) : (
-                    <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this),browserBlock:this.state.isBrowserBlockError}}/>
-                )}
+                <BrowserBlock browserblockinfo = {this.state}/>
+                <div>
+                    <Suspense fallback={<Loader />}>
+                        {this.state.tempAccessToken || this.state.isInApp ? (
+                            <Login data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this), isInApp: this.state.isInApp,browserBlock:this.state.isBrowserBlockError}}/>
+                        ) : (
+                            <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this),browserBlock:this.state.isBrowserBlockError}}/>
+                        )}
+                    </Suspense>
+                </div>
                 <div className="row mobile-footer mt-5" style={{display: this.state.isInApp ? 'block' : 'auto', margin: this.state.isInApp && window.window.innerWidth >= 1024 ? '0' : ''}}>
                     <p className="col-12 font-weight-bold">If You're a Patient's Guest</p>
                     <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>

@@ -13,6 +13,7 @@ class TempAccess extends React.Component {
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
+
     signOn(e) {
         e.preventDefault();
         localStorage.clear();
@@ -48,6 +49,7 @@ class TempAccess extends React.Component {
             this.props.data.emit({ showLoader: false });
         });
     }
+    
     handleChange(key, event) {
         event.preventDefault();
         const { name, value } = event.target;
