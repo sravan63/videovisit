@@ -195,10 +195,11 @@ public class WebService {
 				logger.debug("jsonInptString : " + inputJsonString);
 
 				responseJsonStr = callVVRestService(ServiceUtil.UPDATE_MEMBER_MEETING_STATUS, inputJsonString);
-
-				final JsonParser parser = new JsonParser();
-				final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-				output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+				if (StringUtils.isNotBlank(responseJsonStr)) {
+					final JsonParser parser = new JsonParser();
+					final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
+					output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+				}
 			}
 
 		} catch (Exception e) {
@@ -236,10 +237,11 @@ public class WebService {
 
 			responseJsonStr = callVVRestService(ServiceUtil.IS_MEETING_HASH_VALID, inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
-
-			final JsonParser parser = new JsonParser();
-			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-			output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
+			if (StringUtils.isNotBlank(responseJsonStr)) {
+				final JsonParser parser = new JsonParser();
+				final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
+				output = gson.fromJson(jobject.get("service").toString(), MeetingDetailsOutput.class);
+			}
 		} catch (Exception e) {
 			logger.error("Web Service API error : " + e);
 			throw new Exception("Web Service API error", e.getCause());
@@ -278,9 +280,11 @@ public class WebService {
 
 			responseJsonStr = callVVRestService(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString);
 			logger.info("jsonResponseString : " + responseJsonStr);
-			final JsonParser parser = new JsonParser();
-			final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-			output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+			if (StringUtils.isNotBlank(responseJsonStr)) {
+				final JsonParser parser = new JsonParser();
+				final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
+				output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+			}
 		}
 
 		catch (Exception e) {
@@ -683,9 +687,11 @@ public class WebService {
 				logger.debug("jsonInputString : " + inputJsonString);
 				jsonResponseStr = callVVRestService(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, inputJsonString);
 				logger.info("jsonResponseString : " + jsonResponseStr);
-				final JsonParser parser = new JsonParser();
-				final JsonObject jobject = (JsonObject) parser.parse(jsonResponseStr);
-				output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+				if (StringUtils.isNotBlank(jsonResponseStr)) {
+					final JsonParser parser = new JsonParser();
+					final JsonObject jobject = (JsonObject) parser.parse(jsonResponseStr);
+					output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId, e);
