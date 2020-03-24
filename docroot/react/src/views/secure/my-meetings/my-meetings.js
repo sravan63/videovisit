@@ -145,8 +145,11 @@ class MyMeetings extends React.Component {
     checkIOS(url){
         var iOSver = UtilityService.iOSversion();
         if (iOSver[0] >= 7) {                   
-            window.location.replace(url);
+            // window.location.replace(url);
+            alert(url);
+            window.location.assign(url);
         }else{
+            alert('Ios version ' + iOSver[0]);
             this.openTab(url);
         }
     }
