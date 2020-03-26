@@ -298,7 +298,7 @@ public class MemberRestController{
 	public ModelAndView mobilepatientmeetings(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
 		logger.info(LOG_EXITING);
-		return new ModelAndView("mPatientLandingPage");
+		return new ModelAndView("mAppPatientLandingPage");
 	}
 	
 	@RequestMapping(value = "/videovisitmobileready.htm", method = { RequestMethod.GET, RequestMethod.POST })
