@@ -25,7 +25,7 @@ VIDEO_VISITS_MOBILE.Path = {
 	        expired : 'logout.htm'
 	    },
 	    login : {
-	        ajaxurl : 'mobilelogin.json'
+	        ajaxurl : '/videovisit/mobileLogin.json'
 	    },
 	    guest : {
 	        verify : 'verifyguest.json',
@@ -46,7 +46,7 @@ VIDEO_VISITS_MOBILE.Path = {
         ,
 	    joinMeeting : {
 	        userPresentInMeeting:'userPresentInMeeting.json',
-	        launchMeetingforMember:'launchMeetingforMember.json'	        	
+	        launchMeetingforMember:'/videovisit/launchMobileMeetingForMember.json'	        	
 	    },
 	    logout : {
 	        logoutjson: 'logout.json',
@@ -370,34 +370,6 @@ $(document).ready(function() {
 	// END--APP ALERT handling using cookie
 
 	// Login button submit click
-	$("#login-submit").click(function(event) {
-		event.preventDefault();
-
-		if ( $("#mrn").val().length > 0)
-		{
-			if ( $("#mrn").val().length < 8 )
-	        {
-	        	while ( $("#mrn").val().length < 8 )
-	        	{
-	        		$("#mrn").val('0' + $("#mrn").val());
-	        	}
-	        }
-        }
-		
-		if ( $("#birth_month").val().length < 2 )
-        {
-        	while( $("#birth_month").val().length < 2 )
-        	{
-        		$("#birth_month").val('0' + $("#birth_month").val());
-        	}
-        }
-		
-		// if client side validation successful
-		if(isLoginValidationSuccess()){
-			loginSubmit();
-		}
-
-	});
 	
 	// Login button submit click
 	$("#mobile-login-submit").click(function(event) {

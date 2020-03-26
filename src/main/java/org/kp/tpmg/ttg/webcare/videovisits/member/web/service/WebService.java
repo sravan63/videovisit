@@ -27,6 +27,7 @@ import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
+import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.EndMeetingForMemberGuestDesktopInput;
@@ -43,6 +44,7 @@ import org.kp.tpmg.videovisit.model.meeting.LaunchMemberOrProxyMeetingForMemberI
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdInput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdOutput;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForMemberAndProxiesInput;
 import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForNonMemberProxiesInput;
@@ -1542,5 +1544,82 @@ public class WebService {
 		logger.info(LOG_EXITING);
 		return output;
 	}
+
+	public static MeetingDetailsJSON retrieveMeeting(String mrn8Digit, int pastMinutes, int futureMinutes,
+			String sessionID, String clientId) throws Exception {
+		logger.info(LOG_ENTERED + " pastMinutes=" + pastMinutes + " pastMinutes=" + pastMinutes);
+		logger.debug("mrn8Digit=" + mrn8Digit);
+
+		MeetingDetailsJSON meetingDetailsJSON = null;
+		Gson gson = new Gson();
+		String output = null;
+		ActiveMeetingsForMemberInput jsonInput = new ActiveMeetingsForMemberInput();
+		try {
+			if (mrn8Digit == null || sessionID == null) {
+				logger.warn("Missing input attributes.");
+				MeetingDetailsJSON detailsJSON = new MeetingDetailsJSON();
+				detailsJSON.setService(new MeetingDetailsOutput());
+				final Status status = new Status();
+				status.setCode("300");
+				status.setMessage("Missing input attributes.");
+				detailsJSON.getService().setStatus(status);
+				return detailsJSON;
+			}
+			jsonInput.setMrn(mrn8Digit);
+			jsonInput.setClientId(clientId);
+			jsonInput.setSessionId(sessionID);
+			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
+			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
+			meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
+		} catch (Exception e) {
+			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
+			meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
+		}
+		logger.info(LOG_EXITING);
+		return meetingDetailsJSON;
+	}
+	
+	public static String getLaunchMeetingDetails(long meetingID, String inMeetingDisplayName, String sessionID,
+			String mrn8Digit, String deviceType, String deviceOS, String deviceOSversion, boolean isMobileFlow)
+			throws Exception {
+		logger.info(LOG_ENTERED + " meetingID: " + meetingID + ", isMobileFlow :" + isMobileFlow + ", deviceType :"
+				+ deviceType + ", deviceOS :" + deviceOS + ", deviceOSversion :" + deviceOSversion);
+		logger.debug("mrn8Digit=" + mrn8Digit + ", inMeetingDisplayName" + inMeetingDisplayName);
+
+		LaunchMeetingForMemberInput jsonInput = new LaunchMeetingForMemberInput();
+		Gson gson = new Gson();
+		String output;
+		if (meetingID <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID)
+				|| StringUtils.isBlank(inMeetingDisplayName)) {
+			logger.warn("Missing input attributes.");
+			LaunchMeetingForMemberGuestJSON memberOutput = new LaunchMeetingForMemberGuestJSON();
+			memberOutput.setService(new LaunchMeetingForMemberGuestOutput());
+			final Status status = new Status();
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			memberOutput.getService().setStatus(status);
+			return gson.toJson(memberOutput);
+		}
+		try {
+			jsonInput.setMrn(mrn8Digit);
+			jsonInput.setMeetingID(meetingID);
+			jsonInput.setSessionId(sessionID);
+			jsonInput.setInMeetingDisplayName(inMeetingDisplayName);
+			jsonInput.setDeviceType(deviceType);
+			jsonInput.setDeviceOS(deviceOS);
+			jsonInput.setDeviceOSversion(deviceOSversion);
+			jsonInput.setMobileFlow(isMobileFlow);
+			jsonInput.setClientId(WebUtil.MOB_CLIENT_ID);
+			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
+			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
+		} catch (Exception e) {
+			logger.error("Web Service API error for meeting:" + meetingID + " Retrying...", e);
+			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
 
 }

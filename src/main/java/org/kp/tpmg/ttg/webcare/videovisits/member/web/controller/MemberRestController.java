@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 @RestController
@@ -255,14 +256,6 @@ public class MemberRestController{
 		return resJsonStr;
 	}
 	
-	@RequestMapping(value = "/mobileAppPatientLogin.htm", method = { RequestMethod.GET, RequestMethod.POST })
-	public RedirectView mobileAppPatientLogin(final HttpServletRequest request, final HttpServletResponse response) {
-		logger.info(LOG_ENTERED);
-		final String redirectUrl = MeetingCommand.mobileLaunchRedirect(request);
-		logger.info(LOG_EXITING);
-		return new RedirectView(redirectUrl);
-	}
-	
 	@RequestMapping(value = "/mobilelaunchvv.htm", method = { RequestMethod.POST, RequestMethod.GET })
 	public RedirectView mobileLaunchVV(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
@@ -299,5 +292,19 @@ public class MemberRestController{
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;
+	}
+	
+	@RequestMapping(value = "/mobileAppPatientMeetings.htm", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView mobilepatientmeetings(final HttpServletRequest request, final HttpServletResponse response) {
+		logger.info(LOG_ENTERED);
+		logger.info(LOG_EXITING);
+		return new ModelAndView("mPatientLandingPage");
+	}
+	
+	@RequestMapping(value = "/videovisitmobileready.htm", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView videovisitmobileready(final HttpServletRequest request, final HttpServletResponse response) {
+		logger.info(LOG_ENTERED);
+		logger.info(LOG_EXITING);
+		return new ModelAndView("videoVisitMobilePexip");
 	}
 }

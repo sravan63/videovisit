@@ -24,6 +24,8 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
@@ -42,6 +44,7 @@ import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
 import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
@@ -53,6 +56,7 @@ import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.sf.json.JSONObject;
 import net.sourceforge.wurfl.core.Device;
 
 public class MeetingCommand {
@@ -1173,6 +1177,209 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
+	}
+
+	public static String retrieveMeeting(HttpServletRequest request) throws Exception {
+		logger.info(LOG_ENTERED);
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		updateWebappContextWithBrowserFlags(ctx);
+		MeetingDetailsJSON meetingDetailsJSON = null;
+		try {
+			if (ctx != null && ctx.getMemberDO() != null) {
+				meetingDetailsJSON = WebService.retrieveMeeting(ctx.getMemberDO().getMrn(), PAST_MINUTES,
+						FUTURE_MINUTES, request.getSession().getId(), ctx.getClientId());
+				if (meetingDetailsJSON != null && meetingDetailsJSON.getService() != null
+						&& meetingDetailsJSON.getService().getStatus() != null
+						&& "200".equals(meetingDetailsJSON.getService().getStatus().getCode())
+						&& meetingDetailsJSON.getService().getEnvelope() != null
+						&& meetingDetailsJSON.getService().getEnvelope().getMeetings() != null) {
+					List<MeetingDO> myMeetings = meetingDetailsJSON.getService().getEnvelope().getMeetings();
+					if (myMeetings.size() == 1 && myMeetings.get(0) == null) {
+						ctx.setTotalmeetings(0);
+					} else {
+						ctx.setTotalmeetings(myMeetings.size());
+					}
+					ctx.setMyMeetings(myMeetings);
+				} else {
+					ctx.setMyMeetings(null);
+					ctx.setTotalmeetings(0);
+				}
+				logger.info(LOG_EXITING);
+				return JSONObject.fromObject(meetingDetailsJSON).toString();
+			}
+		} catch (Exception e) {
+			logger.error("System Error" + e.getMessage(), e);
+		}
+		logger.info(LOG_EXITING);
+		return JSONObject.fromObject(new SystemError()).toString();
+	}
+	
+	public static void updateWebappContextWithBrowserFlags(WebAppContext ctx) {
+		if (ctx != null) {
+			final String blockChrome = getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
+			final String blockFF = getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
+			final String blockEdge = getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
+			final String blockSafari = getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
+			final String blockSafariVersion = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
+			final String blockPexipIE = AppProperties.getExtPropertiesValueByKey("BLOCK_PEXIP_IE_BROWSER");
+			if (StringUtils.isNotBlank(blockChrome)) {
+				ctx.setBlockChrome(blockChrome);
+			}
+			if (StringUtils.isNotBlank(blockFF)) {
+				ctx.setBlockFF(blockFF);
+			}
+			if (StringUtils.isNotBlank(blockEdge)) {
+				ctx.setBlockEdge(blockEdge);
+			}
+			if (StringUtils.isNotBlank(blockSafari)) {
+				ctx.setBlockSafari(blockSafari);
+			}
+			if (StringUtils.isNotBlank(blockSafariVersion)) {
+				ctx.setBlockSafariVersion(blockSafariVersion);
+			}
+			if (StringUtils.isNotBlank(blockPexipIE)) {
+				ctx.setBlockPexipIE(blockPexipIE);
+			}
+		}
+	}
+	
+	public static String verifyMember(HttpServletRequest request) throws Exception {
+		logger.info(LOG_ENTERED);
+		VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
+
+		try {
+			String lastName = "";
+			String mrn8Digit = "";
+			String birth_month = "";
+			String birth_year = "";
+			String birth_day = "";
+			WebAppContext ctx = WebAppContext.getWebAppContext(request);
+
+			if (StringUtils.isNotBlank(request.getParameter("last_name"))) {
+				lastName = request.getParameter("last_name");
+			}
+			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
+				mrn8Digit = fillToLength(request.getParameter("mrn"), '0', 8);
+			}
+			if (StringUtils.isNotBlank(request.getParameter("birth_month"))) {
+				birth_month = request.getParameter("birth_month");
+			}
+			if (StringUtils.isNotBlank(request.getParameter("birth_year"))) {
+				birth_year = request.getParameter("birth_year");
+			}
+			if (StringUtils.isNotBlank(request.getParameter("birth_day"))) {
+				birth_day = request.getParameter("birth_day");
+			}
+			if (ctx != null) {
+				if(StringUtils.isNotBlank(lastName)){
+					lastName = WebUtil.replaceSpecialCharacters(lastName);
+				}
+				verifyMemberOutput = WebService.verifyMember(lastName, mrn8Digit, birth_month, birth_year, birth_day,
+						request.getSession().getId(), ctx.getClientId());
+
+				if (verifyMemberOutput != null && verifyMemberOutput.getStatus() != null
+						&& "200".equals(verifyMemberOutput.getStatus().getCode())
+						&& verifyMemberOutput.getEnvelope() != null
+						&& verifyMemberOutput.getEnvelope().getMember() != null) {
+					ctx.setMemberDO(verifyMemberOutput.getEnvelope().getMember());
+					return "1";
+				} else {
+					ctx.setMemberDO(null);
+					return "3";
+				}
+
+			} else {
+				return "3";
+			}
+		} catch (Exception e) {
+			logger.error("System Error" + e.getMessage(), e);
+			return "3";
+
+		}
+	}
+
+	public static void updateWebappContextWithPexipMobileBrowserDetails(WebAppContext ctx) {
+		if (ctx != null) {
+			final String pexMobBlockSafariVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_SAFARI_VERSION");
+			final String pexMobBlockChromeVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_CHROME_VERSION");
+			final String pexMobBlockFirefoxVer = getExtPropertiesValueByKey("PEXIP_MOBILE_BLOCK_FIREFOX_VERSION");
+			if (StringUtils.isNotBlank(pexMobBlockSafariVer)) {
+				ctx.setPexMobBlockSafariVer(pexMobBlockSafariVer);
+			}
+			if (StringUtils.isNotBlank(pexMobBlockChromeVer)) {
+				ctx.setPexMobBlockChromeVer(pexMobBlockChromeVer);
+			}
+			if (StringUtils.isNotBlank(pexMobBlockFirefoxVer)) {
+				ctx.setPexMobBlockFirefoxVer(pexMobBlockFirefoxVer);
+			}
+		}
+	}
+	
+	public static void updateWebappContextWithPexipDesktopBrowserDetails(WebAppContext ctx) {
+		if (ctx != null) {
+			final String pexDesktopBlockSafariVer = getExtPropertiesValueByKey("PEXIP_BLOCK_SAFARI_VERSION");
+			final String pexDesktopBlockChromeVer = getExtPropertiesValueByKey("PEXIP_BLOCK_CHROME_VERSION");
+			final String pexDesktopBlockFirefoxVer = getExtPropertiesValueByKey("PEXIP_BLOCK_FIREFOX_VERSION");
+			final String pexDesktopBlockEdgeVer = getExtPropertiesValueByKey("PEXIP_BLOCK_EDGE_VERSION");
+			if (StringUtils.isNotBlank(pexDesktopBlockSafariVer)) {
+				ctx.setPexBlockSafariVer(pexDesktopBlockSafariVer);
+			}
+			if (StringUtils.isNotBlank(pexDesktopBlockChromeVer)) {
+				ctx.setPexBlockChromeVer(pexDesktopBlockChromeVer);
+			}
+			if (StringUtils.isNotBlank(pexDesktopBlockFirefoxVer)) {
+				ctx.setPexBlockFirefoxVer(pexDesktopBlockFirefoxVer);
+			}
+			if (StringUtils.isNotBlank(pexDesktopBlockEdgeVer)) {
+				ctx.setPexBlockEdgeVer(pexDesktopBlockEdgeVer);
+			}
+		}
+	}
+	
+	public static String getLaunchMeetingDetailsForMember(HttpServletRequest request)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		long meetingId = 0;
+		String deviceType = null;
+		boolean isMobileflow = true;
+		String output = null;
+		WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		String inMeetingDisplayName = null;
+		try {
+			logger.info("meetingid=" + request.getParameter("meetingId"));
+			logger.debug("In meetingdisplayname=" + request.getParameter("inMeetingDisplayName"));
+			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
+				meetingId = Long.parseLong(request.getParameter("meetingId"));
+			}
+
+			if (StringUtils.isNotBlank(request.getParameter("inMeetingDisplayName"))) {
+				inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+			}
+			Device device = DeviceDetectionService.checkForDevice(request);
+			Map<String, String> capabilities = device.getCapabilities();
+
+			logger.debug("Mobile capabilities" + capabilities);
+			String brandName = capabilities.get("brand_name");
+			String modelName = capabilities.get("model_name");
+			String deviceOs = capabilities.get("device_os");
+			String deviceOsVersion = capabilities.get("device_os_version");
+
+			if (brandName != null && modelName != null) {
+				deviceType = brandName + " " + modelName;
+			}
+			output = WebService.getLaunchMeetingDetails(meetingId, inMeetingDisplayName, request.getSession().getId(),
+					ctx.getMemberDO().getMrn(), deviceType, deviceOs, deviceOsVersion, isMobileflow);
+			if (output != null) {
+				logger.debug("json output:" + output);
+				logger.info(LOG_EXITING);
+				return output;
+			}
+
+		} catch (Exception e) {
+			logger.error("System Error for meeting:" + meetingId, e);
+		}
+		logger.info(LOG_EXITING);
+		return JSONObject.fromObject(new SystemError()).toString();
 	}
 
 }

@@ -11,11 +11,12 @@
 
 	<groupId>org.kp.tpmg.ttg.videovisit</groupId>
 	<artifactId>videovisitmember</artifactId>
-	<version>3.4.0-SNAPSHOT</version>
+	<version>3.4.5-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<properties>
 		<spring.version>4.3.1.RELEASE</spring.version>
+		<apachetiles.version>3.0.5</apachetiles.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<vvservice-clientVersion>3.4.0-SNAPSHOT</vvservice-clientVersion>
 		<frontend-plugin.version>0.0.27</frontend-plugin.version>
@@ -77,6 +78,11 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
 		</dependency>
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<!-- to address package org.apache.commons.lang does not exist -->
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -109,7 +115,19 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<!-- to address com.google.gson -->
+		<!-- Apache Tiles -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-core</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>${apachetiles.version}</version>
+		</dependency>
+		<!-- to address com.google.gson -->		
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
@@ -139,7 +157,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>

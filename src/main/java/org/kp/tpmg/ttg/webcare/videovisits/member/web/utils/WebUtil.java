@@ -1,10 +1,15 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.utils;
 
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties.getExtPropertiesValueByKey;
+
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,6 +21,7 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 
@@ -24,7 +30,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 public class WebUtil {
 
 	public static final Logger logger = Logger.getLogger(WebUtil.class);
@@ -454,5 +459,103 @@ public class WebUtil {
 			}
 		}
 		return returnVal;
+	}
+	
+	public static String getCurrentDateTimeZone() {
+		logger.info(LOG_ENTERED);
+		Calendar calToday = Calendar.getInstance();
+		calToday.setTime(new Date());
+		TimeZone tz1 = calToday.getTimeZone();
+		logger.info("inDayLightSavings = " + tz1.inDaylightTime(new Date()));
+		if (tz1.inDaylightTime(new Date()))
+			return "PDT";
+		else
+			return "PST";
+	}
+	
+	public static void updateWebappContextForAndroidSDK(final WebAppContext ctx, HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		final String mobileOs = StringUtils.isNotBlank(request.getParameter("os")) ? request.getParameter("os").trim()
+				: null;
+		String mobileAppVersion = StringUtils.isNotBlank(request.getParameter("appVersion"))
+				? request.getParameter("appVersion").trim()
+				: null;
+		logger.info(
+				"Request parameters from mdo app, mobileOs : " + mobileOs + "mobileAppVersion : " + mobileAppVersion);
+		try {
+			if (ctx != null && StringUtils.isNotBlank(mobileAppVersion) && WebUtil.ANDROID.equalsIgnoreCase(mobileOs)) {
+				String mdoAppLatestVersion = getExtPropertiesValueByKey("MDO_APP_ANDROID_SDK_VERSION");
+				if (StringUtils.isBlank(mobileAppVersion)) {
+					ctx.setAndroidSDK(false);
+					logger.info("Setting android SDK to false");
+				} else if (!mobileAppVersion.equalsIgnoreCase(mdoAppLatestVersion)) {
+					String entered[] = mobileAppVersion.split("\\.");
+					String latest[] = mdoAppLatestVersion.split("\\.");
+
+					if (entered.length != latest.length) {
+						if (entered.length > latest.length) {
+							mdoAppLatestVersion = mdoAppLatestVersion + ".0";
+							latest = mdoAppLatestVersion.split("\\.");
+						} else {
+							mobileAppVersion = mobileAppVersion + ".0";
+							entered = mobileAppVersion.split("\\.");
+						}
+					}
+					if (!mobileAppVersion.equalsIgnoreCase(mdoAppLatestVersion) && entered.length == latest.length) {
+						for (int i = 0; i < entered.length; i++) {
+							if (convertStringToInteger(entered[i]) > convertStringToInteger(latest[i])) {
+								ctx.setAndroidSDK(true);
+								logger.info("Setting android SDK to true");
+								break;
+							} else if (convertStringToInteger(latest[i]) > convertStringToInteger(entered[i])) {
+								ctx.setAndroidSDK(false);
+								logger.info("Setting android SDK to false");
+								break;
+							}
+						}
+					} else {
+						ctx.setAndroidSDK(true);
+						logger.info("Setting android SDK to true");
+					}
+				} else {
+					ctx.setAndroidSDK(true);
+					logger.info("Setting android SDK to true");
+				}
+
+			}
+		} catch (Exception e) {
+			logger.warn("Error while updating WebappContextForAndroidSDK", e);
+		}
+		logger.info(LOG_EXITING);
+	}
+
+	public static boolean isSafariOrFFBrowser(HttpServletRequest httpRequest) {
+		logger.info(LOG_ENTERED);
+		boolean isSafariOrFFBrowser = false;
+		try {
+			final String browser = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browser) && (browser.contains("safari") || browser.contains("firefox"))) {
+				isSafariOrFFBrowser = true;
+			}
+		} catch (Exception ex) {
+			logger.info("Error while checking the requested browser is firefox or chrome: ", ex);
+		}
+		logger.info(LOG_EXITING + " -> isSafariOrFFBrowser : " + isSafariOrFFBrowser);
+		return isSafariOrFFBrowser;
+	}
+	
+	public static boolean isChromeOrFFBrowser(HttpServletRequest httpRequest) {
+		logger.info(LOG_ENTERED);
+		boolean isChromeOrFFBrowser = false;
+		try {
+			final String browser = getBrowserDetails(httpRequest).toLowerCase();
+			if (StringUtils.isNotBlank(browser) && (browser.contains("firefox") || browser.contains("chrome"))) {
+				isChromeOrFFBrowser = true;
+			}
+		} catch (Exception ex) {
+			logger.info("Error while checking the requested browser is firefox or chrome: ", ex);
+		}
+		logger.info(LOG_EXITING + " isChromeOrFFBrowser: " + isChromeOrFFBrowser);
+		return isChromeOrFFBrowser;
 	}
 }
