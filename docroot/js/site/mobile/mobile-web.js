@@ -25,7 +25,7 @@ VIDEO_VISITS_MOBILE.Path = {
 	        expired : 'logout.htm'
 	    },
 	    login : {
-	        ajaxurl : '/videovisit/mobileLogin.json'
+	        ajaxurl : 'mobileLogin.json'
 	    },
 	    guest : {
 	        verify : 'verifyguest.json',
@@ -46,7 +46,7 @@ VIDEO_VISITS_MOBILE.Path = {
         ,
 	    joinMeeting : {
 	        userPresentInMeeting:'userPresentInMeeting.json',
-	        launchMeetingforMember:'/videovisit/launchMobileMeetingForMember.json'	        	
+	        launchMeetingforMember:'launchMobileMeetingForMember.json'	        	
 	    },
 	    logout : {
 	        logoutjson: 'logout.json',
@@ -909,11 +909,16 @@ function launchVideoVisitMember(data){
 		    var mObj = data.service.launchMeetingEnvelope.launchMeeting;
 		    var vendor = data.service.launchMeetingEnvelope.launchMeeting.vendor;
             var appOS = getAppOS();
+            var isAndroidSDK = $('#isAndroidSDK').val();
 
 		    if(vendor == 'pexip'){
 		    	if(appOS === 'iOS'){
                  checkIOS(url);
 			}
+			else {
+				if(isAndroidSDK=="true"){
+				 openTab(url);
+				}
 			else {
 				var newurl = new URL(url);
 				var roomJoinPexip = mObj.roomKey; // newurl.searchParams.get('roomUrl');
@@ -921,7 +926,7 @@ function launchVideoVisitMember(data){
                     "meetingId": mObj.meetingId,
                     "meetingCode": null,
                     "caregiverId": null,
-                    "vidyoUrl": roomJoinPexip,
+                    "roomUrl": roomJoinPexip,
                     "guestName": mObj.member.inMeetingDisplayName,
                     "isProvider": 'false',
                     "isMember": "Y",
@@ -943,6 +948,8 @@ function launchVideoVisitMember(data){
                    }
                });
 		    }
+		}
+		
 		}
 		    else {
 
@@ -988,7 +995,7 @@ function launchVideoVisitForPatientGuest(mObj,vendor,megaMeetingUrl, meetingId, 
                     "meetingId": mObj.meetingId,
                     "meetingCode": meetingCode ? meetingCode : null,
                     "caregiverId": caregiverId ? caregiverId : name,
-                    "vidyoUrl": megaMeetingUrl,
+                    "roomUrl": megaMeetingUrl,
                     "guestName": name,
                     "isProvider": 'false',
                     "isMember": "N",
