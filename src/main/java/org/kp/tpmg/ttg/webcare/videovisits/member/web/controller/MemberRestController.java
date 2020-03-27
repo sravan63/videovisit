@@ -256,14 +256,6 @@ public class MemberRestController{
 		return resJsonStr;
 	}
 	
-	@RequestMapping(value = "/mobilelaunchvv.htm", method = { RequestMethod.POST, RequestMethod.GET })
-	public RedirectView mobileLaunchVV(final HttpServletRequest request) {
-		logger.info(LOG_ENTERED);
-		final String redirectUrl = MeetingCommand.mobileLaunchVV(request);
-		logger.info(LOG_EXITING);
-		return new RedirectView(redirectUrl);
-	}
-	
 	@RequestMapping(value = "/*.htm", method = { RequestMethod.POST, RequestMethod.GET })
 	public RedirectView handleHtmRequest(final HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);

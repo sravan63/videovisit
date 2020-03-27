@@ -5,6 +5,7 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppPrope
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,8 +23,10 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
+import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -557,5 +560,24 @@ public class WebUtil {
 		}
 		logger.info(LOG_EXITING + " isChromeOrFFBrowser: " + isChromeOrFFBrowser);
 		return isChromeOrFFBrowser;
+	}
+	
+	public static void addMeetingDateTime(final MeetingDO meetingDO, final VideoVisitParamsDTO videoVisitParams) {
+		logger.info(LOG_ENTERED);
+		try {
+			if (StringUtils.isNotBlank(meetingDO.getMeetingTime())) {
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(Long.valueOf(meetingDO.getMeetingTime()));
+				SimpleDateFormat sfdate = new SimpleDateFormat("MMM dd");
+				SimpleDateFormat sftime = new SimpleDateFormat("hh:mm a");
+				// Can be changed to format like e.g. Fri, Jun 06, 2014 03:15 PM using below
+				// SimpleDateFormat sfdate = new SimpleDateFormat("EEE, MMM dd, yyyy hh:mm a");
+				videoVisitParams.setMeetingDate(sfdate.format(cal.getTime()));
+				videoVisitParams.setMeetingTime(sftime.format(cal.getTime()));
+			}
+		} catch (Exception ex) {
+			logger.error("date conversion error:" + ex.getMessage(), ex);
+		}
+		logger.info(LOG_EXITING);
 	}
 }
