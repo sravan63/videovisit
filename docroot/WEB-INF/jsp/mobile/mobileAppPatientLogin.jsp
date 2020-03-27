@@ -10,7 +10,7 @@
 		<form class="login-form" style="margin:6px 0 0;">
 			<ul class="form-block">
 				<li class="">
-					<p class="mobile-patient-light-auth-label">LAST NAME</p>
+					<p class="mobile-patient-light-auth-label">TEST LAST NAME</p>
 					<input class="mobile-patient-light-auth-inputfield" type="text" name="last_name" id="last_name" tabindex="1" placeholder="i.e. Smith" autocorrect = "off" pattern="[a-zA-Z]+" required></li>
 				<li class="">
 					<p class="mobile-patient-light-auth-label">MEDICAL RECORD NO.</p>
