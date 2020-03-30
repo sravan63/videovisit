@@ -1094,7 +1094,7 @@ function disconnect(){
         if(isMember == 'true' || isMember == true){
             $.ajax({
                 type: "POST",
-                url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+                url: 'joinLeaveMobileMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
                 cache: false,
                 dataType: "json",
                 data: userData,
@@ -1119,7 +1119,7 @@ function disconnect(){
     				};
     				$.ajax({
     			        type: "POST",
-    			        url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+    			        url: 'joinLeaveMobileMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
     			        cache: false,
     			        dataType: "json",
     			        data: userData,
@@ -1329,7 +1329,7 @@ function disconnectOnRefresh(){
     };
     $.ajax({
         type: "POST",
-        url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+        url: 'joinLeaveMobileMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
         cache: false,
         dataType: "json",
         data: userData,

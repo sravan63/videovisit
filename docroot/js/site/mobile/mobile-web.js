@@ -922,7 +922,8 @@ function launchVideoVisitMember(data){
 		        var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);	
 		        var version = safariVersionMatch[1].slice(0,4);	
 		        var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
-		    	if(version >= 13.0 && IpadOS){
+		        var IpadOSMob = /iPad/.test(navigator.userAgent);
+		    	if(version >= 13.0 && (IpadOS || IpadOSMob)){
 		    		redirectToReactVideoPage(mObj);
 		    		return false;
 		    	}

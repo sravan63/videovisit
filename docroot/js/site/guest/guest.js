@@ -169,7 +169,7 @@ function getAppOS(){
     var iOS = false,
     p = navigator.platform;
    // alert(p);
-    if( p.toLowerCase().indexOf('ipad') != -1 || p.toLowerCase().indexOf('iphone') != -1 || p.toLowerCase().indexOf('ipod') != -1 || p.indexOf('iPhone Simulator') != -1 ){
+    if( p.toLowerCase().indexOf('ipad') != -1 || p === 'MacIntel' || p.toLowerCase().indexOf('iphone') != -1 || p.toLowerCase().indexOf('ipod') != -1 || p.indexOf('iPhone Simulator') != -1 ){
         return "iOS";
     }
     
