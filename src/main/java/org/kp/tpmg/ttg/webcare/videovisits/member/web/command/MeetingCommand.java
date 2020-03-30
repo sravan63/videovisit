@@ -718,6 +718,31 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return result;
 	}
+	
+	/**
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	public static String mobileRunningLateInfo(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		String output = null;
+
+		final String meetingId = request.getParameter("meetingId");
+		final String sessionId = request.getSession().getId();
+
+		try {
+			if (ctx != null) {
+				output = WebService.getProviderRunningLateDetails(meetingId, sessionId, ctx.getClientId());
+			}
+		} catch (Exception e) {
+			output = new Gson().toJson(new SystemError());
+			logger.error("System Error for meeting:" + meetingId, e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
 
 	public static String caregiverJoinLeaveMeeting(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
@@ -823,6 +848,29 @@ public class MeetingCommand {
 		return result;
 	}
 	
+	public static String logMobileVendorMeetingEvents(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
+		final String meetingId = request.getParameter("meetingId");
+		final String userType = request.getParameter("userType");
+		final String userId = request.getParameter("userId");
+		final String eventName = request.getParameter("eventName");
+		final String eventDescription = request.getParameter("eventDescription");
+		final String logType = request.getParameter("logType");
+		final String sessionId = request.getSession().getId();
+		final String clientId = WebUtil.getClientIdFromContext(ctx);
+		try {
+			output = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
+					eventName, eventDescription, logType, sessionId, clientId);
+		} catch (Exception e) {
+			output = new Gson().toJson(new SystemError());
+			logger.error("System Error for meeting :" + meetingId + " : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
 
 	/**
 	 * @param request
@@ -913,6 +961,50 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
+	}
+	
+	public static String joinLeaveMobileMeeting(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		String deviceType = null;
+		final String meetingId = request.getParameter("meetingId");
+		final String inMeetingDisplayName = request.getParameter("inMeetingDisplayName");
+		final boolean isPatient = "true".equalsIgnoreCase(request.getParameter("isPatient")) ? true : false;
+		final String joinLeaveMeeting = request.getParameter("joinLeaveMeeting");
+		final String sessionId = request.getSession().getId();
+		final String clientId = WebUtil.KPPC;
+		
+		try {
+			final Gson gson = new GsonBuilder().serializeNulls().create();
+			final Device device = DeviceDetectionService.checkForDevice(request);
+			final Map<String, String> capabilities = device.getCapabilities();
+			final String brandName = capabilities.get("brand_name");
+			final String modelName = capabilities.get("model_name");
+			final String deviceOs = StringUtils.isNotBlank(capabilities.get("device_os"))
+					? capabilities.get("device_os")
+					: WebUtil.getDeviceOs();
+			final String deviceOsVersion = StringUtils.isNotBlank(capabilities.get("device_os_version"))
+					? capabilities.get("device_os_version")
+					: WebUtil.getDeviceOsVersion();
+
+			if (brandName != null && modelName != null) {
+				deviceType = brandName + " " + modelName;
+			}
+			if (StringUtils.isBlank(deviceType)) {
+				deviceType = WebUtil.DEFAULT_DEVICE;
+			}
+			final JoinLeaveMeetingJSON joinLeaveMeetingJSON = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
+					isPatient,joinLeaveMeeting, deviceType, deviceOs, deviceOsVersion, clientId, sessionId);
+			if(joinLeaveMeetingJSON != null && joinLeaveMeetingJSON.getService() != null 
+					&& joinLeaveMeetingJSON.getService().getStatus() != null) {
+				output = gson.toJson(joinLeaveMeetingJSON.getService().getStatus());
+			}
+		} catch (Exception e) {
+			output = new Gson().toJson(new SystemError());
+			logger.error("System Error for meeting :" + meetingId + " : ", e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
 	}
 	
 	public static String isMeetingHashValid(HttpServletRequest request, HttpServletResponse response) throws Exception {

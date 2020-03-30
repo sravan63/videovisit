@@ -1679,15 +1679,15 @@ var sendUserJoinLeaveStatus = function(guestName, isPatient, status){
 	};
 	$.ajax({
         type: "POST",
-        url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+        url: 'joinLeaveMobileMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
         cache: false,
         dataType: "json",
         data: userData,
         success: function(result, textStatus){
-            console.log("joinLeaveMeeting :: result :: "+result);
+            console.log("joinLeaveMobileMeeting :: result :: "+result);
         },
         error: function(textStatus){
-            console.log("joinLeaveMeeting :: error :: "+textStatus);
+            console.log("joinLeaveMobileMeeting :: error :: "+textStatus);
         }
     });
 }
@@ -1772,7 +1772,7 @@ var newStartTimeCheck = function(){
 		}
 		$.ajax({
 			type: "GET",
-			url: "providerRunningLateInfo.json",
+			url: "mobileRunningLateInfo.json",
 			cache: false,
 			dataType: "json",
 			data: {'meetingId':$("#meetingId").val()},
@@ -1799,7 +1799,7 @@ var newStartTimeCheck = function(){
 		var isHostAvailable =  validateMobileHostAvailability();
 		$.ajax({
 			type: "GET",
-			url: "providerRunningLateInfo.json",
+			url: "mobileRunningLateInfo.json",
 			cache: false,
 			dataType: "json",
 			data: {'meetingId':$("#meetingId").val()},
@@ -1886,7 +1886,7 @@ var VideoVisit = {
 
 		$.ajax({
 			type: "POST",
-			url: "logVendorMeetingEvents.json",
+			url: "logMobileVendorMeetingEvents.json",
 			cache: false,
 			dataType: "json",
 			data: eventData,

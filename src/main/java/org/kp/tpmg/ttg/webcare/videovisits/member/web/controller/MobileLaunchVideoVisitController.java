@@ -65,7 +65,7 @@ public class MobileLaunchVideoVisitController {
 			if (StringUtils.isBlank(mblLaunchToken)
 					|| !JwtUtil.validateAuthToken(mblLaunchToken, String.valueOf(meetingId), mrn)) {
 				logger.info("Invalid auth token so sending sc_unauthorized error");
-				return new ModelAndView("redirect:autherror.htm");
+				return new ModelAndView("mauthError");
 			}
 
 			ctx.setMeetingId(meetingId);
@@ -137,7 +137,7 @@ public class MobileLaunchVideoVisitController {
 			if (ctx.getVideoVisit() == null || StringUtils.isBlank(ctx.getVideoVisit().getMeetingId())
 					|| StringUtils.isBlank(ctx.getVideoVisit().getRoomUrl())
 					|| StringUtils.isBlank(ctx.getVideoVisit().getVendorConfId())) {
-				modelAndView.setViewName("redirect:autherror.htm");
+				modelAndView.setViewName("mauthError");
 			}
 		}
 		logger.info(LOG_EXITING);

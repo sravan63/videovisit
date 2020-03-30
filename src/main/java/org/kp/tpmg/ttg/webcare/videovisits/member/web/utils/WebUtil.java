@@ -580,4 +580,8 @@ public class WebUtil {
 		}
 		logger.info(LOG_EXITING);
 	}
+	
+	public static String getClientIdFromContext(final WebAppContext ctx) {
+		return ctx != null ? ctx.getClientId() : VV_MBR_WEB;
+	}
 }
