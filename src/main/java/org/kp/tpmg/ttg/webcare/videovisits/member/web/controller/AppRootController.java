@@ -36,10 +36,7 @@ public class AppRootController {
 		MeetingCommand.updateWebappContextWithPexipMobileBrowserDetails(ctx);
 		MeetingCommand.updateWebappContextWithBrowserFlags(ctx);
 		MeetingCommand.updateWebappContextWithPexipDesktopBrowserDetails(ctx);
-		boolean isMobileAppPatientLoginPage = request.getRequestURI().contains("mobileAppPatientLogin.htm");
-		if (isMobileAppPatientLoginPage) {
-			WebUtil.updateWebappContextForAndroidSDK(ctx, request);
-		}
+		WebUtil.updateWebappContextForAndroidSDK(ctx, request);
 		ModelAndView modelAndView = new ModelAndView("mPatientLogin");
 		logger.info(LOG_EXITING);
 		return modelAndView;

@@ -289,14 +289,16 @@ public class MemberRestController{
 	@RequestMapping(value = "/mobileAppPatientMeetings.htm", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView mobilepatientmeetings(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
+		ModelAndView modelAndView = new ModelAndView("mAppPatientLandingPage");
 		logger.info(LOG_EXITING);
-		return new ModelAndView("mAppPatientLandingPage");
+		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/videovisitmobileready.htm", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView videovisitmobileready(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
+		ModelAndView modelAndView = new ModelAndView("videoVisitMobilePexip");
 		logger.info(LOG_EXITING);
-		return new ModelAndView("videoVisitMobilePexip");
+		return modelAndView;
 	}
 }
