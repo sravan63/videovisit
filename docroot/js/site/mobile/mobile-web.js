@@ -757,7 +757,7 @@ function getAppOS(){
     var iOS = false,
     p = navigator.platform;
 
-    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p==='iPhone Simulator' || p==='iPad Simulator'){
+    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p === 'MacIntel' || p==='iPhone Simulator' || p==='iPad Simulator'){
         return "iOS";
     }
 
@@ -887,6 +887,12 @@ function deleteCookie(c_name){
 	}
 }
 
+function getIOSversion() {
+     // supports iOS 2.0 and later
+        var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+        return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+    }
+
 
 function launchVideoVisitMember(data){
 		//add logic to differentiate vidyo/pexip
@@ -913,46 +919,28 @@ function launchVideoVisitMember(data){
 
 		    if(vendor == 'pexip'){
 		    	if(appOS === 'iOS'){
-                 checkIOS(url);
+		        var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);	
+		        var version = safariVersionMatch[1].slice(0,4);	
+		        var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
+		    	if(version >= 13.0 && IpadOS){
+		    		redirectToReactVideoPage(mObj);
+		    		return false;
+		    	}
+		    	else{
+		    	 checkIOS(url);			
+		    	}
 			}
 			else {
 				if(isAndroidSDK=="true"){
 				 openTab(url);
 				}
 			else {
-				var newurl = new URL(url);
-				var roomJoinPexip = mObj.roomKey; // newurl.searchParams.get('roomUrl');
-              var mobileMeetingObj = {
-                    "meetingId": mObj.meetingId,
-                    "meetingCode": null,
-                    "caregiverId": null,
-                    "roomUrl": roomJoinPexip,
-                    "guestName": mObj.member.inMeetingDisplayName,
-                    "isProvider": 'false',
-                    "isMember": "Y",
-                    "isProxyMeeting": "N",
-                    "guestUrl": roomJoinPexip
-                }
-                $.ajax({
-                   type: 'POST',
-                   url: 'videoVisitMobile.htm',
-                   cache: false,
-                   async: false,
-                   data: mobileMeetingObj,
-                   success: function(){
-                       //add logic to differentiate vidyo/pexip
-                       window.location.href = 'videovisitmobileready.htm';
-                   },
-                   error: function(err) {
-                       window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
-                   }
-               });
-		    }
-		}
+				redirectToReactVideoPage(mObj);
+		    	}
+			}
 		
 		}
 		    else {
-
 				if(appOS === 'iOS'){
 	            checkIOS(url);
 				}
@@ -973,7 +961,35 @@ function launchVideoVisitMember(data){
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
 
-
+function redirectToReactVideoPage(mObj){
+	  //var newurl = new URL(url);
+	  var roomJoinPexip = mObj.roomKey; // newurl.searchParams.get('roomUrl');
+	  var mobileMeetingObj = {
+	  	"meetingId": mObj.meetingId,
+	  	"meetingCode": null,
+	  	"caregiverId": null,
+	  	"roomUrl": roomJoinPexip,
+	  	"guestName": mObj.member.inMeetingDisplayName,
+	  	"isProvider": 'false',
+	  	"isMember": "Y",
+	  	"isProxyMeeting": "N",
+	  	"guestUrl": roomJoinPexip
+	  }
+	  $.ajax({
+	  	type: 'POST',
+	  	url: 'videoVisitMobile.htm',
+	  	cache: false,
+	  	async: false,
+	  	data: mobileMeetingObj,
+	  	success: function(){
+               //add logic to differentiate vidyo/pexip
+               window.location.href = 'videovisitmobileready.htm';
+           },
+           error: function(err) {
+               window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
+           }
+       });
+}
 
 
 /**
@@ -1476,7 +1492,7 @@ function startPexip() {
 		$('.camera-switch-disable-ios').css('display','none');
 		$('.video-controls li:first').addClass('moveLeft');
 	}
-	newStartTimeCheckForOneTime();
+	//newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
 //		setKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
 	}
@@ -1826,9 +1842,9 @@ var newStartTimeCheck = function(){
 		});
 	};
 
-	newStartTimeRecursiveCall = window.setInterval(function(){
+	/*newStartTimeRecursiveCall = window.setInterval(function(){
 	newStartTimeCheck();
-    },120000);
+    },120000);*/
 
 
 

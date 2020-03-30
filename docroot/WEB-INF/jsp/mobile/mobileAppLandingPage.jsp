@@ -257,7 +257,7 @@ function allowToJoin(vendor){
 
 function getAppOS(){
     p = navigator.platform;
-    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p==='iPhone Simulator' || p==='iPad Simulator'){
+    if( p === 'iPad' || p === 'iPhone' || p === 'iPod' || p === 'MacIntel' || p==='iPhone Simulator' || p==='iPad Simulator'){
         return "iOS";
     }
     if(navigator.userAgent.match(/Android/i)){
