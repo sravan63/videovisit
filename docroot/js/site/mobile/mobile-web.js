@@ -919,10 +919,11 @@ function launchVideoVisitMember(data){
 
 		    if(vendor == 'pexip'){
 		    	if(appOS === 'iOS'){
-		    	var version = getIOSversion();	
-		    	var iosFullversion = version[0] + '.'+ version[1];
-		    	if(iosFullversion >= 13.0 && /iPad/.test(navigator.userAgent)){
-                 redirectToReactVideoPage(mObj);
+		        var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);	
+		        var version = safariVersionMatch[1].slice(0,4);	
+		        var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
+		    	if(version >= 13.0 && IpadOS){
+		    		redirectToReactVideoPage(mObj);
 		    	}
 		    	else{
 		    	 checkIOS(url);			
