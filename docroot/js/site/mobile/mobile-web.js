@@ -924,6 +924,7 @@ function launchVideoVisitMember(data){
 		        var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
 		    	if(version >= 13.0 && IpadOS){
 		    		redirectToReactVideoPage(mObj);
+		    		return false;
 		    	}
 		    	else{
 		    	 checkIOS(url);			
@@ -1491,7 +1492,7 @@ function startPexip() {
 		$('.camera-switch-disable-ios').css('display','none');
 		$('.video-controls li:first').addClass('moveLeft');
 	}
-	newStartTimeCheckForOneTime();
+	//newStartTimeCheckForOneTime();
 	if(isMember == 'true' || isMember == true){
 //		setKPHCConferenceStatus(meetingId, "J", isProxyMeeting, decodeURIComponent($('#guestName').val()));
 	}
@@ -1841,9 +1842,9 @@ var newStartTimeCheck = function(){
 		});
 	};
 
-	newStartTimeRecursiveCall = window.setInterval(function(){
+	/*newStartTimeRecursiveCall = window.setInterval(function(){
 	newStartTimeCheck();
-    },120000);
+    },120000);*/
 
 
 
