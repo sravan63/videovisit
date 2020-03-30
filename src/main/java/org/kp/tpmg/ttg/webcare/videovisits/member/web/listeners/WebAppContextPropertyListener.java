@@ -4,13 +4,11 @@ import java.io.IOException;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
 
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebListener
 public class WebAppContextPropertyListener implements ServletContextListener {
 
 	private static final Logger logger = LoggerFactory.getLogger(WebAppContextPropertyListener.class);
