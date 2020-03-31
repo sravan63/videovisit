@@ -301,4 +301,20 @@ public class MemberRestController{
 		logger.info(LOG_EXITING);
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/mobileNativeLogout.htm", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView mobileNativeLogout(final HttpServletRequest request, final HttpServletResponse response) {
+		logger.info(LOG_ENTERED);
+		ModelAndView modelAndView = new ModelAndView("mobileNativeLogout");
+		logger.info(LOG_EXITING);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/autherror.htm", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView authError(final HttpServletRequest request, final HttpServletResponse response) {
+		logger.info(LOG_ENTERED);
+		ModelAndView modelAndView = new ModelAndView("mauthError");
+		logger.info(LOG_EXITING);
+		return modelAndView;
+	}
 }
