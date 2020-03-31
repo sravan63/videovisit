@@ -1391,7 +1391,7 @@ public class MeetingCommand {
 			logger.info("meetingid=" + request.getParameter("meetingId"));
 			logger.debug("In meetingdisplayname=" + request.getParameter("inMeetingDisplayName"));
 			if (StringUtils.isNotBlank(request.getParameter("meetingId"))) {
-				meetingId = Long.parseLong(request.getParameter("meetingId"));
+				meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
 			}
 
 			if (StringUtils.isNotBlank(request.getParameter("inMeetingDisplayName"))) {

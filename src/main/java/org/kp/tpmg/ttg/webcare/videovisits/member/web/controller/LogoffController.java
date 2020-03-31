@@ -27,6 +27,6 @@ public class LogoffController {
 			WebAppContext.setWebAppContext(request, null);
 		}
 		logger.info(LOG_EXITING);
-		return new ModelAndView("mLogoutPage");
+		return new ModelAndView("mobileNativeLogout");
 	}
 }
