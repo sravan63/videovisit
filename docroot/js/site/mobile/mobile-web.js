@@ -901,7 +901,6 @@ function launchVideoVisitMember(data){
 		try{
 			//data = jQuery.parseJSON(data);
 			if ( data.service.status.code != 200){
-				alert("service side");
 				window.location.replace("logout.htm");
 			}
 
@@ -925,7 +924,7 @@ function launchVideoVisitMember(data){
 		    	var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
 		    	if(IpadOSMob){
 		        var versionIpad = iOSversion();
-		            version = versionIpad[0] + '.' + versionIpad[1];	
+		            version = versionIpad[0] + '.'+ versionIpad[1];	
 		        }
 		        if(IpadOS){
 		        var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);	
@@ -961,7 +960,6 @@ function launchVideoVisitMember(data){
 	}
 		catch(e)
 		{
-			alert("after IOS check");
 			window.location.replace("logout.htm");
 		}
 	}
@@ -996,8 +994,7 @@ function redirectToReactVideoPage(mObj){
                window.location.href = 'videovisitmobileready.htm';
            },
            error: function(err) {
-           	   window.location.href = 'videovisitmobileready.htm';	
-               //window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
+               window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
            }
        });
 }
