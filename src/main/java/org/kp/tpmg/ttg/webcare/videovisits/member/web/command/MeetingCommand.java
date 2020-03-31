@@ -731,10 +731,11 @@ public class MeetingCommand {
 
 		final String meetingId = request.getParameter("meetingId");
 		final String sessionId = request.getSession().getId();
+		final String clientId = WebUtil.MOB_CLIENT_ID;
 
 		try {
 			if (ctx != null) {
-				output = WebService.getProviderRunningLateDetails(meetingId, sessionId, ctx.getClientId());
+				output = WebService.getProviderRunningLateDetails(meetingId, sessionId, clientId);
 			}
 		} catch (Exception e) {
 			output = new Gson().toJson(new SystemError());
@@ -851,7 +852,6 @@ public class MeetingCommand {
 	public static String logMobileVendorMeetingEvents(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
 		final String meetingId = request.getParameter("meetingId");
 		final String userType = request.getParameter("userType");
 		final String userId = request.getParameter("userId");
@@ -859,7 +859,7 @@ public class MeetingCommand {
 		final String eventDescription = request.getParameter("eventDescription");
 		final String logType = request.getParameter("logType");
 		final String sessionId = request.getSession().getId();
-		final String clientId = WebUtil.getClientIdFromContext(ctx);
+		final String clientId = WebUtil.MOB_CLIENT_ID;
 		try {
 			output = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
 					eventName, eventDescription, logType, sessionId, clientId);
