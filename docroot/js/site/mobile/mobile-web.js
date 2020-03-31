@@ -919,10 +919,17 @@ function launchVideoVisitMember(data){
 
 		    if(vendor == 'pexip'){
 		    	if(appOS === 'iOS'){
+		        var version;		
+		    	var IpadOSMob = /iPad/.test(navigator.userAgent);	
+		    	var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
+		    	if(IpadOSMob){
+		        var versionIpad = iOSversion();
+		            version = versionIpad[0] + '.'+ versionIpad[1];	
+		        }
+		        if(IpadOS){
 		        var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);	
-		        var version = safariVersionMatch[1].slice(0,4);	
-		        var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
-		        var IpadOSMob = /iPad/.test(navigator.userAgent);
+		        	version = safariVersionMatch[1].slice(0,4);	
+		    	}
 		    	if(version >= 13.0 && (IpadOS || IpadOSMob)){
 		    		redirectToReactVideoPage(mObj);
 		    		return false;
