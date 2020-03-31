@@ -19,8 +19,8 @@ public class JoinLeaveMobileMeetingController {
 	public static final Logger logger = Logger.getLogger(JoinLeaveMobileMeetingController.class);
 	private static final String JSONMAPPING = "jsonData";
 
-	@RequestMapping(value = "/joinLeaveMobileMeeting.json", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView joinLeaveMobileMeeting(ModelAndView modelAndView, HttpServletRequest request,
+	@RequestMapping(value = "/joinLeaveMeeting.json", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView joinLeaveMeeting(ModelAndView modelAndView, HttpServletRequest request,
 			HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
 		try {
