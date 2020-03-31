@@ -363,7 +363,7 @@ export function cleanup(event) {
 }
 
 export function finalise(event) {
-    log("info", "finalise", "console: inside webui finalise event :" + event);
+    log("info", "finalise", "console: inside webui finalise event");
     //console.log("inside webui finalise");
     rtc.disconnect();
     cleanup();

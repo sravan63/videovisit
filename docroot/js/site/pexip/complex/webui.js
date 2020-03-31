@@ -549,7 +549,7 @@ function cleanup(event) {
 }
 
 function finalise(event) {
-    log("info","finalise","console: inside webui finalise event :" + event); 
+    log("info","finalise","console: inside webui finalise event :"); 
     //console.log("inside webui finalise");
     rtc.disconnect();
     cleanup();
@@ -1094,7 +1094,7 @@ function disconnect(){
         if(isMember == 'true' || isMember == true){
             $.ajax({
                 type: "POST",
-                url: 'joinLeaveMobileMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+                url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
                 cache: false,
                 dataType: "json",
                 data: userData,

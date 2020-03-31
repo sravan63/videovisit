@@ -115,7 +115,7 @@ class BackendService extends React.Component {
         let headers = {
             "inMeetingDisplayName": inMeetingDisplayName
         };
-        return Axios.post(this.state.basePath + '/videovisit/' + 'joinLeaveMeeting.json' + '?loginType=sso' + '&meetingId=' + meetingId + '&isPatient=' + isPatient + '&joinLeaveMeeting=' + joinLeaveMeeting, {},{ headers: headers });
+        return Axios.post(this.state.basePath + '/videovisit/' + 'joinLeaveReactMeeting.json' + '?loginType=sso' + '&meetingId=' + meetingId + '&isPatient=' + isPatient + '&joinLeaveMeeting=' + joinLeaveMeeting, {},{ headers: headers });
     }
 
     guestLogout(meetingCode,headers,isFromBackButton){
