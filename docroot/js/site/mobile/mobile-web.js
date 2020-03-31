@@ -996,7 +996,8 @@ function redirectToReactVideoPage(mObj){
                window.location.href = 'videovisitmobileready.htm';
            },
            error: function(err) {
-               window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
+           	   window.location.href = 'videovisitmobileready.htm';	
+               //window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
            }
        });
 }
