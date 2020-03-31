@@ -34,8 +34,6 @@ public class AppRootController {
 			logger.info("Context is not null");
 		}
 		MeetingCommand.updateWebappContextWithPexipMobileBrowserDetails(ctx);
-		MeetingCommand.updateWebappContextWithBrowserFlags(ctx);
-		MeetingCommand.updateWebappContextWithPexipDesktopBrowserDetails(ctx);
 		WebUtil.updateWebappContextForAndroidSDK(ctx, request);
 		ModelAndView modelAndView = new ModelAndView("mPatientLogin");
 		logger.info(LOG_EXITING);

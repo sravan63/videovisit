@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class MobileRunningLateInfoController {
 
 	public static final Logger logger = Logger.getLogger(MobileRunningLateInfoController.class);
-	private static String JSONMAPPING = "jsonData";
+	private static final String JSONMAPPING = "jsonData";
 
 	@RequestMapping(value = "/mobileRunningLateInfo.json", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView mobileRunningLateInfo(ModelAndView modelAndView, HttpServletRequest request,

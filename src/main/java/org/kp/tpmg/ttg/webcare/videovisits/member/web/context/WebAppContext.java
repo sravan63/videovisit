@@ -44,10 +44,10 @@ public class WebAppContext implements Serializable {
 	private String kpKeepAliveUrl = null;
 	private boolean isAuthenticated = false;
 	private boolean isNonMember = false;
-	private String blockChrome = "true";
-	private String blockFF = "true";
-	private String blockEdge = "true";
-	private String blockSafari = "true";
+	private String blockChrome = "false";
+	private String blockFF = "false";
+	private String blockEdge = "false";
+	private String blockSafari = "false";
 	private String blockSafariVersion = "12";
 	private boolean showPeripheralsPage = true;
 	private boolean isNative = false;

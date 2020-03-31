@@ -1274,7 +1274,7 @@ public class MeetingCommand {
 	public static String retrieveMeeting(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		final WebAppContext ctx = WebAppContext.getWebAppContext(request);
-		updateWebappContextWithBrowserFlags(ctx);
+		updateWebappContextWithPexipMobileBrowserDetails(ctx);
 		MeetingDetailsJSON meetingDetailsJSON = null;
 		try {
 			if (ctx != null && ctx.getMemberDO() != null) {
@@ -1304,35 +1304,6 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return JSONObject.fromObject(new SystemError()).toString();
-	}
-	
-	public static void updateWebappContextWithBrowserFlags(WebAppContext ctx) {
-		if (ctx != null) {
-			final String blockChrome = getExtPropertiesValueByKey("BLOCK_CHROME_BROWSER");
-			final String blockFF = getExtPropertiesValueByKey("BLOCK_FIREFOX_BROWSER");
-			final String blockEdge = getExtPropertiesValueByKey("BLOCK_EDGE_BROWSER");
-			final String blockSafari = getExtPropertiesValueByKey("BLOCK_SAFARI_BROWSER");
-			final String blockSafariVersion = AppProperties.getExtPropertiesValueByKey("BLOCK_SAFARI_VERSION");
-			final String blockPexipIE = AppProperties.getExtPropertiesValueByKey("BLOCK_PEXIP_IE_BROWSER");
-			if (StringUtils.isNotBlank(blockChrome)) {
-				ctx.setBlockChrome(blockChrome);
-			}
-			if (StringUtils.isNotBlank(blockFF)) {
-				ctx.setBlockFF(blockFF);
-			}
-			if (StringUtils.isNotBlank(blockEdge)) {
-				ctx.setBlockEdge(blockEdge);
-			}
-			if (StringUtils.isNotBlank(blockSafari)) {
-				ctx.setBlockSafari(blockSafari);
-			}
-			if (StringUtils.isNotBlank(blockSafariVersion)) {
-				ctx.setBlockSafariVersion(blockSafariVersion);
-			}
-			if (StringUtils.isNotBlank(blockPexipIE)) {
-				ctx.setBlockPexipIE(blockPexipIE);
-			}
-		}
 	}
 	
 	public static String verifyMember(HttpServletRequest request) throws Exception {
@@ -1403,27 +1374,6 @@ public class MeetingCommand {
 			}
 			if (StringUtils.isNotBlank(pexMobBlockFirefoxVer)) {
 				ctx.setPexMobBlockFirefoxVer(pexMobBlockFirefoxVer);
-			}
-		}
-	}
-	
-	public static void updateWebappContextWithPexipDesktopBrowserDetails(WebAppContext ctx) {
-		if (ctx != null) {
-			final String pexDesktopBlockSafariVer = getExtPropertiesValueByKey("PEXIP_BLOCK_SAFARI_VERSION");
-			final String pexDesktopBlockChromeVer = getExtPropertiesValueByKey("PEXIP_BLOCK_CHROME_VERSION");
-			final String pexDesktopBlockFirefoxVer = getExtPropertiesValueByKey("PEXIP_BLOCK_FIREFOX_VERSION");
-			final String pexDesktopBlockEdgeVer = getExtPropertiesValueByKey("PEXIP_BLOCK_EDGE_VERSION");
-			if (StringUtils.isNotBlank(pexDesktopBlockSafariVer)) {
-				ctx.setPexBlockSafariVer(pexDesktopBlockSafariVer);
-			}
-			if (StringUtils.isNotBlank(pexDesktopBlockChromeVer)) {
-				ctx.setPexBlockChromeVer(pexDesktopBlockChromeVer);
-			}
-			if (StringUtils.isNotBlank(pexDesktopBlockFirefoxVer)) {
-				ctx.setPexBlockFirefoxVer(pexDesktopBlockFirefoxVer);
-			}
-			if (StringUtils.isNotBlank(pexDesktopBlockEdgeVer)) {
-				ctx.setPexBlockEdgeVer(pexDesktopBlockEdgeVer);
 			}
 		}
 	}
