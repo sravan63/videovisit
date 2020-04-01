@@ -479,11 +479,14 @@ $(document).ready(function() {
 	        	}
 	        	catch(e)
 	        	{
-	        		if (inAppBrowserFlag == "true")
+	        		if (inAppBrowserFlag == "true"){
 	            		window.location.replace("mobileAppPatientLogin.htm");
+	        		}
 
-	            	else
+	            	else{
+	            		alert("Button click",e);
 	            		window.location.replace("logout.htm");
+	            	}
 	        	}
 	        	var isValidUserSession =  data.isValidUserSession;
 
@@ -492,10 +495,13 @@ $(document).ready(function() {
 	        		var meetingStatus = data.service.launchMeetingEnvelope.launchMeeting.meetingStatus;
 	        		console.log("meetingStatus: ",meetingStatus);
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	             		if (inAppBrowserFlag == "true")
+	             		if (inAppBrowserFlag == "true"){
     	            		window.location.replace("mobileAppPatientMeetingExpired.htm");
-	             		else
+	             		}
+	             		else{
+	             			alert("expired meeting");
 	             			window.location.replace("meetingexpiredmember.htm");
+	             		}
 	             	}
 	             	else{
 		             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
@@ -514,28 +520,37 @@ $(document).ready(function() {
 			            		}
 			            		catch(e)
 			            		{
-			            			if (inAppBrowserFlag == "true")
+			            			if (inAppBrowserFlag == "true"){
 			    	            		window.location.replace("mobileAppPatientLogin.htm");
-			    	            	else
+			            			}
+			    	            	else{
+			    	            		alert("cancelled meeting",e);
 			    	            		window.location.replace("logout.htm");
+			    	            	}
 			            		}
 			            	
 		             	}
 		            }
 		            else{
-		            	if (inAppBrowserFlag == "true")
+		            	if (inAppBrowserFlag == "true"){
 		            		window.location.replace("mobileAppPatientLogin.htm");
-		            	else
+		            	}
+		            	else{
+		            		alert("data not success");
 		            		window.location.replace("logout.htm");
+		            	}
 		            }
 
 		        },
-		        error: function() {
-		        	if (inAppBrowserFlag == "true")
+		        error: function(error) {
+		        	if (inAppBrowserFlag == "true"){
 	            		window.location.replace("mobileAppPatientLogin.htm");
-	            	else
+		        	}
+	            	else{
+	            		alert("button click failed", error);
 	            		window.location.replace("logout.htm");
-	            		 },
+	            		 }
+	            	},
 		        beforeSend: function () {		        	
 		        	$("#layover").show();		        	
 	        	}
