@@ -933,8 +933,25 @@ function launchVideoVisitMember(data){
             var isAndroidSDK = $('#isAndroidSDK').val();
 
 		    if(vendor == 'pexip'){
-		    	if(appOS === 'iOS'){
+		    	 if(appOS === 'iOS'){
+		        var version;		
+		    	var IpadOSMob = /iPad/.test(navigator.userAgent);	
+		    	var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
+		    	if(IpadOSMob){
+		        var versionIpad = iOSversion();
+		            version = versionIpad[0] + '.'+ versionIpad[1];	
+		        }
+		        if(IpadOS){
+		        var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);	
+		        	version = safariVersionMatch[1].slice(0,4);	
+		    	}
+		    	if(version >= 13.0 && (IpadOS || IpadOSMob)){
+		    		window.location.replace(url);
+		    		return false;
+		    	}
+		    	else{
 		    	 checkIOS(url);			
+		    	}
 			}
 			else {
 				if(isAndroidSDK=="true"){
@@ -958,6 +975,7 @@ function launchVideoVisitMember(data){
 	}
 		catch(e)
 		{
+			alert("failed");
 			window.location.replace("logout.htm");
 		}
 	}
