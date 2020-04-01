@@ -470,7 +470,8 @@ $(document).ready(function() {
 	        url: VIDEO_VISITS_MOBILE.Path.joinMeeting.launchMeetingforMember,
 	        data: postdata,
 	        success: function(data) {
-	        	alert("before ajax call try" + data);
+	        	var url = "kppc://videovisit?signon=false&vendor=pexip&guest=false&meetingId=291542";
+	        	window.location.replace(url);
 	        	//data = JSON.parse(data);
 	        	//launchVideoVisitMember(data);
 		        },
