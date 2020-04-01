@@ -448,6 +448,7 @@ $(document).ready(function() {
 	//temp launch video function for guest
 	
 	 $(".button-launch-visit").click(function(event) {
+	 	alert("button clicked");
 		//var inAppBrowserFlag = $('#inAppBrowserFlag').val();
 		event.preventDefault();
 
@@ -469,78 +470,9 @@ $(document).ready(function() {
 	        url: VIDEO_VISITS_MOBILE.Path.joinMeeting.launchMeetingforMember,
 	        data: postdata,
 	        success: function(data) {
-	        	try
-	        	{
-	        		data = $.parseJSON(data);
-	        		//console.log("response",data.status.code);
-	        	
-	   
-	        		//validationData= $.parseJSON(validationData)
-	        	}
-	        	catch(e)
-	        	{
-	        		if (inAppBrowserFlag == "true"){
-	            		window.location.replace("mobileAppPatientLogin.htm");
-	        		}
-
-	            	else{
-	            		alert("Button click",e);
-	            		window.location.replace("logout.htm");
-	            	}
-	        	}
-	        	var isValidUserSession =  data.isValidUserSession;
-
-	        	 if(data.success == true && isValidUserSession == true){
-
-	        		var meetingStatus = data.service.launchMeetingEnvelope.launchMeeting.meetingStatus;
-	        		console.log("meetingStatus: ",meetingStatus);
-	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	             		if (inAppBrowserFlag == "true"){
-    	            		window.location.replace("mobileAppPatientMeetingExpired.htm");
-	             		}
-	             		else{
-	             			alert("expired meeting");
-	             			window.location.replace("meetingexpiredmember.htm");
-	             		}
-	             	}
-	             	else{
-		             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
-			            		try
-			            		{
-				            		var userPresentInMeetingData = data.service.launchMeetingEnvelope.launchMeeting.inMeeting;
-				            		console.log("userPresentInMeetingData: ",userPresentInMeetingData);
-
-				            		if(userPresentInMeetingData == true){
-				            			$("#layover").hide();
-				            			modalShow('modal-user-present');
-				            		}
-				            		else{
-				            			launchVideoVisitMember(data);
-				            			}
-			            		}
-			            		catch(e)
-			            		{
-			            			if (inAppBrowserFlag == "true"){
-			    	            		window.location.replace("mobileAppPatientLogin.htm");
-			            			}
-			    	            	else{
-			    	            		alert("cancelled meeting",e);
-			    	            		window.location.replace("logout.htm");
-			    	            	}
-			            		}
-			            	
-		             	}
-		            }
-		            else{
-		            	if (inAppBrowserFlag == "true"){
-		            		window.location.replace("mobileAppPatientLogin.htm");
-		            	}
-		            	else{
-		            		alert("data not success");
-		            		window.location.replace("logout.htm");
-		            	}
-		            }
-
+	        	alert("before ajax call try" + data);
+	        	//data = JSON.parse(data);
+	        	//launchVideoVisitMember(data);
 		        },
 		        error: function(error) {
 		        	if (inAppBrowserFlag == "true"){
