@@ -1723,10 +1723,10 @@ var sendUserJoinLeaveStatus = function(guestName, isPatient, status){
         dataType: "json",
         data: userData,
         success: function(result, textStatus){
-            console.log("joinLeaveMobileMeeting :: result :: "+result);
+            console.log("joinLeaveMeeting :: result :: "+result);
         },
         error: function(textStatus){
-            console.log("joinLeaveMobileMeeting :: error :: "+textStatus);
+            console.log("joinLeaveMeeting :: error :: "+textStatus);
         }
     });
 }

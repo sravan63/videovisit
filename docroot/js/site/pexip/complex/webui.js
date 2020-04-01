@@ -1119,7 +1119,7 @@ function disconnect(){
     				};
     				$.ajax({
     			        type: "POST",
-    			        url: 'joinLeaveMobileMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+    			        url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
     			        cache: false,
     			        dataType: "json",
     			        data: userData,
@@ -1329,7 +1329,7 @@ function disconnectOnRefresh(){
     };
     $.ajax({
         type: "POST",
-        url: 'joinLeaveMobileMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
+        url: 'joinLeaveMeeting.json',// VIDEO_VISITS.Path.visit.joinLeaveMeeting,
         cache: false,
         dataType: "json",
         data: userData,
