@@ -916,6 +916,7 @@ function launchVideoVisitMember(data){
 		try{
 			//data = jQuery.parseJSON(data);
 			if ( data.service.status.code != 200){
+				alert("launch video member", data.service);
 				window.location.replace("logout.htm");
 			}
 
