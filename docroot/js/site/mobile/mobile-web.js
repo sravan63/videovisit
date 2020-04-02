@@ -925,45 +925,45 @@ function launchVideoVisitMember(data){
             var appOS = getAppOS();
             var isAndroidSDK = $('#isAndroidSDK').val();
 
-		    if(vendor == 'pexip'){
-		    	 if(appOS === 'iOS'){
-		        var version;		
+		   
+		    if(appOS === 'iOS'){
+		    	window.location.replace(url);
+		    
+		        /*var version;		
 		    	var IpadOSMob = /iPad/.test(navigator.userAgent);	
 		    	var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
 		    	if(IpadOSMob){
+		    	window.location.replace("www.gmail2.com");	
 		        var versionIpad = iOSversion();
 		            version = versionIpad[0] + '.'+ versionIpad[1];	
 		        }
 		        if(IpadOS){
+		        window.location.replace("www.gmail3.com");	
 		        var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);	
 		        	version = safariVersionMatch[1].slice(0,4);	
 		    	}
 		    	if(version >= 13.0 && (IpadOS || IpadOSMob)){
+		    		window.location.replace("www.gmail.com");
 		    		window.location.replace(url);
-		    	}
-		    	else{
+		    	}*/
+		        }
+		    else{
+		    	 window.location.replace("www.gmail1.com");
 		    	 checkIOS(url);			
-		    	}
-			}
-			else {
+		    }
+
+			
+			/*else {
 				if(isAndroidSDK=="true"){
 				 openTab(url);
 				}
 			else {
 				redirectToReactVideoPage(mObj);
 		    	}
-			}
+			}*/
 		
-		}
-		    else {
-				if(appOS === 'iOS'){
-	            checkIOS(url);
-				}
-
-				else{
-					openTab(url);
-				}
-		}
+		
+		    
 	}
 		catch(e)
 		{
