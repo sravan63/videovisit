@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="js/library/jquery/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/site/global/commonScript.js"></script>
    <c:choose>
       <c:when test="${allOk}">
 		<!-- DASHBOARD_ALL_OK -->
