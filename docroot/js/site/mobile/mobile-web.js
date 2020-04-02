@@ -448,7 +448,6 @@ $(document).ready(function() {
 	//temp launch video function for guest
 	
 	 $(".button-launch-visit").click(function(event) {
-	 	alert("button clicked");
 		//var inAppBrowserFlag = $('#inAppBrowserFlag').val();
 		event.preventDefault();
 
@@ -470,18 +469,79 @@ $(document).ready(function() {
 	        url: VIDEO_VISITS_MOBILE.Path.joinMeeting.launchMeetingforMember,
 	        data: postdata,
 	        success: function(data) {
-	        	var url = "kppc://videovisit?signon=false&vendor=pexip&guest=false&meetingId=291542";
-	        	window.location.replace(url);
-	        	//data = JSON.parse(data);
-	        	//launchVideoVisitMember(data);
+	        	try
+	        	{
+	        		data = JSON.parse(data);
+	        		//console.log("response",data.status.code);
+	        		//validationData= $.parseJSON(validationData)
+	        	}
+	        	catch(e)
+	        	{
+	        		if (inAppBrowserFlag == "true"){
+	            		window.location.replace("mobileAppPatientLogin.htm");
+	        		}
+
+	            	else{
+	            		window.location.replace("www.yahoo.com");
+	            	}
+	        	}
+	        	var isValidUserSession =  data.isValidUserSession;
+
+	        	 if(data.success == true && isValidUserSession == true){
+
+	        		var meetingStatus = data.service.launchMeetingEnvelope.launchMeeting.meetingStatus;
+	        		//console.log("meetingStatus: ",meetingStatus);
+	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
+	             		if (inAppBrowserFlag == "true"){
+    	            		window.location.replace("mobileAppPatientMeetingExpired.htm");
+	             		}
+	             		else{
+	             			window.location.replace("meetingexpiredmember.htm");
+	             		}
+	             	}
+	             	else{
+		             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
+			            		try
+			            		{
+				            		var userPresentInMeetingData = data.service.launchMeetingEnvelope.launchMeeting.inMeeting;
+				            		//console.log("userPresentInMeetingData: ",userPresentInMeetingData);
+
+				            		if(userPresentInMeetingData == true){
+				            			$("#layover").hide();
+				            			modalShow('modal-user-present');
+				            		}
+				            		else{
+				            			launchVideoVisitMember(data);
+				            			}
+			            		}
+			            		catch(e)
+			            		{
+			            			if (inAppBrowserFlag == "true"){
+			    	            		window.location.replace("mobileAppPatientLogin.htm");
+			            			}
+			    	            	else{
+			    	            		window.location.replace("www.google.com");
+			    	            	}
+			            		}
+			            	
+		             	}
+		            }
+		            else{
+		            	if (inAppBrowserFlag == "true"){
+		            		window.location.replace("mobileAppPatientLogin.htm");
+		            	}
+		            	else{
+		            		window.location.replace("www.google1.com");
+		            	}
+		            }
+
 		        },
 		        error: function(error) {
 		        	if (inAppBrowserFlag == "true"){
 	            		window.location.replace("mobileAppPatientLogin.htm");
 		        	}
 	            	else{
-	            		alert("button click failed", error);
-	            		window.location.replace("logout.htm");
+	            		window.location.replace("www.google2.com");
 	            		 }
 	            	},
 		        beforeSend: function () {		        	
@@ -849,7 +909,6 @@ function launchVideoVisitMember(data){
 		try{
 			//data = jQuery.parseJSON(data);
 			if ( data.service.status.code != 200){
-				alert("launch video member", data.service);
 				window.location.replace("logout.htm");
 			}
 
@@ -881,7 +940,6 @@ function launchVideoVisitMember(data){
 		    	}
 		    	if(version >= 13.0 && (IpadOS || IpadOSMob)){
 		    		window.location.replace(url);
-		    		return false;
 		    	}
 		    	else{
 		    	 checkIOS(url);			
@@ -909,8 +967,8 @@ function launchVideoVisitMember(data){
 	}
 		catch(e)
 		{
-			alert("failed");
-			window.location.replace("logout.htm");
+			//alert("failed");
+			window.location.replace("www.gmail.com");
 		}
 	}
 
