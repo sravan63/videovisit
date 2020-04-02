@@ -18,8 +18,7 @@ public class HealthMonitorController {
 	public static final Logger logger = Logger.getLogger(HealthMonitorController.class);
 
 	@RequestMapping(value = "/healthMonitor", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView handlePageRequest(ModelAndView modelAndView, HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView handlePageRequest(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
 		boolean txtMode = "".equals(request.getParameter("text"));
 
@@ -38,6 +37,7 @@ public class HealthMonitorController {
 			logger.info(LOG_EXITING);
 			return toRet;
 		} else {
+			ModelAndView modelAndView = new ModelAndView("healthMonitor");
 			modelAndView.addObject("db", wrapReturn(db));
 			modelAndView.addObject("allOk", allOk);
 			logger.info(LOG_EXITING);
