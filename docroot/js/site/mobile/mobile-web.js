@@ -927,40 +927,16 @@ function launchVideoVisitMember(data){
 
 		   
 		    if(appOS === 'iOS'){
-		    	//window.location.replace(url);
-		        var version;		
-		    	var IpadOSMob = /iPad/.test(navigator.userAgent);	
-		    	var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
-		    	if(IpadOSMob){
-		        var versionIpad = iOSversion();
-		            version = versionIpad[0] + '.'+ versionIpad[1];	
-		        }
-		        if(IpadOS){
-		        var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);	
-		        	version = safariVersionMatch[1].slice(0,4);	
-		    	}
-		    	if(version >= 13.0 && (IpadOS || IpadOSMob)){
-		    		window.location.replace(url);
-		    	}
-		    	else{
-		    	 window.location.replace("www.gmail1.com");
-		    	 checkIOS(url);			
-		    	}
+		    	 window.location.replace(url);
 		    }
-
-			
 			else {
 				if(isAndroidSDK=="true"){
 				 openTab(url);
 				}
-			else {
-				window.location.replace("www.gmail2.com");
+				else {
 				redirectToReactVideoPage(mObj);
 		    	}
 			}
-		
-		
-		    
 	}
 		catch(e)
 		{
