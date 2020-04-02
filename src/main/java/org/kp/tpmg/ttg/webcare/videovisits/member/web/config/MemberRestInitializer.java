@@ -16,7 +16,7 @@ public class MemberRestInitializer extends AbstractAnnotationConfigDispatcherSer
 
 	@Override
 	protected String[] getServletMappings() {
-		return new String[] { "*.json", "*.htm" };
+		return new String[] { "*.json", "*.htm", "/healthMonitor" };
 	}
 
 }
