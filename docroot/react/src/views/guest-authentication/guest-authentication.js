@@ -201,7 +201,7 @@ class Authentication extends React.Component {
              {this.state.showLoader ? (<Loader />):('')}
               {this.state.NotLoggedIn ?  (  
                 <div>
-             <div className="guest-main-content">
+             <div className={this.state.isBrowserBlockError ? 'guest-main-content mobile-block' : 'guest-main-content'}>
                 {this.state.errorlogin ? 
                     <div className="row error-text">
                          <p className="col-sm-12">{this.state.displayErrorMsg}</p>

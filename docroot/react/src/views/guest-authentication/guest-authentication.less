@@ -164,6 +164,9 @@
 
 /* Mobile Styles to  Tablet Styles */
 @media only screen and (max-width: 960px) {
+    .mobile-block{
+        height: calc(100vh - 120px) !important;
+    }
     .guest-main-content {
         margin: 0.2rem 1rem;
         padding: 1rem;
@@ -181,6 +184,7 @@
                 }
             }
         }
+        
 
         .mobile-help-link {
             display: flex;
@@ -212,14 +216,14 @@
 /* Mobile Styles */
 @media only screen and (min-width: 330px) and (max-width: 660px) and (orientation: portrait) {
     .guest-main-content {
-        height: calc(74vh - 105px);
+        // height: calc(74vh - 105px);
     }
 }
 
 /* Tablet Styles */
 @media only screen and (min-width: 661px) and (max-width: 959px) and (orientation: portrait) {
     .guest-main-content {
-        height: calc(81vh - 105px);
+        // height: calc(81vh - 105px);
 
         .guest-form-content {
             .guest-form {
