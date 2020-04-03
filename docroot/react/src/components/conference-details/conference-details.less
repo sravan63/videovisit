@@ -24,12 +24,14 @@
 
             .clinician-info {
                 font-weight: bold;
+                display: flex;
+                align-items: center;
                 .presence-indicator {
                     display: inline-block;
                     background: url('../../assets/SVG/Connected.svg') no-repeat;
                     height: 0.375rem;
                     width: 0.375rem;
-                    margin: 0 0 0.5rem -0.68rem;
+                    margin-left: -0.68rem;
                     background-position: center;
                 }
                 .show{
@@ -63,12 +65,13 @@
             overflow-y: auto;
             margin-left: -1rem;
             .participant{
+                display: flex;
+                align-items: center;
                 .presence-indicator {
                     display: inline-block;
                     background: url('../../assets/SVG/Connected.svg') no-repeat;
                     height: 0.375rem;
                     width: 0.375rem;
-                    margin: .5rem 0;
                     background-position: center;
                     margin-left: .35rem;
                 }

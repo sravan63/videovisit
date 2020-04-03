@@ -25,6 +25,9 @@ class ConferenceDetails extends React.Component {
                     });
                     this.setSortedParticipantList();
                     this.indicateUserOnJoin();
+                    this.setState({
+                         meetingDetails: notification.data.meetingDetails
+                    });
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
                     this.setState({
@@ -94,6 +97,7 @@ class ConferenceDetails extends React.Component {
                 this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
             }
         }
+        
     }
 
     validateUser(participant) {
