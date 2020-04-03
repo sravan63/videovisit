@@ -471,40 +471,36 @@ $(document).ready(function() {
 	        success: function(data) {
 	        	try
 	        	{
-	        		data = JSON.parse(data);
+	        		data = $.parseJSON(data);
 	        		//console.log("response",data.status.code);
+	        	
+	   
 	        		//validationData= $.parseJSON(validationData)
 	        	}
 	        	catch(e)
 	        	{
-	        		if (inAppBrowserFlag == "true"){
+	        		if (inAppBrowserFlag == "true")
 	            		window.location.replace("mobileAppPatientLogin.htm");
-	        		}
 
-	            	else{
-	            		window.location.replace("www.yahoo.com");
-	            	}
+	            	else
+	            		window.location.replace("logout.htm");
 	        	}
 	        	var isValidUserSession =  data.isValidUserSession;
 
 	        	 if(data.success == true && isValidUserSession == true){
 
 	        		var meetingStatus = data.service.launchMeetingEnvelope.launchMeeting.meetingStatus;
-	        		//console.log("meetingStatus: ",meetingStatus);
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
-	             		if (inAppBrowserFlag == "true"){
+	             		if (inAppBrowserFlag == "true")
     	            		window.location.replace("mobileAppPatientMeetingExpired.htm");
-	             		}
-	             		else{
+	             		else
 	             			window.location.replace("meetingexpiredmember.htm");
-	             		}
 	             	}
 	             	else{
 		             	// Get the meagmeeting username who joined the meeting. This will be passed to the API to check if the user has alredy joined the meeting from some other device.
 			            		try
 			            		{
 				            		var userPresentInMeetingData = data.service.launchMeetingEnvelope.launchMeeting.inMeeting;
-				            		//console.log("userPresentInMeetingData: ",userPresentInMeetingData);
 
 				            		if(userPresentInMeetingData == true){
 				            			$("#layover").hide();
@@ -516,34 +512,28 @@ $(document).ready(function() {
 			            		}
 			            		catch(e)
 			            		{
-			            			if (inAppBrowserFlag == "true"){
+			            			if (inAppBrowserFlag == "true")
 			    	            		window.location.replace("mobileAppPatientLogin.htm");
-			            			}
-			    	            	else{
-			    	            		window.location.replace("www.google.com");
-			    	            	}
+			    	            	else
+			    	            		window.location.replace("logout.htm");
 			            		}
 			            	
 		             	}
 		            }
 		            else{
-		            	if (inAppBrowserFlag == "true"){
+		            	if (inAppBrowserFlag == "true")
 		            		window.location.replace("mobileAppPatientLogin.htm");
-		            	}
-		            	else{
-		            		window.location.replace("www.google1.com");
-		            	}
+		            	else
+		            		window.location.replace("logout.htm");
 		            }
 
 		        },
-		        error: function(error) {
-		        	if (inAppBrowserFlag == "true"){
+		        error: function() {
+		        	if (inAppBrowserFlag == "true")
 	            		window.location.replace("mobileAppPatientLogin.htm");
-		        	}
-	            	else{
-	            		window.location.replace("www.google2.com");
-	            		 }
-	            	},
+	            	else
+	            		window.location.replace("logout.htm");
+	            		 },
 		        beforeSend: function () {		        	
 		        	$("#layover").show();		        	
 	        	}
@@ -895,12 +885,6 @@ function deleteCookie(c_name){
 	}
 }
 
-function getIOSversion() {
-     // supports iOS 2.0 and later
-        var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
-        return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
-    }
-
 
 function launchVideoVisitMember(data){
 		//add logic to differentiate vidyo/pexip
@@ -925,23 +909,48 @@ function launchVideoVisitMember(data){
             var appOS = getAppOS();
             var isAndroidSDK = $('#isAndroidSDK').val();
 
-		   
 		    if(appOS === 'iOS'){
-		    	 window.location.replace(url);
-		    }
+                 window.location.replace(url);
+			}
 			else {
 				if(isAndroidSDK=="true"){
 				 openTab(url);
 				}
 				else {
-				redirectToReactVideoPage(mObj);
-		    	}
-			}
+				var newurl = new URL(url);
+				var roomJoinPexip = mObj.roomKey; // newurl.searchParams.get('roomUrl');
+              var mobileMeetingObj = {
+                    "meetingId": mObj.meetingId,
+                    "meetingCode": null,
+                    "caregiverId": null,
+                    "roomUrl": roomJoinPexip,
+                    "guestName": mObj.member.inMeetingDisplayName,
+                    "isProvider": 'false',
+                    "isMember": "Y",
+                    "isProxyMeeting": "N",
+                    "guestUrl": roomJoinPexip
+                }
+                $.ajax({
+                   type: 'POST',
+                   url: 'videoVisitMobile.htm',
+                   cache: false,
+                   async: false,
+                   data: mobileMeetingObj,
+                   success: function(){
+                       //add logic to differentiate vidyo/pexip
+                       window.location.href = 'videovisitmobileready.htm';
+                   },
+                   error: function(err) {
+                       window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
+                   }
+               });
+            }
+		    }
+		    
 	}
 		catch(e)
 		{
-			//alert("failed");
-			window.location.replace("www.gmail.com");
+			window.location.replace("logout.htm");
 		}
 	}
 
@@ -950,35 +959,7 @@ function launchVideoVisitMember(data){
 	//alert("megaMeetingUrl=" + megaMeetingUrl);
 	//window.location.replace(megaMeetingUrl);
 
-function redirectToReactVideoPage(mObj){
-	  //var newurl = new URL(url);
-	  var roomJoinPexip = mObj.roomKey; // newurl.searchParams.get('roomUrl');
-	  var mobileMeetingObj = {
-	  	"meetingId": mObj.meetingId,
-	  	"meetingCode": null,
-	  	"caregiverId": null,
-	  	"roomUrl": roomJoinPexip,
-	  	"guestName": mObj.member.inMeetingDisplayName,
-	  	"isProvider": 'false',
-	  	"isMember": "Y",
-	  	"isProxyMeeting": "N",
-	  	"guestUrl": roomJoinPexip
-	  }
-	  $.ajax({
-	  	type: 'POST',
-	  	url: 'videoVisitMobile.htm',
-	  	cache: false,
-	  	async: false,
-	  	data: mobileMeetingObj,
-	  	success: function(){
-               //add logic to differentiate vidyo/pexip
-               window.location.href = 'videovisitmobileready.htm';
-           },
-           error: function(err) {
-               window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
-           }
-       });
-}
+
 
 
 /**
@@ -1743,6 +1724,11 @@ function toggleCamera(){
 	 var videoSource, callType = 'video';
 	videoSource = isRearCamera ? mobileVideoSources[0] : mobileVideoSources[1];
 	isRearCamera = !isRearCamera;
+	if(isRearCamera){
+		document.getElementById('selfview').style.transform = "none";
+	}else{
+		document.getElementById('selfview').style.transform = "scaleX(-1)";
+	}
 	updateCall(callType, videoSource);
 }
 function updateCall(callType, videoSource = null, audioSource = null) {
