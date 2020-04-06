@@ -6,10 +6,12 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.springframework.http.MediaType;
@@ -289,7 +291,18 @@ public class MemberRestController{
 	@RequestMapping(value = "/mobileAppPatientMeetings.htm", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView mobilepatientmeetings(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
-		ModelAndView modelAndView = new ModelAndView("mAppPatientLandingPage");
+		ModelAndView modelAndView = new ModelAndView("redirect:mobileAppPatientLogin.htm");;
+		try {
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				WebAppContext context = WebAppContext.getWebAppContext(request);
+				if (context != null && context.getMemberDO() != null) {
+					modelAndView = new ModelAndView("mAppPatientLandingPage");
+				}
+			}
+		} catch (Exception e) {
+			logger.warn("Error while redirecting to mAppPatientLandingPage", e);
+		}
 		logger.info(LOG_EXITING);
 		return modelAndView;
 	}
