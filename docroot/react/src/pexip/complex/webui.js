@@ -623,7 +623,8 @@ function connected(url) {
         }
     }
     var isSetup = localStorage.getItem('isSetupPage');
-    if (isSetup == null) {
+    if(pexipInitialConnect==false){
+        if (isSetup == null) {
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         var meetingId = JSON.parse(localStorage.getItem('meetingId'));
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
@@ -644,6 +645,8 @@ function connected(url) {
                     BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
                 }
             }
+            pexipInitialConnect=true;
+        }
     }
 }
 
