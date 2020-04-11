@@ -17,8 +17,19 @@ class TempAccess extends React.Component {
     signOn(e) {
         e.preventDefault();
         localStorage.clear();
+        var mrn = this.state.mrn;
+        if (mrn.length > 0)
+        {
+            if (mrn.length < 8)
+            {
+                while (mrn.length < 8)
+                {
+                    mrn = '0' + mrn;
+                }
+            }
+        }
         this.props.data.emit({ showLoader: true });
-        BackendService.getTempLogin(this.state.lastname.trim(), this.state.mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
+        BackendService.getTempLogin(this.state.lastname.trim(), mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
             if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
                 this.props.data.emit({ showLoader: false });
                 this.setState({
@@ -91,7 +102,7 @@ class TempAccess extends React.Component {
         }
 
         if ("" != event.target.value) {
-            if (this.state.lastname != "" && this.state.mrn != "" && this.state.birth_month != "" && this.state.birth_year != "") {
+            if (this.state.lastname.trim() != "" && this.state.mrn.trim() != "" && this.state.birth_month.trim() != "" && this.state.birth_year.trim() != "") {
                 this.button.disabled = false;
             } else {
                 this.button.disabled = true;
