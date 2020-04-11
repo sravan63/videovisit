@@ -26,10 +26,11 @@ class TempAccess extends React.Component {
                 {
                     mrn = '0' + mrn;
                 }
+                this.state.mrn = mrn;
             }
         }
         this.props.data.emit({ showLoader: true });
-        BackendService.getTempLogin(this.state.lastname.trim(), mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
+        BackendService.getTempLogin(this.state.lastname.trim(), this.state.mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
             if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
                 this.props.data.emit({ showLoader: false });
                 this.setState({
