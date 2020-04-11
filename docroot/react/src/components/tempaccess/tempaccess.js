@@ -39,7 +39,7 @@ class TempAccess extends React.Component {
                 });
                 this.props.data.emit({ isMobileError: true });
                 this.props.data.emit({ showLoader: false });
-                window.scrollTo(0, -2);
+                window.scrollTo(0, 0);
             }
         }, (err) => {
             this.setState({
@@ -47,6 +47,7 @@ class TempAccess extends React.Component {
             });
             this.props.data.emit({ isMobileError: true });
             this.props.data.emit({ showLoader: false });
+            window.scrollTo(0, 0);
         });
     }
     
