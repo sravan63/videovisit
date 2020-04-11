@@ -128,6 +128,7 @@ class Authentication extends React.Component {
                 }
             } else if (response.data.statusCode == 510 || response.data.statusCode == 500) {
                 this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_VALIDATION_MSG, showLoader: false });
+                window.scrollTo(0, 0); 
             } else {
                 if(rejoin){
                 this.setState({ showLoader: false });    
