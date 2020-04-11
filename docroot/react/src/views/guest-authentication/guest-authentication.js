@@ -88,7 +88,7 @@ class Authentication extends React.Component {
             "authToken": this.state.authToken
         };
         sessionStorage.setItem('lastname',this.state.lastname);
-        this.guestLogin(this.state.meetingCode, this.state.lastname,headers,false);
+        this.guestLogin(this.state.meetingCode, this.state.lastname.trim(),headers,false);
     }
 
     reJoinMeeting(){
@@ -172,11 +172,14 @@ class Authentication extends React.Component {
         const { name, value } = event.target;
         switch (name) {
             case 'lastname':
-                const lname_regex = event.target.value.replace(/[^a-zA-Z(\)\[\]\{\}\-._@#,\'\"\:]/g, "");
-                this.lastname = lname_regex;
-                this.setState({
-                    [name]: this.lastname
-                });
+                const lname_regex = event.target.value;
+                var isValid = UtilityService.hasAllLegalCharacters(lname_regex);
+                if(isValid){
+                    this.lastname = lname_regex;
+                    this.setState({
+                        [name]: this.lastname
+                    });
+                }
                 break;
             default:
                 break;

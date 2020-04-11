@@ -18,7 +18,7 @@ class TempAccess extends React.Component {
         e.preventDefault();
         localStorage.clear();
         this.props.data.emit({ showLoader: true });
-        BackendService.getTempLogin(this.state.lastname, this.state.mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
+        BackendService.getTempLogin(this.state.lastname.trim(), this.state.mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
             if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
                 this.props.data.emit({ showLoader: false });
                 this.setState({
@@ -55,11 +55,14 @@ class TempAccess extends React.Component {
         const { name, value } = event.target;
         switch (name) {
             case 'lastname':
-                const lname_regex = event.target.value.replace(/[^a-zA-Z(\)\[\]\{\}\-._@#,\'\"\:]/g, "");
-                this.lastname = lname_regex;
-                this.setState({
-                    [name]: this.lastname
-                });
+                const lname_regex = event.target.value;    
+                var isValid = UtilityService.hasAllLegalCharacters(lname_regex);
+                if(isValid){
+                    this.lastname = lname_regex;
+                    this.setState({
+                        [name]: this.lastname
+                    });
+                }
                 break;
             case 'mrn':
                 const mrn_regex = event.target.value.replace(/[^0-9 ]/g, "");
