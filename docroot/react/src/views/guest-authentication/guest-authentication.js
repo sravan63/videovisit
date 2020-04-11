@@ -120,7 +120,8 @@ class Authentication extends React.Component {
                 if(rejoin){
                 this.setState({ showLoader: false });    
                 this.SignOut();  
-                window.location.reload(false);  
+                window.location.reload(false);
+                window.scrollTo(0, 0);
                 }
                 else{
                 this.errorCompForGuestLogin();
@@ -131,7 +132,8 @@ class Authentication extends React.Component {
                 if(rejoin){
                 this.setState({ showLoader: false });    
                 this.SignOut();  
-                window.location.reload(false);  
+                window.location.reload(false); 
+                window.scrollTo(0, 0); 
                 }
                 else{
                 this.errorCompForGuestLogin();
@@ -141,7 +143,8 @@ class Authentication extends React.Component {
             if(rejoin){
                 this.setState({ showLoader: false });    
                 this.SignOut();   
-                window.location.reload(false); 
+                window.location.reload(false);
+                window.scrollTo(0, 0); 
                 }
                 else{
                 this.errorCompForGuestLogin();
@@ -151,6 +154,7 @@ class Authentication extends React.Component {
 
     errorCompForGuestLogin() {
         this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_ERROR_MSG, showLoader: false });
+        window.scrollTo(0, 0);
     }
 
     SignOut(){
