@@ -18,6 +18,7 @@ class TempAccess extends React.Component {
         e.preventDefault();
         localStorage.clear();
         var mrn = this.state.mrn;
+        var  month = this.state.birth_month;
         if (mrn.length > 0)
         {
             if (mrn.length < 8)
@@ -28,6 +29,15 @@ class TempAccess extends React.Component {
                 }
                 this.state.mrn = mrn;
             }
+        }
+
+        if (month.length < 2 )
+        {
+            while(month.length < 2 )
+            {
+                month = '0' + month;
+            }
+            this.state.birth_month = month;
         }
         this.props.data.emit({ showLoader: true });
         BackendService.getTempLogin(this.state.lastname.trim(), this.state.mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
@@ -68,14 +78,11 @@ class TempAccess extends React.Component {
         const { name, value } = event.target;
         switch (name) {
             case 'lastname':
-                const lname_regex = event.target.value.replace(/[0-9]/g, "");    
-                var isValid = UtilityService.hasAllLegalCharacters(lname_regex);
-                if(isValid){
-                    this.lastname = lname_regex;
-                    this.setState({
-                        [name]: this.lastname
-                    });
-                }
+                const lname_regex = event.target.value.replace(/[^A-Za-z '‘’-]/g, "");    
+                this.lastname = lname_regex;
+                this.setState({
+                    [name]: this.lastname
+                });
                 break;
             case 'mrn':
                 const mrn_regex = event.target.value.replace(/[^0-9 ]/g, "");
