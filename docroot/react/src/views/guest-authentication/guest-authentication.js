@@ -177,11 +177,14 @@ class Authentication extends React.Component {
         const { name, value } = event.target;
         switch (name) {
             case 'lastname':
-                const lname_regex = event.target.value.replace(/[^A-Za-z '‘’-]/g, "");
+                const lname_regex = event.target.value.replace(/[0-9]/g, "");
+                var isValid = UtilityService.hasAllLegalCharacters(lname_regex);
+                if(isValid){
                     this.lastname = lname_regex;
                     this.setState({
                         [name]: this.lastname
                     });
+                }
                 break;
             default:
                 break;
