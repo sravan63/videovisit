@@ -39,10 +39,17 @@
             list-style: none;
             padding: 0;
 
+            .user-name {
+                display: inline-block;
+                width: calc(100% - 10.403rem);
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                vertical-align: bottom;
+            }
             li {
                 display: inline-block;
                 padding: 0 0.5rem;
-
                 .help-link {
                     color: #006ba6;
                     outline: none;

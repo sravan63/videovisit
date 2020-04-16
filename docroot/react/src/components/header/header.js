@@ -41,7 +41,7 @@ class header extends React.Component {
                 <div className = "container-fluid">
                     { !this.state.isInApp ? (
                         <div className = "row header-content">
-                            <div className = "col-md-8 banner-content">
+                            <div className = "col-md-6 banner-content">
                                 <div className = "logo"> 
                             </div> 
                             <div className = "title">
@@ -49,9 +49,9 @@ class header extends React.Component {
                                 <p className = "text-uppercase m-0 sub-title" >The Permanente Medical Group< /p> 
                             </div> 
                         </div> 
-                        <div className = "col-md-4 text-right user-details" >
+                        <div className = "col-md-6 text-right user-details" >
                             <ul >
-                                <li className = "text-capitalize" > 
+                                <li className = "text-capitalize user-name" > 
                                 {this.state.name ? this.state.name : ''} 
                                 </li>
                                  <li className = "text-capitalize" > 
