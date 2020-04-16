@@ -37,7 +37,7 @@ public class JwtTokenValidator {
             return body;
 
         } catch (ExpiredJwtException e) {
-        	logger.error("ExpiredJwtException : " + e);
+        	logger.warn("ExpiredJwtException : " + e);
         } catch (JwtException e) {
         	logger.error("JwtException : " + e);
         }
