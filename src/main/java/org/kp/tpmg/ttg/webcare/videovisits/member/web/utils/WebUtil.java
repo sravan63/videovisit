@@ -84,6 +84,7 @@ public class WebUtil {
 	
 	public static final String ANDROID = "android";
 	public static final String IOS = "ios";
+	public static final String MDO_HELP_URL = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq";
 	
 	
 	public static boolean isDOBMMYYYYFormat(String value) {
@@ -422,6 +423,9 @@ public class WebUtil {
 		// OS version for ipad
 		final String IPAD_OS_VERSION = AppProperties.getExtPropertiesValueByKey("IPAD_OS_VERSION");
 		properties.put("IPAD_OS_VERSION", StringUtils.isNotBlank(IPAD_OS_VERSION) ? IPAD_OS_VERSION : "13.1");
+		
+		final String mdoHelpUrl = AppProperties.getExtPropertiesValueByKey("mdo_help_url");
+		properties.put("mdoHelpUrl", StringUtils.isNotBlank(mdoHelpUrl) ? mdoHelpUrl : MDO_HELP_URL);
 	}
 	
 	public static String convertMapToJsonString(final Map<String, String> map) {
