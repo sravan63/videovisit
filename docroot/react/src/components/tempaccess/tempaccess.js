@@ -18,6 +18,7 @@ class TempAccess extends React.Component {
         e.preventDefault();
         localStorage.clear();
         var mrn = this.state.mrn;
+        var month = this.state.birth_month;
         if (mrn.length > 0)
         {
             if (mrn.length < 8)
@@ -28,6 +29,14 @@ class TempAccess extends React.Component {
                 }
                 this.state.mrn = mrn;
             }
+        }
+        if (month.length < 2 )
+        {
+            while(month.length < 2 )
+            {
+                month = '0' + month;
+            }
+            this.state.birth_month = month;
         }
         this.props.data.emit({ showLoader: true });
         BackendService.getTempLogin(this.state.lastname.trim(), this.state.mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
