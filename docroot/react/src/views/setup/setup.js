@@ -33,11 +33,6 @@ class Setup extends React.Component {
     }
 
     componentDidMount() {
-        var nonSafari = /CriOS|FxiOS/.test(navigator.userAgent);
-        if(nonSafari){
-          this.setState({ isBrowserBlockError: true });
-          return false;
-        }
         MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             switch (message.text) {
