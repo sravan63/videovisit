@@ -98,11 +98,11 @@ public class MeetingCommand {
 					response.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(verifyMemberOutput.getEnvelope().getMember().getMrn()));
 				}
 			}
-			if (StringUtils.isBlank(output)) {
-				output = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_MEMBER, FAILURE_900, FAILURE, null);
-			}
 		} catch (Exception e) {
 			logger.error("Error while verifyMember", e);
+		}
+		if (StringUtils.isBlank(output)) {
+			output = WebUtil.prepareCommonOutputJson(ServiceUtil.VERIFY_MEMBER, FAILURE_900, FAILURE, null);
 		}
 		return output;
 	}

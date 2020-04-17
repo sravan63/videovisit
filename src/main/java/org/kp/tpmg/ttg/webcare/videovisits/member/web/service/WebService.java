@@ -850,31 +850,33 @@ public class WebService {
 		final String Dob = birth_month + "/" + birth_year;
 		VerifyMemberInput verifyMeberInput = new VerifyMemberInput();
 		try {
-			if (mrn == null || sessionId == null || lastName == null) {
-				throw new Exception("One of required fields are null");
-			}
-			if (!WebUtil.isDOBMMYYYYFormat(Dob)) {
-				throw new Exception("DOB has to be in the format of MM/YYYY but is [" + Dob + "]");
-			}
-			verifyMeberInput.setMrn(mrn);
-			verifyMeberInput.setLastName(lastName);
-			verifyMeberInput.setDateOfBirth(Dob);
-			verifyMeberInput.setSessionID(sessionId);
-			verifyMeberInput.setClientId(clientId);
+			if (StringUtils.isNotBlank(mrn) && StringUtils.isNotBlank(sessionId) && StringUtils.isNotBlank(lastName)) {
+				if (WebUtil.isDOBMMYYYYFormat(Dob)) {
+					verifyMeberInput.setMrn(mrn);
+					verifyMeberInput.setLastName(lastName);
+					verifyMeberInput.setDateOfBirth(Dob);
+					verifyMeberInput.setSessionID(sessionId);
+					verifyMeberInput.setClientId(clientId);
 
-			final Gson gson = new Gson();
-			String inputString = gson.toJson(verifyMeberInput);
-			logger.debug("jsonInputString " + inputString);
+					final Gson gson = new Gson();
+					String inputString = gson.toJson(verifyMeberInput);
+					logger.debug("jsonInputString " + inputString);
 
-			String jsonString = callVVRestService(ServiceUtil.VERIFY_MEMBER, inputString);
-			logger.debug("outputjsonString" + jsonString);
-			if (StringUtils.isNotBlank(jsonString)) {
-				final JsonParser parser = new JsonParser();
-				final JsonObject jobject = (JsonObject) parser.parse(jsonString);
-				verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), VerifyMemberOutput.class);
+					String jsonString = callVVRestService(ServiceUtil.VERIFY_MEMBER, inputString);
+					logger.debug("outputjsonString" + jsonString);
+					if (StringUtils.isNotBlank(jsonString)) {
+						final JsonParser parser = new JsonParser();
+						final JsonObject jobject = (JsonObject) parser.parse(jsonString);
+						verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), VerifyMemberOutput.class);
+					}
+				} else {
+					logger.warn("DOB has to be in the format of MM/YYYY but is [" + Dob + "]");
+				}
+			} else {
+				logger.warn("One of required fields are null or empty");
 			}
 		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			logger.error("Web Service API error:" + e.getMessage(), e);
 			throw new Exception("Web Service API error", e.getCause());
 		}
 		logger.info(LOG_EXITING);
