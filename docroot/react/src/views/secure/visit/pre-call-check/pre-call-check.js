@@ -23,7 +23,7 @@ class PreCallCheck extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false };
+        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false,mdoHelpUrl:'' };
         this.goBack = this.goBack.bind(this);
         this.joinVisit = this.joinVisit.bind(this);
     }
@@ -59,8 +59,23 @@ class PreCallCheck extends React.Component {
                     break;
             }
         });
+        this.getBrowserBlockInfo();
     }
-
+    getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                 browserNames = response.data; 
+                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+    }
     toggleOpen(type) {
         this.setState({
             data: {
@@ -142,7 +157,7 @@ class PreCallCheck extends React.Component {
                     </div>
                     <div className="col-md-4 links text-right">
                         <ul>
-                            <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a></li>
+                            <li><a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a></li>
                         </ul>
                     </div>
                   </div>

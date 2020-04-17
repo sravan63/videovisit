@@ -16,7 +16,7 @@ class Authentication extends React.Component {
         super(props);
         localStorage.clear();
         this.tempAccessToken = false;
-        this.state = { tempAccessToken: false, isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false };
+        this.state = { tempAccessToken: false, isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'' };
     }
 
     emitFromChild(obj) {
@@ -49,6 +49,7 @@ class Authentication extends React.Component {
         BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
             if (response.data && response.status == '200') {
                  browserNames = response.data;
+                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                  if(Utilities.validateBrowserBlock(browserNames)){
                     this.setState({ isBrowserBlockError: true });
                  }
@@ -79,7 +80,7 @@ class Authentication extends React.Component {
         return (
             <div id='container' className="authentication-page">
             {this.state.showLoader ? (<Loader />):('')}
-             <Header/>
+             <Header helpUrl = {this.state.mdoHelpUrl}/>
              <div className={this.state.isInApp && window.window.innerWidth >= 1024 ? "main-content occupy-space" : "main-content"}>
                 {this.state.isMobileError ? 
                     (<div className="row error-text">
@@ -91,7 +92,7 @@ class Authentication extends React.Component {
                 : ('')}
                 <div className="row mobile-help-link">
                     <div className="col-12 text-right help-icon p-0">
-                        <a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a>
+                        <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
                 </div>
                 

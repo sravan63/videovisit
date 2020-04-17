@@ -45,8 +45,8 @@ class header extends React.Component {
                                 <div className = "logo"> 
                             </div> 
                             <div className = "title">
-                                <p className = "m-0" >Video Visits< /p> 
-                                <p className = "text-uppercase m-0 sub-title" >The Permanente Medical Group< /p> 
+                                <p className = "m-0" >Video Visits</p> 
+                                <p className = "text-uppercase m-0 sub-title" >The Permanente Medical Group</p> 
                             </div> 
                         </div> 
                         <div className = "col-md-6 text-right user-details" >
@@ -58,7 +58,7 @@ class header extends React.Component {
                                  {this.state.name ? '|' : ''} 
                                  </li> 
                                  <li > 
-                                 <a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
+                                 <a href = {this.props.helpUrl}
                                 className = "help-link"
                                 target = "_blank" >Help</a>
                                 </li>
@@ -73,10 +73,8 @@ class header extends React.Component {
                         <div className = "col-md-8 banner-content"></div>
                         <div className = "col-md-4 text-right user-details">
                             <ul>
-                                <li > 
-                                     < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile"
-                                    className = "help-link"
-                                    target = "_blank" >Help< /a>
+                                <li> 
+                                     <a href = {this.props.helpUrl} className = "help-link"target = "_blank" >Help</a>
                                 </li >
                             </ul>
                         </div>

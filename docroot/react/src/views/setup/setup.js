@@ -27,7 +27,7 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {}, media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false};
+        this.state = { data: {}, media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:''};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
     }
@@ -67,6 +67,7 @@ class Setup extends React.Component {
         BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
             if (response.data && response.status == '200') {
                  browserNames = response.data; 
+                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                  if(UtilityService.validateBrowserBlock(browserNames)){
                     this.setState({ isBrowserBlockError: true });
                  }
@@ -159,10 +160,10 @@ class Setup extends React.Component {
     render() {
         return (
             <div id='container' className="setup-page">
-                 <Header />
+                 <Header helpUrl = {this.state.mdoHelpUrl}/>
                  <div className="row mobile-help-link">
                     <div className="col-12 text-right help-icon p-0">
-                        <a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a>
+                        <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
                 </div>
                  <div className="row mobile-logo-container m-0"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>

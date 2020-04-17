@@ -8,13 +8,14 @@ import { range } from 'rxjs';
 import { MessageService } from '../../services/message-service.js'
 import GlobalConfig from '../../services/global.config';
 import Utilities from '../../services/utilities-service.js';
+import BackendService from '../../services/backendService.js';
 
 class MobileHeader extends React.Component {
     constructor(props) {
         super(props);
         this.loggedInUserName = '';
         this.promoContainer = React.createRef();
-        this.state = { message: 'Testing', isMobile:false, hidePromotion: true, isInApp: false, showPromotion: false };
+        this.state = { message: 'Testing', isMobile:false, hidePromotion: true, isInApp: false, showPromotion: false,mdoHelpUrl:'' };
     }
 
     componentDidMount() {
@@ -28,14 +29,30 @@ class MobileHeader extends React.Component {
         }
 
         window.addEventListener('scroll', this.scrollHandler.bind(this));
-
+        this.getBrowserBlockInfo();
     }
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
         // this.subscription.unsubscribe();
+        window.removeEventListener('scroll', this.scrollHandler.bind(this), false);
     }
-
+    
+    getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                 browserNames = response.data; 
+                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+    }
     scrollHandler(){
         if(this.promoContainer.current && this.state.showPromotion) {
             var mHeader = document.getElementsByClassName('header-controls')[0];
@@ -77,7 +94,7 @@ class MobileHeader extends React.Component {
                         </div>
                     </div>) : ('') }
                     <div className={this.state.hidePromotion ? "header-controls" : "header-controls"}>
-                        < a href = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className = "helpMobile" target = "_blank" >Help</a>
+                        < a href = {this.state.mdoHelpUrl} className = "helpMobile" target = "_blank" >Help</a>
                         <a className="sign-off" onClick = {this.signOff}>Sign Out</a>
                     </div>
                 </div>) :('') }

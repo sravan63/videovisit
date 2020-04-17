@@ -20,7 +20,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false };
+        this.state = { userDetails: {}, isRearCamera:false, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'' };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -147,7 +147,22 @@ class Conference extends React.Component {
 
         });
         window.addEventListener('resize', this.handleResize.bind(this));
-
+        this.getBrowserBlockInfo();
+    }
+    getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                 browserNames = response.data; 
+                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
     }
     handleResize(){
         if(this.state.moreparticpants){
@@ -294,6 +309,7 @@ class Conference extends React.Component {
                 this.leaveMeeting(isFromBackButton);
             }
        }
+       window.removeEventListener('resize', this.handleResize.bind(this), false);
     }
 
     toggleSettings() {
@@ -436,7 +452,7 @@ class Conference extends React.Component {
                     </div>
                     <div className="col-md-4 links text-right">
                         <ul>
-                            <li><a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a></li>
+                            <li><a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a></li>
                             <li className="text-capitalize">|</li>
                             <li><a className="help-link" onClick={this.refreshPage}>Refresh</a></li>
                         </ul>

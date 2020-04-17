@@ -15,7 +15,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false };
+        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'' };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -59,6 +59,7 @@ class Authentication extends React.Component {
         BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
             if (response.data && response.status == '200') {
                  browserNames = response.data; 
+                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                  if(UtilityService.validateBrowserBlock(browserNames)){
                     this.setState({ isBrowserBlockError: true });
                  }
@@ -205,7 +206,7 @@ class Authentication extends React.Component {
     render() {
         return (
             <div id='container' className="authentication-page">
-             <Header/>
+             <Header helpUrl = {this.state.mdoHelpUrl}/>
              {this.state.showLoader ? (<Loader />):('')}
               {this.state.NotLoggedIn ?  (  
                 <div>
@@ -218,7 +219,7 @@ class Authentication extends React.Component {
                 
                 <div className="row mobile-help-link">
                     <div className="col-12 text-right help-icon p-0">
-                        <a href="https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq/mobile" className="help-link" target="_blank">Help</a>
+                        <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
                 </div>
                 <div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>

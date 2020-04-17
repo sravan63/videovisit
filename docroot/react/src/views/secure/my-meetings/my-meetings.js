@@ -12,7 +12,7 @@ class MyMeetings extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, myMeetings: [], showLoader: true,isInApp: false};
+        this.state = { userDetails: {}, myMeetings: [], showLoader: true,isInApp: false,mdoHelpUrl:''};
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
@@ -37,10 +37,26 @@ class MyMeetings extends React.Component {
         });      
         var isInAppAccess = UtilityService.getInAppAccessFlag();
         this.setState({isInApp: isInAppAccess});
+        this.getBrowserBlockInfo();
     }
 
     componentWillUnmount() {
         clearTimeout(this.interval);
+    }
+    getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                 browserNames = response.data; 
+                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
     }
     resetSessionToken(token){
         this.state.userDetails.ssoSession = token;
@@ -254,7 +270,7 @@ class MyMeetings extends React.Component {
         return (
             <div id='container' className="my-meetings">
                 {this.state.showLoader ? (<Loader />):('')}
-                <Header history={this.props.history}/>
+                <Header history={this.props.history} helpUrl={this.state.mdoHelpUrl} />
                 <MobileHeader />
                 <div className="meetings-container">
                 <h1 className="visitsToday">Your Video Visits for Today</h1>
