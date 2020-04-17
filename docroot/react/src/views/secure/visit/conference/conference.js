@@ -352,16 +352,21 @@ class Conference extends React.Component {
             }
             BackendService.quitMeeting(meetingId, isProxyMeeting, headers, loginType, backButton).subscribe((response) => {
                 console.log("Success");
-                if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
+                if (response.data && response.data.statusCode == '200') {
+                    if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                     this.resetSessionToken(response.headers.authtoken);
-                }
+                    }
                 Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
+                }
+                else{
+                    this.props.history.push(GlobalConfig.LOGIN_URL);
+                }
                 //window.location.reload(false);
             }, (err) => {
                 console.log("Error");
                 Utilities.setPromotionFlag(false);
-                this.props.history.push(GlobalConfig.MEETINGS_URL);
+                this.props.history.push(GlobalConfig.LOGIN_URL);
                 //window.location.reload(false);
             });
 
