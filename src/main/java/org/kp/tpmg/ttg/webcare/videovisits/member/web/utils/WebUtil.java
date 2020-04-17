@@ -84,7 +84,7 @@ public class WebUtil {
 	
 	public static final String ANDROID = "android";
 	public static final String IOS = "ios";
-	public static final String MDO_HELP_URL = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/#/faq";
+	public static final String MDO_HELP_URL = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/faq";
 	
 	
 	public static boolean isDOBMMYYYYFormat(String value) {
