@@ -90,20 +90,18 @@ class Authentication extends React.Component {
                         }
                     </div>)
                 : ('')}
-                <div className="row mobile-help-link">
+                <div className="row help-link-container">
                     <div className="col-12 text-right help-icon p-0">
                         <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
                 </div>
-                
-                {!this.state.isInApp ?(<div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>) :('')}
                 <BrowserBlock browserblockinfo = {this.state}/>
                 <div>
                     <Suspense fallback={<Loader />}>
                         {this.state.tempAccessToken || this.state.isInApp ? (
                             <Login data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this), isInApp: this.state.isInApp,browserBlock:this.state.isBrowserBlockError}}/>
                         ) : (
-                            <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this),browserBlock:this.state.isBrowserBlockError}}/>
+                            <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader, isInApp: this.state.isInApp, emit:this.emitFromChild.bind(this),browserBlock:this.state.isBrowserBlockError}}/>
                         )}
                     </Suspense>
                 </div>

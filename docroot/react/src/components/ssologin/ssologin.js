@@ -13,6 +13,7 @@ export default class Ssologin extends React.Component {
             username: '',
             password: '',
             NotLoggedIn: false,
+            isInApp: false,
             screenOrientation:'',
             errors: {
                 usernameflag: '',
@@ -43,6 +44,7 @@ export default class Ssologin extends React.Component {
             console.log(err);
             this.setState({ NotLoggedIn: true });
         });
+        this.setState({isInApp : this.props.data.isInApp});
         window.addEventListener('orientationchange', this.setScreenOrientation);
     }
     setScreenOrientation(){
@@ -138,15 +140,22 @@ export default class Ssologin extends React.Component {
             <div className="sso-content"> 
             {this.state.NotLoggedIn ?  (        
                     <div className="row sso-form" style={{width: window.innerWidth < 787 && window.orientation == 0 ? 'auto' : 'fit-content',margin:window.innerWidth < 787 && window.orientation == 0 ? '0' : '0 auto'}}> 
+                        {!this.state.isInApp ?(<div className="row mobile-logo-container">
+                            <div className="title">
+                                <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
+                                <p className="col-12 p-0 sub-header">Video Visits</p>
+                            </div>
+                        </div>) :
+                        ('')}
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group top-form-group-margin">
-                                <label className="col-sm-12">kp.org user ID</label>
+                                <label className="col-sm-12 text-uppercase">kp.org user ID</label>
                                 <div className="col-sm-12">
                                     <input type="text" name="username" maxLength="20" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')} disabled={this.props.data.browserBlock} />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-12">Password</label>
+                                <label className="col-sm-12 text-uppercase">Password</label>
                                 <div className="col-sm-12">
                                     <input type="password" name="password" value={this.state.password} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" onChange={this.handleChange.bind(this,'password')} disabled={this.props.data.browserBlock} />
                                 </div>

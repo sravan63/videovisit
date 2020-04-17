@@ -3,6 +3,8 @@ import BackendService from '../../services/backendService.js';
 import { MessageService } from '../../services/message-service.js';
 import UtilityService from '../../services/utilities-service.js';
 import GlobalConfig from '../../services/global.config';
+import KPLOGO from '../../components/kp-logo/kp-logo';
+
 import './header.less';
 
 class header extends React.Component {
@@ -40,7 +42,7 @@ class header extends React.Component {
                 return (
                 <div className = "container-fluid">
                     { !this.state.isInApp ? (
-                        <div className = "row header-content">
+                        <div className = {!this.state.isLogin ? "row header-content bmargin" : "row header-content"}>
                             <div className = "col-md-6 banner-content">
                                 <div className = "logo"> 
                             </div> 
@@ -50,7 +52,7 @@ class header extends React.Component {
                             </div> 
                         </div> 
                         <div className = "col-md-6 text-right user-details" >
-                            <ul >
+                            { this.state.isLogin ? (<ul >
                                 <li className = "text-capitalize user-name" > 
                                 {this.state.name ? this.state.name : ''} 
                                 </li>
@@ -66,7 +68,7 @@ class header extends React.Component {
                                 <li className = "text-capitalize"> 
                                     {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>Sign out</a> :''}
                                 </li>                        
-                            </ul> 
+                            </ul> ) : (<KPLOGO />) }
                         </div>
                     </div>) : 
                     (<div className = "row header-content" style={{display: this.state.isLogin ? 'flex' : 'none'}}>

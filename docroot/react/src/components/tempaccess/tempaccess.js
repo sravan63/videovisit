@@ -9,9 +9,13 @@ class TempAccess extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: { errorlogin: false, errormsg: '' } };
+        this.state = { isInApp: false, lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: { errorlogin: false, errormsg: '' } };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({isInApp : this.props.data.isInApp});
     }
 
     signOn(e) {
@@ -135,22 +139,29 @@ class TempAccess extends React.Component {
         return (
             <div className="temp-content">
                 <div className="row temp-form" style={{width: this.getStyles(),margin:window.innerWidth < 787 && window.orientation == 0 ? '0' : '0 auto'}}> 
+                    {!this.state.isInApp ?(<div className="row mobile-logo-container">
+                        <div className="title">
+                            <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
+                            <p className="col-12 p-0 sub-header">Video Visits</p>
+                        </div>
+                    </div>) :
+                    ('')}
                     <form className="col-xs-12 col-md-12 login-form">
-                        <p className="col-12 sub-text mt-5 font-weight-bold">Patient's Information</p>
+                        <p className="col-12 sub-text font-weight-bold">Patient's Information</p>
                         <div className="form-group">
-                            <label className="col-sm-12 text-capitalize">Last Name</label>
+                            <label className="col-sm-12 text-uppercase">Last Name</label>
                             <div className="col-sm-12">
                                 <input type="text" pattern="[a-zA-Z]+" name="lastname" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="i.e. Smith" disabled={this.props.data.browserBlock}/>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-sm-12 text-capitalize">Medical Record Number</label>
+                            <label className="col-sm-12 text-uppercase">Medical Record Number</label>
                             <div className="col-sm-12">
                                 <input type="tel" name="mrn" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="######" maxLength="8" disabled={this.props.data.browserBlock} />
                             </div>
                         </div>
                         <div className="form-group col">
-                            <label className="col-12 p-0 text-capitalize">Date of Birth</label>
+                            <label className="col-12 p-0 text-uppercase">Date of Birth</label>
                             <div className="row">
                                 <div className="col-3">
                                     <input type="tel" name="birth_month" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="MM" maxLength="2" disabled={this.props.data.browserBlock} /> 
