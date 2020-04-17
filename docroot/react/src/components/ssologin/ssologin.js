@@ -139,7 +139,7 @@ export default class Ssologin extends React.Component {
         return (
             <div className="sso-content"> 
             {this.state.NotLoggedIn ?  (        
-                    <div className="row sso-form" style={{width: window.innerWidth < 787 && window.orientation == 0 ? 'auto' : 'fit-content',margin:window.innerWidth < 787 && window.orientation == 0 ? '0' : '0 auto'}}> 
+                    <div className="row sso-form"> 
                         {!this.state.isInApp ?(<div className="row mobile-logo-container">
                             <div className="title">
                                 <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
