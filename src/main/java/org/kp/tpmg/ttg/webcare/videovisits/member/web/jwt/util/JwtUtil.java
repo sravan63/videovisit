@@ -16,7 +16,7 @@ public class JwtUtil {
 	}
 
 	public final static String JWT_SECRET = "videovisit-jwt-secret-kaiser-ttg-tpmg-ncal-this-key";
-	public final static long JWT_TOKEN_EXPIRATION_MILLIS = 1320000;// expiration set to 22 mins
+	public final static long JWT_TOKEN_EXPIRATION_MILLIS = 7200000;// expiration set to 2 hours
 	public static final Logger logger = Logger.getLogger(JwtUtil.class);
 
 	public static Claims createClaims(String userName) {
