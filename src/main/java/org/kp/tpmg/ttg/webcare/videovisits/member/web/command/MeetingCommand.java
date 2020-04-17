@@ -551,7 +551,7 @@ public class MeetingCommand {
 			}
 			logger.info("meetingId=" + meetingId + ", isProxyMeeting=" + request.getParameter("isProxyMeeting"));
 			boolean isProxyMeeting;
-			if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
+			if ("Y".equalsIgnoreCase(request.getHeader("isProxyMeeting"))) {
 				isProxyMeeting = true;
 			} else {
 				isProxyMeeting = false;
