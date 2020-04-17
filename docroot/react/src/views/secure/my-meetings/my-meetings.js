@@ -51,7 +51,7 @@ class MyMeetings extends React.Component {
     getMyMeetings() {
         let headers = {
             "Content-Type": "application/json",
-            "mrn": this.state.userDetails.mrn ? this.state.userDetails.mrn : ''
+            "mrn": this.state.userDetails.mrn ? this.state.userDetails.mrn : null
         };
         let myMeetingsUrl = "retrieveActiveMeetingsForMemberAndProxies.json";
         let isProxy = true;
@@ -169,7 +169,7 @@ class MyMeetings extends React.Component {
         var meetingId = meeting.meetingId;
         var headers = {
             "Content-Type": "application/json",
-            "mrn": this.state.userDetails.mrn ? this.state.userDetails.mrn : ''
+            "mrn": this.state.userDetails.mrn ? this.state.userDetails.mrn : null
         };
         var sessionInfo = {};
         var isInAppAccess = UtilityService.getInAppAccessFlag();
