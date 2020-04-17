@@ -42,7 +42,7 @@ class header extends React.Component {
                 return (
                 <div className = "container-fluid">
                     { !this.state.isInApp ? (
-                        <div className = {!this.state.isLogin ? "row header-content bmargin" : "row header-content"}>
+                        <div className = {!this.state.name ? "row header-content bmargin" : "row header-content"}>
                             <div className = "col-md-6 banner-content">
                                 <div className = "logo"> 
                             </div> 
@@ -52,7 +52,7 @@ class header extends React.Component {
                             </div> 
                         </div> 
                         <div className = "col-md-6 text-right user-details" >
-                            { this.state.isLogin ? (<ul >
+                            { this.state.name ? (<ul >
                                 <li className = "text-capitalize user-name" > 
                                 {this.state.name ? this.state.name : ''} 
                                 </li>
