@@ -110,11 +110,12 @@ class TempAccess extends React.Component {
                 this.setState({
                     [name]: this.birth_year
                 });
+                this.state.birth_year = this.birth_year;
                 break;
             default:
                 break;
         }
-
+        
         if ("" != event.target.value) {
             if (this.state.lastname.trim() != "" && this.state.mrn.trim() != "" && this.state.birth_month.trim() != "" && this.state.birth_year.trim() != "") {
                 this.button.disabled = false;
