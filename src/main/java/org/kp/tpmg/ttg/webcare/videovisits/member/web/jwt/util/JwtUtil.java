@@ -49,13 +49,13 @@ public class JwtUtil {
 	}
 	
 	public static boolean validateAuthToken(final String authToken, final String reqMeetingId, final String reqMrn) {
-		logger.info(LOG_ENTERED);
+		logger.info(LOG_ENTERED + " mobile direct launch");
 		boolean isValid = false;
 		Claims claims = null;
 		try {
 			claims = JwtTokenValidator.parseToken(authToken, JwtUtil.JWT_SECRET);
 		} catch (Exception e) {
-			logger.warn("Error while validating token", e);
+			logger.warn("Error while validating mobile direct launch token ", e);
 		}
 		logger.debug(claims);
 		if (claims != null && !claims.isEmpty() && StringUtils.isNotBlank(reqMeetingId) && StringUtils.isNotBlank(reqMrn) ) {
@@ -69,7 +69,7 @@ public class JwtUtil {
 		if(!isValid && authToken.contains(reqMeetingId) && authToken.contains(reqMrn)) {
 			isValid = true;
 		}
-		logger.info(LOG_EXITING);
+		logger.info(LOG_EXITING + " mobile direct launch");
 		return isValid;
 	}
 }
