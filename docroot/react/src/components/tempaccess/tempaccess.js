@@ -81,15 +81,12 @@ class TempAccess extends React.Component {
         const { name, value } = event.target;
         switch (name) {
             case 'lastname':
-                const lname_regex = event.target.value.replace(/[0-9]/g, "");    
-                var isValid = UtilityService.hasAllLegalCharacters(lname_regex);
-                if(isValid){
-                    this.lastname = lname_regex;
-                    this.setState({
-                        [name]: this.lastname
-                    });
-                    this.state.lastname = this.lastname;
-                }
+                const lname_regex = event.target.value.replace(/[^A-Za-z '‘’-]/g, "");    
+                this.lastname = lname_regex;
+                this.setState({
+                    [name]: this.lastname
+                });
+                this.state.lastname = this.lastname;
                 break;
             case 'mrn':
                 const mrn_regex = event.target.value.replace(/[^0-9 ]/g, "");
