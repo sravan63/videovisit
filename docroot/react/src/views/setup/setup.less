@@ -5,20 +5,24 @@
     }
     .mobile-logo-container {
         display: none;
+        margin-bottom: 0.5rem;
+        .title{
+            width: fit-content;
+            margin: 0 2.812rem;
+            .header {
+                font-size: 1.187rem;
+                color: #333333;
+                font-weight: 500;
+            }
 
-        .mobile-tpmg-logo {
-            background: url('../../assets/TPMG.svg') no-repeat;
-            height: 5.625rem;
-            width: 5.625rem;
-            margin: 0 auto;
+            .sub-header {
+                font-size: 2rem;
+                color: #203864;
+                font-weight: 500;
+                margin-top: -10px;
+            }
         }
 
-        .header {
-            font-size: 2rem;
-            color: #203864;
-            text-align: center;
-            margin: 0 0 0.5rem;
-        }
     }
 
     .setup-content {
@@ -129,6 +133,28 @@
     }
 }
 
+@media only screen and (max-width: 376px) and (orientation: portrait){
+    .setup-page {
+        .setup-content {
+            .setup {
+                .browser-block-container{
+                    width:100% !important;
+                    .browser-block-content{
+                        .special-message{
+                            width: 10rem !important;
+                        }
+                        .app-store-container{
+                            .android-playstore{
+                                margin-left: 0.5rem !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 /* Mobile Styles to  Tablet Styles */
 @media only screen and (max-width: 960px) {
     .setup-page {
@@ -164,5 +190,4 @@
     }
 }
 
-/* Desktop Styles */
-@media only screen and (min-width: 960px) {}
+
