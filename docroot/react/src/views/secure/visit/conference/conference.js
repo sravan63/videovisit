@@ -108,7 +108,10 @@ class Conference extends React.Component {
                     this.leaveMeeting();
                     break;
                 case GlobalConfig.MEMBER_READY:
+                    if(!sessionStorage.getItem('memberAlone')){
+                    sessionStorage.setItem('memberAlone', true);
                     this.handleTimer(true);
+                    }
                     break;       
                 case GlobalConfig.START_SCREENSHARE:
                     this.setState({ showSharedContent: true });
@@ -342,6 +345,7 @@ class Conference extends React.Component {
 
     leaveMeeting(isFromBackButton) {
         this.setState({ leaveMeeting: true });
+        sessionStorage.removeItem('memberAlone');
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         if(isDirectLaunch){
             WebUI.pexipDisconnect();
