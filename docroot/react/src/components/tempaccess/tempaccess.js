@@ -89,7 +89,7 @@ class TempAccess extends React.Component {
                 this.state.lastname = this.lastname;
                 break;
             case 'mrn':
-                const mrn_regex = event.target.value.replace(/[^0-9 ]/g, "");
+                const mrn_regex = event.target.value.replace(/[^0-9]/g, "");
                 this.mrn = mrn_regex;
                 this.setState({
                     [name]: this.mrn
@@ -97,7 +97,7 @@ class TempAccess extends React.Component {
                 this.state.mrn = this.mrn;
                 break;
             case 'birth_month':
-                const birth_month_regex = event.target.value.replace(/[^0-9 ]/g, "");
+                const birth_month_regex = event.target.value.replace(/[^0-9]/g, "");
                 this.birth_month = birth_month_regex;
                 this.setState({
                     [name]: this.birth_month
@@ -105,7 +105,7 @@ class TempAccess extends React.Component {
                 this.state.birth_month = this.birth_month;
                 break;
             case 'birth_year':
-                const birth_year_regex = event.target.value.replace(/[^0-9 ]/g, "");
+                const birth_year_regex = event.target.value.replace(/[^0-9]/g, "");
                 this.birth_year = birth_year_regex;
                 this.setState({
                     [name]: this.birth_year
