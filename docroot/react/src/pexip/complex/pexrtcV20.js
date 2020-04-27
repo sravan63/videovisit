@@ -5,9 +5,9 @@ var PeerConnection = window.mozRTCPeerConnection || window.webkitRTCPeerConnecti
 
 /*
 License for Base64.js,
-retrieved from https://urldefense.com/v3/__https://code.google.com/p/javascriptbase64__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilSdfLQ3w$ 
+retrieved from https://code.google.com/p/javascriptbase64
 
-Copyright (c) 2008 Fred Palmer https://urldefense.com/v3/__http://fred.palmer_at_gmail.com__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikjd-I7Rg$ 
+Copyright (c) 2008 Fred Palmer fred.palmer_at_gmail.com
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -223,9 +223,8 @@ export function PexRTCCall() {
     self.call_uuid = null;
     self.legacy_screenshare = false;
     self.h264_enabled = true;
-    self.vp9_enabled = true;
     self.allow_1080p = false;
-    https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$  = null;
+    self.stream = null;
     self.presentation_in_main = false;
     self.ice_candidates = [];
     self.host_candidate = null;
@@ -234,7 +233,6 @@ export function PexRTCCall() {
     self.microphone = null;
     self.audioContext = null;
     self.audioRTCInterval = null;
-    self.audioSender = null;
     self.previousIceConnectionState = '';
     self.outstanding_requests = {};
 
@@ -263,8 +261,8 @@ PexRTCCall.prototype.sdpAddCandidates = function(sdplines) {
         newlines.push(sdplines[i]);
 
         if (sdplines[i].indexOf('a=ssrc:') === 0 && sdplines[i].indexOf('cname:') > 0) {
-            var ssrc = sdplines[i].substr(7, sdplines[i].indexOf(" ")-7);
-            newlines.push('a=x-ssrc-range:' + ssrc + '-' + (parseInt(ssrc)+99));
+            var ssrc = sdplines[i].substr(7, sdplines[i].indexOf(" ") - 7);
+            newlines.push('a=x-ssrc-range:' + ssrc + '-' + (parseInt(ssrc) + 99));
         }
     }
 
@@ -335,7 +333,7 @@ PexRTCCall.prototype.cleanupLocalCandidates = function(sdplines) {
                         var fields = sdplines[i].split(' ');
                         if (fields[4].lastIndexOf('.local') > 0) {
                             if (nonlocals == 0) {
-                                fields[4] = 'https://urldefense.com/v3/__http://192.0.0.8__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilHXR1gnQ$ ';
+                                fields[4] = '192.0.0.8';
                                 newlines.push(fields.join(' '));
                             }
                             continue;
@@ -343,7 +341,7 @@ PexRTCCall.prototype.cleanupLocalCandidates = function(sdplines) {
                     }
                     newlines.push(sdplines[i]);
 
-                    if (sdplines[i+1] === undefined || sdplines[i+1].lastIndexOf('m=', 0) === 0) {
+                    if (sdplines[i + 1] === undefined || sdplines[i + 1].lastIndexOf('m=', 0) === 0) {
                         break;
                     }
                 }
@@ -364,7 +362,7 @@ PexRTCCall.prototype.sdpAddPLI = function(origlines) {
     for (var i = 0; i < sdplines.length; i++) {
         var sdpline = sdplines[i];
 
-        if (sdplines[i].lastIndexOf('c=', 0) === 0 && (sdplines[i].substr(-7) == 'https://urldefense.com/v3/__http://0.0.0.0__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilPmyfXpw$ ' || sdplines[i].length < 16 || sdplines[i].lastIndexOf('.local') > -1 || self.firefox_ver > 0)) {
+        if (sdplines[i].lastIndexOf('c=', 0) === 0 && (sdplines[i].substr(-7) == '0.0.0.0' || sdplines[i].length < 16 || sdplines[i].lastIndexOf('.local') > -1 || self.firefox_ver > 0)) {
             var host = self.getHostCandidate(sdplines, i);
             if (host) {
                 if (host[0].indexOf(':') > -1) {
@@ -373,8 +371,6 @@ PexRTCCall.prototype.sdpAddPLI = function(origlines) {
                     sdpline = 'c=IN IP4 ' + host[0];
                 }
             }
-        } else if (!self.parent.use_trickle_ice && sdplines[i].lastIndexOf('a=ice-options:trickle') === 0) {
-            continue;
         } else if (sdplines[i].lastIndexOf('m=', 0) === 0 && (sdplines[i].split(' ')[1] == '9' || self.firefox_ver > 0)) {
             var fields = sdplines[i].split(' ');
             var host = self.getHostCandidate(sdplines, i, fields[1]) || self.getHostCandidate(sdplines, i);
@@ -407,17 +403,8 @@ PexRTCCall.prototype.sdpAddPLI = function(origlines) {
 
             if ((!self.h264_enabled || self.is_screenshare) && sdplines[i].lastIndexOf('a=rtpmap:', 0) === 0 && sdplines[i].lastIndexOf('H264') > 0) {
                 var fields = sdplines[i].split(' ');
-                var pt = fields[0].substr(fields[0].indexOf(':')+1);
-                while (sdplines[i+1].lastIndexOf('a=fmtp:' + pt, 0) === 0 || sdplines[i+1].lastIndexOf('a=rtcp-fb:' + pt, 0) === 0) {
-                    i++;
-                }
-                continue;
-            }
-
-            if (!self.vp9_enabled && sdplines[i].lastIndexOf('a=rtpmap:', 0) === 0 && sdplines[i].lastIndexOf('VP9') > 0) {
-                var fields = sdplines[i].split(' ');
-                var pt = fields[0].substr(fields[0].indexOf(':')+1);
-                while (sdplines[i+1].lastIndexOf('a=fmtp:' + pt, 0) === 0 || sdplines[i+1].lastIndexOf('a=rtcp-fb:' + pt, 0) === 0) {
+                var pt = fields[0].substr(fields[0].indexOf(':') + 1);
+                while (sdplines[i + 1].lastIndexOf('a=fmtp:' + pt, 0) === 0 || sdplines[i + 1].lastIndexOf('a=rtcp-fb:' + pt, 0) === 0) {
                     i++;
                 }
                 continue;
@@ -427,25 +414,15 @@ PexRTCCall.prototype.sdpAddPLI = function(origlines) {
 
             if (self.chrome_ver > 0 && (self.allow_1080p || self.call_type == 'presentation') && sdplines[i].lastIndexOf('a=rtpmap:', 0) === 0) {
                 var fields = sdplines[i].split(' ');
-                var pt = fields[0].substr(fields[0].indexOf(':')+1);
+                var pt = fields[0].substr(fields[0].indexOf(':') + 1);
                 if (sdplines[i].lastIndexOf('VP8') > 0 || sdplines[i].lastIndexOf('VP9') > 0) {
                     newlines.push('a=fmtp:' + pt + ' max-fs=8160;max-fr=30');
                 } else if (sdplines[i].lastIndexOf('H264') > 0) {
-                    while (sdplines[i+1].lastIndexOf('a=rtcp-fb:' + pt, 0) === 0) {
+                    while (sdplines[i + 1].lastIndexOf('a=rtcp-fb:' + pt, 0) === 0) {
                         newlines.push(sdplines[++i]);
                     }
-                    if (sdplines[i+1].lastIndexOf('a=fmtp:' + pt, 0) === 0 && sdplines[i+1].lastIndexOf('max-fs') === -1) {
+                    if (sdplines[i + 1].lastIndexOf('a=fmtp:' + pt, 0) === 0 && sdplines[i + 1].lastIndexOf('max-fs') === -1) {
                         newlines.push(sdplines[++i] + ';max-br=3732;max-mbps=245760;max-fs=8192;max-smbps=245760;max-fps=3000;max-fr=30');
-                    }
-                }
-            }
-
-            if (self.firefox_ver > 65 && (self.allow_1080p || self.call_type == 'presentation') && sdplines[i].lastIndexOf('a=rtpmap:', 0) === 0 && sdplines[i].lastIndexOf('H264') > 0) {
-                var fields = sdplines[i].split(' ');
-                var pt = fields[0].substr(fields[0].indexOf(':')+1);
-                for (var j = 0; j < newlines.length; j++) {
-                    if (newlines[j].lastIndexOf('a=fmtp:' + pt, 0) === 0 && newlines[j].lastIndexOf('max-fs') === -1) {
-                        newlines[j] += ';max-br=3732;max-mbps=245760;max-fs=8192;max-smbps=245760;max-fps=3000;max-fr=30';
                     }
                 }
             }
@@ -470,15 +447,15 @@ PexRTCCall.prototype.sdpChangeBW = function(sdplines) {
             state = 'invideo';
         } else if (state === 'invideo') {
             if (sdplines[i].lastIndexOf('c=', 0) === 0) {
-                if (sdplines[i+1].lastIndexOf('b=AS:', 0) === 0) {
-                    var oldbw = sdplines[i+1];
-                    oldbw = oldbw.substr(oldbw.indexOf(":")+1);
+                if (sdplines[i + 1].lastIndexOf('b=AS:', 0) === 0) {
+                    var oldbw = sdplines[i + 1];
+                    oldbw = oldbw.substr(oldbw.indexOf(":") + 1);
                     if (parseInt(oldbw) < self.bandwidth_out) {
                         self.bandwidth_out = oldbw;
                     }
                     i++;
                 }
-                if (sdplines[i+1].lastIndexOf('b=TIAS:', 0) === 0) {
+                if (sdplines[i + 1].lastIndexOf('b=TIAS:', 0) === 0) {
                     i++;
                 }
                 newlines.push('b=AS:' + self.bandwidth_out);
@@ -488,14 +465,7 @@ PexRTCCall.prototype.sdpChangeBW = function(sdplines) {
                     state = 'notinvideo';
                 }
             }
-        }
 
-        if (sdplines[i].lastIndexOf('a=rtpmap:', 0) === 0 && sdplines[i].lastIndexOf('opus') > 0) {
-            var fields = sdplines[i].split(' ');
-            var pt = fields[0].substr(fields[0].indexOf(':')+1);
-            if (sdplines[i+1].lastIndexOf('a=fmtp:' + pt, 0) === 0) {
-                newlines.push(sdplines[++i] + ';stereo=0');
-            }
         }
         if (navigator.userAgent.indexOf("Chrome") != -1 && sdplines[i].lastIndexOf('a=sendonly', 0) === 0) {
             newlines.push('a=sendrecv');
@@ -506,7 +476,7 @@ PexRTCCall.prototype.sdpChangeBW = function(sdplines) {
 };
 
 
-PexRTCCall.prototype.makeCall = function (parent, call_type) {
+PexRTCCall.prototype.makeCall = function(parent, call_type) {
     var self = this;
 
     if (self.state != 'UPDATING') {
@@ -516,10 +486,10 @@ PexRTCCall.prototype.makeCall = function (parent, call_type) {
     self.bandwidth_in = self.parent.bandwidth_in;
     self.bandwidth_out = self.parent.bandwidth_out;
     if (self.parent.set_bandwidth_in < self.bandwidth_in) {
-         self.bandwidth_in = self.parent.set_bandwidth_in;
+        self.bandwidth_in = self.parent.set_bandwidth_in;
     }
     if (self.parent.set_bandwidth_out < self.bandwidth_out) {
-         self.bandwidth_out = self.parent.set_bandwidth_out;
+        self.bandwidth_out = self.parent.set_bandwidth_out;
     }
     self.presentation_in_main = self.parent.presentation_in_main;
     self.legacy_screenshare = self.parent.screenshare_api === null;
@@ -529,10 +499,8 @@ PexRTCCall.prototype.makeCall = function (parent, call_type) {
     self.edge_ver = self.parent.edge_ver;
     self.safari_ver = self.parent.safari_ver;
     self.h264_enabled = self.parent.h264_enabled;
-    self.vp9_enabled = self.parent.vp9_enabled;
     self.allow_1080p = self.parent.allow_1080p;
     self.force_hd = self.parent.force_hd;
-    self.is_electron = self.parent.is_electron
 
     if (call_type == 'presentation') {
         self.call_type = call_type;
@@ -567,37 +535,36 @@ PexRTCCall.prototype.makeCall = function (parent, call_type) {
         self.recv_video = self.parent.recv_video;
     }
 
-    if (self.is_screenshare && ((self.chrome_ver >= 34 && self.chrome_ver < 72) || self.is_electron) && !self.legacy_screenshare && !self.parent.user_presentation_stream) {
+    if (self.is_screenshare && self.chrome_ver >= 34 && self.chrome_ver < 72 && !self.legacy_screenshare && !self.parent.user_presentation_stream) {
         var pending = window.setTimeout(function() {
             /* var err = new Error('NavigatorUserMediaError');
-            https://urldefense.com/v3/__http://err.name__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilyON-h_g$  = 'EXTENSION_UNAVAILABLE';
+            err.name = 'EXTENSION_UNAVAILABLE';
             self.gumError(err); */
             self.legacy_screenshare = true;
             self.getMedia();
         }, 2000);
-        self.event_listener = function (event) {
+        self.event_listener = function(event) {
             if (event.origin != window.location.origin) {
                 return;
             }
             if (event.data.type == self.parent.screenshare_api + 'Done') {
                 self.getMedia(event.data.sourceId);
             } else if (event.data.type == self.parent.screenshare_api + 'Pending') {
-                window.clearTimeout(https://urldefense.com/v3/__http://event.data.id__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm-sAoLw$ );
+                window.clearTimeout(event.data.id);
             }
         };
         window.addEventListener('message', self.event_listener);
-        window.postMessage({ type: self.parent.screenshare_api, id: +pending}, '*');
+        window.postMessage({ type: self.parent.screenshare_api, id: +pending }, '*');
     } else {
         self.getMedia();
     }
 };
 
-PexRTCCall.prototype.sendRequest = function(request, params, cb, retries, timeout) {
+PexRTCCall.prototype.sendRequest = function(request, params, cb, retries) {
     var self = this;
 
     // Only do sync if explicitly asked
     var async = cb === false ? false : true;
-    var xhr_timeout = timeout || self.parent.xhr_timeout;
     var xhr = new XMLHttpRequest();
     var xhrUrl = "https://" + self.parent.node + "/api/client/v2/conferences/" + self.parent.conference_uri + "/participants/" + self.parent.uuid + "/" + request;
     self.parent.onLog("PexRTCCall.sendRequest", request, params, xhrUrl);
@@ -606,9 +573,6 @@ PexRTCCall.prototype.sendRequest = function(request, params, cb, retries, timeou
         delete self.outstanding_requests[request];
     }
     xhr.open("POST", xhrUrl, async);
-    if (retries === undefined) {
-        retries = 0;
-    }
     if (cb) {
         xhr.onload = function(e) {
             if (e.target.status == 502 || e.target.status == 504) {
@@ -616,29 +580,32 @@ PexRTCCall.prototype.sendRequest = function(request, params, cb, retries, timeou
                     self.parent.error = e.target.status + " " + e.target.statusText + " sending request: " + request;
                     self.onError(self.parent.trans.ERROR_CONNECTING);
                 } else {
-                    self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries, xhr_timeout); }, retries * 500);
+                    self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries); }, retries * 500);
                 }
             } else {
                 cb(e);
             }
         };
     }
+    if (retries === undefined) {
+        retries = 0;
+    }
     xhr.onerror = function() {
         if (++retries > 10 || cb === false) {
             self.parent.error = "Error sending request: " + request;
             self.onError(self.parent.trans.ERROR_CONNECTING);
         } else {
-            self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries, xhr_timeout); }, retries * 500);
+            self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries); }, retries * 500);
         }
     };
     if (async) {
-        xhr.timeout = xhr_timeout;
+        xhr.timeout = self.parent.xhr_timeout;
         xhr.ontimeout = function() {
             if (++retries > 10 || cb === false) {
                 self.parent.error = "Timeout sending request: " + request;
                 self.onError(self.parent.trans.ERROR_CONNECTING);
             } else {
-                self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries, xhr_timeout); }, retries * 500);
+                self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries); }, retries * 500);
             }
         };
     }
@@ -673,7 +640,7 @@ PexRTCCall.prototype.sendRequest = function(request, params, cb, retries, timeou
     }
 };
 
-PexRTCCall.prototype.handleError = function (err) {
+PexRTCCall.prototype.handleError = function(err) {
     var self = this;
 
     if (self.state != 'DISCONNECTING') {
@@ -695,7 +662,7 @@ PexRTCCall.prototype.handleError = function (err) {
 PexRTCCall.prototype.getMedia = function(sourceId) {
     var self = this;
 
-    if (self.is_screenshare && ((self.chrome_ver >= 34 && self.chrome_ver < 72) || self.is_electron) && !self.legacy_screenshare && !self.parent.user_presentation_stream) {
+    if (self.is_screenshare && self.chrome_ver >= 34 && self.chrome_ver < 72 && !self.legacy_screenshare && !self.parent.user_presentation_stream) {
         if (sourceId) {
             self.video_source = sourceId;
         } else {
@@ -734,27 +701,23 @@ PexRTCCall.prototype.getMedia = function(sourceId) {
                     }
                 }
             }
-            if (self.chrome_ver < 72 || self.is_electron) {
+            if (self.chrome_ver < 72) {
                 videoConstraints.maxWidth = self.parent.screenshare_width;
                 videoConstraints.maxHeight = self.parent.screenshare_height;
                 videoConstraints.maxFrameRate = self.parent.screenshare_fps.toString();
-            } else {
-                videoConstraints.width = {'max': self.parent.screenshare_width};
-                videoConstraints.height = {'max': self.parent.screenshare_height};
-                videoConstraints.frameRate = {'ideal': self.parent.screenshare_fps, 'max': self.parent.screenshare_fps};
             }
         } else if (self.firefox_ver > 43 || self.edge_ver > 10527) {
-            videoConstraints.frameRate = {'ideal': 30, 'max': 30};
+            videoConstraints.frameRate = { 'ideal': 30, 'max': 30 };
             if (self.force_hd > 0 && navigator.userAgent.indexOf('OS X') != -1) {
-                videoConstraints.width = {'min': 1280};
-                videoConstraints.height = {'min': 720};
+                videoConstraints.width = { 'min': 1280 };
+                videoConstraints.height = { 'min': 720 };
                 if (self.force_hd == 1080) {
                     videoConstraints.width.ideal = 1920;
                     videoConstraints.height.ideal = 1080;
                 }
             } else {
-                videoConstraints.width = {'ideal': 1280};
-                videoConstraints.height = {'ideal': 720};
+                videoConstraints.width = { 'ideal': 1280 };
+                videoConstraints.height = { 'ideal': 720 };
                 if (self.force_hd == 1080) {
                     videoConstraints.width.max = 1920;
                     videoConstraints.height.max = 1080;
@@ -839,10 +802,10 @@ PexRTCCall.prototype.getMedia = function(sourceId) {
 
         var constraints = { 'audio': audioConstraints };
 
-        if ((self.chrome_ver > 56 && !(self.is_screenshare && (self.chrome_ver < 72 || self.is_electron)) && !self.is_android) || self.firefox_ver > 32 || self.edge_ver > 10527 || self.safari_ver >= 11) {
-            https://urldefense.com/v3/__http://constraints.video__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikTrDIA7Q$  = videoConstraints;
+        if ((self.chrome_ver > 56 && !self.is_screenshare && !self.is_android) || self.firefox_ver > 32 || self.edge_ver > 10527 || self.safari_ver >= 11) {
+            constraints.video = videoConstraints;
         } else {
-            https://urldefense.com/v3/__http://constraints.video__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikTrDIA7Q$  = { 'mandatory' : videoConstraints, 'optional' : [] };
+            constraints.video = { 'mandatory': videoConstraints, 'optional': [] };
         }
 
         if (self.video_source && !self.is_screenshare) {
@@ -862,7 +825,7 @@ PexRTCCall.prototype.getMedia = function(sourceId) {
         }
 
         if (self.video_source === false) {
-            https://urldefense.com/v3/__http://constraints.video__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikTrDIA7Q$  = false;
+            constraints.video = false;
         }
 
         self.parent.onLog("constraints", constraints);
@@ -873,7 +836,7 @@ PexRTCCall.prototype.getMedia = function(sourceId) {
             navigator.msGetUserMedia);
 
         try {
-            if (self.call_type == 'screen' && navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia && !self.parent.is_electron) {
+            if (self.call_type == 'screen' && navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
                 navigator.mediaDevices.getDisplayMedia(constraints)
                     .then(function(stream) { self.gumSuccess(stream); })
                     .catch(function(err) { self.gumError(err); });
@@ -964,7 +927,7 @@ PexRTCCall.prototype.gumError = function(err) {
     if (self.is_screenshare) {
         self.cleanup();
         if (self.chrome_ver >= 34 && self.chrome_ver < 72) {
-            if (err && https://urldefense.com/v3/__http://err.name__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilyON-h_g$  == 'TrackStartError') {
+            if (err && err.name == 'TrackStartError') {
                 self.handleError(self.parent.trans.ERROR_CONNECTING_SCREENSHARE);
             } else {
                 self.onScreenshareMissing();
@@ -983,7 +946,7 @@ PexRTCCall.prototype.gumError = function(err) {
             self.parent.event_error(self.pc, self.parent.conference, 'getUserMedia', err);
         }
         if (err) {
-            self.parent.error = https://urldefense.com/v3/__http://err.name__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilyON-h_g$ ;
+            self.parent.error = err.name;
         }
         self.handleError(self.parent.trans.ERROR_USER_MEDIA);
     }
@@ -1006,7 +969,7 @@ PexRTCCall.prototype.connect = function() {
     if (self.firefox_ver > 52 || self.safari_ver >= 11) {
         self.pc.ontrack = function(evt) { self.pcAddStream(evt.streams); }
     } else {
-        self.pc.onaddstream = function(evt) { self.pcAddStream([https://urldefense.com/v3/__http://evt.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imCzESv-w$ ]); };
+        self.pc.onaddstream = function(evt) { self.pcAddStream([evt.stream]); };
     }
     //pc.onremovestream = this.pcRemoveStream;
     //pc.onsignalingstatechange = this.pcSignalingStateChange;
@@ -1026,7 +989,7 @@ PexRTCCall.prototype.connect = function() {
     }
 
     if (self.localStream) {
-        if (self.state == 'UPDATING' && (self.firefox_ver > 58 || self.chrome_ver > 71 || self.safari_ver >= 12.1)) {
+        if (self.state == 'UPDATING' && (self.firefox_ver > 58 || self.chrome_ver > 71 || self.safari_ver >= 11)) {
             if (self.mutedAudio) {
                 var tracks = self.localStream.getAudioTracks();
                 for (var i = 0; i < tracks.length; i++) {
@@ -1039,9 +1002,9 @@ PexRTCCall.prototype.connect = function() {
                     tracks[i].enabled = false;
                 }
             }
-            var senders = self.pc.getSenders();
-            if (self.safari_ver >= 12.1) {
-                for (var i=0; i<senders.length; i++) {
+            if (self.safari_ver >= 11) {
+                var senders = self.pc.getSenders();
+                for (var i = 0; i < senders.length; i++) {
                     if (senders[i].track && senders[i].track.kind == "audio") {
                         senders[i].replaceTrack(self.localStream.getAudioTracks()[0]);
                     } else if (senders[i].track && senders[i].track.kind == "video") {
@@ -1049,10 +1012,8 @@ PexRTCCall.prototype.connect = function() {
                     }
                 }
             } else {
-                senders[0].replaceTrack(self.localStream.getTracks()[0]);
-                if (senders.length > 1) {
-                    senders[1].replaceTrack(self.localStream.getTracks()[1]);
-                }
+                self.pc.getSenders()[0].replaceTrack(self.localStream.getTracks()[0]);
+                self.pc.getSenders()[1].replaceTrack(self.localStream.getTracks()[1]);
             }
             return self.ackReceived();
         } else if (self.pc.addStream) {
@@ -1084,19 +1045,8 @@ PexRTCCall.prototype.pcCreateOffer = function() {
     var self = this;
 
     var constraints = {};
-    if (self.safari_ver >= 11) {
-        if (self.recv_audio && self.audio_source === false) {
-            self.pc.addTransceiver('audio', {'direction': 'recvonly'});
-        } else {
-            constraints['offerToReceiveAudio'] = self.recv_audio;
-        }
-        if (self.recv_video && self.video_source === false) {
-            self.pc.addTransceiver('video', {'direction': 'recvonly'});
-        } else {
-            constraints['offerToReceiveVideo'] = self.recv_video;
-        }
-    } else if (self.chrome_ver > 49 || self.firefox_ver > 42 || self.edge_ver > 10527) {
-        constraints =  { 'offerToReceiveAudio': self.recv_audio, 'offerToReceiveVideo': self.recv_video };
+    if (self.chrome_ver > 49 || self.firefox_ver > 42 || self.edge_ver > 10527 || self.safari_ver >= 11) {
+        constraints = { 'offerToReceiveAudio': self.recv_audio, 'offerToReceiveVideo': self.recv_video };
     } else {
         constraints = { 'mandatory': { 'OfferToReceiveAudio': self.recv_audio, 'OfferToReceiveVideo': self.recv_video } };
     }
@@ -1110,48 +1060,33 @@ PexRTCCall.prototype.pcCreateOffer = function() {
                 self.parent.error = "Timed out gathering candidates";
                 self.handleError(self.parent.trans.ERROR_ICE_CANDIDATES);
             } else {
-                self.sendOffer(self.pc.localDescription);
+                self.pcOfferCreated(self.pc.localDescription);
             }
         }
     }, self.parent.ice_timeout * 1000);
 
-    if (self.state == 'ACTIVE' && self.parent.use_trickle_ice) {
-        self.state = 'CONNECTING';
-    }
-
-    if (self.safari_ver >= 12 || self.firefox_ver > 65) {
+    if (self.safari_ver >= 11 || self.firefox_ver > 65) {
         self.pc.createOffer(constraints)
-                            .then(function(sdp) { 
-                                if (self.parent.use_trickle_ice) {
-                                    self.sendOffer(sdp);
-                                } else {
-                                    self.pcOfferCreated(sdp);
-                                }
-                            }).catch(function(err) {
-                                if (self.parent.event_error) {
-                                    self.parent.event_error(self.pc, self.parent.conference, 'createOffer', err, self.pc.localDescription);
-                                }
-                                self.handleError(err);
-                            });
+            .then(function(sdp) { self.pcOfferCreated(sdp); })
+            .catch(function(err) {
+                if (self.parent.event_error) {
+                    self.parent.event_error(self.pc, self.parent.conference, 'createOffer', err, self.pc.localDescription);
+                }
+                self.handleError(err);
+            });
     } else {
-        self.pc.createOffer(function(sdp) { 
-                                if (self.parent.use_trickle_ice) {
-                                    self.sendOffer(sdp);
-                                } else {
-                                    self.pcOfferCreated(sdp);
-                                }
-                            },
-                            function(err) {
-                                if (self.parent.event_error) {
-                                    self.parent.event_error(self.pc, self.parent.conference, 'createOffer', err, self.pc.localDescription);
-                                }
-                                self.handleError(err);
-                            },
-                            constraints);
+        self.pc.createOffer(function(sdp) { self.pcOfferCreated(sdp); },
+            function(err) {
+                if (self.parent.event_error) {
+                    self.parent.event_error(self.pc, self.parent.conference, 'createOffer', err, self.pc.localDescription);
+                }
+                self.handleError(err);
+            },
+            constraints);
     }
 };
 
-PexRTCCall.prototype.pcIceCandidate = function (evt) {
+PexRTCCall.prototype.pcIceCandidate = function(evt) {
     var self = this;
 
     // Do not gather candidates again
@@ -1162,11 +1097,7 @@ PexRTCCall.prototype.pcIceCandidate = function (evt) {
     self.parent.onLog("Ice Gathering State", self.pc.iceGatheringState);
     if (evt.candidate) {
         self.parent.onLog("Gathered ICE candidate", evt.candidate.candidate);
-        if (self.parent.use_trickle_ice){
-            self.sendRequest('calls/' + self.call_uuid + '/new_candidate', { 'candidate': evt.candidate.candidate, 'mid': evt.candidate.sdpMid });
-        } else {
-            self.ice_candidates.push(evt.candidate.candidate);
-        }
+        self.ice_candidates.push(evt.candidate.candidate);
     } else if (self.pc.iceGatheringState == "complete") {
         if (self.state == 'ACTIVE') {
             self.state = 'CONNECTING';
@@ -1177,7 +1108,7 @@ PexRTCCall.prototype.pcIceCandidate = function (evt) {
                 self.handleError(self.parent.trans.ERROR_ICE_CANDIDATES);
             } else {
                 setTimeout(function() {
-                    self.sendOffer(self.pc.localDescription);
+                    self.pcOfferCreated(self.pc.localDescription);
                 }, 200);
             }
         }
@@ -1219,16 +1150,16 @@ PexRTCCall.prototype.pcAddStream = function(streams) {
     for (var i = 0; i < streams.length; i++) {
         self.parent.onLog("Stream added", streams[i].id);
         if (self.recv_audio === false && self.recv_video === false && self.localStream) {
-            https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$  = self.localStream;
+            self.stream = self.localStream;
         } else {
-            https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$  = streams[i];
+            self.stream = streams[i];
         }
         if (self.state == 'CONNECTED' || self.state == 'UPDATING') {
             if (self.parent.return_media_stream) {
-                self.onConnect(https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$ , self.call_uuid);
+                self.onConnect(self.stream, self.call_uuid);
             } else {
                 var url = window.URL || window.webkitURL || window.mozURL;
-                self.onConnect(url.createObjectURL(https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$ ), self.call_uuid);
+                self.onConnect(url.createObjectURL(self.stream), self.call_uuid);
             }
         }
         self.state = 'CONNECTED';
@@ -1238,52 +1169,44 @@ PexRTCCall.prototype.pcAddStream = function(streams) {
 PexRTCCall.prototype.pcOfferCreated = function(sdp) {
     var self = this;
 
-    self.parent.onLog("Setting local description", sdp.sdp);
-    if (self.safari_ver >= 12 || self.firefox_ver > 65) {
-        self.pc.setLocalDescription(sdp)
-                        .then(function () { self.parent.onLog("Local description active"); })
-                        .catch(function (err) {
-                            if (self.parent.event_error) {
-                                self.parent.event_error(self.pc, self.parent.conference, 'setLocalDescription', err, sdp);
-                            }
-                            self.parent.onLog("Local description failed", err);
-                        });
-    } else {
-        self.pc.setLocalDescription(sdp,
-                        function () { self.parent.onLog("Local description active"); },
-                        function (err) {
-                            if (self.parent.event_error) {
-                                self.parent.event_error(self.pc, self.parent.conference, 'setLocalDescription', err, sdp);
-                            }
-                            self.parent.onLog("Local description failed", err);
-                        }
-                    );
-    }
-};
-
-PexRTCCall.prototype.sendOffer = function(sdp) {
-    var self = this;
-
-    if (self.chrome_ver > 0 && self.chrome_ver < 72 && !self.parent.use_trickle_ice) {
-        self.pcOfferCreated(sdp);
-    }
-
-    var mutatedOffer = {'call_type' : 'WEBRTC', 'sdp' : self.mutateOffer(sdp).sdp};
-    if (self.is_screenshare) {
-        mutatedOffer.present = 'send';
-    } else if (self.call_type == 'presentation') {
-        mutatedOffer.present = 'receive';
-    } else if (self.presentation_in_main) {
-        mutatedOffer.present = 'main';
-    }
-
-    var request = self.state == 'UPDATING' ? 'calls/' + self.call_uuid + '/update' : 'calls';
-    self.sendRequest(request, mutatedOffer, function(e) {
-        if (self.parent.use_trickle_ice) {
-            self.pcOfferCreated(sdp);
+    self.parent.onLog("Created offer", sdp.sdp);
+    if (self.state == 'ACTIVE' || (self.chrome_ver > 0 && self.chrome_ver < 73)) {
+        if (self.safari_ver >= 11 || self.firefox_ver > 65) {
+            self.pc.setLocalDescription(sdp)
+                .then(function() { self.parent.onLog("Local description active"); })
+                .catch(function(err) {
+                    if (self.parent.event_error) {
+                        self.parent.event_error(self.pc, self.parent.conference, 'setLocalDescription', err, sdp);
+                    }
+                    self.parent.onLog("Local description failed", err);
+                });
+        } else {
+            self.pc.setLocalDescription(sdp,
+                function() { self.parent.onLog("Local description active"); },
+                function(err) {
+                    if (self.parent.event_error) {
+                        self.parent.event_error(self.pc, self.parent.conference, 'setLocalDescription', err, sdp);
+                    }
+                    self.parent.onLog("Local description failed", err);
+                }
+            );
         }
-        self.processAnswer(e);
-    }, 0, 60000);
+    }
+
+    if (self.state == 'CONNECTING' || self.state == 'UPDATING') {
+        var mutatedOffer = { 'call_type': 'WEBRTC', 'sdp': self.mutateOffer(sdp).sdp };
+        if (self.is_screenshare) {
+            mutatedOffer.present = 'send';
+        } else if (self.call_type == 'presentation') {
+            mutatedOffer.present = 'receive';
+        } else if (self.presentation_in_main) {
+            mutatedOffer.present = 'main';
+        }
+        var request = self.state == 'UPDATING' ? 'calls/' + self.call_uuid + '/update' : 'calls';
+        self.sendRequest(request, mutatedOffer, function(e) {
+            self.processAnswer(e);
+        });
+    }
 };
 
 PexRTCCall.prototype.remoteDescriptionActive = function() {
@@ -1299,20 +1222,15 @@ PexRTCCall.prototype.remoteDescriptionActive = function() {
 PexRTCCall.prototype.ackReceived = function() {
     var self = this;
 
-    if (self.firefox_ver > 43 && self.is_screenshare && !https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$ ) {
-        // Firefox does not add a stream/track for outbound screensharing so https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$  is not populated
-        if (self.parent.return_media_stream) {
-            self.onConnect(self.localStream, self.call_uuid);
-        } else {
-            var url = window.URL || window.webkitURL || window.mozURL;
-            self.onConnect(url.createObjectURL(self.localStream), self.call_uuid);
-        }
+    if (self.firefox_ver > 43 && self.is_screenshare && !self.stream) {
+        // Firefox does not add a stream/track for outbound screensharing
+        self.onConnect(null, self.call_uuid);
     } else if (self.state == 'CONNECTED' || self.state == 'UPDATING') {
         if (self.parent.return_media_stream) {
-            self.onConnect(https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$ , self.call_uuid);
+            self.onConnect(self.stream, self.call_uuid);
         } else {
             var url = window.URL || window.webkitURL || window.mozURL;
-            self.onConnect(url.createObjectURL(https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$ ), self.call_uuid);
+            self.onConnect(url.createObjectURL(self.stream), self.call_uuid);
         }
     }
     self.state = 'CONNECTED';
@@ -1348,31 +1266,31 @@ PexRTCCall.prototype.processAnswer = function(e) {
         var sdp = lines.join('\r\n');
         self.parent.onLog("Mutated answer", sdp);
 
-        if (self.safari_ver >= 12 || self.firefox_ver > 65) {
-            self.pc.setRemoteDescription(new SessionDescription({ 'type' : 'answer', 'sdp' : sdp }))
-                            .then(function () { self.remoteDescriptionActive(); })
-                            .catch(function (err) {
-                                if (self.parent.event_error) {
-                                    self.parent.event_error(self.pc, self.parent.conference, 'setRemoteDescription', err, sdp);
-                                }
-                                self.parent.onLog("Remote description failed", err);
-                                self.handleError(err.message);
-                            });
+        if (self.safari_ver >= 11 || self.firefox_ver > 65) {
+            self.pc.setRemoteDescription(new SessionDescription({ 'type': 'answer', 'sdp': sdp }))
+                .then(function() { self.remoteDescriptionActive(); })
+                .catch(function(err) {
+                    if (self.parent.event_error) {
+                        self.parent.event_error(self.pc, self.parent.conference, 'setRemoteDescription', err, sdp);
+                    }
+                    self.parent.onLog("Remote description failed", err);
+                    self.handleError(err.message);
+                });
         } else {
-            self.pc.setRemoteDescription(new SessionDescription({ 'type' : 'answer', 'sdp' : sdp }),
-                            function () {
-                                          if (self.edge_ver > 10527 && self.edge_ver <= 14393) {
-                                              self.sdpIceCandidates(lines);
-                                          }
-                                          self.remoteDescriptionActive();
-                                        },
-                            function (err) {
-                                if (self.parent.event_error) {
-                                    self.parent.event_error(self.pc, self.parent.conference, 'setRemoteDescription', err, sdp);
-                                }
-                                self.parent.onLog("Remote description failed", err);
-                                self.handleError(err.message);
-                            });
+            self.pc.setRemoteDescription(new SessionDescription({ 'type': 'answer', 'sdp': sdp }),
+                function() {
+                    if (self.edge_ver > 10527 && self.edge_ver <= 14393) {
+                        self.sdpIceCandidates(lines);
+                    }
+                    self.remoteDescriptionActive();
+                },
+                function(err) {
+                    if (self.parent.event_error) {
+                        self.parent.event_error(self.pc, self.parent.conference, 'setRemoteDescription', err, sdp);
+                    }
+                    self.parent.onLog("Remote description failed", err);
+                    self.handleError(err.message);
+                });
         }
     }
 };
@@ -1384,11 +1302,11 @@ PexRTCCall.prototype.sdpIceCandidates = function(sdplines) {
 
     for (var i = 0; i < sdplines.length; i++) {
         if (sdplines[i].lastIndexOf('a=candidate', 0) === 0) {
-            candidate = {'sdpMLineIndex' : mLine, 'candidate' : sdplines[i].substr(2)};
+            candidate = { 'sdpMLineIndex': mLine, 'candidate': sdplines[i].substr(2) };
             self.pc.addIceCandidate(candidate);
         } else if (sdplines[i].lastIndexOf('m=', 0) === 0 || sdplines[i] === '') {
             if (mLine > -1) {
-                candidate = {'sdpMLineIndex' : mLine, 'candidate' : 'candidate:1 1 udp 1 https://urldefense.com/v3/__http://0.0.0.0__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilPmyfXpw$  9 typ endOfCandidates'};
+                candidate = { 'sdpMLineIndex': mLine, 'candidate': 'candidate:1 1 udp 1 0.0.0.0 9 typ endOfCandidates' };
                 self.pc.addIceCandidate(candidate);
             }
             mLine++;
@@ -1432,22 +1350,7 @@ PexRTCCall.prototype.muteAudio = function(setting) {
         return self.mutedAudio;
     }
 
-    if (self.pc && self.safari_ver >= 13) {
-        if (!self.audioSender) {
-            var senders = self.pc.getSenders();
-            for (var i=0; i<senders.length; i++) {
-                if (senders[i].track && senders[i].track.kind == 'audio') {
-                    self.audioSender = senders[i];
-                }
-            }
-        }
-
-        if (self.mutedAudio) { // Old setting = actually enable
-            self.audioSender.replaceTrack(self.localStream.getAudioTracks()[0]);
-        } else {
-            self.audioSender.replaceTrack(null);
-        }
-    } else if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 12 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
+    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 11 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
         var senders = self.pc.getSenders();
         for (var i = 0; i < senders.length; i++) {
             if (senders[i].track && senders[i].track.kind == 'audio') {
@@ -1484,7 +1387,7 @@ PexRTCCall.prototype.update = function(call_type) {
     if (self.state == 'CONNECTED') {
         self.state = 'UPDATING';
         self.cleanupAudioContext();
-        if (self.safari_ver >= 11 && self.safari_ver < 12.1 && https://urldefense.com/v3/__http://self.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikWkOKQ3Q$ ) {
+        if (self.safari_ver >= 11 && self.safari_ver < 12.1 && self.stream) {
             var tracks = self.stream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
                 tracks[i].stop();
@@ -1523,7 +1426,7 @@ PexRTCCall.prototype.muteVideo = function(setting) {
         return self.mutedVideo;
     }
 
-    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 12 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
+    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 11 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
         var senders = self.pc.getSenders();
         for (var i = 0; i < senders.length; i++) {
             if (senders[i].track && senders[i].track.kind == 'video') {
@@ -1586,8 +1489,6 @@ PexRTCCall.prototype.disconnect = function(cb, save_call) {
 
     if (!save_call) {
         self.cleanup();
-    } else if (self.pc && self.pc.signalingState != 'closed') {
-        self.pc.close();
     }
     if (self.state != 'DISCONNECTING') {
         self.state = 'DISCONNECTING';
@@ -1873,7 +1774,7 @@ PexRTMP.prototype.makeCall = function(parent, call_type) {
     self.bandwidth_out = self.parent.bandwidth_out;
     self.presentation_in_main = self.parent.presentation_in_main;
     if (self.flash) {
-        self.flash = swfobject.getObjectById(https://urldefense.com/v3/__http://self.flash.id__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ikGcnspAQ$ );
+        self.flash = swfobject.getObjectById(self.flash.id);
     }
 
     if (call_type == 'presentation') {
@@ -1928,7 +1829,7 @@ PexRTMP.prototype.connect = function() {
     }
     self.sendRequest('calls', callRequest, function(e) {
         self.processAnswer(e);
-    }, 0, 60000);
+    });
 };
 
 PexRTMP.prototype.processAnswer = function(e) {
@@ -1973,12 +1874,11 @@ PexRTMP.prototype.processAnswer = function(e) {
     //self.onConnect(remoteServiceUri);
 };
 
-PexRTMP.prototype.sendRequest = function(request, params, cb, retries, timeout) {
+PexRTMP.prototype.sendRequest = function(request, params, cb, retries) {
     var self = this;
 
     // Only do sync if explicitly asked
     var async = cb === false ? false : true;
-    var xhr_timeout = timeout || self.parent.xhr_timeout;
     var xhr = new XMLHttpRequest();
     var xhrUrl = "https://" + self.parent.node + "/api/client/v2/conferences/" + self.parent.conference_uri + "/participants/" + self.parent.uuid + "/" + request;
     self.parent.onLog("PexRTMP.sendRequest", request, params, xhrUrl);
@@ -1987,9 +1887,6 @@ PexRTMP.prototype.sendRequest = function(request, params, cb, retries, timeout) 
         delete self.outstanding_requests[request];
     }
     xhr.open("POST", xhrUrl, async);
-    if (retries === undefined) {
-        retries = 0;
-    }
     if (cb) {
         xhr.onload = function(e) {
             if (e.target.status == 502 || e.target.status == 504) {
@@ -1997,29 +1894,32 @@ PexRTMP.prototype.sendRequest = function(request, params, cb, retries, timeout) 
                     self.parent.error = e.target.status + " " + e.target.statusText + " sending request: " + request;
                     self.onError(self.parent.trans.ERROR_CONNECTING);
                 } else {
-                    self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries, xhr_timeout); }, retries * 500);
+                    self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries); }, retries * 500);
                 }
             } else {
                 cb(e);
             }
         };
     }
+    if (retries === undefined) {
+        retries = 0;
+    }
     xhr.onerror = function() {
         if (++retries > 10 || cb === false) {
             self.parent.error = "Error sending request: " + request;
             self.onError(self.parent.trans.ERROR_CONNECTING);
         } else {
-            self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries, xhr_timeout); }, retries * 500);
+            self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries); }, retries * 500);
         }
     };
     if (async) {
-        xhr.timeout = xhr_timeout;
+        xhr.timeout = self.parent.xhr_timeout;
         xhr.ontimeout = function() {
             if (++retries > 10 || cb === false) {
                 self.parent.error = "Timeout sending request: " + request;
                 self.onError(self.parent.trans.ERROR_CONNECTING);
             } else {
-                self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries, xhr_timeout); }, retries * 500);
+                self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries); }, retries * 500);
             }
         };
     }
@@ -2155,7 +2055,7 @@ export function PexRTC() {
     self.pcConfig = {};
     self.default_stun = null;
     self.turn_server = null;
-    https://urldefense.com/v3/__http://self.pin__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilcy7bOXA$  = null;
+    self.pin = null;
     self.pin_status = 'none';
     self.call_type = '';
     self.mutedAudio = false;
@@ -2195,7 +2095,6 @@ export function PexRTC() {
     self.dtmf_queue = {};
     self.fecc_queue = {};
     self.h264_enabled = true;
-    self.vp9_enabled = true;
     self.png_presentation = false;
     self.basic_username = null;
     self.basic_password = null;
@@ -2203,11 +2102,10 @@ export function PexRTC() {
     self.user_presentation_stream = null;
     self.return_media_stream = false;
     self.ice_timeout = 10;
-    self.use_trickle_ice = true;
 
     self.screenshare = null;
     self.presentation = null;
-    https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  = null;
+    self.call = null;
     self.flash = undefined;
     self.error = null;
 
@@ -2241,7 +2139,6 @@ export function PexRTC() {
     self.outstanding_requests = {};
 
     self.is_android = navigator.userAgent.indexOf('Android') != -1;
-    self.is_electron = navigator.userAgent.indexOf("Electron") != -1;
 
     if (navigator.userAgent.indexOf("Chrome") != -1) {
         self.chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
@@ -2298,7 +2195,7 @@ export function PexRTC() {
         ERROR_SCREENSHARE_CANCELLED: "Screenshare cancelled",
         ERROR_CALL_FAILED: "Call Failed: ",
         ERROR_WEBRTC_SUPPORT: "Error: WebRTC not supported by this browser",
-        ERROR_SCREENSHARE_EXTENSION: "Error: Screenshare extension not found.\n\nHave you installed it from https://urldefense.com/v3/__http://www.pexip.com/extension/?__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97iltcYiK7g$ ",
+        ERROR_SCREENSHARE_EXTENSION: "Error: Screenshare extension not found.\n\nHave you installed it from http://www.pexip.com/extension/?",
         ERROR_USER_MEDIA: "Error: Could not get access to camera/microphone.\n\nHave you allowed access? Has any other application locked the camera?",
         ERROR_ICE_CANDIDATES: "Failed to gather IP addresses",
         ERROR_ICE_FAILED: "Failed to establish media to server.\n\nEnsure required firewall ports are permitted.",
@@ -2342,13 +2239,12 @@ PexRTC.prototype.makeCall = function(node, conf, name, bw, call_type, flash) {
     });
 };
 
-PexRTC.prototype.sendRequest = function(request, params, cb, req_method, retries, timeout) {
+PexRTC.prototype.sendRequest = function(request, params, cb, req_method, retries) {
     var self = this;
 
     // Only do sync if explicitly asked
     var async = cb === false ? false : true;
     var method = req_method || "POST";
-    var xhr_timeout = timeout || self.xhr_timeout;
     var xhr = new XMLHttpRequest();
     var xhrUrl = "https://" + self.node + "/api/client/v2/conferences/" + self.conference_uri + "/" + request;
     self.onLog("PexRTC.sendRequest", request, params, method, xhrUrl);
@@ -2357,9 +2253,6 @@ PexRTC.prototype.sendRequest = function(request, params, cb, req_method, retries
         delete self.outstanding_requests[request];
     }
     xhr.open(method, xhrUrl, async);
-    if (retries === undefined) {
-        retries = 0;
-    }
     if (cb) {
         xhr.onload = function(e) {
             if (e.target.status == 502 || e.target.status == 504) {
@@ -2367,36 +2260,39 @@ PexRTC.prototype.sendRequest = function(request, params, cb, req_method, retries
                     self.error = e.target.status + " " + e.target.statusText + " sending request: " + request;
                     self.onError(self.trans.ERROR_CONNECTING);
                 } else {
-                    self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, method, retries, xhr_timeout); }, retries * 500);
+                    self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, retries); }, retries * 500);
                 }
             } else {
                 cb(e);
             }
         };
     }
+    if (retries === undefined) {
+        retries = 0;
+    }
     xhr.onerror = function() {
         if (++retries > 10 || cb === false) {
             self.error = "Error sending request: " + request;
             self.onError(self.trans.ERROR_CONNECTING);
         } else {
-            self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, method, retries, xhr_timeout); }, retries * 500);
+            self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, method, retries); }, retries * 500);
         }
     };
     if (async) {
-        xhr.timeout = xhr_timeout;
+        xhr.timeout = self.xhr_timeout;
         xhr.ontimeout = function() {
             if (++retries > 10 || cb === false) {
                 self.error = "Timeout sending request: " + request;
                 self.onError(self.trans.ERROR_CONNECTING);
             } else {
-                self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, method, retries, xhr_timeout); }, retries * 500);
+                self.outstanding_requests[request] = setTimeout(function() { self.sendRequest(request, params, cb, method, retries); }, retries * 500);
             }
         };
     }
     if (self.token) {
         xhr.setRequestHeader('token', self.token);
-    } else if (https://urldefense.com/v3/__http://self.pin__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilcy7bOXA$  !== null) {
-        xhr.setRequestHeader('pin', https://urldefense.com/v3/__http://self.pin__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilcy7bOXA$ );
+    } else if (self.pin !== null) {
+        xhr.setRequestHeader('pin', self.pin);
     }
     if (self.basic_username && self.basic_password) {
         xhr.setRequestHeader('Authorization', 'Basic ' + Base64.encode(self.basic_username + ':' + self.basic_password));
@@ -2422,6 +2318,7 @@ PexRTC.prototype.sendRequest = function(request, params, cb, req_method, retries
 
 PexRTC.prototype.requestToken = function(cb) {
     var self = this;
+    var msg;
 
     if (!self.token) {
         var params = { 'display_name': self.display_name };
@@ -2436,7 +2333,7 @@ PexRTC.prototype.requestToken = function(cb) {
             params.conference_extension = self.conference_extension;
         }
 
-        self.sendRequest("request_token", params, function(evt) { self.tokenRequested(evt, cb); }, "POST", 10, 60000);
+        msg = self.sendRequest("request_token", params, function(evt) { self.tokenRequested(evt, cb); });
     } else if (cb) {
         cb();
     }
@@ -2456,7 +2353,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
     self.onLog("PexRTC.tokenRequested response", e.target.responseText);
 
     if (msg.http_status == 200) {
-        self.vp9_enabled = self.vp9_enabled && msg.result.vp9_enabled && (self.chrome_ver > 29 || self.firefox_ver > 28);
+        var vp9_enabled = msg.result.vp9_enabled && (self.chrome_ver > 29 || self.firefox_ver > 28);
         self.token = msg.result.token;
         self.uuid = msg.result.participant_uuid;
         self.role = msg.result.role;
@@ -2472,7 +2369,6 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
         self.remote_call_type = msg.result.call_type;
         self.guests_can_present = msg.result.guests_can_present;
         self.conference_name = msg.result.conference_name;
-        self.use_trickle_ice = self.use_trickle_ice && msg.result.trickle_ice_enabled;
 
         if (self.allow_1080p) {
             self.force_hd = 1080;
@@ -2529,11 +2425,6 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
                 }
             }
         }
-        if ('turn' in msg.result && self.edge_ver == 0 && self.safari_ver == 0) {
-            for (var i = 0; i < msg.result.turn.length; i++) {
-                self.pcConfig.iceServers.push(msg.result.turn[i]);
-            }
-        }
         self.onLog("ICE Servers:", self.pcConfig);
 
         if ('bandwidth_in' in msg.result) {
@@ -2548,7 +2439,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
                 self.bandwidth_out = self.set_bandwidth_out;
             }
         }
-        if (self.vp9_enabled) {
+        if (vp9_enabled) {
             if (self.bandwidth_in < 960) {
                 self.bandwidth_in = Math.round(self.bandwidth_in * 0.75);
             } else if (self.bandwidth_in < 1800 || !self.allow_1080p) {
@@ -2629,7 +2520,7 @@ PexRTC.prototype.createEventSource = function() {
     if (!self.event_source && self.token) {
         self.event_source = new EventSource("https://" + self.node + "/api/client/v2/conferences/" + self.conference_uri + "/events?token=" + self.token);
         self.event_source.addEventListener("presentation_start", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("presentation_start", msg);
             msg.status = "start";
             if (self.presentation_msg.status != 'start' ||
@@ -2653,7 +2544,7 @@ PexRTC.prototype.createEventSource = function() {
             }
         }, false);
         self.event_source.addEventListener("participant_create", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("participant_create", msg);
             self.rosterList[msg.uuid] = msg;
             if (msg.uuid == self.uuid && self.current_service_type && msg.service_type) {
@@ -2669,7 +2560,7 @@ PexRTC.prototype.createEventSource = function() {
             }
         }, false);
         self.event_source.addEventListener("participant_update", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("participant_update", msg);
             self.rosterList[msg.uuid] = msg;
             if (msg.uuid == self.uuid && self.current_service_type && msg.service_type) {
@@ -2685,7 +2576,7 @@ PexRTC.prototype.createEventSource = function() {
             }
         }, false);
         self.event_source.addEventListener("participant_delete", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("participant_delete", msg);
             delete self.rosterList[msg.uuid];
             if (!self.oldRosterList) {
@@ -2698,7 +2589,7 @@ PexRTC.prototype.createEventSource = function() {
             }
         }, false);
         self.event_source.addEventListener("message_received", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("message_received", msg);
             if (self.onChatMessage) {
                 self.onChatMessage(msg);
@@ -2742,9 +2633,9 @@ PexRTC.prototype.createEventSource = function() {
 
         }, false);
         self.event_source.addEventListener("call_disconnected", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("call_disconnected", msg);
-            if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  && self.call.call_uuid == msg.call_uuid) {
+            if (self.call && self.call.call_uuid == msg.call_uuid) {
                 self.call.remoteDisconnect(msg);
             } else if (self.presentation && self.presentation.call_uuid == msg.call_uuid) {
                 self.presentation.remoteDisconnect(msg);
@@ -2753,7 +2644,7 @@ PexRTC.prototype.createEventSource = function() {
             }
         }, false);
         self.event_source.addEventListener("disconnect", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("disconnect", msg);
             var reason = self.trans.ERROR_DISCONNECTED;
             if ('reason' in msg) {
@@ -2767,31 +2658,31 @@ PexRTC.prototype.createEventSource = function() {
             }
         }, false);
         self.event_source.addEventListener("conference_update", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("conference_update", msg);
             if (self.onConferenceUpdate) {
                 self.onConferenceUpdate(msg);
             }
         }, false);
         self.event_source.addEventListener("refer", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("refer", msg);
             self.processRefer(msg);
         }, false);
         self.event_source.addEventListener("on_hold", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("call_hold", msg);
             self.holdresume(msg.setting);
         }, false);
         self.event_source.addEventListener("stage", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("stage", msg);
             if (self.onStageUpdate) {
                 self.onStageUpdate(msg);
             }
         }, false);
         self.event_source.addEventListener("layout", function(e) {
-            var msg = JSON.parse(https://urldefense.com/v3/__http://e.data__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97imm4g4VDQ$ );
+            var msg = JSON.parse(e.data);
             self.onLog("layout", msg);
             if (self.onLayoutUpdate) {
                 self.onLayoutUpdate(msg);
@@ -2862,8 +2753,10 @@ PexRTC.prototype.dialOut = function(destination, protocol, role, cb, user_params
     }
 
     var command = "dial";
-    var params = {'destination': destination,
-                  'protocol': (protocol ? protocol : "sip")};
+    var params = {
+        'destination': destination,
+        'protocol': (protocol ? protocol : "sip")
+    };
     var streaming = false;
 
     if (typeof user_params == "string") {
@@ -3004,7 +2897,7 @@ PexRTC.prototype.transferParticipant = function(uuid, destination, role, pin, cb
     if (role) {
         params.role = role;
         if (pin) {
-            https://urldefense.com/v3/__http://params.pin__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ik7bU0vjQ$  = pin;
+            params.pin = pin;
         }
     }
 
@@ -3064,42 +2957,7 @@ PexRTC.prototype.setRole = function(uuid, role) {
     self.sendRequest(command, params, function() {});
 };
 
-PexRTC.prototype.setBuzz = function() {
-    var self = this;
-
-    var command = "participants/" + self.uuid + "/buzz";
-    self.sendRequest(command);
-};
-
-PexRTC.prototype.clearBuzz = function(uuid) {
-    var self = this;
-
-    var command = "participants/" + (uuid ? uuid : self.uuid) + "/clearbuzz";
-    self.sendRequest(command);
-};
-
-PexRTC.prototype.clearAllBuzz = function() {
-    var self = this;
-
-    var command = "clearallbuzz";
-    self.sendRequest(command);
-};
-
-PexRTC.prototype.videoMuted = function () {
-    var self = this;
-
-    var command = "participants/" + self.uuid + "/video_muted";
-    self.sendRequest(command);  
-};
-
-PexRTC.prototype.videoUnmuted = function () {
-    var self = this;
-
-    var command = "participants/" + self.uuid + "/video_unmuted";
-    self.sendRequest(command);  
-};
-
-PexRTC.prototype.handleError = function (err) {
+PexRTC.prototype.handleError = function(err) {
     var self = this;
 
     if (self.state != 'DISCONNECTING') {
@@ -3127,7 +2985,7 @@ PexRTC.prototype.connect = function(pin, extension) {
 
     var doConnect = function() {
         if (self.state != 'DISCONNECTING') {
-            if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
+            if (self.call) {
                 self.call.connect();
             } else {
                 self.onConnect();
@@ -3137,8 +2995,8 @@ PexRTC.prototype.connect = function(pin, extension) {
 
     if (self.pin_status != 'none') {
         self.pin_status = 'none';
-        https://urldefense.com/v3/__http://self.pin__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilcy7bOXA$  = pin || 'none';
-        self.requestToken(function () {
+        self.pin = pin || 'none';
+        self.requestToken(function() {
             self.createEventSource();
             doConnect();
         });
@@ -3156,17 +3014,13 @@ PexRTC.prototype.connect = function(pin, extension) {
 PexRTC.prototype.addCall = function(call_type, flash) {
     var self = this;
 
-    if (self.call_type == 'none' && !(call_type == 'screen' || call_type == 'window' || call_type == 'application' || call_type == 'screen_http' || call_type == 'presentation')) {
-        self.call_type = '';
-    }
-
     var obj;
     if (call_type == 'screen_http') {
         obj = new PexJPEGPresentation();
     } else if (flash || self.call_type == 'rtmp' || self.call_type == 'stream') {
         obj = new PexRTMP(flash);
-    } else if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  && !call_type) {
-        obj = https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ;
+    } else if (self.call && !call_type) {
+        obj = self.call;
     } else {
         obj = new PexRTCCall();
     }
@@ -3226,8 +3080,8 @@ PexRTC.prototype.addCall = function(call_type, flash) {
             }
         };
         self.presentation.makeCall(self, call_type);
-    } else if (!https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
-        https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  = obj;
+    } else if (!self.call) {
+        self.call = obj;
         self.call.onSetup = function(stream) {
             self.onSetup(stream, self.pin_status, self.conference_extension);
         };
@@ -3241,12 +3095,12 @@ PexRTC.prototype.addCall = function(call_type, flash) {
             self.onConnect(stream);
         };
         self.call.onDisconnect = function(reason) {
-            if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
+            if (self.call) {
                 if (self.stats_interval) {
                     clearInterval(self.stats_interval);
                     self.stats_interval = null;
                 }
-                https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  = null;
+                self.call = null;
                 if (self.onCallDisconnect) {
                     self.onCallDisconnect(reason);
                 } else {
@@ -3256,12 +3110,12 @@ PexRTC.prototype.addCall = function(call_type, flash) {
             }
         };
         self.call.onError = function(reason) {
-            if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  && self.state != 'DISCONNECTING') {
+            if (self.call && self.state != 'DISCONNECTING') {
                 if (self.stats_interval) {
                     clearInterval(self.stats_interval);
                     self.stats_interval = null;
                 }
-                https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  = null;
+                self.call = null;
                 self.onError(reason);
             }
         };
@@ -3276,7 +3130,7 @@ PexRTC.prototype.addCall = function(call_type, flash) {
                     clearInterval(self.stats_interval);
                     self.stats_interval = null;
                 }
-                https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  = null;
+                self.call = null;
                 if (self.onScreenshareMissing) {
                     self.onScreenshareMissing();
                 } else {
@@ -3309,7 +3163,7 @@ PexRTC.prototype.addCall = function(call_type, flash) {
             }
         };
         self.stats_interval = setInterval(pollMediaStatistics, 1000);
-    } else if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
+    } else if (self.call) {
         self.call.makeCall(self, self.call_type);
     }
     return obj;
@@ -3318,14 +3172,14 @@ PexRTC.prototype.addCall = function(call_type, flash) {
 PexRTC.prototype.disconnectCall = function(referral) {
     var self = this;
 
-    if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
+    if (self.call) {
         self.call.disconnect(false, referral);
         if (!referral) {
             if (self.stats_interval) {
                 clearInterval(self.stats_interval);
                 self.stats_interval = null;
             }
-            https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  = null;
+            self.call = null;
             self.flash = undefined;
         }
     }
@@ -3334,7 +3188,7 @@ PexRTC.prototype.disconnectCall = function(referral) {
 PexRTC.prototype.renegotiate = function(call_type) {
     var self = this;
 
-    if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  && self.call.update) {
+    if (self.call && self.call.update) {
         self.call.update(call_type === undefined ? self.call_type : call_type);
     }
 };
@@ -3342,7 +3196,7 @@ PexRTC.prototype.renegotiate = function(call_type) {
 PexRTC.prototype.clearLocalStream = function() {
     var self = this;
 
-    if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  && self.call.pc) {
+    if (self.call && self.call.pc) {
         var streams = self.call.pc.getLocalStreams();
         for (var i = 0; i < streams.length; i++) {
             self.call.pc.removeStream(streams[i]);
@@ -3366,7 +3220,7 @@ PexRTC.prototype.present = function(call_type) {
 PexRTC.prototype.muteAudio = function(setting) {
     var self = this;
 
-    if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  && self.call.state == 'CONNECTED') {
+    if (self.call) {
         self.mutedAudio = self.call.muteAudio(setting);
     } else if (setting !== undefined) {
         self.mutedAudio = setting;
@@ -3380,14 +3234,8 @@ PexRTC.prototype.muteAudio = function(setting) {
 PexRTC.prototype.muteVideo = function(setting) {
     var self = this;
 
-    if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
+    if (self.call) {
         self.mutedVideo = self.call.muteVideo(setting);
-
-        if (self.mutedVideo) {
-            self.videoMuted();
-        } else {
-            self.videoUnmuted();
-        }
     } else if (setting !== undefined) {
         self.mutedVideo = setting;
     } else {
@@ -3411,7 +3259,7 @@ PexRTC.prototype.sendDTMF = function(digits, target) {
     var self = this;
 
     target = target || "call";
-    if (target == "call" && !https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
+    if (target == "call" && !self.call) {
         return false;
     }
 
@@ -3447,7 +3295,7 @@ PexRTC.prototype.sendFECC = function(action, axis, direction, target, timeout) {
     var self = this;
 
     target = target || "call";
-    if (target == "call" && !https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
+    if (target == "call" && !self.call) {
         return false;
     }
 
@@ -3473,7 +3321,7 @@ PexRTC.prototype.feccSent = function(target) {
 PexRTC.prototype.holdresume = function(setting) {
     var self = this;
 
-    if (https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$ ) {
+    if (self.call) {
         self.call.holdresume(setting);
     }
     if (self.presentation) {
@@ -3531,10 +3379,10 @@ PexRTC.prototype.getPresentation = function() {
         self.addCall("presentation");
     } else if (self.onPresentationConnected) {
         if (self.return_media_stream) {
-            self.onPresentationConnected(https://urldefense.com/v3/__http://self.presentation.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97inarFor1g$ );
+            self.onPresentationConnected(self.presentation.stream);
         } else {
             var url = window.URL || window.webkitURL || window.mozURL;
-            self.onPresentationConnected(url.createObjectURL(https://urldefense.com/v3/__http://self.presentation.stream__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97inarFor1g$ ));
+            self.onPresentationConnected(url.createObjectURL(self.presentation.stream));
         }
     }
 };
@@ -3660,7 +3508,7 @@ PexRTC.prototype.getVersion = function() {
 export function PexFlashEventsClass(call) {
     var self = this;
 
-    https://urldefense.com/v3/__http://self.call__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97ilJ6DuEHw$  = call;
+    self.call = call;
 }
 
 PexFlashEventsClass.prototype.onError = function() {
@@ -3699,12 +3547,12 @@ export function PexRTCStreamStatistics() {
     self.recentTotal = 0;
     self.recentLost = 0;
     self.samples = [];
-    https://urldefense.com/v3/__http://self.info__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97inNLRQC0w$  = {};
+    self.info = {};
 }
 
 PexRTCStreamStatistics.prototype.getStats = function() {
     var self = this;
-    return https://urldefense.com/v3/__http://self.info__;!!BZ50a36bapWJ!-kSNlHeO5CbH2m1RuEPxSyUZ4yDg8K5jUPe7BiJz1yE8uKz5CKjr_1M97inNLRQC0w$ ;
+    return self.info;
 };
 
 PexRTCStreamStatistics.prototype.updateBWEStats = function(result) {
@@ -3891,8 +3739,10 @@ PexRTCStatistics.prototype.updateStats = function(results) {
     for (var i = 0; i < results.length; ++i) {
         if (self.statIsOfType(results[i], 'audio', 'send')) audio_send = results[i];
         else if (self.statIsOfType(results[i], 'audio', 'recv')) audio_recv = results[i];
-        else if (self.statIsOfType(results[i], 'video', 'send')) { video_send = results[i]; self.updateGoogCpuLimitedResolution(results[i]); }
-        else if (self.statIsOfType(results[i], 'video', 'recv')) video_recv = results[i];
+        else if (self.statIsOfType(results[i], 'video', 'send')) {
+            video_send = results[i];
+            self.updateGoogCpuLimitedResolution(results[i]);
+        } else if (self.statIsOfType(results[i], 'video', 'recv')) video_recv = results[i];
         else if (self.statIsBandwidthEstimation(results[i])) self.video_out.updateBWEStats(results[i]);
     }
 
@@ -3959,10 +3809,16 @@ PexRTCStatistics.prototype.getStats = function() {
     if (self.audio_in.lastTimestamp === null) {
         return {};
     }
-    return {'outgoing': {'audio': self.audio_out.getStats(),
-                         'video': self.video_out.getStats()},
-            'incoming': {'audio': self.audio_in.getStats(),
-                         'video': self.video_in.getStats()}};
+    return {
+        'outgoing': {
+            'audio': self.audio_out.getStats(),
+            'video': self.video_out.getStats()
+        },
+        'incoming': {
+            'audio': self.audio_in.getStats(),
+            'video': self.video_in.getStats()
+        }
+    };
 };
 
 export default PexRTC;
