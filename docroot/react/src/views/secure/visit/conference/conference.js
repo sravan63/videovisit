@@ -484,8 +484,7 @@ class Conference extends React.Component {
                                 <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                                 {!this.state.isbrowsercheck && !this.state.isMobile ? (
                                 <li><span className="white-circle"><span id="settings" className="icon-holder settings-btn" onClick={this.toggleSettings.bind(this)}></span></span></li>):('')}
-                                {this.state.isMobile && !this.state.isIOS ? (
-                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder" onClick={()=>this.toggleCamera()}></span></span></li>):('')}
+                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder" onClick={()=>this.toggleCamera()}></span></span></li>
                                 <li><span className="red-circle"><span id="endCall" className="icon-holder" onClick={()=>this.leaveMeeting('mobile')} ></span></span></li>
                                 <li style={{display: this.state.showaudioIcon ? 'block' : 'none'}}><span className="white-circle"><span id="speaker" className="icon-holder unmutedspeaker" onClick={()=>this.toggleControls('audio')} ></span></span></li>
                                 <li style={{display: this.state.showaudioIcon ? 'none' : 'block'}}><span className="white-circle"><span id="speaker" className="icon-holder mutedspeaker" onClick={()=>this.toggleControls('audio')}></span></span></li>
@@ -502,8 +501,7 @@ class Conference extends React.Component {
                                 <li><span className="red-circle"><span id="endCall" className="icon-holder" onClick={()=>this.leaveMeeting('mobile')} ></span></span></li>
                                 {!this.state.isbrowsercheck && !this.state.isMobile ? (
                                 <li><span className="white-circle"><span id="settings" className="icon-holder settings-btn" onClick={this.toggleSettings.bind(this)}></span></span></li>):('')}
-                                {this.state.isMobile && !this.state.isIOS ? (
-                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder" onClick={()=>this.toggleCamera()}></span></span></li> ):('')}
+                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder" onClick={()=>this.toggleCamera()}></span></span></li>
                                 <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                                 <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                               </ul>
