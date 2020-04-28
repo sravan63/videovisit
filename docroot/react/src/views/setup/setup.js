@@ -27,7 +27,7 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {}, media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:''};
+        this.state = { data: {}, media: {}, constrains: {}, startTest: false, userLoggedIn: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:''};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
     }
@@ -58,6 +58,9 @@ class Setup extends React.Component {
                     break;
             }
         });
+        if (localStorage.getItem('signedIn')) {
+          this.setState({ userLoggedIn: true });
+        }
         this.getBrowserBlockInfo();
     }
 
@@ -167,9 +170,10 @@ class Setup extends React.Component {
             <div id='container' className="setup-page">
                  <Header helpUrl = {this.state.mdoHelpUrl}/>
                  <div className="row mobile-help-link">
+                 {!this.state.userLoggedIn ? (
                     <div className="col-12 text-right help-icon p-0">
                         <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
-                    </div>
+                    </div>):('')}
                 </div>
                 <div className="row mobile-logo-container">
                  <div className="title">
