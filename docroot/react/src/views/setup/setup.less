@@ -1,14 +1,13 @@
 .setup-page {
     .mobile-help-link {
-        display: none;
         margin: 0 1rem;
     }
     .mobile-logo-container {
         display: none;
         margin-bottom: 0.5rem;
         .title{
-            width: fit-content;
-            margin: 0 2.812rem;
+            width: 75%;
+            margin: 0 auto;
             .header {
                 font-size: 1.187rem;
                 color: #333333;
@@ -33,7 +32,7 @@
             min-height: 1rem;
             width: 75%;
             padding-top: 3rem;
-            margin-top: 8rem;
+            margin-top: 0rem;
 
             .peripheral-options {
                 .periheral-container {
@@ -187,6 +186,21 @@
                 margin-top: 1rem;
             }
         }
+    }
+}
+
+/* Desktop Styles */
+@media only screen and (min-width: 960px) {
+    .setup-page {
+       .mobile-help-link{
+            margin: 9rem 5.5rem 0 0;
+       }
+       .help-link {
+            color: #006ba6;
+            outline: none;
+            text-decoration: none;
+        }
+
     }
 }
 

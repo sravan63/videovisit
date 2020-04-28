@@ -219,7 +219,12 @@ class Authentication extends React.Component {
                         <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
                 </div>
-                <div className="row mobile-logo-container"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
+                <div className="row mobile-logo-container">
+                    <div className="title">
+                        <p className="col-12 m-0 header">Kaiser Permanente</p>
+                        <p className="col-12 sub-header">Video Visits</p>
+                    </div>
+                </div>
                 <div className="guest-form-content">
                 <BrowserBlock browserblockinfo = {this.state}/>
                 {this.state.ReJoin ? (
