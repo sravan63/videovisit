@@ -45,15 +45,16 @@ export default class Ssologin extends React.Component {
             this.setState({ NotLoggedIn: true });
         });
         this.setState({isInApp : this.props.data.isInApp});
-        window.addEventListener('orientationchange', this.setScreenOrientation);
+        this.setScreenOrientation();
+        window.addEventListener('orientationchange', this.setScreenOrientation.bind(this));
     }
     setScreenOrientation(){
-        var isLandscape = window.matchMedia("(orientation:landscape)").matches;
-        // if(isLandscape) {  
-        //     this.setState({  screenOrientation: 'landscape' });
-        // } else {  
-        //     this.setState({  screenOrientation: 'portrait' });
-        // }
+        //var isLandscape = window.matchMedia("(orientation:landscape)").matches;
+        if(window.orientation == 0) {  
+            this.setState({  screenOrientation: 'portrait' });
+        } else {  
+            this.setState({  screenOrientation: 'landscape' });
+        }
     }
     handleDataAfterResponse(response) {
         this.setState({
@@ -139,7 +140,7 @@ export default class Ssologin extends React.Component {
         return (
             <div className="sso-content"> 
             {this.state.NotLoggedIn ?  (        
-                    <div className="row sso-form" style={{width: window.innerWidth < 787 && window.orientation == 0 ? 'auto' : 'fit-content',margin:window.innerWidth < 787 && window.orientation == 0 ? '0' : '0 auto'}}> 
+                    <div className={this.state.screenOrientation == 'portrait' ? "row sso-form width-p-auto" : "row sso-form width-l-fit"}> 
                         {!this.state.isInApp ?(<div className="row mobile-logo-container">
                             <div className="title">
                                 <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>

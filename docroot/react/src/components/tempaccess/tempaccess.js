@@ -16,8 +16,17 @@ class TempAccess extends React.Component {
 
     componentDidMount() {
         this.setState({isInApp : this.props.data.isInApp});
+        this.setScreenOrientation();
+        window.addEventListener('orientationchange', this.setScreenOrientation.bind(this));
     }
-
+    setScreenOrientation(){
+        //var isLandscape = window.matchMedia("(orientation:landscape)").matches;
+        if(window.orientation == 0) {  
+            this.setState({  screenOrientation: 'portrait' });
+        } else {  
+            this.setState({  screenOrientation: 'landscape' });
+        }
+    }
     signOn(e) {
         e.preventDefault();
         localStorage.clear();
@@ -139,7 +148,7 @@ class TempAccess extends React.Component {
     render() {
         return (
             <div className="temp-content">
-                <div className="row temp-form" style={{width: this.getStyles(),margin:window.innerWidth < 787 && window.orientation == 0 ? '0' : '0 auto'}}> 
+                <div className={this.state.screenOrientation == 'portrait' ? "row temp-form width-p-auto" : "row temp-form width-l-fit"}> 
                     {!this.state.isInApp ?(<div className="row mobile-logo-container">
                         <div className="title">
                             <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
