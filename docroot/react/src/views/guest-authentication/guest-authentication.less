@@ -171,7 +171,7 @@
     .guest-main-content {
         margin: 0.2rem 1rem;
         padding: 1rem;
-        height: calc(81vh - 105px);
+        height: 100vh;
 
         .guest-form-content {
 
@@ -243,7 +243,6 @@
 }
 @media only screen and (max-width: 325px) and (orientation: portrait){
     .guest-main-content {
-        height: auto;
         .guest-form-content {
                 .browser-block-container{
                     width:100% !important;
@@ -262,7 +261,7 @@
     }
 }
 
-@media only screen and (max-width: 700px) and (orientation: landscape){
+@media only screen and (max-device-width: 700px) and (orientation: landscape){
     .guest-main-content {
         height: auto !important;
     }
@@ -304,9 +303,9 @@
 
             .guest-form {
                 margin: 0 auto;
-                width: 55%;
+                width: 35%;
                 .login-form{
-                    min-height:15rem;
+                    min-height:15.6rem;
                 }
             }
         }
