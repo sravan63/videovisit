@@ -113,7 +113,6 @@
 
             .login-form {
                 margin: 0 auto;
-                min-height: 15.625rem;
                 .form-group {
                     .label {
                         font-size: .8125rem;
@@ -162,16 +161,13 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        height: auto !important;
+        height: 100vh !important;
     }
 
 }
 
 /* Mobile Styles to  Tablet Styles */
 @media only screen and (max-width: 960px) {
-    // .mobile-block{
-    //     height: calc(100vh - 105px) !important;
-    // }
     .guest-main-content {
         margin: 0.2rem 1rem;
         padding: 1rem;
@@ -232,7 +228,10 @@
 /* Tablet Styles */
 @media only screen and (min-width: 661px) and (max-width: 959px) and (orientation: portrait) {
     .guest-main-content {
-        height: calc(81vh - 28px);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100vh;
 
         .guest-form-content {
             .guest-form {
@@ -242,6 +241,33 @@
         }
     }
 }
+@media only screen and (max-width: 325px) and (orientation: portrait){
+    .guest-main-content {
+        height: auto;
+        .guest-form-content {
+                .browser-block-container{
+                    width:100% !important;
+                    .browser-block-content{
+                        .special-message{
+                            width: 10rem !important;
+                        }
+                        .app-store-container{
+                            .android-playstore{
+                                margin-left: 0.5rem !important;
+                            }
+                        }
+                    }
+                }
+        }
+    }
+}
+
+@media only screen and (max-width: 812px) and (orientation: landscape){
+    .guest-main-content {
+        height: auto !important;
+    }
+}
+
 
 /* Desktop Styles */
 @media only screen and (min-width: 960px) {
@@ -256,7 +282,7 @@
             right: 0;
         }
        .mobile-help-link{
-            margin: 9rem 5.5rem 0 0;
+            margin: 10rem 5.5rem 0 0;
        }
        .help-link {
             color: #006ba6;
@@ -271,7 +297,10 @@
 
             .guest-form {
                 margin: 0 auto;
-                width: 35%;
+                width: 55%;
+                .login-form{
+                    min-height:15rem;
+                }
             }
         }
     }
