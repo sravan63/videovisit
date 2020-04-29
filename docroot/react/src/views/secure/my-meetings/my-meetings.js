@@ -269,7 +269,7 @@ class MyMeetings extends React.Component {
     render() {
         return (
             <div id='container' className="my-meetings">
-                {this.state.showLoader ? (<Loader />):('')}
+                {this.state.showLoader && !this.state.isInApp ? (<Loader />):('')}
                 <Header history={this.props.history} helpUrl={this.state.mdoHelpUrl} />
                 <MobileHeader />
                 <div className="meetings-container">
