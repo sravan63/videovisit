@@ -3705,7 +3705,7 @@ PexFlashEventsClass.prototype.onConnect = function(stream) {
 };
 
 
-export function PexRTCStreamStatistics() {
+export function PexRTCStreamStatistics(parent) {
     var self = this;
 
     self.lastPackets = 0;
