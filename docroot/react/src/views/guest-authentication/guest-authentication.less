@@ -273,11 +273,7 @@
         }
     }
 }
-@media only screen and (max-height: 336px) and (orientation: landscape){
-    .guest-main-content {
-        height: calc(100vh - 2%) !important;
-    }
-}
+
 @media only screen and (max-device-width: 847px) and (orientation: landscape){
     .guest-main-content {
         height: auto !important;
@@ -288,7 +284,11 @@
         }
     }
 }
-
+@media only screen and (max-height: 336px) and (orientation: landscape){
+    .guest-main-content {
+        height: calc(100vh - 2%) !important;
+    }
+}
 @media only screen and (device-height : 375px) and (device-width : 812px)  {
     .guest-main-content {
         height: auto !important;
