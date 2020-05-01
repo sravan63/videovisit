@@ -150,7 +150,7 @@ class Conference extends React.Component {
                 case GlobalConfig.CLOSE_SETTINGS:
                     this.hideSettings = message.data;
                     break;
-                case GlobalConfig.GlobalConfig.ENABLE_IOS_CAM:
+                case GlobalConfig.ENABLE_IOS_CAM:
                     this.setState({
                         disableCamFlip: false,
                         isMobileSafari: true
