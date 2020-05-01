@@ -277,9 +277,18 @@
 @media only screen and (max-device-width: 735px) and (orientation: landscape){
     .guest-main-content {
         height: auto !important;
+        .guest-form {
+            .login-form{
+                width: 60%;
+            }
+        }
     }
 }
-
+@media only screen and (max-device-height: 100px)and (orientation: landscape){
+    .guest-main-content {
+        height: calc(100vh - 2%) !important;
+    }
+}
 @media only screen and (device-height : 375px) and (device-width : 812px)  {
     .guest-main-content {
         height: auto !important;
