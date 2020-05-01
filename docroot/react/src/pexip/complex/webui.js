@@ -728,6 +728,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     rtc.onParticipantUpdate = participantUpdated;
     rtc.onParticipantDelete = participantDeleted;
     rtc.onLayoutUpdate = layoutUpdate;
+    rtc.onIceGathered = mediaReady;
 
     conference = conf;
     console.log("Conference: " + conference);
@@ -741,6 +742,14 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     }
 }*/
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
+}
+
+function mediaReady(){
+    //alert("Ice gathering done");
+    var browserInfo = Utilities.getBrowserInformation();
+    if(UtilityService.isMobileDevice() && browserInfo.isSafari){
+        MessageService.sendMessage(GlobalConfig.ENABLE_IOS_CAM, null);
+    }
 }
 
 export function getTurnServersObjs() {

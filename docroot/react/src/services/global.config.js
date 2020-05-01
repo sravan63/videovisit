@@ -72,7 +72,8 @@ const GlobalConfig = {
     STOP_SCREENSHARE: 'stop screenshare',
     USER_JOINED: 'user joined',
     USER_LEFT: 'user left',
-    ERROR_PAGE: _rootUrl + 'authenticationFailed'
+    ERROR_PAGE: _rootUrl + 'authenticationFailed',
+    ENABLE_IOS_CAM:'Enable IOS cam'
 };
 
 export default GlobalConfig;

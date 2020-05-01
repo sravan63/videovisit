@@ -20,7 +20,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'' };
+        this.state = { userDetails: {}, isRearCamera:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'' };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -74,6 +74,10 @@ class Conference extends React.Component {
         var browserInfo = Utilities.getBrowserInformation();
         if (browserInfo.isSafari || browserInfo.isFireFox) {
             this.setState({ isbrowsercheck: true })
+        }
+        
+        if (browserInfo.isSafari){
+            this.setState({isMobileSafari:true});
         }
 
         var isMobile = Utilities.isMobileDevice();
@@ -146,6 +150,12 @@ class Conference extends React.Component {
                 case GlobalConfig.CLOSE_SETTINGS:
                     this.hideSettings = message.data;
                     break;
+                case GlobalConfig.GlobalConfig.ENABLE_IOS_CAM:
+                    this.setState({
+                        disableCamFlip: false,
+                        isMobileSafari: true
+                    });
+                    break;    
             }
 
         });
@@ -484,7 +494,7 @@ class Conference extends React.Component {
                                 <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                                 {!this.state.isbrowsercheck && !this.state.isMobile ? (
                                 <li><span className="white-circle"><span id="settings" className="icon-holder settings-btn" onClick={this.toggleSettings.bind(this)}></span></span></li>):('')}
-                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder" onClick={()=>this.toggleCamera()}></span></span></li>
+                                <li ><span className="white-circle"><span id="cameraSwitch" className = {this.state.disableCamFlip && this.state.isMobileSafari ? 'icon-holder disable' : 'icon-holder'} onClick={()=>this.toggleCamera()}></span></span></li>
                                 <li><span className="red-circle"><span id="endCall" className="icon-holder" onClick={()=>this.leaveMeeting('mobile')} ></span></span></li>
                                 <li style={{display: this.state.showaudioIcon ? 'block' : 'none'}}><span className="white-circle"><span id="speaker" className="icon-holder unmutedspeaker" onClick={()=>this.toggleControls('audio')} ></span></span></li>
                                 <li style={{display: this.state.showaudioIcon ? 'none' : 'block'}}><span className="white-circle"><span id="speaker" className="icon-holder mutedspeaker" onClick={()=>this.toggleControls('audio')}></span></span></li>
@@ -501,7 +511,7 @@ class Conference extends React.Component {
                                 <li><span className="red-circle"><span id="endCall" className="icon-holder" onClick={()=>this.leaveMeeting('mobile')} ></span></span></li>
                                 {!this.state.isbrowsercheck && !this.state.isMobile ? (
                                 <li><span className="white-circle"><span id="settings" className="icon-holder settings-btn" onClick={this.toggleSettings.bind(this)}></span></span></li>):('')}
-                                <li ><span className="white-circle"><span id="cameraSwitch" className="icon-holder" onClick={()=>this.toggleCamera()}></span></span></li>
+                                <li ><span className="white-circle"><span id="cameraSwitch" className = {this.state.disableCamFlip && this.state.isMobileSafari ? 'icon-holder disable' : 'icon-holder'} onClick={()=>this.toggleCamera()}></span></span></li>
                                 <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                                 <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                               </ul>

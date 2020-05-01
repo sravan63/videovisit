@@ -231,7 +231,7 @@ export function PexRTCCall() {
     self.presentation_in_main = false;
     self.ice_candidates = [];
     self.host_candidate = null;
-
+    self.onIceGathered = null;
     self.analyser = null;
     self.microphone = null;
     self.audioContext = null;
@@ -1181,7 +1181,10 @@ PexRTCCall.prototype.pcIceCandidate = function(evt) {
 
 PexRTCCall.prototype.pcIceConnectionStateChanged = function(evt) {
     var self = this;
-
+    // Condition satisfies only for IOS, For windows state will be connected.
+    if(self.pc.iceConnectionState=='completed'){
+        self.onIceGathered();
+    }
     self.parent.onLog("Ice Connection State", self.pc.iceConnectionState);
     if (self.pc.iceConnectionState == 'failed' && self.state == 'CONNECTED') {
         if (self.previousIceConnectionState == 'checking') {
@@ -2224,7 +2227,7 @@ export function PexRTC() {
     self.onCallTransfer = null;
     self.onCallDisconnect = null;
     self.onIceFailure = null;
-
+    self.onIceGathered = null;
     self.onParticipantCreate = null;
     self.onParticipantUpdate = null;
     self.onParticipantDelete = null;
@@ -3232,6 +3235,10 @@ PexRTC.prototype.addCall = function(call_type, flash) {
         self.call.onSetup = function(stream) {
             self.onSetup(stream, self.pin_status, self.conference_extension);
         };
+        self.call.onIceGathered = function(){
+            console.log('ICE GATHERED CAPTURED');
+            self.onIceGathered();
+        }
         self.call.onConnect = function(stream) {
             if (self.mutedAudio) {
                 self.muteAudio(self.mutedAudio);
