@@ -15,6 +15,7 @@ import ConferenceDetails from '../../../../components/conference-details/confere
 import ConferenceControls from '../../../../components/conference-controls/conference-controls';
 import GlobalConfig from '../../../../services/global.config';
 import { MessageService } from '../../../../services/message-service.js';
+import MediaService from '../../../../services/media-service.js';
 
 class Conference extends React.Component {
 
@@ -437,6 +438,8 @@ class Conference extends React.Component {
 
     toggleCamera(){
         var camID = this.state.media["videoinput"];
+        var speaker = this.state.media["audiooutput"];
+        alert("speaker length---->" + speaker.length);
         var videoSource;
         // Keeps only first and last camera ids, if device has more than 2 cameras.
         if(camID.length > 2){
@@ -447,6 +450,9 @@ class Conference extends React.Component {
             isRearCamera: !this.state.isRearCamera
             });
         WebUI.switchDevices('video', videoSource);
+        if(this.state.isMobileSafari){
+            MediaService.changeAudioDestination(speaker[0], 'video');
+        }
     }
 
     
