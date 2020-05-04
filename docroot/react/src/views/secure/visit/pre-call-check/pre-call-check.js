@@ -164,7 +164,7 @@ class PreCallCheck extends React.Component {
                   <div className="row mobile-logo-container m-0"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
                  <div className="pre-call-check-content">
                      <div className="row pre-call-check">
-                         <div className="col-md-5 peripheral-options p-0">
+                         <div className="col-lg-5 col-md-7 peripheral-options p-0">
                              <div className="periheral-container">
                                  <div className="label">Camera</div>
                                  <div className="dropdown show">
@@ -237,7 +237,7 @@ class PreCallCheck extends React.Component {
                                  </div>
                              </div>
                          </div>
-                         <div className="col-md-5 video-preview"><video id="preview" playsInline autoPlay></video></div>
+                         <div className="col-lg-5 col-md-5 video-preview"><video id="preview" playsInline autoPlay></video></div>
                          <div className="col-md-12 button-controls text-center">
                            <button className="btn rounded-0 mr-3" onClick={this.goBack}>Back</button>
                            <button className="btn rounded-0" onClick={this.joinVisit}>Join</button>
