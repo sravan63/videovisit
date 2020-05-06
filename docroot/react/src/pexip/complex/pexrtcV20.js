@@ -1500,7 +1500,7 @@ PexRTCCall.prototype.update = function(call_type) {
                 self.localStream.removeTrack(tracks[i]);
             }
             self.localStream = undefined;
-            if (self.firefox_ver > 47 || (self.safari_ver >= 11 && self.safari_ver < 12.1) || self.chrome_ver > 71) {
+            if (self.firefox_ver > 47 || self.safari_ver >= 11  || self.chrome_ver > 71) {
                 var senders = self.pc.getSenders();
                 for (var i = 0; i < senders.length; i++) {
                     self.pc.removeTrack(senders[i]);
