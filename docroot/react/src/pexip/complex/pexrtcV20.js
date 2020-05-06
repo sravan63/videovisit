@@ -902,11 +902,11 @@ PexRTCCall.prototype.gumSuccess = function(stream) {
         self.onSetup(url.createObjectURL(stream));
     }
 
-    // try {
-    //     self.createAudioContext(stream);
-    // } catch (e) {
-    //     self.parent.onLog("Unable to create audio context", e);
-    // }
+    try {
+        self.createAudioContext(stream);
+    } catch (e) {
+        self.parent.onLog("Unable to create audio context", e);
+    }
 };
 
 PexRTCCall.prototype.createAudioContext = function(stream) {
