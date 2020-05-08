@@ -729,6 +729,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     rtc.onParticipantDelete = participantDeleted;
     rtc.onLayoutUpdate = layoutUpdate;
     rtc.onIceGathered = mediaReady;
+    rtc.onIceFailure = setTurnServer;
 
     conference = conf;
     console.log("Conference: " + conference);
@@ -752,40 +753,31 @@ function mediaReady(){
     }
 }
 
-export function getTurnServersObjs() {
+function setTurnServer(){
+    var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
+    rtc.turn_server = getTurnServersObjs(turnServerDetails);
+}
+
+function getTurnServersObjs(turnServerDetails) {
     var t_servers = [];
-    if (typeof sidePaneMeetingDetails.vendorConfig.turnServers == 'string') {
+    if (typeof turnServerDetails.turnServers == 'string') {
         t_servers.push({
-            url: 'turn:' + sidePaneMeetingDetails.vendorConfig.turnServers + '?transport=tcp',
-            username: sidePaneMeetingDetails.vendorConfig.turnUserName,
-            credential: sidePaneMeetingDetails.vendorConfig.turnPassword
+            url: 'turn:' + turnServerDetails.turnServers + '?transport=tcp',
+            username: turnServerDetails.turnUserName,
+            credential: turnServerDetails.turnPassword
         });
     } else {
-        for (let i = 0; i < sidePaneMeetingDetails.vendorConfig.turnServers.length; i++) {
+        for (let i = 0; i < turnServerDetails.turnServers.length; i++) {
             t_servers.push({
-                url: 'turn:' + sidePaneMeetingDetails.vendorConfig.turnServers[i] + '?transport=tcp',
-                username: sidePaneMeetingDetails.vendorConfig.turnUserName,
-                credential: sidePaneMeetingDetails.vendorConfig.turnPassword
+                url: 'turn:' + turnServerDetails.turnServers[i] + '?transport=tcp',
+                username: turnServerDetails.turnUserName,
+                credential: turnServerDetails.turnPassword
             });
         }
     }
     return t_servers;
 }
 
-export function getTurnServerObjsForMobile() {
-    var t_servers = [];
-    if ($('#turnServers').val()) {
-        var servers = $('#turnServers').val().replace('[', '').replace(']', '').split(',');
-        for (let i = 0; i < servers.length; i++) {
-            t_servers.push({
-                url: 'turn:' + servers[i].trim() + '?transport=tcp',
-                username: $('#turnUserName').val().trim(),
-                credential: $('#turnPassword').val().trim()
-            });
-        }
-    }
-    return t_servers;
-}
 
 export function pexipDisconnect() {
     rtc.disconnect();

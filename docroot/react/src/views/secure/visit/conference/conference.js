@@ -222,6 +222,8 @@ class Conference extends React.Component {
                 var data = response.data.data;
                 this.setState({ meetingDetails: data });
                 this.startPexip(this.state.meetingDetails);
+                var turnServerInfo = data.vendorConfig;
+                sessionStorage.setItem('turnServer', JSON.stringify(turnServerInfo));
                 var isDirectLaunch = localStorage.getItem('isDirectLaunch');
                 if( !isDirectLaunch ) {
                     MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
@@ -446,6 +448,11 @@ class Conference extends React.Component {
         this.setState({
             isRearCamera: !this.state.isRearCamera
             });
+        if(this.state.isRearCamera == true){
+            document.getElementById('selfview').style.transform = "none";
+        }else{
+            document.getElementById('selfview').style.transform = "scaleX(-1)";
+        }
         WebUI.switchDevices('video', videoSource);
     }
 

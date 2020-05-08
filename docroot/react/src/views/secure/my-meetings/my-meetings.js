@@ -226,6 +226,7 @@ class MyMeetings extends React.Component {
                     if (this.state.userDetails.isTempAccess){
                         this.resetSessionToken(response.headers.authtoken);
                     }
+                    this.setState({ showLoader: false });
                     var roomJoin = response.data.data.roomJoinUrl;
                     localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));
                     localStorage.setItem('roomUrl', roomJoin);
@@ -234,19 +235,13 @@ class MyMeetings extends React.Component {
                     if(isInAppAccess){
                         var os = UtilityService.getAppOS();
                         if(os=='iOS'){
-                          this.checkIOS(roomJoin);
-                          this.setState({ showLoader: false });
-                          return false;
+                          window.location.replace(roomJoin);
                         } else {
-                            var isAndroidSDK = sessionStorage.getItem('isAndroidSDK');    
+                            var isAndroidSDK = sessionStorage.getItem('isAndroidSDK');
                             if(isAndroidSDK=="true") {
                                 this.openTab(roomJoin);
-                                this.setState({ showLoader: false });
-                                return false;
                             } else {
                                 this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
-                                this.setState({ showLoader: false });
-                                return false;
                             }
                         }
                     }
