@@ -629,7 +629,8 @@ function connected(url) {
         var meetingId = JSON.parse(localStorage.getItem('meetingId'));
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-            if(isDirectLaunch){
+        var inAppAccess = UtilityService.getInAppAccessFlag();
+            if(isDirectLaunch || inAppAccess){
                 JoinLeaveMobileCall("J");
             } else {
                 var memberName;
@@ -694,10 +695,13 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     name = decodeURIComponent(username).replace('+', ' ');
     source = req_source;
     var camID = [];
+    var isSetupPage = localStorage.getItem('isSetupPage');
     if (localStorage.getItem('selectedPeripherals')) {
         var peripherals = JSON.parse(localStorage.getItem('selectedPeripherals'));
         cameraID = peripherals.videoSource.deviceId;
-        //audioSource = peripherals.audioSource.deviceId;
+        if(isSetupPage){
+        audioSource = peripherals.micSource.deviceId;
+        }
     } else {
         MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
@@ -709,7 +713,10 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
         });
     }
     rtc.video_source = cameraID; //cameraID
-    // rtc.audio_source =  audioSource;    //microPhoneID
+    if(isSetupPage){
+    rtc.audio_source =  audioSource;  //microPhoneID
+    }
+      
 
     window.addEventListener('beforeunload', finalise);
 
@@ -782,7 +789,8 @@ function getTurnServersObjs(turnServerDetails) {
 export function pexipDisconnect() {
     rtc.disconnect();
     var isDirectLaunch = localStorage.getItem('isDirectLaunch');
-    if(isDirectLaunch){
+    var inAppAccess = UtilityService.getInAppAccessFlag();
+    if(isDirectLaunch || inAppAccess){
         JoinLeaveMobileCall("L");
     }
 }
@@ -794,6 +802,7 @@ export function JoinLeaveMobileCall(status){
     var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
     var userLoggedIn = udata.lastName +', '+ udata.firstName;  
     var inMeetingName = JSON.parse(localStorage.getItem('memberName'));
+    var isDirectLaunch = localStorage.getItem('isDirectLaunch');
     var isPatient;
     var inMeetingDisplayName;
         if(userLoggedIn == inMeetingName){
@@ -808,10 +817,16 @@ export function JoinLeaveMobileCall(status){
             isPatient = false;
             inMeetingDisplayName = userLoggedIn;
         }
-        BackendService.sendUserJoinLeaveStatus(meetingId,isPatient,status,inMeetingDisplayName).subscribe((response) => {
+        var loginType = isDirectLaunch ? "sso" : "tempAccess"
+        BackendService.sendUserJoinLeaveStatus(meetingId,isPatient,status,inMeetingDisplayName,loginType).subscribe((response) => {
             console.log("Success");
             if(status == "L"){
+                if(isDirectLaunch){
                 window.location.href = 'mobileNativeLogout.htm';
+                }
+                else{
+                MessageService.sendMessage(GlobalConfig.INAPP_LEAVEMEETING, null);
+                }
             }
         }, (err) => {
             console.log("Error");

@@ -71,16 +71,7 @@ class header extends React.Component {
                             </ul> ) : (<KPLOGO />) }
                         </div>
                     </div>) : 
-                    (<div className = "row header-content" style={{display: this.state.isLogin ? 'flex' : 'none'}}>
-                        <div className = "col-md-8 banner-content"></div>
-                        <div className = "col-md-4 text-right user-details">
-                            <ul>
-                                <li> 
-                                     <a href = {this.props.helpUrl} className = "help-link"target = "_blank" >Help</a>
-                                </li >
-                            </ul>
-                        </div>
-                    </div>)}
+                    ('')}
                 </div> );
             }
         }

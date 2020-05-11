@@ -58,7 +58,7 @@ class UtilityService extends React.Component {
                 }
             }
         }
-        if (this.getBrowserInformation().isFirefox) {
+        if (this.getBrowserInformation().isFireFox) {
             if (blockFF) {
                 isBrowserBlockError = true;
             } else {

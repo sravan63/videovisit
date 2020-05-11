@@ -74,6 +74,9 @@ class Authentication extends React.Component {
             var isSDK = decodeURIComponent(urlParams.get('isAndroidSDK'));
             sessionStorage.setItem('isAndroidSDK', isSDK);
         }
+        else if( Utilities.getInAppAccessFlag() ) {
+            this.setState({ isInApp: true });
+        }
     }
 
     render() {
@@ -90,11 +93,12 @@ class Authentication extends React.Component {
                         }
                     </div>)
                 : ('')}
+                {!this.state.isInApp ? (
                 <div className="row help-link-container">
                     <div className="col-12 text-right help-icon p-0">
                         <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
-                </div>
+                </div>):('')}
                 <BrowserBlock browserblockinfo = {this.state}/>
                 <div>
                     <Suspense fallback={<Loader />}>

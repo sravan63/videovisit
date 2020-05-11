@@ -155,7 +155,11 @@ class Conference extends React.Component {
                         disableCamFlip: false,
                         isMobileSafari: true
                     });
-                    break;    
+                    break;
+                case GlobalConfig.INAPP_LEAVEMEETING:
+                    this.props.history.push(GlobalConfig.MEETINGS_URL);
+                    break; 
+        
             }
 
         });
@@ -359,7 +363,8 @@ class Conference extends React.Component {
         this.setState({ leaveMeeting: true });
         sessionStorage.removeItem('memberAlone');
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
-        if(isDirectLaunch){
+        var inAppAccess = Utilities.getInAppAccessFlag();
+        if(isDirectLaunch || inAppAccess){
             WebUI.pexipDisconnect();
             return false;
         }
@@ -445,13 +450,12 @@ class Conference extends React.Component {
             camID.splice(1,camID.length-2);
         }
         videoSource = this.state.isRearCamera ? camID[0].deviceId : camID[1].deviceId;
-        this.setState({
-            isRearCamera: !this.state.isRearCamera
-            });
+        this.state.isRearCamera = !this.state.isRearCamera
+            
         if(this.state.isRearCamera == true){
-            document.getElementById('selfview').style.transform = "none";
+            document.getElementById('selfvideo').style.transform = "none";
         }else{
-            document.getElementById('selfview').style.transform = "scaleX(-1)";
+            document.getElementById('selfvideo').style.transform = "scaleX(-1)";
         }
         WebUI.switchDevices('video', videoSource);
     }
