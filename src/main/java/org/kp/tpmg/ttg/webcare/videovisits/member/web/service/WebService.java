@@ -1441,7 +1441,6 @@ public class WebService {
 			final String inputJsonStr = gson.toJson(input);
 			logger.info("inputJsonStr: " + inputJsonStr);
 			jsonOutput = callVVRestService(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, inputJsonStr);
-			logger.info("jsonOutput: " + jsonOutput);
 		} catch (Exception e) {
 			logger.error("Web Service API error ", e);
 		}
