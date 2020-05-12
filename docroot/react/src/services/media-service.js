@@ -19,9 +19,8 @@ class MediaService extends React.Component {
     // Initiates the device load
     loadDeviceMediaData(){
       var browserInfo = Utilities.getBrowserInformation();
-      var isMobile = Utilities.isMobileDevice();
       if(!browserInfo.isIE){
-        if((browserInfo.isSafari || browserInfo.isFireFox) && !isMobile ) {
+        if(browserInfo.isSafari || browserInfo.isFireFox) {
           navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
               console.log('Stream1 started with success');
               this.setDevice();
