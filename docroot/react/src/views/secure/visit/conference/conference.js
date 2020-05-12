@@ -14,6 +14,7 @@ import Notifier from '../../../../components/notifier/notifier';
 import ConferenceDetails from '../../../../components/conference-details/conference-details';
 import ConferenceControls from '../../../../components/conference-controls/conference-controls';
 import GlobalConfig from '../../../../services/global.config';
+import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
 
 class Conference extends React.Component {
@@ -125,7 +126,14 @@ class Conference extends React.Component {
                     break;
                 case GlobalConfig.MEDIA_DATA_READY:  
                     this.list = message.data;
-                    this.setState({ media: this.list }); 
+                    this.setState({ media: this.list });
+                    let constrains = {
+                            audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
+                            videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                            micSource: this.list.audioinput ? this.list.audioinput[0] : null
+                        };
+                    localStorage.setItem('selectedPeripherals', JSON.stringify(constrains));
+                    this.startPexip(this.state.meetingDetails); 
                     break;
                 case GlobalConfig.VIDEO_MUTE:
                     this.setState({
@@ -225,7 +233,12 @@ class Conference extends React.Component {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
                 this.setState({ meetingDetails: data });
-                this.startPexip(this.state.meetingDetails);
+                if (localStorage.getItem('selectedPeripherals')) {
+                    this.startPexip(this.state.meetingDetails);
+                }
+                else{
+                    MediaService.loadDeviceMediaData();
+                }
                 var turnServerInfo = data.vendorConfig;
                 sessionStorage.setItem('turnServer', JSON.stringify(turnServerInfo));
                 var isDirectLaunch = localStorage.getItem('isDirectLaunch');

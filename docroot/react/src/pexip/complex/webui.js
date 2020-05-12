@@ -703,14 +703,14 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
         audioSource = peripherals.micSource.deviceId;
         }
     } else {
-        MediaService.loadDeviceMediaData();
+        /*MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             if (message.text == GlobalConfig.MEDIA_DATA_READY) {
                 this.list = message.data;
                 cameraID = this.list.videoinput[0].deviceId;
                 //audioSource = this.list.audiooutput[0].deviceId;
             }
-        });
+        });*/
     }
     rtc.video_source = cameraID; //cameraID
     if(isSetupPage){
