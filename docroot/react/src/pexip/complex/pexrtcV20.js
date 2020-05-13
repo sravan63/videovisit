@@ -2440,7 +2440,7 @@ PexRTC.prototype.requestToken = function(cb) {
             params.conference_extension = self.conference_extension;
         }
 
-        self.sendRequest("request_token", params, function(evt) { self.tokenRequested(evt, cb); }, "POST", 60000);
+        self.sendRequest("request_token", params, function(evt) { self.tokenRequested(evt, cb); }, "POST", 600);
     } else if (cb) {
         cb();
     }
