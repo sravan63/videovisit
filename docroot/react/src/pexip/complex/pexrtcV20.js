@@ -602,6 +602,7 @@ PexRTCCall.prototype.sendRequest = function(request, params, cb, retries, timeou
     }
     xhr.open("POST", xhrUrl, async);
     if (retries === undefined) {
+    	console.log("Inside retries=0");
         retries = 0;
     }
     if (cb) {
@@ -619,6 +620,7 @@ PexRTCCall.prototype.sendRequest = function(request, params, cb, retries, timeou
         };
     }
     xhr.onerror = function() {
+    	console.log("Inside retries - onerror");
         if (++retries > 10 || cb === false) {
             self.parent.error = "Error sending request: " + request;
             self.onError(self.parent.trans.ERROR_CONNECTING);
@@ -2438,7 +2440,7 @@ PexRTC.prototype.requestToken = function(cb) {
             params.conference_extension = self.conference_extension;
         }
 
-        self.sendRequest("request_token", params, function(evt) { self.tokenRequested(evt, cb); }, "POST", 10, 60000);
+        self.sendRequest("request_token", params, function(evt) { self.tokenRequested(evt, cb); }, "POST", 60000);
     } else if (cb) {
         cb();
     }
