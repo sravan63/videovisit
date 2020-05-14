@@ -397,7 +397,7 @@ function handleError(reason) {
 }
 
 function doneSetup(url, pin_status, conference_extension) {
-    console.log("inside doneSetup");
+    console.log("Inside doneSetup");
 
     if (url) {
         if (typeof(MediaStream) !== "undefined" && url instanceof MediaStream) {
@@ -753,7 +753,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
 }
 
 function mediaReady(){
-    //alert("Ice gathering done");
+    console.log("Inside mediaReady - Ice gathering done");
     var browserInfo = UtilityService.getBrowserInformation();
     if(UtilityService.isMobileDevice() && browserInfo.isSafari){
         MessageService.sendMessage(GlobalConfig.ENABLE_IOS_CAM, null);
@@ -761,6 +761,7 @@ function mediaReady(){
 }
 
 function setTurnServer(){
+	console.log("setTurnServer");
     var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
     rtc.turn_server = getTurnServersObjs(turnServerDetails);
 }
