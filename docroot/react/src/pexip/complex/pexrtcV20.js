@@ -2498,7 +2498,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
             }
         }
         if (self.turn_server && self.edge_ver == 0) {
-        	console.log("Inside self.turn_server - " +self.turn_server");
+        	console.log("Inside self.turn_server - " +self.turn_server);
             var turn_servers = []
             if (self.turn_server instanceof Array) {
                 turn_servers = self.turn_server;
