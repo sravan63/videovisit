@@ -2488,6 +2488,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
 
         self.pcConfig.iceServers = [];
         if (self.default_stun) {
+        	console.log("Inside self.default_stun");
             if (self.firefox_ver > 43 || self.edge_ver > 10527 || self.safari_ver >= 11) {
                 self.pcConfig.iceServers.push({ 'urls': [self.default_stun] });
             } else {
@@ -2495,6 +2496,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
             }
         }
         if (self.turn_server && self.edge_ver == 0) {
+        	console.log("Inside self.turn_server");
             var turn_servers = []
             if (self.turn_server instanceof Array) {
                 turn_servers = self.turn_server;
@@ -2523,6 +2525,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
             }
         }
         if ('stun' in msg.result && self.edge_ver == 0) {
+        	console.log("Inside STUN");
             for (var i = 0; i < msg.result.stun.length; i++) {
                 if (self.firefox_ver > 43 || self.safari_ver >= 11) {
                     self.pcConfig.iceServers.push({ 'urls': [msg.result.stun[i].url] });
@@ -2532,6 +2535,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
             }
         }
         if ('turn' in msg.result && self.edge_ver == 0 && self.safari_ver == 0) {
+        	console.log("Inside TURN");
             for (var i = 0; i < msg.result.turn.length; i++) {
                 self.pcConfig.iceServers.push(msg.result.turn[i]);
             }
