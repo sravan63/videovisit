@@ -73,7 +73,7 @@ class MediaService extends React.Component {
     handleError(error){
         var ErrorMsg = error.message;
         if(ErrorMsg =='Failed starting capture of a audio track'){
-          alert("Unable to connect : Mic is in use already, try disconnecting Audio call and refresh the page");
+          alert("Unable to join : Looks like you're a phone call, hangup and refresh page to join.");
         }
         console.log('Media Service - Error Occured :: '+error);
     }
