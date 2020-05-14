@@ -502,6 +502,7 @@ PexRTCCall.prototype.sdpChangeBW = function(sdplines) {
 
 
 PexRTCCall.prototype.makeCall = function(parent, call_type) {
+	console.log("Inside makeCall");
     var self = this;
 
     if (self.state != 'UPDATING') {
@@ -2458,6 +2459,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
     self.onLog("PexRTC.tokenRequested response", e.target.responseText);
 
     if (msg.http_status == 200) {
+    	console.log("Inside msg.http_status == 200");
         self.vp9_enabled = self.vp9_enabled && msg.result.vp9_enabled && (self.chrome_ver > 29 || self.firefox_ver > 28);
         self.token = msg.result.token;
         self.uuid = msg.result.participant_uuid;
@@ -2488,7 +2490,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
 
         self.pcConfig.iceServers = [];
         if (self.default_stun) {
-        	console.log("Inside self.default_stun");
+        	console.log("Inside self.default_stun - " +self.default_stun);
             if (self.firefox_ver > 43 || self.edge_ver > 10527 || self.safari_ver >= 11) {
                 self.pcConfig.iceServers.push({ 'urls': [self.default_stun] });
             } else {
@@ -2496,7 +2498,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
             }
         }
         if (self.turn_server && self.edge_ver == 0) {
-        	console.log("Inside self.turn_server");
+        	console.log("Inside self.turn_server - " +self.turn_server");
             var turn_servers = []
             if (self.turn_server instanceof Array) {
                 turn_servers = self.turn_server;
