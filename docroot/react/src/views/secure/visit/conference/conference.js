@@ -21,7 +21,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'' };
+        this.state = { userDetails: {}, isRearCamera:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -135,6 +135,10 @@ class Conference extends React.Component {
                     localStorage.setItem('selectedPeripherals', JSON.stringify(constrains));
                     this.startPexip(this.state.meetingDetails); 
                     break;
+                case GlobalConfig.CAMERA_FLIP:
+                    this.setState({isMirrorView: message.data});    
+                    break;
+
                 case GlobalConfig.VIDEO_MUTE:
                     this.setState({
                         showvideoIcon: message.data
@@ -471,16 +475,20 @@ class Conference extends React.Component {
         if (browserInfo.isFireFox) {
             var isRear = vObject.label.toLowerCase().indexOf('back') > -1 || vObject.label.toLowerCase().indexOf('rear') > -1;  
             if(isRear){
-            document.getElementById('selfvideo').style.transform = "none";
+              this.setState({isMirrorView : false});  
+            // document.getElementById('selfvideo').style.transform = "none";
             }else{
-            document.getElementById('selfvideo').style.transform = "scaleX(-1)";
+                this.setState({isMirrorView : true});
+            // document.getElementById('selfvideo').style.transform = "scaleX(-1)";
             }
         }
         else{
             if(this.state.isRearCamera == true){
-            document.getElementById('selfvideo').style.transform = "none";
+                this.setState({isMirrorView : false}); 
+            // document.getElementById('selfvideo').style.transform = "none";
             }else{
-            document.getElementById('selfvideo').style.transform = "scaleX(-1)";
+                this.setState({isMirrorView : true}); 
+            // document.getElementById('selfvideo').style.transform = "scaleX(-1)";
             }
         }
         
@@ -523,7 +531,7 @@ class Conference extends React.Component {
                                 <Settings />
                             </div>
                             <div id="selfview" className="self-view">
-                               <video id="selfvideo" autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                               <video id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video>
                             </div>
                             <div id="controls" className="controls-bar">

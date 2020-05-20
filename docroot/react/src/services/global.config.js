@@ -74,7 +74,8 @@ const GlobalConfig = {
     USER_LEFT: 'user left',
     ERROR_PAGE: _rootUrl + 'authenticationFailed',
     ENABLE_IOS_CAM:'Enable IOS cam',
-    INAPP_LEAVEMEETING:'Leave Meeting InApp'
+    INAPP_LEAVEMEETING:'Leave Meeting InApp',
+    CAMERA_FLIP:'Show Mirror Image'
 };
 
 export default GlobalConfig;

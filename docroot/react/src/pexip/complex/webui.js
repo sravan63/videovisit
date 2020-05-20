@@ -702,15 +702,11 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
         if(isSetupPage){
         audioSource = peripherals.micSource.deviceId;
         }
-    } else {
-        /*MediaService.loadDeviceMediaData();
-        this.subscription = MessageService.getMessage().subscribe((message, data) => {
-            if (message.text == GlobalConfig.MEDIA_DATA_READY) {
-                this.list = message.data;
-                cameraID = this.list.videoinput[0].deviceId;
-                //audioSource = this.list.audiooutput[0].deviceId;
-            }
-        });*/
+    } 
+    var browserInfo = UtilityService.getBrowserInformation();
+    if(UtilityService.isMobileDevice() && browserInfo.isFireFox){
+        var isRear = peripherals.videoSource.label.toLowerCase().indexOf('back') > -1 || peripherals.videoSource.label.toLowerCase().indexOf('rear') > -1;  
+        MessageService.sendMessage(GlobalConfig.CAMERA_FLIP, !isRear);
     }
     rtc.video_source = cameraID; //cameraID
     if(isSetupPage){
