@@ -470,9 +470,7 @@ class Conference extends React.Component {
 
         if (browserInfo.isFireFox) {
             var isRear = vObject.label.toLowerCase().indexOf('back') > -1 || vObject.label.toLowerCase().indexOf('rear') > -1;  
-            alert(vObject.label);
-            alert(isRear);
-            if(isRear && this.state.isRearCamera == true){
+            if(isRear){
             document.getElementById('selfvideo').style.transform = "none";
             }else{
             document.getElementById('selfvideo').style.transform = "scaleX(-1)";
