@@ -341,6 +341,7 @@ class Conference extends React.Component {
                 this.leaveMeeting(isFromBackButton);
             }
        }
+       localStorage.removeItem('selectedPeripherals');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
     }
 
@@ -437,10 +438,8 @@ class Conference extends React.Component {
                 //window.location.reload(false);
             });
         }
-        var browserInfo = Utilities.getBrowserInformation();
-            if (browserInfo.isSafari || browserInfo.isFireFox) {
-                localStorage.removeItem('selectedPeripherals');
-            }
+        
+        localStorage.removeItem('selectedPeripherals');
 
     }
 
@@ -458,18 +457,35 @@ class Conference extends React.Component {
     toggleCamera(){
         var camID = this.state.media["videoinput"];
         var videoSource;
+        var vObject;
         // Keeps only first and last camera ids, if device has more than 2 cameras.
         if(camID.length > 2){
             camID.splice(1,camID.length-2);
         }
-        videoSource = this.state.isRearCamera ? camID[0].deviceId : camID[1].deviceId;
-        this.state.isRearCamera = !this.state.isRearCamera
-            
-        if(this.state.isRearCamera == true){
+        //videoSource = this.state.isRearCamera ? camID[0].deviceId : camID[1].deviceId;
+        vObject = this.state.isRearCamera ? camID[0] : camID[1];
+        videoSource = vObject.deviceId;
+        this.state.isRearCamera = !this.state.isRearCamera;
+        var browserInfo = Utilities.getBrowserInformation();
+        if (browserInfo.isFireFox) {
+            var isRear = vObject.label.indexOf('back') > -1 || vObject.label.indexOf('rear') > -1;  
+            if(isRear && this.state.isRearCamera == true){
             document.getElementById('selfvideo').style.transform = "none";
-        }else{
+            }else{
             document.getElementById('selfvideo').style.transform = "scaleX(-1)";
+            }
         }
+        else{
+            if(this.state.isRearCamera == true){
+            document.getElementById('selfvideo').style.transform = "none";
+            }else{
+            document.getElementById('selfvideo').style.transform = "scaleX(-1)";
+            }
+        }
+
+
+
+        
         WebUI.switchDevices('video', videoSource);
     }
 
