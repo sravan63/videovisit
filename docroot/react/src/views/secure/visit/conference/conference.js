@@ -467,8 +467,9 @@ class Conference extends React.Component {
         videoSource = vObject.deviceId;
         this.state.isRearCamera = !this.state.isRearCamera;
         var browserInfo = Utilities.getBrowserInformation();
+
         if (browserInfo.isFireFox) {
-            var isRear = vObject.label.indexOf('back') > -1 || vObject.label.indexOf('rear') > -1;  
+            var isRear = vObject.label.toLowerCase().indexOf('back') > -1 || vObject.label.toLowerCase().indexOf('rear') > -1;  
             if(isRear && this.state.isRearCamera == true){
             document.getElementById('selfvideo').style.transform = "none";
             }else{
@@ -482,9 +483,6 @@ class Conference extends React.Component {
             document.getElementById('selfvideo').style.transform = "scaleX(-1)";
             }
         }
-
-
-
         
         WebUI.switchDevices('video', videoSource);
     }
