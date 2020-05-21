@@ -97,6 +97,7 @@ class Conference extends React.Component {
                     this.setState({ hostavail: true, videofeedflag: true, moreparticpants: false });
                     this.toggleDockView(false);
                     this.handleTimer(false);
+                    window.clearInterval(this.runningLate);
                     break;
                 case GlobalConfig.HOST_LEFT:
                     this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
@@ -132,7 +133,9 @@ class Conference extends React.Component {
                             videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
                             micSource: this.list.audioinput ? this.list.audioinput[0] : null
                         };
+                    if (localStorage.getItem('selectedPeripherals') == null) {    
                     localStorage.setItem('selectedPeripherals', JSON.stringify(constrains));
+                    }
                     this.startPexip(this.state.meetingDetails); 
                     break;
                 case GlobalConfig.CAMERA_FLIP:
@@ -237,12 +240,7 @@ class Conference extends React.Component {
             if (response.data && response.data.statusCode == '200') {
                 var data = response.data.data;
                 this.setState({ meetingDetails: data });
-                if (localStorage.getItem('selectedPeripherals')) {
-                    this.startPexip(this.state.meetingDetails);
-                }
-                else{
-                    MediaService.loadDeviceMediaData();
-                }
+                MediaService.loadDeviceMediaData();
                 var turnServerInfo = data.vendorConfig;
                 sessionStorage.setItem('turnServer', JSON.stringify(turnServerInfo));
                 var isDirectLaunch = localStorage.getItem('isDirectLaunch');
