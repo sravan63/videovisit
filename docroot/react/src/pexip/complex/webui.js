@@ -751,7 +751,9 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
 function mediaReady(){
     console.log("Inside mediaReady - Ice gathering done");
     var browserInfo = UtilityService.getBrowserInformation();
-    if(UtilityService.isMobileDevice() && browserInfo.isSafari){
+    var os = UtilityService.getAppOS();
+    var isIOS = os == 'iOS' ? true : false;
+    if( isIOS && browserInfo.isSafari){
         MessageService.sendMessage(GlobalConfig.ENABLE_IOS_CAM, null);
     }
 }
