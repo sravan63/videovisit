@@ -86,6 +86,8 @@ public class WebUtil {
 	public static final String IOS = "ios";
 	public static final String MDO_HELP_URL = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/faq";
 	
+	public static final String KEEP_ALIVE = "keep_alive";
+	
 	
 	public static boolean isDOBMMYYYYFormat(String value) {
 		if (value == null)
@@ -426,6 +428,9 @@ public class WebUtil {
 		
 		final String mdoHelpUrl = AppProperties.getExtPropertiesValueByKey("mdo_help_url");
 		properties.put("mdoHelpUrl", StringUtils.isNotBlank(mdoHelpUrl) ? mdoHelpUrl : MDO_HELP_URL);
+		
+		final String KEEP_ALIVE_URL = AppProperties.getExtPropertiesValueByKey("KPORG_SSO_KEEP_ALIVE_URL");
+		properties.put("KEEP_ALIVE_URL", StringUtils.isNotBlank(KEEP_ALIVE_URL) ? KEEP_ALIVE_URL : "https://healthy.kaiserpermanente.org/health/mycare/consumer/keepalive?ts=");
 	}
 	
 	public static String convertMapToJsonString(final Map<String, String> map) {
@@ -587,5 +592,10 @@ public class WebUtil {
 	
 	public static String getClientIdFromContext(final WebAppContext ctx) {
 		return ctx != null ? ctx.getClientId() : VV_MBR_WEB;
+	}
+	
+	public static void loadKeepAliveProperty(final Map<String, String> properties) {
+		final String KEEP_ALIVE_URL = AppProperties.getExtPropertiesValueByKey("KPORG_SSO_KEEP_ALIVE_URL");
+		properties.put("KEEP_ALIVE_URL", StringUtils.isNotBlank(KEEP_ALIVE_URL) ? KEEP_ALIVE_URL : "https://healthy.kaiserpermanente.org/health/mycare/consumer/keepalive?ts=");
 	}
 }

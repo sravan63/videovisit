@@ -1104,6 +1104,8 @@ public class MeetingCommand {
 			properties = new HashMap<>();
 			if ("browser".equalsIgnoreCase(propertyName)) {
 				WebUtil.loadAllBrowserBlockProperties(properties);
+			} else if(WebUtil.KEEP_ALIVE.equalsIgnoreCase(propertyName)) {
+				WebUtil.loadKeepAliveProperty(properties);
 			}
 		} else {
 			logger.warn("propertyName is blank/empty.");
