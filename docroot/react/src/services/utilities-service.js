@@ -47,6 +47,7 @@ class UtilityService extends React.Component {
         let isBrowserBlockError = false;
         if (this.getBrowserInformation().isIE) {
             isBrowserBlockError = true;
+            return isBrowserBlockError;
         }
         if (this.getBrowserInformation().isChrome) {
             if (blockChrome) {
@@ -106,17 +107,29 @@ class UtilityService extends React.Component {
                 isBrowserBlockError = true;
             }
         }
+        if(navigator.userAgent.match('FxiOS')){
+            if(blockIosFFVersion){
+                isBrowserBlockError = true;
+            }
+        }
+
         if(!this.getBrowserInformation().isIE){
+            var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
             if(this.getBrowserInformation().isAlliPadCheck){
-                var iOSver = this.iOSversion();
-                var iosFullversion = iOSver[0] + '.'+ iOSver[1];
-                if(iosFullversion < browserNames.IPAD_OS_VERSION){
+                var version;
+                var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);
+                version = safariVersionMatch[1].slice(0,4);
+                if(version < browserNames.IPAD_OS_VERSION){
                     isBrowserBlockError = true;
                 }
             }
-            var iosFF = navigator.userAgent.match("FxiOS");
-            if(iosFullversion != '' && blockIosFFVersion && iosFF){
-                isBrowserBlockError = true;
+            if(IpadOS && this.isMobileDevice()){
+                var version;
+                var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);
+                version = safariVersionMatch[1].slice(0,4);
+                if(version < browserNames.IPAD_OS_VERSION){
+                    isBrowserBlockError = true;
+                }
             }
         }
         return isBrowserBlockError;

@@ -38,8 +38,12 @@ class MyMeetings extends React.Component {
         });      
         var isInAppAccess = UtilityService.getInAppAccessFlag();
         this.setState({isInApp: isInAppAccess});
-        this.getBrowserBlockInfo();
-        
+        //this.getBrowserBlockInfo();
+        if(sessionStorage.getItem('helpUrl')){
+            var helpUrl = sessionStorage.getItem('helpUrl');
+            this.setState({ mdoHelpUrl: helpUrl });
+        }
+
         var isTempAccess = this.state.userDetails.isTempAccess;
         if(sessionStorage.getItem('keepAlive') && !isTempAccess){
             var keepAliveUrl = sessionStorage.getItem('keepAlive');
@@ -57,7 +61,7 @@ class MyMeetings extends React.Component {
         window.clearInterval(this.interval);
         window.clearInterval(this.keepAlive);
     }
-    getBrowserBlockInfo(){
+    /*getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",
             browserNames = '';
@@ -71,7 +75,7 @@ class MyMeetings extends React.Component {
         }, (err) => {
             console.log("Error");
         });
-    }
+    }*/
     resetSessionToken(token){
         this.state.userDetails.ssoSession = token;
         localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(this.state.userDetails)));

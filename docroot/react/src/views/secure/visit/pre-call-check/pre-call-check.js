@@ -59,9 +59,13 @@ class PreCallCheck extends React.Component {
                     break;
             }
         });
-        this.getBrowserBlockInfo();
+        if(sessionStorage.getItem('helpUrl')){
+            var helpUrl = sessionStorage.getItem('helpUrl');
+            this.setState({ mdoHelpUrl: helpUrl });
+        }
+        //this.getBrowserBlockInfo();
     }
-    getBrowserBlockInfo(){
+    /*getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",
             browserNames = '';
@@ -75,7 +79,7 @@ class PreCallCheck extends React.Component {
         }, (err) => {
             console.log("Error");
         });
-    }
+    }*/
     toggleOpen(type) {
         this.setState({
             data: {

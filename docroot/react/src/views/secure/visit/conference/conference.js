@@ -179,9 +179,13 @@ class Conference extends React.Component {
 
         });
         window.addEventListener('resize', this.handleResize.bind(this));
-        this.getBrowserBlockInfo();
+        if(sessionStorage.getItem('helpUrl')){
+            var helpUrl = sessionStorage.getItem('helpUrl');
+            this.setState({ mdoHelpUrl: helpUrl });
+        }
+        //this.getBrowserBlockInfo();
     }
-    getBrowserBlockInfo(){
+    /*getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",
             browserNames = '';
@@ -195,7 +199,7 @@ class Conference extends React.Component {
         }, (err) => {
             console.log("Error");
         });
-    }
+    }*/
     handleResize(){
         if(this.state.moreparticpants){
             const isDock = window.innerWidth > 1024; // passes true only for desktop
