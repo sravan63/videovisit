@@ -107,7 +107,7 @@ public class MeetingCommand {
 		return output;
 	}
 	
-	public static String updateEndMeetingLogout(HttpServletRequest request, String memberName,
+	public static String updateEndMeetingLogout(final HttpServletRequest request, final HttpServletResponse response, String memberName,
 			boolean notifyVideoForMeetingQuit) throws Exception {
 		logger.info(LOG_ENTERED);
 		ServiceCommonOutput output = null;
@@ -115,8 +115,8 @@ public class MeetingCommand {
 		long meetingId = 0;
 		try {
 			meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
-			String mrn = request.getHeader("mrn");
-			String clientId = WebUtil.getClientIdByLoginTypeAndBackButtonAction(request);
+			final String mrn = request.getHeader("mrn");
+			final String clientId = WebUtil.getClientIdByLoginTypeAndBackButtonAction(request);
 			memberName = request.getHeader("memberName");
 			output = WebService.memberEndMeetingLogout(mrn, meetingId, request.getSession().getId(), memberName,
 					notifyVideoForMeetingQuit, clientId);
@@ -124,6 +124,9 @@ public class MeetingCommand {
 					&& StringUtils.isNotBlank(output.getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(output.getName(), output.getStatus().getCode(),
 						output.getStatus().getMessage(), "");
+				if(StringUtils.isNotBlank(request.getHeader("mrn"))) {
+					response.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(request.getHeader("mrn")));
+				}
 			}
 		} catch (Exception e) {
 			logger.error("System Error for meeting:" + meetingId, e);
@@ -594,13 +597,13 @@ public class MeetingCommand {
 		return result;
 	}
 
-	public static String memberLeaveProxyMeeting(HttpServletRequest request)
+	public static String memberLeaveProxyMeeting(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
 		JoinLeaveMeetingJSON output = null;
 		String result = null;
 		try {
-			String clientId = WebUtil.getClientIdByLoginTypeAndBackButtonAction(request);
+			final String clientId = WebUtil.getClientIdByLoginTypeAndBackButtonAction(request);
 			output = WebService.memberLeaveProxyMeeting(request.getParameter("meetingId"), request.getHeader("memberName"),
 					request.getSession().getId(), clientId);
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
@@ -608,6 +611,9 @@ public class MeetingCommand {
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING,
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(), "");
+				if(StringUtils.isNotBlank(request.getParameter("meetingId"))) {
+					response.setHeader(WebUtil.AUTH_TOKEN, JwtUtil.generateJwtToken(request.getParameter("meetingId")));
+				}
 			}
 		} catch (Exception e) {
 			logger.error("Error while leaveMeeting : " + e.getMessage(), e);

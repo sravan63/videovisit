@@ -188,9 +188,9 @@ public class MemberRestController{
 		String memberName = request.getHeader("memberName");
 		logger.debug("memberName=" + memberName);
 		if ("Y".equalsIgnoreCase(request.getParameter("isProxyMeeting"))) {
-			output = MeetingCommand.memberLeaveProxyMeeting(request);
+			output = MeetingCommand.memberLeaveProxyMeeting(request, response);
 		} else {
-			output = MeetingCommand.updateEndMeetingLogout(request, memberName, false);
+			output = MeetingCommand.updateEndMeetingLogout(request, response, memberName, false);
 		}
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
