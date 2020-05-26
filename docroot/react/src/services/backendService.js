@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios-observable';
+import $ from 'jquery';
 
 
 class BackendService extends React.Component {
@@ -115,7 +116,7 @@ class BackendService extends React.Component {
     keepAliveCookie(url){
          //Axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
          //Axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-        let headers = {
+        /*let headers = {
             "Access-Control-Allow-Origin": "*",
             'Access-Control-Allow-Credentials':true,
             'Content-Type': 'application/json',
@@ -127,7 +128,19 @@ class BackendService extends React.Component {
             },
             (err) => {
             console.log("Error");
-        });
+        });*/
+        $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'jsonp',
+                cache: false,
+                async: true,
+                crossDomain:true,
+                success: function(keepAliveData){               
+                },
+                error: function() {             
+                }
+            });
 
     }
 
