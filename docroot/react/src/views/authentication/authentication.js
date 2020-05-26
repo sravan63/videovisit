@@ -50,6 +50,7 @@ class Authentication extends React.Component {
             if (response.data && response.status == '200') {
                  browserNames = response.data;
                  this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
+                 sessionStorage.setItem('helpUrl',response.data.mdoHelpUrl);
                  sessionStorage.setItem('keepAlive',response.data.KEEP_ALIVE_URL);
                  if(Utilities.validateBrowserBlock(browserNames)){
                     this.setState({ isBrowserBlockError: true });
