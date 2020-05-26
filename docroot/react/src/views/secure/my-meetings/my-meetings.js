@@ -17,6 +17,7 @@ class MyMeetings extends React.Component {
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.signOff = this.signOff.bind(this);
+        this.keepAlive = 0;
         // this.joinMeeting = this.joinMeeting.bind(this);
     }
     componentDidMount() {
@@ -38,15 +39,23 @@ class MyMeetings extends React.Component {
         var isInAppAccess = UtilityService.getInAppAccessFlag();
         this.setState({isInApp: isInAppAccess});
         this.getBrowserBlockInfo();
+        
         var isTempAccess = this.state.userDetails.isTempAccess;
         if(sessionStorage.getItem('keepAlive') && !isTempAccess){
             var keepAliveUrl = sessionStorage.getItem('keepAlive');
             BackendService.keepAliveCookie(keepAliveUrl);
         }
+        if(!isTempAccess){
+            this.keepAlive = setInterval(() => {
+                var keepAliveUrl = sessionStorage.getItem('keepAlive');
+                BackendService.keepAliveCookie(keepAliveUrl);
+            }, 1200000);
+        }
     }
 
     componentWillUnmount() {
-        clearTimeout(this.interval);
+        window.clearInterval(this.interval);
+        window.clearInterval(this.keepAlive);
     }
     getBrowserBlockInfo(){
         var propertyName = 'browser',
