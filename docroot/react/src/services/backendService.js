@@ -111,6 +111,26 @@ class BackendService extends React.Component {
             });
 
     }
+
+    keepAliveCookie(url){
+         //Axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
+         //Axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+        let headers = {
+            "Access-Control-Allow-Origin": "*",
+            'Access-Control-Allow-Credentials':true,
+            'Content-Type': 'application/json',
+            crossorigin:true
+        };
+
+        Axios.get(url, {}, { headers: headers }).subscribe((response) => {
+            console.log("success");
+            },
+            (err) => {
+            console.log("Error");
+        });
+
+    }
+
     sendUserJoinLeaveStatus(meetingId,isPatient,joinLeaveMeeting,inMeetingDisplayName,loginType){
         let headers = {
             "inMeetingDisplayName": inMeetingDisplayName

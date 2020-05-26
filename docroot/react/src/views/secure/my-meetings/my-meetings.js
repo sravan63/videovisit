@@ -38,6 +38,11 @@ class MyMeetings extends React.Component {
         var isInAppAccess = UtilityService.getInAppAccessFlag();
         this.setState({isInApp: isInAppAccess});
         this.getBrowserBlockInfo();
+        var isTempAccess = this.state.userDetails.isTempAccess;
+        if(sessionStorage.getItem('keepAlive') && !isTempAccess){
+            var keepAliveUrl = sessionStorage.getItem('keepAlive');
+            BackendService.keepAliveCookie(keepAliveUrl);
+        }
     }
 
     componentWillUnmount() {
