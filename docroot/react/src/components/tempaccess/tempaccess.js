@@ -156,7 +156,7 @@ class TempAccess extends React.Component {
                         </div>
                     </div>) :
                     ('')}
-                    <form className="col-xs-12 col-md-12 login-form">
+                    <form className="col-xs-12 col-md-12 login-form" onSubmit={this.signOn}>
                         <p className="col-12 sub-text font-weight-bold">Patient's Information</p>
                         <div className="form-group">
                             <label className="col-sm-12 text-uppercase">Last Name</label>
@@ -182,7 +182,7 @@ class TempAccess extends React.Component {
                             </div> 
                         </div> 
                         <div className = "form-group mobile-submit mt-5" >
-                             <button type = "button" className = "btn rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled}>Sign In</button>
+                             <button type = "submit" className = "btn rounded-0 p-0 login-submit" id="login"  disabled={this.button.disabled}>Sign In</button>
                         </div>
                     </form>
                     {!this.props.data.isInApp ?(<button type="button" className="mobile-form-toggle mt-1 btn cancel-btn row" onClick={() => this.props.data.emit({isTemp: false})} >
