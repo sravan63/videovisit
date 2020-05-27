@@ -28,6 +28,7 @@ class Conference extends React.Component {
         this.list = [];
         this.handle = 0;
         this.runningLate = 0;
+        this.keepAlive = 0;
     }
 
     componentDidMount() {
@@ -57,6 +58,17 @@ class Conference extends React.Component {
             this.runningLate = setInterval(() => {
                 this.getRunningLateInfo();
             }, GlobalConfig.RUNNING_LATE_TIMER);
+            var isTempAccess = this.state.userDetails.isTempAccess;
+            if(sessionStorage.getItem('keepAlive') && !isTempAccess){
+            var keepAliveUrl = sessionStorage.getItem('keepAlive');
+            BackendService.keepAliveCookie(keepAliveUrl);
+            }
+            if(!isTempAccess){
+            this.keepAlive = setInterval(() => {
+                var keepAliveUrl = sessionStorage.getItem('keepAlive');
+                BackendService.keepAliveCookie(keepAliveUrl);
+            }, 1200000);
+            }
 
         } else {
             if(sessionStorage.getItem('guestCode')){
@@ -334,6 +346,7 @@ class Conference extends React.Component {
         // clear on component unmount
         window.clearInterval(this.handle);
         window.clearInterval(this.runningLate);
+        window.clearInterval(this.keepAlive);
         this.subscription.unsubscribe();
         if(this.state.isGuest == true){
             var isGuestLeave = sessionStorage.getItem('guestLeave');
