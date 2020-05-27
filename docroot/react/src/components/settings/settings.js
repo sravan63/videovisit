@@ -16,6 +16,7 @@ class Settings extends React.Component {
         super(props);
         this.list = [];
         this.state = { data: {}, media: {}, constrains: {}, settingstoggle: true , isbrowsercheck: false};
+        this.handleClickOutside = this.handleClickOutside.bind(this);
     }
 
     componentDidMount() {
@@ -38,7 +39,7 @@ class Settings extends React.Component {
                     break;
             }
         });
-        document.addEventListener('click', this.handleClickOutside.bind(this), true);
+        document.addEventListener('click', this.handleClickOutside, true);
         var browserInfo = Utilities.getBrowserInformation();
         if (browserInfo.isSafari || browserInfo.isFireFox) {
             this.setState({ isbrowsercheck: true })
@@ -93,7 +94,7 @@ class Settings extends React.Component {
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
-        document.removeEventListener('click', this.handleClickOutside.bind(this), true);
+        document.removeEventListener('click', this.handleClickOutside, true);
         this.subscription.unsubscribe();
     }
 
