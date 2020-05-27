@@ -21,7 +21,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = { userDetails: {}, isRearCamera:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -29,6 +29,10 @@ class Conference extends React.Component {
         this.handle = 0;
         this.runningLate = 0;
         this.keepAlive = 0;
+        this.overlayTimer = 0;
+        this.timerForLeaveMeeting = 0;
+        this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
+        this.stayinMeeting = this.stayinMeeting.bind(this);
     }
 
     componentDidMount() {
@@ -103,6 +107,18 @@ class Conference extends React.Component {
             this.setState({ isIOS: true });
         }
 
+        if(sessionStorage.getItem('overlayDisplayed')){
+            setTimeout(() => {
+                this.showOverlayView(true);
+            }, 5000);
+        }
+
+        if(sessionStorage.getItem('isValidInteraction')){
+            setTimeout(() => {
+                 this.startTimerforLeaveMeeting();
+            }, 5000);
+        }
+
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.HOST_AVAIL:
@@ -110,11 +126,15 @@ class Conference extends React.Component {
                     this.toggleDockView(false);
                     this.handleTimer(false);
                     window.clearInterval(this.runningLate);
+                    window.clearTimeout(this.overlayTimer);
+                    window.clearTimeout(this.timerForLeaveMeeting);
                     break;
                 case GlobalConfig.HOST_LEFT:
                     this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
                     this.toggleDockView(false);
                     this.handleTimer(true);
+                    sessionStorage.setItem('isValidInteraction',true);
+                    this.startTimerforLeaveMeeting();
                     break;
                 case GlobalConfig.HAS_MORE_PARTICIPANTS:
                     this.setState({ hostavail: false, moreparticpants: true });
@@ -229,6 +249,39 @@ class Conference extends React.Component {
         else{
             window.clearInterval(this.handle);
         }
+    }
+
+    startTimerforLeaveMeeting(){
+        this.timerForLeaveMeeting = setTimeout(() => {
+                this.setState({showOverlay: true});
+                this.showOverlayView();
+            }, 600000);
+    }
+
+    showOverlayView(param){
+        if(param){
+        this.setState({showOverlay: true});
+        }
+        sessionStorage.setItem('overlayDisplayed',true);
+        sessionStorage.removeItem('isValidInteraction');
+        this.overlayTimer = setTimeout(() => {
+            this.setState({showOverlay: false});
+            this.leaveMeeting();
+        }, 60000);
+    }
+
+    stayinMeeting(){
+         sessionStorage.removeItem('overlayDisplayed');
+         clearTimeout(this.overlayTimer);
+         clearTimeout(this.timerForLeaveMeeting);
+         this.setState({showOverlay: false});
+         this.startTimerforLeaveMeeting();
+         sessionStorage.setItem('isValidInteraction',true);
+    }
+
+    leaveOverlayMeeting(){
+        this.setState({showOverlay: false});
+        this.leaveMeeting();
     }
 
     toggleDockView(isDock) {
@@ -347,6 +400,8 @@ class Conference extends React.Component {
         window.clearInterval(this.handle);
         window.clearInterval(this.runningLate);
         window.clearInterval(this.keepAlive);
+        window.clearTimeout(this.overlayTimer);
+        window.clearTimeout(this.timerForLeaveMeeting);
         this.subscription.unsubscribe();
         if(this.state.isGuest == true){
             var isGuestLeave = sessionStorage.getItem('guestLeave');
@@ -395,6 +450,8 @@ class Conference extends React.Component {
     leaveMeeting(isFromBackButton) {
         this.setState({ leaveMeeting: true });
         sessionStorage.removeItem('memberAlone');
+        sessionStorage.removeItem('isValidInteraction');
+        sessionStorage.removeItem('overlayDisplayed');
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         var inAppAccess = Utilities.getInAppAccessFlag();
         if(isDirectLaunch || inAppAccess){
@@ -517,6 +574,17 @@ class Conference extends React.Component {
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
                 {this.state.showLoader ? (<Loader />):('')}
+                {this.state.showOverlay ? (
+                    <div id="leaveMeetingPopup" className="leaveMeeting-popup">
+                        <div className="popup-content">
+                            <h3>Leaving Visit</h3>
+                            <h4>Your video visit session is going to end, unless you choose Stay.</h4>
+                            <div className= "overlayButton">
+                            <button type="button" className="leave" onClick={this.leaveOverlayMeeting} >Leave Room</button>
+                            <button type="button" className="stay" onClick={this.stayinMeeting}>Stay</button>
+                            </div>
+                        </div>
+                    </div>):('')}
                 <div className="conference-header row">
                     <div className="col-md-8 banner-content">
                         <div className="logo"></div>
