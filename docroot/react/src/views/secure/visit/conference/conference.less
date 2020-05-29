@@ -20,24 +20,24 @@
             .overlayButton{
                 text-align: right;
                 margin-top: 2rem;
-            }
-            .leave{
+                .leave{
                 color: #006BA6;
                 border: 1px solid #006BA6;
                 background-color: #FFFFFF;
                 font-size: 16px;
                 cursor: pointer;
                 height: 2.5rem;
-                width: 7rem;
-            } 
-            .stay{
+                width: 8rem;
+                } 
+                .stay{
                 background: #006ba6;
                 border: 1px solid #006BA6;
                 cursor: pointer;
                 color: #FFF;
                 height: 2.5rem;
-                width: 7rem;
+                width: 8rem;
                 margin-left: 1rem;
+                }
             }
         }
     }
@@ -281,6 +281,15 @@
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .conference-page {
+        .leaveMeeting-popup{
+            .popup-content {
+                .overlayButton{
+                    .leave, .stay{
+                        width: 8rem;
+                    }
+                }
+            }
+        }
         .video-conference-container {
             .col-md-10 {
                 max-width: 100% !important;
@@ -308,6 +317,13 @@
         .leaveMeeting-popup{
             .popup-content {
                 width: 80% !important;
+                .overlayButton{
+                    .leave, .stay{
+                        width: 7rem;
+                        font-size: 14px !important;
+                    }
+                }
+
             }
         }
 
