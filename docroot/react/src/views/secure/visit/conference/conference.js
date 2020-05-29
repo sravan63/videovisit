@@ -107,6 +107,12 @@ class Conference extends React.Component {
             this.setState({ isIOS: true });
         }
 
+        if(sessionStorage.getItem('hostleft')){
+            setTimeout(() => {
+                 this.startTimerforLeaveMeeting();
+            }, 6000);
+        }
+
         if(sessionStorage.getItem('overlayDisplayed')){
             setTimeout(() => {
                 this.showOverlayView(true);
@@ -264,6 +270,7 @@ class Conference extends React.Component {
         }
         sessionStorage.setItem('overlayDisplayed',true);
         sessionStorage.removeItem('isValidInteraction');
+        sessionStorage.removeItem('hostleft');
         this.overlayTimer = setTimeout(() => {
             this.setState({showOverlay: false});
             this.leaveMeeting();
@@ -452,6 +459,7 @@ class Conference extends React.Component {
         sessionStorage.removeItem('memberAlone');
         sessionStorage.removeItem('isValidInteraction');
         sessionStorage.removeItem('overlayDisplayed');
+        sessionStorage.removeItem('hostleft');
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         var inAppAccess = Utilities.getInAppAccessFlag();
         if(isDirectLaunch || inAppAccess){

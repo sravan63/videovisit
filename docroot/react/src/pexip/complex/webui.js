@@ -856,6 +856,7 @@ export function toggleWaitingRoom(pexipParticipantsList) {
             if (hostDirtyThisMeeting) {
                 //Half waiting room
                 MessageService.sendMessage(GlobalConfig.HAS_MORE_PARTICIPANTS, null);
+                sessionStorage.setItem('hostleft',true);
             } else {
                 // Full waiting room
                 MessageService.sendMessage(GlobalConfig.HOST_LEFT, null);
