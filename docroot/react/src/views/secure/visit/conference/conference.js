@@ -139,8 +139,10 @@ class Conference extends React.Component {
                     this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
                     this.toggleDockView(false);
                     this.handleTimer(true);
-                    sessionStorage.setItem('isValidInteraction',true);
-                    this.startTimerforLeaveMeeting();
+                    if(sessionStorage.getItem('isTrueHost')){
+                        sessionStorage.setItem('isValidInteraction',true);    
+                        this.startTimerforLeaveMeeting();
+                    }
                     break;
                 case GlobalConfig.HAS_MORE_PARTICIPANTS:
                     this.setState({ hostavail: false, moreparticpants: true });
@@ -460,6 +462,7 @@ class Conference extends React.Component {
         sessionStorage.removeItem('isValidInteraction');
         sessionStorage.removeItem('overlayDisplayed');
         sessionStorage.removeItem('hostleft');
+        sessionStorage.removeItem('isTrueHost');
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         var inAppAccess = Utilities.getInAppAccessFlag();
         if(isDirectLaunch || inAppAccess){
