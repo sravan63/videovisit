@@ -192,6 +192,7 @@ class ConferenceDetails extends React.Component {
                 this.setState({
                     hostDetails: { hostInCall: true, uuid: data.uuid }
                 });
+                sessionStorage.setItem('isTrueHost',true);
                 isHostValidation = true;
             }
         } else {
