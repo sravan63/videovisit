@@ -603,6 +603,7 @@ $(document).ready(function() {
 		    	if(appOS != 'iOS'){	        	
 	        	$("#layover").show();		        	
         		}
+        	}
 	    });
 
 		return false;
