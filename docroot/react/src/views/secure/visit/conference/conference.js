@@ -176,7 +176,13 @@ class Conference extends React.Component {
                     if (localStorage.getItem('selectedPeripherals') == null) {    
                     localStorage.setItem('selectedPeripherals', JSON.stringify(constrains));
                     }
-                    this.startPexip(this.state.meetingDetails); 
+                    this.startPexip(this.state.meetingDetails);
+                    var isDirectLaunch = localStorage.getItem('isDirectLaunch');
+                    if( !isDirectLaunch ) {
+                    MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
+                        meetingDetails: this.state.meetingDetails
+                    });
+                    } 
                     break;
                 case GlobalConfig.CAMERA_FLIP:
                     this.setState({isMirrorView: message.data});    
@@ -321,12 +327,7 @@ class Conference extends React.Component {
                 MediaService.loadDeviceMediaData();
                 var turnServerInfo = data.vendorConfig;
                 sessionStorage.setItem('turnServer', JSON.stringify(turnServerInfo));
-                var isDirectLaunch = localStorage.getItem('isDirectLaunch');
-                if( !isDirectLaunch ) {
-                    MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
-                        meetingDetails: this.state.meetingDetails
-                    });
-                }
+                
             } else {
                 // Do nothing
             }
