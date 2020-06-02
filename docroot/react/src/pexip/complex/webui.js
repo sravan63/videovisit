@@ -386,8 +386,19 @@ function remoteDisconnect(reason) {
     window.removeEventListener('beforeunload', finalise);
 }
 
+function handleRequestTimeout(reason) {
+    if(reason == 'Error connecting to conference' && rtc.error == "Timeout sending request: request_token") {
+        MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
+            heading: 'Unable to join', 
+            message : 'Content: Please try again. (ID: token)',
+            controls : [{label: 'OK', type: 'leave'} ]
+        });
+    }
+}
+
 function handleError(reason) {
     log("error", "handleError", "event: inside handleError reason :" + reason);
+    handleRequestTimeout(reason);
     //    console.log("HandleError");
     //    console.log(reason);
     if (video && !selfvideo.src && new Date() - startTime > 30000) {
@@ -668,7 +679,7 @@ export function switchDevices(constrain, device = null) {
     rtc.renegotiate();
 }
 
-export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj) {
+export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj, config) {
     console.log("inside webui initialise");
     log('info', 'initialise', "event: video visit initialise");
 
@@ -716,6 +727,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
 
     window.addEventListener('beforeunload', finalise);
 
+    rtc.requestTimeout = config.clientAPI ? config.clientAPI.reqTokenTimeOut * 1000 : 60000;
     rtc.onSetup = doneSetup;
     rtc.onConnect = connected;
     rtc.onError = handleError;

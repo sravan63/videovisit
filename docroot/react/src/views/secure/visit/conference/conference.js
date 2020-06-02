@@ -2,6 +2,7 @@ import React from "react";
 /*import * as mainWebrtc from '../../../../pexip/complex/desktop-main-webrtc.js';*/
 import Header from '../../../../components/header/header';
 import Loader from '../../../../components/loader/loader';
+import VVModal from '../../../../modals/modal';
 import BackendService from '../../../../services/backendService.js';
 import Utilities from '../../../../services/utilities-service.js';
 import './conference.less';
@@ -33,6 +34,11 @@ class Conference extends React.Component {
         this.timerForLeaveMeeting = 0;
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
+        this.leaveVisitPopupOptions = { 
+            heading: 'Leave Visit', 
+            message : 'Your video visit session is going to end, unless you choose Stay.',
+            controls : [{label: 'Leave Room', type: 'leave'}, {label: 'Stay', type: 'stay'} ]
+        };
     }
 
     componentDidMount() {
@@ -127,6 +133,9 @@ class Conference extends React.Component {
 
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
+                case GlobalConfig.CLOSE_MODAL:
+                    this.vvModalClosed(message.data);
+                    break;
                 case GlobalConfig.HOST_AVAIL:
                     this.setState({ hostavail: true, videofeedflag: true, moreparticpants: false });
                     this.toggleDockView(false);
@@ -267,35 +276,46 @@ class Conference extends React.Component {
 
     startTimerforLeaveMeeting(){
         this.timerForLeaveMeeting = setTimeout(() => {
-                this.setState({showOverlay: true});
+                // this.setState({showOverlay: true});
+                MessageService.sendMessage(GlobalConfig.OPEN_MODAL, this.leaveVisitPopupOptions);
                 this.showOverlayView();
             }, 600000);
     }
 
     showOverlayView(param){
         if(param){
-        this.setState({showOverlay: true});
+            // this.setState({showOverlay: true});
+            MessageService.sendMessage(GlobalConfig.OPEN_MODAL, this.leaveVisitPopupOptions);
         }
         sessionStorage.setItem('overlayDisplayed',true);
         sessionStorage.removeItem('isValidInteraction');
         sessionStorage.removeItem('hostleft');
         this.overlayTimer = setTimeout(() => {
-            this.setState({showOverlay: false});
+            // this.setState({showOverlay: false});
+            MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
             this.leaveMeeting();
         }, 60000);
+    }
+
+    vvModalClosed(data){
+        if(data.type == 'stay'){
+            this.stayinMeeting();
+        } else if(data.type == 'leave'){
+            this.leaveOverlayMeeting();
+        }
     }
 
     stayinMeeting(){
          sessionStorage.removeItem('overlayDisplayed');
          clearTimeout(this.overlayTimer);
          clearTimeout(this.timerForLeaveMeeting);
-         this.setState({showOverlay: false});
+         // this.setState({showOverlay: false});
          this.startTimerforLeaveMeeting();
          sessionStorage.setItem('isValidInteraction',true);
     }
 
     leaveOverlayMeeting(){
-        this.setState({showOverlay: false});
+        // this.setState({showOverlay: false});
         this.leaveMeeting();
     }
 
@@ -401,8 +421,9 @@ class Conference extends React.Component {
             };
             localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         }
+        const config = meeting.vendorConfig;
         MessageService.sendMessage(GlobalConfig.ACCESS_MEMBER_NAME, null);
-        WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);
+        WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source, null, config);
     }
 
     componentWillUnmount() {
@@ -586,17 +607,7 @@ class Conference extends React.Component {
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
                 {this.state.showLoader ? (<Loader />):('')}
-                {this.state.showOverlay ? (
-                    <div id="leaveMeetingPopup" className="leaveMeeting-popup">
-                        <div className="popup-content">
-                            <h3>Leaving Visit</h3>
-                            <h4>Your video visit session is going to end, unless you choose Stay.</h4>
-                            <div className= "overlayButton">
-                            <button type="button" className="leave" onClick={this.leaveOverlayMeeting} >Leave Room</button>
-                            <button type="button" className="stay" onClick={this.stayinMeeting}>Stay</button>
-                            </div>
-                        </div>
-                    </div>):('')}
+                <VVModal />
                 <div className="conference-header row">
                     <div className="col-md-8 banner-content">
                         <div className="logo"></div>

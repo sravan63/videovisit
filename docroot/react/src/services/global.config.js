@@ -75,7 +75,10 @@ const GlobalConfig = {
     ERROR_PAGE: _rootUrl + 'authenticationFailed',
     ENABLE_IOS_CAM:'Enable IOS cam',
     INAPP_LEAVEMEETING:'Leave Meeting InApp',
-    CAMERA_FLIP:'Show Mirror Image'
+    CAMERA_FLIP:'Show Mirror Image',
+    OPEN_MODAL: 'open popup',
+    CLOSE_MODAL: 'popup closed',
+    CLOSE_MODAL_AUTOMATICALLY: 'close popup automatically'
 };
 
 export default GlobalConfig;

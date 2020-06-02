@@ -203,6 +203,7 @@ export function b2p(val) {
 export function PexRTCCall() {
     var self = this;
 
+    self.requestTimeout = 60000;
     self.state = 'IDLE';
     self.parent = null;
     self.bandwidth_in = 1280;
@@ -2447,8 +2448,10 @@ PexRTC.prototype.requestToken = function(cb) {
         if (self.conference_extension) {
             params.conference_extension = self.conference_extension;
         }
-
-        self.sendRequest("request_token", params, function(evt) { self.tokenRequested(evt, cb); }, "POST", 10, 60000);
+        var timeout = self.requestTimeout;
+        self.sendRequest("request_token", params, function(evt) { 
+            self.tokenRequested(evt, cb); 
+        }, "POST", 10, timeout);
     } else if (cb) {
         cb();
     }
