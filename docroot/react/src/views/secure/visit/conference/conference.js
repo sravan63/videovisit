@@ -143,6 +143,8 @@ class Conference extends React.Component {
                     window.clearInterval(this.runningLate);
                     window.clearTimeout(this.overlayTimer);
                     window.clearTimeout(this.timerForLeaveMeeting);
+                    MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+                    sessionStorage.removeItem('overlayDisplayed');
                     break;
                 case GlobalConfig.HOST_LEFT:
                     this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
