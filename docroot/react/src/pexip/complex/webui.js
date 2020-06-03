@@ -387,10 +387,11 @@ function remoteDisconnect(reason) {
 }
 
 function handleRequestTimeout(reason) {
-    if(reason == 'Error connecting to conference' && rtc.error == "Timeout sending request: request_token") {
+    var isTimeOutError = rtc.error == "Timeout sending request: request_token" || rtc.error == "Timeout sending request: refresh_token";
+    if( reason == 'Error connecting to conference' && isTimeOutError ) {
         MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
             heading: 'Unable to join', 
-            message : 'Content: Please try again. (ID: token)',
+            message : 'Please try again. (ID: token)',
             controls : [{label: 'OK', type: 'leave'} ]
         });
     }
@@ -728,6 +729,11 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     window.addEventListener('beforeunload', finalise);
 
     rtc.requestTimeout = config.clientAPI ? config.clientAPI.reqTokenTimeOut * 1000 : 60000;
+    rtc.refreshProperties = {
+        timeout : config.clientAPI ? config.clientAPI.refTokenTimeOut * 1000 : 60000,
+        interval : config.clientAPI ? config.clientAPI.refDefaultInterval : 120,
+        retries : config.clientAPI ? Number(config.clientAPI.refRetryInterval) : undefined
+    };
     rtc.onSetup = doneSetup;
     rtc.onConnect = connected;
     rtc.onError = handleError;

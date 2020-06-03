@@ -204,6 +204,7 @@ export function PexRTCCall() {
     var self = this;
 
     self.requestTimeout = 60000;
+    self.refreshProperties = { timeout : 60000, interval : 120, retries : undefined};
     self.state = 'IDLE';
     self.parent = null;
     self.bandwidth_in = 1280;
@@ -2448,10 +2449,10 @@ PexRTC.prototype.requestToken = function(cb) {
         if (self.conference_extension) {
             params.conference_extension = self.conference_extension;
         }
-        var timeout = self.requestTimeout;
+        
         self.sendRequest("request_token", params, function(evt) { 
             self.tokenRequested(evt, cb); 
-        }, "POST", 10, timeout);
+        }, "POST", 10, self.requestTimeout);
     } else if (cb) {
         cb();
     }
@@ -2601,8 +2602,8 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
     }
 
     if (!self.token_refresh && self.token) {
-        var expires = msg.result.expires || 120;
-        self.token_refresh = setInterval(self.refreshToken.bind(this), (expires * 1000) / 3);
+        var expires = self.refreshProperties.interval; // msg.result.expires || 120;
+        self.token_refresh = setInterval(self.refreshToken.bind(this), (expires * 1000)); // (expires * 1000) / 3
 
         self.sendRequest("conference_status", null, function(e) {
             self.onLog("conference_status");
@@ -2642,7 +2643,7 @@ PexRTC.prototype.refreshToken = function() {
         } else {
             return self.handleError(msg.result || msg.reason);
         }
-    });
+    }, 'POST', self.refreshProperties.retries, self.refreshProperties.timeout);
 };
 
 PexRTC.prototype.createEventSource = function() {
