@@ -140,7 +140,6 @@ class Conference extends React.Component {
                     this.setState({ hostavail: true, videofeedflag: true, moreparticpants: false });
                     this.toggleDockView(false);
                     this.handleTimer(false);
-                    window.clearInterval(this.runningLate);
                     window.clearTimeout(this.overlayTimer);
                     window.clearTimeout(this.timerForLeaveMeeting);
                     MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
@@ -360,6 +359,9 @@ class Conference extends React.Component {
     }
 
     getRunningLateInfo() {
+        if(this.state.hostavail == true){
+            return;
+        }
         var meetingId = this.state.meetingId,
             loginType = this.state.loginType,
             url = "providerRunningLateInfo.json";
