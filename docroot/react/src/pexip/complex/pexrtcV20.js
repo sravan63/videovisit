@@ -2636,6 +2636,7 @@ PexRTC.prototype.refreshToken = function() {
             self.token = msg.result.token;
             if(self.refreshTokenProperties.retryTimer){
                 clearInterval(self.refreshTokenProperties.retryTimer);
+                self.refreshTokenProperties.retryTimer = null;
             }
             if (msg.result.role != self.role) {
                 self.role = msg.result.role;

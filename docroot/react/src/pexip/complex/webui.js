@@ -392,6 +392,7 @@ function handleError(reason) {
     if( isTimeOutError ) {
         if(rtc.refreshTokenProperties.retryTimer){
             clearInterval(rtc.refreshTokenProperties.retryTimer);
+            rtc.refreshTokenProperties.retryTimer = null;
         }
         MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
             heading: 'Unable to join', 
