@@ -204,7 +204,7 @@ export function PexRTCCall() {
     var self = this;
 
     self.requestTimeout = 60000;
-    self.refreshProperties = { timeout : 60000, interval : 120, retries : undefined};
+    self.refreshTokenProperties = { timeout : 60000, interval : 120, retries : 2, retryTimer: null};
     self.state = 'IDLE';
     self.parent = null;
     self.bandwidth_in = 1280;
@@ -2602,7 +2602,7 @@ PexRTC.prototype.tokenRequested = function(e, cb) {
     }
 
     if (!self.token_refresh && self.token) {
-        var expires = self.refreshProperties.interval; // msg.result.expires || 120;
+        var expires = self.refreshTokenProperties.interval; // msg.result.expires || 120;
         self.token_refresh = setInterval(self.refreshToken.bind(this), (expires * 1000)); // (expires * 1000) / 3
 
         self.sendRequest("conference_status", null, function(e) {
@@ -2634,6 +2634,9 @@ PexRTC.prototype.refreshToken = function() {
         }
         if (e.target.status == 200) {
             self.token = msg.result.token;
+            if(self.refreshTokenProperties.retryTimer){
+                clearInterval(self.refreshTokenProperties.retryTimer);
+            }
             if (msg.result.role != self.role) {
                 self.role = msg.result.role;
                 if (self.onRoleUpdate) {
@@ -2643,7 +2646,7 @@ PexRTC.prototype.refreshToken = function() {
         } else {
             return self.handleError(msg.result || msg.reason);
         }
-    }, 'POST', self.refreshProperties.retries, self.refreshProperties.timeout);
+    }, 'POST', 10, self.refreshTokenProperties.timeout);
 };
 
 PexRTC.prototype.createEventSource = function() {

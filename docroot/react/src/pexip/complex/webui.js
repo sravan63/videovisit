@@ -386,26 +386,28 @@ function remoteDisconnect(reason) {
     window.removeEventListener('beforeunload', finalise);
 }
 
-function handleRequestTimeout(reason) {
-    var isTimeOutError = rtc.error == "Timeout sending request: request_token" || rtc.error == "Timeout sending request: refresh_token";
-    if( reason == 'Error connecting to conference' && isTimeOutError ) {
+function handleError(reason) {
+    log("error", "handleError", "event: inside handleError reason :" + reason);
+    var isTimeOutError = rtc.error == "Timeout sending request: request_token" || reason == "Call Failed: Invalid token"; // || rtc.error == "Error sending request: calls";
+    if( isTimeOutError ) {
+        if(rtc.refreshTokenProperties.retryTimer){
+            clearInterval(rtc.refreshTokenProperties.retryTimer);
+        }
         MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
             heading: 'Unable to join', 
             message : 'Please try again. (ID: token)',
             controls : [{label: 'OK', type: 'leave'} ]
         });
+    } else if( rtc.error == "Timeout sending request: refresh_token" || rtc.error == "Error sending request: refresh_token") {
+        if(!rtc.refreshTokenProperties.retryTimer){
+            rtc.refreshTokenProperties.retryTimer = setInterval(rtc.refreshToken.bind(this), (rtc.refreshTokenProperties.retries * 1000));
+        }
+    } else {
+        if (video && !selfvideo.src && new Date() - startTime > 30000) {
+            reason = "WebSocket connection error.";
+        }
+        remoteDisconnect(reason);
     }
-}
-
-function handleError(reason) {
-    log("error", "handleError", "event: inside handleError reason :" + reason);
-    handleRequestTimeout(reason);
-    //    console.log("HandleError");
-    //    console.log(reason);
-    if (video && !selfvideo.src && new Date() - startTime > 30000) {
-        reason = "WebSocket connection error.";
-    }
-    remoteDisconnect(reason);
 }
 
 function doneSetup(url, pin_status, conference_extension) {
@@ -729,10 +731,11 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     window.addEventListener('beforeunload', finalise);
 
     rtc.requestTimeout = config.clientAPI ? config.clientAPI.reqTokenTimeOut * 1000 : 60000;
-    rtc.refreshProperties = {
+    rtc.refreshTokenProperties = {
         timeout : config.clientAPI ? config.clientAPI.refTokenTimeOut * 1000 : 60000,
         interval : config.clientAPI ? config.clientAPI.refDefaultInterval : 120,
-        retries : config.clientAPI ? Number(config.clientAPI.refRetryInterval) : undefined
+        retries : config.clientAPI ? Number(config.clientAPI.refRetryInterval) : 2,
+        retryTimer : null
     };
     rtc.onSetup = doneSetup;
     rtc.onConnect = connected;
