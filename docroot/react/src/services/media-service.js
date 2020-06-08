@@ -23,6 +23,7 @@ class MediaService extends React.Component {
         if(browserInfo.isSafari || browserInfo.isFireFox) {
           navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
               console.log('Stream1 started with success');
+              window.localStream = stream;
               this.setDevice();
           }).catch((error)=>{ 
               this.handleError(error);
@@ -49,6 +50,12 @@ class MediaService extends React.Component {
      });
     }
 
+    stopAudio(){
+      localStream.getTracks().forEach( (track) => {
+        track.stop();
+      });
+    }
+
     // Gets the list of devices on load.
     gotDevicesList(devices){
         this.sergigateMediaByKind(devices);
@@ -73,7 +80,7 @@ class MediaService extends React.Component {
     handleError(error){
         var ErrorMsg = error.message;
         if(ErrorMsg =='Failed starting capture of a audio track'){
-          alert("Unable to join : Looks like you're a phone call, hangup and refresh page to join.");
+          alert("Unable to join: Looks like you're on a phone call, hangup and refresh page to join.");
         }
         console.log('Media Service - Error Occured :: '+error);
     }

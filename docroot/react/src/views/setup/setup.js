@@ -66,7 +66,8 @@ class Setup extends React.Component {
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
-        this.subscription.unsubscribe();
+        //this.subscription.unsubscribe();
+        window.location.reload();
     }
     getBrowserBlockInfo(){
         var propertyName = 'browser',
@@ -134,6 +135,10 @@ class Setup extends React.Component {
 
     startTest() {
         this.setState({ loadingSetup: true });
+        var browserInfo = UtilityService.getBrowserInformation();
+        if(browserInfo.isSafari || browserInfo.isFireFox) {
+          MediaService.stopAudio();
+        }
         const data = this.state.constrains;
         localStorage.setItem('selectedPeripherals', JSON.stringify(data));
         const url = 'createSetupWizardMeeting.json';
@@ -151,7 +156,7 @@ class Setup extends React.Component {
                     source = "Join+Conference",
                     name = meeting.member.inMeetingDisplayName;
                 localStorage.setItem('isSetupPage', true);
-                WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source);
+                WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source, null, null);
             } else {
                 this.setState({ loadingSetup: false });
             }

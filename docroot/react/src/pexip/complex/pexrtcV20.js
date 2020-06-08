@@ -2149,6 +2149,8 @@ PexRTMP.prototype.getMediaStatistics = function() {
 export function PexRTC() {
     var self = this;
     self.state = 'IDLE';
+    self.requestTimeout = 60000;
+    self.refreshTokenProperties = { timeout : 60000, interval : 120, retries : 2, retryTimer: null};
     self.conference = null;
     self.conference_uri = '';
     self.role = null;

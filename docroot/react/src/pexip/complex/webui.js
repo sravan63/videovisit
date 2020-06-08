@@ -731,6 +731,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
 
     window.addEventListener('beforeunload', finalise);
 
+    if(config){
     rtc.requestTimeout = config.clientAPI ? config.clientAPI.reqTokenTimeOut * 1000 : 60000;
     rtc.refreshTokenProperties = {
         timeout : config.clientAPI ? config.clientAPI.refTokenTimeOut * 1000 : 60000,
@@ -738,6 +739,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
         retries : config.clientAPI ? Number(config.clientAPI.refRetryInterval) : 2,
         retryTimer : null
     };
+    }
     rtc.onSetup = doneSetup;
     rtc.onConnect = connected;
     rtc.onError = handleError;
