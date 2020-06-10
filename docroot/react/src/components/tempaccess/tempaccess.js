@@ -156,7 +156,7 @@ class TempAccess extends React.Component {
                         </div>
                     </div>) :
                     ('')}
-                    <form className="col-xs-12 col-md-12 login-form" onSubmit={this.signOn}>
+                    <form className="col-xs-12 col-md-12 login-form" onSubmit={this.signOn} noValidate>
                         <p className="col-12 sub-text font-weight-bold">Patient's Information</p>
                         <div className="form-group">
                             <label className="col-sm-12 text-uppercase">Last Name</label>
