@@ -534,7 +534,11 @@ $(document).ready(function() {
 	            	else
 	            		window.location.replace("logout.htm");
 	            		 },
-		        beforeSend: function () {		        	
+		        beforeSend: function () {
+		        var appOS = getAppOS();
+		    		if(appOS != 'iOS'){	        	
+	        			$("#layover").show();		        	
+        			}
 	        	//$("#layover").show();		        	
 	        	}
 		    });
@@ -596,6 +600,10 @@ $(document).ready(function() {
 	        	window.location.replace(VIDEO_VISITS_MOBILE.Path.guestlogout.logout_ui);
 	        },
 	        beforeSend: function () {
+	        	var appOS = getAppOS();
+		    	if(appOS != 'iOS'){	        	
+	        		$("#layover").show();		        	
+        		}
 	        	//$("#layover").show();		        	
         	}
 	    });
