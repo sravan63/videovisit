@@ -27,9 +27,10 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {}, media: {}, constrains: {}, startTest: false, userLoggedIn: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:''};
+        this.state = { data: {}, userDetails: {}, media: {}, constrains: {}, startTest: false, userLoggedIn: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:''};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
+        this.signOut = this.signOut.bind(this);
     }
 
     componentDidMount() {
@@ -44,7 +45,9 @@ class Setup extends React.Component {
                 case GlobalConfig.TEST_CALL_FINISHED:
                     this.doneSetupTest();
                     break;
-
+                case GlobalConfig.SETUPLOGOUT:
+                     this.signOut();     
+                     break;
                 case GlobalConfig.MEDIA_DATA_READY:
                     this.list = message.data;
                     this.setState({ media: this.list });
@@ -66,9 +69,36 @@ class Setup extends React.Component {
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
-        //this.subscription.unsubscribe();
+        this.subscription.unsubscribe();
         window.location.reload();
     }
+
+    signOut(){
+      const udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('LoginUserDetails')));
+      this.state.userDetails = udata;
+      localStorage.clear();
+        var loginType;
+        var headers = {},
+            data = this.state.userDetails;
+        if (data.isTempAccess) {
+            headers.authtoken = data.ssoSession;
+            loginType = GlobalConfig.LOGIN_TYPE.TEMP;
+        } else {
+            headers.ssoSession = data.ssoSession;
+            loginType = GlobalConfig.LOGIN_TYPE.SSO;
+        }
+        BackendService.logout(headers, loginType).subscribe((response) => {
+            if (response.data != "" && response.data != null && response.data.statusCode == 200) {
+                this.props.history.push('/login');
+            } else {
+                this.props.history.push('/login');
+            }
+        }, (err) => {
+            this.props.history.push('/login');
+
+        });
+    }
+
     getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",

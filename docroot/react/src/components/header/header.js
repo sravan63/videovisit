@@ -35,7 +35,13 @@ class header extends React.Component {
             }
         }
         signOffMethod() {
-            MessageService.sendMessage(GlobalConfig.LOGOUT, null);
+            var isSetup = window.location.href.indexOf('setup') > -1;
+            if(isSetup){
+                MessageService.sendMessage(GlobalConfig.SETUPLOGOUT, null);
+            }
+            else{
+                MessageService.sendMessage(GlobalConfig.LOGOUT, null);
+            }
 
         }
         render() {
