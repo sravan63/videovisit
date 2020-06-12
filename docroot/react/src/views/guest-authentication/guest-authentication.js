@@ -34,8 +34,8 @@ class Authentication extends React.Component {
             sessionStorage.setItem('meetingCodeval',this.state.meetingCode);
         }
         this.setState({ showLoader: true });
-        var getMe = UtilityService.getBrowserInformation();
-       if(getMe.isIE == false){
+        var browserInfo = UtilityService.getBrowserInformation();
+       if(!browserInfo.isIE){
         BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 this.setState({ NotLoggedIn: true, showLoader: false, authToken:response.headers.authtoken });
@@ -214,7 +214,7 @@ class Authentication extends React.Component {
              {this.state.showLoader ? (<Loader />):('')}
               {this.state.NotLoggedIn ?  (  
                 <div>
-             <div className="guest-main-content">
+             <div className={this.state.ReJoin ? "guest-main-content rejoinchk":"guest-main-content"}>
                 {this.state.errorlogin ? 
                     <div className="row error-text">
                          <p className="col-sm-12">{this.state.displayErrorMsg}</p>
