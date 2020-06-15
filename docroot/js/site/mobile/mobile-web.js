@@ -450,11 +450,7 @@ $(document).ready(function() {
 	 $(".button-launch-visit").click(function(event) {
 		//var inAppBrowserFlag = $('#inAppBrowserFlag').val();
 		event.preventDefault();
-
-		var appOS = getAppOS();
-			if(appOS != 'iOS'){	        	
-	        	$("#layover").show();		        	
-        	}
+		$(".button-launch-visit").attr("disabled", true);
 
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
@@ -484,6 +480,7 @@ $(document).ready(function() {
 	        	}
 	        	catch(e)
 	        	{
+	        		$(".button-launch-visit").attr("disabled", false);
 	        		if (inAppBrowserFlag == "true")
 	            		window.location.replace("mobileAppPatientLogin.htm");
 
@@ -496,6 +493,7 @@ $(document).ready(function() {
 
 	        		var meetingStatus = data.service.launchMeetingEnvelope.launchMeeting.meetingStatus;
 	             	if( meetingStatus == "finished" ||  meetingStatus == "host_ended" ||  meetingStatus == "cancelled" ){
+	             		$(".button-launch-visit").attr("disabled", false);
 	             		if (inAppBrowserFlag == "true")
     	            		window.location.replace("mobileAppPatientMeetingExpired.htm");
 	             		else
@@ -509,6 +507,7 @@ $(document).ready(function() {
 
 				            		if(userPresentInMeetingData == true){
 				            			$("#layover").hide();
+				            			$(".button-launch-visit").attr("disabled", false);
 				            			modalShow('modal-user-present');
 				            		}
 				            		else{
@@ -517,6 +516,7 @@ $(document).ready(function() {
 			            		}
 			            		catch(e)
 			            		{
+			            			$(".button-launch-visit").attr("disabled", false);
 			            			if (inAppBrowserFlag == "true")
 			    	            		window.location.replace("mobileAppPatientLogin.htm");
 			    	            	else
@@ -526,6 +526,7 @@ $(document).ready(function() {
 		             	}
 		            }
 		            else{
+		            	$(".button-launch-visit").attr("disabled", false);
 		            	if (inAppBrowserFlag == "true")
 		            		window.location.replace("mobileAppPatientLogin.htm");
 		            	else
@@ -534,13 +535,17 @@ $(document).ready(function() {
 
 		        },
 		        error: function() {
+		        	$(".button-launch-visit").attr("disabled", false);
 		        	if (inAppBrowserFlag == "true")
 	            		window.location.replace("mobileAppPatientLogin.htm");
 	            	else
 	            		window.location.replace("logout.htm");
 	            		 },
 		        beforeSend: function () {
-		       
+		       	var appOS = getAppOS();
+		    		if(appOS != 'iOS'){	        	
+	        			$("#layover").show();		        	
+        			}
 	        	//$("#layover").show();		        	
 	        	}
 		    });
@@ -920,6 +925,7 @@ function launchVideoVisitMember(data){
             var isAndroidSDK = $('#isAndroidSDK').val();
 
 		    if(appOS === 'iOS'){
+		    	$(".button-launch-visit").attr("disabled", false);
                  window.location.replace(url);
 			}
 			else {
@@ -948,9 +954,11 @@ function launchVideoVisitMember(data){
                    data: mobileMeetingObj,
                    success: function(){
                        //add logic to differentiate vidyo/pexip
+                       $(".button-launch-visit").attr("disabled", false);
                        window.location.href = 'videovisitmobileready.htm';
                    },
                    error: function(err) {
+                   	   $(".button-launch-visit").attr("disabled", false);	
                        window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
                    }
                });
@@ -959,7 +967,8 @@ function launchVideoVisitMember(data){
 		    
 	}
 		catch(e)
-		{
+		{	
+			$(".button-launch-visit").attr("disabled", false);
 			window.location.replace("logout.htm");
 		}
 	}
@@ -1069,7 +1078,7 @@ function openTab(url)
 	 var a = window.document.createElement("a");
 	 a.target = '_blank';
 	 a.href = url;
-
+	 $(".button-launch-visit").attr("disabled", false);
 	    // Dispatch fake click
 	 var e = window.document.createEvent("MouseEvents");
 	 e.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
