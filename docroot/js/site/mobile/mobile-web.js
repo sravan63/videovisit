@@ -451,6 +451,11 @@ $(document).ready(function() {
 		//var inAppBrowserFlag = $('#inAppBrowserFlag').val();
 		event.preventDefault();
 
+		var appOS = getAppOS();
+			if(appOS != 'iOS'){	        	
+	        	$("#layover").show();		        	
+        	}
+
 		var megaMeetingId = $(this).attr("megameetingid");
 		var lastName = $(this).attr("lastname");
 		var firstName = $(this).attr("firstname");
@@ -535,10 +540,7 @@ $(document).ready(function() {
 	            		window.location.replace("logout.htm");
 	            		 },
 		        beforeSend: function () {
-		        var appOS = getAppOS();
-		    		if(appOS != 'iOS'){	        	
-	        			$("#layover").show();		        	
-        			}
+		       
 	        	//$("#layover").show();		        	
 	        	}
 		    });
