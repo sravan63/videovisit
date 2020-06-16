@@ -152,7 +152,7 @@ export default class Ssologin extends React.Component {
                             <div className="form-group top-form-group-margin">
                                 <label className="col-sm-12 text-uppercase">kp.org user ID</label>
                                 <div className="col-sm-12">
-                                    <input type="text" name="username" maxLength="20" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')} disabled={this.props.data.browserBlock} />
+                                    <input type="text" name="username" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')} disabled={this.props.data.browserBlock} />
                                 </div>
                             </div>
                             <div className="form-group">

@@ -111,14 +111,14 @@ class Authentication extends React.Component {
                         )}
                     </Suspense>
                 </div>
-                <div className="row mobile-footer mt-5" style={{display: this.state.isInApp ? 'block' : 'auto', margin: this.state.isInApp && window.window.innerWidth >= 1024 ? '0' : ''}}>
+                {!this.state.isInApp ?(<div className="form-footer">
+                    <Footer />
+                </div>) : ('')}
+                <div className="row mobile-footer mt-3" style={{display: this.state.isInApp ? 'block' : 'auto', margin: this.state.isInApp && window.window.innerWidth >= 1024 ? '0' : ''}}>
                     <p className="col-12 font-weight-bold">If You're a Patient's Guest</p>
                     <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>
                 </div>
-            </div> 
-            {!this.state.isInApp ?(<div className="form-footer">
-                <Footer />
-            </div>) : ('')}
+            </div>             
          </div>
         );
     }

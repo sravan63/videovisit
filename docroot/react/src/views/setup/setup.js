@@ -19,6 +19,7 @@ import * as WebUI from '../../pexip/complex/webui.js';
 import * as eventSource from '../../pexip/complex/EventSource.js';
 import UtilityService from '../../services/utilities-service';
 import BrowserBlock from '../../components/browser-block/browser-block';
+import Footer from '../../components/footer/footer';
 import './setup.less';
 
 class Setup extends React.Component {
@@ -290,10 +291,13 @@ class Setup extends React.Component {
                              </div>
                             
                          </div>
-                         <div className="col-md-12 mt-5 button-controls text-center">
+                         <div className="col-md-12 mt-5 button-controls text-center mb-4">
                            <button className="btn rounded-0" onClick={this.joinVisit} disabled={this.state.loadingSetup || this.state.isBrowserBlockError}>Join</button>
                          </div>
                      </div>
+                     <div className="form-footer">
+                        <Footer />
+                    </div>
                  </div>
             </div>
         )

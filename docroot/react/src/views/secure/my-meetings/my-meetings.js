@@ -6,6 +6,7 @@ import BackendService from '../../../services/backendService.js';
 import { MessageService } from '../../../services/message-service.js';
 import GlobalConfig from '../../../services/global.config';
 import UtilityService from '../../../services/utilities-service.js';
+import Footer from '../../../components/footer/footer';
 import './my-meetings.less';
 class MyMeetings extends React.Component {
 
@@ -365,6 +366,9 @@ class MyMeetings extends React.Component {
                  <div className="col-sm-12 col-lg-12 col-md-12" className={this.state.isInApp && window.window.innerWidth >= 1024 ? "wifi inapp-wifi" : "wifi"}>
                     <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
                  </div>
+                </div>
+                <div className="form-footer">
+                    <Footer />
                 </div>
             </div>
         )

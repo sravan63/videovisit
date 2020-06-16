@@ -287,7 +287,11 @@
     }
 
     .form-footer {
-        display: none;
+        display: block;
+        position: unset !important;
+        .container{
+            display: block;
+        }
     }
 }
 
@@ -311,6 +315,29 @@
                 margin: 0 auto;
                 width: 65%;
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 325px) and (orientation: portrait){
+    .main-content {
+                .browser-block-container{
+                    width:100% !important;
+                    .browser-block-content{
+                        .special-message{
+                            width: 10rem !important;
+                        }
+                        .app-store-container{
+                            .android-playstore{
+                                margin-left: 0.5rem !important;
+                            }
+                        }
+                    }
+                }
+    }
+    .form-footer{
+        .container #list-conditions{
+            margin-left: -30px;
         }
     }
 }
