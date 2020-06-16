@@ -371,7 +371,7 @@ class MyMeetings extends React.Component {
                     <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
                  </div>
                 </div>
-                {this.state.showFooter ? (<div className="form-footer">
+                {this.state.showFooter ? (<div className="mymeeting-form-footer">
                     <Footer />
                 </div>) : ('') }
                 
