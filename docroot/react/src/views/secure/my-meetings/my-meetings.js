@@ -13,7 +13,7 @@ class MyMeetings extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, myMeetings: [], showLoader: true,isInApp: false,mdoHelpUrl:''};
+        this.state = { userDetails: {}, myMeetings: [], showLoader: true,isInApp: false,mdoHelpUrl:'',showFooter : true};
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
@@ -35,6 +35,10 @@ class MyMeetings extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((notification) => {
             if (notification.text == GlobalConfig.LOGOUT) {
                 this.signOff();
+            }
+            else if(notification.text == GlobalConfig.TOGGLE_MOBILE_FOOTER){
+                this.setState({showFooter : notification.data });
+                this.state.showFooter = notification.data;
             }
         });      
         var isInAppAccess = UtilityService.getInAppAccessFlag();
@@ -367,9 +371,10 @@ class MyMeetings extends React.Component {
                     <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
                  </div>
                 </div>
-                <div className="form-footer">
+                {this.state.showFooter ? (<div className="form-footer">
                     <Footer />
-                </div>
+                </div>) : ('') }
+                
             </div>
         )
     }

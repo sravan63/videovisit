@@ -79,7 +79,8 @@ const GlobalConfig = {
     CAMERA_FLIP:'Show Mirror Image',
     OPEN_MODAL: 'open popup',
     CLOSE_MODAL: 'popup closed',
-    CLOSE_MODAL_AUTOMATICALLY: 'close popup automatically'
+    CLOSE_MODAL_AUTOMATICALLY: 'close popup automatically',
+    TOGGLE_MOBILE_FOOTER: 'Mobile Footer Toggle'
 };
 
 export default GlobalConfig;

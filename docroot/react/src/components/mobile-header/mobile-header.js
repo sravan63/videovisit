@@ -24,6 +24,10 @@ class MobileHeader extends React.Component {
         var showPromotion = Utilities.getPromotionFlag();
         if (isMobile & !isInAppAccess && showPromotion) { 
             this.setState({ isMobile: true, hidePromotion: false, isInApp: false, showPromotion: true });
+            setTimeout(() => {
+                MessageService.sendMessage(GlobalConfig.TOGGLE_MOBILE_FOOTER, false);    
+            }, 0);
+            
         } else {
             this.setState({ isMobile: isMobile, isInApp: isInAppAccess, showPromotion: showPromotion });
         }
@@ -58,12 +62,14 @@ class MobileHeader extends React.Component {
             var mHeader = document.getElementsByClassName('header-controls')[0];
             if(!this.state.hidePromotion && window.scrollY >= mHeader.offsetTop) {
                 this.setState({ hidePromotion: true });
+                MessageService.sendMessage(GlobalConfig.TOGGLE_MOBILE_FOOTER, true);
                 // Re-positions the page to the top.
                 setTimeout(()=>{ 
                     window.scrollTo(0, 20); 
                 }, 200);
             } else if(this.state.hidePromotion && window.scrollY <= 0) {
                 this.setState({ hidePromotion: false });
+                MessageService.sendMessage(GlobalConfig.TOGGLE_MOBILE_FOOTER, false);
             }
         }
 
