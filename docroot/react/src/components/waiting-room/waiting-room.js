@@ -55,7 +55,7 @@ class WaitingRoom extends React.Component {
                             <div className="tpmg-logo float-left p-0 m-0"></div>
     						<span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'none' : 'block' }}>{this.state.waitingroommsg}</span>
                             <span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>Your visit will now start at <b>{this.state.runningLateUpdatedTime}</b></span>
-                            <div className="runninglate-msg mt-2" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{this.state.waitingroommsg}</div>                                    
+                            <div className="runninglate-msg" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{this.state.waitingroommsg}</div>                                    
     					</div>
     				</div>
     			</div>
@@ -65,7 +65,7 @@ class WaitingRoom extends React.Component {
                             <div className="tpmg-logo float-left p-0 m-0"></div>
     						<span className="waitingroom-text col" style={{display: this.state.isRunningLate  ? 'none' : 'block' }}>{this.state.waitingroommsg}</span>
                             <span className="waitingroom-text" style={{display: this.state.isRunningLate  ? 'block' : 'none' }}>Your visit will now start at <b>{this.state.runningLateUpdatedTime}</b></span>
-                            <div className="runninglate-msg mt-2" style={{display: this.state.isRunningLate  ? 'block' : 'none' }}>{this.state.waitingroommsg}</div>                                    
+                            <div className="runninglate-msg" style={{display: this.state.isRunningLate  ? 'block' : 'none' }}>{this.state.waitingroommsg}</div>                                    
     					</div>
     				</div>
     			</div>                                  

@@ -887,9 +887,9 @@ export function toggleWaitingRoom(pexipParticipantsList) {
             }
         }
     }
-    if (hostDirtyThisMeeting) {
-        adjustLayout(participantsInMeeting, isHostAvail);
-    }
+    // if (hostDirtyThisMeeting) {
+    //     adjustLayout(participantsInMeeting, isHostAvail);
+    // }
 }
 
 export function adjustLayout(participants, isHostAvail) {
