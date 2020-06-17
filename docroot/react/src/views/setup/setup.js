@@ -209,7 +209,11 @@ class Setup extends React.Component {
                  {!this.state.userLoggedIn ? (
                     <div className="col-12 text-right help-icon p-0">
                         <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
-                    </div>):('')}
+                    </div>):
+                  (
+                    <div className="col-12 text-right hideforDesktop help-icon p-0">
+                        <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
+                    </div>)}
                 </div>
                 <div className="row mobile-logo-container">
                  <div className="title">
