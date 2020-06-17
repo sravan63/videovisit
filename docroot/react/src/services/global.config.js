@@ -68,7 +68,6 @@ const GlobalConfig = {
     TOGGLE_SETTINGS: 'toggle settings',
     CLOSE_SETTINGS: 'closed settings',
     LOGOUT: 'User Signed Out',
-    SETUPLOGOUT: 'User Signed out Setup Page',
     START_SCREENSHARE: 'start screenshare',
     STOP_SCREENSHARE: 'stop screenshare',
     USER_JOINED: 'user joined',

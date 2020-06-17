@@ -65,6 +65,7 @@ class MyMeetings extends React.Component {
     componentWillUnmount() {
         window.clearInterval(this.interval);
         window.clearInterval(this.keepAlive);
+        this.subscription.unsubscribe();
     }
     /*getBrowserBlockInfo(){
         var propertyName = 'browser',

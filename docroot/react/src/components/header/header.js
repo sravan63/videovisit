@@ -34,16 +34,11 @@ class header extends React.Component {
                 });
             }
         }
+        
         signOffMethod() {
-            var isSetup = window.location.href.indexOf('setup') > -1;
-            if(isSetup){
-                MessageService.sendMessage(GlobalConfig.SETUPLOGOUT, null);
-            }
-            else{
-                MessageService.sendMessage(GlobalConfig.LOGOUT, null);
-            }
-
+            MessageService.sendMessage(GlobalConfig.LOGOUT, null);
         }
+
         render() {
                 return (
                 <div className = "container-fluid">

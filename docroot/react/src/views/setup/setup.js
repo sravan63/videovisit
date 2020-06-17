@@ -46,7 +46,7 @@ class Setup extends React.Component {
                 case GlobalConfig.TEST_CALL_FINISHED:
                     this.doneSetupTest();
                     break;
-                case GlobalConfig.SETUPLOGOUT:
+                case GlobalConfig.LOGOUT:
                      this.signOut();     
                      break;
                 case GlobalConfig.MEDIA_DATA_READY:
