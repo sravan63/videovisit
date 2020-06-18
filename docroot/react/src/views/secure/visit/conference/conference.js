@@ -32,6 +32,8 @@ class Conference extends React.Component {
         this.keepAlive = 0;
         this.overlayTimer = 0;
         this.timerForLeaveMeeting = 0;
+        this.visibilityChange = null;
+        this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
         this.leaveVisitPopupOptions = { 
@@ -42,6 +44,16 @@ class Conference extends React.Component {
     }
 
     componentDidMount() {
+        if (typeof document.hidden !== 'undefined') { 
+            this.visibilityChange = 'visibilitychange';
+        } 
+        else if (typeof document.msHidden !== 'undefined') {
+            this.visibilityChange = 'msvisibilitychange';
+        } 
+        else if (typeof document.webkitHidden !== 'undefined') {
+            this.visibilityChange = 'webkitvisibilitychange';
+        }
+        document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
             this.setState({ showLoader: false });
@@ -264,6 +276,12 @@ class Conference extends React.Component {
 
     } 
 
+    handleVisibilityChange() {
+        if (document.visibilityState === 'visible') {
+            window.location.reload(false);
+        } 
+    }
+
     handleTimer(param){
         if(param){
         this.handle = setInterval(() => {
@@ -437,6 +455,7 @@ class Conference extends React.Component {
         window.clearInterval(this.keepAlive);
         window.clearTimeout(this.overlayTimer);
         window.clearTimeout(this.timerForLeaveMeeting);
+        document.removeEventListener(this.visibilityChange, this.handleVisibilityChange);
         this.subscription.unsubscribe();
         if(this.state.isGuest == true){
             var isGuestLeave = sessionStorage.getItem('guestLeave');
