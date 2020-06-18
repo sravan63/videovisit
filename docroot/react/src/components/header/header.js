@@ -13,17 +13,20 @@ class header extends React.Component {
             this.state = {
                 name: '',
                 isInApp: false,
-                isLogin: false,
+                isSetup: false,
                 userDetails: {}
             };
             this.signOffMethod = this.signOffMethod.bind(this);
         }
         componentWillMount() {
             //if(this.props.userDetails && this.props.userDetails.userDetails){
+            var url = window.location.href.indexOf('setup') > -1;
+            if(url){
+                this.setState({isSetup:true});
+            }    
             var isInAppAccess = UtilityService.getInAppAccessFlag(); 
             if(isInAppAccess){
-                var url = window.location.href.indexOf('login') > -1;
-                this.setState({isInApp: true, isLogin:url});
+                this.setState({isInApp: true});
             }  
             if (localStorage.getItem('LoginUserDetails')) {
                 const data = JSON.parse(UtilityService.decrypt(localStorage.getItem('LoginUserDetails')));
@@ -43,7 +46,7 @@ class header extends React.Component {
                 return (
                 <div className = "container-fluid">
                     { !this.state.isInApp ? (
-                        <div className = {!this.state.name ? "row header-content bmargin" : "row header-content"}>
+                        <div className = {!this.state.name || this.state.isSetup ? "row header-content bmargin" : "row header-content"}>
                             <div className = "col-md-7 banner-content">
                                 <div className = "logo"> 
                             </div> 
@@ -53,7 +56,7 @@ class header extends React.Component {
                             </div> 
                         </div> 
                         <div className = "col-md-5 text-right user-details" >
-                            { this.state.name ? (<ul >
+                            { this.state.name && !this.state.isSetup ? (<ul >
                                 <li className = "text-capitalize user-name" > 
                                 {this.state.name ? this.state.name : ''} 
                                 </li>
