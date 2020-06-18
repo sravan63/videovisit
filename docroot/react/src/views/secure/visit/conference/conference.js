@@ -277,8 +277,11 @@ class Conference extends React.Component {
     } 
 
     handleVisibilityChange() {
-        if (document.visibilityState === 'visible') {
-            window.location.reload(false);
+        var browserDetails = Utilities.getBrowserInformation();
+        if(Utilities.isMobileDevice() && browserDetails.isSafari){
+            if (document.visibilityState === 'visible') {
+                window.location.reload(false);
+            } 
         } 
     }
 
