@@ -262,10 +262,10 @@ class Setup extends React.Component {
                            <button className="btn rounded-0" onClick={this.joinVisit} disabled={this.state.loadingSetup || this.state.isBrowserBlockError}>Join</button>
                          </div>
                      </div>
-                     <div className="form-footer">
-                        <Footer />
-                    </div>
                  </div>
+                 <div className="form-footer">
+                        <Footer />
+                </div>
             </div>
         )
     }

@@ -135,6 +135,20 @@
             }
         }
     }
+    .form-footer {
+        display: block;
+        position: relative;
+        .container-fluid{
+            .row {
+                margin-left: 0.5rem !important;
+                margin-right: 0rem;
+                .col-12{
+                    padding: 0;
+                    margin: 0;
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 376px) and (orientation: portrait){
@@ -219,5 +233,26 @@
 
     }
 }
+
+@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) {
+    /* For portrait layouts only */
+    .form-footer {
+        display: block;
+        bottom: 2rem;
+        position: absolute !important;
+        .container-fluid{
+            padding: 0;
+            display: block;
+            .row {
+                margin-left: 0.5rem !important;
+                margin-right: 0rem;
+                .col-12{
+                    padding: 0;
+                    margin: 0;
+                }
+            }
+        }
+    }
+  }
 
 
