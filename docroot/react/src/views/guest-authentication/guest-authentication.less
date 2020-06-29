@@ -150,7 +150,6 @@
 
 .form-footer {
     display: block;
-    position: fixed;
     bottom: 0;
     width: 100%;
     background: #FFFFFF;
@@ -215,18 +214,18 @@
 
     .form-footer {
         display: block;
-        position: unset !important;
-        .container{
+        position: relative;
+        margin-top: 2rem;
+        .container-fluid{
             padding: 0;
             display: block;
             .row {
-                margin-left: -1.5rem;
-                margin-right: -1.5rem;
                 .col-12{
-                    padding: 0;
-                    margin: 0;
                     #list-conditions li a:hover,a:active{
                         text-decoration: none;
+                    }
+                    p.copyright {
+                        text-align: left !important;
                     }
                 }
             }

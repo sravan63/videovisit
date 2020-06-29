@@ -256,11 +256,11 @@ class Authentication extends React.Component {
                         </form>
                     </div> )}
                 </div>
-                <div className="form-footer">
-                    <Footer />
-                </div>
                 <div className="row mobile-footer mt-5">
                     <p className="col-12 secondary">Children age 11 and younger must have a parent or legal guardian present during the visit.</p>
+                </div>
+                <div className="form-footer">
+                    <Footer />
                 </div>
             </div> 
             </div> ) : ('')}

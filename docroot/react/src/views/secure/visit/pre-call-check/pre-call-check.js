@@ -16,7 +16,7 @@ import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service';
 import GlobalConfig from '../../../../services/global.config';
 import './pre-call-check.less';
-
+import Footer from '../../../../components/footer/footer';
 class PreCallCheck extends React.Component {
 
     constructor(props) {
@@ -248,6 +248,9 @@ class PreCallCheck extends React.Component {
                          </div>
                      </div>
                  </div>
+                 <div className="form-footer">
+                        <Footer />
+                    </div>
             </div>
         )
     }
