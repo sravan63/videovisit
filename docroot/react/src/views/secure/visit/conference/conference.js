@@ -252,24 +252,24 @@ class Conference extends React.Component {
             this.setState({ mdoHelpUrl: helpUrl });
         }
         //this.getBrowserBlockInfo();
-        this.fullScreenWindow();
+        // this.fullScreenWindow();
     }
-    fullScreenWindow(){
-        var doc = window.document;
-        var docEl = doc.documentElement;
-        // alert(docEl);
+    // fullScreenWindow(){
+    //     var doc = window.document;
+    //     var docEl = doc.documentElement;
+    //     // alert(docEl);
 
-        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-        var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
+    //     var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+    //     var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
 
-        if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-            document.documentElement.requestFullscreen();
-            // requestFullScreen.call(docEl);
-        }
-        else {
-            cancelFullScreen.call(doc);
-        }
-    }
+    //     if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+    //         document.documentElement.requestFullscreen();
+    //         // requestFullScreen.call(docEl);
+    //     }
+    //     else {
+    //         cancelFullScreen.call(doc);
+    //     }
+    // }
     /*getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",
