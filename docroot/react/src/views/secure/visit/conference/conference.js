@@ -295,7 +295,7 @@ class Conference extends React.Component {
 
     handleVisibilityChange() {
         var browserDetails = Utilities.getBrowserInformation();
-        if(Utilities.isMobileDevice() && browserDetails.isSafari){
+        if(Utilities.isMobileDevice()){
             if (document.visibilityState === 'visible') {
                 window.location.reload(false);
             } 
