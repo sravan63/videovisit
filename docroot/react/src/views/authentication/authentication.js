@@ -115,7 +115,7 @@ class Authentication extends React.Component {
                     <p className="col-12 font-weight-bold">If You're a Patient's Guest</p>
                     <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>
                 </div>
-                {!this.state.isInApp ?(<div className="form-footer">
+                {!this.state.isInApp ?(<div className="auth-form-footer">
                     <Footer />
                 </div>) : ('')}
             </div>             

@@ -263,7 +263,7 @@ class Setup extends React.Component {
                          </div>
                      </div>
                  </div>
-                 <div className="form-footer">
+                 <div className="setup-form-footer">
                         <Footer />
                 </div>
             </div>

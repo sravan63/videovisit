@@ -3,7 +3,7 @@ import './footer.less';
 class footer extends Component {
   render() {
     return <div className="container-fluid main-footer">
-    <div className="row mt-1 ml-0 mt-2">
+    <div className="row ml-0 mt-2">
       <div className="col-12 text-center p-0">
         <ul id="list-conditions" className="text-left pl-0">
             <li><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp" target="_blank" className="pr-2 pb-0"> Terms &amp; Conditions</a></li>

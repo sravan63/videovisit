@@ -148,7 +148,7 @@
     }
 }
 
-.form-footer {
+.guest-form-footer {
     display: block;
     bottom: 0;
     width: 100%;
@@ -212,12 +212,13 @@
         }
     }
 
-    .form-footer {
+    .guest-form-footer {
         display: block;
         position: relative;
+        margin-top: 2rem;
         .main-footer{
+            padding-left: 0rem;
             .row {
-                // margin-top: 2rem !important;
                 .col-12{
                     #list-conditions li a:hover,a:active{
                         text-decoration: none;
@@ -239,7 +240,7 @@
         justify-content: space-between;
         height: 100vh;
     }
-    // .form-footer {
+    // .guest-form-footer {
     //     position: absolute !important;
     // }
 }
@@ -288,11 +289,6 @@
             margin-right:1rem;
         }
     }
-    // .form-footer{
-    //     .container #list-conditions{
-    //         margin-left: -1.875rem;
-    //     }
-    // }
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2){
@@ -309,19 +305,28 @@
     }
 
  }
-
+ @media only screen and (min-device-height: 401px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-device-pixel-ratio: 2){
+    /* For portrait layouts only */
+    .guest-main-content {
+        .guest-form-footer {
+            position: absolute;
+            .main-footer{
+                padding-left: 2rem;
+            }
+        }
+    }        
+  }
  @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) and (-webkit-min-device-pixel-ratio: 2){
     /* For portrait layouts only */
-    .form-footer {
+    .guest-form-footer {
         display: block;
         width: 95%;
-        .container-fluid{
+        margin-top: 2rem;
+        .main-footer{
+            padding-left: 0rem;
             .row {
                 margin-left: 0rem !important;
                 margin-right: 0rem;
-                margin-top: 3.2rem !important;
-                .col-12{
-                }
             }
         }
     }
