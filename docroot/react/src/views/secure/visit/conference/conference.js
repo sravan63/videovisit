@@ -252,36 +252,36 @@ class Conference extends React.Component {
             this.setState({ mdoHelpUrl: helpUrl });
         }
         //this.getBrowserBlockInfo();
-        this.fullScreenWindow();
+        //this.fullScreenWindow();
     }
-    fullScreenWindow(){
-        var isMobile = Utilities.isMobileDevice();
-        var browserDetails = Utilities.getBrowserInformation();
-        if(isMobile && !browserDetails.isSafari){
-            if (!document.fullscreenElement &&    // alternative standard method
-                !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
-            if (document.documentElement.requestFullscreen) {
-                document.documentElement.requestFullscreen();
-            } else if (document.documentElement.msRequestFullscreen) {
-                document.documentElement.msRequestFullscreen();
-            } else if (document.documentElement.mozRequestFullScreen) {
-                document.documentElement.mozRequestFullScreen();
-            } else if (document.documentElement.webkitRequestFullscreen) {
-                document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-            }
-            } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            }
-            }
-        }
-    }
+    // fullScreenWindow(){
+    //     var isMobile = Utilities.isMobileDevice();
+    //     var browserDetails = Utilities.getBrowserInformation();
+    //     if(isMobile && !browserDetails.isSafari){
+    //         if (!document.fullscreenElement &&    // alternative standard method
+    //             !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
+    //         if (document.documentElement.requestFullscreen) {
+    //             document.documentElement.requestFullscreen();
+    //         } else if (document.documentElement.msRequestFullscreen) {
+    //             document.documentElement.msRequestFullscreen();
+    //         } else if (document.documentElement.mozRequestFullScreen) {
+    //             document.documentElement.mozRequestFullScreen();
+    //         } else if (document.documentElement.webkitRequestFullscreen) {
+    //             document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    //         }
+    //         } else {
+    //         if (document.exitFullscreen) {
+    //             document.exitFullscreen();
+    //         } else if (document.msExitFullscreen) {
+    //             document.msExitFullscreen();
+    //         } else if (document.mozCancelFullScreen) {
+    //             document.mozCancelFullScreen();
+    //         } else if (document.webkitExitFullscreen) {
+    //             document.webkitExitFullscreen();
+    //         }
+    //         }
+    //     }
+    // }
     /*getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",
@@ -307,7 +307,7 @@ class Conference extends React.Component {
 
     handleVisibilityChange() {
         var browserDetails = Utilities.getBrowserInformation();
-        if(Utilities.isMobileDevice() && browserDetails.isSafari){
+        if(Utilities.isMobileDevice()){
             if (document.visibilityState === 'visible') {
                 window.location.reload(false);
             } 
