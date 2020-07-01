@@ -215,7 +215,7 @@ class ConferenceDetails extends React.Component {
 
     appendParticipantToTheList(data, participant, isTelephony) {
         if(isTelephony){
-            if(data.display_name.toLowercase().trim().indexOf('phone interpreter') > -1){
+            if(data.display_name.toLowerCase().trim().indexOf('phone interpreter') > -1){
                 this.state.interpreterGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
             } else {
                 this.state.telephonyGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
