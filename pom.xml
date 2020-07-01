@@ -238,6 +238,24 @@
 
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build_argument>run build</build_argument>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<build_argument>run build-dev</build_argument>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 
@@ -334,7 +352,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>run build</arguments>
+							<arguments>${build_argument}</arguments>
 						</configuration>
 					</execution>
 				</executions>
