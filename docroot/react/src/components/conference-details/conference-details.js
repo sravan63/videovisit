@@ -53,6 +53,7 @@ class ConferenceDetails extends React.Component {
     setSortedParticipantList() {
         let list = [];
         let telephonyGuests = [];
+        let interpreterGuests = [];
         let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
         let guests = this.state.meetingDetails.caregiver ? this.state.meetingDetails.caregiver.slice(0) : [];
         let participants = clinicians.concat(guests);
@@ -73,12 +74,17 @@ class ConferenceDetails extends React.Component {
             this.state.meetingDetails.sipParticipants.map(guest => {
                 let name = guest.displayName.toLowerCase();
                 let number = guest.destination ? guest.destination : guest.uri.substring(6,16);
-                telephonyGuests.push({ name: name.trim(), number: number, inCall: false, isTelephony: true});
+                if(name.indexOf('phone interpreter') > -1) {
+                    interpreterGuests.push({ name: name.trim(), number: number, inCall: false, isTelephony: true});
+                } else {
+                    telephonyGuests.push({ name: name.trim(), number: number, inCall: false, isTelephony: true});
+                }
             });
         }
         this.setState({ telephonyGuests: telephonyGuests });
+        this.setState({ interpreterGuests: interpreterGuests });
         this.setState({
-            participants: this.state.videoGuests.concat(this.state.telephonyGuests)
+            participants: this.state.videoGuests.concat(this.state.telephonyGuests, this.state.interpreterGuests)
         });
     }
 
