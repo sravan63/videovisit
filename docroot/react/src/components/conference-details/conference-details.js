@@ -215,7 +215,11 @@ class ConferenceDetails extends React.Component {
 
     appendParticipantToTheList(data, participant, isTelephony) {
         if(isTelephony){
-            this.state.telephonyGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
+            if(data.display_name.toLowercase().trim().indexOf('phone interpreter') > -1){
+                this.state.interpreterGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
+            } else {
+                this.state.telephonyGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
+            }
         } else if(data.role == "guest") { // In 'Lastname, Firstname (email)' format.
             var gName = participant.indexOf('(') > -1 ? participant.split('(')[0] : participant;
             var lName = participant.split(',')[0].trim();
@@ -246,7 +250,7 @@ class ConferenceDetails extends React.Component {
         }
         // Re-iterating participants list
         this.setState({
-            participants: this.state.videoGuests.concat(this.state.telephonyGuests)
+            participants: this.state.videoGuests.concat(this.state.telephonyGuests, this.state.interpreterGuests)
         });
     }
 
