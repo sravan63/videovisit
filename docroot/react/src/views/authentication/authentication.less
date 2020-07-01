@@ -286,7 +286,6 @@
         }
     }
     .auth-form-footer {
-        display: block;
         .main-footer{
             padding-left: 0px !important;
             .row {
@@ -380,7 +379,7 @@
         }
         .sso-content {
             margin-top: 2rem;
-
+            min-height: calc(90vh - 12.5rem);
             .sso-form,
             .temp-form {
                 margin: 0 auto;
@@ -389,6 +388,7 @@
         }
 
         .temp-content {
+            min-height: calc(90vh - 10.5rem);
             .sso-form,
             .temp-form {
                 margin: 0 auto;
@@ -397,12 +397,30 @@
         }
     }
 }
+/* Iphone X */
+@media only screen and (device-width : 375px) and (device-height : 812px) and (-webkit-device-pixel-ratio : 3) and (orientation : portrait) { 
+    .auth-form-footer {
+        bottom:1.5rem;
+    }
+}
+/* Iphone 8plus */
+@media only screen and (device-width : 414px) and (device-height :736px) and (-webkit-device-pixel-ratio : 3) and (orientation : portrait) { 
+    .auth-form-footer {
+        bottom:0rem;
+    }
+}
+/*Iphone 11 & Iphone 11 max*/
+@media only screen and (device-width : 414px) and (device-height :896px) and (orientation : portrait) { 
+    .auth-form-footer {
+        bottom:3rem;
+    }
+}
 @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait) and (-webkit-device-pixel-ratio: 2){
     /* For portrait layouts only */
     .main-content {
         .auth-form-footer {
             display: block;
-            bottom: 0 !important;
+            bottom: 1rem;
             position: absolute !important;
             width: 95%;
             .container-fluid{
