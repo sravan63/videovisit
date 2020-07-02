@@ -252,7 +252,8 @@ class Conference extends React.Component {
             this.setState({ mdoHelpUrl: helpUrl });
         }
         //this.getBrowserBlockInfo();
-        window.addEventListener('load', this.handleLoad.bind(this));
+        //window.addEventListener('load', this.handleLoad.bind(this));
+        document.addEventListener('DOMContentLoaded', this.handleLoad);
     }
     handleLoad(){
         var isMobile = Utilities.isMobileDevice();
@@ -501,7 +502,7 @@ class Conference extends React.Component {
        }
        localStorage.removeItem('selectedPeripherals');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
-       window.removeEventListener('load', this.handleLoad.bind(this), false)  
+    //    window.removeEventListener('load', this.handleLoad.bind(this), false)  
     }
 
     toggleSettings() {
