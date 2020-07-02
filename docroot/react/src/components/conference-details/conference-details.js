@@ -144,6 +144,10 @@ class ConferenceDetails extends React.Component {
         // TODO: Should remove this after UID implementation
         if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
             participant = participant.split('(')[0].trim();
+            if(participant.split(',').length > 2){ // lname, fname, (email)
+                var lastIndex = participant.lastIndexOf(',');
+                participant = participant.substring(0, lastIndex);
+            }
         }
 
         this.state.participants.map(function(p){
