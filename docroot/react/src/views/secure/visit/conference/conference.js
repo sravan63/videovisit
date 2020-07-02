@@ -251,8 +251,6 @@ class Conference extends React.Component {
             var helpUrl = sessionStorage.getItem('helpUrl');
             this.setState({ mdoHelpUrl: helpUrl });
         }
-        //this.getBrowserBlockInfo();
-        // this.fullScreenWindow();
     }
     fullScreenWindow(){
         var isMobile = Utilities.isMobileDevice();
