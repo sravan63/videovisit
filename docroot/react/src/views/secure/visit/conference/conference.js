@@ -22,7 +22,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = { userDetails: {}, isRearCamera:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true,showfullscreen:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -269,6 +269,9 @@ class Conference extends React.Component {
             } else if (document.documentElement.webkitRequestFullscreen) {
                 document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
             }
+            this.setState({
+                showfullscreen: !this.state.showfullscreen
+            })
             } else {
             if (document.exitFullscreen) {
                 document.exitFullscreen();
@@ -279,6 +282,9 @@ class Conference extends React.Component {
             } else if (document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
             }
+            this.setState({
+                showfullscreen: !this.state.showfullscreen
+            })
             }
         }
     }
@@ -707,7 +713,8 @@ class Conference extends React.Component {
                                 <li style={{display: this.state.showaudioIcon ? 'none' : 'block'}}><span className="white-circle"><span id="speaker" className="icon-holder mutedspeaker" onClick={()=>this.toggleControls('audio')}></span></span></li>
                                 <li style={{display: this.state.showmicIcon ? 'block' : 'none'}}><span className="white-circle"><span id="mic" className="icon-holder unmutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
                                 <li style={{display: this.state.showmicIcon ? 'none' : 'block'}}><span className="white-circle"><span id="mic" className="icon-holder mutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
-                                <li><span className="red-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.fullScreenWindow()}></span></span></li>
+                                <li style={{display: this.state.showfullscreen ? 'block' : 'none'}}><span className="white-circle"><span id="camera" className="icon-holder fullscreen" onClick={()=>this.fullScreenWindow()}></span></span></li>
+                                <li style={{display: this.state.showfullscreen ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder exitscreen" onClick={()=>this.fullScreenWindow()}></span></span></li>
                               </ul>
                             </div>
                             <div id="controls" className="landscape-controlbar">
@@ -723,7 +730,8 @@ class Conference extends React.Component {
                                 <li ><span className="white-circle"><span id="cameraSwitch" className = {this.state.disableCamFlip && this.state.isMobileSafari ? 'icon-holder disable' : 'icon-holder'} onClick={()=>this.toggleCamera()}></span></span></li>):('')}
                                 <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                                 <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
-                                <li><span className="red-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.fullScreenWindow()}></span></span></li>
+                                <li style={{display: this.state.showfullscreen ? 'block' : 'none'}}><span className="white-circle"><span id="camera" className="icon-holder fullscreen" onClick={()=>this.fullScreenWindow()}></span></span></li>
+                                <li style={{display: this.state.showfullscreen ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder exitscreen" onClick={()=>this.fullScreenWindow()}></span></span></li>
                               </ul>
                             </div>
                         </div>
