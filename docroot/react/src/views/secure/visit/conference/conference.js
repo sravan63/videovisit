@@ -252,10 +252,9 @@ class Conference extends React.Component {
             this.setState({ mdoHelpUrl: helpUrl });
         }
         //this.getBrowserBlockInfo();
-        //window.addEventListener('load', this.handleLoad.bind(this));
-        document.addEventListener('DOMContentLoaded', this.handleLoad);
+        // this.fullScreenWindow();
     }
-    handleLoad(){
+    fullScreenWindow(){
         var isMobile = Utilities.isMobileDevice();
         var browserDetails = Utilities.getBrowserInformation();
         if(isMobile && !browserDetails.isSafari){
@@ -502,7 +501,7 @@ class Conference extends React.Component {
        }
        localStorage.removeItem('selectedPeripherals');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
-    //    window.removeEventListener('load', this.handleLoad.bind(this), false)  
+       window.removeEventListener('load', this.handleLoad)  
     }
 
     toggleSettings() {
@@ -708,6 +707,7 @@ class Conference extends React.Component {
                                 <li style={{display: this.state.showaudioIcon ? 'none' : 'block'}}><span className="white-circle"><span id="speaker" className="icon-holder mutedspeaker" onClick={()=>this.toggleControls('audio')}></span></span></li>
                                 <li style={{display: this.state.showmicIcon ? 'block' : 'none'}}><span className="white-circle"><span id="mic" className="icon-holder unmutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
                                 <li style={{display: this.state.showmicIcon ? 'none' : 'block'}}><span className="white-circle"><span id="mic" className="icon-holder mutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
+                                <li><span className="red-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.fullScreenWindow()}></span></span></li>
                               </ul>
                             </div>
                             <div id="controls" className="landscape-controlbar">
@@ -723,6 +723,7 @@ class Conference extends React.Component {
                                 <li ><span className="white-circle"><span id="cameraSwitch" className = {this.state.disableCamFlip && this.state.isMobileSafari ? 'icon-holder disable' : 'icon-holder'} onClick={()=>this.toggleCamera()}></span></span></li>):('')}
                                 <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                                 <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
+                                <li><span className="red-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.fullScreenWindow()}></span></span></li>
                               </ul>
                             </div>
                         </div>
