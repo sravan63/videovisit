@@ -41,6 +41,7 @@ class Conference extends React.Component {
             message : 'Your video visit session is going to end, unless you choose Stay.',
             controls : [{label: 'Leave Room', type: 'leave'}, {label: 'Stay', type: 'stay'} ]
         };
+        this.handleLoad = this.handleLoad.bind(this);
     }
 
     componentDidMount() {
@@ -252,9 +253,9 @@ class Conference extends React.Component {
             this.setState({ mdoHelpUrl: helpUrl });
         }
         //this.getBrowserBlockInfo();
-        this.fullScreenWindow();
+        window.addEventListener('load', this.handleLoad);
     }
-    fullScreenWindow(){
+    handleLoad(){
         var isMobile = Utilities.isMobileDevice();
         var browserDetails = Utilities.getBrowserInformation();
         if(isMobile && !browserDetails.isSafari){
@@ -304,9 +305,7 @@ class Conference extends React.Component {
         }
 
     } 
-
     handleVisibilityChange() {
-        var browserDetails = Utilities.getBrowserInformation();
         if(Utilities.isMobileDevice()){
             if (document.visibilityState === 'visible') {
                 window.location.reload(false);
@@ -503,6 +502,7 @@ class Conference extends React.Component {
        }
        localStorage.removeItem('selectedPeripherals');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
+       window.removeEventListener('load', this.handleLoad)  
     }
 
     toggleSettings() {
