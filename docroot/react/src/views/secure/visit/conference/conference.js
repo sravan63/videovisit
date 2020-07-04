@@ -176,6 +176,7 @@ class Conference extends React.Component {
                     this.leaveMeeting();
                     break;
                 case GlobalConfig.MEMBER_READY:
+                case GlobalConfig.UPDATE_RUNNING_LATE:    
                     if(!sessionStorage.getItem('memberAlone')){
                     sessionStorage.setItem('memberAlone', true);
                     this.handleTimer(true);
