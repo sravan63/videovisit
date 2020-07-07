@@ -13,6 +13,7 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCE
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS_200;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +30,10 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.Survey;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.UserAnswer;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
@@ -52,6 +56,7 @@ import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
+import org.springframework.http.HttpMethod;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -1431,6 +1436,70 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return JSONObject.fromObject(new SystemError()).toString();
 	}
+
+	public static String submitSurvey(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String response = null;
+		String meetingId = null;
+		try {
+			final List<UserAnswer> userAnswers = new ArrayList<UserAnswer>();
+			meetingId = request.getHeader("meeting_id");
+			final String userType = request.getHeader("user_type");
+			final String userValue = request.getHeader("user_value");
+			final String questionId = request.getHeader("question_id");
+			final String answer = request.getHeader("answer");
+			final String clientId = request.getHeader("clientId");
+
+			// contact UI how they send list of questions
+			UserAnswer userAnswer = new UserAnswer();
+			userAnswer.setQuestionId(Integer.parseInt(questionId));
+			userAnswer.setAnswer(answer);
+
+			userAnswers.add(userAnswer);
+
+			response = WebService.submitSurvey(userType, userValue, meetingId, userAnswers, clientId,
+					request.getSession().getId());
+		} catch (Exception e) {
+			logger.error("System Error while submitting the survey for meeting : " + meetingId, e);
+		}
+		if (StringUtils.isBlank(response)) {
+			response = JSONObject.fromObject(new SystemError()).toString();
+		}
+		logger.info(LOG_EXITING);
+		return response;
+	}
+
+	public static String getMeetingQualitySurveyDetails(HttpServletRequest request, final String surveyName) {
+		logger.info(LOG_ENTERED);
+		String response = null;
+		try {
+			final Gson gson = new Gson();
+			final String clientId = request.getHeader("clientId");
+			response = WebService.getMeetingQualitySurveyDetails(gson, true, false, clientId,
+					request.getSession().getId());
+			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(response, ActiveSurveysResponse.class);
+			if(activeSurveysResponse != null) {
+				if(SUCCESS_200.equalsIgnoreCase(activeSurveysResponse.getCode()) && CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())){
+					for(Survey survey : activeSurveysResponse.getSurveys()) {
+						if(surveyName.equalsIgnoreCase(survey.getSurveyName())) {
+							response = gson.toJson(survey);
+						}
+					}
+				} else {
+					// what if we get 200 status and empty surveys in the response
+					response = activeSurveysResponse.getCode();
+				}
+			} 
+		} catch (Exception e) {
+			logger.error("System Error while getting MeetingQualityFeedback Survey Details : ", e);
+		}
+		if (StringUtils.isBlank(response)) {
+			response = JSONObject.fromObject(new SystemError()).toString();
+		}
+		logger.info(LOG_EXITING);
+		return response;
+	}
+	
 
 }
 

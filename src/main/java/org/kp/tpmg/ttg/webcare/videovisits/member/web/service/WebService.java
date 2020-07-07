@@ -19,6 +19,8 @@ import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.InputUserAnswers;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.UserAnswer;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
@@ -89,6 +91,7 @@ public class WebService {
 	private static String setupWizardMeetingType;
 
 	private static String videoVisitRestServiceUrl = null;
+	private static String videoVisitMeetingRestServiceUrl = null;
 
 	// Member SSO related properties
 	private static String memberSSOAuthAPIUrl = null;
@@ -530,10 +533,13 @@ public class WebService {
 			serviceSecurityPassword = Crypto.decrypt(appProp.getProperty("SERVICE_SECURITY_PASSWORD"));
 			logger.debug("videoVisitRestServiceUrl : " + videoVisitRestServiceUrl + "SecurityUsername:"
 					+ serviceSecurityUsername + ", SecurityPassword:" + serviceSecurityPassword);
+
+			videoVisitMeetingRestServiceUrl = appProp.getProperty("VIDEOVISIT_MEETING_REST_URL");
 		} catch (Exception e) {
 			logger.warn("Failed to get videoVisitRestServiceUrl from external properties file");
 		}
-		logger.info(LOG_EXITING + " videoVisitRestServiceUrl :  " + videoVisitRestServiceUrl);
+		logger.info(LOG_EXITING + " videoVisitRestServiceUrl :  " + videoVisitRestServiceUrl
+				+ ", videoVisitMeetingRestServiceUrl : " + videoVisitMeetingRestServiceUrl);
 	}
 	
 	public static void initializeSetupWizardProperties() {
@@ -1642,5 +1648,89 @@ public class WebService {
 		return output;
 	}
 
+	public static String submitSurvey(String userType, String userValue, String meetingId, List<UserAnswer> userAnswers,
+			String clientId, String sessionId) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		
+		if (StringUtils.isBlank(meetingId) || Integer.parseInt(meetingId) <= 0 || StringUtils.isBlank(sessionId)
+				|| StringUtils.isBlank(clientId) || userAnswers == null || userAnswers.isEmpty()
+				|| StringUtils.isBlank(userType) || StringUtils.isBlank(userValue)) {
+			output = WebUtil.BAD_REQUEST_400;
+		}
+		try {
+			final InputUserAnswers input = new InputUserAnswers();
+			input.setMeetingId(Integer.parseInt(meetingId));
+			input.setUserType(userType);
+			input.setUserValue(userValue);
+			input.setUserAnswers(userAnswers);
+			input.setClientId(clientId);
+			input.setSessionId(sessionId);
+			final Gson gson = new Gson();
+			logger.debug("inputJsonString : " + gson.toJson(input));
+			output = callVVMeetingRestService(HttpMethod.POST, null, ServiceUtil.SUBMIT_SURVEY, gson.toJson(input));
+		} catch (Exception e) {
+			logger.error("Web Service API Error while submitting the survey for meeting : " + meetingId, e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
 
+	}
+
+	public static String callVVMeetingRestService(final HttpMethod httpMethod, HttpHeaders headers, final String operationName, final String input) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		ResponseEntity<?> responseEntity = null;
+		try {
+			logger.info("videoVisitMeetingRestServiceUrl url: " + videoVisitMeetingRestServiceUrl + operationName);
+			if (StringUtils.isBlank(videoVisitMeetingRestServiceUrl) || StringUtils.isBlank(serviceSecurityUsername)
+					|| StringUtils.isBlank(serviceSecurityPassword)) {
+				initializeRestProperties();
+			}
+			final URI uri = new URI(videoVisitMeetingRestServiceUrl + operationName);
+			logger.info("videoVisitMeetingRestServiceUrl : " + uri);
+			final String authStr = serviceSecurityUsername + ":" + serviceSecurityPassword;
+			logger.debug("authStr : " + authStr);
+			final String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
+
+			if(headers == null) {
+				headers = new HttpHeaders();
+			}
+			headers.setContentType(MediaType.APPLICATION_JSON);
+			headers.set("Accept", "*/*");
+			headers.set("Authorization", "Basic " + authEncoded.trim());
+			final HttpEntity<?> entity = new HttpEntity<Object>(input, headers);
+			responseEntity = restTemplate.exchange(uri, httpMethod, entity, String.class);
+			if (responseEntity != null) {
+				output = (String) responseEntity.getBody();
+			}
+
+		} catch (Exception e) {
+			logger.error("Web Service API error:" + e.getMessage(), e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+
+	public static String getMeetingQualitySurveyDetails(final Gson gson, final boolean memberFl, final boolean providerFl, final String clientId,
+			final String sessionId) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)) {
+			output = WebUtil.BAD_REQUEST_400;
+		}
+		try {
+			final HttpHeaders headers = new HttpHeaders();
+			headers.set("X-clientId", clientId);
+			headers.set("X-sessionId", sessionId);
+			headers.set("X-providerFl", Boolean.toString(providerFl));
+			headers.set("X-memberFl", Boolean.toString(memberFl));
+			
+			output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_ACTIVE_SURVEYS, null);
+		} catch (Exception e) {
+			logger.error("Web Service API error:" + e.getMessage(), e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }
