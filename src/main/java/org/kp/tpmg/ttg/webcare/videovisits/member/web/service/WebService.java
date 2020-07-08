@@ -28,6 +28,7 @@ import org.kp.tpmg.videovisit.model.MemberLogoutInput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
+import org.kp.tpmg.videovisit.model.mediastats.InsertVendorMeetingMediaCDRInput;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
@@ -1733,4 +1734,40 @@ public class WebService {
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	public static String insertVendorMeetingMediaCDR(final String meetingId, final String meetingVmr, final String callUUID,
+			 final String partipantName, final String mediaStats, String sessionId, String clientId) {
+		
+		logger.info(LOG_ENTERED);
+		String jsonResponse = null;
+		final Gson gson = new Gson();
+		if (StringUtils.isBlank(sessionId)) {
+			logger.warn("Missing input attributes");
+			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+			final ServiceCommonOutput service = new ServiceCommonOutput();
+			final Status status = new Status();
+			service.setName(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR);
+			output.setService(service);
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			output.getService().setStatus(status);
+			jsonResponse = gson.toJson(output);
+		} else {
+			final InsertVendorMeetingMediaCDRInput input = new InsertVendorMeetingMediaCDRInput();
+			input.setMeetingId(meetingId);
+			input.setMeetingVmr(meetingVmr);
+			input.setCallUUID(callUUID);
+			input.setMediaStats(mediaStats);
+			input.setClientId(clientId);
+			input.setParticipantName(partipantName);
+			input.setSessionId(sessionId);
+
+			final String inputString = gson.toJson(input);
+			logger.debug("jsonInptString : " + inputString);
+			jsonResponse = callVVRestService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString);
+		}
+		logger.info(LOG_EXITING);
+		return jsonResponse;
+	}
+
 }

@@ -31,6 +31,7 @@ public class ServiceUtil {
 	public static final String LEAVE_MEETING = "leaveMeeting";
 	public static final String VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST = "verifyAndLaunchMeetingForMemberGuest";
 	public static final String MOBILE_LAUNCH_VV = "mobilelaunchvv";
+	public static final String INSERT_VENODR_MEETING_MEDIA_CDR = "insertVendorMeetingMediaCDR";
 	
 	public static final String SUBMIT_SURVEY = "submitSurvey";
 	public static final String GET_ACTIVE_SURVEYS = "getActiveSurveys";
