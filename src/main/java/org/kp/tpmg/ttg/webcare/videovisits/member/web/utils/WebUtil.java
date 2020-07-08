@@ -88,6 +88,7 @@ public class WebUtil {
 	public static final String MDO_HELP_URL = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/faq";
 	
 	public static final String KEEP_ALIVE = "keep_alive";
+	public static final String SURVEY_TIMEOUT = "survey_timeout";
 	
 	
 	public static boolean isDOBMMYYYYFormat(String value) {
@@ -598,5 +599,10 @@ public class WebUtil {
 	public static void loadKeepAliveProperty(final Map<String, String> properties) {
 		final String KEEP_ALIVE_URL = AppProperties.getExtPropertiesValueByKey("KPORG_SSO_KEEP_ALIVE_URL");
 		properties.put("KEEP_ALIVE_URL", StringUtils.isNotBlank(KEEP_ALIVE_URL) ? KEEP_ALIVE_URL : "https://healthy.kaiserpermanente.org/health/mycare/consumer/keepalive?ts=");
+	}
+	
+	public static void loadSurveyTimeOutProperties(final Map<String, String> properties) {
+		final String MEETING_QUALITY_FEEDBACK_TIMEOUT = AppProperties.getExtPropertiesValueByKey("MEETING_QUALITY_FEEDBACK_TIMEOUT");
+		properties.put("MEETING_QUALITY_FEEDBACK_TIMEOUT", StringUtils.isNotBlank(MEETING_QUALITY_FEEDBACK_TIMEOUT) ? MEETING_QUALITY_FEEDBACK_TIMEOUT : "120");
 	}
 }

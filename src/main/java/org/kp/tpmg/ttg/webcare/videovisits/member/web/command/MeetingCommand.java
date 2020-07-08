@@ -13,7 +13,6 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCE
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS_200;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,10 +55,10 @@ import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
-import org.springframework.http.HttpMethod;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import net.sf.json.JSONObject;
 import net.sourceforge.wurfl.core.Device;
@@ -1117,6 +1116,8 @@ public class MeetingCommand {
 				WebUtil.loadAllBrowserBlockProperties(properties);
 			} else if(WebUtil.KEEP_ALIVE.equalsIgnoreCase(propertyName)) {
 				WebUtil.loadKeepAliveProperty(properties);
+			} else if(WebUtil.SURVEY_TIMEOUT.equalsIgnoreCase(propertyName)) {
+				WebUtil.loadSurveyTimeOutProperties(properties);
 			}
 		} else {
 			logger.warn("propertyName is blank/empty.");
@@ -1441,23 +1442,15 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String response = null;
 		String meetingId = null;
+		List<UserAnswer> userAnswers = null;
 		try {
-			final List<UserAnswer> userAnswers = new ArrayList<UserAnswer>();
-			meetingId = request.getHeader("meeting_id");
-			final String userType = request.getHeader("user_type");
-			final String userValue = request.getHeader("user_value");
-			final String questionId = request.getHeader("question_id");
-			final String answer = request.getHeader("answer");
-			final String clientId = request.getHeader("clientId");
+			final Gson gson = new Gson();
+			meetingId = request.getHeader("meetingId");
+			final String userType = request.getHeader("userType");
+			final String userValue = request.getHeader("userValue");
 
-			// contact UI how they send list of questions
-			UserAnswer userAnswer = new UserAnswer();
-			userAnswer.setQuestionId(Integer.parseInt(questionId));
-			userAnswer.setAnswer(answer);
-
-			userAnswers.add(userAnswer);
-
-			response = WebService.submitSurvey(userType, userValue, meetingId, userAnswers, clientId,
+			userAnswers = gson.fromJson(request.getHeader("userAnswers"), new TypeToken<List<UserAnswer>>() {}.getType());
+			response = WebService.submitSurvey(gson, userType, userValue, meetingId, userAnswers, WebUtil.VV_MBR_WEB,
 					request.getSession().getId());
 		} catch (Exception e) {
 			logger.error("System Error while submitting the survey for meeting : " + meetingId, e);
@@ -1469,24 +1462,27 @@ public class MeetingCommand {
 		return response;
 	}
 
-	public static String getMeetingQualitySurveyDetails(HttpServletRequest request, final String surveyName) {
+	public static String getMeetingQualitySurveyDetails(final HttpServletRequest request, final String surveyName) {
 		logger.info(LOG_ENTERED);
 		String response = null;
 		try {
 			final Gson gson = new Gson();
-			final String clientId = request.getHeader("clientId");
-			response = WebService.getMeetingQualitySurveyDetails(gson, true, false, clientId,
+			response = WebService.getMeetingQualitySurveyDetails(gson, true, false, WebUtil.VV_MBR_WEB,
 					request.getSession().getId());
 			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(response, ActiveSurveysResponse.class);
-			if(activeSurveysResponse != null) {
-				if(SUCCESS_200.equalsIgnoreCase(activeSurveysResponse.getCode()) && CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())){
-					for(Survey survey : activeSurveysResponse.getSurveys()) {
-						if(surveyName.equalsIgnoreCase(survey.getSurveyName())) {
-							response = gson.toJson(survey);
+			if (activeSurveysResponse != null) {
+				if (SUCCESS_200.equalsIgnoreCase(activeSurveysResponse.getCode())) {
+					if (CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())) {
+
+						for (Survey survey : activeSurveysResponse.getSurveys()) {
+							if (surveyName.equalsIgnoreCase(survey.getSurveyName())) {
+								response = gson.toJson(survey);
+							}
 						}
+					} else {
+						// what if we get 200 status and empty surveys in the response
 					}
 				} else {
-					// what if we get 200 status and empty surveys in the response
 					response = activeSurveysResponse.getCode();
 				}
 			} 
@@ -1499,7 +1495,40 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return response;
 	}
-	
+	public static String insertVendorMeetingMediaCDR(final HttpServletRequest request) throws Exception {
+		logger.info(LOG_ENTERED);
+		String jsonOutput = null;
+		String result = null;
+		final String meetingId = request.getParameter("meetingId");
+		final String meetingVmr = request.getParameter("meetingVmr");
+		final String callUUID = request.getParameter("callUUID");
+		final String partipantName = request.getParameter("partipantName");
+		final String mediaStats = request.getParameter("mediaStats");
+		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		try {
+			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID,partipantName,mediaStats,
+					request.getSession().getId(), WebUtil.VV_MBR_WEB);
+			if (StringUtils.isNotBlank(jsonOutput)) {
+				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+			}
+			
+			if (output != null && output.getService() != null
+					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
+					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR,
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(), "");
+			}
+		} catch (Exception e) {
+			logger.error("Error while insertVendorMeetingMediaCDR for meeting:" + meetingId, e);
+		}
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, FAILURE_900,
+					FAILURE, null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
+	}	
 
 }
 

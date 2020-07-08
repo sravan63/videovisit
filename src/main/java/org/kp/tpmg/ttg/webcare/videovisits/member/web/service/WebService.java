@@ -19,7 +19,9 @@ import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.InputUserAnswers;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.Response;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.UserAnswer;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
@@ -28,6 +30,7 @@ import org.kp.tpmg.videovisit.model.MemberLogoutInput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
+import org.kp.tpmg.videovisit.model.mediastats.InsertVendorMeetingMediaCDRInput;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
@@ -1648,27 +1651,30 @@ public class WebService {
 		return output;
 	}
 
-	public static String submitSurvey(String userType, String userValue, String meetingId, List<UserAnswer> userAnswers,
-			String clientId, String sessionId) {
+	public static String submitSurvey(final Gson gson, final String userType, final String userValue,
+			final String meetingId, final List<UserAnswer> userAnswers, final String clientId, final String sessionId) {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		
-		if (StringUtils.isBlank(meetingId) || Integer.parseInt(meetingId) <= 0 || StringUtils.isBlank(sessionId)
-				|| StringUtils.isBlank(clientId) || userAnswers == null || userAnswers.isEmpty()
-				|| StringUtils.isBlank(userType) || StringUtils.isBlank(userValue)) {
-			output = WebUtil.BAD_REQUEST_400;
-		}
 		try {
-			final InputUserAnswers input = new InputUserAnswers();
-			input.setMeetingId(Integer.parseInt(meetingId));
-			input.setUserType(userType);
-			input.setUserValue(userValue);
-			input.setUserAnswers(userAnswers);
-			input.setClientId(clientId);
-			input.setSessionId(sessionId);
-			final Gson gson = new Gson();
-			logger.debug("inputJsonString : " + gson.toJson(input));
-			output = callVVMeetingRestService(HttpMethod.POST, null, ServiceUtil.SUBMIT_SURVEY, gson.toJson(input));
+			if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)
+					|| userAnswers == null || userAnswers.isEmpty() || StringUtils.isBlank(userType)
+					|| StringUtils.isBlank(userValue)) {
+				final Response response = new Response();
+				response.setCode(WebUtil.BAD_REQUEST_400);
+				output = gson.toJson(response);
+			} else {
+
+				final InputUserAnswers input = new InputUserAnswers();
+				input.setMeetingId(Integer.parseInt(meetingId));
+				input.setUserType(userType);
+				input.setUserValue(userValue);
+				input.setUserAnswers(userAnswers);
+				input.setClientId(clientId);
+				input.setSessionId(sessionId);
+				logger.debug("inputJsonString : " + gson.toJson(input));
+				output = callVVMeetingRestService(HttpMethod.POST, null, ServiceUtil.SUBMIT_SURVEY, gson.toJson(input));
+
+			}
 		} catch (Exception e) {
 			logger.error("Web Service API Error while submitting the survey for meeting : " + meetingId, e);
 		}
@@ -1677,7 +1683,8 @@ public class WebService {
 
 	}
 
-	public static String callVVMeetingRestService(final HttpMethod httpMethod, HttpHeaders headers, final String operationName, final String input) {
+	public static String callVVMeetingRestService(final HttpMethod httpMethod, HttpHeaders headers,
+			final String operationName, final String input) {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		ResponseEntity<?> responseEntity = null;
@@ -1693,7 +1700,7 @@ public class WebService {
 			logger.debug("authStr : " + authStr);
 			final String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
 
-			if(headers == null) {
+			if (headers == null) {
 				headers = new HttpHeaders();
 			}
 			headers.setContentType(MediaType.APPLICATION_JSON);
@@ -1712,25 +1719,66 @@ public class WebService {
 		return output;
 	}
 
-	public static String getMeetingQualitySurveyDetails(final Gson gson, final boolean memberFl, final boolean providerFl, final String clientId,
-			final String sessionId) {
+	public static String getMeetingQualitySurveyDetails(final Gson gson, final boolean memberFl,
+			final boolean providerFl, final String clientId, final String sessionId) {
 		logger.info(LOG_ENTERED);
 		String output = null;
-		if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)) {
-			output = WebUtil.BAD_REQUEST_400;
-		}
 		try {
-			final HttpHeaders headers = new HttpHeaders();
-			headers.set("X-clientId", clientId);
-			headers.set("X-sessionId", sessionId);
-			headers.set("X-providerFl", Boolean.toString(providerFl));
-			headers.set("X-memberFl", Boolean.toString(memberFl));
-			
-			output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_ACTIVE_SURVEYS, null);
+			if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)
+					|| (memberFl == false && providerFl == false)) {
+				final ActiveSurveysResponse response = new ActiveSurveysResponse();
+				response.setCode(WebUtil.BAD_REQUEST_400);
+				output = gson.toJson(response);
+			} else {
+
+				final HttpHeaders headers = new HttpHeaders();
+				headers.set("X-clientId", clientId);
+				headers.set("X-sessionId", sessionId);
+				headers.set("X-providerFl", Boolean.toString(providerFl));
+				headers.set("X-memberFl", Boolean.toString(memberFl));
+
+				output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_ACTIVE_SURVEYS, null);
+			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	public static String insertVendorMeetingMediaCDR(final String meetingId, final String meetingVmr, final String callUUID,
+			 final String partipantName, final String mediaStats, String sessionId, String clientId) {
+		
+		logger.info(LOG_ENTERED);
+		String jsonResponse = null;
+		final Gson gson = new Gson();
+		if (StringUtils.isBlank(sessionId)) {
+			logger.warn("Missing input attributes");
+			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+			final ServiceCommonOutput service = new ServiceCommonOutput();
+			final Status status = new Status();
+			service.setName(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR);
+			output.setService(service);
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			output.getService().setStatus(status);
+			jsonResponse = gson.toJson(output);
+		} else {
+			final InsertVendorMeetingMediaCDRInput input = new InsertVendorMeetingMediaCDRInput();
+			input.setMeetingId(meetingId);
+			input.setMeetingVmr(meetingVmr);
+			input.setCallUUID(callUUID);
+			input.setMediaStats(mediaStats);
+			input.setClientId(clientId);
+			input.setParticipantName(partipantName);
+			input.setSessionId(sessionId);
+
+			final String inputString = gson.toJson(input);
+			logger.debug("jsonInptString : " + inputString);
+			jsonResponse = callVVRestService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString);
+		}
+		logger.info(LOG_EXITING);
+		return jsonResponse;
+	}
+
 }
