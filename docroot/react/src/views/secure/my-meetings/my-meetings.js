@@ -366,7 +366,7 @@ class MyMeetings extends React.Component {
                     }) 
 
                 ):(
-                <div className="no-meetings">{!this.state.showLoader ? (<p className="text-center">You have no meetings in the next 15 minutes.</p>):('')}</div>
+                <div className="no-meetings">{!this.state.showLoader ? (<p className="text-center">You have no visits in the next 15 minutes.</p>):('')}</div>
                 )}
                  <div className="col-sm-12 col-lg-12 col-md-12" className={this.state.isInApp && window.window.innerWidth >= 1024 ? "wifi inapp-wifi" : "wifi"}>
                     <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
