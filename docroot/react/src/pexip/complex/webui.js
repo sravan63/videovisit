@@ -655,12 +655,20 @@ function connected(url) {
                     memberName = JSON.parse(localStorage.getItem('memberName'));
                 }            
                if(localStorage.getItem('isGuest')) {
-                    var meetingCode= udata.meetingCode;
-                    BackendService.CaregiverJoinMeeting(meetingId, meetingCode);  
+                    var meetingCode = udata.meetingCode,
+                        memberName  = udata.lastName +', '+ udata.firstName;
+                   BackendService.CaregiverJoinMeeting(meetingId, meetingCode);
                 } else {
                     BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
                 }
             }
+            let mediaStats = rtc.getMediaStatistics();
+            let data = {
+                mediaData: mediaStats,
+                meetingId: meetingId,
+                memberName: memberName
+            };
+            MessageService.sendMessage(GlobalConfig.MEDIA_STATS_DATA, data);
             pexipInitialConnect=true;
         }
     }

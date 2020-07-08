@@ -160,5 +160,14 @@ class BackendService extends React.Component {
         return Axios.post(this.state.basePath + '/videovisit/' + 'quitMeeting.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&isProxyMeeting=' + isProxyMeeting + '&isFromBackButton=' + isFromBackButton, {}, { headers: headers });
     }
 
+    storeMediaStats(meetingId, meetingVmr, participantName, callUUID, data) {
+        Axios.post(this.state.basePath + '/videovisit/' + 'insertVendorMeetingMediaCDR.json' + '?meetingId=' + meetingId + '&meetingVmr=' + meetingVmr + '&participantName=' + participantName + '&callUUID=' + callUUID, data).subscribe((response) => {
+                console.log("success",response);
+            },
+            (err) => {
+                console.log("Error",err);
+            });
+    }
+
 }
 export default new BackendService();

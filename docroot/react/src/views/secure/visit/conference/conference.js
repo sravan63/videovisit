@@ -29,6 +29,7 @@ class Conference extends React.Component {
         this.list = [];
         this.handle = 0;
         this.runningLate = 0;
+        this.MediaStats = 0;
         this.keepAlive = 0;
         this.overlayTimer = 0;
         this.timerForLeaveMeeting = 0;
@@ -242,7 +243,10 @@ class Conference extends React.Component {
                     break;
                 case GlobalConfig.INAPP_LEAVEMEETING:
                     this.props.history.push(GlobalConfig.MEETINGS_URL);
-                    break; 
+                    break;
+                case GlobalConfig.MEDIA_STATS_DATA:
+                    this.sendMediaStats(message.data);
+                    break;
         
             }
 
@@ -253,6 +257,15 @@ class Conference extends React.Component {
             this.setState({ mdoHelpUrl: helpUrl });
         }
     }
+
+    sendMediaStats(data) {
+        var meetingVmr = this.state.meetingDetails.meetingVendorId;
+        this.MediaStats = setInterval(() => {
+            BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '', JSON.stringify(data.mediaData));
+        }, 30000);
+
+    }
+
     fullScreenWindow(){
         var isMobile = Utilities.isMobileDevice();
         var browserDetails = Utilities.getBrowserInformation();
@@ -487,6 +500,7 @@ class Conference extends React.Component {
         // clear on component unmount
         window.clearInterval(this.handle);
         window.clearInterval(this.runningLate);
+        window.clearInterval(this.MediaStats);
         window.clearInterval(this.keepAlive);
         window.clearTimeout(this.overlayTimer);
         window.clearTimeout(this.timerForLeaveMeeting);
