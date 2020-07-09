@@ -519,6 +519,7 @@ class Conference extends React.Component {
             }
        }
        localStorage.removeItem('selectedPeripherals');
+       sessionStorage.removeItem('UUID');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
        window.removeEventListener('load', this.handleLoad)  
     }

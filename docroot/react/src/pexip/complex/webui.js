@@ -478,6 +478,18 @@ function participantCreated(participant) {
         }
         MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
     }
+    var loginUserName,
+        isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting')),
+        userData = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+
+    if(isProxyMeeting == 'Y'){
+        loginUserName = userData.lastName +', '+ userData.firstName;
+    } else {
+        loginUserName = JSON.parse(localStorage.getItem('memberName'));
+    }
+    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim()) {
+        sessionStorage.setItem('UUID',participant.uuid);
+    }
     toggleWaitingRoom(pexipParticipantsList);
 }
 
@@ -655,8 +667,7 @@ function connected(url) {
                     memberName = JSON.parse(localStorage.getItem('memberName'));
                 }            
                if(localStorage.getItem('isGuest')) {
-                    var meetingCode = udata.meetingCode,
-                        memberName  = udata.lastName +', '+ udata.firstName;
+                    var meetingCode = udata.meetingCode;
                    BackendService.CaregiverJoinMeeting(meetingId, meetingCode);
                 } else {
                     BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
