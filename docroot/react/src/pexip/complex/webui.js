@@ -883,6 +883,12 @@ export function hostInMeeting(element, index, array) {
     return element.role == GlobalConfig.CHAIR_ROLE;
 }
 
+export function removeDuplicateParticipants(pexipParticipantsList){
+    var participant = pexipParticipantsList.map(a => a.display_name);
+    var participantsLength = participant.filter( onlyUnique );
+    return participantsLength;
+}
+
 export function toggleWaitingRoom(pexipParticipantsList) {
     var isHostAvail = pexipParticipantsList.some(hostInMeeting);
     var participants = pexipParticipantsList.map(a => a.uuid);
@@ -896,6 +902,11 @@ export function toggleWaitingRoom(pexipParticipantsList) {
         if (participantsInMeeting.length == 1) {
             MessageService.sendMessage(GlobalConfig.HOST_LEFT, null);
         } else if (participantsInMeeting.length > 1) {
+            var totalCount  = removeDuplicateParticipants(pexipParticipantsList);
+            if(totalCount.length == 1){
+                MessageService.sendMessage(GlobalConfig.REMOVE_DUPLICATES, null);
+                return;
+            }
             if (hostDirtyThisMeeting) {
                 //Half waiting room
                 MessageService.sendMessage(GlobalConfig.HAS_MORE_PARTICIPANTS, null);

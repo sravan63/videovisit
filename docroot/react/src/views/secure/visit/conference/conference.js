@@ -247,6 +247,9 @@ class Conference extends React.Component {
                 case GlobalConfig.MEDIA_STATS_DATA:
                     this.sendMediaStats(message.data);
                     break;
+                case GlobalConfig.REMOVE_DUPLICATES:
+                    this.handleTimer(true);
+                    break;
         
             }
 
@@ -333,12 +336,13 @@ class Conference extends React.Component {
 
     handleTimer(param){
         if(param){
-        this.handle = setInterval(() => {
+        this.handle = setTimeout(() => {
                 this.leaveMeeting();
+                this.handle = 0;
             }, GlobalConfig.SIGNOUT_MEMBER_ALONE);
         }
         else{
-            window.clearInterval(this.handle);
+            clearTimeout(this.handle);
         }
     }
 
@@ -499,7 +503,7 @@ class Conference extends React.Component {
 
     componentWillUnmount() {
         // clear on component unmount
-        window.clearInterval(this.handle);
+        clearTimeout(this.handle);
         window.clearInterval(this.runningLate);
         window.clearInterval(this.MediaStats);
         window.clearInterval(this.keepAlive);
