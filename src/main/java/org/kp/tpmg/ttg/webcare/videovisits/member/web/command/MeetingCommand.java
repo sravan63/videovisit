@@ -61,7 +61,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import jdk.internal.jline.internal.Log;
 import net.sf.json.JSONObject;
 import net.sourceforge.wurfl.core.Device;
 
@@ -1497,29 +1496,28 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return response;
 	}
-
 	public static String insertVendorMeetingMediaCDR(final HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		String jsonOutput = null;
 		String result = null;
-		String mediaStats = null;
 		final String meetingId = request.getParameter("meetingId");
 		final String meetingVmr = request.getParameter("meetingVmr");
 		final String callUUID = request.getParameter("callUUID");
 		final String partipantName = request.getParameter("partipantName");
-		if (request.getReader() != null) {
-			mediaStats = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-		}
-		Log.info("mediaStats" + mediaStats);
+		String mediaStats = "";
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
-			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID, partipantName,
-					mediaStats, request.getSession().getId(), WebUtil.VV_MBR_WEB);
+			if (request.getReader() != null) {
+				mediaStats = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+			}
+			logger.info("mediaStats" + mediaStats);
+			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID,partipantName,mediaStats,
+					request.getSession().getId(), WebUtil.VV_MBR_WEB);
 			if (StringUtils.isNotBlank(jsonOutput)) {
 				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
 			}
-
+			
 			if (output != null && output.getService() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
@@ -1530,8 +1528,8 @@ public class MeetingCommand {
 			logger.error("Error while insertVendorMeetingMediaCDR for meeting:" + meetingId, e);
 		}
 		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, FAILURE_900, FAILURE,
-					null);
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, FAILURE_900,
+					FAILURE, null);
 		}
 		logger.info(LOG_EXITING);
 		return result;
