@@ -1470,12 +1470,13 @@ public class MeetingCommand {
 		try {
 			final Gson gson = new Gson();
 			surveyName = request.getHeader("surveyName");
-			response = WebService.getSurveyDetails(gson, true, false, WebUtil.VV_MBR_WEB,
+			final String output = WebService.getSurveyDetails(gson, true, false, WebUtil.VV_MBR_WEB,
 					request.getSession().getId());
-			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(response, ActiveSurveysResponse.class);
+			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(output, ActiveSurveysResponse.class);
 			if (activeSurveysResponse != null) {
 				if (SUCCESS_200.equalsIgnoreCase(activeSurveysResponse.getCode())) {
-					if (CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())) {
+					if (CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())
+							&& StringUtils.isNotBlank(surveyName)) {
 						for (Survey survey : activeSurveysResponse.getSurveys()) {
 							if (surveyName.equalsIgnoreCase(survey.getSurveyName())) {
 								response = gson.toJson(survey);
