@@ -80,8 +80,7 @@ const GlobalConfig = {
     CLOSE_MODAL: 'popup closed',
     CLOSE_MODAL_AUTOMATICALLY: 'close popup automatically',
     TOGGLE_MOBILE_FOOTER: 'Mobile Footer Toggle',
-    MEDIA_STATS_DATA:'StoreMedia Stats',
-    REMOVE_DUPLICATES:'Member alone'
+    MEDIA_STATS_DATA:'StoreMedia Stats'
 };
 
 export default GlobalConfig;

@@ -161,9 +161,6 @@ class BackendService extends React.Component {
     }
 
     storeMediaStats(meetingId, meetingVmr, participantName, callUUID, data) {
-        if(sessionStorage.getItem('UUID')) {
-             callUUID = sessionStorage.getItem('UUID');
-        }
         Axios.post(this.state.basePath + '/videovisit/' + 'insertVendorMeetingMediaCDR.json' + '?meetingId=' + meetingId + '&meetingVmr=' + meetingVmr + '&participantName=' + participantName + '&callUUID=' + callUUID, data).subscribe((response) => {
                 console.log("success",response);
             },

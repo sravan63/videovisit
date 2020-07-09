@@ -247,9 +247,6 @@ class Conference extends React.Component {
                 case GlobalConfig.MEDIA_STATS_DATA:
                     this.sendMediaStats(message.data);
                     break;
-                case GlobalConfig.REMOVE_DUPLICATES:
-                    this.handleTimer(true);
-                    break;
         
             }
 
@@ -263,7 +260,6 @@ class Conference extends React.Component {
 
     sendMediaStats(data) {
         var meetingVmr = this.state.meetingDetails.meetingVendorId;
-        BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '', JSON.stringify(data.mediaData));
         this.MediaStats = setInterval(() => {
             BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '', JSON.stringify(data.mediaData));
         }, 30000);
@@ -336,13 +332,12 @@ class Conference extends React.Component {
 
     handleTimer(param){
         if(param){
-        this.handle = setTimeout(() => {
+        this.handle = setInterval(() => {
                 this.leaveMeeting();
-                this.handle = 0;
             }, GlobalConfig.SIGNOUT_MEMBER_ALONE);
         }
         else{
-            clearTimeout(this.handle);
+            window.clearInterval(this.handle);
         }
     }
 
@@ -503,7 +498,7 @@ class Conference extends React.Component {
 
     componentWillUnmount() {
         // clear on component unmount
-        clearTimeout(this.handle);
+        window.clearInterval(this.handle);
         window.clearInterval(this.runningLate);
         window.clearInterval(this.MediaStats);
         window.clearInterval(this.keepAlive);
@@ -524,7 +519,6 @@ class Conference extends React.Component {
             }
        }
        localStorage.removeItem('selectedPeripherals');
-       sessionStorage.removeItem('UUID');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
        window.removeEventListener('load', this.handleLoad)  
     }
