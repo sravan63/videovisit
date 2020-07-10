@@ -342,13 +342,12 @@ public class MemberRestController{
 		return output;
 	}
 	
-	@RequestMapping(value = "/getMeetingQualitySurveyDetails.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+	@RequestMapping(value = "/getSurveyDetails.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
-	public String getMeetingQualitySurveyDetails(final HttpServletRequest request, final HttpServletResponse response)
+	public String getSurveyDetails(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		// need to get it from properties or constants
-		String output = MeetingCommand.getMeetingQualitySurveyDetails(request, "meeting_quality_feedback");
+		String output = MeetingCommand.getSurveyDetails(request);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;

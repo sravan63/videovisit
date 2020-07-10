@@ -25,15 +25,15 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
+import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Survey;
+import org.kp.tpmg.ttg.videovisitsmeetingapi.model.UserAnswer;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.Survey;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.UserAnswer;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
@@ -1463,32 +1463,34 @@ public class MeetingCommand {
 		return response;
 	}
 
-	public static String getMeetingQualitySurveyDetails(final HttpServletRequest request, final String surveyName) {
+	public static String getSurveyDetails(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String response = null;
+		String surveyName = null;
 		try {
 			final Gson gson = new Gson();
-			response = WebService.getMeetingQualitySurveyDetails(gson, true, false, WebUtil.VV_MBR_WEB,
+			surveyName = request.getHeader("surveyName");
+			final String output = WebService.getSurveyDetails(gson, true, false, WebUtil.VV_MBR_WEB,
 					request.getSession().getId());
-			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(response, ActiveSurveysResponse.class);
+			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(output, ActiveSurveysResponse.class);
 			if (activeSurveysResponse != null) {
 				if (SUCCESS_200.equalsIgnoreCase(activeSurveysResponse.getCode())) {
-					if (CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())) {
-
+					if (CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())
+							&& StringUtils.isNotBlank(surveyName)) {
 						for (Survey survey : activeSurveysResponse.getSurveys()) {
 							if (surveyName.equalsIgnoreCase(survey.getSurveyName())) {
 								response = gson.toJson(survey);
 							}
 						}
 					} else {
-						// what if we get 200 status and empty surveys in the response
+						response = WebUtil.DATA_NOT_FOUND;
 					}
 				} else {
 					response = activeSurveysResponse.getCode();
 				}
 			} 
 		} catch (Exception e) {
-			logger.error("System Error while getting MeetingQualityFeedback Survey Details : ", e);
+			logger.error("System Error while getting Survey Details : " + surveyName, e);
 		}
 		if (StringUtils.isBlank(response)) {
 			response = JSONObject.fromObject(new SystemError()).toString();
@@ -1496,6 +1498,7 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return response;
 	}
+	
 	public static String insertVendorMeetingMediaCDR(final HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
 		String jsonOutput = null;
@@ -1504,6 +1507,7 @@ public class MeetingCommand {
 		final String meetingVmr = request.getParameter("meetingVmr");
 		final String callUUID = request.getParameter("callUUID");
 		final String partipantName = request.getParameter("partipantName");
+
 		String mediaStats = "";
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 		Gson gson = new GsonBuilder().serializeNulls().create();
@@ -1517,7 +1521,7 @@ public class MeetingCommand {
 			if (StringUtils.isNotBlank(jsonOutput)) {
 				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
 			}
-			
+
 			if (output != null && output.getService() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
@@ -1528,8 +1532,8 @@ public class MeetingCommand {
 			logger.error("Error while insertVendorMeetingMediaCDR for meeting:" + meetingId, e);
 		}
 		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, FAILURE_900,
-					FAILURE, null);
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, FAILURE_900, FAILURE,
+					null);
 		}
 		logger.info(LOG_EXITING);
 		return result;

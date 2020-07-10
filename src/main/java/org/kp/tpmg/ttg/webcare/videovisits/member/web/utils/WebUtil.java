@@ -79,6 +79,7 @@ public class WebUtil {
 	public static final String SUCCESS_200 = "200";
 	public static final String FAILURE_900 = "900";
 	public static final String BAD_REQUEST_400 = "400";
+	public static final String DATA_NOT_FOUND = "500";
 	public static final String FAILURE = "failure";
 	public static final String SUCCESS = "success";
 	public static final String MRN = "mrn";
