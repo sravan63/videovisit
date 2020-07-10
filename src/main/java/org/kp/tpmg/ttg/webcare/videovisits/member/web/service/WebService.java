@@ -17,12 +17,12 @@ import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.ttg.common.property.IApplicationProperties;
-import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
-import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
-import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Response;
-import org.kp.tpmg.ttg.videovisitsmeetingapi.model.UserAnswer;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.ActiveSurveysResponse;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.InputUserAnswers;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.Response;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.UserAnswer;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
@@ -1719,7 +1719,7 @@ public class WebService {
 		return output;
 	}
 
-	public static String getSurveyDetails(final Gson gson, final boolean memberFl,
+	public static String getMeetingQualitySurveyDetails(final Gson gson, final boolean memberFl,
 			final boolean providerFl, final String clientId, final String sessionId) {
 		logger.info(LOG_ENTERED);
 		String output = null;
