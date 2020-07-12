@@ -1117,8 +1117,8 @@ public class MeetingCommand {
 				WebUtil.loadAllBrowserBlockProperties(properties);
 			} else if(WebUtil.KEEP_ALIVE.equalsIgnoreCase(propertyName)) {
 				WebUtil.loadKeepAliveProperty(properties);
-			} else if(WebUtil.SURVEY_TIMEOUT.equalsIgnoreCase(propertyName)) {
-				WebUtil.loadSurveyTimeOutProperties(properties);
+			} else if(WebUtil.SURVEY.equalsIgnoreCase(propertyName)) {
+				WebUtil.loadSurveyProperties(properties);
 			}
 		} else {
 			logger.warn("propertyName is blank/empty.");
@@ -1515,7 +1515,7 @@ public class MeetingCommand {
 			if (request.getReader() != null) {
 				mediaStats = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			}
-			logger.info("mediaStats" + mediaStats);
+			logger.info("mediaStats" + mediaStats.toString());
 			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID,partipantName,mediaStats,
 					request.getSession().getId(), WebUtil.VV_MBR_WEB);
 			if (StringUtils.isNotBlank(jsonOutput)) {

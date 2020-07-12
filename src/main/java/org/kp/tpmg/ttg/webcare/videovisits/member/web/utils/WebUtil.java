@@ -89,7 +89,7 @@ public class WebUtil {
 	public static final String MDO_HELP_URL = "https://mydoctor.kaiserpermanente.org/ncal/videovisit/faq";
 	
 	public static final String KEEP_ALIVE = "keep_alive";
-	public static final String SURVEY_TIMEOUT = "survey_timeout";
+	public static final String SURVEY = "survey";
 	
 	
 	public static boolean isDOBMMYYYYFormat(String value) {
@@ -602,8 +602,11 @@ public class WebUtil {
 		properties.put("KEEP_ALIVE_URL", StringUtils.isNotBlank(KEEP_ALIVE_URL) ? KEEP_ALIVE_URL : "https://healthy.kaiserpermanente.org/health/mycare/consumer/keepalive?ts=");
 	}
 	
-	public static void loadSurveyTimeOutProperties(final Map<String, String> properties) {
+	public static void loadSurveyProperties(final Map<String, String> properties) {
 		final String MEETING_QUALITY_FEEDBACK_TIMEOUT = AppProperties.getExtPropertiesValueByKey("MEETING_QUALITY_FEEDBACK_TIMEOUT");
 		properties.put("MEETING_QUALITY_FEEDBACK_TIMEOUT", StringUtils.isNotBlank(MEETING_QUALITY_FEEDBACK_TIMEOUT) ? MEETING_QUALITY_FEEDBACK_TIMEOUT : "120");
+		
+		final String MINIMUM_IN_MEETING_TIME_FOR_SURVEY = AppProperties.getExtPropertiesValueByKey("MINIMUM_IN_MEETING_TIME_FOR_SURVEY");
+		properties.put("MINIMUM_IN_MEETING_TIME_FOR_SURVEY", StringUtils.isNotBlank(MINIMUM_IN_MEETING_TIME_FOR_SURVEY) ? MINIMUM_IN_MEETING_TIME_FOR_SURVEY : "120");
 	}
 }
