@@ -1774,6 +1774,7 @@ public class WebService {
 			input.setSessionId(sessionId);
 
 			final String inputString = gson.toJson(input);
+			logger.info("jsonInptString : " + inputString);
 			logger.debug("jsonInptString : " + inputString);
 			jsonResponse = callVVRestService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString);
 		}
