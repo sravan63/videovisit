@@ -37,6 +37,7 @@ class Conference extends React.Component {
         this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
+        this.leaveMeeting = this.leaveMeeting.bind(this);
         this.leaveVisitPopupOptions = { 
             heading: 'Leave Visit', 
             message : 'Your video visit session is going to end, unless you choose Stay.',
@@ -248,6 +249,8 @@ class Conference extends React.Component {
                     this.sendMediaStats(message.data);
                     break;
                 case GlobalConfig.REMOVE_DUPLICATES:
+                    this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
+                    this.toggleDockView(false);
                     this.handleTimer(true);
                     break;
         
@@ -335,11 +338,13 @@ class Conference extends React.Component {
     }
 
     handleTimer(param){
+        var self = this;
         if(param){
-        this.handle = setTimeout(() => {
-                this.leaveMeeting();
-                this.handle = 0;
-            }, GlobalConfig.SIGNOUT_MEMBER_ALONE);
+            clearTimeout(this.handle);
+            this.handle = setTimeout(function() {
+                self.leaveMeeting();
+                self.handle = 0;
+            },GlobalConfig.SIGNOUT_MEMBER_ALONE);
         }
         else{
             clearTimeout(this.handle);
