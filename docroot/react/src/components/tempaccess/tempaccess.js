@@ -4,12 +4,13 @@ import BackendService from '../../services/backendService.js';
 import GlobalConfig from '../../services/global.config';
 import { Route, withRouter } from 'react-router-dom';
 import UtilityService from '../../services/utilities-service.js';
+import BrowserBlock from '../../components/browser-block/browser-block';
 
 class TempAccess extends React.Component {
     constructor(props) {
         super(props);
         localStorage.clear();
-        this.state = { isInApp: false, lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: { errorlogin: false, errormsg: '' } };
+        this.state = { isInApp: false, lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: { errorlogin: false, errormsg: '' },isbrowserBlockDisplay : false };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
     }
@@ -18,6 +19,32 @@ class TempAccess extends React.Component {
         this.setState({isInApp : this.props.data.isInApp});
         this.setScreenOrientation();
         window.addEventListener('orientationchange', this.setScreenOrientation.bind(this));
+        var inAppAccess = UtilityService.getInAppAccessFlag();
+        if(!inAppAccess){
+            this.getBrowserBlockInfo();
+        }
+        this.setState({ isbrowserBlockDisplay: window.innerWidth > 961 });
+    }
+    getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                 browserNames = response.data;
+                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
+                 sessionStorage.setItem('helpUrl',response.data.mdoHelpUrl);
+                 sessionStorage.setItem('keepAlive',response.data.KEEP_ALIVE_URL);
+                 if(UtilityService.validateBrowserBlock(browserNames)){
+                    this.setState({ isBrowserBlockError: true });
+                 }
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+
     }
     setScreenOrientation(){
         //var isLandscape = window.matchMedia("(orientation:landscape)").matches;
@@ -26,6 +53,13 @@ class TempAccess extends React.Component {
         } else {  
             this.setState({  screenOrientation: 'landscape' });
         }
+        setTimeout(() => {
+            if(window.innerWidth > 961){
+                this.setState({ isbrowserBlockDisplay: true });
+            }else{
+                this.setState({ isbrowserBlockDisplay: false });
+            }    
+        }, 0);
     }
     signOn(e) {
         e.preventDefault();
@@ -148,6 +182,9 @@ class TempAccess extends React.Component {
     render() {
         return (
             <div className="temp-content">
+                {this.state.isbrowserBlockDisplay ?  (    
+                    <BrowserBlock browserblockinfo = {this.state} />    
+                 ) : ('')}
                 <div className={this.state.screenOrientation == 'portrait' ? "row temp-form width-p-auto" : "row temp-form width-l-fit"}> 
                     {!this.state.isInApp ?(<div className="row mobile-logo-container">
                         <div className="title">
@@ -156,6 +193,9 @@ class TempAccess extends React.Component {
                         </div>
                     </div>) :
                     ('')}
+                    {!this.state.isbrowserBlockDisplay ?  (    
+                        <BrowserBlock browserblockinfo = {this.state} />    
+                    ) : ('')}
                     <form className="col-xs-12 col-md-12 login-form" onSubmit={this.signOn} noValidate>
                         <p className="col-12 sub-text font-weight-bold">Patient's Information</p>
                         <div className="form-group">
