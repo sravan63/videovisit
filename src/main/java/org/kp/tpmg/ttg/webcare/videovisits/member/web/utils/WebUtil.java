@@ -603,8 +603,8 @@ public class WebUtil {
 	}
 	
 	public static void loadSurveyProperties(final Map<String, String> properties) {
-		final String MEETING_QUALITY_FEEDBACK_TIMEOUT = AppProperties.getExtPropertiesValueByKey("MEETING_QUALITY_FEEDBACK_TIMEOUT");
-		properties.put("MEETING_QUALITY_FEEDBACK_TIMEOUT", StringUtils.isNotBlank(MEETING_QUALITY_FEEDBACK_TIMEOUT) ? MEETING_QUALITY_FEEDBACK_TIMEOUT : "120");
+		final String MEETING_FEEDBACK_TIMEOUT = AppProperties.getExtPropertiesValueByKey("MEETING_FEEDBACK_TIMEOUT");
+		properties.put("MEETING_FEEDBACK_TIMEOUT", StringUtils.isNotBlank(MEETING_FEEDBACK_TIMEOUT) ? MEETING_FEEDBACK_TIMEOUT : "120");
 		
 		final String MINIMUM_IN_MEETING_TIME_FOR_SURVEY = AppProperties.getExtPropertiesValueByKey("MINIMUM_IN_MEETING_TIME_FOR_SURVEY");
 		properties.put("MINIMUM_IN_MEETING_TIME_FOR_SURVEY", StringUtils.isNotBlank(MINIMUM_IN_MEETING_TIME_FOR_SURVEY) ? MINIMUM_IN_MEETING_TIME_FOR_SURVEY : "120");
