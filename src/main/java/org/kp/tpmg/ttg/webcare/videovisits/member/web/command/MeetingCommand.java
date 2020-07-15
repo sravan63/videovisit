@@ -1515,7 +1515,6 @@ public class MeetingCommand {
 			if (request.getReader() != null) {
 				mediaStats = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			}
-			logger.info("participantName: " + partipantName);
 			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID, partipantName,
 					mediaStats, request.getSession().getId(), WebUtil.VV_MBR_WEB);
 			if (StringUtils.isNotBlank(jsonOutput)) {

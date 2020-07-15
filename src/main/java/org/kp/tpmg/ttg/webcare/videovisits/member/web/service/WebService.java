@@ -1747,8 +1747,8 @@ public class WebService {
 	}
 	
 	public static String insertVendorMeetingMediaCDR(final String meetingId, final String meetingVmr, final String callUUID,
-			 final String partipantName, final String mediaStats, String sessionId, String clientId) {
-		
+			final String partipantName, final String mediaStats, String sessionId, String clientId) {
+
 		logger.info(LOG_ENTERED);
 		String jsonResponse = null;
 		final Gson gson = new Gson();
@@ -1774,7 +1774,6 @@ public class WebService {
 			input.setSessionId(sessionId);
 
 			final String inputString = gson.toJson(input);
-			logger.info("jsonInptString : " + inputString);
 			logger.debug("jsonInptString : " + inputString);
 			jsonResponse = callVVRestService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString);
 		}
