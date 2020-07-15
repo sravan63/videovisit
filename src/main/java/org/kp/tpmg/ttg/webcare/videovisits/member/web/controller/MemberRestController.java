@@ -342,12 +342,12 @@ public class MemberRestController{
 		return output;
 	}
 	
-	@RequestMapping(value = "/getSurveyDetails.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+	@RequestMapping(value = "/getActiveSurveys.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
 			RequestMethod.POST, RequestMethod.GET })
-	public String getSurveyDetails(final HttpServletRequest request, final HttpServletResponse response)
+	public String getActiveSurveys(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		String output = MeetingCommand.getSurveyDetails(request);
+		String output = MeetingCommand.getActiveSurveys(request);
 		logger.debug("output = " + output);
 		logger.info(LOG_EXITING);
 		return output;

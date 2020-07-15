@@ -1673,7 +1673,7 @@ public class WebService {
 				input.setSessionId(sessionId);
 				logger.debug("inputJsonString : " + gson.toJson(input));
 				output = callVVMeetingRestService(HttpMethod.POST, null, ServiceUtil.SUBMIT_SURVEY, gson.toJson(input));
-
+				logger.debug("response : " + output);
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API Error while submitting the survey for meeting : " + meetingId, e);
@@ -1719,25 +1719,29 @@ public class WebService {
 		return output;
 	}
 
-	public static String getSurveyDetails(final Gson gson, final boolean memberFl,
-			final boolean providerFl, final String clientId, final String sessionId) {
+	public static String getActiveSurveys(final Gson gson, final boolean memberFl, final boolean providerFl,
+			final String meetingId, final String userType, final String userValue, final String sessionId) {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		try {
-			if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)
-					|| (memberFl == false && providerFl == false)) {
+			if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(meetingId) || "0".equalsIgnoreCase(meetingId) || StringUtils.isBlank(userType)
+					|| StringUtils.isBlank(userValue)) {
 				final ActiveSurveysResponse response = new ActiveSurveysResponse();
 				response.setCode(WebUtil.BAD_REQUEST_400);
 				output = gson.toJson(response);
 			} else {
 
 				final HttpHeaders headers = new HttpHeaders();
-				headers.set("X-clientId", clientId);
+				headers.set("X-clientId", WebUtil.VV_MBR_WEB);
 				headers.set("X-sessionId", sessionId);
 				headers.set("X-providerFl", Boolean.toString(providerFl));
 				headers.set("X-memberFl", Boolean.toString(memberFl));
+				headers.set("X-meetingId", meetingId);
+				headers.set("X-userType", userType);
+				headers.set("X-userValue", userValue);
 
 				output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_ACTIVE_SURVEYS, null);
+				logger.debug("response : " + output);
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage(), e);

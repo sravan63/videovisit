@@ -1463,34 +1463,31 @@ public class MeetingCommand {
 		return response;
 	}
 
-	public static String getSurveyDetails(final HttpServletRequest request) {
+	public static String getActiveSurveys(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String response = null;
-		String surveyName = null;
 		try {
 			final Gson gson = new Gson();
-			surveyName = request.getHeader("surveyName");
-			final String output = WebService.getSurveyDetails(gson, true, false, WebUtil.VV_MBR_WEB,
+//			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
+			final String meetingId = request.getHeader("meetingId");
+			final String userType = request.getHeader("userType");
+			final String userValue = request.getHeader("userValue");
+			final String surveyName = request.getParameter("surveyName");
+			logger.info("input surveyName : " + surveyName);
+			response = WebService.getActiveSurveys(gson, true, false, meetingId, userType, userValue,
 					request.getSession().getId());
-			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(output, ActiveSurveysResponse.class);
-			if (activeSurveysResponse != null) {
-				if (SUCCESS_200.equalsIgnoreCase(activeSurveysResponse.getCode())) {
-					if (CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())
-							&& StringUtils.isNotBlank(surveyName)) {
-						for (Survey survey : activeSurveysResponse.getSurveys()) {
-							if (surveyName.equalsIgnoreCase(survey.getSurveyName())) {
-								response = gson.toJson(survey);
-							}
-						}
-					} else {
-						response = WebUtil.DATA_NOT_FOUND;
+			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(response, ActiveSurveysResponse.class);
+			if (StringUtils.isNotBlank(surveyName) && activeSurveysResponse != null
+					&& SUCCESS_200.equalsIgnoreCase(activeSurveysResponse.getCode())
+					&& CollectionUtils.isNotEmpty(activeSurveysResponse.getSurveys())) {
+				for (Survey survey : activeSurveysResponse.getSurveys()) {
+					if (surveyName.equalsIgnoreCase(survey.getSurveyName())) {
+						response = gson.toJson(survey);
 					}
-				} else {
-					response = activeSurveysResponse.getCode();
 				}
-			} 
+			}
 		} catch (Exception e) {
-			logger.error("System Error while getting Survey Details : " + surveyName, e);
+			logger.error("System Error while getActiveSurveys : ", e);
 		}
 		if (StringUtils.isBlank(response)) {
 			response = JSONObject.fromObject(new SystemError()).toString();
@@ -1506,7 +1503,7 @@ public class MeetingCommand {
 		final String meetingId = request.getParameter("meetingId");
 		final String meetingVmr = request.getParameter("meetingVmr");
 		final String callUUID = request.getParameter("callUUID");
-		final String partipantName = request.getParameter("partipantName");
+		final String partipantName = request.getParameter("participantName");
 
 		String mediaStats = "";
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
@@ -1515,9 +1512,9 @@ public class MeetingCommand {
 			if (request.getReader() != null) {
 				mediaStats = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			}
-			logger.info("mediaStats" + mediaStats.toString());
-			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID,partipantName,mediaStats,
-					request.getSession().getId(), WebUtil.VV_MBR_WEB);
+			logger.info("participantName: " + partipantName);
+			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID, partipantName,
+					mediaStats, request.getSession().getId(), WebUtil.VV_MBR_WEB);
 			if (StringUtils.isNotBlank(jsonOutput)) {
 				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
 			}
