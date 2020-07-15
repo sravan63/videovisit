@@ -1506,7 +1506,7 @@ public class MeetingCommand {
 		final String meetingId = request.getParameter("meetingId");
 		final String meetingVmr = request.getParameter("meetingVmr");
 		final String callUUID = request.getParameter("callUUID");
-		final String partipantName = request.getParameter("partipantName");
+		final String partipantName = request.getParameter("participantName");
 
 		String mediaStats = "";
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
