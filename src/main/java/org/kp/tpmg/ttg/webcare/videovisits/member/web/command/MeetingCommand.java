@@ -1515,9 +1515,9 @@ public class MeetingCommand {
 			if (request.getReader() != null) {
 				mediaStats = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			}
-			logger.info("mediaStats" + mediaStats.toString());
-			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID,partipantName,mediaStats,
-					request.getSession().getId(), WebUtil.VV_MBR_WEB);
+			logger.info("participantName: " + partipantName);
+			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID, partipantName,
+					mediaStats, request.getSession().getId(), WebUtil.VV_MBR_WEB);
 			if (StringUtils.isNotBlank(jsonOutput)) {
 				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
 			}
