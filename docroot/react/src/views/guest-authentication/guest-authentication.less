@@ -165,6 +165,10 @@
         .mobile-footer {
             display: block;
             margin-top: 5rem !important;
+            @-moz-document url-prefix() {
+                display: block;
+                margin-top: 10rem !important;
+            }
         }
     }
 
@@ -308,19 +312,6 @@
     .guest-main-content {
         height: auto !important;
     }
-
- }
- @media only screen and (min-device-width : 375px) and (max-device-width : 812px) and (orientation:landscape)  {
-    .guest-main-content {
-        .mobile-footer {
-            @-moz-document url-prefix() {
-                display: block;
-                margin-top: 5rem !important;
-            }
-            
-        }
-    }
-
  }
  @media only screen and (min-device-width: 401px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-device-pixel-ratio: 2){
     /* For portrait layouts only */
@@ -348,8 +339,7 @@
         }
     }
   }
-
-@media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
     .guest-main-content {
         .guest-form-content {
             margin: 0 !important;
@@ -365,7 +355,6 @@
         }
     }
 }
-
 /* Desktop Styles */
 @media only screen and (min-width: 961px) {
     .guest-main-content {

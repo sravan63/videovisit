@@ -36,7 +36,7 @@ class Authentication extends React.Component {
         var isMobile = UtilityService.isMobileDevice();
         var browserInfo = UtilityService.getBrowserInformation();
         if(isMobile && navigator.userAgent.match('FxiOS')){
-            alert(" Width " + window.innerWidth + " Height " + window.innerHeight);
+           // alert(" Width " + window.innerWidth + " Height " + window.innerHeight);
         }
        if(!browserInfo.isIE){
         BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
