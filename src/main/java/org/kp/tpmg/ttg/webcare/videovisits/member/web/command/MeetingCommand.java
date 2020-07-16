@@ -1512,7 +1512,7 @@ public class MeetingCommand {
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
-			if (request.getReader() != null) {
+			if (request.getReader() != null && request.getReader().lines() != null) {
 				mediaStats = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			}
 			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID, partipantName,
