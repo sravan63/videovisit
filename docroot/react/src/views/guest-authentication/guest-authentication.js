@@ -33,7 +33,7 @@ class Authentication extends React.Component {
             sessionStorage.setItem('meetingCodeval',this.state.meetingCode);
         }
         this.setState({ showLoader: true });
-        var isMobile = Utilities.isMobileDevice();
+        var isMobile = UtilityService.isMobileDevice();
         var browserInfo = UtilityService.getBrowserInformation();
         if(isMobile && browserInfo.isFireFox){
             alert("For firefox only");
