@@ -1752,7 +1752,8 @@ public class WebService {
 		logger.info(LOG_ENTERED);
 		String jsonResponse = null;
 		final Gson gson = new Gson();
-		if (StringUtils.isBlank(sessionId)) {
+		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(meetingVmr)
+				|| StringUtils.isBlank(callUUID)) {
 			logger.warn("Missing input attributes");
 			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 			final ServiceCommonOutput service = new ServiceCommonOutput();
