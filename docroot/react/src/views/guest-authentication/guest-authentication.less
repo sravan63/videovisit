@@ -307,10 +307,17 @@
 @media only screen and (device-height : 375px) and (device-width : 812px)  {
     .guest-main-content {
         height: auto !important;
-        .guest-form-content{
+    }
+
+ }
+ @media only screen and (min-device-width : 375px) and (min-device-width : 812px) and (orientation:landscape)  {
+    .guest-main-content {
+        .mobile-footer {
             @-moz-document url-prefix() {
-                height : calc(100vh - -70px) !important
+                display: block;
+                margin-top: 5rem !important;
             }
+            
         }
     }
 
