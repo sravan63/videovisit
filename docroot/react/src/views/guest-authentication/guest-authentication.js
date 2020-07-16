@@ -25,7 +25,6 @@ class Authentication extends React.Component {
 
     componentDidMount() {
         //var meetingCode;
-        var getMe = UtilityService.getBrowserInformation();
         if(sessionStorage.getItem('meetingCodeval') != window.location.hash.slice(25)){
             sessionStorage.clear();
         }
@@ -34,7 +33,11 @@ class Authentication extends React.Component {
             sessionStorage.setItem('meetingCodeval',this.state.meetingCode);
         }
         this.setState({ showLoader: true });
+        var isMobile = Utilities.isMobileDevice();
         var browserInfo = UtilityService.getBrowserInformation();
+        if(isMobile && browserInfo.isFireFox){
+            alert("For firefox only");
+        }
        if(!browserInfo.isIE){
         BackendService.isMeetingValidGuest(this.state.meetingCode).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
