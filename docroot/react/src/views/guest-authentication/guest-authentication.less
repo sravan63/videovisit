@@ -307,6 +307,11 @@
 @media only screen and (device-height : 375px) and (device-width : 812px)  {
     .guest-main-content {
         height: auto !important;
+        .guest-form-content{
+            @-moz-document url-prefix() {
+                height : calc(100vh - -70px) !important
+            }
+        }
     }
 
  }
