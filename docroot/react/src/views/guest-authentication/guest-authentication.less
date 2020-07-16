@@ -322,7 +322,7 @@
     }
 
  }
- @media only screen and (min-device-height: 401px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-device-pixel-ratio: 2){
+ @media only screen and (min-device-width: 401px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-device-pixel-ratio: 2){
     /* For portrait layouts only */
     .guest-main-content {
         .guest-form-footer {
@@ -348,6 +348,23 @@
         }
     }
   }
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+    .guest-main-content {
+        .guest-form-content {
+            margin: 0 !important;
+        }
+    }
+}
+
+@media only screen and (device-width : 724px) and (device-height : 298px) and (-webkit-device-pixel-ratio : 3) and (orientation : landscape) {
+    .guest-main-content {
+        .mobile-footer {
+                display: block;
+                margin-top: 7rem !important;
+        }
+    }
+}
 
 /* Desktop Styles */
 @media only screen and (min-width: 961px) {
