@@ -1747,12 +1747,13 @@ public class WebService {
 	}
 	
 	public static String insertVendorMeetingMediaCDR(final String meetingId, final String meetingVmr, final String callUUID,
-			final String partipantName, final String mediaStats, String sessionId, String clientId) {
+			final String partipantName, final String mediaStats, final String sessionId, final String clientId) {
 		logger.info(LOG_ENTERED);
 		String jsonResponse = null;
 		final Gson gson = new Gson();
-		if (StringUtils.isBlank(meetingId) && StringUtils.isBlank(meetingVmr)
-				&& StringUtils.isBlank(callUUID)) {
+		if (StringUtils.isBlank(sessionId)
+				|| (StringUtils.isBlank(meetingId) && StringUtils.isBlank(meetingVmr)
+				&& StringUtils.isBlank(callUUID))) {
 			logger.warn("Missing input attributes");
 			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 			final ServiceCommonOutput service = new ServiceCommonOutput();
