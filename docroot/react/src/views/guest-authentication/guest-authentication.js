@@ -35,7 +35,7 @@ class Authentication extends React.Component {
         this.setState({ showLoader: true });
         var isMobile = UtilityService.isMobileDevice();
         var browserInfo = UtilityService.getBrowserInformation();
-        if(isMobile && browserInfo.isFireFox){
+        if(isMobile && navigator.userAgent.match('FxiOS')){
             alert("For firefox only");
         }
        if(!browserInfo.isIE){
