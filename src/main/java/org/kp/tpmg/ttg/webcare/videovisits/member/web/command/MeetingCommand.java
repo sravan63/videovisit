@@ -1468,10 +1468,9 @@ public class MeetingCommand {
 		String response = null;
 		try {
 			final Gson gson = new Gson();
-//			final long meetingId = WebUtil.convertStringToLong(request.getHeader("meetingId"));
-			final String meetingId = request.getHeader("meetingId");
-			final String userType = request.getHeader("userType");
-			final String userValue = request.getHeader("userValue");
+			final String meetingId = request.getParameter("meetingId");
+			final String userType = request.getParameter("userType");
+			final String userValue = request.getParameter("userValue");
 			final String surveyName = request.getParameter("surveyName");
 			logger.info("input surveyName : " + surveyName);
 			response = WebService.getActiveSurveys(gson, true, false, meetingId, userType, userValue,
@@ -1509,10 +1508,9 @@ public class MeetingCommand {
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
-			if (request.getReader() != null) {
+			if (request.getReader() != null && request.getReader().lines() != null) {
 				mediaStats = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			}
-			logger.info("participantName: " + partipantName);
 			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID, partipantName,
 					mediaStats, request.getSession().getId(), WebUtil.VV_MBR_WEB);
 			if (StringUtils.isNotBlank(jsonOutput)) {

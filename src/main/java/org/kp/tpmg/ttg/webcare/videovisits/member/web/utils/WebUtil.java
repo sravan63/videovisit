@@ -434,6 +434,9 @@ public class WebUtil {
 		
 		final String KEEP_ALIVE_URL = AppProperties.getExtPropertiesValueByKey("KPORG_SSO_KEEP_ALIVE_URL");
 		properties.put("KEEP_ALIVE_URL", StringUtils.isNotBlank(KEEP_ALIVE_URL) ? KEEP_ALIVE_URL : "https://healthy.kaiserpermanente.org/health/mycare/consumer/keepalive?ts=");
+		
+		final String insertMediaStatsFrequency = getExtPropertiesValueByKey("INSERT_MEDIA_STATS_FREQUENCY");
+		properties.put("INSERT_MEDIA_STATS_FREQUENCY", StringUtils.isNotBlank(insertMediaStatsFrequency) ? insertMediaStatsFrequency : "60");
 	}
 	
 	public static String convertMapToJsonString(final Map<String, String> map) {
