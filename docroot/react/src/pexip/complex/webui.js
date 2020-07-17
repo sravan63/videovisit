@@ -673,16 +673,22 @@ function connected(url) {
                     BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
                 }
             }
-            let mediaStats = rtc.getMediaStatistics();
             let data = {
-                mediaData: mediaStats,
                 meetingId: meetingId,
                 memberName: memberName
             };
-            MessageService.sendMessage(GlobalConfig.MEDIA_STATS_DATA, data);
+            let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            if(isChrome) {
+                MessageService.sendMessage(GlobalConfig.MEDIA_STATS_DATA, data);
+            }
             pexipInitialConnect=true;
         }
     }
+}
+
+export function getMediaStatsData(){
+    let mediaStatsData =  rtc.getMediaStatistics();
+    return mediaStatsData;
 }
 
 export function setPatientGuestPresenceIndicatorManually() {
