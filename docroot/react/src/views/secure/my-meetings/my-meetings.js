@@ -44,19 +44,19 @@ class MyMeetings extends React.Component {
         var isInAppAccess = UtilityService.getInAppAccessFlag();
         this.setState({isInApp: isInAppAccess});
         //this.getBrowserBlockInfo();
-        if(sessionStorage.getItem('helpUrl')){
-            var helpUrl = sessionStorage.getItem('helpUrl');
+        if(localStorage.getItem('helpUrl')){
+            var helpUrl = localStorage.getItem('helpUrl');
             this.setState({ mdoHelpUrl: helpUrl });
         }
 
         var isTempAccess = this.state.userDetails.isTempAccess;
-        if(sessionStorage.getItem('keepAlive') && !isTempAccess){
-            var keepAliveUrl = sessionStorage.getItem('keepAlive');
+        if(localStorage.getItem('keepAlive') && !isTempAccess){
+            var keepAliveUrl = localStorage.getItem('keepAlive');
             BackendService.keepAliveCookie(keepAliveUrl);
         }
         if(!isTempAccess){
             this.keepAlive = setInterval(() => {
-                var keepAliveUrl = sessionStorage.getItem('keepAlive');
+                var keepAliveUrl = localStorage.getItem('keepAlive');
                 BackendService.keepAliveCookie(keepAliveUrl);
             }, 1200000);
         }

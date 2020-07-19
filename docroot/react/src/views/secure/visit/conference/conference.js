@@ -83,13 +83,13 @@ class Conference extends React.Component {
                 this.getRunningLateInfo();
             }, GlobalConfig.RUNNING_LATE_TIMER);
             var isTempAccess = this.state.userDetails.isTempAccess;
-            if(sessionStorage.getItem('keepAlive') && !isTempAccess){
-            var keepAliveUrl = sessionStorage.getItem('keepAlive');
+            if(localStorage.getItem('keepAlive') && !isTempAccess){
+            var keepAliveUrl = localStorage.getItem('keepAlive');
             BackendService.keepAliveCookie(keepAliveUrl);
             }
             if(!isTempAccess){
             this.keepAlive = setInterval(() => {
-                var keepAliveUrl = sessionStorage.getItem('keepAlive');
+                var keepAliveUrl = localStorage.getItem('keepAlive');
                 BackendService.keepAliveCookie(keepAliveUrl);
             }, 1200000);
             }
@@ -258,8 +258,8 @@ class Conference extends React.Component {
 
         });
         window.addEventListener('resize', this.handleResize.bind(this));
-        if(sessionStorage.getItem('helpUrl')){
-            var helpUrl = sessionStorage.getItem('helpUrl');
+        if(localStorage.getItem('helpUrl')){
+            var helpUrl = localStorage.getItem('helpUrl');
             this.setState({ mdoHelpUrl: helpUrl });
         }
     }

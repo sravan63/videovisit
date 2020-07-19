@@ -59,8 +59,8 @@ class PreCallCheck extends React.Component {
                     break;
             }
         });
-        if(sessionStorage.getItem('helpUrl')){
-            var helpUrl = sessionStorage.getItem('helpUrl');
+        if(localStorage.getItem('helpUrl')){
+            var helpUrl = localStorage.getItem('helpUrl');
             this.setState({ mdoHelpUrl: helpUrl });
         }
         //this.getBrowserBlockInfo();
