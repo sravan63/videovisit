@@ -39,7 +39,7 @@ class Authentication extends React.Component {
         }
         var inAppAccess = Utilities.getInAppAccessFlag();
         if(!inAppAccess){
-            // this.getBrowserBlockInfo();
+            this.getBrowserBlockInfo();
         }
     }
     getBrowserBlockInfo(){
@@ -101,7 +101,7 @@ class Authentication extends React.Component {
                         <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
                 </div>):('')}
-                {/* <BrowserBlock browserblockinfo = {this.state}/> */}
+                { <BrowserBlock browserblockinfo = {this.state}/> }
                 <div>
                     <Suspense fallback={<Loader />}>
                         {this.state.tempAccessToken || this.state.isInApp ? (

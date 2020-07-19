@@ -4,7 +4,6 @@ import BackendService from '../../services/backendService.js';
 import GlobalConfig from '../../services/global.config';
 import UtilityService from '../../services/utilities-service.js';
 import ReactDOM from 'react-dom';
-import BrowserBlock from '../../components/browser-block/browser-block';
 export default class Ssologin extends React.Component {
     constructor(props) {
         super(props);
@@ -20,8 +19,7 @@ export default class Ssologin extends React.Component {
                 passwordflag: '',
                 errorlogin: false,
                 errormsg: '',
-            },
-            isbrowserBlockDisplay : false
+            }
         };
         this.button = { disabled: true }
         this.getLoginUserDetails = this.getLoginUserDetails.bind(this);
@@ -48,32 +46,6 @@ export default class Ssologin extends React.Component {
         this.setState({isInApp : this.props.data.isInApp});
         this.setScreenOrientation();
         window.addEventListener('orientationchange', this.setScreenOrientation.bind(this));
-        var inAppAccess = UtilityService.getInAppAccessFlag();
-        if(!inAppAccess){
-            this.getBrowserBlockInfo();
-        }
-        this.setState({ isbrowserBlockDisplay: window.innerWidth > 961 });
-    }
-    getBrowserBlockInfo(){
-        var propertyName = 'browser',
-            url = "loadPropertiesByName.json",
-            browserNames = '';
-        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
-            if (response.data && response.status == '200') {
-                 browserNames = response.data;
-                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
-                 sessionStorage.setItem('helpUrl',response.data.mdoHelpUrl);
-                 sessionStorage.setItem('keepAlive',response.data.KEEP_ALIVE_URL);
-                 if(UtilityService.validateBrowserBlock(browserNames)){
-                    this.setState({ isBrowserBlockError: true });
-                 }
-            } else {
-                // Do nothing
-            }
-        }, (err) => {
-            console.log("Error");
-        });
-
     }
     setScreenOrientation(){
         //var isLandscape = window.matchMedia("(orientation:landscape)").matches;
@@ -82,13 +54,7 @@ export default class Ssologin extends React.Component {
         } else {  
             this.setState({  screenOrientation: 'landscape' });
         }
-        setTimeout(() => {
-            if(window.innerWidth > 961){
-                this.setState({ isbrowserBlockDisplay: true });
-            }else{
-                this.setState({ isbrowserBlockDisplay: false });
-            }    
-        }, 0);
+
         
     }
     handleDataAfterResponse(response) {
@@ -178,9 +144,6 @@ export default class Ssologin extends React.Component {
         const { errors } = this.state;
         return (
             <div className="sso-content">
-             {this.state.isbrowserBlockDisplay ?  (    
-                <BrowserBlock browserblockinfo = {this.state} />    
-             ) : ('')}
             {this.state.NotLoggedIn ?  (        
                     <div className={this.state.screenOrientation == 'portrait' ? "row sso-form width-p-auto" : "row sso-form width-l-fit"}> 
                         {!this.state.isInApp ?(<div className="row mobile-logo-container">
@@ -190,9 +153,6 @@ export default class Ssologin extends React.Component {
                             </div>
                         </div>) :
                         ('')}
-                        {!this.state.isbrowserBlockDisplay ?  (    
-                            <BrowserBlock browserblockinfo = {this.state} />    
-                        ) : ('')}
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group top-form-group-margin">
                                 <label className="col-sm-12 text-uppercase">kp.org user ID</label>
