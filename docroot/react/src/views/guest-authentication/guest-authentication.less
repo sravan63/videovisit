@@ -150,7 +150,7 @@
 
 .guest-form-footer {
     display: block;
-    position: absolute;
+    // position: absolute;
     bottom: 0;
     width: 100%;
     background: #FFFFFF;
@@ -162,6 +162,10 @@
         flex-direction: column;
         justify-content: space-between;
         height: 100vh !important;
+        .mobile-footer {
+            display: block;
+            margin-top: 5rem !important;
+        }
     }
 
 }
@@ -306,14 +310,16 @@
     }
 
  }
- @media only screen and (min-device-height: 401px) and (max-device-width: 1024px) and (orientation:landscape) and (-webkit-device-pixel-ratio: 2){
-    /* For portrait layouts only */
+ @media only screen 
+ and (min-device-width : 375px) 
+ and (max-device-width : 812px)
+    and (-webkit-device-pixel-ratio : 3) and (orientation : landscape){    
     .guest-main-content {
         .guest-form-footer {
-            position: absolute;
-            .main-footer{
-                padding-left: 2rem;
-            }
+             position: relative !important;
+            // .main-footer{
+            //     padding-left: 2rem;
+            // }
         }
     }        
   }
@@ -323,8 +329,9 @@
         display: block;
         width: 95%;
         margin-top: 2rem;
+        position: absolute;
         .main-footer{
-            padding-left: 0rem;
+            // padding-left: 0rem;
             .row {
                 margin-left: 0rem !important;
                 margin-right: 0rem;
@@ -332,7 +339,33 @@
         }
     }
   }
+@media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2)  {
+    .guest-main-content {
+        .guest-form-content {
+            margin: 0 !important;
+        }
+        .guest-form-footer{
+            position: absolute;
+        }
+    }
+}
 
+@media only screen and (device-width : 724px) and (device-height : 298px) and (-webkit-device-pixel-ratio : 1) and (orientation : landscape) {
+    .guest-main-content {
+        .mobile-footer {
+                display: block;
+                margin-top: 10rem !important;
+        }
+    }
+}
+@media only screen and (device-width : 724px) and (device-height : 298px) and (-webkit-device-pixel-ratio : 3) and (orientation : landscape) {
+    .guest-main-content {
+        .mobile-footer {
+                display: block;
+                margin-top: 10rem !important;
+        }
+    }
+}
 /* Desktop Styles */
 @media only screen and (min-width: 961px) {
     .guest-main-content {
