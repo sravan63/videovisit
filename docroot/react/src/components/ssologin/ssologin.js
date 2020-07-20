@@ -66,9 +66,11 @@ export default class Ssologin extends React.Component {
         var data = response.data.data.memberInfo;
         if (data != null || data != undefined) {
             let helpLinkUrl = sessionStorage.getItem('helpUrl'),
-                keepAliveUrl = sessionStorage.getItem('keepAlive');
+                keepAliveUrl = sessionStorage.getItem('keepAlive'),
+                mediaStatsTimer = sessionStorage.getItem('mediaStatsTimer');
             localStorage.setItem('helpUrl',helpLinkUrl);
             localStorage.setItem('keepAlive',keepAliveUrl);
+            localStorage.setItem('mediaStats',mediaStatsTimer);
             data.isTempAccess = false;
             data.ssoSession = response.data.data.ssoSession;
             localStorage.setItem('LoginUserDetails', UtilityService.encrypt(JSON.stringify(data)));

@@ -265,12 +265,16 @@ class Conference extends React.Component {
     }
 
     sendMediaStats(data) {
+        var mediaStatsFrequency = localStorage.getItem('mediaStats');
+        if (mediaStatsFrequency == 0) {
+            return;
+        }
+        mediaStatsFrequency = parseInt(mediaStatsFrequency) * 1000;
         var meetingVmr = this.state.meetingDetails.meetingVendorId;
         BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '');
         this.MediaStats = setInterval(() => {
             BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '');
-        }, 30000);
-
+        }, mediaStatsFrequency);
     }
 
     fullScreenWindow(){

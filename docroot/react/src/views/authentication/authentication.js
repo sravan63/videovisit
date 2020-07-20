@@ -52,6 +52,7 @@ class Authentication extends React.Component {
                  this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                  sessionStorage.setItem('helpUrl',response.data.mdoHelpUrl);
                  sessionStorage.setItem('keepAlive',response.data.KEEP_ALIVE_URL);
+                 sessionStorage.setItem('mediaStatsTimer',response.data.INSERT_MEDIA_STATS_FREQUENCY);
                  if(Utilities.validateBrowserBlock(browserNames)){
                     this.setState({ isBrowserBlockError: true });
                  }

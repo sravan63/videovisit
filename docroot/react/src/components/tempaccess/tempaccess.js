@@ -65,7 +65,9 @@ class TempAccess extends React.Component {
                 data.ssoSession = response.headers.authtoken;
                 //localStorage.setItem('userDetails', fullname);
                 let helpLinkUrl = sessionStorage.getItem('helpUrl'),
-                    keepAliveUrl = sessionStorage.getItem('keepAlive');
+                    keepAliveUrl = sessionStorage.getItem('keepAlive'),
+                    mediaStatsTimer = sessionStorage.getItem('mediaStatsTimer');
+                localStorage.setItem('mediaStats',mediaStatsTimer);
                 localStorage.setItem('helpUrl',helpLinkUrl);
                 localStorage.setItem('keepAlive',keepAliveUrl);
                 localStorage.setItem('LoginUserDetails', UtilityService.encrypt(JSON.stringify(data)));
