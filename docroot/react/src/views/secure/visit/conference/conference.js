@@ -266,9 +266,9 @@ class Conference extends React.Component {
 
     sendMediaStats(data) {
         var meetingVmr = this.state.meetingDetails.meetingVendorId;
-        BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '', data.mediaData);
+        BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '');
         this.MediaStats = setInterval(() => {
-            BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '', data.mediaData);
+            BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '');
         }, 30000);
 
     }

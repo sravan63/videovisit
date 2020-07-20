@@ -1,6 +1,7 @@
 import React from 'react';
 import Axios from 'axios-observable';
 import $ from 'jquery';
+import * as WebUI from '../pexip/complex/webui.js';
 
 
 class BackendService extends React.Component {
@@ -160,11 +161,12 @@ class BackendService extends React.Component {
         return Axios.post(this.state.basePath + '/videovisit/' + 'quitMeeting.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&isProxyMeeting=' + isProxyMeeting + '&isFromBackButton=' + isFromBackButton, {}, { headers: headers });
     }
 
-    storeMediaStats(meetingId, meetingVmr, participantName, callUUID, data) {
+    storeMediaStats(meetingId, meetingVmr, participantName, callUUID) {
         if(sessionStorage.getItem('UUID')) {
              callUUID = sessionStorage.getItem('UUID');
         }
-        Axios.post(this.state.basePath + '/videovisit/' + 'insertVendorMeetingMediaCDR.json' + '?meetingId=' + meetingId + '&meetingVmr=' + meetingVmr + '&participantName=' + participantName + '&callUUID=' + callUUID, data).subscribe((response) => {
+        var mediaData = WebUI.getMediaStatsData();
+        Axios.post(this.state.basePath + '/videovisit/' + 'insertVendorMeetingMediaCDR.json' + '?meetingId=' + meetingId + '&meetingVmr=' + meetingVmr + '&participantName=' + participantName + '&callUUID=' + callUUID, mediaData).subscribe((response) => {
                 console.log("success",response);
             },
             (err) => {
