@@ -62,7 +62,7 @@ utilitiesTemp.msgQueue = [];
 utilitiesTemp.msgInProgress = false;
 var refreshingOrSelfJoinMeeting = true;
 var disconnectAlreadyCalled = false;
-var userDetails = {};
+var userDetails = { uuid: null };
 
 var rtc = new PexRTC();
 
@@ -1016,7 +1016,7 @@ export var log = function(type, param, msg) {
                             userType = data.userType ? data.userType : '',
                             userId = data.userId ? data.userId : '';
 
-                            msg += userDetails ? ' :: UUID :: '+ userDetails.uuid : ''; 
+                            msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : ''; 
 
                         var params = [type, param, msg, meetingId, userType, userId];
                         var isSetup = localStorage.getItem('isSetupPage');
@@ -1030,9 +1030,21 @@ export var log = function(type, param, msg) {
             break;
         case 'error':
             // Notify error to backed
-            var params = [type, param, msg];
-            //VideoVisit.logVendorMeetingEvents(params);
-            console.error('WebRTC ERROR :: ' + param + ' :: ' + msg);
+            msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : ''; 
+            if (localStorage.getItem('vendorDetails')) {
+                data = JSON.parse(localStorage.getItem('vendorDetails')),
+                    meetingId = data.meetingId ? data.meetingId : '',
+                    userType = data.userType ? data.userType : '',
+                    userId = data.userId ? data.userId : '';
+
+                    msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : ''; 
+
+                var params = [type, param, msg, meetingId, userType, userId];
+                var isSetup = localStorage.getItem('isSetupPage');
+                if (isSetup == null) {
+                    BackendService.logVendorMeetingEvents(params);
+                }
+            }
             break;
     }
 };
