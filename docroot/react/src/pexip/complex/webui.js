@@ -62,6 +62,7 @@ utilitiesTemp.msgQueue = [];
 utilitiesTemp.msgInProgress = false;
 var refreshingOrSelfJoinMeeting = true;
 var disconnectAlreadyCalled = false;
+var userDetails = {};
 
 var rtc = new PexRTC();
 
@@ -455,7 +456,7 @@ export function sipDialOut() {
 function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
-    log("info", "participantCreated", "console: participantCreated - inside participantCreated - participant:" + participant);
+    log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
     
     if (participant.protocol == "sip") {
         var joinParticipantMsg = {
@@ -488,6 +489,7 @@ function participantCreated(participant) {
         loginUserName = JSON.parse(localStorage.getItem('memberName'));
     }
     if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim()) {
+        userDetails = participant;
         sessionStorage.setItem('UUID',participant.uuid);
     }
     toggleWaitingRoom(pexipParticipantsList);
@@ -501,7 +503,7 @@ function participantUpdated(participant) {
 
 function participantDeleted(participant) {
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
-    log("info", "participantDeleted", "console: participantDeleted - inside participantDeleted - participant:" + participant);
+    log("info", "participantDeleted", "event: participantDeleted - inside participantDeleted - participant:" + participant);
     if (isMobileDevice) {
         updateParticipantList(participant, 'left');
         console.log("inside participantDeleted");
@@ -702,6 +704,7 @@ export function setPatientGuestPresenceIndicatorManually() {
 }
 
 export function switchDevices(constrain, device = null) {
+    log("info", constrain+"_peripheral_change_action", "event: peripherals"+constrain+"Change - on changing the peripheral dropdown");
     if(constrain == 'video'){
         rtc.video_source = device;
     }
@@ -752,7 +755,6 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     if(isSetupPage){
     rtc.audio_source =  audioSource;  //microPhoneID
     }
-      
 
     window.addEventListener('beforeunload', finalise);
 
@@ -1013,6 +1015,8 @@ export var log = function(type, param, msg) {
                             meetingId = data.meetingId ? data.meetingId : '',
                             userType = data.userType ? data.userType : '',
                             userId = data.userId ? data.userId : '';
+
+                            msg += userDetails ? ' :: UUID :: '+ userDetails.uuid : ''; 
 
                         var params = [type, param, msg, meetingId, userType, userId];
                         var isSetup = localStorage.getItem('isSetupPage');
