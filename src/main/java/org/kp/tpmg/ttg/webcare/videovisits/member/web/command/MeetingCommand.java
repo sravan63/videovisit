@@ -33,6 +33,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.InputUserAnswers;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
@@ -1442,17 +1443,22 @@ public class MeetingCommand {
 	public static String submitSurvey(final HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		String response = null;
-		String meetingId = null;
-		List<UserAnswer> userAnswers = null;
+		String inputRequestBody = null;
+		final String clientId = WebUtil.VV_MBR_WEB;
+		InputUserAnswers input = null;
+		Integer meetingId = null;
 		try {
 			final Gson gson = new Gson();
-			meetingId = request.getHeader("meetingId");
-			final String userType = request.getHeader("userType");
-			final String userValue = request.getHeader("userValue");
+			if (request.getReader() != null && request.getReader().lines() != null) {
+				inputRequestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+			}
+			logger.debug("inputRequestBody : " + inputRequestBody);
 
-			userAnswers = gson.fromJson(request.getHeader("userAnswers"), new TypeToken<List<UserAnswer>>() {}.getType());
-			response = WebService.submitSurvey(gson, userType, userValue, meetingId, userAnswers, WebUtil.VV_MBR_WEB,
-					request.getSession().getId());
+			input = gson.fromJson(inputRequestBody, InputUserAnswers.class);
+			input.setClientId(clientId);
+			input.setSessionId(request.getSession().getId());
+			meetingId = input.getMeetingId();
+			response = WebService.submitSurvey(gson, input);
 		} catch (Exception e) {
 			logger.error("System Error while submitting the survey for meeting : " + meetingId, e);
 		}
