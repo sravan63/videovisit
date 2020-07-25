@@ -26,14 +26,13 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
+import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Survey;
-import org.kp.tpmg.ttg.videovisitsmeetingapi.model.UserAnswer;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
-import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.InputUserAnswers;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
@@ -60,7 +59,6 @@ import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import net.sf.json.JSONObject;
 import net.sourceforge.wurfl.core.Device;
@@ -1446,7 +1444,7 @@ public class MeetingCommand {
 		String inputRequestBody = null;
 		final String clientId = WebUtil.VV_MBR_WEB;
 		InputUserAnswers input = null;
-		Integer meetingId = null;
+		long meetingId = 0;
 		try {
 			final Gson gson = new Gson();
 			if (request.getReader() != null && request.getReader().lines() != null) {
