@@ -67,6 +67,8 @@ class Authentication extends React.Component {
             if (response.data && response.status == '200') {
                  browserNames = response.data; 
                  this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
+                 sessionStorage.setItem('helpUrl',response.data.mdoHelpUrl);
+                 sessionStorage.setItem('mediaStatsTimer',response.data.INSERT_MEDIA_STATS_FREQUENCY);
                  if(UtilityService.validateBrowserBlock(browserNames)){
                     this.setState({ isBrowserBlockError: true });
                  }
@@ -122,6 +124,10 @@ class Authentication extends React.Component {
                     localStorage.setItem('userDetails', UtilityService.encrypt(JSON.stringify(data)));
                     localStorage.setItem('isGuest', true);
                     this.setState({ showLoader: false });
+                    let helpLinkUrl = sessionStorage.getItem('helpUrl'),
+                        mediaStatsTimer = sessionStorage.getItem('mediaStatsTimer');
+                    localStorage.setItem('mediaStats',mediaStatsTimer);
+                    localStorage.setItem('helpUrl',helpLinkUrl);
                     this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
                 }
             } else if (response.data.statusCode == 300 || response.data.statusCode == 900) {
