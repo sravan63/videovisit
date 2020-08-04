@@ -66,6 +66,9 @@ class MyMeetings extends React.Component {
         window.clearInterval(this.interval);
         window.clearInterval(this.keepAlive);
         this.subscription.unsubscribe();
+        if(localStorage.getItem('meetingAttended')){
+            this.signOff();
+        }
     }
     /*getBrowserBlockInfo(){
         var propertyName = 'browser',
@@ -203,6 +206,7 @@ class MyMeetings extends React.Component {
 
     joinMeeting(meeting) {
         console.log(meeting);
+        localStorage.removeItem('meetingAttended')
         localStorage.setItem('meetingId', JSON.stringify(meeting.meetingId));
         this.setState({ showLoader: true });
         var myMeetingsUrl;

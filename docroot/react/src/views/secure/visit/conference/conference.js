@@ -485,6 +485,7 @@ class Conference extends React.Component {
         window.clearTimeout(this.timerForLeaveMeeting);
         document.removeEventListener(this.visibilityChange, this.handleVisibilityChange);
         this.subscription.unsubscribe();
+        localStorage.setItem('meetingAttended', true);
         if(this.state.isGuest == true){
             var isGuestLeave = sessionStorage.getItem('guestLeave');
             if(!isGuestLeave) {
