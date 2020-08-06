@@ -41,6 +41,7 @@ class Authentication extends React.Component {
                 this.setState({ NotLoggedIn: true, showLoader: false, authToken:response.headers.authtoken });
             if (sessionStorage.getItem('guestLeave')) {
                 this.setState({ ReJoin: true});
+                sessionStorage.setItem('ReJoin',true);
              }
             } 
             else if (response.data.statusCode == 510){
@@ -58,6 +59,10 @@ class Authentication extends React.Component {
         this.setState({ errorlogin: false, displayErrorMsg: '' });
     }
         this.getBrowserBlockInfo();
+        if(sessionStorage.getItem('ReJoin')){
+            this.setState({ ReJoin: true});
+            //sessionStorage.removeItem('ReJoin');
+        }
      }
      getBrowserBlockInfo(){
         var propertyName = 'browser',
@@ -174,6 +179,7 @@ class Authentication extends React.Component {
 
     SignOut(){
         sessionStorage.removeItem('guestLeave');
+        sessionStorage.removeItem('ReJoin');
         sessionStorage.setItem('guestCode',JSON.stringify(this.state.meetingCode));
         this.setState({ReJoin:false, errorlogin: false});
         localStorage.clear();
