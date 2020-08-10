@@ -497,6 +497,14 @@ function participantCreated(participant) {
 
 function participantUpdated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
+    var loginUserName = JSON.parse(localStorage.getItem('memberName'));
+    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim()) {
+        if (participant.is_muted == "YES") {
+            MessageService.sendMessage("hostMuted", true);
+        } else {
+            MessageService.sendMessage("hostMuted", false);
+        }
+    }
     pexipParticipantsList.push(participant);
 
 }
@@ -1077,4 +1085,8 @@ export function muteUnmuteMic() {
     } else {
         log("info", "microphone_unmute_action", "event: unmuteMic - on click of unmute mic button");
     }
+}
+
+export function setParticipantUnmute(){
+    rtc.sendChatMessage("unmute");
 }
