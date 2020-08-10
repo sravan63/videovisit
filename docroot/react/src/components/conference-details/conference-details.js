@@ -7,7 +7,6 @@ import { range } from 'rxjs';
 import { MessageService } from '../../services/message-service.js';
 import GlobalConfig from '../../services/global.config';
 import Utilities from '../../services/utilities-service.js';
-import * as WebUI from '../../pexip/complex/webui.js';
 
 class ConferenceDetails extends React.Component {
     constructor(props) {
@@ -46,18 +45,8 @@ class ConferenceDetails extends React.Component {
                 case GlobalConfig.USER_LEFT:
                     this.validateGuestPresence(GlobalConfig.USER_LEFT, notification.data);
                 break;
-                case "hostMuted":
-                    if(notification.data){
-                    this.setState({muteIcon:false,unmuteIcon:true});
-                    }
-                    else{
-                        this.setState({muteIcon:true,unmuteIcon:false});
-                    }
-
-                    break;
             }
         });
-        this.setState({muteIcon:true,unmuteIcon:false});
         
     }
 
@@ -301,14 +290,6 @@ class ConferenceDetails extends React.Component {
         this.subscription.unsubscribe();
     }
 
-    setParticipantMute(val){
-        if(val){
-            WebUI.setParticipantUnmute();
-        this.setState({muteIcon:false,unmuteIcon:true});
-        }
-
-    }
-
     leaveMeeting() {
         MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
     }
@@ -320,8 +301,6 @@ class ConferenceDetails extends React.Component {
                     <button className="btn leave-button" onClick={this.leaveMeeting}>Leave Room</button>
                     <div className="visit-details">
                         <p className="text-capitalize mt-1 mb-1">Visit details</p>
-                            <div title="Mute Speakers" style={{display: this.state.muteIcon ? 'block' : 'none'}}  className="btns media-controls microphone-btn" onClick={()=>this.setParticipantMute(false)}></div>
-                            <div title="Unmute Speakers" style={{display: this.state.unmuteIcon? 'block' : 'none'}} className="btns media-controls microphone-muted-btn" onClick={()=>this.setParticipantMute(true)}></div>
                         <div className="clinician-info text-capitalize"><span className={this.state.hostDetails.hostInCall ? "presence-indicator show" : "presence-indicator hide" }></span><span className="name text-capitalize">{this.getClinicianName(this.state.meetingDetails.host)}</span></div>
                         <div className="visit-time text-capitalize">
                             <b>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}</b>
