@@ -61,7 +61,6 @@ class Authentication extends React.Component {
         this.getBrowserBlockInfo();
         if(sessionStorage.getItem('ReJoin')){
             this.setState({ ReJoin: true});
-            //sessionStorage.removeItem('ReJoin');
         }
      }
      getBrowserBlockInfo(){
