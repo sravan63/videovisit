@@ -20,22 +20,25 @@ class MediaService extends React.Component {
     loadDeviceMediaData(){
       var browserInfo = Utilities.getBrowserInformation();
       if(!browserInfo.isIE){
-        if(browserInfo.isSafari || browserInfo.isFireFox) {
+        //if(browserInfo.isSafari || browserInfo.isFireFox) {
           navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
               console.log('Stream1 started with success');
               window.localStream = stream;
               this.setDevice();
+              stream.getTracks().forEach(track=>{
+                track.stop();
+            });
           }).catch((error)=>{ 
               this.handleError(error);
               console.log('Failed to start stream1');
           });
-        } else {
-          navigator.mediaDevices.enumerateDevices().then((list)=>{
-              this.gotDevicesList(list);
-          }).catch((error)=>{
-              this.handleError(error);
-          });
-        }
+        // } else {
+        //   navigator.mediaDevices.enumerateDevices().then((list)=>{
+        //       this.gotDevicesList(list);
+        //   }).catch((error)=>{
+        //       this.handleError(error);
+        //   });
+        // }
       
       // Registers the devie change handler.
       navigator.mediaDevices.ondevicechange = this.onDeviceChange;
@@ -99,6 +102,7 @@ class MediaService extends React.Component {
 
     // Triggers when a device is plugged in or plugged out.
     onDeviceChange(event){
+      var browserInfo = Utilities.getBrowserInformation();
       if(browserInfo.OSName.toLowerCase() !== "windows"){
         console.log("DEVICE CHANGE EVENT TRIGGERED");
         navigator.mediaDevices.enumerateDevices();
