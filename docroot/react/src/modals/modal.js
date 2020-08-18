@@ -44,8 +44,9 @@ class VVModal extends React.Component {
             {this.state.showOverlay ? (
             <div id="leaveMeetingPopup" className="leaveMeeting-popup">
                 <div className="popup-content">
-                    <h3>{ this.state.popupOptions.heading }</h3>
-                    <h4>{ this.state.popupOptions.message }</h4>
+                    { this.state.popupOptions.type && this.state.popupOptions.type.length > 0 ?  (<div><h4>{ this.state.popupOptions.heading }</h4>
+                        <p>{ this.state.popupOptions.message }</p></div>):(<div><h3>{ this.state.popupOptions.heading }</h3>
+                        <h4>{ this.state.popupOptions.message }</h4></div>) }
                     <div className= "overlayButton">
                         { this.state.popupOptions.controls && this.state.popupOptions.controls.length > 0 ? 
                             this.state.popupOptions.controls.map((item,index) =>{

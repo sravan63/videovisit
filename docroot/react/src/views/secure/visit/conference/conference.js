@@ -22,7 +22,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = { userDetails: {}, isRearCamera:false, cameraPermission:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -42,6 +42,11 @@ class Conference extends React.Component {
             heading: 'Leave Visit', 
             message : 'Your video visit session is going to end, unless you choose Stay.',
             controls : [{label: 'Leave Room', type: 'leave'}, {label: 'Stay', type: 'stay'} ]
+        };
+        this.PermissionErrorContent = {
+            heading: 'Camera and Microphone Access Required',
+            message: 'Before you can start your visit you must enable your camera and microphone.',
+            type: 'Permission'
         };
     }
 
@@ -253,7 +258,9 @@ class Conference extends React.Component {
                     this.toggleDockView(false);
                     this.handleTimer(true);
                     break;
-        
+                case GlobalConfig.MEDIA_PERMISSION:
+                    MessageService.sendMessage(GlobalConfig.OPEN_MODAL, this.PermissionErrorContent);
+                    this.setState({cameraPermission:true});
             }
 
         });
@@ -679,7 +686,7 @@ class Conference extends React.Component {
                     </div>
                 </div>
                 {this.state.meetingDetails ? (
-                    <div className="row video-conference-container">
+                    <div className="row video-conference-container" style={{display: this.state.cameraPermission ? 'none' : 'flex'}}>
                         <div className="col-md-10 p-0 video-conference">
                             <ConferenceControls controls={this.state}/>
                             <div className="col p-0 remote-feed-container">
