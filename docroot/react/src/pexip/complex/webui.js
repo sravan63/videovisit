@@ -404,7 +404,18 @@ function handleError(reason) {
         if(!rtc.refreshTokenProperties.retryTimer){
             rtc.refreshTokenProperties.retryTimer = setInterval(rtc.refreshToken.bind(this), (rtc.refreshTokenProperties.retries * 1000));
         }
-    } else {
+    }
+    else if(rtc.error == 'NotAllowedError'){
+        var deniedPermission;
+        let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+        if(isChrome) {
+            if (!deniedPermission) {
+                deniedPermission = true;
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
+            }
+        }
+    }
+    else {
         if (video && !selfvideo.src && new Date() - startTime > 30000) {
             reason = "WebSocket connection error.";
         }

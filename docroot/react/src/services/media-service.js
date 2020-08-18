@@ -79,16 +79,8 @@ class MediaService extends React.Component {
   // Error call back.
     handleError(error){
         var ErrorMsg = error.message;
-        var deniedPermission;
         if(ErrorMsg =='Failed starting capture of a audio track'){
           alert("Unable to join: Looks like you're on a phone call, hangup and refresh page to join.");
-        }
-        let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        if(isChrome) {
-            if (ErrorMsg == "Permission denied" && !deniedPermission) {
-                deniedPermission = true;
-                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
-            }
         }
         console.log('Media Service - Error Occured :: '+error);
     }
