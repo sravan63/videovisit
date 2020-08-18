@@ -82,7 +82,8 @@ const GlobalConfig = {
     TOGGLE_MOBILE_FOOTER: 'Mobile Footer Toggle',
     MEDIA_STATS_DATA:'StoreMedia Stats',
     REMOVE_DUPLICATES:'Member alone',
-    MEDIA_PERMISSION:'Permission Denied'
+    MEDIA_PERMISSION:'Permission Denied',
+    RENDER_VIDEO_DOM:'Show Video DOM '
 };
 
 export default GlobalConfig;

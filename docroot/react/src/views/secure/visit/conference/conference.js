@@ -22,7 +22,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, cameraPermission:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = { userDetails: {}, isRearCamera:false, showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -260,7 +260,10 @@ class Conference extends React.Component {
                     break;
                 case GlobalConfig.MEDIA_PERMISSION:
                     MessageService.sendMessage(GlobalConfig.OPEN_MODAL, this.PermissionErrorContent);
-                    this.setState({cameraPermission:true});
+                    break;
+                case GlobalConfig.RENDER_VIDEO_DOM:
+                    this.setState({showRemotefeed:true});
+                    break;
             }
 
         });
@@ -686,10 +689,10 @@ class Conference extends React.Component {
                     </div>
                 </div>
                 {this.state.meetingDetails ? (
-                    <div className="row video-conference-container" style={{display: this.state.cameraPermission ? 'none' : 'flex'}}>
+                    <div className="row video-conference-container" >
                         <div className="col-md-10 p-0 video-conference">
                             <ConferenceControls controls={this.state}/>
-                            <div className="col p-0 remote-feed-container">
+                            <div className="col p-0 remote-feed-container" style={{display: this.state.showRemotefeed ? 'flex' : 'none'}}>
                                 <WaitingRoom waitingroom={this.state} />
                                 <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                 <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
@@ -697,8 +700,8 @@ class Conference extends React.Component {
                                 </div>
                                 <Settings />
                             </div>
-                            <div id="selfview" className="self-view">
-                               <video id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                            <div id="selfview" className="self-view" >
+                               <video id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none',background: this.state.showRemotefeed ? '' : 'gray'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video>
                             </div>
                             <div id="controls" className="controls-bar">
