@@ -665,7 +665,6 @@ function connected(url) {
     var isSetup = localStorage.getItem('isSetupPage');
     if(pexipInitialConnect==false){
         if (isSetup == null) {
-        MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         var meetingId = JSON.parse(localStorage.getItem('meetingId'));
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));

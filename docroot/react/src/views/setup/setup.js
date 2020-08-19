@@ -39,6 +39,7 @@ class Setup extends React.Component {
           this.getBrowserBlockInfo();
           return false;
         }
+        localStorage.setItem('isSetupPage', true);
         MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             switch (message.text) {

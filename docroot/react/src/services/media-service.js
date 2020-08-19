@@ -72,6 +72,12 @@ class MediaService extends React.Component {
             media['kind'] = mData.kind;
             this.mediaData[media.kind].push(media);
         });
+        let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+        let isSetup = localStorage.getItem('isSetupPage');
+        if(isChrome && !isSetup) {
+            this.cameraPermissions();
+            this.micPermissions();
+        }
         console.log('Media Service - List Of Media Devices :: ' + this.mediaData);
         MessageService.sendMessage(GlobalConfig.MEDIA_DATA_READY, this.mediaData);
     }
@@ -185,6 +191,54 @@ class MediaService extends React.Component {
       } else {
         DeviceService.helperRingtoneStop();
       }
+    }
+     cameraPermissions(){
+        navigator.permissions.query(
+            { name: 'camera' }
+        ).then(function(permissionStatus){
+            console.log(permissionStatus.state); // granted, denied, prompt
+
+            if(permissionStatus.state == 'granted'){
+                MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+            } else {
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
+            }
+
+            permissionStatus.onchange = function(){
+                console.log("Permission changed to " + this.state);
+                if(this.state == 'denied'){
+
+                } else if(this.state == 'granted'){
+                    MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+                    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                }
+            }
+        });
+    }
+
+     micPermissions(){
+        navigator.permissions.query(
+            { name: 'microphone' }
+        ).then(function(permissionStatus){
+            console.log(permissionStatus.state); // granted, denied, prompt
+
+            if(permissionStatus.state === 'granted') {
+                MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+            }
+                else {
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
+            }
+
+            permissionStatus.onchange = function(){
+                console.log("Permission changed to " + this.state);
+                if(this.state == 'denied'){
+
+                } else if(this.state == 'granted'){
+                    MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+                    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                }
+            }
+        });
     }
 
 }
