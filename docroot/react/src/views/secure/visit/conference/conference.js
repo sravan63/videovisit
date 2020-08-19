@@ -197,7 +197,6 @@ class Conference extends React.Component {
                     break;
                 case GlobalConfig.MEDIA_DATA_READY:  
                     this.list = message.data;
-                    MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
                     this.setState({ media: this.list });
                     let constrains = {
                             audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
