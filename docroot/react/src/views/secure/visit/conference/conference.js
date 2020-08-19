@@ -197,6 +197,7 @@ class Conference extends React.Component {
                     break;
                 case GlobalConfig.MEDIA_DATA_READY:  
                     this.list = message.data;
+                    MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
                     this.setState({ media: this.list });
                     let constrains = {
                             audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
@@ -360,6 +361,7 @@ class Conference extends React.Component {
             this.leaveOverlayMeeting();
         }
     }
+
 
     stayinMeeting(){
          sessionStorage.removeItem('overlayDisplayed');
@@ -690,9 +692,9 @@ class Conference extends React.Component {
                 </div>
                 {this.state.meetingDetails ? (
                     <div className="row video-conference-container" >
-                        <div className="col-md-10 p-0 video-conference">
+                        <div className="col-md-10 p-0 video-conference" style={{display: this.state.showRemotefeed ? 'flex' : 'none'}}>
                             <ConferenceControls controls={this.state}/>
-                            <div className="col p-0 remote-feed-container" style={{display: this.state.showRemotefeed ? 'flex' : 'none'}}>
+                            <div className="col p-0 remote-feed-container" >
                                 <WaitingRoom waitingroom={this.state} />
                                 <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                 <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
@@ -735,7 +737,7 @@ class Conference extends React.Component {
                               </ul>
                             </div>
                         </div>
-                        <ConferenceDetails/>
+                        <ConferenceDetails conference={this.state}/>
                     </div>
             ): ('')
         } </div>

@@ -296,7 +296,7 @@ class ConferenceDetails extends React.Component {
 
     render() {
         return (
-            <div className="col-md-2 p-0 conference-details">
+            <div className="col-md-2 p-0 conference-details" style={{display: this.props.conference.showRemotefeed ? 'block' : 'none'}}>
                 <div className="clinician-information">
                     <button className="btn leave-button" onClick={this.leaveMeeting}>Leave Room</button>
                     <div className="visit-details">
