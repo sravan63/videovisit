@@ -691,7 +691,7 @@ class Conference extends React.Component {
                 </div>
                 {this.state.meetingDetails ? (
                     <div className="row video-conference-container" >
-                        <div className="col-md-10 p-0 video-conference" style={{display: this.state.showRemotefeed ? 'flex' : 'none'}}>
+                        <div className="col-md-10 p-0 video-conference">
                             <ConferenceControls controls={this.state}/>
                             <div className="col p-0 remote-feed-container" >
                                 <WaitingRoom waitingroom={this.state} />
