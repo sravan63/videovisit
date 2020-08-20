@@ -74,7 +74,7 @@ class MediaService extends React.Component {
         });
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
         let isSetup = localStorage.getItem('isSetupPage');
-        if(isChrome && !isSetup) {
+        if(isChrome && !Utilities.isMobileDevice() && !isSetup) {
             this.cameraPermissions();
             this.micPermissions();
         }
@@ -209,8 +209,8 @@ class MediaService extends React.Component {
                 if(this.state == 'denied'){
 
                 } else if(this.state == 'granted'){
-                    MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
-                    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                    //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+                    //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             }
         });
@@ -234,8 +234,8 @@ class MediaService extends React.Component {
                 if(this.state == 'denied'){
 
                 } else if(this.state == 'granted'){
-                    MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
-                    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                    //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+                    //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             }
         });
