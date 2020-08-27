@@ -678,7 +678,7 @@ function participantCreated(participant){
         updateParticipantList(participant,'join');
         console.log("inside participantCreated");
      }
-     else if(participant.protocol == "sip" ){
+     else if(participant.protocol == "sip" || (participant.protocol != "webrtc" &&  participant.protocol != "api")){
         var joinParticipantMsg = participant.display_name + " has joined the visit.";
             if(!refreshingOrSelfJoinMeeting && participant.display_name != $('#guestName').val()){
                 utilityNotifyQueue(joinParticipantMsg);

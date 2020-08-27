@@ -553,7 +553,7 @@ var VideoVisit =
         	for(var i=0;i<participants.length;i++){
         		var pData = participants[i];
         		var prName = (vendorval == 'webrtc')?participants[i].trim():(vendorval == 'vidyo')?pData.name.trim(): participants[i].display_name.trim();
-        		if(vendorval == 'pexip' && participants[i].protocol=="sip"){
+        		if(vendorval == 'pexip' && (participants[i].protocol=="sip" || (participants[i].protocol != "webrtc" &&  participants[i].protocol != "api"))){
         			prName = participants[i].uri.substring(6,16);
         		}
 
@@ -785,7 +785,7 @@ function updateParticipantsAndGuestsList(meetingList){
 			tempArr[i].title = tempArr[i].title ? tempArr[i].title : '';
 			$('.participants-list').append('<div class="guest-participant guest-part-'+i+'"><img class="participant-indicator" src="vidyoplayer/img/vidyo-redesign/svg/SVG/Connected.svg" /><span class="name-of-participant">'+tempArr[i].firstName.toLowerCase()+' '+tempArr[i].lastName.toLowerCase()+' '+tempArr[i].title+'</span><span class="three-dots hide"><img src="vidyoplayer/img/vidyo-redesign/svg/SVG/Action.svg" /></span></div>');
 		}else{
-			if(tempArr[i].participantType == 'audio' || tempArr[i].protocol =="sip"){
+			if(tempArr[i].participantType == 'audio' || tempArr[i].protocol =="sip" || (tempArr[i].protocol !="webrtc" && tempArr[i].protocol !="api")){
 				phoneNumCount++;
 				var phoneName = tempArr[i].displayName?tempArr[i].displayName : tempArr[i].display_name;
 				var phoneNumb = tempArr[i].destination?tempArr[i].destination : tempArr[i].uri.substring(6,16);

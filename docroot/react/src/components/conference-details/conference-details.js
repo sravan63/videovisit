@@ -137,9 +137,9 @@ class ConferenceDetails extends React.Component {
         var participantInList = false;
         var hasJoined = type == GlobalConfig.USER_JOINED;
         var participant = hasJoined ? 
-                          data.protocol == "sip" ? data.uri.substring(6, 16) : data.display_name 
+                          data.protocol == "sip" || (data.protocol != "webrtc" &&  data.protocol != "api") ? data.uri.substring(6, 16) : data.display_name
                           : data.uuid;
-        var isTelephony = hasJoined ? data.protocol == "sip" : false;
+        var isTelephony = hasJoined ? data.protocol == "sip" || (data.protocol != "webrtc" &&  data.protocol != "api") : false;
 
         // TODO: Should remove this after UID implementation
         if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
