@@ -469,7 +469,7 @@ function participantCreated(participant) {
     pexipParticipantsList.push(participant);
     log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
     
-    if (participant.protocol == "sip" || (participant.protocol != "webrtc" &&  participant.protocol != "api")) {
+    if (participant.protocol == "sip") {
         var joinParticipantMsg = {
             message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
             name: participant.display_name
