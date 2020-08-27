@@ -1477,7 +1477,7 @@ public class MeetingCommand {
 			final String userValue = request.getParameter("userValue");
 			final String surveyName = request.getParameter("surveyName");
 			logger.info("input surveyName : " + surveyName);
-			response = WebService.getActiveSurveys(gson, false, true, meetingId, userType, userValue,
+			response = WebService.getActiveSurveys(gson, true, false, meetingId, userType, userValue,
 					request.getSession().getId());
 			final ActiveSurveysResponse activeSurveysResponse = gson.fromJson(response, ActiveSurveysResponse.class);
 			if (StringUtils.isNotBlank(surveyName) && activeSurveysResponse != null
