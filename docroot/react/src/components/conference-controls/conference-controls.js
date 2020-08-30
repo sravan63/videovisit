@@ -74,8 +74,8 @@ class ConferenceControls extends React.Component {
             <div className="button-container">
                 <div className="button-group" >
                     <div className="media-toggle">
-                        <div title="Enable Video" style={{display: this.props.controls.showvideoIcon ? 'block' : 'none'}} className="btns media-controls video-btn" onClick={()=>this.toggleControls('video')}></div>
-                        <div title="Disable Video" style={{display: this.props.controls.showvideoIcon ? 'none' : 'block'}} className="btns media-controls video-muted-btn" onClick={()=>this.toggleControls('video')}></div>   
+                        <div title="Disable Video" style={{display: this.props.controls.showvideoIcon ? 'block' : 'none'}} className="btns media-controls video-btn" onClick={()=>this.toggleControls('video')}></div>
+                        <div title="Enable Video" style={{display: this.props.controls.showvideoIcon ? 'none' : 'block'}} className="btns media-controls video-muted-btn" onClick={()=>this.toggleControls('video')}></div>
                     </div>
                     <div className="media-toggle">
                         <div title="Mute Speakers" style={{display: this.props.controls.showaudioIcon ? 'block' : 'none'}}  className="btns media-controls speaker-btn" onClick={()=>this.toggleControls('audio')}></div>
