@@ -1536,6 +1536,39 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
+	}
+
+	public static String authorizeVVCode(HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String jsonOutput = null;
+		String result = null;
+		String authtoken = "";
+		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		try {
+			if (request.getReader() != null && request.getReader().lines() != null) {
+				authtoken = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+			}
+			jsonOutput = WebService.authorizeVVCode(authtoken, request.getSession().getId(), WebUtil.VV_MBR_WEB);
+			if (StringUtils.isNotBlank(jsonOutput)) {
+				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+			}
+
+			if (output != null && output.getService() != null
+					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
+					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.AUTHORIZE_VV_CODE,
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(), "");
+			}
+		} catch (Exception e) {
+			logger.error("Error while authorizeVVCode for authtoken:" + authtoken, e);
+		}
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.AUTHORIZE_VV_CODE, FAILURE_900, FAILURE,
+					null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
 	}	
 
 }

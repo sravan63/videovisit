@@ -25,6 +25,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
+import org.kp.tpmg.videovisit.model.AccessTokenDetails;
 import org.kp.tpmg.videovisit.model.MemberLogoutInput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
@@ -61,6 +62,7 @@ import org.kp.tpmg.videovisit.model.meeting.provider.UpdateEmailActionInput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateInput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutput;
 import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
+import org.kp.tpmg.videovisit.model.notification.ValidateVVCodeInput;
 import org.kp.tpmg.videovisit.model.notification.VendorMeetingEventInput;
 import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
@@ -1772,6 +1774,34 @@ public class WebService {
 			final String inputString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputString);
 			jsonResponse = callVVRestService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString);
+		}
+		logger.info(LOG_EXITING);
+		return jsonResponse;
+	}
+
+	public static String authorizeVVCode(String authtoken, String sessionId, String clientId) {
+		logger.info(LOG_ENTERED);
+		String jsonResponse = null;
+		final Gson gson = new Gson();
+		if (StringUtils.isBlank(authtoken) || (StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId))) {
+			logger.warn("Missing input attributes");
+			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+			final ServiceCommonOutput service = new ServiceCommonOutput();
+			final Status status = new Status();
+			service.setName(ServiceUtil.AUTHORIZE_VV_CODE);
+			output.setService(service);
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			output.getService().setStatus(status);
+			jsonResponse = gson.toJson(output);
+		} else {
+			
+			final ValidateVVCodeInput input = new ValidateVVCodeInput();
+			input.setAccessCode(authtoken);
+			input.setClientId(clientId);
+			final String inputString = gson.toJson(input);
+			logger.debug("jsonInptString : " + inputString);
+			jsonResponse = callVVRestService(ServiceUtil.AUTHORIZE_VV_CODE, inputString);
 		}
 		logger.info(LOG_EXITING);
 		return jsonResponse;
