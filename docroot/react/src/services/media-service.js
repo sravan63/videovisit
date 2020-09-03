@@ -75,8 +75,10 @@ class MediaService extends React.Component {
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
         let isSetup = localStorage.getItem('isSetupPage');
         if(isChrome && !Utilities.isMobileDevice() && !isSetup) {
-            this.cameraPermissions();
-            this.micPermissions();
+            setTimeout(()=>{
+                this.cameraPermissions();
+                this.micPermissions();
+            },1600);
         }
         console.log('Media Service - List Of Media Devices :: ' + this.mediaData);
         MessageService.sendMessage(GlobalConfig.MEDIA_DATA_READY, this.mediaData);
@@ -200,15 +202,24 @@ class MediaService extends React.Component {
 
             if(permissionStatus.state == 'granted'){
                 MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
-            } else {
-                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
+            } else  if(permissionStatus.state == 'denied'){
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
+            }
+            else {
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
             }
 
             permissionStatus.onchange = function(){
                 console.log("Permission changed to " + this.state);
                 if(this.state == 'denied'){
-
+                    MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
                 } else if(this.state == 'granted'){
+                    var deniedError  = document.getElementsByClassName('selectIcon').length;
+                    if(deniedError == 0){
+                        MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+                        MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                    }
+
                     //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
                     //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
@@ -225,15 +236,23 @@ class MediaService extends React.Component {
             if(permissionStatus.state === 'granted') {
                 MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
             }
-                else {
-                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
+            else  if(permissionStatus.state == 'denied'){
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
+            }
+            else {
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
             }
 
             permissionStatus.onchange = function(){
                 console.log("Permission changed to " + this.state);
                 if(this.state == 'denied'){
-
+                    MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
                 } else if(this.state == 'granted'){
+                    var deniedError  = document.getElementsByClassName('selectIcon').length;
+                    if(deniedError == 0){
+                        MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+                        MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                    }
                     //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
                     //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }

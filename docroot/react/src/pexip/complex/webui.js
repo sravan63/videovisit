@@ -32,6 +32,7 @@ var useAlertsForLogging = false;
 var cameraID;
 var audioSource;
 var isSetup;
+var deniedPermission = false;
 
 var id_selfview;
 var id_muteaudio;
@@ -406,12 +407,12 @@ function handleError(reason) {
         }
     }
     else if(rtc.error == 'NotAllowedError'){
-        var deniedPermission;
+        let isSetup = localStorage.getItem('isSetupPage');
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        if(isChrome) {
+        if(isChrome && !UtilityService.isMobileDevice() && !isSetup) {
             if (!deniedPermission) {
                 deniedPermission = true;
-                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, true);
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
             }
         }
     }
@@ -665,8 +666,8 @@ function connected(url) {
     var isSetup = localStorage.getItem('isSetupPage');
     if(pexipInitialConnect==false){
         if (isSetup == null) {
-        MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
-        MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+        //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+        //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         var meetingId = JSON.parse(localStorage.getItem('meetingId'));
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));

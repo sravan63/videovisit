@@ -32,6 +32,9 @@ class VVModal extends React.Component {
         // unsubscribe to ensure no memory leaks
         this.subscription.unsubscribe();
     }
+    refreshPage() {
+        window.location.reload(false);
+    }
 
     closePopup(option){
         MessageService.sendMessage(GlobalConfig.CLOSE_MODAL, option);
@@ -45,7 +48,11 @@ class VVModal extends React.Component {
             <div id="leaveMeetingPopup" className="leaveMeeting-popup">
                 <div className="popup-content">
                     { this.state.popupOptions.type && this.state.popupOptions.type.length > 0 ?  (<div><h5>{ this.state.popupOptions.heading }</h5>
-                        <p>{ this.state.popupOptions.message }</p></div>):(<div><h3>{ this.state.popupOptions.heading }</h3>
+                        { this.state.popupOptions.type=='Permission' ? (<p>{ this.state.popupOptions.message }</p>) :
+                            (<div><p className="selectIcon">Click on the <span className="camIcon"> </span>in the
+                                URL bar to grant access, then refresh.</p><div className= "refreshButton">
+                            <button type="button" className="refresh" onClick={this.refreshPage}>Refresh</button>
+                            </div></div>)}</div>):(<div><h3>{ this.state.popupOptions.heading }</h3>
                         <h4>{ this.state.popupOptions.message }</h4></div>) }
                     <div className= "overlayButton">
                         { this.state.popupOptions.controls && this.state.popupOptions.controls.length > 0 ? 

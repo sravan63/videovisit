@@ -43,10 +43,14 @@ class Conference extends React.Component {
             message : 'Your video visit session is going to end, unless you choose Stay.',
             controls : [{label: 'Leave Room', type: 'leave'}, {label: 'Stay', type: 'stay'} ]
         };
-        this.PermissionErrorContent = {
+        this.permissionRequiredContent = {
             heading: 'Camera and Microphone Access Required',
             message: 'Before you can start your visit you must enable your camera and microphone.',
             type: 'Permission'
+        };
+        this.permissionDeniedContent={
+            heading: 'Camera and Microphone Access Blocked',
+            type: 'Denied'
         };
     }
 
@@ -259,7 +263,14 @@ class Conference extends React.Component {
                     this.handleTimer(true);
                     break;
                 case GlobalConfig.MEDIA_PERMISSION:
-                    MessageService.sendMessage(GlobalConfig.OPEN_MODAL, this.PermissionErrorContent);
+                    var modalData;
+                    if(message.data=='denied'){
+                         modalData = this.permissionDeniedContent;
+                    }
+                    else{
+                        modalData = this.permissionRequiredContent;
+                    }
+                    MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
                     break;
                 case GlobalConfig.RENDER_VIDEO_DOM:
                     this.setState({showRemotefeed:true});
