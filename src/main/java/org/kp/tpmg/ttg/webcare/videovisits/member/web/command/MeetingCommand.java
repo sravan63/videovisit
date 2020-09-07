@@ -39,6 +39,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionSer
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
+import org.kp.tpmg.videovisit.model.AuthorizeVVCodeOutputJson;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 import org.kp.tpmg.videovisit.model.Status;
@@ -1543,33 +1544,30 @@ public class MeetingCommand {
 		String jsonOutput = null;
 		String result = null;
 		String authtoken = "";
-		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
-		Gson gson = new GsonBuilder().serializeNulls().create();
+		final Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
 			if (request.getReader() != null && request.getReader().lines() != null) {
 				authtoken = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
 			}
 			jsonOutput = WebService.authorizeVVCode(authtoken, request.getSession().getId(), WebUtil.VV_MBR_WEB);
-			if (StringUtils.isNotBlank(jsonOutput)) {
-				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
-			}
-
+			final AuthorizeVVCodeOutputJson output = gson.fromJson(jsonOutput, AuthorizeVVCodeOutputJson.class);
 			if (output != null && output.getService() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.AUTHORIZE_VV_CODE,
-						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(), "");
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
+						output.getService().getEnvelope() != null ? output.getService().getEnvelope().getMeeting()
+								: null);
 			}
 		} catch (Exception e) {
 			logger.error("Error while authorizeVVCode for authtoken:" + authtoken, e);
 		}
 		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.AUTHORIZE_VV_CODE, FAILURE_900, FAILURE,
-					null);
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.AUTHORIZE_VV_CODE, FAILURE_900, FAILURE, null);
 		}
 		logger.info(LOG_EXITING);
 		return result;
-	}	
+	}
 
 }
 

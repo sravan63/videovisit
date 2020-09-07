@@ -1799,6 +1799,7 @@ public class WebService {
 			final ValidateVVCodeInput input = new ValidateVVCodeInput();
 			input.setAccessCode(authtoken);
 			input.setClientId(clientId);
+			input.setSessionId(sessionId);
 			final String inputString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputString);
 			jsonResponse = callVVRestService(ServiceUtil.AUTHORIZE_VV_CODE, inputString);
