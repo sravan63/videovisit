@@ -45,7 +45,7 @@ class Conference extends React.Component {
         };
         this.permissionRequiredContent = {
             heading: 'Camera and Microphone Access Required',
-            message: 'Before you can start your visit you must enable your camera and microphone.',
+            message: 'Before you can start your visit you must allow access to your camera and microphone.',
             type: 'Permission'
         };
         this.permissionDeniedContent={
