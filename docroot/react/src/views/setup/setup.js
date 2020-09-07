@@ -39,7 +39,7 @@ class Setup extends React.Component {
           this.getBrowserBlockInfo();
           return false;
         }
-        localStorage.setItem('isSetupPage', true);
+        sessionStorage.setItem('isSetupPage', true);
         MediaService.loadDeviceMediaData();
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             switch (message.text) {
@@ -67,6 +67,7 @@ class Setup extends React.Component {
         // unsubscribe to ensure no memory leaks
         this.subscription.unsubscribe();
         window.location.reload();
+        sessionStorage.removeItem('isSetupPage');
     }
 
     getBrowserBlockInfo(){

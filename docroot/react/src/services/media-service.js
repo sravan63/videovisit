@@ -21,7 +21,10 @@ class MediaService extends React.Component {
       var browserInfo = Utilities.getBrowserInformation();
       if(!browserInfo.isIE){
         if(browserInfo.isSafari || browserInfo.isFireFox) {
-          navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
+            if(!Utilities.isMobileDevice()) {
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
+            }
+          navigator.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
               console.log('Stream1 started with success');
               window.localStream = stream;
               this.setDevice();
@@ -43,6 +46,8 @@ class MediaService extends React.Component {
     }
 
     setDevice(){
+    MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
      navigator.mediaDevices.enumerateDevices().then((list)=>{
        this.gotDevicesList(list.slice(0));
      }).catch((error)=>{
@@ -51,9 +56,11 @@ class MediaService extends React.Component {
     }
 
     stopAudio(){
-      localStream.getTracks().forEach( (track) => {
-        track.stop();
-      });
+      if(window.localStream) {
+          localStream.getTracks().forEach((track) => {
+              track.stop();
+          });
+      }
     }
 
     // Gets the list of devices on load.
@@ -72,8 +79,10 @@ class MediaService extends React.Component {
             media['kind'] = mData.kind;
             this.mediaData[media.kind].push(media);
         });
+
+
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        let isSetup = localStorage.getItem('isSetupPage');
+        let isSetup = sessionStorage.getItem('isSetupPage');
         if(isChrome && !Utilities.isMobileDevice() && !isSetup) {
             setTimeout(()=>{
                 this.cameraPermissions();
@@ -86,9 +95,18 @@ class MediaService extends React.Component {
   
   // Error call back.
     handleError(error){
-        var ErrorMsg = error.message;
+        var ErrorMsg = error.message,
+            browserInfo = Utilities.getBrowserInformation();
         if(ErrorMsg =='Failed starting capture of a audio track'){
           alert("Unable to join: Looks like you're on a phone call, hangup and refresh page to join.");
+        }
+        if(browserInfo.isSafari || browserInfo.isFireFox) {
+            let isSetup = sessionStorage.getItem('isSetupPage');
+            if (!Utilities.isMobileDevice() && !isSetup){
+                if (error.name == 'NotAllowedError') {
+                    MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
+                }
+            }
         }
         console.log('Media Service - Error Occured :: '+error);
     }

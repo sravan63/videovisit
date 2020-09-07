@@ -142,7 +142,11 @@ class PreCallCheck extends React.Component {
     joinVisit() {
         // set constrains.
         const data = this.state.constrains;
-        localStorage.setItem('selectedPeripherals', JSON.stringify(data));
+        if(data.hasOwnProperty('videoSource')) {
+            localStorage.setItem('selectedPeripherals', JSON.stringify(data));
+        }else{
+            sessionStorage.setItem('deniedPermission', true);
+        }
         MediaService.stop();
         this.props.data.togglePrecheck();
     }

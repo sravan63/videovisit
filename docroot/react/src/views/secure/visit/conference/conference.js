@@ -50,7 +50,19 @@ class Conference extends React.Component {
         };
         this.permissionDeniedContent={
             heading: 'Camera and Microphone Access Blocked',
+            displayIcon:'true',
+            type: 'Denied',
+        };
+        this.permissionDeniedForSafari={
+            heading: 'Camera and Microphone Access Blocked',
+            message: 'Click on the Refresh button below and allow Camera/Microphone Permissions',
             type: 'Denied'
+        };
+        this.permissionDeniedforFirefox={
+            heading: 'Camera and Microphone Access Blocked',
+            displayIcon:'true',
+            isMozilla:'true',
+            type: 'Denied',
         };
     }
 
@@ -265,7 +277,16 @@ class Conference extends React.Component {
                 case GlobalConfig.MEDIA_PERMISSION:
                     var modalData;
                     if(message.data=='denied'){
-                         modalData = this.permissionDeniedContent;
+                        let browserInfo = Utilities.getBrowserInformation();
+                        if (browserInfo.isSafari) {
+                            modalData = this.permissionDeniedForSafari;
+                        }
+                        else if(browserInfo.isFireFox){
+                            modalData = this.permissionDeniedforFirefox;
+                        }
+                        else {
+                            modalData = this.permissionDeniedContent;
+                        }
                     }
                     else{
                         modalData = this.permissionRequiredContent;
@@ -499,6 +520,8 @@ class Conference extends React.Component {
 
     componentWillUnmount() {
         // clear on component unmount
+        MediaService.stopAudio();
+        sessionStorage.removeItem('deniedPermission');
         clearTimeout(this.handle);
         window.clearInterval(this.runningLate);
         window.clearInterval(this.MediaStats);

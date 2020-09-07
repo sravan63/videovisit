@@ -49,8 +49,8 @@ class VVModal extends React.Component {
                 <div className="popup-content">
                     { this.state.popupOptions.type && this.state.popupOptions.type.length > 0 ?  (<div><h5>{ this.state.popupOptions.heading }</h5>
                         { this.state.popupOptions.type=='Permission' ? (<p>{ this.state.popupOptions.message }</p>) :
-                            (<div><p className="selectIcon">Click on the <span className="camIcon"> </span>in the
-                                URL bar to grant access, then refresh.</p><div className= "refreshButton">
+                            (<div className="selectIcon">{this.state.popupOptions.displayIcon=='true'?<p>Click on the <span id="camIcon" className={this.state.popupOptions.isMozilla=='true'?'camMicIcon':'cameraIcon'}> </span>in the
+                                URL bar to grant access, then refresh.</p>:<p>{ this.state.popupOptions.message }</p>}<div className= "refreshButton">
                             <button type="button" className="refresh" onClick={this.refreshPage}>Refresh</button>
                             </div></div>)}</div>):(<div><h3>{ this.state.popupOptions.heading }</h3>
                         <h4>{ this.state.popupOptions.message }</h4></div>) }

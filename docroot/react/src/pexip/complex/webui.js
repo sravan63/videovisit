@@ -407,7 +407,7 @@ function handleError(reason) {
         }
     }
     else if(rtc.error == 'NotAllowedError'){
-        let isSetup = localStorage.getItem('isSetupPage');
+        let isSetup = sessionStorage.getItem('isSetupPage');
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
         if(isChrome && !UtilityService.isMobileDevice() && !isSetup) {
             if (!deniedPermission) {
@@ -667,7 +667,7 @@ function connected(url) {
     if(pexipInitialConnect==false){
         if (isSetup == null) {
         //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
-        MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+        //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
         var meetingId = JSON.parse(localStorage.getItem('meetingId'));
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
