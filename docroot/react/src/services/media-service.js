@@ -19,19 +19,31 @@ class MediaService extends React.Component {
     // Initiates the device load
     loadDeviceMediaData(){
       var browserInfo = Utilities.getBrowserInformation();
+      var isSetup = sessionStorage.getItem('isSetupPage');
       if(!browserInfo.isIE){
         if(browserInfo.isSafari || browserInfo.isFireFox) {
-            if(!Utilities.isMobileDevice()) {
+            if (!Utilities.isMobileDevice()) {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
             }
-          navigator.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
-              console.log('Stream1 started with success');
-              window.localStream = stream;
-              this.setDevice();
-          }).catch((error)=>{ 
-              this.handleError(error);
-              console.log('Failed to start stream1');
-          });
+            if (isSetup =='true') {
+                navigator.mediaDevices.getUserMedia({audio: true, video: false}).then((stream) => {
+                    console.log('Stream1 started with success');
+                    window.localStream = stream;
+                    this.setDevice();
+                }).catch((error) => {
+                    this.handleError(error);
+                    console.log('Failed to start stream1');
+                });
+            } else {
+                navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
+                    console.log('Stream1 started with success');
+                    window.localStream = stream;
+                    this.setDevice();
+                }).catch((error) => {
+                    this.handleError(error);
+                    console.log('Failed to start stream1');
+                });
+            }
         } else {
           navigator.mediaDevices.enumerateDevices().then((list)=>{
               this.gotDevicesList(list);
