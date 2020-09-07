@@ -11,11 +11,9 @@ class MediaService extends React.Component {
 
     constructor() {
         super();
-        this.state = { mediaData: {}, selectedConstrain : {} };
+        this.state = { mediaData: {},cameraAllowed:false,micAllowed:false, selectedConstrain : {} };
         this.mediaData = {};
         this.drawNewCanvas = true;
-        this.cameraAllowed = false;
-        this.micAllowed = false;
     }
     
     // Initiates the device load
@@ -233,8 +231,8 @@ class MediaService extends React.Component {
             console.log(permissionStatus.state); // granted, denied, prompt
 
             if(permissionStatus.state == 'granted'){
-                this.cameraAllowed = true;
-                if(this.micAllowed==true) {
+                this.state.cameraAllowed = true;
+                if(this.state.micAllowed==true) {
                     MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             } else  if(permissionStatus.state == 'denied'){
@@ -269,8 +267,8 @@ class MediaService extends React.Component {
             console.log(permissionStatus.state); // granted, denied, prompt
 
             if(permissionStatus.state === 'granted') {
-                this.micAllowed=true;
-                if(this.cameraAllowed==true) {
+                this.state.micAllowed=true;
+                if(this.state.cameraAllowed==true) {
                     MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             }
