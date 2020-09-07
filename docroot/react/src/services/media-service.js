@@ -225,14 +225,15 @@ class MediaService extends React.Component {
       }
     }
      cameraPermissions(){
+        var self = this;
         navigator.permissions.query(
             { name: 'camera' }
         ).then(function(permissionStatus){
             console.log(permissionStatus.state); // granted, denied, prompt
 
             if(permissionStatus.state == 'granted'){
-                this.state.cameraAllowed = true;
-                if(this.state.micAllowed==true) {
+                self.state.cameraAllowed = true;
+                if(self.state.micAllowed==true) {
                     MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             } else  if(permissionStatus.state == 'denied'){
@@ -261,14 +262,15 @@ class MediaService extends React.Component {
     }
 
      micPermissions(){
+        var self = this;
         navigator.permissions.query(
             { name: 'microphone' }
         ).then(function(permissionStatus){
             console.log(permissionStatus.state); // granted, denied, prompt
 
             if(permissionStatus.state === 'granted') {
-                this.state.micAllowed=true;
-                if(this.state.cameraAllowed==true) {
+                self.state.micAllowed=true;
+                if(self.state.cameraAllowed==true) {
                     MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             }
