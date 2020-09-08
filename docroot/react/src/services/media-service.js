@@ -11,7 +11,7 @@ class MediaService extends React.Component {
 
     constructor() {
         super();
-        this.state = { mediaData: {},cameraAllowed:false,micAllowed:false, selectedConstrain : {} };
+        this.state = { mediaData: {},cameraAllowed:false,micAllowed:false,camBlocked:false, selectedConstrain : {} };
         this.mediaData = {};
         this.drawNewCanvas = true;
     }
@@ -237,6 +237,7 @@ class MediaService extends React.Component {
                     MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             } else  if(permissionStatus.state == 'denied'){
+                self.state.camBlocked = true;
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
             }
             else {
@@ -278,7 +279,9 @@ class MediaService extends React.Component {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
             }
             else {
-                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
+                if(self.state.camBlocked != true) {
+                    MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
+                }
             }
 
             permissionStatus.onchange = function(){
