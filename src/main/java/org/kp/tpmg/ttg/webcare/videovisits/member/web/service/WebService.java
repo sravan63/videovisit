@@ -26,6 +26,7 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
 import org.kp.tpmg.videovisit.model.AccessTokenDetails;
+import org.kp.tpmg.videovisit.model.AuthorizeVVCodeOutputJson;
 import org.kp.tpmg.videovisit.model.MemberLogoutInput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
@@ -33,6 +34,7 @@ import org.kp.tpmg.videovisit.model.Status;
 import org.kp.tpmg.videovisit.model.mediastats.InsertVendorMeetingMediaCDRInput;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
 import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
+import org.kp.tpmg.videovisit.model.meeting.AuthorizeVVCodeOutput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
 import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
 import org.kp.tpmg.videovisit.model.meeting.EndMeetingForMemberGuestDesktopInput;
@@ -1785,8 +1787,8 @@ public class WebService {
 		final Gson gson = new Gson();
 		if (StringUtils.isBlank(authtoken) || (StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId))) {
 			logger.warn("Missing input attributes");
-			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
-			final ServiceCommonOutput service = new ServiceCommonOutput();
+			final AuthorizeVVCodeOutputJson output = new AuthorizeVVCodeOutputJson();
+			final AuthorizeVVCodeOutput service = new AuthorizeVVCodeOutput();
 			final Status status = new Status();
 			service.setName(ServiceUtil.AUTHORIZE_VV_CODE);
 			output.setService(service);

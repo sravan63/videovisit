@@ -1556,7 +1556,7 @@ public class MeetingCommand {
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.AUTHORIZE_VV_CODE,
 						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
-						output.getService().getEnvelope() != null ? output.getService().getEnvelope().getMeeting()
+						output.getService().getEnvelope() != null ? output.getService().getEnvelope()
 								: null);
 			}
 		} catch (Exception e) {
