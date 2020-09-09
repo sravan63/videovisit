@@ -22,7 +22,7 @@ class MediaService extends React.Component {
       var isSetup = sessionStorage.getItem('isSetupPage');
       if(!browserInfo.isIE){
         if(browserInfo.isSafari || browserInfo.isFireFox) {
-            if (!Utilities.isMobileDevice()) {
+            if (!Utilities.isMobileDevice() && browserInfo.isSafari) {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
             }
             if (isSetup =='true') {
@@ -112,9 +112,9 @@ class MediaService extends React.Component {
         if(ErrorMsg =='Failed starting capture of a audio track'){
           alert("Unable to join: Looks like you're on a phone call, hangup and refresh page to join.");
         }
-        if(browserInfo.isSafari || browserInfo.isFireFox) {
+        if(browserInfo.isSafari) {
             let isSetup = sessionStorage.getItem('isSetupPage');
-            if (!Utilities.isMobileDevice() && !isSetup){
+            if (!isSetup){
                 if (error.name == 'NotAllowedError') {
                     MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
                 }

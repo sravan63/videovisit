@@ -55,7 +55,7 @@ class Conference extends React.Component {
         };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
-            message: 'Click on the Refresh button below and allow Camera/Microphone Permissions',
+            message: 'Click on the Refresh button and allow access to Camera/Microphone.',
             type: 'Denied'
         };
         this.permissionDeniedforFirefox={
