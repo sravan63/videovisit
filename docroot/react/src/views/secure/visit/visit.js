@@ -40,9 +40,8 @@ class Visit extends React.Component {
         }
         var browserInfo = Utilities.getBrowserInformation();
         var peripheralsSelected = localStorage.getItem('selectedPeripherals');
-        var permissionNotGranted = sessionStorage.getItem('deniedPermission');
         var showPreCallCheck = (browserInfo.isSafari || browserInfo.isFireFox);
-        if (showPreCallCheck && !peripheralsSelected && !permissionNotGranted) {
+        if (showPreCallCheck && !peripheralsSelected) {
             this.setState({ showPreCheck: true });
         } else {
             this.setState({ showPreCheck: false });

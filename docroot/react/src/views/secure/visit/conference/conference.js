@@ -55,7 +55,7 @@ class Conference extends React.Component {
         };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
-            message: 'Click on the Refresh button and allow access to Camera/Microphone.',
+            message: 'Click on the Refresh button and allow access to Camera/Microphone or check your browser settings.',
             type: 'Denied'
         };
         this.permissionDeniedforFirefox={
@@ -64,6 +64,11 @@ class Conference extends React.Component {
             isMozilla:'true',
             type: 'Denied',
         };
+        this.permissionDeniedMobile={
+            heading: 'Camera and Microphone Access Blocked',
+            message: 'Click on the lock icon in the URL bar and grant access in Site Settings, then refresh.',
+            type: 'Denied'
+        }
     }
 
     componentDidMount() {
@@ -285,7 +290,12 @@ class Conference extends React.Component {
                             modalData = this.permissionDeniedforFirefox;
                         }
                         else {
-                            modalData = this.permissionDeniedContent;
+                            if(Utilities.isMobileDevice()){
+                                modalData = this.permissionDeniedMobile;
+                            }
+                            else {
+                                modalData = this.permissionDeniedContent;
+                            }
                         }
                     }
                     else{
@@ -521,7 +531,6 @@ class Conference extends React.Component {
     componentWillUnmount() {
         // clear on component unmount
         MediaService.stopAudio();
-        sessionStorage.removeItem('deniedPermission');
         clearTimeout(this.handle);
         window.clearInterval(this.runningLate);
         window.clearInterval(this.MediaStats);
@@ -725,7 +734,7 @@ class Conference extends React.Component {
                 </div>
                 {this.state.meetingDetails ? (
                     <div className="row video-conference-container" >
-                        <div className="col-md-10 p-0 video-conference" style={{display: this.state.showRemotefeed ? 'flex' : 'none'}}>
+                        <div className="col-md-10 p-0 video-conference" style={{visibility: this.state.showRemotefeed ? 'visible' : 'hidden'}}>
                             <ConferenceControls controls={this.state}/>
                             <div className="col p-0 remote-feed-container" >
                                 <WaitingRoom waitingroom={this.state} />

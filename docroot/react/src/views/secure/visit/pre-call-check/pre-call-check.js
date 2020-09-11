@@ -17,28 +17,29 @@ import { MessageService } from '../../../../services/message-service';
 import GlobalConfig from '../../../../services/global.config';
 import './pre-call-check.less';
 import Footer from '../../../../components/footer/footer';
+import VVModal from "../../../../modals/modal";
 class PreCallCheck extends React.Component {
 
     constructor(props) {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { userDetails: {}, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false,mdoHelpUrl:'' };
+        this.state = { userDetails: {},renderView:false, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false,mdoHelpUrl:'' };
         this.goBack = this.goBack.bind(this);
         this.joinVisit = this.joinVisit.bind(this);
+        this.permissionRequiredContent = {
+            heading: 'Camera and Microphone Access Required',
+            message: 'Before you can start your visit you must allow access to your camera and microphone.',
+            type: 'Permission'
+        };
+        this.permissionDeniedForSafari={
+            heading: 'Camera and Microphone Access Blocked',
+            message: 'Click on the Refresh button and allow access to Camera/Microphone.',
+            type: 'Denied'
+        };
     }
 
     componentDidMount() {
-        if (localStorage.getItem('userDetails')) {
-            this.state.userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
-            if (this.state.userDetails) {
-                this.setState({ showPage: true });
-                MediaService.loadDeviceMediaData();
-            }
-        } else {
-            this.props.history.push(GlobalConfig.LOGIN_URL);
-        }
-
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             switch (message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
@@ -57,8 +58,33 @@ class PreCallCheck extends React.Component {
                     };
                     MediaService.start(constrains);
                     break;
+                case GlobalConfig.MEDIA_PERMISSION:
+                    var modalData;
+                    if(message.data=='denied'){
+                        let browserInfo = Utilities.getBrowserInformation();
+                        if (browserInfo.isSafari) {
+                            modalData = this.permissionDeniedForSafari;
+                        }
+                    }
+                    else{
+                        modalData = this.permissionRequiredContent;
+                    }
+                    MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
+                    break;
+                case GlobalConfig.RENDER_VIDEO_DOM:
+                    this.setState({renderView:true});
+                    break;
             }
         });
+        if (localStorage.getItem('userDetails')) {
+            this.state.userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
+            if (this.state.userDetails) {
+                this.setState({ showPage: true });
+                MediaService.loadDeviceMediaData();
+            }
+        } else {
+            this.props.history.push(GlobalConfig.LOGIN_URL);
+        }
         if(localStorage.getItem('helpUrl')){
             var helpUrl = localStorage.getItem('helpUrl');
             this.setState({ mdoHelpUrl: helpUrl });
@@ -92,6 +118,7 @@ class PreCallCheck extends React.Component {
 
     componentWillUnmount() {
         window.location.reload(false);
+        this.subscription.unsubscribe();
     }
 
     selectPeripheral(media, type) {
@@ -142,11 +169,7 @@ class PreCallCheck extends React.Component {
     joinVisit() {
         // set constrains.
         const data = this.state.constrains;
-        if(data.hasOwnProperty('videoSource')) {
-            localStorage.setItem('selectedPeripherals', JSON.stringify(data));
-        }else{
-            sessionStorage.setItem('deniedPermission', true);
-        }
+        localStorage.setItem('selectedPeripherals', JSON.stringify(data));
         MediaService.stop();
         this.props.data.togglePrecheck();
     }
@@ -154,7 +177,9 @@ class PreCallCheck extends React.Component {
 
     render() {
         return (
-            <div id='container' className="pre-call-check-page">
+            <div>
+            <VVModal />
+            <div id='container' className="pre-call-check-page" style={{visibility: this.state.renderView ? 'visible' : 'hidden'}}>
                  <div className="pre-call-check-header row m-0">
                     <div className="col-md-8 banner-content">
                         <div className="logo"></div>
@@ -255,6 +280,7 @@ class PreCallCheck extends React.Component {
                  <div className="form-footer">
                         <Footer />
                     </div>
+            </div>
             </div>
         )
     }
