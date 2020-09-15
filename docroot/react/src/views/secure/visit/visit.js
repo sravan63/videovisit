@@ -14,7 +14,7 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, showPage: false,isInstantJoin: false,mdoHelpUrl:'',isChecked:true, renderPage:false, isMobile: false, showPreCheck: true };
+        this.state = { userDetails: {}, showPage: false,isInstantJoin: false,mdoHelpUrl:'',isChecked:true, displayName:'', renderPage:false, isMobile: false, showPreCheck: true };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.denyUser = this.denyUser.bind(this);
         this.allowLogin = this.allowLogin.bind(this);
@@ -146,7 +146,8 @@ class Visit extends React.Component {
                         let userData = response.data.data;
                         let meetingId = userData.meeting.meetingId;
                         let isProxyMeeting = "N";
-                        this.setState({renderPage: true});
+                        let fullName = userData.firstName + " " + userData.lastName;
+                        this.setState({renderPage: true, displayName:fullName});
                         let userDetails = { isTempAccess: false, lastName :userData.lastName , firstName:userData.firstName , mrn:userData.meeting.member.mrn, ssoSession: '' };
                         localStorage.setItem('userDetails', Utilities.encrypt(JSON.stringify(userDetails)));
                         localStorage.setItem('meetingId', JSON.stringify(meetingId));
@@ -197,7 +198,7 @@ class Visit extends React.Component {
                         </div>
                     </div>
                     <div className="confirmationContent">
-                        <h3 className="patientConfirm"> Are you the Patient ?</h3>
+                        <h3 className="patientConfirm"> Are you {this.state.displayName} ?</h3>
                         <div>
                             <input type="checkbox" className="checkTerms" name="isChecked" onChange={this.handleInputChange}/>
                             <span>I acknowledge the </span><a className="terms "href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp" target="_blank">Terms and Conditions shown here</a>
