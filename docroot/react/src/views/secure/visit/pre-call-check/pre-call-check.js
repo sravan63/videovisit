@@ -34,7 +34,7 @@ class PreCallCheck extends React.Component {
         };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
-            message: 'Click on the Refresh button and allow access to Camera/Microphone.',
+            message: 'Click on the Refresh button and allow access to Camera/Microphone or check your browser settings.',
             type: 'Denied'
         };
     }
@@ -179,7 +179,7 @@ class PreCallCheck extends React.Component {
         return (
             <div>
             <VVModal />
-            <div id='container' className="pre-call-check-page" style={{visibility: this.state.renderView ? 'visible' : 'hidden'}}>
+            <div id='container' className="pre-call-check-page" >
                  <div className="pre-call-check-header row m-0">
                     <div className="col-md-8 banner-content">
                         <div className="logo"></div>
@@ -195,7 +195,7 @@ class PreCallCheck extends React.Component {
                     </div>
                   </div>
                   <div className="row mobile-logo-container m-0"><div className="col-12 mobile-tpmg-logo"></div><p className="col-12 header">Video Visits</p></div>
-                 <div className="pre-call-check-content">
+                 <div className="pre-call-check-content" style={{visibility: this.state.renderView ? 'visible' : 'hidden'}}>
                      <div className="row pre-call-check">
                          <div className="col-lg-5 col-md-7 peripheral-options p-0">
                              <div className="periheral-container">
