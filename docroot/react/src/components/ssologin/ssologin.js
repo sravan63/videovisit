@@ -84,7 +84,7 @@ export default class Ssologin extends React.Component {
     getLoginUserDetails(e) {
         e.preventDefault();
         localStorage.clear();
-        this.props.data.emit({ showLoader: true });
+        this.props.data.emit({ showLoader: true,instantJoin:false });
         BackendService.getSSOLogin(this.state.username, this.state.password).subscribe((response) => {
             /* if (response && response.data && response.data.statusCode && response.data.statusCode == '200'
               && response.data.data && response.data.data.memberInfo && response.data.data.ssoSession) {*/

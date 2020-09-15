@@ -92,10 +92,15 @@ class Conference extends React.Component {
             }
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
+            var isInstantJoin = sessionStorage.getItem('isInstantJoin');
             if (userDetails != null) {
                 this.state.meetingCode = this.state.isGuest ? userDetails.meetingCode : null;
                 if(this.state.isGuest == true){
                     this.state.loginType = "guest";
+                }
+                else if(isInstantJoin){
+                    // loginType
+                    this.state.loginType='instant_join';
                 }
                 else{
                     this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO
@@ -109,11 +114,11 @@ class Conference extends React.Component {
                 this.getRunningLateInfo();
             }, GlobalConfig.RUNNING_LATE_TIMER);
             var isTempAccess = this.state.userDetails.isTempAccess;
-            if(localStorage.getItem('keepAlive') && !isTempAccess){
+            if(localStorage.getItem('keepAlive') && !isTempAccess && !isInstantJoin){
             var keepAliveUrl = localStorage.getItem('keepAlive');
             BackendService.keepAliveCookie(keepAliveUrl);
             }
-            if(!isTempAccess){
+            if(!isTempAccess && !isInstantJoin){
             this.keepAlive = setInterval(() => {
                 var keepAliveUrl = localStorage.getItem('keepAlive');
                 BackendService.keepAliveCookie(keepAliveUrl);
@@ -604,7 +609,9 @@ class Conference extends React.Component {
                 loginType = this.state.loginType;
             if (loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                 headers.authtoken = this.state.accessToken;
-            } else {
+            } else if(loginType=='instant_join'){
+                headers.authtoken='';
+            } else{
                 headers.ssoSession = this.state.accessToken;
             }
             headers.mrn = this.state.userDetails.mrn;
@@ -622,10 +629,15 @@ class Conference extends React.Component {
                 console.log("Success");
                 if (response.data && response.data.statusCode == '200') {
                     if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
-                    this.resetSessionToken(response.headers.authtoken);
+                        this.resetSessionToken(response.headers.authtoken);
+                        Utilities.setPromotionFlag(true);
+                        this.props.history.push(GlobalConfig.MEETINGS_URL);
+                    } else if (this.state.loginType == 'instant_join') {
+                        this.props.history.push(GlobalConfig.LOGIN_URL);
+                    } else {
+                        Utilities.setPromotionFlag(true);
+                        this.props.history.push(GlobalConfig.MEETINGS_URL);
                     }
-                Utilities.setPromotionFlag(true);
-                this.props.history.push(GlobalConfig.MEETINGS_URL);
                 }
                 else{
                     this.props.history.push(GlobalConfig.LOGIN_URL);

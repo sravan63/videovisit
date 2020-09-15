@@ -14,30 +14,63 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, showPage: false, isMobile: false, showPreCheck: true };
+        this.state = { userDetails: {}, showPage: false,isInstantJoin: false,mdoHelpUrl:'',isChecked:true, renderPage:false, isMobile: false, showPreCheck: true };
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.denyUser = this.denyUser.bind(this);
+        this.allowLogin = this.allowLogin.bind(this);
     }
 
     componentDidMount() {
-        var isDirectLaunch = window.location.href.indexOf('isDirectLaunch') > -1;
-        if (localStorage.getItem('userDetails')) {
+        var isDirectLaunch = window.location.href.indexOf('isDirectLaunch') > -1,
+            isInstantJoin = window.location.href.indexOf('isInstantJoin') > -1;
+        if(isInstantJoin){
+            this.launchInstantJoin();
+            this.setState({ isInstantJoin: true });
+        }
+        else if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             if (this.state.userDetails) {
                 this.setState({ showPage: true });
             }
+            this.showPreCallCheck();
         } else if( isDirectLaunch ) {
             this.launchVisit();
-        } else {
+        }
+        else {
             if(sessionStorage.getItem('guestCode')){
                 var meetingCode = JSON.parse(sessionStorage.getItem('guestCode'));
                 this.props.history.push('/guestlogin?meetingcode=' + meetingCode);
             } else {
                 this.props.history.push(GlobalConfig.LOGIN_URL);
             }
+
         }
         var isMobile = Utilities.isMobileDevice();
         if (isMobile) {
             this.setState({ isMobile: true });
         }
+
+    }
+
+    handleInputChange(event){
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name]: !value
+        });
+    }
+    denyUser(){
+        this.props.history.push("/login");
+    }
+    allowLogin(){
+        this.setState({isInstantJoin:false});
+        this.showPreCallCheck();
+        sessionStorage.setItem('isInstantJoin',true);
+    }
+
+    showPreCallCheck(){
         var browserInfo = Utilities.getBrowserInformation();
         var peripheralsSelected = localStorage.getItem('selectedPeripherals');
         var showPreCallCheck = (browserInfo.isSafari || browserInfo.isFireFox);
@@ -46,6 +79,25 @@ class Visit extends React.Component {
         } else {
             this.setState({ showPreCheck: false });
         }
+    }
+
+    getBrowserBlockInfo(){
+        var propertyName = 'browser',
+            url = "loadPropertiesByName.json",
+            browserNames = '';
+        BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
+            if (response.data && response.status == '200') {
+                browserNames = response.data;
+                this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
+                localStorage.setItem('helpUrl',response.data.mdoHelpUrl);
+                localStorage.setItem('mediaStats',response.data.INSERT_MEDIA_STATS_FREQUENCY);
+            } else {
+                // Do nothing
+            }
+        }, (err) => {
+            console.log("Error");
+        });
+
     }
 
     launchVisit() {
@@ -75,6 +127,59 @@ class Visit extends React.Component {
         }
     }
 
+    launchInstantJoin(){
+        var browserInfo = Utilities.getBrowserInformation();
+        if( browserInfo.isIE ) {
+            this.props.history.push(GlobalConfig.ERROR_PAGE);
+            return;
+        }
+        this.getBrowserBlockInfo();
+        const params = window.location.href.split('?')[1];
+        const urlParams = new URLSearchParams( params );
+        const isInstantJoin = urlParams.has('isInstantJoin') && JSON.parse(urlParams.get('isInstantJoin'));
+        const tokenValue  = urlParams.has('tk') && urlParams.get('tk');
+        let isMobile = Utilities.isMobileDevice();
+        if(isInstantJoin && tokenValue!=''){
+            BackendService.validateInstantJoin(isMobile, tokenValue).subscribe((response) => {
+                if (response.data && response.status == '200') {
+                    if (response.data.data != null && response.data.data != '') {
+                        let userData = response.data.data;
+                        let meetingId = userData.meeting.meetingId;
+                        let isProxyMeeting = "N";
+                        this.setState({renderPage: true});
+                        let userDetails = { isTempAccess: false, lastName :userData.lastName , firstName:userData.firstName , mrn:userData.meeting.member.mrn, ssoSession: '' };
+                        localStorage.setItem('userDetails', Utilities.encrypt(JSON.stringify(userDetails)));
+                        localStorage.setItem('meetingId', JSON.stringify(meetingId));
+                        localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
+                    }
+                    else{
+                        this.props.history.push({
+                            pathname: "/login",
+                            state: { message: "instantJoin" },
+                        });
+                    }
+                } else {
+                    this.props.history.push({
+                        pathname: "/login",
+                        state: { message: "instantJoin" },
+                    });
+                }
+            }, (err) => {
+                this.props.history.push({
+                    pathname: "/login",
+                    state: { message: "instantJoin" },
+                });
+            });
+
+        }
+        else{
+            this.props.history.push({
+                pathname: "/login",
+                state: { message: "instantJoin" },
+            });
+        }
+    }
+
     togglePrecheck() {
         this.setState({
             showPreCheck: false
@@ -83,12 +188,42 @@ class Visit extends React.Component {
 
     render() {
         return (
-            <div>
-                <Suspense fallback={<Loader />}>
-                    {this.state.showPreCheck && !this.state.isMobile? 
-                      (<PreCallCheck history={this.props.history} data={{togglePrecheck: this.togglePrecheck.bind(this)}}/>)
-                    : (<Conference history={this.props.history} />)}
-                </Suspense>
+            <div>{this.state.isInstantJoin ?(<div className='instantJoin-container' style={{visibility: this.state.renderPage ? 'visible' : 'hidden'}}>
+                    <Header helpUrl = {this.state.mdoHelpUrl}/>
+                    <div className="row instant-mobile-header">
+                        <div className="title">
+                            <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
+                            <p className="col-12 p-0 sub-header">Video Visits</p>
+                        </div>
+                    </div>
+                    <div className="confirmationContent">
+                        <h3 className="patientConfirm"> Are you the Patient ?</h3>
+                        <div>
+                            <input type="checkbox" className="checkTerms" name="isChecked" onChange={this.handleInputChange}/>
+                            <span>I acknowledge the </span><a className="terms "href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp" target="_blank">Terms and Conditions shown here</a>
+                        </div>
+                        <button  type="button" className="odd" onClick={this.denyUser}>Deny</button>
+                        <button  type="button" className="even" onClick={this.allowLogin} disabled={this.state.isChecked}>Confirm</button>
+                    </div>
+                    <div className="instant-form-footer">
+                        <div className="instant-main-footer">
+                            <ul id="instant-list-conditions">
+                                <li><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp"
+                                       target="_blank"> Terms and Conditions</a></li>
+                                <li className="last"><a
+                                    href="https://members.kaiserpermanente.org/kpweb/privacystate/entrypage.do"
+                                    target="_blank">Privacy Practices</a></li>
+                            </ul>
+                            <p className="copyright">Copyright ©2012-2020 The Permanente Medical Group, Inc. All rights
+                                reserved.</p>
+                        </div>
+                    </div>
+                </div>):
+                (<Suspense fallback={<Loader />}>
+                    {this.state.showPreCheck && !this.state.isMobile?
+                        (<PreCallCheck history={this.props.history} data={{togglePrecheck: this.togglePrecheck.bind(this)}}/>)
+                        : (<Conference history={this.props.history} />)}
+                </Suspense>)}
             </div>
         )
     }

@@ -16,7 +16,7 @@ class Authentication extends React.Component {
         super(props);
         localStorage.clear();
         this.tempAccessToken = false;
-        this.state = { tempAccessToken: false, isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'' };
+        this.state = { tempAccessToken: false,instantJoin:false, isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'' };
     }
 
     emitFromChild(obj) {
@@ -30,9 +30,16 @@ class Authentication extends React.Component {
         if (obj.hasOwnProperty('showLoader')) {
             this.setState({ showLoader: obj.showLoader });
         }
+        if (obj.hasOwnProperty('instantJoin')) {
+            this.setState({ instantJoin: obj.instantJoin,isMobileError:false});
+        }
     }
 
     componentDidMount() {
+        var instantJoinCheck = this.props.location.state;
+        if(instantJoinCheck && instantJoinCheck.message && instantJoinCheck.message=='instantJoin'){
+          this.setState({isMobileError:true,instantJoin:true});
+        }
         var browserInfo = Utilities.getBrowserInformation();
         if(!browserInfo.isIE){
             this.validateInAppAccess();
@@ -90,9 +97,9 @@ class Authentication extends React.Component {
              <div className={this.state.isInApp && window.window.innerWidth >= 1024 ? "main-content occupy-space" : "main-content"}>
                 {this.state.isMobileError ? 
                     (<div className="row error-text">
-                        {this.state.tempAccessToken || this.state.isInApp ? 
-                            (<p className="col-sm-12">Incorrect patient information</p>) 
-                           :(<p className="col-sm-12">Invalid User ID / Password</p>)
+                        {this.state.tempAccessToken || this.state.isInApp ?
+                            (<p className="col-sm-12">Incorrect patient information</p>)
+                           :this.state.instantJoin ?(<p className="col-sm-12">Invalid link, sign in to join your visit</p>):(<p className="col-sm-12">Invalid User ID / Password</p>)
                         }
                     </div>)
                 : ('')}

@@ -174,5 +174,12 @@ class BackendService extends React.Component {
             });
     }
 
+    validateInstantJoin(isFromMobile,data){
+        let headers ={
+            authtoken:data
+        };
+        return Axios.post(this.state.basePath + '/videovisit/' + 'authorizeVVCode.json' + '?loginType=instant_join' + '&isFromMobile=' + isFromMobile, {},{ headers: headers });
+    }
+
 }
 export default new BackendService();
