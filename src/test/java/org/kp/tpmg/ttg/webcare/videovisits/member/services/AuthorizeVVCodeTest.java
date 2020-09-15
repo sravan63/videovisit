@@ -29,7 +29,7 @@ public class AuthorizeVVCodeTest extends AbstractVideoVisitMemberApiTest {
 				request.getSession().getId();
 				result = "12345";
 
-				request.getReader().lines();
+				request.getHeader("authtoken");
 				result = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzE4OTAxNDQwNDA4MCIsIm1lZXRpbmdJZCI6IjMzMTg5MCIsInVzZXJJZCI6IjE0NDA0MDgwIiwidXNlclR5cGUiOiJQYXRpZW50IiwiZXhwIjoxNTk5NDU0ODQ1fQ.6X-ibBMl0AB2EDwtD1O8Lt0_u7wcrv40tn7WnJkVgyhtoEzqu83vFhXVuSZAsY9qNbCXoPQ4IGlzC8CLSvCcHw";
 
 				restTemplate.postForEntity((URI) any, (HttpEntity) any, String.class);
@@ -74,7 +74,7 @@ public class AuthorizeVVCodeTest extends AbstractVideoVisitMemberApiTest {
 				request.getSession().getId();
 				result = "12345";
 
-				request.getReader().lines();
+				request.getHeader("authtoken");
 				result = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzE4OTAxNDQwNDA4MCIsIm1lZXRpbmdJZCI6IjMzMTg5MCIsInVzZXJJZCI6IjE0NDA0MDgwIiwidXNlclR5cGUiOiJQYXRpZW50IiwiZXhwIjoxNTk5NDU0ODQ1fQ.6X-ibBMl0AB2EDwtD1O8Lt0_u7wcrv40tn7WnJkVgyhtoEzqu83vFhXVuSZAsY9qNbCXoPQ4IGlzC8CLSvCcHw";
 
 				restTemplate.postForEntity((URI) any, (HttpEntity) any, String.class);
@@ -101,7 +101,7 @@ public class AuthorizeVVCodeTest extends AbstractVideoVisitMemberApiTest {
 				request.getSession().getId();
 				result = "12345";
 
-				request.getReader().lines();
+				request.getHeader("authtoken");
 				result = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzMzE4OTAxNDQwNDA4MCIsIm1lZXRpbmdJZCI6IjMzMTg5MCIsInVzZXJJZCI6IjE0NDA0MDgwIiwidXNlclR5cGUiOiJQYXRpZW50IiwiZXhwIjoxNTk5NDU0ODQ1fQ.6X-ibBMl0AB2EDwtD1O8Lt0_u7wcrv40tn7WnJkVgyhtoEzqu83vFhXVuSZAsY9qNbCXoPQ4IGlzC8CLSvCcHw";
 
 				restTemplate.postForEntity((URI) any, (HttpEntity) any, String.class);

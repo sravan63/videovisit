@@ -1546,8 +1546,8 @@ public class MeetingCommand {
 		String authtoken = "";
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
-			if (request.getReader() != null && request.getReader().lines() != null) {
-				authtoken = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+			if (request.getHeader("authtoken") != null) {
+				authtoken = request.getHeader("authtoken");
 			}
 			jsonOutput = WebService.authorizeVVCode(authtoken, request.getSession().getId(), WebUtil.VV_MBR_WEB);
 			final AuthorizeVVCodeOutputJson output = gson.fromJson(jsonOutput, AuthorizeVVCodeOutputJson.class);
