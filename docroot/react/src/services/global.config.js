@@ -83,7 +83,8 @@ const GlobalConfig = {
     MEDIA_STATS_DATA:'StoreMedia Stats',
     REMOVE_DUPLICATES:'Member alone',
     MEDIA_PERMISSION:'Permission Denied',
-    RENDER_VIDEO_DOM:'Show Video DOM '
+    RENDER_VIDEO_DOM:'Show Video DOM ',
+    HIDE_LOADER:'hide loader'
 };
 
 export default GlobalConfig;

@@ -390,6 +390,7 @@ function remoteDisconnect(reason) {
 
 function handleError(reason) {
     log("error", "handleError", "event: inside handleError reason :" + reason);
+    MessageService.sendMessage(GlobalConfig.HIDE_LOADER, 'true');
     var isTimeOutError = rtc.error == "Timeout sending request: request_token" || reason == "Call Failed: Invalid token"; // || rtc.error == "Error sending request: calls";
     if( isTimeOutError ) {
         if(rtc.refreshTokenProperties.retryTimer){

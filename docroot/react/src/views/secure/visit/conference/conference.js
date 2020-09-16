@@ -313,6 +313,9 @@ class Conference extends React.Component {
                         this.setState({showRemotefeed: true, showLoader:false});
                     }
                     break;
+                case GlobalConfig.HIDE_LOADER:
+                    this.setState({showLoader:false});
+                    break;
             }
 
         });
