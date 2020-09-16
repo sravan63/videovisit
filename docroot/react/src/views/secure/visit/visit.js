@@ -62,7 +62,7 @@ class Visit extends React.Component {
         });
     }
     denyUser(){
-        this.props.history.push("/login");
+        window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
     }
     allowLogin(){
         this.setState({isInstantJoin:false});

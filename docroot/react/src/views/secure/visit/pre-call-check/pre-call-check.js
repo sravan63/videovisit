@@ -160,9 +160,12 @@ class PreCallCheck extends React.Component {
 
     goBack() {
         MediaService.stop();
+        var isInstantJoin = sessionStorage.getItem('isInstantJoin');
         var isGuest = localStorage.getItem('isGuest');
         if (isGuest == "true") {
             this.props.history.push('/guestlogin?meetingcode=' + this.state.userDetails.meetingCode);
+        } else if(isInstantJoin){
+            this.props.history.push('/login');
         } else {
             this.props.history.push('/myMeetings');
         }
