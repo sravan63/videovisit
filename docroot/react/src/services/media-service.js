@@ -59,7 +59,7 @@ class MediaService extends React.Component {
 
     setDevice(){
     MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
-    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, 'preCallCheck');
      navigator.mediaDevices.enumerateDevices().then((list)=>{
        this.gotDevicesList(list.slice(0));
      }).catch((error)=>{
@@ -234,7 +234,7 @@ class MediaService extends React.Component {
             if(permissionStatus.state == 'granted'){
                 self.state.cameraAllowed = true;
                 if(self.state.micAllowed==true) {
-                    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                    //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             } else  if(permissionStatus.state == 'denied'){
                 self.state.camBlocked = true;
@@ -252,7 +252,7 @@ class MediaService extends React.Component {
                     var deniedError  = document.getElementsByClassName('selectIcon').length;
                     if(deniedError == 0){
                         MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
-                        MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                        //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                     }
 
                     //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
@@ -272,7 +272,7 @@ class MediaService extends React.Component {
             if(permissionStatus.state === 'granted') {
                 self.state.micAllowed=true;
                 if(self.state.cameraAllowed==true) {
-                    MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                    //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             }
             else  if(permissionStatus.state == 'denied'){
@@ -292,7 +292,7 @@ class MediaService extends React.Component {
                     var deniedError  = document.getElementsByClassName('selectIcon').length;
                     if(deniedError == 0){
                         MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
-                        MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
+                        //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                     }
                     //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
                     //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);

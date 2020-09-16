@@ -84,7 +84,7 @@ class Conference extends React.Component {
         document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
-            this.setState({ showLoader: false });
+            //this.setState({ showLoader: false });
             if (localStorage.getItem('isGuest')) {
                 this.state.isGuest = true;
                 this.state.loginType = "guest";
@@ -309,7 +309,9 @@ class Conference extends React.Component {
                     MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
                     break;
                 case GlobalConfig.RENDER_VIDEO_DOM:
-                    this.setState({showRemotefeed:true});
+                    if(message.data!='preCallCheck') {
+                        this.setState({showRemotefeed: true, showLoader:false});
+                    }
                     break;
             }
 

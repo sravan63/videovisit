@@ -72,7 +72,9 @@ class PreCallCheck extends React.Component {
                     MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
                     break;
                 case GlobalConfig.RENDER_VIDEO_DOM:
-                    this.setState({renderView:true});
+                    if(message.data=='preCallCheck') {
+                        this.setState({renderView: true});
+                    }
                     break;
             }
         });
