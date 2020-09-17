@@ -59,6 +59,8 @@ public class WebUtil {
 	public static final String VV_MBR_GUEST_BACK_BTN = "vv-mbr-guest-back-btn";
 	public static final String VV_MBR_SSO_SIM_WEB = "vv-mbr-sso-sim";
 	public static final String VV_MBR_SSO_SIM_BACK_BTN = "vv-mbr-sso-sim-back-btn";
+	public static final String VV_MBR_WEB_INSTANT_JOIN = "vv_mbr_web_instant_join";
+	public static final String VV_MBR_MBL_INSTANT_JOIN = "vv_mbr_mbl_instant_join";
 	public static final String EDGE = "edge";
 	public static final String KPPC = "KPPC";
 	public static final String BANDWIDTH_512_KBPS = "512kbps";
@@ -612,4 +614,14 @@ public class WebUtil {
 		final String MINIMUM_IN_MEETING_TIME_FOR_SURVEY = AppProperties.getExtPropertiesValueByKey("MINIMUM_IN_MEETING_TIME_FOR_SURVEY");
 		properties.put("MINIMUM_IN_MEETING_TIME_FOR_SURVEY", StringUtils.isNotBlank(MINIMUM_IN_MEETING_TIME_FOR_SURVEY) ? MINIMUM_IN_MEETING_TIME_FOR_SURVEY : "120");
 	}
+	
+	public static String getClientIdForInstantJoin(final String loginType, final String isFromMobile){
+		logger.info(LOG_ENTERED);
+		String clientId = VV_MBR_WEB_INSTANT_JOIN;
+		if (TRUE.equalsIgnoreCase(isFromMobile)) {
+		clientId = VV_MBR_MBL_INSTANT_JOIN;
+		}
+		logger.info(LOG_EXITING + " -> clientId : " + clientId);
+		return clientId;
+		}
 }

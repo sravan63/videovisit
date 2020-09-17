@@ -1549,7 +1549,9 @@ public class MeetingCommand {
 			if (request.getHeader("authtoken") != null) {
 				authtoken = request.getHeader("authtoken");
 			}
-			jsonOutput = WebService.authorizeVVCode(authtoken, request.getSession().getId(), WebUtil.VV_MBR_WEB);
+			String clientId = WebUtil.getClientIdForInstantJoin(request.getParameter(LOGIN_TYPE),
+					request.getParameter("isFromMobile"));
+			jsonOutput = WebService.authorizeVVCode(authtoken, request.getSession().getId(), clientId);
 			final AuthorizeVVCodeOutputJson output = gson.fromJson(jsonOutput, AuthorizeVVCodeOutputJson.class);
 			if (output != null && output.getService() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
