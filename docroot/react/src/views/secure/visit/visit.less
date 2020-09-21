@@ -1,3 +1,11 @@
+.instant-help-link-container{
+  display: block;
+}
+.instant-helpLink {
+  color: #006ba6;
+  outline: none;
+  text-decoration: none;
+}
 .confirmationContent{
   position: fixed;
   text-align: center;
@@ -6,7 +14,7 @@
   height: 100%;
  .patientConfirm{
    margin-bottom: 2rem;
- }
+  }
   button{
     margin-top: 1.5rem;
   }
@@ -99,5 +107,16 @@
 @media only screen and (max-width: 960px) {
   .instant-mobile-header {
     display: block;
+    margin-top: 0;
+    padding: 0 0 0 2rem;
+  }
+  .instant-help-link-container {
+    display: flex;
+    padding: 1rem 1rem 0;
+  }
+}
+@media only screen and (min-width: 961px) {
+  .instant-help-link-container{
+    margin: 9rem 5.5rem 0 0;
   }
 }

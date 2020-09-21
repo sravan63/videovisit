@@ -191,6 +191,11 @@ class Visit extends React.Component {
         return (
             <div>{this.state.isInstantJoin ?(<div className='instantJoin-container' style={{visibility: this.state.renderPage ? 'visible' : 'hidden'}}>
                     <Header helpUrl = {this.state.mdoHelpUrl}/>
+                    <div className="row instant-help-link-container">
+                        <div className="col-12 text-right help-icon p-0">
+                            <a href={this.state.mdoHelpUrl} className="instant-helpLink" target="_blank">Help</a>
+                        </div>
+                    </div>
                     <div className="row instant-mobile-header">
                         <div className="title">
                             <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
