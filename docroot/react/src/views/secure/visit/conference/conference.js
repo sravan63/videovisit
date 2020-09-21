@@ -639,6 +639,10 @@ class Conference extends React.Component {
                         this.props.history.push(GlobalConfig.MEETINGS_URL);
                     } else if (this.state.loginType == 'instant_join') {
                         this.props.history.push(GlobalConfig.LOGIN_URL);
+                        history.pushState(null, null, location.href);
+                        window.onpopstate = function(event) {
+                            history.go(1);
+                        };
                     } else {
                         Utilities.setPromotionFlag(true);
                         this.props.history.push(GlobalConfig.MEETINGS_URL);
