@@ -123,6 +123,7 @@
 @media only screen and (max-width: 960px) {
   .instant-content {
     .instant-mobile-header {
+      position: fixed;
       display: block;
       margin-top: 0;
       padding: 0 0 0 2rem;
@@ -130,7 +131,14 @@
 
     .instant-help-link-container {
       display: flex;
-      padding: 1rem 1rem 0;
+      padding: 1rem 0rem;
+      .help-icon {
+        position: fixed;
+      }
+    }
+    .instant-form-footer {
+      position: fixed;
+      bottom: -1rem;
     }
   }
 }
