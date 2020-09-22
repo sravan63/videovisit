@@ -14,7 +14,7 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, showPage: false,isInstantJoin: false,mdoHelpUrl:'',isChecked:true, displayName:'', renderPage:false, isMobile: false, showPreCheck: true };
+        this.state = { userDetails: {}, showPage: false,isInstantJoin: false,mdoHelpUrl:'',isChecked:false, displayName:'', renderPage:false, isMobile: false, showPreCheck: true };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.denyUser = this.denyUser.bind(this);
         this.allowLogin = this.allowLogin.bind(this);
@@ -62,7 +62,7 @@ class Visit extends React.Component {
         const name = target.name;
 
         this.setState({
-            [name]: !value
+            [name]: value
         });
     }
     denyUser(){
@@ -210,11 +210,11 @@ class Visit extends React.Component {
                         <div className="confirmationContent">
                             <h3 className="patientConfirm"> Are you {this.state.displayName} ?</h3>
                             <div>
-                                <input type="checkbox" className="checkTerms" name="isChecked" onChange={this.handleInputChange}/>
+                                <input type="checkbox" className="checkTerms" checked={this.state.isChecked} name="isChecked" onChange={this.handleInputChange}/>
                                 <span>I acknowledge the </span><a className="terms "href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp" target="_blank">Terms and Conditions shown here.</a>
                             </div>
                             <button  type="button" className="odd" onClick={this.denyUser}>Deny</button>
-                            <button  type="button" className="even" onClick={this.allowLogin} disabled={this.state.isChecked}>Confirm</button>
+                            <button  type="button" className="even" onClick={this.allowLogin} disabled={!this.state.isChecked}>Confirm</button>
                         </div>
                         <div className="instant-form-footer">
                             <div className="instant-main-footer">
