@@ -759,7 +759,7 @@ class Conference extends React.Component {
                     <div className="row video-conference-container" >
                         <div className="col-md-10 p-0 video-conference" style={{visibility: this.state.showRemotefeed ? 'visible' : 'hidden'}}>
                             <ConferenceControls controls={this.state}/>
-                            <div className="col p-0 remote-feed-container" >
+                            <div className="col-11 p-0 remote-feed-container" >
                                 <WaitingRoom waitingroom={this.state} />
                                 <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                 <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
@@ -786,7 +786,7 @@ class Conference extends React.Component {
                                 <li style={{display: this.state.showmicIcon ? 'none' : 'block'}}><span className="white-circle"><span id="mic" className="icon-holder mutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
                               </ul>
                             </div>
-                            <div id="controls" className="landscape-controlbar">
+                            <div id="controls" className="landscape-controlbar col-1">
                               <ul className="video-controls m-0">
                                 <li className="cam" style={{display: this.state.showmicIcon ? 'block' : 'none'}}><span className="white-circle"><span id="mic" className="icon-holder unmutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
                                 <li className="cam" style={{display: this.state.showmicIcon ? 'none' : 'block'}}><span className="white-circle"><span id="mic" className="icon-holder mutedmic" onClick={()=>this.toggleControls('microphone')} ></span></span></li>
