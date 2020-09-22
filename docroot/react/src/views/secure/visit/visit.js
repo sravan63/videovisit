@@ -195,37 +195,39 @@ class Visit extends React.Component {
         return (
             <div>{this.state.isInstantJoin ?(<div className='instantJoin-container' style={{visibility: this.state.renderPage ? 'visible' : 'hidden'}}>
                     <Header helpUrl = {this.state.mdoHelpUrl}/>
-                    <div className="row instant-help-link-container">
-                        <div className="col-12 text-right help-icon p-0">
-                            <a href={this.state.mdoHelpUrl} className="instant-helpLink" target="_blank">Help</a>
+                    <div className='instant-content'>
+                        <div className="row instant-help-link-container">
+                            <div className="col-12 text-right help-icon p-0">
+                                <a href={this.state.mdoHelpUrl} className="instant-helpLink" target="_blank">Help</a>
+                            </div>
                         </div>
-                    </div>
-                    <div className="row instant-mobile-header">
-                        <div className="title">
-                            <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
-                            <p className="col-12 p-0 sub-header">Video Visits</p>
+                        <div className="row instant-mobile-header">
+                            <div className="title">
+                                <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
+                                <p className="col-12 p-0 sub-header">Video Visits</p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="confirmationContent">
-                        <h3 className="patientConfirm"> Are you {this.state.displayName} ?</h3>
-                        <div>
-                            <input type="checkbox" className="checkTerms" name="isChecked" onChange={this.handleInputChange}/>
-                            <span>I acknowledge the </span><a className="terms "href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp" target="_blank">Terms and Conditions shown here</a>
+                        <div className="confirmationContent">
+                            <h3 className="patientConfirm"> Are you {this.state.displayName} ?</h3>
+                            <div>
+                                <input type="checkbox" className="checkTerms" name="isChecked" onChange={this.handleInputChange}/>
+                                <span>I acknowledge the </span><a className="terms "href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp" target="_blank">Terms and Conditions shown here.</a>
+                            </div>
+                            <button  type="button" className="odd" onClick={this.denyUser}>Deny</button>
+                            <button  type="button" className="even" onClick={this.allowLogin} disabled={this.state.isChecked}>Confirm</button>
                         </div>
-                        <button  type="button" className="odd" onClick={this.denyUser}>Deny</button>
-                        <button  type="button" className="even" onClick={this.allowLogin} disabled={this.state.isChecked}>Confirm</button>
-                    </div>
-                    <div className="instant-form-footer">
-                        <div className="instant-main-footer">
-                            <ul id="instant-list-conditions">
-                                <li><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp"
-                                       target="_blank"> Terms and Conditions</a></li>
-                                <li className="last"><a
-                                    href="https://members.kaiserpermanente.org/kpweb/privacystate/entrypage.do"
-                                    target="_blank">Privacy Practices</a></li>
-                            </ul>
-                            <p className="copyright">Copyright ©2012-2020 The Permanente Medical Group, Inc. All rights
-                                reserved.</p>
+                        <div className="instant-form-footer">
+                            <div className="instant-main-footer">
+                                <ul id="instant-list-conditions">
+                                    <li><a href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp"
+                                           target="_blank"> Terms and Conditions</a></li>
+                                    <li className="last"><a
+                                        href="https://members.kaiserpermanente.org/kpweb/privacystate/entrypage.do"
+                                        target="_blank">Privacy Practices</a></li>
+                                </ul>
+                                <p className="copyright">Copyright ©2012-2020 The Permanente Medical Group, Inc. All rights
+                                    reserved.</p>
+                            </div>
                         </div>
                     </div>
                 </div>):
