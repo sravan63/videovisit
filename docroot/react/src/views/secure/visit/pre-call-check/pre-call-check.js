@@ -84,6 +84,7 @@ class PreCallCheck extends React.Component {
                 this.setState({ showPage: true });
                 MediaService.loadDeviceMediaData();
             }
+            sessionStorage.setItem('preCallCheckLoaded',true);
         } else {
             this.props.history.push(GlobalConfig.LOGIN_URL);
         }

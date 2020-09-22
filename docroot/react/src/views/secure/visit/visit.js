@@ -24,8 +24,12 @@ class Visit extends React.Component {
         var isDirectLaunch = window.location.href.indexOf('isDirectLaunch') > -1,
             isInstantJoin = window.location.href.indexOf('isInstantJoin') > -1;
         if(isInstantJoin){
-            this.launchInstantJoin();
-            this.setState({ isInstantJoin: true });
+            if(sessionStorage.getItem('preCallCheckLoaded')) {
+                this.showPreCallCheck();
+            }else{
+                this.launchInstantJoin();
+                this.setState({isInstantJoin: true});
+            }
         }
         else if (localStorage.getItem('userDetails')) {
             this.state.userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
