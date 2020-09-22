@@ -24,7 +24,7 @@ class Visit extends React.Component {
         var isDirectLaunch = window.location.href.indexOf('isDirectLaunch') > -1,
             isInstantJoin = window.location.href.indexOf('isInstantJoin') > -1;
         if(isInstantJoin){
-            if(sessionStorage.getItem('preCallCheckLoaded')) {
+            if(sessionStorage.getItem('preCallCheckLoaded') || sessionStorage.getItem('isInstantJoin')) {
                 this.showPreCallCheck();
             }else{
                 this.launchInstantJoin();

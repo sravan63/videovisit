@@ -599,6 +599,7 @@ class Conference extends React.Component {
     leaveMeeting(isFromBackButton) {
         this.setState({ leaveMeeting: true });
         sessionStorage.removeItem('preCallCheckLoaded');
+        sessionStorage.removeItem('isInstantJoin');
         sessionStorage.removeItem('memberAlone');
         sessionStorage.removeItem('isValidInteraction');
         sessionStorage.removeItem('overlayDisplayed');
