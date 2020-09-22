@@ -819,7 +819,7 @@ function mediaReady(){
     var browserInfo = UtilityService.getBrowserInformation();
     var os = UtilityService.getAppOS();
     var isIOS = os == 'iOS' ? true : false;
-    if( isIOS && browserInfo.isSafari){
+    if( isIOS && browserInfo.isSafari && UtilityService.isMobileDevice()){
         MessageService.sendMessage(GlobalConfig.ENABLE_IOS_CAM, null);
     }
 }
