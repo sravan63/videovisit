@@ -93,7 +93,7 @@
   
   </div>
   <div id="landing-portal-none" class="no-meetings-grid display-none-cls">
-        <p>You have no meetings in the next 15 minutes.</p>
+        <p>You have no visits in the next 15 minutes.</p>
   </div>
 </div>
 

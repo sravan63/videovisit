@@ -147,7 +147,7 @@
 				<div class="alert alert-hero alert-no-visits" style="background-color:#FFFFFF; border-top:1px solid #D4D4D5; box-shadow:none;">
 					<div class="alert-hero-message">
 						<div class="image" style="background:url('images/mobile/video-icon-gray.png') no-repeat center; margin:-10px 15px 0 0; background-size:contain;"></div>
-						<p style=""><strong>You have no meetings in the next 15 minutes.</strong></p>
+						<p style=""><strong>You have no visits in the next 15 minutes.</strong></p>
 					</div>
 				</div>
 				
