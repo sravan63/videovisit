@@ -365,14 +365,14 @@ export function cleanup(event) {
 }
 
 export function finalise(event) {
-    log("info", "finalise", "console: inside webui finalise event");
+    log("info", "ConferencePageClosed", "event: Closing video conference page and redirecting to visits page");
     //console.log("inside webui finalise");
     rtc.disconnect();
     cleanup();
 }
 
 function remoteDisconnect(reason) {
-    log("info", "remoteDisconnect", "console: inside remoteDisconnect reason :" + reason);
+    log("info","ConferenceRemoteDisconnect","event: Disconnecting the conference, reason :" + reason);
     cleanup();
     if (reason.indexOf("get access to camera") > -1) {
         MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
@@ -389,7 +389,7 @@ function remoteDisconnect(reason) {
 }
 
 function handleError(reason) {
-    log("error", "handleError", "event: inside handleError reason :" + reason);
+    log("error","ConnectionFailed","event: connection failed, reason :" + reason);
     MessageService.sendMessage(GlobalConfig.HIDE_LOADER, 'true');
     var isTimeOutError = rtc.error == "Timeout sending request: request_token" || reason == "Call Failed: Invalid token"; // || rtc.error == "Error sending request: calls";
     if( isTimeOutError ) {
@@ -426,8 +426,7 @@ function handleError(reason) {
 }
 
 function doneSetup(url, pin_status, conference_extension) {
-    console.log("Inside doneSetup");
-
+    log("info", "ReadyToConnect", "event: User is ready to join the conference.");
     if (url) {
         if (typeof(MediaStream) !== "undefined" && url instanceof MediaStream) {
             selfvideo.srcObject = url;
@@ -442,9 +441,10 @@ function doneSetup(url, pin_status, conference_extension) {
 
 export function submitPinEntry() {
     //maincontent.classList.remove("hidden");
+    log("info", "EnteringPinToJoinConference", "event: Passing pin to join the conference.");
     var Guestpin = localStorage.getItem('guestPin');
     pin = Guestpin;
-    console.log("PIN is now " + pin);
+    // console.log("PIN is now " + pin);
     rtc.connect(pin);
     return false;
 }
@@ -469,7 +469,7 @@ export function sipDialOut() {
 function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     pexipParticipantsList.push(participant);
-    log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
+    // log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
     
     if (participant.protocol == "sip") {
         var joinParticipantMsg = {
@@ -516,7 +516,7 @@ function participantUpdated(participant) {
 
 function participantDeleted(participant) {
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
-    log("info", "participantDeleted", "event: participantDeleted - inside participantDeleted - participant:" + participant);
+    // log("info", "participantDeleted", "event: participantDeleted - inside participantDeleted - participant:" + participant);
     if (isMobileDevice) {
         updateParticipantList(participant, 'left');
         console.log("inside participantDeleted");
@@ -647,7 +647,6 @@ export function getMediaStats() {
 }
 
 function connected(url) {
-    log("info", "connected", "event: connected - inside connected");
     setTimeout(function() {
         refreshingOrSelfJoinMeeting = false;
     }, 5000);
@@ -667,6 +666,7 @@ function connected(url) {
     var isSetup = localStorage.getItem('isSetupPage');
     if(pexipInitialConnect==false){
         if (isSetup == null) {
+        log("info","ConferenceConnected","event: joined conference successfully.");
         //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
         MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, 'conference');
         var isDirectLaunch = localStorage.getItem('isDirectLaunch');
@@ -967,7 +967,7 @@ export function adjustLayout(participants, isHostAvail) {
 }
 
 export function disconnectOnRefresh() {
-    log("info", 'disconnectOnRefresh', "event: Refresh::click - disconnectOnRefresh before calling navigateToPage if disconnected completely : ");
+    log("info", 'DisconnectOnRefresh', "event: Refresh::click - disconnectOnRefresh before calling navigateToPage if disconnected completely : ");
     console.log("inside disconnect");
     disconnectAlreadyCalled = true;
     var guestName = $("#guestName").val();
@@ -1067,10 +1067,10 @@ export var log = function(type, param, msg) {
 export function muteSpeaker() {
     var video = document.getElementById("video");
     if (video.muted) {
-        log("info", "speaker_unmute_action", "event: muteSpeaker - on click of mute speaker button");
+        log("info", "speaker_mute_action", "event: muteSpeaker - on click of mute speaker button");
         video.muted = false;
     } else {
-        log("info", "speaker_mute_action", "event: unmuteSpeaker - on click of unmute speaker button");
+        log("info", "speaker_unmute_action", "event: unmuteSpeaker - on click of unmute speaker button");
         video.muted = true;
     }
 }
