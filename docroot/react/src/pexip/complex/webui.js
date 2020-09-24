@@ -1067,10 +1067,10 @@ export var log = function(type, param, msg) {
 export function muteSpeaker() {
     var video = document.getElementById("video");
     if (video.muted) {
-        log("info", "speaker_mute_action", "event: muteSpeaker - on click of mute speaker button");
+        log("info", "speaker_unmute_action", "event: unmuteSpeaker - on click of unmute speaker button");
         video.muted = false;
     } else {
-        log("info", "speaker_unmute_action", "event: unmuteSpeaker - on click of unmute speaker button");
+        log("info", "speaker_mute_action", "event: muteSpeaker - on click of mute speaker button");
         video.muted = true;
     }
 }
