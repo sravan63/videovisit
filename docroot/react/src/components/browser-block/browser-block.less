@@ -94,7 +94,7 @@
             .special-message{
                 font-size: .9rem;
                 float: left;
-                width: 20rem;
+                width: 14rem;
                 margin-bottom: 1rem;
             }
             .app-store-container{
@@ -114,14 +114,9 @@
             
             .warning-text{
                 font-size: .7rem;
-                width: 12rem;
             }
         }
         .browser-block-content{
-            
-            .special-message{
-                width: 11rem !important;
-            }
             .app-store-container{
                 .ios-appstore{
                     background-size: 6.5rem 2.5rem !important;
@@ -133,4 +128,15 @@
         }
     }
 
+}
+
+@media only screen and (max-width: 325px) and (orientation: portrait) {
+    .browser-block-container {
+        .browser-block-header {
+
+            .warning-text {
+                width: 12rem;
+            }
+        }
+    }
 }

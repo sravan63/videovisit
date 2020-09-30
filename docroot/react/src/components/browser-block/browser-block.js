@@ -36,7 +36,7 @@ class BrowserBlock extends React.Component {
                         <div className="warning-text">Video Visits does not support your browser.</div>
                     </div>
                     <div className="row browser-block-content ml-0 mt-4">
-                        <div className="col-lg-1 col-md-2 col-sm-3 float-left mt-3 mdo-logo"></div>
+                        <div className="col-lg-1 col-md-2 col-sm-3 float-left mdo-logo"></div>
                             <div className="col-lg-5 col-md-6 special-message col-sm-8">
                                 {this.state.isMobile ?
                                     this.state.isIOS ? (<b>Join using Safari browser or the My Doctor Online app.</b>):(<b>Join using Chrome browser or the My Doctor Online app.</b>):
