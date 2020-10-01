@@ -111,7 +111,7 @@ class Visit extends React.Component {
     launchVisit() {
         var browserInfo = Utilities.getBrowserInformation();
         if( browserInfo.isIE ) {
-            this.props.history.push('/login');
+            this.props.history.push(GlobalConfig.ERROR_PAGE);
             return;
         }
         const params = window.location.href.split('?')[1];
@@ -138,7 +138,7 @@ class Visit extends React.Component {
     launchInstantJoin(){
         var browserInfo = Utilities.getBrowserInformation();
         if( browserInfo.isIE ) {
-            this.props.history.push(GlobalConfig.ERROR_PAGE);
+            this.props.history.push('/login');
             return;
         }
         this.getBrowserBlockInfo();
