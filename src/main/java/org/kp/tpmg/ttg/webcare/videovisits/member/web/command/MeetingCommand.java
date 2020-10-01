@@ -28,6 +28,7 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Survey;
+import org.kp.tpmg.ttg.videovisitsmeetingapi.model.SurveyResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
@@ -1569,6 +1570,38 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
+	}
+	
+	public static String getSurveyQuestions(final HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String response = null;
+		try {
+			final Gson gson = new Gson();
+			final String meetingId = request.getParameter("meetingId");
+			final String userType = request.getParameter("userType");
+			final String userValue = request.getParameter("userValue");
+			final String surveyName = AppProperties.getExtPropertiesValueByKey("SURVEY_NAME");
+			
+			logger.info("input surveyName : " + surveyName);
+			response = WebService.getSurveyQuestions(gson, surveyName, meetingId, userType, userValue,
+					request.getSession().getId());
+			final SurveyResponse surveyResponse = gson.fromJson(response, SurveyResponse.class);
+			if (StringUtils.isNotBlank(surveyName) && surveyResponse != null
+					&& SUCCESS_200.equalsIgnoreCase(surveyResponse.getCode())
+					&& surveyResponse.getSurvey() != null) {
+					Survey survey = surveyResponse.getSurvey();
+					if (surveyName.equalsIgnoreCase(survey.getSurveyName())) {
+						response = gson.toJson(survey);
+					}
+			}
+		} catch (Exception e) {
+			logger.error("System Error while getActiveSurveys : ", e);
+		}
+		if (StringUtils.isBlank(response)) {
+			response = JSONObject.fromObject(new SystemError()).toString();
+		}
+		logger.info(LOG_EXITING);
+		return response;
 	}
 
 }

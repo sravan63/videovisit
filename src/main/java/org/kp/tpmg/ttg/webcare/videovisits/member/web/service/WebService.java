@@ -20,6 +20,7 @@ import org.kp.tpmg.ttg.common.property.IApplicationProperties;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Response;
+import org.kp.tpmg.ttg.videovisitsmeetingapi.model.SurveyResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
@@ -1808,6 +1809,36 @@ public class WebService {
 		}
 		logger.info(LOG_EXITING);
 		return jsonResponse;
+	}
+	
+	public static String getSurveyQuestions(final Gson gson, final String surveyName, final String meetingId, 
+			final String userType, final String userValue, final String sessionId) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			if (StringUtils.isBlank(sessionId) || StringUtils.isBlank(meetingId) || "0".equalsIgnoreCase(meetingId) || StringUtils.isBlank(userType)
+					|| StringUtils.isBlank(userValue)) {
+				final SurveyResponse response = new SurveyResponse();
+				response.setCode(WebUtil.BAD_REQUEST_400);
+				output = gson.toJson(response);
+			} else {
+				final HttpHeaders headers = new HttpHeaders();
+				headers.set("X-clientId", WebUtil.VV_MBR_WEB);
+				headers.set("X-sessionId", sessionId);
+				headers.set("X-surveyclientname", WebUtil.VV_MBR_WEB);
+				headers.set("X-surveyname", surveyName);
+				headers.set("X-meetingId", meetingId);
+				headers.set("X-userType", userType);
+				headers.set("X-userValue", userValue);
+
+				output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_SURVEY_QUESTIONS, null);
+				logger.debug("response : " + output);
+			}
+		} catch (Exception e) {
+			logger.error("Web Service API error:" + e.getMessage(), e);
+		}
+		logger.info(LOG_EXITING);
+		return output;
 	}
 
 }
