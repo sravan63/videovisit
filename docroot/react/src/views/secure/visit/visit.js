@@ -14,8 +14,7 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, showPage: false,isInstantJoin: false,mdoHelpUrl:'',isChecked:false, displayName:'', renderPage:false, isMobile: false, showPreCheck: true };
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.state = { userDetails: {}, showPage: false,isInstantJoin: false,mdoHelpUrl:'', displayName:'', renderPage:false, isMobile: false, showPreCheck: true };
         this.denyUser = this.denyUser.bind(this);
         this.allowLogin = this.allowLogin.bind(this);
     }
@@ -56,18 +55,10 @@ class Visit extends React.Component {
 
     }
 
-    handleInputChange(event){
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]: value
-        });
-    }
     denyUser(){
         window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
     }
+
     allowLogin(){
         this.setState({isInstantJoin:false});
         this.showPreCallCheck();
@@ -214,11 +205,9 @@ class Visit extends React.Component {
                         <div className="confirmationContent">
                             <h3 className="patientConfirm"> Are you {this.state.displayName} ?</h3>
                             <div>
-                                <input type="checkbox" className="checkTerms" checked={this.state.isChecked} name="isChecked" onChange={this.handleInputChange}/>
-                                <span>I acknowledge the </span><a className="terms "href="http://mydoctor.kaiserpermanente.org/ncal/mdo/terms_and_conditions.jsp" target="_blank">Terms and Conditions shown here.</a>
+                                <button  type="button" className="denyUser" onClick={this.denyUser}>No</button>
+                                <button  type="button" className="allowUser" onClick={this.allowLogin}>Yes</button>
                             </div>
-                            <button  type="button" className="odd" onClick={this.denyUser}>Deny</button>
-                            <button  type="button" className="even" onClick={this.allowLogin} disabled={!this.state.isChecked}>Confirm</button>
                         </div>
                         <div className="instant-form-footer">
                             <div className="instant-main-footer">
