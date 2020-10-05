@@ -102,13 +102,24 @@ class UtilityService extends React.Component {
                 }
             }
         }
+        //Chrome IOS (Mobile)
         if(navigator.userAgent.match('CriOS')){
             if(blockIosChromeVersion){
                 isBrowserBlockError = true;
             }
         }
+        //Firefox IOS(Mobile)
         if(navigator.userAgent.match('FxiOS')){
             if(blockIosFFVersion){
+                isBrowserBlockError = true;
+            }
+        }
+        //Chrome & Firefox (IOS Ipad)
+        if(this.isMobileDevice() && this.getAppOS() == 'iOS'){
+            if(navigator.vendor.toLowerCase() == 'google inc.' && blockIosChromeVersion){
+                isBrowserBlockError = true;
+            }
+            if( navigator.vendor=='' && blockIosFFVersion){
                 isBrowserBlockError = true;
             }
         }
@@ -118,17 +129,21 @@ class UtilityService extends React.Component {
             if(this.getBrowserInformation().isAlliPadCheck){
                 var version;
                 var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);
-                version = safariVersionMatch[1].slice(0,4);
-                if(version < browserNames.IPAD_OS_VERSION){
-                    isBrowserBlockError = true;
+                if(safariVersionMatch) {
+                    version = safariVersionMatch[1].slice(0, 4);
+                    if (version < browserNames.IPAD_OS_VERSION) {
+                        isBrowserBlockError = true;
+                    }
                 }
             }
             if(IpadOS && this.isMobileDevice()){
                 var version;
                 var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);
-                version = safariVersionMatch[1].slice(0,4);
-                if(version < browserNames.IPAD_OS_VERSION){
-                    isBrowserBlockError = true;
+                if(safariVersionMatch) {
+                    version = safariVersionMatch[1].slice(0, 4);
+                    if (version < browserNames.IPAD_OS_VERSION) {
+                        isBrowserBlockError = true;
+                    }
                 }
             }
         }
