@@ -116,12 +116,14 @@ class UtilityService extends React.Component {
         }
         //Chrome & Firefox (IOS Ipad)
         if(this.isMobileDevice() && this.getAppOS() == 'iOS'){
-            let isWebRTCSupported = navigator.getUserMedia;
-            alert("WebRtC support: " + isWebRTCSupported);
-            if(!isWebRTCSupported && blockIosFFVersion){
-                isBrowserBlockError = true;
+            let isGetUserMediaSupported = false;
+            if (navigator.getUserMedia) {
+                isGetUserMediaSupported = true;
+            } else if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                isGetUserMediaSupported = true;
             }
-            if(!isWebRTCSupported && blockIosChromeVersion){
+            alert("userMediaSupport: " + isGetUserMediaSupported );
+            if(!isGetUserMediaSupported){
                 isBrowserBlockError = true;
             }
         }
