@@ -122,7 +122,6 @@ class UtilityService extends React.Component {
             } else if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 isGetUserMediaSupported = true;
             }
-            alert("userMediaSupport: " + isGetUserMediaSupported );
             if(!isGetUserMediaSupported){
                 isBrowserBlockError = true;
             }
