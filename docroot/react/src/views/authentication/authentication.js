@@ -70,6 +70,7 @@ class Authentication extends React.Component {
                 // Do nothing
             }
         }, (err) => {
+            this.setState({ isBrowserBlockError: true,blockIpadChrome: true });
             console.log("Error");
         });
 

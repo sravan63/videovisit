@@ -455,14 +455,19 @@
         }
     }        
   }
-  @media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
-    .auth-form-footer {
-        bottom:-1rem !important;
-    }
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+      .main-content {
+          .auth-form-footer {
+              bottom: -1rem !important;
+          }
+      }
 }
-@media only screen and (min-device-width: 768px) and (max-device-width: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
-    #loginForm-footer {
-        bottom:-1rem !important;
+//Ipad pro 11 inch
+@media only screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+    .main-content {
+        #loginForm-footer {
+            bottom: -1rem !important;
+        }
     }
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
