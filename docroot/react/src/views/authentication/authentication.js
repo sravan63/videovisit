@@ -16,7 +16,7 @@ class Authentication extends React.Component {
         super(props);
         localStorage.clear();
         this.tempAccessToken = false;
-        this.state = { tempAccessToken: false,instantJoin:false,blockIpadChrome:false, isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'' };
+        this.state = { tempAccessToken: false,instantJoin:false,isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'' };
     }
 
     emitFromChild(obj) {
@@ -62,16 +62,12 @@ class Authentication extends React.Component {
                  sessionStorage.setItem('mediaStatsTimer',response.data.INSERT_MEDIA_STATS_FREQUENCY);
                  if(Utilities.validateBrowserBlock(browserNames)){
                     this.setState({ isBrowserBlockError: true });
-                     if(navigator.userAgent.match('CriOS') && /iPad/.test(navigator.userAgent) ){
-                         this.setState({ blockIpadChrome: true });
-                     }
                  }
             } else {
                 // Do nothing
             }
         }, (err) => {
-            this.setState({ isBrowserBlockError: true,blockIpadChrome: true });
-            console.log("Error");
+
         });
 
     }
@@ -127,7 +123,7 @@ class Authentication extends React.Component {
                     <p className="col-12 font-weight-bold">If You're a Patient's Guest</p>
                     <p className="col-12 secondary">Guests of patients with a video visit, click the link in your email invitation.</p>
                 </div>
-                {!this.state.isInApp ?(<div className="auth-form-footer" id={this.state.blockIpadChrome ? "loginForm-footer" : ''} style={{bottom:this.state.isBrowserBlockError ? '0rem': ''}}>
+                {!this.state.isInApp ?(<div className="auth-form-footer" style={{bottom:this.state.isBrowserBlockError ? '0rem': ''}}>
                     <Footer />
                 </div>) : ('')}
             </div>             
