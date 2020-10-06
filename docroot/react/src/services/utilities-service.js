@@ -155,7 +155,7 @@ class UtilityService extends React.Component {
     isMobileDevice() {
         var isMobile = false; 
         var iosMobile;
-        if (navigator.maxTouchPoints > 1) {
+        if (navigator.maxTouchPoints > 1 && this.getAppOS() == 'iOS') {
             iosMobile = true;
         }
         //initiate as false
