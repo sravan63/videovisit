@@ -1580,8 +1580,10 @@ public class MeetingCommand {
 			final String meetingId = request.getParameter("meetingId");
 			final String userType = request.getParameter("userType");
 			final String userValue = request.getParameter("userValue");
-			final String surveyName = AppProperties.getExtPropertiesValueByKey("SURVEY_NAME");
-			
+			String surveyName = AppProperties.getExtPropertiesValueByKey("MEMBER_SURVEY_NAME");
+			if(StringUtils.isBlank(surveyName)) {
+				surveyName = "pt_meeting_quality_feedback";
+			}
 			logger.info("input surveyName : " + surveyName);
 			response = WebService.getSurveyQuestions(gson, surveyName, meetingId, userType, userValue,
 					request.getSession().getId());
