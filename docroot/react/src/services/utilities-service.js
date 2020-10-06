@@ -116,6 +116,7 @@ class UtilityService extends React.Component {
         }
         //Chrome & Firefox (IOS Ipad)
         if(this.isMobileDevice() && this.getAppOS() == 'iOS'){
+            alert("vendor value: " + navigator.vendor);
             if(navigator.vendor.toLowerCase() == 'google inc.' && blockIosChromeVersion){
                 isBrowserBlockError = true;
             }
