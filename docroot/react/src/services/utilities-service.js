@@ -123,9 +123,9 @@ class UtilityService extends React.Component {
                 isBrowserBlockError = true;
             }
         }
-
+        //Ipad Safari browser check
         if(!this.getBrowserInformation().isIE){
-            var IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
+            //Ipad Safari Normal Mode
             if(this.getBrowserInformation().isAlliPadCheck){
                 var version;
                 var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);
@@ -136,6 +136,8 @@ class UtilityService extends React.Component {
                     }
                 }
             }
+            //Ipad Safari Desktop Site
+            let IpadOS = navigator.userAgent.indexOf("Macintosh") > -1;
             if(IpadOS && this.isMobileDevice()){
                 var version;
                 var safariVersionMatch = navigator.userAgent.match(/version\/([\d\.]+)/i);
