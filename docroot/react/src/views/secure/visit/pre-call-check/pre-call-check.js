@@ -17,7 +17,7 @@ import { MessageService } from '../../../../services/message-service';
 import GlobalConfig from '../../../../services/global.config';
 import './pre-call-check.less';
 import Footer from '../../../../components/footer/footer';
-import VVModal from "../../../../modals/modal";
+import VVModal from "../../../../modals/simple-modal/modal";
 class PreCallCheck extends React.Component {
 
     constructor(props) {

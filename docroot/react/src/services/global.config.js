@@ -84,7 +84,10 @@ const GlobalConfig = {
     REMOVE_DUPLICATES:'Member alone',
     MEDIA_PERMISSION:'Permission Denied',
     RENDER_VIDEO_DOM:'Show Video DOM ',
-    HIDE_LOADER:'hide loader'
+    HIDE_LOADER:'hide loader',
+    OPEN_SURVEY_MODAL: 'open survey popup',
+    CLOSE_SURVEY_MODAL: 'survey popup closed',
+    CLOSE_SURVEY_MODAL_AUTOMATICALLY: 'close survey popup automatically'
 };
 
 export default GlobalConfig;

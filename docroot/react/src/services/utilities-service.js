@@ -11,6 +11,8 @@ class UtilityService extends React.Component {
         this.browserInfo = {};
         this.isInApp = false;
         this.showPromotion = false;
+        this.minTime = null;
+        this.meetingBeginsAt = null;
         this.validateBrowser = this.validateBrowser.bind(this);
         this.validateBrowser();
     }
@@ -275,6 +277,34 @@ class UtilityService extends React.Component {
 
     getPromotionFlag(){
         return this.showPromotion;
+    }
+
+    setMinTimeToShowUserSurvey(minTime){
+        this.minTime = minTime;
+    }
+
+    canShowUserSurvey() {
+		const minTimeInMeeting = this.minTime ? parseInt(this.minTime) : 120;
+		const now = new Date().getTime();
+		const difference = now - this.meetingBeginsAt;
+		const meetingDurationInSecs = Math.floor(difference/1000);
+		return meetingDurationInSecs > minTimeInMeeting;
+    }
+    
+    logMeetingStartTime(meetingId){
+        if( sessionStorage.getItem('meetingTimeLog') ) {
+            const meetingTimeLog = JSON.parse(sessionStorage.getItem('meetingTimeLog'));
+            this.meetingBeginsAt = meetingTimeLog[meetingId] ? Number(meetingTimeLog[meetingId]) : new Date().getTime(); 
+            if(!meetingTimeLog[meetingId]) {
+                meetingTimeLog[meetingId] = Number(this.meetingBeginsAt);
+                sessionStorage.setItem('meetingTimeLog', JSON.stringify(meetingTimeLog));
+            }
+        } else {
+            this.meetingBeginsAt = new Date().getTime();
+            const meetingTimeLog = {};
+            meetingTimeLog[meetingId] = this.meetingBeginsAt;
+            sessionStorage.setItem('meetingTimeLog', JSON.stringify(meetingTimeLog));
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 import React from "react";
-import { MessageService } from '../services/message-service.js';
-import GlobalConfig from '../services/global.config';
+import { MessageService } from '../../services/message-service.js';
+import GlobalConfig from '../../services/global.config';
 import './modal.less';
 
 class VVModal extends React.Component {

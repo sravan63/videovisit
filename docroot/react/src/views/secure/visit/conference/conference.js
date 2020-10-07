@@ -2,7 +2,8 @@ import React from "react";
 /*import * as mainWebrtc from '../../../../pexip/complex/desktop-main-webrtc.js';*/
 import Header from '../../../../components/header/header';
 import Loader from '../../../../components/loader/loader';
-import VVModal from '../../../../modals/modal';
+import VVModal from '../../../../modals/simple-modal/modal';
+import SurveyModal from '../../../../modals/survey-modal/survey-modal';
 import BackendService from '../../../../services/backendService.js';
 import Utilities from '../../../../services/utilities-service.js';
 import './conference.less';
@@ -38,6 +39,10 @@ class Conference extends React.Component {
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
+        this.quitMeetingCalled = false;
+        this.surveyInprogress = false;
+        this.surveyTimer = 0;
+        this.surveyAutoCloseTime = 120000;
         this.leaveVisitPopupOptions = { 
             heading: 'Leave Visit', 
             message : 'Your video visit session is going to end, unless you choose Stay.',
@@ -91,6 +96,7 @@ class Conference extends React.Component {
                 sessionStorage.removeItem('guestLeave');
             }
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
+            Utilities.logMeetingStartTime(this.state.meetingId);
             var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             var isInstantJoin = sessionStorage.getItem('isInstantJoin');
             if (userDetails != null) {
@@ -178,6 +184,9 @@ class Conference extends React.Component {
 
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
+                case GlobalConfig.CLOSE_SURVEY_MODAL:
+                    this.submitSurvey(message.data);
+                    break;
                 case GlobalConfig.CLOSE_MODAL:
                     this.vvModalClosed(message.data);
                     break;
@@ -206,7 +215,7 @@ class Conference extends React.Component {
                     this.handleTimer(false);
                     break;
                 case GlobalConfig.LEAVE_VISIT:
-                    this.leaveMeeting();
+                    this.leaveMeeting(message.data);
                     break;
                 case GlobalConfig.MEMBER_READY:
                 case GlobalConfig.UPDATE_RUNNING_LATE:    
@@ -535,6 +544,7 @@ class Conference extends React.Component {
         }
         const config = meeting.vendorConfig;
         MessageService.sendMessage(GlobalConfig.ACCESS_MEMBER_NAME, null);
+        WebUI.log("info", "PreparingSetup", "event: Preparing user to join the conference.");
         WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source, null, config);
     }
 
@@ -547,6 +557,7 @@ class Conference extends React.Component {
         window.clearInterval(this.keepAlive);
         window.clearTimeout(this.overlayTimer);
         window.clearTimeout(this.timerForLeaveMeeting);
+        window.clearTimeout(this.surveyTimer);
         document.removeEventListener(this.visibilityChange, this.handleVisibilityChange);
         this.subscription.unsubscribe();
         localStorage.setItem('meetingAttended', true);
@@ -596,7 +607,21 @@ class Conference extends React.Component {
         }
     }
 
+    initSurvey(leaveType){
+        if( leaveType == 'mobile' || leaveType == 'manual' ){
+            if( Utilities.canShowUserSurvey() ){
+                this.initiateSurvey();
+                this.surveyTimer = setTimeout(() => {
+                    MessageService.sendMessage(GlobalConfig.CLOSE_SURVEY_MODAL_AUTOMATICALLY, null);
+                    this.surveyInprogress = false;
+                    this.goTo();
+               }, this.surveyAutoCloseTime);
+            }
+        }
+    }
+
     leaveMeeting(isFromBackButton) {
+        this.initSurvey(isFromBackButton);
         this.setState({ leaveMeeting: true });
         sessionStorage.removeItem('preCallCheckLoaded');
         sessionStorage.removeItem('isInstantJoin');
@@ -634,31 +659,25 @@ class Conference extends React.Component {
             }
             BackendService.quitMeeting(meetingId, isProxyMeeting, headers, loginType, backButton).subscribe((response) => {
                 console.log("Success");
+                this.quitMeetingCalled = true;
                 if (response.data && response.data.statusCode == '200') {
-                    if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
+                    if( this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP ){
                         this.resetSessionToken(response.headers.authtoken);
-                        Utilities.setPromotionFlag(true);
-                        this.props.history.push(GlobalConfig.MEETINGS_URL);
-                    } else if (this.state.loginType == 'instant_join') {
-                        this.props.history.push(GlobalConfig.LOGIN_URL);
-                        history.pushState(null, null, location.href);
-                        window.onpopstate = function(event) {
-                            history.go(1);
-                        };
-                    } else {
-                        Utilities.setPromotionFlag(true);
-                        this.props.history.push(GlobalConfig.MEETINGS_URL);
                     }
+                    this.goTo();
                 }
                 else{
-                    this.props.history.push(GlobalConfig.LOGIN_URL);
+                    if(!this.surveyInprogress){
+                        this.props.history.push(GlobalConfig.LOGIN_URL);
+                    }
                 }
-                //window.location.reload(false);
             }, (err) => {
                 console.log("Error");
-                Utilities.setPromotionFlag(false);
-                this.props.history.push(GlobalConfig.LOGIN_URL);
-                //window.location.reload(false);
+                this.quitMeetingCalled = true;
+                if(!this.surveyInprogress){
+                    Utilities.setPromotionFlag(false);
+                    this.props.history.push(GlobalConfig.LOGIN_URL);
+                }
             });
 
         } else {
@@ -670,17 +689,13 @@ class Conference extends React.Component {
             var backButton = isFromBackButton ? isFromBackButton : false;    
             BackendService.guestLogout(this.state.meetingCode,headers,backButton).subscribe((response) => {
                 console.log("Success");
-                this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
-                // window.location.reload(false);
+                this.goTo();
             }, (err) => {
                 console.log("Error");
-                this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
-                //window.location.reload(false);
+                this.goTo();
             });
         }
-        
         localStorage.removeItem('selectedPeripherals');
-
     }
 
     resetSessionToken(token) {
@@ -731,13 +746,118 @@ class Conference extends React.Component {
         WebUI.switchDevices('video', videoSource);
     }
 
-    
+    initiateSurvey(){
+        let uValue;
+        let uType;
+        let meetingId = this.state.meetingDetails.meetingId;
+        if(!this.state.isGuest) {
+            uValue = this.state.userDetails.mrn;
+            uType = 'mrn';
+        } else {
+            const guestName = JSON.parse(localStorage.getItem('memberName'));
+            uValue = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
+            uValue = uValue.split('(')[0].trim();
+            uType = 'name';
+        } 
+        // const survey = '{"surveyId": 3,"surveyName": "test_other_controls","surveyText": "Testing controls","clientName": "","questions": [{"questionId": 4,"question": "Video","displayControlId": 1,"displayControlName": "rating","sequenceNr": 4},{"questionId": 5,"question": "Audio","displayControlId": 1,"displayControlName": "rating","sequenceNr": 4}],"providerFl": true,"memberFl": true}';
+        const survey = '{"surveyId": 3,"surveyName": "test_other_controls","surveyText": "Testing controls","clientName": "","questions": [{"questionId": 4,"question": "Test Rating","displayControlId": 1,"displayControlName": "rating","sequenceNr": 4},{"questionId": 4,"question": "Test Textbox","displayControlId": 1,"displayControlName": "textbox","sequenceNr": 1,"questionAnswers": [{"displayAnswer": "text default","defaultSelected": true}]},{"questionId": 5,"question": "Test Radio Button","displayControlId": 2,"displayControlName": "radiobutton","sequenceNr": 2,"questionAnswers": [{"displayAnswer": "radio button 1","defaultSelected": false},{"displayAnswer": "radio button 2","defaultSelected": false},{"displayAnswer": "radio button 3","defaultSelected": true},{"displayAnswer": "radio button 4","defaultSelected": false}]},{"questionId": 6,"question": "Test check box","displayControlId": 3,"displayControlName": "checkbox","sequenceNr": 3,"questionAnswers": [{"displayAnswer": "check box 1","defaultSelected": true},{"displayAnswer": "check box 2","defaultSelected": false},{"displayAnswer": "check box 3","defaultSelected": false},{"displayAnswer": "check box 4","defaultSelected": true}]}],"providerFl": true,"memberFl": true}';
+        this.surveyInprogress = true;
+        MessageService.sendMessage(GlobalConfig.OPEN_SURVEY_MODAL, JSON.parse(survey));
+        
+        // BackendService.getSurveyDetails( meetingId, uType, uValue ).subscribe((response) => {
+        //     console.log("Success");
+        //     if(response.code == '200') {
+        //         if(response.data.survey) {
+        //             this.surveyInprogress = true;
+        //             MessageService.sendMessage(GlobalConfig.OPEN_MODAL, response.survey);
+        //         } else {
+        //             this.surveyInprogress = false;
+        //             if( this.quitMeetingCalled ){
+        //                 this.goTo();
+        //             }
+        //         }
+        //     } else {
+        //         this.surveyInprogress = false;
+        //         if( this.quitMeetingCalled ){
+        //             this.goTo();
+        //         }
+        //     }
+        // }, (err) => {
+        //     console.log("Error");
+        //     this.surveyInprogress = false;
+        //     if( this.quitMeetingCalled ){
+        //         this.goTo();
+        //     }
+        // });
+        
+    }
+
+    goTo() {
+        if(this.surveyInprogress){
+            return;
+        }
+        if(this.state.isGuest == false){
+            if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
+                Utilities.setPromotionFlag(true);
+                this.props.history.push(GlobalConfig.MEETINGS_URL);
+            } else if (this.state.loginType == 'instant_join') {
+                this.props.history.push(GlobalConfig.LOGIN_URL);
+                history.pushState(null, null, location.href);
+                window.onpopstate = function(event) {
+                    history.go(1);
+                };
+            } else {
+                Utilities.setPromotionFlag(true);
+                this.props.history.push(GlobalConfig.MEETINGS_URL);
+            }
+        } else {
+            this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
+        }
+    }
+
+    submitSurvey(data){
+        if(!data){
+            this.surveyInprogress = false;
+            this.goTo();
+        } else {
+            let uValue;
+            let uType;
+            if(!this.state.isGuest) {
+                uValue = this.state.userDetails.mrn;
+                uType = 'mrn';
+            } else {
+                const guestName = JSON.parse(localStorage.getItem('memberName'));
+                uValue = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
+                uValue = uValue.split('(')[0].trim();
+                uType = 'name';
+            } 
+            const survey = {
+                userAnswers: data,
+                userType: uType,
+                userValue: uValue,
+                meetingId: this.state.meetingDetails.meetingId
+            };
+            this.surveyInprogress = false;
+            this.goTo();
+            // BackendService.submitSurvey( survey ).subscribe((response) => {
+            //     console.log("Success");
+            //     this.surveyInprogress = false;
+            //     this.goTo();
+            // }, (err) => {
+            //     console.log("Error");
+            //     this.surveyInprogress = false;
+            //     this.goTo();
+            // });
+        }
+        
+    }
 
     render() {
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
                 {this.state.showLoader ? (<Loader />):('')}
+                <SurveyModal />
                 <VVModal />
                 <div className="conference-header row">
                     <div className="col-md-8 banner-content">
