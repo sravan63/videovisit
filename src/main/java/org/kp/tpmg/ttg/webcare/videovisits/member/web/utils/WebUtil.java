@@ -439,6 +439,12 @@ public class WebUtil {
 		
 		final String insertMediaStatsFrequency = getExtPropertiesValueByKey("INSERT_MEDIA_STATS_FREQUENCY");
 		properties.put("INSERT_MEDIA_STATS_FREQUENCY", StringUtils.isNotBlank(insertMediaStatsFrequency) ? insertMediaStatsFrequency : "60");
+		
+		final String MEETING_FEEDBACK_TIMEOUT = AppProperties.getExtPropertiesValueByKey("MEETING_FEEDBACK_TIMEOUT");
+		properties.put("MEETING_FEEDBACK_TIMEOUT", StringUtils.isNotBlank(MEETING_FEEDBACK_TIMEOUT) ? MEETING_FEEDBACK_TIMEOUT : "120");
+		
+		final String MINIMUM_IN_MEETING_TIME_FOR_SURVEY = AppProperties.getExtPropertiesValueByKey("MINIMUM_IN_MEETING_TIME_FOR_SURVEY");
+		properties.put("MINIMUM_IN_MEETING_TIME_FOR_SURVEY", StringUtils.isNotBlank(MINIMUM_IN_MEETING_TIME_FOR_SURVEY) ? MINIMUM_IN_MEETING_TIME_FOR_SURVEY : "120");
 	}
 	
 	public static String convertMapToJsonString(final Map<String, String> map) {

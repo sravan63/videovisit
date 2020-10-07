@@ -1587,15 +1587,15 @@ public class MeetingCommand {
 			logger.info("input surveyName : " + surveyName);
 			response = WebService.getSurveyQuestions(gson, surveyName, meetingId, userType, userValue,
 					request.getSession().getId());
-			final SurveyResponse surveyResponse = gson.fromJson(response, SurveyResponse.class);
-			if (StringUtils.isNotBlank(surveyName) && surveyResponse != null
-					&& SUCCESS_200.equalsIgnoreCase(surveyResponse.getCode())
-					&& surveyResponse.getSurvey() != null) {
-					Survey survey = surveyResponse.getSurvey();
-					if (surveyName.equalsIgnoreCase(survey.getSurveyName())) {
-						response = gson.toJson(survey);
-					}
-			}
+//			final SurveyResponse surveyResponse = gson.fromJson(response, SurveyResponse.class);
+//			if (StringUtils.isNotBlank(surveyName) && surveyResponse != null
+//					&& SUCCESS_200.equalsIgnoreCase(surveyResponse.getCode())
+//					&& surveyResponse.getSurvey() != null) {
+//					Survey survey = surveyResponse.getSurvey();
+//					if (surveyName.equalsIgnoreCase(survey.getSurveyName())) {
+//						response = gson.toJson(survey);
+//					}
+//			}
 		} catch (Exception e) {
 			logger.error("System Error while getActiveSurveys : ", e);
 		}
