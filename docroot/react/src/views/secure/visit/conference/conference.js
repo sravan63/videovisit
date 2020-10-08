@@ -827,7 +827,13 @@ class Conference extends React.Component {
                 uValue = uValue.split('(')[0].trim();
                 uType = 'name';
             } 
-            BackendService.submitSurvey( this.state.meetingDetails.meetingId, uType, uValue, JSON.stringify(data) ).subscribe((response) => {
+            const survey = {
+                userAnswers: data,
+                userType: uType,
+                userValue: uValue,
+                meetingId: this.state.meetingDetails.meetingId
+            };
+            BackendService.submitSurvey( survey ).subscribe((response) => {
                 console.log("Success");
                 this.surveyInprogress = false;
                 this.goTo();

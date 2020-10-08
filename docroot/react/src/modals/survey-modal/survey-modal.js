@@ -180,7 +180,7 @@ class SurveyModal extends React.Component {
 				element.classList.add('active');
 			}
         }
-        this.addFeedback(prefix, count + 1);
+        this.addFeedback(prefix, count );
     }
 
     render() {
