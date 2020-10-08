@@ -42,7 +42,7 @@ class Conference extends React.Component {
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
-        this.surveyAutoCloseTime = 120000;
+        this.surveyAutoCloseTime = null;
         this.leaveVisitPopupOptions = { 
             heading: 'Leave Visit', 
             message : 'Your video visit session is going to end, unless you choose Stay.',
@@ -97,6 +97,7 @@ class Conference extends React.Component {
             }
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
             Utilities.logMeetingStartTime(this.state.meetingId);
+            this.surveyAutoCloseTime = Utilities.getMeetingFeedbackTimeout();
             var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             var isInstantJoin = sessionStorage.getItem('isInstantJoin');
             if (userDetails != null) {
@@ -575,6 +576,7 @@ class Conference extends React.Component {
        }
        localStorage.removeItem('selectedPeripherals');
        sessionStorage.removeItem('UUID');
+       sessionStorage.removeItem('meetingTimeLog');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
        window.removeEventListener('load', this.handleLoad)  
     }
@@ -609,7 +611,7 @@ class Conference extends React.Component {
 
     initSurvey(leaveType){
         if( leaveType == 'mobile' || leaveType == 'manual' ){
-            if( Utilities.canShowUserSurvey() ){
+            if( Utilities.canShowUserSurvey() ) {
                 this.initiateSurvey();
                 this.surveyTimer = setTimeout(() => {
                     MessageService.sendMessage(GlobalConfig.CLOSE_SURVEY_MODAL_AUTOMATICALLY, null);
@@ -758,38 +760,32 @@ class Conference extends React.Component {
             uValue = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
             uValue = uValue.split('(')[0].trim();
             uType = 'name';
-        } 
-        // const survey = '{"surveyId": 3,"surveyName": "test_other_controls","surveyText": "Testing controls","clientName": "","questions": [{"questionId": 4,"question": "Video","displayControlId": 1,"displayControlName": "rating","sequenceNr": 4},{"questionId": 5,"question": "Audio","displayControlId": 1,"displayControlName": "rating","sequenceNr": 4}],"providerFl": true,"memberFl": true}';
-        const survey = '{"surveyId": 3,"surveyName": "test_other_controls","surveyText": "Testing controls","clientName": "","questions": [{"questionId": 4,"question": "Test Rating","displayControlId": 1,"displayControlName": "rating","sequenceNr": 4},{"questionId": 4,"question": "Test Textbox","displayControlId": 1,"displayControlName": "textbox","sequenceNr": 1,"questionAnswers": [{"displayAnswer": "text default","defaultSelected": true}]},{"questionId": 5,"question": "Test Radio Button","displayControlId": 2,"displayControlName": "radiobutton","sequenceNr": 2,"questionAnswers": [{"displayAnswer": "radio button 1","defaultSelected": false},{"displayAnswer": "radio button 2","defaultSelected": false},{"displayAnswer": "radio button 3","defaultSelected": true},{"displayAnswer": "radio button 4","defaultSelected": false}]},{"questionId": 6,"question": "Test check box","displayControlId": 3,"displayControlName": "checkbox","sequenceNr": 3,"questionAnswers": [{"displayAnswer": "check box 1","defaultSelected": true},{"displayAnswer": "check box 2","defaultSelected": false},{"displayAnswer": "check box 3","defaultSelected": false},{"displayAnswer": "check box 4","defaultSelected": true}]}],"providerFl": true,"memberFl": true}';
+        }
         this.surveyInprogress = true;
-        MessageService.sendMessage(GlobalConfig.OPEN_SURVEY_MODAL, JSON.parse(survey));
-        
-        // BackendService.getSurveyDetails( meetingId, uType, uValue ).subscribe((response) => {
-        //     console.log("Success");
-        //     if(response.code == '200') {
-        //         if(response.data.survey) {
-        //             this.surveyInprogress = true;
-        //             MessageService.sendMessage(GlobalConfig.OPEN_MODAL, response.survey);
-        //         } else {
-        //             this.surveyInprogress = false;
-        //             if( this.quitMeetingCalled ){
-        //                 this.goTo();
-        //             }
-        //         }
-        //     } else {
-        //         this.surveyInprogress = false;
-        //         if( this.quitMeetingCalled ){
-        //             this.goTo();
-        //         }
-        //     }
-        // }, (err) => {
-        //     console.log("Error");
-        //     this.surveyInprogress = false;
-        //     if( this.quitMeetingCalled ){
-        //         this.goTo();
-        //     }
-        // });
-        
+        BackendService.getSurveyDetails( meetingId, uType, uValue ).subscribe((response) => {
+            console.log("Success");
+            if(response.data && response.data.code == '200') {
+                if(response.data.survey) {
+                    MessageService.sendMessage(GlobalConfig.OPEN_SURVEY_MODAL, response.data.survey);
+                } else {
+                    this.surveyInprogress = false;
+                    if( this.quitMeetingCalled ){
+                        this.goTo();
+                    }
+                }
+            } else {
+                this.surveyInprogress = false;
+                if( this.quitMeetingCalled ){
+                    this.goTo();
+                }
+            }
+        }, (err) => {
+            console.log("Error");
+            this.surveyInprogress = false;
+            if( this.quitMeetingCalled ){
+                this.goTo();
+            }
+        });
     }
 
     goTo() {
@@ -831,23 +827,15 @@ class Conference extends React.Component {
                 uValue = uValue.split('(')[0].trim();
                 uType = 'name';
             } 
-            const survey = {
-                userAnswers: data,
-                userType: uType,
-                userValue: uValue,
-                meetingId: this.state.meetingDetails.meetingId
-            };
-            this.surveyInprogress = false;
-            this.goTo();
-            // BackendService.submitSurvey( survey ).subscribe((response) => {
-            //     console.log("Success");
-            //     this.surveyInprogress = false;
-            //     this.goTo();
-            // }, (err) => {
-            //     console.log("Error");
-            //     this.surveyInprogress = false;
-            //     this.goTo();
-            // });
+            BackendService.submitSurvey( this.state.meetingDetails.meetingId, uType, uValue, JSON.stringify(data) ).subscribe((response) => {
+                console.log("Success");
+                this.surveyInprogress = false;
+                this.goTo();
+            }, (err) => {
+                console.log("Error");
+                this.surveyInprogress = false;
+                this.goTo();
+            });
         }
         
     }

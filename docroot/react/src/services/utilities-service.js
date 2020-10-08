@@ -13,6 +13,7 @@ class UtilityService extends React.Component {
         this.showPromotion = false;
         this.minTime = null;
         this.meetingBeginsAt = null;
+        this.surveyTimeout = null;
         this.validateBrowser = this.validateBrowser.bind(this);
         this.validateBrowser();
     }
@@ -280,11 +281,25 @@ class UtilityService extends React.Component {
     }
 
     setMinTimeToShowUserSurvey(minTime){
-        this.minTime = minTime;
+        this.minTime = parseInt(minTime);
+        sessionStorage.setItem('minInMeetingTimeForSurvey',minTime);
+    }
+
+    getMinTimeToShowUserSurvey(){
+        return this.minTime ? this.minTime : sessionStorage.getItem('minInMeetingTimeForSurvey') ? parseInt(sessionStorage.getItem('minInMeetingTimeForSurvey')) : 120;
+    }
+
+    setMeetingFeedbackTimeout(minFedbackTime){
+        this.surveyTimeout = parseInt(minFedbackTime);
+        sessionStorage.setItem('meetingFeedbackTimeout',minFedbackTime);
+    }
+
+    getMeetingFeedbackTimeout(){
+        return this.surveyTimeout ? this.surveyTimeout * 1000 : sessionStorage.getItem('meetingFeedbackTimeout') ? parseInt(sessionStorage.getItem('meetingFeedbackTimeout')) * 1000 : 120000;
     }
 
     canShowUserSurvey() {
-		const minTimeInMeeting = this.minTime ? parseInt(this.minTime) : 120;
+		const minTimeInMeeting = this.getMinTimeToShowUserSurvey();
 		const now = new Date().getTime();
 		const difference = now - this.meetingBeginsAt;
 		const meetingDurationInSecs = Math.floor(difference/1000);

@@ -86,6 +86,8 @@ class Visit extends React.Component {
                 this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                 localStorage.setItem('helpUrl',response.data.mdoHelpUrl);
                 localStorage.setItem('mediaStats',response.data.INSERT_MEDIA_STATS_FREQUENCY);
+                Utilities.setMeetingFeedbackTimeout(response.data.MEETING_FEEDBACK_TIMEOUT);
+                Utilities.setMinTimeToShowUserSurvey(response.data.MINIMUM_IN_MEETING_TIME_FOR_SURVEY);
                 if(Utilities.validateBrowserBlock(browserNames)){
                     this.props.history.push('/login');
                     return;
