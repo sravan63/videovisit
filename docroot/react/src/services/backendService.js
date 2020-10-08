@@ -185,7 +185,7 @@ class BackendService extends React.Component {
         return Axios.post(this.state.basePath + '/videovisit/' + 'getSurveyQuestions.json' + '?meetingId=' + meetingId+'&userType='+userType+'&userValue='+userValue, {});
     }
 
-    submitSurvey(meetingId, userType, userValue, survey) {
+    submitSurvey(survey) {
         return Axios.post(this.state.basePath + '/videovisit/' + 'submitSurvey.json', survey);
     }
 
