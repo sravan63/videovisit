@@ -766,7 +766,10 @@ class Conference extends React.Component {
             console.log("Success");
             if(response.data && response.data.code == '200') {
                 if(response.data.survey) {
-                    MessageService.sendMessage(GlobalConfig.OPEN_SURVEY_MODAL, response.data.survey);
+                    const survey = '{"surveyId":3,"surveyName":"test_other_controls","surveyText":"Testing controls","clientName":"","questions":[{"questionId":4,"question":"Test Textbox","displayControlId":1,"displayControlName":"textbox","sequenceNr":1,"questionAnswers":[{"displayAnswer":"text default","defaultSelected":true}]},{"questionId":5,"question":"Test Radio Button","displayControlId":2,"displayControlName":"radiobutton","sequenceNr":2,"questionAnswers":[{"displayAnswer":"radio button 1","defaultSelected":false},{"displayAnswer":"radio button 2","defaultSelected":false},{"displayAnswer":"radio button 3","defaultSelected":true},{"displayAnswer":"radio button 4","defaultSelected":false}]},{"questionId":6,"question":"Test check box","displayControlId":3,"displayControlName":"checkbox","sequenceNr":3,"questionAnswers":[{"displayAnswer":"check box 1","defaultSelected":false},{"displayAnswer":"check box 2","defaultSelected":false},{"displayAnswer":"check box 3","defaultSelected":false},{"displayAnswer":"check box 4","defaultSelected":true}]}],"providerFl":true,"memberFl":true}';
+                    MessageService.sendMessage(GlobalConfig.OPEN_SURVEY_MODAL, JSON.parse(survey));
+                    // MessageService.sendMessage(GlobalConfig.OPEN_SURVEY_MODAL, response.data.survey);
+
                     let browserInfo = Utilities.getBrowserInformation();
                     if(browserInfo.isFireFox){
                         this.setState({showVideoFeed: false});
