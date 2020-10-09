@@ -23,7 +23,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = { userDetails: {}, isRearCamera:false, showVideoFeed: false, showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -320,7 +320,7 @@ class Conference extends React.Component {
                     break;
                 case GlobalConfig.RENDER_VIDEO_DOM:
                     if(message.data!='preCallCheck') {
-                        this.setState({showRemotefeed: true, showLoader:false});
+                        this.setState({showRemotefeed: true, showVideoFeed:true, showLoader:false});
                     }
                     break;
                 case GlobalConfig.HIDE_LOADER:
@@ -769,7 +769,7 @@ class Conference extends React.Component {
                     MessageService.sendMessage(GlobalConfig.OPEN_SURVEY_MODAL, response.data.survey);
                     let browserInfo = Utilities.getBrowserInformation();
                     if(browserInfo.isFireFox){
-                        this.setState({showRemotefeed: false});
+                        this.setState({showVideoFeed: false});
                     }
                 } else {
                     this.surveyInprogress = false;
@@ -877,7 +877,7 @@ class Conference extends React.Component {
                     <div className="row video-conference-container" >
                         <div className="col-md-10 p-0 video-conference" style={{visibility: this.state.showRemotefeed ? 'visible' : 'hidden'}}>
                             <ConferenceControls controls={this.state}/>
-                            <div className="col-11 p-0 remote-feed-container" >
+                            <div className="col-11 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} />
                                 <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                 <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
@@ -885,7 +885,7 @@ class Conference extends React.Component {
                                 </div>
                                 <Settings />
                             </div>
-                            <div id="selfview" className="self-view" >
+                            <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                <video id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video>
                             </div>
