@@ -681,10 +681,10 @@ function connected(url) {
             if(isDirectLaunch || inAppAccess){
                 JoinLeaveMobileCall("J");
             }
-            else if(isInstantJoin){
-                BackendService.launchMeetingForInstantMember(meetingId,inMeetingDisplayName,isProxyMeeting,isMobile,mrn);
-            }
             else {
+                if(isInstantJoin){
+                    BackendService.launchMeetingForInstantMember(meetingId,inMeetingDisplayName,isProxyMeeting,isMobile,mrn);
+                }
                 var memberName;
                 if(isProxyMeeting == 'Y'){
                     memberName = udata.lastName +', '+ udata.firstName;                
