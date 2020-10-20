@@ -1060,7 +1060,7 @@ public class WebService {
 		String inputJsonString = null;
 		LaunchMeetingForMemberDesktopInput input;
 		if (meetingId <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId)
-				|| StringUtils.isBlank(inMeetingDisplayName)) {
+				|| StringUtils.isBlank(clientId) || StringUtils.isBlank(inMeetingDisplayName)) {
 			logger.warn("Missing input attributes.");
 			LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
 			output.setService(new LaunchMeetingForMemberGuestOutput());

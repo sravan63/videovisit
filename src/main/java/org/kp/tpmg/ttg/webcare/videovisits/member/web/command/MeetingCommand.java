@@ -28,7 +28,6 @@ import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Survey;
-import org.kp.tpmg.ttg.videovisitsmeetingapi.model.SurveyResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.SystemError;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
@@ -647,7 +646,13 @@ public class MeetingCommand {
 			String desktopBandwidth = AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH");
 			desktopBandwidth = StringUtils.isNotBlank(desktopBandwidth) ? desktopBandwidth
 					: WebUtil.BANDWIDTH_1024_KBPS;
-			String clientId = WebUtil.getClientId(request.getParameter(LOGIN_TYPE), request.getParameter("isFromMobile"));
+			final String loginType = request.getParameter(LOGIN_TYPE);
+			String clientId = null;
+			if(WebUtil.INSTANT_JOIN.equalsIgnoreCase(loginType)) {
+				clientId = WebUtil.getClientIdForInstantJoin(request.getParameter(LOGIN_TYPE), request.getParameter("isFromMobile"));
+			} else {
+				clientId = WebUtil.getClientId(request.getParameter(LOGIN_TYPE), request.getParameter("isFromMobile"));
+			}
 			jsonOutput = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 					request.getSession().getId(), clientId);
 			if (StringUtils.isNotBlank(jsonOutput)) {
@@ -1588,7 +1593,7 @@ public class MeetingCommand {
 			response = WebService.getSurveyQuestions(gson, surveyName, meetingId, userType, userValue,
 					request.getSession().getId());
 		} catch (Exception e) {
-			logger.error("System Error while getActiveSurveys : ", e);
+			logger.error("System Error while getSurveyQuestions : ", e);
 		}
 		if (StringUtils.isBlank(response)) {
 			response = JSONObject.fromObject(new SystemError()).toString();

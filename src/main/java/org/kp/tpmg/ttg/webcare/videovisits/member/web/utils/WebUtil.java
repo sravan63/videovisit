@@ -75,6 +75,7 @@ public class WebUtil {
 	public static final String LOGIN_TYPE = "loginType";
 	public static final String SSO = "sso";
 	public static final String TEMP_ACCESS = "tempAccess";
+	public static final String INSTANT_JOIN = "instant_join";
 	public static final String SUBMIT_LOGIN = "submitLogin";
 	public static final String SSO_SUBMIT_LOGIN = "ssoSubmitLogin";
 	
@@ -624,10 +625,11 @@ public class WebUtil {
 	public static String getClientIdForInstantJoin(final String loginType, final String isFromMobile){
 		logger.info(LOG_ENTERED);
 		String clientId = VV_MBR_WEB_INSTANT_JOIN;
-		if (TRUE.equalsIgnoreCase(isFromMobile)) {
-		clientId = VV_MBR_MBL_INSTANT_JOIN;
+		if (INSTANT_JOIN.equalsIgnoreCase(loginType) && TRUE.equalsIgnoreCase(isFromMobile)) {
+			clientId = VV_MBR_MBL_INSTANT_JOIN;
 		}
+
 		logger.info(LOG_EXITING + " -> clientId : " + clientId);
 		return clientId;
-		}
+	}	
 }

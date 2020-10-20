@@ -113,6 +113,18 @@ public class MemberRestController{
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	@RequestMapping(value = "/launchMeetingForInstantMember.json", produces = {
+			MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String launchMeetingForInstantMember(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = MeetingCommand.launchMeetingForMemberDesktop(request);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
 
 	@RequestMapping(value = "/providerRunningLateInfo.json", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })
