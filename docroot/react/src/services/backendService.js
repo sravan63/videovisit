@@ -113,6 +113,21 @@ class BackendService extends React.Component {
             });
 
     }
+    launchMeetingForInstantMember(meetingId, displayName, isProxyMeeting, isFromMobile,mrn) {
+        let headers = {
+            megaMeetingDisplayName: displayName,
+            isProxyMeeting:isProxyMeeting,
+            mrn:mrn,
+            "Content-Type": "application/json"
+        };
+        Axios.post(this.state.basePath + '/videovisit/' + 'launchMeetingForInstantMember.json' + '?loginType=instant_join' + '&meetingId=' + meetingId + '&isFromMobile=' + isFromMobile, {}, { headers: headers }).subscribe((response) => {
+                console.log("Patient joined from Instant join");
+            },
+            (err) => {
+                console.log("Error-launchMeetingForInstantMember");
+            });
+
+    }
 
     keepAliveCookie(url){
          //Axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';

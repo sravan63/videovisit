@@ -676,10 +676,18 @@ function connected(url) {
         var meetingId = JSON.parse(localStorage.getItem('meetingId'));
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+        var isInstantJoin = sessionStorage.getItem('isInstantJoin');
+        var mrn = udata.mrn;
+        var isMobile = UtilityService.isMobileDevice();
+        var inMeetingDisplayName = JSON.parse(localStorage.getItem('memberName'));
         var inAppAccess = UtilityService.getInAppAccessFlag();
             if(isDirectLaunch || inAppAccess){
                 JoinLeaveMobileCall("J");
-            } else {
+            }
+            else if(isInstantJoin){
+                BackendService.launchMeetingForInstantMember(meetingId,inMeetingDisplayName,isProxyMeeting,isMobile,mrn);
+            }
+            else {
                 var memberName;
                 if(isProxyMeeting == 'Y'){
                     memberName = udata.lastName +', '+ udata.firstName;                
