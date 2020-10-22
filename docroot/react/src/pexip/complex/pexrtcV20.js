@@ -1198,7 +1198,7 @@ PexRTCCall.prototype.pcIceConnectionStateChanged = function(evt) {
         self.onIceGathered();
     }
     self.parent.onLog("Ice Connection State", self.pc.iceConnectionState);
-    if (self.pc.iceConnectionState == 'failed' && self.state == 'CONNECTED') {
+    if ((self.pc.iceConnectionState == 'failed' || self.pc.iceConnectionState == 'disconnected') && self.state == 'CONNECTED') {
         if (self.previousIceConnectionState == 'checking') {
             self.parent.onLog("ICE Failed at start of call.");
         } else if (self.chrome_ver > 0) {

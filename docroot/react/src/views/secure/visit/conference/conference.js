@@ -576,6 +576,7 @@ class Conference extends React.Component {
        }
        localStorage.removeItem('selectedPeripherals');
        sessionStorage.removeItem('UUID');
+       sessionStorage.removeItem('turnServerChanged');
        sessionStorage.removeItem('meetingTimeLog');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
        window.removeEventListener('load', this.handleLoad)  

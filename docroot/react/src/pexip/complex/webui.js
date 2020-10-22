@@ -377,7 +377,12 @@ function remoteDisconnect(reason) {
     if (reason.indexOf("get access to camera") > -1) {
         MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
         alert(reason);
-    } else {
+    }
+    else if( reason == 'Call Failed: Failed to gather IP addresses' ){
+        setTurnServer();
+        return;
+    }
+    else {
         if (reason == 'Test call finished') {
             MessageService.sendMessage(GlobalConfig.TEST_CALL_FINISHED, null);
         } else if( reason.indexOf("Out of transcoding resource") > -1 ){
@@ -790,6 +795,11 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
         retryTimer : null
     };
     }
+    if( sessionStorage.getItem('turnServerChanged') ){
+        var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
+        rtc.turn_server = getTurnServersObjs(turnServerDetails);
+    }
+
     rtc.onSetup = doneSetup;
     rtc.onConnect = connected;
     rtc.onError = handleError;
@@ -833,9 +843,9 @@ function mediaReady(){
 }
 
 function setTurnServer(){
-    console.log("setTurnServer");
-    var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
-    rtc.turn_server = getTurnServersObjs(turnServerDetails);
+    log("info","SettingTURNServerConfiguration","event: Changing the TURN server configuration on ICE connection or candidates failure/disconnect");
+    sessionStorage.setItem('turnServerChanged', 'true');
+    window.location.reload();
 }
 
 function getTurnServersObjs(turnServerDetails) {
