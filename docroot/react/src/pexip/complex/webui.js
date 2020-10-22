@@ -812,6 +812,9 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     console.log("Conference: " + conference);
 
     startTime = new Date();
+
+    var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
+    rtc.turn_server = getTurnServersObjs(turnServerDetails);
     /*if (isMobileDevice) {
         rtc.turn_server = getTurnServerObjsForMobile();
     } else {
@@ -834,8 +837,8 @@ function mediaReady(){
 
 function setTurnServer(){
     console.log("setTurnServer");
-    var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
-    rtc.turn_server = getTurnServersObjs(turnServerDetails);
+    //var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
+    //rtc.turn_server = getTurnServersObjs(turnServerDetails);
 }
 
 function getTurnServersObjs(turnServerDetails) {
