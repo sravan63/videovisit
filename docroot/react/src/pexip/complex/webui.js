@@ -836,7 +836,7 @@ function mediaReady(){
 }
 
 function setTurnServer(){
-    console.log("setTurnServer");
+    log("info","ICE connection failed","event: Callback for ice connection failure");
     //var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
     //rtc.turn_server = getTurnServersObjs(turnServerDetails);
 }
