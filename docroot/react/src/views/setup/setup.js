@@ -157,6 +157,8 @@ class Setup extends React.Component {
                     source = "Join+Conference",
                     name = meeting.member.inMeetingDisplayName;
                 localStorage.setItem('isSetupPage', true);
+                var turnServerInfo = meeting.vendorConfig;
+                sessionStorage.setItem('turnServer', JSON.stringify(turnServerInfo));
                 WebUI.initialise(roomJoinUrl, alias, bandwidth, name, guestPin, source, null, null);
             } else {
                 this.setState({ loadingSetup: false });
