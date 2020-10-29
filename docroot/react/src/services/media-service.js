@@ -109,7 +109,7 @@ class MediaService extends React.Component {
     handleError(error){
         var ErrorMsg = error.message,
             browserInfo = Utilities.getBrowserInformation();
-        if(ErrorMsg =='Failed starting capture of a audio track'){
+        if(ErrorMsg =='Failed starting capture of a audio track' || ErrorMsg == 'The I/O read operation failed.'){
           alert("Unable to join: Looks like you're on a phone call, hangup and refresh page to join.");
         }
         if(browserInfo.isSafari) {
