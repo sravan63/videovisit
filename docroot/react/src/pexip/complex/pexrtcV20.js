@@ -2317,7 +2317,7 @@ export function PexRTC() {
         ERROR_CALL_FAILED: "Call Failed: ",
         ERROR_WEBRTC_SUPPORT: "Error: WebRTC not supported by this browser",
         ERROR_SCREENSHARE_EXTENSION: "Error: Screenshare extension not found.\n\nHave you installed it from http://www.pexip.com/extension/?",
-        ERROR_USER_MEDIA: "Error: Could not get access to camera/microphone.\n\nHave you allowed access? Has any other application locked the camera?",
+        ERROR_USER_MEDIA: "Error: Could not get access to camera and microphone.\n\nHave you allowed access? Has any other application locked the camera?",
         ERROR_ICE_CANDIDATES: "Failed to gather IP addresses",
         ERROR_ICE_FAILED: "Failed to establish media to server.\n\nEnsure required firewall ports are permitted.",
         ERROR_PRESENTATION_ENDED: "Presentation ended",

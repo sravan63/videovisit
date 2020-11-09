@@ -34,7 +34,7 @@ class PreCallCheck extends React.Component {
         };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
-            message: 'Click on the Refresh button and allow access to Camera/Microphone or check your browser settings.',
+            message: 'Click on the Refresh button and allow access to Camera and Microphone or check your browser settings.',
             type: 'Denied'
         };
     }
