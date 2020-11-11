@@ -232,7 +232,7 @@ class Authentication extends React.Component {
                     </div>
                 : ('')}
                 
-                <div className="row mobile-help-link">
+                <div className={this.state.errorlogin ? "row mobile-help-link error-chk":"row mobile-help-link"}>
                     <div className="col-12 text-right help-icon p-0">
                         <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
