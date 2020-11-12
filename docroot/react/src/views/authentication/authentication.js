@@ -106,7 +106,7 @@ class Authentication extends React.Component {
                     </div>)
                 : ('')}
                 {!this.state.isInApp ? (
-                <div className="row help-link-container">
+                <div className={this.state.isMobileError ? "row help-link-container error-chk":"row help-link-container"}>
                     <div className="col-12 text-right help-icon p-0">
                         <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
                     </div>
