@@ -48,7 +48,7 @@ class Authentication extends React.Component {
         if(!inAppAccess){
             this.getBrowserBlockInfo();
         }
-        window.addEventListener('scroll', this.handleScroll.bind(this));
+        // window.addEventListener('scroll', this.handleScroll.bind(this));
     }
     handleScroll(event) {
         if(this.state.isMobileError){
