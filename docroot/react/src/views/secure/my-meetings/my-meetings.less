@@ -58,7 +58,75 @@
             }
 
         }
-
+        .promotion-container{
+            // height: calc(100% - 3rem);
+            margin-bottom: 1rem;
+            .promotion{
+                // height: 100%;
+                // height: 18rem;
+                text-align: center;
+                width: 100%;
+                .banner {
+                    background-color: #F0F3F5;
+                    // height: 100%;
+                    padding: 1rem;
+                    .image-holder {
+                        background: url('../../../assets/promotion/banner-image.png');
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                        height: 25rem;
+                    }
+                }
+                .message-container {
+                    // height: 90%;
+                    background-color: #FFFFFF;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    margin-top: 3.56rem;
+                    .wrapper {
+                        margin: 0 1.562rem;
+                        border: solid 1px #E0E7EB;
+                        height: calc(100% - 1.75rem);
+                        padding: 1.562rem 1.25rem 1.562rem 1.562rem;
+                        .message {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                        }
+                        .badgets {
+                            display: flex;
+                            justify-content: center;
+                            // height: calc(100% - 72px);
+                            margin: auto -10%;
+                            padding: 10% 0;
+                            .android {
+                                background: url('../../../assets/playstore.png');
+                                height: 100%;
+                            }
+                            .ios {
+                                background: url('../../../assets/appstore.png');
+                                height: 100%
+                            }
+                            .icon {
+                                width: 22%;
+                                background-size: contain;
+                                background-repeat: no-repeat;
+                                background-position: center;
+                                margin: 0 0.1rem;
+                                height: 4rem;
+                                a {
+                                    display: inline-block;
+                                    height: 100%;
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         .no-meetings {
             font-size: 1.25rem;
         }
@@ -74,7 +142,7 @@
     .my-meetings {
         .meetings-container {
             margin: 8rem 10rem 0 10rem;            
-            min-height: calc(100vh - 12.125rem);
+            min-height: calc(100vh - -10.125rem);
             .clinician-details {
                 display: flex;
 

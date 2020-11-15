@@ -13,7 +13,7 @@ class MyMeetings extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, myMeetings: [], showLoader: true,isInApp: false,mdoHelpUrl:'',showFooter : true};
+        this.state = { userDetails: {}, myMeetings: [], showLoader: true,isInApp: false,mdoHelpUrl:'',showFooter : true,showPromotion: false,hidePromotion: false};
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
@@ -60,6 +60,11 @@ class MyMeetings extends React.Component {
                 BackendService.keepAliveCookie(keepAliveUrl);
             }, 1200000);
         }
+        var showPromotion = UtilityService.getPromotionFlag();
+        var isMobile = UtilityService.isMobileDevice();
+        if (isMobile && showPromotion) { 
+            this.setState({ hidePromotion: true });
+        }    
     }
 
     componentWillUnmount() {
@@ -372,6 +377,21 @@ class MyMeetings extends React.Component {
                 ):(
                 <div className="no-meetings">{!this.state.showLoader ? (<p className="text-center">You have no visits in the next 15 minutes.</p>):('')}</div>
                 )}
+                { !this.state.hidePromotion ? 
+                    (<div className="row promotion-container show-promotion">
+                        <div className="promotion">
+                            <div className="banner"><div className="image-holder"></div></div>
+                            <div className="message-container">
+                                <div className="wrapper">
+                                    <div className="message">Next time you want to see your doctor, try a video visit from our My Doctor Online mobile app.</div>
+                                    <div className="badgets">
+                                        <div className="ios icon"><a className="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></div>
+                                        <div className="android icon"><a className="icon-link" href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&amp;hl=en_US" target="_blank"></a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>) : ('') }
                  <div className="col-sm-12 col-lg-12 col-md-12" className={this.state.isInApp && window.window.innerWidth >= 1024 ? "wifi inapp-wifi" : "wifi"}>
                     <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
                  </div>
