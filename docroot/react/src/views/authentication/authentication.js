@@ -47,20 +47,8 @@ class Authentication extends React.Component {
         var inAppAccess = Utilities.getInAppAccessFlag();
         if(!inAppAccess){
             this.getBrowserBlockInfo();
-        }
-        // window.addEventListener('scroll', this.handleScroll.bind(this));
-    }
-    handleScroll(event) {
-        if(this.state.isMobileError){
-            
-            if(document.documentElement.scrollTop > 20){                
-                this.setState({ isScrollPosition : true });
-            }else{
-                this.setState({ isScrollPosition : false });
-            }
-            
-        }
-    }
+        }        
+    }    
     getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",
@@ -110,7 +98,7 @@ class Authentication extends React.Component {
              <Header helpUrl = {this.state.mdoHelpUrl}/>
              <div className={this.state.isInApp && window.window.innerWidth >= 1024 ? "main-content occupy-space" : "main-content"}>
                 {this.state.isMobileError ? 
-                    (<div className={this.state.isScrollPosition ? "row error-text isScrollChk":"row error-text"}>
+                    (<div className="row error-text">
                         {this.state.tempAccessToken || this.state.isInApp ?
                             (<p className="col-sm-12">Incorrect patient information</p>)
                            :this.state.instantJoin ?(<p className="col-sm-12">Invalid link, sign in to join your visit</p>):(<p className="col-sm-12">Invalid User ID / Password</p>)
