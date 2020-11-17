@@ -416,8 +416,14 @@ function handleError(reason) {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
             }
         }
-    }
-    else {
+    } else if(reason == 'Call Failed: Disconnected while gathering IP addresses') {
+        const eMessage = UtilityService.isMobileDevice() ? 'Try switching to an LTE connection and reload the page' : 'Try joining from your mobile device with an LTE connection';
+        MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
+            heading: "Can't establish network connection", 
+            message : eMessage,
+            controls : [{label: 'OK', type: 'leave'} ]
+        });
+    } else {
         if (video && !selfvideo.src && new Date() - startTime > 30000) {
             reason = "WebSocket connection error.";
         }

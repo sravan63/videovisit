@@ -1208,7 +1208,8 @@ PexRTCCall.prototype.pcIceConnectionStateChanged = function(evt) {
             self.parent.onIceFailure();
         }
     } else if(self.pc.iceConnectionState == 'disconnected' && self.state == 'CONNECTED'){
-        console.log('IceConnectionDisconnected : event: Callback for ice connection disconnected');
+        self.parent.onLog('IceConnectionDisconnected : event: Callback for ice connection disconnected');
+        self.handleError('Disconnected while gathering IP addresses');
     }
     self.previousIceConnectionState = self.pc.iceConnectionState;
 };
