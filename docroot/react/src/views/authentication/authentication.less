@@ -144,7 +144,7 @@
 
             .login-form {
                 margin: 0 auto;
-
+                z-index: -1;
                 .form-group {
                     .label {
                         font-size: .8125rem;
@@ -372,7 +372,7 @@
             margin: -2.7rem auto -8rem auto;
             width: 100%;
             left: 0;
-            position: absolute;
+            position: fixed;
             right: 0;
         }
         .isScrollChk{
@@ -383,6 +383,9 @@
         }
         .help-link-container{
             margin: 9rem 5.5rem 0 0;
+            .help-icon{
+                z-index: -1;
+            }
         }
         .sso-content {
             margin-top: 2rem;
