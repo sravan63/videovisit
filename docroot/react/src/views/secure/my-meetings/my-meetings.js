@@ -62,7 +62,7 @@ class MyMeetings extends React.Component {
         }
         var showPromotion = UtilityService.getPromotionFlag();
         var isMobile = UtilityService.isMobileDevice();
-        if (isMobile && showPromotion) { 
+        if (isMobile && showPromotion && window.innerWidth < 1024 ) { 
             this.setState({ hidePromotion: true });
         }    
     }
