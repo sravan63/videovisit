@@ -62,11 +62,20 @@ class MyMeetings extends React.Component {
         }
         var showPromotion = UtilityService.getPromotionFlag();
         var isMobile = UtilityService.isMobileDevice();
-        if (isMobile && showPromotion && window.innerWidth < 1024 ) { 
+        if (isMobile && showPromotion) { 
             this.setState({ hidePromotion: true });
-        }    
+        }  
+        window.addEventListener('resize', this.handleResize.bind(this));  
     }
-
+    handleResize(){
+        var showPromotion = UtilityService.getPromotionFlag();
+        var isMobile = UtilityService.isMobileDevice();
+        if (isMobile && showPromotion && window.innerWidth < 961 ) { 
+            this.setState({ hidePromotion: true });
+        }else{
+            this.setState({ hidePromotion: false });
+        }
+    }
     componentWillUnmount() {
         window.clearInterval(this.interval);
         window.clearInterval(this.keepAlive);
