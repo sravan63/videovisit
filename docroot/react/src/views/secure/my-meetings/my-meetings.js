@@ -75,6 +75,9 @@ class MyMeetings extends React.Component {
         }else{
             this.setState({ hidePromotion: false });
         }
+        setTimeout(()=>{ 
+            window.scrollTo(0, 20); 
+        }, 0);
     }
     componentWillUnmount() {
         window.clearInterval(this.interval);
