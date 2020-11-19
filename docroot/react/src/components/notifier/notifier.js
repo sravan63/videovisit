@@ -21,7 +21,8 @@ class Notifier extends React.Component {
             switch (notification.text) {
                 case GlobalConfig.NOTIFY_USER:
                     if (this.loggedInUserName.toLowerCase() !== notification.data.name.toLowerCase()) {
-                        this.setState({ message: notification.data.message, showNotifier: true });
+                        let notificationmsg = notification.data.message.replace(", (dummy@dummy.com)","");
+                        this.setState({ message: notificationmsg, showNotifier: true });
                         setTimeout(() => {
                             this.setState({ showNotifier: false });
                         }, 2500);
