@@ -1339,20 +1339,20 @@ public class MeetingCommand {
 			String birth_day = "";
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 
-			if (StringUtils.isNotBlank(request.getHeader("last_name"))) {
-				lastName = request.getHeader("last_name");
+			if (StringUtils.isNotBlank(request.getParameter("last_name"))) {
+				lastName = request.getParameter("last_name");
 			}
-			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
-				mrn8Digit = fillToLength(request.getHeader("mrn"), '0', 8);
+			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
+				mrn8Digit = fillToLength(request.getParameter("mrn"), '0', 8);
 			}
-			if (StringUtils.isNotBlank(request.getHeader("birth_month"))) {
-				birth_month = request.getHeader("birth_month");
+			if (StringUtils.isNotBlank(request.getParameter("birth_month"))) {
+				birth_month = request.getParameter("birth_month");
 			}
-			if (StringUtils.isNotBlank(request.getHeader("birth_year"))) {
-				birth_year = request.getHeader("birth_year");
+			if (StringUtils.isNotBlank(request.getParameter("birth_year"))) {
+				birth_year = request.getParameter("birth_year");
 			}
-			if (StringUtils.isNotBlank(request.getHeader("birth_day"))) {
-				birth_day = request.getHeader("birth_day");
+			if (StringUtils.isNotBlank(request.getParameter("birth_day"))) {
+				birth_day = request.getParameter("birth_day");
 			}
 			if (ctx != null) {
 				if(StringUtils.isNotBlank(lastName)){
