@@ -98,25 +98,19 @@ class Authentication extends React.Component {
         e.preventDefault();
         localStorage.clear();
         this.setState({ showLoader: true });
-        let headers = {
-            "authToken": this.state.authToken
-        };
         sessionStorage.setItem('lastname',this.state.lastname);
-        this.guestLogin(this.state.meetingCode, this.state.lastname.trim(),headers,false);
+        this.guestLogin(this.state.meetingCode, this.state.lastname.trim(),this.state.authToken,false);
     }
 
     reJoinMeeting(){
         sessionStorage.removeItem('guestLeave');
-        let headers = {
-            "authToken": this.state.authToken
-        };
         var pname = sessionStorage.getItem('lastname');
-        this.guestLogin(this.state.meetingCode,pname,headers,true);
+        this.guestLogin(this.state.meetingCode,pname,this.state.authToken,true);
         //this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
     }
 
-    guestLogin(meetingCode,lastname,headers,rejoin){
-        BackendService.guestLogin(meetingCode,lastname,headers).subscribe((response) => {
+    guestLogin(meetingCode,lastname,authToken,rejoin){
+        BackendService.guestLogin(meetingCode,lastname,authToken).subscribe((response) => {
             if (response.data != "" && response.data != null && response.data.statusCode == 200) {
                 if (response.data.data != null && response.data.data != '') {
                     var data = {};

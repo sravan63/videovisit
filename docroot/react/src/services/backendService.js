@@ -28,20 +28,32 @@ class BackendService extends React.Component {
         return Axios.post(this.state.basePath + '/videovisit/isMeetingHashValid.json?meetingCode=' + meetingCode + '&loginType=guest', {});
     }
 
-    guestLogin(meetingCode, patientLastName,headers) {
-        return Axios.post(this.state.basePath + '/videovisit/guestLoginJoinMeeting.json?meetingCode=' + meetingCode + '&patientLastName=' + patientLastName + '&loginType=guest', {}, { headers: headers });
+    guestLogin(meetingCode, patientLastName,authTokenValue) {
+        let headers = {
+            authToken: authTokenValue,
+            patientLastName:patientLastName
+        };
+        return Axios.post(this.state.basePath + '/videovisit/guestLoginJoinMeeting.json?meetingCode=' + meetingCode + '&loginType=guest', {}, { headers: headers });
     }
 
     getSSOLogin(username, password) {
-        return Axios.post(this.state.basePath + '/videovisit/ssoSubmitLogin.json?username=' +
-            username + '&password=' + password + '&loginType=sso', {});
+        let headers = {
+            username:username,
+            password: password
+        }
+        return Axios.post(this.state.basePath + '/videovisit/ssoSubmitLogin.json?loginType=sso', {}, { headers: headers });
 
     }
 
     getTempLogin(lastname, mrn, birth_month, birth_year) {
-        return Axios.post(this.state.basePath + '/videovisit/submitLogin.json?last_name=' +
-            lastname + '&mrn=' + mrn + '&birth_month=' +
-            birth_month + '&birth_year=' + birth_year + '&loginType=tempAccess', {});
+        let headers = {
+            last_name:  lastname,
+            mrn:mrn,
+            birth_month:birth_month,
+            birth_year:birth_year
+        };
+        return Axios.post(this.state.basePath + '/videovisit/submitLogin.json?loginType=tempAccess', {}, { headers: headers });
+
     }
 
     getMyMeetings(url, isProxy, headers, loginType) {
