@@ -417,9 +417,10 @@ function handleError(reason) {
             }
         }
     } else if(reason == 'Call Failed: Disconnected while gathering IP addresses') {
-        const eMessage = UtilityService.isMobileDevice() ? 'Try switching to an LTE connection and reload the page' : 'Try joining from your mobile device with an LTE connection';
+        const eTitle = UtilityService.isMobileDevice() ? 'Refresh Page' : "Can't establish network connection";
+        const eMessage = UtilityService.isMobileDevice() ? 'Unable to establish a network connection. If problem persists, switch to a cellular connection and refresh.' : 'Rejoin your visit or use your mobile device with an LTE connection.';
         MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
-            heading: "Can't establish network connection", 
+            heading: eTitle, 
             message : eMessage,
             controls : [{label: 'OK', type: 'leave'} ]
         });
@@ -832,7 +833,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
 }
 
 function mediaReady(){
-    console.log("Inside mediaReady - Ice gathering done");
+    log("info","ICEGatheringCompleted","event: Callback after ice gathering established");
     var browserInfo = UtilityService.getBrowserInformation();
     var os = UtilityService.getAppOS();
     var isIOS = os == 'iOS' ? true : false;
