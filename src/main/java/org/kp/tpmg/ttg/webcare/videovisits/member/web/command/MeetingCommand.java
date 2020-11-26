@@ -78,14 +78,14 @@ public class MeetingCommand {
 		VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
 		String output = null;
 		try {
-			String lastName = request.getParameter("last_name");
-			String birth_month = request.getParameter("birth_month");
-			String birth_year = request.getParameter("birth_year");
-			String birth_day = request.getParameter("birth_day");
+			String lastName = request.getHeader("last_name");
+			String birth_month = request.getHeader("birth_month");
+			String birth_year = request.getHeader("birth_year");
+			String birth_day = request.getHeader("birth_day");
 			String mrn8Digit = "";
 
-			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
-				mrn8Digit = fillToLength(request.getParameter("mrn"), '0', 8);
+			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
+				mrn8Digit = fillToLength(request.getHeader("mrn"), '0', 8);
 			}
 
 			if (StringUtils.isNotBlank(lastName)) {
@@ -240,8 +240,8 @@ public class MeetingCommand {
 	public static String performSSOSignOn(final HttpServletRequest request, final HttpServletResponse response) throws Exception {logger.info(LOG_ENTERED);
 	String strResponse = null;
 	try {
-		String userName = request.getParameter("username");
-		String password = request.getParameter("password");
+		String userName = request.getHeader("username");
+		String password = request.getHeader("password");
 
 		logger.debug("userName= " + userName + ",password=" + password);
 		KpOrgSignOnInfo kpOrgSignOnInfo = null;
@@ -1063,7 +1063,7 @@ public class MeetingCommand {
 		String clientId = null;
 		final String meetingCode = request.getParameter("meetingCode");
 		try {
-			final String patientLastName = WebUtil.replaceSpecialCharacters(request.getParameter("patientLastName"));
+			final String patientLastName = WebUtil.replaceSpecialCharacters(request.getHeader("patientLastName"));
 			boolean isMobileFlow = false;
 			try {
 				Device device = DeviceDetectionService.checkForDevice(request);
@@ -1339,20 +1339,20 @@ public class MeetingCommand {
 			String birth_day = "";
 			WebAppContext ctx = WebAppContext.getWebAppContext(request);
 
-			if (StringUtils.isNotBlank(request.getParameter("last_name"))) {
-				lastName = request.getParameter("last_name");
+			if (StringUtils.isNotBlank(request.getHeader("last_name"))) {
+				lastName = request.getHeader("last_name");
 			}
-			if (StringUtils.isNotBlank(request.getParameter("mrn"))) {
-				mrn8Digit = fillToLength(request.getParameter("mrn"), '0', 8);
+			if (StringUtils.isNotBlank(request.getHeader("mrn"))) {
+				mrn8Digit = fillToLength(request.getHeader("mrn"), '0', 8);
 			}
-			if (StringUtils.isNotBlank(request.getParameter("birth_month"))) {
-				birth_month = request.getParameter("birth_month");
+			if (StringUtils.isNotBlank(request.getHeader("birth_month"))) {
+				birth_month = request.getHeader("birth_month");
 			}
-			if (StringUtils.isNotBlank(request.getParameter("birth_year"))) {
-				birth_year = request.getParameter("birth_year");
+			if (StringUtils.isNotBlank(request.getHeader("birth_year"))) {
+				birth_year = request.getHeader("birth_year");
 			}
-			if (StringUtils.isNotBlank(request.getParameter("birth_day"))) {
-				birth_day = request.getParameter("birth_day");
+			if (StringUtils.isNotBlank(request.getHeader("birth_day"))) {
+				birth_day = request.getHeader("birth_day");
 			}
 			if (ctx != null) {
 				if(StringUtils.isNotBlank(lastName)){
