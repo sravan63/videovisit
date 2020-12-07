@@ -13,7 +13,7 @@ class ConferenceDetails extends React.Component {
         super(props);       
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
-        this.state = { isRunningLate: false, runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [], hostDetails: {hostInCall: false, uuid: null} };
+        this.state = { isRunningLate: false,spotlight:false,runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [], hostDetails: {hostInCall: false, uuid: null} };
     }
 
     componentDidMount() {
@@ -45,9 +45,30 @@ class ConferenceDetails extends React.Component {
                 case GlobalConfig.USER_LEFT:
                     this.validateGuestPresence(GlobalConfig.USER_LEFT, notification.data);
                 break;
+                case GlobalConfig.SPOTLIGHT:
+                    this.setSpotlight(true,notification.data);
+                break;
+                case GlobalConfig.UNSPOTLIGHT:
+                    this.setSpotlight(false,notification.data);
+                break;
+
             }
         });
         
+    }
+
+    setSpotlight(key,data){
+        if(this.state.hostDetails.uuid == data.uuid){
+            this.setState({spotlight:key});
+        }
+        else {
+            this.state.participants.map((val) => {
+                if (val.uuid == data.uuid) {
+                    val.spotlighted = key;
+                    this.setState({participants:this.state.participants});
+                }
+            });
+        }
     }
 
     setSortedParticipantList() {
@@ -64,7 +85,7 @@ class ConferenceDetails extends React.Component {
                 // TODO: Should remove this after UID implementation
                 let backupName = guest.lastName.toLowerCase() + ', ' + guest.firstName.toLowerCase();
                 backupName += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : '' : '';
-                list.push({ name: name.trim(), inCall: false, isTelephony: false, backupName: backupName });
+                list.push({ name: name.trim(), inCall: false, spotlighted:false, isTelephony: false, backupName: backupName });
             });
             list.sort((a, b) => (a.name > b.name) ? 1 : -1);
         }
@@ -94,13 +115,13 @@ class ConferenceDetails extends React.Component {
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         if( isGuest ){
             var name = JSON.parse(localStorage.getItem('memberName'));
-            this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
+            this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null,spotlight:null, protocol: 'api', role: 'guest'});
         } else if( isProxyMeeting == 'Y' ){
             var patient = this.state.meetingDetails.member.lastName+', '+this.state.meetingDetails.member.firstName;
             var name = JSON.parse(localStorage.getItem('memberName'));
             // Satisfies only for child proxy scenario.
             if( name !== patient ){
-                this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null, protocol: 'api', role: 'guest'});
+                this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null,spotlight:null, protocol: 'api', role: 'guest'});
             }
         }
         
@@ -166,11 +187,15 @@ class ConferenceDetails extends React.Component {
                         participantInList = true;
                         p.inCall = true;
                         p.uuid = data.uuid;
+                        if(data.spotlight !=0){
+                            p.spotlighted = true;
+                        }
                     }
                 }
             } else {
                 if(p.uuid == participant){
                     p.inCall = false;
+                    p.spotlighted = false;
                     participantInList = true;
                 }
             }
@@ -199,8 +224,10 @@ class ConferenceDetails extends React.Component {
             hostclinician += hClinician.title ? ' ' + hClinician.title : '';
 
             if(data.display_name.toLowerCase() == host.toLowerCase() || data.display_name.toLowerCase() == hostclinician.toLowerCase()){
+                let pinFeed = data.spotlight !=0 ? true: false;
                 this.setState({
-                    hostDetails: { hostInCall: true, uuid: data.uuid }
+                    hostDetails: { hostInCall: true, uuid: data.uuid },
+                    spotlight:pinFeed
                 });
                 sessionStorage.setItem('isTrueHost',true);
                 isHostValidation = true;
@@ -208,7 +235,8 @@ class ConferenceDetails extends React.Component {
         } else {
             if(data.uuid == this.state.hostDetails.uuid){
                 this.setState({
-                    hostDetails: { hostInCall: false, uuid: data.uuid }
+                    hostDetails: { hostInCall: false, uuid: data.uuid },
+                    spotlight:false
                 });
                 sessionStorage.setItem('isTrueHost',true);
                 isHostValidation = true;
@@ -301,7 +329,7 @@ class ConferenceDetails extends React.Component {
                     <button className="btn leave-button" onClick={this.leaveMeeting}>Leave Room</button>
                     <div className="visit-details">
                         <p className="text-capitalize mt-1 mb-1">Visit details</p>
-                        <div className="clinician-info text-capitalize"><span className={this.state.hostDetails.hostInCall ? "presence-indicator show" : "presence-indicator hide" }></span><span className="name text-capitalize">{this.getClinicianName(this.state.meetingDetails.host)}</span></div>
+                        <div className="clinician-info text-capitalize"><span className={this.state.spotlight ? "pinnedIcon show" : "pinnedIcon removePin" }></span><span className = {this.state.spotlight ? "name text-capitalize adjustWidth" : "name text-capitalize"}>{this.getClinicianName(this.state.meetingDetails.host)}</span><span className={this.state.hostDetails.hostInCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
                         <div className="visit-time text-capitalize">
                             <b>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}</b>
                             <span>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'date')}</span>
@@ -317,7 +345,7 @@ class ConferenceDetails extends React.Component {
                         { this.state.participants && this.state.participants.length > 0 ? 
                             this.state.participants.map((item,key) =>{
                             return (
-                                <div className="participant mt-2" key={key}><span className={item.inCall ? "presence-indicator show" : "presence-indicator hide" }></span><span className="name text-capitalize">{item.name}</span></div>
+                                <div className="participant mt-2" key={key}><span className = {item.spotlighted ? "pinnedIcon" : "pinnedIcon removePin"}></span><span className={item.spotlighted ? "name text-capitalize adjustWidth": "name text-capitalize"}>{item.name}</span><span className={item.inCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
                             )
                         }) 
                          : ('') 

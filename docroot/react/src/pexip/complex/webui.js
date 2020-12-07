@@ -517,6 +517,12 @@ function participantCreated(participant) {
 
 function participantUpdated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
+    if(participant.spotlight != 0 && participant.protocol !='sip'){
+        MessageService.sendMessage(GlobalConfig.SPOTLIGHT,participant);
+    }
+    else if(participant.protocol !='sip'){
+        MessageService.sendMessage(GlobalConfig.UNSPOTLIGHT,participant);
+    }
     pexipParticipantsList.push(participant);
 
 }

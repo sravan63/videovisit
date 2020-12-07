@@ -31,8 +31,22 @@
                     background: url('../../assets/SVG/Connected.svg') no-repeat;
                     height: 0.375rem;
                     width: 0.375rem;
-                    margin-left: -0.68rem;
                     background-position: center;
+                }
+                .pinnedIcon{
+                    display: inline-block;
+                    background: url('../../assets/SVG/pin.svg') no-repeat;
+                    height: 1.0625rem;
+                    width: 0.6875rem;
+                    margin-right: 0.3rem;
+                    margin-top:0.1875rem;
+                    background-position: center;
+                }
+                .removePin{
+                    display:none;
+                }
+                .adjustWidth{
+                    width: calc(100% - 2.375rem) !important;
                 }
                 .show{
                     opacity: 1;
@@ -42,8 +56,7 @@
                 }
                 .name{
                     display: inline-block;
-                    width: calc(100% - 0.375rem);
-                    margin-left: 0.43rem;
+                    width: calc(100% - 1.375rem);
                     text-overflow: ellipsis;
                     overflow: hidden;
                     white-space: nowrap;
@@ -67,13 +80,26 @@
             .participant{
                 display: flex;
                 align-items: center;
+                margin-left: 1rem;
                 .presence-indicator {
                     display: inline-block;
                     background: url('../../assets/SVG/Connected.svg') no-repeat;
                     height: 0.375rem;
                     width: 0.375rem;
                     background-position: center;
-                    margin-left: .35rem;
+                    //margin-left: .35rem;
+                }
+                .pinnedIcon{
+                    display: inline-block;
+                    background: url('../../assets/SVG/pin.svg') no-repeat;
+                    height: 1.0625rem;
+                    width: 0.6875rem;
+                    margin-left: 0.3rem;
+                    margin-top:0.1875rem;
+                    background-position: center;
+                }
+                .removePin{
+                    display:none;
                 }
                 .show{
                     opacity: 1;
@@ -81,10 +107,13 @@
                 .hide{
                     opacity: 0;
                 }
+                .adjustWidth{
+                    width: calc(100% - 3.5rem) !important;
+                }
                 .name{
                     display: inline-block;
-                    width: calc(100% - 1.375rem);
-                    margin-left: .25rem;
+                    width: calc(100% - 2.5rem);
+                    margin-left: 0.25rem;
                 }
                 .text-capitalize {
                     text-overflow: ellipsis;

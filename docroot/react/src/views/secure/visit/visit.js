@@ -205,7 +205,7 @@ class Visit extends React.Component {
                             </div>
                         </div>
                         <div className="confirmationContent">
-                            <h3 className="patientConfirm"> Are you {this.state.displayName} ?</h3>
+                            <h3 className="patientConfirm"> Are you {this.state.displayName}?</h3>
                             <div>
                                 <button  type="button" className="denyUser" onClick={this.denyUser}>No</button>
                                 <button  type="button" className="allowUser" onClick={this.allowLogin}>Yes</button>

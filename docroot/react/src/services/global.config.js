@@ -87,7 +87,9 @@ const GlobalConfig = {
     HIDE_LOADER:'hide loader',
     OPEN_SURVEY_MODAL: 'open survey popup',
     CLOSE_SURVEY_MODAL: 'survey popup closed',
-    CLOSE_SURVEY_MODAL_AUTOMATICALLY: 'close survey popup automatically'
+    CLOSE_SURVEY_MODAL_AUTOMATICALLY: 'close survey popup automatically',
+    SPOTLIGHT:'spotlight participant',
+    UNSPOTLIGHT:'unspotlight participant'
 };
 
 export default GlobalConfig;
