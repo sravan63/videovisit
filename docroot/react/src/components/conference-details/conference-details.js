@@ -115,13 +115,13 @@ class ConferenceDetails extends React.Component {
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         if( isGuest ){
             var name = JSON.parse(localStorage.getItem('memberName'));
-            this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null,spotlight:null, protocol: 'api', role: 'guest'});
+            this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null,spotlight:0, protocol: 'api', role: 'guest'});
         } else if( isProxyMeeting == 'Y' ){
             var patient = this.state.meetingDetails.member.lastName+', '+this.state.meetingDetails.member.firstName;
             var name = JSON.parse(localStorage.getItem('memberName'));
             // Satisfies only for child proxy scenario.
             if( name !== patient ){
-                this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null,spotlight:null, protocol: 'api', role: 'guest'});
+                this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null,spotlight:0, protocol: 'api', role: 'guest'});
             }
         }
         
