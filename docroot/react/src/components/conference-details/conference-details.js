@@ -75,9 +75,14 @@ class ConferenceDetails extends React.Component {
         let list = [];
         let telephonyGuests = [];
         let interpreterGuests = [];
+        var participants = [];
         let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
         let guests = this.state.meetingDetails.caregiver ? this.state.meetingDetails.caregiver.slice(0) : [];
-        let participants = clinicians.concat(guests);
+        var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
+        participants = clinicians.concat(guests);
+        if(isGuest){
+            participants = clinicians.concat(this.state.meetingDetails.member);
+        }
         if (participants) {
             participants.map(guest => {
                 let name = guest.firstName.toLowerCase() + ' ' + guest.lastName.toLowerCase();
@@ -134,7 +139,7 @@ class ConferenceDetails extends React.Component {
         if(isGuest){
             var memberName = this.state.meetingDetails.member.lastName +', '+ this.state.meetingDetails.member.firstName;
             if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim()){
-                showIndicator = false;
+                showIndicator = true;
             }
         } else {
             var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
@@ -259,7 +264,9 @@ class ConferenceDetails extends React.Component {
             let name = fName.toLowerCase() + ' ' + lName.toLowerCase();
             // TODO: Should remove this after UID implementation
             let backupName = lName.toLowerCase() + ', ' + fName.toLowerCase();
-            this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
+            //if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')))){
+                this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
+            //}
             this.state.videoGuests.sort((a, b) => (a.name > b.name) ? 1 : -1);
         } else { // In 'Lastname, Firstname Title' format.
             var nArr = participant.split(',');
@@ -331,7 +338,7 @@ class ConferenceDetails extends React.Component {
                         <p className="text-capitalize mt-1 mb-1">Visit details</p>
                         <div className="clinician-info text-capitalize"><span className={this.state.spotlight ? "pinnedIcon show" : "pinnedIcon removePin" }></span><span className = {this.state.spotlight ? "name text-capitalize adjustWidth" : "name text-capitalize"}>{this.getClinicianName(this.state.meetingDetails.host)}</span><span className={this.state.hostDetails.hostInCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
                         <div className="visit-time text-capitalize">
-                            <b>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}</b>
+                            {this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}
                             <span>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'date')}</span>
                         </div>
                         <div style={{display: this.state.isRunningLate ? 'block' : 'none' }}>
