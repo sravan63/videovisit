@@ -820,6 +820,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     rtc.onLayoutUpdate = layoutUpdate;
     rtc.onIceGathered = mediaReady;
     rtc.onIceFailure = setTurnServer;
+    rtc.onChatMessage = chatReceived;
 
     conference = conf;
     console.log("Conference: " + conference);
@@ -874,6 +875,25 @@ function getTurnServersObjs(turnServerDetails) {
     return t_servers;
 }
 
+function chatReceived(message){
+    var sender = message.origin;
+    var userName = JSON.parse(localStorage.getItem('memberName'));
+    if(sender == userName){
+        return;
+    }
+    if(message.payload && message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
+        // Received text format DUPLICATE_MEMBER#NAME#UUID
+        var mData = message.payload.split['#'];
+        var duplicateName = mData[1];
+        var uuid = mData[2];
+        var userUUID = sessionStorage.getItem('UUID');
+        if( uuid == userUUID ){
+            localStorage.setItem('memberName', duplicateName);
+        } else {
+            MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:duplicateName});
+        }
+    }
+}
 
 export function pexipDisconnect() {
     rtc.disconnect();

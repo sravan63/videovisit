@@ -51,7 +51,19 @@ class ConferenceDetails extends React.Component {
                 case GlobalConfig.UNSPOTLIGHT:
                     this.setSpotlight(false,notification.data);
                 break;
-
+                case GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR:
+                    const gData = notification.data;
+                    let isInList = false;
+                    this.state.participants.map((guest)=>{
+                        if(guest.uuid == gData.uuid){
+                            guest.name = gData.name;
+                            isInList = true;
+                        }
+                    });
+                    if( !isInList ) {
+                        this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: gData.name, uuid: gData.uuid,spotlight:0, protocol: 'api', role: 'guest'});
+                    }
+                break;
             }
         });
         

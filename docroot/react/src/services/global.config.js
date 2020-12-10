@@ -89,7 +89,9 @@ const GlobalConfig = {
     CLOSE_SURVEY_MODAL: 'survey popup closed',
     CLOSE_SURVEY_MODAL_AUTOMATICALLY: 'close survey popup automatically',
     SPOTLIGHT:'spotlight participant',
-    UNSPOTLIGHT:'unspotlight participant'
+    UNSPOTLIGHT:'unspotlight participant',
+    DUPLICATE_NAME: 'DUPLICATE_MEMBER#',
+    UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR: 'UPDATE DUPLICATE MEMBERS TO SIDEBAR'
 };
 
 export default GlobalConfig;
