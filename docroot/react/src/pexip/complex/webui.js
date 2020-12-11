@@ -883,7 +883,7 @@ function chatReceived(message){
     }
     if(message.payload && message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
         // Received text format DUPLICATE_MEMBER#NAME#UUID
-        var mData = message.payload.split['#'];
+        var mData = message.payload.split('#');
         var duplicateName = mData[1];
         var uuid = mData[2];
         var userUUID = sessionStorage.getItem('UUID');
