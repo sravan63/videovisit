@@ -519,12 +519,16 @@ class Conference extends React.Component {
             source = "Join+Conference",
             name;
         if (this.state.isGuest == false) {
-            if(this.state.isProxyMeeting == 'Y'){
-                name = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;
+            if( !sessionStorage.getItem('loggedAsDuplicateMember') ){
+                if(this.state.isProxyMeeting == 'Y'){
+                    name = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;
+                } else {
+                    name = Utilities.formatStringTo(meeting.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
+                }
+                localStorage.setItem('memberName', JSON.stringify(name));
             } else {
-                name = Utilities.formatStringTo(meeting.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
+                name = localStorage.getItem('memberName');
             }
-            localStorage.setItem('memberName', JSON.stringify(name));
             var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
             var vendorDetails = {
                 "meetingId": meeting.meetingId,
@@ -533,9 +537,13 @@ class Conference extends React.Component {
             };
             localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         } else {
-            var guestName = this.getInMeetingGuestName(meeting.caregiver);
-            localStorage.setItem('memberName', JSON.stringify(guestName));
-            name = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
+            if( !sessionStorage.getItem('loggedAsDuplicateMember') ){
+                var guestName = this.getInMeetingGuestName(meeting.caregiver);
+                localStorage.setItem('memberName', JSON.stringify(guestName));
+                name = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
+            } else {
+                name = localStorage.getItem('memberName');
+            }
             var vendorDetails = {
                 "meetingId": meeting.meetingId,
                 "userType": "Caregiver",
@@ -577,6 +585,7 @@ class Conference extends React.Component {
        localStorage.removeItem('selectedPeripherals');
        sessionStorage.removeItem('UUID');
        sessionStorage.removeItem('meetingTimeLog');
+       sessionStorage.removeItem('loggedAsDuplicateMember');
        window.removeEventListener('resize', this.handleResize.bind(this), false);
        window.removeEventListener('load', this.handleLoad)  
     }
