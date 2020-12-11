@@ -528,6 +528,7 @@ class Conference extends React.Component {
                 localStorage.setItem('memberName', JSON.stringify(name));
             } else {
                 name = localStorage.getItem('memberName');
+                localStorage.setItem('memberName', JSON.stringify(name));
             }
             var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
             var vendorDetails = {
@@ -543,6 +544,7 @@ class Conference extends React.Component {
                 name = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
             } else {
                 name = localStorage.getItem('memberName');
+                localStorage.setItem('memberName', JSON.stringify(name));
             }
             var vendorDetails = {
                 "meetingId": meeting.meetingId,
