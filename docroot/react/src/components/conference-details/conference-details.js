@@ -148,6 +148,7 @@ class ConferenceDetails extends React.Component {
              }  
             participants = guests.splice(removeGuestName,1);
             participants = guests;
+            participants = clinicians.concat(guests);
             
         }else{
              participants = clinicians.concat(guests);
