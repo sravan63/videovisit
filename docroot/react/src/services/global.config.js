@@ -91,7 +91,9 @@ const GlobalConfig = {
     SPOTLIGHT:'spotlight participant',
     UNSPOTLIGHT:'unspotlight participant',
     DUPLICATE_NAME: 'DUPLICATE_MEMBER#',
-    UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR: 'UPDATE DUPLICATE MEMBERS TO SIDEBAR'
+    UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR: 'UPDATE DUPLICATE MEMBERS TO SIDEBAR',
+    ACTIVESPEAKER:'bold participant',
+    NOTACTIVESPEAKER:'unbold participant'
 };
 
 export default GlobalConfig;

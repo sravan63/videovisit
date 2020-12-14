@@ -64,6 +64,13 @@ class ConferenceDetails extends React.Component {
                         this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: gData.name, uuid: gData.uuid,spotlight:0, protocol: 'api', role: 'guest'});
                     }
                 break;
+                case GlobalConfig.ACTIVESPEAKER:
+                    this.setActiveSpeaker(true,notification.data);
+                break;
+                case GlobalConfig.NOTACTIVESPEAKER:
+                    this.setActiveSpeaker(false,notification.data);
+                break;
+
             }
         });
         
@@ -83,6 +90,32 @@ class ConferenceDetails extends React.Component {
         }
     }
 
+    setActiveSpeaker(key,data){
+        if(data.length > 0){
+            if(this.state.hostDetails.uuid == data[0].uuid){
+                this.setState({activeSpeaker:key});
+            }
+            else {
+                this.state.participants.map((val) => {
+                    if (val.uuid == data[0].uuid) {
+                        val.setactiveSpeaker = key;
+                        this.setState({participants:this.state.participants});
+                    }else{
+                        val.setactiveSpeaker = false;
+                        this.setState({participants:this.state.participants});
+                    }
+                });
+            }
+        }else{
+            this.setState({activeSpeaker:false});
+            this.state.participants.map((val) => {
+                    val.setactiveSpeaker = false;
+                    this.setState({participants:this.state.participants});
+                
+            });
+        }
+    }
+
     setSortedParticipantList() {
         let list = [];
         let telephonyGuests = [];
@@ -91,9 +124,33 @@ class ConferenceDetails extends React.Component {
         let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
         let guests = this.state.meetingDetails.caregiver ? this.state.meetingDetails.caregiver.slice(0) : [];
         var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
-        participants = clinicians.concat(guests);
-        if(isGuest){
-            participants = clinicians.concat(this.state.meetingDetails.member);
+        var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'))
+        if(!isGuest){
+            var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
+            var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
+        }
+        
+        var patientName =  this.state.meetingDetails.member.lastName.toLowerCase() + ', ' + this.state.meetingDetails.member.firstName.toLowerCase();
+        var removeGuestName;
+        if(isGuest || patientName != memberName){
+            var participant =JSON.parse(localStorage.getItem('memberName'));
+            if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
+                        participant = participant.split('(')[0].trim();
+                        if(participant.split(',').length > 2){ // lname, fname, (email)
+                            var lastIndex = participant.lastIndexOf(',');
+                            participant = participant.substring(0, lastIndex);
+                        }
+                    }
+             if(isGuest){       
+                 removeGuestName = guests.findIndex(x=>x.lastName + ', '+ x.firstName == participant);
+             }else{
+                removeGuestName = guests.findIndex(x=>x.lastName.toLowerCase().trim() + ', '+ x.firstName.toLowerCase().trim() == memberName.trim());
+             }  
+            participants = guests.splice(removeGuestName,1);
+            participants = guests;
+            
+        }else{
+             participants = clinicians.concat(guests);
         }
         if (participants) {
             participants.map(guest => {
@@ -104,9 +161,29 @@ class ConferenceDetails extends React.Component {
                 backupName += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : '' : '';
                 list.push({ name: name.trim(), inCall: false, spotlighted:false, isTelephony: false, backupName: backupName });
             });
-            list.sort((a, b) => (a.name > b.name) ? 1 : -1);
+            list.sort((a, b) => (a.name > b.name) ? 1 : -1);            
+            if(isGuest || patientName != memberName) {
+                let patientBackupName = this.state.meetingDetails.member.lastName + ', ' + this.state.meetingDetails.member.firstName;
+                let patient = this.state.meetingDetails.member.firstName.toLowerCase() + ' ' + this.state.meetingDetails.member.lastName.toLowerCase();
+                list.unshift({
+                    name: patient.trim(),
+                    inCall: false,
+                    spotlighted: false,
+                    isTelephony: false,
+                    backupName: patientBackupName,
+                    isPatient : true
+                });
+            }
         }
+        //  var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+        //  var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
+        //  var memberName = udata.lastName +', '+ udata.firstName;
+        //  var patientName =  this.state.meetingDetails.member.firstName.toLowerCase() + ' ' + this.state.meetingDetails.member.lastName.toLowerCase();
+        // if(isGuest || memberName != patientName){
+        //     list.unshift({ name: patientName.trim(), inCall: false, isTelephony: false, backupName: patientName.hasOwnProperty('title') ? patientName.title ? ' ' + patientName.title : '' : '' });
+        // }
         this.setState({ videoGuests: list });
+
         // Adding Telephony guest to the participant's list.
         if(this.state.meetingDetails.sipParticipants){
             this.state.meetingDetails.sipParticipants.map(guest => {
@@ -164,7 +241,7 @@ class ConferenceDetails extends React.Component {
             } else {
                 var patient = this.state.meetingDetails.member.lastName+', '+this.state.meetingDetails.member.firstName;
                 if( participant.display_name.toLowerCase().trim() == patient.toLowerCase().trim() ) {
-                    showIndicator = false;
+                    showIndicator = true;
                 }
             }
         }
@@ -270,16 +347,38 @@ class ConferenceDetails extends React.Component {
                 this.state.telephonyGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
             }
         } else if(data.role == "guest") { // In 'Lastname, Firstname (email)' format.
+            var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
             var gName = participant.indexOf('(') > -1 ? participant.split('(')[0] : participant;
             var lName = participant.split(',')[0].trim();
             var fName = participant.split(',')[1].trim();
             let name = fName.toLowerCase() + ' ' + lName.toLowerCase();
             // TODO: Should remove this after UID implementation
             let backupName = lName.toLowerCase() + ', ' + fName.toLowerCase();
-            //if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')))){
+            if(!isGuest){
+                var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
+                var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
+            }
+            var patientName =  this.state.meetingDetails.member.firstName.toLowerCase() + ' ' + this.state.meetingDetails.member.lastName.toLowerCase();
+            if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName'))) && isGuest ){
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
-            //}
+            }else if(!(data.display_name.toLowerCase() == memberName) && !isGuest){
+                this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
+            }
+            // var filteredPatient = this.state.videoGuests.findIndex(x=>x.name == patientName);
+            // if(filteredPatient == 0 && filteredPatient != -1){
+            //     this.state.videoGuests.splice(filteredPatient,1);
+            // }
+            //participants = guests;
+            // var onlyPatient = this.state.videoGuests.filter(x=>x.isPatient == true);
+            // if(onlyPatient.length > 0){
+            //     this.state.videoGuests.splice(filteredPatient, 1);
+            // }
             this.state.videoGuests.sort((a, b) => (a.name > b.name) ? 1 : -1);
+            //let backupName1 = onlyPatient[0].name.toLowerCase() + ', ' + onlyPatient[0].name.toLowerCase();
+            // if(filteredPatient == 0 && filteredPatient != -1){
+            //     this.state.videoGuests.unshift({ name: patientName.trim(), inCall: false, isTelephony: false, backupName: patientName, uuid: data.uuid });
+            // }
+            
         } else { // In 'Lastname, Firstname Title' format.
             var nArr = participant.split(',');
             var lName = nArr[0].trim();
@@ -348,7 +447,7 @@ class ConferenceDetails extends React.Component {
                     <button className="btn leave-button" onClick={this.leaveMeeting}>Leave Room</button>
                     <div className="visit-details">
                         <p className="text-capitalize mt-1 mb-1">Visit details</p>
-                        <div className="clinician-info text-capitalize"><span className={this.state.spotlight ? "pinnedIcon show" : "pinnedIcon removePin" }></span><span className = {this.state.spotlight ? "name text-capitalize adjustWidth" : "name text-capitalize"}>{this.getClinicianName(this.state.meetingDetails.host)}</span><span className={this.state.hostDetails.hostInCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
+                        <div className="clinician-info text-capitalize"><span className={this.state.spotlight ? "pinnedIcon show" : "pinnedIcon removePin" }></span><span className = {this.state.spotlight ? "name text-capitalize adjustWidth" : "name text-capitalize"}><span className={this.state.activeSpeaker ? "activespeaker" : "notactivespeaker"}>{this.getClinicianName(this.state.meetingDetails.host)}</span></span><span className={this.state.hostDetails.hostInCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
                         <div className="visit-time text-capitalize">
                             {this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}
                             <span>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'date')}</span>
@@ -364,7 +463,7 @@ class ConferenceDetails extends React.Component {
                         { this.state.participants && this.state.participants.length > 0 ? 
                             this.state.participants.map((item,key) =>{
                             return (
-                                <div className="participant mt-2" key={key}><span className = {item.spotlighted ? "pinnedIcon" : "pinnedIcon removePin"}></span><span className={item.spotlighted ? "name text-capitalize adjustWidth": "name text-capitalize"}>{item.name}</span><span className={item.inCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
+                                <div className="participant mt-2" key={key}><span className = {item.spotlighted ? "pinnedIcon" : "pinnedIcon removePin"}></span><span className={item.spotlighted ? "name text-capitalize adjustWidth": "name text-capitalize"}><span className={item.setactiveSpeaker ? "activespeaker" : "notactivespeaker"}>{item.name}</span></span><span className={item.inCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
                             )
                         }) 
                          : ('') 

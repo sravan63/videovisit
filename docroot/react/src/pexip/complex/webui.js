@@ -821,7 +821,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     rtc.onIceGathered = mediaReady;
     rtc.onIceFailure = setTurnServer;
     rtc.onChatMessage = chatReceived;
-
+    rtc.onStageUpdate = StageUpdated;
     conference = conf;
     console.log("Conference: " + conference);
 
@@ -1136,5 +1136,17 @@ export function muteUnmuteMic() {
         log("info", "microphone_mute_action", "event: muteMic - on click of mute mic button");
     } else {
         log("info", "microphone_unmute_action", "event: unmuteMic - on click of unmute mic button");
+    }
+}
+ function StageUpdated(participantsList){
+    var activeSpeakersList = participantsList.filter(x=> x.vad == 100);
+    let mapUuidToSpeaker = activeSpeakersList.map(function(val, index){ 
+        return { uuid:val.participant_uuid}; 
+    });
+    if(activeSpeakersList.length > 0){
+        MessageService.sendMessage(GlobalConfig.ACTIVESPEAKER,mapUuidToSpeaker);
+    }
+    else{
+        MessageService.sendMessage(GlobalConfig.NOTACTIVESPEAKER,mapUuidToSpeaker);
     }
 }
