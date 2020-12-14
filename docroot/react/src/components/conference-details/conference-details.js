@@ -145,8 +145,10 @@ class ConferenceDetails extends React.Component {
                  removeGuestName = guests.findIndex(x=>x.lastName + ', '+ x.firstName == participant);
              }else{
                 removeGuestName = guests.findIndex(x=>x.lastName.toLowerCase().trim() + ', '+ x.firstName.toLowerCase().trim() == memberName.trim());
-             }  
-            participants = guests.splice(removeGuestName,1);
+             }
+             if(removeGuestName != -1){  
+                participants = guests.splice(removeGuestName,1);
+            }
             participants = guests;
             participants = clinicians.concat(guests);
             
