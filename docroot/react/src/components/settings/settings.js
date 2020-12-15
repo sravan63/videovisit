@@ -72,15 +72,15 @@ class Settings extends React.Component {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            WebUI.switchDevices('video', media.deviceId);
+            WebUI.switchDevices('video', media);
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media, 'video');
-            WebUI.switchDevices('speaker');
+            WebUI.switchDevices('speaker',media);
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
             MediaService.changeAudioDestination(media, 'video');
-            WebUI.switchDevices('mic');
+            WebUI.switchDevices('mic',media);
         }
         // Sets the constrains in dropdowns.
         this.setState({

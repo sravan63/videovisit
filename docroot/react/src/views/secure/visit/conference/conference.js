@@ -756,7 +756,7 @@ class Conference extends React.Component {
             }
         }
         
-        WebUI.switchDevices('video', videoSource);
+        WebUI.switchDevices('video', vObject);
     }
 
     initiateSurvey(){

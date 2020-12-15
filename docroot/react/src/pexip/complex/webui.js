@@ -740,9 +740,9 @@ export function setPatientGuestPresenceIndicatorManually() {
 }
 
 export function switchDevices(constrain, device = null) {
-    log("info", constrain+"_peripheral_change_action", "event: peripherals"+constrain+"Change - on changing the peripheral dropdown");
+    log("info", constrain+"_peripheral_change_action", "event: peripherals"+constrain+"Change - on changing the peripheral dropdown to :: " + device.label);
     if(constrain == 'video'){
-        rtc.video_source = device;
+        rtc.video_source = device.deviceId;
     }
     rtc.renegotiate();
 }
