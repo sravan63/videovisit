@@ -362,7 +362,7 @@ class ConferenceDetails extends React.Component {
                 var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
             }
             var patientName =  this.state.meetingDetails.member.firstName.toLowerCase() + ' ' + this.state.meetingDetails.member.lastName.toLowerCase();
-            if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName'))) && isGuest ){
+            if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')).toLowerCase()) && isGuest ){
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
             }else if(!(data.display_name.toLowerCase() == memberName) && !isGuest){
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
