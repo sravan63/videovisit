@@ -4,6 +4,7 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +22,12 @@ import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Response;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.SurveyResponse;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.APIToken;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.model.AccessTokenDetails;
 import org.kp.tpmg.videovisit.model.AuthorizeVVCodeOutputJson;
 import org.kp.tpmg.videovisit.model.MemberLogoutInput;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
@@ -110,6 +111,11 @@ public class WebService {
 	private static String kpOrgSSOUserAgentTypeHeader = null;
 	private static String kpOrgSSOAPIKeyHeader = null;
 	private static String kpOrgSSOAppNameHeader = null;
+	
+	private static String accessToken = null;
+	private static int retryFlag = 0;
+	private static final String CONSUMER_KEY_INTERNAL = "YSZKsLgz1EguT2UEJAEN_XoSTfQa";
+	private static final String CONSUMER_SECRET_INTERNAL = "LSLoxMoGz2LVSx9nYuKuv1KfK0sa";
 
 	// Parameters for Proxy Appts logic
 	private static String secureCodes = null;
@@ -206,7 +212,7 @@ public class WebService {
 				final String inputJsonString = gson.toJson(input);
 				logger.debug("jsonInptString : " + inputJsonString);
 
-				responseJsonStr = callVVRestService(ServiceUtil.UPDATE_MEMBER_MEETING_STATUS, inputJsonString);
+				responseJsonStr = callVVAPiService(ServiceUtil.UPDATE_MEMBER_MEETING_STATUS, inputJsonString);
 				if (StringUtils.isNotBlank(responseJsonStr)) {
 					final JsonParser parser = new JsonParser();
 					final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
@@ -247,7 +253,7 @@ public class WebService {
 			final String inputJsonString = gson.toJson(input);
 			logger.info("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callVVRestService(ServiceUtil.IS_MEETING_HASH_VALID, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.IS_MEETING_HASH_VALID, inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				final JsonParser parser = new JsonParser();
@@ -290,7 +296,7 @@ public class WebService {
 			final String inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callVVRestService(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString);
 			logger.info("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				final JsonParser parser = new JsonParser();
@@ -700,7 +706,7 @@ public class WebService {
 				final Gson gson = new Gson();
 				inputJsonString = gson.toJson(input);
 				logger.debug("jsonInputString : " + inputJsonString);
-				jsonResponseStr = callVVRestService(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, inputJsonString);
+				jsonResponseStr = callVVAPiService(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, inputJsonString);
 				logger.info("jsonResponseString : " + jsonResponseStr);
 				if (StringUtils.isNotBlank(jsonResponseStr)) {
 					final JsonParser parser = new JsonParser();
@@ -754,7 +760,7 @@ public class WebService {
 			inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callVVRestService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,
+			responseJsonStr = callVVAPiService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,
 					inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
@@ -763,7 +769,7 @@ public class WebService {
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			responseJsonStr = callVVRestService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,
+			responseJsonStr = callVVAPiService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,
 					inputJsonString);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
@@ -819,7 +825,7 @@ public class WebService {
 			inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callVVRestService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES,
+			responseJsonStr = callVVAPiService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES,
 					inputJsonString);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
@@ -829,7 +835,7 @@ public class WebService {
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			responseJsonStr = callVVRestService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES,
+			responseJsonStr = callVVAPiService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES,
 					inputJsonString);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
@@ -878,7 +884,7 @@ public class WebService {
 					String inputString = gson.toJson(verifyMeberInput);
 					logger.debug("jsonInputString " + inputString);
 
-					String jsonString = callVVRestService(ServiceUtil.VERIFY_MEMBER, inputString);
+					String jsonString = callVVAPiService(ServiceUtil.VERIFY_MEMBER, inputString);
 					logger.debug("outputjsonString" + jsonString);
 					if (StringUtils.isNotBlank(jsonString)) {
 						final JsonParser parser = new JsonParser();
@@ -926,7 +932,7 @@ public class WebService {
 			final Gson gson = new GsonBuilder().serializeNulls().create();
 			final String inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
-			responseJsonStr = callVVRestService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				final JsonParser parser = new JsonParser();
@@ -949,11 +955,11 @@ public class WebService {
 		final Gson gson = new Gson();
 		ServiceCommonOutputJson testDbRoundTripJson = new ServiceCommonOutputJson();
 		try {
-			responseJsonStr = callVVRestService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}");
+			responseJsonStr = callVVAPiService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}");
 			testDbRoundTripJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			responseJsonStr = callVVRestService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}");
+			responseJsonStr = callVVAPiService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}");
 			testDbRoundTripJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		}
 		logger.info(LOG_EXITING);
@@ -991,14 +997,14 @@ public class WebService {
 			inputJsonString = gson.toJson(joinLeaveMeetingInput);
 			logger.debug("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callVVRestService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
 			}
 			logger.info("jsonResponseString : " + responseJsonStr);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
-			responseJsonStr = callVVRestService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
 			}
@@ -1042,10 +1048,10 @@ public class WebService {
 			input.setClientId(clientId);
 			inputJsonString = gson.toJson(input);
 			logger.debug("inputJsonString : " + inputJsonString);
-			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
-			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString);
 		}
 		logger.info(LOG_EXITING);
 		return responseJsonStr;
@@ -1080,10 +1086,10 @@ public class WebService {
 			input.setClientId(clientId);
 			inputJsonString = gson.toJson(input);
 			logger.debug("inputJsonString : " + inputJsonString);
-			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
-			responseJsonStr = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
+			responseJsonStr = callVVAPiService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString);
 		}
 		logger.info(LOG_EXITING);
 		return responseJsonStr;
@@ -1122,10 +1128,10 @@ public class WebService {
 			jsonInput.setMobileFlow(isMobileFlow);
 			jsonInput.setClientId(WebUtil.MOB_CLIENT_ID);
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
-			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
+			output = callVVAPiService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
-			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
+			output = callVVAPiService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		}
 		logger.info(LOG_EXITING);
 		return output;
@@ -1154,10 +1160,10 @@ public class WebService {
 			input.setMrn8Digit(mrn);
 			input.setSessionId(sessionId);
 			logger.debug("inputJsonString : " + gson.toJson(input));
-			output = callVVRestService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input));
+			output = callVVAPiService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input));
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			output = callVVRestService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input));
+			output = callVVAPiService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input));
 		}
 		logger.info(LOG_EXITING);
 		return output;
@@ -1195,7 +1201,7 @@ public class WebService {
 
 			final String inputJsonStr = gson.toJson(input);
 			logger.info("inputJsonStr " + inputJsonStr);
-			jsonOutput = callVVRestService(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS, inputJsonStr);
+			jsonOutput = callVVAPiService(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS, inputJsonStr);
 			logger.info("jsonOutput " + jsonOutput);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId, e);
@@ -1242,7 +1248,7 @@ public class WebService {
 
 			final String inputJsonStr = gson.toJson(input);
 			logger.info("inputJsonStr " + inputJsonStr);
-			jsonOutput = callVVRestService(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST, inputJsonStr);
+			jsonOutput = callVVAPiService(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST, inputJsonStr);
 			logger.info("jsonOutput " + jsonOutput);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId, e);
@@ -1278,7 +1284,7 @@ public class WebService {
 				input.setSessionId(sessionId);
 				final String inputJsonStr = gson.toJson(input);
 				logger.info("inputJsonStr: " + inputJsonStr);
-				jsonOutput = callVVRestService(ServiceUtil.UPDATE_EMAIL_ACTION, inputJsonStr);
+				jsonOutput = callVVAPiService(ServiceUtil.UPDATE_EMAIL_ACTION, inputJsonStr);
 				logger.info("jsonOutput: " + jsonOutput);
 
 			} catch (Exception e) {
@@ -1322,7 +1328,7 @@ public class WebService {
 
 				final String inputJsonStr = gson.toJson(input);
 				logger.debug("inputJsonStr: " + inputJsonStr);
-				jsonOutput = callVVRestService(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, inputJsonStr);
+				jsonOutput = callVVAPiService(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, inputJsonStr);
 				logger.info("jsonOutput: " + jsonOutput);
 
 			} catch (Exception e) {
@@ -1402,7 +1408,7 @@ public class WebService {
 			inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callVVRestService(ServiceUtil.GET_MEETINGS_FOR_MEMBER_AND_NON_MEMBER_PROXIES,
+			responseJsonStr = callVVAPiService(ServiceUtil.GET_MEETINGS_FOR_MEMBER_AND_NON_MEMBER_PROXIES,
 					inputJsonString);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
@@ -1412,7 +1418,7 @@ public class WebService {
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			responseJsonStr = callVVRestService(ServiceUtil.GET_MEETINGS_FOR_MEMBER_AND_NON_MEMBER_PROXIES,
+			responseJsonStr = callVVAPiService(ServiceUtil.GET_MEETINGS_FOR_MEMBER_AND_NON_MEMBER_PROXIES,
 					inputJsonString);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
@@ -1462,7 +1468,7 @@ public class WebService {
 
 			final String inputJsonStr = gson.toJson(input);
 			logger.info("inputJsonStr: " + inputJsonStr);
-			jsonOutput = callVVRestService(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, inputJsonStr);
+			jsonOutput = callVVAPiService(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, inputJsonStr);
 		} catch (Exception e) {
 			logger.error("Web Service API error ", e);
 		}
@@ -1502,9 +1508,9 @@ public class WebService {
 			logger.debug("jsonInptString : " + inputJsonString);
 
 			if ("J".equalsIgnoreCase(joinLeaveMeeting)) {
-				responseJsonStr = callVVRestService(ServiceUtil.JOIN_MEETING, inputJsonString);
+				responseJsonStr = callVVAPiService(ServiceUtil.JOIN_MEETING, inputJsonString);
 			} else if ("L".equalsIgnoreCase(joinLeaveMeeting)) {
-				responseJsonStr = callVVRestService(ServiceUtil.LEAVE_MEETING, inputJsonString);
+				responseJsonStr = callVVAPiService(ServiceUtil.LEAVE_MEETING, inputJsonString);
 			}// else part to be decided by ranjeet
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
@@ -1513,9 +1519,9 @@ public class WebService {
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
 			if ("J".equalsIgnoreCase(joinLeaveMeeting)) {
-				responseJsonStr = callVVRestService(ServiceUtil.JOIN_MEETING, inputJsonString);
+				responseJsonStr = callVVAPiService(ServiceUtil.JOIN_MEETING, inputJsonString);
 			} else if ("L".equalsIgnoreCase(joinLeaveMeeting)) {
-				responseJsonStr = callVVRestService(ServiceUtil.LEAVE_MEETING, inputJsonString);
+				responseJsonStr = callVVAPiService(ServiceUtil.LEAVE_MEETING, inputJsonString);
 			}
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
@@ -1556,7 +1562,7 @@ public class WebService {
 			input.setSessionId(sessionId);
 			inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
-			responseJsonStr = callVVRestService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
+			responseJsonStr = callVVAPiService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
 					inputJsonString);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
@@ -1566,7 +1572,7 @@ public class WebService {
 			logger.error(
 					"Web Service API error for guestLoginJoinMeeting for meetingHash:" + meetingHash + " Retrying...",
 					e);
-			responseJsonStr = callVVRestService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
+			responseJsonStr = callVVAPiService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
 					inputJsonString);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
@@ -1600,13 +1606,13 @@ public class WebService {
 			jsonInput.setClientId(clientId);
 			jsonInput.setSessionId(sessionID);
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
-			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
+			output = callVVAPiService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
 			if (StringUtils.isNotBlank(output)) {
 				meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			output = callVVRestService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
+			output = callVVAPiService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput));
 			if (StringUtils.isNotBlank(output)) {
 				meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
 			}
@@ -1646,10 +1652,10 @@ public class WebService {
 			jsonInput.setMobileFlow(isMobileFlow);
 			jsonInput.setClientId(WebUtil.MOB_CLIENT_ID);
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
-			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
+			output = callVVAPiService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingID + " Retrying...", e);
-			output = callVVRestService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
+			output = callVVAPiService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput));
 		}
 		logger.info(LOG_EXITING);
 		return output;
@@ -1776,7 +1782,7 @@ public class WebService {
 
 			final String inputString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputString);
-			jsonResponse = callVVRestService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString);
+			jsonResponse = callVVAPiService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString);
 		}
 		logger.info(LOG_EXITING);
 		return jsonResponse;
@@ -1805,7 +1811,7 @@ public class WebService {
 			input.setSessionId(sessionId);
 			final String inputString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputString);
-			jsonResponse = callVVRestService(ServiceUtil.AUTHORIZE_VV_CODE, inputString);
+			jsonResponse = callVVAPiService(ServiceUtil.AUTHORIZE_VV_CODE, inputString);
 		}
 		logger.info(LOG_EXITING);
 		return jsonResponse;
@@ -1840,5 +1846,137 @@ public class WebService {
 		logger.info(LOG_EXITING);
 		return output;
 	}
-
+	
+	public static String callAPIManagerService(final String operationName, final String input) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		try {
+			if(StringUtils.isNotBlank(accessToken)) {
+				output = callVVAPIManagerRestService(operationName, input, accessToken);
+			} else {
+				output = callVVNewTokenAPIManagerRestService(input, operationName);
+			}
+		} catch (HttpClientErrorException e) {
+			if(e.getRawStatusCode() == 401) {
+				//Retry to connect again by creating a new api token
+				try {
+					output = callVVNewTokenAPIManagerRestService(input, operationName);
+				} 
+				catch (Exception e1) {
+					logger.error("Web Service API error : " + e1.getMessage(), e1);
+				}
+			}
+		}		
+		catch(Exception e) {
+			logger.error("Web Service API error : " + e.getMessage(), e);
+			//retry again
+			try {
+				if(StringUtils.isNotBlank(accessToken)) {
+					output = callVVAPIManagerRestService(operationName, input, accessToken);
+				}
+			} catch (Exception e1) {
+				logger.error("Web Service API error : " + e1.getMessage(), e1);
+			}
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
+	public static String callVVAPIManagerRestService(final String operationName, final String input, String accessToken) throws URISyntaxException {
+		logger.info(LOG_ENTERED);
+		logger.debug("accessToken : " + accessToken);
+		String output = null;
+		String uriContext = null;
+		final String internalUrl = AppProperties.getExtPropertiesValueByKey("api_manager_internal_url");
+		uriContext = AppProperties.getExtPropertiesValueByKey("videovisit_integration_service_context");
+		final URI uri = new URI(internalUrl + uriContext + operationName);
+		logger.info("serviceUrl : " + uri);
+		
+		final HttpEntity<?> entity = new HttpEntity<Object>(input, getJsonHttpHeaders(accessToken));
+		final ResponseEntity<?> responseEntity = restTemplate.postForEntity(uri, entity, String.class);
+		if (responseEntity != null) {
+			output = (String) responseEntity.getBody();
+		}
+		logger.info(LOG_ENTERED);
+		return output;
+	}
+	
+	public static HttpHeaders getJsonHttpHeaders(final String accessToken) {
+		logger.info(LOG_ENTERED);
+		final HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + accessToken.trim());
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.set("Accept", "*/*");
+		logger.info(LOG_ENTERED);
+		return headers;
+	}
+	
+	public static String callVVNewTokenAPIManagerRestService(final String input, final String operationName) throws Exception {
+		logger.info(LOG_ENTERED);
+		APIToken apiToken = null;
+		String output = null;
+		apiToken = getAPIToken();
+		accessToken = apiToken.getAccessToken();
+		if (apiToken != null && StringUtils.isNotBlank(accessToken)) {
+			output = callVVAPIManagerRestService(operationName, input, accessToken);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
+	public static APIToken getAPIToken() throws Exception {
+		logger.info(LOG_ENTERED);
+		APIToken output = null;
+		try {
+			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
+			final String internalUrl = appProp.getProperty("api_manager_internal_url");
+			final String tokenApi = appProp.getProperty("token_api");
+			String consumerKey = appProp.getProperty("consumer_key_internal");
+			Crypto crypto = new Crypto();
+			String consumerSecret = crypto.read(appProp.getProperty("consumer_secret_internal"));
+			if (StringUtils.isBlank(consumerKey) || StringUtils.isBlank(consumerSecret)) {
+				consumerKey = CONSUMER_KEY_INTERNAL;
+				consumerSecret = CONSUMER_SECRET_INTERNAL;
+			}  
+			final URI uri = new URI(internalUrl + tokenApi);
+			logger.info("tokenUrl : " + uri);
+			final String authStr = consumerKey + ":" + consumerSecret;
+			logger.debug("authStr : " + authStr);
+			final String authEncoded = DatatypeConverter.printBase64Binary(authStr.getBytes());
+			final HttpHeaders httpHeaders = new HttpHeaders();
+			httpHeaders.set("Accept", "*/*");
+			httpHeaders.set("Authorization", "Basic " + authEncoded.trim());
+			final HttpEntity<?> entity = new HttpEntity<Object>(httpHeaders);
+			final ResponseEntity<?> responseEntity = restTemplate.postForEntity(uri, entity, String.class);
+			if (responseEntity != null) {
+				String outputJson = (String) responseEntity.getBody();
+				output = new Gson().fromJson(outputJson, APIToken.class);
+			}
+		} catch (Exception e) {
+			logger.error("Web Service API error : " + e.getMessage(), e);
+			if(retryFlag < 2) {
+				retryFlag++;
+				output = getAPIToken();
+				return output;
+			} else if(retryFlag == 2) {
+				retryFlag = 0;
+				throw e;
+			}
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
+	public static String callVVAPiService(final String operationName, final String input) {
+		logger.info(LOG_ENTERED);
+		String tokenFlag = AppProperties.getExtPropertiesValueByKey("token_flag");
+		String output = null;
+		if("false".equalsIgnoreCase(tokenFlag)) {
+			output = callVVRestService(operationName, input);
+		} else {
+			output = callAPIManagerService(operationName, input);
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }
