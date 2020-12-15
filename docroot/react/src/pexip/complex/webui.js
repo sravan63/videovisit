@@ -876,11 +876,11 @@ function getTurnServersObjs(turnServerDetails) {
 }
 
 function chatReceived(message){
-    var sender = message.origin;
-    var userName = JSON.parse(localStorage.getItem('memberName'));
-    if(sender == userName){
-        return;
-    }
+    // var sender = message.origin;
+    // var userName = JSON.parse(localStorage.getItem('memberName'));
+    // if(sender == userName){
+    //     return;
+    // }
     if(message.payload && message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
         // Received text format DUPLICATE_MEMBER#NAME#UUID
         var mData = message.payload.split('#');
