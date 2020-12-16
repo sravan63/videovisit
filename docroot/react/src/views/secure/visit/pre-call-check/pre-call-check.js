@@ -11,6 +11,7 @@ import { map, filter } from 'rxjs/operators';
 import Header from '../../../../components/header/header';
 import Loader from '../../../../components/loader/loader';
 import BackendService from '../../../../services/backendService.js';
+import * as WebUI from '../../../../pexip/complex/webui.js';
 import Utilities from '../../../../services/utilities-service.js';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service';
@@ -132,10 +133,12 @@ class PreCallCheck extends React.Component {
                 audioSource: this.state.constrains.micSource,
             };
             MediaService.start(constrains);
+            WebUI.switchDevices('video', media);
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media);
             this.setState({ musicOn: false });
+            WebUI.switchDevices('speaker', media);
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
             const constrains = {
@@ -143,6 +146,7 @@ class PreCallCheck extends React.Component {
                 audioSource: this.state.constrains.micSource,
             };
             MediaService.start(constrains);
+            WebUI.switchDevices('mic', media);
         }
         // Sets the constrains in dropdowns.
         this.setState({

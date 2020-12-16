@@ -105,15 +105,18 @@ class Setup extends React.Component {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
+            WebUI.switchDevices('video', media);
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media, 'video');
+            WebUI.switchDevices('speaker', media);
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
             const constrains = {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
+            WebUI.switchDevices('mic', media);
         }
         // Sets the constrains in dropdowns.
         this.setState({
