@@ -156,7 +156,7 @@ class Setup extends React.Component {
                 var guestPin = meeting.meetingId.split('').reverse().join(''),
                     roomJoinUrl = meeting.roomJoinUrl,
                     alias = meeting.meetingVendorId,
-                    bandwidth = "1280",
+                    bandwidth = null,
                     source = "Join+Conference",
                     name = meeting.member.inMeetingDisplayName;
                 localStorage.setItem('isSetupPage', true);
