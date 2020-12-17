@@ -1952,13 +1952,15 @@ public class WebService {
 				String outputJson = (String) responseEntity.getBody();
 				output = new Gson().fromJson(outputJson, APIToken.class);
 			}
+			retryFlag = 0;
 		} catch (Exception e) {
 			logger.error("Web Service API error : " + e.getMessage(), e);
 			if(retryFlag < 2) {
 				retryFlag++;
+				logger.error("retrying " + retryFlag + " time");
 				output = getAPIToken();
 				return output;
-			} else if(retryFlag == 2) {
+			} else if(retryFlag >= 2) {
 				retryFlag = 0;
 				throw e;
 			}
