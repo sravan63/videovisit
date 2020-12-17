@@ -897,6 +897,7 @@ function chatReceived(message){
 }
 
 export function pexipDisconnect() {
+    rtc.present(null);
     rtc.disconnect();
     var isDirectLaunch = localStorage.getItem('isDirectLaunch');
     var inAppAccess = UtilityService.getInAppAccessFlag();
