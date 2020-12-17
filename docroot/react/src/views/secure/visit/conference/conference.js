@@ -778,10 +778,7 @@ class Conference extends React.Component {
             if(response.data && response.data.code == '200') {
                 if(response.data.survey) {
                     MessageService.sendMessage(GlobalConfig.OPEN_SURVEY_MODAL, response.data.survey);
-                    let browserInfo = Utilities.getBrowserInformation();
-                    if(browserInfo.isFireFox){
                         this.setState({showVideoFeed: false});
-                    }
                 } else {
                     this.surveyInprogress = false;
                     if( this.quitMeetingCalled ){
