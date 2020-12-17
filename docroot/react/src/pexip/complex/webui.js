@@ -781,7 +781,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
         if(isSetupPage){
         audioSource = peripherals.micSource.deviceId;
         }
-        log('info', 'initialise peripherals', "event: video visit peripherals :: Camera - " + peripherals.videoSource.label + " Speaker - " + peripherals.audioSource.label + " Microphone - " + peripherals.micSource.label );
+        log('info', 'initialise peripherals', "event: video visit peripherals :: Camera - " + peripherals.videoSource.label + " Speaker - " + peripherals.audioSource == null ? " " : peripherals.audioSource.label + " Microphone - " + peripherals.micSource.label );
     } 
     var browserInfo = UtilityService.getBrowserInformation();
     if(UtilityService.isMobileDevice() && browserInfo.isFireFox){
