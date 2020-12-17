@@ -262,6 +262,13 @@ class MyMeetings extends React.Component {
             headers.isProxyMeeting = isProxyMeeting;
             localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
         }
+        var userType = isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
+            var vendorDetails = {
+                "meetingId": meeting.meetingId,
+                "userType": userType,
+                "userId": meeting.member.mrn
+            };
+            localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         sessionInfo.loginType = loginType;
         localStorage.setItem('sessionInfo', JSON.stringify(sessionInfo));
         var isMobile = UtilityService.isMobileDevice();
