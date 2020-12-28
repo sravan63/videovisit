@@ -85,14 +85,16 @@ class BackendService extends React.Component {
         else{
             loginType="guest";
         }
-        var logType = params[0],
-            meetingId = (params[3]) ? params[3] : '',
-            userType = (params[4]) ? params[4] : '',
-            userId =  (params[5]) ? params[5] : '',
-            eventName = (params[1]) ? params[1] : '',
-            eventDescription =  (params[2]) ? params[2] : ''
+        let headers = {
+            logType:  params[0],
+            meetingId : (params[3]) ? params[3] : '',
+            userType : (params[4]) ? params[4] : '',
+            userId :  (params[5]) ? params[5] : '',
+            eventName : (params[1]) ? params[1] : '',
+            eventDescription :  (params[2]) ? params[2] : ''
+        };
         
-        Axios.post(this.state.basePath + '/videovisit/' + 'logVendorMeetingEvents.json' + '?loginType=' + loginType + '&logType=' + logType + '&meetingId=' + meetingId+ '&userType=' + userType + '&userId=' + userId + '&eventName=' + eventName + '&eventDescription=' + eventDescription,{}).subscribe((response) => {
+        Axios.post(this.state.basePath + '/videovisit/' + 'logVendorMeetingEvents.json' + '?loginType=' + loginType,{},{ headers: headers }).subscribe((response) => {
                 console.log("success");
             },
             (err) => {
@@ -192,8 +194,14 @@ class BackendService extends React.Component {
         if(sessionStorage.getItem('UUID')) {
              callUUID = sessionStorage.getItem('UUID');
         }
+        let headers = {
+            meetingId: meetingId,
+            meetingVmr:meetingVmr,
+            participantName:participantName,
+            callUUID:callUUID
+        };
         var mediaData = WebUI.getMediaStatsData();
-        Axios.post(this.state.basePath + '/videovisit/' + 'insertVendorMeetingMediaCDR.json' + '?meetingId=' + meetingId + '&meetingVmr=' + meetingVmr + '&participantName=' + participantName + '&callUUID=' + callUUID, mediaData).subscribe((response) => {
+        Axios.post(this.state.basePath + '/videovisit/' + 'insertVendorMeetingMediaCDR.json', mediaData,{ headers: headers }).subscribe((response) => {
                 console.log("success",response);
             },
             (err) => {
@@ -209,7 +217,12 @@ class BackendService extends React.Component {
     }
 
     getSurveyDetails(meetingId, userType, userValue) {
-        return Axios.post(this.state.basePath + '/videovisit/' + 'getSurveyQuestions.json' + '?meetingId=' + meetingId+'&userType='+userType+'&userValue='+userValue, {});
+        let headers = {
+            meetingId:meetingId,
+            userType:userType,
+            userValue:userValue
+        };
+        return Axios.post(this.state.basePath + '/videovisit/' + 'getSurveyQuestions.json', {},{ headers: headers });
     }
 
     submitSurvey(survey) {
