@@ -832,14 +832,14 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String jsonOutput = null;
 		String result = null;
-		final String meetingId = request.getParameter("meetingId");
-		final String userType = request.getParameter("userType");
-		final String userId = request.getParameter("userId");
-		final String eventName = request.getParameter("eventName");
-		final String eventDescription = request.getParameter("eventDescription");
-		final String logType = request.getParameter("logType");
+		final String meetingId = request.getHeader("meetingId");
+		final String userType = request.getHeader("userType");
+		final String userId = request.getHeader("userId");
+		final String eventName = request.getHeader("eventName");
+		final String eventDescription = request.getHeader("eventDescription");
+		final String logType = request.getHeader("logType");
 		final String sessionId = request.getSession().getId();
-		final String loginType = request.getParameter(LOGIN_TYPE);
+		final String loginType = request.getHeader(LOGIN_TYPE);
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
@@ -1510,10 +1510,10 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String jsonOutput = null;
 		String result = null;
-		final String meetingId = request.getParameter("meetingId");
-		final String meetingVmr = request.getParameter("meetingVmr");
-		final String callUUID = request.getParameter("callUUID");
-		final String partipantName = request.getParameter("participantName");
+		final String meetingId = request.getHeader("meetingId");
+		final String meetingVmr = request.getHeader("meetingVmr");
+		final String callUUID = request.getHeader("callUUID");
+		final String partipantName = request.getHeader("participantName");
 
 		String mediaStats = "";
 		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
@@ -1582,9 +1582,9 @@ public class MeetingCommand {
 		String response = null;
 		try {
 			final Gson gson = new Gson();
-			final String meetingId = request.getParameter("meetingId");
-			final String userType = request.getParameter("userType");
-			final String userValue = request.getParameter("userValue");
+			final String meetingId = request.getHeader("meetingId");
+			final String userType = request.getHeader("userType");
+			final String userValue = request.getHeader("userValue");
 			String surveyName = AppProperties.getExtPropertiesValueByKey("MEMBER_SURVEY_NAME");
 			if(StringUtils.isBlank(surveyName)) {
 				surveyName = "pt_meeting_quality_feedback";
