@@ -7,7 +7,7 @@ module.exports = (env,options) => {
   return {
    output: {
       path: path.resolve(__dirname, "videovisit"),
-      filename: "bundle.js",
+      filename: "bundle.js?[contenthash]",
       publicPath: '/videovisit/'
     },
   devtool: isDev ? "#eval-source-map":false,
@@ -55,7 +55,6 @@ module.exports = (env,options) => {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      hash: true,
       template: "./src/index.html",
       favicon: './src/assets/favicon.ico'
     })
