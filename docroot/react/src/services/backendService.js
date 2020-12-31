@@ -38,7 +38,7 @@ class BackendService extends React.Component {
 
     getSSOLogin(username, password) {
         let headers = {
-            uname:username,
+            username:username,
             password: password
         }
         return Axios.post(this.state.basePath + '/videovisit/ssoSubmitLogin.json?loginType=sso', {}, { headers: headers });
