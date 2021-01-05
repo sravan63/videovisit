@@ -1857,8 +1857,10 @@ public class WebService {
 				output = callVVNewTokenAPIManagerRestService(input, operationName);
 			}
 		} catch (HttpClientErrorException e) {
+			logger.warn("status code: " + e.getRawStatusCode());
 			if(e.getRawStatusCode() == 401) {
 				//Retry to connect again by creating a new api token
+				logger.warn("received 401, so retrying with new token");
 				try {
 					output = callVVNewTokenAPIManagerRestService(input, operationName);
 				} 
@@ -1872,6 +1874,7 @@ public class WebService {
 			//retry again
 			try {
 				if(StringUtils.isNotBlank(accessToken)) {
+					 logger.warn("received error so, retrying with existing token");
 					output = callVVAPIManagerRestService(operationName, input, accessToken);
 				}
 			} catch (Exception e1) {
