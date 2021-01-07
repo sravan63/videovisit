@@ -37,7 +37,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.kp.tpmg.ttg.videovisit</groupId>
-			<artifactId>videovisitservice-client</artifactId>
+			<artifactId>videovisitsapi-client</artifactId>
 			<version>${vvservice-clientVersion}</version>
 			<exclusions>
 				<exclusion>
