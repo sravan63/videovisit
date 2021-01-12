@@ -1453,17 +1453,23 @@ public class MeetingCommand {
 		InputUserAnswers input = null;
 		long meetingId = 0;
 		try {
-			final Gson gson = new Gson();
-			if (request.getReader() != null && request.getReader().lines() != null) {
-				inputRequestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
-			}
-			logger.debug("inputRequestBody : " + inputRequestBody);
+			if (request != null && request.getSession() != null) {
+				final Gson gson = new Gson();
+				if (request.getReader() != null && request.getReader().lines() != null) {
+					inputRequestBody = request.getReader().lines().collect(Collectors.joining(System.lineSeparator()));
+				}
+				logger.debug("inputRequestBody : " + inputRequestBody);
 
-			input = gson.fromJson(inputRequestBody, InputUserAnswers.class);
-			input.setClientId(clientId);
-			input.setSessionId(request.getSession().getId());
-			meetingId = input.getMeetingId();
-			response = WebService.submitSurvey(gson, input);
+				input = gson.fromJson(inputRequestBody, InputUserAnswers.class);
+				if (input != null) {
+					input.setClientId(clientId);
+					input.setSessionId(request.getSession().getId());
+					meetingId = input.getMeetingId();
+					response = WebService.submitSurvey(gson, input);
+				} else {
+					logger.info("inputRequestBody/Input is null");
+				}
+			}
 		} catch (Exception e) {
 			logger.error("System Error while submitting the survey for meeting : " + meetingId, e);
 		}
