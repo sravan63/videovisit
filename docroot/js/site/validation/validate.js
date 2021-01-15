@@ -88,10 +88,10 @@ function validate(validationObj){
                 	if(!isValid){
                 		errorMessage = "Please enter at least 2 characters."
                 	}
-                    if (isValid){
+                    /*if (isValid){
                         //isValid = isAlphaNumeric(paramValue);
                         isValid = hasAllLegalCharacters(paramValue);
-                    }
+                    }*/
 	    			isAllValid = isAllValid && isValid;
 	    			
 	    			break;
