@@ -1467,7 +1467,7 @@ public class MeetingCommand {
 					meetingId = input.getMeetingId();
 					response = WebService.submitSurvey(gson, input);
 				} else {
-					logger.info("inputRequestBody/Input is null");
+					logger.warn("inputRequestBody/Input is null");
 				}
 			}
 		} catch (Exception e) {
