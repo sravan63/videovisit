@@ -51,7 +51,7 @@ class header extends React.Component {
                                 <div className = "logo"> 
                             </div> 
                             <div className = "title">
-                                <p className = "m-0" >Video Visits</p> 
+                                <p className = "m-0" >{this.props.data && this.props.data.videoVisits ? this.props.data.videoVisits: 'Video Visits' }</p>
                                 <p className = "text-uppercase m-0 sub-title" >The Permanente Medical Group</p> 
                             </div> 
                         </div> 

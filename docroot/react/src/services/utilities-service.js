@@ -14,6 +14,7 @@ class UtilityService extends React.Component {
         this.minTime = null;
         this.meetingBeginsAt = null;
         this.surveyTimeout = null;
+        this.lang='';
         this.validateBrowser = this.validateBrowser.bind(this);
         this.validateBrowser();
     }
@@ -34,6 +35,22 @@ class UtilityService extends React.Component {
     // Returns the browser informaion.
     getBrowserInformation() {
         return this.browserInfo;
+    }
+
+    setLang(param){
+        this.lang=param;
+    }
+
+    getLang(){
+        if(sessionStorage.getItem('Instant-Lang-selection')){
+            let lang = sessionStorage.getItem('Instant-Lang-selection');
+            let staticData = require('../lang/'+lang+'.json');
+            return staticData;
+        }
+        else {
+            let staticData = require('../lang/'+this.lang+'.json');
+            return staticData;
+        }
     }
 
     validateBrowserBlock(browserNames){

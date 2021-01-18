@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, Route, Link } from 'react-router-dom';
-import axios from 'axios';
+import Utilities from './services/utilities-service.js';
 
 import { routes, RouteWithSubRoutes } from './routerConfig';
 
@@ -9,6 +9,8 @@ class App extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {userDetails: {}};
+		Utilities.setLang('english');
+
 	}	
 	render() {
 		return (

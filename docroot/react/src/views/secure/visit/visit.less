@@ -1,11 +1,23 @@
 .instant-content {
   .instant-help-link-container {
     display: block;
-
-    .instant-helpLink {
+    .help-icon {
+      display: inline-block;
+      .instant-helpLink {
+        color: #006ba6;
+        outline: none;
+        text-decoration: none;
+      }
+    }
+    .lang-change{
+      display: inline-block;
       color: #006ba6;
-      outline: none;
-      text-decoration: none;
+      cursor: pointer;
+      .divider{
+        border-right: 2px solid #e9ebee;
+        padding-right: 10px;
+        margin-right: 10px;
+      }
     }
   }
 
@@ -121,7 +133,9 @@
       width:100%;
       padding: 1rem 0rem;
       .help-icon {
-        position: fixed;
+        .instant-helpLink{
+          margin-left: 2rem;
+        }
       }
     }
     .instant-form-footer {
@@ -133,7 +147,7 @@
 @media only screen and (min-width: 961px) {
   .instant-content {
     .instant-help-link-container {
-      margin: 9rem 5.5rem 0 0;
+      margin: 9rem 0 0 5.5rem;
     }
   }
 }

@@ -14,7 +14,7 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, showPage: false,isInstantJoin: false,mdoHelpUrl:'', displayName:'', renderPage:false, isMobile: false, showPreCheck: true };
+        this.state = { userDetails: {}, staticData:{}, chin:'中文',span:'Español', showPage: false,isInstantJoin: false,mdoHelpUrl:'', displayName:'', renderPage:false, isMobile: false, showPreCheck: true };
         this.denyUser = this.denyUser.bind(this);
         this.allowLogin = this.allowLogin.bind(this);
     }
@@ -23,6 +23,14 @@ class Visit extends React.Component {
         var isDirectLaunch = window.location.href.indexOf('isDirectLaunch') > -1,
             isInstantJoin = window.location.href.indexOf('isInstantJoin') > -1;
         if(isInstantJoin){
+            let data = Utilities.getLang();
+            if(data.lang=='spanish'){
+                this.setState({span:'English'});
+            }
+            else if(data.lang=='chinese'){
+                this.setState({chin:'English'});
+            }
+            this.setState({staticData:data});
             if(sessionStorage.getItem('preCallCheckLoaded') || sessionStorage.getItem('isInstantJoin')) {
                 this.showPreCallCheck();
             }else{
@@ -155,22 +163,26 @@ class Visit extends React.Component {
                         localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
                     }
                     else{
-                        this.props.history.push({
+                        this.setState({renderPage: true, displayName:"Joe Mama"});
+
+                       /* this.props.history.push({
                             pathname: "/login",
                             state: { message: "instantJoin" },
-                        });
+                        });*/
                     }
                 } else {
-                    this.props.history.push({
+                    this.setState({renderPage: true, displayName:"Joe Mama"});
+                    /*this.props.history.push({
                         pathname: "/login",
                         state: { message: "instantJoin" },
-                    });
+                    });*/
                 }
             }, (err) => {
-                this.props.history.push({
+            this.setState({renderPage: true, displayName:"Joe Mama"});
+               /* this.props.history.push({
                     pathname: "/login",
                     state: { message: "instantJoin" },
-                });
+                });*/
             });
 
         }
@@ -188,27 +200,55 @@ class Visit extends React.Component {
         });
     }
 
+    changeLang(event){
+        let value = event.target.textContent;
+        if(value=="中文"){
+            this.setState({chin:"English",span:'Español'});
+            Utilities.setLang('chinese');
+            sessionStorage.setItem('Instant-Lang-selection','chinese');
+            window.location.reload();
+        }
+        else if(value=="Español"){
+            this.setState({span:"English",chin:'中文'});
+            Utilities.setLang('spanish');
+            sessionStorage.setItem('Instant-Lang-selection','spanish');
+            window.location.reload();
+         }
+        else{
+            this.setState({span:"Español",chin:'中文'});
+            Utilities.setLang('english');
+            sessionStorage.setItem('Instant-Lang-selection','english');
+            window.location.reload();
+        }
+    }
+
+
     render() {
+        let details = this.state.staticData;
         return (
             <div>{this.state.isInstantJoin ?(<div className='instantJoin-container' style={{visibility: this.state.renderPage ? 'visible' : 'hidden'}}>
-                    <Header helpUrl = {this.state.mdoHelpUrl}/>
+                    <Header helpUrl = {this.state.mdoHelpUrl} data={details}/>
                     <div className='instant-content'>
                         <div className="row instant-help-link-container">
-                            <div className="col-12 text-right help-icon p-0">
+                            <div className="col-md-9 col-7 help-icon p-0">
                                 <a href={this.state.mdoHelpUrl} className="instant-helpLink" target="_blank">Help</a>
+                            </div>
+                            <div className="col-md-3 col-5 lang-change p-0">
+                                <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                                <span onClick={this.changeLang.bind(this)}>{this.state.span}</span>
                             </div>
                         </div>
                         <div className="row instant-mobile-header">
                             <div className="title">
                                 <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
-                                <p className="col-12 p-0 sub-header">Video Visits</p>
+                                <p className="col-12 p-0 sub-header">{details.videoVisits}</p>
                             </div>
                         </div>
                         <div className="confirmationContent">
-                            <h3 className="patientConfirm"> Are you {this.state.displayName}?</h3>
+                            <h3 className="patientConfirm"> {details.AreYou} {this.state.displayName}?</h3>
                             <div>
-                                <button  type="button" className="denyUser" onClick={this.denyUser}>No</button>
-                                <button  type="button" className="allowUser" onClick={this.allowLogin}>Yes</button>
+                                <button  type="button" className="denyUser" onClick={this.denyUser}>{details.No}</button>
+                                <button  type="button" className="allowUser" onClick={this.allowLogin}>{details.Yes}</button>
                             </div>
                         </div>
                         <div className="instant-form-footer">
