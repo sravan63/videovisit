@@ -1244,13 +1244,21 @@ function mobileloginSubmit(){
     var currentTime = new Date();
     var n = currentTime.getTime();
     // We are setting no cache in the url as safari is caching the url and returning the same results each time.
-	var postdata = 'last_name=' + $('input[name=last_name]').val() + '&mrn=' + $('input[name=mrn]').val() + '&birth_month='
-								+ $('input[name=birth_month]').val() + '&birth_year=' + $('input[name=birth_year]').val() + '&birth_day=' + birth_day + '&nocache=' + n;
+	var postData = {
+		last_name:$('input[name=last_name]').val(),
+		mrn:$('input[name=mrn]').val(),
+		birth_month:$('input[name=birth_month]').val(),
+		birth_year:$('input[name=birth_year]').val(),
+		birth_day:birth_day
+	};
 
 	$.ajax({
         type: "POST",
         url: VIDEO_VISITS_MOBILE.Path.login.ajaxurl,
-        data: postdata,
+		dataType: "json",
+		headers: postData,
+		cache: false,
+		data: {},
         success: function(returndata) {
             returndata = $.trim(returndata);
             
