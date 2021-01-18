@@ -175,7 +175,6 @@ class Visit extends React.Component {
                     });
                 }
             }, (err) => {
-            this.setState({renderPage: true, displayName:"Joe Mama"});
                 this.props.history.push({
                     pathname: "/login",
                     state: { message: "instantJoin" },
