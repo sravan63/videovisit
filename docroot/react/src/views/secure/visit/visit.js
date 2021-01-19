@@ -5,6 +5,7 @@ import BackendService from '../../../services/backendService.js';
 import Utilities from '../../../services/utilities-service.js';
 import GlobalConfig from '../../../services/global.config';
 import './visit.less';
+import {MessageService} from "../../../services/message-service";
 
 const PreCallCheck = React.lazy(() => import('./pre-call-check/pre-call-check'));
 const Conference = React.lazy(() => import('./conference/conference'));
@@ -23,14 +24,7 @@ class Visit extends React.Component {
         var isDirectLaunch = window.location.href.indexOf('isDirectLaunch') > -1,
             isInstantJoin = window.location.href.indexOf('isInstantJoin') > -1;
         if(isInstantJoin){
-            let data = Utilities.getLang();
-            if(data.lang=='spanish'){
-                this.setState({span:'English'});
-            }
-            else if(data.lang=='chinese'){
-                this.setState({chin:'English'});
-            }
-            this.setState({staticData:data});
+            this.getLanguage();
             if(sessionStorage.getItem('preCallCheckLoaded') || sessionStorage.getItem('isInstantJoin')) {
                 this.showPreCallCheck();
             }else{
@@ -60,12 +54,34 @@ class Visit extends React.Component {
         if (isMobile) {
             this.setState({ isMobile: true });
         }
+        this.subscription = MessageService.getMessage().subscribe((message) => {
+                if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+                    this.getLanguage();
+                }
+
+        });
+
 
     }
 
     denyUser(){
         window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
     }
+
+    getLanguage(){
+        let data = Utilities.getLang();
+        if(data.lang=='spanish'){
+            this.setState({span:'English',chin: '中文',staticData: data});
+        }
+        else if(data.lang=='chinese'){
+            this.setState({chin:'English',span:'Español',staticData: data});
+        }
+        else {
+            this.setState({span: "Español", chin: '中文',staticData: data});
+        }
+
+    }
+
 
     allowLogin(){
         this.setState({isInstantJoin:false});
@@ -163,7 +179,7 @@ class Visit extends React.Component {
                         localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
                     }
                     else{
-                        this.props.history.push({
+                       this.props.history.push({
                             pathname: "/login",
                             state: { message: "instantJoin" },
                         });
@@ -199,22 +215,16 @@ class Visit extends React.Component {
     changeLang(event){
         let value = event.target.textContent;
         if(value=="中文"){
-            this.setState({chin:"English",span:'Español'});
-            Utilities.setLang('chinese');
             sessionStorage.setItem('Instant-Lang-selection','chinese');
-            window.location.reload();
+            Utilities.setLang('chinese');
         }
         else if(value=="Español"){
-            this.setState({span:"English",chin:'中文'});
-            Utilities.setLang('spanish');
             sessionStorage.setItem('Instant-Lang-selection','spanish');
-            window.location.reload();
+            Utilities.setLang('spanish');
          }
         else{
-            this.setState({span:"Español",chin:'中文'});
-            Utilities.setLang('english');
             sessionStorage.setItem('Instant-Lang-selection','english');
-            window.location.reload();
+            Utilities.setLang('english');
         }
     }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import Axios from 'axios-observable';
 import GlobalConfig from './global.config';
+import { MessageService } from './message-service.js';
 
 var CryptoJS = require("crypto-js");
 
@@ -39,6 +40,7 @@ class UtilityService extends React.Component {
 
     setLang(param){
         this.lang=param;
+        MessageService.sendMessage(GlobalConfig.LANGUAGE_CHANGED, null);
     }
 
     getLang(){

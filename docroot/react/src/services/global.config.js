@@ -93,7 +93,8 @@ const GlobalConfig = {
     DUPLICATE_NAME: 'DUPLICATE_MEMBER#',
     UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR: 'UPDATE DUPLICATE MEMBERS TO SIDEBAR',
     ACTIVESPEAKER:'bold participant',
-    NOTACTIVESPEAKER:'unbold participant'
+    NOTACTIVESPEAKER:'unbold participant',
+    LANGUAGE_CHANGED:'language changed'
 };
 
 export default GlobalConfig;
