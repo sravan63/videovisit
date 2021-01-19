@@ -163,30 +163,34 @@ class Visit extends React.Component {
                         localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
                     }
                     else{
-                        this.props.history.push({
+                        this.setState({renderPage: true, displayName:"Joe Mama"});
+                        /*this.props.history.push({
                             pathname: "/login",
                             state: { message: "instantJoin" },
-                        });
+                        });*/
                     }
                 } else {
-                    this.props.history.push({
+                        this.setState({renderPage: true, displayName:"Joe Mama"});
+                    /*this.props.history.push({
                         pathname: "/login",
                         state: { message: "instantJoin" },
-                    });
+                    });*/
                 }
             }, (err) => {
-                this.props.history.push({
+                        this.setState({renderPage: true, displayName:"Joe Mama"});
+                /*this.props.history.push({
                     pathname: "/login",
                     state: { message: "instantJoin" },
-                });
+                });*/
             });
 
         }
         else{
-            this.props.history.push({
+            this.setState({renderPage: true, displayName:"Joe Mama"});
+            /*this.props.history.push({
                 pathname: "/login",
                 state: { message: "instantJoin" },
-            });
+            });*/
         }
     }
 
