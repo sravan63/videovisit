@@ -15,7 +15,7 @@ class MobileHeader extends React.Component {
         super(props);
         this.loggedInUserName = '';
         this.promoContainer = React.createRef();
-        this.state = { message: 'Testing', isMobile:false, hidePromotion: true, isInApp: false, showPromotion: false,mdoHelpUrl:'' };
+        this.state = { message: 'Testing',staticData:{}, chin:'中文',span:'Español', isMobile:false, hidePromotion: true, isInApp: false, showPromotion: false,mdoHelpUrl:'' };
     }
 
     componentDidMount() {
@@ -34,11 +34,25 @@ class MobileHeader extends React.Component {
 
         window.addEventListener('scroll', this.scrollHandler.bind(this));
         this.getBrowserBlockInfo();
+        if (localStorage.getItem('LoginUserDetails')) {
+            const data = JSON.parse(Utilities.decrypt(localStorage.getItem('LoginUserDetails')));
+            this.state.userDetails = data;
+            //const data = this.props.userDetails.userDetails;
+            this.setState({
+                name: data.lastName.toLowerCase() + ', ' + data.firstName.toLowerCase()
+            });
+        }
+        this.getLanguage();
+        this.subscription = MessageService.getMessage().subscribe((message) => {
+            if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+                this.getLanguage();
+            }
+        });
     }
 
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
-        // this.subscription.unsubscribe();
+        // this.subscription.unsubscribe();        
         window.removeEventListener('scroll', this.scrollHandler.bind(this), false);
     }
     
@@ -56,6 +70,34 @@ class MobileHeader extends React.Component {
         }, (err) => {
             console.log("Error");
         });
+    }
+    getLanguage(){
+        let data = Utilities.getLang();
+        if(data.lang=='spanish'){
+            this.setState({span:'English',chin: '中文',staticData: data});
+        }
+        else if(data.lang=='chinese'){
+            this.setState({chin:'English',span:'Español',staticData: data});
+        }
+        else {
+            this.setState({span: "Español", chin: '中文',staticData: data});
+        }
+
+    }
+    changeLang(event){
+        let value = event.target.textContent;
+        if(value=="中文"){
+            sessionStorage.setItem('Instant-Lang-selection','chinese');
+            Utilities.setLang('chinese');
+        }
+        else if(value=="Español"){
+            sessionStorage.setItem('Instant-Lang-selection','spanish');
+            Utilities.setLang('spanish');
+         }
+        else{
+            sessionStorage.setItem('Instant-Lang-selection','english');
+            Utilities.setLang('english');
+        }
     }
     scrollHandler(){
         if(this.promoContainer.current && this.state.showPromotion) {
@@ -100,8 +142,15 @@ class MobileHeader extends React.Component {
                         </div>
                     </div>) : ('') }
                     <div className={this.state.hidePromotion ? "header-controls" : "header-controls"}>
-                        < a href = {this.state.mdoHelpUrl} className = "helpMobile" target = "_blank" >Help</a>
-                        <a className="sign-off" onClick = {this.signOff}>Sign Out</a>
+                            <div className="lang-change float-left p-0">
+                                <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                                <span onClick={this.changeLang.bind(this)}>{this.state.span}</span>                        
+                            </div>    
+                        <a className="text-capitalize user-name sign-off">{this.state.name ? this.state.name : ''}</a><br/>
+                        <div className="float-right">
+                            <a href = {this.state.staticData.HelpLink} className="pr-2" target = "_blank">{this.state.staticData.Help}</a>|
+                            <a className="sign-off pl-2" onClick = {this.signOff}> Sign Out</a>
+                        </div>                        
                     </div>
                 </div>) :('') }
             </div>

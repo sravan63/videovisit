@@ -3,6 +3,21 @@
   "videoVisits": "視訊就診",
   "AreYou": "您是",
   "Yes": "是",
-  "No": "不是"
+  "No": "不是",
+  "KPUSERID":"KP.ORG 用戶 ID",
+  "Password":"密碼",
+  "Signin": "登錄",
+  "TempaccessBtnLabel": "視訊就診臨時准入",
+  "Help":"幫助",
+  "HelpLink":"https://mydoctor.kaiserpermanente.org/zh/ncal/help/video-visits",
+  "PatientGuest":"視訊就診患者訪客",
+  "EmailInvitation":"請點選您電子郵件邀請函中的鏈接。",
+  "PatientInformation":"患者資訊",
+  "lastname":"姓",
+  "MRN":"醫療紀錄編號",
+  "DOB":"出生日期",
+  "DOBMM":"月/",
+  "DOBYY":"年",
+  "Cancel":"取消"
 
 }

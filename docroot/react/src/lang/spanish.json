@@ -3,6 +3,21 @@
   "videoVisits": "Videoconsultas",
   "AreYou": "¿Es usted",
   "Yes": "Sí",
-  "No": "No"
+  "No": "No",
+  "KPUSERID":"NOMBRE DE USUARIO DE KP.ORG",
+  "Password":"CONTRASEÑA",
+  "Signin": "Iniciar sesión",
+  "TempaccessBtnLabel": "Acceso temporal para la videoconsulta",
+  "Help":"Ayuda",
+  "HelpLink": "https://mydoctor.kaiserpermanente.org/es/ncal/help/video-visits",
+  "PatientGuest":"Invitado del paciente",
+  "EmailInvitation":"Ingresar usando el enlace en la invitación de su correo electrónico",
+  "PatientInformation":"nformación del paciente",
+  "lastname":"APELLIDO",
+  "MRN":"NÚMERO DE HISTORIA CLÍNICA",
+  "DOB":"FECHA DE NACIMIENTO",
+  "DOBMM":"MM",
+  "DOBYY":"AAAA",
+  "Cancel":"Cancel"
 
 }

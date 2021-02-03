@@ -3,6 +3,21 @@
   "videoVisits": "Video Visits",
   "AreYou": "Are you",
   "Yes": "Yes",
-  "No": "No"
+  "No": "No",
+  "KPUSERID":"KP.ORG USER ID",
+  "Password":"Password",
+  "Signin": "Sign In",
+  "TempaccessBtnLabel":"Video Visit Temporary Access",
+  "Help":"Help",
+  "HelpLink": "https://mydoctor.kaiserpermanente.org/ncal/help/video-visits",
+  "PatientGuest":"If You're a Patient's Guest",
+  "EmailInvitation":"Guests of patients with a video visit, click the link in your email invitation.",
+  "PatientInformation":"Patient's Information",
+  "lastname":"Last name",
+  "MRN":"Medical record number",
+  "DOB":"Date of birth",
+  "DOBMM":"MM",
+  "DOBYY":"YYYY",
+  "Cancel":"Cancel"
 
 }

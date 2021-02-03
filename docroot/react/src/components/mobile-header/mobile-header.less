@@ -102,10 +102,10 @@
     }
     .header-controls {
         width: 100%;
-        height: 3rem;
+        height: 4rem;
         background: #FFFFFF;
         color: #006ba6;
-        padding: 1rem;
+        padding: 0.5rem 1rem 1rem 1rem;
         font-size: 1rem;
         text-align: center;
 
@@ -114,7 +114,19 @@
             cursor: pointer;
             text-decoration: none;
         }
-
+        .lang-change{
+            display: inline-block;
+            color: #006ba6;
+            cursor: pointer;
+            .divider{
+              border-right: 2px solid #006ba6;
+              padding-right: 10px;
+              margin-right: 10px;
+            }
+        }
+        .user-name{
+            color: #000000 !important;
+        }
         .helpMobile {
             float: left;
         }

@@ -23,7 +23,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, showVideoFeed: false, showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = { userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -334,6 +334,12 @@ class Conference extends React.Component {
             var helpUrl = localStorage.getItem('helpUrl');
             this.setState({ mdoHelpUrl: helpUrl });
         }
+        this.getLanguage();
+            this.subscription = MessageService.getMessage().subscribe((message) => {
+                if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+                    this.getLanguage();
+                }
+            });
     }
 
     sendMediaStats(data) {
@@ -710,7 +716,34 @@ class Conference extends React.Component {
         }
         localStorage.removeItem('selectedPeripherals');
     }
+    getLanguage(){
+        let data = Utilities.getLang();
+        if(data.lang=='spanish'){
+            this.setState({span:'English',chin: '中文',staticData: data});
+        }
+        else if(data.lang=='chinese'){
+            this.setState({chin:'English',span:'Español',staticData: data});
+        }
+        else {
+            this.setState({span: "Español", chin: '中文',staticData: data});
+        }
 
+    }
+    changeLang(event){
+        let value = event.target.textContent;
+        if(value=="中文"){
+            sessionStorage.setItem('Instant-Lang-selection','chinese');
+            Utilities.setLang('chinese');
+        }
+        else if(value=="Español"){
+            sessionStorage.setItem('Instant-Lang-selection','spanish');
+            Utilities.setLang('spanish');
+         }
+        else{
+            sessionStorage.setItem('Instant-Lang-selection','english');
+            Utilities.setLang('english');
+        }
+    }
     resetSessionToken(token) {
         this.state.accessToken = token;
         this.state.userDetails.ssoSession = token;
@@ -875,9 +908,15 @@ class Conference extends React.Component {
                     </div>
                     <div className="col-md-4 links text-right">
                         <ul>
-                            <li><a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a></li>
+                            <li><a href={this.state.staticData.HelpLink} className="help-link" target="_blank">{this.state.staticData.Help}</a></li>
                             <li className="text-capitalize">|</li>
                             <li><a className="help-link" onClick={this.refreshPage}>Refresh</a></li>
+                            <div className="lang-change p-0">
+                            <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                                    <span>|</span>
+                                    <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
+                            </div>    
+                            
                         </ul>
                     </div>
                 </div>

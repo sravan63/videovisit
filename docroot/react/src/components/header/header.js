@@ -14,9 +14,18 @@ class header extends React.Component {
                 name: '',
                 isInApp: false,
                 isSetup: false,
-                userDetails: {}
+                userDetails: {},
+                staticData:{}, chin:'中文',span:'Español'
             };
             this.signOffMethod = this.signOffMethod.bind(this);
+        }
+        componentDidMount() {              
+            this.getLanguage();
+            this.subscription = MessageService.getMessage().subscribe((message) => {
+                if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+                    this.getLanguage();
+                }
+            });      
         }
         componentWillMount() {
             //if(this.props.userDetails && this.props.userDetails.userDetails){
@@ -42,6 +51,35 @@ class header extends React.Component {
             MessageService.sendMessage(GlobalConfig.LOGOUT, null);
         }
 
+        getLanguage(){
+            let data = UtilityService.getLang();
+            if(data.lang=='spanish'){
+                this.setState({span:'English',chin: '中文',staticData: data});
+            }
+            else if(data.lang=='chinese'){
+                this.setState({chin:'English',span:'Español',staticData: data});
+            }
+            else {
+                this.setState({span: "Español", chin: '中文',staticData: data});
+            }
+    
+        }
+        changeLang(event){
+            let value = event.target.textContent;
+            if(value=="中文"){
+                sessionStorage.setItem('Instant-Lang-selection','chinese');
+                UtilityService.setLang('chinese');
+            }
+            else if(value=="Español"){
+                sessionStorage.setItem('Instant-Lang-selection','spanish');
+                UtilityService.setLang('spanish');
+             }
+            else{
+                sessionStorage.setItem('Instant-Lang-selection','english');
+                UtilityService.setLang('english');
+            }
+        }
+
         render() {
                 return (
                 <div className = "container-fluid">
@@ -57,21 +95,22 @@ class header extends React.Component {
                         </div> 
                         <div className = "col-md-5 text-right user-details" >
                             { this.state.name && !this.state.isSetup ? (<ul >
-                                <li className = "text-capitalize user-name" > 
-                                {this.state.name ? this.state.name : ''} 
-                                </li>
-                                 <li className = "text-capitalize" > 
-                                 {this.state.name ? '|' : ''} 
-                                 </li> 
-                                 <li > 
-                                 <a href = {this.props.helpUrl}
-                                className = "help-link"
-                                target = "_blank" >Help</a>
+                                <li className = "text-capitalize user-name">{this.state.name ? this.state.name : ''}</li>
+                                 <li className = "text-capitalize">{this.state.name ? '|' : ''} </li> 
+                                 <li>
+                                     <a href = {this.state.staticData.HelpLink} className = "help-link" target = "_blank" >{this.state.staticData.Help}</a>
                                 </li>
                                 <li> {this.state.name ? '|' : ''} </li> 
                                 <li className = "text-capitalize"> 
                                     {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>Sign out</a> :''}
-                                </li>                        
+                                </li>   
+                                <li className="text-capitalize">
+                                <div className="lang-change p-0" style={{display: window.location.href.indexOf('isInstantJoin') > -1 ? 'none' : 'block'}}>
+                                    <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                                    <span>|</span>
+                                    <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
+                                </div>    
+                                </li>                     
                             </ul> ) : (<KPLOGO />) }
                         </div>
                     </div>) : 

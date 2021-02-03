@@ -7,6 +7,7 @@ import Login from '../../components/tempaccess/tempaccess';
 import Loader from '../../components/loader/loader';
 import './guest-authentication.less';
 import BackendService from '../../services/backendService.js';
+import { MessageService } from '../../services/message-service.js';
 import UtilityService from '../../services/utilities-service.js';
 import GlobalConfig from '../../services/global.config';
 import BrowserBlock from '../../components/browser-block/browser-block';
@@ -15,7 +16,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'' };
+        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'' };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -62,6 +63,12 @@ class Authentication extends React.Component {
         if(sessionStorage.getItem('ReJoin')){
             this.setState({ ReJoin: true});
         }
+        this.getLanguage();
+        this.subscription = MessageService.getMessage().subscribe((message) => {
+            if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+                this.getLanguage();
+            }
+        });   
      }
      getBrowserBlockInfo(){
         var propertyName = 'browser',
@@ -164,7 +171,34 @@ class Authentication extends React.Component {
                 }
         });
     }
+    getLanguage(){
+        let data = UtilityService.getLang();
+        if(data.lang=='spanish'){
+            this.setState({span:'English',chin: '中文',staticData: data});
+        }
+        else if(data.lang=='chinese'){
+            this.setState({chin:'English',span:'Español',staticData: data});
+        }
+        else {
+            this.setState({span: "Español", chin: '中文',staticData: data});
+        }
 
+    }
+    changeLang(event){
+        let value = event.target.textContent;
+        if(value=="中文"){
+            sessionStorage.setItem('Instant-Lang-selection','chinese');
+            UtilityService.setLang('chinese');
+        }
+        else if(value=="Español"){
+            sessionStorage.setItem('Instant-Lang-selection','spanish');
+            UtilityService.setLang('spanish');
+         }
+        else{
+            sessionStorage.setItem('Instant-Lang-selection','english');
+            UtilityService.setLang('english');
+        }
+    }
     errorCompForGuestLogin() {
         this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_ERROR_MSG, showLoader: false });
         window.scrollTo(0, 0);
@@ -227,8 +261,13 @@ class Authentication extends React.Component {
                 : ('')}
                 
                 <div className={this.state.errorlogin ? "row mobile-help-link error-chk":"row mobile-help-link"}>
-                    <div className="col-12 text-right help-icon p-0">
-                        <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
+                    <div className="col-md-9 col-7 lang-change p-0">
+                            <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                            <span>|</span>
+                            <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>                               
+                    </div>
+                    <div className="col-md-3 col-5 help-icon p-0">
+                        <a href={this.state.staticData.HelpLink} className="instant-helpLink" target="_blank">{this.state.staticData.Help}</a>
                     </div>
                 </div>
                 <div className="row mobile-logo-container">

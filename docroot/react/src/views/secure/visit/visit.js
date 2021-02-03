@@ -202,7 +202,7 @@ class Visit extends React.Component {
             this.props.history.push({
                 pathname: "/login",
                 state: { message: "instantJoin" },
-            });
+            });            
         }
     }
 
@@ -236,12 +236,13 @@ class Visit extends React.Component {
                     <Header helpUrl = {this.state.mdoHelpUrl} data={details}/>
                     <div className='instant-content'>
                         <div className="row instant-help-link-container">
-                            <div className="col-md-9 col-7 help-icon p-0">
-                                <a href={this.state.mdoHelpUrl} className="instant-helpLink" target="_blank">Help</a>
+                            <div className="col-md-9 col-7 lang-change p-0">
+                            <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                            <span onClick={this.changeLang.bind(this)}>{this.state.span}</span>                               
                             </div>
-                            <div className="col-md-3 col-5 lang-change p-0">
-                                <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                                <span onClick={this.changeLang.bind(this)}>{this.state.span}</span>
+                            <div className="col-md-3 col-5 help-icon p-0">
+ 
+                                <a href={details.HelpLink} className="instant-helpLink" target="_blank">{details.Help}</a>
                             </div>
                         </div>
                         <div className="row instant-mobile-header">
