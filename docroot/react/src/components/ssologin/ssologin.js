@@ -151,30 +151,30 @@ export default class Ssologin extends React.Component {
                         {!this.state.isInApp ?(<div className="row mobile-logo-container">
                             <div className="title">
                                 <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
-                                <p className="col-12 p-0 sub-header">Video Visits</p>
+                                <p className="col-12 p-0 sub-header">{this.props.data.translateLang.videoVisits}</p>
                             </div>
                         </div>) :
                         ('')}
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group top-form-group-margin">
-                                <label className="col-sm-12 text-uppercase">kp.org user ID</label>
+                                <label className="col-sm-12 text-uppercase">{this.props.data.translateLang.KPUSERID}</label>
                                 <div className="col-sm-12">
                                     <input type="text" name="username" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')} disabled={this.props.data.browserBlock} />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-12 text-uppercase">Password</label>
+                                <label className="col-sm-12 text-uppercase">{this.props.data.translateLang.Password}</label>
                                 <div className="col-sm-12">
                                     <input type="password" name="password" value={this.state.password} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" onChange={this.handleChange.bind(this,'password')} disabled={this.props.data.browserBlock} />
                                 </div>
                             </div>
                             <div className="form-group mobile-submit margin-gap">
-                                <button type="submit" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled || this.props.data.browserBlock}>Sign In</button>
+                                <button type="submit" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled || this.props.data.browserBlock}>{this.props.data.translateLang.Signin}</button>
                             </div>
                         </form>
                         <button type="button" disabled={this.props.data.browserBlock} className="mobile-form-toggle mt-1 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >
                             <span className="video-icon mr-1"></span>
-                            <span className="toggle-text" >Video Visit Temporary Access </span>
+                            <span className="toggle-text" >{this.props.data.translateLang.TempaccessBtnLabel}</span>
                         </button>
                     </div> ) : ('')}
                 </div>

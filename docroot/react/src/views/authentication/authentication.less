@@ -16,6 +16,16 @@
 
     .help-link-container {
         display: block;
+        .lang-change{            
+            color: #006ba6;
+            cursor: pointer;
+            .divider{                      
+                padding-right: 0.5rem;                      
+              }
+              .spanishlabel{
+                  padding-left: 0.5rem;
+              }
+          }
     }
     .help-link {
         color: #006ba6;
@@ -144,6 +154,7 @@
 
             .login-form {
                 margin: 0 auto;
+                margin-top: 8%;
                 .form-group {
                     .label {
                         font-size: .8125rem;
@@ -234,7 +245,14 @@
     background: #FFFFFF;
     height: 0rem;
 }
-
+@media only screen and (min-width: 960px) {
+    .main-content {    
+        .help-link-container {
+            display: block;
+            margin: 9rem 0 0 5.5rem;            
+        }
+    }
+}
 /* Mobile Styles to  Tablet Styles */
 @media only screen and (max-width: 960px) {
     .main-content {
@@ -249,6 +267,7 @@
                 margin: 0;
                 .mobile-logo-container {
                     display: block;
+                    margin-top: 1rem;
                 }
                 .login-form {
                     .margin-gap {
@@ -268,6 +287,9 @@
 
         .help-link-container {
             display: flex;
+            .help-icon{
+                text-align: right;
+            }
         }
 
         .error-text {
@@ -382,7 +404,7 @@
             margin: 11.2rem 5.5rem 0 0 !important;
         }
         .help-link-container{
-            margin: 9rem 5.5rem 0 0;
+           // margin: 9rem 5.5rem 0 0;
         }
         .sso-content {
             margin-top: 2rem;

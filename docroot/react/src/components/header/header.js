@@ -104,7 +104,7 @@ class header extends React.Component {
                                 <li className = "text-capitalize"> 
                                     {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>Sign out</a> :''}
                                 </li>   
-                                <li className="text-capitalize">
+                                <li className="text-capitalize lang-trans">
                                 <div className="lang-change p-0" style={{display: window.location.href.indexOf('isInstantJoin') > -1 ? 'none' : 'block'}}>
                                     <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
                                     <span>|</span>
