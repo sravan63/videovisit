@@ -261,13 +261,13 @@ class Authentication extends React.Component {
                 : ('')}
                 
                 <div className={this.state.errorlogin ? "row mobile-help-link error-chk":"row mobile-help-link"}>
-                    <div className="col-md-9 col-7 lang-change p-0">
+                    <div className="col-md-10 help-icon text-right p-0">
+                        <a href={this.state.staticData.HelpLink} className="help-link" target="_blank">{this.state.staticData.Help}</a>
+                        <div className="lang-change p-0">
                             <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
                             <span>|</span>
-                            <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>                               
-                    </div>
-                    <div className="col-md-3 col-5 help-icon p-0">
-                        <a href={this.state.staticData.HelpLink} className="instant-helpLink" target="_blank">{this.state.staticData.Help}</a>
+                            <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
+                        </div>
                     </div>
                 </div>
                 <div className="row mobile-logo-container">
