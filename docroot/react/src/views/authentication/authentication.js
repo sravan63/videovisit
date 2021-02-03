@@ -142,7 +142,7 @@ class Authentication extends React.Component {
                 : ('')}
                 {!this.state.isInApp ? (
                 <div className={this.state.isMobileError ? "row help-link-container error-chk":"row help-link-container"}>                    
-                    <div className="col-md-10 help-icon text-right p-0">
+                    <div className="col-lg-10 col-md-12 help-icon text-right p-0">
                         <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
                         <div className="lang-change p-0">
                             <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
