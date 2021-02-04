@@ -25,7 +25,7 @@ class PreCallCheck extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { userDetails: {},renderView:false, showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false,mdoHelpUrl:'' };
+        this.state = { userDetails: {},renderView:false, staticData:{}, chin:'中文',span:'Español',showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false,mdoHelpUrl:'' };
         this.goBack = this.goBack.bind(this);
         this.joinVisit = this.joinVisit.bind(this);
         this.permissionRequiredContent = {
@@ -94,6 +94,12 @@ class PreCallCheck extends React.Component {
             this.setState({ mdoHelpUrl: helpUrl });
         }
         //this.getBrowserBlockInfo();
+        this.getLanguage();
+        this.subscription = MessageService.getMessage().subscribe((message) => {
+            if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+                this.getLanguage();
+            }
+        }); 
     }
     /*getBrowserBlockInfo(){
         var propertyName = 'browser',
@@ -183,9 +189,37 @@ class PreCallCheck extends React.Component {
         MediaService.stop();
         this.props.data.togglePrecheck();
     }
+    getLanguage(){
+        let data = Utilities.getLang();
+        if(data.lang=='spanish'){
+            this.setState({span:'English',chin: '中文',staticData: data});
+        }
+        else if(data.lang=='chinese'){
+            this.setState({chin:'English',span:'Español',staticData: data});
+        }
+        else {
+            this.setState({span: "Español", chin: '中文',staticData: data});
+        }
 
+    }
+    changeLang(event){
+        let value = event.target.textContent;
+        if(value=="中文"){
+            sessionStorage.setItem('Instant-Lang-selection','chinese');
+            Utilities.setLang('chinese');
+        }
+        else if(value=="Español"){
+            sessionStorage.setItem('Instant-Lang-selection','spanish');
+            Utilities.setLang('spanish');
+         }
+        else{
+            sessionStorage.setItem('Instant-Lang-selection','english');
+            Utilities.setLang('english');
+        }
+    }
 
     render() {
+        let Details = this.state.staticData;
         return (
             <div>
             <VVModal />
@@ -200,7 +234,14 @@ class PreCallCheck extends React.Component {
                     </div>
                     <div className="col-md-4 links text-right">
                         <ul>
-                            <li><a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a></li>
+                            <li>
+                            <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
+                                <div className="lang-change p-0">
+                                    <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                                    <span>|</span>
+                                    <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
+                                </div>    
+                        </li>
                         </ul>
                     </div>
                   </div>

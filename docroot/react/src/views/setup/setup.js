@@ -28,7 +28,7 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {}, userDetails: {}, media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:''};
+        this.state = { data: {}, userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:''};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
     }
@@ -61,6 +61,12 @@ class Setup extends React.Component {
         });
         
         this.getBrowserBlockInfo();
+        this.getLanguage();
+        this.subscription = MessageService.getMessage().subscribe((message) => {
+            if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+                this.getLanguage();
+            }
+        }); 
     }
 
     componentWillUnmount() {
@@ -175,14 +181,47 @@ class Setup extends React.Component {
     doneSetupTest() {
         this.setState({ startTest: false, loadingSetup: false });
     }
+    getLanguage(){
+        let data = UtilityService.getLang();
+        if(data.lang=='spanish'){
+            this.setState({span:'English',chin: '中文',staticData: data});
+        }
+        else if(data.lang=='chinese'){
+            this.setState({chin:'English',span:'Español',staticData: data});
+        }
+        else {
+            this.setState({span: "Español", chin: '中文',staticData: data});
+        }
 
+    }
+    changeLang(event){
+        let value = event.target.textContent;
+        if(value=="中文"){
+            sessionStorage.setItem('Instant-Lang-selection','chinese');
+            UtilityService.setLang('chinese');
+        }
+        else if(value=="Español"){
+            sessionStorage.setItem('Instant-Lang-selection','spanish');
+            UtilityService.setLang('spanish');
+         }
+        else{
+            sessionStorage.setItem('Instant-Lang-selection','english');
+            UtilityService.setLang('english');
+        }
+    }
     render() {
+        let Details = this.state.staticData;
         return (
             <div id='container' className="setup-page">
                  <Header helpUrl = {this.state.mdoHelpUrl}/>
                  <div className="row mobile-help-link">
-                    <div className="col-12 text-right help-icon p-0">
-                        <a href={this.state.mdoHelpUrl} className="help-link" target="_blank">Help</a>
+                 <div className="col-lg-12 col-md-12 help-icon text-right float-left p-0">
+                        <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
+                        <div className="lang-change p-0">
+                            <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                            <span>|</span>
+                            <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
+                        </div>
                     </div>
                  </div>
                 <div className="row mobile-logo-container">
