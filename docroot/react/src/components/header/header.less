@@ -86,5 +86,51 @@
 @media only screen and (max-width: 960px) {
     .header-content {
         display: none !important;
+        .user-details {
+            margin-left: -4.7rem;
+            // padding: 2.5rem 0;
+    
+            ul {
+                list-style: none;
+                padding: 2.5rem 0;
+    
+                .user-name {
+                    display: inline-block;
+                    width: calc(100% - 11.403rem);
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    vertical-align: bottom;
+                    color: #000000;
+                }
+                li {
+                    display: inline-block;
+                    padding: 0 0.5rem;
+                    .help-link {
+                        color: #006ba6;
+                        outline: none;
+                        text-decoration: none;
+                    }
+    
+                    .sign-off {
+                        cursor: pointer;
+                    }
+                    .lang-change{
+                        color: #006ba6;
+                        cursor: pointer;
+                        float: left;
+                        .divider{                      
+                          padding-right: 0.5rem;                      
+                        }
+                        .spanishlabel{
+                            padding-left: 0.5rem;
+                        }
+                      }                  
+                }
+                .lang-trans{
+                    padding-top: 3px;
+                }
+            }
+        }
     }
 }

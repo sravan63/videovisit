@@ -142,15 +142,17 @@ class MobileHeader extends React.Component {
                         </div>
                     </div>) : ('') }
                     <div className={this.state.hidePromotion ? "header-controls" : "header-controls"}>
-                            <div className="lang-change float-left p-0">
-                                <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                                <span onClick={this.changeLang.bind(this)}>{this.state.span}</span>                        
-                            </div>    
+                               
                         <a className="text-capitalize user-name sign-off">{this.state.name ? this.state.name : ''}</a><br/>
                         <div className="float-right">
                             <a href = {this.state.staticData.HelpLink} className="pr-2" target = "_blank">{this.state.staticData.Help}</a>|
                             <a className="sign-off pl-2" onClick = {this.signOff}> Sign Out</a>
-                        </div>                        
+                        </div>    
+                        <div className="lang-change float-left p-0">
+                                <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                                <span>|</span>
+                                <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>                        
+                            </div>                     
                     </div>
                 </div>) :('') }
             </div>

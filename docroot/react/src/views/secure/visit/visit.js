@@ -236,7 +236,7 @@ class Visit extends React.Component {
                     <Header helpUrl = {this.state.mdoHelpUrl} data={details}/>
                     <div className='instant-content'>
                         <div className="row instant-help-link-container">
-                        <div className="col-lg-10 col-md-12 help-icon text-right p-0">
+                        <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                         <a href={details.HelpLink} className="help-link" target="_blank">{details.Help}</a>
                             <div className="lang-change p-0">
                                 <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>

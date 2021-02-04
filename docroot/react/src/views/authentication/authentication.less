@@ -376,12 +376,6 @@
 
         .sso-content,
         .temp-content {
-            // .width-p-auto{
-            //     width: auto !important;
-            // }
-            // .width-l-fit{
-            //     width: fit-content !important;
-            // }
             .sso-form,
             .temp-form {
                 margin: 0 auto;
@@ -400,9 +394,9 @@
             margin: -2.73rem auto -8rem auto;
             width: 100%;
             left: 0;
-            position: fixed;
+            position: absolute;
             right: 0;
-            z-index: 1;
+            //z-index: 1;
         }
         .isScrollChk{
             width: 97% !important; 
@@ -430,6 +424,13 @@
         }
     }
 }
+@media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
+    .main-content {
+        .help-link-container {
+            margin: 9rem 2rem 0 5.5rem;
+        }
+    }
+  }
 /* Iphone X */
 @media only screen and (device-width : 375px) and (device-height : 812px) and (-webkit-device-pixel-ratio : 3) and (orientation : portrait) { 
     .auth-form-footer {
