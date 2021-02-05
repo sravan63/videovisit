@@ -94,7 +94,7 @@ class header extends React.Component {
                             </div> 
                         </div> 
                         <div className = "col-md-5 text-right user-details" >
-                            { this.state.name && !this.state.isSetup ? (<ul >
+                            { this.state.name && !this.state.isSetup && !(window.location.href.indexOf('isInstantJoin') > -1) ? (<ul >
                                 <li className = "text-capitalize user-name">{this.state.name ? this.state.name : ''}</li>
                                  <li className = "text-capitalize">{this.state.name ? '|' : ''} </li> 
                                  <li>
@@ -105,7 +105,7 @@ class header extends React.Component {
                                     {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>Sign out</a> :''}
                                 </li>   
                                 <li className="text-capitalize lang-trans">
-                                <div className="lang-change p-0" style={{display: window.location.href.indexOf('isInstantJoin') > -1 ? 'none' : 'block'}}>
+                                <div className="lang-change p-0">
                                     <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
                                     <span>|</span>
                                     <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
