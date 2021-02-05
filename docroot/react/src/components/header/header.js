@@ -84,7 +84,7 @@ class header extends React.Component {
                 return (
                 <div className = "container-fluid">
                     { !this.state.isInApp ? (
-                        <div className = {!this.state.name || this.state.isSetup ? "row header-content bmargin" : "row header-content"}>
+                        <div className = {!this.state.name || this.state.isSetup ? "row header-content bmargin" : "row header-content bmargin"}>
                             <div className = "col-md-7 banner-content">
                                 <div className = "logo"> 
                             </div> 
