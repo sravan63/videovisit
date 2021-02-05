@@ -431,17 +431,7 @@
 //         }
 //     }
 //   }
-@media only screen
-   and (min-device-width: 375px)
-   and (max-device-width: 812px)
-   and (-webkit-min-device-pixel-ratio: 3) and (orientation:landscape) {
-    .main-content {
-                .help-link-container {
-                    margin-bottom: 1rem;
-                }
-            }
- }
-/* Iphone X */
+ /* Iphone X */
 @media only screen and (device-width : 375px) and (device-height : 812px) and (-webkit-device-pixel-ratio : 3) and (orientation : portrait) { 
     .auth-form-footer {
         top:-1rem;
@@ -457,6 +447,13 @@
 @media only screen and (device-width : 414px) and (device-height :896px) and (orientation : portrait) { 
     .auth-form-footer {
         bottom:3rem;
+    }
+}
+@media only screen and (device-width : 414px) and (device-height :896px) and (orientation : landscape) { 
+    .main-content {
+        .mobile-logo-container {
+            margin-top: 3rem;
+        }
     }
 }
 @media only screen and (device-width :834px) and (device-height :1151px) and (orientation : portrait) { 
