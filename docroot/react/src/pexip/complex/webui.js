@@ -478,7 +478,7 @@ function participantCreated(participant) {
     pexipParticipantsList.push(participant);
     // log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
     
-    if (participant.protocol == "sip") {
+    if (participant.is_audio_only_call == "YES") {
         var joinParticipantMsg = {
             message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
             name: participant.display_name
@@ -517,10 +517,10 @@ function participantCreated(participant) {
 
 function participantUpdated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
-    if(participant.spotlight != 0 && participant.protocol !='sip'){
+    if(participant.spotlight != 0 && participant.is_audio_only_call !='YES'){
         MessageService.sendMessage(GlobalConfig.SPOTLIGHT,participant);
     }
-    else if(participant.protocol !='sip'){
+    else if(participant.is_audio_only_call !='YES'){
         MessageService.sendMessage(GlobalConfig.UNSPOTLIGHT,participant);
     }
     pexipParticipantsList.push(participant);
