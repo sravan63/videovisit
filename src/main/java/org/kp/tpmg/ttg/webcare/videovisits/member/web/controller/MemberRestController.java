@@ -37,7 +37,7 @@ public class MemberRestController{
 			logger.info("ssoCookie Value : "+ssoCookie.getValue());
 			result = MeetingCommand.validateKpOrgSSOSession(request, ssoCookie.getValue());
 		}
-		logger.info("validateKpOrgSSOSession result : "+result);
+		logger.debug("validateKpOrgSSOSession result : "+result);
 		logger.info(LOG_EXITING);
 		return result;
 	}
