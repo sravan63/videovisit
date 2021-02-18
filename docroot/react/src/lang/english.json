@@ -35,7 +35,7 @@
       "RunningLateLabel":"We're sorry, your doctor is running late."
     },
     "guestauth":{
-      "GuestHeaderLabelTxt":"Children age 11 and younger must have a parent or legal guardian present during the visit",
+      "GuestHeaderLabelTxt":"Children age 11 and younger must have a parent or legal guardian present during the visit.",
       "PatientLastName":"Patient’s Last Name",
       "JoinBtnName":"Join"
     },

@@ -290,7 +290,7 @@ class Authentication extends React.Component {
                     <div className="row notice">{Details.GuestHeaderLabelTxt}</div>
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group">
-                                <label className="col-sm-12 text-capitalize">{Details.PatientLastName}</label>
+                                <label className="col-sm-12">{Details.PatientLastName}</label>
                                 <div className="col-sm-12">
                                     <input type="text" pattern="[a-zA-Z]+" name="lastname" disabled = {this.state.inputDisable || this.state.isBrowserBlockError} value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input"/>
                                 </div>
