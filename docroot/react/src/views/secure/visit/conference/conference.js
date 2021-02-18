@@ -925,7 +925,7 @@ class Conference extends React.Component {
                         <div className="col-md-10 p-0 video-conference" style={{visibility: this.state.showRemotefeed ? 'visible' : 'hidden'}}>
                             <ConferenceControls controls={this.state}/>
                             <div className="col-11 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                                <WaitingRoom waitingroom={this.state} />
+                                <WaitingRoom waitingroom={this.state} data={{translateLang:this.state.staticData}} />
                                 <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                 <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>

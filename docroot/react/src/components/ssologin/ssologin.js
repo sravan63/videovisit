@@ -157,24 +157,24 @@ export default class Ssologin extends React.Component {
                         ('')}
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group top-form-group-margin">
-                                <label className="col-sm-12 text-uppercase">{this.props.data.translateLang.KPUSERID}</label>
+                                <label className="col-sm-12 text-uppercase">{this.props.data.translateLang.auth.sso.KPUSERID}</label>
                                 <div className="col-sm-12">
                                     <input type="text" name="username" value={this.state.username} className="form-control rounded-0 p-0 shadow-none no-outline textindent mobile-input" onChange={this.handleChange.bind(this,'username')} disabled={this.props.data.browserBlock} />
                                 </div>
                             </div>
                             <div className="form-group">
-                                <label className="col-sm-12 text-uppercase">{this.props.data.translateLang.Password}</label>
+                                <label className="col-sm-12 text-uppercase">{this.props.data.translateLang.auth.sso.Password}</label>
                                 <div className="col-sm-12">
                                     <input type="password" name="password" value={this.state.password} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" onChange={this.handleChange.bind(this,'password')} disabled={this.props.data.browserBlock} />
                                 </div>
                             </div>
                             <div className="form-group mobile-submit margin-gap">
-                                <button type="submit" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled || this.props.data.browserBlock}>{this.props.data.translateLang.Signin}</button>
+                                <button type="submit" className="btn rounded-0 p-0 login-submit" id="login" onClick={this.getLoginUserDetails} disabled={this.button.disabled || this.props.data.browserBlock}>{this.props.data.translateLang.auth.sso.Signin}</button>
                             </div>
                         </form>
                         <button type="button" disabled={this.props.data.browserBlock} className="mobile-form-toggle mt-1 btn row pr-2 pl-0" onClick={() => this.props.data.emit({isTemp: true})} >
                             <span className="video-icon mr-1"></span>
-                            <span className="toggle-text" >{this.props.data.translateLang.TempaccessBtnLabel}</span>
+                            <span className="toggle-text" >{this.props.data.translateLang.auth.temp.TempaccessBtnLabel}</span>
                         </button>
                     </div> ) : ('')}
                 </div>

@@ -91,7 +91,7 @@ class Authentication extends React.Component {
         else {
             this.setState({span: "Español", chin: '中文',staticData: data});
         }
-
+        
     }
     changeLang(event){
         let value = event.target.textContent;
@@ -126,7 +126,10 @@ class Authentication extends React.Component {
     }
 
     render() {
-        let Details = this.state.staticData;
+        var Details = this.state.staticData;
+        if(Details && Details.auth && Details.auth.sso){
+            var ssoDetails = Details.auth.sso;
+        }
         return (
             <div id='container' className="authentication-page">
             {this.state.showLoader ? (<Loader />):('')}
@@ -162,8 +165,8 @@ class Authentication extends React.Component {
                     </Suspense>
                 </div>
                 <div className="row mobile-footer mt-3" style={{display: this.state.isInApp ? 'block' : 'auto', margin: this.state.isInApp && window.window.innerWidth >= 1024 ? '0' : ''}}>
-                    <p className="col-12 font-weight-bold">{Details.PatientGuest}</p>
-                    <p className="col-12 secondary">{Details.EmailInvitation}</p>
+                    <p className="col-12 font-weight-bold">{ssoDetails && ssoDetails.PatientGuest}</p>
+                    <p className="col-12 secondary">{ssoDetails && ssoDetails.EmailInvitation}</p>
                 </div>
                 {!this.state.isInApp ?(<div className="auth-form-footer" style={{bottom:this.state.isBrowserBlockError ? '0rem': ''}}>
                     <Footer />

@@ -1,23 +1,49 @@
 {
   "lang": "spanish",
   "videoVisits": "Videoconsultas",
-  "AreYou": "¿Es usted",
-  "Yes": "Sí",
-  "No": "No",
-  "KPUSERID":"NOMBRE DE USUARIO DE KP.ORG",
-  "Password":"CONTRASEÑA",
-  "Signin": "Iniciar sesión",
-  "TempaccessBtnLabel": "Acceso temporal para la videoconsulta",
   "Help":"Ayuda",
   "HelpLink": "https://mydoctor.kaiserpermanente.org/es/ncal/help/video-visits",
-  "PatientGuest":"Invitado del paciente",
-  "EmailInvitation":"Ingresar usando el enlace en la invitación de su correo electrónico",
-  "PatientInformation":"nformación del paciente",
-  "lastname":"APELLIDO",
-  "MRN":"NÚMERO DE HISTORIA CLÍNICA",
-  "DOB":"FECHA DE NACIMIENTO",
-  "DOBMM":"MM",
-  "DOBYY":"AAAA",
-  "Cancel":"Cancel"
-
+  "auth":{
+      "sso":{
+        "KPUSERID":"NOMBRE DE USUARIO DE KP.ORG",
+        "Password":"CONTRASEÑA",
+        "Signin": "Iniciar sesión",
+        "PatientGuest":"Invitado del paciente",
+        "EmailInvitation":"Ingresar usando el enlace en la invitación de su correo electrónico"
+      },
+      "temp":{
+        "TempaccessBtnLabel":"Acceso temporal para la videoconsulta",
+        "lastname":"APELLIDO",
+        "MRN":"NÚMERO DE HISTORIA CLÍNICA",
+        "DOB":"FECHA DE NACIMIENTO",
+        "DOBMM":"MM",
+        "DOBYY":"AAAA",
+        "Cancel":"Cancelar",
+        "PatientInformation":"Información del paciente"
+      }
+    },
+    "my_visits":{
+      
+    },
+    "instant_join":{
+      "AreYou": "¿Es usted",
+      "Yes": "Sí",
+      "No": "No"
+    },
+    "conference":{
+      "WaitingRoomLabel":"Su consulta empezará a las",
+      "RunningLateLabel":"Lo siento. Su médico va a llegar tarde."
+    },
+    "guestauth":{
+      "GuestHeaderLabelTxt":"Los niños de 11 años o menos deben tener a uno de los padres o a un tutor legal presente durante la consulta.",
+      "PatientLastName":"Apellido del paciente",
+      "JoinBtnName":"Ingresar"
+    },
+    "setup":{
+      "Camera":"Camera",
+      "Microphone":"Microphone",
+      "Speaker":"Speaker",
+      "Start":"Start",
+      "Join":"Join"
+    }
 }

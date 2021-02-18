@@ -210,7 +210,10 @@ class Setup extends React.Component {
         }
     }
     render() {
-        let Details = this.state.staticData;
+        var Details = this.state.staticData;
+        if(Details && Details.setup){
+            var translateLang = Details.setup;
+        }
         return (
             <div id='container' className="setup-page">
                  <Header helpUrl = {this.state.mdoHelpUrl}/>
@@ -236,7 +239,7 @@ class Setup extends React.Component {
                      <BrowserBlock browserblockinfo = {this.state}/>
                          <div className="col-md-5 peripheral-options p-0">
                              <div className="periheral-container">
-                                 <div className="label">Camera</div>
+                                 <div className="label">{translateLang && translateLang.Camera}</div>
                                  <div className="dropdown show">
                                       <a className={this.state.constrains.videoSource && !this.state.loadingSetup && !this.state.isBrowserBlockError ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
                                         {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
@@ -254,7 +257,7 @@ class Setup extends React.Component {
                                  </div>
                              </div>
                              <div className="periheral-container">
-                                 <div className="label">Microphone</div>
+                                 <div className="label">{translateLang && translateLang.Microphone}</div>
                                  <div className="dropdown show">
                                       <a className={this.state.constrains.micSource && !this.state.loadingSetup && !this.state.isBrowserBlockError ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
                                         {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
@@ -272,7 +275,7 @@ class Setup extends React.Component {
                                  </div>
                              </div>
                              {this.state.constrains.audioSource ? (<div className="periheral-container">
-                                 <div className="label">Speaker</div>
+                                 <div className="label">{translateLang && translateLang.Speaker}</div>
                                  <div className="dropdown show">
                                       <a className={this.state.constrains.audioSource && !this.state.loadingSetup && !this.state.isBrowserBlockError ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
                                         {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
@@ -292,8 +295,10 @@ class Setup extends React.Component {
                          </div>
                          <div className="col-md-5 p-0 video-preview">
                                  <div className="start-test" style={{display: !this.state.startTest ? 'flex' : 'none'}}>
-                                     <button className="btn rounded-0 btn-primary" onClick={this.startTest} disabled={this.state.isBrowserBlockError}>Start</button>
+                                     <button className="btn rounded-0 btn-primary" onClick={this.startTest} disabled={this.state.isBrowserBlockError}>{translateLang && translateLang.Start}</button>
+                                     <div className="msg-note">{translateLang && translateLang.EquipmentMsgNote}</div>   
                                  </div>
+                                 
                             
                              <div className="preview" style={{display: !this.state.startTest ? 'none' : 'block'}} >
                                 <video id="video" playsInline autoPlay></video>
@@ -305,7 +310,7 @@ class Setup extends React.Component {
                             
                          </div>
                          <div className="col-md-12 mt-5 button-controls text-center mb-4">
-                           <button className="btn rounded-0" onClick={this.joinVisit} disabled={this.state.loadingSetup || this.state.isBrowserBlockError}>Join</button>
+                           <button className="btn rounded-0" onClick={this.joinVisit} disabled={this.state.loadingSetup || this.state.isBrowserBlockError}>{translateLang && translateLang.Join}</button>
                          </div>
                      </div>
                  </div>

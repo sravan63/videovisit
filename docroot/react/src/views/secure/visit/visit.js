@@ -183,12 +183,14 @@ class Visit extends React.Component {
                             pathname: "/login",
                             state: { message: "instantJoin" },
                         });
+                        // this.setState({renderPage: true, displayName:"Joe Mama"});
                     }
                 } else {
                     this.props.history.push({
                         pathname: "/login",
                         state: { message: "instantJoin" },
                     });
+                    // this.setState({renderPage: true, displayName:"Joe Mama"});
                 }
             }, (err) => {
                 this.props.history.push({
@@ -203,6 +205,7 @@ class Visit extends React.Component {
                 pathname: "/login",
                 state: { message: "instantJoin" },
             });            
+            // this.setState({renderPage: true, displayName:"Joe Mama"});
         }
     }
 
@@ -230,14 +233,17 @@ class Visit extends React.Component {
 
 
     render() {
-        let details = this.state.staticData;
+        let Details = this.state.staticData;
+        if(Details && Details.instant_join){
+            var instantDetails = Details.instant_join;
+        }
         return (
             <div>{this.state.isInstantJoin ?(<div className='instantJoin-container' style={{visibility: this.state.renderPage ? 'visible' : 'hidden'}}>
-                    <Header helpUrl = {this.state.mdoHelpUrl} data={details}/>
+                    <Header helpUrl = {this.state.mdoHelpUrl} data={Details}/>
                     <div className='instant-content'>
                         <div className="row instant-help-link-container">
                         <div className="col-lg-12 col-md-12 help-icon text-right p-0">
-                        <a href={details.HelpLink} className="help-link" target="_blank">{details.Help}</a>
+                        <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
                             <div className="lang-change p-0">
                                 <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
                                 <span>|</span>
@@ -248,14 +254,14 @@ class Visit extends React.Component {
                         <div className="row instant-mobile-header">
                             <div className="title">
                                 <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
-                                <p className="col-12 p-0 sub-header">{details.videoVisits}</p>
+                                <p className="col-12 p-0 sub-header">{Details.videoVisits}</p>
                             </div>
                         </div>
                         <div className="confirmationContent">
-                            <h3 className="patientConfirm"> {details.AreYou} {this.state.displayName}?</h3>
+                            <h3 className="patientConfirm"> {Details.AreYou} {this.state.displayName}?</h3>
                             <div>
-                                <button  type="button" className="denyUser" onClick={this.denyUser}>{details.No}</button>
-                                <button  type="button" className="allowUser" onClick={this.allowLogin}>{details.Yes}</button>
+                                <button  type="button" className="denyUser" onClick={this.denyUser}>{instantDetails && instantDetails.No}</button>
+                                <button  type="button" className="allowUser" onClick={this.allowLogin}>{instantDetails && instantDetails.Yes}</button>
                             </div>
                         </div>
                         <div className="instant-form-footer">

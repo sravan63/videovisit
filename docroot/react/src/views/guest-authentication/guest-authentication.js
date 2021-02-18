@@ -247,9 +247,10 @@ class Authentication extends React.Component {
     }
 
     render() {
+        var Details = this.state.staticData.guestauth;
         return (
             <div id='container' className="authentication-page">
-             <Header helpUrl = {this.state.mdoHelpUrl}/>
+             <Header helpUrl = {this.state.mdoHelpUrl} data={this.state.staticData} />
              {this.state.showLoader ? (<Loader />):('')}
               {this.state.NotLoggedIn ?  (  
                 <div>
@@ -273,7 +274,7 @@ class Authentication extends React.Component {
                 <div className="row mobile-logo-container">
                     <div className="title">
                         <p className="col-12 m-0 header">Kaiser Permanente</p>
-                        <p className="col-12 sub-header">Video Visits</p>
+                        <p className="col-12 sub-header">{this.state.staticData.videoVisits}</p>
                     </div>
                 </div>
                 <div className="guest-form-content">
@@ -286,22 +287,22 @@ class Authentication extends React.Component {
                 ):
                  (    
                     <div className="row guest-form" >
-                    <div className="row notice">Children age 11 and younger must have a parent or legal guardian present during the visit.</div>
+                    <div className="row notice">{Details.GuestHeaderLabelTxt}</div>
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group">
-                                <label className="col-sm-12 text-capitalize">Patient Last Name</label>
+                                <label className="col-sm-12 text-capitalize">{Details.PatientLastName}</label>
                                 <div className="col-sm-12">
                                     <input type="text" pattern="[a-zA-Z]+" name="lastname" disabled = {this.state.inputDisable || this.state.isBrowserBlockError} value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input"/>
                                 </div>
                             </div>
                             <div className = "form-group mobile-submit mt-5" >
-                                 <button type = "submit" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled || this.state.isBrowserBlockError}>Join</button>
+                                 <button type = "submit" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled || this.state.isBrowserBlockError}>{Details.JoinBtnName}</button>
                             </div>
                         </form>
                     </div> )}
                 </div>
                 <div className="row mobile-footer mt-5">
-                    <p className="col-12 secondary">Children age 11 and younger must have a parent or legal guardian present during the visit.</p>
+                    <p className="col-12 secondary">{Details.GuestHeaderLabelTxt}</p>
                 </div>
                 <div className="guest-form-footer">
                     <Footer />

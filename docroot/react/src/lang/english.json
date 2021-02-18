@@ -1,23 +1,50 @@
 {
   "lang": "english",
   "videoVisits": "Video Visits",
-  "AreYou": "Are you",
-  "Yes": "Yes",
-  "No": "No",
-  "KPUSERID":"KP.ORG USER ID",
-  "Password":"Password",
-  "Signin": "Sign In",
-  "TempaccessBtnLabel":"Video Visit Temporary Access",
   "Help":"Help",
   "HelpLink": "https://mydoctor.kaiserpermanente.org/ncal/help/video-visits",
-  "PatientGuest":"If You're a Patient's Guest",
-  "EmailInvitation":"Guests of patients with a video visit, click the link in your email invitation.",
-  "PatientInformation":"Patient's Information",
-  "lastname":"Last name",
-  "MRN":"Medical record number",
-  "DOB":"Date of birth",
-  "DOBMM":"MM",
-  "DOBYY":"YYYY",
-  "Cancel":"Cancel"
-
+  "auth":{
+      "sso":{
+        "KPUSERID":"KP.ORG USER ID",
+        "Password":"Password",
+        "Signin": "Sign In",
+        "PatientGuest":"If You're a Patient's Guest",
+        "EmailInvitation":"Guests of patients with a video visit, click the link in your email invitation."
+      },
+      "temp":{
+        "TempaccessBtnLabel":"Video Visit Temporary Access",
+        "lastname":"Last name",
+        "MRN":"Medical record number",
+        "DOB":"Date of birth",
+        "DOBMM":"MM",
+        "DOBYY":"YYYY",
+        "Cancel":"Cancel",
+        "PatientInformation":"Patient's Information"
+      }
+    },
+    "my_visits":{
+      
+    },
+    "instant_join":{
+      "AreYou": "Are you",
+      "Yes": "Yes",
+      "No": "No"
+    },
+    "conference":{
+      "WaitingRoomLabel":"Your visit will now start at",
+      "RunningLateLabel":"We're sorry, your doctor is running late."
+    },
+    "guestauth":{
+      "GuestHeaderLabelTxt":"Children age 11 and younger must have a parent or legal guardian present during the visit",
+      "PatientLastName":"Patient’s Last Name",
+      "JoinBtnName":"Join"
+    },
+    "setup":{
+      "Camera":"Camera",
+      "Microphone":"Microphone",
+      "Speaker":"Speaker",
+      "Start":"Start",
+      "Join":"Join",
+      "EquipmentMsgNote":"Equipment check test is in English only"
+    }
 }
