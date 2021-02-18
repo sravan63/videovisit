@@ -1268,9 +1268,6 @@ PexRTCCall.prototype.pcIceConnectionStateChanged = function(evt) {
         if (self.parent.onIceFailure) {
             self.parent.onIceFailure();
         }
-    } else if(self.pc.iceConnectionState == 'disconnected' && self.state == 'CONNECTED'){
-        self.parent.onLog('IceConnectionDisconnected : event: Callback for ice connection disconnected');
-        //self.handleError('Disconnected while gathering IP addresses');
     }
     else if (self.pc.iceConnectionState == 'disconnected') {
         if (self.previousIceConnectionState == 'disconnected') {
@@ -1286,6 +1283,8 @@ PexRTCCall.prototype.pcIceConnectionStateChanged = function(evt) {
                 self.pcIceConnectionStateChanged(evt);
             }, 2000);
         }
+        //self.parent.onLog('IceConnectionDisconnected : event: Callback for ice connection disconnected');
+        //self.handleError('Disconnected while gathering IP addresses');
     }
     self.previousIceConnectionState = self.pc.iceConnectionState;
 };
