@@ -44,6 +44,7 @@
       "Microphone":"Microphone",
       "Speaker":"Speaker",
       "Start":"Start",
-      "Join":"Join"
+      "Join":"Join",
+      "EquipmentMsgNote":"Equipment check test is in English only"
     }
 }

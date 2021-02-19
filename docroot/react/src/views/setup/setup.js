@@ -216,7 +216,7 @@ class Setup extends React.Component {
         }
         return (
             <div id='container' className="setup-page">
-                 <Header helpUrl = {this.state.mdoHelpUrl}/>
+                 <Header helpUrl = {this.state.mdoHelpUrl} data={Details}/>
                  <div className="row mobile-help-link">
                  <div className="col-lg-12 col-md-12 help-icon text-right float-left p-0">
                         <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
@@ -230,7 +230,7 @@ class Setup extends React.Component {
                 <div className="row mobile-logo-container">
                  <div className="title">
                       <p className="col-12 m-0 header">Kaiser Permanente</p>
-                      <p className="col-12 sub-header">Video Visits</p>
+                      <p className="col-12 sub-header">{Details.videoVisits}</p>
                   </div>
                   </div>
                  
@@ -295,9 +295,9 @@ class Setup extends React.Component {
                          </div>
                          <div className="col-md-5 p-0 video-preview">
                                  <div className="start-test" style={{display: !this.state.startTest ? 'flex' : 'none'}}>
-                                     <button className="btn rounded-0 btn-primary" onClick={this.startTest} disabled={this.state.isBrowserBlockError}>{translateLang && translateLang.Start}</button>
-                                     <div className="msg-note">{translateLang && translateLang.EquipmentMsgNote}</div>   
+                                     <button className="btn rounded-0 btn-primary" onClick={this.startTest} disabled={this.state.isBrowserBlockError}>{translateLang && translateLang.Start}</button>                                        
                                  </div>
+                                 <div className="msg-note">{translateLang && translateLang.EquipmentMsgNote}</div>
                                  
                             
                              <div className="preview" style={{display: !this.state.startTest ? 'none' : 'block'}} >
