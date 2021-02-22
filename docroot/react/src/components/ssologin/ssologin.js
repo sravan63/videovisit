@@ -23,6 +23,7 @@ export default class Ssologin extends React.Component {
         };
         this.button = { disabled: true }
         this.getLoginUserDetails = this.getLoginUserDetails.bind(this);
+        this.setScreenOrientation = this.setScreenOrientation.bind(this);
     }
 
 
@@ -45,7 +46,7 @@ export default class Ssologin extends React.Component {
         });
         this.setState({isInApp : this.props.data.isInApp});
         this.setScreenOrientation();
-        window.addEventListener('orientationchange', this.setScreenOrientation.bind(this));
+        window.addEventListener('orientationchange', this.setScreenOrientation, false);
     }
     setScreenOrientation(){
         //var isLandscape = window.matchMedia("(orientation:landscape)").matches;
@@ -57,6 +58,12 @@ export default class Ssologin extends React.Component {
 
         
     }
+
+    componentWillUnmount() {
+        // unsubscribe to ensure no memory leaks
+        window.removeEventListener('orientationchange', this.setScreenOrientation, false);
+    }
+
     handleDataAfterResponse(response) {
         this.setState({
             errors: { errorlogin: false, errormsg: "" }

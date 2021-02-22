@@ -13,6 +13,7 @@ class WaitingRoom extends React.Component {
     constructor(props) {
         super(props);
         this.state = {waitingroommsg: '',runningLateUpdatedTime:'',isRunningLate:''};
+        this.handleResize = this.handleResize.bind(this);
     }
 
     componentDidMount() {
@@ -26,7 +27,7 @@ class WaitingRoom extends React.Component {
                 break;
             }
         });
-        window.addEventListener('resize', this.handleResize.bind(this));
+        window.addEventListener('resize', this.handleResize, false);
     }
     handleResize(){
         var halfwaitingroom = document.getElementsByClassName("half-waiting-room")[0];
@@ -43,6 +44,7 @@ class WaitingRoom extends React.Component {
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
         this.subscription.unsubscribe();
+        window.removeEventListener('resize', this.handleResize, false);
     }
 
 

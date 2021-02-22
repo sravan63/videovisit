@@ -12,12 +12,13 @@ class TempAccess extends React.Component {
         this.state = { isInApp: false, lastname: '', mrn: '', birth_month: '', birth_year: '', errormsgs: { errorlogin: false, errormsg: '' } };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
+        this.setScreenOrientation = this.setScreenOrientation.bind(this);
     }
 
     componentDidMount() {
         this.setState({isInApp : this.props.data.isInApp});
         this.setScreenOrientation();
-        window.addEventListener('orientationchange', this.setScreenOrientation.bind(this));
+        window.addEventListener('orientationchange', this.setScreenOrientation, false);
     }
 
     setScreenOrientation(){
@@ -152,6 +153,12 @@ class TempAccess extends React.Component {
         return width;
 
     }
+
+    componentWillUnmount() {
+        // unsubscribe to ensure no memory leaks
+        window.removeEventListener('orientationchange', this.setScreenOrientation, false);
+    }
+
     render() {
         return (
             <div className="temp-content">

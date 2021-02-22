@@ -15,6 +15,7 @@ class MobileHeader extends React.Component {
         super(props);
         this.loggedInUserName = '';
         this.promoContainer = React.createRef();
+        this.scrollHandler =  this.scrollHandler.bind(this);
         this.state = { message: 'Testing',staticData:{}, chin:'中文',span:'Español', isMobile:false, hidePromotion: true, isInApp: false, showPromotion: false,mdoHelpUrl:'' };
     }
 
@@ -32,7 +33,7 @@ class MobileHeader extends React.Component {
             this.setState({ isMobile: isMobile, isInApp: isInAppAccess, showPromotion: showPromotion });
         }
 
-        window.addEventListener('scroll', this.scrollHandler.bind(this));
+        window.addEventListener('scroll', this.scrollHandler, false);
         this.getBrowserBlockInfo();
         if (localStorage.getItem('LoginUserDetails')) {
             const data = JSON.parse(Utilities.decrypt(localStorage.getItem('LoginUserDetails')));
@@ -53,7 +54,7 @@ class MobileHeader extends React.Component {
     componentWillUnmount() {
         // unsubscribe to ensure no memory leaks
         // this.subscription.unsubscribe();        
-        window.removeEventListener('scroll', this.scrollHandler.bind(this), false);
+        window.removeEventListener('scroll', this.scrollHandler, false);
     }
     
     getBrowserBlockInfo(){

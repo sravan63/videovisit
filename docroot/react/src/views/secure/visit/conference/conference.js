@@ -36,6 +36,7 @@ class Conference extends React.Component {
         this.timerForLeaveMeeting = 0;
         this.visibilityChange = null;
         this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
+        this.handleResize = this.handleResize.bind(this);
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
@@ -329,7 +330,7 @@ class Conference extends React.Component {
             }
 
         });
-        window.addEventListener('resize', this.handleResize.bind(this));
+        window.addEventListener('resize', this.handleResize,false);
         if(localStorage.getItem('helpUrl')){
             var helpUrl = localStorage.getItem('helpUrl');
             this.setState({ mdoHelpUrl: helpUrl });
@@ -575,7 +576,6 @@ class Conference extends React.Component {
         window.clearTimeout(this.overlayTimer);
         window.clearTimeout(this.timerForLeaveMeeting);
         window.clearTimeout(this.surveyTimer);
-        document.removeEventListener(this.visibilityChange, this.handleVisibilityChange);
         this.subscription.unsubscribe();
         localStorage.setItem('meetingAttended', true);
         if(this.state.isGuest == true){
@@ -594,8 +594,9 @@ class Conference extends React.Component {
        sessionStorage.removeItem('UUID');
        sessionStorage.removeItem('meetingTimeLog');
        sessionStorage.removeItem('loggedAsDuplicateMember');
-       window.removeEventListener('resize', this.handleResize.bind(this), false);
-       window.removeEventListener('load', this.handleLoad)  
+       window.removeEventListener('resize', this.handleResize, false);
+       document.removeEventListener(this.visibilityChange, this.handleVisibilityChange, false);
+
     }
 
     toggleSettings() {

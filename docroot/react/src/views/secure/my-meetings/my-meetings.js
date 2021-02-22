@@ -17,6 +17,7 @@ class MyMeetings extends React.Component {
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
+        this.handleResize = this.handleResize.bind(this);
         this.signOff = this.signOff.bind(this);
         this.keepAlive = 0;
         // this.joinMeeting = this.joinMeeting.bind(this);
@@ -65,7 +66,7 @@ class MyMeetings extends React.Component {
         if (isMobile && showPromotion) { 
             this.setState({ hidePromotion: true });
         }  
-        window.addEventListener('resize', this.handleResize.bind(this));  
+        window.addEventListener('resize', this.handleResize, false);
     }
     handleResize(){
         var showPromotion = UtilityService.getPromotionFlag();
@@ -82,6 +83,7 @@ class MyMeetings extends React.Component {
     componentWillUnmount() {
         window.clearInterval(this.interval);
         window.clearInterval(this.keepAlive);
+        window.removeEventListener('resize', this.handleResize, false);
         this.subscription.unsubscribe();
         if(localStorage.getItem('meetingAttended')){
             this.signOff();
