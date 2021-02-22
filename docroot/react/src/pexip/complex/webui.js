@@ -888,11 +888,15 @@ function chatReceived(message){
     if(message.payload && message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
         // Received text format DUPLICATE_MEMBER#NAME#UUID
         var mData = message.payload.split('#');
-        var duplicateName = mData[1];
+        var dName = mData[1]; // mama, joe 2
+        let lName = dName.split(',')[0].trim();
+        let fName = dName.split(',')[1].trim();
+        let userCount = fName.split(' ')[1].trim();
+        var duplicateName = lName+' '+userCount+', '+fName.split(' ')[0].trim(); // mama 2, joe
         var uuid = mData[2];
         var userUUID = sessionStorage.getItem('UUID');
         if( uuid == userUUID ){
-            localStorage.setItem('memberName', duplicateName);
+            localStorage.setItem('memberName', JSON.stringify(duplicateName));
             sessionStorage.setItem('loggedAsDuplicateMember', true);
         } else {
             MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:duplicateName});
