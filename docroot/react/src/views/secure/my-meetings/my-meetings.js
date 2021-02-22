@@ -398,6 +398,12 @@ class MyMeetings extends React.Component {
                 ):(
                 <div className="no-meetings">{!this.state.showLoader ? (<p className="text-center">You have no visits in the next 15 minutes.</p>):('')}</div>
                 )}
+                <div className="row" style={{ display:this.state.myMeetings.length > 0 ?  "block" : "none"}}>
+                    <div className="col-lg-9 col-md-12 pl-0 pb-3 pr-0 wifi-msg">
+                    You may be joining before your clinician. Please be patient. Join with a strong Wi-Fi or internet connection from a quiet, 
+                    well-lit place. If you need help getting ready for your video visit, call 844-216-5769 for support, Monday – Friday, 5 AM to 7 PM.
+                    </div>
+                </div>
                 { !this.state.hidePromotion ? 
                     (<div className="row promotion-container show-promotion">
                         <div className="promotion">
@@ -412,10 +418,7 @@ class MyMeetings extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>) : ('') }
-                 <div className="col-sm-12 col-lg-12 col-md-12" className={this.state.isInApp && window.window.innerWidth >= 1024 ? "wifi inapp-wifi" : "wifi"}>
-                    <p>Please make sure you have a strong Wi-Fi or 4G connection</p>
-                 </div>
+                    </div>) : ('') }                 
                 </div>
                 {this.state.showFooter ? (<div className="mymeeting-form-footer">
                     <Footer />
