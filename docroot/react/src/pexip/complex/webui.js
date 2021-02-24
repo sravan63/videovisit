@@ -508,7 +508,7 @@ function participantCreated(participant) {
     } else {
         loginUserName = JSON.parse(localStorage.getItem('memberName'));
     }
-    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim()) {
+    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim() && !sessionStorage.getItem('UUID')) {
         userDetails = participant;
         sessionStorage.setItem('UUID',participant.uuid);
     }
@@ -885,6 +885,7 @@ function chatReceived(message){
     // if(sender == userName){
     //     return;
     // }
+    console.log('==>  DUPLICATE CHAT RECEIVED');
     if(message.payload && message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
         // Received text format DUPLICATE_MEMBER#NAME#UUID
         var mData = message.payload.split('#');
@@ -896,7 +897,7 @@ function chatReceived(message){
         var uuid = mData[2];
         var userUUID = sessionStorage.getItem('UUID');
         if( uuid == userUUID ){
-            localStorage.setItem('memberName', JSON.stringify(duplicateName));
+            localStorage.setItem('memberName', JSON.stringify(dName));
             sessionStorage.setItem('loggedAsDuplicateMember', true);
         } else {
             MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:duplicateName});
