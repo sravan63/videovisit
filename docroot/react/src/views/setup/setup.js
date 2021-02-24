@@ -297,17 +297,17 @@ class Setup extends React.Component {
                                  <div className="start-test" style={{display: !this.state.startTest ? 'flex' : 'none'}}>
                                      <button className="btn rounded-0 btn-primary" onClick={this.startTest} disabled={this.state.isBrowserBlockError}>{translateLang && translateLang.Start}</button>                                        
                                  </div>
-                                 <div className="msg-note">{translateLang && translateLang.EquipmentMsgNote}</div>
-                                 
-                            
-                             <div className="preview" style={{display: !this.state.startTest ? 'none' : 'block'}} >
-                                <video id="video" playsInline autoPlay></video>
-                                <div id="selfview" className="selfview">
-                                  <video id="selfvideo" autoPlay="autoplay" playsInline="playsinline" muted={true}>
-                                  </video>
+                                <div className="preview" style={{display: !this.state.startTest ? 'none' : 'block'}} >
+                                    <video id="video" playsInline autoPlay></video>
+                                    <div id="selfview" className="selfview">
+                                        <video id="selfvideo" autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                                        </video>
+                                    </div>
                                 </div>
-                             </div>
-                            
+                         </div>
+                         <div className="col-md-7"></div>
+                         <div className="col-md-5 pl-0">
+                             <div className="msg-note">{translateLang && translateLang.EquipmentMsgNote}</div>
                          </div>
                          <div className="col-md-12 mt-5 button-controls text-center mb-4">
                            <button className="btn rounded-0" onClick={this.joinVisit} disabled={this.state.loadingSetup || this.state.isBrowserBlockError}>{translateLang && translateLang.Join}</button>
