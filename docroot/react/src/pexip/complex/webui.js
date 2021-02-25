@@ -475,6 +475,11 @@ export function sipDialOut() {
 
 function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
+    var uniqueKey = '';
+    if(participant.display_name.indexOf('#') > -1){
+        uniqueKey = participant.display_name.split('#')[1];
+        participant.display_name = participant.display_name.split('#')[0];
+    }
     pexipParticipantsList.push(participant);
     // log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
     
@@ -508,11 +513,21 @@ function participantCreated(participant) {
     } else {
         loginUserName = JSON.parse(localStorage.getItem('memberName'));
     }
-    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim() && !sessionStorage.getItem('UUID')) {
+    var isLoggedInUser = validateLoggedInUser(uniqueKey);
+    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim() &&  isLoggedInUser) {
         userDetails = participant;
         sessionStorage.setItem('UUID',participant.uuid);
     }
     toggleWaitingRoom(pexipParticipantsList);
+}
+
+function validateLoggedInUser(uniqueKey){
+    var bool = false;
+    if( sessionStorage.getItem('uKey') && uniqueKey ){
+        var uKey = sessionStorage.getItem('uKey');
+        bool = (uKey == uniqueKey);
+    }
+    return bool;
 }
 
 function participantUpdated(participant) {
@@ -840,6 +855,9 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
             rtc.turn_server = getTurnServersObjs();
         }
     }*/
+    var uniqueKey = Math.random() *100000;
+    sessionStorage.setItem('uKey',uniqueKey);
+    name += '#'+uniqueKey; // Mama, Joe#12345667
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
@@ -897,7 +915,7 @@ function chatReceived(message){
         var uuid = mData[2];
         var userUUID = sessionStorage.getItem('UUID');
         if( uuid == userUUID ){
-            localStorage.setItem('memberName', JSON.stringify(dName));
+            localStorage.setItem('memberName', dName);
             sessionStorage.setItem('loggedAsDuplicateMember', true);
         } else {
             MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:duplicateName});
