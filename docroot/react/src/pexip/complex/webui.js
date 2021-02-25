@@ -915,7 +915,7 @@ function chatReceived(message){
         var uuid = mData[2];
         var userUUID = sessionStorage.getItem('UUID');
         if( uuid == userUUID ){
-            localStorage.setItem('memberName', dName);
+            localStorage.setItem('memberName', JSON.stringify(dName));
             sessionStorage.setItem('loggedAsDuplicateMember', true);
         } else {
             MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:duplicateName});

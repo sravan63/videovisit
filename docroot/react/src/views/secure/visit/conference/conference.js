@@ -534,7 +534,7 @@ class Conference extends React.Component {
                 }
                 localStorage.setItem('memberName', JSON.stringify(name));
             } else {
-                name = localStorage.getItem('memberName');
+                name = JSON.parse(localStorage.getItem('memberName'));
                 // localStorage.setItem('memberName', name);
             }
             var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
@@ -550,8 +550,8 @@ class Conference extends React.Component {
                 localStorage.setItem('memberName', JSON.stringify(guestName));
                 name = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
             } else {
-                name = localStorage.getItem('memberName');
-                localStorage.setItem('memberName', JSON.stringify(name));
+                name = JSON.parse(localStorage.getItem('memberName'));
+                //localStorage.setItem('memberName', JSON.stringify(name));
             }
             var vendorDetails = {
                 "meetingId": meeting.meetingId,
