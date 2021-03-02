@@ -23,7 +23,7 @@
       }
     },
     "my_visits":{
-      
+       "Wifimsg":"You may be joining before your clinician. Please be patient. Join with a strong Wi-Fi or internet connection from a quiet, well-lit place. If you need help getting ready for your video visit, call 844-216-5769 for support, Monday – Friday, 5 AM to 7 PM."
     },
     "instant_join":{
       "AreYou": "Are you",
@@ -45,6 +45,6 @@
       "Speaker":"Speaker",
       "Start":"Start",
       "Join":"Join",
-      "EquipmentMsgNote":"Equipment check test is in English only"
+      "EquipmentMsgNote":""
     }
 }
