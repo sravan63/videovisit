@@ -475,11 +475,11 @@ export function sipDialOut() {
 
 function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
-   /* var uniqueKey = '';
+    var uniqueKey = '';
     if(participant.display_name.indexOf('#') > -1){
         uniqueKey = participant.display_name.split('#')[1];
         participant.display_name = participant.display_name.split('#')[0];
-    }*/
+    }
     pexipParticipantsList.push(participant);
     // log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
     
@@ -491,7 +491,6 @@ function participantCreated(participant) {
         if(!refreshingOrSelfJoinMeeting){
             MessageService.sendMessage(GlobalConfig.NOTIFY_USER, joinParticipantMsg);
         }
-
         MessageService.sendMessage(GlobalConfig.USER_JOINED, participant);
 
     } else {
@@ -513,15 +512,15 @@ function participantCreated(participant) {
     } else {
         loginUserName = JSON.parse(localStorage.getItem('memberName'));
     }
-    //var isLoggedInUser = validateLoggedInUser(uniqueKey);
-    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim()) {
+    var isLoggedInUser = validateLoggedInUser(uniqueKey);
+    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim() &&  isLoggedInUser) {
         userDetails = participant;
         sessionStorage.setItem('UUID',participant.uuid);
     }
     toggleWaitingRoom(pexipParticipantsList);
 }
 
-function validateLoggedInUser(uniqueKey){
+export function validateLoggedInUser(uniqueKey){
     var bool = false;
     if( sessionStorage.getItem('uKey') && uniqueKey ){
         var uKey = sessionStorage.getItem('uKey');
@@ -855,9 +854,9 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
             rtc.turn_server = getTurnServersObjs();
         }
     }*/
-    //var uniqueKey = Math.random() *100000;
-    //sessionStorage.setItem('uKey',uniqueKey);
-    //name += '#'+uniqueKey; // Mama, Joe#12345667
+    var uniqueKey = Math.random() *100000;
+    sessionStorage.setItem('uKey',uniqueKey);
+    name += '#'+uniqueKey; // Mama, Joe#12345667
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
@@ -898,29 +897,50 @@ function getTurnServersObjs(turnServerDetails) {
 }
 
 function chatReceived(message){
-    // var sender = message.origin;
-    // var userName = JSON.parse(localStorage.getItem('memberName'));
-    // if(sender == userName){
-    //     return;
-    // }
-    console.log('==>  DUPLICATE CHAT RECEIVED');
     if(message.payload && message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
-        // Received text format DUPLICATE_MEMBER#NAME#UUID
+        // Received text format DUPLICATE_MEMBER#DUPLICATE_ARRAY_LIST
         var mData = message.payload.split('#');
-        var dName = mData[1]; // mama, joe 2
-        let lName = dName.split(',')[0].trim();
-        let fName = dName.split(',')[1].trim();
-        let userCount = fName.split(' ')[1].trim();
-        var duplicateName = lName+' '+userCount+', '+fName.split(' ')[0].trim(); // mama 2, joe
-        var uuid = mData[2];
+        var duplicateList = JSON.parse(mData[1]);
         var userUUID = sessionStorage.getItem('UUID');
-        if( uuid == userUUID ){
-            localStorage.setItem('memberName', JSON.stringify(dName));
+        var isDuplicateUser = false;
+        var loggedInAs = '';
+        log("info", 'DuplicateMemberInVisit', "event: DuplicateMembersJoined - Total duplicate members in visit "+duplicateList.length);
+        duplicateList.map((u)=>{
+            var dName = u.name; // mama, joe 2
+            var uuid = u.uuid;
+            // Update duplicate names in the participants list.
+            if( uuid == userUUID ) {
+                isDuplicateUser = true;
+                loggedInAs = dName.trim();
+            } else {
+                pexipParticipantsList.map((p)=>{
+                    if( p.uuid == uuid ) {
+                        p.display_name = dName;
+                        MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:dName});
+                    }
+                });
+            }
+        });
+        if( isDuplicateUser ){
+            localStorage.setItem('memberName', JSON.stringify(loggedInAs));
             sessionStorage.setItem('loggedAsDuplicateMember', true);
-        } else {
-            MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:duplicateName});
+            // Extracting actual patient name.
+            var patientName = loggedInAs.slice(0, -1);
+            // Append actual patient to side bar.
+            pexipParticipantsList.map((p)=>{
+                if( p.display_name.toLowerCase().trim() == patientName.toLowerCase().trim() ){
+                    MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:p.uuid, name:patientName});
+                }
+            })
         }
     }
+}
+
+export function formatDuplicateNames(dName){
+    let lName = dName.split(',')[0].trim();
+    let fName = dName.split(',')[1].trim();
+    let userCount = fName.split(' ')[1].trim();
+    return lName+' '+userCount+', '+fName.split(' ')[0].trim(); // mama 2, joe
 }
 
 export function pexipDisconnect() {

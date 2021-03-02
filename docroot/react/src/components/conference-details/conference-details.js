@@ -7,6 +7,7 @@ import { range } from 'rxjs';
 import { MessageService } from '../../services/message-service.js';
 import GlobalConfig from '../../services/global.config';
 import Utilities from '../../services/utilities-service.js';
+import * as WebUI from '../../pexip/complex/webui.js';
 
 class ConferenceDetails extends React.Component {
     constructor(props) {
@@ -38,7 +39,7 @@ class ConferenceDetails extends React.Component {
                 break;
                 case GlobalConfig.USER_JOINED:
                     var canShowPresenceIndicator = this.validateUser(notification.data);
-                    if( canShowPresenceIndicator ){
+                    if( canShowPresenceIndicator ) {
                         this.validateGuestPresence(GlobalConfig.USER_JOINED, notification.data);
                     }
                 break;
@@ -55,13 +56,13 @@ class ConferenceDetails extends React.Component {
                     const gData = notification.data;
                     let isInList = false;
                     this.state.participants.map((guest)=>{
-                        if(guest.uuid == gData.uuid){
-                            guest.name = gData.name;
+                        if( guest.backupName.toLowerCase().trim() == gData.name.toLowerCase().trim() ) {
+                            guest.uuid = gData.uuid;
                             isInList = true;
                         }
                     });
                     if( !isInList ) {
-                        this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: gData.name, uuid: gData.uuid,spotlight:0, protocol: 'api', role: 'guest'});
+                        this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: gData.name, uuid: gData.uuid,spotlight:0, protocol: 'api', role: 'guest', isDuplicate: true});
                     }
                 break;
                 case GlobalConfig.ACTIVESPEAKER:
@@ -238,7 +239,7 @@ class ConferenceDetails extends React.Component {
             if( isProxyMeeting == 'N' ) {
                 var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
                 var memberName = udata.lastName +', '+ udata.firstName;
-                if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim()){
+                if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim() ){
                     showIndicator = false;
                 }
             } else {
@@ -298,8 +299,8 @@ class ConferenceDetails extends React.Component {
             }
         });
         if(!participantInList){
-            let isHostInCall = this.validateHostPresence(data, hasJoined);
-            if(hasJoined && !isHostInCall){
+            let isHost = this.validateHostPresence(data, hasJoined);
+            if(hasJoined && !isHost) {
                 this.appendParticipantToTheList(data, participant, isTelephony);
             }
         }
@@ -357,16 +358,27 @@ class ConferenceDetails extends React.Component {
             let name = fName.toLowerCase() + ' ' + lName.toLowerCase();
             // TODO: Should remove this after UID implementation
             let backupName = lName.toLowerCase() + ', ' + fName.toLowerCase();
+            if( this.validateDuplicateUser(gName) ){
+                var duplicateName = WebUI.formatDuplicateNames(gName); // returns as mama 2, joe
+                var dLName = duplicateName.split(',')[0].trim();
+                var dFName = duplicateName.split(',')[1].trim();
+                name = dFName.toLowerCase() + ' ' + dLName.toLowerCase(); // changed to joe mama 2
+            }
             if(!isGuest){
                 var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
                 var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
             }
-            var patientName =  this.state.meetingDetails.member.firstName.toLowerCase() + ' ' + this.state.meetingDetails.member.lastName.toLowerCase();
             if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')).toLowerCase()) && isGuest ){
+                // For guests
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
             }else if(!(data.display_name.toLowerCase() == memberName) && !isGuest){
+                // For actual members
+                this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
+            } else if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')).toLowerCase()) && sessionStorage.getItem('loggedAsDuplicateMember') ){
+                // For duplicate members
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
             }
+
             // var filteredPatient = this.state.videoGuests.findIndex(x=>x.name == patientName);
             // if(filteredPatient == 0 && filteredPatient != -1){
             //     this.state.videoGuests.splice(filteredPatient,1);
@@ -441,6 +453,16 @@ class ConferenceDetails extends React.Component {
 
     leaveMeeting() {
         MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, 'manual');
+    }
+
+    validateDuplicateUser(userName){
+        var isDuplicate = false;
+        var patientName =  JSON.parse(localStorage.getItem("memberName")); // this.state.meetingDetails.member.lastName.toLowerCase() + ', ' + this.state.meetingDetails.member.firstName.toLowerCase();
+        if( userName.trim().toLowerCase().indexOf(patientName.toLowerCase()) > -1 ) {
+             // Mama, Joe 2
+             isDuplicate = isNaN(userName.slice(-1)) == false;
+        }
+        return isDuplicate;
     }
 
     render() {
