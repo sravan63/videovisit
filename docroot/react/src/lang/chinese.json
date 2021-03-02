@@ -19,7 +19,8 @@
         "DOBMM":"月/",
         "DOBYY":"年",
         "Cancel":"取消",
-        "PatientInformation":"患者資訊"
+        "PatientInformation":"患者資訊",
+        "SignIn":"登錄"
       }
     },
     "my_visits":{
@@ -35,9 +36,9 @@
       "RunningLateLabel":"We're sorry, your doctor is running late."
     },
     "guestauth":{
-      "GuestHeaderLabelTxt":"Children age 11 and younger must have a parent or legal guardian present during the visit.",
-      "PatientLastName":"Patient’s Last Name",
-      "JoinBtnName":"Join"
+      "GuestHeaderLabelTxt":"在就診期間，11 歲及以下的兒童必須有父母或法定監護人在場。",
+      "PatientLastName":"患者姓氏",
+      "JoinBtnName":"加入"
     },
     "setup":{
       "Camera":"攝像頭",

@@ -158,7 +158,7 @@ class Authentication extends React.Component {
                 <div>
                     <Suspense fallback={<Loader />}>
                         {this.state.tempAccessToken || this.state.isInApp ? (
-                            <Login data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this), isInApp: this.state.isInApp,browserBlock:this.state.isBrowserBlockError}}/>
+                            <Login data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader,emit:this.emitFromChild.bind(this), isInApp: this.state.isInApp,browserBlock:this.state.isBrowserBlockError,translateLang:Details}}/>
                         ) : (
                             <Ssologin history={this.props.history} data={{tempAccessToken:this.state.tempAccessToken,showLoader:this.state.showLoader, isInApp: this.state.isInApp, emit:this.emitFromChild.bind(this),browserBlock:this.state.isBrowserBlockError,translateLang:Details}}/>
                         )}

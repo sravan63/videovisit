@@ -160,49 +160,55 @@ class TempAccess extends React.Component {
     }
 
     render() {
+        let Details = this.props.data.translateLang;
+        let tempDetails;
+        if(Details && Details.auth && Details.auth.temp){
+             tempDetails = Details.auth.temp;
+        }
+
         return (
             <div className="temp-content">
                 <div className={this.state.screenOrientation == 'portrait' ? "row temp-form width-p-auto" : "row temp-form width-l-fit"}> 
                     {!this.state.isInApp ?(<div className="row mobile-logo-container">
                         <div className="title">
                             <p className="col-12 p-0 m-0 header">Kaiser Permanente</p>
-                            <p className="col-12 p-0 sub-header">Video Visits</p>
+                            <p className="col-12 p-0 sub-header">{this.props.data.translateLang.videoVisits}</p>
                         </div>
                     </div>) :
                     ('')}
                     <form className="col-xs-12 col-md-12 login-form" onSubmit={this.signOn} noValidate>
-                        <p className="col-12 sub-text font-weight-bold">Patient's Information</p>
+                        <p className="col-12 sub-text font-weight-bold">{tempDetails.PatientInformation}</p>
                         <div className="form-group">
-                            <label className="col-sm-12 text-uppercase">Last Name</label>
+                            <label className="col-sm-12 text-uppercase">{tempDetails.lastname}</label>
                             <div className="col-sm-12">
                                 <input type="text" pattern="[a-zA-Z]+" name="lastname" value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="i.e. Smith" disabled={this.props.data.browserBlock}/>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label className="col-sm-12 text-uppercase">Medical Record Number</label>
+                            <label className="col-sm-12 text-uppercase">{tempDetails.MRN}</label>
                             <div className="col-sm-12">
                                 <input type="tel" name="mrn" value={this.state.mrn} onChange={this.handleChange.bind(this,'mrn')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="######" maxLength="8" disabled={this.props.data.browserBlock} />
                             </div>
                         </div>
                         <div className="form-group col">
-                            <label className="col-12 p-0 text-uppercase">Date of Birth</label>
+                            <label className="col-12 p-0 text-uppercase">{tempDetails.DOB}</label>
                             <div className="row">
                                 <div className="col-3">
-                                    <input type="tel" name="birth_month" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="MM" maxLength="2" disabled={this.props.data.browserBlock} /> 
+                                    <input type="tel" name="birth_month" value={this.state.birth_month} onChange={this.handleChange.bind(this,'birth_month')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder={tempDetails.DOBMM} maxLength="2" disabled={this.props.data.browserBlock} />
                                 </div> 
                                 <div className = "col-9" >
-                                    <input type="tel" name="birth_year" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder="YYYY" maxLength="4" disabled={this.props.data.browserBlock} /> 
+                                    <input type="tel" name="birth_year" value={this.state.birth_year} onChange={this.handleChange.bind(this,'birth_year')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input" placeholder={tempDetails.DOBYY} maxLength="4" disabled={this.props.data.browserBlock} />
                                 </div> 
                             </div> 
                         </div> 
                         <div className = "form-group mobile-submit mt-5" >
-                             <button type = "submit" className = "btn rounded-0 p-0 login-submit" id="login"  disabled={this.button.disabled}>Sign In</button>
+                             <button type = "submit" className = "btn rounded-0 p-0 login-submit" id="login"  disabled={this.button.disabled}>{tempDetails.SignIn}</button>
                         </div>
                     </form>
                     {!this.props.data.isInApp ?(<button type="button" className="mobile-form-toggle mt-1 btn cancel-btn row" onClick={() => this.props.data.emit({isTemp: false})} >
                         {/* <span className="video-icon mr-2"></span>
                         <span className="toggle-text" >Cancel </span> */}
-                        Cancel
+                        {tempDetails.Cancel}
                     </button>) : ('')}
                     
                 </div> 
