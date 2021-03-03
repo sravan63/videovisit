@@ -358,7 +358,7 @@ class MyMeetings extends React.Component {
             <div id='container' className="my-meetings">
                 {this.state.showLoader && !this.state.isInApp ? (<Loader />):('')}
                 <Header history={this.props.history} helpUrl={this.state.mdoHelpUrl} data={Details} />
-                <MobileHeader />
+                <MobileHeader data={Details} />
                 <div className="meetings-container">
                 <h1 className="visitsToday">{visitLabelDetails && visitLabelDetails.VisitsTodayMsg}</h1>
                 {this.state.myMeetings.length > 0 ? (
