@@ -19,7 +19,8 @@
         "DOBMM":"MM",
         "DOBYY":"YYYY",
         "Cancel":"Cancel",
-        "PatientInformation":"Patient's Information"
+        "PatientInformation":"Patient's Information",
+        "SignIn": "Sign In"
       }
     },
     "my_visits":{
