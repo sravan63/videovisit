@@ -925,13 +925,13 @@ function chatReceived(message){
             localStorage.setItem('memberName', JSON.stringify(loggedInAs));
             sessionStorage.setItem('loggedAsDuplicateMember', true);
             // Extracting actual patient name.
-            var patientName = loggedInAs.slice(0, -1);
+            var patientName = loggedInAs.slice(0, -1).trim();
             // Append actual patient to side bar.
             pexipParticipantsList.map((p)=>{
                 if( p.display_name.toLowerCase().trim() == patientName.toLowerCase().trim() ){
                     MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:p.uuid, name:patientName});
                 }
-            })
+            });
         }
     }
 }
