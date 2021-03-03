@@ -59,6 +59,9 @@ class ConferenceDetails extends React.Component {
                         if( guest.backupName.toLowerCase().trim() == gData.name.toLowerCase().trim() ) {
                             guest.uuid = gData.uuid;
                             isInList = true;
+                            if( !guest.inCall ){
+                                guest.inCall = true;
+                            }
                         }
                     });
                     if( !isInList ) {
