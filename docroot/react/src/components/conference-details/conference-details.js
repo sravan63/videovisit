@@ -362,11 +362,13 @@ class ConferenceDetails extends React.Component {
             // TODO: Should remove this after UID implementation
             let backupName = lName.toLowerCase() + ', ' + fName.toLowerCase();
             if( this.validateDuplicateUser(gName) ){
+                console.log('===== changing duplicate name format  ===== ');
                 var duplicateName = WebUI.formatDuplicateNames(gName); // returns as mama 2, joe
                 var dLName = duplicateName.split(',')[0].trim();
                 var dFName = duplicateName.split(',')[1].trim();
                 name = dFName.toLowerCase() + ' ' + dLName.toLowerCase(); // changed to joe mama 2
             }
+            console.log(' ====== ACTUAL NAME CHANGED TO :: '+name);
             if(!isGuest){
                 var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
                 var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
