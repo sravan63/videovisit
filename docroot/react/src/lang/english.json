@@ -3,6 +3,7 @@
   "videoVisits": "Video Visits",
   "Help":"Help",
   "HelpLink": "https://mydoctor.kaiserpermanente.org/ncal/help/video-visits",
+  "Signout":"Sign Out",
   "auth":{
       "sso":{
         "KPUSERID":"KP.ORG USER ID",
@@ -24,6 +25,7 @@
       }
     },
     "my_visits":{
+       "VisitsTodayMsg":"Your Video Visits for Today",
        "Wifimsg":"You may be joining before your clinician. Please be patient. Join with a strong Wi-Fi or internet connection from a quiet, well-lit place. If you need help getting ready for your video visit, call 844-216-5769 for support, Monday – Friday, 5 AM to 7 PM."
     },
     "instant_join":{
@@ -33,7 +35,8 @@
     },
     "conference":{
       "WaitingRoomLabel":"Your visit will now start at",
-      "RunningLateLabel":"We're sorry, your doctor is running late."
+      "RunningLateLabel":"We're sorry, your doctor is running late.",
+      "Refresh":"Refresh"
     },
     "guestauth":{
       "GuestHeaderLabelTxt":"Children age 11 and younger must have a parent or legal guardian present during the visit.",

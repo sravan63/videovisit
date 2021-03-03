@@ -3,6 +3,7 @@
   "videoVisits": "視訊就診",
   "Help":"幫助",
   "HelpLink": "https://mydoctor.kaiserpermanente.org/zh/ncal/help/video-visits",
+  "Signout":"登出",
   "auth":{
       "sso":{
         "KPUSERID":"KP.ORG 用戶 ID",
@@ -24,6 +25,7 @@
       }
     },
     "my_visits":{
+      "VisitsTodayMsg":"這是您今天的視訊就診",
       "Wifimsg":"您的登入可能先於您的臨床醫護人員。請稍候。在安靜、光線充足的地方透過傳訊強勁可靠的Wi-Fi或網際網路連接加入就診。如果您需要幫助來為視訊就診做準備，可在週一至週五上午5:00至晚上7:00打電話844-216-5769獲得支援。"
     },
     "instant_join":{
@@ -33,7 +35,8 @@
     },
     "conference":{
       "WaitingRoomLabel":"Your visit will now start at",
-      "RunningLateLabel":"We're sorry, your doctor is running late."
+      "RunningLateLabel":"We're sorry, your doctor is running late.",
+      "Refresh":"Refresh"
     },
     "guestauth":{
       "GuestHeaderLabelTxt":"在就診期間，11 歲及以下的兒童必須有父母或法定監護人在場。",

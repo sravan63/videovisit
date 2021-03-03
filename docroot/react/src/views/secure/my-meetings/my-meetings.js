@@ -13,7 +13,7 @@ class MyMeetings extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, myMeetings: [], showLoader: true,isInApp: false,mdoHelpUrl:'',showFooter : true,showPromotion: false,hidePromotion: false};
+        this.state = { userDetails: {}, myMeetings: [], showLoader: true,staticData:{}, chin:'中文',span:'Español',isInApp: false,mdoHelpUrl:'',showFooter : true,showPromotion: false,hidePromotion: false};
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
@@ -67,6 +67,12 @@ class MyMeetings extends React.Component {
             this.setState({ hidePromotion: true });
         }  
         window.addEventListener('resize', this.handleResize, false);
+        this.getLanguage();
+        this.subscription = MessageService.getMessage().subscribe((message) => {
+            if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+                this.getLanguage();
+            }
+        });
     }
     handleResize(){
         var showPromotion = UtilityService.getPromotionFlag();
@@ -313,16 +319,48 @@ class MyMeetings extends React.Component {
             this.props.history.push(GlobalConfig.LOGIN_URL);
         });
     }
+    getLanguage(){
+        let data = UtilityService.getLang();
+        if(data.lang=='spanish'){
+            this.setState({span:'English',chin: '中文',staticData: data});
+        }
+        else if(data.lang=='chinese'){
+            this.setState({chin:'English',span:'Español',staticData: data});
+        }
+        else {
+            this.setState({span: "Español", chin: '中文',staticData: data});
+        }
 
+    }
+    changeLang(event){
+        let value = event.target.textContent;
+        if(value=="中文"){
+            sessionStorage.setItem('Instant-Lang-selection','chinese');
+            UtilityService.setLang('chinese');
+        }
+        else if(value=="Español"){
+            sessionStorage.setItem('Instant-Lang-selection','spanish');
+            UtilityService.setLang('spanish');
+         }
+        else{
+            sessionStorage.setItem('Instant-Lang-selection','english');
+            UtilityService.setLang('english');
+        }
+    }
 
     render() {
+        let Details = this.state.staticData;
+        // let visitLabelDetails;
+        if(Details && Details.my_visits){
+            var visitLabelDetails = Details.my_visits;
+        }
         return (
             <div id='container' className="my-meetings">
                 {this.state.showLoader && !this.state.isInApp ? (<Loader />):('')}
-                <Header history={this.props.history} helpUrl={this.state.mdoHelpUrl} />
+                <Header history={this.props.history} helpUrl={this.state.mdoHelpUrl} data={Details} />
                 <MobileHeader />
                 <div className="meetings-container">
-                <h1 className="visitsToday">Your Video Visits for Today</h1>
+                <h1 className="visitsToday">{visitLabelDetails && visitLabelDetails.VisitsTodayMsg}</h1>
                 {this.state.myMeetings.length > 0 ? (
                     this.state.myMeetings.map((item,key) =>{
                         return (
@@ -400,8 +438,7 @@ class MyMeetings extends React.Component {
                 )}
                 <div className="row" style={{ display:this.state.myMeetings.length > 0 ?  "block" : "none"}}>
                     <div className="col-lg-9 col-md-12 pl-0 pb-3 pr-0 wifi-msg">
-                    You may be joining before your clinician. Please be patient. Join with a strong Wi-Fi or internet connection from a quiet, 
-                    well-lit place. If you need help getting ready for your video visit, call 844-216-5769 for support, Monday – Friday, 5 AM to 7 PM.
+                    {visitLabelDetails && visitLabelDetails.Wifimsg}
                     </div>
                 </div>
                 { !this.state.hidePromotion ? 

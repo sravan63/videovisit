@@ -102,7 +102,7 @@ class header extends React.Component {
                                 </li>
                                 <li> {this.state.name ? '|' : ''} </li> 
                                 <li className = "text-capitalize"> 
-                                    {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>Sign out</a> :''}
+                                    {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>{this.props.data.Signout}</a> :''}
                                 </li>   
                                 <li className="text-capitalize lang-trans">
                                 <div className="lang-change p-0">

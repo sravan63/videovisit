@@ -3,6 +3,7 @@
   "videoVisits": "Videoconsultas",
   "Help":"Ayuda",
   "HelpLink": "https://mydoctor.kaiserpermanente.org/es/ncal/help/video-visits",
+  "Signout":"Salir",
   "auth":{
       "sso":{
         "KPUSERID":"NOMBRE DE USUARIO DE KP.ORG",
@@ -24,7 +25,8 @@
       }
     },
     "my_visits":{
-      "Wifimsg":"You may be joining before your clinician. Please be patient. Join with a strong Wi-Fi or internet connection from a quiet, well-lit place. If you need help getting ready for your video visit, call 844-216-5769 for support, Monday – Friday, 5 AM to 7 PM."
+      "VisitsTodayMsg":"Su videoconsulta de hoy",
+      "Wifimsg":"Es posible que esté ingresando antes que su médico. Gracias por su paciencia.Ingrese con una conexión confiable a Wi-Fi o a internet, desde un lugar tranquilo y bien alumbrado.Si necesita ayuda para prepararse para su videoconsulta, llame al 844-216-5769, lunes a viernes, de 5 a. m. a 7 p. m."
     },
     "instant_join":{
       "AreYou": "¿Es usted",
@@ -33,7 +35,8 @@
     },
     "conference":{
       "WaitingRoomLabel":"Su consulta empezará a las",
-      "RunningLateLabel":"Lo siento. Su médico va a llegar tarde."
+      "RunningLateLabel":"Lo siento. Su médico va a llegar tarde.",
+      "Refresh":"Refresh"
     },
     "guestauth":{
       "GuestHeaderLabelTxt":"Los niños de 11 años o menos deben tener a uno de los padres o a un tutor legal presente durante la consulta.",
