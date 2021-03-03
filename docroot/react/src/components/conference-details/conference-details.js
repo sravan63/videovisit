@@ -462,7 +462,7 @@ class ConferenceDetails extends React.Component {
 
     validateDuplicateUser(userName){
         var isDuplicate = false;
-        var patientName =  JSON.parse(localStorage.getItem("memberName")); // this.state.meetingDetails.member.lastName.toLowerCase() + ', ' + this.state.meetingDetails.member.firstName.toLowerCase();
+        var patientName =  this.state.meetingDetails.member.lastName.toLowerCase() + ', ' + this.state.meetingDetails.member.firstName.toLowerCase();
         if( userName.trim().toLowerCase().indexOf(patientName.toLowerCase()) > -1 ) {
              // Mama, Joe 2
              isDuplicate = isNaN(userName.slice(-1)) == false;
