@@ -512,10 +512,13 @@ function participantCreated(participant) {
     } else {
         loginUserName = JSON.parse(localStorage.getItem('memberName'));
     }
-    var isLoggedInUser = validateLoggedInUser(uniqueKey);
-    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim() &&  isLoggedInUser) {
-        userDetails = participant;
-        sessionStorage.setItem('UUID',participant.uuid);
+    if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim() && !sessionStorage.getItem('UUID')) {
+        // var isLoggedInUser = validateLoggedInUser(participant.start_time);
+        // if(isLoggedInUser) {
+            userDetails = participant;
+            console.log('=====> SETTING UUID :: '+participant.uuid);
+            sessionStorage.setItem('UUID',participant.uuid);
+        // }
     }
     toggleWaitingRoom(pexipParticipantsList);
 }
@@ -854,9 +857,8 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
             rtc.turn_server = getTurnServersObjs();
         }
     }*/
-    var uniqueKey = Math.random() *100000;
-    sessionStorage.setItem('uKey',uniqueKey);
-    name += '#'+uniqueKey; // Mama, Joe#12345667
+    
+    // name += '#'+uniqueKey; // Mama, Joe#12345667
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
