@@ -239,7 +239,13 @@ class ConferenceDetails extends React.Component {
             }
         } else {
             var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-            if( isProxyMeeting == 'N' ) {
+            if( sessionStorage.getItem('loggedAsDuplicateMember') ) {
+                // For duplicate members
+                var patient = JSON.parse(localStorage.getItem('memberName'));
+                if( participant.display_name.toLowerCase().trim() == patient.toLowerCase().trim() ) {
+                    showIndicator = false;
+                }
+            } else if( isProxyMeeting == 'N' ) {
                 var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
                 var memberName = udata.lastName +', '+ udata.firstName;
                 if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim() ){
