@@ -36,7 +36,24 @@
     "conference":{
       "WaitingRoomLabel":"Your visit will now start at",
       "RunningLateLabel":"We're sorry, your doctor is running late.",
-      "Refresh":"Refresh"
+      "Refresh":"Refresh",
+      "EnableVideo":"Enable Video",
+      "DisableVideo":"Disable Video",
+      "MuteSpeakers":"Mute Speakers",
+      "UnmuteSpeakers":"Unmute Speakers",
+      "MuteMic":"Mute Mic",
+      "UnmuteMic":"Unmute Mic",
+      "Settings":"Settings",
+      "Camera":"Camera",
+      "Microphone":"Microphone",
+      "Speaker":"Speaker",
+      "Done":"Done",
+      "WaitingRoomNotification":"Your visit will start once your doctor joins.",
+      "LeaveRoom":"Leave Room",
+      "VisitDetails":"Visit Details",
+      "Time":"Time",
+      "Date":"Date",
+      "Guests":"Guests"
     },
     "guestauth":{
       "GuestHeaderLabelTxt":"在就診期間，11 歲及以下的兒童必須有父母或法定監護人在場。",

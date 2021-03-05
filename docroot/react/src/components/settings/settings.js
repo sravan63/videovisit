@@ -104,14 +104,15 @@ class Settings extends React.Component {
     }
 
     render() {
+        let Details = this.props.data.conference;
         return (<div>
             {!this.state.isbrowsercheck ? (<div className={ this.state.settingstoggle ? 'setting-peripherals hide-peripherals' : 'setting-peripherals show-peripherals'}>
                 <div className="row settings-page p-0">
                     <div className="col-xs-12 col-md-12 peripheral-options p-0">
                                 <div className="close-button" onClick={() => this.close(this)}></div>
-                                <div className="text-center"><h4>Settings</h4></div>
+                                <div className="text-center"><h4>{Details && Details.Settings}</h4></div>
                                     <div className="periheral-container">
-                                        <div className="label">Camera</div>
+                                        <div className="label">{Details && Details.Camera}</div>
                                         <div className="dropdown show">
                                             <a className={this.state.constrains.videoSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
                                                 {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
@@ -129,7 +130,7 @@ class Settings extends React.Component {
                                         </div>
                                     </div>
                                     <div className="periheral-container">
-                                        <div className="label">Microphone</div>
+                                        <div className="label">{Details && Details.Microphone}</div>
                                         <div className="dropdown show">
                                             <a className={this.state.constrains.micSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
                                                 {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
@@ -147,7 +148,7 @@ class Settings extends React.Component {
                                         </div>
                                     </div>
                                     <div className="periheral-container">
-                                        <div className="label">Speaker</div>
+                                        <div className="label">{Details && Details.Speaker}</div>
                                         {this.state.constrains.audioSource ? (<div className="dropdown show">
                                             <a className={this.state.constrains.audioSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
                                                 {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
@@ -165,7 +166,7 @@ class Settings extends React.Component {
                                         </div>) : ('')}                                 
                                     </div>
                                     <div className="col-md-12 button-controls text-center">
-                                        <button className="btn rounded-0" onClick={() => this.close(this)}>Done</button>
+                                        <button className="btn rounded-0" onClick={() => this.close(this)}>{Details && Details.Done}</button>
                                     </div>
                                 </div>
                             </div>

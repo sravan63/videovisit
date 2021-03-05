@@ -894,6 +894,11 @@ class Conference extends React.Component {
     }
 
     render() {
+        let Details = this.state.staticData;
+        let RefreshLbl;
+        if(Details && Details.conference){
+            RefreshLbl = Details.conference.Refresh;
+        }
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -904,7 +909,7 @@ class Conference extends React.Component {
                     <div className="col-md-8 banner-content">
                         <div className="logo"></div>
                         <div className="title">
-                            <p className="m-0">Video Visits</p>
+                            <p className="m-0">{Details.videoVisits}</p>
                             <p className="text-uppercase m-0 sub-title">The Permanente Medical Group</p>
                         </div>
                     </div>
@@ -912,7 +917,7 @@ class Conference extends React.Component {
                         <ul>
                             <li><a href={this.state.staticData.HelpLink} className="help-link" target="_blank">{this.state.staticData.Help}</a></li>
                             <li className="text-capitalize">|</li>
-                            <li><a className="help-link" onClick={this.refreshPage}>Refresh</a></li>
+                            <li><a className="help-link" onClick={this.refreshPage}>{Details && RefreshLbl}</a></li>
                             <div className="lang-change p-0">
                             <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
                                     <span>|</span>
@@ -925,14 +930,14 @@ class Conference extends React.Component {
                 {this.state.meetingDetails ? (
                     <div className="row video-conference-container" >
                         <div className="col-md-10 p-0 video-conference" style={{visibility: this.state.showRemotefeed ? 'visible' : 'hidden'}}>
-                            <ConferenceControls controls={this.state}/>
+                            <ConferenceControls controls={this.state} data={Details} />
                             <div className="col-11 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                                <WaitingRoom waitingroom={this.state} data={{translateLang:this.state.staticData}} />
+                                <WaitingRoom waitingroom={this.state} data={Details} />
                                 <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                 <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                  <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                 </div>
-                                <Settings />
+                                <Settings data={Details} />
                             </div>
                             <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                <video id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
@@ -969,7 +974,7 @@ class Conference extends React.Component {
                               </ul>
                             </div>
                         </div>
-                        <ConferenceDetails conference={this.state}/>
+                        <ConferenceDetails conference={this.state} data={Details} />
                     </div>
             ): ('')
         } </div>

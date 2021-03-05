@@ -70,23 +70,24 @@ class ConferenceControls extends React.Component {
     }
 
     render() {
+        let Details = this.props.data.conference;
         return (
             <div className="button-container">
                 <div className="button-group" >
                     <div className="media-toggle">
-                        <div title="Disable Video" style={{display: this.props.controls.showvideoIcon ? 'block' : 'none'}} className="btns media-controls video-btn" onClick={()=>this.toggleControls('video')}></div>
-                        <div title="Enable Video" style={{display: this.props.controls.showvideoIcon ? 'none' : 'block'}} className="btns media-controls video-muted-btn" onClick={()=>this.toggleControls('video')}></div>
+                        <div title={Details && Details.DisableVideo} style={{display: this.props.controls.showvideoIcon ? 'block' : 'none'}} className="btns media-controls video-btn" onClick={()=>this.toggleControls('video')}></div>
+                        <div title={Details && Details.EnableVideo} style={{display: this.props.controls.showvideoIcon ? 'none' : 'block'}} className="btns media-controls video-muted-btn" onClick={()=>this.toggleControls('video')}></div>
                     </div>
                     <div className="media-toggle">
-                        <div title="Mute Speakers" style={{display: this.props.controls.showaudioIcon ? 'block' : 'none'}}  className="btns media-controls speaker-btn" onClick={()=>this.toggleControls('audio')}></div>
-                        <div title="Unmute Speakers" style={{display: this.props.controls.showaudioIcon ? 'none' : 'block'}} className="btns media-controls speaker-muted-btn" onClick={()=>this.toggleControls('audio')}></div>
+                        <div title={Details && Details.MuteSpeakers} style={{display: this.props.controls.showaudioIcon ? 'block' : 'none'}}  className="btns media-controls speaker-btn" onClick={()=>this.toggleControls('audio')}></div>
+                        <div title={Details && Details.UnmuteSpeakers} style={{display: this.props.controls.showaudioIcon ? 'none' : 'block'}} className="btns media-controls speaker-muted-btn" onClick={()=>this.toggleControls('audio')}></div>
                     </div>
                     <div className="media-toggle">
-                        <div title="Mute Mic" style={{display: this.props.controls.showmicIcon ? 'block' : 'none'}} className="btns media-controls microphone-btn" onClick={()=>this.toggleControls('microphone')}></div>
-                        <div title="Unmute Mic" style={{display: this.props.controls.showmicIcon ? 'none' : 'block'}} className="btns media-controls microphone-muted-btn" onClick={()=>this.toggleControls('microphone')}></div>
+                        <div title={Details && Details.MuteMic} style={{display: this.props.controls.showmicIcon ? 'block' : 'none'}} className="btns media-controls microphone-btn" onClick={()=>this.toggleControls('microphone')}></div>
+                        <div title={Details && Details.UnmuteMic} style={{display: this.props.controls.showmicIcon ? 'none' : 'block'}} className="btns media-controls microphone-muted-btn" onClick={()=>this.toggleControls('microphone')}></div>
                     </div>
                     <div className="media-toggle">
-                        <div title="Settings" style={{display:this.state.isbrowsercheck ? 'none':'block'}} className="btns media-controls settings-btn" onClick={this.toggleSettings.bind(this)}></div>                                    
+                        <div title={Details && Details.Settings} style={{display:this.state.isbrowsercheck ? 'none':'block'}} className="btns media-controls settings-btn" onClick={this.toggleSettings.bind(this)}></div>                                    
                     </div>
                 </div>
             </div>

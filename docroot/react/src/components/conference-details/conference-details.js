@@ -477,12 +477,13 @@ class ConferenceDetails extends React.Component {
     }
 
     render() {
+        let Details = this.props.data.conference;
         return (
             <div className="col-md-2 p-0 conference-details" style={{display: this.props.conference.showRemotefeed ? 'block' : 'none'}} >
                 <div className="clinician-information">
-                    <button className="btn leave-button" onClick={this.leaveMeeting}>Leave Room</button>
+                    <button className="btn leave-button" onClick={this.leaveMeeting}>{Details && Details.LeaveRoom}</button>
                     <div className="visit-details">
-                        <p className="text-capitalize mt-1 mb-1">Visit details</p>
+                        <p className="mt-1 mb-1">{Details && Details.VisitDetails}</p>
                         <div className="clinician-info text-capitalize"><span className={this.state.spotlight ? "pinnedIcon show" : "pinnedIcon removePin" }></span><span className = {this.state.spotlight ? "name text-capitalize adjustWidth" : "name text-capitalize"}><span className={this.state.activeSpeaker ? "activespeaker" : "notactivespeaker"}>{this.getClinicianName(this.state.meetingDetails.host)}</span></span><span className={this.state.hostDetails.hostInCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
                         <div className="visit-time text-capitalize">
                             {this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}
@@ -494,7 +495,7 @@ class ConferenceDetails extends React.Component {
                     </div>
                 </div>
                 <div className="participants-information">
-                    <p className="header mb-0">Guests</p>
+                    <p className="header mb-0">{Details && Details.Guests}</p>
                     <div className="participant-details" aria-labelledby="dropdownMenuButton">
                         { this.state.participants && this.state.participants.length > 0 ? 
                             this.state.participants.map((item,key) =>{

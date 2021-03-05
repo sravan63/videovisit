@@ -36,7 +36,7 @@
     "conference":{
       "WaitingRoomLabel":"Su consulta empezará a las",
       "RunningLateLabel":"Lo siento. Su médico va a llegar tarde.",
-      "Refresh":"Refresh",
+      "Refresh":"Actualizar",
       "EnableVideo":"Habilitar video",
       "DisableVideo":"Deshabilitar video",
       "MuteSpeakers":"Poner los parlantes en silencio",
@@ -48,7 +48,7 @@
       "Microphone":"Micrófono",
       "Speaker":"Parlante",
       "Done":"Hecho",
-      "VisitNotification":"Su consulta empezará cuando el médico ingrese.",
+      "WaitingRoomNotification":"Su consulta empezará cuando el médico ingrese.",
       "LeaveRoom":"Salir de la sala",
       "VisitDetails":"Detalles de la consulta",
       "Time":"HORA",
