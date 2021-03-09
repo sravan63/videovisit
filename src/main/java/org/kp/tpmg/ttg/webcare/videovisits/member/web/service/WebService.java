@@ -771,7 +771,7 @@ public class WebService {
 
 			inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
-
+			logger.debug("MAPPOINTMENT : " + MAPPOINTMENT);
 			responseJsonStr = callVVAPiService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,
 					inputJsonString, MAPPOINTMENT);
 			logger.debug("jsonResponseString : " + responseJsonStr);
@@ -1910,6 +1910,7 @@ public class WebService {
 	public static String callVVAPIManagerRestService(final String operationName, final String input, String accessToken,
 			final String opFlag) throws URISyntaxException {
 		logger.info(LOG_ENTERED);
+		logger.debug("opFlag : " + opFlag);
 		logger.debug("accessToken : " + accessToken);
 		String output = null;
 		String uriContext = null;
