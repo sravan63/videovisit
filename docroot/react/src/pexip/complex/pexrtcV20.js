@@ -513,6 +513,13 @@ PexRTCCall.prototype.sdpChangeBW = function(sdplines) {
             }
 
         }
+        if (sdplines[i].lastIndexOf('a=rtpmap:', 0) === 0 && sdplines[i].lastIndexOf('opus') > 0) {
+            var fields = sdplines[i].split(' ');
+            var pt = fields[0].substr(fields[0].indexOf(':')+1);
+            if (sdplines[i+1].lastIndexOf('a=fmtp:' + pt, 0) === 0) {
+                newlines.push(sdplines[++i] + ';stereo=0');
+            }
+        }
         if (navigator.userAgent.indexOf("Chrome") != -1 && sdplines[i].lastIndexOf('a=sendonly', 0) === 0) {
             newlines.push('a=sendrecv');
         }
@@ -945,11 +952,11 @@ PexRTCCall.prototype.gumSuccess = function(stream) {
         self.onSetup(url.createObjectURL(stream));
     }
 
-    // try {
-    //     self.createAudioContext(stream);
-    // } catch (e) {
-    //     self.parent.onLog("Unable to create audio context", e);
-    // }
+     try {
+         self.createAudioContext(stream);
+     } catch (e) {
+         self.parent.onLog("Unable to create audio context", e);
+     }
 };
 
 PexRTCCall.prototype.createAudioContext = function(stream) {
