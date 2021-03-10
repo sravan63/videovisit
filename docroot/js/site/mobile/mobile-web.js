@@ -902,70 +902,21 @@ function deleteCookie(c_name){
 
 
 function launchVideoVisitMember(data){
-		//add logic to differentiate vidyo/pexip
-	
-		//var name = lastName + " " + firstName;
 		try{
-			//data = jQuery.parseJSON(data);
 			if ( data.service.status.code != 200){
 				window.location.replace("logout.htm");
 			}
-
-//			if (data.errorMessage) {
-//				window.location.replace("logout.htm");
-//			}
-//			console.log("launchVideoVisitMember")
-			url = data.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
-			//window.location.href = 'videovisitmobileready.htm';
-			//return;
-//			console.log("url",url);
-		    var mObj = data.service.launchMeetingEnvelope.launchMeeting;
-		    var vendor = data.service.launchMeetingEnvelope.launchMeeting.vendor;
+			var url = data.service.launchMeetingEnvelope.launchMeeting.roomJoinUrl;
             var appOS = getAppOS();
-            var isAndroidSDK = $('#isAndroidSDK').val();
 
 		    if(appOS === 'iOS'){
 		    	$(".button-launch-visit").attr("disabled", false);
                  window.location.replace(url);
 			}
 			else {
-				if(isAndroidSDK=="true"){
 				 openTab(url);
-				}
-				else {
-				var newurl = new URL(url);
-				var roomJoinPexip = mObj.roomKey; // newurl.searchParams.get('roomUrl');
-              var mobileMeetingObj = {
-                    "meetingId": mObj.meetingId,
-                    "meetingCode": null,
-                    "caregiverId": null,
-                    "roomUrl": roomJoinPexip,
-                    "guestName": mObj.member.inMeetingDisplayName,
-                    "isProvider": 'false',
-                    "isMember": "Y",
-                    "isProxyMeeting": "N",
-                    "guestUrl": roomJoinPexip
-                }
-                $.ajax({
-                   type: 'POST',
-                   url: 'videoVisitMobile.htm',
-                   cache: false,
-                   async: false,
-                   data: mobileMeetingObj,
-                   success: function(){
-                       //add logic to differentiate vidyo/pexip
-                       $(".button-launch-visit").attr("disabled", false);
-                       window.location.href = 'videovisitmobileready.htm';
-                   },
-                   error: function(err) {
-                   	   $(".button-launch-visit").attr("disabled", false);	
-                       window.location.href="logout.htm";//DE15797 changes, along with backend back button filter changes
-                   }
-               });
-            }
 		    }
-		    
-	}
+		}
 		catch(e)
 		{	
 			$(".button-launch-visit").attr("disabled", false);
@@ -973,10 +924,6 @@ function launchVideoVisitMember(data){
 		}
 	}
 
-	//var megaMeetingUrl = megaMeetingUrl + "/guest/&id=" + megaMeetingId  +  "&name=" + name + "&title=Video Visits&go=1&agree=1";
-
-	//alert("megaMeetingUrl=" + megaMeetingUrl);
-	//window.location.replace(megaMeetingUrl);
 
 
 
