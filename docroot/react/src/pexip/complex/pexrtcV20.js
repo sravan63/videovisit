@@ -3812,8 +3812,8 @@ PexRTC.prototype.disconnect = function(reason, referral) {
         self.token = null;
     }
     // throw ice connection disconnected error here.
-    self.parent.onLog('IceConnectionDisconnected : event: Callback for ice connection disconnected');
-    self.handleError('Disconnected while gathering IP addresses');
+    // self.onLog('IceConnectionDisconnected : event: Callback for ice connection disconnected');
+    // self.handleError('Disconnected while gathering IP addresses');
 
 };
 
