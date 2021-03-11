@@ -1886,7 +1886,7 @@ public class WebService {
 			}
 		}
 		catch(Exception e) {
-			logger.error("Web Service API error : " + e.getMessage(), e);
+			logger.warn("Web Service API error : " + e.getMessage(), e);
 			//retry again
 			try {
 				if(opFlag.equalsIgnoreCase(VVINTEGRATION) && StringUtils.isNotBlank(accessToken)) {
