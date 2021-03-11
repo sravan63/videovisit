@@ -46,27 +46,6 @@
                 ]
             }
         },
-        "guest" : {
-            "global"    :   [
-            	"js/site/global/dateExtensions_loader.js"
-            ],
-            "specific"  :   {
-                "guest"  :   [
-                	"js/site/guest/guest.js",
-                	"js/site/validation/validate.js"
-                ]
-            }
-        },
-        "guestready" : {
-            "global"    :   [
-                "js/site/global/dateExtensions_loader.js"
-            ],
-            "specific"  :   {
-                "guestready"  :   [
-                    "js/site/guestready/guestready.js",
-                ]
-            }
-        },
         "landingnone" : {
             "global"    :   [],
             "specific"  :   {
@@ -118,23 +97,6 @@
                 ]
             }
         },
-        "guestvisit" : {
-            "global"   : [
-            ],
-            "specific" : {
-                "guestvisit" : [
-                    "js/site/guestvisit/guestvisit.js"
-                ]
-            }
-        },
-        "guesthelp" : {
-            "global"   : [],
-            "specific" : {
-                "guesthelp" : [
-                    "js/site/help/help.js"
-                ]
-            }
-        },
         "help" : {
             "global"   : [],
             "specific" : {
@@ -155,19 +117,10 @@
             ],
             "specific" : {
                 "videoVisit" : [
-                	"js/site/visit/visit.js",
-                	"js/site/guestvisit/guestvisit.js"
+
                 ]
             }
 		},
-        "videoVisitGuestReady" : {
-			"global"   : [],
-            "specific" : {
-                "videoVisitGuestReady" : [
-                	"js/site/guestvisit/guestvisit.js"
-                ]
-          	}
-        },
         "mdo" : {
             "global"   : [],
             "specific" : {
@@ -181,15 +134,6 @@
             "specific" : {
                 "mdohelp" : [
                 	"js/site/mdo/jq-plugins-v1.min.js"
-                ]
-            }
-        },
-        "setup" : {
-            "global"   : [],
-            "specific" : {
-                "setup" : [
-                	"js/site/mdo/jq-plugins-v1.min.js",
-                    "js/site/setup/setup.js"
                 ]
             }
         },
