@@ -3793,10 +3793,12 @@ PexRTC.prototype.disconnect = function(reason, referral) {
     if (self.token) {
         var params = {};
         if (self.error) {
+            self.onLog('ERROR ON DISCONNECT :: '+self.error);
             params['error'] = self.error;
         }
         if (reason) {
             params['reason'] = reason;
+            self.onLog('REASON ON DISCONNECT :: '+reason);
         }
         if (navigator.sendBeacon) {
             var beaconUrl = "https://" + self.node + "/api/client/v2/conferences/" + self.conference_uri + "/release_token?token=" + self.token;
@@ -3811,7 +3813,7 @@ PexRTC.prototype.disconnect = function(reason, referral) {
         }
         self.token = null;
     }
-    // throw ice connection disconnected error here.
+    // TODO: check for the error/reason and throw ice connection disconnected error here.
     // self.onLog('IceConnectionDisconnected : event: Callback for ice connection disconnected');
     // self.handleError('Disconnected while gathering IP addresses');
 
