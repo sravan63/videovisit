@@ -2027,34 +2027,37 @@ public class WebService {
 				retryFlagMCnfc = 0;
 			}
 		} catch (Exception e) {
-			logger.error("Web Service API error : " + e.getMessage(), e);
+			logger.warn("Web Service API error : " + e.getMessage(), e);
 			if(opFlag.equalsIgnoreCase(VVINTEGRATION)) {
 				if(retryFlag < 2) {
 					retryFlag++;
-					logger.error("retryFlag no." + retryFlag);
+					logger.warn("retryFlag no." + retryFlag);
 					output = getAPIToken(opFlag);
 					return output;
 				} else if(retryFlag >= 2) {
+					logger.error("Web Service API retry error : " + e.getMessage(), e);
 					retryFlag = 0;
 					throw e;
 				}
 			} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT)) {
 				if(retryFlagMAppt < 2) {
 					retryFlagMAppt++;
-					logger.error("retryFlagMAppt no." + retryFlagMAppt);
+					logger.warn("retryFlagMAppt no." + retryFlagMAppt);
 					output = getAPIToken(opFlag);
 					return output;
 				} else if(retryFlagMAppt >= 2) {
+					logger.error("Web Service API retry error : " + e.getMessage(), e);
 					retryFlagMAppt = 0;
 					throw e;
 				}
 			} else if(opFlag.equalsIgnoreCase(MCONFERENCE)) {
 				if(retryFlagMCnfc < 2) {
 					retryFlagMCnfc++;
-					logger.error("retryFlagMCnfc no." + retryFlagMCnfc);
+					logger.warn("retryFlagMCnfc no." + retryFlagMCnfc);
 					output = getAPIToken(opFlag);
 					return output;
 				} else if(retryFlagMCnfc >= 2) {
+					logger.error("Web Service API retry error : " + e.getMessage(), e);
 					retryFlagMCnfc = 0;
 					throw e;
 				}
