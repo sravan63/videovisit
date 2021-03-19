@@ -79,6 +79,8 @@ const GlobalConfig = {
     OPEN_MODAL: 'open popup',
     CLOSE_MODAL: 'popup closed',
     CLOSE_MODAL_AUTOMATICALLY: 'close popup automatically',
+    OPEN_INFO_MODAL: 'open info popup',
+    CLOSE_INFO_MODAL: 'info popup closed',
     TOGGLE_MOBILE_FOOTER: 'Mobile Footer Toggle',
     MEDIA_STATS_DATA:'StoreMedia Stats',
     REMOVE_DUPLICATES:'Member alone',
@@ -94,7 +96,13 @@ const GlobalConfig = {
     UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR: 'UPDATE DUPLICATE MEMBERS TO SIDEBAR',
     ACTIVESPEAKER:'bold participant',
     NOTACTIVESPEAKER:'unbold participant',
-    LANGUAGE_CHANGED:'language changed'
+    LANGUAGE_CHANGED:'language changed',
+    ICE_GATHERING_COMPLETE: 'IceGatheringComplete',
+    NETWORK_CONNECTION_SUCCESS: 'NetworkConnectionSuccess',
+    NETWORK_RECONNECTING: 'NetworkReconnecting',
+    FAILED_MID_WAY: 'CallFailedMidway',
+    CALL_CONNECTED: 'CallConnected',
+    CALL_DISCONNECTED: 'CallDisconnected'
 };
 
 export default GlobalConfig;

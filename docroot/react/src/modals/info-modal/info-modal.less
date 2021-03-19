@@ -1,0 +1,33 @@
+.info-modal-overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    width: 100%;
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    .info-container {
+        .content {
+            width: 100%;
+            background: #FFF;
+            text-align: center;
+            .loader {
+                background: url('../../assets/desktop_spinner.gif');
+                height: 4.625rem;
+                width: 4.625rem;
+                display: inline-block;
+                background-repeat: no-repeat;
+                background-size: cover;
+                margin: 1rem auto;
+            }
+            .info {
+                text-align: center;
+                font-size: 1rem;
+                font-weight: bold;
+                max-width: 15rem;
+                word-wrap: break-word;
+            }
+        }
+    }
+}

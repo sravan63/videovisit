@@ -4,6 +4,7 @@ import Header from '../../../../components/header/header';
 import Loader from '../../../../components/loader/loader';
 import VVModal from '../../../../modals/simple-modal/modal';
 import SurveyModal from '../../../../modals/survey-modal/survey-modal';
+import InfoModal from '../../../../modals/info-modal/info-modal';
 import BackendService from '../../../../services/backendService.js';
 import Utilities from '../../../../services/utilities-service.js';
 import './conference.less';
@@ -903,6 +904,7 @@ class Conference extends React.Component {
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
                 {this.state.showLoader ? (<Loader />):('')}
+                <InfoModal />
                 <SurveyModal />
                 <VVModal />
                 <div className="conference-header row">

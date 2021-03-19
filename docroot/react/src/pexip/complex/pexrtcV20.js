@@ -233,7 +233,7 @@ export function PexRTCCall() {
     self.presentation_in_main = false;
     self.ice_candidates = [];
     self.host_candidate = null;
-    self.onIceGathered = null;
+    self.onTrace = null;
     self.analyser = null;
     self.microphone = null;
     self.audioContext = null;
@@ -1257,7 +1257,7 @@ PexRTCCall.prototype.pcIceConnectionStateChanged = function(evt) {
     var self = this;
     // Condition satisfies only for IOS, For windows state will be connected.
     if(self.pc.iceConnectionState=='completed'){
-        self.onIceGathered();
+        self.onTrace('IceGatheringComplete');
     }
     self.parent.onLog("Ice Connection State", self.pc.iceConnectionState);
     if (self.iceRestartTimer) {
@@ -2365,7 +2365,7 @@ export function PexRTC() {
     self.onCallTransfer = null;
     self.onCallDisconnect = null;
     self.onIceFailure = null;
-    self.onIceGathered = null;
+    self.onTrace = null;
     self.onParticipantCreate = null;
     self.onParticipantUpdate = null;
     self.onParticipantDelete = null;
@@ -2944,12 +2944,14 @@ PexRTC.prototype.createEventSource = function() {
         }, false);
         self.event_source.onopen = function(e) {
             self.onLog("event source open");
+            self.onTrace('NetworkConnectionSuccess');
             self.event_source_timeout = 10;
         };
         self.event_source.onerror = function(e) {
             self.onLog("event source error", e);
             if (self.state != 'DISCONNECTING') {
                 self.onLog("reconnecting...");
+                self.onTrace('NetworkReconnecting');
                 self.event_source.close();
                 self.event_source = null;
                 if (self.event_source_timeout > 15000) {
@@ -3376,9 +3378,9 @@ PexRTC.prototype.addCall = function(call_type, flash) {
         self.call.onSetup = function(stream) {
             self.onSetup(stream, self.pin_status, self.conference_extension);
         };
-        self.call.onIceGathered = function(){
+        self.call.onTrace = function(msg){
             console.log('ICE GATHERED CAPTURED');
-            self.onIceGathered();
+            self.onTrace(msg);
         }
         self.call.onConnect = function(stream) {
             if (self.mutedAudio) {

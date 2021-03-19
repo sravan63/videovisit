@@ -64,6 +64,7 @@ utilitiesTemp.msgInProgress = false;
 var refreshingOrSelfJoinMeeting = true;
 var disconnectAlreadyCalled = false;
 var userDetails = { uuid: null };
+var connectionRefused = false;
 
 var rtc = new PexRTC();
 
@@ -406,8 +407,7 @@ function handleError(reason) {
         if(!rtc.refreshTokenProperties.retryTimer){
             rtc.refreshTokenProperties.retryTimer = setInterval(rtc.refreshToken.bind(this), (rtc.refreshTokenProperties.retries * 1000));
         }
-    }
-    else if(rtc.error == 'NotAllowedError'){
+    } else if(rtc.error == 'NotAllowedError') {
         let isSetup = sessionStorage.getItem('isSetupPage');
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
         if(isChrome && !isSetup) {
@@ -416,14 +416,6 @@ function handleError(reason) {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
             }
         }
-    } else if(reason == 'Call Failed: Disconnected while gathering IP addresses') {
-        const eTitle = UtilityService.isMobileDevice() ? 'Refresh Page' : "Can't establish network connection";
-        const eMessage = UtilityService.isMobileDevice() ? 'Unable to establish a network connection. If problem persists, switch to a cellular connection and refresh.' : 'Rejoin your visit or use your mobile device with an LTE connection.';
-        MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
-            heading: eTitle, 
-            message : eMessage,
-            controls : [{label: 'OK', type: 'leave'} ]
-        });
     } else {
         if (video && !selfvideo.src && new Date() - startTime > 30000) {
             reason = "WebSocket connection error.";
@@ -839,7 +831,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     rtc.onParticipantUpdate = participantUpdated;
     rtc.onParticipantDelete = participantDeleted;
     rtc.onLayoutUpdate = layoutUpdate;
-    rtc.onIceGathered = mediaReady;
+    rtc.onTrace = traceHandler;
     rtc.onIceFailure = setTurnServer;
     rtc.onChatMessage = chatReceived;
     rtc.onStageUpdate = StageUpdated;
@@ -862,13 +854,50 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
-function mediaReady(){
-    log("info","ICEGatheringCompleted","event: Callback after ice gathering established");
-    var browserInfo = UtilityService.getBrowserInformation();
-    var os = UtilityService.getAppOS();
-    var isIOS = os == 'iOS' ? true : false;
-    if( isIOS && browserInfo.isSafari && UtilityService.isMobileDevice()){
-        MessageService.sendMessage(GlobalConfig.ENABLE_IOS_CAM, null);
+function traceHandler(info){
+    switch(info) {
+        case GlobalConfig.ICE_GATHERING_COMPLETE:
+            log("info","IceGatheringCompleted","event: Callback after ice gathering established");
+            var browserInfo = UtilityService.getBrowserInformation();
+            var os = UtilityService.getAppOS();
+            var isIOS = os == 'iOS' ? true : false;
+            if( isIOS && browserInfo.isSafari && UtilityService.isMobileDevice()){
+                MessageService.sendMessage(GlobalConfig.ENABLE_IOS_CAM, null);
+            }
+            break;
+
+        case GlobalConfig.NETWORK_CONNECTION_SUCCESS:
+            log("info","NetworkEstablished","event: Callback after network established");
+            MessageService.sendMessage(GlobalConfig.CLOSE_INFO_MODAL, null);
+            break;
+_
+        case GlobalConfig.NETWORK_RECONNECTING:
+            log("info","Reconnecting","event: Reconnecting to the network");
+            MessageService.sendMessage(GlobalConfig.OPEN_INFO_MODAL, { text: 'Trying to reconnect', loader: true });
+            break;
+
+        case GlobalConfig.FAILED_MID_WAY:
+            log("info","IceConnectionDisconnected","event: ICE Disconnected mid-call; triggering ICE restart.");
+            connectionRefused = true;
+            break;
+
+        case GlobalConfig.CALL_CONNECTED:
+            log("info","IceConnectionConnected","event: Ice Connection State connected");
+            connectionRefused = false;
+            break;
+
+        case GlobalConfig.CALL_DISCONNECTED:
+            // Check for the ice connection status and throw ice connection disconnected error here.
+            if( connectionRefused == true ) {
+                log("error","ConnectionFailed","event: connection failed, reason : Disconnected while gathering IP addresses");
+                const eTitle = UtilityService.isMobileDevice() ? 'Refresh Page' : "Can't establish network connection";
+                const eMessage = UtilityService.isMobileDevice() ? 'Unable to establish a network connection. If problem persists, switch to a cellular connection and refresh.' : 'Rejoin your visit or use your mobile device with an LTE connection.';
+                MessageService.sendMessage(GlobalConfig.CLOSE_INFO_MODAL, null);
+                MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
+                    heading: eTitle, message : eMessage, controls : [{label: 'OK', type: 'leave'} ]
+                });
+            }
+            break;
     }
 }
 
