@@ -686,23 +686,20 @@ function connected(url) {
         }
     }
     var isSetup = localStorage.getItem('isSetupPage');
-    var isMobile = UtilityService.isMobileDevice();
-    if( isMobile && !isSetup ){
-        resetMuteOptionsOnCamFlip(false);
-    }
     if(pexipInitialConnect==false){
         if (isSetup == null) {
-        log("info","ConferenceConnected","event: joined conference successfully.");
-        //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
-        MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, 'conference');
-        var isDirectLaunch = localStorage.getItem('isDirectLaunch');
-        var meetingId = JSON.parse(localStorage.getItem('meetingId'));
-        var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-        var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-        var isInstantJoin = sessionStorage.getItem('isInstantJoin');
-        var mrn = udata.mrn;
-        var inMeetingDisplayName = JSON.parse(localStorage.getItem('memberName'));
-        var inAppAccess = UtilityService.getInAppAccessFlag();
+            var isMobile = UtilityService.isMobileDevice();
+            log("info","ConferenceConnected","event: joined conference successfully.");
+            //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+            MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, 'conference');
+            var isDirectLaunch = localStorage.getItem('isDirectLaunch');
+            var meetingId = JSON.parse(localStorage.getItem('meetingId'));
+            var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+            var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
+            var isInstantJoin = sessionStorage.getItem('isInstantJoin');
+            var mrn = udata.mrn;
+            var inMeetingDisplayName = JSON.parse(localStorage.getItem('memberName'));
+            var inAppAccess = UtilityService.getInAppAccessFlag();
             if(isDirectLaunch || inAppAccess){
                 JoinLeaveMobileCall("J");
             }
@@ -751,33 +748,8 @@ export function setPatientGuestPresenceIndicatorManually() {
     }
 }
 
-var isSpeakerMuted = false;
-var isMicMuted = false;
-
-function resetMuteOptionsOnCamFlip(reset){
-    if(reset){
-        // unmuting speaker and mic if already muted.
-        if(isSpeakerMuted){
-            var video = document.getElementById("video");
-            video.muted = false;
-        }
-        if(isMicMuted){
-            let muteAudio = rtc.muteAudio();
-        }
-    } else {
-        if(isSpeakerMuted){
-            var video = document.getElementById("video");
-            video.muted = true;
-        }
-        if(isMicMuted){
-            let muteAudio = rtc.muteAudio();
-        }
-    }
-}
-
 export function switchDevices(constrain, device = null) {
     log("info", constrain+"_peripheral_change_action", "event: peripherals"+constrain+"Change - on changing the peripheral dropdown to :: " + device.label);
-    resetMuteOptionsOnCamFlip(true);
     if(constrain == 'video'){
         rtc.video_source = device.deviceId;
     }
@@ -1220,11 +1192,9 @@ export function muteSpeaker() {
     if (video.muted) {
         log("info", "speaker_unmute_action", "event: unmuteSpeaker - on click of unmute speaker button");
         video.muted = false;
-        isSpeakerMuted = false;
     } else {
         log("info", "speaker_mute_action", "event: muteSpeaker - on click of mute speaker button");
         video.muted = true;
-        isSpeakerMuted = true;
     }
 }
 
@@ -1240,7 +1210,6 @@ export function muteUnmuteVideo() {
 
 export function muteUnmuteMic() {
     let muteAudio = rtc.muteAudio();
-    isMicMuted = muteAudio;
     if (muteAudio) {
         log("info", "microphone_mute_action", "event: muteMic - on click of mute mic button");
     } else {
