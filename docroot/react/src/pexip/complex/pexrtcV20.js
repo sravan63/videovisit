@@ -1260,6 +1260,9 @@ PexRTCCall.prototype.pcIceConnectionStateChanged = function(evt) {
         self.onTrace('IceGatheringComplete');
     }
     self.parent.onLog("Ice Connection State", self.pc.iceConnectionState);
+    if(self.pc.iceConnectionState == 'connected' || self.pc.iceConnectionState=='completed'){
+        self.onTrace('CallConnected');
+    }
     if (self.iceRestartTimer) {
         clearTimeout(self.iceRestartTimer);
         self.iceRestartTimer = null;
@@ -1279,6 +1282,7 @@ PexRTCCall.prototype.pcIceConnectionStateChanged = function(evt) {
     else if (self.pc.iceConnectionState == 'disconnected') {
         if (self.previousIceConnectionState == 'disconnected') {
             self.parent.onLog("ICE Disconnected mid-call; triggering ICE restart.");
+            self.onTrace('CallFailedMidway');
             if (self.chrome_ver > 0) {
                 self.parent.event_source.close();
                 self.parent.event_source = null;
@@ -3815,10 +3819,7 @@ PexRTC.prototype.disconnect = function(reason, referral) {
         }
         self.token = null;
     }
-    // TODO: check for the error/reason and throw ice connection disconnected error here.
-    // self.onLog('IceConnectionDisconnected : event: Callback for ice connection disconnected');
-    // self.handleError('Disconnected while gathering IP addresses');
-
+    self.onTrace('CallDisconnected');
 };
 
 PexRTC.prototype.sendPresentationImage = function(file, cb) {
