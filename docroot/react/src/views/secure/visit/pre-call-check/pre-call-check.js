@@ -220,6 +220,10 @@ class PreCallCheck extends React.Component {
 
     render() {
         let Details = this.state.staticData;
+        var translateLang;
+        if(Details && Details.precall){
+            translateLang = Details.precall;
+        }
         return (
             <div>
             <VVModal />
@@ -228,7 +232,7 @@ class PreCallCheck extends React.Component {
                     <div className="col-md-8 banner-content">
                         <div className="logo"></div>
                         <div className="title">
-                            <p className="m-0">Video Visits</p>
+                            <p className="m-0">{Details.videoVisits}</p>
                             <p className="text-uppercase m-0 sub-title">The Permanente Medical Group</p>
                         </div>
                     </div>
@@ -250,7 +254,7 @@ class PreCallCheck extends React.Component {
                      <div className="row pre-call-check">
                          <div className="col-lg-5 col-md-7 peripheral-options p-0">
                              <div className="periheral-container">
-                                 <div className="label">Camera</div>
+                                 <div className="label">{translateLang && translateLang.Camera}</div>
                                  <div className="dropdown show">
                                       <a className={this.state.constrains.videoSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
                                         {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
@@ -268,7 +272,7 @@ class PreCallCheck extends React.Component {
                                  </div>
                              </div>
                              <div className="periheral-container">
-                                 <div className="label">Microphone</div>
+                                 <div className="label">{translateLang && translateLang.Microphone}</div>
                                  <div className="dropdown show">
                                       <a className={this.state.constrains.micSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
                                         {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
@@ -289,7 +293,7 @@ class PreCallCheck extends React.Component {
                                  </div>
                              </div>
                              <div className="periheral-container">
-                                 <div className="label">Speaker</div>
+                                 <div className="label">{translateLang && translateLang.Speaker}</div>
                                  {this.state.constrains.audioSource ? (<div className="dropdown show">
                                       <a className={this.state.constrains.audioSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
                                         {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
@@ -324,7 +328,7 @@ class PreCallCheck extends React.Component {
                          <div className="col-lg-5 col-md-5 video-preview"><video id="preview" playsInline autoPlay></video></div>
                          <div className="col-md-12 button-controls text-center">
                            <button className="btn rounded-0 mr-3" onClick={this.goBack}>Back</button>
-                           <button className="btn rounded-0" onClick={this.joinVisit}>Join</button>
+                           <button className="btn rounded-0" onClick={this.joinVisit}>{translateLang && translateLang.Join}</button>
                          </div>
                      </div>
                  </div>

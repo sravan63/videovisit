@@ -67,5 +67,12 @@
       "Start":"Start",
       "Join":"Join",
       "EquipmentMsgNote":""
+    },
+    "precall":{
+      "Camera":"Camera",
+      "Microphone":"Microphone",
+      "Speaker":"Speaker",
+      "Start":"Start",
+      "Join":"Join"
     }
 }

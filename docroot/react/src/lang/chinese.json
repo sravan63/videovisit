@@ -67,5 +67,12 @@
       "Start":"開始",
       "Join":"加入",
       "EquipmentMsgNote":"設備檢查測試僅限英文"
+    },
+    "precall":{
+      "Camera":"攝像頭",
+      "Microphone":"麥克風",
+      "Speaker":"擴音器",
+      "Start":"開始",
+      "Join":"加入"
     }
 }

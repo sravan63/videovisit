@@ -67,5 +67,12 @@
       "Start":"Empezar",
       "Join":"Ingresar",
       "EquipmentMsgNote":"Las pruebas para revisar el equipo están solamente en inglés."
+    },
+    "precall":{
+      "Camera":"Cámara",
+      "Microphone":"Micrófono",
+      "Speaker":"Parlante",
+      "Start":"Empezar",
+      "Join":"Ingresar"
     }
 }
