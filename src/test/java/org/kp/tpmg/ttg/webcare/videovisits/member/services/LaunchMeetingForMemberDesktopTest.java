@@ -45,7 +45,7 @@ public class LaunchMeetingForMemberDesktopTest extends AbstractVideoVisitMemberA
 		
 		new MockUp<WebService>() {
 			@Mock
-			APIToken getAPIToken(final String opFlag) {
+			APIToken getAPIToken(final char opFlag, String consumerKey, String consumerSecret) {
 				return apiToken;
 			}
 		};

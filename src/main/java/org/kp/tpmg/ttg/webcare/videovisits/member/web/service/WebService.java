@@ -112,22 +112,22 @@ public class WebService {
 	private static String kpOrgSSOAPIKeyHeader = null;
 	private static String kpOrgSSOAppNameHeader = null;
 	
-	private static String accessToken = null;
 	private static String accessTokenMAppointment = null;
 	private static String accessTokenMConference = null;
+	private static String accessTokenIntegration = null;
 	private static int retryFlag = 0;
 	private static int retryFlagMAppt = 0;
 	private static int retryFlagMCnfc = 0;
-	private static final String CONSUMER_KEY_INTERNAL = "YSZKsLgz1EguT2UEJAEN_XoSTfQa";
-	private static final String CONSUMER_SECRET_INTERNAL = "LSLoxMoGz2LVSx9nYuKuv1KfK0sa";
+	private static final String CONSUMER_KEY_INTERNAL_INTEGRATION = "t1A1sXccjZaFKv6sabVX20eXuzUa";
+	private static final String CONSUMER_SECRET_INTERNAL_INTEGRATION = "fx0oej_fyeuW8lcUD_BJykfP1E0a";
 	private static final String CONSUMER_KEY_INTERNAL_MAPPOINTMENT = "palMqc2Ao21rOf6q3PW62TMV96Ya"; //need to be updated
 	private static final String CONSUMER_SECRET_INTERNAL_MAPPOINTMENT = "CM4M3a38CL3rS96ibfkdHfMIpUAa"; //need to be updated
 	private static final String CONSUMER_KEY_INTERNAL_MCONFERENCE = "gOpMHOfsHc1adpQBpR27doFHMLoa"; //need to be updated
 	private static final String CONSUMER_SECRET_INTERNAL_MCONFERENCE = "8U_NlEQq6MuxVkJffsqLmDdHhPYa"; //need to be updated
 	
-	private static final String VVINTEGRATION = "vvIntegration";
-	private static final String MAPPOINTMENT = "mAppointment";
-	private static final String MCONFERENCE = "mConference";
+	private static final char VVINTEGRATION = 'I';
+	private static final char MAPPOINTMENT = 'A';
+	private static final char MCONFERENCE = 'C';
 
 	// Parameters for Proxy Appts logic
 	private static String secureCodes = null;
@@ -897,7 +897,7 @@ public class WebService {
 					String inputString = gson.toJson(verifyMeberInput);
 					logger.debug("jsonInputString " + inputString);
 
-					String jsonString = callVVAPiService(ServiceUtil.VERIFY_MEMBER, inputString, MAPPOINTMENT);
+					String jsonString = callVVAPiService(ServiceUtil.VERIFY_MEMBER, inputString, VVINTEGRATION);
 					logger.debug("outputjsonString" + jsonString);
 					if (StringUtils.isNotBlank(jsonString)) {
 						final JsonParser parser = new JsonParser();
@@ -1341,7 +1341,7 @@ public class WebService {
 
 				final String inputJsonStr = gson.toJson(input);
 				logger.debug("inputJsonStr: " + inputJsonStr);
-				jsonOutput = callVVAPiService(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, inputJsonStr, MCONFERENCE);
+				jsonOutput = callVVAPiService(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, inputJsonStr, VVINTEGRATION);
 				logger.info("jsonOutput: " + jsonOutput);
 
 			} catch (Exception e) {
@@ -1859,18 +1859,35 @@ public class WebService {
 		return output;
 	}
 	
-	public static String callAPIManagerService(final String operationName, final String input, final String opFlag) {
+	public static String getNewTokenAppointmentApiResponse(final String operationName, final String input, final char opFlag, 
+			final String uriContext) throws Exception {
+		APIToken apiToken = null;
+		String output = null;
+		Crypto crypto = new Crypto();
+		String consumerKey = null;
+		String consumerSecret = null;
+		consumerKey = AppProperties.getExtPropertiesValueByKey("consumer_key_internal_mappointment");
+		consumerSecret = crypto.read(AppProperties.getExtPropertiesValueByKey("consumer_secret_internal_mappointment"));
+		apiToken = getAPIToken(opFlag, consumerKey, consumerSecret);
+		if (apiToken != null) {
+			accessTokenMAppointment = apiToken.getAccessToken();
+		}
+		if(StringUtils.isNotBlank(accessTokenMAppointment)) {
+			output = callVVAPIManagerRestService(operationName, input, accessTokenMAppointment, uriContext);
+		}
+		return output;
+	}
+	
+	public static String callAppointmentAPIManagerService(final String operationName, final String input, final char opFlag) {
 		logger.info(LOG_ENTERED);
 		String output = null;
+		String uriContext = null;
 		try {
-			if(opFlag.equalsIgnoreCase(VVINTEGRATION) && StringUtils.isNotBlank(accessToken)) {
-				output = callVVAPIManagerRestService(operationName, input, accessToken, opFlag);
-			} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT) && StringUtils.isNotBlank(accessTokenMAppointment)) {
-				output = callVVAPIManagerRestService(operationName, input, accessTokenMAppointment, opFlag);
-			} else if(opFlag.equalsIgnoreCase(MCONFERENCE) && StringUtils.isNotBlank(accessTokenMConference)) {
-				output = callVVAPIManagerRestService(operationName, input, accessTokenMConference, opFlag);
+			uriContext = AppProperties.getExtPropertiesValueByKey("mappointment_service_context");
+			if(StringUtils.isNotBlank(accessTokenMAppointment)) {
+				output = callVVAPIManagerRestService(operationName, input, accessTokenMAppointment, uriContext);
 			} else {
-				output = callVVNewTokenAPIManagerRestService(input, operationName, opFlag);
+				output = getNewTokenAppointmentApiResponse(operationName, input, opFlag, uriContext);
 			}
 		} catch (HttpClientErrorException e) {
 			logger.warn("status code: " + e.getRawStatusCode());
@@ -1878,7 +1895,128 @@ public class WebService {
 				//Retry to connect again by creating a new api token
 				logger.warn("received 401, so retrying with new token");
 				try {
-					output = callVVNewTokenAPIManagerRestService(input, operationName, opFlag);
+					output = getNewTokenAppointmentApiResponse(operationName, input, opFlag, uriContext);
+				}
+				catch (Exception e1) {
+					logger.error("Web Service API error : " + e1.getMessage(), e1);
+				}
+			}
+		}
+		catch(Exception e) {
+			logger.warn("Web Service API error : " + e.getMessage(), e);
+			//retry again
+			try {
+				if(StringUtils.isNotBlank(accessTokenMAppointment)) {
+					logger.warn("received error so, retrying with existing token member appointment token");
+					output = callVVAPIManagerRestService(operationName, input, accessTokenMAppointment, uriContext);
+				}
+			} catch (Exception e1) {
+				logger.error("Web Service API error : " + e1.getMessage(), e1);
+			}
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
+	
+	public static String getNewTokenConferenceApiResponse(final String operationName, final String input, final char opFlag, 
+			final String uriContext) throws Exception {
+		APIToken apiToken = null;
+		String output = null;
+		Crypto crypto = new Crypto();
+		String consumerKey = null;
+		String consumerSecret = null;
+		consumerKey = AppProperties.getExtPropertiesValueByKey("consumer_key_internal_mconference");
+		consumerSecret = crypto.read(AppProperties.getExtPropertiesValueByKey("consumer_secret_internal_mconference"));
+		apiToken = getAPIToken(opFlag, consumerKey, consumerSecret);
+		System.out.println(apiToken);
+		if (apiToken != null) {
+			accessTokenMConference = apiToken.getAccessToken();
+		}
+		if(StringUtils.isNotBlank(accessTokenMConference)) {
+			output = callVVAPIManagerRestService(operationName, input, accessTokenMConference, uriContext);
+		}
+		return output;
+	}
+	
+	public static String callIntegrationAPIManagerService(final String operationName, final String input, final char opFlag) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		String uriContext = null;
+		try {
+			uriContext = AppProperties.getExtPropertiesValueByKey("integration_service_context");
+			if(StringUtils.isNotBlank(accessTokenIntegration)) {
+				output = callVVAPIManagerRestService(operationName, input, accessTokenIntegration, uriContext);
+			} else {
+				output = getNewTokenIntegrationApiResponse(operationName, input, opFlag, uriContext);
+			}
+		} catch (HttpClientErrorException e) {
+			logger.warn("status code: " + e.getRawStatusCode());
+			if(e.getRawStatusCode() == 401) {
+				//Retry to connect again by creating a new api token
+				logger.warn("received 401, so retrying with new token");
+				try {
+					output = getNewTokenIntegrationApiResponse(operationName, input, opFlag, uriContext);
+				}
+				catch (Exception e1) {
+					logger.error("Web Service API error : " + e1.getMessage(), e1);
+				}
+			}
+		}
+		catch(Exception e) {
+			logger.warn("Web Service API error : " + e.getMessage(), e);
+			//retry again
+			try {
+				if(StringUtils.isNotBlank(accessTokenIntegration)) {
+					logger.warn("received error so, retrying with existing token member integration token");
+					output = callVVAPIManagerRestService(operationName, input, accessTokenIntegration, uriContext);
+				}
+			} catch (Exception e1) {
+				logger.error("Web Service API error : " + e1.getMessage(), e1);
+			}
+		}
+		logger.info(LOG_EXITING);
+		return output;
+	}
+	
+	public static String getNewTokenIntegrationApiResponse(final String operationName, final String input, final char opFlag, 
+			final String uriContext) throws Exception {
+		APIToken apiToken = null;
+		String output = null;
+		Crypto crypto = new Crypto();
+		String consumerKey = null;
+		String consumerSecret = null;
+		consumerKey = AppProperties.getExtPropertiesValueByKey("consumer_key_internal_integration");
+		consumerSecret = crypto.read(AppProperties.getExtPropertiesValueByKey("consumer_secret_internal_integration"));
+		apiToken = getAPIToken(opFlag, consumerKey, consumerSecret);
+		if (apiToken != null) {
+			accessTokenIntegration = apiToken.getAccessToken();
+		}
+		if(StringUtils.isNotBlank(accessTokenIntegration)) {
+			output = callVVAPIManagerRestService(operationName, input, accessTokenIntegration, uriContext);
+		}
+		return output;
+	}
+	
+	
+	public static String callConferenceAPIManagerService(final String operationName, final String input, final char opFlag) {
+		logger.info(LOG_ENTERED);
+		String output = null;
+		String uriContext = null;
+		try {
+			uriContext = AppProperties.getExtPropertiesValueByKey("mconference_service_context");
+			if(StringUtils.isNotBlank(accessTokenMConference)) {
+				output = callVVAPIManagerRestService(operationName, input, accessTokenMConference, uriContext);
+			} else {
+				output = getNewTokenConferenceApiResponse(operationName, input, opFlag, uriContext);
+			}
+		} catch (HttpClientErrorException e) {
+			logger.warn("status code: " + e.getRawStatusCode());
+			if(e.getRawStatusCode() == 401) {
+				//Retry to connect again by creating a new api token
+				logger.warn("received 401, so retrying with new token");
+				try {
+					output = getNewTokenConferenceApiResponse(operationName, input, opFlag, uriContext);
 				} 
 				catch (Exception e1) {
 					logger.error("Web Service API error : " + e1.getMessage(), e1);
@@ -1889,15 +2027,9 @@ public class WebService {
 			logger.warn("Web Service API error : " + e.getMessage(), e);
 			//retry again
 			try {
-				if(opFlag.equalsIgnoreCase(VVINTEGRATION) && StringUtils.isNotBlank(accessToken)) {
-					 logger.warn("received error so, retrying with existing token integration token");
-					output = callVVAPIManagerRestService(operationName, input, accessToken, opFlag);
-				} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT) && StringUtils.isNotBlank(accessTokenMAppointment)) {
-					logger.warn("received error so, retrying with existing token member appointment token");
-					output = callVVAPIManagerRestService(operationName, input, accessTokenMAppointment, opFlag);
-				} else if(opFlag.equalsIgnoreCase(MCONFERENCE) && StringUtils.isNotBlank(accessTokenMConference)) {
+				if(StringUtils.isNotBlank(accessTokenMConference)) {
 					logger.warn("received error so, retrying with existing token member conference token");
-					output = callVVAPIManagerRestService(operationName, input, accessTokenMConference, opFlag);
+					output = callVVAPIManagerRestService(operationName, input, accessTokenMConference, uriContext);
 				}
 			} catch (Exception e1) {
 				logger.error("Web Service API error : " + e1.getMessage(), e1);
@@ -1908,20 +2040,11 @@ public class WebService {
 	}
 	
 	public static String callVVAPIManagerRestService(final String operationName, final String input, String accessToken,
-			final String opFlag) throws URISyntaxException {
+			final String uriContext) throws URISyntaxException {
 		logger.info(LOG_ENTERED);
-		logger.debug("opFlag : " + opFlag);
 		logger.debug("accessToken : " + accessToken);
 		String output = null;
-		String uriContext = null;
 		final String internalUrl = AppProperties.getExtPropertiesValueByKey("api_manager_internal_url");
-		if(opFlag.equalsIgnoreCase(VVINTEGRATION)) {
-			uriContext = AppProperties.getExtPropertiesValueByKey("videovisit_integration_service_context");
-		} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT)) {
-			uriContext = AppProperties.getExtPropertiesValueByKey("mappointment_service_context");
-		} else if(opFlag.equalsIgnoreCase(MCONFERENCE)) {
-			uriContext = AppProperties.getExtPropertiesValueByKey("mconference_service_context");
-		}
 		final URI uri = new URI(internalUrl + uriContext + operationName);
 		logger.info("serviceUrl : " + uri);
 		
@@ -1944,65 +2067,28 @@ public class WebService {
 		return headers;
 	}
 	
-	public static String callVVNewTokenAPIManagerRestService(final String input, final String operationName, 
-			final String opFlag) throws Exception {
-		logger.info(LOG_ENTERED);
-		APIToken apiToken = null;
-		String output = null;
-		apiToken = getAPIToken(opFlag);
-		if(opFlag.equalsIgnoreCase(VVINTEGRATION)) {
-			accessToken = apiToken.getAccessToken();
-		} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT)) {
-			accessTokenMAppointment = apiToken.getAccessToken();
-		} else if(opFlag.equalsIgnoreCase(MCONFERENCE)) {
-			accessTokenMConference = apiToken.getAccessToken();
-		}
-//		if (apiToken != null && StringUtils.isNotBlank(accessToken)) {
-//			output = callVVAPIManagerRestService(operationName, input, accessToken);
-//		}
-		if(apiToken != null) {
-			if(opFlag.equalsIgnoreCase(VVINTEGRATION) && StringUtils.isNotBlank(accessToken)) {
-				output = callVVAPIManagerRestService(operationName, input, accessToken, opFlag);
-			} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT) && StringUtils.isNotBlank(accessTokenMAppointment)) {
-				output = callVVAPIManagerRestService(operationName, input, accessTokenMAppointment, opFlag);
-			} else if(opFlag.equalsIgnoreCase(MCONFERENCE) && StringUtils.isNotBlank(accessTokenMConference)) {
-				output = callVVAPIManagerRestService(operationName, input, accessTokenMConference, opFlag);
-			}
-		}
-		logger.info(LOG_EXITING);
-		return output;
-	}
-	
-	public static APIToken getAPIToken(final String opFlag) throws Exception {
+	public static APIToken getAPIToken(final char opFlag, String consumerKey, String consumerSecret) throws Exception {
 		logger.info(LOG_ENTERED);
 		APIToken output = null;
 		try {
 			final IApplicationProperties appProp = AppProperties.getInstance().getApplicationProperty();
 			final String internalUrl = appProp.getProperty("api_manager_internal_url");
 			final String tokenApi = appProp.getProperty("token_api");
-			String consumerKey = null;
-			String consumerSecret = null;
-			Crypto crypto = new Crypto();
-			if(opFlag.equalsIgnoreCase(VVINTEGRATION)) {
-				consumerKey = appProp.getProperty("consumer_key_internal");
-				consumerSecret = crypto.read(appProp.getProperty("consumer_secret_internal"));
-			} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT)) {
-				consumerKey = appProp.getProperty("consumer_key_internal_mappointment");
-				consumerSecret = crypto.read(appProp.getProperty("consumer_secret_internal_mappointment"));
-			} else if(opFlag.equalsIgnoreCase(MCONFERENCE)) {
-				consumerKey = appProp.getProperty("consumer_key_internal_mconference");
-				consumerSecret = crypto.read(appProp.getProperty("consumer_secret_internal_mconference"));
-			}
 			if (StringUtils.isBlank(consumerKey) || StringUtils.isBlank(consumerSecret)) {
-				if(opFlag.equalsIgnoreCase(VVINTEGRATION)) {
-					consumerKey = CONSUMER_KEY_INTERNAL;
-					consumerSecret = CONSUMER_SECRET_INTERNAL;
-				} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT)) {
-					consumerKey = CONSUMER_KEY_INTERNAL_MAPPOINTMENT;
-					consumerSecret = CONSUMER_SECRET_INTERNAL_MAPPOINTMENT;
-				} else if(opFlag.equalsIgnoreCase(MCONFERENCE)) {
-					consumerKey = CONSUMER_KEY_INTERNAL_MCONFERENCE;
-					consumerSecret = CONSUMER_SECRET_INTERNAL_MCONFERENCE;
+				switch(opFlag) {
+					case VVINTEGRATION:
+						consumerKey = CONSUMER_KEY_INTERNAL_INTEGRATION;
+						consumerSecret = CONSUMER_SECRET_INTERNAL_INTEGRATION;
+						break;
+					case MAPPOINTMENT:
+						consumerKey = CONSUMER_KEY_INTERNAL_MAPPOINTMENT;
+						consumerSecret = CONSUMER_SECRET_INTERNAL_MAPPOINTMENT;
+						break;
+					case MCONFERENCE:
+						consumerKey = CONSUMER_KEY_INTERNAL_MCONFERENCE;
+						consumerSecret = CONSUMER_SECRET_INTERNAL_MCONFERENCE;
+						break;
+					default:
 				}
 			}  
 			final URI uri = new URI(internalUrl + tokenApi);
@@ -2019,63 +2105,82 @@ public class WebService {
 				String outputJson = (String) responseEntity.getBody();
 				output = new Gson().fromJson(outputJson, APIToken.class);
 			}
-			if(opFlag.equalsIgnoreCase(VVINTEGRATION)) {
-				retryFlag = 0;
-			} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT)) {
-				retryFlagMAppt = 0;
-			} else if(opFlag.equalsIgnoreCase(MCONFERENCE)) {
-				retryFlagMCnfc = 0;
+			
+			switch(opFlag) {
+				case VVINTEGRATION:
+					retryFlag = 0;
+					break;
+				case MAPPOINTMENT:
+					retryFlagMAppt = 0;
+					break;
+				case MCONFERENCE:
+					retryFlagMCnfc = 0;
+					break;
+				default:
 			}
 		} catch (Exception e) {
 			logger.warn("Web Service API error : " + e.getMessage(), e);
-			if(opFlag.equalsIgnoreCase(VVINTEGRATION)) {
-				if(retryFlag < 2) {
-					retryFlag++;
-					logger.warn("retryFlag no." + retryFlag);
-					output = getAPIToken(opFlag);
-					return output;
-				} else if(retryFlag >= 2) {
-					logger.error("Web Service API retry error : " + e.getMessage(), e);
-					retryFlag = 0;
-					throw e;
-				}
-			} else if(opFlag.equalsIgnoreCase(MAPPOINTMENT)) {
-				if(retryFlagMAppt < 2) {
-					retryFlagMAppt++;
-					logger.warn("retryFlagMAppt no." + retryFlagMAppt);
-					output = getAPIToken(opFlag);
-					return output;
-				} else if(retryFlagMAppt >= 2) {
-					logger.error("Web Service API retry error : " + e.getMessage(), e);
-					retryFlagMAppt = 0;
-					throw e;
-				}
-			} else if(opFlag.equalsIgnoreCase(MCONFERENCE)) {
-				if(retryFlagMCnfc < 2) {
-					retryFlagMCnfc++;
-					logger.warn("retryFlagMCnfc no." + retryFlagMCnfc);
-					output = getAPIToken(opFlag);
-					return output;
-				} else if(retryFlagMCnfc >= 2) {
-					logger.error("Web Service API retry error : " + e.getMessage(), e);
-					retryFlagMCnfc = 0;
-					throw e;
-				}
+			switch(opFlag) {
+				case VVINTEGRATION:
+					if(retryFlag < 2) {
+						retryFlag++;
+						logger.warn("retryFlag no." + retryFlag);
+						output = getAPIToken(opFlag, consumerKey, consumerSecret);
+						return output;
+					} else if(retryFlag >= 2) {
+						logger.error("Web Service API retry error : " + e.getMessage(), e);
+						retryFlag = 0;
+						throw e;
+					}
+					break;
+				case MAPPOINTMENT:
+					if(retryFlagMAppt < 2) {
+						retryFlagMAppt++;
+						logger.warn("retryFlagMAppt no." + retryFlagMAppt);
+						output = getAPIToken(opFlag, consumerKey, consumerSecret);
+						return output;
+					} else if(retryFlagMAppt >= 2) {
+						logger.error("Web Service API retry error : " + e.getMessage(), e);
+						retryFlagMAppt = 0;
+						throw e;
+					}
+					break;
+				case MCONFERENCE:
+					if(retryFlagMCnfc < 2) {
+						retryFlagMCnfc++;
+						logger.warn("retryFlagMCnfc no." + retryFlagMCnfc);
+						output = getAPIToken(opFlag, consumerKey, consumerSecret);
+						return output;
+					} else if(retryFlagMCnfc >= 2) {
+						logger.error("Web Service API retry error : " + e.getMessage(), e);
+						retryFlagMCnfc = 0;
+						throw e;
+					}
+					break;
+				default:
 			}
 		}
 		logger.info(LOG_EXITING);
 		return output;
 	}
 	
-	public static String callVVAPiService(final String operationName, final String input, final String opFlag) {
+	public static String callVVAPiService(final String operationName, final String input, final char opFlag) {
 		logger.info(LOG_ENTERED);
-		String tokenFlag = AppProperties.getExtPropertiesValueByKey("token_flag");
 		String output = null;
-		if("false".equalsIgnoreCase(tokenFlag)) {
-			output = callVVRestService(operationName, input);
-		} else {
-			output = callAPIManagerService(operationName, input, opFlag);
-		}
+		
+		switch(opFlag) {
+			case VVINTEGRATION:
+				output = callIntegrationAPIManagerService(operationName, input, opFlag);
+				break;
+			case MAPPOINTMENT:
+				output = callAppointmentAPIManagerService(operationName, input, opFlag);
+				break;
+			case MCONFERENCE:
+				output = callConferenceAPIManagerService(operationName, input, opFlag);
+				break;
+			default:
+		}		
+			
 		logger.info(LOG_EXITING);
 		return output;
 	}
