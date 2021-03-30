@@ -105,6 +105,7 @@ class Authentication extends React.Component {
         e.preventDefault();
         localStorage.clear();
         this.setState({ showLoader: true });
+        this.state.lastname = this.state.lastname.replace(/[‘’]/g, "'");
         sessionStorage.setItem('lastname',this.state.lastname);
         this.guestLogin(this.state.meetingCode, this.state.lastname.trim(),this.state.authToken,false);
     }
