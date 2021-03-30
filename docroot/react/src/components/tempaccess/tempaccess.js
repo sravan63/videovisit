@@ -54,6 +54,7 @@ class TempAccess extends React.Component {
             this.state.birth_month = month;
         }
         this.props.data.emit({ showLoader: true });
+        this.state.lastname = this.state.lastname.replace(/[‘’]/g, "'");
         BackendService.getTempLogin(this.state.lastname.trim(), this.state.mrn, this.state.birth_month, this.state.birth_year).subscribe((response) => {
             if (response.data != "" && response.data != null && response && response.data.statusCode == 200) {
                 this.props.data.emit({ showLoader: false });
