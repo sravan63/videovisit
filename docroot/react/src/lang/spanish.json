@@ -58,7 +58,7 @@
       "Start":""
     },
     "guestauth":{
-      "GuestHeaderLabelTxt":"Los niños de 11 años o menos deben tener a uno de los padres o a un tutor legal presente durante la consulta.",
+      "GuestHeaderLabelTxt":"Los niños de 11 años o menores deben tener a uno de los padres o a un tutor legal presente durante la consulta.",
       "PatientLastName":"Apellido del paciente",
       "JoinBtnName":"Ingresar"
     },
