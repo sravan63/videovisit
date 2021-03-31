@@ -1,4 +1,3 @@
-/* PexRTC v25.2 03/30 */
 /* global window, navigator, WebSocket, console, URL, setTimeout, setInterval, clearInterval, EventSource */
 import $ from 'jquery';
 var SessionDescription = window.mozRTCSessionDescription || window.RTCSessionDescription;
@@ -442,7 +441,7 @@ PexRTCCall.prototype.sdpAddPLI = function(origlines) {
 
             newlines.push(sdpline);
 
-            if ((self.chrome_ver > 0 || self.safari_ver >= 11) && (self.allow_1080p || self.call_type == 'presentation') && sdplines[i].lastIndexOf('a=rtpmap:', 0) === 0) {
+            if (self.chrome_ver > 0 && (self.allow_1080p || self.call_type == 'presentation') && sdplines[i].lastIndexOf('a=rtpmap:', 0) === 0) {
                 var fields = sdplines[i].split(' ');
                 var pt = fields[0].substr(fields[0].indexOf(':') + 1);
                 if (sdplines[i].lastIndexOf('VP8') > 0 || sdplines[i].lastIndexOf('VP9') > 0) {
@@ -736,14 +735,10 @@ PexRTCCall.prototype.handleError = function(err) {
             if (self.call_type == 'presentation' || self.is_screenshare) {
                 self.onError(err);
             } else {
-                if (err && err.hasOwnProperty('message')) {
+                if (err.hasOwnProperty('message')) {
                     err = err.message;
                 }
-                if (err) {
                 self.onError(self.parent.trans.ERROR_CALL_FAILED + err);
-                } else {
-                    self.onError(self.parent.trans.ERROR_CALL_FAILED);
-                }
             }
         }
     }
@@ -2217,14 +2212,10 @@ PexRTMP.prototype.handleError = function(err) {
             if (self.call_type == 'presentation' || self.call_type == 'screen') {
                 self.onError(err);
             } else {
-                if (err && err.hasOwnProperty('message')) {
+                if (err.hasOwnProperty('message')) {
                     err = err.message;
                 }
-                if (err) {
                 self.onError(self.parent.trans.ERROR_CALL_FAILED + err);
-                } else {
-                    self.onError(self.parent.trans.ERROR_CALL_FAILED);
-                }
             }
         }
     }
@@ -3059,7 +3050,7 @@ PexRTC.prototype.dialOut = function(destination, protocol, role, cb, user_params
         }
 
         if ("source" in user_params) {
-            params.source = user_params.source;
+            source = user_params.source;
         }
     }
 
@@ -3273,14 +3264,10 @@ PexRTC.prototype.handleError = function (err) {
             if (self.call_type == 'presentation' || self.call_type == 'screen') {
                 self.onError(err);
             } else {
-                if (err && err.hasOwnProperty('message')) {
+                if (err.hasOwnProperty('message')) {
                     err = err.message;
                 }
-                if (err) {
                 self.onError(self.trans.ERROR_CALL_FAILED + err);
-                } else {
-                    self.onError(self.trans.ERROR_CALL_FAILED);
-                }
             }
         }
     }
@@ -3403,7 +3390,7 @@ PexRTC.prototype.addCall = function(call_type, flash) {
             if (self.mutedAudio) {
                 self.muteAudio(self.mutedAudio);
             }
-            if (self.call.video_source === false) {
+            if (self.video_source === false) {
                 self.videoMuted();
             } else if (self.mutedVideo) {
                 self.muteVideo(self.mutedVideo);
