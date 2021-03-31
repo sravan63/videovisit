@@ -17,7 +17,7 @@
         "lastname":"姓",
         "MRN":"醫療紀錄編號",
         "DOB":"出生日期",
-        "DOBMM":"月/",
+        "DOBMM":"月",
         "DOBYY":"年",
         "Cancel":"取消",
         "PatientInformation":"患者資訊",
