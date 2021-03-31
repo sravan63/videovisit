@@ -48,10 +48,8 @@ class WaitingRoom extends React.Component {
     }
 
 
-    render() {
-        // if(this.props.data && this.props.data.conference && this.props.data.conference.WaitingRoomLabel){
-            var translateLangText = this.props.data.conference;
-        // }
+    render() {        
+            var translateLangText = this.props.data.conference;        
         return (
             <div className="waiting-room-body" style={{width: this.props.waitingroom.hostavail ? '0' : '100%', display:this.props.waitingroom.hostavail ? "none" : "block",height: this.props.waitingroom.moreparticpants ? 'auto' : '100%' }}>
                 <div className="full-waiting-room" style={{display: this.props.waitingroom.moreparticpants &&  window.innerWidth > 1024 ? 'none' : 'flex' }}>
@@ -59,7 +57,7 @@ class WaitingRoom extends React.Component {
     					<div className="waitingRoomMessageBlock row">
                             <div className="tpmg-logo float-left p-0 m-0"></div>
     						<span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'none' : 'block' }}>{translateLangText && translateLangText.WaitingRoomNotification}</span>
-                            <span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{translateLangText && translateLangText.WaitingRoomLabel} <b>{this.state.runningLateUpdatedTime}</b></span>
+                            <span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{translateLangText && translateLangText.WaitingRoomLabel} <b>{this.state.runningLateUpdatedTime}</b>{translateLangText && translateLangText.Start}</span>
                             <div className="runninglate-msg" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{translateLangText && translateLangText.RunningLateLabel}</div>                                    
     					</div>
     				</div>

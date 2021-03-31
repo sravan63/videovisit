@@ -8,7 +8,7 @@
       "sso":{
         "KPUSERID":"KP.ORG 用戶 ID",
         "Password":"密碼",
-        "Signin": "登錄",
+        "Signin": "登入",
         "PatientGuest":"視訊就診患者訪客",
         "EmailInvitation":"請點選您電子郵件邀請函中的鏈接。"
       },
@@ -21,7 +21,7 @@
         "DOBYY":"年",
         "Cancel":"取消",
         "PatientInformation":"患者資訊",
-        "SignIn":"登錄"
+        "SignIn":"登入"
       }
     },
     "my_visits":{
@@ -31,29 +31,31 @@
     "instant_join":{
       "AreYou": "您是",
       "Yes": "是",
-      "No": "不是"
+      "No": "不是",
+      "Isit":"嗎"
     },
     "conference":{
-      "WaitingRoomLabel":"Your visit will now start at",
-      "RunningLateLabel":"We're sorry, your doctor is running late.",
-      "Refresh":"Refresh",
-      "EnableVideo":"Enable Video",
-      "DisableVideo":"Disable Video",
-      "MuteSpeakers":"Mute Speakers",
-      "UnmuteSpeakers":"Unmute Speakers",
-      "MuteMic":"Mute Mic",
-      "UnmuteMic":"Unmute Mic",
-      "Settings":"Settings",
-      "Camera":"Camera",
-      "Microphone":"Microphone",
-      "Speaker":"Speaker",
-      "Done":"Done",
-      "WaitingRoomNotification":"Your visit will start once your doctor joins.",
-      "LeaveRoom":"Leave Room",
-      "VisitDetails":"Visit Details",
-      "Time":"Time",
-      "Date":"Date",
-      "Guests":"Guests"
+      "WaitingRoomLabel":"現在您的就診將於 ",
+      "RunningLateLabel":"很抱歉，您的醫生要晚到一會兒。",
+      "Refresh":"刷新頁面",
+      "EnableVideo":"啟用視訊",
+      "DisableVideo":"停用視訊",
+      "MuteSpeakers":"擴音器靜音",
+      "UnmuteSpeakers":"取消擴音器靜音",
+      "MuteMic":"麥克風靜音",
+      "UnmuteMic":"取消麥克風靜音",
+      "Settings":"設定",
+      "Camera":"攝像頭",
+      "Microphone":"麥克風",
+      "Speaker":"擴音器",
+      "Done":"完成",
+      "WaitingRoomNotification":"您的醫生加入後，您的就診就會開始。",
+      "LeaveRoom":"離開診室",
+      "VisitDetails":"就診詳情",
+      "Time":"時間",
+      "Date":"日期",
+      "Guests":"訪客",
+      "Start":"開始"
     },
     "guestauth":{
       "GuestHeaderLabelTxt":"在就診期間，11 歲及以下的兒童必須有父母或法定監護人在場。",
