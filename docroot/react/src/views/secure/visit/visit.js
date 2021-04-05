@@ -258,7 +258,7 @@ class Visit extends React.Component {
                             </div>
                         </div>
                         <div className="confirmationContent">
-                        <h3 className="patientConfirm"> {instantDetails && instantDetails.AreYou} {this.state.displayName}{instantDetails && instantDetails.Isit}?</h3>
+                        <h3 className="patientConfirm"> {instantDetails && instantDetails.AreYou}{this.state.displayName}{instantDetails && instantDetails.Isit}?</h3>
                             <div>
                                 <button  type="button" className="denyUser" onClick={this.denyUser}>{instantDetails && instantDetails.No}</button>
                                 <button  type="button" className="allowUser" onClick={this.allowLogin}>{instantDetails && instantDetails.Yes}</button>
