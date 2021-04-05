@@ -206,7 +206,8 @@ class MyMeetings extends React.Component {
         if (Minutes <= 9) {
             Minutes = "0" + Minutes;
         }
-        let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
+        let data = UtilityService.getLang();
+        let AMPM = DateObj.getHours() > 11 ? data.lang=='spanish'? "p. m." : "PM" : data.lang=='spanish' ? "a. m." : "AM";
         return Hour + ':' + Minutes + " " + AMPM;
     }
 
@@ -365,7 +366,7 @@ class MyMeetings extends React.Component {
                     this.state.myMeetings.map((item,key) =>{
                         return (
                             <div className="meeting-content row" key={key}>
-                                {item.isRunningLate == true || item.isRunningLate == "true"?(<div className="col-md-12 running-late-indicator"><span className="runningLate">We're sorry, your doctor is running late.</span> New start time is<span className="newTime"> {this.getHoursAndMinutes(item.runLateMeetingTime)}</span></div>):('')}
+                                {item.isRunningLate == true || item.isRunningLate == "true"?(<div className="col-md-12 running-late-indicator"><span className="runningLate">{visitLabelDetails && visitLabelDetails.VisitsRunningLateMsg}</span><span className="newTime"> {this.getHoursAndMinutes(item.runLateMeetingTime)}</span></div>):('')}
                                 <div className="col-md-8 pl-0">
                                     <div className="row">
                                         <div className="col-md-5">
