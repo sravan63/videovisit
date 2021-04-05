@@ -57,7 +57,7 @@ class WaitingRoom extends React.Component {
     					<div className="waitingRoomMessageBlock row">
                             <div className="tpmg-logo float-left p-0 m-0"></div>
     						<span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'none' : 'block' }}>{translateLangText && translateLangText.WaitingRoomNotification}</span>
-                            <span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{translateLangText && translateLangText.WaitingRoomLabel} <b>{this.state.runningLateUpdatedTime}</b>{translateLangText && translateLangText.Start}</span>
+                            <span className="waitingroom-text" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{translateLangText && translateLangText.WaitingRoomLabel}<b>{this.state.runningLateUpdatedTime}</b>{translateLangText && translateLangText.Start}</span>
                             <div className="runninglate-msg" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>{translateLangText && translateLangText.RunningLateLabel}</div>                                    
     					</div>
     				</div>
@@ -67,7 +67,7 @@ class WaitingRoom extends React.Component {
     					<div className="waitingRoomMessageBlock row">
                             <div className="tpmg-logo float-left p-0 m-0"></div>
     						<span className="waitingroom-text col" style={{display: this.state.isRunningLate  ? 'none' : 'block' }}>{translateLangText && translateLangText.WaitingRoomNotification}</span>
-                            <span className="waitingroom-text" style={{display: this.state.isRunningLate  ? 'block' : 'none' }}>{translateLangText && translateLangText.WaitingRoomLabel} <b>{this.state.runningLateUpdatedTime}</b></span>
+                            <span className="waitingroom-text" style={{display: this.state.isRunningLate  ? 'block' : 'none' }}>{translateLangText && translateLangText.WaitingRoomLabel}<b>{this.state.runningLateUpdatedTime}</b></span>
                             <div className="runninglate-msg" style={{display: this.state.isRunningLate  ? 'block' : 'none' }}>{translateLangText && translateLangText.RunningLateLabel}</div>                                    
     					</div>
     				</div>

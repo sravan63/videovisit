@@ -26,6 +26,7 @@
     },
     "my_visits":{
       "VisitsTodayMsg":"這是您今天的視訊就診",
+      "VisitsRunningLateMsg": "We're sorry, your doctor is running late.New start time is",
       "Wifimsg":"您的登入可能先於您的臨床醫護人員。請稍候。在安靜、光線充足的地方透過傳訊強勁可靠的Wi-Fi或網際網路連接加入就診。如果您需要幫助來為視訊就診做準備，可在週一至週五上午5:00至晚上7:00打電話844-216-5769獲得支援。"
     },
     "instant_join":{
@@ -35,7 +36,7 @@
       "Isit":"嗎"
     },
     "conference":{
-      "WaitingRoomLabel":"現在您的就診將於 ",
+      "WaitingRoomLabel":"現在您的就診將於",
       "RunningLateLabel":"很抱歉，您的醫生要晚到一會兒。",
       "Refresh":"刷新頁面",
       "EnableVideo":"啟用視訊",
