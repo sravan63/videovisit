@@ -976,6 +976,9 @@ export function formatDuplicateNames(dName){
 
 export function pexipDisconnect() {
     connectionRefused = false;
+    if( UtilityService.getAppOS() == 'Android' ) {
+        video.srcObject = null;
+    }
     rtc.disconnect();
     var isDirectLaunch = localStorage.getItem('isDirectLaunch');
     var inAppAccess = UtilityService.getInAppAccessFlag();
