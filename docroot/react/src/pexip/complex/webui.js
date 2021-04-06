@@ -427,6 +427,7 @@ function handleError(reason) {
 function doneSetup(url, pin_status, conference_extension) {
     log("info", "ReadyToConnect", "event: User is ready to join the conference.");
     if (url) {
+        checkAndApplyConstraints(url);
         if (typeof(MediaStream) !== "undefined" && url instanceof MediaStream) {
             selfvideo.srcObject = url;
         } else {
@@ -436,6 +437,36 @@ function doneSetup(url, pin_status, conference_extension) {
     console.log("PIN status: " + pin_status);
     console.log("IVR status: " + conference_extension);
     submitPinEntry();
+}
+
+function checkAndApplyConstraints(url){
+    if( UtilityService.isMobileDevice() ) {
+        if( UtilityService.getAppOS() == 'Android' ){
+            url.getTracks().map((track)=>{
+                if( track.kind == 'video' ) {
+                    var constraints = track.getConstraints();
+                    var scaledHeight = constraints.height.min;
+                    var scaledWidth = constraints.width.min;
+                    var isLandscape = window.matchMedia("(orientation:landscape)").matches;
+                    if ( isLandscape ) {
+                        var sHt = scaledHeight / (16 * 16); // 1280/256 = 5; 1280/16 * 16 = 1280
+                        scaledHeight = scaledHeight/sHt; // 1280/5 = 256;
+                    } else {
+                        var sWt = scaledWidth / (16 * 16);
+                        scaledWidth = scaledWidth/sWt;
+                    }
+                    track.applyConstraints({
+                        width: { min: scaledWidth },
+                        height: { min: scaledHeight },
+                        advanced: [
+                          {width: scaledWidth, height: scaledHeight},
+                          {aspectRatio: 1.333}
+                        ]
+                    });
+                }
+            });
+        }
+    }
 }
 
 export function submitPinEntry() {
