@@ -1632,8 +1632,8 @@ PexRTCCall.prototype.update = function(call_type) {
         if (self.safari_ver >= 11 && self.safari_ver < 12.1 && self.stream) {
             var tracks = self.stream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
-                self.stream.removeTrack(tracks[i]);
                 tracks[i].stop();
+                self.stream.removeTrack(tracks[i]);
             }
         }
 
