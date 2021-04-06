@@ -26,7 +26,7 @@
     },
     "my_visits":{
       "VisitsTodayMsg":"Su videoconsulta de hoy",
-      "VisitsRunningLateMsg": "Lo siento. Su médico va a llegar tarde. La nueva hora de inicio es:",
+      "VisitsRunningLateMsg": "Lo siento, Su médico va a llegar tarde. La nueva hora de inicio es:",
       "Wifimsg":"Es posible que esté ingresando antes que su médico. Gracias por su paciencia. Ingrese con una conexión confiable a Wi-Fi o a internet, desde un lugar tranquilo y bien alumbrado. Si necesita ayuda para prepararse para su videoconsulta, llame al 844-216-5769, lunes a viernes, de 5 a. m. a 7 p. m."
     },
     "instant_join":{

@@ -366,7 +366,7 @@ class MyMeetings extends React.Component {
                     this.state.myMeetings.map((item,key) =>{
                         return (
                             <div className="meeting-content row" key={key}>
-                                {item.isRunningLate == true || item.isRunningLate == "true"?(<div className="col-md-12 running-late-indicator"><span className="runningLate">{visitLabelDetails && visitLabelDetails.VisitsRunningLateMsg}</span><span className="newTime"> {this.getHoursAndMinutes(item.runLateMeetingTime)}</span></div>):('')}
+                                {item.isRunningLate == true || item.isRunningLate == "true"?(<div className="col-md-12 p-0 running-late-indicator"><span className="runningLate">{visitLabelDetails && visitLabelDetails.VisitsRunningLateMsg}</span><span className="newTime"> {this.getHoursAndMinutes(item.runLateMeetingTime)}</span></div>):('')}
                                 <div className="col-md-8 pl-0">
                                     <div className="row">
                                         <div className="col-md-5">
