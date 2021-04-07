@@ -8,7 +8,6 @@ import GlobalConfig from '../../services/global.config';
 import UtilityService from '../../services/utilities-service.js';
 
 var video;
-var selfvideo;
 var flash;
 var isMobileDevice = false;
 var presentation = null;
