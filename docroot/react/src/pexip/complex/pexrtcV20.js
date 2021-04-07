@@ -1629,19 +1629,19 @@ PexRTCCall.prototype.update = function(call_type) {
     if (self.state == 'CONNECTED') {
         self.state = 'UPDATING';
         self.cleanupAudioContext();
-        if (self.safari_ver >= 11 && self.safari_ver < 12.1 && self.stream) {
+        if ((self.safari_ver >= 11 && self.safari_ver < 12.1 && self.stream) || (self.chrome_ver > 85 && self.is_mobile) ) {
             var tracks = self.stream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
-                tracks[i].stop();
                 self.stream.removeTrack(tracks[i]);
+                tracks[i].stop();
             }
         }
 
         if (self.localStream) {
             var tracks = self.localStream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
-                tracks[i].stop();
                 self.localStream.removeTrack(tracks[i]);
+                tracks[i].stop();
             }
             self.localStream = undefined;
             if (self.firefox_ver > 47 || (self.safari_ver >= 11 && self.safari_ver < 12.1) || self.chrome_ver > 71) {
