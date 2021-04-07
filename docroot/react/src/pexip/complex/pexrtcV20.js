@@ -1629,7 +1629,7 @@ PexRTCCall.prototype.update = function(call_type) {
     if (self.state == 'CONNECTED') {
         self.state = 'UPDATING';
         self.cleanupAudioContext();
-        if ((self.safari_ver >= 11 && self.safari_ver < 12.1 && self.stream) || (self.chrome_ver > 85 && self.is_mobile) ) {
+        if (self.safari_ver >= 11 && self.safari_ver < 12.1 && self.stream) {
             var tracks = self.stream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
                 self.stream.removeTrack(tracks[i]);
