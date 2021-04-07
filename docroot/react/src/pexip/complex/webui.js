@@ -8,6 +8,7 @@ import GlobalConfig from '../../services/global.config';
 import UtilityService from '../../services/utilities-service.js';
 
 var video;
+var selfvideo;
 var flash;
 var isMobileDevice = false;
 var presentation = null;
@@ -976,6 +977,10 @@ export function formatDuplicateNames(dName){
 
 export function pexipDisconnect() {
     connectionRefused = false;
+    if( UtilityService.getAppOS() == 'Android' ) {
+        video.srcObject = null;
+        selfvideo.srcObject = null;
+    }
     rtc.disconnect();
     var isDirectLaunch = localStorage.getItem('isDirectLaunch');
     var inAppAccess = UtilityService.getInAppAccessFlag();
