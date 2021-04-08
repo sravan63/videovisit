@@ -586,6 +586,7 @@ PexRTCCall.prototype.makeCall = function (parent, call_type) {
     self.is_mobile = self.parent.is_mobile;
     self.firefox_ver = self.parent.firefox_ver;
     self.chrome_ver = self.parent.chrome_ver;
+    self.android_ver = self.parent.android_ver;
     self.edge_ver = self.parent.edge_ver;
     self.safari_ver = self.parent.safari_ver;
     self.h264_enabled = self.parent.h264_enabled;
@@ -1640,8 +1641,14 @@ PexRTCCall.prototype.update = function(call_type) {
         if (self.localStream) {
             var tracks = self.localStream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
-                self.localStream.removeTrack(tracks[i]);
-                tracks[i].stop();
+                if( self.is_android && self.android_ver == 11 && self.chrome_ver > 0 ){
+                    // Fix for Android 11 + Chrome freezing issue.
+                    self.localStream.removeTrack(tracks[i]);
+                    tracks[i].stop();
+                } else {
+                    tracks[i].stop();
+                    self.localStream.removeTrack(tracks[i]);
+                }
             }
             self.localStream = undefined;
             if (self.firefox_ver > 47 || (self.safari_ver >= 11 && self.safari_ver < 12.1) || self.chrome_ver > 71) {
@@ -2396,6 +2403,12 @@ export function PexRTC() {
     self.is_android = navigator.userAgent.indexOf('Android') != -1;
     self.is_electron = navigator.userAgent.indexOf("Electron") != -1;
     self.is_mobile = navigator.userAgent.indexOf('Mobile') != -1;
+
+    if(navigator.userAgent.indexOf('Android') != -1){
+        self.android_ver = parseInt(navigator.userAgent.match(/Android\s([0-9\.]*)/i)[1], 10);
+    } else{
+        self.android_ver = 0;
+    }
 
     if (navigator.userAgent.indexOf("Chrome") != -1) {
         self.chrome_ver = parseInt(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);

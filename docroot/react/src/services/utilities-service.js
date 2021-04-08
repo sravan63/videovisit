@@ -234,6 +234,10 @@ class UtilityService extends React.Component {
         return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
     }
 
+    getAndroidVersion(){
+        return parseInt(navigator.userAgent.match(/Android\s([0-9\.]*)/i)[1], 10);
+    }
+
     // Returns formatted string based on (capitalize, upper and lower case).
     formatStringTo(str, format) {
         let formatedStr = '';
