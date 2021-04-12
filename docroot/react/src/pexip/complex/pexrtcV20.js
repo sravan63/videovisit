@@ -1,4 +1,4 @@
-/* PexRTC v25.2 03/30 */
+/* PexRTC v25.3 04/09 */
 /* global window, navigator, WebSocket, console, URL, setTimeout, setInterval, clearInterval, EventSource */
 import $ from 'jquery';
 var SessionDescription = window.mozRTCSessionDescription || window.RTCSessionDescription;
@@ -1638,7 +1638,7 @@ PexRTCCall.prototype.update = function(call_type) {
             }
         }
 
-        if (self.localStream) {
+        if (self.localStream && !(self.firefox_ver > 58 || self.chrome_ver > 71 || self.safari_ver >= 12.1)) {
             var tracks = self.localStream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
                 if( self.is_android && self.android_ver == 11 && self.chrome_ver > 0 ){
@@ -1650,8 +1650,7 @@ PexRTCCall.prototype.update = function(call_type) {
                     self.localStream.removeTrack(tracks[i]);
                 }
             }
-            self.localStream = undefined;
-            if (self.firefox_ver > 47 || (self.safari_ver >= 11 && self.safari_ver < 12.1) || self.chrome_ver > 71) {
+            if (self.firefox_ver > 47 || (self.safari_ver >= 11 && self.safari_ver < 12.1)) {
                 var senders = self.pc.getSenders();
                 for (var i = 0; i < senders.length; i++) {
                     self.pc.removeTrack(senders[i]);
@@ -1663,6 +1662,7 @@ PexRTCCall.prototype.update = function(call_type) {
                 }
             }
         }
+        self.localStream = undefined;
 
         self.makeCall(self.parent, call_type);
     }
