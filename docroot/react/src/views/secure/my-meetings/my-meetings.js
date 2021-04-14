@@ -13,7 +13,7 @@ class MyMeetings extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, myMeetings: [], showLoader: true,staticData:{}, chin:'中文',span:'Español',isInApp: false,mdoHelpUrl:'',showFooter : true,showPromotion: false,hidePromotion: false};
+        this.state = { userDetails: {}, myMeetings: [], showLoader: true,staticData:{my_visits:{}}, chin:'中文',span:'Español',isInApp: false,mdoHelpUrl:'',showFooter : true,showPromotion: false,hidePromotion: false};
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getMyMeetings = this.getMyMeetings.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
@@ -206,9 +206,19 @@ class MyMeetings extends React.Component {
         if (Minutes <= 9) {
             Minutes = "0" + Minutes;
         }
-        let data = UtilityService.getLang();
-        let AMPM = DateObj.getHours() > 11 ? data.lang=='spanish'? "p. m." : "PM" : data.lang=='spanish' ? "a. m." : "AM";
-        return Hour + ':' + Minutes + " " + AMPM;
+        let data = UtilityService.getLang();        
+        let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
+        switch(data.lang){
+            case "spanish":                
+                return Hour + ':' + Minutes + " " + (DateObj.getHours() > 11 ? 'p. m.' : 'a. m.');
+                break;
+            case "chinese":
+                return (DateObj.getHours() > 11 ? '下午' : '上午') + ''+ Hour + ':' + Minutes;
+                break;
+                default:                    
+                    return Hour + ':' + Minutes + " " + AMPM;
+                    break;        
+        }
     }
 
     checkIOS(url){
@@ -347,26 +357,36 @@ class MyMeetings extends React.Component {
             sessionStorage.setItem('Instant-Lang-selection','english');
             UtilityService.setLang('english');
         }
-    }
+    }    
+    getBadgeVersion(OSName){
+        let data = UtilityService.getLang(); 
+        switch(data.lang){
+            case "spanish":
+                return OSName + "-spanish icon";
+                break;
+            case "chinese":
+                return OSName + "-chinese icon";
+                break;
+            default:
+                return OSName + "-english icon";
+                break;    
 
+        }
+    }
     render() {
         let Details = this.state.staticData;
-        // let visitLabelDetails;
-        if(Details && Details.my_visits){
-            var visitLabelDetails = Details.my_visits;
-        }
         return (
             <div id='container' className="my-meetings">
                 {this.state.showLoader && !this.state.isInApp ? (<Loader />):('')}
                 <Header history={this.props.history} helpUrl={this.state.mdoHelpUrl} data={Details} />
                 <MobileHeader data={Details} />
                 <div className="meetings-container">
-                <h1 className="visitsToday">{visitLabelDetails && visitLabelDetails.VisitsTodayMsg}</h1>
+                <h1 className="visitsToday">{Details.my_visits.VisitsTodayMsg}</h1>
                 {this.state.myMeetings.length > 0 ? (
                     this.state.myMeetings.map((item,key) =>{
                         return (
                             <div className="meeting-content row" key={key}>
-                                {item.isRunningLate == true || item.isRunningLate == "true"?(<div className="col-md-12 p-0 running-late-indicator"><span className="runningLate">{visitLabelDetails && visitLabelDetails.VisitsRunningLateMsg}</span><span className="newTime"> {this.getHoursAndMinutes(item.runLateMeetingTime)}</span></div>):('')}
+                                {item.isRunningLate == true || item.isRunningLate == "true"?(<div className="col-md-12 p-0 running-late-indicator"><span className="runningLate">{this.getHoursAndMinutes(item.runLateMeetingTime).indexOf("上午") > -1 && Details.lang == 'chinese' ? Details.my_visits.VisitsRunningLateMsg : Details.my_visits.VisitsRunningLateMsgPM}{Details.lang == 'chinese' ? (this.getHoursAndMinutes(item.runLateMeetingTime)).substring(2) : ''}</span><span className="newTime"> {Details.lang == 'chinese' ? '' : this.getHoursAndMinutes(item.runLateMeetingTime)}</span></div>):('')}
                                 <div className="col-md-8 pl-0">
                                     <div className="row">
                                         <div className="col-md-5">
@@ -439,7 +459,7 @@ class MyMeetings extends React.Component {
                 )}
                 <div className="row" style={{ display:this.state.myMeetings.length > 0 ?  "block" : "none"}}>
                     <div className="col-lg-9 col-md-12 pl-0 pb-3 pr-0 wifi-msg">
-                    {visitLabelDetails && visitLabelDetails.Wifimsg}
+                    {Details.my_visits.Wifimsg}
                     </div>
                 </div>
                 { !this.state.hidePromotion ? 
@@ -450,8 +470,8 @@ class MyMeetings extends React.Component {
                                 <div className="wrapper">
                                     <div className="message">Next time you want to see your doctor, try a video visit from our My Doctor Online mobile app.</div>
                                     <div className="badgets">
-                                        <div className="ios icon"><a className="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></div>
-                                        <div className="android icon"><a className="icon-link" href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&amp;hl=en_US" target="_blank"></a></div>
+                                        <div className={this.getBadgeVersion('ios')}><a className="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></div>
+                                        <div className={this.getBadgeVersion('android')}><a className="icon-link" href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&amp;hl=en_US" target="_blank"></a></div>
                                     </div>
                                 </div>
                             </div>
