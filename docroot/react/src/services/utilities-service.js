@@ -266,11 +266,81 @@ class UtilityService extends React.Component {
             let Minutes = (DateObj.getMinutes() <= 9) ? "0" + DateObj.getMinutes() : DateObj.getMinutes();
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
             Hour = (Hour == 0) ? 12 : Hour;
-            str = Hour + ':' + Minutes + " " + AMPM + ', ';
+            switch(this.getLang().lang){
+                case "spanish":                                    
+                    str = Hour + ':' + Minutes + " " + (DateObj.getHours() > 11 ? 'p. m.' : 'a. m.') + ', ';
+                    break;
+                case "chinese":
+                    str = (DateObj.getHours() > 11 ? '下午' : '上午') + ''+ Hour + ':' + Minutes + ', ';
+                    break;
+                    default:                    
+                    str = Hour + ':' + Minutes + " " + AMPM + ', ';
+                        break;        
+            }
+            // str = Hour + ':' + Minutes + " " + AMPM + ', ';
+            
         } else {
             let week = String(DateObj).substring(0, 3);
             let monthstr = String(DateObj).substr(4, 6);
             let month = DateObj.getDate() < 10 ? monthstr.replace("0", "") : monthstr;
+            var Details = this.getLang().conference;
+            if(this.getLang().lang == 'spanish'){                
+                switch(week){
+                    case "Mon":                
+                            week = Details.Monday;
+                        break;
+                    case "Tue":                
+                            week = Details.Tuesday;
+                        break;
+                    case "Wed":                
+                            week = Details.Wednesday;
+                        break;
+                    case "Thu":                
+                            week = Details.Thursday;
+                        break;                        
+                    case "Fri":                
+                            week = Details.Friday;
+                        break;
+                    case "Sat":                
+                            week = Details.Saturday;
+                    break;
+                    case "Sun":                
+                            week = Details.Sunday;
+                    break;            
+                    default:                    
+                        return Hour + ':' + Minutes + " " + AMPM;
+                        break;        
+                }
+            }else if(this.getLang().lang == 'chinese'){
+                switch(week){
+                    case "Mon":                
+                            week = Details.Monday;
+                        break;
+                    case "Tue":                
+                            week = Details.Tuesday;
+                        break;
+                    case "Wed":                
+                            week = Details.Wednesday;
+                        break;
+                    case "Thu":                
+                            week = Details.Thursday;
+                        break;                        
+                    case "Fri":                
+                            week = Details.Friday;
+                        break;
+                    case "Sat":                
+                            week = Details.Saturday;
+                    break;
+                    case "Sun":                
+                            week = Details.Sunday;
+                    break;            
+                    default:                    
+                        return Hour + ':' + Minutes + " " + AMPM;
+                        break;        
+                }
+            }else{
+                str = week + ', ' + month;
+            }
             str = week + ', ' + month;
         }
         return str;
@@ -282,7 +352,17 @@ class UtilityService extends React.Component {
         var hours = (meetingTime.getHours() > 11) ? meetingTime.getHours() - 12 : meetingTime.getHours();
         hours = (hours == 0) ? 12 : hours;
         var ampmval = (meetingTime.getHours() > 11) ? 'PM' : 'AM';
-        return hours + ':' + minutes + ' ' + ampmval
+        switch(this.getLang().lang){
+            case "spanish":                
+                return hours + ':' + minutes + " " + (meetingTime.getHours() > 11 ? 'p. m.' : 'a. m.');
+                break;
+            case "chinese":
+                return (meetingTime.getHours() > 11 ? '下午' : '上午') + ''+ hours + ':' + minutes;
+                break;
+                default:                    
+                    return hours + ':' + minutes + " " + ampmval;
+                    break;        
+        }
     }
 
     encrypt(actual) {
@@ -343,7 +423,7 @@ class UtilityService extends React.Component {
             meetingTimeLog[meetingId] = this.meetingBeginsAt;
             sessionStorage.setItem('meetingTimeLog', JSON.stringify(meetingTimeLog));
         }
-    }
+    }   
 
 }
 export default new UtilityService();

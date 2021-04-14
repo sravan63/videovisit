@@ -14,6 +14,7 @@ class ConferenceDetails extends React.Component {
         super(props);       
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
+        this.updateRunningLateTime = this.updateRunningLateTime.bind(this);
         this.state = { isRunningLate: false,spotlight:false,runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [], hostDetails: {hostInCall: false, uuid: null} };
     }
 
@@ -452,9 +453,10 @@ class ConferenceDetails extends React.Component {
         if (!this.state.isRunningLate || !this.state.runLateMeetingTime) {
             return;
         }
-        this.setState({
-            runningLateUpdatedTime: Utilities.formatInMeetingRunningLateTime(this.state.runLateMeetingTime)
-        });
+        // this.setState({
+        //     runningLateUpdatedTime: Utilities.formatInMeetingRunningLateTime(this.state.runLateMeetingTime)
+        // });
+        return Utilities.formatInMeetingRunningLateTime(this.state.runLateMeetingTime);
     }
 
     componentWillUnmount() {
@@ -485,12 +487,12 @@ class ConferenceDetails extends React.Component {
                     <div className="visit-details">
                         <p className="mt-1 mb-1">{Details && Details.VisitDetails}</p>
                         <div className="clinician-info text-capitalize"><span className={this.state.spotlight ? "pinnedIcon show" : "pinnedIcon removePin" }></span><span className = {this.state.spotlight ? "name text-capitalize adjustWidth" : "name text-capitalize"}><span className={this.state.activeSpeaker ? "activespeaker" : "notactivespeaker"}>{this.getClinicianName(this.state.meetingDetails.host)}</span></span><span className={this.state.hostDetails.hostInCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
-                        <div className="visit-time text-capitalize">
+                        <div className="visit-time">
                             {this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}
                             <span>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'date')}</span>
                         </div>
                         <div style={{display: this.state.isRunningLate ? 'block' : 'none' }}>
-                            <span className="time-display">updated: {this.state.runningLateUpdatedTime}</span>
+                            <span className="time-display">{Details && Details.Updated}: {this.updateRunningLateTime()}</span>
                         </div>
                     </div>
                 </div>
