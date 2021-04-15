@@ -277,7 +277,6 @@ class UtilityService extends React.Component {
                     str = Hour + ':' + Minutes + " " + AMPM + ', ';
                         break;        
             }
-            // str = Hour + ':' + Minutes + " " + AMPM + ', ';
             
         } else {
             let week = String(DateObj).substring(0, 3);
@@ -307,8 +306,48 @@ class UtilityService extends React.Component {
                     case "Sun":                
                             week = Details.Sunday;
                     break;            
-                    default:                    
-                        return Hour + ':' + Minutes + " " + AMPM;
+                    default: 
+                        break;        
+                }
+                const DateNumber = month.split(" ")[1];
+                switch(month.split(" ")[0]){
+                    case "Jan":                
+                        month = Details.January + ' ' + DateNumber;
+                        break;
+                    case "Feb":                
+                        month = Details.Febuary + ' ' + DateNumber;
+                        break;
+                    case "Mar":                
+                        month = Details.March + ' ' + DateNumber;
+                        break;
+                    case "Apr":                
+                        month = Details.April + ' ' + DateNumber;
+                        break;                        
+                    case "May":                
+                        month = Details.May + ' ' + DateNumber;
+                        break;
+                    case "Jun":                
+                        month = Details.June + ' ' + DateNumber;
+                    break;
+                    case "Jul":                
+                        month = Details.July + ' ' + DateNumber;
+                    break;
+                    case "Aug":                
+                        month = Details.August + ' ' + DateNumber;
+                    break;
+                    case "Sep":                
+                        month = Details.September + ' ' + DateNumber;
+                    break;
+                    case "Oct":                
+                        month = Details.October + ' ' + DateNumber;
+                    break;
+                    case "Nov":                
+                        month = Details.November + ' ' + DateNumber;
+                    break;
+                    case "Dec":                
+                        month = Details.December + ' ' + DateNumber;
+                    break;            
+                    default:  
                         break;        
                 }
             }else if(this.getLang().lang == 'chinese'){
@@ -334,8 +373,48 @@ class UtilityService extends React.Component {
                     case "Sun":                
                             week = Details.Sunday;
                     break;            
-                    default:                    
-                        return Hour + ':' + Minutes + " " + AMPM;
+                    default:
+                        break;        
+                }
+                const DateNumber = month.split(" ")[1];
+                switch(month.split(" ")[0]){
+                    case "Jan":                
+                        month = Details.January + ' ' + DateNumber;
+                        break;
+                    case "Feb":                
+                        month = Details.Febuary + ' ' + DateNumber;
+                        break;
+                    case "Mar":                
+                        month = Details.March + ' ' + DateNumber;
+                        break;
+                    case "Apr":                
+                        month = Details.April + ' ' + DateNumber;
+                        break;                        
+                    case "May":                
+                        month = Details.May + ' ' + DateNumber;
+                        break;
+                    case "Jun":                
+                        month = Details.June + ' ' + DateNumber;
+                    break;
+                    case "Jul":                
+                        month = Details.July + ' ' + DateNumber;
+                    break;
+                    case "Aug":                
+                        month = Details.August + ' ' + DateNumber;
+                    break;
+                    case "Sep":                
+                        month = Details.September + ' ' + DateNumber;
+                    break;
+                    case "Oct":                
+                        month = Details.October + ' ' + DateNumber;
+                    break;
+                    case "Nov":                
+                        month = Details.November + ' ' + DateNumber;
+                    break;
+                    case "Dec":                
+                        month = Details.December + ' ' + DateNumber;
+                    break;            
+                    default:  
                         break;        
                 }
             }else{
