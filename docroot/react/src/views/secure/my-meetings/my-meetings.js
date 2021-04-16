@@ -386,7 +386,7 @@ class MyMeetings extends React.Component {
                     this.state.myMeetings.map((item,key) =>{
                         return (
                             <div className="meeting-content row" key={key}>
-                                {item.isRunningLate == true || item.isRunningLate == "true"?(<div className="col-md-12 p-0 running-late-indicator"><span className="runningLate">{this.getHoursAndMinutes(item.runLateMeetingTime).indexOf("上午") > -1 && Details.lang == 'chinese' ? Details.my_visits.VisitsRunningLateMsg : Details.my_visits.VisitsRunningLateMsgPM}{Details.lang == 'chinese' ? (this.getHoursAndMinutes(item.runLateMeetingTime)).substring(2) : ''}</span><span className="newTime"> {Details.lang == 'chinese' ? '' : this.getHoursAndMinutes(item.runLateMeetingTime)}</span></div>):('')}
+                                {item.isRunningLate == true || item.isRunningLate == "true"?(<div className="col-md-12 p-0 running-late-indicator"><span className="runningLate">{Details.my_visits.VisitsRunningLateMsg}<b>{Details.lang == 'chinese' ? this.getHoursAndMinutes(item.runLateMeetingTime) : ''}</b></span><span className="newTime"> {Details.lang != 'chinese' ? this.getHoursAndMinutes(item.runLateMeetingTime) : ''}</span></div>):('')}
                                 <div className="col-md-8 pl-0">
                                     <div className="row">
                                         <div className="col-md-5">
