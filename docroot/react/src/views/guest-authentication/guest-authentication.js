@@ -16,7 +16,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'' };
+        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'' };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -91,9 +91,10 @@ class Authentication extends React.Component {
         });
     }
     renderErrorCompValidation(param) {
+        let data = UtilityService.getLang();
         this.setState({
             errorlogin: true,
-            displayErrorMsg: param ? GlobalConfig.GUEST_FUTURE_MEETING : GlobalConfig.GUEST_VALIDATE_MEETING_ERROR_MSG,
+            displayErrorMsg: param ? GlobalConfig.GUEST_FUTURE_MEETING : data.errorCodes.ErrorVisitUnavailable,
             inputDisable: true,
             NotLoggedIn: true,
             showLoader: false
@@ -147,7 +148,8 @@ class Authentication extends React.Component {
                 this.errorCompForGuestLogin();
                 }
             } else if (response.data.statusCode == 510 || response.data.statusCode == 500) {
-                this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_VALIDATION_MSG, showLoader: false });
+                let data = UtilityService.getLang();
+                this.setState({ errorlogin: true, displayErrorMsg: data.errorCodes.ErrorNoMatchingMsg, showLoader: false });
                 window.scrollTo(0, 0); 
             } else {
                 if(rejoin){
@@ -183,7 +185,7 @@ class Authentication extends React.Component {
         else {
             this.setState({span: "Español", chin: '中文',staticData: data});
         }
-
+        this.renderErrorCompValidation();
     }
     changeLang(event){
         let value = event.target.textContent;
@@ -248,7 +250,7 @@ class Authentication extends React.Component {
     }
 
     render() {
-        var Details = this.state.staticData.guestauth;
+        var Details = this.state.staticData;
         return (
             <div id='container' className="authentication-page">
              <Header helpUrl = {this.state.mdoHelpUrl} data={this.state.staticData} />
@@ -288,22 +290,22 @@ class Authentication extends React.Component {
                 ):
                  (    
                     <div className="row guest-form" >
-                    <div className="row notice">{Details.GuestHeaderLabelTxt}</div>
+                    <div className="row notice">{Details.guestauth.GuestHeaderLabelTxt}</div>
                         <form className="col-xs-12 col-md-12 login-form">
                             <div className="form-group">
-                                <label className="col-sm-12">{Details.PatientLastName}</label>
+                                <label className="col-sm-12">{Details.guestauth.PatientLastName}</label>
                                 <div className="col-sm-12">
                                     <input type="text" pattern="[a-zA-Z]+" name="lastname" disabled = {this.state.inputDisable || this.state.isBrowserBlockError} value={this.state.lastname} onChange={this.handleChange.bind(this,'lastname')} className="form-control rounded-0 p-0 shadow-none outline-no textindent mobile-input"/>
                                 </div>
                             </div>
                             <div className = "form-group mobile-submit mt-5" >
-                                 <button type = "submit" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled || this.state.isBrowserBlockError}>{Details.JoinBtnName}</button>
+                                 <button type = "submit" className = "btn w-50 rounded-0 p-0 login-submit" id="login" onClick={this.signOn} disabled={this.button.disabled || this.state.isBrowserBlockError}>{Details.guestauth.JoinBtnName}</button>
                             </div>
                         </form>
                     </div> )}
                 </div>
                 <div className="row mobile-footer mt-5">
-                    <p className="col-12 secondary">{Details.GuestHeaderLabelTxt}</p>
+                    <p className="col-12 secondary">{Details.guestauth.GuestHeaderLabelTxt}</p>
                 </div>
                 <div className="guest-form-footer">
                     <Footer />

@@ -17,7 +17,7 @@ class Authentication extends React.Component {
         super(props);
         localStorage.clear();
         this.tempAccessToken = false;
-        this.state = { tempAccessToken: false,staticData:{}, chin:'中文',span:'Español',instantJoin:false,isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'',isScrollPosition: false };
+        this.state = { tempAccessToken: false,staticData:{auth:{sso:{}},errorCodes:{}}, chin:'中文',span:'Español',instantJoin:false,isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'',isScrollPosition: false };
     }
 
     emitFromChild(obj) {
@@ -127,9 +127,6 @@ class Authentication extends React.Component {
 
     render() {
         var Details = this.state.staticData;
-        if(Details && Details.auth && Details.auth.sso){
-            var ssoDetails = Details.auth.sso;
-        }
         return (
             <div id='container' className="authentication-page">
             {this.state.showLoader ? (<Loader />):('')}
@@ -138,8 +135,8 @@ class Authentication extends React.Component {
                 {this.state.isMobileError ? 
                     (<div className="row error-text">
                         {this.state.tempAccessToken || this.state.isInApp ?
-                            (<p className="col-sm-12">Incorrect patient information</p>)
-                           :this.state.instantJoin ?(<p className="col-sm-12">Invalid link, sign in to join your visit</p>):(<p className="col-sm-12">Invalid User ID / Password</p>)
+                            (<p className="col-sm-12">{Details.errorCodes.ErrorPatientInfo}</p>)
+                           :this.state.instantJoin ?(<p className="col-sm-12">{Details.errorCodes.ErrorInvalidLink}</p>):(<p className="col-sm-12">{Details.errorCodes.ErrorInvalidUSerID}</p>)
                         }
                     </div>)
                 : ('')}
@@ -165,8 +162,8 @@ class Authentication extends React.Component {
                     </Suspense>
                 </div>
                 <div className="row mobile-footer mt-3" style={{display: this.state.isInApp ? 'block' : 'auto', margin: this.state.isInApp && window.window.innerWidth >= 1024 ? '0' : ''}}>
-                    <p className="col-12 font-weight-bold">{ssoDetails && ssoDetails.PatientGuest}</p>
-                    <p className="col-12 secondary">{ssoDetails && ssoDetails.EmailInvitation}</p>
+                    <p className="col-12 font-weight-bold">{Details.auth.sso.PatientGuest}</p>
+                    <p className="col-12 secondary">{Details.auth.sso.EmailInvitation}</p>
                 </div>
                 {!this.state.isInApp ?(<div className="auth-form-footer" style={{bottom:this.state.isBrowserBlockError ? '0rem': ''}}>
                     <Footer />

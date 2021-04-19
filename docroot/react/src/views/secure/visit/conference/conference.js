@@ -24,7 +24,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = { userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -45,14 +45,15 @@ class Conference extends React.Component {
         this.surveyInprogress = false;
         this.surveyTimer = 0;
         this.surveyAutoCloseTime = null;
+        let data = Utilities.getLang();
         this.leaveVisitPopupOptions = { 
             heading: 'Leave Visit', 
             message : 'Your video visit session is going to end, unless you choose Stay.',
             controls : [{label: 'Leave Room', type: 'leave'}, {label: 'Stay', type: 'stay'} ]
         };
-        this.permissionRequiredContent = {
-            heading: 'Camera and Microphone Access Required',
-            message: 'Before you can start your visit you must allow access to your camera and microphone.',
+        this.permissionRequiredContent = {            
+            heading: data.errorCodes.CameraAccessPermissionMsg,
+            message: data.errorCodes.VisitStartNotificationMsg,
             type: 'Permission'
         };
         this.permissionDeniedContent={
@@ -896,10 +897,6 @@ class Conference extends React.Component {
 
     render() {
         let Details = this.state.staticData;
-        let RefreshLbl;
-        if(Details && Details.conference){
-            RefreshLbl = Details.conference.Refresh;
-        }
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -919,7 +916,7 @@ class Conference extends React.Component {
                         <ul>
                             <li><a href={this.state.staticData.HelpLink} className="help-link" target="_blank">{this.state.staticData.Help}</a></li>
                             <li className="text-capitalize">|</li>
-                            <li><a className="help-link" onClick={this.refreshPage}>{Details && RefreshLbl}</a></li>
+                            <li><a className="help-link" onClick={this.refreshPage}>{Details.conference.Refresh}</a></li>
                             <div className="lang-change p-0">
                             <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
                                     <span>|</span>

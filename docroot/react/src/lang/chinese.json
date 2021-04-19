@@ -97,5 +97,14 @@
       "Speaker":"擴音器",
       "Start":"開始",
       "Join":"加入"
+    },
+    "errorCodes":{
+      "ErrorPatientInfo":"Incorrect patient information",
+      "ErrorInvalidUSerID":"Invalid User ID / Password",
+      "ErrorInvalidLink":"Invalid link. Sign in to join your visit.",
+      "ErrorVisitUnavailable":"The video visit you’re trying to join isn’t currently available",
+      "ErrorNoMatchingMsg":"No matching patient found. Please try again.",
+      "CameraAccessPermissionMsg":"Camera and Microphone Access Required",
+      "VisitStartNotificationMsg":"Before you can start your visit, you must allow access to your camera and microphone."
     }
 }

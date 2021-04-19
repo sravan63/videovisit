@@ -97,5 +97,14 @@
       "Speaker":"Parlante",
       "Start":"Empezar",
       "Join":"Ingresar"
+    },
+    "errorCodes":{
+      "ErrorPatientInfo":"Información incorrecta del paciente.",
+      "ErrorInvalidUSerID":"Nombre de usuario/contraseña inválido",
+      "ErrorInvalidLink":"Enlace inválido. Inicie sesión para ingresar a su consulta",
+      "ErrorVisitUnavailable":"La videoconsulta a la que está intentando ingresar no está disponible",
+      "ErrorNoMatchingMsg":"No se encontró tal paciente. Vuelva a intentarlo",
+      "CameraAccessPermissionMsg":"Necesita acceso a la cámara y al micrófono",
+      "VisitStartNotificationMsg":"Antes de que pueda empezar su consulta, debe permitir el acceso a su cámara y micrófono."
     }
 }
