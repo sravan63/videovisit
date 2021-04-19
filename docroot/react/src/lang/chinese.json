@@ -96,7 +96,10 @@
       "Microphone":"麥克風",
       "Speaker":"擴音器",
       "Start":"開始",
-      "Join":"加入"
+      "Join":"加入",
+      "Back":"返回",
+      "PlaySound":"播放聲音",
+      "PauseSound":"暫停聲音"
     },
     "errorCodes":{
       "ErrorPatientInfo":"Incorrect patient information",

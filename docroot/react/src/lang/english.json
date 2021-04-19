@@ -77,7 +77,10 @@
       "Microphone":"Microphone",
       "Speaker":"Speaker",
       "Start":"Start",
-      "Join":"Join"
+      "Join":"Join",
+      "Back":"Back",
+      "PlaySound":"Play Sound",
+      "PauseSound":"Pause Sound"
     },
     "errorCodes":{
       "ErrorPatientInfo":"Incorrect patient information",

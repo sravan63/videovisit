@@ -25,7 +25,7 @@ class PreCallCheck extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { userDetails: {},renderView:false, staticData:{}, chin:'中文',span:'Español',showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false,mdoHelpUrl:'' };
+        this.state = { userDetails: {},renderView:false, staticData:{precall:{}}, chin:'中文',span:'Español',showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false,mdoHelpUrl:'' };
         this.goBack = this.goBack.bind(this);
         this.joinVisit = this.joinVisit.bind(this);
         this.permissionRequiredContent = {
@@ -220,10 +220,6 @@ class PreCallCheck extends React.Component {
 
     render() {
         let Details = this.state.staticData;
-        var translateLang;
-        if(Details && Details.precall){
-            translateLang = Details.precall;
-        }
         return (
             <div>
             <VVModal />
@@ -254,7 +250,7 @@ class PreCallCheck extends React.Component {
                      <div className="row pre-call-check">
                          <div className="col-lg-5 col-md-7 peripheral-options p-0">
                              <div className="periheral-container">
-                                 <div className="label">{translateLang && translateLang.Camera}</div>
+                                 <div className="label">{Details.precall.Camera}</div>
                                  <div className="dropdown show">
                                       <a className={this.state.constrains.videoSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'video')}>
                                         {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
@@ -272,7 +268,7 @@ class PreCallCheck extends React.Component {
                                  </div>
                              </div>
                              <div className="periheral-container">
-                                 <div className="label">{translateLang && translateLang.Microphone}</div>
+                                 <div className="label">{Details.precall.Microphone}</div>
                                  <div className="dropdown show">
                                       <a className={this.state.constrains.micSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'audio')}>
                                         {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
@@ -293,7 +289,7 @@ class PreCallCheck extends React.Component {
                                  </div>
                              </div>
                              <div className="periheral-container">
-                                 <div className="label">{translateLang && translateLang.Speaker}</div>
+                                 <div className="label">{Details.precall.Speaker}</div>
                                  {this.state.constrains.audioSource ? (<div className="dropdown show">
                                       <a className={this.state.constrains.audioSource ? 'btn col-md-12 dropdown-toggle rounded-0' : 'btn col-md-12 dropdown-toggle rounded-0 disabled'} role="button" href="#" data-toggle="dropdown" onClick={this.toggleOpen.bind(this,'speaker')}>
                                         {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
@@ -314,12 +310,12 @@ class PreCallCheck extends React.Component {
                                      {this.state.musicOn ? (
                                          <button className="btn playback-button pause" onClick={this.toggleMusic.bind(this, false)}>
                                              <span className="pause-icon"></span>
-                                             <span className="text">Pause Sound</span>
+                                             <span className="text">{Details.precall.PauseSound}</span>
                                          </button>
                                     ) : (
                                          <button className="btn playback-button play" onClick={this.toggleMusic.bind(this, true)}>
                                              <span className="play-icon"></span>
-                                             <span className="text">Play Sound</span>
+                                             <span className="text">{Details.precall.PlaySound}</span>
                                          </button>
                                     )}
                                  </div>
@@ -327,8 +323,8 @@ class PreCallCheck extends React.Component {
                          </div>
                          <div className="col-lg-5 col-md-5 video-preview"><video id="preview" playsInline autoPlay></video></div>
                          <div className="col-md-12 button-controls text-center">
-                           <button className="btn rounded-0 mr-3" onClick={this.goBack}>Back</button>
-                           <button className="btn rounded-0" onClick={this.joinVisit}>{translateLang && translateLang.Join}</button>
+                           <button className="btn rounded-0 mr-3" onClick={this.goBack}>{Details.precall.Back}</button>
+                           <button className="btn rounded-0" onClick={this.joinVisit}>{Details.precall.Join}</button>
                          </div>
                      </div>
                  </div>

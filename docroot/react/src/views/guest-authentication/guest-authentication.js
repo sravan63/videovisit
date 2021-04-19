@@ -148,8 +148,7 @@ class Authentication extends React.Component {
                 this.errorCompForGuestLogin();
                 }
             } else if (response.data.statusCode == 510 || response.data.statusCode == 500) {
-                let data = UtilityService.getLang();
-                this.setState({ errorlogin: true, displayErrorMsg: data.errorCodes.ErrorNoMatchingMsg, showLoader: false });
+                this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_VALIDATION_MSG, showLoader: false });
                 window.scrollTo(0, 0); 
             } else {
                 if(rejoin){
@@ -185,7 +184,7 @@ class Authentication extends React.Component {
         else {
             this.setState({span: "Español", chin: '中文',staticData: data});
         }
-        this.renderErrorCompValidation();
+        // this.renderErrorCompValidation();
     }
     changeLang(event){
         let value = event.target.textContent;

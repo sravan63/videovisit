@@ -96,7 +96,10 @@
       "Microphone":"Micrófono",
       "Speaker":"Parlante",
       "Start":"Empezar",
-      "Join":"Ingresar"
+      "Join":"Ingresar",
+      "Back":"Atrás",
+      "PlaySound":"Activar el sonido",
+      "PauseSound":" Pausar el sonido"      
     },
     "errorCodes":{
       "ErrorPatientInfo":"Información incorrecta del paciente.",
