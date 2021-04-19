@@ -16,7 +16,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'' };
+        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'' };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -46,9 +46,11 @@ class Authentication extends React.Component {
              }
             } 
             else if (response.data.statusCode == 510){
+                this.setState({ statusCode: 510 });
                 this.renderErrorCompValidation(true);
             }
             else {
+                this.setState({ statusCode: 511 });
                 this.renderErrorCompValidation(false);
             }
         }, (err) => {
@@ -148,7 +150,9 @@ class Authentication extends React.Component {
                 this.errorCompForGuestLogin();
                 }
             } else if (response.data.statusCode == 510 || response.data.statusCode == 500) {
-                this.setState({ errorlogin: true, displayErrorMsg: GlobalConfig.GUEST_LOGIN_VALIDATION_MSG, showLoader: false });
+                let data = UtilityService.getLang();
+                this.setState({ statusCode: 500 });
+                this.setState({ errorlogin: true, displayErrorMsg: data.errorCodes.ErrorNoMatchingMsg, showLoader: false });
                 window.scrollTo(0, 0); 
             } else {
                 if(rejoin){
@@ -184,7 +188,14 @@ class Authentication extends React.Component {
         else {
             this.setState({span: "Español", chin: '中文',staticData: data});
         }
-        // this.renderErrorCompValidation();
+        if(this.state.errorlogin){
+            if(this.state.statusCode == 511){
+                this.setState({ displayErrorMsg: data.errorCodes.ErrorVisitUnavailable });
+            }
+            if(this.state.statusCode == 500){
+                this.setState({ displayErrorMsg: data.errorCodes.ErrorNoMatchingMsg });
+            }    
+        }
     }
     changeLang(event){
         let value = event.target.textContent;

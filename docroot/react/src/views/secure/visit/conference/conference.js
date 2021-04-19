@@ -45,6 +45,7 @@ class Conference extends React.Component {
         this.surveyInprogress = false;
         this.surveyTimer = 0;
         this.surveyAutoCloseTime = null;
+        this.getLanguage();            
         let data = Utilities.getLang();
         this.leaveVisitPopupOptions = { 
             heading: 'Leave Visit', 
