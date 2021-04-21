@@ -279,8 +279,6 @@ class UtilityService extends React.Component {
             }
             
         } else {
-             DateObj.setMonth(11);
-            // DateObj.setDate(11)
             let week = GlobalConfig.WEEK_DAYS[this.getLang().lang][DateObj.getDay()];
             let month = GlobalConfig.MONTHS[this.getLang().lang][DateObj.getMonth()];
             let date = DateObj.getDate() < 10 ? String(DateObj.getDate()).replace("0", "") : DateObj.getDate();
