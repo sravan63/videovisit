@@ -102,7 +102,17 @@ const GlobalConfig = {
     NETWORK_RECONNECTING: 'NetworkReconnecting',
     FAILED_MID_WAY: 'CallFailedMidway',
     CALL_CONNECTED: 'CallConnected',
-    CALL_DISCONNECTED: 'CallDisconnected'
+    CALL_DISCONNECTED: 'CallDisconnected',
+    WEEK_DAYS: {
+        chinese: ["週日", "週一", "週二", "週三", "週四", "週五", "週六"],
+        english: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        spanish: ["dom.", "lun.", "mar.", "mié.", "jue.", "vie.", "sáb."]
+    },
+    MONTHS: {
+        chinese: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+        english: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        spanish: ["ene.", "feb.", "mar.", "abr.", "may.", "jun.", "jul.", "ago.", "sep.", "oct.", "nov.", "dic."]
+    }
 };
 
 export default GlobalConfig;
