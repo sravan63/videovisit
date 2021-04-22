@@ -939,7 +939,6 @@ class Conference extends React.Component {
                                 </div>
                                 <Settings data={Details} />
                             </div>
-                            <div className="self-view-btn" id="selfViewBtn" onClick={()=>WebUI.handleSelfView(true)} style={{display:'none'}}>&nbsp;</div>
                             <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                <video id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video>
