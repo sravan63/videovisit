@@ -33,6 +33,7 @@ var cameraID;
 var audioSource;
 var isSetup;
 var deniedPermission = false;
+var dragged = false;
 
 var id_selfview;
 var id_muteaudio;
@@ -692,6 +693,7 @@ function connected(url) {
             log("info","ConferenceConnected","event: joined conference successfully.");
             //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
             MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, 'conference');
+            dragElement(document.getElementById("selfvideo"));
             var isDirectLaunch = localStorage.getItem('isDirectLaunch');
             var meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
@@ -731,6 +733,60 @@ function connected(url) {
             pexipInitialConnect=true;
         }
     }
+}
+
+function dragElement(elmnt) {
+    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+    document.getElementById(elmnt.id).onmousedown = dragMouseDown;
+
+    function dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        dragged=false;
+        // get the mouse cursor position at startup:
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = elementDrag;
+    }
+
+    function elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        dragged=true;
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        // set the element's new position:
+        elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+        elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+    }
+
+    function closeDragElement(e) {
+        /* stop moving when mouse button is released:*/
+        setTimeout(()=>{
+            if( !dragged ) {
+                handleSelfView(false);
+            }
+        },500);
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+
+export function handleSelfView(flag,event){
+    if (flag) {
+        $('#selfview').css('display', 'block');
+        $('#selfViewBtn').css('display', 'none');
+    } else {
+        $('#selfview').css('display', 'none');
+        $('#selfViewBtn').css('display', 'block');
+    }
+
 }
 
 export function getMediaStatsData(){
