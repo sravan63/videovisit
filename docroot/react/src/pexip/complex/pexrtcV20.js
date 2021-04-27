@@ -3390,6 +3390,10 @@ PexRTC.prototype.addCall = function(call_type, flash) {
                 self.onPresentationConnected(stream);
             }
         };
+        self.presentation.onTrace = function(msg){
+            console.log('ICE GATHERED CAPTURED');
+            self.onTrace(msg);
+        }
         self.presentation.onDisconnect = function(reason) {
             self.presentation = null;
             if (self.onPresentationDisconnected) {
