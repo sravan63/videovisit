@@ -258,7 +258,18 @@ class Authentication extends React.Component {
         }
 
     }
+    toggleLangInfo(){
+        let data = UtilityService.getLang(); 
+        switch(data.lang){
+            case "spanish":
+                return "guest-form rejoinComp spanish";
+                break;            
+            default:
+                return  "guest-form rejoinComp";
+                break;    
 
+        }
+    }
     render() {
         var Details = this.state.staticData;
         return (
@@ -293,7 +304,7 @@ class Authentication extends React.Component {
                 <div className="guest-form-content">
                 <BrowserBlock browserblockinfo = {this.state}/>
                 {this.state.ReJoin ? (
-                   <div className="guest-form rejoinComp">
+                   <div className={this.toggleLangInfo()}>
                       <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>{this.state.staticData.guestauth.Rejoin}</button>
                       <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()} disabled={this.state.isBrowserBlockError}>{Details.Signout}</button>
                     </div>
