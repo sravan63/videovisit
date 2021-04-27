@@ -90,7 +90,7 @@ function remotePresentationClosed(reason) {
 }
 
 function checkForBlockedPopup() {
-    if (!presentation || typeof presentation.innerHeight === "undefined" || (presentation.innerHeight === 0 && presentation.innerWidth === 0)) {
+    if (!presentation) {
         // Popups blocked
         presentationClosed();
         flash_button = setInterval(function() {
@@ -137,19 +137,21 @@ export function resizePresentationWindow() {
 }
 
 function loadPresentationStream(videoURL) {
-    if (presentation && document.querySelectorAll('.presentation-view #presvideo')) {
-        $('#presentation-view').find('#presvideo')[0].srcObject = videoURL;
+    if (presentation && $(presentation).find('#presvideo').length>0) {
+        $('.presentation-view').find('#presvideo')[0].srcObject = videoURL;
     }
 }
 
 export function createPresentationStreamWindow() {
     //presentation-view
-    if (presentation == null) {
+    if (!presentation) {
         MessageService.sendMessage(GlobalConfig.START_SCREENSHARE, null);
-        presentation = document.getElementById('presentation-view');
-        mobileviewHeight = isMobileDevice ? '40vh' : '100%';
-        presentation.innerHTML = "<img src='' id='loadimage' display:none; /><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay'/><img src='' id='presimage' width='0px'/></div>";
         setTimeout(checkForBlockedPopup, 1000);
+        //presentation = document.getElementById('presentation-view');
+        mobileviewHeight = isMobileDevice ? '40vh' : '100%';
+        presentation = $('.presentation-view');
+        $('.presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:none;height:100%;width:100%;z-index:5;object-fit: contain;' /><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay'/><img src='' id='presimage' width='0px'/></div>");
+
     }
 }
 
