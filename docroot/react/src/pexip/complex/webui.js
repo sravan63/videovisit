@@ -79,7 +79,7 @@ export function presentationClosed() {
 
 function remotePresentationClosed(reason) {
     if (presentation) {
-        presentation.close();
+        //presentation.close();
         // TODO - Need to streamline this later, it's a hack for as of now
         if (getAppOS() == "iOS" && reason == "Failed to gather IP addresses") {
             return;
