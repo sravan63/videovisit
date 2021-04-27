@@ -294,8 +294,8 @@ class Authentication extends React.Component {
                 <BrowserBlock browserblockinfo = {this.state}/>
                 {this.state.ReJoin ? (
                    <div className="guest-form rejoinComp">
-                      <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError} >Rejoin</button>
-                      <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()} disabled={this.state.isBrowserBlockError} >Sign out</button>
+                      <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>{this.state.staticData.guestauth.Rejoin}</button>
+                      <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()} disabled={this.state.isBrowserBlockError}>{Details.Signout}</button>
                     </div>
                 ):
                  (    

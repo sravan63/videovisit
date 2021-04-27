@@ -441,7 +441,7 @@ class MyMeetings extends React.Component {
                                     <div className="row joinNow-container">
                                         <div className="col-md-12 videoJoin">
                                         <div className="video-button">
-                                          <button type="button" className="btn rounded-0 p-0 join-visit" disabled={item.meetingVendorId==null} onClick={this.joinMeeting.bind(this,item)}>Join your visit</button>
+                                          <button type="button" className="btn rounded-0 p-0 join-visit" disabled={item.meetingVendorId==null} onClick={this.joinMeeting.bind(this,item)}>{Details.my_visits.JoinVisit}</button>
                                         </div>
                                         </div>
                                         <div className="col-md-12 mt-3 joinText">
@@ -455,7 +455,7 @@ class MyMeetings extends React.Component {
                     }) 
 
                 ):(
-                <div className="no-meetings">{!this.state.showLoader ? (<p className="text-center">You have no visits in the next 15 minutes.</p>):('')}</div>
+                <div className="no-meetings">{!this.state.showLoader ? (<p className="text-center">{Details.my_visits.Novisits}</p>):('')}</div>
                 )}
                 <div className="row" style={{ display:this.state.myMeetings.length > 0 ?  "block" : "none"}}>
                     <div className="col-lg-9 col-md-12 pl-0 pb-3 pr-0 wifi-msg">
@@ -468,7 +468,7 @@ class MyMeetings extends React.Component {
                             <div className="banner"><div className="image-holder"></div></div>
                             <div className="message-container">
                                 <div className="wrapper">
-                                    <div className="message">Next time you want to see your doctor, try a video visit from our My Doctor Online mobile app.</div>
+                                    <div className="message">{Details.my_visits.MobileAppLabelTxt}</div>
                                     <div className="badgets">
                                         <div className={this.getBadgeVersion('ios')}><a className="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></div>
                                         <div className={this.getBadgeVersion('android')}><a className="icon-link" href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&amp;hl=en_US" target="_blank"></a></div>

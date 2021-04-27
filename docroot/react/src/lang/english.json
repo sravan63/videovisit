@@ -27,7 +27,10 @@
     "my_visits":{
        "VisitsTodayMsg":"Your Video Visits for Today",
        "VisitsRunningLateMsg": "We're sorry, your doctor is running late. New start time is",
-       "Wifimsg":"You may be joining before your clinician. Please be patient. Join with a strong Wi-Fi or internet connection from a quiet, well-lit place. If you need help getting ready for your video visit, call 844-216-5769 for support, Monday – Friday, 5 AM to 7 PM."
+       "Wifimsg":"You may be joining before your clinician. Please be patient. Join with a strong Wi-Fi or internet connection from a quiet, well-lit place. If you need help getting ready for your video visit, call 844-216-5769 for support, Monday – Friday, 5 AM to 7 PM.",
+       "JoinVisit":"Join your visit",
+       "Novisits":"You have no visits in the next 15 minutes.",
+       "MobileAppLabelTxt":"Next time you want to see your doctor, try a video visit from our My Doctor Online mobile app."
     },
     "instant_join":{
       "AreYou": "Are you ",
@@ -62,7 +65,8 @@
     "guestauth":{
       "GuestHeaderLabelTxt":"Children age 11 and younger must have a parent or legal guardian present during the visit.",
       "PatientLastName":"Patient’s Last Name",
-      "JoinBtnName":"Join"
+      "JoinBtnName":"Join",
+      "Rejoin":"Rejoin"
     },
     "setup":{
       "Camera":"Camera",

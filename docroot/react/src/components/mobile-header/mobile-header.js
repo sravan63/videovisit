@@ -138,6 +138,7 @@ class MobileHeader extends React.Component {
     }
 
     render() {
+        let Details = this.state.staticData;
         return (
             <div>
                 { !this.state.isInApp ? (<div className={this.state.hidePromotion ? "mobile-header fix-to-top" : "mobile-header"}>
@@ -147,7 +148,7 @@ class MobileHeader extends React.Component {
                             <div className="banner"><div className="image-holder"></div></div>
                             <div className="message-container">
                                 <div className="wrapper">
-                                    <div className="message">Next time you want to see your doctor, try a video visit from our My Doctor Online mobile app.</div>
+                                    <div className="message">{Details.my_visits.MobileAppLabelTxt}</div>
                                     <div className="badgets">
                                         <div className={this.getBadgeVersion('ios')}><a className="icon-link" href="https://itunes.apple.com/us/app/my-doctor-online-ncal-only/id497468339?mt=8" target="_blank"></a></div>
                                         <div className={this.getBadgeVersion('android')}><a className="icon-link" href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&amp;hl=en_US" target="_blank"></a></div>
