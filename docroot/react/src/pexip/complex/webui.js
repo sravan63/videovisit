@@ -137,10 +137,8 @@ export function resizePresentationWindow() {
 }
 
 function loadPresentationStream(videoURL) {
-    if (presentation && document.querySelectorAll('.presentation-view #loadimage')) {
-        presentation.presvideo.poster = "";
-        presentation.presvideo.src = videoURL;
-        presentation.presvideo.setAttribute('src', videoURL);
+    if (presentation && document.querySelectorAll('.presentation-view #presvideo')) {
+        $('#presentation-view').find('#presvideo')[0].srcObject = videoURL;
     }
 }
 
@@ -150,8 +148,8 @@ export function createPresentationStreamWindow() {
         MessageService.sendMessage(GlobalConfig.START_SCREENSHARE, null);
         presentation = document.getElementById('presentation-view');
         mobileviewHeight = isMobileDevice ? '40vh' : '100%';
-        presentation.innerHTML = "<img src='' id='loadimage' /><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay'/><img src='' id='presimage' width='0px'/></div>";
-        // setTimeout(checkForBlockedPopup, 1000);
+        presentation.innerHTML = "<img src='' id='loadimage' display:none; /><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay'/><img src='' id='presimage' width='0px'/></div>";
+        setTimeout(checkForBlockedPopup, 1000);
     }
 }
 
@@ -339,7 +337,7 @@ function holdresume(setting) {
         video.poster = "";
         video.src = videoURL;
         if (presentation != null) {
-            loadPresentation();
+            rtc.getPresentation();
         }
         id_muteaudio.classList.remove("inactive");
         id_mutevideo.classList.remove("inactive");
@@ -823,7 +821,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
     rtc.onHoldResume = holdresume;
     rtc.onRosterList = updateRosterList;
     rtc.onPresentation = presentationStartStop;
-    rtc.onPresentationReload = loadPresentation;
+    //rtc.onPresentationReload = loadPresentation;
     rtc.onScreenshareStopped = unpresentScreen;
     rtc.onPresentationConnected = loadPresentationStream;
     rtc.onPresentationDisconnected = remotePresentationClosed;
