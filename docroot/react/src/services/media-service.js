@@ -14,6 +14,7 @@ class MediaService extends React.Component {
         this.state = { mediaData: {},cameraAllowed:false,micAllowed:false,camBlocked:false, selectedConstrain : {} };
         this.mediaData = {};
         this.drawNewCanvas = true;
+        this.peripherals=[];
     }
     
     // Initiates the device load
@@ -78,6 +79,9 @@ class MediaService extends React.Component {
     // Gets the list of devices on load.
     gotDevicesList(devices){
         this.sergigateMediaByKind(devices);
+        this.peripherals = devices;
+        console.log("Devices List" + devices);
+        console.log("Peripherals", this.peripherals);
         devices.map(mData => {
             const media = {};
             if( mData.label == '' ){
@@ -107,6 +111,7 @@ class MediaService extends React.Component {
   
   // Error call back.
     handleError(error){
+        console.log(error.name + "  " +  error.message);
         var ErrorMsg = error.message,
             browserInfo = Utilities.getBrowserInformation();
         if(ErrorMsg =='Failed starting capture of a audio track' || ErrorMsg == 'The I/O read operation failed.'){
