@@ -112,17 +112,22 @@ class MediaService extends React.Component {
   // Error call back.
     handleError(error){
         console.log(error.name + "  " +  error.message);
+        let isSetup = sessionStorage.getItem('isSetupPage');
         var ErrorMsg = error.message,
             browserInfo = Utilities.getBrowserInformation();
         if(ErrorMsg =='Failed starting capture of a audio track' || ErrorMsg == 'The I/O read operation failed.'){
           alert("Unable to join: Looks like you're on a phone call, hangup and refresh page to join.");
         }
         if(browserInfo.isSafari) {
-            let isSetup = sessionStorage.getItem('isSetupPage');
             if (!isSetup){
                 if (error.name == 'NotAllowedError') {
                     MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
                 }
+            }
+        }
+        if(browserInfo.isFireFox && !isSetup){
+            if (error.name == 'NotFoundError') {
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
             }
         }
         console.log('Media Service - Error Occured :: '+error);
