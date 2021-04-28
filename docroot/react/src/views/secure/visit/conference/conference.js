@@ -30,6 +30,7 @@ class Conference extends React.Component {
         this.hideSettings = true;
         this.list = [];
         this.handle = 0;
+        this.NoDevices = false;
         this.runningLate = 0;
         this.MediaStats = 0;
         this.keepAlive = 0;
@@ -317,6 +318,10 @@ class Conference extends React.Component {
                             }
                         }
                     }
+                    else if(message.data==='prompt-no-Devices'){
+                        modalData = this.permissionRequiredContent;
+                        this.NoDevices = true;
+                    }
                     else{
                         modalData = this.permissionRequiredContent;
                     }
@@ -572,6 +577,11 @@ class Conference extends React.Component {
 
     componentWillUnmount() {
         // clear on component unmount
+        if(this.NoDevices){
+            this.subscription.unsubscribe();
+            this.goTo();
+            return;
+        }
         MediaService.stopAudio();
         clearTimeout(this.handle);
         window.clearInterval(this.runningLate);

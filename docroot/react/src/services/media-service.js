@@ -14,7 +14,6 @@ class MediaService extends React.Component {
         this.state = { mediaData: {},cameraAllowed:false,micAllowed:false,camBlocked:false, selectedConstrain : {} };
         this.mediaData = {};
         this.drawNewCanvas = true;
-        this.peripherals=[];
     }
     
     // Initiates the device load
@@ -79,9 +78,10 @@ class MediaService extends React.Component {
     // Gets the list of devices on load.
     gotDevicesList(devices){
         this.sergigateMediaByKind(devices);
-        this.peripherals = devices;
-        console.log("Devices List" + devices);
-        console.log("Peripherals", this.peripherals);
+        if(devices.length == 0){
+            MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt-no-Devices');
+            return;
+        }
         devices.map(mData => {
             const media = {};
             if( mData.label == '' ){
@@ -111,7 +111,6 @@ class MediaService extends React.Component {
   
   // Error call back.
     handleError(error){
-        console.log(error.name + "  " +  error.message);
         let isSetup = sessionStorage.getItem('isSetupPage');
         var ErrorMsg = error.message,
             browserInfo = Utilities.getBrowserInformation();
@@ -125,9 +124,9 @@ class MediaService extends React.Component {
                 }
             }
         }
-        if(browserInfo.isFireFox && !isSetup){
-            if (error.name == 'NotFoundError') {
-                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
+        if(!isSetup){
+            if (error.name && error.name == 'NotFoundError') {
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt-no-Devices');
             }
         }
         console.log('Media Service - Error Occured :: '+error);
