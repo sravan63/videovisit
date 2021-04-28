@@ -77,11 +77,27 @@ class MediaService extends React.Component {
 
     // Gets the list of devices on load.
     gotDevicesList(devices){
-        this.sergigateMediaByKind(devices);
         if(devices.length == 0){
             MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt-no-Devices');
             return;
         }
+        if(devices.length !=0 ){
+            let micsDetected = [];
+            let camDetected = [];
+            devices.forEach((val)=>{
+                if(val.kind && val.kind === 'audioinput'){
+                    micsDetected.push(val.groupId);
+                }
+                else if(val.kind && val.kind === 'videoinput'){
+                    camDetected.push(val.groupId)
+                }
+            });
+            if(micsDetected.length == 0 || camDetected.length == 0){
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt-no-Devices');
+                return;
+            }
+        }
+        this.sergigateMediaByKind(devices);
         devices.map(mData => {
             const media = {};
             if( mData.label == '' ){
