@@ -150,7 +150,7 @@ export function createPresentationStreamWindow() {
         //presentation = document.getElementById('presentation-view');
         mobileviewHeight = isMobileDevice ? '40vh' : '100%';
         presentation = $('.presentation-view');
-        $('.presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:none;height:100%;width:100%;z-index:5;object-fit: contain;' /><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='0px' autoplay='autoplay'/><img src='' id='presimage' width='0px'/></div>");
+        $('.presentation-view').html("<img src='' id='loadimage' style='position:absolute;left:0;top:0;display:none;height:100%;width:100%;z-index:5;object-fit: contain;' /><div width='0px' height='0px' style='position:absolute;left:0;top:0;'><video id='presvideo' width='100%' height='100%' autoPlay='autoplay' playsInline='playsinline'/><img src='' id='presimage' width='0px'/></div>");
 
     }
 }
