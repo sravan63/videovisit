@@ -28,15 +28,22 @@ class PreCallCheck extends React.Component {
         this.state = { userDetails: {},renderView:false, staticData:{precall:{}}, chin:'中文',span:'Español',showPage: false, showLoader: true, data: {}, media: {}, constrains: {}, musicOn: false,mdoHelpUrl:'' };
         this.goBack = this.goBack.bind(this);
         this.joinVisit = this.joinVisit.bind(this);
+        let data = Utilities.getLang();
         this.permissionRequiredContent = {
-            heading: 'Camera and Microphone Access Required',
-            message: 'Before you can start your visit you must allow access to your camera and microphone.',
+            heading: data.errorCodes.CameraAccessPermissionMsg,
+            message: data.errorCodes.VisitStartNotificationMsg,
             type: 'Permission'
         };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
             message: 'Click on the Refresh button and allow access to Camera and Microphone or check your browser settings.',
             type: 'Denied'
+        };
+        this.permissionDeniedforFirefox={
+            heading: 'Camera and Microphone Access Blocked',
+            displayIcon:'true',
+            isMozilla:'true',
+            type: 'Denied',
         };
     }
 
@@ -65,6 +72,9 @@ class PreCallCheck extends React.Component {
                         let browserInfo = Utilities.getBrowserInformation();
                         if (browserInfo.isSafari) {
                             modalData = this.permissionDeniedForSafari;
+                        }
+                        else if(browserInfo.isFireFox){
+                            modalData = this.permissionDeniedforFirefox;
                         }
                     }
                     else{
@@ -223,7 +233,7 @@ class PreCallCheck extends React.Component {
         return (
             <div>
             <VVModal />
-            <div id='container' className="pre-call-check-page" >
+            <div id='container' className="pre-call-check-page" style={{background: this.state.renderView ? '#F0F4F7' : '#000000'}} >
                  <div className="pre-call-check-header row m-0">
                     <div className="col-md-8 banner-content">
                         <div className="logo"></div>

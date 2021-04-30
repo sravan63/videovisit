@@ -18,19 +18,7 @@ class VVModal extends React.Component {
                     if(this.state.showOverlay){
                         this.setState({showOverlay : false});
                     }
-                    if(notification.data.type=='Permission'){
-                        let data = UtilityService.getLang();
-                        let obj = {
-                            heading: data.errorCodes.CameraAccessPermissionMsg,
-                            message: data.errorCodes.VisitStartNotificationMsg,
-                            type: 'Permission'
-                        }
-                        this.setState({popupOptions: obj});
-                    }
-                    else {
-                        this.setState({popupOptions: notification.data});
-                    }
-                    this.setState({showOverlay : true});
+                    this.setState({popupOptions: notification.data,showOverlay : true});
                     break;
                 case GlobalConfig.CLOSE_MODAL_AUTOMATICALLY:
                     this.setState({showOverlay : false});
