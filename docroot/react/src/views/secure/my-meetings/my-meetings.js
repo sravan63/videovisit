@@ -373,6 +373,25 @@ class MyMeetings extends React.Component {
 
         }
     }
+    getDepartMentVersion(deptName){
+        // deptName = "urgent care";
+        let data = UtilityService.getLang();
+            var departmentList = GlobalConfig.departmentNames.NCAL_Translation_Names.filter(function (transDeptName) {
+                return transDeptName.english.toLowerCase().trim() === deptName;
+            }).map(function (transDeptName) {
+                if(data.lang == GlobalConfig.LANGUAGE_ENG){
+                    return transDeptName.english.toLowerCase().trim();
+                }
+                if(data.lang == GlobalConfig.LANGUAGE_SPANISH){
+                    return transDeptName.spanish;
+                }
+                if(data.lang == GlobalConfig.LANGUAGE_CHINESE){
+                    return transDeptName.chinese;
+                }
+
+            })
+        return departmentList;
+    }
     render() {
         let Details = this.state.staticData;
         return (
@@ -397,7 +416,7 @@ class MyMeetings extends React.Component {
                                             <img className="circle-image" src={item.host.imageUrl} alt="" />
                                             <div className="clinician-name-and-details">
                                                 <span className="text-capitalize clinician-name font-weight-bold ml-3">{this.getClinicianName(item.host)}</span>
-                                            <span className="department-details text-capitalize ml-3">{item.host.departmentName?item.host.departmentName.toLowerCase():''}</span>
+                                            <span className="department-details text-capitalize ml-3">{this.getDepartMentVersion(item.host.departmentName?item.host.departmentName.toLowerCase():'')}</span>
                                             </div>
                                         </div>
                                     </div>
