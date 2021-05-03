@@ -180,6 +180,60 @@ public class WebService {
 	public static void setSetupWizardMeetingType(String setupWizardMeetingType) {
 		WebService.setupWizardMeetingType = setupWizardMeetingType;
 	}
+	
+	
+	public static ServiceCommonOutputJson testIntgService() throws Exception {
+		logger.info(LOG_ENTERED);
+		String responseJsonStr = null;
+		final Gson gson = new Gson();
+		ServiceCommonOutputJson testIntgServiceJson = new ServiceCommonOutputJson();
+		try {
+			responseJsonStr = callVVAPiService(ServiceUtil.TEST_IS_ALIVE, "{}", VVINTEGRATION);
+			testIntgServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+		} catch (Exception e) {
+			logger.warn("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			responseJsonStr = callVVAPiService(ServiceUtil.TEST_IS_ALIVE, "{}", VVINTEGRATION);
+			testIntgServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+		}
+		logger.info(LOG_EXITING);
+		return testIntgServiceJson;
+	}
+
+	public static ServiceCommonOutputJson testMApptService() throws Exception {
+		logger.info(LOG_ENTERED);
+		String responseJsonStr = null;
+		final Gson gson = new Gson();
+		ServiceCommonOutputJson testMApptServiceJson = new ServiceCommonOutputJson();
+		try {
+			responseJsonStr = callVVAPiService(ServiceUtil.TEST_IS_ALIVE, "{}", MAPPOINTMENT);
+			testMApptServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+		} catch (Exception e) {
+			logger.warn("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			responseJsonStr = callVVAPiService(ServiceUtil.TEST_IS_ALIVE, "{}", MAPPOINTMENT);
+			testMApptServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+		}
+		logger.info(LOG_EXITING);
+		return testMApptServiceJson;
+	}
+
+	public static ServiceCommonOutputJson testMConfService() throws Exception {
+		logger.info(LOG_ENTERED);
+		String responseJsonStr = null;
+		final Gson gson = new Gson();
+		ServiceCommonOutputJson testMConfServiceJson = new ServiceCommonOutputJson();
+		try {
+			responseJsonStr = callVVAPiService(ServiceUtil.TEST_IS_ALIVE, "{}", MCONFERENCE);
+			testMConfServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+		} catch (Exception e) {
+			logger.warn("Web Service API error:" + e.getMessage() + " Retrying...", e);
+			responseJsonStr = callVVAPiService(ServiceUtil.TEST_IS_ALIVE, "{}", MCONFERENCE);
+			testMConfServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+		}
+		logger.info(LOG_EXITING);
+		return testMConfServiceJson;
+	}
+	
+	
 
 	/**
 	 * This method invokes updateMemberMeetingStatus rest service and updates the

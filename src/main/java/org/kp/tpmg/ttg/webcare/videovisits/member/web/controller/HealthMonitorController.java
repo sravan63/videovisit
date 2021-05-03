@@ -20,31 +20,21 @@ public class HealthMonitorController {
 	@RequestMapping(value = "/healthMonitor", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView handlePageRequest(final HttpServletRequest request, final HttpServletResponse response) {
 		logger.info(LOG_ENTERED);
-		boolean txtMode = "".equals(request.getParameter("text"));
 
-		//String db = MonitoringCommand.testDbRoundTrip(request);
+		String vvmapptstat = MonitoringCommand.testMApptService(request);
 
-		String db = "OK";
+		String vvmconfstat = MonitoringCommand.testMConfService(request);
+
+		String vvmintgstat = MonitoringCommand.testIntgService(request);
 		
-		boolean allOk = isOk(db);
-
-		if (txtMode) {
-			int statusCode = 0;
-			if (!allOk) {
-				statusCode = 1;
-			}
-
-			ModelAndView toRet = new ModelAndView("simpleText");
-			toRet.addObject("simpleText", "" + Integer.toString(statusCode));
-			logger.info(LOG_EXITING);
-			return toRet;
-		} else {
 			ModelAndView modelAndView = new ModelAndView("healthMonitor");
-			modelAndView.addObject("db", wrapReturn(db));
-			modelAndView.addObject("allOk", allOk);
+			
+			modelAndView.addObject("vvmapptstat", wrapReturn(vvmapptstat));
+			modelAndView.addObject("vvmconfstat", wrapReturn(vvmconfstat));
+			modelAndView.addObject("vvmintgstat", wrapReturn(vvmintgstat));
+			
 			logger.info(LOG_EXITING);
 			return modelAndView;
-		}
 	}
 
 	protected boolean isOk(String val) {

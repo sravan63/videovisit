@@ -15,9 +15,22 @@
 							<th width="160px"> Monitoring Item</th>
 							<th width="300px"> Status</th>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td>Database Status</td>
 							<td> ${db}  </td>
+						</tr>-->
+						
+						<tr>
+							<td>VV Member Appointment Service/API Manager Status</td>
+							<td> ${vvmapptstat}  </td>
+						</tr>
+						<tr>
+							<td>VV Member Conference Service/API Manager Status</td>
+							<td> ${vvmconfstat}  </td>
+						</tr>
+						<tr>
+							<td>VV Integration Service/API Manager Status</td>
+							<td> ${vvmintgstat}  </td>
 						</tr>
 
 					</table>
