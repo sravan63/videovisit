@@ -19,7 +19,7 @@
 	</logger>
 
 	<root>
-		<level value="DEBUG" />
+		<level value="WARN" />
 	</root>
 
 </log4j:configuration>
