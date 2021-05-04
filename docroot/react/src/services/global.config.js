@@ -532,12 +532,7 @@ const GlobalConfig = {
               "english": "SURGERY",
               "spanish": "CIRUGÍA",
               "chinese": "外科手術部"
-            },
-            {
-              "english": "THERAPEUTIC SERVICES",
-              "spanish": "SERVICIOS TERAPÉUTICOS",
-              "chinese": "行政部"
-            },
+            },            
             {
               "english": "TRANSPLANT SERVICES",
               "spanish": "SERVICIOS DE TRASPLANTES",
