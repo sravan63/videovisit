@@ -58,6 +58,11 @@ class Conference extends React.Component {
             message: data.errorCodes.VisitStartNotificationMsg,
             type: 'Permission'
         };
+        this.noDevicesFound = {
+            heading:'No Camera and Microphone Found',
+            message: 'Before you can start your visit you must plugin external camera and microphone.',
+            type: 'Permission'
+        };
         this.permissionDeniedContent={
             heading: 'Camera and Microphone Access Blocked',
             displayIcon:'true',
@@ -319,7 +324,7 @@ class Conference extends React.Component {
                         }
                     }
                     else if(message.data==='prompt-no-Devices'){
-                        modalData = this.permissionRequiredContent;
+                        modalData = this.noDevicesFound;
                         this.NoDevices = true;
                     }
                     else{

@@ -34,6 +34,11 @@ class PreCallCheck extends React.Component {
             message: data.errorCodes.VisitStartNotificationMsg,
             type: 'Permission'
         };
+        this.noDevicesFound = {
+            heading:'No Camera and Microphone Found',
+            message: 'Before you can start your visit you must plugin external camera and microphone.',
+            type: 'Permission'
+        };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
             message: 'Click on the Refresh button and allow access to Camera and Microphone or check your browser settings.',
@@ -76,6 +81,9 @@ class PreCallCheck extends React.Component {
                         else if(browserInfo.isFireFox){
                             modalData = this.permissionDeniedforFirefox;
                         }
+                    }
+                    else if(message.data==='prompt-no-Devices'){
+                        modalData = this.noDevicesFound;
                     }
                     else{
                         modalData = this.permissionRequiredContent;
