@@ -374,7 +374,6 @@ class MyMeetings extends React.Component {
         }
     }
     getDepartMentVersion(deptName){
-        // deptName = "urgent care";
         let data = UtilityService.getLang();
             var departmentList = GlobalConfig.departmentNames.NCAL_Translation_Names.filter(function (transDeptName) {
                 return transDeptName.english.toLowerCase().trim() === deptName;
@@ -390,7 +389,11 @@ class MyMeetings extends React.Component {
                 }
 
             })
-        return departmentList;
+        if(departmentList.length == 0){
+            return deptName;
+        }else{
+            return departmentList;
+        }        
     }
     render() {
         let Details = this.state.staticData;
