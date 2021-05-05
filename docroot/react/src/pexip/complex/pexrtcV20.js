@@ -2970,7 +2970,7 @@ PexRTC.prototype.createEventSource = function() {
         }, false);
         self.event_source.onopen = function(e) {
             self.onLog("event source open");
-            self.onTrace('NetworkConnectionSuccess');
+            // self.onTrace('NetworkConnectionSuccess');
             self.event_source_timeout = 10;
         };
         self.event_source.onerror = function(e) {
@@ -2978,6 +2978,9 @@ PexRTC.prototype.createEventSource = function() {
             if (self.state != 'DISCONNECTING') {
                 self.onLog("reconnecting...");
                 self.onTrace('NetworkReconnecting');
+                setTimeout(()=>{
+                    self.onTrace('NetworkConnectionSuccess');
+                }, 5000);
                 self.event_source.close();
                 self.event_source = null;
                 if (self.event_source_timeout > 15000) {
