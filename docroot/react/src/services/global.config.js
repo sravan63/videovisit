@@ -33,6 +33,7 @@ const GlobalConfig = {
     EMAIL_REF: 'email',
     TEST_CALL_FINISHED: 'Test call finished',
     MEDIA_DATA_READY: 'Media Data Ready',
+    UPDATE_MEDIA_DEVICES: 'Update Media Devices',
     NOTIFY_USER: 'Notify User',
     MEMBER_READY: 'Member Ready',
     HOST_AVAIL: 'Host Availble',

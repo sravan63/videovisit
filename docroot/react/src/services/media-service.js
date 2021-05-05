@@ -14,6 +14,8 @@ class MediaService extends React.Component {
         this.state = { mediaData: {},cameraAllowed:false,micAllowed:false,camBlocked:false, selectedConstrain : {} };
         this.mediaData = {};
         this.drawNewCanvas = true;
+        this.isDeviceChange = false;
+        this.onDeviceChange = this.onDeviceChange.bind(this);
     }
     
     // Initiates the device load
@@ -52,8 +54,8 @@ class MediaService extends React.Component {
           });
         }
       
-      // Registers the devie change handler.
-      navigator.mediaDevices.ondevicechange = this.onDeviceChange;
+        // Registers the devie change handler.
+        navigator.mediaDevices.ondevicechange = this.onDeviceChange;
       }
     }
 
@@ -99,17 +101,19 @@ class MediaService extends React.Component {
         }
         this.sergigateMediaByKind(devices);
         devices.map(mData => {
-            const media = {};
-            if( mData.label == '' ){
-              var dummy = mData.kind == 'videoinput' ? 'Camera ' : mData.kind == 'audioinput' ? 'Microphone ' : 'Speaker ';
-              dummy += this.mediaData[mData.kind].length + 1;
-              media['label'] = dummy;
-            } else {
-              media['label'] = mData.label;
+            if( Utilities.checkForValidMediaDevice(mData.deviceId) ) {
+              const media = {};
+              if( mData.label == '' ){
+                var dummy = mData.kind == 'videoinput' ? 'Camera ' : mData.kind == 'audioinput' ? 'Microphone ' : 'Speaker ';
+                dummy += this.mediaData[mData.kind].length + 1;
+                media['label'] = dummy;
+              } else {
+                media['label'] = mData.label;
+              }
+              media['deviceId'] = mData.deviceId;
+              media['kind'] = mData.kind;
+              this.mediaData[media.kind].push(media);
             }
-            media['deviceId'] = mData.deviceId;
-            media['kind'] = mData.kind;
-            this.mediaData[media.kind].push(media);
         });
 
 
@@ -122,7 +126,12 @@ class MediaService extends React.Component {
             },1600);
         }
         console.log('Media Service - List Of Media Devices :: ' + this.mediaData);
-        MessageService.sendMessage(GlobalConfig.MEDIA_DATA_READY, this.mediaData);
+        if( this.isDeviceChange ){
+          MessageService.sendMessage(GlobalConfig.UPDATE_MEDIA_DEVICES, this.mediaData);
+          this.isDeviceChange = false;
+        } else {
+          MessageService.sendMessage(GlobalConfig.MEDIA_DATA_READY, this.mediaData);
+        }
     }
   
   // Error call back.
@@ -162,10 +171,12 @@ class MediaService extends React.Component {
 
     // Triggers when a device is plugged in or plugged out.
     onDeviceChange(event){
-      if(browserInfo.OSName.toLowerCase() !== "windows"){
-        console.log("DEVICE CHANGE EVENT TRIGGERED");
-        navigator.mediaDevices.enumerateDevices();
-        this.start(this.state.selectedConstrain);
+      console.log("DEVICE CHANGE EVENT TRIGGERED");
+      // navigator.mediaDevices.enumerateDevices();
+      // this.start(this.state.selectedConstrain);
+      if( !this.isDeviceChange ){
+        this.isDeviceChange = true;
+        this.loadDeviceMediaData();
       }
     }
 
@@ -189,6 +200,15 @@ class MediaService extends React.Component {
           if (error.name === 'SecurityError') {
             errorMessage = 'You need to use HTTPS for selecting audio output ' +
                 'device: ' + error;
+          } else if(errorMessage == 'DOMException: Requested device not found' || errorMessage == 'DOMException: The operation could not be performed and was aborted'){
+            // speaker is not compatible
+            for(var i=this.mediaData['audiooutput'].length-1; i >=0; i--){
+              const speaker = this.mediaData['audiooutput'][i];
+              if( sinkId == speaker.deviceId ){
+                this.mediaData['audiooutput'].splice(i,1);
+              }
+            }
+            MessageService.sendMessage(GlobalConfig.UPDATE_MEDIA_DEVICES, this.mediaData);
           }
           console.error(errorMessage);
         });

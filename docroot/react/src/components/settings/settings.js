@@ -23,6 +23,7 @@ class Settings extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
+                case GlobalConfig.UPDATE_MEDIA_DEVICES:
                     this.list = message.data;
                     this.setState({ media: this.list });
                     this.setState({
