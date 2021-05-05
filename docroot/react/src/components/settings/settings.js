@@ -23,16 +23,18 @@ class Settings extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
+                    this.setPeripherals(message);
+                    break;
                 case GlobalConfig.UPDATE_MEDIA_DEVICES:
-                    this.list = message.data;
-                    this.setState({ media: this.list });
-                    this.setState({
-                        constrains: {
-                            audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
-                            videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
-                            micSource: this.list.audioinput ? this.list.audioinput[0] : null,
-                        }
-                    });
+                    this.setPeripherals(message);
+                    let constrains = {
+                        audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
+                        videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                        micSource: this.list.audioinput ? this.list.audioinput[0] : null
+                    };
+                    localStorage.setItem('selectedPeripherals', JSON.stringify(constrains));
+                    this.selectPeripheral(constrains.videoSource, 'camera');
+                    this.selectPeripheral(constrains.micSource, 'mic');
                     break;
                 case GlobalConfig.TOGGLE_SETTINGS:
                     this.setState({ settingstoggle: message.data });
@@ -45,6 +47,17 @@ class Settings extends React.Component {
         if (browserInfo.isSafari || browserInfo.isFireFox) {
             this.setState({ isbrowsercheck: true })
         }
+    }
+    setPeripherals(message){
+        this.list = message.data;
+        this.setState({ media: this.list });
+        this.setState({
+            constrains: {
+                audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
+                videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                micSource: this.list.audioinput ? this.list.audioinput[0] : null,
+            }
+        });
     }
     handleClickOutside(event) {
         const domNode = ReactDOM.findDOMNode(this);
