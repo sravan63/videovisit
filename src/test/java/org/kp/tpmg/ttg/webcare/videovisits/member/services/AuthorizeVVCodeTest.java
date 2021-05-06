@@ -34,7 +34,7 @@ public class AuthorizeVVCodeTest extends AbstractVideoVisitMemberApiTest {
 		
 		new MockUp<WebService>() {
 			@Mock
-			APIToken getAPIToken(final char opFlag, String consumerKey, String consumerSecret) {
+			APIToken getAPIToken(String consumerKey, String consumerSecret) {
 				return apiToken;
 			}
 		};
