@@ -367,7 +367,7 @@ class UtilityService extends React.Component {
     }   
 
     checkForValidMediaDevice(num){
-        var Exp = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
+        var Exp = /((^[0-9=+-]+[a-z=+-]+)|(^[a-z=+-]+[0-9=+-]+))+[0-9=+-a-z=+-]+$/i;
         var isValid = Exp.test(num);
         return isValid;
     }
