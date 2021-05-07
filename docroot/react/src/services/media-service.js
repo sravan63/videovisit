@@ -101,19 +101,17 @@ class MediaService extends React.Component {
         }
         this.sergigateMediaByKind(devices);
         devices.map(mData => {
-            if( Utilities.checkForValidMediaDevice(mData.deviceId) ) {
-              const media = {};
-              if( mData.label == '' ){
-                var dummy = mData.kind == 'videoinput' ? 'Camera ' : mData.kind == 'audioinput' ? 'Microphone ' : 'Speaker ';
-                dummy += this.mediaData[mData.kind].length + 1;
-                media['label'] = dummy;
-              } else {
-                media['label'] = mData.label;
-              }
-              media['deviceId'] = mData.deviceId;
-              media['kind'] = mData.kind;
-              this.mediaData[media.kind].push(media);
-            }
+          const media = {};
+          if( mData.label == '' ){
+            var dummy = mData.kind == 'videoinput' ? 'Camera ' : mData.kind == 'audioinput' ? 'Microphone ' : 'Speaker ';
+            dummy += this.mediaData[mData.kind].length + 1;
+            media['label'] = dummy;
+          } else {
+            media['label'] = mData.label;
+          }
+          media['deviceId'] = mData.deviceId;
+          media['kind'] = mData.kind;
+          this.mediaData[media.kind].push(media);
         });
 
 
@@ -126,12 +124,25 @@ class MediaService extends React.Component {
             },1600);
         }
         console.log('Media Service - List Of Media Devices :: ' + this.mediaData);
+        this.removeInvalidDevices();
         if( this.isDeviceChange ){
           MessageService.sendMessage(GlobalConfig.UPDATE_MEDIA_DEVICES, this.mediaData);
           this.isDeviceChange = false;
         } else {
           MessageService.sendMessage(GlobalConfig.MEDIA_DATA_READY, this.mediaData);
         }
+    }
+
+    removeInvalidDevices() {
+      for(var m in this.mediaData) {
+        const media = this.mediaData[m];
+        for(var i=media.length-1; i>=0; i--){
+          const mData = media[i];
+          if( !Utilities.checkForValidMediaDevice(mData.deviceId) ) {
+            media.splice(i,1);
+          }
+        }
+      }
     }
   
   // Error call back.
