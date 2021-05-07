@@ -138,7 +138,7 @@ class MediaService extends React.Component {
         const media = this.mediaData[m];
         for(var i=media.length-1; i>=0; i--){
           const mData = media[i];
-          if( !Utilities.checkForValidMediaDevice(mData.deviceId) ) {
+          if( !Utilities.checkForValidMediaDevice(mData.deviceId) && mData.deviceId !== '' ) {
             media.splice(i,1);
           }
         }
