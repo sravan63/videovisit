@@ -33,8 +33,7 @@ class Settings extends React.Component {
                         micSource: this.list.audioinput ? this.list.audioinput[0] : null
                     };
                     localStorage.setItem('selectedPeripherals', JSON.stringify(constrains));
-                    this.selectPeripheral(constrains.videoSource, 'camera');
-                    this.selectPeripheral(constrains.micSource, 'mic');
+                    WebUI.reconnect();
                     break;
                 case GlobalConfig.TOGGLE_SETTINGS:
                     this.setState({ settingstoggle: message.data });
