@@ -875,7 +875,7 @@ function traceHandler(info){
 _
         case GlobalConfig.NETWORK_RECONNECTING:
             log("info","Reconnecting","event: Reconnecting to the network");
-            MessageService.sendMessage(GlobalConfig.OPEN_INFO_MODAL, { text: 'Trying to Reconnect', loader: true });
+            MessageService.sendMessage(GlobalConfig.OPEN_INFO_MODAL, { text: 'Trying to reconnect', loader: true });
             break;
 
         case GlobalConfig.FAILED_MID_WAY:
