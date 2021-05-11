@@ -180,11 +180,11 @@ public class WebService {
 		final Gson gson = new Gson();
 		ServiceCommonOutputJson testIntgServiceJson = new ServiceCommonOutputJson();
 		try {
-			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", VVINTEGRATION);
+			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", VVINTEGRATION, ServiceUtil.GET);
 			testIntgServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", VVINTEGRATION);
+			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", VVINTEGRATION, ServiceUtil.GET);
 			testIntgServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		}
 		logger.info(LOG_EXITING);
@@ -197,11 +197,11 @@ public class WebService {
 		final Gson gson = new Gson();
 		ServiceCommonOutputJson testMApptServiceJson = new ServiceCommonOutputJson();
 		try {
-			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", MAPPOINTMENT);
+			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", MAPPOINTMENT, ServiceUtil.GET);
 			testMApptServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", MAPPOINTMENT);
+			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", MAPPOINTMENT, ServiceUtil.GET);
 			testMApptServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		}
 		logger.info(LOG_EXITING);
@@ -214,11 +214,11 @@ public class WebService {
 		final Gson gson = new Gson();
 		ServiceCommonOutputJson testMConfServiceJson = new ServiceCommonOutputJson();
 		try {
-			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", MCONFERENCE, ServiceUtil.GET);
 			testMConfServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		} catch (Exception e) {
 			logger.warn("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_IS_ALIVE, "{}", MCONFERENCE, ServiceUtil.GET);
 			testMConfServiceJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		}
 		logger.info(LOG_EXITING);
@@ -270,7 +270,7 @@ public class WebService {
 				final String inputJsonString = gson.toJson(input);
 				logger.debug("jsonInptString : " + inputJsonString);
 
-				responseJsonStr = callAPIManagerService(ServiceUtil.UPDATE_MEMBER_MEETING_STATUS, inputJsonString, MCONFERENCE);
+				responseJsonStr = callAPIManagerService(ServiceUtil.UPDATE_MEMBER_MEETING_STATUS, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 				if (StringUtils.isNotBlank(responseJsonStr)) {
 					final JsonParser parser = new JsonParser();
 					final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
@@ -311,7 +311,7 @@ public class WebService {
 			final String inputJsonString = gson.toJson(input);
 			logger.info("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callAPIManagerService(ServiceUtil.IS_MEETING_HASH_VALID, inputJsonString, MAPPOINTMENT);
+			responseJsonStr = callAPIManagerService(ServiceUtil.IS_MEETING_HASH_VALID, inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				final JsonParser parser = new JsonParser();
@@ -354,7 +354,7 @@ public class WebService {
 			final String inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callAPIManagerService(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString, MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.END_MEETING_FOR_MEMBER_GUEST_DESKTOP, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 			logger.info("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				final JsonParser parser = new JsonParser();
@@ -764,7 +764,7 @@ public class WebService {
 				final Gson gson = new Gson();
 				inputJsonString = gson.toJson(input);
 				logger.debug("jsonInputString : " + inputJsonString);
-				jsonResponseStr = callAPIManagerService(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, inputJsonString, MCONFERENCE);
+				jsonResponseStr = callAPIManagerService(ServiceUtil.SET_KPHC_CONFERENCE_STATUS, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 				logger.info("jsonResponseString : " + jsonResponseStr);
 				if (StringUtils.isNotBlank(jsonResponseStr)) {
 					final JsonParser parser = new JsonParser();
@@ -819,7 +819,7 @@ public class WebService {
 			logger.debug("jsonInptString : " + inputJsonString);
 			logger.debug("MAPPOINTMENT : " + MAPPOINTMENT);
 			responseJsonStr = callAPIManagerService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,
-					inputJsonString, MAPPOINTMENT);
+					inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				jobject = (JsonObject) parser.parse(responseJsonStr);
@@ -828,7 +828,7 @@ public class WebService {
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
 			responseJsonStr = callAPIManagerService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_MEMBER_AND_PROXIES,
-					inputJsonString, MAPPOINTMENT);
+					inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
@@ -884,7 +884,7 @@ public class WebService {
 			logger.debug("jsonInptString : " + inputJsonString);
 
 			responseJsonStr = callAPIManagerService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES,
-					inputJsonString, MAPPOINTMENT);
+					inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
@@ -894,7 +894,7 @@ public class WebService {
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
 			responseJsonStr = callAPIManagerService(ServiceUtil.RETRIEVE_ACTIVE_MEETINGS_FOR_NON_MEMBER_AND_PROXIES,
-					inputJsonString, MAPPOINTMENT);
+					inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
@@ -943,7 +943,7 @@ public class WebService {
 					String inputString = gson.toJson(verifyMeberInput);
 					logger.debug("jsonInputString " + inputString);
 
-					String jsonString = callAPIManagerService(ServiceUtil.VERIFY_MEMBER, inputString, VVINTEGRATION);
+					String jsonString = callAPIManagerService(ServiceUtil.VERIFY_MEMBER, inputString, VVINTEGRATION, ServiceUtil.POST);
 					logger.debug("outputjsonString" + jsonString);
 					if (StringUtils.isNotBlank(jsonString)) {
 						final JsonParser parser = new JsonParser();
@@ -991,7 +991,7 @@ public class WebService {
 			final Gson gson = new GsonBuilder().serializeNulls().create();
 			final String inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
-			responseJsonStr = callAPIManagerService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString, MAPPOINTMENT);
+			responseJsonStr = callAPIManagerService(ServiceUtil.CREATE_INSTANT_VENDOR_MEETING, inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				final JsonParser parser = new JsonParser();
@@ -1014,11 +1014,11 @@ public class WebService {
 		final Gson gson = new Gson();
 		ServiceCommonOutputJson testDbRoundTripJson = new ServiceCommonOutputJson();
 		try {
-			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}", MAPPOINTMENT);
+			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}", MAPPOINTMENT, ServiceUtil.POST);
 			testDbRoundTripJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}", MAPPOINTMENT);
+			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}", MAPPOINTMENT, ServiceUtil.POST);
 			testDbRoundTripJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
 		}
 		logger.info(LOG_EXITING);
@@ -1056,14 +1056,14 @@ public class WebService {
 			inputJsonString = gson.toJson(joinLeaveMeetingInput);
 			logger.debug("jsonInptString : " + inputJsonString);
 
-			responseJsonStr = callAPIManagerService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString, MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
 			}
 			logger.info("jsonResponseString : " + responseJsonStr);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
-			responseJsonStr = callAPIManagerService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString, MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
 			}
@@ -1107,10 +1107,10 @@ public class WebService {
 			input.setClientId(clientId);
 			inputJsonString = gson.toJson(input);
 			logger.debug("inputJsonString : " + inputJsonString);
-			responseJsonStr = callAPIManagerService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString, MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
-			responseJsonStr = callAPIManagerService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString, MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.LAUNCH_MEMBER_OR_PROXY_MEETING_FOR_MEMBER, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 		}
 		logger.info(LOG_EXITING);
 		return responseJsonStr;
@@ -1145,10 +1145,10 @@ public class WebService {
 			input.setClientId(clientId);
 			inputJsonString = gson.toJson(input);
 			logger.debug("inputJsonString : " + inputJsonString);
-			responseJsonStr = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString, MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
-			responseJsonStr = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString, MCONFERENCE);
+			responseJsonStr = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 		}
 		logger.info(LOG_EXITING);
 		return responseJsonStr;
@@ -1187,10 +1187,10 @@ public class WebService {
 			jsonInput.setMobileFlow(isMobileFlow);
 			jsonInput.setClientId(WebUtil.MOB_CLIENT_ID);
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
-			output = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput), MCONFERENCE);
+			output = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput), MCONFERENCE, ServiceUtil.POST);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
-			output = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput), MCONFERENCE);
+			output = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput), MCONFERENCE, ServiceUtil.POST);
 		}
 		logger.info(LOG_EXITING);
 		return output;
@@ -1219,10 +1219,10 @@ public class WebService {
 			input.setMrn8Digit(mrn);
 			input.setSessionId(sessionId);
 			logger.debug("inputJsonString : " + gson.toJson(input));
-			output = callAPIManagerService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input), MAPPOINTMENT);
+			output = callAPIManagerService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input), MAPPOINTMENT, ServiceUtil.POST);
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			output = callAPIManagerService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input), MAPPOINTMENT);
+			output = callAPIManagerService(ServiceUtil.MEMBER_LOGOUT, gson.toJson(input), MAPPOINTMENT, ServiceUtil.POST);
 		}
 		logger.info(LOG_EXITING);
 		return output;
@@ -1260,7 +1260,7 @@ public class WebService {
 
 			final String inputJsonStr = gson.toJson(input);
 			logger.info("inputJsonStr " + inputJsonStr);
-			jsonOutput = callAPIManagerService(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS, inputJsonStr, MAPPOINTMENT);
+			jsonOutput = callAPIManagerService(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS, inputJsonStr, MAPPOINTMENT, ServiceUtil.POST);
 			logger.info("jsonOutput " + jsonOutput);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId, e);
@@ -1307,7 +1307,7 @@ public class WebService {
 
 			final String inputJsonStr = gson.toJson(input);
 			logger.info("inputJsonStr " + inputJsonStr);
-			jsonOutput = callAPIManagerService(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST, inputJsonStr, MCONFERENCE);
+			jsonOutput = callAPIManagerService(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST, inputJsonStr, MCONFERENCE, ServiceUtil.POST);
 			logger.info("jsonOutput " + jsonOutput);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId, e);
@@ -1343,7 +1343,7 @@ public class WebService {
 				input.setSessionId(sessionId);
 				final String inputJsonStr = gson.toJson(input);
 				logger.info("inputJsonStr: " + inputJsonStr);
-				jsonOutput = callAPIManagerService(ServiceUtil.UPDATE_EMAIL_ACTION, inputJsonStr, MAPPOINTMENT);
+				jsonOutput = callAPIManagerService(ServiceUtil.UPDATE_EMAIL_ACTION, inputJsonStr, MAPPOINTMENT, ServiceUtil.POST);
 				logger.info("jsonOutput: " + jsonOutput);
 
 			} catch (Exception e) {
@@ -1387,7 +1387,7 @@ public class WebService {
 
 				final String inputJsonStr = gson.toJson(input);
 				logger.debug("inputJsonStr: " + inputJsonStr);
-				jsonOutput = callAPIManagerService(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, inputJsonStr, VVINTEGRATION);
+				jsonOutput = callAPIManagerService(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, inputJsonStr, VVINTEGRATION, ServiceUtil.POST);
 				logger.info("jsonOutput: " + jsonOutput);
 
 			} catch (Exception e) {
@@ -1468,7 +1468,7 @@ public class WebService {
 			logger.debug("jsonInptString : " + inputJsonString);
 
 			responseJsonStr = callAPIManagerService(ServiceUtil.GET_MEETINGS_FOR_MEMBER_AND_NON_MEMBER_PROXIES,
-					inputJsonString, MAPPOINTMENT);
+					inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
@@ -1478,7 +1478,7 @@ public class WebService {
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
 			responseJsonStr = callAPIManagerService(ServiceUtil.GET_MEETINGS_FOR_MEMBER_AND_NON_MEMBER_PROXIES,
-					inputJsonString, MAPPOINTMENT);
+					inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 
 			logger.debug("jsonResponseString : " + responseJsonStr);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
@@ -1527,7 +1527,7 @@ public class WebService {
 
 			final String inputJsonStr = gson.toJson(input);
 			logger.info("inputJsonStr: " + inputJsonStr);
-			jsonOutput = callAPIManagerService(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, inputJsonStr, MAPPOINTMENT);
+			jsonOutput = callAPIManagerService(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID, inputJsonStr, MAPPOINTMENT, ServiceUtil.POST);
 		} catch (Exception e) {
 			logger.error("Web Service API error ", e);
 		}
@@ -1567,9 +1567,9 @@ public class WebService {
 			logger.debug("jsonInptString : " + inputJsonString);
 
 			if ("J".equalsIgnoreCase(joinLeaveMeeting)) {
-				responseJsonStr = callAPIManagerService(ServiceUtil.JOIN_MEETING, inputJsonString, MCONFERENCE);
+				responseJsonStr = callAPIManagerService(ServiceUtil.JOIN_MEETING, inputJsonString, MCONFERENCE,ServiceUtil.POST);
 			} else if ("L".equalsIgnoreCase(joinLeaveMeeting)) {
-				responseJsonStr = callAPIManagerService(ServiceUtil.LEAVE_MEETING, inputJsonString, MCONFERENCE);
+				responseJsonStr = callAPIManagerService(ServiceUtil.LEAVE_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 			}// else part to be decided by ranjeet
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
@@ -1578,9 +1578,9 @@ public class WebService {
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
 			if ("J".equalsIgnoreCase(joinLeaveMeeting)) {
-				responseJsonStr = callAPIManagerService(ServiceUtil.JOIN_MEETING, inputJsonString, MCONFERENCE);
+				responseJsonStr = callAPIManagerService(ServiceUtil.JOIN_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 			} else if ("L".equalsIgnoreCase(joinLeaveMeeting)) {
-				responseJsonStr = callAPIManagerService(ServiceUtil.LEAVE_MEETING, inputJsonString, MCONFERENCE);
+				responseJsonStr = callAPIManagerService(ServiceUtil.LEAVE_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST);
 			}
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
@@ -1622,7 +1622,7 @@ public class WebService {
 			inputJsonString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputJsonString);
 			responseJsonStr = callAPIManagerService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
-					inputJsonString, MAPPOINTMENT);
+					inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
 			}
@@ -1632,7 +1632,7 @@ public class WebService {
 					"Web Service API error for guestLoginJoinMeeting for meetingHash:" + meetingHash + " Retrying...",
 					e);
 			responseJsonStr = callAPIManagerService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
-					inputJsonString, MAPPOINTMENT);
+					inputJsonString, MAPPOINTMENT, ServiceUtil.POST);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				output = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
 			}
@@ -1665,13 +1665,13 @@ public class WebService {
 			jsonInput.setClientId(clientId);
 			jsonInput.setSessionId(sessionID);
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
-			output = callAPIManagerService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput), MAPPOINTMENT);
+			output = callAPIManagerService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput), MAPPOINTMENT, ServiceUtil.POST);
 			if (StringUtils.isNotBlank(output)) {
 				meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
-			output = callAPIManagerService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput), MAPPOINTMENT);
+			output = callAPIManagerService(ServiceUtil.GET_ACTIVE_MEETINGS_FOR_MEMBER, gson.toJson(jsonInput), MAPPOINTMENT, ServiceUtil.POST);
 			if (StringUtils.isNotBlank(output)) {
 				meetingDetailsJSON = gson.fromJson(output, MeetingDetailsJSON.class);
 			}
@@ -1711,10 +1711,10 @@ public class WebService {
 			jsonInput.setMobileFlow(isMobileFlow);
 			jsonInput.setClientId(WebUtil.MOB_CLIENT_ID);
 			logger.debug("inputJsonString : " + gson.toJson(jsonInput));
-			output = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput), MCONFERENCE);
+			output = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput), MCONFERENCE, ServiceUtil.POST);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingID + " Retrying...", e);
-			output = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput), MCONFERENCE);
+			output = callAPIManagerService(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, gson.toJson(jsonInput), MCONFERENCE, ServiceUtil.POST);
 		}
 		logger.info(LOG_EXITING);
 		return output;
@@ -1841,7 +1841,7 @@ public class WebService {
 
 			final String inputString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputString);
-			jsonResponse = callAPIManagerService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString, MCONFERENCE);
+			jsonResponse = callAPIManagerService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString, MCONFERENCE, ServiceUtil.POST);
 		}
 		logger.info(LOG_EXITING);
 		return jsonResponse;
@@ -1869,7 +1869,7 @@ public class WebService {
 			input.setSessionId(sessionId);
 			final String inputString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputString);
-			jsonResponse = callAPIManagerService(ServiceUtil.AUTHORIZE_VV_CODE, inputString, MAPPOINTMENT);
+			jsonResponse = callAPIManagerService(ServiceUtil.AUTHORIZE_VV_CODE, inputString, MAPPOINTMENT, ServiceUtil.POST);
 		}
 		logger.info(LOG_EXITING);
 		return jsonResponse;
@@ -2188,7 +2188,7 @@ public class WebService {
 	
 	
 	
-	public static String callAPIManagerService(final String operationName, final String input, final char opFlag) {
+	public static String callAPIManagerService(final String operationName, final String input, final char opFlag, final String opType) {
 		logger.info(LOG_ENTERED);
 		String output = null;
 		String uriContext = null;
@@ -2207,9 +2207,9 @@ public class WebService {
 			}
 			
 			if(StringUtils.isNotBlank(accessToken)) {
-				output = callVVAPIManagerRestService(operationName, input, accessToken, uriContext);
+				output = callVVAPIManagerRestService(operationName, input, accessToken, uriContext, opType);
 			} else {
-				output = getNewTokenApiResponse(operationName, input, uriContext);
+				output = getNewTokenApiResponse(operationName, input, uriContext, opType);
 			}
 		} catch (HttpClientErrorException e) {
 			logger.warn("status code: " + e.getRawStatusCode());
@@ -2217,7 +2217,7 @@ public class WebService {
 				//Retry to connect again by creating a new api token
 				logger.warn("received 401, so retrying with new token");
 				try {
-					output = getNewTokenApiResponse(operationName, input, uriContext);
+					output = getNewTokenApiResponse(operationName, input, uriContext, opType);
 				}
 				catch (Exception e1) {
 					logger.error("Web Service API error : " + e1.getMessage(), e1);
@@ -2230,7 +2230,7 @@ public class WebService {
 			try {
 				if(StringUtils.isNotBlank(accessToken)) {
 					logger.warn("received error so, retrying with existing token member token");
-					output = callVVAPIManagerRestService(operationName, input, accessToken, uriContext);
+					output = callVVAPIManagerRestService(operationName, input, accessToken, uriContext, opType);
 				}
 			} catch (Exception e1) {
 				logger.error("Web Service API error : " + e1.getMessage(), e1);
@@ -2242,7 +2242,7 @@ public class WebService {
 	
 	//add comments
 	public static String getNewTokenApiResponse(final String operationName, final String input, 
-			final String uriContext) throws Exception {
+			final String uriContext, final String opType) throws Exception {
 		APIToken apiToken = null;
 		String output = null;
 		Crypto crypto = new Crypto();
@@ -2255,7 +2255,7 @@ public class WebService {
 			accessToken = apiToken.getAccessToken();
 		}
 		if(StringUtils.isNotBlank(accessToken)) {
-			output = callVVAPIManagerRestService(operationName, input, accessToken, uriContext);
+			output = callVVAPIManagerRestService(operationName, input, accessToken, uriContext, opType);
 		}
 		//what if accessToken is null
 		return output;
@@ -2303,16 +2303,21 @@ public class WebService {
 	}
 	
 	public static String callVVAPIManagerRestService(final String operationName, final String input, String accessToken,
-			final String uriContext) throws URISyntaxException {
+			final String uriContext, final String opType) throws URISyntaxException {
 		logger.info(LOG_ENTERED);
 		logger.debug("accessToken : " + accessToken);
 		String output = null;
 		final String internalUrl = AppProperties.getExtPropertiesValueByKey("api_manager_internal_url");
 		final URI uri = new URI(internalUrl + uriContext + operationName);
 		logger.info("serviceUrl : " + uri);
-		
-		final HttpEntity<?> entity = new HttpEntity<Object>(input, getJsonHttpHeaders(accessToken));
-		final ResponseEntity<?> responseEntity = restTemplate.postForEntity(uri, entity, String.class);
+		ResponseEntity<?> responseEntity = null;
+		if(StringUtils.isNotBlank(opType) && opType.equalsIgnoreCase(ServiceUtil.GET)) {
+			responseEntity = restTemplate.getForEntity(uri, String.class);
+		}
+		else {
+			final HttpEntity<?> entity = new HttpEntity<Object>(input, getJsonHttpHeaders(accessToken));
+			responseEntity = restTemplate.postForEntity(uri, entity, String.class);
+		}
 		if (responseEntity != null) {
 			output = (String) responseEntity.getBody();
 		}

@@ -38,4 +38,6 @@ public class ServiceUtil {
 	public static final String GET_ACTIVE_SURVEYS = "getActiveSurveys";
 	public static final String GET_SURVEY_QUESTIONS = "getSurveyQuestions";
 	public static final String TEST_IS_ALIVE = "isAlive";
+	public static final String GET = "GET";
+	public static final String POST = "POST";
 }
