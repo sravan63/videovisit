@@ -5,6 +5,7 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
@@ -21,13 +22,9 @@ public class MonitoringCommand {
 		logger.info(LOG_ENTERED);
 		String toRet = null;
 		try {
-			ServiceCommonOutputJson result = WebService.testMApptService();
-			if (result != null && result.getService() != null && result.getService().getStatus() != null) {
-				if ("200".equals(result.getService().getStatus().getCode())) {
-					toRet = "OK";
-				} else {
-					toRet = result.getService().getStatus().getMessage();
-				}
+			String result = WebService.testMApptService();
+			if (StringUtils.isNotBlank(result) && result.equalsIgnoreCase("success")) {
+				toRet = "OK";
 			} else {
 				toRet = "Failure";
 			}
@@ -43,13 +40,9 @@ public class MonitoringCommand {
 		logger.info(LOG_ENTERED);
 		String toRet = null;
 		try {
-			ServiceCommonOutputJson result = WebService.testMConfService();
-			if (result != null && result.getService() != null && result.getService().getStatus() != null) {
-				if ("200".equals(result.getService().getStatus().getCode())) {
-					toRet = "OK";
-				} else {
-					toRet = result.getService().getStatus().getMessage();
-				}
+			String result = WebService.testMConfService();
+			if (StringUtils.isNotBlank(result) && result.equalsIgnoreCase("success")) {
+				toRet = "OK";
 			} else {
 				toRet = "Failure";
 			}
@@ -65,13 +58,9 @@ public class MonitoringCommand {
 		logger.info(LOG_ENTERED);
 		String toRet = null;
 		try {
-			ServiceCommonOutputJson result = WebService.testIntgService();
-			if (result != null && result.getService() != null && result.getService().getStatus() != null) {
-				if ("200".equals(result.getService().getStatus().getCode())) {
-					toRet = "OK";
-				} else {
-					toRet = result.getService().getStatus().getMessage();
-				}
+			String result = WebService.testIntgService();
+			if (StringUtils.isNotBlank(result) && result.equalsIgnoreCase("success")) {
+				toRet = "OK";
 			} else {
 				toRet = "Failure";
 			}
