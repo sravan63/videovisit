@@ -2310,17 +2310,22 @@ public class WebService {
 		final String internalUrl = AppProperties.getExtPropertiesValueByKey("api_manager_internal_url");
 		final URI uri = new URI(internalUrl + uriContext + operationName);
 		logger.info("serviceUrl : " + uri);
-		ResponseEntity<?> responseEntity = null;
+		
 		if(StringUtils.isNotBlank(opType) && opType.equalsIgnoreCase(ServiceUtil.GET)) {
 			final HttpEntity<?> entity = new HttpEntity<Object>(getJsonHttpHeaders(accessToken));
-			responseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+			ResponseEntity<String> responseEntity = null;
+			responseEntity =	restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+			if (responseEntity != null) {
+				output = (String) responseEntity.getBody();
+			}
 		}
 		else {
+			ResponseEntity<?> responseEntity = null;
 			final HttpEntity<?> entity = new HttpEntity<Object>(input, getJsonHttpHeaders(accessToken));
 			responseEntity = restTemplate.postForEntity(uri, entity, String.class);
-		}
-		if (responseEntity != null) {
-			output = (String) responseEntity.getBody();
+			if (responseEntity != null) {
+				output = (String) responseEntity.getBody();
+			}
 		}
 		logger.info(LOG_ENTERED);
 		return output;
