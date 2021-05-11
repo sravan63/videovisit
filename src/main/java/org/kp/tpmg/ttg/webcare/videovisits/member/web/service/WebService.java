@@ -2312,7 +2312,8 @@ public class WebService {
 		logger.info("serviceUrl : " + uri);
 		ResponseEntity<?> responseEntity = null;
 		if(StringUtils.isNotBlank(opType) && opType.equalsIgnoreCase(ServiceUtil.GET)) {
-			responseEntity = restTemplate.getForEntity(uri, String.class);
+			final HttpEntity<?> entity = new HttpEntity<Object>(getJsonHttpHeaders(accessToken));
+			responseEntity = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
 		}
 		else {
 			final HttpEntity<?> entity = new HttpEntity<Object>(input, getJsonHttpHeaders(accessToken));
