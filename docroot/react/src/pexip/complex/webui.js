@@ -752,8 +752,6 @@ export function switchDevices(constrain, device = null) {
     log("info", constrain+"_peripheral_change_action", "event: peripherals"+constrain+"Change - on changing the peripheral dropdown to :: " + device.label);
     if(constrain == 'video'){
         rtc.video_source = device.deviceId;
-    } else if(constrain == 'mic'){
-        rtc.audio_source = device.deviceId;
     }
     rtc.renegotiate();
 }
@@ -974,10 +972,6 @@ export function formatDuplicateNames(dName){
     let fName = dName.split(',')[1].trim();
     let userCount = fName.split(' ')[1].trim();
     return lName+' '+userCount+', '+fName.split(' ')[0].trim(); // mama 2, joe
-}
-
-export function reconnect(){
-    rtc.renegotiate();
 }
 
 export function pexipDisconnect() {
