@@ -70,7 +70,7 @@ class Conference extends React.Component {
         };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
-            message: 'Click on the Refresh button and allow access to Camera and Microphone or check your browser settings.',
+            message: 'Check your browser settings to allow access to the Camera and Microphone and then click the Refresh button.',
             type: 'Denied'
         };
         this.permissionDeniedforFirefox={

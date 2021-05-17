@@ -29,7 +29,7 @@ class header extends React.Component {
         }
         componentWillMount() {
             //if(this.props.userDetails && this.props.userDetails.userDetails){
-            var url = window.location.href.indexOf('setup') > -1;
+            var url = window.location.href.toLowerCase().indexOf('setup') > -1;
             if(url){
                 this.setState({isSetup:true});
             }    
