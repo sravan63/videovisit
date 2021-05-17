@@ -73,6 +73,7 @@ class MyMeetings extends React.Component {
                 this.getLanguage();
             }
         });
+        window.scrollTo(0, 0);
     }
     handleResize(){
         var showPromotion = UtilityService.getPromotionFlag();
