@@ -146,6 +146,7 @@ export function createPresentationStreamWindow() {
     //presentation-view
     if (!presentation) {
         MessageService.sendMessage(GlobalConfig.START_SCREENSHARE, null);
+        $('.presentation-view').css('display','flex');
         setTimeout(checkForBlockedPopup, 1000);
         //presentation = document.getElementById('presentation-view');
         mobileviewHeight = isMobileDevice ? '40vh' : '100%';
