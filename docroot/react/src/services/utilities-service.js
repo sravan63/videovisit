@@ -93,7 +93,7 @@ class UtilityService extends React.Component {
         }
 
         if (this.getBrowserInformation().isSafari) {
-            if (blockSafari) {
+            if (true) {
                 isBrowserBlockError = true;
             } else {
                 var fullVersion  = ''+parseFloat(navigator.appVersion);
