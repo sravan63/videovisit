@@ -93,7 +93,7 @@ class UtilityService extends React.Component {
         }
 
         if (this.getBrowserInformation().isSafari) {
-            if (true) {
+            if (blockSafari) {
                 isBrowserBlockError = true;
             } else {
                 var fullVersion  = ''+parseFloat(navigator.appVersion);
@@ -365,7 +365,6 @@ class UtilityService extends React.Component {
             sessionStorage.setItem('meetingTimeLog', JSON.stringify(meetingTimeLog));
         }
     }   
-
 
 }
 export default new UtilityService();
