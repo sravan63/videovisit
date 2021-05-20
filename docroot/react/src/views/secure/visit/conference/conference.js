@@ -19,7 +19,6 @@ import ConferenceControls from '../../../../components/conference-controls/confe
 import GlobalConfig from '../../../../services/global.config';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 class Conference extends React.Component {
 
@@ -949,15 +948,11 @@ class Conference extends React.Component {
                             <ConferenceControls controls={this.state} data={Details} />
                             <div className="col-11 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
-                                <TransformWrapper defaultScale={1} minScale={1} >
-                                    <TransformComponent>
-                                        <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                    <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                             <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                         </div>
-                                    </TransformComponent>
-                                </TransformWrapper>
-                                <Settings data={Details} />
+                                    <Settings data={Details} />
                             </div>
                             <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                <video id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
