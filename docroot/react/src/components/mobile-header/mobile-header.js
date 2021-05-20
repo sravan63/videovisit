@@ -103,7 +103,7 @@ class MobileHeader extends React.Component {
     scrollHandler(){
         if(this.promoContainer.current && this.state.showPromotion) {
             var mHeader = document.getElementsByClassName('header-controls')[0];
-            if(!this.state.hidePromotion && window.scrollY >= mHeader.offsetTop) {
+            if(!this.state.hidePromotion && window.scrollY >= 250) {
                 this.setState({ hidePromotion: true });
                 MessageService.sendMessage(GlobalConfig.TOGGLE_MOBILE_FOOTER, true);
                 // Re-positions the page to the top.
@@ -143,7 +143,21 @@ class MobileHeader extends React.Component {
             <div>
                 { !this.state.isInApp ? (<div className={this.state.hidePromotion ? "mobile-header fix-to-top" : "mobile-header"}>
                     { this.state.isMobile ? 
-                    (<div className={this.state.hidePromotion ? "promotion-container hide-promotion" : "promotion-container show-promotion"} ref={this.promoContainer}>
+                    (<div>
+                        <div className={this.state.hidePromotion ? "header-controls" : "header-controls"}>
+                               
+                               <a className="text-capitalize user-name sign-off">{this.state.name ? this.state.name : ''}</a><br/>
+                               <div className="float-right">
+                                   <a href = {this.state.staticData.HelpLink} className="pr-2" target = "_blank">{this.state.staticData.Help}</a>|
+                                   <a className="sign-off pl-2" onClick = {this.signOff}> {this.props.data.Signout}</a>
+                               </div>    
+                               <div className="lang-change float-left p-0">
+                                       <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                                       <span>|</span>
+                                       <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>                        
+                                   </div>                     
+                           </div>
+                        <div className={this.state.hidePromotion ? "promotion-container hide-promotion" : "promotion-container show-promotion"} ref={this.promoContainer}>
                         <div className="promotion">
                             <div className="banner"><div className="image-holder"></div></div>
                             <div className="message-container">
@@ -156,20 +170,20 @@ class MobileHeader extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>) : ('') }
-                    <div className={this.state.hidePromotion ? "header-controls" : "header-controls"}>
+                    </div></div>) : (<div className={this.state.hidePromotion ? "header-controls" : "header-controls"}>
                                
-                        <a className="text-capitalize user-name sign-off">{this.state.name ? this.state.name : ''}</a><br/>
-                        <div className="float-right">
-                            <a href = {this.state.staticData.HelpLink} className="pr-2" target = "_blank">{this.state.staticData.Help}</a>|
-                            <a className="sign-off pl-2" onClick = {this.signOff}> {this.props.data.Signout}</a>
-                        </div>    
-                        <div className="lang-change float-left p-0">
-                                <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                                <span>|</span>
-                                <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>                        
-                            </div>                     
-                    </div>
+                               <a className="text-capitalize user-name sign-off">{this.state.name ? this.state.name : ''}</a><br/>
+                               <div className="float-right">
+                                   <a href = {this.state.staticData.HelpLink} className="pr-2" target = "_blank">{this.state.staticData.Help}</a>|
+                                   <a className="sign-off pl-2" onClick = {this.signOff}> {this.props.data.Signout}</a>
+                               </div>    
+                               <div className="lang-change float-left p-0">
+                                       <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
+                                       <span>|</span>
+                                       <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>                        
+                                   </div>                     
+                           </div>) }
+                    
                 </div>) :('') }
             </div>
         );
