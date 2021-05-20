@@ -75,7 +75,7 @@ class MyMeetings extends React.Component {
         });
         setTimeout(()=>{ 
             window.scrollTo(0, 0);
-        }, 1000);
+        }, 0);
     }
     handleResize(){
         var showPromotion = UtilityService.getPromotionFlag();
