@@ -1641,14 +1641,8 @@ PexRTCCall.prototype.update = function(call_type) {
         if (self.localStream && !(self.firefox_ver > 58 || self.chrome_ver > 71 || self.safari_ver >= 12.1)) {
             var tracks = self.localStream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
-                if( self.is_android && self.android_ver == 11 && self.chrome_ver > 0 ){
-                    // Fix for Android 11 + Chrome freezing issue.
-                    self.localStream.removeTrack(tracks[i]);
-                    tracks[i].stop();
-                } else {
-                    tracks[i].stop();
-                    self.localStream.removeTrack(tracks[i]);
-                }
+                tracks[i].stop();
+                self.localStream.removeTrack(tracks[i]);
             }
             if (self.firefox_ver > 47 || (self.safari_ver >= 11 && self.safari_ver < 12.1)) {
                 var senders = self.pc.getSenders();

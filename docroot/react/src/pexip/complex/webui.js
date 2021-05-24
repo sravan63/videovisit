@@ -978,13 +978,6 @@ export function formatDuplicateNames(dName){
 
 export function pexipDisconnect() {
     connectionRefused = false;
-    if( UtilityService.getAppOS() == 'Android' &&
-        UtilityService.getAndroidVersion() == 11 && 
-        UtilityService.getBrowserInformation().isChrome ) {
-        // Fix for Android 11 + Chrome freezing issue.
-        video.srcObject = null;
-        selfvideo.srcObject = null;
-    }
     rtc.disconnect();
     var isDirectLaunch = localStorage.getItem('isDirectLaunch');
     var inAppAccess = UtilityService.getInAppAccessFlag();
