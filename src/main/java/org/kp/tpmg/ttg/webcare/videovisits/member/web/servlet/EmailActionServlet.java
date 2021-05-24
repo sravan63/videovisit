@@ -53,7 +53,7 @@ public class EmailActionServlet extends HttpServlet {
 			graphics2d.dispose();
 			ImageIO.write(image, "png", out);
 		} catch (Exception e) {
-			logger.error("Error updating email interation for meeting : " + meetingId, e);
+			logger.warn("Error updating email interation for meeting : " + meetingId, e);
 		} finally {
 			try {
 				if(out != null) {

@@ -917,7 +917,7 @@ public class WebService {
 		VerifyMemberOutput verifyMemberOutput = null;
 		final String Dob = birth_month + "/" + birth_year;
 		VerifyMemberInput verifyMeberInput = new VerifyMemberInput();
-		logger.info("lastName: " + lastName);
+		logger.debug("lastName: " + lastName);
 		try {
 			if (StringUtils.isNotBlank(mrn) && StringUtils.isNotBlank(sessionId) && StringUtils.isNotBlank(lastName)) {
 				if (WebUtil.isDOBMMYYYYFormat(Dob)) {
