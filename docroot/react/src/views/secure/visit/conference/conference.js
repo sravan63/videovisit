@@ -24,7 +24,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { visibilityFlag: true, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = { userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -46,6 +46,8 @@ class Conference extends React.Component {
         this.surveyInprogress = false;
         this.surveyTimer = 0;
         this.surveyAutoCloseTime = null;
+        this.selfViewMedia=React.createRef();
+        this.remoteFeedMedia=React.createRef();
         this.getLanguage();            
         let data = Utilities.getLang();
         this.leaveVisitPopupOptions = { 
@@ -391,11 +393,24 @@ class Conference extends React.Component {
 
     } 
     handleVisibilityChange() {
-        if(Utilities.isMobileDevice()){
+        if(Utilities.isMobileDevice()) {
             if (document.visibilityState === 'visible') {
                 //window.location.reload(false);
-                this.setState({visibilityFlag: !this.state.visibilityFlag});
+                //this.setState({videoMode: 'play'});
+                
+                this.selfViewMedia && this.selfViewMedia.current.paly();
+                this.remoteFeedMedia && this.remoteFeedMedia.current.play();
+
+                //Re-loads the video element
+                // this.selfViewMedia && this.selfViewMedia.current.load();
+                //this.remoteFeedMedia && this.remoteFeedMedia.current.load();
+
             } 
+            else if(document.visibilityState === 'hidden') {
+                //this.setState({videoMode: 'pause'});
+                this.selfViewMedia && this.selfViewMedia.current.pause();
+                this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
+            }
         } 
     }
 
@@ -951,12 +966,12 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
-                                            <video className="remoteFeed" width="100%" height="100%" id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                            <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                         </div>
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               <video id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                               <video ref={this.selfViewMedia} id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video>
                             </div>
                             <div id="controls" className="controls-bar">
