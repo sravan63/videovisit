@@ -395,19 +395,10 @@ class Conference extends React.Component {
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
             if (document.visibilityState === 'visible') {
-                //window.location.reload(false);
-                //this.setState({videoMode: 'play'});
-                
                 this.selfViewMedia && this.selfViewMedia.current.play();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.play();
-
-                //Re-loads the video element
-                // this.selfViewMedia && this.selfViewMedia.current.load();
-                //this.remoteFeedMedia && this.remoteFeedMedia.current.load();
-
             } 
             else if(document.visibilityState === 'hidden') {
-                //this.setState({videoMode: 'pause'});
                 this.selfViewMedia && this.selfViewMedia.current.pause();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
             }
