@@ -48,6 +48,7 @@ class Conference extends React.Component {
         this.surveyAutoCloseTime = null;
         this.selfViewMedia=React.createRef();
         this.remoteFeedMedia=React.createRef();
+        this.presentationViewMedia = React.createRef();
         this.getLanguage();            
         let data = Utilities.getLang();
         this.leaveVisitPopupOptions = { 
@@ -394,15 +395,19 @@ class Conference extends React.Component {
     } 
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
+            let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
+           
             if (document.visibilityState === 'visible') {
                 this.selfViewMedia && this.selfViewMedia.current.play();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.play();
+                presentationView && presentationView.play(); 
             } 
             else if(document.visibilityState === 'hidden') {
                 this.selfViewMedia && this.selfViewMedia.current.pause();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
-            }
-        } 
+                presentationView && presentationView.pause();
+            } 
+        }
     }
 
     handleTimer(param){
@@ -955,7 +960,7 @@ class Conference extends React.Component {
                             <ConferenceControls controls={this.state} data={Details} />
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
-                                    <div id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                    <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                             <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                         </div>
