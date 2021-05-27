@@ -476,7 +476,9 @@ function participantCreated(participant) {
     }
     pexipParticipantsList.push(participant);
     // log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
-    
+    if (participant.protocol == "api" && participant.display_name.indexOf('TPLC') > -1){ 
+        return;
+    }
     if (participant.protocol == "sip") {
         var joinParticipantMsg = {
             message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
