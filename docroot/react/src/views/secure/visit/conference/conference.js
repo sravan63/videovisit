@@ -46,9 +46,9 @@ class Conference extends React.Component {
         this.surveyInprogress = false;
         this.surveyTimer = 0;
         this.surveyAutoCloseTime = null;
+        this.presentationViewMedia = React.createRef();
         this.selfViewMedia=React.createRef();
         this.remoteFeedMedia=React.createRef();
-        this.presentationViewMedia = React.createRef();
         this.getLanguage();            
         let data = Utilities.getLang();
         this.leaveVisitPopupOptions = { 
