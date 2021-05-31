@@ -393,14 +393,29 @@ class Conference extends React.Component {
         }
 
     } 
+    handleVideoPlay = (playPromise, videoElement) => {
+        if (playPromise) {
+            playPromise.then(()=> {
+            })
+            .catch(error => {
+                //window.location.reload();
+                videoElement.load();
+            });
+        }
+        else {
+            //window.location.reload();
+            videoElement.load();
+        }
+    }
+
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
-           
+            
             if (document.visibilityState === 'visible') {
-                this.selfViewMedia && this.selfViewMedia.current.play();
-                this.remoteFeedMedia && this.remoteFeedMedia.current.play();
-                presentationView && presentationView.play(); 
+                this.selfViewMedia && this.handleVideoPlay(this.selfViewMedia.current.play(), this.selfViewMedia);
+                this.remoteFeedMedia && this.handleVideoPlay(this.remoteFeedMedia.current.play(), this.remoteFeedMedia);
+                presentationView && this.handleVideoPlay(presentationView.play(), presentationView); 
             } 
             else if(document.visibilityState === 'hidden') {
                 this.selfViewMedia && this.selfViewMedia.current.pause();
