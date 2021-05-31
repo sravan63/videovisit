@@ -42,6 +42,7 @@ class Conference extends React.Component {
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
+        this.handleVideoPlay=this.handleVideoPlay.bind(this);
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
@@ -393,7 +394,7 @@ class Conference extends React.Component {
         }
 
     } 
-    handleVideoPlay = (playPromise, videoElement) => {
+    handleVideoPlay(playPromise, videoElement) {
         if (playPromise) {
             playPromise.then(()=> {
             })
