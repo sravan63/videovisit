@@ -103,7 +103,10 @@ class Conference extends React.Component {
         }
         document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
        // this.presentationViewMedia && this.presentationViewMedia.current.querySelector("#presvideo").addEventListener("onerror", this.handleVideoError);
-       this.presentationViewMedia && this.presentationViewMedia.current.querySelector("#presvideo").addEventListener("error", this.handleVideoError);
+       if(this.presentationViewMedia){
+            let presVideoElement=this.presentationViewMedia.current.querySelector("#presvideo");
+            presVideoElement && presVideoElement.addEventListener("error", this.handleVideoError);
+       } 
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
             //this.setState({ showLoader: false });
@@ -437,7 +440,7 @@ class Conference extends React.Component {
                     let presViewPlayPromise =presentationView.play();
                     this.handleVideoPlay(presViewPlayPromise, presentationView);
                 }
-                
+
                 console.log(this.selfViewMedia.current.paused);
                 console.log(this.remoteFeedMedia.current.paused);
                 console.log(presentationView.paused);
