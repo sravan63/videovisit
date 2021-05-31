@@ -554,6 +554,9 @@ function participantDeleted(participant) {
             return user.uuid != participant.uuid;
         });
         if(!refreshingOrSelfJoinMeeting){
+            if (removingParticipant[0].protocol == "api" && removingParticipant[0].display_name.indexOf('TPLC') > -1){ 
+                return;
+            }
             var participantMsg = {
                 message : removingParticipant[0].display_name + " "+GlobalConfig.LEFT_VISIT,
                 name: removingParticipant[0].display_name
