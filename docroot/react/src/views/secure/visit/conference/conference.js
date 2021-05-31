@@ -437,6 +437,7 @@ class Conference extends React.Component {
                     let presViewPlayPromise =presentationView.play();
                     this.handleVideoPlay(presViewPlayPromise, presentationView);
                 }
+                
                 console.log(this.selfViewMedia.current.paused);
                 console.log(this.remoteFeedMedia.current.paused);
                 console.log(presentationView.paused);
