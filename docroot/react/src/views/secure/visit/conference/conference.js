@@ -981,7 +981,7 @@ class Conference extends React.Component {
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               <video ref={this.selfViewMedia} id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" >
+                               <video ref={this.selfViewMedia} id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video>
                             </div>
                             <div id="controls" className="controls-bar">
