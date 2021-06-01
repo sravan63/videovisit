@@ -48,8 +48,8 @@ class Conference extends React.Component {
         this.surveyAutoCloseTime = null;
         this.restartPexip=null;
         this.presentationViewMedia = React.createRef();
-        this.selfViewMedia=React.createRef();
-        this.remoteFeedMedia=React.createRef();
+        this.selfViewMedia = React.createRef();
+        this.remoteFeedMedia = React.createRef();
         this.getLanguage();            
         let data = Utilities.getLang();
         this.leaveVisitPopupOptions = { 
@@ -400,10 +400,7 @@ class Conference extends React.Component {
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
            
             if (document.visibilityState === 'visible') {
-                if(this.selfViewMedia) {
-                    this.selfViewMedia.current.muted = true;
-                    this.selfViewMedia.current.play();
-                }
+                this.selfViewMedia && this.selfViewMedia.current.play();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.play();
                 presentationView && presentationView.play();
                 this.restartPexip && clearTimeout(this.restartPexip); 
@@ -984,7 +981,7 @@ class Conference extends React.Component {
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               <video ref={this.selfViewMedia} id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                               <video ref={this.selfViewMedia} id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" >
                                </video>
                             </div>
                             <div id="controls" className="controls-bar">
