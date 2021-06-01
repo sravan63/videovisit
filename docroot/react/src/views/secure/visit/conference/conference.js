@@ -42,12 +42,11 @@ class Conference extends React.Component {
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
-        this.handleVideoPlay=this.handleVideoPlay.bind(this);
-        this.handleVideoError=this.handleVideoError.bind(this);
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
         this.surveyAutoCloseTime = null;
+        this.restartPexip=null;
         this.presentationViewMedia = React.createRef();
         this.selfViewMedia=React.createRef();
         this.remoteFeedMedia=React.createRef();
@@ -102,11 +101,6 @@ class Conference extends React.Component {
             this.visibilityChange = 'webkitvisibilitychange';
         }
         document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
-       // this.presentationViewMedia && this.presentationViewMedia.current.querySelector("#presvideo").addEventListener("onerror", this.handleVideoError);
-       if(this.presentationViewMedia){
-            let presVideoElement=this.presentationViewMedia.current.querySelector("#presvideo");
-            presVideoElement && presVideoElement.addEventListener("error", this.handleVideoError);
-       } 
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
             //this.setState({ showLoader: false });
@@ -400,58 +394,32 @@ class Conference extends React.Component {
         }
 
     } 
-    handleVideoPlay(playPromise, videoElement) {
-        if (playPromise) {
-            playPromise.then(()=> {
-                //Video will play automatically.
-            })
-            .catch(error => {
-                //window.location.reload();
-                videoElement.load();
-            });
-        }
-        else {
-            //window.location.reload();
-            videoElement.load();
-        }
-    }
-
-    handleVideoError(){
-        window.location.reload();
-        //this.selfViewMedia.current.load();
-        //this.remoteFeedMedia.current();
-        //presentationView.load();
-    }
 
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
-
+           
             if (document.visibilityState === 'visible') {
-                if(this.selfViewMedia){
-                    let selfViewPlayVideoPromise = this.selfViewMedia.current.play();
-                    this.handleVideoPlay(selfViewPlayVideoPromise, this.selfViewMedia.current);
-                }
-                if(this.remoteFeedMedia){
-                    let remoreFeedPlayPromise=this.remoteFeedMedia.current.play();
-                    this.handleVideoPlay(remoreFeedPlayPromise, this.remoteFeedMedia);
-                } 
-                if(presentationView){
-                    let presViewPlayPromise =presentationView.play();
-                    this.handleVideoPlay(presViewPlayPromise, presentationView);
-                }
-
-                console.log(this.selfViewMedia.current.paused);
-                console.log(this.remoteFeedMedia.current.paused);
-                console.log(presentationView.paused);
-                console.log(this.selfViewMedia.current.error);
-                console.log(this.remoteFeedMedia.current.error);
-                console.log(presentationView.error);
+                this.selfViewMedia && this.selfViewMedia.current.play();
+                this.remoteFeedMedia && this.remoteFeedMedia.current.play();
+                presentationView && presentationView.play();
+                this.restartPexip && clearTimeout(this.restartPexip); 
             } 
             else if(document.visibilityState === 'hidden') {
+                let noOfTimes=0;
+
                 this.selfViewMedia && this.selfViewMedia.current.pause();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
                 presentationView && presentationView.pause();
+                
+                this.restartPexip = setInterval(() => {
+                    //this.startPexip(this.state.meetingDetails);
+                    //mediaService.load();
+                    window.location.reload();
+                    if(++noOfTimes > 3){
+                        clearTimeout(this.restartPexip);
+                    }
+                }, 20000);
             } 
         }
     }
@@ -1008,12 +976,12 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
-                                            <video ref ={this.remoteFeedMedia} onError ={this.handleVideoError} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                            <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                         </div>
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               <video ref={this.selfViewMedia} id="selfvideo" onError ={this.handleVideoError} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                               <video ref={this.selfViewMedia} id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video>
                             </div>
                             <div id="controls" className="controls-bar">
