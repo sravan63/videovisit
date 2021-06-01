@@ -400,7 +400,10 @@ class Conference extends React.Component {
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
            
             if (document.visibilityState === 'visible') {
-                this.selfViewMedia && this.selfViewMedia.current.play();
+                if(this.selfViewMedia) {
+                    this.selfViewMedia.current.muted = true;
+                    this.selfViewMedia.current.play();
+                }
                 this.remoteFeedMedia && this.remoteFeedMedia.current.play();
                 presentationView && presentationView.play();
                 this.restartPexip && clearTimeout(this.restartPexip); 
