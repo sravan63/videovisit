@@ -269,6 +269,10 @@ class ConferenceDetails extends React.Component {
                           data.protocol == "sip" ? data.uri.substring(6, 16) : data.display_name 
                           : data.uuid;
         var isTelephony = hasJoined ? data.protocol == "sip" : false;
+        if(hasJoined){
+            var isInterpreter = data.display_name.toLowerCase().indexOf('interpreter') > -1 ? data.display_name : false;
+        }
+
 
         // TODO: Should remove this after UID implementation
         if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
@@ -282,7 +286,14 @@ class ConferenceDetails extends React.Component {
         this.state.participants.map(function(p){
             if(hasJoined){
                 if(isTelephony){
-                    if(p.number == participant){
+                    if(isInterpreter){
+                        if(p.name.toLowerCase() == isInterpreter.toLowerCase()){
+                            participantInList = true;
+                            p.inCall = true;
+                            p.uuid = data.uuid;
+                        }
+                    }
+                    else if(p.number == participant){
                         participantInList = true;
                         p.inCall = true;
                         p.uuid = data.uuid;

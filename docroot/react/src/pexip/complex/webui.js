@@ -536,6 +536,12 @@ function participantUpdated(participant) {
     else if(participant.protocol !='sip'){
         MessageService.sendMessage(GlobalConfig.UNSPOTLIGHT,participant);
     }
+    else if(participant.spotlight != 0 && participant.display_name.toLowerCase().indexOf('interpreter') > -1){
+        MessageService.sendMessage(GlobalConfig.SPOTLIGHT,participant);
+    }
+    else if(participant.spotlight == 0 && participant.display_name.toLowerCase().indexOf('interpreter') > -1){
+        MessageService.sendMessage(GlobalConfig.UNSPOTLIGHT,participant);
+    }
     pexipParticipantsList.push(participant);
 
 }
