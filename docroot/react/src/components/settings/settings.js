@@ -15,6 +15,7 @@ class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.list = [];
+        this.updatedDevices = {};
         this.state = { data: {}, media: {}, constrains: {}, settingstoggle: true , isbrowsercheck: false};
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
@@ -23,15 +24,45 @@ class Settings extends React.Component {
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
-                    this.list = message.data;
-                    this.setState({ media: this.list });
-                    this.setState({
-                        constrains: {
-                            audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
-                            videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
-                            micSource: this.list.audioinput ? this.list.audioinput[0] : null,
-                        }
-                    });
+                    this.setPeripherals(message);
+                    break;
+                case GlobalConfig.RESET_MEDIA_DEVICES:
+                    this.updatedDevices['speakersBeforeChange'] = Number(this.list.audiooutput.length);
+                    this.updatedDevices['micsBeforeChange'] = Number(this.list.audioinput.length);
+                    this.updatedDevices['camerasBeforeChange'] = Number(this.list.videoinput.length);
+                    this.list = [];
+                    this.setState({ constrains : {} });
+                    break;
+                case GlobalConfig.UPDATE_MEDIA_DEVICES:
+                    const tspeakers = message.data.audiooutput.length;
+                    const tmics = message.data.audioinput.length;
+                    const tcameras = message.data.videoinput.length;
+                    this.setPeripherals(message);
+                    let constrains = {
+                        audioSource: message.data.audiooutput ? message.data.audiooutput[0] : null,
+                        videoSource: message.data.videoinput ? message.data.videoinput[0] : null,
+                        micSource: message.data.audioinput ? message.data.audioinput[0] : null
+                    };
+                    if( this.updatedDevices['camerasBeforeChange'] > tcameras ) {
+                        // Change in camera
+                        const videoSource = constrains.videoSource;
+                        const micSource = constrains.micSource;
+                        this.selectPeripheral(micSource, 'mic');
+                        this.selectPeripheral(videoSource, 'camera');
+                        localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
+                    } else if( this.updatedDevices['micsBeforeChange'] > tmics ) {
+                        // Change in mic
+                        const micSource = constrains.micSource;
+                        this.selectPeripheral(micSource, 'mic');
+                        localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
+                    }
+                    if( this.updatedDevices['speakersBeforeChange'] > tspeakers ) {
+                        // Change in speaker
+                        const speakerSource = constrains.audioSource;
+                        this.selectPeripheral(speakerSource, 'speaker');
+                        localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
+                    }
+                    MediaService.resetDeviceChangeFlag();
                     break;
                 case GlobalConfig.TOGGLE_SETTINGS:
                     this.setState({ settingstoggle: message.data });
@@ -44,6 +75,17 @@ class Settings extends React.Component {
         if (browserInfo.isSafari || browserInfo.isFireFox) {
             this.setState({ isbrowsercheck: true })
         }
+    }
+    setPeripherals(message){
+        this.list = message.data;
+        this.setState({ media: this.list });
+        this.setState({
+            constrains: {
+                audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
+                videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                micSource: this.list.audioinput ? this.list.audioinput[0] : null,
+            }
+        });
     }
     handleClickOutside(event) {
         const domNode = ReactDOM.findDOMNode(this);
@@ -79,7 +121,6 @@ class Settings extends React.Component {
             WebUI.switchDevices('speaker',media);
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
-            MediaService.changeAudioDestination(media, 'video');
             WebUI.switchDevices('mic',media);
         }
         // Sets the constrains in dropdowns.

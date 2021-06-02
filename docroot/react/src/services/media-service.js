@@ -14,47 +14,50 @@ class MediaService extends React.Component {
         this.state = { mediaData: {},cameraAllowed:false,micAllowed:false,camBlocked:false, selectedConstrain : {} };
         this.mediaData = {};
         this.drawNewCanvas = true;
+        this.isDeviceChange = false;
+        this.onDeviceChange = this.onDeviceChange.bind(this);
+        this.loadDeviceMediaData = this.loadDeviceMediaData.bind(this);
     }
-
+    
     // Initiates the device load
     loadDeviceMediaData(){
-        var browserInfo = Utilities.getBrowserInformation();
-        var isSetup = sessionStorage.getItem('isSetupPage');
-        if(!browserInfo.isIE){
-            if(browserInfo.isSafari || browserInfo.isFireFox) {
-                if (!Utilities.isMobileDevice()) {
-                    MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
-                }
-                if (isSetup =='true') {
-                    navigator.mediaDevices.getUserMedia({audio: true, video: false}).then((stream) => {
-                        console.log('Stream1 started with success');
-                        window.localStream = stream;
-                        this.setDevice();
-                    }).catch((error) => {
-                        this.handleError(error);
-                        console.log('Failed to start stream1');
-                    });
-                } else {
-                    navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
-                        console.log('Stream1 started with success');
-                        window.localStream = stream;
-                        this.setDevice();
-                    }).catch((error) => {
-                        this.handleError(error);
-                        console.log('Failed to start stream1');
-                    });
-                }
-            } else {
-                navigator.mediaDevices.enumerateDevices().then((list)=>{
-                    this.gotDevicesList(list);
-                }).catch((error)=>{
+      var browserInfo = Utilities.getBrowserInformation();
+      var isSetup = sessionStorage.getItem('isSetupPage');
+      if(!browserInfo.isIE){
+        if(browserInfo.isSafari || browserInfo.isFireFox) {
+            if (!Utilities.isMobileDevice()) {
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
+            }
+            if (isSetup =='true') {
+                navigator.mediaDevices.getUserMedia({audio: true, video: false}).then((stream) => {
+                    console.log('Stream1 started with success');
+                    window.localStream = stream;
+                    this.setDevice();
+                }).catch((error) => {
                     this.handleError(error);
+                    console.log('Failed to start stream1');
+                });
+            } else {
+                navigator.mediaDevices.getUserMedia({audio: true, video: true}).then((stream) => {
+                    console.log('Stream1 started with success');
+                    window.localStream = stream;
+                    this.setDevice();
+                }).catch((error) => {
+                    this.handleError(error);
+                    console.log('Failed to start stream1');
                 });
             }
-
-            // Registers the devie change handler.
-            navigator.mediaDevices.ondevicechange = this.onDeviceChange;
+        } else {
+          navigator.mediaDevices.enumerateDevices().then((list)=>{
+              this.gotDevicesList(list);
+          }).catch((error)=>{
+              this.handleError(error);
+          });
         }
+      
+        // Registers the device change handler.
+        navigator.mediaDevices.ondevicechange = this.onDeviceChange;
+      }
     }
 
     setDevice(){
@@ -68,11 +71,11 @@ class MediaService extends React.Component {
     }
 
     stopAudio(){
-        if(window.localStream) {
-            localStream.getTracks().forEach((track) => {
-                track.stop();
-            });
-        }
+      if(window.localStream) {
+          localStream.getTracks().forEach((track) => {
+              track.stop();
+          });
+      }
     }
 
     // Gets the list of devices on load.
@@ -99,17 +102,17 @@ class MediaService extends React.Component {
         }
         this.sergigateMediaByKind(devices);
         devices.map(mData => {
-            const media = {};
-            if( mData.label == '' ){
-                var dummy = mData.kind == 'videoinput' ? 'Camera ' : mData.kind == 'audioinput' ? 'Microphone ' : 'Speaker ';
-                dummy += this.mediaData[mData.kind].length + 1;
-                media['label'] = dummy;
-            } else {
-                media['label'] = mData.label;
-            }
-            media['deviceId'] = mData.deviceId;
-            media['kind'] = mData.kind;
-            this.mediaData[media.kind].push(media);
+          const media = {};
+          if( mData.label == '' ){
+            var dummy = mData.kind == 'videoinput' ? 'Camera ' : mData.kind == 'audioinput' ? 'Microphone ' : 'Speaker ';
+            dummy += this.mediaData[mData.kind].length + 1;
+            media['label'] = dummy;
+          } else {
+            media['label'] = mData.label;
+          }
+          media['deviceId'] = mData.deviceId;
+          media['kind'] = mData.kind;
+          this.mediaData[media.kind].push(media);
         });
 
 
@@ -122,10 +125,31 @@ class MediaService extends React.Component {
             },1600);
         }
         console.log('Media Service - List Of Media Devices :: ' + this.mediaData);
-        MessageService.sendMessage(GlobalConfig.MEDIA_DATA_READY, this.mediaData);
+        this.removeInvalidDevices();
+        if( this.isDeviceChange ){
+          MessageService.sendMessage(GlobalConfig.UPDATE_MEDIA_DEVICES, this.mediaData);
+        } else {
+          MessageService.sendMessage(GlobalConfig.MEDIA_DATA_READY, this.mediaData);
+        }
     }
 
-    // Error call back.
+    resetDeviceChangeFlag(){
+      this.isDeviceChange = false;
+    }
+
+    removeInvalidDevices() {
+      for(var m in this.mediaData) {
+        const media = this.mediaData[m];
+        for(var i=media.length-1; i>=0; i--){
+          const mData = media[i];
+          if( !Utilities.checkForValidMediaDevice(mData.deviceId) && mData.deviceId !== '' ) {
+            media.splice(i,1);
+          }
+        }
+      }
+    }
+  
+  // Error call back.
     handleError(error){
         let isSetup = sessionStorage.getItem('isSetupPage');
         var ErrorMsg = error.message,
@@ -162,54 +186,65 @@ class MediaService extends React.Component {
 
     // Triggers when a device is plugged in or plugged out.
     onDeviceChange(event){
-        if(browserInfo.OSName.toLowerCase() !== "windows"){
-            console.log("DEVICE CHANGE EVENT TRIGGERED");
-            navigator.mediaDevices.enumerateDevices();
-            this.start(this.state.selectedConstrain);
-        }
+      console.log("DEVICE CHANGE EVENT TRIGGERED");
+      if( !this.isDeviceChange ) {
+        MessageService.sendMessage(GlobalConfig.RESET_MEDIA_DEVICES, null);
+        this.isDeviceChange = true;
+        this.loadDeviceMediaData();
+      }
     }
 
     // Chages the microphone on dropdown change.
     changeAudioDestination(speaker, dom='preview') {
-        var audioDestination = speaker.deviceId;
-        var videoElement = document.getElementById(dom);
-        DeviceService.helperRingtoneStop();
-        this.attachSinkId(videoElement, audioDestination);
+      var audioDestination = speaker.deviceId;
+      var videoElement = document.getElementById(dom);
+      DeviceService.helperRingtoneStop();
+      this.attachSinkId(videoElement, audioDestination);
     }
 
     // Attach audio output device to video element using device/sink ID.
     attachSinkId(element, sinkId) {
-        if (typeof element.sinkId !== 'undefined') {
-            element.setSinkId(sinkId)
-                .then(function() {
-                    console.log('Success, audio output device attached: ' + sinkId);
-                })
-                .catch(function(error) {
-                    var errorMessage = error;
-                    if (error.name === 'SecurityError') {
-                        errorMessage = 'You need to use HTTPS for selecting audio output ' +
-                            'device: ' + error;
-                    }
-                    console.error(errorMessage);
-                });
-        } else {
-            console.warn('Browser does not support output device selection.');
-        }
+      if (typeof element.sinkId !== 'undefined') {
+        element.setSinkId(sinkId)
+        .then(function() {
+          console.log('Success, audio output device attached: ' + sinkId);
+        })
+        .catch(function(error) {
+          var errorMessage = error;
+          if (error.name === 'SecurityError') {
+            errorMessage = 'You need to use HTTPS for selecting audio output ' +
+                'device: ' + error;
+          } else if(errorMessage == 'DOMException: Requested device not found' || errorMessage == 'DOMException: The operation could not be performed and was aborted'){
+            // speaker is not compatible
+            for(var i=this.mediaData['audiooutput'].length-1; i >=0; i--){
+              const speaker = this.mediaData['audiooutput'][i];
+              if( sinkId == speaker.deviceId ){
+                this.mediaData['audiooutput'].splice(i,1);
+              }
+            }
+            console.log('DEVICE GONE ABRUPTLY');
+            // MessageService.sendMessage(GlobalConfig.UPDATE_MEDIA_DEVICES, this.mediaData);
+          }
+          // console.error(errorMessage);
+        });
+      } else {
+        console.warn('Browser does not support output device selection.');
+      }
     }
 
     // Starts the vide, audio and microphone stream.
     start(constrains) {
-        if (window.stream) {
-            window.stream.getTracks().forEach(function(track) {
-                track.stop();
-            });
-        }
-        this.state.selectedConstrain = constrains;
-        var constraints = {
-            audio: {deviceId: constrains.audioSource ? {exact: constrains.audioSource.deviceId} : undefined},
-            video: {deviceId: constrains.videoSource ? {exact: constrains.videoSource.deviceId} : undefined}
-        };
-        navigator.mediaDevices.getUserMedia(constraints).then((stream)=>{
+      if (window.stream) {
+        window.stream.getTracks().forEach(function(track) {
+          track.stop();
+        });
+      }
+      this.state.selectedConstrain = constrains;
+      var constraints = {
+        audio: {deviceId: constrains.audioSource ? {exact: constrains.audioSource.deviceId} : undefined},
+        video: {deviceId: constrains.videoSource ? {exact: constrains.videoSource.deviceId} : undefined}
+      };
+      navigator.mediaDevices.getUserMedia(constraints).then((stream)=>{
             this.gotStream(stream);
         }).catch((error)=>{
             this.handleError(error);
@@ -253,7 +288,7 @@ class MediaService extends React.Component {
         var self = this;
         navigator.permissions.query(
             { name: 'camera' }
-        ).then(function(permissionStatus){
+        ).then((permissionStatus)=>{
             console.log(permissionStatus.state); // granted, denied, prompt
 
             if(permissionStatus.state == 'granted'){
@@ -269,17 +304,19 @@ class MediaService extends React.Component {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
             }
 
-            permissionStatus.onchange = function(){
-                console.log("Permission changed to " + this.state);
-                if(this.state == 'denied'){
+            permissionStatus.onchange = (event)=>{
+                const state = event.currentTarget.state;
+                console.log("Permission changed to " + state);
+                if(state == 'denied'){
                     MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
-                } else if(this.state == 'granted'){
+                } else if(state == 'granted'){
                     var deniedError  = document.getElementsByClassName('selectIcon').length;
                     if(deniedError == 0){
                         MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
                         //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                     }
-
+                    this.isDeviceChange = true;
+                    this.loadDeviceMediaData();
                     //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
                     //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
@@ -291,7 +328,7 @@ class MediaService extends React.Component {
         var self = this;
         navigator.permissions.query(
             { name: 'microphone' }
-        ).then(function(permissionStatus){
+        ).then((permissionStatus)=>{
             console.log(permissionStatus.state); // granted, denied, prompt
 
             if(permissionStatus.state === 'granted') {
@@ -309,11 +346,12 @@ class MediaService extends React.Component {
                 }
             }
 
-            permissionStatus.onchange = function(){
-                console.log("Permission changed to " + this.state);
-                if(this.state == 'denied'){
+            permissionStatus.onchange = (event)=>{
+                const state = event.currentTarget.state;
+                console.log("Permission changed to " + state);
+                if(state == 'denied'){
                     MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
-                } else if(this.state == 'granted'){
+                } else if(state == 'granted'){
                     var deniedError  = document.getElementsByClassName('selectIcon').length;
                     if(deniedError == 0){
                         MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
