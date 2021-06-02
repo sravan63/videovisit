@@ -401,11 +401,9 @@ class Conference extends React.Component {
            
             if (document.visibilityState === 'visible') {
                 this.restartPexip && clearTimeout(this.restartPexip); 
-                setTimeout(function () {
-                    this.selfViewMedia && this.selfViewMedia.current.play();
-                }, 100);
-                this.remoteFeedMedia && this.remoteFeedMedia.current.play();
-                presentationView && presentationView.play();
+                this.selfViewMedia && this.selfViewMedia.current.load();
+                this.remoteFeedMedia && this.remoteFeedMedia.current.load();
+                presentationView && presentationView.load();
             } 
             else if(document.visibilityState === 'hidden') {
                 let noOfTimes=0;
