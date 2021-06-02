@@ -37,26 +37,27 @@ class Settings extends React.Component {
                     const tspeakers = message.data.audiooutput.length;
                     const tmics = message.data.audioinput.length;
                     const tcameras = message.data.videoinput.length;
-                    this.setPeripherals(message);
+                    // this.setPeripherals(message);
                     let constrains = {
                         audioSource: message.data.audiooutput ? message.data.audiooutput[0] : null,
                         videoSource: message.data.videoinput ? message.data.videoinput[0] : null,
                         micSource: message.data.audioinput ? message.data.audioinput[0] : null
                     };
-                    if( this.updatedDevices['camerasBeforeChange'] > tcameras ) {
+                    const rtc = WebUI.getRTC();
+                    if( this.updatedDevices['camerasBeforeChange'] > tcameras || rtc.video_source !== constrains.videoSource.deviceId ) {
                         // Change in camera
                         const videoSource = constrains.videoSource;
                         const micSource = constrains.micSource;
                         this.selectPeripheral(micSource, 'mic');
                         this.selectPeripheral(videoSource, 'camera');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
-                    } else if( this.updatedDevices['micsBeforeChange'] > tmics ) {
+                    } else if( this.updatedDevices['micsBeforeChange'] > tmics || rtc.audio_source !== this.state.constrains.micSource.deviceId ) {
                         // Change in mic
                         const micSource = constrains.micSource;
                         this.selectPeripheral(micSource, 'mic');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
                     }
-                    if( this.updatedDevices['speakersBeforeChange'] > tspeakers ) {
+                    if( this.updatedDevices['speakersBeforeChange'] > tspeakers || speakerSource !== this.state.constrains.audioSource.deviceId  ) {
                         // Change in speaker
                         const speakerSource = constrains.audioSource;
                         this.selectPeripheral(speakerSource, 'speaker');

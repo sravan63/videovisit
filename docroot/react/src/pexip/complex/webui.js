@@ -989,6 +989,10 @@ export function formatDuplicateNames(dName){
     return lName+' '+userCount+', '+fName.split(' ')[0].trim(); // mama 2, joe
 }
 
+export function getRTC(){
+    return rtc;
+}
+
 export function pexipDisconnect() {
     connectionRefused = false;
     if( UtilityService.getAppOS() == 'Android' &&
