@@ -31,7 +31,7 @@ class Settings extends React.Component {
                     this.updatedDevices['micsBeforeChange'] = Number(this.list.audioinput.length);
                     this.updatedDevices['camerasBeforeChange'] = Number(this.list.videoinput.length);
                     this.list = [];
-                    this.setState({ constrains : {} });
+                    this.setState({ media : {} });
                     break;
                 case GlobalConfig.UPDATE_MEDIA_DEVICES:
                     const tspeakers = message.data.audiooutput.length;
@@ -44,7 +44,7 @@ class Settings extends React.Component {
                         micSource: message.data.audioinput ? message.data.audioinput[0] : null
                     };
                     const rtc = WebUI.getRTC();
-                    if( this.updatedDevices['camerasBeforeChange'] > tcameras || rtc.video_source !== constrains.videoSource.deviceId ) {
+                    if( this.updatedDevices['camerasBeforeChange'] > tcameras || rtc.video_source !== this.state.constrains.videoSource.deviceId ) {
                         // Change in camera
                         const videoSource = constrains.videoSource;
                         const micSource = constrains.micSource;
@@ -57,13 +57,14 @@ class Settings extends React.Component {
                         this.selectPeripheral(micSource, 'mic');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
                     }
-                    if( this.updatedDevices['speakersBeforeChange'] > tspeakers || speakerSource !== this.state.constrains.audioSource.deviceId  ) {
+                    if( this.updatedDevices['speakersBeforeChange'] > tspeakers || constrains.audioSource.deviceId !== this.state.constrains.audioSource.deviceId  ) {
                         // Change in speaker
                         const speakerSource = constrains.audioSource;
                         this.selectPeripheral(speakerSource, 'speaker');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
                     }
                     MediaService.resetDeviceChangeFlag();
+                    this.setPeripherals(message);
                     break;
                 case GlobalConfig.TOGGLE_SETTINGS:
                     this.setState({ settingstoggle: message.data });
