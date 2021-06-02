@@ -401,7 +401,11 @@ class Conference extends React.Component {
            
             if (document.visibilityState === 'visible') {
                     WebUI.pexipDisconnect();
-                    MediaService.loadDeviceMediaData();
+                    MediaService.stopAudio();
+                    setTimeout(()=>{
+                        MediaService.loadDeviceMediaData();
+                    },2000);
+
                     //this.selfViewMedia && this.selfViewMedia.current.play();
                     //this.remoteFeedMedia && this.remoteFeedMedia.current.play();
                     //presentationView && presentationView.play();
