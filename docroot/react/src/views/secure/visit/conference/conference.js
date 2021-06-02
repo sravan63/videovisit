@@ -400,7 +400,7 @@ class Conference extends React.Component {
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
            
             if (document.visibilityState === 'visible') {
-                this.restartPexip && clearTimeout(this.restartPexip); 
+                this.restartPexip && clearInterval(this.restartPexip); 
                 this.selfViewMedia && this.selfViewMedia.current.load();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.load();
                 presentationView && presentationView.load();
@@ -416,8 +416,8 @@ class Conference extends React.Component {
                     //this.startPexip(this.state.meetingDetails);
                     //MediaService.loadDeviceMediaData();
                     window.location.reload();
-                    if(++noOfTimes > 3){
-                        clearTimeout(this.restartPexip);
+                    if(++noOfTimes > 6) {
+                        clearInterval(this.restartPexip);
                     }
                 }, 20000);
             } 
