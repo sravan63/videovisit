@@ -400,18 +400,22 @@ class Conference extends React.Component {
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
            
             if (document.visibilityState === 'visible') {
-                    WebUI.pexipDisconnect();
+                if((Date.now() - this.restartPexip) > 20000){
+                    window.location.reload();
+                }
+                else {
+                    this.selfViewMedia && this.selfViewMedia.current.play();
+                    this.remoteFeedMedia && this.remoteFeedMedia.current.play();
+                    presentationView && presentationView.play();
+                    /*WebUI.pexipDisconnect();
                     MediaService.stopAudio();
                     setTimeout(()=>{
                         MediaService.loadDeviceMediaData();
-                    },2000);
-
-                    //this.selfViewMedia && this.selfViewMedia.current.play();
-                    //this.remoteFeedMedia && this.remoteFeedMedia.current.play();
-                    //presentationView && presentationView.play();
-
+                    },1000);*/
+                }
             } 
             else if(document.visibilityState === 'hidden') {
+                this.restartPexip = Date.now();
                 this.selfViewMedia && this.selfViewMedia.current.pause();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
                 presentationView && presentationView.pause();
