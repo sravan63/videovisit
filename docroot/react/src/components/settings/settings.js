@@ -14,8 +14,9 @@ import Utilities from '../../services/utilities-service.js';
 class Settings extends React.Component {
     constructor(props) {
         super(props);
-        this.list = [];
+        // this.list = {};
         this.updatedDevices = {};
+        this.browserInfo = null;
         this.state = { data: {}, media: {}, constrains: {}, settingstoggle: true , isbrowsercheck: false};
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
@@ -27,14 +28,14 @@ class Settings extends React.Component {
                     this.setPeripherals(message);
                     break;
                 case GlobalConfig.RESET_MEDIA_DEVICES:
-                    this.updatedDevices['speakersBeforeChange'] = Number(this.list.audiooutput.length);
-                    this.updatedDevices['micsBeforeChange'] = Number(this.list.audioinput.length);
-                    this.updatedDevices['camerasBeforeChange'] = Number(this.list.videoinput.length);
-                    this.list = [];
+                    this.updatedDevices['speakersBeforeChange'] = this.browserInfo.isSafari ? 0 : Number(this.state.media.audiooutput.length);
+                    this.updatedDevices['micsBeforeChange'] = Number(this.state.media.audioinput.length);
+                    this.updatedDevices['camerasBeforeChange'] = Number(this.state.media.videoinput.length);
+                    // this.list = {};
                     this.setState({ media : {} });
                     break;
                 case GlobalConfig.UPDATE_MEDIA_DEVICES:
-                    const tspeakers = message.data.audiooutput.length;
+                    const tspeakers = this.browserInfo.isSafari ? 0 : message.data.audiooutput.length;
                     const tmics = message.data.audioinput.length;
                     const tcameras = message.data.videoinput.length;
                     // this.setPeripherals(message);
@@ -57,7 +58,7 @@ class Settings extends React.Component {
                         this.selectPeripheral(micSource, 'mic');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
                     }
-                    if( this.updatedDevices['speakersBeforeChange'] > tspeakers || constrains.audioSource.deviceId !== this.state.constrains.audioSource.deviceId  ) {
+                    if( !this.browserInfo.isSafari && (this.updatedDevices['speakersBeforeChange'] > tspeakers || constrains.audioSource.deviceId !== this.state.constrains.audioSource.deviceId) ) {
                         // Change in speaker
                         const speakerSource = constrains.audioSource;
                         this.selectPeripheral(speakerSource, 'speaker');
@@ -73,19 +74,19 @@ class Settings extends React.Component {
             }
         });
         document.addEventListener('click', this.handleClickOutside, true);
-        var browserInfo = Utilities.getBrowserInformation();
-        if (browserInfo.isSafari || browserInfo.isFireFox) {
+        this.browserInfo = Utilities.getBrowserInformation();
+        if (this.browserInfo.isSafari || this.browserInfo.isFireFox) {
             this.setState({ isbrowsercheck: true })
         }
     }
     setPeripherals(message){
-        this.list = message.data;
-        this.setState({ media: this.list });
+        // this.list = message.data;
+        this.setState({ media: message.data });
         this.setState({
             constrains: {
-                audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
-                videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
-                micSource: this.list.audioinput ? this.list.audioinput[0] : null,
+                audioSource: message.data.audiooutput ? message.data.audiooutput[0] : null,
+                videoSource: message.data.videoinput ? message.data.videoinput[0] : null,
+                micSource: message.data.audioinput ? message.data.audioinput[0] : null,
             }
         });
     }
