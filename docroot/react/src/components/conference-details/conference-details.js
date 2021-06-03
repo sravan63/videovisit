@@ -291,6 +291,9 @@ class ConferenceDetails extends React.Component {
                             participantInList = true;
                             p.inCall = true;
                             p.uuid = data.uuid;
+                            if(data.spotlight !=0){
+                                p.spotlighted = true;
+                            }
                         }
                     }
                     else if(p.number == participant){
