@@ -18,7 +18,11 @@ class MediaService extends React.Component {
         this.onDeviceChange = this.onDeviceChange.bind(this);
         this.loadDeviceMediaData = this.loadDeviceMediaData.bind(this);
     }
-    
+
+    componentDidMount() {
+        navigator.mediaDevices.ondevicechange = this.onDeviceChange;
+    }
+
     // Initiates the device load
     loadDeviceMediaData(){
       var browserInfo = Utilities.getBrowserInformation();
@@ -56,7 +60,7 @@ class MediaService extends React.Component {
         }
       
         // Registers the device change handler.
-        navigator.mediaDevices.ondevicechange = this.onDeviceChange;
+
       }
     }
 
