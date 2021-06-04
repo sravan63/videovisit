@@ -47,14 +47,14 @@ class Settings extends React.Component {
                         micSource: message.data.audioinput ? message.data.audioinput[0] : null
                     };
                     const rtc = WebUI.getRTC();
-                    if( this.updatedDevices['camerasBeforeChange'] > tcameras || rtc.video_source !== this.state.constrains.videoSource.deviceId ) {
+                    if( this.updatedDevices['camerasBeforeChange'] > tcameras || rtc.video_source !== constrains.videoSource.deviceId ) {
                         // Change in camera
                         const videoSource = constrains.videoSource;
                         const micSource = constrains.micSource;
                         this.selectPeripheral(micSource, 'mic');
                         this.selectPeripheral(videoSource, 'camera');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
-                    } else if( this.updatedDevices['micsBeforeChange'] > tmics || rtc.audio_source !== this.state.constrains.micSource.deviceId ) {
+                    } else if( this.updatedDevices['micsBeforeChange'] > tmics || rtc.audio_source !== constrains.micSource.deviceId ) {
                         // Change in mic
                         const micSource = constrains.micSource;
                         this.selectPeripheral(micSource, 'mic');
