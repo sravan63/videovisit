@@ -403,7 +403,7 @@ class Conference extends React.Component {
 
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
-            //let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
+            let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
            
             if (document.visibilityState === 'visible') {
                 console.log("Document visible now");
