@@ -17,6 +17,7 @@ class Settings extends React.Component {
         // this.list = {};
         this.updatedDevices = {};
         this.browserInfo = null;
+        this.rtc = null;
         this.state = { data: {}, media: {}, constrains: {}, settingstoggle: true , isbrowsercheck: false};
         this.handleClickOutside = this.handleClickOutside.bind(this);
     }
@@ -46,15 +47,16 @@ class Settings extends React.Component {
                         videoSource: message.data.videoinput ? message.data.videoinput[0] : null,
                         micSource: message.data.audioinput ? message.data.audioinput[0] : null
                     };
-                    const rtc = WebUI.getRTC();
-                    if( this.updatedDevices['camerasBeforeChange'] > tcameras || rtc.video_source !== constrains.videoSource.deviceId ) {
+                    if( this.updatedDevices['camerasBeforeChange'] > tcameras 
+                        || this.rtc.video_source !== constrains.videoSource.deviceId ) {
                         // Change in camera
                         const videoSource = constrains.videoSource;
                         const micSource = constrains.micSource;
                         this.selectPeripheral(micSource, 'mic');
                         this.selectPeripheral(videoSource, 'camera');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
-                    } else if( this.updatedDevices['micsBeforeChange'] > tmics || rtc.audio_source !== constrains.micSource.deviceId ) {
+                    } else if( this.updatedDevices['micsBeforeChange'] > tmics 
+                               || this.rtc.audio_source !== constrains.micSource.deviceId ) {
                         // Change in mic
                         const micSource = constrains.micSource;
                         this.selectPeripheral(micSource, 'mic');
@@ -70,6 +72,23 @@ class Settings extends React.Component {
                     this.setPeripherals(message);
                     break;
                 case GlobalConfig.TOGGLE_SETTINGS:
+                    if(message.data == false){
+                        let vSource = null;
+                        this.state.media.videoinput.map((v)=>{
+                            if(v.deviceId == this.rtc.video_source){ vSource = v; }
+                        });
+                        let mSource = null;
+                        this.state.media.audioinput.map((m)=>{
+                            if(m.deviceId == this.rtc.audio_source){ mSource = m; }
+                        });
+                        this.setState({
+                            constrains: {
+                                audioSource: this.state.constrains.audioSource,
+                                videoSource: vSource ? vSource : this.state.constrains.videoSource,
+                                micSource: mSource ? mSource : this.state.constrains.micSource,
+                            }
+                        });
+                    }
                     this.setState({ settingstoggle: message.data });
                     // this.state.settingstoggle = message.data;
                     break;
@@ -80,6 +99,7 @@ class Settings extends React.Component {
         if (this.browserInfo.isSafari || this.browserInfo.isFireFox) {
             this.setState({ isbrowsercheck: true })
         }
+        this.rtc = WebUI.getRTC();
     }
     setPeripherals(message){
         // this.list = message.data;
@@ -123,7 +143,7 @@ class Settings extends React.Component {
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media, 'video');
-            WebUI.switchDevices('speaker',media);
+            // WebUI.switchDevices('speaker',media);
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
             WebUI.switchDevices('mic',media);
