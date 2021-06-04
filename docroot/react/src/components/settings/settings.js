@@ -47,9 +47,9 @@ class Settings extends React.Component {
                     const tcameras = message.data.videoinput.length;
                     // this.setPeripherals(message);
                     let constrains = {
-                        audioSource: message.data.audiooutput ? message.data.audiooutput[0] : null,
+                        audioSource: message.data.audiooutput ? message.data.audiooutput.length > 1 ? message.data.audiooutput[1] : message.data.audiooutput[0] : null,
                         videoSource: message.data.videoinput ? message.data.videoinput[0] : null,
-                        micSource: message.data.audioinput ? message.data.audioinput[0] : null
+                        micSource: message.data.audioinput ? message.data.audioinput.length > 1 ? message.data.audioinput[1] : message.data.audioinput[0] : null
                     };
                     if( this.updatedDevices['camerasBeforeChange'] > tcameras 
                         || this.rtc.video_source !== constrains.videoSource.deviceId ) {
