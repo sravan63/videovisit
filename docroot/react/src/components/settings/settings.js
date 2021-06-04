@@ -37,6 +37,10 @@ class Settings extends React.Component {
                         this.setState({media: {}});
                     }
                     break;
+                case GlobalConfig.RECONNECT_ON_DEVICE_CHANGE:
+                    this.rtc.renegotiate();
+                    MediaService.resetDeviceChangeFlag();
+                    break;
                 case GlobalConfig.UPDATE_MEDIA_DEVICES:
                     const tspeakers = this.browserInfo.isSafari ? 0 : message.data.audiooutput.length;
                     const tmics = message.data.audioinput.length;

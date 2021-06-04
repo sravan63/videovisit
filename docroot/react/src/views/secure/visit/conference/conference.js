@@ -413,7 +413,6 @@ class Conference extends React.Component {
                     this.selfViewMedia && this.selfViewMedia.current.play();
                     this.remoteFeedMedia && this.remoteFeedMedia.current.play();
                     presentationView && presentationView.play();
-                    WebUI.getRTC().renegotiate();
                     /*WebUI.pexipDisconnect();
                     MediaService.stopAudio();
                     setTimeout(()=>{

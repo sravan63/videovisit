@@ -187,10 +187,15 @@ class MediaService extends React.Component {
     // Triggers when a device is plugged in or plugged out.
     onDeviceChange(event){
       console.log("DEVICE CHANGE EVENT TRIGGERED");
-      if( !this.isDeviceChange && !Utilities.isMobileDevice()) {
-        MessageService.sendMessage(GlobalConfig.RESET_MEDIA_DEVICES, null);
-        this.isDeviceChange = true;
-        this.loadDeviceMediaData();
+      if( !this.isDeviceChange ) {
+          if( !Utilities.isMobileDevice() ){
+              MessageService.sendMessage(GlobalConfig.RESET_MEDIA_DEVICES, null);
+              this.isDeviceChange = true;
+              this.loadDeviceMediaData();
+            } else {
+              MessageService.sendMessage(GlobalConfig.RECONNECT_ON_DEVICE_CHANGE, null);
+              this.isDeviceChange = true
+          }
       }
     }
 

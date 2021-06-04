@@ -35,6 +35,7 @@ const GlobalConfig = {
     MEDIA_DATA_READY: 'Media Data Ready',
     UPDATE_MEDIA_DEVICES: 'Update Media Devices',
     RESET_MEDIA_DEVICES: 'reset media device list',
+    RECONNECT_ON_DEVICE_CHANGE: 'reconnect on device change',
     NOTIFY_USER: 'Notify User',
     MEMBER_READY: 'Member Ready',
     HOST_AVAIL: 'Host Availble',
