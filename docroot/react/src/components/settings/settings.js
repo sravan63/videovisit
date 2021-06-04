@@ -28,11 +28,13 @@ class Settings extends React.Component {
                     this.setPeripherals(message);
                     break;
                 case GlobalConfig.RESET_MEDIA_DEVICES:
-                    this.updatedDevices['speakersBeforeChange'] = this.browserInfo.isSafari ? 0 : Number(this.state.media.audiooutput.length);
-                    this.updatedDevices['micsBeforeChange'] = Number(this.state.media.audioinput.length);
-                    this.updatedDevices['camerasBeforeChange'] = Number(this.state.media.videoinput.length);
-                    // this.list = {};
-                    this.setState({ media : {} });
+                    if(this.state.media) {
+                        this.updatedDevices['speakersBeforeChange'] = this.browserInfo.isSafari ? 0 : Number(this.state.media.audiooutput.length);
+                        this.updatedDevices['micsBeforeChange'] = Number(this.state.media.audioinput.length);
+                        this.updatedDevices['camerasBeforeChange'] = Number(this.state.media.videoinput.length);
+                        // this.list = {};
+                        this.setState({media: {}});
+                    }
                     break;
                 case GlobalConfig.UPDATE_MEDIA_DEVICES:
                     const tspeakers = this.browserInfo.isSafari ? 0 : message.data.audiooutput.length;
