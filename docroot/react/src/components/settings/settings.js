@@ -56,6 +56,9 @@ class Settings extends React.Component {
                         // Change in mic
                         const micSource = constrains.micSource;
                         this.selectPeripheral(micSource, 'mic');
+                        if( this.browserInfo.isSafari ){
+                            this.selectPeripheral(micSource, 'speaker');
+                        }
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
                     }
                     if( !this.browserInfo.isSafari && (this.updatedDevices['speakersBeforeChange'] > tspeakers || constrains.audioSource.deviceId !== this.state.constrains.audioSource.deviceId) ) {
