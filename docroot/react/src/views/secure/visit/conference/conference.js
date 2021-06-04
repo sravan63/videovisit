@@ -38,6 +38,7 @@ class Conference extends React.Component {
         this.timerForLeaveMeeting = 0;
         this.visibilityChange = null;
         this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
+        this.deviceChanged = this.deviceChanged.bind(this);
         this.handleResize = this.handleResize.bind(this);
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
@@ -100,6 +101,7 @@ class Conference extends React.Component {
         else if (typeof document.webkitHidden !== 'undefined') {
             this.visibilityChange = 'webkitvisibilitychange';
         }
+        navigator.mediaDevices.addEventListener('devicechange',this.deviceChanged);
         document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
@@ -358,6 +360,10 @@ class Conference extends React.Component {
                     this.getLanguage();
                 }
             });
+    }
+
+    deviceChanged(){
+        MediaService.onDeviceChange();
     }
 
     sendMediaStats(data) {
