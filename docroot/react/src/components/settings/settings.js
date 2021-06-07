@@ -14,7 +14,7 @@ import Utilities from '../../services/utilities-service.js';
 class Settings extends React.Component {
     constructor(props) {
         super(props);
-        // this.list = {};
+        this.mediaAvailable = false;
         this.updatedDevices = {};
         this.browserInfo = null;
         this.rtc = null;
@@ -27,71 +27,57 @@ class Settings extends React.Component {
             switch (message.text) {
                 case GlobalConfig.MEDIA_DATA_READY:
                     this.setPeripherals(message);
+                    this.mediaAvailable = true;
                     break;
                 case GlobalConfig.RESET_MEDIA_DEVICES:
-                    if(this.state.media) {
+                    if(this.mediaAvailable == true && this.state.media) {
                         this.updatedDevices['speakersBeforeChange'] = this.browserInfo.isSafari ? 0 : Number(this.state.media.audiooutput.length);
                         this.updatedDevices['micsBeforeChange'] = Number(this.state.media.audioinput.length);
                         this.updatedDevices['camerasBeforeChange'] = Number(this.state.media.videoinput.length);
-                        // this.list = {};
                         this.setState({media: {}});
                     }
                     break;
                 case GlobalConfig.RECONNECT_ON_DEVICE_CHANGE:
-                    this.rtc.renegotiate();
+                    // For mobile
+                    setTimeout(()=>{
+                        this.rtc.renegotiate();
+                    }, 1000);
                     MediaService.resetDeviceChangeFlag();
                     break;
                 case GlobalConfig.UPDATE_MEDIA_DEVICES:
-                    const tspeakers = this.browserInfo.isSafari ? 0 : message.data.audiooutput.length;
-                    const tmics = message.data.audioinput.length;
-                    const tcameras = message.data.videoinput.length;
-                    // this.setPeripherals(message);
-                    let constrains = {
-                        audioSource: message.data.audiooutput ? message.data.audiooutput.length > 1 ? message.data.audiooutput[1] : message.data.audiooutput[0] : null,
-                        videoSource: message.data.videoinput ? message.data.videoinput[0] : null,
-                        micSource: message.data.audioinput ? message.data.audioinput.length > 1 ? message.data.audioinput[1] : message.data.audioinput[0] : null
-                    };
-                    if( this.updatedDevices['camerasBeforeChange'] > tcameras 
-                        || this.rtc.video_source !== constrains.videoSource.deviceId ) {
-                        // Change in camera
-                        const videoSource = constrains.videoSource;
-                        const micSource = constrains.micSource;
+                    const speakersAfterChange = this.browserInfo.isSafari ? 0 : message.data.audiooutput.length;
+                    const micsAfterChange = message.data.audioinput.length;
+                    const camerasAfterChange = message.data.videoinput.length;
+                    if( this.updatedDevices['camerasBeforeChange'] !== camerasAfterChange ) {
+                        // Change in CAMERAS
+                        const videoSource = this.updatedDevices['camerasBeforeChange'] > camerasAfterChange ? message.data.videoinput[0] : 
+                        message.data.videoinput.length > 1 ? message.data.videoinput[1] : message.data.videoinput[0];
+                        const micSource = this.updatedDevices['micsBeforeChange'] > micsAfterChange ? message.data.audioinput[0] : 
+                        message.data.audioinput.length > 1 ? message.data.audioinput[1] : message.data.audioinput[0];
                         this.selectPeripheral(micSource, 'mic');
                         this.selectPeripheral(videoSource, 'camera');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
-                    } else if( this.updatedDevices['micsBeforeChange'] > tmics 
-                               || this.rtc.audio_source !== constrains.micSource.deviceId ) {
-                        // Change in mic
-                        const micSource = constrains.micSource;
+                    } else if( this.updatedDevices['micsBeforeChange'] !== micsAfterChange ) {
+                        // Change in MICS
+                        const micSource = this.updatedDevices['micsBeforeChange'] > micsAfterChange ? message.data.audioinput[0] : 
+                        message.data.audioinput.length > 1 ? message.data.audioinput[1] : message.data.audioinput[0];
                         this.selectPeripheral(micSource, 'mic');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
                     }
-                    if( !this.browserInfo.isSafari && (this.updatedDevices['speakersBeforeChange'] > tspeakers || constrains.audioSource.deviceId !== this.state.constrains.audioSource.deviceId) ) {
-                        // Change in speaker
-                        const speakerSource = constrains.audioSource;
+                    if( !this.state.isbrowsercheck && (this.updatedDevices['speakersBeforeChange'] !== speakersAfterChange) ) {
+                        // Change in SPEAKERS
+                        const speakerSource = this.updatedDevices['speakersBeforeChange'] > speakersAfterChange ? message.data.audiooutput[0] : 
+                        message.data.audiooutput.length > 1 ? message.data.audiooutput[1] : message.data.audiooutput[0];
                         this.selectPeripheral(speakerSource, 'speaker');
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
                     }
                     MediaService.resetDeviceChangeFlag();
                     this.setPeripherals(message);
+                    this.showActivePeripherals();
                     break;
                 case GlobalConfig.TOGGLE_SETTINGS:
                     if(message.data == false){
-                        let vSource = null;
-                        this.state.media.videoinput.map((v)=>{
-                            if(v.deviceId == this.rtc.video_source){ vSource = v; }
-                        });
-                        let mSource = null;
-                        this.state.media.audioinput.map((m)=>{
-                            if(m.deviceId == this.rtc.audio_source){ mSource = m; }
-                        });
-                        this.setState({
-                            constrains: {
-                                audioSource: this.state.constrains.audioSource,
-                                videoSource: vSource ? vSource : this.state.constrains.videoSource,
-                                micSource: mSource ? mSource : this.state.constrains.micSource,
-                            }
-                        });
+                        this.showActivePeripherals();
                     }
                     this.setState({ settingstoggle: message.data });
                     // this.state.settingstoggle = message.data;
@@ -113,6 +99,27 @@ class Settings extends React.Component {
                 audioSource: message.data.audiooutput ? message.data.audiooutput[0] : null,
                 videoSource: message.data.videoinput ? message.data.videoinput[0] : null,
                 micSource: message.data.audioinput ? message.data.audioinput[0] : null,
+            }
+        });
+    }
+    showActivePeripherals(){
+        let vSource = null;
+        this.state.media.videoinput.map((v)=>{
+            if(v.deviceId == this.rtc.video_source){ vSource = v; }
+        });
+        let mSource = null;
+        this.state.media.audioinput.map((m)=>{
+            if(m.deviceId == this.rtc.audio_source){ mSource = m; }
+        });
+        let sSource = null;
+        this.state.media.audiooutput.map((s)=>{
+            if(MediaService.getCurrentSpeakerDevice() && s.deviceId == MediaService.getCurrentSpeakerDevice().deviceId ){ sSource = s; }
+        });
+        this.setState({
+            constrains: {
+                audioSource: sSource ? sSource : this.state.constrains.audioSource,
+                videoSource: vSource ? vSource : this.state.constrains.videoSource,
+                micSource: mSource ? mSource : this.state.constrains.micSource,
             }
         });
     }

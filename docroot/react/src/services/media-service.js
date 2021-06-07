@@ -15,6 +15,7 @@ class MediaService extends React.Component {
         this.mediaData = {};
         this.drawNewCanvas = true;
         this.isDeviceChange = false;
+        this.speaker = null;
         this.onDeviceChange = this.onDeviceChange.bind(this);
         this.loadDeviceMediaData = this.loadDeviceMediaData.bind(this);
     }
@@ -184,6 +185,10 @@ class MediaService extends React.Component {
         return this.mediaData;
     }
 
+    getCurrentSpeakerDevice(){
+        return this.speaker;
+    }
+
     // Triggers when a device is plugged in or plugged out.
     onDeviceChange(event){
       console.log("DEVICE CHANGE EVENT TRIGGERED");
@@ -201,6 +206,7 @@ class MediaService extends React.Component {
 
     // Chages the microphone on dropdown change.
     changeAudioDestination(speaker, dom='preview') {
+      this.speaker = speaker;
       var audioDestination = speaker.deviceId;
       var videoElement = document.getElementById(dom);
       DeviceService.helperRingtoneStop();
