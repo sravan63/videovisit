@@ -40,9 +40,10 @@ class Settings extends React.Component {
                 case GlobalConfig.RECONNECT_ON_DEVICE_CHANGE:
                     // For mobile
                     setTimeout(()=>{
-                        this.rtc.renegotiate();
+                        this.selectPeripheral(this.state.constrains.micSource, 'mic');
+                        this.selectPeripheral(this.state.constrains.videoSource, 'camera');
+                        MediaService.resetDeviceChangeFlag();
                     }, 1000);
-                    MediaService.resetDeviceChangeFlag();
                     break;
                 case GlobalConfig.UPDATE_MEDIA_DEVICES:
                     const speakersAfterChange = this.browserInfo.isSafari ? 0 : message.data.audiooutput.length;
