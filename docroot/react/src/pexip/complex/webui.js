@@ -17,6 +17,7 @@ var conf_uri;
 var pexipInitialConnect = false;
 var conference;
 var videoURL;
+var selfBox;
 var presWidth = 1280;
 var presHeight = 720;
 var presenter;
@@ -741,9 +742,25 @@ function connected(url) {
             if(isChrome) {
                 MessageService.sendMessage(GlobalConfig.MEDIA_STATS_DATA, data);
             }
+            selfBox = document.getElementById("selfvideo");
+            selfBox.addEventListener("touchend", handleEnd, false);
+            selfBox.addEventListener("touchmove", handleMove, false);
             pexipInitialConnect=true;
         }
     }
+}
+
+function handleMove(e){
+    var touchLocation = e.targetTouches[0];
+
+    // assign box new coordinates based on the touch.
+    selfBox.style.left = touchLocation.pageX + 'px';
+    selfBox.style.top = touchLocation.pageY + 'px';
+}
+
+function handleEnd(e){
+    var x = parseInt(selfBox.style.left);
+    var y = parseInt(selfBox.style.top);
 }
 
 export function getMediaStatsData(){
@@ -1255,3 +1272,4 @@ export function muteUnmuteMic() {
         MessageService.sendMessage(GlobalConfig.NOTACTIVESPEAKER,mapUuidToSpeaker);
     }
 }
+
