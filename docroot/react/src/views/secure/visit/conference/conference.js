@@ -65,28 +65,22 @@ class Conference extends React.Component {
         };
         this.noDevicesFound = {
             heading:'No Camera and Microphone Found',
-            message: 'Before you can start your visit you must plugin external camera and microphone.',
+            message: 'Before you can start your visit, you must plug in an external camera and/or microphone.',
             type: 'Permission'
         };
         this.permissionDeniedContent={
             heading: 'Camera and Microphone Access Blocked',
-            displayIcon:'true',
+            message:'Select the camera/microphone or settings icon in the address (URL) bar at the top of your browser to allow access, then refresh.',
             type: 'Denied',
         };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
-            message: 'Check your browser settings to allow access to the Camera and Microphone and then click the Refresh button.',
+            message: 'Select the Refresh button to allow access to your camera and microphone or check your browser settings.',
             type: 'Denied'
-        };
-        this.permissionDeniedforFirefox={
-            heading: 'Camera and Microphone Access Blocked',
-            displayIcon:'true',
-            isMozilla:'true',
-            type: 'Denied',
         };
         this.permissionDeniedMobile={
             heading: 'Camera and Microphone Access Blocked',
-            message: 'Click on the lock icon in the URL bar and grant access in Site Settings, then refresh.',
+            message: 'Select the lock icon in the address (URL) bar at the top of your browser to allow access to your camera and microphone in Permissions, then refresh.',
             type: 'Denied'
         }
     }
@@ -316,9 +310,6 @@ class Conference extends React.Component {
                         let browserInfo = Utilities.getBrowserInformation();
                         if (browserInfo.isSafari) {
                             modalData = this.permissionDeniedForSafari;
-                        }
-                        else if(browserInfo.isFireFox){
-                            modalData = this.permissionDeniedforFirefox;
                         }
                         else {
                             if(Utilities.isMobileDevice()){

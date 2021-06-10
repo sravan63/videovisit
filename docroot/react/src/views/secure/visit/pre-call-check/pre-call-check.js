@@ -36,18 +36,17 @@ class PreCallCheck extends React.Component {
         };
         this.noDevicesFound = {
             heading:'No Camera and Microphone Found',
-            message: 'Before you can start your visit you must plugin external camera and microphone.',
+            message: 'Before you can start your visit, you must plug in an external camera and/or microphone.',
             type: 'Permission'
         };
         this.permissionDeniedForSafari={
             heading: 'Camera and Microphone Access Blocked',
-            message: 'Check your browser settings to allow access to the Camera and Microphone and then click the Refresh button.',
+            message: 'Select the Refresh button to allow access to your camera and microphone or check your browser settings.',
             type: 'Denied'
         };
         this.permissionDeniedforFirefox={
             heading: 'Camera and Microphone Access Blocked',
-            displayIcon:'true',
-            isMozilla:'true',
+            message:'Select the camera/microphone or settings icon in the address (URL) bar at the top of your browser to allow access, then refresh.',
             type: 'Denied',
         };
     }

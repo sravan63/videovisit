@@ -47,12 +47,15 @@ class VVModal extends React.Component {
             {this.state.showOverlay ? (
             <div id="leaveMeetingPopup" className="leaveMeeting-popup">
                 <div className="popup-content">
-                    { this.state.popupOptions.type && this.state.popupOptions.type.length > 0 ?  (<div><h5>{ this.state.popupOptions.heading }</h5>
+                    { this.state.popupOptions.type && this.state.popupOptions.type.length > 0 ? (<div><h5>{ this.state.popupOptions.heading }</h5>
                         { this.state.popupOptions.type=='Permission' ? (<p>{ this.state.popupOptions.message }</p>) :
-                            (<div className="selectIcon">{this.state.popupOptions.displayIcon=='true'?<p>Click on the <span id="camIcon" className={this.state.popupOptions.isMozilla=='true'?'camMicIcon':'cameraIcon'}> </span>in the
-                                URL bar to grant access, then refresh.</p>:<p>{ this.state.popupOptions.message }</p>}<div className= "refreshButton">
-                            <button type="button" className="refresh" onClick={this.refreshPage}>Refresh</button>
-                            </div></div>)}</div>):(<div><h3>{ this.state.popupOptions.heading }</h3>
+                            (<div className="selectIcon">
+                                <p>{ this.state.popupOptions.message }</p>
+                                <div className= "refreshButton">
+                                    <button type="button" className="refresh" onClick={this.refreshPage}>Refresh</button>
+                                </div>
+                            </div>)}
+                    </div>):(<div><h3>{ this.state.popupOptions.heading }</h3>
                         <h4>{ this.state.popupOptions.message }</h4></div>) }
                     <div className= "overlayButton">
                         { this.state.popupOptions.controls && this.state.popupOptions.controls.length > 0 ? 
