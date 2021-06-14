@@ -470,14 +470,15 @@ export function sipDialOut() {
 
 export function sendChatContent(participants, vmr, userName){
     let loggedInUser = participants.filter(me => me.display_name.toLowerCase().trim() === userName.toLowerCase().trim());
-    if(loggedInUser && loggedInUser.length > 0){
+    if(loggedInUser && loggedInUser.length > 0) {
+        let screenOrientation = screen.orientation.type.split("-")[0];
         let chatContent= {
-            aspectMode: screen.orientation.type.split("-")[0], 
+            aspectMode: screenOrientation, 
             chatCmd: "selfAspectMode", 
             chatVersion: "0.9.0", 
             clientID: "VideoVisits", 
             cmd: "selfAspectMode", 
-            cmdArgs: {aspectMode: screen.orientation.type.split("-")[0]}, 
+            cmdArgs: {aspectMode: screenOrientation}, 
             fromUUID: loggedInUser[0].uuid, 
             toUUID: loggedInUser[0].uuid, 
             vmr
