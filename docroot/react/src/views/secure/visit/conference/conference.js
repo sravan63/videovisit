@@ -24,7 +24,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = {isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -43,6 +43,9 @@ class Conference extends React.Component {
         this.leaveOverlayMeeting = this.leaveOverlayMeeting.bind(this);
         this.stayinMeeting = this.stayinMeeting.bind(this);
         this.leaveMeeting = this.leaveMeeting.bind(this);
+        this.setPIPMode = this.setPIPMode.bind(this);
+        this.appendParticipant = this.appendParticipant.bind(this);
+        this.removeParticipant = this.removeParticipant.bind(this);
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
@@ -237,9 +240,11 @@ class Conference extends React.Component {
                     break;       
                 case GlobalConfig.START_SCREENSHARE:
                     this.setState({ showSharedContent: true });
+                    this.setState({isPIPMode: false});
                     break;
                 case GlobalConfig.STOP_SCREENSHARE:
                     this.setState({ showSharedContent: false });
+                    this.setState({isPIPMode: true});
                     break;
                 case GlobalConfig.MEDIA_DATA_READY:  
                     this.list = message.data;
@@ -337,6 +342,15 @@ class Conference extends React.Component {
                 case GlobalConfig.HIDE_LOADER:
                     this.setState({showLoader:false});
                     break;
+                case GlobalConfig.USER_JOINED:
+                    this.appendParticipant(message.data);
+                break;
+                case GlobalConfig.USER_LEFT:
+                    this.removeParticipant(message.data);
+                break;
+                case GlobalConfig.SELF_ASPECT_MODE:
+                    message.data.toLowerCase()==="portrait" ? this.setState({isPIPMode: true}): this.setState({isPIPMode: false});
+                break;
             }
 
         });
@@ -351,6 +365,22 @@ class Conference extends React.Component {
                     this.getLanguage();
                 }
             });
+    }
+
+    appendParticipant(newParticipant) {
+        this.setState({
+            participants: [...this.state.participants, newParticipant]
+          },function() {
+            this.setState({isPIPMode: this.setPIPMode()});
+        });
+    }
+
+    removeParticipant(leftParticipant) {
+        this.setState({participants: this.state.participants.filter(function(participant) { 
+            return participant.uuid !== leftParticipant.uuid; 
+        })}, function(){
+            this.setState({isPIPMode: this.setPIPMode()});
+        });
     }
 
     deviceChanged(){
@@ -384,12 +414,22 @@ class Conference extends React.Component {
             console.log("Error");
         });
     }*/
-    handleResize(){
+    handleResize() {
+        let loggedInUserName = JSON.parse(localStorage.getItem('memberName'));
+
         if(this.state.moreparticpants){
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
         }
-
+        // OrientationChange Deprecated so using resize handler
+        if (window.matchMedia("(orientation: portrait)").matches) {
+            this.setState({isPIPMode: this.setPIPMode()});
+            WebUI.sendChatContent(this.state.participants, this.state.meetingDetails.meetingVendorId, loggedInUserName);
+         }
+         if (window.matchMedia("(orientation: landscape)").matches) {
+           this.setState({isPIPMode: false});
+           WebUI.sendChatContent(this.state.participants, this.state.meetingDetails.meetingVendorId, loggedInUserName);
+         }
     } 
 
     handleVisibilityChange() {
@@ -934,6 +974,20 @@ class Conference extends React.Component {
         
     }
 
+    setPIPMode() {
+        if(window.matchMedia("(orientation: portrait)").matches && this.state.isMobile) {
+            if(this.state.participants && this.state.participants.length > 0 ) {
+                let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
+                //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
+                let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" ); // && p.selfAspectMode.toUpperCase() === "PORTRAIT");
+                if(participantCount === 2 && isNotLandscapeOrAudioCall && !this.state.showSharedContent) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     render() {
         let Details = this.state.staticData;
         return (
@@ -973,13 +1027,16 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
-                                            <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                            <video ref ={this.remoteFeedMedia} className={this.state.isPIPMode ? 'remoteFeedPIP':'remoteFeed'} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                            {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               <video ref={this.selfViewMedia} id="selfvideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
-                               </video>
+                               <video ref={this.selfViewMedia} id="selfvideo" className={this.state.isPIPMode ? 'selfViewVideoPIP':'selfViewVideo'} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
+                                </video>
+                               {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
+                               </video> */}
                             </div>
                             <div id="controls" className="controls-bar">
                               <ul className="video-controls m-0">

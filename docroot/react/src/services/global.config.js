@@ -75,6 +75,7 @@ const GlobalConfig = {
     STOP_SCREENSHARE: 'stop screenshare',
     USER_JOINED: 'user joined',
     USER_LEFT: 'user left',
+    SELF_ASPECT_MODE: 'SelfAspectMode',
     ERROR_PAGE: _rootUrl + 'authenticationFailed',
     ENABLE_IOS_CAM:'Enable IOS cam',
     INAPP_LEAVEMEETING:'Leave Meeting InApp',

@@ -65,6 +65,7 @@ var refreshingOrSelfJoinMeeting = true;
 var disconnectAlreadyCalled = false;
 var userDetails = { uuid: null };
 var connectionRefused = false;
+var loggedInUserName;
 
 var rtc = new PexRTC();
 
@@ -467,6 +468,25 @@ export function sipDialOut() {
     //console.log("phone_num: " +phone_num);
 }
 
+export function sendChatContent(participants, vmr, userName){
+    let loggedInUser = participants.filter(me => me.display_name.toLowerCase().trim() === userName.toLowerCase().trim());
+    if(loggedInUser && loggedInUser.length > 0){
+        let chatContent= {
+            aspectMode: screen.orientation.type.split("-")[0], 
+            chatCmd: "selfAspectMode", 
+            chatVersion: "0.9.0", 
+            clientID: "VideoVisits", 
+            cmd: "selfAspectMode", 
+            cmdArgs: {aspectMode: screen.orientation.type.split("-")[0]}, 
+            fromUUID: loggedInUser[0].uuid, 
+            toUUID: loggedInUser[0].uuid, 
+            vmr
+        };
+
+        rtc.sendChatMessage(chatContent);
+    }
+}
+
 function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     var uniqueKey = '';
@@ -516,7 +536,12 @@ function participantCreated(participant) {
             sessionStorage.setItem('UUID',participant.uuid);
         // }
     }
+    loggedInUserName = loginUserName;
     toggleWaitingRoom(pexipParticipantsList);
+    
+    if(UtilityService.isMobileDevice()) {
+        sendChatContent(pexipParticipantsList,conference,loggedInUserName);
+    }
 }
 
 export function validateLoggedInUser(uniqueKey){
@@ -552,6 +577,7 @@ function participantDeleted(participant) {
     if (isMobileDevice) {
         updateParticipantList(participant, 'left');
         console.log("inside participantDeleted");
+        sendChatContent(pexipParticipantsList,conference,loggedInUserName);
     } else {
         var removingParticipant = pexipParticipantsList.filter(function(user) {
             return user.uuid == participant.uuid;
@@ -943,41 +969,47 @@ function getTurnServersObjs(turnServerDetails) {
 }
 
 function chatReceived(message){
-    if(message.payload && message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
-        // Received text format DUPLICATE_MEMBER#DUPLICATE_ARRAY_LIST
-        var mData = message.payload.split('#');
-        var duplicateList = JSON.parse(mData[1]);
-        var userUUID = sessionStorage.getItem('UUID');
-        var isDuplicateUser = false;
-        var loggedInAs = '';
-        log("info", 'DuplicateMemberInVisit', "event: DuplicateMembersJoined - Total duplicate members in visit "+duplicateList.length);
-        duplicateList.map((u)=>{
-            var dName = u.name; // mama, joe 2
-            var uuid = u.uuid;
-            // Update duplicate names in the participants list.
-            if( uuid == userUUID ) {
-                isDuplicateUser = true;
-                loggedInAs = dName.trim();
-            } else {
+    if(message.payload) {
+        if(typeof message.payload === 'string' && message.payload.indexOf("cmdArgs") !== -1) {
+            let chatContent = JSON.parse(message.payload);
+            MessageService.sendMessage(GlobalConfig.SELF_ASPECT_MODE, chatContent.cmdArgs.aspectMode);
+        }
+        if(message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
+            // Received text format DUPLICATE_MEMBER#DUPLICATE_ARRAY_LIST
+            var mData = message.payload.split('#');
+            var duplicateList = JSON.parse(mData[1]);
+            var userUUID = sessionStorage.getItem('UUID');
+            var isDuplicateUser = false;
+            var loggedInAs = '';
+            log("info", 'DuplicateMemberInVisit', "event: DuplicateMembersJoined - Total duplicate members in visit "+duplicateList.length);
+            duplicateList.map((u)=>{
+                var dName = u.name; // mama, joe 2
+                var uuid = u.uuid;
+                // Update duplicate names in the participants list.
+                if( uuid == userUUID ) {
+                    isDuplicateUser = true;
+                    loggedInAs = dName.trim();
+                } else {
+                    pexipParticipantsList.map((p)=>{
+                        if( p.uuid == uuid ) {
+                            p.display_name = dName;
+                            MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:dName});
+                        }
+                    });
+                }
+            });
+            if( isDuplicateUser ){
+                localStorage.setItem('memberName', JSON.stringify(loggedInAs));
+                sessionStorage.setItem('loggedAsDuplicateMember', true);
+                // Extracting actual patient name.
+                var patientName = loggedInAs.slice(0, -1).trim();
+                // Append actual patient to side bar.
                 pexipParticipantsList.map((p)=>{
-                    if( p.uuid == uuid ) {
-                        p.display_name = dName;
-                        MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:dName});
+                    if( p.display_name.toLowerCase().trim() == patientName.toLowerCase().trim() ){
+                        MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:p.uuid, name:patientName});
                     }
                 });
             }
-        });
-        if( isDuplicateUser ){
-            localStorage.setItem('memberName', JSON.stringify(loggedInAs));
-            sessionStorage.setItem('loggedAsDuplicateMember', true);
-            // Extracting actual patient name.
-            var patientName = loggedInAs.slice(0, -1).trim();
-            // Append actual patient to side bar.
-            pexipParticipantsList.map((p)=>{
-                if( p.display_name.toLowerCase().trim() == patientName.toLowerCase().trim() ){
-                    MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:p.uuid, name:patientName});
-                }
-            });
         }
     }
 }
