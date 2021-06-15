@@ -24,7 +24,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = {selfAspectMode: '', isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -349,7 +349,9 @@ class Conference extends React.Component {
                     this.removeParticipant(message.data);
                 break;
                 case GlobalConfig.SELF_ASPECT_MODE:
-                    message.data.toLowerCase()==="portrait" ? this.setState({isPIPMode: true}): this.setState({isPIPMode: false});
+                    let screenMode= message.data.toLowerCase();
+                    screenMode ==="portrait" ? this.setState({isPIPMode: true}): this.setState({isPIPMode: false});
+                    this.setState({selfAspectMode: screenMode});
                 break;
             }
 
@@ -977,17 +979,17 @@ class Conference extends React.Component {
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
             if(this.state.participants && this.state.participants.length > 0 ) {
-                //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
+                let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
-                let participantCount = this.state.participants.length;
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
-                if(participantCount === 2 && isNotAudioCall && !this.state.showSharedContent) {
+                if(participantCount === 2 && this.state.selfAspectMode==='portrait' && isNotAudioCall && !this.state.showSharedContent) {
                     //let vh = window.innerHeight - 60;
                     //this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
                     return true;
                 }
             }
         }
+        this.remoteFeedMedia.current.style.removeProperty("height");
         return false;
     }
 
