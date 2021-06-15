@@ -429,7 +429,7 @@ class Conference extends React.Component {
             WebUI.sendChatContent(this.state.participants, this.state.meetingDetails.meetingVendorId, loggedInUserName);
          }
          if (window.matchMedia("(orientation: landscape)").matches) {
-           this.setState({isPIPMode: false});
+           this.setState({isPIPMode: this.setPIPMode()});
            WebUI.sendChatContent(this.state.participants, this.state.meetingDetails.meetingVendorId, loggedInUserName);
          }
     } 
@@ -983,8 +983,8 @@ class Conference extends React.Component {
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
                 if(participantCount === 2 && this.state.selfAspectMode==='portrait' && isNotAudioCall && !this.state.showSharedContent) {
-                    //let vh = window.innerHeight - 60;
-                    //this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
+                    let vh = window.innerHeight - 55;
+                    this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
                     return true;
                 }
             }
