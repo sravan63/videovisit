@@ -505,7 +505,7 @@ class ConferenceDetails extends React.Component {
                             {this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'time')}
                             <span>{this.getHoursAndMinutes(this.state.meetingDetails.meetingTime, 'date')}</span>
                         </div>
-                        <div style={{display: this.state.isRunningLate ? 'block' : 'none' }}>
+                        <div className="runningLate-time" style={{display: this.state.isRunningLate ? 'block' : 'none' }}>
                             <span className="time-display">{Details && Details.Updated}: {this.updateRunningLateTime()}</span>
                         </div>
                     </div>
