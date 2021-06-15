@@ -975,12 +975,15 @@ class Conference extends React.Component {
     }
 
     setPIPMode() {
-        if(window.matchMedia("(orientation: portrait)").matches && this.state.isMobile) {
+        if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
             if(this.state.participants && this.state.participants.length > 0 ) {
-                let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
+                //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
-                let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" ); // && p.selfAspectMode.toUpperCase() === "PORTRAIT");
-                if(participantCount === 2 && isNotLandscapeOrAudioCall && !this.state.showSharedContent) {
+                let participantCount = this.state.participants.length;
+                let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
+                if(participantCount === 2 && isNotAudioCall && !this.state.showSharedContent) {
+                    //let vh = window.innerHeight - 60;
+                    //this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
                     return true;
                 }
             }
