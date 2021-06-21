@@ -468,24 +468,35 @@ export function sipDialOut() {
     //console.log("phone_num: " +phone_num);
 }
 
-export function sendChatContent(participants, vmr, userName){
-    let loggedInUser = participants.filter(me => me.display_name.toLowerCase().trim() === userName.toLowerCase().trim());
-    if(loggedInUser && loggedInUser.length > 0) {
-        let screenOrientation = screen.orientation.type.split("-")[0];
+// vmr: meetingVendorId and cmdArgs is aspectMode: screenOrientation
+export function sendChatContent(vmr, cmdArgs) {
+    let loggedInUserUUID= sessionStorage.getItem("UUID");
+    
+    if(loggedInUserUUID) {
         let chatContent= {
-            aspectMode: screenOrientation, 
+            aspectMode: cmdArgs.aspectMode, 
             chatCmd: "selfAspectMode", 
             chatVersion: "0.9.0", 
             clientID: "VideoVisits", 
             cmd: "selfAspectMode", 
-            cmdArgs: {aspectMode: screenOrientation}, 
-            fromUUID: loggedInUser[0].uuid, 
-            toUUID: loggedInUser[0].uuid, 
+            cmdArgs, 
+            fromUUID: loggedInUserUUID, 
+            toUUID: loggedInUserUUID, 
             vmr
         };
 
         rtc.sendChatMessage(chatContent);
     }
+}
+
+function getAspectMode() {
+    if(window.matchMedia("(orientation: portrait)").matches) {
+        return "portrait";
+    }
+    else if(window.matchMedia("(orientation: landscape)").matches){
+        return "landscape";
+    }
+    return null;
 }
 
 function participantCreated(participant) {
@@ -541,7 +552,7 @@ function participantCreated(participant) {
     toggleWaitingRoom(pexipParticipantsList);
     
     if(UtilityService.isMobileDevice()) {
-        sendChatContent(pexipParticipantsList,conference,loggedInUserName);
+        sendChatContent(conference, {aspectMode: getAspectMode()});
     }
 }
 
@@ -578,7 +589,7 @@ function participantDeleted(participant) {
     if (isMobileDevice) {
         updateParticipantList(participant, 'left');
         console.log("inside participantDeleted");
-        sendChatContent(pexipParticipantsList,conference,loggedInUserName);
+        sendChatContent(conference, {aspectMode: getAspectMode()});
     } else {
         var removingParticipant = pexipParticipantsList.filter(function(user) {
             return user.uuid == participant.uuid;

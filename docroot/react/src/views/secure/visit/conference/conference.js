@@ -385,8 +385,11 @@ class Conference extends React.Component {
         });
     }
 
-    deviceChanged(){
-        MediaService.onDeviceChange();
+    deviceChanged() {
+        //disabling this code to test PIP US defect, will enable after that.
+        if(false) {
+            MediaService.onDeviceChange();
+        }
     }
 
     sendMediaStats(data) {
@@ -417,21 +420,19 @@ class Conference extends React.Component {
         });
     }*/
     handleResize() {
-        let loggedInUserName = JSON.parse(localStorage.getItem('memberName'));
-
-        if(this.state.moreparticpants){
+       if(this.state.moreparticpants) {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
         }
         // OrientationChange Deprecated so using resize handler
         if (window.matchMedia("(orientation: portrait)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
-            WebUI.sendChatContent(this.state.participants, this.state.meetingDetails.meetingVendorId, loggedInUserName);
-         }
+            WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId, {aspectMode: "portrait"});
+        }
          if (window.matchMedia("(orientation: landscape)").matches) {
            this.setState({isPIPMode: this.setPIPMode()});
-           WebUI.sendChatContent(this.state.participants, this.state.meetingDetails.meetingVendorId, loggedInUserName);
-         }
+           WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId, {aspectMode: "landscape"});
+        }
     } 
 
     handleVisibilityChange() {
@@ -979,10 +980,12 @@ class Conference extends React.Component {
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
             if(this.state.participants && this.state.participants.length > 0 ) {
-                let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
+                //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
-                if(participantCount === 2 && this.screenMode==='portrait' && isNotAudioCall && !this.state.showSharedContent) {
+                let participantCount = this.state.participants.length;
+
+                if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent) {
                     let vh = window.innerHeight - 55;
                     this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
                     return true;
