@@ -386,10 +386,7 @@ class Conference extends React.Component {
     }
 
     deviceChanged() {
-        //disabling this code to test PIP US defect, will enable after that.
-        if(false) {
-            MediaService.onDeviceChange();
-        }
+        MediaService.onDeviceChange();
     }
 
     sendMediaStats(data) {
@@ -980,10 +977,10 @@ class Conference extends React.Component {
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
             if(this.state.participants && this.state.participants.length > 0 ) {
-                //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
+                let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
-                let participantCount = this.state.participants.length;
+                //let participantCount = this.state.participants.length;
 
                 if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent) {
                     let vh = window.innerHeight - 55;
