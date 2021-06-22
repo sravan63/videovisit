@@ -425,7 +425,7 @@ class Conference extends React.Component {
         if (window.matchMedia("(orientation: portrait)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId, {aspectMode: "portrait"});
-        }
+          }
          if (window.matchMedia("(orientation: landscape)").matches) {
            this.setState({isPIPMode: this.setPIPMode()});
            WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId, {aspectMode: "landscape"});
@@ -977,12 +977,12 @@ class Conference extends React.Component {
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
             if(this.state.participants && this.state.participants.length > 0 ) {
+                let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
                 //let participantCount = this.state.participants.length;
-
-                if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent) {
+                if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 55;
                     this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
                     return true;
@@ -1031,7 +1031,7 @@ class Conference extends React.Component {
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                        <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
+                                    <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
                                             <video ref ={this.remoteFeedMedia} className={this.state.isPIPMode ? 'remoteFeedPIP':'remoteFeed'} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>
