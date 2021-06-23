@@ -211,6 +211,10 @@
                 display: none; // For temporary use
             }
 
+            .stream-containerPIP{
+                width:100%
+            }
+
             .selfViewVideo {
                 position: absolute;
                 z-index: 2;
@@ -223,7 +227,7 @@
 
             .selfViewVideoPIP {
                 z-index: 1;
-                top: 0px;
+                bottom: 55px;
                 max-width: 45%;
                 max-height: 25%;
                 right:0;
@@ -286,6 +290,9 @@
         .video-conference-container {
             .stream-container {
                 width: 91.5% !important;
+            }
+            .stream-containerPIP{
+                width:100%
             }
             .presentation-view {
                 width: 91.5% !important;
@@ -385,7 +392,7 @@
 
                     .selfViewVideoPIP {
                         z-index: 1;
-                        top: 0px;
+                        bottom: 55px;
                         max-width: 45%;
                         max-height: 25%;
                         right:0;
