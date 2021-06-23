@@ -471,7 +471,7 @@ export function sipDialOut() {
 // vmr: meetingVendorId and cmdArgs is aspectMode: screenOrientation
 export function sendChatContent(vmr, cmdArgs) {
     let loggedInUserUUID= sessionStorage.getItem("UUID");
-    
+
     if(loggedInUserUUID) {
         let chatContent= {
             aspectMode: cmdArgs.aspectMode, 
@@ -980,11 +980,13 @@ function getTurnServersObjs(turnServerDetails) {
     return t_servers;
 }
 
-function chatReceived(message){
+function chatReceived(message) {
     if(message.payload) {
         if(typeof message.payload === 'string' && message.payload.indexOf("cmdArgs") !== -1) {
             let chatContent = JSON.parse(message.payload);
-            MessageService.sendMessage(GlobalConfig.SELF_ASPECT_MODE, chatContent.cmdArgs.aspectMode);
+            if(chatContent.cmdArgs.aspectMode) {
+                MessageService.sendMessage(GlobalConfig.SELF_ASPECT_MODE, chatContent.cmdArgs.aspectMode);
+            }
         }
         if(message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
             // Received text format DUPLICATE_MEMBER#DUPLICATE_ARRAY_LIST
