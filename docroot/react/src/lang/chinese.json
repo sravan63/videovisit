@@ -93,6 +93,12 @@
       "ErrorVisitUnavailable":"你要加入的視訊就診目前無法連接",
       "ErrorNoMatchingMsg":"未找到匹配的患者。請重試。",
       "CameraAccessPermissionMsg":"需要能夠使用相機和麥克風",
-      "VisitStartNotificationMsg":"在可以開始您的就診之前，您必須能夠使用您的相機和麥克風。"
+      "VisitStartNotificationMsg":"在可以開始您的就診之前，您必須能夠使用您的相機和麥克風。",
+      "NoDeviceFoundHeader":"未找到攝像鏡頭和麥克風",
+      "NoDeviceFoundMsg":"在開始就診前，您必須插入外部攝像鏡頭和/或麥克風。",
+      "CameraAccessBlockHeader":"攝像鏡頭和麥克風已禁用",
+      "CameraAccessBlockDefaultMsg":"在您的瀏覽器上方的地址 (URL)欄選擇攝像鏡頭/麥克風或設置圖符以允許使用，然後刷新。",
+      "CameraAccessBlockSafariMsg":"點選「Refresh」（刷新）按鈕以允許使用您的攝像鏡頭和麥克風，或檢查您的瀏覽器設置。",
+      "CameraAccessBlockMobileMsg":"在您的瀏覽器上方的地址 (URL)欄點選鎖的圖符，在「 Permissions」（許可）項下選擇允許使用攝像鏡頭/麥克風，然後刷新。"
     }
 }

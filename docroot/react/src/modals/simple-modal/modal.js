@@ -42,6 +42,7 @@ class VVModal extends React.Component {
     }
 
     render() {
+    let Details = UtilityService.getLang();
     return (
         <div className="vv-modal">
             {this.state.showOverlay ? (
@@ -52,7 +53,7 @@ class VVModal extends React.Component {
                             (<div className="selectIcon">
                                 <p>{ this.state.popupOptions.message }</p>
                                 <div className= "refreshButton">
-                                    <button type="button" className="refresh" onClick={this.refreshPage}>Refresh</button>
+                                    <button type="button" className="refresh" onClick={this.refreshPage}>{Details.conference.Refresh}</button>
                                 </div>
                             </div>)}
                     </div>):(<div><h3>{ this.state.popupOptions.heading }</h3>

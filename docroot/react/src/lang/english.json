@@ -93,6 +93,12 @@
       "ErrorVisitUnavailable":"The video visit you’re trying to join isn’t currently available",
       "ErrorNoMatchingMsg":"No matching patient found. Please try again.",
       "CameraAccessPermissionMsg":"Camera and Microphone Access Required",
-      "VisitStartNotificationMsg":"Before you can start your visit, you must allow access to your camera and microphone."
+      "VisitStartNotificationMsg":"Before you can start your visit, you must allow access to your camera and microphone.",
+      "NoDeviceFoundHeader":"No Camera and Microphone Found",
+      "NoDeviceFoundMsg":"Before you can start your visit, you must plug in an external camera and/or microphone.",
+      "CameraAccessBlockHeader":"Camera and Microphone Access Blocked",
+      "CameraAccessBlockDefaultMsg":"Select the camera/microphone or settings icon in the address (URL) bar at the top of your browser to allow access, then refresh.",
+      "CameraAccessBlockSafariMsg":"Select the Refresh button to allow access to your camera and microphone or check your browser settings.",
+      "CameraAccessBlockMobileMsg":"Select the lock icon in the address (URL) bar at the top of your browser to allow access to your camera and microphone in Permissions, then refresh."
     }
 }

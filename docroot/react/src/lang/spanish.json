@@ -93,6 +93,12 @@
       "ErrorVisitUnavailable":"La videoconsulta a la que está intentando ingresar no está disponible",
       "ErrorNoMatchingMsg":"No se encontró tal paciente. Vuelva a intentarlo.",
       "CameraAccessPermissionMsg":"Necesita acceso a la cámara y al micrófono",
-      "VisitStartNotificationMsg":"Antes de que pueda empezar su consulta, debe permitir el acceso a su cámara y micrófono."
+      "VisitStartNotificationMsg":"Antes de que pueda empezar su consulta, debe permitir el acceso a su cámara y micrófono.",
+      "NoDeviceFoundHeader":"No se ha encontrado la cámara o el micrófono",
+      "NoDeviceFoundMsg":"Antes de empezar su consulta, debe conectar una cámara o un micrófono externos.",
+      "CameraAccessBlockHeader":"El acceso a la cámara y al micrófono está bloqueado",
+      "CameraAccessBlockDefaultMsg":"Seleccione el ícono de la cámara/del micrófono o el de configuraciones en la barra de direcciones (URL) en la parte superior de su navegador para permitir el acceso, después haga clic en actualizar.",
+      "CameraAccessBlockSafariMsg":"Seleccione el botón de actualizar para permitir el acceso a su cámara y al micrófono o revise las configuraciones de su navegador.",
+      "CameraAccessBlockMobileMsg":"Seleccione el ícono del candado en la barra de direcciones (URL) en la parte de arriba de su navegador para permitir el acceso a su cámara y al micrófono en Permisos, después haga clic en actualizar."
     }
 }
