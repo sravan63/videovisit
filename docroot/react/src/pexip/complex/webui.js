@@ -486,7 +486,7 @@ export function sendChatContent(vmr, arg) {
             vmr
         };
 
-        rtc.sendChatMessage(chatContent);
+        rtc.sendChatMessage(JSON.stringify(chatContent));
     }
 }
 

@@ -234,8 +234,25 @@
                 position: absolute;
             }
 
+            .flipSelfViewVideoPIP {
+                z-index: 1;
+                object-fit: cover;
+                max-width: 100%;
+                position: absolute;
+                top: 0;
+            }
+
             .remoteFeedPIP{
                 object-fit: cover; 
+             }
+             
+             .flipRemoteFeedPIP {
+                max-width: 26%;
+                right: 0;
+                height: auto;
+                bottom: 55px;
+                position: fixed;
+                z-index: 3;
              }
 
             .presentation-view {
@@ -375,6 +392,15 @@
                     .remoteFeedPIP{
                        object-fit: cover; 
                     }
+
+                    .flipRemoteFeedPIP {
+                        max-width: 45%;
+                        right: 0;
+                        height: auto;
+                        bottom: 55px;
+                        position: fixed;
+                        z-index: 3;
+                     }
                 }
 
                 .self-view {
@@ -397,6 +423,14 @@
                         max-height: 25%;
                         right:0;
                         position: absolute;
+                    }
+
+                    .flipSelfViewVideoPIP {
+                        z-index: 1;
+                        object-fit: cover;
+                        max-width: 100%;
+                        position: absolute;
+                        top: 0;
                     }
                 }
             }
