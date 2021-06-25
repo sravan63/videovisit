@@ -468,9 +468,10 @@ export function sipDialOut() {
     //console.log("phone_num: " +phone_num);
 }
 
-// vmr: meetingVendorId and cmdArgs is aspectMode: screenOrientation
-export function sendChatContent(vmr, cmdArgs) {
+// vmr: meetingVendorId and arg conatins any value passed by consumer
+export function sendChatContent(vmr, arg) {
     let loggedInUserUUID= sessionStorage.getItem("UUID");
+    let cmdArgs= {aspectMode: getAspectMode()};
 
     if(loggedInUserUUID) {
         let chatContent= {
@@ -552,7 +553,7 @@ function participantCreated(participant) {
     toggleWaitingRoom(pexipParticipantsList);
     
     if(UtilityService.isMobileDevice()) {
-        sendChatContent(conference, {aspectMode: getAspectMode()});
+        sendChatContent(conference);
     }
 }
 
@@ -589,7 +590,7 @@ function participantDeleted(participant) {
     if (isMobileDevice) {
         updateParticipantList(participant, 'left');
         console.log("inside participantDeleted");
-        sendChatContent(conference, {aspectMode: getAspectMode()});
+        sendChatContent(conference);
     } else {
         var removingParticipant = pexipParticipantsList.filter(function(user) {
             return user.uuid == participant.uuid;

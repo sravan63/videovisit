@@ -350,8 +350,10 @@ class Conference extends React.Component {
                     this.removeParticipant(message.data);
                 break;
                 case GlobalConfig.SELF_ASPECT_MODE:
-                    this.screenMode= message.data.toLowerCase();
-                    this.setState({isPIPMode: this.setPIPMode()})
+                    if(message && message.data) {
+                        this.screenMode= message.data.toLowerCase();
+                        this.setState({isPIPMode: this.setPIPMode()});
+                    }
                 break;
             }
 
@@ -424,11 +426,11 @@ class Conference extends React.Component {
         // OrientationChange Deprecated so using resize handler
         if (window.matchMedia("(orientation: portrait)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
-            WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId, {aspectMode: "portrait"});
-          }
+            WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
+        }
          if (window.matchMedia("(orientation: landscape)").matches) {
            this.setState({isPIPMode: this.setPIPMode()});
-           WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId, {aspectMode: "landscape"});
+           WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
     } 
 
@@ -994,7 +996,19 @@ class Conference extends React.Component {
     }
 
     render() {
-        let Details = this.state.staticData;
+        let remoteFeedClass, selfViewClass, Details = this.state.staticData;
+        let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
+        
+        if(this.state.isPIPMode) {
+            remoteStreamContainerClass = `${remoteStreamContainerClass} stream-containerPIP`;
+            remoteFeedClass =  'remoteFeedPIP';
+            selfViewClass =  'selfViewVideoPIP';
+        }
+        else{
+            remoteFeedClass = 'remoteFeed';
+            selfViewClass = 'selfViewVideo';
+        }
+
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -1031,14 +1045,14 @@ class Conference extends React.Component {
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                    <div className={this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container'} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
-                                            <video ref ={this.remoteFeedMedia} className={this.state.isPIPMode ? 'remoteFeedPIP':'remoteFeed'} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                        <div className={remoteStreamContainerClass} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
+                                            <video ref ={this.remoteFeedMedia} data-view="larger"  className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>
                                     <Settings data={Details} />
                             </div>
-                            <div id="selfview" className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               <video ref={this.selfViewMedia} id="selfvideo" className={this.state.isPIPMode ? 'selfViewVideoPIP':'selfViewVideo'} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
+                            <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
+                               <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
                                 </video>
                                {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
                                </video> */}
