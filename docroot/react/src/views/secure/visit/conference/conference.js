@@ -37,6 +37,13 @@ class Conference extends React.Component {
         this.overlayTimer = 0;
         this.timerForLeaveMeeting = 0;
         this.visibilityChange = null;
+        this.initialPositionTop = '';
+        this.initialPositionLeft = '';
+        this.widthSideBar = 0;
+        this.pos1 = 0;
+        this.pos2 = 0;
+        this.pos3 = 0;
+        this.pos4 = 0;
         this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
         this.deviceChanged = this.deviceChanged.bind(this);
         this.handleResize = this.handleResize.bind(this);
@@ -47,6 +54,12 @@ class Conference extends React.Component {
         this.appendParticipant = this.appendParticipant.bind(this);
         this.removeParticipant = this.removeParticipant.bind(this);
         this.flipView = this.flipView.bind(this);
+        this.dragElement = this.dragElement.bind(this);
+        this.dragMouseDown = this.dragMouseDown.bind(this);
+        this.elementDrag = this.elementDrag.bind(this);
+        this.closeDragElement = this.closeDragElement.bind(this);
+        this.handleEnd = this.handleEnd.bind(this);
+        this.handleMove = this.handleMove.bind(this);
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
@@ -197,6 +210,12 @@ class Conference extends React.Component {
                  this.startTimerforLeaveMeeting();
             }, 5000);
         }
+        let selfBox = document.getElementById("selfvideo");
+        this.dragElement(selfBox);
+        this.initialPositionTop = selfBox.offsetTop + "px";
+        this.initialPositionLeft = selfBox.offsetLeft + "px";
+        selfBox.addEventListener("touchend", this.handleEnd, false);
+        selfBox.addEventListener("touchmove", this.handleMove, false);
 
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
@@ -340,6 +359,9 @@ class Conference extends React.Component {
                     if(message.data!='preCallCheck') {
                         this.setState({showRemotefeed: true, showVideoFeed:true, showLoader:false});
                     }
+                    let element = document.querySelector('.conference-details');
+                    let positionInfo = element.getBoundingClientRect();
+                    this.widthSideBar = positionInfo.width;
                     break;
                 case GlobalConfig.HIDE_LOADER:
                     this.setState({showLoader:false});
@@ -371,6 +393,91 @@ class Conference extends React.Component {
                 }
             });
     }
+
+    dragElement(elmnt) {
+        document.getElementById(elmnt.id).onmousedown = this.dragMouseDown;
+    }
+
+    dragMouseDown(e) {
+        e = e || window.event;
+        e.preventDefault();
+        // get the mouse cursor position at startup:
+        this.pos3 = e.clientX;
+        this.pos4 = e.clientY;
+        document.onmouseup = this.closeDragElement;
+        // call a function whenever the cursor moves:
+        document.onmousemove = this.elementDrag;
+    }
+
+     elementDrag(e) {
+        e = e || window.event;
+        e.preventDefault();
+        let elmnt = this.selfViewMedia.current;
+
+        // calculate the new cursor position:
+        this.pos1 = this.pos3 - e.clientX;
+        this.pos2 = this.pos4 - e.clientY;
+        this.pos3 = e.clientX;
+        this.pos4 = e.clientY;
+        // set the element's new position:
+         //
+
+        if(window.innerWidth <= 1024){
+
+        }
+        else {
+            if ((elmnt.offsetTop - this.pos2) < -98 && window.innerWidth > 1024) {
+                elmnt.style.top = "-98px";
+            } else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
+                elmnt.style.top = this.initialPositionTop;
+            } else {
+                elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
+            }
+
+            if (elmnt.offsetLeft - this.pos1 < 2) {
+                elmnt.style.left = "0px";
+            } else if (elmnt.offsetLeft - this.pos1 > parseInt(this.initialPositionLeft.slice(0, -2)) + this.widthSideBar) {
+                elmnt.style.left = parseInt(this.initialPositionLeft.slice(0, -2)) + this.widthSideBar + "px";
+            } else {
+                elmnt.style.left = (elmnt.offsetLeft - this.pos1) + "px";
+            }
+        }
+    }
+
+     closeDragElement(e) {
+        /* stop moving when mouse button is released:*/
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+
+     handleMove(e){
+        if(Utilities.isMobileDevice() && this.state.isPIPMode) {
+            var touchLocation = e.targetTouches[0];
+            let element = this.selfViewMedia.current;
+            // assign box new coordinates based on the touch.
+            element.style.left = touchLocation.pageX + 'px';
+            element.style.top = touchLocation.pageY + 'px';
+        }
+     }
+
+    handleEnd(e) {
+        if(Utilities.isMobileDevice() && this.state.isPIPMode) {
+            let element = this.selfViewMedia.current;
+            if (element.style.left < '15px') {
+                element.style.left = "16px";
+            }
+            if (element.style.left > '200px') {
+                element.style.left = this.initialPositionLeft;
+            }
+            if (element.style.top < '1px') {
+                element.style.top = "0px";
+            }
+            if (element.style.top > '560px') {
+                element.style.top = this.initialPositionTop;
+            }
+        }
+    }
+
 
     appendParticipant(newParticipant) {
         this.setState({
@@ -420,6 +527,25 @@ class Conference extends React.Component {
         });
     }*/
     handleResize() {
+        if(window.innerWidth >= 1024) {
+            this.selfViewMedia.current.style.top = "initial";
+            this.selfViewMedia.current.style.left = "initial";
+            this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
+            this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
+            let element = document.querySelector('.conference-details');
+            let positionInfo = element.getBoundingClientRect();
+            this.widthSideBar = positionInfo.width;
+            this.selfViewMedia.current.style.top = this.initialPositionTop;
+            this.selfViewMedia.current.style.left = this.initialPositionLeft;
+        }
+        else if (window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches) {
+                this.selfViewMedia.current.style.top = "initial";
+                this.selfViewMedia.current.style.left = "16px";
+        }
+        else{
+            this.selfViewMedia.current.style.top = "initial";
+            this.selfViewMedia.current.style.left = "initial";
+        }
        if(this.state.moreparticpants) {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
