@@ -41,7 +41,7 @@ class PreCallCheck extends React.Component {
         };
         this.permissionDeniedForSafari={
             heading: data.errorCodes.CameraAccessBlockHeader,
-            message: data.errorCodesCameraAccessBlockSafariMsg,
+            message: data.errorCodes.CameraAccessBlockSafariMsg,
             type: 'Denied'
         };
         this.permissionDeniedforFirefox={
