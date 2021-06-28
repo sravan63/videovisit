@@ -24,7 +24,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {isRemoteFlippedToSelf: false, isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = {isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -53,7 +53,6 @@ class Conference extends React.Component {
         this.setPIPMode = this.setPIPMode.bind(this);
         this.appendParticipant = this.appendParticipant.bind(this);
         this.removeParticipant = this.removeParticipant.bind(this);
-        this.flipView = this.flipView.bind(this);
         this.dragElement = this.dragElement.bind(this);
         this.dragMouseDown = this.dragMouseDown.bind(this);
         this.elementDrag = this.elementDrag.bind(this);
@@ -557,9 +556,6 @@ class Conference extends React.Component {
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
-            this.remoteFeedMedia.current.dataset.view = "larger";
-            this.selfViewMedia.current.dataset.view = "smaller";     
-            this.setState({isRemoteFlippedToSelf:false});
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
     } 
@@ -1125,28 +1121,6 @@ class Conference extends React.Component {
         return false;
     }
 
-    flipView(e) {
-        const remoteFeed = this.remoteFeedMedia.current;
-        const selfFeed= this.selfViewMedia.current;
-        let clickedElement= e.target;
-        if(!this.state.isPIPMode) {
-            return;
-        }
-        if(clickedElement.dataset.view === "smaller") {
-            if(clickedElement.id !== remoteFeed.id) {
-                remoteFeed.style.removeProperty("height");
-                remoteFeed.dataset.view = "smaller";
-            }
-            else{
-                selfFeed.style.removeProperty("height");
-                selfFeed.dataset.view = "smaller";
-            }
-            clickedElement.style.setProperty('height', `${ window.innerHeight - 55}px`)
-            clickedElement.dataset.view = "larger";
-            this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf});
-        }
-    }
-
     render() {
         let remoteFeedClass, selfViewClass, Details = this.state.staticData;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
@@ -1158,13 +1132,6 @@ class Conference extends React.Component {
         else{
             remoteFeedClass = 'remoteFeed';
             selfViewClass = 'selfViewVideo';
-        }
-        if(this.state.isRemoteFlippedToSelf) {
-            remoteFeedClass = 'flipRemoteFeedPIP';
-            selfViewClass = 'flipSelfViewVideoPIP';
-        }
-        else{
-            this.selfViewMedia.current && this.selfViewMedia.current.style.removeProperty("height");
         }
 
         return (
@@ -1204,13 +1171,13 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={remoteStreamContainerClass} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
-                                            <video ref ={this.remoteFeedMedia} data-view="larger"  className={remoteFeedClass} onClick={this.flipView} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                            <video ref ={this.remoteFeedMedia} data-view="larger"  className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} onClick={this.flipView} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
+                               <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
                                 </video>
                                {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
                                </video> */}
