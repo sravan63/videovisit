@@ -4,6 +4,7 @@
   "Help":"Ayuda",
   "HelpLink": "https://mydoctor.kaiserpermanente.org/es/ncal/help/video-visits",
   "Signout":"Salir",
+  "Refresh":"Actualizar",
   "auth":{
       "sso":{
         "KPUSERID":"NOMBRE DE USUARIO DE KP.ORG",

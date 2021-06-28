@@ -53,7 +53,7 @@ class VVModal extends React.Component {
                             (<div className="selectIcon">
                                 <p>{ this.state.popupOptions.message }</p>
                                 <div className= "refreshButton">
-                                    <button type="button" className="refresh" onClick={this.refreshPage}>{Details.conference.Refresh}</button>
+                                    <button type="button" className="refresh" onClick={this.refreshPage}>{Details.Refresh}</button>
                                 </div>
                             </div>)}
                     </div>):(<div><h3>{ this.state.popupOptions.heading }</h3>

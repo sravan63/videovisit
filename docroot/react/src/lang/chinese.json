@@ -4,6 +4,7 @@
   "Help":"幫助",
   "HelpLink": "https://mydoctor.kaiserpermanente.org/zh/ncal/help/video-visits",
   "Signout":"登出",
+  "Refresh":"刷新",
   "auth":{
       "sso":{
         "KPUSERID":"KP.ORG 用戶 ID",
