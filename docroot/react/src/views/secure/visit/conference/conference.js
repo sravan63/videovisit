@@ -408,7 +408,7 @@ class Conference extends React.Component {
         document.onmousemove = this.elementDrag;
     }
 
-     elementDrag(e) {
+    elementDrag(e) {
         e = e || window.event;
         e.preventDefault();
         let elmnt = this.selfViewMedia.current;
@@ -419,12 +419,38 @@ class Conference extends React.Component {
         this.pos3 = e.clientX;
         this.pos4 = e.clientY;
         // set the element's new position:
-         //
+        //
+        let selfViewElement = document.querySelector('#selfvideo');
+        let selfPosition = selfViewElement.getBoundingClientRect();
 
-        if(window.innerWidth <= 1024){
+        let element = document.querySelector('.video-conference');
+        let positionInfo = element.getBoundingClientRect();
 
+        let controls = document.querySelector('#controls');
+        let controlsPosition = controls.getBoundingClientRect();
+
+
+        let confWidth = positionInfo.width - selfPosition.width - controlsPosition.width ;
+
+
+        if(window.innerWidth >= 715 && window.innerWidth <= 1024){
+            if ((elmnt.offsetTop - this.pos2) < 0) {
+                elmnt.style.top = "0px";
+            }
+            else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
+                elmnt.style.top = this.initialPositionTop;
+            } else {
+                elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
+            }
+            if (elmnt.offsetLeft - this.pos1 < 17) {
+                elmnt.style.left = "16px";
+            } else if (elmnt.offsetLeft - this.pos1 > confWidth ) {
+                elmnt.style.left = confWidth + "px";
+            } else {
+                elmnt.style.left = (elmnt.offsetLeft - this.pos1) + "px";
+            }
         }
-        else {
+        else if(window.innerWidth > 1024){
             if ((elmnt.offsetTop - this.pos2) < -98 && window.innerWidth > 1024) {
                 elmnt.style.top = "-98px";
             } else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
@@ -443,14 +469,15 @@ class Conference extends React.Component {
         }
     }
 
-     closeDragElement(e) {
+
+    closeDragElement(e) {
         /* stop moving when mouse button is released:*/
         document.onmouseup = null;
         document.onmousemove = null;
     }
 
      handleMove(e){
-        if(Utilities.isMobileDevice() && this.state.isPIPMode) {
+        if(Utilities.isMobileDevice() && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
             var touchLocation = e.targetTouches[0];
             let element = this.selfViewMedia.current;
             // assign box new coordinates based on the touch.
@@ -460,18 +487,19 @@ class Conference extends React.Component {
      }
 
     handleEnd(e) {
-        if(Utilities.isMobileDevice() && this.state.isPIPMode) {
+        if(Utilities.isMobileDevice() && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
             let element = this.selfViewMedia.current;
-            if (element.style.left < '15px') {
+            if (parseInt(element.style.left.slice(0, -2)) < 145) {
                 element.style.left = "16px";
             }
-            if (element.style.left > '200px') {
+            else if (parseInt(element.style.left.slice(0, -2)) > 150) {
                 element.style.left = this.initialPositionLeft;
             }
-            if (element.style.top < '1px') {
+
+            if (parseInt(element.style.top.slice(0, -2)) < 200) {
                 element.style.top = "0px";
             }
-            if (element.style.top > '560px') {
+            else if (parseInt(element.style.top.slice(0, -2)) > 350) {
                 element.style.top = this.initialPositionTop;
             }
         }
@@ -540,6 +568,7 @@ class Conference extends React.Component {
         else if (window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches) {
                 this.selfViewMedia.current.style.top = "initial";
                 this.selfViewMedia.current.style.left = "16px";
+                this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
         }
         else{
             this.selfViewMedia.current.style.top = "initial";
