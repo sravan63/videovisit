@@ -1140,7 +1140,7 @@ class Conference extends React.Component {
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
                 let participantCount = this.state.participants.length;
                 if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
-                    let vh = window.innerHeight - 55;
+                    let vh = window.innerHeight - 50;
                     this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
                     return true;
                 }
