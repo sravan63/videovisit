@@ -512,7 +512,7 @@ class Conference extends React.Component {
 
             let confWidth = positionInfo.width - selfPosition.width - controlsPosition.width ;
 
-            if(window.innerWidth >= 715 && window.innerWidth <= 1024){
+            if(window.innerWidth >= 565 && window.innerWidth <= 1024){
                 if ((elmnt.offsetTop - this.pos2) < 0) {
                     elmnt.style.top = "0px";
                 }
