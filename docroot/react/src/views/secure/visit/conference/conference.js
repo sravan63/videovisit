@@ -59,6 +59,7 @@ class Conference extends React.Component {
         this.closeDragElement = this.closeDragElement.bind(this);
         this.handleEnd = this.handleEnd.bind(this);
         this.handleMove = this.handleMove.bind(this);
+        this.handleStart = this.handleStart.bind(this);
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
@@ -68,14 +69,14 @@ class Conference extends React.Component {
         this.presentationViewMedia = React.createRef();
         this.selfViewMedia = React.createRef();
         this.remoteFeedMedia = React.createRef();
-        this.getLanguage();            
+        this.getLanguage();
         let data = Utilities.getLang();
-        this.leaveVisitPopupOptions = { 
-            heading: 'Leave Visit', 
+        this.leaveVisitPopupOptions = {
+            heading: 'Leave Visit',
             message : 'Your video visit session is going to end, unless you choose Stay.',
             controls : [{label: 'Leave Room', type: 'leave'}, {label: 'Stay', type: 'stay'} ]
         };
-        this.permissionRequiredContent = {            
+        this.permissionRequiredContent = {
             heading: data.errorCodes.CameraAccessPermissionMsg,
             message: data.errorCodes.VisitStartNotificationMsg,
             type: 'Permission'
@@ -103,12 +104,12 @@ class Conference extends React.Component {
     }
 
     componentDidMount() {
-        if (typeof document.hidden !== 'undefined') { 
+        if (typeof document.hidden !== 'undefined') {
             this.visibilityChange = 'visibilitychange';
-        } 
+        }
         else if (typeof document.msHidden !== 'undefined') {
             this.visibilityChange = 'msvisibilitychange';
-        } 
+        }
         else if (typeof document.webkitHidden !== 'undefined') {
             this.visibilityChange = 'webkitvisibilitychange';
         }
@@ -138,7 +139,7 @@ class Conference extends React.Component {
                 }
                 else{
                     this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO
-                }                
+                }
                 this.state.accessToken = userDetails.ssoSession;
                 this.state.userDetails = userDetails;
             }
@@ -177,7 +178,7 @@ class Conference extends React.Component {
         if (browserInfo.isSafari || browserInfo.isFireFox) {
             this.setState({ isbrowsercheck: true })
         }
-        
+
         if (browserInfo.isSafari){
             this.setState({isMobileSafari:true});
         }
@@ -213,8 +214,9 @@ class Conference extends React.Component {
         this.dragElement(selfBox);
         this.initialPositionTop = selfBox.offsetTop + "px";
         this.initialPositionLeft = selfBox.offsetLeft + "px";
-        selfBox.addEventListener("touchend", this.handleEnd, false);
-        selfBox.addEventListener("touchmove", this.handleMove, false);
+        //selfBox.addEventListener("touchend", this.handleEnd, false);
+        //selfBox.addEventListener("touchmove", this.handleMove, false);
+        selfBox.addEventListener("touchstart", this.handleStart, false);
 
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
@@ -238,7 +240,7 @@ class Conference extends React.Component {
                     this.toggleDockView(false);
                     this.handleTimer(true);
                     if(sessionStorage.getItem('isTrueHost')){
-                        sessionStorage.setItem('isValidInteraction',true);    
+                        sessionStorage.setItem('isValidInteraction',true);
                         this.startTimerforLeaveMeeting();
                     }
                     break;
@@ -252,12 +254,12 @@ class Conference extends React.Component {
                     this.leaveMeeting(message.data);
                     break;
                 case GlobalConfig.MEMBER_READY:
-                case GlobalConfig.UPDATE_RUNNING_LATE:    
+                case GlobalConfig.UPDATE_RUNNING_LATE:
                     if(!sessionStorage.getItem('memberAlone')){
                     sessionStorage.setItem('memberAlone', true);
                     this.handleTimer(true);
                     }
-                    break;       
+                    break;
                 case GlobalConfig.START_SCREENSHARE:
                     this.setState({ showSharedContent: true });
                     this.setState({isPIPMode: this.setPIPMode()});
@@ -266,7 +268,7 @@ class Conference extends React.Component {
                     this.setState({ showSharedContent: false });
                     this.setState({isPIPMode: this.setPIPMode()});
                     break;
-                case GlobalConfig.MEDIA_DATA_READY:  
+                case GlobalConfig.MEDIA_DATA_READY:
                     this.list = message.data;
                     this.setState({ media: this.list });
                     let constrains = {
@@ -274,7 +276,7 @@ class Conference extends React.Component {
                             videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
                             micSource: this.list.audioinput ? this.list.audioinput[0] : null
                         };
-                    if (localStorage.getItem('selectedPeripherals') == null) {    
+                    if (localStorage.getItem('selectedPeripherals') == null) {
                         localStorage.setItem('selectedPeripherals', JSON.stringify(constrains));
                     }
                     this.startPexip(this.state.meetingDetails);
@@ -283,10 +285,10 @@ class Conference extends React.Component {
                     MessageService.sendMessage(GlobalConfig.SHOW_CONFERENCE_DETAILS, {
                         meetingDetails: this.state.meetingDetails
                     });
-                    } 
+                    }
                     break;
                 case GlobalConfig.CAMERA_FLIP:
-                    this.setState({isMirrorView: message.data});    
+                    this.setState({isMirrorView: message.data});
                     break;
 
                 case GlobalConfig.VIDEO_MUTE:
@@ -476,33 +478,80 @@ class Conference extends React.Component {
         document.onmousemove = null;
     }
 
+    handleStart(e){
+        e.preventDefault();
+        var touchLocation = e.targetTouches[0];
+        // get the mouse cursor position at startup:
+        this.pos3 = touchLocation.pageX ;
+        this.pos4 = touchLocation.pageY;
+        document.ontouchmove = this.handleMove;
+        // call a function whenever the cursor moves:
+        document.ontouchend = this.handleEnd;
+    }
+
      handleMove(e){
         if(Utilities.isMobileDevice() && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
             var touchLocation = e.targetTouches[0];
-            let element = this.selfViewMedia.current;
+            let elmnt = this.selfViewMedia.current;
+
             // assign box new coordinates based on the touch.
-            element.style.left = touchLocation.pageX + 'px';
-            element.style.top = touchLocation.pageY + 'px';
+            this.pos1 = this.pos3 - touchLocation.pageX ;
+            this.pos2 = this.pos4 - touchLocation.pageY;
+            this.pos3 = touchLocation.pageX ;
+            this.pos4 = touchLocation.pageY;
+
+            let selfViewElement = document.querySelector('#selfvideo');
+            let selfPosition = selfViewElement.getBoundingClientRect();
+
+            let element = document.querySelector('.video-conference');
+            let positionInfo = element.getBoundingClientRect();
+
+            let controls = document.querySelector('#controls');
+            let controlsPosition = controls.getBoundingClientRect();
+
+
+            let confWidth = positionInfo.width - selfPosition.width - controlsPosition.width ;
+
+            if(window.innerWidth >= 715 && window.innerWidth <= 1024){
+                if ((elmnt.offsetTop - this.pos2) < 0) {
+                    elmnt.style.top = "0px";
+                }
+                else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
+                    elmnt.style.top = this.initialPositionTop;
+                } else {
+                    elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
+                }
+                if (elmnt.offsetLeft - this.pos1 < 17) {
+                    elmnt.style.left = "16px";
+                } else if (elmnt.offsetLeft - this.pos1 > confWidth ) {
+                    elmnt.style.left = confWidth + "px";
+                } else {
+                    elmnt.style.left = (elmnt.offsetLeft - this.pos1) + "px";
+                }
+            }
+            else{
+                if ((elmnt.offsetTop - this.pos2) < 2 ) {
+                    elmnt.style.top = "0px";
+                } else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2)) + controlsPosition.height) {
+                    elmnt.style.top = (parseInt(this.initialPositionTop.slice(0, -2)) + controlsPosition.height -10) + "px";
+                } else {
+                    elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
+                }
+
+                if (elmnt.offsetLeft - this.pos1 < 2) {
+                    elmnt.style.left = "0px";
+                } else if (elmnt.offsetLeft - this.pos1 > parseInt(this.initialPositionLeft.slice(0, -2))) {
+                    elmnt.style.left = this.initialPositionLeft;
+                } else {
+                    elmnt.style.left = (elmnt.offsetLeft - this.pos1) + "px";
+                }
+            }
         }
      }
 
     handleEnd(e) {
-        if(Utilities.isMobileDevice() && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
-            let element = this.selfViewMedia.current;
-            if (parseInt(element.style.left.slice(0, -2)) < 145) {
-                element.style.left = "16px";
-            }
-            else if (parseInt(element.style.left.slice(0, -2)) > 150) {
-                element.style.left = this.initialPositionLeft;
-            }
-
-            if (parseInt(element.style.top.slice(0, -2)) < 200) {
-                element.style.top = "0px";
-            }
-            else if (parseInt(element.style.top.slice(0, -2)) > 350) {
-                element.style.top = this.initialPositionTop;
-            }
-        }
+        document.ontouchmove = null;
+        document.ontouchend = null;
     }
 
 
@@ -515,8 +564,8 @@ class Conference extends React.Component {
     }
 
     removeParticipant(leftParticipant) {
-        this.setState({participants: this.state.participants.filter(function(participant) { 
-            return participant.uuid !== leftParticipant.uuid; 
+        this.setState({participants: this.state.participants.filter(function(participant) {
+            return participant.uuid !== leftParticipant.uuid;
         })}, function(){
             this.setState({isPIPMode: this.setPIPMode()});
         });
@@ -544,7 +593,7 @@ class Conference extends React.Component {
             browserNames = '';
         BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
             if (response.data && response.status == '200') {
-                 browserNames = response.data; 
+                 browserNames = response.data;
                  this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
             } else {
                 // Do nothing
@@ -587,12 +636,12 @@ class Conference extends React.Component {
             this.setState({isPIPMode: this.setPIPMode()});
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
-    } 
+    }
 
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
-           
+
             if (document.visibilityState === 'visible') {
                 console.log("Document visible now");
                 if((Date.now() - this.restartPexip) > 20000){
@@ -613,7 +662,7 @@ class Conference extends React.Component {
                 this.selfViewMedia && this.selfViewMedia.current.pause();
                 this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
                 presentationView && presentationView.pause();
-            } 
+            }
         }
     }
 
@@ -706,7 +755,7 @@ class Conference extends React.Component {
                 MediaService.loadDeviceMediaData();
                 var turnServerInfo = data.vendorConfig;
                 sessionStorage.setItem('turnServer', JSON.stringify(turnServerInfo));
-                
+
             } else {
                 // Do nothing
             }
@@ -825,7 +874,7 @@ class Conference extends React.Component {
             }
         } else {
             if(this.state.leaveMeeting == false){
-                var isFromBackButton = "true";    
+                var isFromBackButton = "true";
                 this.leaveMeeting(isFromBackButton);
             }
        }
@@ -908,10 +957,10 @@ class Conference extends React.Component {
             headers.mrn = this.state.userDetails.mrn;
             var meetingId = this.state.meetingDetails.meetingId,
                 isProxyMeeting = this.state.isProxyMeeting,
-                backButton = isFromBackButton ? isFromBackButton : false;  
+                backButton = isFromBackButton ? isFromBackButton : false;
             WebUI.pexipDisconnect();
             if(isProxyMeeting == 'Y'){
-                headers.memberName = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;                
+                headers.memberName = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;
             }
             else{
                 headers.memberName = Utilities.formatStringTo(this.state.meetingDetails.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
@@ -945,7 +994,7 @@ class Conference extends React.Component {
             let headers = {};
                 headers.authtoken = this.state.userDetails.authToken;
                 headers.patientLastName = this.state.userDetails.lastname;
-            var backButton = isFromBackButton ? isFromBackButton : false;    
+            var backButton = isFromBackButton ? isFromBackButton : false;
             BackendService.guestLogout(this.state.meetingCode,headers,backButton).subscribe((response) => {
                 console.log("Success");
                 this.goTo();
@@ -1010,9 +1059,9 @@ class Conference extends React.Component {
         var browserInfo = Utilities.getBrowserInformation();
 
         if (browserInfo.isFireFox) {
-            var isRear = vObject.label.toLowerCase().indexOf('back') > -1 || vObject.label.toLowerCase().indexOf('rear') > -1;  
+            var isRear = vObject.label.toLowerCase().indexOf('back') > -1 || vObject.label.toLowerCase().indexOf('rear') > -1;
             if(isRear){
-              this.setState({isMirrorView : false});  
+              this.setState({isMirrorView : false});
             // document.getElementById('selfvideo').style.transform = "none";
             }else{
                 this.setState({isMirrorView : true});
@@ -1021,14 +1070,14 @@ class Conference extends React.Component {
         }
         else{
             if(this.state.isRearCamera == true){
-                this.setState({isMirrorView : false}); 
+                this.setState({isMirrorView : false});
             // document.getElementById('selfvideo').style.transform = "none";
             }else{
-                this.setState({isMirrorView : true}); 
+                this.setState({isMirrorView : true});
             // document.getElementById('selfvideo').style.transform = "scaleX(-1)";
             }
         }
-        
+
         WebUI.switchDevices('video', vObject);
     }
 
@@ -1111,7 +1160,7 @@ class Conference extends React.Component {
                 uValue = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
                 uValue = uValue.split('(')[0].trim();
                 uType = 'name';
-            } 
+            }
             const survey = {
                 userAnswers: data,
                 userType: uType,
@@ -1128,7 +1177,7 @@ class Conference extends React.Component {
                 this.goTo();
             });
         }
-        
+
     }
 
     setPIPMode() {
