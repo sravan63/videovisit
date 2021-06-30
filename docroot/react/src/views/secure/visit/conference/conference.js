@@ -617,11 +617,20 @@ class Conference extends React.Component {
         else if (window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches) {
                 this.selfViewMedia.current.style.top = "initial";
                 this.selfViewMedia.current.style.left = "16px";
-                this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
+                setTimeout(()=>{
+                    this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
+                },500);
+
         }
         else{
             this.selfViewMedia.current.style.top = "initial";
             this.selfViewMedia.current.style.left = "initial";
+            if(Utilities.isMobileDevice()){
+                setTimeout(()=>{
+                    this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
+                    this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
+                },1000);
+            }
         }
        if(this.state.moreparticpants) {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
@@ -1178,6 +1187,13 @@ class Conference extends React.Component {
             });
         }
 
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if(this.state.isPIPMode){
+            this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
+            this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
+        }
     }
 
     setPIPMode() {
