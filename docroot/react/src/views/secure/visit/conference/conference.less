@@ -313,7 +313,7 @@
             }
             .stream-containerPIP {
                 width:100%;
-                transform: scaleX(1.6);
+                transform: scaleX(1.65);
             }
         }
     }
@@ -416,13 +416,25 @@
     }
 }
 
-@media only screen and (max-width: 400px) and (orientation: portrait) {
+@media only screen and (min-width: 768px) and (max-device-width :1023px) and (orientation : portrait) { 
     .conference-page {
         .video-conference-container {
 
             .stream-containerPIP{
                 width:100%;
-                transform: scaleX(1.2);
+                transform: scaleX(1.6);
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 325px) and (orientation: portrait) {
+    .conference-page {
+        .video-conference-container {
+
+            .stream-containerPIP{
+                width:100%;
+                transform: scaleX(1.24);
             }
         }
     }
