@@ -1196,7 +1196,7 @@ class Conference extends React.Component {
                 }
             }
         }
-        this.remoteFeedMedia.current.style.removeProperty("min-height");
+        this.remoteFeedMedia.current.style.removeProperty("min-height");// To avoid DE22584
         this.remoteFeedMedia.current.style.removeProperty("height");
         return false;
     }
