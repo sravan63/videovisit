@@ -512,7 +512,7 @@ class Conference extends React.Component {
 
             let confWidth = positionInfo.width - selfPosition.width - controlsPosition.width ;
 
-            if(window.innerWidth >= 565 && window.innerWidth <= 1024){
+            if(window.innerWidth >= 565 && window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches){
                 if ((elmnt.offsetTop - this.pos2) < 0) {
                     elmnt.style.top = "0px";
                 }
@@ -525,6 +525,23 @@ class Conference extends React.Component {
                     elmnt.style.left = "16px";
                 } else if (elmnt.offsetLeft - this.pos1 > confWidth ) {
                     elmnt.style.left = confWidth + "px";
+                } else {
+                    elmnt.style.left = (elmnt.offsetLeft - this.pos1) + "px";
+                }
+            }
+            else if(window.innerWidth > 1024){
+                if ((elmnt.offsetTop - this.pos2) < -98 && window.innerWidth > 1024) {
+                    elmnt.style.top = "-98px";
+                } else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
+                    elmnt.style.top = this.initialPositionTop;
+                } else {
+                    elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
+                }
+
+                if (elmnt.offsetLeft - this.pos1 < 2) {
+                    elmnt.style.left = "0px";
+                } else if (elmnt.offsetLeft - this.pos1 > parseInt(this.initialPositionLeft.slice(0, -2)) + this.widthSideBar) {
+                    elmnt.style.left = parseInt(this.initialPositionLeft.slice(0, -2)) + this.widthSideBar + "px";
                 } else {
                     elmnt.style.left = (elmnt.offsetLeft - this.pos1) + "px";
                 }
@@ -603,7 +620,7 @@ class Conference extends React.Component {
         });
     }*/
     handleResize() {
-        if(window.innerWidth >= 1024) {
+        if(window.innerWidth > 1024) {
             this.selfViewMedia.current.style.top = "initial";
             this.selfViewMedia.current.style.left = "initial";
             this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
@@ -629,7 +646,7 @@ class Conference extends React.Component {
                 setTimeout(()=>{
                     this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
                     this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
-                },1000);
+                },500);
             }
         }
        if(this.state.moreparticpants) {
