@@ -1211,6 +1211,12 @@ class Conference extends React.Component {
             this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
             this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
         }
+        else{
+            if(window.matchMedia("(orientation: portrait)").matches) {
+                this.selfViewMedia.current.style.top = "initial";
+                this.selfViewMedia.current.style.left = "initial";
+            }
+        }
     }
 
     setPIPMode() {
