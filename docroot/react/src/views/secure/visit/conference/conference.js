@@ -1230,6 +1230,7 @@ class Conference extends React.Component {
 
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
+            this.remoteFeedMedia.current.focus();
             if(this.state.participants && this.state.participants.length > 0 ) {
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
