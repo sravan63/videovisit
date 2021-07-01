@@ -627,13 +627,15 @@ class Conference extends React.Component {
         if(window.innerWidth > 1024) {
             this.selfViewMedia.current.style.top = "initial";
             this.selfViewMedia.current.style.left = "initial";
-            this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
-            this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
+            setTimeout(()=>{
+                this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
+                this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
+                this.selfViewMedia.current.style.top = this.initialPositionTop;
+                this.selfViewMedia.current.style.left = this.initialPositionLeft;
+            },500);
             let element = document.querySelector('.conference-details');
             let positionInfo = element.getBoundingClientRect();
             this.widthSideBar = positionInfo.width;
-            this.selfViewMedia.current.style.top = this.initialPositionTop;
-            this.selfViewMedia.current.style.left = this.initialPositionLeft;
         }
         else if (window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches) {
                 this.selfViewMedia.current.style.top = "initial";
