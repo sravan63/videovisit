@@ -217,6 +217,7 @@ class Conference extends React.Component {
         //selfBox.addEventListener("touchend", this.handleEnd, false);
         //selfBox.addEventListener("touchmove", this.handleMove, false);
         selfBox.addEventListener("touchstart", this.handleStart, false);
+        this.mainContentWidth = window.innerWidth;
 
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
@@ -620,6 +621,9 @@ class Conference extends React.Component {
         });
     }*/
     handleResize() {
+        if(this.mainContentWidth === window.innerWidth){
+            return;
+        }
         if(window.innerWidth > 1024) {
             this.selfViewMedia.current.style.top = "initial";
             this.selfViewMedia.current.style.left = "initial";
@@ -662,6 +666,7 @@ class Conference extends React.Component {
             this.setState({isPIPMode: this.setPIPMode()});
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
+        this.mainContentWidth = window.innerWidth;
     }
 
     handleVisibilityChange() {
