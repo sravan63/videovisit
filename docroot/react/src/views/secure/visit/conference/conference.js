@@ -653,10 +653,11 @@ class Conference extends React.Component {
                 },500);
             }
         }
-        if(/iPad/.test(navigator.userAgent) && window.matchMedia("(orientation: landscape)").matches) {
+        if(/iPad|Mac/.test(navigator.userAgent) && window.innerWidth > 1024)//window.matchMedia("(orientation: landscape)").matches) {
             this.selfViewMedia.current.style.top = "initial";
             this.selfViewMedia.current.style.left = "initial";
         }
+
        if(this.state.moreparticpants) {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
@@ -1230,7 +1231,7 @@ class Conference extends React.Component {
 
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
-            this.remoteFeedMedia.current.focus();
+            this.remoteFeedMedia.current.click();
             if(this.state.participants && this.state.participants.length > 0 ) {
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
