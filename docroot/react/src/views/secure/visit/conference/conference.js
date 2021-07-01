@@ -653,6 +653,10 @@ class Conference extends React.Component {
                 },500);
             }
         }
+        if(/iPad/.test(navigator.userAgent) && window.innerWidth > 1200 && window.matchMedia("(orientation: landscape)").matches) {
+            this.selfViewMedia.current.style.top = "initial";
+            this.selfViewMedia.current.style.left = "initial";
+        }
        if(this.state.moreparticpants) {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
