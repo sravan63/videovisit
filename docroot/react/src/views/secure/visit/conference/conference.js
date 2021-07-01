@@ -1239,12 +1239,14 @@ class Conference extends React.Component {
                 if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
                     this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
-                    this.remoteFeedMedia.current.style.setProperty('min-height', `${vh}px`); //just to avoid safari iPhone  white space bug DE22584
+                    //just to avoid safari iPhone  white space bug DE22584
+                    document.body.scrollTop = 0; 
+                    document.documentElement.scrollTop = 0; 
+                    //
                     return true;
                 }
             }
         }
-        this.remoteFeedMedia.current.style.removeProperty("min-height");// To avoid DE22584
         this.remoteFeedMedia.current.style.removeProperty("height");
         return false;
     }
