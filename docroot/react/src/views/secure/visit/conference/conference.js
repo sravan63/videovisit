@@ -1239,10 +1239,6 @@ class Conference extends React.Component {
                 if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
                     this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
-                    //just to avoid safari iPhone  white space bug DE22584
-                    document.body.scrollTop = 0; 
-                    document.documentElement.scrollTop = 0; 
-                    //
                     return true;
                 }
             }
