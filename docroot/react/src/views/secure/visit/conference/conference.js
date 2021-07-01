@@ -1238,6 +1238,10 @@ class Conference extends React.Component {
                 let participantCount = this.state.participants.length;
                 if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
+                    //To avoid DE22584
+                    if(/iPhone/.test(navigator.userAgent) ) {
+                        vh = document.documentElement.clientHeight -50;
+                    }
                     this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
                     return true;
                 }
