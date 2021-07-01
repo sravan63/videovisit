@@ -653,7 +653,7 @@ class Conference extends React.Component {
                 },500);
             }
         }
-        if(/iPad|Mac/.test(navigator.userAgent) && window.innerWidth > 1024)//window.matchMedia("(orientation: landscape)").matches) {
+        if(/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) { //window.matchMedia("(orientation: landscape)").matches) {
             this.selfViewMedia.current.style.top = "initial";
             this.selfViewMedia.current.style.left = "initial";
         }
