@@ -46,6 +46,19 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.kp.tpmg.ttg.videovisit</groupId>
+			<artifactId>videovisitsecapi-client</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>*</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.kp.tpmg.ttg.videovisit</groupId>
 			<artifactId>videovisitsmeetingapi-client</artifactId>
@@ -63,6 +76,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
 		<!-- to address org.json missing -->
 		<dependency>
 			<groupId>org.codeartisans</groupId>
