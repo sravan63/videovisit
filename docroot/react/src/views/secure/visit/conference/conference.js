@@ -1242,7 +1242,8 @@ class Conference extends React.Component {
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
                 for (const property in this.aspectModes) {
-                    if(this.aspectModes[property].toLowerCase()!=='portrait') {
+                    let found = this.state.participants.some(el => el.uuid === property); // Sometimes we get two different uuid from chat received for single call. So for safety checking whether that uuid is valid participant or not.
+                    if(found && this.aspectModes[property].toLowerCase()!=='portrait') {
                         isAllParticipantInPortrait = false;
                     }
                   }
