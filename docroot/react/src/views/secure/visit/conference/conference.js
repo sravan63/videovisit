@@ -378,8 +378,10 @@ class Conference extends React.Component {
                 case GlobalConfig.SELF_ASPECT_MODE:
                     if(message && message.data) {
                         let data = message.data;
-                        this.aspectModes[data.uuid] = data.aspectMode;
-                        this.setState({isPIPMode: this.setPIPMode()});
+                        if(data.uuid) {
+                            this.aspectModes[data.uuid] = data.aspectMode.toLowerCase();
+                            this.setState({isPIPMode: this.setPIPMode()});
+                        }
                     }
                 break;
             }
@@ -1236,18 +1238,15 @@ class Conference extends React.Component {
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
             if(this.state.participants && this.state.participants.length > 0 ) {
-                let isAllParticipantInPortrait =true;
+                let isAllParticipantInPortrait;
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
-                //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
+                //let uniqueParticipants = WebUI.removeDuplicateParticipants(this.state.participants);
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
-                for (const property in this.aspectModes) {
-                    let found = this.state.participants.some(el => el.uuid === property); // Sometimes we get two different uuid from chat received for single call. So for safety checking whether that uuid is valid participant or not.
-                    if(found && this.aspectModes[property].toLowerCase()!=='portrait') {
-                        isAllParticipantInPortrait = false;
-                    }
-                  }
+                let allModes =Object.values(this.aspectModes);
+                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='portrait'));
                 let participantCount = this.state.participants.length;
+
                 if(participantCount === 2 && isAllParticipantInPortrait && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
                     //To avoid DE22584 overlapping issue in iPhone
