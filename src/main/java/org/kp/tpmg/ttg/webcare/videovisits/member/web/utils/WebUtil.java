@@ -65,6 +65,8 @@ public class WebUtil {
 	public static final String KPPC = "KPPC";
 	public static final String BANDWIDTH_512_KBPS = "512kbps";
 	public static final String BANDWIDTH_1024_KBPS = "1024kbps";
+	public static final String VV_EC_GUEST_WEB_INSTANT_JOIN = "vv_ec_guest_web_instant_join";
+	public static final String VV_EC_GUEST_MBL_INSTANT_JOIN = "vv_ec_guest_mbl_instant_join";
 	
 	public static final String TRUE = Boolean.TRUE.toString();
 	public static final String FALSE = Boolean.FALSE.toString();
@@ -627,6 +629,17 @@ public class WebUtil {
 		String clientId = VV_MBR_WEB_INSTANT_JOIN;
 		if (INSTANT_JOIN.equalsIgnoreCase(loginType) && TRUE.equalsIgnoreCase(isFromMobile)) {
 			clientId = VV_MBR_MBL_INSTANT_JOIN;
+		}
+
+		logger.info(LOG_EXITING + " -> clientId : " + clientId);
+		return clientId;
+	}	
+	
+	public static String getClientIdForECInstantJoin(final String loginType, final String isFromMobile){
+		logger.info(LOG_ENTERED);
+		String clientId = VV_EC_GUEST_WEB_INSTANT_JOIN;
+		if (INSTANT_JOIN.equalsIgnoreCase(loginType) && TRUE.equalsIgnoreCase(isFromMobile)) {
+			clientId = VV_EC_GUEST_MBL_INSTANT_JOIN;
 		}
 
 		logger.info(LOG_EXITING + " -> clientId : " + clientId);

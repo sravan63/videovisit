@@ -25,6 +25,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.videovisitsec.model.AuthorizeECCodeOutputJson;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Survey;
@@ -1607,6 +1608,40 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return response;
 	}
+	
+	public static String authorizeECCode(HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String jsonOutput = null;
+		String result = null;
+		String authtoken = "";
+		final Gson gson = new GsonBuilder().serializeNulls().create();
+		try {
+			if (request.getHeader("authtoken") != null) {
+				authtoken = request.getHeader("authtoken");
+			}
+			String clientId = WebUtil.getClientIdForECInstantJoin(request.getParameter(LOGIN_TYPE),
+					request.getParameter("isFromMobile"));
+			
+			jsonOutput = WebService.authorizeECCode(authtoken, request.getSession().getId(), clientId);
+			final AuthorizeECCodeOutputJson output = gson.fromJson(jsonOutput, AuthorizeECCodeOutputJson.class);
+			if (output != null && output.getService() != null
+					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
+					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.AUTHORIZE_EC_CODE,
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
+						output.getService().getEnvelope() != null ? output.getService().getEnvelope()
+								: null);
+			}
+		} catch (Exception e) {
+			logger.error("Error while authorizeECCode for authtoken:" + authtoken, e);
+		}
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.AUTHORIZE_EC_CODE, FAILURE_900, FAILURE, null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
+	}
 
+	
 }
 
