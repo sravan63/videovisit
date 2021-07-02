@@ -1236,11 +1236,16 @@ class Conference extends React.Component {
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
             if(this.state.participants && this.state.participants.length > 0 ) {
+                let isAllParticipantInPortrait =true;
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
-                let isAllParticipantInPortrait = this.aspectModes.every(item => item.uuid.toLowerCase() === 'portrait');
+                for (const property in this.aspectModes) {
+                    if(this.aspectModes[property].toLowerCase()!=='portrait') {
+                        isAllParticipantInPortrait = false;
+                    }
+                  }
                 let participantCount = this.state.participants.length;
                 if(participantCount === 2 && isAllParticipantInPortrait && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
