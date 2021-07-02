@@ -29,6 +29,7 @@ class Conference extends React.Component {
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
         this.list = [];
+        this.aspectModes= {};
         this.handle = 0;
         this.NoDevices = false;
         this.runningLate = 0;
@@ -376,7 +377,8 @@ class Conference extends React.Component {
                 break;
                 case GlobalConfig.SELF_ASPECT_MODE:
                     if(message && message.data) {
-                        this.screenMode= message.data.toLowerCase();
+                        let data = message.data;
+                        this.aspectModes[data.uuid] = data.aspectMode;
                         this.setState({isPIPMode: this.setPIPMode()});
                     }
                 break;
@@ -582,6 +584,7 @@ class Conference extends React.Component {
     }
 
     removeParticipant(leftParticipant) {
+        delete this.aspectModes[leftParticipant.uuid];
         this.setState({participants: this.state.participants.filter(function(participant) {
             return participant.uuid !== leftParticipant.uuid;
         })}, function(){
@@ -1231,16 +1234,16 @@ class Conference extends React.Component {
 
     setPIPMode() {
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
-            this.remoteFeedMedia.current.click();
             if(this.state.participants && this.state.participants.length > 0 ) {
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 //let participantCount = WebUI.removeDuplicateParticipants(this.state.participants).length;
                 //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
                 let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
+                let isAllParticipantInPortrait = this.aspectModes.every(item => item.uuid.toLowerCase() === 'portrait');
                 let participantCount = this.state.participants.length;
-                if(participantCount === 2 && this.screenMode ==='portrait' && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
+                if(participantCount === 2 && isAllParticipantInPortrait && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
-                    //To avoid DE22584
+                    //To avoid DE22584 overlapping issue in iPhone
                     if(/iPhone/.test(navigator.userAgent) ) {
                         vh = document.documentElement.clientHeight -50;
                     }
