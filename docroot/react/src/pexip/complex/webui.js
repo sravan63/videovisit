@@ -986,7 +986,7 @@ function chatReceived(message) {
         if(typeof message.payload === 'string' && message.payload.indexOf("cmdArgs") !== -1) {
             let chatContent = JSON.parse(message.payload);
             if(chatContent.cmdArgs.aspectMode) {
-                MessageService.sendMessage(GlobalConfig.SELF_ASPECT_MODE, {uuid:chatContent.fromUUID, aspectMode:chatContent.cmdArgs.aspectMode});
+                MessageService.sendMessage(GlobalConfig.SELF_ASPECT_MODE, {uuid: chatContent.fromUUID, aspectMode: chatContent.cmdArgs.aspectMode});
             }
         }
         if(message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {

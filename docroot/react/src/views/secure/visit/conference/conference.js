@@ -707,7 +707,6 @@ class Conference extends React.Component {
         }
     }
 
-
     handleTimer(param){
         var self = this;
         if(param){
