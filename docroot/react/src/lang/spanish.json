@@ -14,9 +14,9 @@
         "EmailInvitation":"Ingresar usando el enlace en la invitación de su correo electrónico"
       },
       "temp":{
-        "TempaccessBtnLabel":"Acceso temporal para la videoconsulta",
+        "TempaccessBtnLabel":"Acceso temporal a la videoconsulta",
         "lastname":"APELLIDO",
-        "MRN":"NÚMERO DE HISTORIA CLÍNICA",
+        "MRN":"NÚMERO DE HISTORIA CLÍNICA (MRN)",
         "DOB":"FECHA DE NACIMIENTO",
         "DOBMM":"MM",
         "DOBYY":"AAAA",
@@ -30,6 +30,8 @@
       "VisitsRunningLateMsg": "Lo siento, su médico va a llegar tarde. La nueva hora de inicio es:",      
       "Wifimsg":"Es posible que esté ingresando antes que su médico. Gracias por su paciencia. Ingrese con una conexión confiable a Wi-Fi o a internet, desde un lugar tranquilo y bien alumbrado. Si necesita ayuda para prepararse para su videoconsulta, llame al 844-216-5769, lunes a viernes, de 5 a. m. a 7 p. m.",
       "JoinVisit":"Ingrese a su consulta",
+      "AddParticipantsMsg":"Participantes adicionales",
+      "VisitAvailableMsg":"Su consulta estará disponible dentro de los 15 minutos siguientes a la hora de inicio.",
       "Novisits":"No tiene ninguna consulta en los próximos 15 minutos.",
       "MobileAppLabelTxt":"La próxima vez que quiera ver a su médico, intente hacer una videoconsulta de nuestra app móvil My Doctor Online (en inglés)."
     },
@@ -40,7 +42,7 @@
       "Isit":""
     },
     "conference":{
-      "WaitingRoomLabel":"Su consulta empezará a las ",
+      "WaitingRoomLabel":"Su consulta empezará a la(s) ",
       "RunningLateLabel":"Lo siento. Su médico va a llegar tarde.",
       "Refresh":"Actualizar",
       "EnableVideo":"Habilitar video",
@@ -61,7 +63,8 @@
       "Date":"FECHA",
       "Guests":"Invitados",
       "Start":"",
-      "Updated":"actualizado"
+      "Updated":"Nueva hora de inicio",
+      "ReconnectMsg":"Tratando de Reconectar"
     },
     "guestauth":{
       "GuestHeaderLabelTxt":"Los niños de 11 años o menores deben tener a uno de los padres o a un tutor legal presente durante la consulta.",

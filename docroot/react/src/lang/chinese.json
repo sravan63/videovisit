@@ -7,7 +7,7 @@
   "Refresh":"刷新",
   "auth":{
       "sso":{
-        "KPUSERID":"KP.ORG 用戶 ID",
+        "KPUSERID":"KP.ORG用戶ID",
         "Password":"密碼",
         "Signin": "登入",
         "PatientGuest":"視訊就診患者訪客",
@@ -28,8 +28,10 @@
     "my_visits":{
       "VisitsTodayMsg":"這是您今天的視訊就診",
       "VisitsRunningLateMsg": "很抱歉，您的醫生要晚到一會兒。新的開始時間為",
-      "Wifimsg":"您的登入可能先於您的臨床醫護人員。請稍候。在安靜、光線充足的地方透過傳訊強勁可靠的Wi-Fi或網際網路連接加入就診。如果您需要幫助來為視訊就診做準備，可在週一至週五上午5:00至晚上7:00打電話844-216-5769獲得支援。",
+      "Wifimsg":"您的登入可能先於您的臨床醫護人員。請稍候。請在安靜、光線充足的地方透過傳訊強勁可靠的Wi-Fi或網際網路連接加入就診。如果您需要幫助來為視訊就診做準備，可在週一至週五上午5:00至晚上7:00打電話844-216-5769獲得支援。",
       "JoinVisit":"加入就診",
+      "AddParticipantsMsg":"其他參加者",
+      "VisitAvailableMsg":"在預定開始時間後15分鐘內，您就可以看診了。",
       "Novisits":"您在接下來的15分鐘內沒有任何就診。",
       "MobileAppLabelTxt":"下一次您要看醫生時，請試試從「My Doctor Online」（我的線上醫生）應用程式（英文版）進行視訊就診。"
     },
@@ -61,10 +63,11 @@
       "Date":"日期",
       "Guests":"訪客",
       "Start":"開始",
-      "Updated":"已更新"
+      "Updated":"新的就诊时间",
+      "ReconnectMsg":"嘗試重新連接"
     },
     "guestauth":{
-      "GuestHeaderLabelTxt":"在就診期間，11 歲及以下的兒童必須有父母或法定監護人在場。",
+      "GuestHeaderLabelTxt":"在就診期間，11歲及以下的兒童必須有父母或法定監護人在場。",
       "PatientLastName":"患者姓氏",
       "JoinBtnName":"加入",
       "Rejoin":"重新加入"

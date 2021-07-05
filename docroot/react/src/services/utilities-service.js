@@ -282,7 +282,18 @@ class UtilityService extends React.Component {
             let week = GlobalConfig.WEEK_DAYS[this.getLang().lang][DateObj.getDay()];
             let month = GlobalConfig.MONTHS[this.getLang().lang][DateObj.getMonth()];
             let date = DateObj.getDate() < 10 ? String(DateObj.getDate()).replace("0", "") : DateObj.getDate();
-            str = week + ', ' + month + ' ' +  date;
+            
+            switch(this.getLang().lang){
+                case "spanish":                                    
+                    str = week + ', ' + date + ' de ' +  month;
+                    break;
+                case "chinese":
+                    str = week + ', ' + month + '' +  date;
+                    break;
+                    default:                    
+                    str = week + ', ' + month + ' ' +  date;
+                        break;        
+            }
         }
         return str;
     }

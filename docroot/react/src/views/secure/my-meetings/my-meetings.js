@@ -430,7 +430,7 @@ class MyMeetings extends React.Component {
                                     {(item.participant && item.participant.length> 0) || 
                                     (item.caregiver && item.caregiver.length > 0) ||
                                     (item.sipParticipants && item.sipParticipants.length > 0) ?
-                                    <h5 className="mt-4">Additional Participants</h5>:('')}
+                                    <h5 className="mt-4">{Details.my_visits.AddParticipantsMsg}</h5>:('')}
                                     {(item.participant && item.participant.length> 0)? 
                                     item.participant.map((val,index) => {
                                     return ( 
@@ -470,8 +470,8 @@ class MyMeetings extends React.Component {
                                         </div>
                                         </div>
                                         <div className="col-md-12 mt-3 joinText">
-                                        {this.state.userDetails.isTempAccess ||item.meetingVendorId != null ?
-                                        (''):(<span>Your visit will be available within 15 minutes of the start time.</span>)}
+                                        {this.state.userDetails.isTempAccess || item.meetingVendorId != null ?
+                                        (''):(<span>{Details.my_visits.VisitAvailableMsg}</span>)}
                                         </div>
                                     </div>
                                 </div>

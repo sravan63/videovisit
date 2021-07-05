@@ -927,7 +927,8 @@ function traceHandler(info){
 _
         case GlobalConfig.NETWORK_RECONNECTING:
             log("info","Reconnecting","event: Reconnecting to the network");
-            MessageService.sendMessage(GlobalConfig.OPEN_INFO_MODAL, { text: 'Trying to Reconnect', loader: true });
+            let data = UtilityService.getLang();
+            MessageService.sendMessage(GlobalConfig.OPEN_INFO_MODAL, { text: data.conference.ReconnectMsg, loader: true });
             break;
 
         case GlobalConfig.FAILED_MID_WAY:
