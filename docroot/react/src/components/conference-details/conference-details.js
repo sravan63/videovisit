@@ -491,7 +491,18 @@ class ConferenceDetails extends React.Component {
         }
         return isDuplicate;
     }
+    toggleLangInfo(){
+        let data = Utilities.getLang(); 
+        switch(data.lang){
+            case "spanish":
+                return "participant-details spanish-scroll";
+                break;            
+            default:
+                return  "participant-details";
+                break;    
 
+        }
+    }
     render() {
         let Details = this.props.data.conference;
         return (
@@ -512,7 +523,7 @@ class ConferenceDetails extends React.Component {
                 </div>
                 <div className="participants-information">
                     <p className="header mb-0">{Details && Details.Guests}</p>
-                    <div className="participant-details" aria-labelledby="dropdownMenuButton">
+                    <div className={this.toggleLangInfo()} aria-labelledby="dropdownMenuButton">
                         { this.state.participants && this.state.participants.length > 0 ? 
                             this.state.participants.map((item,key) =>{
                             return (
