@@ -59,7 +59,6 @@ class Conference extends React.Component {
         this.elementDrag = this.elementDrag.bind(this);
         this.closeDragElement = this.closeDragElement.bind(this);
         this.flipView = this.flipView.bind(this);
-        this.setOffesetValue = this.setOffesetValue.bind(this);
         this.removePositionProp = this.removePositionProp.bind(this);
         this.handleEnd = this.handleEnd.bind(this);
         this.handleMove = this.handleMove.bind(this);
@@ -1285,9 +1284,6 @@ class Conference extends React.Component {
             selfFeed && selfFeed.style.removeProperty(prop);
         });
     }
-    setOffesetValue(){
-        this.initialPositionTop = this.selfViewMedia.current.offsetTop +"px";
-    }
 
     flipView(e) {
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
@@ -1310,9 +1306,8 @@ class Conference extends React.Component {
                 !isLandscape && clickedElement.style.setProperty('height', `${ window.innerHeight - 50}px`)
                 clickedElement.dataset.view = "larger";
                 this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
-                    this.setOffesetValue();
+                    this.initialPositionTop = this.selfViewMedia.current.offsetTop +"px";
                 });
-                //this.initialPositionTop = selfFeed.current.offsetTop + "px"; 
             }
         }
     }
