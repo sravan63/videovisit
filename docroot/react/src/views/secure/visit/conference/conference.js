@@ -24,7 +24,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = {isRemoteFlippedToSelf: false, isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -58,6 +58,9 @@ class Conference extends React.Component {
         this.dragMouseDown = this.dragMouseDown.bind(this);
         this.elementDrag = this.elementDrag.bind(this);
         this.closeDragElement = this.closeDragElement.bind(this);
+        this.flipView = this.flipView.bind(this);
+        this.setOffesetValue = this.setOffesetValue.bind(this);
+        this.removePositionProp = this.removePositionProp.bind(this);
         this.handleEnd = this.handleEnd.bind(this);
         this.handleMove = this.handleMove.bind(this);
         this.handleStart = this.handleStart.bind(this);
@@ -489,13 +492,17 @@ class Conference extends React.Component {
         // get the mouse cursor position at startup:
         this.pos3 = touchLocation.pageX ;
         this.pos4 = touchLocation.pageY;
+        //To distinguish touchstart is for flip view or drag.
+        this.startX= touchLocation.pageX;
+        this.startY= touchLocation.pageY;
         document.ontouchmove = this.handleMove;
         // call a function whenever the cursor moves:
         document.ontouchend = this.handleEnd;
     }
 
      handleMove(e){
-        if(Utilities.isMobileDevice() && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
+         // Applicable if feed is not flipped, used device is mobile/tablet and PIP view.
+        if(!this.state.isRemoteFlippedToSelf && Utilities.isMobileDevice() && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
             var touchLocation = e.targetTouches[0];
             let elmnt = this.selfViewMedia.current;
 
@@ -572,6 +579,9 @@ class Conference extends React.Component {
      }
 
     handleEnd(e) {
+        if(e.changedTouches[0].pageX === this.startX && e.changedTouches[0].pageY === this.startY){
+            this.flipView(e);
+        }
         document.ontouchmove = null;
         document.ontouchend = null;
     }
@@ -669,13 +679,17 @@ class Conference extends React.Component {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
         }
+        const selfViewFeed = this.selfViewMedia.current;
+        const remoteViewFeed = this.remoteFeedMedia.current;
         // OrientationChange Deprecated so using resize handler
         if(window.matchMedia("(orientation: portrait)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
+            this.state.isRemoteFlippedToSelf && (this.removePositionProp(selfViewFeed,remoteViewFeed), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
+            this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp(selfViewFeed, remoteViewFeed));
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
         this.mainContentWidth = window.innerWidth;
@@ -1261,12 +1275,53 @@ class Conference extends React.Component {
         this.remoteFeedMedia.current.style.removeProperty("height");
         return false;
     }
+    
+    removePositionProp(selfFeed, remoteFeed){
+        const positionMarginProp=["top", "right","bottom", "left"];
+
+        //Removing property which dynamically assigned in self view drag.
+        positionMarginProp.forEach(prop=>{
+            // selfFeed && selfFeed.style[prop] === "initial" && selfFeed.style.removeProperty(prop);
+            selfFeed && selfFeed.style.removeProperty(prop);
+        });
+    }
+    setOffesetValue(){
+        this.initialPositionTop = this.selfViewMedia.current.offsetTop +"px";
+    }
+
+    flipView(e) {
+        const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        if(Utilities.isMobileDevice() && (this.state.isPIPMode || isLandscape)) {
+            let clickedElement= e.target;
+            const selfFeed= this.selfViewMedia.current;
+            const remoteFeed = this.remoteFeedMedia.current;
+
+            //Removing property which dynamically assigned in self view drag.
+            this.removePositionProp(selfFeed, remoteFeed);
+            if(clickedElement.dataset.view === "smaller") {
+                if(clickedElement.id !== remoteFeed.id) {
+                    !isLandscape && remoteFeed.style.removeProperty("height");
+                    remoteFeed.dataset.view = "smaller";
+                }
+                else{
+                    !isLandscape && selfFeed.style.removeProperty("height");
+                    selfFeed.dataset.view = "smaller";
+                }
+                !isLandscape && clickedElement.style.setProperty('height', `${ window.innerHeight - 50}px`)
+                clickedElement.dataset.view = "larger";
+                this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
+                    this.setOffesetValue();
+                });
+                //this.initialPositionTop = selfFeed.current.offsetTop + "px"; 
+            }
+        }
+    }
 
     render() {
-        let remoteFeedClass, selfViewClass, Details = this.state.staticData;
+        let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
         if(this.state.isPIPMode) {
-            remoteStreamContainerClass = `${remoteStreamContainerClass} stream-containerPIP`;
+            streamContainer = `stream-containerPIP`;
             remoteFeedClass =  'remoteFeedPIP';
             selfViewClass =  'selfViewVideoPIP';
         }
@@ -1274,6 +1329,15 @@ class Conference extends React.Component {
             remoteFeedClass = 'remoteFeed';
             selfViewClass = 'selfViewVideo';
         }
+        if(this.state.isRemoteFlippedToSelf) {
+            streamContainer = `flipStream-containerPIP`;
+            remoteFeedClass = 'flipRemoteFeedPIP';
+            selfViewClass = 'flipSelfViewVideoPIP';
+        }
+        else{
+            this.selfViewMedia.current && this.selfViewMedia.current.style.removeProperty("height");
+        }
+        streamContainer && (remoteStreamContainerClass = `${remoteStreamContainerClass } ${streamContainer}`);
 
         return (
             <div className="conference-page pl-0 container-fluid">
@@ -1312,7 +1376,7 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={remoteStreamContainerClass} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
-                                            <video ref ={this.remoteFeedMedia} data-view="larger"  className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                            <video ref ={this.remoteFeedMedia} data-view="larger" onClick={this.flipView} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>
                                     <Settings data={Details} />

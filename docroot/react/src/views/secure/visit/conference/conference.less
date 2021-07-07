@@ -238,8 +238,26 @@
                 position: absolute;
             }
 
+            .flipSelfViewVideoPIP {
+                position: absolute;
+                top: 0px;
+                z-index: 1;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+
             .remoteFeedPIP{
                 object-fit: cover; 
+             }
+             
+             .flipRemoteFeedPIP {
+                z-index: 3;
+                position: fixed;
+                bottom: 52px;
+                right: 0;
+                height: auto;
+                width: 45% !important;
              }
 
             .presentation-view {
@@ -315,6 +333,10 @@
                 width:100%;
                 transform: scaleX(1.65);
             }
+            //As in flip view remote feed becomes self view so we don not need to scale the video up.
+            .flipStream-containerPIP {
+                width:100%;
+            }
         }
     }
 }
@@ -355,6 +377,10 @@
                 transform: scaleX(1.44);
             }
 
+            //As in flip view remote feed becomes self view so we don not need to scale the video up.
+            .flipStream-containerPIP {
+                width:100%;
+            }
             .video-conference {
                 width: 100% !important;
                 display: block !important;
@@ -423,6 +449,10 @@
                 width:100%;
                 transform: scaleX(1.6);
             }
+            //As in flip view remote becomes self view so we don not need to scale the video up.
+            .flipStream-containerPIP{ 
+                width:100%;
+            }
         }
     }
 }
@@ -434,6 +464,11 @@
             .stream-containerPIP{
                 width:100%;
                 transform: scaleX(1.24);
+            }
+            
+            //As in flip view remote feed becomes self view so we don not need to scale the video up.
+            .flipStream-containerPIP {
+                width:100%;
             }
         }
     }
@@ -501,6 +536,15 @@
                         z-index: 2;
                     }
 
+                    .flipRemoteFeedPIP {
+                        position: absolute;
+                        left: 16px;
+                        bottom: 0px;
+                        z-index: 2;
+                        height: auto;
+                        max-width: 15%;
+                    }
+
                     .presentation-view {
                         // padding-top: 2% !important;
                         //width: calc(100% - 3.125rem);
@@ -522,6 +566,14 @@
                     }
                     .selfViewVideoPIP{
                         z-index:7;
+                    }
+		            .flipSelfViewVideoPIP {
+                        position: absolute;
+                        top: 0px;
+                        z-index: 1;
+                        height: 100%;
+                        max-width: 100%;
+                        object-fit: cover;
                     }
                 }
             }
