@@ -41,32 +41,29 @@ class Setup extends React.Component {
         }
         sessionStorage.setItem('isSetupPage', true);
         MediaService.loadDeviceMediaData();
+        navigator.mediaDevices.addEventListener('devicechange',()=>{
+            MediaService.onDeviceChange();
+        });
         this.subscription = MessageService.getMessage().subscribe((message, data) => {
             switch (message.text) {
                 case GlobalConfig.TEST_CALL_FINISHED:
                     this.doneSetupTest();
                     break;
+                case GlobalConfig.UPDATE_MEDIA_DEVICES:
+                    this.displayDevices(message.data);
+                    MediaService.resetDeviceChangeFlag();
+                    break;
                 case GlobalConfig.MEDIA_DATA_READY:
-                    this.list = message.data;
-                    this.setState({ media: this.list });
-                    this.setState({
-                        constrains: {
-                            audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
-                            videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
-                            micSource: this.list.audioinput ? this.list.audioinput[0] : null,
-                        }
-                    });
+                    this.displayDevices(message.data);
+                    break;
+                case GlobalConfig.LANGUAGE_CHANGED:
+                    this.getLanguage();
                     break;
             }
         });
         
         this.getBrowserBlockInfo();
         this.getLanguage();
-        this.subscription = MessageService.getMessage().subscribe((message) => {
-            if(message.text==GlobalConfig.LANGUAGE_CHANGED){
-                this.getLanguage();
-            }
-        }); 
     }
 
     componentWillUnmount() {
@@ -74,6 +71,18 @@ class Setup extends React.Component {
         this.subscription.unsubscribe();
         window.location.reload();
         sessionStorage.removeItem('isSetupPage');
+    }
+
+    displayDevices(data){
+        this.list = data;
+        this.setState({ media: this.list });
+        this.setState({
+            constrains: {
+                audioSource: this.list.audiooutput ? this.list.audiooutput[0] : null,
+                videoSource: this.list.videoinput ? this.list.videoinput[0] : null,
+                micSource: this.list.audioinput ? this.list.audioinput[0] : null,
+            }
+        });
     }
 
     getBrowserBlockInfo(){
