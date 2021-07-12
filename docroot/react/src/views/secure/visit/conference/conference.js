@@ -578,13 +578,17 @@ class Conference extends React.Component {
      }
 
     handleEnd(e) {
-        if(e.changedTouches[0].pageX === this.startX && e.changedTouches[0].pageY === this.startY){
+        // Calculate the distance between start and end position,if the distance is fairly small, fire a click event(this.flipView(e)).
+        const end = e.changedTouches[0],
+        dx = Math.pow(this.startX - end.pageX, 2),
+        dy = Math.pow(this.startY - end.pageY, 2),
+        distance = Math.round(Math.sqrt(dx + dy));
+        if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
         }
         document.ontouchmove = null;
         document.ontouchend = null;
     }
-
 
     appendParticipant(newParticipant) {
         this.setState({
@@ -635,10 +639,6 @@ class Conference extends React.Component {
         });
     }*/
     handleResize() {
-        //To avoid iOS tab bar white band issue.
-        if(/iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.matchMedia("(orientation: portrait)").matches){
-            document.body.height = window.innerHeight;
-        }
         if(this.mainContentWidth === window.innerWidth){
             return;
         }
