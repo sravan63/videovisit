@@ -221,7 +221,7 @@ class Conference extends React.Component {
         //selfBox.addEventListener("touchmove", this.handleMove, false);
         selfBox.addEventListener("touchstart", this.handleStart, false);
         this.mainContentWidth = window.innerWidth;
-
+        this.setCenterCoordinates();
         this.subscription = MessageService.getMessage().subscribe((message) => {
             switch (message.text) {
                 case GlobalConfig.CLOSE_SURVEY_MODAL:
@@ -574,6 +574,7 @@ class Conference extends React.Component {
                     elmnt.style.left = (elmnt.offsetLeft - this.pos1) + "px";
                 }
             }
+            this.removeAllCornerClasses();
         }
      }
 
@@ -585,11 +586,103 @@ class Conference extends React.Component {
         distance = Math.round(Math.sqrt(dx + dy));
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
+        } else {
+            const coordinates = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+            if(coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom){
+                const slideTo = this.getSlidePosition(coordinates);
+                this.slideToCorner(slideTo);
+            }
         }
         document.ontouchmove = null;
         document.ontouchend = null;
     }
 
+    getSlidePosition(coordinates){
+        let slideTo = '';
+        const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        const Y_THRESHOLD = 4; // isLandscape ? 4 : 3;
+        const ySegment = window.innerHeight / Y_THRESHOLD;
+        const xSegment = window.innerWidth / 4;
+        const xPos = Math.round(coordinates[0]/xSegment);
+        const yPos = Math.round(coordinates[1]/ySegment);
+        if( yPos == 1 && xPos == 1 ){
+            slideTo = 'top-left';
+        } else if( yPos == Y_THRESHOLD && xPos == 4 ){
+            slideTo = 'bottom-right'
+        } else if( yPos == 1 && xPos == 4 ){
+            slideTo = 'top-right';
+        } else if( yPos == Y_THRESHOLD && xPos == 1 ){
+            slideTo = 'bottom-left';
+        }
+
+        if(!slideTo) {
+            if( xPos == 1 ){
+                slideTo = 'left';
+            } else if( xPos == 4 ){
+                slideTo = 'right';
+            }
+        }
+
+        if(!slideTo) {
+            if( yPos == 1 ){
+                slideTo = 'top';
+            } else if( yPos == Y_THRESHOLD ){
+                slideTo = 'bottom';
+            }
+        }
+
+        if(!slideTo) {
+            if(xPos > yPos){
+                slideTo = coordinates[0] < (window.innerWidth / 2) ? 'left' : 'right';
+            } else if(yPos > xPos){
+                slideTo = coordinates[1] < (window.innerHeight / 2) ? 'top' : 'bottom';
+            } else {
+                if(isLandscape){
+                    slideTo = coordinates[1] < (window.innerHeight / 2) ? 'top' : 'bottom';
+                } else {
+                    slideTo = coordinates[0] < (window.innerWidth / 2) ? 'left' : 'right';
+                }
+            }
+        }
+        return slideTo;
+    }
+
+    setCenterCoordinates(){
+        const wHeight = window.innerHeight; // 410
+        const wWidth = window.innerWidth; // 1366
+        const cornerOffset = 10; // 10% offset in the corners.
+        this.center = { 
+            top : (cornerOffset/100 * wHeight),  // 41
+            left: (cornerOffset/100 * wWidth), // 136
+            bottom: wHeight - (cornerOffset/100 * wHeight), // 369
+            right: wWidth - (cornerOffset/100 * wWidth)  // 1230
+        };
+    }
+
+    slideToCorner(slideTo){
+        let elmnt = this.selfViewMedia.current;
+        if(slideTo.indexOf('-') > -1 ){
+            let cls1 = slideTo.split('-')[0];
+            let cls2 = slideTo.split('-')[1];
+            elmnt.classList.add(cls1, cls2);
+        } else {
+            elmnt.classList.add(slideTo);
+        }
+        // if(elmnt.classList.contains('bottom')){
+        //     elmnt.style.top = elmnt.offsetTop - elmnt.offsetHeight;
+        // }
+        this.pos3 = (elmnt.offsetLeft - this.pos1) +'px';
+        this.pos4 = (elmnt.offsetTop - this.pos2) +'px';
+    }
+
+    removeAllCornerClasses() {
+        ['top', 'left', 'right', 'bottom'].map((c)=>{
+            if( this.selfViewMedia.current.classList.contains(c) ){
+                this.selfViewMedia.current.classList.remove(c);
+            }
+        });
+    }
+    
     appendParticipant(newParticipant) {
         this.setState({
             participants: [...this.state.participants, newParticipant]
