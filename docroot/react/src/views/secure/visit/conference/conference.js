@@ -639,6 +639,10 @@ class Conference extends React.Component {
         });
     }*/
     handleResize() {
+        //To avoid iOS tab bar white band issue.
+        if(/iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.matchMedia("(orientation: portrait)").matches){
+            document.body.height = window.innerHeight;
+        }
         if(this.mainContentWidth === window.innerWidth){
             return;
         }
