@@ -26,7 +26,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -588,7 +587,7 @@ public class WebUtil {
 		return isChromeOrFFBrowser;
 	}
 	
-	public static void addMeetingDateTime(final MeetingDO meetingDO, final VideoVisitParamsDTO videoVisitParams) {
+	public static void addMeetingDateTime(final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO meetingDO, final VideoVisitParamsDTO videoVisitParams) {
 		logger.info(LOG_ENTERED);
 		try {
 			if (StringUtils.isNotBlank(meetingDO.getMeetingTime())) {

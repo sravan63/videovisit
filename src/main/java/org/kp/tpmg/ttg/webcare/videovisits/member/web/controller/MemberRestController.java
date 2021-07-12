@@ -408,4 +408,15 @@ public class MemberRestController{
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	@RequestMapping(value = "/updateGuestParticipant.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String updateGuestParticipant(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = MeetingCommand.updateGuestParticipant(request);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }

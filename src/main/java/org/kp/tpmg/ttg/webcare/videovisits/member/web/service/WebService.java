@@ -20,8 +20,12 @@ import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.ttg.common.property.IApplicationProperties;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.ActiveMeetingsForMemberInput;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsJSON;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.ttg.videovisitsec.model.AuthorizeECCodeOutput;
 import org.kp.tpmg.ttg.videovisitsec.model.AuthorizeECCodeOutputJson;
+import org.kp.tpmg.ttg.videovisitsec.model.UpdateGuestParticipantInput;
 import org.kp.tpmg.ttg.videovisitsec.model.ValidateECCodeInput;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
@@ -33,46 +37,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.model.AuthorizeVVCodeOutputJson;
-import org.kp.tpmg.videovisit.model.MemberLogoutInput;
-import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
-import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
-import org.kp.tpmg.videovisit.model.Status;
-import org.kp.tpmg.videovisit.model.mediastats.InsertVendorMeetingMediaCDRInput;
-import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForCaregiverInput;
-import org.kp.tpmg.videovisit.model.meeting.ActiveMeetingsForMemberInput;
-import org.kp.tpmg.videovisit.model.meeting.AuthorizeVVCodeOutput;
-import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingInput;
-import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
-import org.kp.tpmg.videovisit.model.meeting.EndMeetingForMemberGuestDesktopInput;
-import org.kp.tpmg.videovisit.model.meeting.GetMeetingsForMemberAndNonMemberProxiesInput;
-import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingForMemberGuestInput;
-import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingInput;
-import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
-import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingOutput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopInput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestOutput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberInput;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMemberOrProxyMeetingForMemberInput;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdInput;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdOutput;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
-import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForMemberAndProxiesInput;
-import org.kp.tpmg.videovisit.model.meeting.RetrieveActiveMeetingsForNonMemberProxiesInput;
-import org.kp.tpmg.videovisit.model.meeting.SetKPHCConferenceStatusInput;
-import org.kp.tpmg.videovisit.model.meeting.UpdateMemberMeetingStatusInput;
-import org.kp.tpmg.videovisit.model.meeting.VerifyAndLaunchMeetingForMemberGuestInput;
-import org.kp.tpmg.videovisit.model.meeting.VerifyMemberInput;
-import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
-import org.kp.tpmg.videovisit.model.meeting.provider.UpdateEmailActionInput;
-import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateInput;
-import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutput;
-import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
-import org.kp.tpmg.videovisit.model.notification.ValidateVVCodeInput;
-import org.kp.tpmg.videovisit.model.notification.VendorMeetingEventInput;
 import org.kp.ttg.sharedservice.client.MemberSSOAuthAPIs;
 import org.kp.ttg.sharedservice.domain.AuthorizeRequestVo;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
@@ -233,26 +197,26 @@ public class WebService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ServiceCommonOutput memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID,
+	public static org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput memberEndMeetingLogout(String mrn8Digit, long meetingID, String sessionID,
 			String memberName, boolean notifyVideoForMeetingQuit, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " MeetingID : " + meetingID);
 		logger.debug("mrn: " + mrn8Digit + ", memberName : " + memberName);
 
-		ServiceCommonOutput output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput output = null;
 		String responseJsonStr = "";
 
 		try {
 			if (meetingID <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID)
 					|| StringUtils.isBlank(memberName)) {
 				logger.warn("Missing input attributes.");
-				output = new ServiceCommonOutput();
-				final Status status = new Status();
+				output = new org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput();
+				final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
 			} else {
 
-				final UpdateMemberMeetingStatusInput input = new UpdateMemberMeetingStatusInput();
+				final org.kp.tpmg.ttg.videovisit.mconference.model.meeting.UpdateMemberMeetingStatusInput input = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.UpdateMemberMeetingStatusInput();
 				input.setMeetingId(meetingID);
 				input.setSessionId(sessionID);
 				input.setMrn(mrn8Digit);
@@ -268,7 +232,7 @@ public class WebService {
 				if (StringUtils.isNotBlank(responseJsonStr)) {
 					final JsonParser parser = new JsonParser();
 					final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-					output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+					output = gson.fromJson(jobject.get("service").toString(), org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput.class);
 				}
 			}
 
@@ -289,13 +253,13 @@ public class WebService {
 			if (StringUtils.isBlank(meetingHash) || StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId)) {
 				logger.warn("Missing input attributes.");
 				output = new MeetingDetailsOutput();
-				final Status status = new Status();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
 				return output;
 			}
-			ActiveMeetingsForCaregiverInput input = new ActiveMeetingsForCaregiverInput();
+			org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.ActiveMeetingsForCaregiverInput input = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.ActiveMeetingsForCaregiverInput();
 
 			input.setMeetingHash(meetingHash);
 			input.setClientId(clientId);
@@ -320,24 +284,24 @@ public class WebService {
 		return output;
 	}
 
-	public static ServiceCommonOutput endCaregiverMeetingSession(String meetingHash, String megaMeetingNameDisplayName,
+	public static org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput endCaregiverMeetingSession(String meetingHash, String megaMeetingNameDisplayName,
 			boolean isParticipantDel, String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " [meetingHash=" + meetingHash + ", isParticipantDel=" + isParticipantDel + "]");
 		logger.debug("megaMeetingNameDisplayName=" + megaMeetingNameDisplayName);
-		ServiceCommonOutput output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput output = null;
 		String responseJsonStr = "";
 		try {
 			if (StringUtils.isBlank(meetingHash) || StringUtils.isBlank(megaMeetingNameDisplayName)
 					|| StringUtils.isBlank(sessionId)) {
 				logger.warn("Missing input attributes.");
-				output = new ServiceCommonOutput();
-				final Status status = new Status();
+				output = new org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput();
+				final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
 				return output;
 			}
-			EndMeetingForMemberGuestDesktopInput input = new EndMeetingForMemberGuestDesktopInput();
+			org.kp.tpmg.ttg.videovisit.mconference.model.meeting.EndMeetingForMemberGuestDesktopInput input = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.EndMeetingForMemberGuestDesktopInput();
 			input.setMeetingHash(meetingHash);
 			input.setPatientLastName(megaMeetingNameDisplayName);
 			input.setIsDeleteMeetingFromVidyo((isParticipantDel));
@@ -353,7 +317,7 @@ public class WebService {
 			if (StringUtils.isNotBlank(responseJsonStr)) {
 				final JsonParser parser = new JsonParser();
 				final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
-				output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+				output = gson.fromJson(jobject.get("service").toString(), org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput.class);
 			}
 		}
 
@@ -729,25 +693,25 @@ public class WebService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ServiceCommonOutput setKPHCConferenceStatus(long meetingId, String joinLeaveStatus,
+	public static org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput setKPHCConferenceStatus(long meetingId, String joinLeaveStatus,
 			boolean isProxyMeeting, String careGiverName, String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId + ", joinLeaveStatus=" + joinLeaveStatus
 				+ ", isProxyMeeting" + isProxyMeeting);
 		logger.debug("careGiverName=" + careGiverName);
-		ServiceCommonOutput output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput output = null;
 		String inputJsonString = "";
 		String jsonResponseStr = "";
 
 		try {
 			if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
 				logger.warn("Missing input attributes.");
-				output = new ServiceCommonOutput();
-				final Status status = new Status();
+				output = new org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput();
+				final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
 			} else {
-				final SetKPHCConferenceStatusInput input = new SetKPHCConferenceStatusInput();
+				final org.kp.tpmg.ttg.videovisit.mconference.model.meeting.SetKPHCConferenceStatusInput input = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.SetKPHCConferenceStatusInput();
 				input.setCareGiverName(careGiverName);
 				input.setClientId(clientId);
 				input.setJoinLeaveStatus(joinLeaveStatus);
@@ -763,7 +727,7 @@ public class WebService {
 				if (StringUtils.isNotBlank(jsonResponseStr)) {
 					final JsonParser parser = new JsonParser();
 					final JsonObject jobject = (JsonObject) parser.parse(jsonResponseStr);
-					output = gson.fromJson(jobject.get("service").toString(), ServiceCommonOutput.class);
+					output = gson.fromJson(jobject.get("service").toString(), org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput.class);
 				}
 			}
 		} catch (Exception e) {
@@ -788,7 +752,7 @@ public class WebService {
 			if (StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionID) || StringUtils.isBlank(clientId)) {
 				logger.warn("Missing input attributes.");
 				output = new MeetingDetailsOutput();
-				final Status status = new Status();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
@@ -800,7 +764,7 @@ public class WebService {
 			}
 
 			logger.debug("after split secure codes: " + secureCodes.split(","));
-			RetrieveActiveMeetingsForMemberAndProxiesInput input = new RetrieveActiveMeetingsForMemberAndProxiesInput();
+			org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.RetrieveActiveMeetingsForMemberAndProxiesInput input = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.RetrieveActiveMeetingsForMemberAndProxiesInput();
 			input.setMrn(mrn8Digit);
 			input.setGetProxyMeetings(getProxyMeetings);
 			input.setSecureCodes(secureCodes.split(","));
@@ -854,7 +818,7 @@ public class WebService {
 			if (StringUtils.isBlank(guid) || StringUtils.isBlank(sessionID) || StringUtils.isBlank(clientId)) {
 				logger.warn("Missing input attributes.");
 				output = new MeetingDetailsOutput();
-				final Status status = new Status();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
@@ -866,7 +830,7 @@ public class WebService {
 			}
 
 			logger.debug("after split secure codes: " + secureCodes.split(","));
-			RetrieveActiveMeetingsForNonMemberProxiesInput input = new RetrieveActiveMeetingsForNonMemberProxiesInput();
+			org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.RetrieveActiveMeetingsForNonMemberProxiesInput input = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.RetrieveActiveMeetingsForNonMemberProxiesInput();
 			input.setGuid(guid);
 			input.setSecureCodes(secureCodes.split(","));
 			input.setIsAdhoc(isAdhoc);
@@ -917,12 +881,12 @@ public class WebService {
 	 * @return
 	 * @throws Exception
 	 */
-	public static VerifyMemberOutput verifyMember(String lastName, String mrn, String birth_month, String birth_year,
+	public static org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberOutput verifyMember(String lastName, String mrn, String birth_month, String birth_year,
 			String birth_day, String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED);
-		VerifyMemberOutput verifyMemberOutput = null;
+		org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberOutput verifyMemberOutput = null;
 		final String Dob = birth_month + "/" + birth_year;
-		VerifyMemberInput verifyMeberInput = new VerifyMemberInput();
+		org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberInput verifyMeberInput = new org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberInput();
 		logger.debug("lastName: " + lastName);
 		try {
 			if (StringUtils.isNotBlank(mrn) && StringUtils.isNotBlank(sessionId) && StringUtils.isNotBlank(lastName)) {
@@ -942,7 +906,7 @@ public class WebService {
 					if (StringUtils.isNotBlank(jsonString)) {
 						final JsonParser parser = new JsonParser();
 						final JsonObject jobject = (JsonObject) parser.parse(jsonString);
-						verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), VerifyMemberOutput.class);
+						verifyMemberOutput = gson.fromJson(jobject.get("service").toString(), org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberOutput.class);
 					}
 				} else {
 					logger.warn("DOB has to be in the format of MM/YYYY but is [" + Dob + "]");
@@ -958,24 +922,24 @@ public class WebService {
 		return verifyMemberOutput;
 	}
 
-	public static CreateInstantVendorMeetingOutput createInstantVendorMeeting(String hostNuid, String[] participantNuid,
+	public static org.kp.tpmg.ttg.videovisit.mappointment.model.CreateInstantVendorMeetingOutput createInstantVendorMeeting(String hostNuid, String[] participantNuid,
 			String memberMrn, String meetingType, String sessionId, String clientId) throws Exception {
 		logger.info(LOG_ENTERED + "meetingType: " + meetingType);
 		logger.debug("hostNuid=" + hostNuid + ", participantNuid=" + participantNuid + ", memberMrn=" + memberMrn);
-		CreateInstantVendorMeetingOutput output = null;
+		org.kp.tpmg.ttg.videovisit.mappointment.model.CreateInstantVendorMeetingOutput output = null;
 		String responseJsonStr = "";
 		try {
 			if (StringUtils.isBlank(hostNuid) || StringUtils.isBlank(memberMrn) || StringUtils.isBlank(meetingType)
 					|| StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)) {
 				logger.warn("Missing input attributes.");
-				output = new CreateInstantVendorMeetingOutput();
-				final Status status = new Status();
+				output = new org.kp.tpmg.ttg.videovisit.mappointment.model.CreateInstantVendorMeetingOutput();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
 				return output;
 			}
-			CreateInstantVendorMeetingInput input = new CreateInstantVendorMeetingInput();
+			org.kp.tpmg.ttg.videovisit.mappointment.model.CreateInstantVendorMeetingInput input = new org.kp.tpmg.ttg.videovisit.mappointment.model.CreateInstantVendorMeetingInput();
 			input.setHostNuid(hostNuid);
 			input.setParticipantNuid(participantNuid);
 			input.setMemberMrn(memberMrn);
@@ -991,7 +955,7 @@ public class WebService {
 				final JsonParser parser = new JsonParser();
 				final JsonObject jobject = (JsonObject) parser.parse(responseJsonStr);
 				if (jobject != null && jobject.get("service") != null) {
-					output = gson.fromJson(jobject.get("service").toString(), CreateInstantVendorMeetingOutput.class);
+					output = gson.fromJson(jobject.get("service").toString(), org.kp.tpmg.ttg.videovisit.mappointment.model.CreateInstantVendorMeetingOutput.class);
 				}
 			}
 		} catch (Exception e) {
@@ -1002,43 +966,43 @@ public class WebService {
 		return output;
 	}
 
-	public static ServiceCommonOutputJson testDbRoundTrip() throws Exception {
+	public static org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson testDbRoundTrip() throws Exception {
 		logger.info(LOG_ENTERED);
 		String responseJsonStr = null;
 		final Gson gson = new Gson();
-		ServiceCommonOutputJson testDbRoundTripJson = new ServiceCommonOutputJson();
+		org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson testDbRoundTripJson = new org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson();
 		try {
 			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}", MAPPOINTMENT, ServiceUtil.POST, null);
-			testDbRoundTripJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+			testDbRoundTripJson = gson.fromJson(responseJsonStr, org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson.class);
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage() + " Retrying...", e);
 			responseJsonStr = callAPIManagerService(ServiceUtil.TEST_DB_ROUND_TRIP, "{}", MAPPOINTMENT, ServiceUtil.POST, null);
-			testDbRoundTripJson = gson.fromJson(responseJsonStr, ServiceCommonOutputJson.class);
+			testDbRoundTripJson = gson.fromJson(responseJsonStr, org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson.class);
 		}
 		logger.info(LOG_EXITING);
 		return testDbRoundTripJson;
 	}
 
-	public static JoinLeaveMeetingJSON memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId,
+	public static org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON memberLeaveProxyMeeting(String meetingId, String careGiverName, String sessionId,
 			String clientId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
 		logger.debug("careGiverName=" + careGiverName);
-		JoinLeaveMeetingJSON output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON output = null;
 		String responseJsonStr = null;
 		final Gson gson = new Gson();
 		String inputJsonString = null;
 		try {
 			if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId)) {
-				output = new JoinLeaveMeetingJSON();
-				JoinLeaveMeetingOutput joinLeaveMeetingOutput = new JoinLeaveMeetingOutput();
-				final Status status = new Status();
+				output = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON();
+				org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingOutput joinLeaveMeetingOutput = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingOutput();
+				final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setService(joinLeaveMeetingOutput);
 				output.getService().setStatus(status);
 				return output;
 			}
-			JoinLeaveMeetingInput joinLeaveMeetingInput = new JoinLeaveMeetingInput();
+			org.kp.tpmg.ttg.videovisit.mconference.model.JoinLeaveMeetingInput joinLeaveMeetingInput = new org.kp.tpmg.ttg.videovisit.mconference.model.JoinLeaveMeetingInput();
 			joinLeaveMeetingInput.setMeetingId(Long.parseLong(meetingId));
 			joinLeaveMeetingInput.setInMeetingDisplayName(careGiverName);
 			joinLeaveMeetingInput.setSessionId(sessionId);
@@ -1052,14 +1016,14 @@ public class WebService {
 
 			responseJsonStr = callAPIManagerService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST, null);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
-				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+				output = gson.fromJson(responseJsonStr, org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON.class);
 			}
 			logger.info("jsonResponseString : " + responseJsonStr);
 		} catch (Exception e) {
 			logger.error("Web Service API error for meeting:" + meetingId + " Retrying...", e);
 			responseJsonStr = callAPIManagerService(ServiceUtil.MEMBER_LEAVE_PROXY_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST, null);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
-				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+				output = gson.fromJson(responseJsonStr, org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON.class);
 			}
 		}
 		logger.info(LOG_EXITING);
@@ -1073,7 +1037,7 @@ public class WebService {
 		final Gson gson = new Gson();
 		String responseJsonStr = null;
 		String inputJsonString = null;
-		LaunchMemberOrProxyMeetingForMemberInput input = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMemberOrProxyMeetingForMemberInput input = null;
 		try {
 			boolean isNonMember = false;
 			if (isProxyMeeting && StringUtils.isBlank(mrn8Digit)) {
@@ -1083,16 +1047,16 @@ public class WebService {
 			if ((!isNonMember && StringUtils.isBlank(mrn8Digit)) || meetingId <= 0 || StringUtils.isBlank(sessionId)
 					|| StringUtils.isBlank(inMeetingDisplayName)) {
 				logger.warn("Missing input attributes.");
-				LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
-				output.setService(new LaunchMeetingForMemberGuestOutput());
-				final Status status = new Status();
+				org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON output = new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON();
+				output.setService(new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestOutput());
+				final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.getService().setStatus(status);
 				return gson.toJson(output);
 			}
 
-			input = new LaunchMemberOrProxyMeetingForMemberInput();
+			input = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMemberOrProxyMeetingForMemberInput();
 			input.setMeetingId(meetingId);
 			input.setMrn(mrn8Digit);
 			input.setInMeetingDisplayName(inMeetingDisplayName);
@@ -1117,13 +1081,13 @@ public class WebService {
 		final Gson gson = new Gson();
 		String responseJsonStr;
 		String inputJsonString = null;
-		LaunchMeetingForMemberDesktopInput input;
+		org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMeetingForMemberDesktopInput input;
 		if (meetingId <= 0 || StringUtils.isBlank(mrn8Digit) || StringUtils.isBlank(sessionId)
 				|| StringUtils.isBlank(clientId) || StringUtils.isBlank(inMeetingDisplayName)) {
 			logger.warn("Missing input attributes.");
-			LaunchMeetingForMemberGuestJSON output = new LaunchMeetingForMemberGuestJSON();
-			output.setService(new LaunchMeetingForMemberGuestOutput());
-			final Status status = new Status();
+			org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON output = new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON();
+			output.setService(new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestOutput());
+			final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			output.getService().setStatus(status);
@@ -1131,7 +1095,7 @@ public class WebService {
 		}
 
 		try {
-			input = new LaunchMeetingForMemberDesktopInput();
+			input = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMeetingForMemberDesktopInput();
 			input.setMeetingId(meetingId);
 			input.setInMeetingDisplayName(inMeetingDisplayName);
 			input.setMrn(mrn8Digit);
@@ -1156,15 +1120,15 @@ public class WebService {
 				+ deviceType + ", deviceOS :" + deviceOS + ", deviceOSversion :" + deviceOSversion);
 		logger.debug("mrn=" + mrn + ", inMeetingDisplayName" + inMeetingDisplayName);
 
-		LaunchMeetingForMemberInput jsonInput = new LaunchMeetingForMemberInput();
+		org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberInput jsonInput = new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberInput();
 		Gson gson = new Gson();
 		String output;
 		if (meetingId <= 0 || StringUtils.isBlank(mrn) || StringUtils.isBlank(sessionId)
 				|| StringUtils.isBlank(inMeetingDisplayName)) {
 			logger.warn("Missing input attributes.");
-			LaunchMeetingForMemberGuestJSON memberOutput = new LaunchMeetingForMemberGuestJSON();
-			memberOutput.setService(new LaunchMeetingForMemberGuestOutput());
-			final Status status = new Status();
+			org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON memberOutput = new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON();
+			memberOutput.setService(new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestOutput());
+			final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			memberOutput.getService().setStatus(status);
@@ -1192,7 +1156,7 @@ public class WebService {
 
 	public static String memberLogout(String mrn, String sessionId) throws Exception {
 		logger.info(LOG_ENTERED);
-		MemberLogoutInput input = new MemberLogoutInput();
+		org.kp.tpmg.ttg.videovisit.mappointment.model.MemberLogoutInput input = new org.kp.tpmg.ttg.videovisit.mappointment.model.MemberLogoutInput();
 		Gson gson = new Gson();
 		String output;
 		if (StringUtils.isBlank(mrn)) {
@@ -1200,9 +1164,9 @@ public class WebService {
 		}
 		if (StringUtils.isBlank(sessionId)) {
 			logger.warn("Missing input attributes.");
-			ServiceCommonOutputJson memberLogoutOutput = new ServiceCommonOutputJson();
-			memberLogoutOutput.setService(new ServiceCommonOutput());
-			final Status status = new Status();
+			org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson memberLogoutOutput = new org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson();
+			memberLogoutOutput.setService(new org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutput());
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			memberLogoutOutput.getService().setStatus(status);
@@ -1232,22 +1196,22 @@ public class WebService {
 		logger.info(LOG_ENTERED + " meetingId: " + meetingId);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		MeetingRunningLateInput input;
+		org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateInput input;
 
 		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(sessionId)) {
 			logger.warn("Missing input attributes.");
-			final MeetingRunningLateOutputJson output = new MeetingRunningLateOutputJson();
-			final MeetingRunningLateOutput service = new MeetingRunningLateOutput();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateOutputJson output = new org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateOutputJson();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateOutput service = new org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateOutput();
 			service.setName(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS);
 			output.setService(service);
-			final Status status = new Status();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			service.setStatus(status);
 			jsonOutput = gson.toJson(output);
 		}
 		try {
-			input = new MeetingRunningLateInput();
+			input = new org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateInput();
 			input.setMeetingId(meetingId);
 			input.setClientId(clientId);
 			input.setSessionId(sessionId);
@@ -1276,23 +1240,23 @@ public class WebService {
 				+ joinOrLeave);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		JoinLeaveMeetingForMemberGuestInput input;
+		org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingForMemberGuestInput input;
 
 		if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(meetingHash) || StringUtils.isBlank(joinOrLeave)
 				|| StringUtils.isBlank(sessionId)) {
 			logger.warn("Missing input attributes.");
-			final JoinLeaveMeetingJSON output = new JoinLeaveMeetingJSON();
-			final JoinLeaveMeetingOutput service = new JoinLeaveMeetingOutput();
+			final org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON output = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON();
+			final org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingOutput service = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingOutput();
 			service.setName(ServiceUtil.JOIN_LEAVE_MEETING_FOR_MEMBER_GUEST);
 			output.setService(service);
-			final Status status = new Status();
+			final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			service.setStatus(status);
 			jsonOutput = gson.toJson(output);
 		}
 		try {
-			input = new JoinLeaveMeetingForMemberGuestInput();
+			input = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingForMemberGuestInput();
 			input.setMeetingId(meetingId);
 			input.setMeetingHash(meetingHash);
 			input.setJoinLeaveMeeting(joinOrLeave);
@@ -1314,22 +1278,22 @@ public class WebService {
 		logger.info(LOG_ENTERED + " meetingId: " + meetingId + ", userType :" + userType + ", action :" + action);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		UpdateEmailActionInput input;
+		org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.UpdateEmailActionInput input;
 
 		if (StringUtils.isBlank(meetingId)) {
 			logger.warn("Missing input attributes.");
-			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
-			final ServiceCommonOutput service = new ServiceCommonOutput();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutput service = new org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutput();
 			service.setName(ServiceUtil.UPDATE_EMAIL_ACTION);
 			output.setService(service);
-			final Status status = new Status();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			service.setStatus(status);
 			jsonOutput = gson.toJson(output);
 		} else {
 			try {
-				input = new UpdateEmailActionInput();
+				input = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.UpdateEmailActionInput();
 				input.setMeetingId(meetingId);
 				input.setUserType(userType);
 				input.setUserAction(action);
@@ -1354,22 +1318,22 @@ public class WebService {
 		logger.info(LOG_ENTERED + " meetingId: " + meetingId + " userType: " + userType);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		VendorMeetingEventInput input;
+		org.kp.tpmg.ttg.videovisitsintegration.model.notification.VendorMeetingEventInput input;
 
 		if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
 			logger.warn("Missing input attributes.");
-			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
-			final ServiceCommonOutput service = new ServiceCommonOutput();
+			final org.kp.tpmg.ttg.videovisitsintegration.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisitsintegration.model.ServiceCommonOutputJson();
+			final org.kp.tpmg.ttg.videovisitsintegration.model.ServiceCommonOutput service = new org.kp.tpmg.ttg.videovisitsintegration.model.ServiceCommonOutput();
 			service.setName(ServiceUtil.LOG_VENDOR_MEETING_EVENTS);
 			output.setService(service);
-			final Status status = new Status();
+			final org.kp.tpmg.ttg.videovisitsintegration.model.Status status = new org.kp.tpmg.ttg.videovisitsintegration.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			output.getService().setStatus(status);
 			jsonOutput = gson.toJson(output);
 		} else {
 			try {
-				input = new VendorMeetingEventInput();
+				input = new org.kp.tpmg.ttg.videovisitsintegration.model.notification.VendorMeetingEventInput();
 				input.setMeetingId(meetingId);
 				input.setUserType(userType);
 				input.setUserId(userId);
@@ -1436,7 +1400,7 @@ public class WebService {
 					|| CollectionUtils.isEmpty(proxyMrns)) {
 				logger.warn("Missing input attributes.");
 				output = new MeetingDetailsOutput();
-				final Status status = new Status();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setStatus(status);
@@ -1448,7 +1412,7 @@ public class WebService {
 			}
 
 			logger.debug("after split secure codes: " + secureCodes.split(","));
-			final GetMeetingsForMemberAndNonMemberProxiesInput input = new GetMeetingsForMemberAndNonMemberProxiesInput();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.GetMeetingsForMemberAndNonMemberProxiesInput input = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.GetMeetingsForMemberAndNonMemberProxiesInput();
 			input.setMemberMrn(mrn8Digit);
 			input.setProxyMrns(proxyMrns);
 			input.setSecureCodes(secureCodes.split(","));
@@ -1500,21 +1464,21 @@ public class WebService {
 
 		final Gson gson = new Gson();
 		String jsonOutput = null;
-		MeetingDetailsForMeetingIdInput input;
+		org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdInput input;
 		if (meetingId <= 0 || StringUtils.isBlank(sessionId) || StringUtils.isBlank(clientId)) {
 			logger.warn("Missing input attributes");
-			final MeetingDetailsForMeetingIdJSON output = new MeetingDetailsForMeetingIdJSON();
-	    	final MeetingDetailsForMeetingIdOutput service = new MeetingDetailsForMeetingIdOutput();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON output = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON();
+	    	final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdOutput service = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdOutput();
 			service.setName(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID);
 			output.setService(service);
-			final Status status = new Status();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			service.setStatus(status);
 			jsonOutput = gson.toJson(output);
 		}
 		try {
-			input = new MeetingDetailsForMeetingIdInput();
+			input = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdInput();
 			input.setMeetingId(meetingId);
 			input.setClientId(WebUtil.VV_MBR_WEB);
 			input.setSessionId(sessionId);
@@ -1529,26 +1493,26 @@ public class WebService {
 		return jsonOutput;
 	}
 	
-	public static JoinLeaveMeetingJSON joinLeaveMeeting(final long meetingId, final String inMeetingDisplayName,
+	public static org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON joinLeaveMeeting(final long meetingId, final String inMeetingDisplayName,
 			boolean isPatient, final String joinLeaveMeeting, final String deviceType, final String deviceOS,
 			final String deviceOSversion, final String clientId, final String sessionId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingId=" + meetingId);
-		JoinLeaveMeetingJSON output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON output = null;
 		String responseJsonStr = null;
 		final Gson gson = new Gson();
 		String inputJsonString = null;
 		try {
 			if (meetingId <= 0 || StringUtils.isBlank(sessionId)) {
-				output = new JoinLeaveMeetingJSON();
-				final JoinLeaveMeetingOutput joinLeaveMeetingOutput = new JoinLeaveMeetingOutput();
-				final Status status = new Status();
+				output = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON();
+				final org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingOutput joinLeaveMeetingOutput = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingOutput();
+				final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setService(joinLeaveMeetingOutput);
 				output.getService().setStatus(status);
 				return output;
 			}
-			final JoinLeaveMeetingInput joinLeaveMeetingInput = new JoinLeaveMeetingInput();
+			final org.kp.tpmg.ttg.videovisit.mconference.model.JoinLeaveMeetingInput joinLeaveMeetingInput = new org.kp.tpmg.ttg.videovisit.mconference.model.JoinLeaveMeetingInput();
 			joinLeaveMeetingInput.setMeetingId(meetingId);
 			joinLeaveMeetingInput.setInMeetingDisplayName(inMeetingDisplayName);
 			joinLeaveMeetingInput.setSessionId(sessionId);
@@ -1566,7 +1530,7 @@ public class WebService {
 				responseJsonStr = callAPIManagerService(ServiceUtil.LEAVE_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST, null);
 			}// else part to be decided by ranjeet
 			if (StringUtils.isNotBlank(responseJsonStr)) {
-				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+				output = gson.fromJson(responseJsonStr, org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON.class);
 			}
 			logger.info("jsonResponseString : " + responseJsonStr);
 		} catch (Exception e) {
@@ -1577,34 +1541,34 @@ public class WebService {
 				responseJsonStr = callAPIManagerService(ServiceUtil.LEAVE_MEETING, inputJsonString, MCONFERENCE, ServiceUtil.POST, null);
 			}
 			if (StringUtils.isNotBlank(responseJsonStr)) {
-				output = gson.fromJson(responseJsonStr, JoinLeaveMeetingJSON.class);
+				output = gson.fromJson(responseJsonStr, org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON.class);
 			}
 		}
 		logger.info(LOG_EXITING);
 		return output;
 	}
 
-	public static MeetingDetailsForMeetingIdJSON guestLoginJoinMeeting(final String meetingHash,
+	public static org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON guestLoginJoinMeeting(final String meetingHash,
 			final String patientLastName, final boolean isMobileFlow, final String deviceType, final String deviceOS,
 			final String deviceOSversion, final String clientId, final String sessionId) throws Exception {
 		logger.info(LOG_ENTERED + " meetingHash=" + meetingHash);
-		MeetingDetailsForMeetingIdJSON output = null;
+		org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON output = null;
 		String responseJsonStr = null;
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		String inputJsonString = null;
 		try {
 			if (StringUtils.isBlank(meetingHash) || StringUtils.isBlank(patientLastName)
 					|| StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId)) {
-				output = new MeetingDetailsForMeetingIdJSON();
-				final MeetingDetailsForMeetingIdOutput meetingDetailsForMeetingIdOutput = new MeetingDetailsForMeetingIdOutput();
-				final Status status = new Status();
+				output = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdOutput meetingDetailsForMeetingIdOutput = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdOutput();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				output.setService(meetingDetailsForMeetingIdOutput);
 				output.getService().setStatus(status);
 				return output;
 			}
-			final VerifyAndLaunchMeetingForMemberGuestInput input = new VerifyAndLaunchMeetingForMemberGuestInput();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.VerifyAndLaunchMeetingForMemberGuestInput input = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.VerifyAndLaunchMeetingForMemberGuestInput();
 			input.setMeetingHash(meetingHash);
 			input.setPatientLastName(patientLastName);
 			input.setMobileFlow(isMobileFlow);
@@ -1618,7 +1582,7 @@ public class WebService {
 			responseJsonStr = callAPIManagerService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
 					inputJsonString, MAPPOINTMENT, ServiceUtil.POST, null);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
-				output = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
+				output = gson.fromJson(responseJsonStr, org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON.class);
 			}
 			logger.debug("jsonResponseString : " + responseJsonStr);
 		} catch (Exception e) {
@@ -1628,7 +1592,7 @@ public class WebService {
 			responseJsonStr = callAPIManagerService(ServiceUtil.VERIFY_AND_LAUNCH_MEETING_FOR_MEMBER_GUEST,
 					inputJsonString, MAPPOINTMENT, ServiceUtil.POST, null);
 			if (StringUtils.isNotBlank(responseJsonStr)) {
-				output = gson.fromJson(responseJsonStr, MeetingDetailsForMeetingIdJSON.class);
+				output = gson.fromJson(responseJsonStr, org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON.class);
 			}
 		}
 		logger.info(LOG_EXITING);
@@ -1649,7 +1613,7 @@ public class WebService {
 				logger.warn("Missing input attributes.");
 				MeetingDetailsJSON detailsJSON = new MeetingDetailsJSON();
 				detailsJSON.setService(new MeetingDetailsOutput());
-				final Status status = new Status();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 				status.setCode("300");
 				status.setMessage("Missing input attributes.");
 				detailsJSON.getService().setStatus(status);
@@ -1681,14 +1645,14 @@ public class WebService {
 				+ deviceType + ", deviceOS :" + deviceOS + ", deviceOSversion :" + deviceOSversion);
 		logger.debug("mrn8Digit=" + mrn8Digit + ", inMeetingDisplayName" + inMeetingDisplayName);
 
-		LaunchMeetingForMemberInput jsonInput = new LaunchMeetingForMemberInput();
+		org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberInput jsonInput = new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberInput();
 		Gson gson = new Gson();
 		String output;
 		if (meetingID <= 0 || StringUtils.isBlank(sessionID)) {
 			logger.warn("Missing input attributes.");
-			LaunchMeetingForMemberGuestJSON memberOutput = new LaunchMeetingForMemberGuestJSON();
-			memberOutput.setService(new LaunchMeetingForMemberGuestOutput());
-			final Status status = new Status();
+			org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON memberOutput = new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON();
+			memberOutput.setService(new org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestOutput());
+			final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 			status.setCode("300");
 			status.setMessage("Missing input attributes.");
 			memberOutput.getService().setStatus(status);
@@ -1814,9 +1778,9 @@ public class WebService {
 				|| (StringUtils.isBlank(meetingId) && StringUtils.isBlank(meetingVmr)
 				&& StringUtils.isBlank(callUUID))) {
 			logger.warn("Missing input attributes");
-			final ServiceCommonOutputJson output = new ServiceCommonOutputJson();
-			final ServiceCommonOutput service = new ServiceCommonOutput();
-			final Status status = new Status();
+			final org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutputJson();
+			final org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput service = new org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput();
+			final org.kp.tpmg.ttg.videovisit.mconference.model.Status status = new org.kp.tpmg.ttg.videovisit.mconference.model.Status();
 			service.setName(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR);
 			output.setService(service);
 			status.setCode("300");
@@ -1824,7 +1788,7 @@ public class WebService {
 			output.getService().setStatus(status);
 			jsonResponse = gson.toJson(output);
 		} else {
-			final InsertVendorMeetingMediaCDRInput input = new InsertVendorMeetingMediaCDRInput();
+			final org.kp.tpmg.ttg.videovisit.mconference.model.mediastats.InsertVendorMeetingMediaCDRInput input = new org.kp.tpmg.ttg.videovisit.mconference.model.mediastats.InsertVendorMeetingMediaCDRInput();
 			input.setMeetingId(meetingId);
 			input.setMeetingVmr(meetingVmr);
 			input.setCallUUID(callUUID);
@@ -1847,9 +1811,9 @@ public class WebService {
 		final Gson gson = new Gson();
 		if (StringUtils.isBlank(authtoken) || (StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId))) {
 			logger.warn("Missing input attributes");
-			final AuthorizeVVCodeOutputJson output = new AuthorizeVVCodeOutputJson();
-			final AuthorizeVVCodeOutput service = new AuthorizeVVCodeOutput();
-			final Status status = new Status();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.AuthorizeVVCodeOutputJson output = new org.kp.tpmg.ttg.videovisit.mappointment.model.AuthorizeVVCodeOutputJson();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.AuthorizeVVCodeOutput service = new org.kp.tpmg.ttg.videovisit.mappointment.model.AuthorizeVVCodeOutput();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = new org.kp.tpmg.ttg.videovisit.mappointment.model.Status();
 			service.setName(ServiceUtil.AUTHORIZE_VV_CODE);
 			output.setService(service);
 			status.setCode("300");
@@ -1857,7 +1821,7 @@ public class WebService {
 			output.getService().setStatus(status);
 			jsonResponse = gson.toJson(output);
 		} else {
-			final ValidateVVCodeInput input = new ValidateVVCodeInput();
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.ValidateVVCodeInput input = new org.kp.tpmg.ttg.videovisit.mappointment.model.ValidateVVCodeInput();
 			input.setAccessCode(authtoken);
 			input.setClientId(clientId);
 			input.setSessionId(sessionId);
@@ -1928,6 +1892,37 @@ public class WebService {
 		return jsonResponse;
 	}
 	
+	public static String updateGuestParticipant(String careGiverId,String meetingId, String joinLeaveStatus, String sessionId, String clientId) {
+		logger.info(LOG_ENTERED);
+		String jsonResponse = null;
+		final Gson gson = new Gson();
+		if (StringUtils.isBlank(careGiverId) || StringUtils.isBlank(meetingId) || StringUtils.isBlank(joinLeaveStatus) || (StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId))) {
+			logger.warn("Missing input attributes");
+			final org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson();
+			final org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutput service = new org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutput();
+			final org.kp.tpmg.ttg.videovisitsec.model.Status status = new org.kp.tpmg.ttg.videovisitsec.model.Status();
+			service.setName(ServiceUtil.UPDATE_GUEST_PARTICIPANT);
+			output.setService(service);
+			status.setCode("300");
+			status.setMessage("Missing input attributes.");
+			output.getService().setStatus(status);
+			jsonResponse = gson.toJson(output);
+		} else {
+			final UpdateGuestParticipantInput input = new UpdateGuestParticipantInput();
+			input.setCareGiverId(careGiverId);
+			input.setMeetingId(meetingId);
+			input.setJoinLeaveStatus(joinLeaveStatus);
+			Map<String, String> headers = new HashMap<String, String>();
+			headers.put("X-CLIENTID", clientId);
+			headers.put("X-SESSIONID", sessionId);
+			final String inputString = gson.toJson(input);
+			logger.debug("jsonInptString : " + inputString);
+			jsonResponse = callAPIManagerService(ServiceUtil.UPDATE_GUEST_PARTICIPANT, inputString, VV_EC, ServiceUtil.POST, headers);
+			logger.debug("jsonOutputString : " + jsonResponse);
+		}
+		logger.info(LOG_EXITING);
+		return jsonResponse;
+	}
 	
 	public static String callAPIManagerService(final String operationName, final String input, final char opFlag, final String opType, final Map<String, String> inputHeaders) {
 		logger.info(LOG_ENTERED);

@@ -25,6 +25,9 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsJSON;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsOutput;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.ttg.videovisitsec.model.AuthorizeECCodeOutputJson;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
@@ -40,21 +43,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionSer
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.ServiceUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.model.AuthorizeVVCodeOutputJson;
-import org.kp.tpmg.videovisit.model.ServiceCommonOutput;
-import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
-import org.kp.tpmg.videovisit.model.Status;
-import org.kp.tpmg.videovisit.model.meeting.CreateInstantVendorMeetingOutput;
-import org.kp.tpmg.videovisit.model.meeting.JoinLeaveMeetingJSON;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberDesktopJSON;
-import org.kp.tpmg.videovisit.model.meeting.LaunchMeetingForMemberGuestJSON;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsJSON;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsOutput;
-import org.kp.tpmg.videovisit.model.meeting.MeetingsEnvelope;
-import org.kp.tpmg.videovisit.model.meeting.VerifyMemberOutput;
-import org.kp.tpmg.videovisit.model.notification.MeetingRunningLateOutputJson;
 import org.kp.ttg.sharedservice.domain.AuthorizeResponseVo;
 import org.kp.ttg.sharedservice.domain.MemberInfo;
 import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
@@ -76,7 +64,7 @@ public class MeetingCommand {
 
 	public static String verifyMember(final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		logger.info(LOG_ENTERED);
-		VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
+		org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberOutput verifyMemberOutput = new org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberOutput();
 		String output = null;
 		try {
 			String lastName = request.getHeader("last_name");
@@ -116,7 +104,7 @@ public class MeetingCommand {
 	public static String updateEndMeetingLogout(final HttpServletRequest request, final HttpServletResponse response, String memberName,
 			boolean notifyVideoForMeetingQuit) throws Exception {
 		logger.info(LOG_ENTERED);
-		ServiceCommonOutput output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput output = null;
 		String result = null;
 		long meetingId = 0;
 		try {
@@ -156,7 +144,7 @@ public class MeetingCommand {
 		if (meetingDetails != null) {
 			final MeetingsEnvelope meetingsEnvelope = meetingDetails.getEnvelope();
 			if (meetingsEnvelope != null) {
-				final List<MeetingDO> meetingDOs = meetingsEnvelope.getMeetings();
+				final List<org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO> meetingDOs = meetingsEnvelope.getMeetings();
 				if (CollectionUtils.isNotEmpty(meetingDOs)) {
 					isMyMeetingsAvailable = true;
 				}
@@ -168,7 +156,7 @@ public class MeetingCommand {
 	public static String endCaregiverMeetingSession(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		ServiceCommonOutput output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput output = null;
 		String result = null;
 		try {
 			String meetingCode = request.getParameter("meetingCode");
@@ -216,7 +204,7 @@ public class MeetingCommand {
 	public static String createInstantVendorMeeting(HttpServletRequest request,
 			String hostNuid, String[] participantNuid, String memberMrn, String meetingType) throws Exception {
 		logger.info(LOG_ENTERED);
-		CreateInstantVendorMeetingOutput output = null;
+		org.kp.tpmg.ttg.videovisit.mappointment.model.CreateInstantVendorMeetingOutput output = null;
 		String result = null;
 		try {
 			output = WebService.createInstantVendorMeeting(hostNuid, participantNuid, memberMrn, meetingType,
@@ -462,7 +450,7 @@ public class MeetingCommand {
 
 	public static String setKPHCConferenceStatus(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
-		ServiceCommonOutput output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutput output = null;
 		long meetingId = 0;
 		String result = null;
 		String clientId = null;
@@ -480,7 +468,7 @@ public class MeetingCommand {
 			output = WebService.setKPHCConferenceStatus(meetingId, status, isProxyMeeting, careGiverName,
 					request.getSession().getId(), clientId);
 			if (output != null && output.getStatus() != null) {
-				Status outputStatus = output.getStatus();
+				org.kp.tpmg.ttg.videovisit.mconference.model.Status outputStatus = output.getStatus();
 				if (StringUtils.isNotBlank(outputStatus.getCode())
 						&& StringUtils.isNotBlank(outputStatus.getMessage())) {
 					result = WebUtil.prepareCommonOutputJson(ServiceUtil.SET_KPHC_CONFERENCE_STATUS,
@@ -524,7 +512,7 @@ public class MeetingCommand {
 		}
 		if (output != null && SUCCESS_200.equals(output.getStatus().getCode())) {
 			if (isMyMeetingsAvailable(output)) {
-				final List<MeetingDO> meetings = output.getEnvelope().getMeetings();
+				final List<org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO> meetings = output.getEnvelope().getMeetings();
 				final Gson gson = new GsonBuilder().serializeNulls().create();
 				jsonStr = gson.toJson(meetings);
 				jsonStr = WebUtil.prepareCommonOutputJson("retrieveActiveMeetingsForMemberAndProxies", SUCCESS_200, SUCCESS, meetings);
@@ -540,7 +528,7 @@ public class MeetingCommand {
 	public static String launchMemberOrProxyMeetingForMember(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
 		long meetingId = 0;
-		LaunchMeetingForMemberDesktopJSON output = new LaunchMeetingForMemberDesktopJSON();
+		org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMeetingForMemberDesktopJSON output = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMeetingForMemberDesktopJSON();
 		String mrn = null;
 		String jsonOutput = null;
 		Gson gson = new GsonBuilder().serializeNulls().create();
@@ -578,7 +566,7 @@ public class MeetingCommand {
 			jsonOutput = WebService.launchMemberOrProxyMeetingForMember(meetingId, mrn, inMeetingDisplayName,
 					isProxyMeeting, request.getSession().getId(), clientId);
 			if (StringUtils.isNotBlank(jsonOutput)) {
-				output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
+				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMeetingForMemberDesktopJSON.class);
 			}
 			if (output != null && output.getService() != null && output.getService().getStatus() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
@@ -606,7 +594,7 @@ public class MeetingCommand {
 	public static String memberLeaveProxyMeeting(final HttpServletRequest request, final HttpServletResponse response)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		JoinLeaveMeetingJSON output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON output = null;
 		String result = null;
 		try {
 			final String clientId = WebUtil.getClientIdByLoginTypeAndBackButtonAction(request);
@@ -635,7 +623,7 @@ public class MeetingCommand {
 	public static String launchMeetingForMemberDesktop(HttpServletRequest request)
 			throws Exception {
 		logger.info(LOG_ENTERED);
-		LaunchMeetingForMemberDesktopJSON output = new LaunchMeetingForMemberDesktopJSON();
+		org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMeetingForMemberDesktopJSON output = new org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMeetingForMemberDesktopJSON();
 		String jsonOutput = null;
 		String result = null;
 		Gson gson = new GsonBuilder().serializeNulls().create();
@@ -657,11 +645,11 @@ public class MeetingCommand {
 			jsonOutput = WebService.launchMeetingForMemberDesktop(meetingId, megaMeetingDisplayName, mrn,
 					request.getSession().getId(), clientId);
 			if (StringUtils.isNotBlank(jsonOutput)) {
-				output = gson.fromJson(jsonOutput, LaunchMeetingForMemberDesktopJSON.class);
+				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisit.mconference.model.meeting.LaunchMeetingForMemberDesktopJSON.class);
 			}
 
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
-				Status status = output.getService().getStatus();
+				org.kp.tpmg.ttg.videovisit.mconference.model.Status status = output.getService().getStatus();
 				if (StringUtils.isNotBlank(status.getCode())) {
 					result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER_DESKTOP,
 							status.getCode(), status.getMessage(),
@@ -706,17 +694,17 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		String jsonOutput = null;
 		String result = null;
-		MeetingRunningLateOutputJson output = new MeetingRunningLateOutputJson();
+		org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateOutputJson output = new org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateOutputJson();
 		final Gson gson = new Gson();
 		final String meetingId = request.getParameter("meetingId");
 		try {
 			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
 			jsonOutput = WebService.getProviderRunningLateDetails(meetingId, request.getSession().getId(), clientId);
 			if (StringUtils.isNotBlank(jsonOutput)) {
-				output = gson.fromJson(jsonOutput, MeetingRunningLateOutputJson.class);
+				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisit.mappointment.model.notification.MeetingRunningLateOutputJson.class);
 			}
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
-				Status status = output.getService().getStatus();
+				org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = output.getService().getStatus();
 				if (StringUtils.isNotBlank(status.getCode())) {
 					result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_PROVIDER_RUNNING_LATE_DETAILS,
 							status.getCode(), status.getMessage(),
@@ -770,7 +758,7 @@ public class MeetingCommand {
 		final String meetingId = request.getParameter("meetingId");
 		final String meetingHash = request.getParameter("meetingHash");
 		String joinOrLeave = request.getParameter("status");
-		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+		org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutputJson();
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		String desktopBandwidth = null;
 		if (StringUtils.isNotEmpty(joinOrLeave)) {
@@ -780,7 +768,7 @@ public class MeetingCommand {
 			jsonOutput = WebService.caregiverJoinLeaveMeeting(meetingId, meetingHash, joinOrLeave,
 					request.getSession().getId(), WebUtil.VV_MBR_GUEST);
 			if (StringUtils.isNotBlank(jsonOutput)) {
-				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutputJson.class);
 			}
 			if (AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH") != null) {
 				desktopBandwidth = AppProperties.getExtPropertiesValueByKey("DESKTOP_BANDWIDTH");
@@ -812,7 +800,7 @@ public class MeetingCommand {
 		String statusCode = "";
 		try {
 			String output = WebService.updateEmailAction(meetingId, userType, action, sessionId);
-			final ServiceCommonOutputJson outputJson = gson.fromJson(output, ServiceCommonOutputJson.class);
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson outputJson = gson.fromJson(output, org.kp.tpmg.ttg.videovisit.mappointment.model.ServiceCommonOutputJson.class);
 			if (outputJson != null && outputJson.getService() != null && outputJson.getService().getStatus() != null) {
 				statusCode = outputJson.getService().getStatus().getCode();
 				if ("200".equalsIgnoreCase(statusCode)) {
@@ -841,17 +829,17 @@ public class MeetingCommand {
 		final String logType = request.getHeader("logType");
 		final String sessionId = request.getSession().getId();
 		final String loginType = request.getHeader(LOGIN_TYPE);
-		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+		org.kp.tpmg.ttg.videovisitsintegration.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisitsintegration.model.ServiceCommonOutputJson();
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
 			String clientId = WebUtil.getClientIdByLoginType(loginType);
 			jsonOutput = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
 					eventName, eventDescription, logType, sessionId, clientId);
 			if (StringUtils.isNotBlank(jsonOutput)) {
-				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisitsintegration.model.ServiceCommonOutputJson.class);
 			}
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
-				Status status = output.getService().getStatus();
+				org.kp.tpmg.ttg.videovisitsintegration.model.Status status = output.getService().getStatus();
 				if (StringUtils.isNotBlank(status.getCode())) {
 					result = WebUtil.prepareCommonOutputJson(ServiceUtil.LOG_VENDOR_MEETING_EVENTS, status.getCode(),
 							status.getMessage(), "");
@@ -899,16 +887,16 @@ public class MeetingCommand {
 		final long meetingId = WebUtil.convertStringToLong(request.getParameter("meetingId"));
 		String result = null;
 		String jsonOutput = null;
-		MeetingDetailsForMeetingIdJSON output = new MeetingDetailsForMeetingIdJSON();
+		org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON output = new org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON();
 		final Gson gson = new Gson();
 		try {
 			String clientId = WebUtil.getClientIdByLoginType(request.getParameter(LOGIN_TYPE));
 			jsonOutput = WebService.getMeetingDetailsForMeetingId(meetingId, request.getSession().getId(), clientId);
 			if (StringUtils.isNotBlank(jsonOutput)) {
-				output = gson.fromJson(jsonOutput, MeetingDetailsForMeetingIdJSON.class);
+				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON.class);
 			}
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
-				Status status = output.getService().getStatus();
+				org.kp.tpmg.ttg.videovisit.mappointment.model.Status status = output.getService().getStatus();
 				if (StringUtils.isNotBlank(status.getCode())) {
 					result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_MEETING_DETAILS_FOR_MEETING_ID,
 							status.getCode(), status.getMessage(),
@@ -961,10 +949,10 @@ public class MeetingCommand {
 			} else if ("L".equalsIgnoreCase(joinLeaveMeeting)) {
 				operationName = ServiceUtil.LEAVE_MEETING;
 			}
-			final JoinLeaveMeetingJSON output = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
+			final org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON output = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
 					isPatient,joinLeaveMeeting, deviceType, deviceOs, deviceOsVersion, clientId, sessionId);
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
-				Status status = output.getService().getStatus();
+				org.kp.tpmg.ttg.videovisit.mconference.model.Status status = output.getService().getStatus();
 				if (StringUtils.isNotBlank(status.getCode())) {
 					result = WebUtil.prepareCommonOutputJson(operationName,
 							status.getCode(), status.getMessage(),output.getService().getStatus());
@@ -1011,7 +999,7 @@ public class MeetingCommand {
 			if (StringUtils.isBlank(deviceType)) {
 				deviceType = WebUtil.DEFAULT_DEVICE;
 			}
-			final JoinLeaveMeetingJSON joinLeaveMeetingJSON = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
+			final org.kp.tpmg.ttg.videovisit.mconference.model.meeting.JoinLeaveMeetingJSON joinLeaveMeetingJSON = WebService.joinLeaveMeeting(WebUtil.convertStringToLong(meetingId), inMeetingDisplayName,
 					isPatient,joinLeaveMeeting, deviceType, deviceOs, deviceOsVersion, clientId, sessionId);
 			if(joinLeaveMeetingJSON != null && joinLeaveMeetingJSON.getService() != null 
 					&& joinLeaveMeetingJSON.getService().getStatus() != null) {
@@ -1090,7 +1078,7 @@ public class MeetingCommand {
 			} else {
 				clientId = WebUtil.VV_MBR_GUEST;
 			}
-			final MeetingDetailsForMeetingIdJSON outputJson = WebService.guestLoginJoinMeeting(meetingCode,
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON outputJson = WebService.guestLoginJoinMeeting(meetingCode,
 					patientLastName, isMobileFlow, deviceType, deviceOs, deviceOsVersion, clientId,
 					request.getSession().getId());
 			if (outputJson != null && outputJson.getService() != null && outputJson.getService().getStatus() != null
@@ -1247,7 +1235,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		long meetingId = 0;
 		String deviceType = null;
-		LaunchMeetingForMemberGuestJSON output = null;
+		org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON output = null;
 		String jsonRes = null;
 		String result = null;
 		Gson gson = new GsonBuilder().serializeNulls().create();
@@ -1270,10 +1258,10 @@ public class MeetingCommand {
 			jsonRes = WebService.launchMeetingForMember(meetingId, inMeetingDisplayName, request.getSession().getId(),
 					mrn, deviceType, deviceOs, deviceOsVersion, true);
 			if (StringUtils.isNotBlank(jsonRes)) {
-				output = gson.fromJson(jsonRes, LaunchMeetingForMemberGuestJSON.class);
+				output = gson.fromJson(jsonRes, org.kp.tpmg.ttg.videovisit.mconference.model.LaunchMeetingForMemberGuestJSON.class);
 			}
 			if (output != null && output.getService() != null && output.getService().getStatus() != null) {
-				Status status = output.getService().getStatus();
+				org.kp.tpmg.ttg.videovisit.mconference.model.Status status = output.getService().getStatus();
 				if (StringUtils.isNotBlank(status.getCode())) {
 					result = WebUtil.prepareCommonOutputJson(ServiceUtil.LAUNCH_MEETING_FOR_MEMBER, status.getCode(),
 							status.getMessage(),
@@ -1307,13 +1295,13 @@ public class MeetingCommand {
 						&& "200".equals(meetingDetailsJSON.getService().getStatus().getCode())
 						&& meetingDetailsJSON.getService().getEnvelope() != null
 						&& meetingDetailsJSON.getService().getEnvelope().getMeetings() != null) {
-					List<MeetingDO> myMeetings = meetingDetailsJSON.getService().getEnvelope().getMeetings();
+					List<org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO> myMeetings = meetingDetailsJSON.getService().getEnvelope().getMeetings();
 					if (myMeetings.size() == 1 && myMeetings.get(0) == null) {
 						ctx.setTotalmeetings(0);
 					} else {
 						ctx.setTotalmeetings(myMeetings.size());
 					}
-					ctx.setMyMeetings(myMeetings);
+			//		ctx.setMyMeetings(myMeetings);
 				} else {
 					ctx.setMyMeetings(null);
 					ctx.setTotalmeetings(0);
@@ -1330,7 +1318,7 @@ public class MeetingCommand {
 	
 	public static String verifyMember(HttpServletRequest request) throws Exception {
 		logger.info(LOG_ENTERED);
-		VerifyMemberOutput verifyMemberOutput = new VerifyMemberOutput();
+		 org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberOutput verifyMemberOutput = new  org.kp.tpmg.ttg.videovisitsintegration.model.VerifyMemberOutput();
 
 		try {
 			String lastName = "";
@@ -1523,7 +1511,7 @@ public class MeetingCommand {
 		final String partipantName = request.getHeader("participantName");
 
 		String mediaStats = "";
-		ServiceCommonOutputJson output = new ServiceCommonOutputJson();
+		org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutputJson();
 		Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
 			if (request.getReader() != null && request.getReader().lines() != null) {
@@ -1532,7 +1520,7 @@ public class MeetingCommand {
 			jsonOutput = WebService.insertVendorMeetingMediaCDR(meetingId, meetingVmr, callUUID, partipantName,
 					mediaStats, request.getSession().getId(), WebUtil.VV_MBR_WEB);
 			if (StringUtils.isNotBlank(jsonOutput)) {
-				output = gson.fromJson(jsonOutput, ServiceCommonOutputJson.class);
+				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisit.mconference.model.ServiceCommonOutputJson.class);
 			}
 
 			if (output != null && output.getService() != null
@@ -1565,7 +1553,7 @@ public class MeetingCommand {
 			String clientId = WebUtil.getClientIdForInstantJoin(request.getParameter(LOGIN_TYPE),
 					request.getParameter("isFromMobile"));
 			jsonOutput = WebService.authorizeVVCode(authtoken, request.getSession().getId(), clientId);
-			final AuthorizeVVCodeOutputJson output = gson.fromJson(jsonOutput, AuthorizeVVCodeOutputJson.class);
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.AuthorizeVVCodeOutputJson output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisit.mappointment.model.AuthorizeVVCodeOutputJson.class);
 			if (output != null && output.getService() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
@@ -1642,6 +1630,42 @@ public class MeetingCommand {
 		return result;
 	}
 
+	public static String updateGuestParticipant(HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String jsonOutput = null;
+		String result = null;
+		String careGiverId = request.getHeader("careGiverId");
+		String meetingId = request.getHeader("meetingId");
+		String joinLeaveStatus = request.getHeader("joinLeaveStatus");
+		org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson();
+		final Gson gson = new GsonBuilder().serializeNulls().create();
+		try {
+			
+			String clientId = WebUtil.getClientIdForECInstantJoin(request.getParameter(LOGIN_TYPE),
+					request.getParameter("isFromMobile"));
+			
+			jsonOutput = WebService.updateGuestParticipant(careGiverId, meetingId, joinLeaveStatus, request.getSession().getId(), clientId);
+			
+			if (StringUtils.isNotBlank(jsonOutput)) {
+				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson.class);
+			}
+			
+			if (output != null && output.getService() != null
+					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
+					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.UPDATE_GUEST_PARTICIPANT,
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(), "");
+			
+			}
+		} catch (Exception e) {
+			logger.error("Error while updateGuestParticipant for meeting:" + meetingId, e);
+		}
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.UPDATE_GUEST_PARTICIPANT, FAILURE_900, FAILURE, null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
+	}
 	
 }
 

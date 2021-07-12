@@ -13,7 +13,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,9 +42,9 @@ public class VideoVisitMobilePatientController {
 			ctx.setShowPexipPrecall(WebUtil.isSafariOrFFBrowser(request));
 			final VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
 			videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
-			final List<MeetingDO> meetings = ctx.getMyMeetings();
+			final List<org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO> meetings = ctx.getMyMeetings();
 			if (meetings != null) {
-				for (MeetingDO meeting : meetings) {
+				for (org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO meeting : meetings) {
 					if (meeting != null && meeting.getMeetingId().equals(request.getParameter("meetingId"))) {
 						videoVisitParams.setHostFirstName(meeting.getHost().getFirstName());
 						videoVisitParams.setHostLastName(meeting.getHost().getLastName());

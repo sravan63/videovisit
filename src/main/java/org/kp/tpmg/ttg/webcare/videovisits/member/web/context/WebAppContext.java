@@ -9,11 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.kp.tpmg.ttg.videovisitsintegration.model.user.Member;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
-import org.kp.tpmg.videovisit.model.user.Caregiver;
-import org.kp.tpmg.videovisit.model.user.Member;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.user.Caregiver;
 
 public class WebAppContext implements Serializable {
 
@@ -269,7 +269,7 @@ public class WebAppContext implements Serializable {
 	/**
 	 * @return the myMeetings
 	 */
-	public List<MeetingDO> getMyMeetings() {
+	public List<org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO> getMyMeetings() {
 		return myMeetings;
 	}
 
@@ -277,7 +277,7 @@ public class WebAppContext implements Serializable {
 	 * @param myMeetings
 	 *            the myMeetings to set
 	 */
-	public void setMyMeetings(List<MeetingDO> myMeetings) {
+	public void setMyMeetings(List<org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO> myMeetings) {
 		this.myMeetings = myMeetings;
 	}
 

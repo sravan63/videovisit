@@ -34,6 +34,7 @@ public class ServiceUtil {
 	public static final String INSERT_VENODR_MEETING_MEDIA_CDR = "insertVendorMeetingMediaCDR";
 	public static final String AUTHORIZE_VV_CODE = "authorizeVVCode";
 	public static final String AUTHORIZE_EC_CODE = "authorizeECCode";
+	public static final String UPDATE_GUEST_PARTICIPANT = "updateGuestParticipant";
 	
 	public static final String SUBMIT_SURVEY = "submitSurvey";
 	public static final String GET_ACTIVE_SURVEYS = "getActiveSurveys";

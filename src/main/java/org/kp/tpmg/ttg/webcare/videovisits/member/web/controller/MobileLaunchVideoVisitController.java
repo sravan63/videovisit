@@ -15,8 +15,6 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDO;
-import org.kp.tpmg.videovisit.model.meeting.MeetingDetailsForMeetingIdJSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -76,8 +74,8 @@ public class MobileLaunchVideoVisitController {
 
 			logger.debug("Output json string : " + output);
 			final Gson gson = new Gson();
-			final MeetingDetailsForMeetingIdJSON meetingDetailsForMeetingIdJSON = gson.fromJson(output,
-					MeetingDetailsForMeetingIdJSON.class);
+			final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON meetingDetailsForMeetingIdJSON = gson.fromJson(output,
+					org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsForMeetingIdJSON.class);
 
 			final VideoVisitParamsDTO videoVisitParams = new VideoVisitParamsDTO();
 			videoVisitParams.setWebrtc(String.valueOf(WebUtil.isChromeOrFFBrowser(request)));
@@ -85,7 +83,7 @@ public class MobileLaunchVideoVisitController {
 			if (meetingDetailsForMeetingIdJSON != null && meetingDetailsForMeetingIdJSON.getService() != null
 					&& meetingDetailsForMeetingIdJSON.getService().getEnvelope() != null
 					&& meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting() != null) {
-				final MeetingDO meetingDo = meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting();
+				final org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDO meetingDo = meetingDetailsForMeetingIdJSON.getService().getEnvelope().getMeeting();
 				logger.debug("MeetingDO: " + meetingDo.toString());
 				videoVisitParams.setMeetingId(meetingDo.getMeetingId());
 				videoVisitParams.setHostFirstName(meetingDo.getHost().getFirstName());

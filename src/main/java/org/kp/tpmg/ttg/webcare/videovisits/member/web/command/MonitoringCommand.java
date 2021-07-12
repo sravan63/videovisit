@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
-import org.kp.tpmg.videovisit.model.ServiceCommonOutputJson;
 
 public class MonitoringCommand {
 

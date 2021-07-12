@@ -3,10 +3,10 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.data;
 import java.io.Serializable;
 import java.util.List;
 
-import org.kp.tpmg.videovisit.model.VendorConfig;
-import org.kp.tpmg.videovisit.model.meeting.SipParticipant;
-import org.kp.tpmg.videovisit.model.user.Caregiver;
-import org.kp.tpmg.videovisit.model.user.Provider;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.domainobject.VendorConfig;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.user.SipParticipant;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.user.Caregiver;
+import org.kp.tpmg.ttg.videovisit.mappointment.model.user.Provider;
 
 public class VideoVisitParamsDTO implements Serializable {
 
