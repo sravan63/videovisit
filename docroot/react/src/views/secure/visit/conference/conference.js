@@ -578,7 +578,7 @@ class Conference extends React.Component {
      }
 
     handleEnd(e) {
-        // Calculate the distance between start and end position,if the distance is fairly small, fire a click event(this.flipView(e)).
+        //[Samsung issue] Calculate the distance between start and end position,if the distance is fairly small, fire a click event(this.flipView(e)).
         const end = e.changedTouches[0],
         dx = Math.pow(this.startX - end.pageX, 2),
         dy = Math.pow(this.startY - end.pageY, 2),
@@ -1315,6 +1315,7 @@ class Conference extends React.Component {
                 clickedElement.dataset.view = "larger";
                 this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
                     this.initialPositionTop = this.selfViewMedia.current.offsetTop +"px";
+                    this.initialPositionLeft = this.selfViewMedia.current.offsetLeft +"px";
                 });
             }
         }
