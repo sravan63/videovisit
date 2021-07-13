@@ -1388,7 +1388,7 @@ class Conference extends React.Component {
 
     flipView(e) {
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-        if(Utilities.isMobileDevice() && (this.state.isPIPMode || isLandscape)) {
+        if(Utilities.isMobileDevice() && (this.state.isPIPMode || (isLandscape && this.state.participants.some(WebUI.hostInMeeting)))) {
             let clickedElement= e.target;
             const selfFeed= this.selfViewMedia.current;
             const remoteFeed = this.remoteFeedMedia.current;
