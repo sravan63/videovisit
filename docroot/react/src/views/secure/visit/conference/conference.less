@@ -486,6 +486,32 @@
     }
 }
 
+@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+    .conference-page {
+        .video-conference-container {
+            .video-conference {
+                .flipRemoteFeedPIP {
+                    z-index: 1000;
+                    position: absolute;
+                    bottom: 0px;
+                    height: auto;
+                    max-width: 23% !important;
+                 }
+                 
+                 .flipSelfViewVideoPIP {
+                    position: absolute;
+                    top: 0px;
+                    left: 5rem;
+                    z-index: 1;
+                    height: 100%;
+                    max-width: 93%;
+                    object-fit: cover;
+                }
+            }
+        }
+    }
+}
+
 @media only screen and (max-width: 1024px) and (orientation: landscape) {
     .conference-page {
         .conference-header {
