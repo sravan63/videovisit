@@ -586,7 +586,7 @@ class Conference extends React.Component {
         distance = Math.round(Math.sqrt(dx + dy));
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
-        } else {
+        } else if((!this.state.isRemoteFlippedToSelf) && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
             const coordinates = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
             if(coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom){
                 const slideTo = this.getSlidePosition(coordinates);
