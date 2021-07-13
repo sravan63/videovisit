@@ -1799,7 +1799,7 @@ public class WebService {
 
 			final String inputString = gson.toJson(input);
 			logger.debug("jsonInptString : " + inputString);
-			jsonResponse = callAPIManagerService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString, MCONFERENCE, ServiceUtil.POST, null);
+			jsonResponse = callAPIManagerService(ServiceUtil.INSERT_VENODR_MEETING_MEDIA_CDR, inputString, VVINTEGRATION, ServiceUtil.POST, null);
 		}
 		logger.info(LOG_EXITING);
 		return jsonResponse;
