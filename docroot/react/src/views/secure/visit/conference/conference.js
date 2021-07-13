@@ -793,6 +793,7 @@ class Conference extends React.Component {
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
         this.mainContentWidth = window.innerWidth;
+        this.removeAllCornerClasses();
     }
 
     handleVisibilityChange() {
@@ -1381,7 +1382,6 @@ class Conference extends React.Component {
 
         //Removing property which dynamically assigned in self view drag.
         positionMarginProp.forEach(prop=>{
-            // selfFeed && selfFeed.style[prop] === "initial" && selfFeed.style.removeProperty(prop);
             selfFeed && selfFeed.style.removeProperty(prop);
         });
     }
