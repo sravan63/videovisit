@@ -240,7 +240,9 @@ class Conference extends React.Component {
                     sessionStorage.removeItem('overlayDisplayed');
                     break;
                 case GlobalConfig.HOST_LEFT:
-                    this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
+                    this.selfViewMedia.current.dataset.view = "smaller";
+                    this.remoteFeedMedia.current.dataset.view = "larger";
+                    this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false, isRemoteFlippedToSelf: false });
                     this.toggleDockView(false);
                     this.handleTimer(true);
                     if(sessionStorage.getItem('isTrueHost')){
@@ -688,6 +690,11 @@ class Conference extends React.Component {
             participants: [...this.state.participants, newParticipant]
           },function() {
             this.setState({isPIPMode: this.setPIPMode()});
+            if(this.state.participants.length > 2) {
+                this.selfViewMedia.current.dataset.view = "smaller";
+                this.remoteFeedMedia.current.dataset.view = "larger";
+                this.setState({isRemoteFlippedToSelf: false});
+            }
         });
     }
 
