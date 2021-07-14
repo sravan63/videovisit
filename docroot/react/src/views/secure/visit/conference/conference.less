@@ -413,7 +413,16 @@
                        object-fit: cover; 
                     }
                 }
-
+                
+                .flipRemoteFeedPIP{
+                    object-fit: cover;
+                    z-index: 3;
+                    position: fixed;
+                    bottom: 52px;
+                    right: 0;
+                    max-height: 25%;
+                    width: 22% !important;
+                }
                 .self-view {
                     // height: 50%;
                     width: 100%;
@@ -434,7 +443,7 @@
                         max-height: 25%;
                         right:0;
                         position: absolute;
-                    }
+                    }                   
                     .top{
                         top: 0px!important;
                     }
@@ -487,7 +496,7 @@
     }
 }
 
-@media only screen and (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+@media only screen and (min-width: 1025px) and (max-width: 1366px) and (orientation: landscape) {
     .conference-page {
         .video-conference-container {
             .video-conference {
@@ -583,7 +592,7 @@
                         bottom: 0px;
                         z-index: 2;
                         max-height: 18%;
-                        max-width: 10%;
+                        max-width: 15%;
                     }
 
                     .presentation-view {
