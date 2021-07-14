@@ -1410,9 +1410,9 @@ class Conference extends React.Component {
             const selfFeed= this.selfViewMedia.current;
             const remoteFeed = this.remoteFeedMedia.current;
 
-            //Removing property which dynamically assigned in self view drag.
-            this.removePositionProp(selfFeed, remoteFeed);
             if(clickedElement.dataset.view === "smaller") {
+                //Removing property which dynamically assigned in self view drag.
+                this.removePositionProp(selfFeed, remoteFeed);
                 if(clickedElement.id !== remoteFeed.id) {
                     !isLandscape && remoteFeed.style.removeProperty("height");
                     remoteFeed.dataset.view = "smaller";
