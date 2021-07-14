@@ -488,7 +488,10 @@ class Conference extends React.Component {
     }
 
     handleStart(e){
-        e.preventDefault();
+        //If we switch to landscape scroll down the page again switch to portrait flip the view now switch to landscape then not able to scroll
+        if(!this.state.isRemoteFlippedToSelf){
+            e.preventDefault();
+        }
         var touchLocation = e.targetTouches[0];
         // get the mouse cursor position at startup:
         this.pos3 = touchLocation.pageX ;
@@ -1378,7 +1381,7 @@ class Conference extends React.Component {
 
                 if(participantCount === 2 && isAllParticipantInPortrait && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
-                    //To avoid DE22584 overlapping issue in iPhone
+                    //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
                     if(/iPhone/.test(navigator.userAgent) ) {
                         vh = document.documentElement.clientHeight -50;
                     }
@@ -1418,7 +1421,12 @@ class Conference extends React.Component {
                     !isLandscape && selfFeed.style.removeProperty("height");
                     selfFeed.dataset.view = "smaller";
                 }
-                !isLandscape && clickedElement.style.setProperty('height', `${ window.innerHeight - 50}px`)
+                let vh = window.innerHeight - 50;
+                //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
+                if(/iPhone/.test(navigator.userAgent) ) {
+                    vh = document.documentElement.clientHeight -50;
+                }
+                !isLandscape && clickedElement.style.setProperty('height', `${vh}px`)
                 clickedElement.dataset.view = "larger";
                 this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
                     this.initialPositionTop = this.selfViewMedia.current.offsetTop +"px";
