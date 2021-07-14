@@ -663,18 +663,23 @@ class Conference extends React.Component {
 
     slideToCorner(slideTo){
         let elmnt = this.selfViewMedia.current;
-        if(slideTo.indexOf('-') > -1 ){
-            let cls1 = slideTo.split('-')[0];
-            let cls2 = slideTo.split('-')[1];
-            elmnt.classList.add(cls1, cls2);
-        } else {
-            elmnt.classList.add(slideTo);
-        }
-        // if(elmnt.classList.contains('bottom')){
-        //     elmnt.style.top = elmnt.offsetTop - elmnt.offsetHeight;
-        // }
+        const cssprops = slideTo.indexOf('-') > -1 ? slideTo.split('-') : [slideTo];
+        this.applyPosition(elmnt, cssprops)
+        
         this.pos3 = (elmnt.offsetLeft - this.pos1) +'px';
         this.pos4 = (elmnt.offsetTop - this.pos2) +'px';
+    }
+    
+    applyPosition(elmnt, cssprops){
+        cssprops.map((s)=>{
+            if(s == 'right'){
+                elmnt.style.left = window.innerWidth - elmnt.offsetWidth + 16 + 'px';
+            }else if(s == 'bottom'){
+                elmnt.style.top = window.innerHeight - elmnt.offsetHeight + 'px';
+            } else {
+                elmnt.classList.add(s);
+            }
+        })
     }
 
     removeAllCornerClasses() {
