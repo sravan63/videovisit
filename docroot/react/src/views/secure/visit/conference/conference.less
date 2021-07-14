@@ -252,11 +252,12 @@
              }
              
              .flipRemoteFeedPIP {
+                 object-fit: cover;
                 z-index: 3;
                 position: fixed;
                 bottom: 52px;
                 right: 0;
-                height: auto;
+                max-height: 25%;
                 width: 45% !important;
              }
 
@@ -490,12 +491,12 @@
     .conference-page {
         .video-conference-container {
             .video-conference {
-                
                 .flipRemoteFeedPIP {
+                    object-fit: cover;
                     z-index: 1000;
                     position: absolute;
                     bottom: 0px;
-                    height: auto;
+                    max-height: 25%;
                     max-width: 23% !important;
                  }
                  
@@ -576,11 +577,12 @@
                     }
 
                     .flipRemoteFeedPIP {
+                        object-fit: cover;
                         position: absolute;
                         left: 16px;
                         bottom: 0px;
                         z-index: 2;
-                        height: auto;
+                        max-height: 18%;
                         max-width: 15%;
                     }
 
