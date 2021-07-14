@@ -242,7 +242,7 @@ class Conference extends React.Component {
                 case GlobalConfig.HOST_LEFT:
                     this.selfViewMedia.current.dataset.view = "smaller";
                     this.remoteFeedMedia.current.dataset.view = "larger";
-                    this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false, isRemoteFlippedToSelf: false });
+                    this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false, isRemoteFlippedToSelf: false});
                     this.toggleDockView(false);
                     this.handleTimer(true);
                     if(sessionStorage.getItem('isTrueHost')){
