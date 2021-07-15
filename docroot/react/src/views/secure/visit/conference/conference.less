@@ -99,20 +99,20 @@
             .red-circle {
                 background: #B81125;
                 box-shadow: 0px 2px 4px;
-                border-radius: 2.5rem;
+                border-radius: 40px;
                 display: inline-block;
-                width: 2.5rem;
-                height: 2.5rem;
+                width: 40px;
+                height: 40px;
                 margin: 5px 0;
             }
 
             .white-circle {
                 background: #FDFDFD;
                 box-shadow: 0px 2px 4px;
-                border-radius: 2.5rem;
+                border-radius: 40px;
                 display: inline-block;
-                width: 2.5rem;
-                height: 2.5rem;
+                width: 40px;
+                height: 40px;
                 margin: 5px 0;
             }
 
@@ -538,12 +538,8 @@
         }
 
         .video-conference-container {
-            height: calc(var(--vh, 1vh) * 100) !important;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0px;
+            height: 100vh !important;
+            overflow: hidden;
 
             .video-conference {
                 width: 100% !important;
@@ -557,17 +553,17 @@
                     display: flex;
                     position: absolute;
                     z-index: 6;
-                    min-width: 3.75rem !important;
+                    width: 3.75rem !important;
                     height: 100% !important;
                     top: 0px;
                     right: 0px;
                     min-width: 0px;
                     background: #515151;
-                    padding-left: 0;
+                    padding-left: 6px;
 
 
                     ul {
-                        width: 100%;
+                        width: 3.125rem;
                         margin: auto;
                         display: flex;
                         flex-direction: column;
@@ -575,7 +571,7 @@
                         padding: 0.5rem 0;
                         align-items: center;
                         li {
-                            min-width: 3.125rem;
+                            width: 3.125rem;
                             text-align: center;
                             float: none;
                         }
