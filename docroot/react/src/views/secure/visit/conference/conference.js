@@ -726,6 +726,7 @@ class Conference extends React.Component {
         if(this.mainContentWidth === window.innerWidth){
             return;
         }
+        
         if(window.innerWidth > 1024) {
             this.selfViewMedia.current.style.top = "initial";
             this.selfViewMedia.current.style.left = "initial";
