@@ -1442,6 +1442,7 @@ class Conference extends React.Component {
             remoteFeedClass = 'remoteFeed';
             selfViewClass = 'selfViewVideo';
         }
+        
         streamContainer && (remoteStreamContainerClass = `${remoteStreamContainerClass } ${streamContainer}`);
 
         return (
