@@ -369,6 +369,7 @@ class Conference extends React.Component {
                     let element = document.querySelector('.conference-details');
                     let positionInfo = element.getBoundingClientRect();
                     this.widthSideBar = positionInfo.width;
+                    this.state.isDesktopView = ( /iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth >= 1024 );
                     break;
                 case GlobalConfig.HIDE_LOADER:
                     this.setState({showLoader:false});
@@ -592,8 +593,10 @@ class Conference extends React.Component {
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
         } else if((!this.state.isRemoteFlippedToSelf) && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
-            const coordinates = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
-            if(coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom){
+            // const coordinates = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+            const coordinates = [this.selfViewMedia.current.offsetLeft, this.selfViewMedia.current.offsetTop];
+            if( coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom
+                || coordinates[0] >= this.center.left && coordinates[0] <= this.center.right ){
                 const slideTo = this.getSlidePosition(coordinates);
                 this.slideToCorner(slideTo);
             }
@@ -604,50 +607,16 @@ class Conference extends React.Component {
 
     getSlidePosition(coordinates){
         let slideTo = '';
-        const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-        const Y_THRESHOLD = 4; // isLandscape ? 4 : 3;
-        const ySegment = window.innerHeight / Y_THRESHOLD;
-        const xSegment = window.innerWidth / 4;
-        const xPos = Math.round(coordinates[0]/xSegment);
-        const yPos = Math.round(coordinates[1]/ySegment);
-        if( yPos == 1 && xPos == 1 ){
-            slideTo = 'top-left';
-        } else if( yPos == Y_THRESHOLD && xPos == 4 ){
-            slideTo = 'bottom-right'
-        } else if( yPos == 1 && xPos == 4 ){
-            slideTo = 'top-right';
-        } else if( yPos == Y_THRESHOLD && xPos == 1 ){
-            slideTo = 'bottom-left';
+        if( coordinates[1] < (window.innerHeight / 2) ){
+            slideTo += 'top-';
+        } else if( coordinates[1] >= (window.innerHeight / 2) ){
+            slideTo += 'bottom-';
         }
 
-        if(!slideTo) {
-            if( xPos == 1 ){
-                slideTo = 'left';
-            } else if( xPos == 4 ){
-                slideTo = 'right';
-            }
-        }
-
-        if(!slideTo) {
-            if( yPos == 1 ){
-                slideTo = 'top';
-            } else if( yPos == Y_THRESHOLD ){
-                slideTo = 'bottom';
-            }
-        }
-
-        if(!slideTo) {
-            if(xPos > yPos){
-                slideTo = coordinates[0] < (window.innerWidth / 2) ? 'left' : 'right';
-            } else if(yPos > xPos){
-                slideTo = coordinates[1] < (window.innerHeight / 2) ? 'top' : 'bottom';
-            } else {
-                if(isLandscape){
-                    slideTo = coordinates[1] < (window.innerHeight / 2) ? 'top' : 'bottom';
-                } else {
-                    slideTo = coordinates[0] < (window.innerWidth / 2) ? 'left' : 'right';
-                }
-            }
+        if( coordinates[0] < (window.innerWidth / 2) ){
+            slideTo += 'left';
+        } else if( coordinates[0] >= (window.innerWidth / 2) ){
+            slideTo += 'right';
         }
         return slideTo;
     }
@@ -680,7 +649,11 @@ class Conference extends React.Component {
                 elmnt.style.left = window.innerWidth - elmnt.offsetWidth + 16 + 'px';
             }else if(s == 'bottom'){
                 var viewportHeight = isLandscape && window.scrollY > 0 ? document.body.scrollHeight : window.innerHeight;
-                elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';
+                if( this.state.isDesktopView ){
+                    elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
+                } else {
+                    elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';
+                }
             } else {
                 elmnt.classList.add(s);
             }
