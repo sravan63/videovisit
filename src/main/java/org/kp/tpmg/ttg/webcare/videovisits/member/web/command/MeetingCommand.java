@@ -1301,7 +1301,7 @@ public class MeetingCommand {
 					} else {
 						ctx.setTotalmeetings(myMeetings.size());
 					}
-			//		ctx.setMyMeetings(myMeetings);
+					ctx.setMyMeetings(myMeetings);
 				} else {
 					ctx.setMyMeetings(null);
 					ctx.setTotalmeetings(0);
