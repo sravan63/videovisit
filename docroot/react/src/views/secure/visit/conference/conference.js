@@ -64,6 +64,7 @@ class Conference extends React.Component {
         this.handleEnd = this.handleEnd.bind(this);
         this.handleMove = this.handleMove.bind(this);
         this.handleStart = this.handleStart.bind(this);
+        this.applyPosition = this.applyPosition.bind(this);
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
@@ -637,8 +638,7 @@ class Conference extends React.Component {
     slideToCorner(slideTo){
         let elmnt = this.selfViewMedia.current;
         const cssprops = slideTo.indexOf('-') > -1 ? slideTo.split('-') : [slideTo];
-        this.applyPosition(elmnt, cssprops)
-        
+        this.applyPosition(elmnt, cssprops);
         this.pos3 = (elmnt.offsetLeft - this.pos1) +'px';
         this.pos4 = (elmnt.offsetTop - this.pos2) +'px';
     }
@@ -1287,6 +1287,7 @@ class Conference extends React.Component {
         } else {
             this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
         }
+        document.getElementsByTagName('body')[0].style.overflow = 'auto';
     }
 
     submitSurvey(data){
