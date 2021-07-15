@@ -1364,7 +1364,7 @@ class Conference extends React.Component {
                 }
             }
         }
-        // If user is in portrait and No PIP due to other condition then disabling the flip state(resetting to default).
+        // If user is in portrait and No PIP due to other condition then disabling the flip state (resetting to default).
         if(window.matchMedia("(orientation: portrait)").matches) {
             this.selfViewMedia.current.dataset.view = "smaller";
             this.remoteFeedMedia.current.dataset.view = "larger";
