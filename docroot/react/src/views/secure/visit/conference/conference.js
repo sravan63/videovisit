@@ -41,6 +41,7 @@ class Conference extends React.Component {
         this.initialPositionTop = '';
         this.initialPositionLeft = '';
         this.widthSideBar = 0;
+        this.isDesktopView = true;
         this.pos1 = 0;
         this.pos2 = 0;
         this.pos3 = 0;
@@ -369,7 +370,7 @@ class Conference extends React.Component {
                     let element = document.querySelector('.conference-details');
                     let positionInfo = element.getBoundingClientRect();
                     this.widthSideBar = positionInfo.width;
-                    this.state.isDesktopView = ( /iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth >= 1024 );
+                    this.isDesktopView = ( /iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth >= 1024 );
                     break;
                 case GlobalConfig.HIDE_LOADER:
                     this.setState({showLoader:false});
@@ -593,8 +594,8 @@ class Conference extends React.Component {
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
         } else if((!this.state.isRemoteFlippedToSelf) && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
-            // const coordinates = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
-            const coordinates = [this.selfViewMedia.current.offsetLeft, this.selfViewMedia.current.offsetTop];
+            const coordinates = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+            // const coordinates = [this.selfViewMedia.current.offsetLeft, this.selfViewMedia.current.offsetTop];
             if( coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom
                 || coordinates[0] >= this.center.left && coordinates[0] <= this.center.right ){
                 const slideTo = this.getSlidePosition(coordinates);
@@ -624,7 +625,7 @@ class Conference extends React.Component {
     setCenterCoordinates(){
         const wHeight = window.innerHeight; // 410
         const wWidth = window.innerWidth; // 1366
-        const cornerOffset = 10; // 10% offset in the corners.
+        const cornerOffset = 5; // % offset in the corners.
         this.center = { 
             top : (cornerOffset/100 * wHeight),  // 41
             left: (cornerOffset/100 * wWidth), // 136
@@ -648,8 +649,8 @@ class Conference extends React.Component {
             if(s == 'right'){
                 elmnt.style.left = window.innerWidth - elmnt.offsetWidth + 16 + 'px';
             }else if(s == 'bottom'){
-                var viewportHeight = isLandscape && window.scrollY > 0 ? document.body.scrollHeight : window.innerHeight;
-                if( this.state.isDesktopView ){
+                var viewportHeight = isLandscape && window.scrollY > 0 && !this.isDesktopView ? document.body.scrollHeight : window.innerHeight;
+                if( this.isDesktopView ){
                     elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
                 } else {
                     elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';
