@@ -1364,6 +1364,9 @@ class Conference extends React.Component {
                 }
             }
         }
+        this.selfViewMedia.current.dataset.view = "smaller";
+        this.remoteFeedMedia.current.dataset.view = "larger";
+        window.matchMedia("(orientation: portrait)").matches && this.setState({isRemoteFlippedToSelf: false});
         this.remoteFeedMedia.current.style.removeProperty("height");
         return false;
     }
@@ -1413,22 +1416,22 @@ class Conference extends React.Component {
     render() {
         let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
-        if(this.state.isPIPMode) {
+        if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             streamContainer = `stream-containerPIP`;
             remoteFeedClass =  'remoteFeedPIP';
             selfViewClass =  'selfViewVideoPIP';
+            if(this.state.isRemoteFlippedToSelf) {
+                streamContainer = `flipStream-containerPIP`;
+                remoteFeedClass = 'flipRemoteFeedPIP';
+                selfViewClass = 'flipSelfViewVideoPIP';
+            }
+            else{
+                this.selfViewMedia.current && this.selfViewMedia.current.style.removeProperty("height");
+            }
         }
-        else{
+        else {
             remoteFeedClass = 'remoteFeed';
             selfViewClass = 'selfViewVideo';
-        }
-        if(this.state.isRemoteFlippedToSelf) {
-            streamContainer = `flipStream-containerPIP`;
-            remoteFeedClass = 'flipRemoteFeedPIP';
-            selfViewClass = 'flipSelfViewVideoPIP';
-        }
-        else{
-            this.selfViewMedia.current && this.selfViewMedia.current.style.removeProperty("height");
         }
         streamContainer && (remoteStreamContainerClass = `${remoteStreamContainerClass } ${streamContainer}`);
 
