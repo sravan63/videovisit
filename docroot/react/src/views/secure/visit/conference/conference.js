@@ -1420,9 +1420,15 @@ class Conference extends React.Component {
         let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
-            streamContainer = `stream-containerPIP`;
-            remoteFeedClass =  'remoteFeedPIP';
-            selfViewClass =  'selfViewVideoPIP';
+            if(window.matchMedia("(orientation: landscape)").matches){
+                remoteFeedClass = 'remoteFeed';
+                selfViewClass = 'selfViewVideo';
+            }
+            else {
+                streamContainer = `stream-containerPIP`;
+                remoteFeedClass =  'remoteFeedPIP';
+                selfViewClass =  'selfViewVideoPIP';
+            }
             if(this.state.isRemoteFlippedToSelf) {
                 streamContainer = `flipStream-containerPIP`;
                 remoteFeedClass = 'flipRemoteFeedPIP';
