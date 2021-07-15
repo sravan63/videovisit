@@ -1,4 +1,4 @@
-Video Visits Member
+Video Visits Member Webapp
 -----------------------------
 -----------------------------
 Release Number:  5.6
