@@ -1399,11 +1399,12 @@ class Conference extends React.Component {
                     !isLandscape && selfFeed.style.removeProperty("height");
                     selfFeed.dataset.view = "smaller";
                 }
-                let vh = window.innerHeight - 50;
-                //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
-                if(/iPhone/.test(navigator.userAgent) ) {
-                    vh = document.documentElement.clientHeight -50;
-                }
+                //let vh = window.innerHeight - 50;
+                let vh = document.documentElement.clientHeight- 50; /* DE22680 Scenario 1.
+                // //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
+                // if(/iPhone/.test(navigator.userAgent) ) {
+                //     vh = document.documentElement.clientHeight -50;
+                // } */
                 !isLandscape && clickedElement.style.setProperty('height', `${vh}px`)
                 clickedElement.dataset.view = "larger";
                 this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
