@@ -1289,6 +1289,7 @@ class Conference extends React.Component {
             this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
         }
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
+        document.getElementsByTagName('body')[0].style.position = 'static';
     }
 
     submitSurvey(data){
