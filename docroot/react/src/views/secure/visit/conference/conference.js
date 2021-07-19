@@ -782,7 +782,7 @@ class Conference extends React.Component {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
         }
-        const selfViewFeed = this.currentSmallerView;
+        const selfViewFeed = this.selfViewMedia.current;
         const remoteViewFeed = this.remoteFeedMedia.current;
         // OrientationChange Deprecated so using resize handler
         if(window.matchMedia("(orientation: portrait)").matches) {
