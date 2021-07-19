@@ -793,7 +793,7 @@ class Conference extends React.Component {
                 if((Date.now() - this.restartPexip) > 20000){
                     window.location.reload();
                 } else {
-                    WebUI.switchDevices(null);
+                    WebUI.renegotiate();
                     this.selfViewMedia && this.selfViewMedia.current.play();
                     this.remoteFeedMedia && this.remoteFeedMedia.current.play();
                     presentationView && presentationView.play();
