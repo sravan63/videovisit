@@ -252,7 +252,7 @@
              }
              
              .flipRemoteFeedPIP {
-                 object-fit: cover;
+                object-fit: cover;
                 z-index: 3;
                 position: fixed;
                 bottom: 52px;
@@ -566,7 +566,7 @@
                 .landscape-controlbar {
                     display: flex;
                     position: absolute;
-                    z-index: 6;
+                    z-index: 2; // Smaller view should be on top of control menus so making making z-index of menus lesser than smaller view;
                     width: 3.75rem !important;
                     height: 100% !important;
                     top: 0px;
@@ -612,7 +612,7 @@
                         position: absolute;
                         left: 16px;
                         bottom: 0px;
-                        z-index: 2;
+                        z-index: 3;
                         max-height: 18%;
                         max-width: 15%;
                     }
