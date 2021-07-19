@@ -782,7 +782,7 @@ class Conference extends React.Component {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
         }
-        let browserInfo = UtilityService.getBrowserInformation();
+        let browserInfo = Utilities.getBrowserInformation();
         if( Utilities.getAppOS()=='iOS' && browserInfo.isSafari && Utilities.isMobileDevice()){
             document.documentElement.style.height = `initial`;
             setTimeout(() => {
