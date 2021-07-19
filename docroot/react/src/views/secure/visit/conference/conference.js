@@ -791,12 +791,12 @@ class Conference extends React.Component {
                 document.documentElement.style.height = `initial`;
                 setTimeout(() => {
                 document.documentElement.style.height = `100%`;
-                    // setTimeout(() => {
-                    //     // this line prevents the content
-                    //     // from hiding behind the address bar
-                    //     //window.scrollTo(0, 1);
-                    //     window.scrollTo(0, 30);
-                    // }, 100);
+                    setTimeout(() => {
+                        // this line prevents the content
+                        // from hiding behind the address bar
+                        //window.scrollTo(0, 1);
+                         window.scrollTo(0, 30);
+                    }, 500);
                 }, 500);
             }
             this.state.isRemoteFlippedToSelf && (this.removePositionProp(), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
