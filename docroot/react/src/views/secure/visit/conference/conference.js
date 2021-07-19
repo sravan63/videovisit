@@ -787,6 +787,18 @@ class Conference extends React.Component {
         // OrientationChange Deprecated so using resize handler
         if(window.matchMedia("(orientation: portrait)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
+            if(/iPhone/.test(navigator.userAgent) ) {
+                document.documentElement.style.height = `initial`;
+                setTimeout(() => {
+                document.documentElement.style.height = `100%`;
+                    setTimeout(() => {
+                        // this line prevents the content
+                        // from hiding behind the address bar
+                        //window.scrollTo(0, 1);
+                        window.scrollTo(0, 30);
+                    }, 500);
+                }, 500);
+            }
             this.state.isRemoteFlippedToSelf && (this.removePositionProp(), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
