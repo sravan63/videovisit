@@ -596,6 +596,10 @@ class Conference extends React.Component {
      }
 
     handleEnd(e) {
+        // Dragging or tapping on larger view must not perform anything. 
+        if(e.target.dataset.view === "larger") {
+            return;
+        }
         //[Samsung issue] Calculate the distance between start and end position,if the distance is fairly small, fire a click event(this.flipView(e)).
         const end = e.changedTouches[0],
         dx = Math.pow(this.startX - end.pageX, 2),
@@ -1365,7 +1369,7 @@ class Conference extends React.Component {
                 let participantCount = this.state.participants.length;
 
                 if(participantCount === 2 && isAllParticipantInPortrait && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
-                    let vh = window.innerHeight - 50;
+                   let vh = window.innerHeight - 50;
                     //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
                     if(/iPhone/.test(navigator.userAgent) ) {
                         vh = document.documentElement.clientHeight -50;
