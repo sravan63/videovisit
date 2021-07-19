@@ -90,6 +90,7 @@ public class WebService {
 	private static final char MAPPOINTMENT = 'A';
 	private static final char MCONFERENCE = 'C';
 	private static final char VV_EC = 'E';
+	private static final char MEMBERWEBAPP = 'M';
 
 	// Parameters for Proxy Appts logic
 	private static String secureCodes = null;
@@ -1691,7 +1692,9 @@ public class WebService {
 				output = gson.toJson(response);
 			} else {
 				logger.debug("inputJsonString : " + gson.toJson(input));
-				output = callVVMeetingRestService(HttpMethod.POST, null, ServiceUtil.SUBMIT_SURVEY, gson.toJson(input));
+				System.out.println(gson.toJson(input));
+				//output = callVVMeetingRestService(HttpMethod.POST, null, ServiceUtil.SUBMIT_SURVEY, gson.toJson(input));
+				output =callAPIManagerService( ServiceUtil.SUBMIT_SURVEY, gson.toJson(input), MEMBERWEBAPP, ServiceUtil.POST, null);
 				logger.debug("response : " + output);
 			}
 		} catch (Exception e) {
@@ -1702,6 +1705,7 @@ public class WebService {
 
 	}
 
+	/*
 	public static String callVVMeetingRestService(final HttpMethod httpMethod, HttpHeaders headers,
 			final String operationName, final String input) {
 		logger.info(LOG_ENTERED);
@@ -1723,7 +1727,6 @@ public class WebService {
 				headers = new HttpHeaders();
 			}
 			headers.setContentType(MediaType.APPLICATION_JSON);
-			headers.set("Accept", "*/*");
 			headers.set("Authorization", "Basic " + authEncoded.trim());
 			final HttpEntity<?> entity = new HttpEntity<Object>(input, headers);
 			responseEntity = restTemplate.exchange(uri, httpMethod, entity, String.class);
@@ -1736,7 +1739,7 @@ public class WebService {
 		}
 		logger.info(LOG_EXITING);
 		return output;
-	}
+	}*/
 
 	public static String getActiveSurveys(final Gson gson, final boolean memberFl, final boolean providerFl,
 			final String meetingId, final String userType, final String userValue, final String sessionId) {
@@ -1749,7 +1752,7 @@ public class WebService {
 				response.setCode(WebUtil.BAD_REQUEST_400);
 				output = gson.toJson(response);
 			} else {
-
+              /*
 				final HttpHeaders headers = new HttpHeaders();
 				headers.set("X-clientId", WebUtil.VV_MBR_WEB);
 				headers.set("X-sessionId", sessionId);
@@ -1758,8 +1761,19 @@ public class WebService {
 				headers.set("X-meetingId", meetingId);
 				headers.set("X-userType", userType);
 				headers.set("X-userValue", userValue);
-
-				output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_ACTIVE_SURVEYS, null);
+				*/
+				
+				Map<String, String> headers = new HashMap<String, String>();
+				headers.put("X-CLIENTID", WebUtil.VV_MBR_WEB);
+				headers.put("X-SESSIONID", sessionId);
+				headers.put("X-providerFl", Boolean.toString(providerFl));
+				headers.put("X-memberFl", Boolean.toString(memberFl));
+				headers.put("X-meetingId", meetingId);
+				headers.put("X-userType", userType);
+				headers.put("X-userValue", userValue);
+				
+				//output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_ACTIVE_SURVEYS, null);
+				output =callAPIManagerService( ServiceUtil.GET_ACTIVE_SURVEYS, null, MEMBERWEBAPP, ServiceUtil.GET, headers);
 				logger.debug("response : " + output);
 			}
 		} catch (Exception e) {
@@ -1844,16 +1858,29 @@ public class WebService {
 				response.setCode(WebUtil.BAD_REQUEST_400);
 				output = gson.toJson(response);
 			} else {
-				final HttpHeaders headers = new HttpHeaders();
-				headers.set("X-clientId", WebUtil.VV_MBR_WEB);
+				//final HttpHeaders headers = new HttpHeaders();
+			/*  headers.set("X-clientId", WebUtil.VV_MBR_WEB);
 				headers.set("X-sessionId", sessionId);
 				headers.set("X-surveyclientname", WebUtil.VV_MBR_WEB);
 				headers.set("X-surveyname", surveyName);
 				headers.set("X-meetingId", meetingId);
 				headers.set("X-userType", userType);
 				headers.set("X-userValue", userValue);
+				*/
+				
+				Map<String, String> headers = new HashMap<String, String>();
+				headers.put("X-CLIENTID", WebUtil.VV_MBR_WEB);
+				headers.put("X-SESSIONID", sessionId);
+				//headers.set("X-clientId", WebUtil.VV_MBR_WEB);
+				//headers.set("X-sessionId", sessionId);
+				headers.put("X-surveyclientname", WebUtil.VV_MBR_WEB);
+				headers.put("X-surveyname", surveyName);
+				headers.put("X-meetingId", meetingId);
+				headers.put("X-userType", userType);
+				headers.put("X-userValue", userValue);
 
-				output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_SURVEY_QUESTIONS, null);
+				//output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_SURVEY_QUESTIONS, null);
+				output =callAPIManagerService(ServiceUtil.GET_SURVEY_QUESTIONS, null, MEMBERWEBAPP, ServiceUtil.GET, headers);
 				logger.debug("response : " + output);
 			}
 		} catch (Exception e) {
@@ -2048,11 +2075,21 @@ public class WebService {
 			}
 			uriContext = AppProperties.getExtPropertiesValueByKey("videovisitsec_service_context");
 			break;
+		case MEMBERWEBAPP: 
+			if(inputHeaders!=null) {
+				for (Map.Entry<String, String> entry : inputHeaders.entrySet()) {
+					headers.set(entry.getKey(), entry.getValue());
+				}
+			}
+			
+			uriContext = AppProperties.getExtPropertiesValueByKey("memberwebapp_service_context");
+			break;
 		default:
 		}
 		final String internalUrl = AppProperties.getExtPropertiesValueByKey("api_manager_internal_url");
 		final URI uri = new URI(internalUrl + uriContext + operationName);
 		logger.info("serviceUrl : " + uri);
+		System.out.println("uri"+uri);
 		ResponseEntity<String> responseEntity = null;
 		if(StringUtils.isNotBlank(opType) && opType.equalsIgnoreCase(ServiceUtil.GET)) {
 			final HttpEntity<?> entity = new HttpEntity<Object>(headers);
