@@ -782,28 +782,28 @@ class Conference extends React.Component {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
         }
-        let browserInfo = Utilities.getBrowserInformation();
-        if( Utilities.getAppOS()=='iOS' && browserInfo.isSafari && Utilities.isMobileDevice()){
-            document.documentElement.style.height = `initial`;
-            setTimeout(() => {
-            document.documentElement.style.height = `100%`;
-                setTimeout(() => {
-                    // this line prevents the content
-                    // from hiding behind the address bar
-                    //window.scrollTo(0, 1);
-                     window.scrollTo(0, 30);
-                }, 250);
-            }, 250);
-        }
         const selfViewFeed = this.selfViewMedia.current;
         const remoteViewFeed = this.remoteFeedMedia.current;
         // OrientationChange Deprecated so using resize handler
         if(window.matchMedia("(orientation: portrait)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
+            if(/iPhone|iPad/.test(navigator.userAgent) ) {
+                document.documentElement.style.height = `initial`;
+                setTimeout(() => {
+                document.documentElement.style.height = `100%`;
+                    setTimeout(() => {
+                        // this line prevents the content
+                        // from hiding behind the address bar
+                        //window.scrollTo(0, 1);
+                         window.scrollTo(0, 30);
+                    }, 500);
+                }, 500);
+            }
             this.state.isRemoteFlippedToSelf && (this.removePositionProp(), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
+            document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px'
             this.setState({isPIPMode: this.setPIPMode()});
             this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp());
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
