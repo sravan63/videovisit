@@ -810,9 +810,6 @@ export function switchDevices(constrain, device = null) {
     rtc.renegotiate();
 }
 
-export function renegotiate(){
-    rtc.renegotiate();
-}
 
 export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj, config) {
     console.log("inside webui initialise");
