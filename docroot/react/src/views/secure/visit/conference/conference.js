@@ -786,6 +786,7 @@ class Conference extends React.Component {
         const remoteViewFeed = this.remoteFeedMedia.current;
         // OrientationChange Deprecated so using resize handler
         if(window.matchMedia("(orientation: portrait)").matches) {
+            document.getElementsByClassName('video-conference-container')[0].style.removeProperty("height");
             this.setState({isPIPMode: this.setPIPMode()});
             if(/iPhone|iPad/.test(navigator.userAgent) ) {
                 document.documentElement.style.height = `initial`;
