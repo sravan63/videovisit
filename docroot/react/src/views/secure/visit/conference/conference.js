@@ -608,8 +608,8 @@ class Conference extends React.Component {
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
         }
-        //if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
-        if(Utilities.isMobileDevice() && (this.state.isPIPMode || (window.matchMedia("(orientation: landscape)").matches && this.state.participants.length === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
+        //if(Utilities.isMobileDevice() && (this.state.isPIPMode || (window.matchMedia("(orientation: landscape)").matches && this.state.participants.length === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
+        if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             const coordinates = [end.pageX, end.pageY];
             // const coordinates = [this.selfViewMedia.current.offsetLeft, this.selfViewMedia.current.offsetTop];
             if( coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom
@@ -791,13 +791,13 @@ class Conference extends React.Component {
                 document.documentElement.style.height = `initial`;
                 setTimeout(() => {
                 document.documentElement.style.height = `100%`;
-                    setTimeout(() => {
-                        // this line prevents the content
-                        // from hiding behind the address bar
-                        //window.scrollTo(0, 1);
-                        window.scrollTo(0, 30);
-                    }, 500);
-                }, 500);
+                    // setTimeout(() => {
+                    //     // this line prevents the content
+                    //     // from hiding behind the address bar
+                    //     //window.scrollTo(0, 1);
+                    //     window.scrollTo(0, 30);
+                    // }, 100);
+                }, 100);
             }
             this.state.isRemoteFlippedToSelf && (this.removePositionProp(), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
