@@ -74,6 +74,7 @@ class Conference extends React.Component {
         this.presentationViewMedia = React.createRef();
         this.selfViewMedia = React.createRef();
         this.remoteFeedMedia = React.createRef();
+        this.currentSmallerView = "";
         this.getLanguage();
         let data = Utilities.getLang();
         this.leaveVisitPopupOptions = {
@@ -109,6 +110,8 @@ class Conference extends React.Component {
     }
 
     componentDidMount() {
+        this.currentSmallerView = this.selfViewMedia.current;
+
         if (typeof document.hidden !== 'undefined') {
             this.visibilityChange = 'visibilitychange';
         }
@@ -491,7 +494,7 @@ class Conference extends React.Component {
     }
 
     handleStart(e){
-        //If we switch to landscape scroll down the page again switch to portrait flip the view now switch to landscape then not able to scroll
+        //If we switch to landscape scroll down the page again switch to portrait flip the view now switch to landscape then not able to scroll due to that smaller view is not visible.
         if(!this.state.isRemoteFlippedToSelf){
             e.preventDefault();
         }
@@ -507,11 +510,16 @@ class Conference extends React.Component {
         document.ontouchend = this.handleEnd;
     }
 
-     handleMove(e){
-         // Applicable if feed is not flipped, used device is mobile/tablet and PIP view.
-        if(!this.state.isRemoteFlippedToSelf && Utilities.isMobileDevice() && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
+     handleMove(e) {
+        // Drag not allowed to larger view. 
+        if(e.target.dataset.view === "larger") {
+            return;
+        }
+         // Applicable if used device is mobile/tablet and PIP view.
+        if(Utilities.isMobileDevice() && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
             var touchLocation = e.targetTouches[0];
-            let elmnt = this.selfViewMedia.current;
+            //let elmnt = this.selfViewMedia.current;
+            let elmnt = this.currentSmallerView;
 
             // assign box new coordinates based on the touch.
             this.pos1 = this.pos3 - touchLocation.pageX ;
@@ -519,7 +527,8 @@ class Conference extends React.Component {
             this.pos3 = touchLocation.pageX ;
             this.pos4 = touchLocation.pageY;
 
-            let selfViewElement = document.querySelector('#selfvideo');
+            //let selfViewElement = document.querySelector('#selfvideo');
+            let selfViewElement = this.currentSmallerView;
             let selfPosition = selfViewElement.getBoundingClientRect();
 
             let element = document.querySelector('.video-conference');
@@ -594,8 +603,10 @@ class Conference extends React.Component {
         distance = Math.round(Math.sqrt(dx + dy));
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
-        } else if((!this.state.isRemoteFlippedToSelf) && (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
-            const coordinates = [e.changedTouches[0].pageX, e.changedTouches[0].pageY];
+        }
+        //if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
+        if(Utilities.isMobileDevice() && (this.state.isPIPMode || (window.matchMedia("(orientation: landscape)").matches && this.state.participants.length === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
+            const coordinates = [end.pageX, end.pageY];
             // const coordinates = [this.selfViewMedia.current.offsetLeft, this.selfViewMedia.current.offsetTop];
             if( coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom
                 || coordinates[0] >= this.center.left && coordinates[0] <= this.center.right ){
@@ -636,7 +647,7 @@ class Conference extends React.Component {
     }
 
     slideToCorner(slideTo){
-        let elmnt = this.selfViewMedia.current;
+        let elmnt = this.currentSmallerView;
         const cssprops = slideTo.indexOf('-') > -1 ? slideTo.split('-') : [slideTo];
         this.applyPosition(elmnt, cssprops);
         this.pos3 = (elmnt.offsetLeft - this.pos1) +'px';
@@ -658,13 +669,13 @@ class Conference extends React.Component {
             } else {
                 elmnt.classList.add(s);
             }
-        })
+        });
     }
 
     removeAllCornerClasses() {
         ['top', 'left', 'right', 'bottom'].map((c)=>{
-            if( this.selfViewMedia.current.classList.contains(c) ){
-                this.selfViewMedia.current.classList.remove(c);
+            if( this.currentSmallerView.classList.contains(c) ){
+                this.currentSmallerView.classList.remove(c);
             }
         });
     }
@@ -728,56 +739,56 @@ class Conference extends React.Component {
         }
 
         if(window.innerWidth > 1024) {
-            this.selfViewMedia.current.style.top = "initial";
-            this.selfViewMedia.current.style.left = "initial";
+            this.currentSmallerView.style.top = "initial";
+            this.currentSmallerView.style.left = "initial";
             setTimeout(()=>{
-                this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
-                this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
-                this.selfViewMedia.current.style.top = this.initialPositionTop;
-                this.selfViewMedia.current.style.left = this.initialPositionLeft;
+                this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
+                this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
+                this.currentSmallerView.style.top = this.initialPositionTop;
+                this.currentSmallerView.style.left = this.initialPositionLeft;
             },500);
             let element = document.querySelector('.conference-details');
             let positionInfo = element.getBoundingClientRect();
             this.widthSideBar = positionInfo.width;
         }
         else if (window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches) {
-                this.selfViewMedia.current.style.top = "initial";
-                this.selfViewMedia.current.style.left = "16px";
+                this.currentSmallerView.style.top = "initial";
+                this.currentSmallerView.style.left = "16px";
                 setTimeout(()=>{
-                    this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
+                    this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
                 },500);
 
         }
         else{
-            this.selfViewMedia.current.style.top = "initial";
-            this.selfViewMedia.current.style.left = "initial";
+            this.currentSmallerView.style.top = "initial";
+            this.currentSmallerView.style.left = "initial";
             if(Utilities.isMobileDevice()){
                 setTimeout(()=>{
-                    this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
-                    this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
+                    this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
+                    this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
                 },500);
             }
         }
         if(/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) { //window.matchMedia("(orientation: landscape)").matches) {
-            this.selfViewMedia.current.style.top = "initial";
-            this.selfViewMedia.current.style.left = "initial";
+            this.currentSmallerView.style.top = "initial";
+            this.currentSmallerView.style.left = "initial";
         }
 
        if(this.state.moreparticpants) {
             const isDock = window.innerWidth > 1024; // passes true only for desktop
             this.toggleDockView(isDock);
         }
-        const selfViewFeed = this.selfViewMedia.current;
+        const selfViewFeed = this.currentSmallerView;
         const remoteViewFeed = this.remoteFeedMedia.current;
         // OrientationChange Deprecated so using resize handler
         if(window.matchMedia("(orientation: portrait)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
-            this.state.isRemoteFlippedToSelf && (this.removePositionProp(selfViewFeed,remoteViewFeed), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
+            this.state.isRemoteFlippedToSelf && (this.removePositionProp(), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
             this.setState({isPIPMode: this.setPIPMode()});
-            this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp(selfViewFeed, remoteViewFeed));
+            this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp());
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
         this.mainContentWidth = window.innerWidth;
@@ -1330,13 +1341,13 @@ class Conference extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(this.state.isPIPMode){
-            this.initialPositionTop = document.querySelector('#selfvideo').offsetTop + "px";
-            this.initialPositionLeft = document.querySelector('#selfvideo').offsetLeft + "px";
+            this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
+            this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
         }
         else{
             if(window.matchMedia("(orientation: portrait)").matches) {
-                this.selfViewMedia.current.style.top = "initial";
-                this.selfViewMedia.current.style.left = "initial";
+                this.currentSmallerView.style.top = "initial";
+                this.currentSmallerView.style.left = "initial";
             }
         }
     }
@@ -1374,17 +1385,19 @@ class Conference extends React.Component {
         return false;
     }
     
-    removePositionProp(selfFeed, remoteFeed){
+    removePositionProp(){
         const positionMarginProp=["top", "right","bottom", "left"];
 
         //Removing property which dynamically assigned in self view drag.
         positionMarginProp.forEach(prop=>{
-            selfFeed && selfFeed.style.removeProperty(prop);
+            this.selfViewMedia.current &&  this.selfViewMedia.current.style.removeProperty(prop);
+            this.remoteFeedMedia.current && this.remoteFeedMedia.current.style.removeProperty(prop);
         });
     }
 
     flipView(e) {
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        
         if(Utilities.isMobileDevice() && (this.state.isPIPMode || (isLandscape && this.state.participants.length === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
             let clickedElement= e.target;
             const selfFeed= this.selfViewMedia.current;
@@ -1392,12 +1405,14 @@ class Conference extends React.Component {
 
             if(clickedElement.dataset.view === "smaller") {
                 //Removing property which dynamically assigned in self view drag.
-                this.removePositionProp(selfFeed, remoteFeed);
+                this.removePositionProp();
                 if(clickedElement.id !== remoteFeed.id) {
+                    this.currentSmallerView = this.remoteFeedMedia.current;
                     !isLandscape && remoteFeed.style.removeProperty("height");
                     remoteFeed.dataset.view = "smaller";
                 }
                 else{
+                    this.currentSmallerView = this.selfViewMedia.current;
                     !isLandscape && selfFeed.style.removeProperty("height");
                     selfFeed.dataset.view = "smaller";
                 }
@@ -1409,8 +1424,8 @@ class Conference extends React.Component {
                 !isLandscape && clickedElement.style.setProperty('height', `${vh}px`)
                 clickedElement.dataset.view = "larger";
                 this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
-                    this.initialPositionTop = this.selfViewMedia.current.offsetTop +"px";
-                    this.initialPositionLeft = this.selfViewMedia.current.offsetLeft +"px";
+                    this.initialPositionTop =  this.currentSmallerView.offsetTop +"px";
+                    this.initialPositionLeft = this.currentSmallerView.offsetLeft +"px";
                 });
             }
         }
@@ -1443,7 +1458,7 @@ class Conference extends React.Component {
             selfViewClass = 'selfViewVideo';
             this.selfViewMedia.current && this.selfViewMedia.current.style.removeProperty("height");
         }
-        
+
         streamContainer && (remoteStreamContainerClass = `${remoteStreamContainerClass } ${streamContainer}`);
 
         return (
@@ -1483,7 +1498,7 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={remoteStreamContainerClass} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
-                                            <video ref ={this.remoteFeedMedia} data-view="larger" onClick={this.flipView} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                            <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>
                                     <Settings data={Details} />
