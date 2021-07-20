@@ -662,7 +662,7 @@ class Conference extends React.Component {
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
         cssprops.map((s)=>{
             if(s == 'right'){
-                elmnt.style.left = window.innerWidth - elmnt.offsetWidth + 16 + 'px';
+                elmnt.style.left = this.state.isRemoteFlippedToSelf? window.innerWidth - elmnt.offsetWidth + 'px': window.innerWidth - elmnt.offsetWidth + 16 + 'px';
             }else if(s == 'bottom'){
                 var viewportHeight = isLandscape && window.scrollY > 0 && !this.isDesktopView ? document.body.scrollHeight : window.innerHeight;
                 if( this.isDesktopView ){
