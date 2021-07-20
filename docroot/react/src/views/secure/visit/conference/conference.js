@@ -804,7 +804,7 @@ class Conference extends React.Component {
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
-            document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px'
+            document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
             this.setState({isPIPMode: this.setPIPMode()});
             this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp());
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
