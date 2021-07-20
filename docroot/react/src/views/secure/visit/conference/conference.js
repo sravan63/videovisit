@@ -111,7 +111,7 @@ class Conference extends React.Component {
 
     componentDidMount() {
         this.currentSmallerView = this.selfViewMedia.current;
-
+        window.matchMedia("(orientation: landscape)").matches && (document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px');
         if (typeof document.hidden !== 'undefined') {
             this.visibilityChange = 'visibilitychange';
         }
