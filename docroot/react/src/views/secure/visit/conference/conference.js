@@ -46,7 +46,6 @@ class Conference extends React.Component {
         this.pos2 = 0;
         this.pos3 = 0;
         this.pos4 = 0;
-        this.currentSlideTo = "";
         this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
         this.deviceChanged = this.deviceChanged.bind(this);
         this.handleResize = this.handleResize.bind(this);
@@ -113,7 +112,7 @@ class Conference extends React.Component {
     componentDidMount() {
         this.currentSmallerView = this.selfViewMedia.current;
         //iPad desktop view in landscape or phone landscape view.
-        if((/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) || window.matchMedia("(orientation: landscape)").matches) {
+        if(Utilities.isMobileDevice() && ((/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) || (window.matchMedia("(orientation: landscape)").matches))) {
             document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
         }
         if (typeof document.hidden !== 'undefined') {
@@ -499,7 +498,7 @@ class Conference extends React.Component {
 
     handleStart(e){
         //If we switch to landscape scroll down the page again switch to portrait flip the view now switch to landscape then not able to scroll due to that smaller view is not visible.
-        if(!this.state.isRemoteFlippedToSelf){
+        if(!this.state.isRemoteFlippedToSelf && e.target.dataset.view !== "larger"){
             e.preventDefault();
         }
         var touchLocation = e.targetTouches[0];
@@ -612,19 +611,12 @@ class Conference extends React.Component {
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
         }
-        //else if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             const coordinates = [end.pageX, end.pageY];
-            // const coordinates = [this.selfViewMedia.current.offsetLeft, this.selfViewMedia.current.offsetTop];
-            if( coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom
-                || coordinates[0] >= this.center.left && coordinates[0] <= this.center.right ){
-                const slideTo = this.getSlidePosition(coordinates);
-                this.currentSlideTo = slideTo;
-                this.slideToCorner(slideTo);
-            }
+            const slideTo = this.getSlidePosition(coordinates);
+            this.slideToCorner(slideTo);
         }
         
-       // this.slideToCorner(this.currentSlideTo);
         document.ontouchmove = null;
         document.ontouchend = null;
     }
@@ -671,12 +663,8 @@ class Conference extends React.Component {
             if(s == 'right'){
                 elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - elmnt.offsetWidth + 'px': window.innerWidth - elmnt.offsetWidth + 16 + 'px';
             }else if(s == 'bottom'){
-                var viewportHeight = isLandscape && window.scrollY > 0 && !this.isDesktopView ? document.body.scrollHeight : window.innerHeight;
-                if( this.isDesktopView ){
-                    elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
-                } else {
-                    elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';
-                }
+                var viewportHeight = isLandscape && window.scrollY > 0 && !this.isDesktopView ? document.body.scrollHeight : window.innerHeight;             
+                elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';               
             } else {
                 elmnt.classList.add(s);
             }
@@ -1366,16 +1354,19 @@ class Conference extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if(this.state.isPIPMode){
+        const isToggleControls = ["showvideoIcon", "showaudioIcon", "showmicIcon"].some(stateKey=> prevState[stateKey] !== this.state[stateKey]);
+        if(!isToggleControls){
+            if(this.state.isPIPMode){
             this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
             this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
-        }
-        else{
-            if(window.matchMedia("(orientation: portrait)").matches) {
+            }
+            else{
+                if(window.matchMedia("(orientation: portrait)").matches) {
                 this.currentSmallerView.style.top = "initial";
                 this.currentSmallerView.style.left = "initial";
+                }
             }
-        }
+    }
     }
 
     setPIPMode() {
@@ -1450,8 +1441,8 @@ class Conference extends React.Component {
                 !isLandscape && clickedElement.style.setProperty('height', `${vh}px`)
                 clickedElement.dataset.view = "larger";
                 this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
-                    this.initialPositionTop =  this.currentSmallerView.offsetTop +"px";
-                    this.initialPositionLeft = this.currentSmallerView.offsetLeft +"px";
+                   this.initialPositionTop =  this.currentSmallerView.offsetTop +"px";
+                   this.initialPositionLeft = this.currentSmallerView.offsetLeft +"px";
                 });
             }
         }
