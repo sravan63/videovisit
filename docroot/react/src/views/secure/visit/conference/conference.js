@@ -111,7 +111,10 @@ class Conference extends React.Component {
 
     componentDidMount() {
         this.currentSmallerView = this.selfViewMedia.current;
-        window.matchMedia("(orientation: landscape)").matches && (document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px');
+        //iPad desktop view in landscape or phone landscape view.
+        if((/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) || window.matchMedia("(orientation: landscape)").matches) {
+            document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
+        }
         if (typeof document.hidden !== 'undefined') {
             this.visibilityChange = 'visibilitychange';
         }
@@ -773,9 +776,11 @@ class Conference extends React.Component {
                 },500);
             }
         }
+        //iPad desktop view in landscape.
         if(/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) { //window.matchMedia("(orientation: landscape)").matches) {
             this.currentSmallerView.style.top = "initial";
             this.currentSmallerView.style.left = "initial";
+            document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
         }
 
        if(this.state.moreparticpants) {
