@@ -46,6 +46,7 @@ class Conference extends React.Component {
         this.pos2 = 0;
         this.pos3 = 0;
         this.pos4 = 0;
+        this.currentSlideTo = "";
         this.handleVisibilityChange = this.handleVisibilityChange.bind(this);
         this.deviceChanged = this.deviceChanged.bind(this);
         this.handleResize = this.handleResize.bind(this);
@@ -611,16 +612,19 @@ class Conference extends React.Component {
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
         }
-        //if(Utilities.isMobileDevice() && (this.state.isPIPMode || (window.matchMedia("(orientation: landscape)").matches && this.state.participants.length === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
+        //else if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             const coordinates = [end.pageX, end.pageY];
             // const coordinates = [this.selfViewMedia.current.offsetLeft, this.selfViewMedia.current.offsetTop];
             if( coordinates[1] >= this.center.top && coordinates[1] <= this.center.bottom
                 || coordinates[0] >= this.center.left && coordinates[0] <= this.center.right ){
                 const slideTo = this.getSlidePosition(coordinates);
+                this.currentSlideTo = slideTo;
                 this.slideToCorner(slideTo);
             }
         }
+        
+       // this.slideToCorner(this.currentSlideTo);
         document.ontouchmove = null;
         document.ontouchend = null;
     }
@@ -644,7 +648,7 @@ class Conference extends React.Component {
     setCenterCoordinates(){
         const wHeight = window.innerHeight; // 410
         const wWidth = window.innerWidth; // 1366
-        const cornerOffset = 5; // % offset in the corners.
+        const cornerOffset = 0.5; // % offset in the corners.
         this.center = { 
             top : (cornerOffset/100 * wHeight),  // 41
             left: (cornerOffset/100 * wWidth), // 136
