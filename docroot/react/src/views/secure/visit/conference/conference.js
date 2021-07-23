@@ -516,7 +516,7 @@ class Conference extends React.Component {
 
      handleMove(e) {
         // Drag not allowed to larger view. 
-        if(e.target.dataset.view === "larger") {
+        if(e.target.dataset.view !== "smaller") {
             return;
         }
          // Applicable if used device is mobile/tablet and PIP view.
@@ -1355,7 +1355,7 @@ class Conference extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        const isToggleControls = ["showvideoIcon", "showaudioIcon", "showmicIcon"].some(stateKey=> prevState[stateKey] !== this.state[stateKey]);
+        const isToggleControls = ["showvideoIcon", "showaudioIcon", "showmicIcon", "isMirrorView"].some(stateKey=> prevState[stateKey] !== this.state[stateKey]);
         if(!isToggleControls){
             if(this.state.isPIPMode){
             this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
