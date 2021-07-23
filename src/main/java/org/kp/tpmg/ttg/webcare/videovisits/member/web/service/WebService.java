@@ -90,7 +90,7 @@ public class WebService {
 	private static final char MAPPOINTMENT = 'A';
 	private static final char MCONFERENCE = 'C';
 	private static final char VV_EC = 'E';
-	private static final char MEMBERWEBAPP = 'M';
+	private static final char MEETINGAPI = 'M';
 
 	// Parameters for Proxy Appts logic
 	private static String secureCodes = null;
@@ -1692,9 +1692,8 @@ public class WebService {
 				output = gson.toJson(response);
 			} else {
 				logger.debug("inputJsonString : " + gson.toJson(input));
-				System.out.println(gson.toJson(input));
 				//output = callVVMeetingRestService(HttpMethod.POST, null, ServiceUtil.SUBMIT_SURVEY, gson.toJson(input));
-				output =callAPIManagerService( ServiceUtil.SUBMIT_SURVEY, gson.toJson(input), MEMBERWEBAPP, ServiceUtil.POST, null);
+				output =callAPIManagerService( ServiceUtil.SUBMIT_SURVEY, gson.toJson(input), MEETINGAPI, ServiceUtil.POST, null);
 				logger.debug("response : " + output);
 			}
 		} catch (Exception e) {
@@ -1764,8 +1763,8 @@ public class WebService {
 				*/
 				
 				Map<String, String> headers = new HashMap<String, String>();
-				headers.put("X-CLIENTID", WebUtil.VV_MBR_WEB);
-				headers.put("X-SESSIONID", sessionId);
+				headers.put("X-clientId", WebUtil.VV_MBR_WEB);
+				headers.put("X-sessionId", sessionId);
 				headers.put("X-providerFl", Boolean.toString(providerFl));
 				headers.put("X-memberFl", Boolean.toString(memberFl));
 				headers.put("X-meetingId", meetingId);
@@ -1773,7 +1772,7 @@ public class WebService {
 				headers.put("X-userValue", userValue);
 				
 				//output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_ACTIVE_SURVEYS, null);
-				output =callAPIManagerService( ServiceUtil.GET_ACTIVE_SURVEYS, null, MEMBERWEBAPP, ServiceUtil.GET, headers);
+				output =callAPIManagerService( ServiceUtil.GET_ACTIVE_SURVEYS, null, MEETINGAPI, ServiceUtil.GET, headers);
 				logger.debug("response : " + output);
 			}
 		} catch (Exception e) {
@@ -1869,10 +1868,8 @@ public class WebService {
 				*/
 				
 				Map<String, String> headers = new HashMap<String, String>();
-				headers.put("X-CLIENTID", WebUtil.VV_MBR_WEB);
-				headers.put("X-SESSIONID", sessionId);
-				//headers.set("X-clientId", WebUtil.VV_MBR_WEB);
-				//headers.set("X-sessionId", sessionId);
+				headers.put("X-clientId", WebUtil.VV_MBR_WEB);
+				headers.put("X-sessionId", sessionId);
 				headers.put("X-surveyclientname", WebUtil.VV_MBR_WEB);
 				headers.put("X-surveyname", surveyName);
 				headers.put("X-meetingId", meetingId);
@@ -1880,7 +1877,7 @@ public class WebService {
 				headers.put("X-userValue", userValue);
 
 				//output = callVVMeetingRestService(HttpMethod.GET, headers, ServiceUtil.GET_SURVEY_QUESTIONS, null);
-				output =callAPIManagerService(ServiceUtil.GET_SURVEY_QUESTIONS, null, MEMBERWEBAPP, ServiceUtil.GET, headers);
+				output =callAPIManagerService(ServiceUtil.GET_SURVEY_QUESTIONS, null, MEETINGAPI, ServiceUtil.GET, headers);
 				logger.debug("response : " + output);
 			}
 		} catch (Exception e) {
@@ -2075,21 +2072,19 @@ public class WebService {
 			}
 			uriContext = AppProperties.getExtPropertiesValueByKey("videovisitsec_service_context");
 			break;
-		case MEMBERWEBAPP: 
+		case MEETINGAPI: 
 			if(inputHeaders!=null) {
 				for (Map.Entry<String, String> entry : inputHeaders.entrySet()) {
 					headers.set(entry.getKey(), entry.getValue());
 				}
 			}
-			
-			uriContext = AppProperties.getExtPropertiesValueByKey("memberwebapp_service_context");
+			uriContext = AppProperties.getExtPropertiesValueByKey("videovisitsmeeting_service_context");
 			break;
 		default:
 		}
 		final String internalUrl = AppProperties.getExtPropertiesValueByKey("api_manager_internal_url");
 		final URI uri = new URI(internalUrl + uriContext + operationName);
 		logger.info("serviceUrl : " + uri);
-		System.out.println("uri"+uri);
 		ResponseEntity<String> responseEntity = null;
 		if(StringUtils.isNotBlank(opType) && opType.equalsIgnoreCase(ServiceUtil.GET)) {
 			final HttpEntity<?> entity = new HttpEntity<Object>(headers);
