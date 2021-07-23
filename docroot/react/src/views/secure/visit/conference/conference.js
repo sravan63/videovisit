@@ -250,6 +250,7 @@ class Conference extends React.Component {
                 case GlobalConfig.HOST_LEFT:
                     this.selfViewMedia.current.dataset.view = "smaller";
                     this.remoteFeedMedia.current.dataset.view = "larger";
+                    this.currentSmallerView = this.selfViewMedia.current;
                     this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false, isRemoteFlippedToSelf: false});
                     this.toggleDockView(false);
                     this.handleTimer(true);
@@ -1382,7 +1383,7 @@ class Conference extends React.Component {
                 let participantCount = this.state.participants.length;
 
                 if(participantCount === 2 && isAllParticipantInPortrait && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
-                   let vh = window.innerHeight - 50;
+                    let vh = window.innerHeight - 50;
                     //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
                     if(/iPhone/.test(navigator.userAgent) ) {
                         vh = document.documentElement.clientHeight -50;
