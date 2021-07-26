@@ -660,9 +660,13 @@ class Conference extends React.Component {
     
     applyPosition(elmnt, cssprops){
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        let = dskTopView = false;
+        if(/iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth >= 1024 ){
+            dskTopView = true
+        }
         cssprops.map((s)=>{
             if(s == 'right'){
-                if(this.isDesktopView){
+                if(dskTopView){
                     if(!this.state.isRemoteFlippedToSelf){
                         elmnt.style.left = window.innerWidth - elmnt.offsetWidth  + 16 + 'px';
                     }
@@ -674,8 +678,8 @@ class Conference extends React.Component {
                     elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - elmnt.offsetWidth + 'px': window.innerWidth - elmnt.offsetWidth + 16 + 'px';
                 }
             }else if(s == 'bottom'){
-                var viewportHeight = isLandscape && window.scrollY > 0 && !this.isDesktopView ? document.body.scrollHeight : window.innerHeight;             
-                if(this.isDesktopView){
+                var viewportHeight = isLandscape && window.scrollY > 0 && !dskTopView ? document.body.scrollHeight : window.innerHeight;             
+                if(dskTopView){
                     if(!this.state.isRemoteFlippedToSelf) {
                         elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
                     }
@@ -799,6 +803,7 @@ class Conference extends React.Component {
             this.currentSmallerView.style.top = "initial";
             this.currentSmallerView.style.left = "initial";
             document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
+            this.applyPosition(this.currentSmallerView, ["bottom"]);
         }
 
        if(this.state.moreparticpants) {
@@ -1438,8 +1443,9 @@ class Conference extends React.Component {
 
     flipView(e) {
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-        
-        if(Utilities.isMobileDevice() && (this.state.isPIPMode || (isLandscape && this.state.participants.length === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
+        let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
+
+        if(Utilities.isMobileDevice() && (this.state.isPIPMode || (isLandscape && participantCount === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
             let clickedElement= e.target;
             const selfFeed= this.selfViewMedia.current;
             const remoteFeed = this.remoteFeedMedia.current;
