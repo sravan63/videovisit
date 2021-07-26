@@ -663,7 +663,12 @@ class Conference extends React.Component {
         cssprops.map((s)=>{
             if(s == 'right'){
                 if(this.isDesktopView){
-                    elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - (elmnt.offsetWidth*2) + 'px': window.innerWidth - (elmnt.offsetWidth*2) + 16 + 'px';
+                    if(!this.state.isRemoteFlippedToSelf){
+                        elmnt.style.left = window.innerWidth - elmnt.offsetWidth  + 16 + 'px';
+                    }
+                    else{
+                        elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - (elmnt.offsetWidth * 2) + 'px': window.innerWidth - (elmnt.offsetWidth * 2) + 16 + 'px';
+                    }
                 }
                 else{
                     elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - elmnt.offsetWidth + 'px': window.innerWidth - elmnt.offsetWidth + 16 + 'px';
@@ -671,8 +676,13 @@ class Conference extends React.Component {
             }else if(s == 'bottom'){
                 var viewportHeight = isLandscape && window.scrollY > 0 && !this.isDesktopView ? document.body.scrollHeight : window.innerHeight;             
                 if(this.isDesktopView){
-                    
-                    elmnt.style.top = viewportHeight - (elmnt.offsetHeight*2) + 'px';
+                    if(!this.state.isRemoteFlippedToSelf){
+                        
+                        elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
+                    }
+                    else{
+                        elmnt.style.top = viewportHeight - (elmnt.offsetHeight - 100) + 'px';
+                    }
                 }
                 else{
                     elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';
