@@ -660,7 +660,7 @@ class Conference extends React.Component {
     
     applyPosition(elmnt, cssprops){
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-        let = dskTopView = false;
+        let dskTopView = false;
         if(/iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth >= 1024 ){
             dskTopView = true
         }
