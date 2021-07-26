@@ -760,13 +760,16 @@ class Conference extends React.Component {
 
         }
         else{
-            this.currentSmallerView.style.top = "initial";
-            this.currentSmallerView.style.left = "initial";
-            if(Utilities.isMobileDevice()){
-                setTimeout(()=>{
-                    this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
-                    this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
-                },500);
+            //[In some android devices] when we scroll the page self view is coming to default position to stop that added this check.
+            if(this.mainContentWidth !== window.innerWidth) {
+                this.currentSmallerView.style.top = "initial";
+                this.currentSmallerView.style.left = "initial";
+                if(Utilities.isMobileDevice()){
+                    setTimeout(()=>{
+                        this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
+                        this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
+                    },500);
+                }
             }
         }
         //iPad desktop view in landscape.
@@ -1367,7 +1370,7 @@ class Conference extends React.Component {
                 this.currentSmallerView.style.left = "initial";
                 }
             }
-    }
+        }
     }
 
     setPIPMode() {
