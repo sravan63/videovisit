@@ -685,7 +685,9 @@ class Conference extends React.Component {
             participants: [...this.state.participants, newParticipant]
           },function() {
             this.setState({isPIPMode: this.setPIPMode()});
-            if(this.state.participants.length > 2) {
+            let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
+
+            if(participantCount > 2) {
                 this.selfViewMedia.current.dataset.view = "smaller";
                 this.remoteFeedMedia.current.dataset.view = "larger";
                 this.setState({isRemoteFlippedToSelf: false});
