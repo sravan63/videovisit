@@ -662,10 +662,21 @@ class Conference extends React.Component {
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
         cssprops.map((s)=>{
             if(s == 'right'){
-                elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - elmnt.offsetWidth + 'px': window.innerWidth - elmnt.offsetWidth + 16 + 'px';
+                if(this.isDesktopView){
+                    elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - (elmnt.offsetWidth*2) + 'px': window.innerWidth - (elmnt.offsetWidth*2) + 16 + 'px';
+                }
+                else{
+                    elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - elmnt.offsetWidth + 'px': window.innerWidth - elmnt.offsetWidth + 16 + 'px';
+                }
             }else if(s == 'bottom'){
                 var viewportHeight = isLandscape && window.scrollY > 0 && !this.isDesktopView ? document.body.scrollHeight : window.innerHeight;             
-                elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';               
+                if(this.isDesktopView){
+                    
+                    elmnt.style.top = viewportHeight - (elmnt.offsetHeight*2) + 'px';
+                }
+                else{
+                    elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';
+                }               
             } else {
                 elmnt.classList.add(s);
             }
