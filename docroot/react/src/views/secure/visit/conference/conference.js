@@ -676,8 +676,7 @@ class Conference extends React.Component {
             }else if(s == 'bottom'){
                 var viewportHeight = isLandscape && window.scrollY > 0 && !this.isDesktopView ? document.body.scrollHeight : window.innerHeight;             
                 if(this.isDesktopView){
-                    if(!this.state.isRemoteFlippedToSelf){
-                        
+                    if(!this.state.isRemoteFlippedToSelf) {
                         elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
                     }
                     else{
