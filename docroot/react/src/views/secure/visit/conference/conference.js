@@ -684,7 +684,7 @@ class Conference extends React.Component {
                         elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
                     }
                     else{
-                        elmnt.style.top = viewportHeight - (elmnt.offsetHeight - 100) + 'px';
+                        elmnt.style.top = viewportHeight - (elmnt.offsetHeight + 100) + 'px';
                     }
                 }
                 else{
