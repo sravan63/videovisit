@@ -1379,13 +1379,11 @@ class Conference extends React.Component {
                 let isAllParticipantInPortrait;
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 //let uniqueParticipants = WebUI.removeDuplicateParticipants(this.state.participants);
-                //let isNotLandscapeOrAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" && p.selfAspectMode.toUpperCase() === "PORTRAIT");
-                let isNotAudioCall = this.state.participants.every(p => p.is_audio_only_call.toUpperCase() === "NO" );
                 let allModes =Object.values(this.aspectModes);
-                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='portrait'));
-                let participantCount = this.state.participants.length;
+                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='desktop'));
+                let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
 
-                if(participantCount === 2 && isAllParticipantInPortrait && isNotAudioCall && !this.state.showSharedContent && isHostAvail) {
+                if(participantCount === 2 && isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {   
                     let vh = window.innerHeight - 50;
                     //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
                     if(/iPhone/.test(navigator.userAgent) ) {
