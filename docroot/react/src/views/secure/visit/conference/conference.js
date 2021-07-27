@@ -671,7 +671,7 @@ class Conference extends React.Component {
                         elmnt.style.left = window.innerWidth - elmnt.offsetWidth  + 16 + 'px';
                     }
                     else{
-                        elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - (elmnt.offsetWidth * 2) + 'px': window.innerWidth - (elmnt.offsetWidth * 2) + 16 + 'px';
+                        elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - (elmnt.offsetWidth * 2) + 'px': window.innerWidth - elmnt.offsetWidth  + 'px';
                     }
                 }
                 else{
@@ -679,13 +679,8 @@ class Conference extends React.Component {
                 }
             }else if(s == 'bottom'){
                 var viewportHeight = isLandscape && window.scrollY > 0 && !dskTopView ? document.body.scrollHeight : window.innerHeight;             
-                if(dskTopView){
-                    if(!this.state.isRemoteFlippedToSelf) {
-                        elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
-                    }
-                    else{
-                        elmnt.style.top = viewportHeight - (elmnt.offsetHeight + 100) + 'px';
-                    }
+                if(dskTopView && !this.state.isRemoteFlippedToSelf ){
+                    elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
                 }
                 else{
                     elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';
@@ -803,7 +798,10 @@ class Conference extends React.Component {
             this.currentSmallerView.style.top = "initial";
             this.currentSmallerView.style.left = "initial";
             document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
-            this.applyPosition(this.currentSmallerView, ["bottom"]);
+            // Calling applyPosition(as a callback) under settimeout because we want latest offeset of smaller view after switching the orientation mode.
+            setTimeout(()=>{
+                this.applyPosition(this.currentSmallerView, ["bottom"]);
+            },100);
         }
 
        if(this.state.moreparticpants) {

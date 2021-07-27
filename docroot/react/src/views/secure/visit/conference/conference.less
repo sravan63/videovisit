@@ -550,7 +550,7 @@
                 .flipRemoteFeedPIP {
                     object-fit: cover;
                     z-index: 1000;
-                    position: absolute;
+                    position: fixed;
                     bottom: 0px;
                     max-height: 25%;
                     max-width: 9.5% !important;
@@ -710,26 +710,26 @@
         }
     }
 }
+// will add later if require to remove black band in iPad
+// @media only screen and (max-width: 1366px) and (orientation: landscape) {
+//     .conference-page {
+//         .video-conference-container {
+//             .video-conference {
+//                 .stream-container {
+//                     width: 100%;
+//                     height: 100%;
+//                     position: relative;
+//                     display: none; 
+//                     transform: scale(1.44);
+//                 }
 
-@media only screen and (max-width: 1366px) and (orientation: landscape) {
-    .conference-page {
-        .video-conference-container {
-            .video-conference {
-                .stream-container {
-                    width: 100%;
-                    height: 100%;
-                    position: relative;
-                    display: none; 
-                    transform: scale(1.44);
-                }
-
-                .flipStream-containerPIP {
-                    transform: none;
-                }
-            }
-        }
-    }
-}
+//                 .flipStream-containerPIP {
+//                     transform: none;
+//                 }
+//             }
+//         }
+//     }
+// }
 
 @media only screen and (max-width: 980px) and (orientation: landscape) { 
     .conference-page {
