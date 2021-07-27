@@ -840,14 +840,18 @@ class Conference extends React.Component {
     }
 
     handleVisibilityChange() {
+        alert('1. entered the function');
         if(Utilities.isMobileDevice()){
+            alert('2. isMobile');
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
 
             if (document.visibilityState === 'visible') {
+                alert('3. visible');
                 console.log("Document visible now");
                 if((Date.now() - this.restartPexip) > 20000){
                     window.location.reload();
                 } else {
+                    alert('4. Play selfview');
                     this.selfViewMedia && this.selfViewMedia.current.play();
                     this.remoteFeedMedia && this.remoteFeedMedia.current.play();
                     presentationView && presentationView.play();
@@ -858,6 +862,7 @@ class Conference extends React.Component {
                     },1000);*/
                 }
             } else if(document.visibilityState === 'hidden') {
+                alert('5. hidden - pause selfview');
                 console.log("Document hidden now");
                 this.restartPexip = Date.now();
                 this.selfViewMedia && this.selfViewMedia.current.pause();
