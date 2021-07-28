@@ -126,6 +126,7 @@ class Conference extends React.Component {
         }
         navigator.mediaDevices.addEventListener('devicechange',this.deviceChanged);
         document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
+        console.log('Handle visibility change event listener')
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
             //this.setState({ showLoader: false });
@@ -416,6 +417,10 @@ class Conference extends React.Component {
 
     componentDidUpdate() {
         alert('component updated');
+    }
+
+    shouldComponentUpdate() {
+        alert('component should update');
     }
 
     dragElement(elmnt) {
