@@ -126,7 +126,6 @@ class Conference extends React.Component {
         }
         navigator.mediaDevices.addEventListener('devicechange',this.deviceChanged);
         document.addEventListener(this.visibilityChange, this.handleVisibilityChange, false);
-        console.log('Handle visibility change event listener')
         // Make AJAX call for meeting details
         if (localStorage.getItem('meetingId')) {
             //this.setState({ showLoader: false });
@@ -413,14 +412,6 @@ class Conference extends React.Component {
                     this.getLanguage();
                 }
             });
-    }
-
-    componentDidUpdate() {
-        alert('component updated');
-    }
-
-    shouldComponentUpdate() {
-        alert('component should update');
     }
 
     dragElement(elmnt) {
@@ -1392,6 +1383,7 @@ class Conference extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        alert('component updated');
         const isToggleControls = ["showvideoIcon", "showaudioIcon", "showmicIcon", "isMirrorView"].some(stateKey=> prevState[stateKey] !== this.state[stateKey]);
         if(!isToggleControls){
             if(this.state.isPIPMode){
