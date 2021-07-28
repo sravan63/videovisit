@@ -823,8 +823,8 @@ class Conference extends React.Component {
                         // from hiding behind the address bar
                         //window.scrollTo(0, 1);
                          window.scrollTo(0, 30);
-                    }, 0);
-                }, 0);
+                    }, 150);
+                }, 150);
             }
             this.state.isRemoteFlippedToSelf && (this.removePositionProp(), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
