@@ -1383,7 +1383,6 @@ class Conference extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        alert('component updated');
         const isToggleControls = ["showvideoIcon", "showaudioIcon", "showmicIcon", "isMirrorView"].some(stateKey=> prevState[stateKey] !== this.state[stateKey]);
         if(!isToggleControls){
             if(this.state.isPIPMode){
