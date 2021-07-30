@@ -729,7 +729,12 @@ class Conference extends React.Component {
 
     sendMediaStats(data) {
         var mediaStatsFrequency = localStorage.getItem('mediaStats');
-        if (mediaStatsFrequency == 0) {
+        if (mediaStatsFrequency){
+            if(mediaStatsFrequency == 0){
+                return;
+            }
+        }
+        else{
             return;
         }
         mediaStatsFrequency = parseInt(mediaStatsFrequency) * 1000;
