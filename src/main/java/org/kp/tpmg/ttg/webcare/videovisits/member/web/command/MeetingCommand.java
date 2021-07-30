@@ -1637,6 +1637,8 @@ public class MeetingCommand {
 		String careGiverId = request.getHeader("careGiverId");
 		String meetingId = request.getHeader("meetingId");
 		String joinLeaveStatus = request.getHeader("joinLeaveStatus");
+		String firstName=request.getHeader("firstName");
+		String lastName=request.getHeader("lastName");
 		org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson();
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
@@ -1644,7 +1646,7 @@ public class MeetingCommand {
 			String clientId = WebUtil.getClientIdForECInstantJoin(request.getParameter(LOGIN_TYPE),
 					request.getParameter("isFromMobile"));
 			
-			jsonOutput = WebService.updateGuestParticipant(careGiverId, meetingId, joinLeaveStatus, request.getSession().getId(), clientId);
+			jsonOutput = WebService.updateGuestParticipant(careGiverId, meetingId, joinLeaveStatus, request.getSession().getId(), clientId,firstName,lastName);
 			
 			if (StringUtils.isNotBlank(jsonOutput)) {
 				output = gson.fromJson(jsonOutput, org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson.class);
@@ -1666,6 +1668,5 @@ public class MeetingCommand {
 		logger.info(LOG_EXITING);
 		return result;
 	}
-	
 }
 

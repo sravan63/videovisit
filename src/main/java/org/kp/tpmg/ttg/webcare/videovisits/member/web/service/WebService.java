@@ -1916,11 +1916,13 @@ public class WebService {
 		return jsonResponse;
 	}
 	
-	public static String updateGuestParticipant(String careGiverId,String meetingId, String joinLeaveStatus, String sessionId, String clientId) {
+	public static String updateGuestParticipant(String careGiverId,String meetingId, String joinLeaveStatus, String sessionId, String clientId,String firstName,String lastName) {
 		logger.info(LOG_ENTERED);
 		String jsonResponse = null;
 		final Gson gson = new Gson();
-		if (StringUtils.isBlank(careGiverId) || StringUtils.isBlank(meetingId) || StringUtils.isBlank(joinLeaveStatus) || (StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId))) {
+		if((StringUtils.isBlank(careGiverId)  && (StringUtils.isBlank(firstName) || StringUtils.isBlank(lastName)))
+	        || StringUtils.isBlank(meetingId) || StringUtils.isBlank(joinLeaveStatus)
+		    || StringUtils.isBlank(clientId)  ||  StringUtils.isBlank(sessionId)) {
 			logger.warn("Missing input attributes");
 			final org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson output = new org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutputJson();
 			final org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutput service = new org.kp.tpmg.ttg.videovisitsec.model.ServiceCommonOutput();
@@ -1936,6 +1938,8 @@ public class WebService {
 			input.setCareGiverId(careGiverId);
 			input.setMeetingId(meetingId);
 			input.setJoinLeaveStatus(joinLeaveStatus);
+			input.setFirstName(firstName);
+			input.setLastName(lastName);
 			Map<String, String> headers = new HashMap<String, String>();
 			headers.put("X-CLIENTID", clientId);
 			headers.put("X-SESSIONID", sessionId);
