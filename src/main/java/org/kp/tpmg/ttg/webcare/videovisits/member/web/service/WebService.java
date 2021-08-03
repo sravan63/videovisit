@@ -25,6 +25,10 @@ import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.ttg.videovisitsec.model.AuthorizeECCodeOutput;
 import org.kp.tpmg.ttg.videovisitsec.model.AuthorizeECCodeOutputJson;
+import org.kp.tpmg.ttg.videovisitsec.model.GetECMeetingDetailsByIdInput;
+import org.kp.tpmg.ttg.videovisitsec.model.GetECMeetingDetailsByIdOutput;
+import org.kp.tpmg.ttg.videovisitsec.model.GetECMeetingDetailsByIdOutputJson;
+import org.kp.tpmg.ttg.videovisitsec.model.Status;
 import org.kp.tpmg.ttg.videovisitsec.model.UpdateGuestParticipantInput;
 import org.kp.tpmg.ttg.videovisitsec.model.ValidateECCodeInput;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
@@ -1947,6 +1951,40 @@ public class WebService {
 			logger.debug("jsonInptString : " + inputString);
 			jsonResponse = callAPIManagerService(ServiceUtil.UPDATE_GUEST_PARTICIPANT, inputString, VV_EC, ServiceUtil.POST, headers);
 			logger.debug("jsonOutputString : " + jsonResponse);
+		}
+		logger.info(LOG_EXITING);
+		return jsonResponse;
+	}
+	
+	public static String getECMeetingDetailsById(String meetingId, String clientId, String sessionId) {
+		logger.info(LOG_ENTERED);
+		String jsonResponse = null;
+		final Gson gson = new Gson();
+		try {
+			if(StringUtils.isBlank(meetingId)||StringUtils.isBlank(clientId)||StringUtils.isBlank(sessionId)) {
+				logger.warn(ServiceUtil.MISSING_INPUT_ATTRIBUTES);
+				final GetECMeetingDetailsByIdOutputJson outputJson = new GetECMeetingDetailsByIdOutputJson();
+				final GetECMeetingDetailsByIdOutput output = new GetECMeetingDetailsByIdOutput();
+				final Status status = new Status();
+				status.setCode(ServiceUtil.CODE_300);
+				status.setMessage(ServiceUtil.MISSING_INPUT_ATTRIBUTES);
+				output.setName(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID);
+				output.setStatus(status);
+				outputJson.setService(output);
+				jsonResponse = gson.toJson(outputJson);
+			}else {
+				final GetECMeetingDetailsByIdInput getECMeetingDetailsByIdInput = new GetECMeetingDetailsByIdInput();
+				getECMeetingDetailsByIdInput.setMeetingId(meetingId);
+				Map<String,String> headers = new HashMap<String,String>();
+				headers.put(ServiceUtil.X_CLIENTID, clientId);
+				headers.put(ServiceUtil.X_SESSIONID, sessionId);
+				final String input = gson.toJson(getECMeetingDetailsByIdInput);
+				logger.debug("jsonInput : "+input);
+				jsonResponse=callAPIManagerService(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID,input,VV_EC,ServiceUtil.POST,headers);
+				logger.debug("jsonResponse : "+jsonResponse);
+			}
+		} catch (Exception e) {
+			logger.error("Web Service API error:" + e.getMessage(), e);
 		}
 		logger.info(LOG_EXITING);
 		return jsonResponse;

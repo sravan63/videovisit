@@ -29,6 +29,7 @@ import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingsEnvelope;
 import org.kp.tpmg.ttg.videovisitsec.model.AuthorizeECCodeOutputJson;
+import org.kp.tpmg.ttg.videovisitsec.model.GetECMeetingDetailsByIdOutputJson;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.ActiveSurveysResponse;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.InputUserAnswers;
 import org.kp.tpmg.ttg.videovisitsmeetingapi.model.Survey;
@@ -1664,6 +1665,37 @@ public class MeetingCommand {
 		}
 		if (StringUtils.isBlank(result)) {
 			result = WebUtil.prepareCommonOutputJson(ServiceUtil.UPDATE_GUEST_PARTICIPANT, FAILURE_900, FAILURE, null);
+		}
+		logger.info(LOG_EXITING);
+		return result;
+	}
+	
+	public static String getECMeetingDetailsById(HttpServletRequest request) {
+		String result="";
+		String meetingId=request.getHeader(ServiceUtil.MEETING_ID);
+		GetECMeetingDetailsByIdOutputJson output = null;
+		String outputJson = null;
+		final Gson gson = new Gson();
+		try {
+			String clientId = WebUtil.getClientIdForECInstantJoin(request.getParameter(LOGIN_TYPE),
+					request.getParameter(ServiceUtil.IS_FROM_MOBILE_STRING));
+			outputJson = WebService.getECMeetingDetailsById(meetingId, clientId,request.getSession().getId());
+			if(StringUtils.isNotBlank(outputJson)) {
+				output = gson.fromJson(outputJson, GetECMeetingDetailsByIdOutputJson.class);
+			}
+			if(output != null && output.getService() != null
+					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
+					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
+				result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID,
+						output.getService().getStatus().getCode(),
+						output.getService().getStatus().getMessage(),
+						output.getService().getEnvelope() != null ? output.getService().getEnvelope() : null);
+			}
+		}catch(Exception e) {
+			logger.error("Error while getting EC meeting details for meeting id : "+meetingId,e);
+		}
+		if (StringUtils.isBlank(result)) {
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID, FAILURE_900, FAILURE, null);
 		}
 		logger.info(LOG_EXITING);
 		return result;

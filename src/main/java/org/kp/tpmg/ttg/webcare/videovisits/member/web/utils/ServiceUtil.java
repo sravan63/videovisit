@@ -42,4 +42,12 @@ public class ServiceUtil {
 	public static final String TEST_IS_ALIVE = "isAlive";
 	public static final String GET = "GET";
 	public static final String POST = "POST";
+	
+	public static final String MEETING_ID = "meetingId";
+	public static final String MISSING_INPUT_ATTRIBUTES = "Missing input attributes.";
+	public static final String CODE_300 = "300";
+	public static final String GET_EC_MEETING_DETAILS_BY_ID = "getECMeetingDetailsById";
+	public static final String X_CLIENTID="X-CLIENTID";
+	public static final String X_SESSIONID="X-SESSIONID";
+	public static final String IS_FROM_MOBILE_STRING="isFromMobile";
 }
