@@ -420,10 +420,10 @@ public class MemberRestController{
 		return output;
 	}
 	
-	@RequestMapping(value="/getECMeetingDetailsById.json", produces= {MediaType.APPLICATION_JSON_VALUE},
-			method= {RequestMethod.POST, RequestMethod.GET})
-	public String getECMeetingDetailsById(final HttpServletRequest request, final HttpServletResponse response) 
-			throws Exception{
+	@RequestMapping(value = "/getECMeetingDetailsById.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String getECMeetingDetailsById(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
 		logger.info(LOG_ENTERED);
 		String output = MeetingCommand.getECMeetingDetailsById(request);
 		logger.debug("output = " + output);

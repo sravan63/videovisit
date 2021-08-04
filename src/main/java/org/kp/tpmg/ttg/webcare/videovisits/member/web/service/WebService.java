@@ -1961,7 +1961,7 @@ public class WebService {
 		String jsonResponse = null;
 		final Gson gson = new Gson();
 		try {
-			if(StringUtils.isBlank(meetingId)||StringUtils.isBlank(clientId)||StringUtils.isBlank(sessionId)) {
+			if (StringUtils.isBlank(meetingId) || StringUtils.isBlank(clientId) || StringUtils.isBlank(sessionId)) {
 				logger.warn(ServiceUtil.MISSING_INPUT_ATTRIBUTES);
 				final GetECMeetingDetailsByIdOutputJson outputJson = new GetECMeetingDetailsByIdOutputJson();
 				final GetECMeetingDetailsByIdOutput output = new GetECMeetingDetailsByIdOutput();
@@ -1972,16 +1972,17 @@ public class WebService {
 				output.setStatus(status);
 				outputJson.setService(output);
 				jsonResponse = gson.toJson(outputJson);
-			}else {
+			} else {
 				final GetECMeetingDetailsByIdInput getECMeetingDetailsByIdInput = new GetECMeetingDetailsByIdInput();
 				getECMeetingDetailsByIdInput.setMeetingId(meetingId);
-				Map<String,String> headers = new HashMap<String,String>();
+				Map<String, String> headers = new HashMap<String, String>();
 				headers.put(ServiceUtil.X_CLIENTID, clientId);
 				headers.put(ServiceUtil.X_SESSIONID, sessionId);
 				final String input = gson.toJson(getECMeetingDetailsByIdInput);
-				logger.debug("jsonInput : "+input);
-				jsonResponse=callAPIManagerService(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID,input,VV_EC,ServiceUtil.POST,headers);
-				logger.debug("jsonResponse : "+jsonResponse);
+				logger.debug("jsonInput : " + input);
+				jsonResponse = callAPIManagerService(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID, input, VV_EC,
+						ServiceUtil.POST, headers);
+				logger.debug("jsonResponse : " + jsonResponse);
 			}
 		} catch (Exception e) {
 			logger.error("Web Service API error:" + e.getMessage(), e);
@@ -2152,4 +2153,8 @@ public class WebService {
 		return headers;
 	}
 	
+	public static void main(String[] args) {
+		Crypto crypto = new Crypto();
+		System.out.println(crypto.read("mUPPWvaOgQ1a0QV3AJVF+vMGmACt6YuuEp0MHh97jpw="));
+	}
 }

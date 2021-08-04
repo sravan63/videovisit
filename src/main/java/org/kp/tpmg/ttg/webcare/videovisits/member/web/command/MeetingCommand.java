@@ -1671,31 +1671,32 @@ public class MeetingCommand {
 	}
 	
 	public static String getECMeetingDetailsById(HttpServletRequest request) {
-		String result="";
-		String meetingId=request.getHeader(ServiceUtil.MEETING_ID);
+		logger.info(LOG_ENTERED);
+		String result = "";
+		String meetingId = request.getHeader(ServiceUtil.MEETING_ID);
 		GetECMeetingDetailsByIdOutputJson output = null;
 		String outputJson = null;
 		final Gson gson = new Gson();
 		try {
 			String clientId = WebUtil.getClientIdForECInstantJoin(request.getParameter(LOGIN_TYPE),
 					request.getParameter(ServiceUtil.IS_FROM_MOBILE_STRING));
-			outputJson = WebService.getECMeetingDetailsById(meetingId, clientId,request.getSession().getId());
-			if(StringUtils.isNotBlank(outputJson)) {
+			outputJson = WebService.getECMeetingDetailsById(meetingId, clientId, request.getSession().getId());
+			if (StringUtils.isNotBlank(outputJson)) {
 				output = gson.fromJson(outputJson, GetECMeetingDetailsByIdOutputJson.class);
 			}
-			if(output != null && output.getService() != null
+			if (output != null && output.getService() != null
 					&& StringUtils.isNotBlank(output.getService().getStatus().getCode())
 					&& StringUtils.isNotBlank(output.getService().getStatus().getMessage())) {
 				result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID,
-						output.getService().getStatus().getCode(),
-						output.getService().getStatus().getMessage(),
+						output.getService().getStatus().getCode(), output.getService().getStatus().getMessage(),
 						output.getService().getEnvelope() != null ? output.getService().getEnvelope() : null);
 			}
-		}catch(Exception e) {
-			logger.error("Error while getting EC meeting details for meeting id : "+meetingId,e);
+		} catch (Exception e) {
+			logger.error("Error while getting EC meeting details for meeting id : " + meetingId, e);
 		}
 		if (StringUtils.isBlank(result)) {
-			result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID, FAILURE_900, FAILURE, null);
+			result = WebUtil.prepareCommonOutputJson(ServiceUtil.GET_EC_MEETING_DETAILS_BY_ID, FAILURE_900, FAILURE,
+					null);
 		}
 		logger.info(LOG_EXITING);
 		return result;
