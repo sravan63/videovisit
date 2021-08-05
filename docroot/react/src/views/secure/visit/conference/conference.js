@@ -863,7 +863,6 @@ class Conference extends React.Component {
                     },1000);*/
                 }
             } else if(document.visibilityState === 'hidden') {
-                alert('do you want to continue?');
                 console.log("Document hidden now");
                 this.restartPexip = Date.now();
                 this.selfViewMedia && this.selfViewMedia.current.pause();
