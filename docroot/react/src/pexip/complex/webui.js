@@ -413,12 +413,12 @@ function handleError(reason) {
     } else if(rtc.error == 'NotAllowedError') {
         let isSetup = sessionStorage.getItem('isSetupPage');
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        if(isChrome && !isSetup) {
+        //if(isChrome && !isSetup) {
             if (!deniedPermission) {
                 deniedPermission = true;
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
             }
-        }
+        //}
     } else {
         if (video && !selfvideo.src && new Date() - startTime > 30000) {
             reason = "WebSocket connection error.";
@@ -429,6 +429,10 @@ function handleError(reason) {
 
 function doneSetup(url, pin_status, conference_extension) {
     log("info", "ReadyToConnect", "event: User is ready to join the conference.");
+    var isSetupPage = localStorage.getItem('isSetupPage');
+    if(isSetupPage){
+        MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
+    }
     if (url) {
         if (typeof(MediaStream) !== "undefined" && url instanceof MediaStream) {
             selfvideo.srcObject = url;
@@ -439,6 +443,7 @@ function doneSetup(url, pin_status, conference_extension) {
     console.log("PIN status: " + pin_status);
     console.log("IVR status: " + conference_extension);
     submitPinEntry();
+    
 }
 
 export function submitPinEntry() {

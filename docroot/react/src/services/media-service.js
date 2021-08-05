@@ -116,10 +116,10 @@ class MediaService extends React.Component {
           this.mediaData[media.kind].push(media);
         });
 
-
+        localStorage.removeItem('campermission');
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
         let isSetup = sessionStorage.getItem('isSetupPage');
-        if(isChrome && !Utilities.isMobileDevice() && !isSetup) {
+        if(isChrome && !Utilities.isMobileDevice()) {
             setTimeout(()=>{
                 this.cameraPermissions();
                 this.micPermissions();
@@ -159,17 +159,13 @@ class MediaService extends React.Component {
             alert("Unable to join: Looks like you're on a phone call, hangup and refresh page to join.");
         }
         if(browserInfo.isSafari || browserInfo.isFireFox) {
-            if (!isSetup){
-                if (error.name == 'NotAllowedError') {
+            if (error.name == 'NotAllowedError') {
                     MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
                 }
-            }
         }
-        if(!isSetup){
-            if (error.name && error.name == 'NotFoundError') {
+        if (error.name && error.name == 'NotFoundError') {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt-no-Devices');
-            }
-        }
+        }        
         console.log('Media Service - Error Occured :: '+error);
     }
 
@@ -304,12 +300,14 @@ class MediaService extends React.Component {
 
             if(permissionStatus.state == 'granted'){
                 self.state.cameraAllowed = true;
+                localStorage.setItem('campermission', true);
                 if(self.state.micAllowed==true) {
                     //MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, true);
                 }
             } else  if(permissionStatus.state == 'denied'){
                 self.state.camBlocked = true;
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
+                localStorage.setItem('campermission', true);
             }
             else {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');

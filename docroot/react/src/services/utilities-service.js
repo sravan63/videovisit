@@ -26,7 +26,7 @@ class UtilityService extends React.Component {
             isSafari: /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor),
             isFireFox: navigator.userAgent.toLowerCase().indexOf('firefox') > -1,
             isIE: /MSIE|Trident/.test(navigator.userAgent),
-            isEdge: /Edge/.test(navigator.userAgent),
+            isEdge: /Edge|Edg/.test(navigator.userAgent),
             isChrome:/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor),
             isAlliPadCheck:  /iPad/.test(navigator.userAgent) 
         }
@@ -117,7 +117,12 @@ class UtilityService extends React.Component {
                 isBrowserBlockError = true;
             } else {
                 var val = navigator.userAgent.split('Edge/');
-                var edge_ver = val[1].slice(0, 2);
+                var edge_ver = '';
+                if(val.length  == 1){
+                    edge_ver = Number(window.navigator.userAgent.match(/Edg\/(\d+)\./)[1], 10);                         
+                }else{
+                    edge_ver = val[1].slice(0, 2); 
+                }                
                 //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
                 if (edge_ver <= blockEdgeVersion) {
                     isBrowserBlockError = true;

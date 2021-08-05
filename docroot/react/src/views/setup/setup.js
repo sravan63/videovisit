@@ -7,7 +7,7 @@ import Popper from 'popper.js';
 
 import { range } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
-
+import VVModal from '../../modals/simple-modal/modal';
 import Header from '../../components/header/header';
 import Loader from '../../components/loader/loader';
 import BackendService from '../../services/backendService.js';
@@ -28,9 +28,36 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {}, userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:''};
+        this.state = { data: {}, userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:'',isChromecheck: false};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
+        this.getLanguage();
+        let data = UtilityService.getLang();
+        this.permissionRequiredContent = {
+            heading: data.errorCodes.CameraAccessPermissionMsg,
+            message: data.errorCodes.VisitStartNotificationMsg,
+            type: 'Permission'
+        };
+        this.noDevicesFound = {
+            heading: data.errorCodes.NoDeviceFoundHeader,
+            message: data.errorCodes.NoDeviceFoundMsg,
+            type: 'Permission'
+        };
+        this.permissionDeniedContent={
+            heading: data.errorCodes.CameraAccessBlockHeader,
+            message: data.errorCodes.CameraAccessBlockDefaultMsg,
+            type: 'Denied',
+        };
+        this.permissionDeniedForSafari={
+            heading: data.errorCodes.CameraAccessBlockHeader,
+            message: data.errorCodes.CameraAccessBlockSafariMsg,
+            type: 'Denied'
+        };
+        this.permissionDeniedMobile={
+            heading: data.errorCodes.CameraAccessBlockHeader,
+            message: data.errorCodes.CameraAccessBlockMobileMsg,
+            type: 'Denied'
+        }
     }
 
     componentDidMount() {
@@ -39,8 +66,7 @@ class Setup extends React.Component {
           this.getBrowserBlockInfo();
           return false;
         }
-        sessionStorage.setItem('isSetupPage', true);
-        MediaService.loadDeviceMediaData();
+        sessionStorage.setItem('isSetupPage', true);        
         navigator.mediaDevices.addEventListener('devicechange',()=>{
             MediaService.onDeviceChange();
         });
@@ -59,11 +85,43 @@ class Setup extends React.Component {
                 case GlobalConfig.LANGUAGE_CHANGED:
                     this.getLanguage();
                     break;
+                case GlobalConfig.MEDIA_PERMISSION:
+                    var modalData;
+                    var browserInfo = UtilityService.getBrowserInformation();
+                    if(message.data=='denied'){                        
+                        if (browserInfo.isSafari) {
+                            modalData = this.permissionDeniedForSafari;
+                        }
+                        else {
+                            if(UtilityService.isMobileDevice()){
+                                modalData = this.permissionDeniedMobile;
+                            }
+                            else {
+                                modalData = this.permissionDeniedContent;
+                            }
+                        }
+                    }
+                    else if(message.data==='prompt-no-Devices'){
+                        modalData = this.noDevicesFound;
+                        this.NoDevices = true;
+                    }
+                    else{
+                        modalData = this.permissionRequiredContent;
+                    }
+                    if (this.state.isChromecheck) {
+                        MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
+                        return;
+                    }
+                    if(!browserInfo.isChrome){
+                        MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
+                    }
+                    break;    
             }
         });
         
         this.getBrowserBlockInfo();
         this.getLanguage();
+        MediaService.loadDeviceMediaData();
     }
 
     componentWillUnmount() {
@@ -153,10 +211,18 @@ class Setup extends React.Component {
     }
 
     startTest() {
-        this.setState({ loadingSetup: true });
         var browserInfo = UtilityService.getBrowserInformation();
+        setTimeout(() => {
+           if(!localStorage.getItem('campermission')){
+                MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
+           }    
+        }, 2000);        
+        this.setState({ loadingSetup: true });        
         if(browserInfo.isSafari || browserInfo.isFireFox) {
           MediaService.stopAudio();
+        }
+        if(browserInfo.isChrome){
+            this.setState({ isChromecheck: true });
         }
         const data = this.state.constrains;
         localStorage.setItem('selectedPeripherals', JSON.stringify(data));
@@ -242,7 +308,7 @@ class Setup extends React.Component {
                       <p className="col-12 sub-header">{Details.videoVisits}</p>
                   </div>
                   </div>
-                 
+                  <VVModal />
                  <div className="setup-content">
                      <div className="row setup">
                      <BrowserBlock browserblockinfo = {this.state}/>
