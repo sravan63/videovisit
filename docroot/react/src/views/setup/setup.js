@@ -91,7 +91,7 @@ class Setup extends React.Component {
                     if(message.data=='denied'){                        
                         if (browserInfo.isSafari) {
                             modalData = this.permissionDeniedForSafari;
-                            browserInfo.isSafari = false;
+                            MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
                         }
                         else {
                             if(UtilityService.isMobileDevice()){
