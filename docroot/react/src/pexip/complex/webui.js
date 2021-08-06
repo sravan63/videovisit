@@ -413,7 +413,7 @@ function handleError(reason) {
     } else if(rtc.error == 'NotAllowedError') {
         let isSetup = sessionStorage.getItem('isSetupPage');
         let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        if(isChrome && isSetup) {
+        if(isChrome || isSetup) {
             if (!deniedPermission) {
                 deniedPermission = true;
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'denied');
