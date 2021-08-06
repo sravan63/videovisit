@@ -213,7 +213,7 @@ class Setup extends React.Component {
     startTest() {
         var browserInfo = UtilityService.getBrowserInformation();
         setTimeout(() => {
-           if(!localStorage.getItem('campermission')){
+           if(!localStorage.getItem('campermission') && !UtilityService.isMobileDevice()){
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
            }    
         }, 2000);        
