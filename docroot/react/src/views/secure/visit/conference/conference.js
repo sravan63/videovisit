@@ -724,7 +724,13 @@ class Conference extends React.Component {
     }
 
     deviceChanged() {
-        MediaService.onDeviceChange();
+        let camera = this.state.isRearCamera ? this.state.media["videoinput"][0].label : this.state.media["videoinput"][1].label;
+        
+        //DE22775
+        if(e && e.label!== camera.label) {
+            MediaService.onDeviceChange();
+        }
+
     }
 
     sendMediaStats(data) {
