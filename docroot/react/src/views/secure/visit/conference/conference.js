@@ -276,11 +276,11 @@ class Conference extends React.Component {
                     }
                     break;
                 case GlobalConfig.START_SCREENSHARE:
-                    this.setState({ showSharedContent: true });
+                    this.setState({ showSharedContent: true, videofeedflag : false });
                     this.setState({isPIPMode: this.setPIPMode()});
                     break;
                 case GlobalConfig.STOP_SCREENSHARE:
-                    this.setState({ showSharedContent: false });
+                    this.setState({ showSharedContent: false,  videofeedflag : true });
                     this.setState({isPIPMode: this.setPIPMode()});
                     break;
                 case GlobalConfig.MEDIA_DATA_READY:
@@ -1489,6 +1489,7 @@ class Conference extends React.Component {
 
     render() {
         let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
+        let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             if(window.matchMedia("(orientation: landscape)").matches){
@@ -1516,7 +1517,10 @@ class Conference extends React.Component {
         }
 
         streamContainer && (remoteStreamContainerClass = `${remoteStreamContainerClass } ${streamContainer}`);
-
+        let remoteContainerStyle={
+            display : this.state.videofeedflag ? 'block' : 'none'
+        };
+        multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -1553,7 +1557,7 @@ class Conference extends React.Component {
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                        <div className={remoteStreamContainerClass} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
+                                        <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
                                             <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>
