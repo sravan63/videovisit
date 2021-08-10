@@ -11,7 +11,7 @@ import Utilities from '../../services/utilities-service.js';
 class BrowserBlock extends React.Component {
     constructor(props) {
         super(props);    
-        this.state = { isRunningLate: false, runLateMeetingTime: '',isIOS:false,isMobile:false, runningLateUpdatedTime: '', meetingDetails: {}, participants: [] };
+        this.state = { isIOS:false,isMobile:false };
     }
 
     componentDidMount() {

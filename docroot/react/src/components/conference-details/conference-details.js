@@ -129,7 +129,8 @@ class ConferenceDetails extends React.Component {
         let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
         let guests = this.state.meetingDetails.caregiver ? this.state.meetingDetails.caregiver.slice(0) : [];
         var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
-        var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'))
+        var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
+        var isECInstantJoin = sessionStorage.getItem('isECInstantJoin');
         if(!isGuest){
             var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
@@ -137,7 +138,7 @@ class ConferenceDetails extends React.Component {
         
         var patientName =  this.state.meetingDetails.member.lastName.toLowerCase() + ', ' + this.state.meetingDetails.member.firstName.toLowerCase();
         var removeGuestName;
-        if(isGuest || patientName != memberName){
+        if(isECInstantJoin || isGuest || patientName != memberName){
             var participant =JSON.parse(localStorage.getItem('memberName'));
             if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
                         participant = participant.split('(')[0].trim();
@@ -392,12 +393,12 @@ class ConferenceDetails extends React.Component {
             console.log(' ====== ACTUAL NAME CHANGED TO :: '+name);
             if(!isGuest){
                 var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
-                var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
+                var memberName = JSON.parse(localStorage.getItem('memberName')); // udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
             }
             if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')).toLowerCase()) && isGuest ){
                 // For guests
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
-            }else if(!(data.display_name.toLowerCase() == memberName) && !isGuest){
+            }else if(!(data.display_name.toLowerCase() == memberName.toLowerCase()) && !isGuest){
                 // For actual members
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
             } else if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')).toLowerCase()) && sessionStorage.getItem('loggedAsDuplicateMember') ){

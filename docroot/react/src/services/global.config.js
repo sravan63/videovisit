@@ -48,7 +48,9 @@ const GlobalConfig = {
     LOGIN_TYPE: {
         TEMP: 'tempAccess',
         SSO: 'sso',
-        GUEST: 'guest'
+        GUEST: 'guest',
+        INSTANT: 'instant_join',
+        EC: 'ec_instant_join'
     },
     VIDEO_MUTE: 'Mute Video',
     VIDEO_UNMUTE: 'Unmute Video',
