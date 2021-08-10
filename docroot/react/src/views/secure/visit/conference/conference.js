@@ -823,11 +823,9 @@ class Conference extends React.Component {
     }
 
     handleVisibilityChange() {
-        window.location.reload();
-        console.log('refresh');
         if(Utilities.isMobileDevice()){
+            window.location.reload();
             let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
-
             if (document.visibilityState === 'visible') {
                 console.log("Document visible now");
                 if((Date.now() - this.restartPexip) > 20000){
