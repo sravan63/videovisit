@@ -2,6 +2,7 @@ import React from 'react';
 import Axios from 'axios-observable';
 import $ from 'jquery';
 import * as WebUI from '../pexip/complex/webui.js';
+import GlobalConfig from './global.config.js';
 
 
 class BackendService extends React.Component {
@@ -127,14 +128,19 @@ class BackendService extends React.Component {
             });
 
     }
-    launchMeetingForInstantMember(meetingId, displayName, isProxyMeeting, isFromMobile,mrn) {
+    launchMeetingForInstantMember(meetingId, displayName, isProxyMeeting, isFromMobile,mrn, isEC=false) {
         let headers = {
             megaMeetingDisplayName: displayName,
             isProxyMeeting:isProxyMeeting,
             mrn:mrn,
             "Content-Type": "application/json"
         };
-        Axios.post(this.state.basePath + '/videovisit/' + 'launchMeetingForInstantMember.json' + '?loginType=instant_join' + '&meetingId=' + meetingId + '&isFromMobile=' + isFromMobile, {}, { headers: headers }).subscribe((response) => {
+        const url = isEC ? 'launchMeetingForInstantMember.json' : 'launchMeetingForInstantMember.json';
+        let params = '?loginType=instant_join' + '&meetingId=' + meetingId + '&isFromMobile=' + isFromMobile;
+        if( isEC ){
+            params += '&status=J';
+        }
+        Axios.post(this.state.basePath + '/videovisit/' + url + params, {}, { headers: headers }).subscribe((response) => {
                 console.log("Patient joined from Instant join");
             },
             (err) => {
@@ -185,9 +191,14 @@ class BackendService extends React.Component {
       return  Axios.post(this.state.basePath + '/videovisit/' + 'endGuestSession.json' + '?loginType=guest' +  '&meetingCode=' + meetingCode + '&isFromBackButton=' + isFromBackButton, {}, { headers: headers });
     }
 
-    quitMeeting(meetingId, isProxyMeeting, headers, loginType, isFromBackButton) {
-
-        return Axios.post(this.state.basePath + '/videovisit/' + 'quitMeeting.json' + '?loginType=' + loginType + '&meetingId=' + meetingId + '&isProxyMeeting=' + isProxyMeeting + '&isFromBackButton=' + isFromBackButton, {}, { headers: headers });
+    quitMeeting(meetingId, isProxyMeeting, headers, loginType, isFromBackButton ) {
+        const isEC = loginType == GlobalConfig.LOGIN_TYPE.EC;
+        const url = isEC ? 'updateGuestParticipant.json' : 'quitMeeting.json';
+        let params = '?loginType=' + loginType + '&meetingId=' + meetingId + '&isProxyMeeting=' + isProxyMeeting + '&isFromBackButton=' + isFromBackButton;
+        if(isEC){
+            params += '&status=L';
+        }
+        return Axios.post(this.state.basePath + '/videovisit/' + url + params, {}, { headers: headers });
     }
 
     storeMediaStats(meetingId, meetingVmr, participantName, callUUID) {
@@ -209,11 +220,14 @@ class BackendService extends React.Component {
             });
     }
 
-    validateInstantJoin(isFromMobile,data){
+    validateInstantJoin(isFromMobile,data,isInstantJoin=true){
         let headers ={
             authtoken:data
         };
-        return Axios.post(this.state.basePath + '/videovisit/' + 'authorizeVVCode.json' + '?loginType=instant_join' + '&isFromMobile=' + isFromMobile, {},{ headers: headers });
+        let loginType = isInstantJoin ? 'instant_join' : 'ec_instant_join';
+        let path = isInstantJoin ? 'authorizeVVCode.json' : 'authorizeECCode.json';
+        return Axios.post(this.state.basePath + '/videovisit/' + path + '?loginType='+ loginType + '&isFromMobile=' + isFromMobile, {},{ headers: headers });
+        
     }
 
     getSurveyDetails(meetingId, userType, userValue) {

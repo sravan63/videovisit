@@ -131,53 +131,25 @@ class Conference extends React.Component {
             //this.setState({ showLoader: false });
             if (localStorage.getItem('isGuest')) {
                 this.state.isGuest = true;
-                this.state.loginType = "guest";
+                this.state.loginType = GlobalConfig.LOGIN_TYPE.GUEST;
                 sessionStorage.removeItem('guestLeave');
             }
             this.state.meetingId = JSON.parse(localStorage.getItem('meetingId'));
             Utilities.logMeetingStartTime(this.state.meetingId);
             this.surveyAutoCloseTime = Utilities.getMeetingFeedbackTimeout();
-            var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
-            var isInstantJoin = sessionStorage.getItem('isInstantJoin');
-            if (userDetails != null) {
-                this.state.meetingCode = this.state.isGuest ? userDetails.meetingCode : null;
-                if(this.state.isGuest == true){
-                    this.state.loginType = "guest";
-                }
-                else if(isInstantJoin){
-                    // loginType
-                    this.state.loginType='instant_join';
-                }
-                else{
-                    this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO
-                }
-                this.state.accessToken = userDetails.ssoSession;
-                this.state.userDetails = userDetails;
-            }
-            this.getInMeetingDetails();
-            this.getRunningLateInfo();
+            this._setUserType();
+            this._getInMeetingDetails();
+            this._getRunningLateInfo();
             this.runningLate = setInterval(() => {
-                this.getRunningLateInfo();
-            }, GlobalConfig.RUNNING_LATE_TIMER);
-            var isTempAccess = this.state.userDetails.isTempAccess;
-            if(localStorage.getItem('keepAlive') && !isTempAccess && !isInstantJoin){
-            var keepAliveUrl = localStorage.getItem('keepAlive');
-            BackendService.keepAliveCookie(keepAliveUrl);
-            }
-            if(!isTempAccess && !isInstantJoin){
-            this.keepAlive = setInterval(() => {
-                var keepAliveUrl = localStorage.getItem('keepAlive');
-                BackendService.keepAliveCookie(keepAliveUrl);
-            }, 1200000);
-            }
-
+                this._getRunningLateInfo();
+            }, GlobalConfig.RUNNING_LATE_TIMER );
+            this._keepAlive();
         } else {
             if(sessionStorage.getItem('guestCode')){
                 var meetingCode = JSON.parse(sessionStorage.getItem('guestCode'));
                 this.props.history.push('/guestlogin?meetingcode=' + meetingCode);
-            }
-            else{
-            this.props.history.push(GlobalConfig.LOGIN_URL);
+            } else{
+                this.props.history.push(GlobalConfig.LOGIN_URL);
             }
         }
 
@@ -276,11 +248,11 @@ class Conference extends React.Component {
                     }
                     break;
                 case GlobalConfig.START_SCREENSHARE:
-                    this.setState({ showSharedContent: true });
+                    this.setState({ showSharedContent: true, videofeedflag : false });
                     this.setState({isPIPMode: this.setPIPMode()});
                     break;
                 case GlobalConfig.STOP_SCREENSHARE:
-                    this.setState({ showSharedContent: false });
+                    this.setState({ showSharedContent: false,  videofeedflag : true });
                     this.setState({isPIPMode: this.setPIPMode()});
                     break;
                 case GlobalConfig.MEDIA_DATA_READY:
@@ -724,7 +696,13 @@ class Conference extends React.Component {
     }
 
     deviceChanged() {
-        MediaService.onDeviceChange();
+        let camera = this.state.isRearCamera ? this.state.media["videoinput"][0].label : this.state.media["videoinput"][1].label;
+        
+        //DE22775
+        if(e && e.label!== camera.label) {
+            MediaService.onDeviceChange();
+        }
+
     }
 
     sendMediaStats(data) {
@@ -952,28 +930,81 @@ class Conference extends React.Component {
         }
     }
 
-    getInMeetingDetails() {
-        var meetingId = this.state.meetingId,
-            loginType = this.state.loginType,
-            url = "meetingDetails.json";
-        BackendService.getMeetingDetails(url, meetingId, loginType).subscribe((response) => {
-            if (response.data && response.data.statusCode == '200') {
-                var data = response.data.data;
-                this.setState({ meetingDetails: data });
-                MediaService.loadDeviceMediaData();
-                var turnServerInfo = data.vendorConfig;
-                sessionStorage.setItem('turnServer', JSON.stringify(turnServerInfo));
-
-            } else {
-                // Do nothing
-            }
-        }, (err) => {
-            console.log("Error");
-        });
+    _getInMeetingDetails() {
+        if( Utilities.getECVisitFlag() ){
+            const ecDetails = Utilities.getECVisitDetails();
+            var data = Utilities.getVisitDetails(ecDetails, 'ec');
+            this._initiateVisit(data);
+        } else {
+            var meetingId = this.state.meetingId,
+                loginType = this.state.loginType,
+                url = this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ? "getECMeetingDetails.json" : "meetingDetails.json";
+            BackendService.getMeetingDetails(url, meetingId, loginType).subscribe((response) => {
+                if (response.data && response.data.statusCode == '200') {
+                    const user = this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ? "ec" : "regular";
+                    var data = Utilities.getVisitDetails(response.data.data, user);
+                    this._initiateVisit(data);
+                } else {
+                    // Do nothing
+                    if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
+                        sessionStorage.removetItem('isECInstantJoin');
+                        window.location.reload();
+                    }
+                }
+            }, (err) => {
+                console.log("Error");
+                if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
+                    sessionStorage.removetItem('isECInstantJoin');
+                    window.location.reload();
+                }
+            });
+        }
 
     }
 
-    getRunningLateInfo() {
+    _initiateVisit(data){
+        this.setState({ meetingDetails: data });
+        MediaService.loadDeviceMediaData();
+        var turnServerInfo = data.vendorConfig;
+        sessionStorage.setItem('turnServer', JSON.stringify(turnServerInfo));
+    }
+
+    // Setting up the user details, sso session & login type
+    _setUserType(){
+        var userDetails = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
+        var isInstantJoin = sessionStorage.getItem('isInstantJoin');
+        var isECInstantJoin = sessionStorage.getItem('isECInstantJoin');
+        if (userDetails != null) {
+            this.state.meetingCode = this.state.isGuest ? userDetails.meetingCode : null;
+            if(this.state.isGuest == true){
+                this.state.loginType = GlobalConfig.LOGIN_TYPE.GUEST;
+            } else if( isInstantJoin ){
+                this.state.loginType = GlobalConfig.LOGIN_TYPE.INSTANT;
+            } else if( isECInstantJoin ){
+                this.state.loginType = GlobalConfig.LOGIN_TYPE.EC;
+            } else {
+                this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO
+            }
+            this.state.accessToken = userDetails.ssoSession;
+            this.state.userDetails = userDetails;
+        }
+    }
+
+    _keepAlive(){
+        var isTempAccess = this.state.userDetails.isTempAccess;
+        if(localStorage.getItem('keepAlive') && this.state.loginType == GlobalConfig.LOGIN_TYPE.SSO ){
+            var keepAliveUrl = localStorage.getItem('keepAlive');
+            BackendService.keepAliveCookie(keepAliveUrl);
+        }
+        if( this.state.loginType == GlobalConfig.LOGIN_TYPE.SSO ){
+            this.keepAlive = setInterval(() => {
+                var keepAliveUrl = localStorage.getItem('keepAlive');
+                BackendService.keepAliveCookie(keepAliveUrl);
+            }, 1200000);
+        }
+    }
+
+    _getRunningLateInfo() {
         if(this.state.hostavail == true){
             return;
         }
@@ -1061,7 +1092,7 @@ class Conference extends React.Component {
         // clear on component unmount
         if(this.NoDevices){
             this.subscription.unsubscribe();
-            this.goTo();
+            this._goTo();
             return;
         }
         MediaService.stopAudio();
@@ -1130,7 +1161,7 @@ class Conference extends React.Component {
                 this.surveyTimer = setTimeout(() => {
                     MessageService.sendMessage(GlobalConfig.CLOSE_SURVEY_MODAL_AUTOMATICALLY, null);
                     this.surveyInprogress = false;
-                    this.goTo();
+                    this._goTo();
                }, this.surveyAutoCloseTime);
             }
         }
@@ -1157,7 +1188,7 @@ class Conference extends React.Component {
                 loginType = this.state.loginType;
             if (loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                 headers.authtoken = this.state.accessToken;
-            } else if(loginType=='instant_join'){
+            } else if( loginType == GlobalConfig.LOGIN_TYPE.INSTANT || loginType == GlobalConfig.LOGIN_TYPE.EC ){
                 headers.authtoken='';
             } else{
                 headers.ssoSession = this.state.accessToken;
@@ -1180,11 +1211,15 @@ class Conference extends React.Component {
                     if( this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP ){
                         this.resetSessionToken(response.headers.authtoken);
                     }
-                    this.goTo();
+                    this._goTo();
                 }
                 else{
                     if(!this.surveyInprogress){
-                        this.props.history.push(GlobalConfig.LOGIN_URL);
+                        if( loginType == GlobalConfig.LOGIN_TYPE.EC ){
+                            this._goTo();
+                        } else {
+                            this.props.history.push(GlobalConfig.LOGIN_URL);
+                        }
                     }
                 }
             }, (err) => {
@@ -1192,7 +1227,11 @@ class Conference extends React.Component {
                 this.quitMeetingCalled = true;
                 if(!this.surveyInprogress){
                     Utilities.setPromotionFlag(false);
-                    this.props.history.push(GlobalConfig.LOGIN_URL);
+                    if(loginType == GlobalConfig.LOGIN_TYPE.EC){
+                        this._goTo();
+                    } else {
+                        this.props.history.push(GlobalConfig.LOGIN_URL);
+                    }
                 }
             });
 
@@ -1205,10 +1244,10 @@ class Conference extends React.Component {
             var backButton = isFromBackButton ? isFromBackButton : false;
             BackendService.guestLogout(this.state.meetingCode,headers,backButton).subscribe((response) => {
                 console.log("Success");
-                this.goTo();
+                this._goTo();
             }, (err) => {
                 console.log("Error");
-                this.goTo();
+                this._goTo();
             });
         }
         localStorage.removeItem('selectedPeripherals');
@@ -1313,25 +1352,25 @@ class Conference extends React.Component {
                 } else {
                     this.surveyInprogress = false;
                     if( this.quitMeetingCalled ){
-                        this.goTo();
+                        this._goTo();
                     }
                 }
             } else {
                 this.surveyInprogress = false;
                 if( this.quitMeetingCalled ){
-                    this.goTo();
+                    this._goTo();
                 }
             }
         }, (err) => {
             console.log("Error");
             this.surveyInprogress = false;
             if( this.quitMeetingCalled ){
-                this.goTo();
+                this._goTo();
             }
         });
     }
 
-    goTo() {
+    _goTo() {
         if(this.surveyInprogress){
             return;
         }
@@ -1339,12 +1378,14 @@ class Conference extends React.Component {
             if (this.state.loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
                 Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
-            } else if (this.state.loginType == 'instant_join') {
+            } else if ( this.state.loginType == GlobalConfig.LOGIN_TYPE.INSTANT ) {
                 this.props.history.push(GlobalConfig.LOGIN_URL);
                 history.pushState(null, null, location.href);
                 window.onpopstate = function(event) {
                     history.go(1);
                 };
+            } else if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
+                window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
             } else {
                 Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
@@ -1359,7 +1400,7 @@ class Conference extends React.Component {
     submitSurvey(data){
         if(!data){
             this.surveyInprogress = false;
-            this.goTo();
+            this._goTo();
         } else {
             let uValue;
             let uType;
@@ -1381,11 +1422,11 @@ class Conference extends React.Component {
             BackendService.submitSurvey( survey ).subscribe((response) => {
                 console.log("Success");
                 this.surveyInprogress = false;
-                this.goTo();
+                this._goTo();
             }, (err) => {
                 console.log("Error");
                 this.surveyInprogress = false;
-                this.goTo();
+                this._goTo();
             });
         }
 
@@ -1487,6 +1528,7 @@ class Conference extends React.Component {
 
     render() {
         let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
+        let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             if(window.matchMedia("(orientation: landscape)").matches){
@@ -1514,7 +1556,10 @@ class Conference extends React.Component {
         }
 
         streamContainer && (remoteStreamContainerClass = `${remoteStreamContainerClass } ${streamContainer}`);
-
+        let remoteContainerStyle={
+            display : this.state.videofeedflag ? 'block' : 'none'
+        };
+        multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -1551,7 +1596,7 @@ class Conference extends React.Component {
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                        <div className={remoteStreamContainerClass} style={{display: this.state.videofeedflag ? 'block' : 'none'}}>
+                                        <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
                                             <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>

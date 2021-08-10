@@ -754,6 +754,7 @@ function connected(url) {
             var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
             var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
             var isInstantJoin = sessionStorage.getItem('isInstantJoin');
+            var isECInstantJoin = sessionStorage.getItem('isECInstantJoin');
             var mrn = udata.mrn;
             var inMeetingDisplayName = JSON.parse(localStorage.getItem('memberName'));
             var inAppAccess = UtilityService.getInAppAccessFlag();
@@ -763,6 +764,8 @@ function connected(url) {
             else {
                 if(isInstantJoin){
                     BackendService.launchMeetingForInstantMember(meetingId,inMeetingDisplayName,isProxyMeeting,isMobile,mrn);
+                } else if(isECInstantJoin){
+                    BackendService.launchMeetingForInstantMember(meetingId,inMeetingDisplayName,isProxyMeeting,isMobile,mrn, true);
                 }
                 var memberName;
                 if(isProxyMeeting == 'Y'){
@@ -814,7 +817,6 @@ export function switchDevices(constrain, device = null) {
     }
     rtc.renegotiate();
 }
-
 
 export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj, config) {
     console.log("inside webui initialise");

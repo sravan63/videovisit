@@ -14,6 +14,8 @@ class UtilityService extends React.Component {
         this.showPromotion = false;
         this.minTime = null;
         this.meetingBeginsAt = null;
+        this.isECVisit = false;
+        this.ecData = null;
         this.surveyTimeout = null;
         this.lang='';
         this.validateBrowser = this.validateBrowser.bind(this);
@@ -386,6 +388,60 @@ class UtilityService extends React.Component {
         var Exp = /((^[0-9=+-]+[a-z=+-]+)|(^[a-z=+-]+[0-9=+-]+))+[0-9=+-a-z=+-]+$/i;
         var isValid = Exp.test(num);
         return isValid;
+    }
+
+    setECVisitFlag(flag){
+        this.isECVisit = flag;
+    }
+
+    getECVisitFlag(){
+        return this.isECVisit;
+    }
+
+    setECVisitDetails(ec){
+        this.ecData = ec;
+    }
+
+    getECVisitDetails(){
+        return this.ecData;
+    }
+
+    getVisitDetails(data, type = 'regular'){
+        const meetingDetails = {};
+        const mData = (type == 'regular') ? data : data.meeting;
+        meetingDetails.meetingId = mData.meetingId;
+        meetingDetails.meetingTime = mData.meetingTime;
+        meetingDetails.roomJoinUrl = mData.roomJoinUrl;
+        meetingDetails.meetingVendorId = (type == 'regular') ? mData.meetingVendorId : mData.meetingVMR;
+        meetingDetails.vendorGuestPin = (type == 'regular') ? mData.vendorGuestPin : mData.confGuestPin;
+        meetingDetails.vendorConfig = (type == 'regular') ? mData.vendorConfig : mData.platformConfig;
+        meetingDetails.sipParticipants = mData.sipParticipants;
+        meetingDetails.participant = type == 'regular' ? mData.participant : mData.participants;
+        meetingDetails.caregiver = type == 'regular' ? mData.caregiver : mData.caregivers;
+        const hprop = type == 'regular' ? 'host' : 'caller';
+        meetingDetails.host = {};
+        ['firstName', 'lastName', 'NUID', 'title', 'facilityName', 'departmentName'].map((prop)=>{
+            meetingDetails.host[prop] = mData[hprop][prop];
+        });
+        meetingDetails.member = {};
+        ['firstName', 'lastName', 'inMeetingDisplayName', 'mrn'].map((prop)=>{
+            let value = (type == 'regular') ? mData['member'][prop] : data[prop];
+            value = (prop == 'inMeetingDisplayName' && type !== 'regular') ? meetingDetails.member['lastName'] + ', ' + meetingDetails.member['firstName'] : value;
+            meetingDetails.member[prop] = value;
+        });
+        if( type !== 'regular' ){
+            this.parseInstantGuestName(meetingDetails.caregiver, meetingDetails.member);
+        }
+        return meetingDetails;
+    }
+
+    parseInstantGuestName(guests, member){
+        guests.map((g)=>{
+            if( g.lastName == member.lastName && g.firstName == member.firstName ){
+                const contact = g.emailAddress ? g.emailAddress : g.phoneNumber;
+                member.inMeetingDisplayName = member.inMeetingDisplayName + ', ('+contact+')';
+            }
+        });
     }
 
 }
