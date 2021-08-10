@@ -830,7 +830,6 @@ class Conference extends React.Component {
 
             if (document.visibilityState === 'visible') {
                 console.log("Document visible now");
-                window.location.reload();
                 if((Date.now() - this.restartPexip) > 20000){
                     window.location.reload();
                 } else {
@@ -1288,7 +1287,6 @@ class Conference extends React.Component {
     }
 
     refreshPage() {
-        alert('Hey');
         window.location.reload(false);
     }
 
