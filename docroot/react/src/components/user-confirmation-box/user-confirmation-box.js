@@ -33,7 +33,7 @@ class UserConfirmationBox extends Component {
           <div className="row instant-help-link-container">
           {this.props.conf.data.invalidSession ? 
               (<div className="row error-text">
-                  <p className="col-sm-12">{Details.errorCodes.ErrorInvalidLink}</p>
+                  <p className="col-sm-12">{Details.errorCodes.ECErrorInvalidLink}</p>
               </div>)
           : ('')}
             <div className="col-lg-12 col-md-12 help-icon text-right p-0">

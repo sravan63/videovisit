@@ -94,6 +94,7 @@
       "ErrorPatientInfo":"Incorrect patient information",
       "ErrorInvalidUSerID":"Invalid User ID / Password",
       "ErrorInvalidLink":"Invalid link. Sign in to join your visit.",
+      "ECErrorInvalidLink": "Invalid link.",
       "ErrorVisitUnavailable":"The video visit you’re trying to join isn’t currently available",
       "ErrorNoMatchingMsg":"No matching patient found. Please try again.",
       "CameraAccessPermissionMsg":"Camera and Microphone Access Required",

@@ -94,6 +94,7 @@
       "ErrorPatientInfo":"Información incorrecta del paciente",
       "ErrorInvalidUSerID":"Nombre de usuario/contraseña inválido",
       "ErrorInvalidLink":"Enlace inválido. Inicie sesión para ingresar a su consulta.",
+      "ECErrorInvalidLink": "Enlace inválido.",
       "ErrorVisitUnavailable":"La videoconsulta a la que está intentando ingresar no está disponible",
       "ErrorNoMatchingMsg":"No se encontró tal paciente. Vuelva a intentarlo.",
       "CameraAccessPermissionMsg":"Necesita acceso a la cámara y al micrófono",

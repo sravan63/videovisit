@@ -94,6 +94,7 @@
       "ErrorPatientInfo":"患者資訊不正確",
       "ErrorInvalidUSerID":"無效使用者ID/密碼",
       "ErrorInvalidLink":"無效鏈接。請登入以加入就診。",
+      "ECErrorInvalidLink": "無效鏈接。",
       "ErrorVisitUnavailable":"你要加入的視訊就診目前無法連接",
       "ErrorNoMatchingMsg":"未找到匹配的患者。請重試。",
       "CameraAccessPermissionMsg":"需要能夠使用相機和麥克風",
