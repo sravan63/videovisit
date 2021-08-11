@@ -149,7 +149,7 @@ class Visit extends React.Component {
     _launchInstantJoin(join_type){
         var browserInfo = Utilities.getBrowserInformation();
         if( browserInfo.isIE ) {
-            if( this.state.isECInstantJoin ){
+            if( join_type == 'ec_instant_join' ){
                 this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false });
             } else {
                 this._unAuthorizedAccess();
@@ -157,9 +157,7 @@ class Visit extends React.Component {
             return;
         }
         this._getBrowserBlockInfo();
-        if( this.state.isBrowserBlockError ){
-            return;
-        }
+        
         const params = window.location.href.split('?')[1];
         const urlParams = new URLSearchParams( params );
         let isInstantJoin;
@@ -172,9 +170,9 @@ class Visit extends React.Component {
             tokenValue  = urlParams.has('tk') && urlParams.get('tk');
         }
         let isMobile = Utilities.isMobileDevice();
-        if(isInstantJoin && tokenValue!=''){
+        if(isInstantJoin && tokenValue!='' && !this.state.isBrowserBlockError ){
             BackendService.validateInstantJoin( isMobile, tokenValue, this.state.isInstantJoin ).subscribe((response) => {
-                if (response.data && response.status == '200') {
+                if (response.data && response.status == '200' && !this.state.isBrowserBlockError ) {
                     if (response.data.data != null && response.data.data != '') {
                         let userData = response.data.data;
                         let fullName = userData.firstName + " " + userData.lastName;
@@ -206,7 +204,11 @@ class Visit extends React.Component {
 
     _unAuthorizedAccess(){
         if( this.state.isECInstantJoin ){
-            this.setState({ userConfirmBox: true, isBrowserBlockError : false, invalidSession: true });
+            if(this.state.isBrowserBlockError){
+                this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false }); 
+            } else {
+                this.setState({ userConfirmBox: true, isBrowserBlockError : false, invalidSession: true });
+            }
             // this.setState({userConfirmBox: true, displayName:"Joe Mama"});
         } else if( this.state.isInstantJoin ){
             this.props.history.push({

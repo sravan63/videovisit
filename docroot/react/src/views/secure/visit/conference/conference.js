@@ -1418,6 +1418,7 @@ class Conference extends React.Component {
                     history.go(1);
                 };
             } else if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
+                sessionStorage.clear();
                 window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
             } else {
                 Utilities.setPromotionFlag(true);
