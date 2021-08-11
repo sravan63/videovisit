@@ -824,30 +824,38 @@ class Conference extends React.Component {
 
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
-            // window.location.reload();
-            let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
+            // reloads the page only when the visibility state is visible
             if (document.visibilityState === 'visible') {
                 window.location.reload();
-                console.log("Document visible now");
-                if((Date.now() - this.restartPexip) > 20000){
-                    window.location.reload();
-                } else {
-                    this.selfViewMedia && this.selfViewMedia.current.play();
-                    this.remoteFeedMedia && this.remoteFeedMedia.current.play();
-                    presentationView && presentationView.play();
-                    /*WebUI.pexipDisconnect();
-                    MediaService.stopAudio();
-                    setTimeout(()=>{
-                        MediaService.loadDeviceMediaData();
-                    },1000);*/
-                }
-            } else if(document.visibilityState === 'hidden') {
-                console.log("Document hidden now");
-                this.restartPexip = Date.now();
-                this.selfViewMedia && this.selfViewMedia.current.pause();
-                this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
-                presentationView && presentationView.pause();
             }
+
+        /** Revertible code */
+        /** Play/Pause the selfview when the visit on browser is changed from foreground to background and brought it back to foreground. */
+        /** Commenting the code till iOS versiom resolves this glitch in its future releases */
+        
+        // let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
+            // if (document.visibilityState === 'visible') {
+            //     window.location.reload();
+            //     console.log("Document visible now");
+            //     if((Date.now() - this.restartPexip) > 20000){
+            //         window.location.reload();
+            //     } else {
+            //         this.selfViewMedia && this.selfViewMedia.current.play();
+            //         this.remoteFeedMedia && this.remoteFeedMedia.current.play();
+            //         presentationView && presentationView.play();
+            //         /*WebUI.pexipDisconnect();
+            //         MediaService.stopAudio();
+            //         setTimeout(()=>{
+            //             MediaService.loadDeviceMediaData();
+            //         },1000);*/
+            //     }
+            // } else if(document.visibilityState === 'hidden') {
+            //     console.log("Document hidden now");
+            //     this.restartPexip = Date.now();
+            //     this.selfViewMedia && this.selfViewMedia.current.pause();
+            //     this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
+            //     presentationView && presentationView.pause();
+            // } 
         }
     }
 
