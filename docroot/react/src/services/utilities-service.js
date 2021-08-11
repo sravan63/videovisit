@@ -421,7 +421,8 @@ class UtilityService extends React.Component {
         const hprop = type == 'regular' ? 'host' : 'caller';
         meetingDetails.host = {};
         ['firstName', 'lastName', 'NUID', 'title', 'facilityName', 'departmentName'].map((prop)=>{
-            meetingDetails.host[prop] = mData[hprop][prop];
+            const cprop = (type == !'regular' && prop == 'NUID') ? 'id' : prop;
+            meetingDetails.host[prop] = mData[hprop][cprop];
         });
         meetingDetails.member = {};
         ['firstName', 'lastName', 'inMeetingDisplayName', 'mrn'].map((prop)=>{
@@ -440,6 +441,7 @@ class UtilityService extends React.Component {
             if( g.lastName == member.lastName && g.firstName == member.firstName ){
                 const contact = g.emailAddress ? g.emailAddress : g.phoneNumber;
                 member.inMeetingDisplayName = member.inMeetingDisplayName + ', ('+contact+')';
+                member.careGiverId = g.careGiverId;
             }
         });
     }

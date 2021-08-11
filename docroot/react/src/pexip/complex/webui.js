@@ -762,11 +762,8 @@ function connected(url) {
                 JoinLeaveMobileCall("J");
             }
             else {
-                if(isInstantJoin){
-                    BackendService.launchMeetingForInstantMember(meetingId,inMeetingDisplayName,isProxyMeeting,isMobile,mrn);
-                } else if(isECInstantJoin){
-                    BackendService.launchMeetingForInstantMember(meetingId,inMeetingDisplayName,isProxyMeeting,isMobile,mrn, true);
-                }
+                const JLData = {meetingId: meetingId,inMeetingDisplayName: inMeetingDisplayName,isProxyMeeting: isProxyMeeting,isMobile: isMobile,mrn: mrn, type:'J'}
+                MessageService.sendMessage(GlobalConfig.SEND_JOIN_LEAVE_STATUS, JLData);
                 var memberName;
                 if(isProxyMeeting == 'Y'){
                     memberName = udata.lastName +', '+ udata.firstName;                

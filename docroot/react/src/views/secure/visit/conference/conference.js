@@ -370,6 +370,21 @@ class Conference extends React.Component {
                         }
                     }
                 break;
+                case GlobalConfig.SEND_JOIN_LEAVE_STATUS:
+                    if(this.state.loginType == GlobalConfig.LOGIN_TYPE.INSTANT){
+                        const jlData = message.data;
+                        BackendService.launchMeetingForInstantMember( jlData );
+                    } else if ( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
+                        const ecData = {};
+                        ecData.meetingId = this.state.meetingDetails.meetingId;
+                        ecData.joinLeaveStatus = 'J';
+                        ecData.firstName = this.state.meetingDetails.member.firstName;
+                        ecData.lastName = this.state.meetingDetails.member.lastName;
+                        ecData.careGiverId = this.state.meetingDetails.member.careGiverId;
+                        ecData.isFromMobile = Utilities.isMobileDevice();
+                        BackendService.launchMeetingForInstantMember(ecData, true);
+                    }
+                break;
             }
 
         });
@@ -944,11 +959,17 @@ class Conference extends React.Component {
         } else {
             var meetingId = this.state.meetingId,
                 loginType = this.state.loginType,
-                url = this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ? "getECMeetingDetails.json" : "meetingDetails.json";
-            BackendService.getMeetingDetails(url, meetingId, loginType).subscribe((response) => {
+                url = this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ? "getECMeetingDetailsById.json" : "meetingDetails.json",
+                isFromMobile = Utilities.isMobileDevice();
+            BackendService.getMeetingDetails(url, meetingId, loginType, isFromMobile).subscribe((response) => {
                 if (response.data && response.data.statusCode == '200') {
                     const user = this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ? "ec" : "regular";
-                    var data = Utilities.getVisitDetails(response.data.data, user);
+                    const mData = response.data.data;
+                    if( user == 'ec' ){
+                        mData.firstName = this.state.userDetails.firstName;
+                        mData.lastName = this.state.userDetails.lastName;
+                    }
+                    var data = Utilities.getVisitDetails(mData, user);
                     this._initiateVisit(data);
                 } else {
                     // Do nothing
@@ -1196,21 +1217,28 @@ class Conference extends React.Component {
                 headers.authtoken = this.state.accessToken;
             } else if( loginType == GlobalConfig.LOGIN_TYPE.INSTANT || loginType == GlobalConfig.LOGIN_TYPE.EC ){
                 headers.authtoken='';
+                if( loginType == GlobalConfig.LOGIN_TYPE.EC ){
+                    headers.meetingId = this.state.meetingDetails.meetingId;
+                    headers.joinLeaveStatus = 'L';
+                    headers.firstName = this.state.meetingDetails.member.firstName;
+                    headers.lastName = this.state.meetingDetails.member.lastName;
+                    headers.careGiverId = this.state.meetingDetails.member.careGiverId;
+                }
             } else{
                 headers.ssoSession = this.state.accessToken;
             }
             headers.mrn = this.state.userDetails.mrn;
             var meetingId = this.state.meetingDetails.meetingId,
                 isProxyMeeting = this.state.isProxyMeeting,
-                backButton = isFromBackButton ? isFromBackButton : false;
+                backButton = isFromBackButton ? isFromBackButton : false,
+                isFromMobile = Utilities.isMobileDevice();
             WebUI.pexipDisconnect();
             if(isProxyMeeting == 'Y'){
                 headers.memberName = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;
-            }
-            else{
+            } else {
                 headers.memberName = Utilities.formatStringTo(this.state.meetingDetails.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
             }
-            BackendService.quitMeeting(meetingId, isProxyMeeting, headers, loginType, backButton).subscribe((response) => {
+            BackendService.quitMeeting(meetingId, isProxyMeeting, headers, loginType, backButton, isFromMobile).subscribe((response) => {
                 console.log("Success");
                 this.quitMeetingCalled = true;
                 if (response.data && response.data.statusCode == '200') {

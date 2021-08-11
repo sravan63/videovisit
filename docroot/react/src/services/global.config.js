@@ -109,6 +109,7 @@ const GlobalConfig = {
     FAILED_MID_WAY: 'CallFailedMidway',
     CALL_CONNECTED: 'CallConnected',
     CALL_DISCONNECTED: 'CallDisconnected',
+    SEND_JOIN_LEAVE_STATUS: 'send join leave status',
     LANGUAGE_ENG:'english',
     LANGUAGE_SPANISH:'spanish',
     LANGUAGE_CHINESE:'chinese',

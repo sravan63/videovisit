@@ -68,8 +68,13 @@ class BackendService extends React.Component {
     getSetupMeeting(url) {
         return Axios.post(this.state.basePath + '/videovisit/' + url);
     }
-    getMeetingDetails(url, meetingId, loginType) {
-        return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType, {}, );
+    getMeetingDetails(url, meetingId, loginType, isFromMobile) {
+        if( loginType == GlobalConfig.LOGIN_TYPE.EC ){
+            const headers = { meetingId: meetingId };
+            return Axios.post(this.state.basePath + '/videovisit/' + url + '?loginType=' + loginType + '&isFromMobile=' + isFromMobile, {}, { headers: headers} );
+        } else {
+            return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType, {} );
+        }
     }
     getRunningLateInfo(url, meetingId, loginType) {
         return Axios.post(this.state.basePath + '/videovisit/' + url + '?meetingId=' + meetingId + '&loginType=' + loginType, {}, );
@@ -128,17 +133,27 @@ class BackendService extends React.Component {
             });
 
     }
-    launchMeetingForInstantMember(meetingId, displayName, isProxyMeeting, isFromMobile,mrn, isEC=false) {
-        let headers = {
-            megaMeetingDisplayName: displayName,
-            isProxyMeeting:isProxyMeeting,
-            mrn:mrn,
-            "Content-Type": "application/json"
-        };
-        const url = isEC ? 'launchMeetingForInstantMember.json' : 'launchMeetingForInstantMember.json';
-        let params = '?loginType=instant_join' + '&meetingId=' + meetingId + '&isFromMobile=' + isFromMobile;
+    launchMeetingForInstantMember(data, isEC=false) {
+        let headers;
+        const url = isEC ? 'updateGuestParticipant.json' : 'launchMeetingForInstantMember.json';
+        let params = '';
         if( isEC ){
-            params += '&status=J';
+            headers = {
+                meetingId : data.meetingId,
+                joinLeaveStatus : 'J',
+                firstName : data.firstName,
+                lastName : data.lastName,
+                careGiverId : data.careGiverId
+            }
+            params = '?loginType=ec_instant_join' + '&isFromMobile=' + data.isFromMobile;
+        } else {
+            headers = {
+                megaMeetingDisplayName: data.displayName,
+                isProxyMeeting: data.isProxyMeeting,
+                mrn: data.mrn,
+                "Content-Type": "application/json"
+            };
+            params = '?loginType=instant_join' + '&meetingId=' + data.meetingId + '&isFromMobile=' + data.isFromMobile;
         }
         Axios.post(this.state.basePath + '/videovisit/' + url + params, {}, { headers: headers }).subscribe((response) => {
                 console.log("Patient joined from Instant join");
@@ -191,12 +206,14 @@ class BackendService extends React.Component {
       return  Axios.post(this.state.basePath + '/videovisit/' + 'endGuestSession.json' + '?loginType=guest' +  '&meetingCode=' + meetingCode + '&isFromBackButton=' + isFromBackButton, {}, { headers: headers });
     }
 
-    quitMeeting(meetingId, isProxyMeeting, headers, loginType, isFromBackButton ) {
+    quitMeeting(meetingId, isProxyMeeting, headers, loginType, isFromBackButton, isFromMobile ) {
         const isEC = loginType == GlobalConfig.LOGIN_TYPE.EC;
         const url = isEC ? 'updateGuestParticipant.json' : 'quitMeeting.json';
-        let params = '?loginType=' + loginType + '&meetingId=' + meetingId + '&isProxyMeeting=' + isProxyMeeting + '&isFromBackButton=' + isFromBackButton;
+        let params = '';
         if(isEC){
-            params += '&status=L';
+            params = "?loginType=" + loginType + "&isFromMobile="+isFromMobile;
+        } else {
+            params = '?loginType=' + loginType + '&meetingId=' + meetingId + '&isProxyMeeting=' + isProxyMeeting + '&isFromBackButton=' + isFromBackButton;
         }
         return Axios.post(this.state.basePath + '/videovisit/' + url + params, {}, { headers: headers });
     }
