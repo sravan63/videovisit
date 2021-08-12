@@ -711,9 +711,13 @@ class Conference extends React.Component {
     }
 
     deviceChanged() {
-        if( !Utilities.isMobileDevice() ){
-            // DE22775
-            // Allowing device change for Desktop
+        let camera = this.state.isRearCamera ? this.state.media["videoinput"][0].label : this.state.media["videoinput"][1].label;
+        
+        //DE22775
+        if(e && e.label!== camera.label) {
+        // if( !Utilities.isMobileDevice() ){
+        //     // DE22775
+        //     // Allowing device change for Desktop
             MediaService.onDeviceChange();
         }
     }
@@ -1159,12 +1163,12 @@ class Conference extends React.Component {
     toggleControls(cntrlname) {
         switch (cntrlname) {
             case GlobalConfig.VIDEO:
-                if(this.state.showvideoIcon){
-                    this.selfViewMedia.current.style.setProperty('border', `1px solid black`);
-                }
-                else{
-                    this.selfViewMedia.current.style.removeProperty('border');
-                }
+                // if(this.state.showvideoIcon){
+                //     this.selfViewMedia.current.style.setProperty('border', `1px solid black`);
+                // }
+                // else{
+                //     this.selfViewMedia.current.style.removeProperty('border');
+                // }
                 this.setState({
                     showvideoIcon: !this.state.showvideoIcon
                 })
