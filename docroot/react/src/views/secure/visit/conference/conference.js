@@ -1159,6 +1159,12 @@ class Conference extends React.Component {
     toggleControls(cntrlname) {
         switch (cntrlname) {
             case GlobalConfig.VIDEO:
+                if(this.state.showvideoIcon){
+                    this.selfViewMedia.current.style.setProperty('border', `1px solid black`);
+                }
+                else{
+                    this.selfViewMedia.current.style.removeProperty('border');
+                }
                 this.setState({
                     showvideoIcon: !this.state.showvideoIcon
                 })
