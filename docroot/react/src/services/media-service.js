@@ -26,7 +26,7 @@ class MediaService extends React.Component {
       var isSetup = sessionStorage.getItem('isSetupPage');
       if(!browserInfo.isIE){
         if(browserInfo.isSafari || browserInfo.isFireFox) {
-            if (!Utilities.isMobileDevice()) {
+            if (!Utilities.isMobileDevice() &&  browserInfo.isFireFox ) {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
             }
             if (isSetup =='true') {
