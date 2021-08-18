@@ -527,7 +527,7 @@ class ConferenceDetails extends React.Component {
                     <div className={this.toggleLangInfo()} aria-labelledby="dropdownMenuButton">
                         { this.state.participants && this.state.participants.length > 0 ? 
                             this.state.participants.map((item,key) =>{
-                            if(!JSON.parse(localStorage.getItem('memberName')).includes(item.backupName)) {
+                            if(!JSON.parse(localStorage.getItem('memberName')).includes(item.backupName)){
                                 return (
                                     <div className="participant mt-2" key={key}><span className = {item.spotlighted ? "pinnedIcon" : "pinnedIcon removePin"}></span><span className={item.spotlighted ? "name text-capitalize adjustWidth": "name text-capitalize"}><span className={item.setactiveSpeaker ? "activespeaker" : "notactivespeaker"}>{item.name}</span></span><span className={item.inCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
                                 )
