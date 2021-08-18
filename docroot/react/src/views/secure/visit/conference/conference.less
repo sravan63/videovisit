@@ -396,6 +396,11 @@
                 .landscape-controlbar {
                     display: none;
                 }
+                .remoteStreamVisible{
+                    bottom: -100% !important;                    
+                    max-width: unset !important;
+                    z-index: unset;
+                }
             }
             
             .stream-containerPIP {
@@ -481,6 +486,10 @@
                     .right {
                         left: calc(100vw - 19%)!important;
                     }
+                }
+                .remotestream{
+                    width: 30% !important;
+                    transform: scaleY(1.2);
                 }
             }
 
@@ -758,8 +767,9 @@
                     transform: none;
                 }
                 .remoteStreamVisible{
-                    right: 6.5%;
+                    right: 8%;
                     left: unset;
+                    max-width: 12.8%;
                 }
             }
         }
