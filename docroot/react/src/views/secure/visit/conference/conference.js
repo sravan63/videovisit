@@ -75,6 +75,7 @@ class Conference extends React.Component {
         this.selfViewMedia = React.createRef();
         this.remoteFeedMedia = React.createRef();
         this.currentSmallerView = "";
+        this.is50PIP= false;
         this.getLanguage();
         let data = Utilities.getLang();
         this.leaveVisitPopupOptions = {
@@ -252,6 +253,7 @@ class Conference extends React.Component {
                     this.setState({isPIPMode: this.setPIPMode()});
                     break;
                 case GlobalConfig.STOP_SCREENSHARE:
+                    this.is50PIP= false;
                     this.setState({ showSharedContent: false,  videofeedflag : true });
                     this.setState({isPIPMode: this.setPIPMode()});
                     break;
@@ -506,9 +508,12 @@ class Conference extends React.Component {
         if(e.target.dataset.view !== "smaller") {
             return;
         }
-        let is50PIP = window.matchMedia("(orientation: portrait)").matches && this.state.showSharedContent;
+        if(window.matchMedia("(orientation: portrait)").matches && this.state.showSharedContent){
+            this.is50PIP =  true;
+            this.currentSmallerView = this.selfViewMedia.current;
+        }
          // Applicable if used device is mobile/tablet and PIP view.
-        if(Utilities.isMobileDevice() && (is50PIP || this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
+        if(Utilities.isMobileDevice() && (this.is50PIP || this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
             var touchLocation = e.targetTouches[0];
             //let elmnt = this.selfViewMedia.current;
             let elmnt = this.currentSmallerView;
@@ -827,6 +832,7 @@ class Conference extends React.Component {
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
+             this.is50PIP = false;
             document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
             this.setState({isPIPMode: this.setPIPMode()});
             this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp());
