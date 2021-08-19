@@ -506,10 +506,9 @@ class Conference extends React.Component {
         if(e.target.dataset.view !== "smaller") {
             return;
         }
-
         let is50PIP = window.matchMedia("(orientation: portrait)").matches && this.state.showSharedContent;
          // Applicable if used device is mobile/tablet and PIP view.
-        if(Utilities.isMobileDevice() &&  (is50PIP || (this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
+        if(Utilities.isMobileDevice() && (is50PIP || this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches)) {
             var touchLocation = e.targetTouches[0];
             //let elmnt = this.selfViewMedia.current;
             let elmnt = this.currentSmallerView;
