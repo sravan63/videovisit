@@ -605,7 +605,7 @@ class Conference extends React.Component {
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
             this.flipView(e);
         }
-        if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
+        if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches || this.is50PIP) {
             const coordinates = [end.pageX, end.pageY];
             const slideTo = this.getSlidePosition(coordinates);
             this.slideToCorner(slideTo);
@@ -1576,7 +1576,7 @@ class Conference extends React.Component {
         let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
         let remoteStreamVisible = this.state.videofeedflag && this.state.showSharedContent ? 'remoteStreamVisible' : 'noSMD';
-        let selfviewandsmd = this.state.videofeedflag && this.state.showSharedContent ? 'remotestream self-view' : 'self-view';
+        //let selfviewandsmd = this.state.videofeedflag && this.state.showSharedContent ? 'remotestream self-view' : 'self-view';
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             if(window.matchMedia("(orientation: landscape)").matches){
                 remoteFeedClass = 'remoteFeed';
@@ -1601,7 +1601,9 @@ class Conference extends React.Component {
             selfViewClass = 'selfViewVideo';
             this.selfViewMedia.current && this.selfViewMedia.current.style.removeProperty("height");
         }
-
+        if(window.matchMedia("(orientation: portrait)").matches && this.state.showSharedContent){
+            selfViewClass =  'selfViewVideoPIP';
+        }
         streamContainer && (remoteStreamContainerClass = `${remoteStreamContainerClass } ${streamContainer}`);
         let remoteContainerStyle={
             display : this.state.videofeedflag ? 'block' : 'none'
@@ -1651,7 +1653,7 @@ class Conference extends React.Component {
                                         </div>
                                     <Settings data={Details} />
                             </div>
-                            <div id="selfview"  className={selfviewandsmd} style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
+                            <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
                                 </video>
                                {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
