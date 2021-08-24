@@ -603,7 +603,9 @@ class Conference extends React.Component {
         dy = Math.pow(this.startY - end.pageY, 2),
         distance = Math.round(Math.sqrt(dx + dy));
         if((end.pageX === this.startX && end.pageY === this.startY) || (distance <= 20)){
-            this.flipView(e);
+            if(!this.state.showSharedContent){
+                this.flipView(e);
+            }
         }
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches || this.is50PIP) {
             const coordinates = [end.pageX, end.pageY];
