@@ -608,7 +608,7 @@ class Conference extends React.Component {
             }
         }
         // For fairly small drag we will not corner the smaller view (drag distance should be > 20).
-        if((this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches || this.is50PIP) && (distance > 20)) {
+        if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches || (this.is50PIP && distance > 20)) {
             const coordinates = [end.pageX, end.pageY];
             const slideTo = this.getSlidePosition(coordinates);
             this.slideToCorner(slideTo);
