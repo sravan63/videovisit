@@ -15,6 +15,7 @@ class BackendService extends React.Component {
         } else {
             this.state.basePath = '';
         }
+        this.counter = 0;
     }
 
     getPreSSO() {
@@ -229,6 +230,7 @@ class BackendService extends React.Component {
             callUUID:callUUID
         };
         var mediaData = WebUI.getMediaStatsData();
+        console.log("Calling insertVendorMeetingMediaCDR: " + "Time: " + new Date() + " Count: " + ++this.counter);
         Axios.post(this.state.basePath + '/videovisit/' + 'insertVendorMeetingMediaCDR.json', mediaData,{ headers: headers }).subscribe((response) => {
                 console.log("success",response);
             },
