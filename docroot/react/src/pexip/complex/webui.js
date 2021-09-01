@@ -512,11 +512,12 @@ function participantCreated(participant) {
         uniqueKey = participant.display_name.split('#')[1];
         participant.display_name = participant.display_name.split('#')[0];
     }
-    pexipParticipantsList.push(participant);
-    // log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
     if (participant.protocol == "api" && participant.display_name.indexOf('TPLC') > -1){ 
         return;
     }
+    pexipParticipantsList.push(participant);
+    // log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
+    
     if (participant.protocol == "sip") {
         var joinParticipantMsg = {
             message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
@@ -572,6 +573,9 @@ export function validateLoggedInUser(uniqueKey){
 }
 
 function participantUpdated(participant) {
+    if (participant.protocol == "api" && participant.display_name.indexOf('TPLC') > -1){ 
+        return;
+    }
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     if(participant.spotlight != 0 && participant.protocol !='sip'){
         MessageService.sendMessage(GlobalConfig.SPOTLIGHT,participant);
