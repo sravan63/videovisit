@@ -103,7 +103,7 @@ class Visit extends React.Component {
                 Utilities.setMeetingFeedbackTimeout(response.data.MEETING_FEEDBACK_TIMEOUT);
                 Utilities.setMinTimeToShowUserSurvey(response.data.MINIMUM_IN_MEETING_TIME_FOR_SURVEY);
                 if( Utilities.validateBrowserBlock(browserNames) ){
-                    if( this.state.isECInstantJoin ){
+                    if( this.state.isECInstantJoin || this.state.isInstantGuest ){
                         this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false });
                     } else {
                         this.props.history.push('/login');
@@ -147,6 +147,10 @@ class Visit extends React.Component {
     }
 
     _launchInstantJoin(join_type){
+        const params = window.location.href.split('?')[1];
+        const urlParams = new URLSearchParams( params );
+        let isInstantGuest = urlParams.has('isPatientGuest') && urlParams.get('isPatientGuest');
+        this.state.isInstantGuest = isInstantGuest;
         var browserInfo = Utilities.getBrowserInformation();
         if( browserInfo.isIE ) {
             if( join_type == 'ec_instant_join' ){
@@ -158,16 +162,11 @@ class Visit extends React.Component {
         }
         this._getBrowserBlockInfo();
         
-        const params = window.location.href.split('?')[1];
-        const urlParams = new URLSearchParams( params );
         let isInstantJoin;
         let tokenValue;
-        let isInstantGuest = false;
         if( join_type == 'instant_join' ){
             isInstantJoin = urlParams.has('isInstantJoin') && JSON.parse(urlParams.get('isInstantJoin'));
             tokenValue  = urlParams.has('tk') && urlParams.get('tk');
-            isInstantGuest = urlParams.has('isPatientGuest') && urlParams.get('isPatientGuest');
-            this.state.isInstantGuest = isInstantGuest;
         } else if( join_type == 'ec_instant_join' ) {
             isInstantJoin = urlParams.has('isECInstantJoin') && JSON.parse(urlParams.get('isECInstantJoin'));
             tokenValue  = urlParams.has('tk') && urlParams.get('tk');
