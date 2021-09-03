@@ -15,7 +15,7 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, staticData:{}, chin:'中文',span:'Español', showPage: false,isInstantJoin: false,isECInstantJoin:false, mdoHelpUrl:'', displayName:'', userConfirmBox:false, isBrowserBlockError: false, invalidSession: false, isMobile: false, showPreCheck: true };
+        this.state = { userDetails: {}, staticData:{}, chin:'中文',span:'Español', showPage: false,isInstantJoin: false,isECInstantJoin:false, isInstantGuest: false, mdoHelpUrl:'', displayName:'', userConfirmBox:false, isBrowserBlockError: false, invalidSession: false, isMobile: false, showPreCheck: true };
         this.denyUser = this.denyUser.bind(this);
         this.allowLogin = this.allowLogin.bind(this);
     }
@@ -162,9 +162,12 @@ class Visit extends React.Component {
         const urlParams = new URLSearchParams( params );
         let isInstantJoin;
         let tokenValue;
+        let isInstantGuest = false;
         if( join_type == 'instant_join' ){
             isInstantJoin = urlParams.has('isInstantJoin') && JSON.parse(urlParams.get('isInstantJoin'));
             tokenValue  = urlParams.has('tk') && urlParams.get('tk');
+            isInstantGuest = urlParams.has('isPatientGuest') && urlParams.get('isPatientGuest');
+            this.state.isInstantGuest = isInstantGuest;
         } else if( join_type == 'ec_instant_join' ) {
             isInstantJoin = urlParams.has('isECInstantJoin') && JSON.parse(urlParams.get('isECInstantJoin'));
             tokenValue  = urlParams.has('tk') && urlParams.get('tk');
@@ -211,10 +214,14 @@ class Visit extends React.Component {
             }
             // this.setState({userConfirmBox: true, displayName:"Joe Mama"});
         } else if( this.state.isInstantJoin ){
-            this.props.history.push({
-                pathname: "/login",
-                state: { message: "instantJoin" },
-            });
+            if( this.state.isInstantGuest ){
+                this.setState({ userConfirmBox: true, isBrowserBlockError : false, invalidSession: true });
+            } else {
+                this.props.history.push({
+                    pathname: "/login",
+                    state: { message: "instantJoin" },
+                });
+            }
         } else {
             this.props.history.push('/login');
         }
