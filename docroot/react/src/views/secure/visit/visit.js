@@ -206,7 +206,7 @@ class Visit extends React.Component {
     }
 
     _unAuthorizedAccess(){
-        if( this.state.isECInstantJoin ){
+        if( this.state.isECInstantJoin || this.state.isInstantGuest ){
             if(this.state.isBrowserBlockError){
                 this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false }); 
             } else {
@@ -214,14 +214,10 @@ class Visit extends React.Component {
             }
             // this.setState({userConfirmBox: true, displayName:"Joe Mama"});
         } else if( this.state.isInstantJoin ){
-            if( this.state.isInstantGuest ){
-                this.setState({ userConfirmBox: true, isBrowserBlockError : false, invalidSession: true });
-            } else {
-                this.props.history.push({
-                    pathname: "/login",
-                    state: { message: "instantJoin" },
-                });
-            }
+            this.props.history.push({
+                pathname: "/login",
+                state: { message: "instantJoin" },
+            });
         } else {
             this.props.history.push('/login');
         }
