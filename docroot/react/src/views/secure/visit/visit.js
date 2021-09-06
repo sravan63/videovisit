@@ -186,9 +186,17 @@ class Visit extends React.Component {
                             Utilities.setECVisitDetails(userData);
                         }
                         let userDetails = { isTempAccess: false, lastName :userData.lastName , firstName:userData.firstName , mrn: mrn, ssoSession: '' };
-                        localStorage.setItem('userDetails', Utilities.encrypt(JSON.stringify(userDetails)));
+                        if( isInstantGuest ){
+                            userDetails.mrn = '';
+                            const instantPG = {firstName: userData.firstName , lastName: userData.lastName, inMeetingDisplayName : userData.lastName + ", " + userData.firstName};
+                            Utilities.parseInstantGuestName(userData.meeting.caregiver, instantPG, true);
+                            userDetails.meetingCode = instantPG.meetingCode;
+                            sessionStorage.setItem('isInstantPG', true);
+                        } else{
+                            localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
+                        }
                         localStorage.setItem('meetingId', JSON.stringify(meetingId));
-                        localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
+                        localStorage.setItem('userDetails', Utilities.encrypt(JSON.stringify(userDetails)));
                     }
                     else{
                         this._unAuthorizedAccess();

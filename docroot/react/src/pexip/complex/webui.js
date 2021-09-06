@@ -781,7 +781,7 @@ function connected(url) {
                 } else {
                     memberName = JSON.parse(localStorage.getItem('memberName'));
                 }            
-               if(localStorage.getItem('isGuest')) {
+               if( localStorage.getItem('isGuest') || sessionStorage.getItem('isInstantPG') ) {
                     var meetingCode = udata.meetingCode;
                    BackendService.CaregiverJoinMeeting(meetingId, meetingCode);
                 } else {

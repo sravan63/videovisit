@@ -24,7 +24,7 @@ class Conference extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {isRemoteFlippedToSelf: false, isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
+        this.state = {isRemoteFlippedToSelf: false, isPIPMode: false, userDetails: {}, isRearCamera:false, showVideoFeed: false, staticData:{conference:{},errorCodes:{}}, chin:'中文',span:'Español', showRemotefeed:false, showOverlay:false, isMobileSafari:false, disableCamFlip:true, showvideoIcon: true, media: {}, showaudioIcon: true, showmicIcon: true, isGuest: false, isIOS: false, isMobile: false, leaveMeeting: false, meetingCode: '', isRunningLate: false, loginType: '', isInstantPG: false, accessToken: null, isProxyMeeting: '', meetingId: null, meetingDetails: {}, participants: [], showLoader: true, runningLatemsg: '', hostavail: false, moreparticpants: false, videofeedflag: false, isbrowsercheck: false, showSharedContent: false,mdoHelpUrl:'', isMirrorView:true };
         this.getInMeetingGuestName = this.getInMeetingGuestName.bind(this);
         this.startPexip = this.startPexip.bind(this);
         this.hideSettings = true;
@@ -1018,6 +1018,9 @@ class Conference extends React.Component {
                 this.state.loginType = GlobalConfig.LOGIN_TYPE.GUEST;
             } else if( isInstantJoin ){
                 this.state.loginType = GlobalConfig.LOGIN_TYPE.INSTANT;
+                if(sessionStorage.getItem('isInstantPG')){
+                    this.state.isInstantPG = true;
+                }
             } else if( isECInstantJoin ){
                 this.state.loginType = GlobalConfig.LOGIN_TYPE.EC;
             } else {
@@ -1069,7 +1072,7 @@ class Conference extends React.Component {
         var guestName;
         caregiver.forEach(function(val, index) {
             if (val.careGiverMeetingHash == details.meetingCode) {
-                guestName = val.lastName + ', ' + val.firstName + ' (' + val.emailAddress + ')';
+                guestName = val.lastName + ', ' + val.firstName + ', (' + val.emailAddress + ')';
             }
         });
         return guestName;
@@ -1088,6 +1091,10 @@ class Conference extends React.Component {
             if( !sessionStorage.getItem('loggedAsDuplicateMember') ){
                 if(this.state.isProxyMeeting == 'Y'){
                     name = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;
+                } else if( this.state.isInstantPG ) {
+                    var guestName = this.getInMeetingGuestName(meeting.caregiver);
+                    localStorage.setItem('memberName', JSON.stringify(guestName));
+                    name = Utilities.formatStringTo(guestName, GlobalConfig.STRING_FORMAT[0]);
                 } else {
                     name = Utilities.formatStringTo(meeting.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
                 }
@@ -1252,6 +1259,8 @@ class Conference extends React.Component {
             WebUI.pexipDisconnect();
             if(isProxyMeeting == 'Y'){
                 headers.memberName = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;
+            } else if( this.state.isInstantPG ) {
+                headers.memberName = JSON.parse(localStorage.getItem('memberName')); // lastname, firstname, (email)
             } else {
                 headers.memberName = Utilities.formatStringTo(this.state.meetingDetails.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
             }
@@ -1429,11 +1438,16 @@ class Conference extends React.Component {
                 Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
             } else if ( this.state.loginType == GlobalConfig.LOGIN_TYPE.INSTANT ) {
-                this.props.history.push(GlobalConfig.LOGIN_URL);
-                history.pushState(null, null, location.href);
-                window.onpopstate = function(event) {
-                    history.go(1);
-                };
+                if( this.state.isInstantPG ){
+                    sessionStorage.clear();
+                    window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
+                } else {
+                    this.props.history.push(GlobalConfig.LOGIN_URL);
+                    history.pushState(null, null, location.href);
+                    window.onpopstate = function(event) {
+                        history.go(1);
+                    };
+                }
             } else if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
                 sessionStorage.clear();
                 window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';

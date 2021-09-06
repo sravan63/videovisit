@@ -436,12 +436,15 @@ class UtilityService extends React.Component {
         return meetingDetails;
     }
 
-    parseInstantGuestName(guests, member){
+    parseInstantGuestName(guests, member, isInstantGuest=false){
         guests.map((g)=>{
             if( g.lastName == member.lastName && g.firstName == member.firstName ){
                 const contact = g.emailAddress ? g.emailAddress : g.phoneNumber;
                 member.inMeetingDisplayName = member.inMeetingDisplayName + ', ('+contact+')';
                 member.careGiverId = g.careGiverId;
+                if(isInstantGuest){
+                    member.meetingCode = g.careGiverMeetingHash;
+                }
             }
         });
     }

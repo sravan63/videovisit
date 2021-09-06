@@ -15,21 +15,19 @@ class ConferenceDetails extends React.Component {
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.updateRunningLateTime = this.updateRunningLateTime.bind(this);
-        this.state = { isRunningLate: false,spotlight:false,runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [], hostDetails: {hostInCall: false, uuid: null} };
+        this.state = { isRunningLate: false,spotlight:false,runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [], hostDetails: {hostInCall: false, uuid: null}, isGuest: false };
     }
 
     componentDidMount() {
         this.subscription = MessageService.getMessage().subscribe((notification) => {
             switch(notification.text) {
                 case GlobalConfig.SHOW_CONFERENCE_DETAILS:
-                    this.setState({
-                        meetingDetails: notification.data.meetingDetails
-                    });
+                    this.setState({ meetingDetails: notification.data.meetingDetails });
+                    this.state.isGuest = ( localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true || 
+                                           sessionStorage.getItem('isInstantPG') && JSON.parse(sessionStorage.getItem('isInstantPG')) == true );
                     this.setSortedParticipantList();
                     this.indicateUserOnJoin();
-                    this.setState({
-                         meetingDetails: notification.data.meetingDetails
-                    });
+                    // this.setState({ meetingDetails: notification.data.meetingDetails });
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
                     this.setState({
@@ -128,17 +126,17 @@ class ConferenceDetails extends React.Component {
         var participants = [];
         let clinicians = this.state.meetingDetails.participant ? this.state.meetingDetails.participant.slice(0) : [];
         let guests = this.state.meetingDetails.caregiver ? this.state.meetingDetails.caregiver.slice(0) : [];
-        var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
+        // var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
         var isECInstantJoin = sessionStorage.getItem('isECInstantJoin');
-        if(!isGuest){
+        if(!this.state.isGuest){
             var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
         }
         
         var patientName =  this.state.meetingDetails.member.lastName.toLowerCase() + ', ' + this.state.meetingDetails.member.firstName.toLowerCase();
         var removeGuestName;
-        if(isECInstantJoin || isGuest || patientName != memberName){
+        if(isECInstantJoin || this.state.isGuest || patientName != memberName){
             var participant =JSON.parse(localStorage.getItem('memberName'));
             if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
                         participant = participant.split('(')[0].trim();
@@ -147,8 +145,8 @@ class ConferenceDetails extends React.Component {
                             participant = participant.substring(0, lastIndex);
                         }
                     }
-             if(isGuest){       
-                 removeGuestName = guests.findIndex(x=>x.lastName + ', '+ x.firstName == participant);
+             if(this.state.isGuest){       
+                 removeGuestName = guests.findIndex(x=>x.lastName.toLowerCase().trim() + ', '+ x.firstName.toLowerCase().trim() == participant.toLowerCase().trim());
              }else{
                 removeGuestName = guests.findIndex(x=>x.lastName.toLowerCase().trim() + ', '+ x.firstName.toLowerCase().trim() == memberName.trim());
              }
@@ -171,7 +169,7 @@ class ConferenceDetails extends React.Component {
                 list.push({ name: name.trim(), inCall: false, spotlighted:false, isTelephony: false, backupName: backupName });
             });
             list.sort((a, b) => (a.name > b.name) ? 1 : -1);            
-            if(isGuest || patientName != memberName) {
+            if(this.state.isGuest || patientName != memberName) {
                 let patientBackupName = this.state.meetingDetails.member.lastName + ', ' + this.state.meetingDetails.member.firstName;
                 let patient = this.state.meetingDetails.member.firstName.toLowerCase() + ' ' + this.state.meetingDetails.member.lastName.toLowerCase();
                 list.unshift({
@@ -214,9 +212,9 @@ class ConferenceDetails extends React.Component {
 
     indicateUserOnJoin() {
         // TODO: Should change this logic after UID implementation
-        var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
+        // var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
         var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
-        if( isGuest ){
+        if( this.state.isGuest ){
             var name = JSON.parse(localStorage.getItem('memberName'));
             this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null,spotlight:0, protocol: 'api', role: 'guest'});
         } else if( isProxyMeeting == 'Y' ){
@@ -233,8 +231,8 @@ class ConferenceDetails extends React.Component {
     validateUser(participant) {
         var showIndicator = true;
         // TODO: Should change this logic after UID implementation
-        var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
-        if(isGuest){
+        // var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
+        if(this.state.isGuest){
             var memberName = this.state.meetingDetails.member.lastName +', '+ this.state.meetingDetails.member.firstName;
             if(participant.display_name.toLowerCase().trim() == memberName.toLowerCase().trim()){
                 showIndicator = true;
@@ -376,7 +374,7 @@ class ConferenceDetails extends React.Component {
                 this.state.telephonyGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
             }
         } else if(data.role == "guest") { // In 'Lastname, Firstname (email)' format.
-            var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
+            // var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
             var gName = participant.indexOf('(') > -1 ? participant.split('(')[0] : participant;
             var lName = participant.split(',')[0].trim();
             var fName = participant.split(',')[1].trim();
@@ -391,14 +389,15 @@ class ConferenceDetails extends React.Component {
                 name = dFName.toLowerCase() + ' ' + dLName.toLowerCase(); // changed to joe mama 2
             }
             console.log(' ====== ACTUAL NAME CHANGED TO :: '+name);
-            if(!isGuest){
+            var memberName = '';
+            if(!this.state.isGuest){
                 var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
-                var memberName = JSON.parse(localStorage.getItem('memberName')); // udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
+                memberName = JSON.parse(localStorage.getItem('memberName')); // udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
             }
-            if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')).toLowerCase()) && isGuest ){
+            if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')).toLowerCase()) && this.state.isGuest ){
                 // For guests
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
-            }else if(!(data.display_name.toLowerCase() == memberName.toLowerCase()) && !isGuest){
+            }else if(!(data.display_name.toLowerCase() == memberName.toLowerCase()) && !this.state.isGuest){
                 // For actual members
                 this.state.videoGuests.push({ name: name.trim(), inCall: true, isTelephony: false, backupName: backupName, uuid: data.uuid });
             } else if(!(data.display_name.toLowerCase() == JSON.parse(localStorage.getItem('memberName')).toLowerCase()) && sessionStorage.getItem('loggedAsDuplicateMember') ){
