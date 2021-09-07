@@ -147,6 +147,7 @@ class Visit extends React.Component {
     }
 
     _launchInstantJoin(join_type){
+        localStorage.clear();
         const params = window.location.href.split('?')[1];
         const urlParams = new URLSearchParams( params );
         let isInstantGuest = urlParams.has('isPatientGuest') && urlParams.get('isPatientGuest');
