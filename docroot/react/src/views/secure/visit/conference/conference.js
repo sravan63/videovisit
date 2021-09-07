@@ -20,6 +20,7 @@ import GlobalConfig from '../../../../services/global.config';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
 import utilitiesService from "../../../../services/utilities-service.js";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 class Conference extends React.Component {
 
