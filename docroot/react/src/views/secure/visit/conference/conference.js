@@ -1669,17 +1669,17 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                 {Utilities.isMobileDevice() ? this.state.showSharedContent ?
                                 <React.Fragment>
-                                <TransformWrapper defaultScale={1} minScale={1} >
-                                 <TransformComponent>
-                                    <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                 </TransformComponent>
-                                </TransformWrapper>
                                     <div className={remoteStreamVisible}>
                                         <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
                                             <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                         </div>
-                                    </div> 
+                                    </div>
+                                    <TransformWrapper defaultScale={1} minScale={1} >
+                                    <TransformComponent>
+                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                    </TransformComponent>
+                                    </TransformWrapper> 
                                 </React.Fragment>
                                     :
                                 <React.Fragment>
