@@ -1678,7 +1678,7 @@ class Conference extends React.Component {
                                     </div>                                    
                                     </TransformComponent>
                                 </TransformWrapper>
-                                :<Fragment>
+                                :<React.Fragment>
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={remoteStreamVisible}>
                                             <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
@@ -1686,7 +1686,7 @@ class Conference extends React.Component {
                                                 {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                             </div>
                                     </div>
-                                </Fragment>}
+                                </React.Fragment>}
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
