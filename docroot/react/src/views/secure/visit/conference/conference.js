@@ -19,6 +19,7 @@ import ConferenceControls from '../../../../components/conference-controls/confe
 import GlobalConfig from '../../../../services/global.config';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
+import utilitiesService from "../../../../services/utilities-service.js";
 
 class Conference extends React.Component {
 
@@ -1665,13 +1666,27 @@ class Conference extends React.Component {
                             <ConferenceControls controls={this.state} data={Details} />
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
+                                {Utilities.isMobileDevice() ? 
+                                <TransformWrapper defaultScale={1} minScale={1} >
+                                    <TransformComponent>
+                                    <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                    <div className={remoteStreamVisible}>
+                                        <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
+                                            <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                            {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
+                                        </div>
+                                    </div>                                    
+                                    </TransformComponent>
+                                </TransformWrapper>
+                                :<Fragment>
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={remoteStreamVisible}>
                                             <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
                                                 <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                                 {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                             </div>
-                                        </div>
+                                    </div>
+                                </Fragment>}
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
