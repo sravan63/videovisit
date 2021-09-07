@@ -188,6 +188,7 @@ class Visit extends React.Component {
                         let userDetails = { isTempAccess: false, lastName :userData.lastName , firstName:userData.firstName , mrn: mrn, ssoSession: '' };
                         if( isInstantGuest ){
                             userDetails.mrn = '';
+                            userDetails.authToken = '';
                             const instantPG = {firstName: userData.firstName , lastName: userData.lastName, inMeetingDisplayName : userData.lastName + ", " + userData.firstName};
                             Utilities.parseInstantGuestName(userData.meeting.caregiver, instantPG, true);
                             userDetails.meetingCode = instantPG.meetingCode;

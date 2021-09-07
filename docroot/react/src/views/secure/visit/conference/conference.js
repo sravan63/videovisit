@@ -1020,6 +1020,7 @@ class Conference extends React.Component {
                 this.state.loginType = GlobalConfig.LOGIN_TYPE.INSTANT;
                 if(sessionStorage.getItem('isInstantPG')){
                     this.state.isInstantPG = true;
+                    this.state.meetingCode = userDetails.meetingCode;
                 }
             } else if( isECInstantJoin ){
                 this.state.loginType = GlobalConfig.LOGIN_TYPE.EC;
@@ -1234,7 +1235,7 @@ class Conference extends React.Component {
             WebUI.pexipDisconnect();
             return false;
         }
-        if (this.state.isGuest == false) {
+        if (this.state.isGuest == false && this.state.isInstantPG == false) {
             var headers = {},
                 loginType = this.state.loginType;
             if (loginType == GlobalConfig.LOGIN_TYPE.TEMP) {
@@ -1259,8 +1260,6 @@ class Conference extends React.Component {
             WebUI.pexipDisconnect();
             if(isProxyMeeting == 'Y'){
                 headers.memberName = this.state.userDetails.lastName + ', ' + this.state.userDetails.firstName;
-            } else if( this.state.isInstantPG ) {
-                headers.memberName = JSON.parse(localStorage.getItem('memberName')); // lastname, firstname, (email)
             } else {
                 headers.memberName = Utilities.formatStringTo(this.state.meetingDetails.member.inMeetingDisplayName, GlobalConfig.STRING_FORMAT[0]);
             }
