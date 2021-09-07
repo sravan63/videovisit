@@ -84,7 +84,7 @@ class header extends React.Component {
                 return (
                 <div className = "container-fluid">
                     { !this.state.isInApp ? (
-                        <div className = {!this.state.name || this.state.isSetup || window.location.href.indexOf('isInstantJoin') > -1 ? "row header-content bmargin" : "row header-content"}>
+                        <div className = {!this.state.name || this.state.isSetup || window.location.href.indexOf('isInstantJoin') > -1 || window.location.href.indexOf('isECInstantJoin') > -1 ? "row header-content bmargin" : "row header-content"}>
                             <div className = "col-md-7 banner-content">
                                 <div className = "logo"> 
                             </div> 
@@ -94,7 +94,7 @@ class header extends React.Component {
                             </div> 
                         </div> 
                         <div className = "col-md-5 text-right user-details" >
-                            { this.state.name && !this.state.isSetup && !(window.location.href.indexOf('isInstantJoin') > -1) ? (<ul >
+                            { this.state.name && !this.state.isSetup && !(window.location.href.indexOf('isInstantJoin') > -1 || window.location.href.indexOf('isECInstantJoin') > -1 ) ? (<ul >
                                 <li className = "text-capitalize user-name">{this.state.name ? this.state.name : ''}</li>
                                  <li className = "text-capitalize">{this.state.name ? '|' : ''} </li> 
                                  <li>
