@@ -19,7 +19,6 @@ import ConferenceControls from '../../../../components/conference-controls/confe
 import GlobalConfig from '../../../../services/global.config';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 class Conference extends React.Component {
 
@@ -1592,24 +1591,24 @@ class Conference extends React.Component {
     }
 
     render() {
-        let selfViewClass, streamContainer, Details = this.state.staticData;
+        let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
         let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
-        this.remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
-        this.remoteStreamVisible = this.state.videofeedflag && this.state.showSharedContent ? 'remoteStreamVisible' : 'noSMD';
+        let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
+        let remoteStreamVisible = this.state.videofeedflag && this.state.showSharedContent ? 'remoteStreamVisible' : 'noSMD';
         //let selfviewandsmd = this.state.videofeedflag && this.state.showSharedContent ? 'remotestream self-view' : 'self-view';
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             if(window.matchMedia("(orientation: landscape)").matches){
-                this.remoteFeedClass = 'remoteFeed';
+                remoteFeedClass = 'remoteFeed';
                 selfViewClass = 'selfViewVideo';
             }
             else {
                 streamContainer = `stream-containerPIP`;
-                this.remoteFeedClass =  'remoteFeedPIP';
+                remoteFeedClass =  'remoteFeedPIP';
                 selfViewClass =  'selfViewVideoPIP';
             }
             if(this.state.isRemoteFlippedToSelf) {
                 streamContainer = `flipStream-containerPIP`;
-                this.remoteFeedClass = 'flipRemoteFeedPIP';
+                remoteFeedClass = 'flipRemoteFeedPIP';
                 selfViewClass = 'flipSelfViewVideoPIP';
             }
             else{
@@ -1617,7 +1616,7 @@ class Conference extends React.Component {
             }
         }
         else {
-            this.remoteFeedClass = 'remoteFeed';
+            remoteFeedClass = 'remoteFeed';
             selfViewClass = 'selfViewVideo';
             this.selfViewMedia.current && this.selfViewMedia.current.style.removeProperty("height");
         }
@@ -1626,11 +1625,11 @@ class Conference extends React.Component {
             this.initialPositionTop =  this.currentSmallerView.offsetTop +"px";
             this.initialPositionLeft = this.currentSmallerView.offsetLeft +"px";
         }
-        streamContainer && (this.remoteStreamContainerClass = `${this.remoteStreamContainerClass } ${streamContainer}`);
-        this.remoteContainerStyle={
+        streamContainer && (remoteStreamContainerClass = `${remoteStreamContainerClass } ${streamContainer}`);
+        let remoteContainerStyle={
             display : this.state.videofeedflag ? 'block' : 'none'
         };
-        multipleVideoParticipants && (this.remoteContainerStyle.transform ='none' );
+        multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -1666,34 +1665,14 @@ class Conference extends React.Component {
                             <ConferenceControls controls={this.state} data={Details} />
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
-
-                                { Utilities.isMobileDevice() ? 
-                                 <TransformWrapper defaultScale={1} minScale={1}>
-                                 <TransformComponent>
-                                 <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                                      
-                                 <div className={this.remoteStreamVisible+' remoteFeedWithTransformZoom'} >
-                                     <div className={this.remoteStreamContainerClass} style={this.remoteContainerStyle}>
-                                         <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={this.remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
-                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
-                                         </div>
-                                 </div>   
-                                 
-                                </TransformComponent>
-                                </TransformWrapper>  :
-                                <React.Fragment>
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                    <div className={this.remoteStreamVisible} >
-                                        <div className={this.remoteStreamContainerClass} style={this.remoteContainerStyle}>
-                                            <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={this.remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                        <div className={remoteStreamVisible}>
+                                            <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
+                                                <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                                 {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                             </div>
-                                    </div>
-                                </React.Fragment>     
-                                } 
-                                
-
-                                <Settings data={Details} />
+                                        </div>
+                                    <Settings data={Details} />
                             </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
