@@ -1591,36 +1591,6 @@ class Conference extends React.Component {
         }
     }
 
-    renderSharedTransformContent = ()=> (
-        <TransformWrapper defaultScale={1} minScale={1}>
-            <TransformComponent>
-            <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                 
-            </TransformComponent>
-            <div className={this.remoteStreamVisible+' remoteFeedWithTransformZoom'} >
-                <div className={this.remoteStreamContainerClass} style={this.remoteContainerStyle}>
-                    <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={this.remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
-                        {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
-                    </div>
-            </div>   
-        </TransformWrapper> 
-    );
-
-    renderTransformContent = ()=> (
-        <TransformWrapper defaultScale={1} minScale={1}>
-            <TransformComponent>
-            <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                  
-            <div className={this.remoteStreamVisible} >
-                <div className={this.remoteStreamContainerClass} style={this.remoteContainerStyle}>
-                    <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={this.remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
-                        {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
-                    </div>
-            </div>      
-            </TransformComponent>
-        </TransformWrapper> 
-    );
-
     render() {
         let selfViewClass, streamContainer, Details = this.state.staticData;
         let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
@@ -1697,7 +1667,19 @@ class Conference extends React.Component {
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
 
-                                { Utilities.isMobileDevice() ? this.renderSharedTransformContent() :
+                                { Utilities.isMobileDevice() ? 
+                                 <TransformWrapper defaultScale={1} minScale={1}>
+                                 <TransformComponent>
+                                 <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                                      
+                                 </TransformComponent>
+                                 <div className={this.remoteStreamVisible+' remoteFeedWithTransformZoom'} >
+                                     <div className={this.remoteStreamContainerClass} style={this.remoteContainerStyle}>
+                                         <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={this.remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                             {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
+                                         </div>
+                                 </div>   
+                             </TransformWrapper>  :
                                 <React.Fragment>
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                     <div className={this.remoteStreamVisible} >
