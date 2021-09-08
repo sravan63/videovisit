@@ -1672,14 +1672,15 @@ class Conference extends React.Component {
                                  <TransformComponent>
                                  <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                                       
-                                 </TransformComponent>
                                  <div className={this.remoteStreamVisible+' remoteFeedWithTransformZoom'} >
                                      <div className={this.remoteStreamContainerClass} style={this.remoteContainerStyle}>
                                          <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={this.remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                              {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                          </div>
                                  </div>   
-                             </TransformWrapper>  :
+                                 
+                                </TransformComponent>
+                                </TransformWrapper>  :
                                 <React.Fragment>
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                     <div className={this.remoteStreamVisible} >
