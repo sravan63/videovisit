@@ -387,6 +387,11 @@ class Conference extends React.Component {
                         BackendService.launchMeetingForInstantMember(ecData, true);
                     }
                 break;
+                case GlobalConfig.UPDATE_HOST_DETAILS_IN_GENERICVISIT:
+                    if(!this.state.meetingDetails.host.nuid){
+                        this.state.meetingDetails.host = notification.data.host;
+                    }
+                break;
             }
 
         });

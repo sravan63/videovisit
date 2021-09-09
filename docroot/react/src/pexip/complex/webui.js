@@ -1006,6 +1006,11 @@ function chatReceived(message) {
                 MessageService.sendMessage(GlobalConfig.SELF_ASPECT_MODE, {uuid: chatContent.fromUUID, aspectMode: chatContent.cmdArgs.aspectMode});
             }
         }
+        if(message.payload.indexOf(GlobalConfig.GENERIC_VISIT) > -1){
+            var gHData = message.payload.split('$')[1];
+            var genericHost = JSON.parse(gHData);
+            MessageService.sendMessage(GlobalConfig.UPDATE_HOST_DETAILS_IN_GENERICVISIT, genericHost);
+        }
         if(message.payload.indexOf(GlobalConfig.DUPLICATE_NAME) > -1) {
             // Received text format DUPLICATE_MEMBER#DUPLICATE_ARRAY_LIST
             var mData = message.payload.split('#');

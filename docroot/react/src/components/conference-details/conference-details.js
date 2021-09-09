@@ -73,7 +73,12 @@ class ConferenceDetails extends React.Component {
                 case GlobalConfig.NOTACTIVESPEAKER:
                     this.setActiveSpeaker(false,notification.data);
                 break;
-
+                case GlobalConfig.UPDATE_HOST_DETAILS_IN_GENERICVISIT:
+                    if(!this.state.meetingDetails.host.nuid){
+                        this.state.meetingDetails.host = notification.data.host;
+                        // this.validateHostPresence(notification.data.details, true);
+                    }
+                break;
             }
         });
         
