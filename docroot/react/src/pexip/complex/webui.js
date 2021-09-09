@@ -382,12 +382,7 @@ function remoteDisconnect(reason) {
         MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
         alert(reason);
     }else if(reason.indexOf("Disconnected by another participant") > -1){
-        let loginType = localStorage.getItem("sessionInfo") && JSON.parse(localStorage.getItem("sessionInfo")).loginType;
-        if(loginType == GlobalConfig.LOGIN_TYPE.TEMP || loginType == GlobalConfig.LOGIN_TYPE.SSO){
-            $(".leave-button").trigger("click");
-        }else{
-            window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
-        }
+        $(".leave-button").trigger("click");
     } else {
         if (reason == 'Test call finished') {
             MessageService.sendMessage(GlobalConfig.TEST_CALL_FINISHED, null);
