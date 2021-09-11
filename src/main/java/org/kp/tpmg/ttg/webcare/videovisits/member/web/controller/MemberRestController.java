@@ -219,6 +219,18 @@ public class MemberRestController{
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	//This is for instant join flow to by pass the SSOSessionFilter
+	@RequestMapping(value = "/endInstantGuestSession.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String endInstantGuestSession(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = MeetingCommand.endCaregiverMeetingSession(request);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
 
 	@RequestMapping(value = "/createSetupWizardMeeting.json", produces = {
 			MediaType.APPLICATION_JSON_VALUE }, method = { RequestMethod.POST, RequestMethod.GET })

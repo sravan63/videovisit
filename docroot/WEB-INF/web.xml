@@ -27,7 +27,7 @@
 
 		<init-param>
 			<param-name>excludeURLs</param-name>
-			<param-value>ssoPreLogin.json,ssoSubmitLogin.json,submitLogin.json,mobileLogin.json,launchMobileMeetingForMember.json,createSetupWizardMeeting.json,providerRunningLateInfo.json,meetingDetails.json,logVendorMeetingEvents.json,setKPHCConferenceStatus.json,logout.json,isMeetingHashValid.json,caregiverJoinMeeting.json,joinLeaveMeeting.json,loadPropertiesByName.json,*.htm,joinLeaveMobileMeeting.json,logMobileVendorMeetingEvents.json,mobileRunningLateInfo.json,healthMonitor,joinLeaveReactMeeting.json,quitMeeting.json,submitSurvey.json,getActiveSurveys.json,insertVendorMeetingMediaCDR.json,authorizeVVCode.json,getSurveyQuestions.json,launchMeetingForInstantMember.json,authorizeECCode.json,updateGuestParticipant.json</param-value>
+			<param-value>ssoPreLogin.json,ssoSubmitLogin.json,submitLogin.json,mobileLogin.json,launchMobileMeetingForMember.json,createSetupWizardMeeting.json,providerRunningLateInfo.json,meetingDetails.json,logVendorMeetingEvents.json,setKPHCConferenceStatus.json,logout.json,isMeetingHashValid.json,caregiverJoinMeeting.json,joinLeaveMeeting.json,loadPropertiesByName.json,*.htm,joinLeaveMobileMeeting.json,logMobileVendorMeetingEvents.json,mobileRunningLateInfo.json,healthMonitor,joinLeaveReactMeeting.json,quitMeeting.json,submitSurvey.json,getActiveSurveys.json,insertVendorMeetingMediaCDR.json,authorizeVVCode.json,getSurveyQuestions.json,launchMeetingForInstantMember.json,authorizeECCode.json,updateGuestParticipant.json,endInstantGuestSession.json</param-value>
 		</init-param>
 
 	</filter>
