@@ -1671,7 +1671,7 @@ class Conference extends React.Component {
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                        <div className={remoteStreamVisible}>
+                                        <div className={remoteStreamVisible} style={remoteContainerStyle}>
                                             <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
                                                 <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                                 {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
