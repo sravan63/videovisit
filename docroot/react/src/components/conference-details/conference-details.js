@@ -15,7 +15,7 @@ class ConferenceDetails extends React.Component {
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.updateRunningLateTime = this.updateRunningLateTime.bind(this);
-        this.state = { isRunningLate: false,spotlight:false,runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [], hostDetails: {hostInCall: false, uuid: null}, isGuest: false };
+        this.state = { isRunningLate: false,spotlight:false,runLateMeetingTime: '', runningLateUpdatedTime: '', meetingDetails: {}, participants: [], hostDetails: {hostInCall: false, uuid: null}, isGuest: false, isGenericVisit: false };
     }
 
     componentDidMount() {
@@ -27,6 +27,7 @@ class ConferenceDetails extends React.Component {
                                            sessionStorage.getItem('isInstantPG') && JSON.parse(sessionStorage.getItem('isInstantPG')) == true );
                     this.setSortedParticipantList();
                     this.indicateUserOnJoin();
+                    this.state.isGenericVisit = ( notification.data.meetingDetails.meetingVendorId.charAt(0) == 'g' );
                     // this.setState({ meetingDetails: notification.data.meetingDetails });
                 break;
                 case GlobalConfig.UPDATE_RUNNING_LATE:
@@ -74,9 +75,17 @@ class ConferenceDetails extends React.Component {
                     this.setActiveSpeaker(false,notification.data);
                 break;
                 case GlobalConfig.UPDATE_HOST_DETAILS_IN_GENERICVISIT:
-                    if(!this.state.meetingDetails.host.nuid){
+                    if(this.state.isGenericVisit && !this.state.meetingDetails.host['NUID']){
                         this.state.meetingDetails.host = notification.data.host;
-                        // this.validateHostPresence(notification.data.details, true);
+                        this.state.meetingDetails.host['NUID'] = notification.data.host.nuid;
+                        const hostName = notification.data.host.lastName.toLowerCase().trim() + ', '+ notification.data.host.firstName.toLowerCase().trim();
+                        for(var i=this.state.participants.length-1; i>=0; i--){
+                            const x = this.state.participants[i];
+                            if(!x.isTelephony && x.backupName.toLowerCase().trim() == hostName){
+                                this.state.participants.splice(i,1);
+                            }
+                        }
+                        this.validateHostPresence(notification.data.details, true);
                     }
                 break;
             }
