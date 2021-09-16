@@ -95,6 +95,7 @@ public class WebService {
 	private static final char MCONFERENCE = 'C';
 	private static final char VV_EC = 'E';
 	private static final char MEETINGAPI = 'M';
+	private static final char MEMBERSOAUTH = 'O';
 
 	// Parameters for Proxy Appts logic
 	private static String secureCodes = null;
@@ -478,35 +479,55 @@ public class WebService {
 		return kpOrgSignOnInfo;
 
 	}
-
+	
+	
 	// Authorize Member by passing guid to Member SSO Auth API
-	public static AuthorizeResponseVo authorizeMemberSSOByGuid(String guid, String regionCode) throws Exception {
-		logger.info(LOG_ENTERED);
-		logger.debug(
-				"guid=" + guid + ", regionCode=" + regionCode + ", memberSSOAuthRegionCode=" + memberSSOAuthRegionCode);
-		AuthorizeResponseVo response = null;
-		try {
-			initializeMemberSSOAuthProperties();
-			EsbInfo esbInfo = new EsbInfo();
-			esbInfo.setEndpoint(memberSSOAuthAPIUrl);
-			esbInfo.setUserName(serviceSecurityUsername);
-			esbInfo.setPassword(serviceSecurityPassword);
+		public static AuthorizeResponseVo authorizeMemberSSOByGuid(String guid, String regionCode) throws Exception {
+			logger.info(LOG_ENTERED);
+			logger.debug(
+					"guid=" + guid + ", regionCode=" + regionCode + ", memberSSOAuthRegionCode=" + memberSSOAuthRegionCode);
+			
+			AuthorizeResponseVo response = null;
+			/*
+			try {
+				initializeMemberSSOAuthProperties();
+				EsbInfo esbInfo = new EsbInfo();
+				esbInfo.setEndpoint(memberSSOAuthAPIUrl);
+				esbInfo.setUserName(serviceSecurityUsername);
+				esbInfo.setPassword(serviceSecurityPassword);
 
-			AuthorizeRequestVo req = new AuthorizeRequestVo();
-			req.setGuid(guid);
-			if (StringUtils.isBlank(regionCode)) {
-				regionCode = memberSSOAuthRegionCode;
+				AuthorizeRequestVo req = new AuthorizeRequestVo();
+				req.setGuid(guid);
+				if (StringUtils.isBlank(regionCode)) {
+					regionCode = memberSSOAuthRegionCode;
+				}
+				req.setRegionCode(regionCode);
+				response = MemberSSOAuthAPIs.authorize(esbInfo, req);
+
+			} catch (Exception e) {
+				logger.error("Web Service API error:" + e.getMessage(), e);
+
 			}
-			req.setRegionCode(regionCode);
-			response = MemberSSOAuthAPIs.authorize(esbInfo, req);
-
-		} catch (Exception e) {
-			logger.error("Web Service API error:" + e.getMessage(), e);
-
+			*/
+			try {
+				initializeMemberSSOAuthProperties();
+				final Gson gson = new Gson();
+				AuthorizeRequestVo req = new AuthorizeRequestVo();
+				req.setGuid(guid);
+				if (StringUtils.isBlank(regionCode)) {
+					regionCode = memberSSOAuthRegionCode;
+				}
+				req.setRegionCode(regionCode);
+				final String inputString = gson.toJson(req);
+				String jsonResponse  = callAPIManagerService(ServiceUtil.AUTHORIZE_MEMBER_OAUTH, inputString, MEMBERSOAUTH, ServiceUtil.POST,null);
+				response = gson.fromJson(jsonResponse, AuthorizeResponseVo.class);
+			}catch(Exception e) {
+				logger.error("Web Service API error:" + e.getMessage(), e);
+			}
+			
+			logger.info(LOG_EXITING);
+			return response;
 		}
-		logger.info(LOG_EXITING);
-		return response;
-	}
 
 	// perform SSO sign off from Kp org API
 	public static boolean performKpOrgSSOSignOff(final String ssoSession) {
@@ -2109,6 +2130,9 @@ public class WebService {
 		case MCONFERENCE:
 			uriContext = AppProperties.getExtPropertiesValueByKey("mconference_service_context");
 			break;
+		case MEMBERSOAUTH:
+			  uriContext = AppProperties.getExtPropertiesValueByKey("members_oauth_service_context");
+			  break;
 		case VV_EC:
 			for (Map.Entry<String, String> entry : inputHeaders.entrySet()) {
 				headers.set(entry.getKey(), entry.getValue());

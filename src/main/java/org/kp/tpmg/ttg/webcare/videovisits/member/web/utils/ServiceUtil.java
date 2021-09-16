@@ -50,4 +50,6 @@ public class ServiceUtil {
 	public static final String X_CLIENTID="X-CLIENTID";
 	public static final String X_SESSIONID="X-SESSIONID";
 	public static final String IS_FROM_MOBILE_STRING="isFromMobile";
+	
+	public static final String AUTHORIZE_MEMBER_OAUTH = "authorize";
 }
