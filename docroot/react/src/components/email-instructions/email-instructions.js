@@ -9,7 +9,7 @@ class emailInstructions extends Component {
     componentDidMount() {
         const params = window.location.href.split('?')[1];
         const urlParams = new URLSearchParams( params );
-        const tokenValue  = urlParams.has('jt') && urlParams.get('jt');
+        const tokenValue  = urlParams.has('tk') && urlParams.get('tk');
         const lang  = urlParams.has('lang') && urlParams.get('lang');
         this.getVisitDetails(tokenValue);
     }
