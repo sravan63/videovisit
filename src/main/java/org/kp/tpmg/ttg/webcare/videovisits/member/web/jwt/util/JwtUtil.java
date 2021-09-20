@@ -16,6 +16,7 @@ public class JwtUtil {
 	}
 
 	public final static String JWT_SECRET = "videovisit-jwt-secret-kaiser-ttg-tpmg-ncal-this-key";
+	public final static String JWT_SECRET_EMAIL = "videovisit-email-jwt-secret-kaiser-ttg-tpmg-ncal-this-key";
 	public final static long JWT_TOKEN_EXPIRATION_MILLIS = 7200000;// expiration set to 2 hours
 	public static final Logger logger = Logger.getLogger(JwtUtil.class);
 
@@ -71,5 +72,17 @@ public class JwtUtil {
 		}
 		logger.info(LOG_EXITING + " mobile direct launch");
 		return isValid;
+	}
+	
+	public static Claims validateEmailAuthToken(final String authToken) {
+		logger.info(LOG_ENTERED);
+		Claims claims = null;
+		try {
+			claims = JwtTokenValidator.parseToken(authToken, JwtUtil.JWT_SECRET_EMAIL);
+		} catch (Exception e) {
+			logger.warn("Error while validating email auth token", e);
+		}
+		logger.info(LOG_EXITING);
+		return claims;
 	}
 }

@@ -52,4 +52,9 @@ public class ServiceUtil {
 	public static final String IS_FROM_MOBILE_STRING="isFromMobile";
 	
 	public static final String AUTHORIZE_MEMBER_OAUTH = "authorize";
+	
+	public static final String INSTRUCTIONAL_EMAIL="patient_instructional_email";
+	public static final String EMAIL_TYPE="emailType";
+	public static final String SUBJECT="subject";
+	public static final String MDO_URL="mdoUrl";
 }

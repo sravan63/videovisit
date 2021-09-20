@@ -442,4 +442,15 @@ public class MemberRestController{
 		logger.info(LOG_EXITING);
 		return output;
 	}
+	
+	@RequestMapping(value = "/getEmailTokenInfo.json", produces = { MediaType.APPLICATION_JSON_VALUE }, method = {
+			RequestMethod.POST, RequestMethod.GET })
+	public String getEmailTokenInfo(final HttpServletRequest request, final HttpServletResponse response)
+			throws Exception {
+		logger.info(LOG_ENTERED);
+		String output = MeetingCommand.getEmailTokenInfo(request);
+		logger.debug("output = " + output);
+		logger.info(LOG_EXITING);
+		return output;
+	}
 }

@@ -12,6 +12,7 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SSO_S
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCESS_200;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
+import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.DATA_NOT_FOUND;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +39,12 @@ import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.KpOrgSignOnInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.UserInfo;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util.JwtUtil;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.EmailDynamicContent;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.EmailDynamicContentOutput;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.EmailDynamicContentOutputEnvelope;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.EmailDynamicContentOutputJson;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.SSOSignOnInfo;
+import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.Status;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.DeviceDetectionService;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.service.WebService;
@@ -51,6 +57,7 @@ import org.kp.ttg.sharedservice.domain.MemberSSOAuthorizeResponseWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import io.jsonwebtoken.Claims;
 import net.sf.json.JSONObject;
 import net.sourceforge.wurfl.core.Device;
 
@@ -1700,6 +1707,63 @@ public class MeetingCommand {
 		}
 		logger.info(LOG_EXITING);
 		return result;
+	}
+	
+	public static String getEmailTokenInfo(HttpServletRequest request) {
+		logger.info(LOG_ENTERED);
+		String result = "";
+		final Gson gson = new Gson();
+		final EmailDynamicContentOutputJson outputJson = new EmailDynamicContentOutputJson();
+		final EmailDynamicContentOutput output = new EmailDynamicContentOutput();
+		final Status status = new Status();
+		output.setName("DynamicEmailTokenContent");
+		try {
+			String authtoken = request.getHeader("authtoken");
+			if (StringUtils.isBlank(authtoken)) {
+				status.setCode(ServiceUtil.CODE_300);
+				status.setMessage(ServiceUtil.MISSING_INPUT_ATTRIBUTES);
+				output.setStatus(status);
+				outputJson.setService(output);
+			} else {
+				final Claims claims = JwtUtil.validateEmailAuthToken(authtoken);
+				if (claims != null && !claims.isEmpty()) {
+					setEmailContentOutput(output, claims);
+					logger.debug(claims);
+					status.setCode(SUCCESS_200);
+					status.setMessage(SUCCESS);
+				} else {
+					status.setCode(DATA_NOT_FOUND);
+					status.setMessage(FAILURE);
+				}
+				output.setStatus(status);
+				outputJson.setService(output);
+			}
+		} catch (Exception e) {
+			status.setCode(FAILURE_900);
+			status.setMessage(FAILURE);
+			output.setStatus(status);
+			outputJson.setService(output);
+			logger.error("Error while parsing the token : ", e);
+		}
+
+		result = gson.toJson(outputJson);
+		logger.info(LOG_EXITING);
+		return result;
+	}
+
+	private static void setEmailContentOutput(final EmailDynamicContentOutput output, final Claims claims) {
+		logger.info(LOG_ENTERED);
+		final EmailDynamicContentOutputEnvelope enevelope = new EmailDynamicContentOutputEnvelope();
+		if(StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE)) && ServiceUtil.INSTRUCTIONAL_EMAIL.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE))) {
+		final EmailDynamicContent  emailDynamicContent = new EmailDynamicContent();
+		emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
+		emailDynamicContent.setEmailType((String) claims.get(ServiceUtil.EMAIL_TYPE));
+		emailDynamicContent.setSubject((String) claims.get(ServiceUtil.SUBJECT));
+		emailDynamicContent.setMdoUrl((String) claims.get(ServiceUtil.MDO_URL));
+		enevelope.setInstructionalEmail(emailDynamicContent);
+		}
+		output.setEnvelope(enevelope);
+		logger.info(LOG_EXITING);
 	}
 }
 
