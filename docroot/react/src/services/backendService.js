@@ -250,6 +250,14 @@ class BackendService extends React.Component {
         
     }
 
+    validateJwtToken(tokenValue){
+        let headers ={
+            authtoken:tokenValue
+        };
+        return Axios.post(this.state.basePath + '/videovisit/' + 'getEmailTokenInfo.json', {},{ headers: headers });
+
+    }
+
     getSurveyDetails(meetingId, userType, userValue) {
         let headers = {
             meetingId:meetingId,

@@ -8,6 +8,7 @@ import Setup from '../src/views/setup/setup';
 import MyMeetings from './views/secure/my-meetings/my-meetings';
 import VideoVisit from './views/secure/visit/visit';
 import FailedAuthentication from './components/authentication-failed/authentication-failed';
+import emailInstructions from "./components/email-instructions/email-instructions";
 
 export const routes = [{
         path: '/',
@@ -36,6 +37,10 @@ export const routes = [{
     {
         path: '/authenticationFailed',
         component: FailedAuthentication
+    },
+    {
+        path: '/mailTranslation',
+        component: emailInstructions
     }
 ];
 export const RouteWithSubRoutes = (route) => (
