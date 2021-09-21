@@ -665,6 +665,7 @@ class Conference extends React.Component {
         if(/iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth >= 1024 ){
             dskTopView = true
         }
+        let controls = isLandscape ? document.getElementsByClassName('landscape-controlbar')[0] : document.getElementsByClassName('controls-bar')[0];
         cssprops.map((s)=>{
             if(s == 'right'){
                 let rightPOS;
@@ -677,7 +678,7 @@ class Conference extends React.Component {
                 } else {
                     rightPOS = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - elmnt.offsetWidth : window.innerWidth - elmnt.offsetWidth + 16 ;
                 }
-                elmnt.style.left = isLandscape && !dskTopView ? rightPOS - (GlobalConfig.CONTROLS_OFFSET + GlobalConfig.BUFFER_SPACE) + 'px' : rightPOS - GlobalConfig.BUFFER_SPACE + 'px';
+                elmnt.style.left = isLandscape && !dskTopView ? rightPOS - (controls.offsetWidth + GlobalConfig.BUFFER_SPACE) + 'px' : rightPOS - GlobalConfig.BUFFER_SPACE + 'px';
             }else if(s == 'bottom'){
                 let bottomPOS;
                 var viewportHeight = isLandscape && window.scrollY > 0 && !dskTopView ? document.body.scrollHeight : window.innerHeight;             
@@ -686,7 +687,7 @@ class Conference extends React.Component {
                 } else {
                     bottomPOS = viewportHeight - elmnt.offsetHeight ;
                 }
-                elmnt.style.top = !isLandscape ? bottomPOS - (GlobalConfig.CONTROLS_OFFSET + GlobalConfig.BUFFER_SPACE) + 'px' : bottomPOS - GlobalConfig.BUFFER_SPACE + 'px';
+                elmnt.style.top = !isLandscape ? bottomPOS - (controls.offsetHeigh + GlobalConfig.BUFFER_SPACE) + 'px' : bottomPOS - GlobalConfig.BUFFER_SPACE + 'px';
             } else {
                 elmnt.classList.add(s);
             }
