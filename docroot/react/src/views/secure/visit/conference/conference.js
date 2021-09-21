@@ -667,25 +667,26 @@ class Conference extends React.Component {
         }
         cssprops.map((s)=>{
             if(s == 'right'){
+                let rightPOS;
                 if(dskTopView){
                     if(!this.state.isRemoteFlippedToSelf){
-                        elmnt.style.left = window.innerWidth - elmnt.offsetWidth  + 16 + 'px';
+                        rightPOS = window.innerWidth - elmnt.offsetWidth  + 16;
+                    } else {
+                        rightPOS = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - (elmnt.offsetWidth * 2) : window.innerWidth - elmnt.offsetWidth ;
                     }
-                    else{
-                        elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - (elmnt.offsetWidth * 2) + 'px': window.innerWidth - elmnt.offsetWidth  + 'px';
-                    }
+                } else {
+                    rightPOS = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - elmnt.offsetWidth : window.innerWidth - elmnt.offsetWidth + 16 ;
                 }
-                else{
-                    elmnt.style.left = this.state.isRemoteFlippedToSelf && !isLandscape ? window.innerWidth - elmnt.offsetWidth + 'px': window.innerWidth - elmnt.offsetWidth + 16 + 'px';
-                }
+                elmnt.style.left = isLandscape && !dskTopView ? rightPOS - (GlobalConfig.CONTROLS_OFFSET + GlobalConfig.BUFFER_SPACE) + 'px' : rightPOS - GlobalConfig.BUFFER_SPACE + 'px';
             }else if(s == 'bottom'){
+                let bottomPOS;
                 var viewportHeight = isLandscape && window.scrollY > 0 && !dskTopView ? document.body.scrollHeight : window.innerHeight;             
                 if(dskTopView && !this.state.isRemoteFlippedToSelf ){
-                    elmnt.style.top = viewportHeight - (elmnt.offsetHeight * 2) + 'px';
+                    bottomPOS = viewportHeight - (elmnt.offsetHeight * 2);
+                } else {
+                    bottomPOS = viewportHeight - elmnt.offsetHeight ;
                 }
-                else{
-                    elmnt.style.top = viewportHeight - elmnt.offsetHeight + 'px';
-                }               
+                elmnt.style.top = !isLandscape ? bottomPOS - (GlobalConfig.CONTROLS_OFFSET + GlobalConfig.BUFFER_SPACE) + 'px' : bottomPOS - GlobalConfig.BUFFER_SPACE + 'px';
             } else {
                 elmnt.classList.add(s);
             }
