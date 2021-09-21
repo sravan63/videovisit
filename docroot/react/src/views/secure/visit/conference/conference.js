@@ -687,7 +687,7 @@ class Conference extends React.Component {
                 } else {
                     bottomPOS = viewportHeight - elmnt.offsetHeight ;
                 }
-                elmnt.style.top = !isLandscape ? bottomPOS - (controls.offsetHeigh + GlobalConfig.BUFFER_SPACE) + 'px' : bottomPOS - GlobalConfig.BUFFER_SPACE + 'px';
+                elmnt.style.top = !isLandscape ? bottomPOS - (controls.offsetHeight + GlobalConfig.BUFFER_SPACE) + 'px' : bottomPOS - GlobalConfig.BUFFER_SPACE + 'px';
             } else {
                 elmnt.classList.add(s);
             }
