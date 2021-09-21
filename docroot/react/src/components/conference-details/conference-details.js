@@ -79,18 +79,23 @@ class ConferenceDetails extends React.Component {
                         this.state.meetingDetails.host = notification.data.host;
                         this.state.meetingDetails.host['NUID'] = notification.data.host.nuid;
                         const hostName = notification.data.host.lastName.toLowerCase().trim() + ', '+ notification.data.host.firstName.toLowerCase().trim();
-                        for(var i=this.state.participants.length-1; i>=0; i--){
-                            const x = this.state.participants[i];
-                            if(!x.isTelephony && x.backupName.toLowerCase().trim() == hostName){
-                                this.state.participants.splice(i,1);
-                            }
-                        }
+                        this._removeHostFromParticipantList(this.state.participants, hostName);
+                        this._removeHostFromParticipantList(this.state.videoGuests, hostName);
                         this.validateHostPresence(notification.data.details, true);
                     }
                 break;
             }
         });
         
+    }
+
+    _removeHostFromParticipantList(list, hostName) {
+        for(var i=list.length-1; i>=0; i--){
+            const x = list[i];
+            if(!x.isTelephony && x.backupName.toLowerCase().trim() == hostName){
+                list.splice(i,1);
+            }
+        }
     }
 
     setSpotlight(key,data){
