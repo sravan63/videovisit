@@ -195,6 +195,7 @@ class Visit extends React.Component {
                             userDetails.meetingCode = instantPG.meetingCode;
                             sessionStorage.setItem('isInstantPG', true);
                         } else{
+                            sessionStorage.setItem('isInstantMember', true);
                             localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
                         }
                         localStorage.setItem('meetingId', JSON.stringify(meetingId));

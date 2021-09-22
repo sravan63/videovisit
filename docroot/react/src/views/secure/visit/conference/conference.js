@@ -1446,6 +1446,10 @@ class Conference extends React.Component {
             } else if ( this.state.loginType == GlobalConfig.LOGIN_TYPE.INSTANT ) {
                 if( this.state.isInstantPG ){
                     sessionStorage.clear();
+                    history.pushState(null, null, location.href);
+                    window.onpopstate = function(event) {
+                    history.go(1);
+                    };
                     window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
                 } else {
                     this.props.history.push(GlobalConfig.LOGIN_URL);
