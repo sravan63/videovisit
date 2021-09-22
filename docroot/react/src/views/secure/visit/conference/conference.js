@@ -1176,7 +1176,10 @@ class Conference extends React.Component {
        sessionStorage.removeItem('loggedAsDuplicateMember');
        window.removeEventListener('resize', this.handleResize, false);
        document.removeEventListener(this.visibilityChange, this.handleVisibilityChange, false);
-
+       setTimeout(() => {
+        window.history.forward()
+      }, 0)
+      window.onunload=function(){null};
     }
 
     toggleSettings() {

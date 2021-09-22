@@ -759,14 +759,11 @@ function connected(url) {
             var meetingId = JSON.parse(localStorage.getItem('meetingId'));
             var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
             var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-            var isInstantJoinMember = sessionStorage.getItem('isInstantMember');
+            var isInstantJoin = sessionStorage.getItem('isInstantJoin');
             var isECInstantJoin = sessionStorage.getItem('isECInstantJoin');
             var mrn = udata.mrn;
             var inMeetingDisplayName = JSON.parse(localStorage.getItem('memberName'));
             var inAppAccess = UtilityService.getInAppAccessFlag();
-            if(isInstantJoinMember){
-                rtc.sendChatMessage('MEMBERJOINEDINSTANT$' + isInstantJoinMember);
-            }
             if(isDirectLaunch || inAppAccess){
                 JoinLeaveMobileCall("J");
             }
