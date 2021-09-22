@@ -112,6 +112,8 @@ const GlobalConfig = {
     CALL_CONNECTED: 'CallConnected',
     CALL_DISCONNECTED: 'CallDisconnected',
     SEND_JOIN_LEAVE_STATUS: 'send join leave status',
+    BUFFER_SPACE: 10,
+    CONTROLS_OFFSET: 50,
     LANGUAGE_ENG:'english',
     LANGUAGE_SPANISH:'spanish',
     LANGUAGE_CHINESE:'chinese',
