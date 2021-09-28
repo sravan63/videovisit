@@ -992,14 +992,14 @@ class Conference extends React.Component {
                 } else {
                     // Do nothing
                     if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
-                        sessionStorage.removetItem('isECInstantJoin');
+                        sessionStorage.removeItem('isECInstantJoin');
                         window.location.reload();
                     }
                 }
             }, (err) => {
                 console.log("Error");
                 if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
-                    sessionStorage.removetItem('isECInstantJoin');
+                    sessionStorage.removeItem('isECInstantJoin');
                     window.location.reload();
                 }
             });
@@ -1080,7 +1080,8 @@ class Conference extends React.Component {
         var guestName;
         caregiver.forEach(function(val, index) {
             if (val.careGiverMeetingHash == details.meetingCode) {
-                guestName = val.lastName + ', ' + val.firstName + ', (' + val.emailAddress + ')';
+                let emailOrPhone = val.emailAddress ? val.emailAddress : val.phoneNumber;
+                guestName = val.lastName + ', ' + val.firstName + ', (' + emailOrPhone + ')';
             }
         });
         return guestName;
