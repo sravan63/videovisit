@@ -53,8 +53,22 @@ public class ServiceUtil {
 	
 	public static final String AUTHORIZE_MEMBER_OAUTH = "authorizebyguid";
 	
-	public static final String INSTRUCTIONAL_EMAIL="patient_instructional_email";
+	public static final String PATIENT_INSTRUCTIONAL_EMAIL="patient_instructional_email";
 	public static final String EMAIL_TYPE="emailType";
 	public static final String SUBJECT="subject";
 	public static final String MDO_URL="mdoUrl";
+	public static final String PATIENT_HELP_URL="patientHelpUrl";
+	public static final String PATIENT_JOIN_URL="patientJoinUrl";
+	
+	public static final String GUEST_HELP_URL="guestHelpUrl";
+	public static final String MEETING_TIME="meetingTime";
+	public static final String MEETING_URL="meetingURL";
+	public static final String MEMBER_FIRSTNAME="memberFirstName";
+	public static final String DOCTOR_LASTNAME="doctorLastName";
+	public static final String DOCTOR_FIRSTNAME="doctorFirstName";
+	public static final String DOCTOR_TITLE="doctorTitle";
+	public static final String MEMBER_LASTNAME_FIRSTCHAR="lastNameFirstCharMember";
+	
+	public static final String CAREGIVER_INSTRUCTIONAL_EMAIL="caregiver_instructional_email";
+	public static final String CAREGIVER_REMINDER_EMAIL="caregiver_reminder_email";
 }

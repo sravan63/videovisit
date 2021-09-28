@@ -1754,13 +1754,33 @@ public class MeetingCommand {
 	private static void setEmailContentOutput(final EmailDynamicContentOutput output, final Claims claims) {
 		logger.info(LOG_ENTERED);
 		final EmailDynamicContentOutputEnvelope enevelope = new EmailDynamicContentOutputEnvelope();
-		if(StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE)) && ServiceUtil.INSTRUCTIONAL_EMAIL.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE))) {
-		final EmailDynamicContent  emailDynamicContent = new EmailDynamicContent();
-		emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
-		emailDynamicContent.setEmailType((String) claims.get(ServiceUtil.EMAIL_TYPE));
-		emailDynamicContent.setSubject((String) claims.get(ServiceUtil.SUBJECT));
-		emailDynamicContent.setMdoUrl((String) claims.get(ServiceUtil.MDO_URL));
-		enevelope.setInstructionalEmail(emailDynamicContent);
+		if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
+				&& ServiceUtil.PATIENT_INSTRUCTIONAL_EMAIL
+						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE))) {
+			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
+			emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
+			emailDynamicContent.setEmailType((String) claims.get(ServiceUtil.EMAIL_TYPE));
+			emailDynamicContent.setSubject((String) claims.get(ServiceUtil.SUBJECT));
+			emailDynamicContent.setPatientHelpUrl((String) claims.get(ServiceUtil.PATIENT_HELP_URL));
+			emailDynamicContent.setPatientJoinUrl((String) claims.get(ServiceUtil.PATIENT_JOIN_URL));
+			enevelope.setInstructionalEmail(emailDynamicContent);
+		} else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
+				&& (ServiceUtil.CAREGIVER_INSTRUCTIONAL_EMAIL
+						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)) || ServiceUtil.CAREGIVER_REMINDER_EMAIL
+						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)))) {
+			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
+			emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
+			emailDynamicContent.setEmailType((String) claims.get(ServiceUtil.EMAIL_TYPE));
+			emailDynamicContent.setSubject((String) claims.get(ServiceUtil.SUBJECT));
+			emailDynamicContent.setGuestHelpUrl((String) claims.get(ServiceUtil.GUEST_HELP_URL));
+			emailDynamicContent.setMeetingURL((String) claims.get(ServiceUtil.MEETING_URL));
+			emailDynamicContent.setMeetingTime((String) claims.get(ServiceUtil.MEETING_TIME));
+			emailDynamicContent.setMemberFirstName((String) claims.get(ServiceUtil.MEMBER_FIRSTNAME));
+			emailDynamicContent.setLastNameFirstCharMember((String) claims.get(ServiceUtil.MEMBER_LASTNAME_FIRSTCHAR));
+			emailDynamicContent.setDoctorFirstName((String) claims.get(ServiceUtil.DOCTOR_FIRSTNAME));
+			emailDynamicContent.setDoctorLastName((String) claims.get(ServiceUtil.DOCTOR_LASTNAME));
+			emailDynamicContent.setDoctorTitle((String) claims.get(ServiceUtil.DOCTOR_TITLE));
+			enevelope.setInstructionalEmail(emailDynamicContent);
 		}
 		output.setEnvelope(enevelope);
 		logger.info(LOG_EXITING);
