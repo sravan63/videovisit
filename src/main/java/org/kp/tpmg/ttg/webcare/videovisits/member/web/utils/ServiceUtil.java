@@ -71,4 +71,7 @@ public class ServiceUtil {
 	
 	public static final String CAREGIVER_INSTRUCTIONAL_EMAIL="caregiver_instructional_email";
 	public static final String CAREGIVER_REMINDER_EMAIL="caregiver_reminder_email";
+	
+	public static final String EMAIL_TYPE_GUEST_EARLYSTART= "GUEST_EARLYSTART";
+	public static final String SIGN_IN_URL="signInUrl";
 }

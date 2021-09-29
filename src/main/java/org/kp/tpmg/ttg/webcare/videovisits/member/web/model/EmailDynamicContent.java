@@ -23,6 +23,7 @@ public class EmailDynamicContent implements Serializable {
 	private String lastNameFirstCharMember;
 	private String patientHelpUrl;
 	private String patientJoinUrl;
+	private String signInUrl;
 
 	public String getMeetingId() {
 		return meetingId;
@@ -142,6 +143,14 @@ public class EmailDynamicContent implements Serializable {
 
 	public void setPatientJoinUrl(String patientJoinUrl) {
 		this.patientJoinUrl = patientJoinUrl;
+	}
+	
+	public String getSignInUrl() {
+		return signInUrl;
+	}
+
+	public void setSignInUrl(String signInUrl) {
+		this.signInUrl = signInUrl;
 	}
 
     

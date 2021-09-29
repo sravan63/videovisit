@@ -1781,6 +1781,18 @@ public class MeetingCommand {
 			emailDynamicContent.setDoctorLastName((String) claims.get(ServiceUtil.DOCTOR_LASTNAME));
 			emailDynamicContent.setDoctorTitle((String) claims.get(ServiceUtil.DOCTOR_TITLE));
 			enevelope.setEmailDynamicContent(emailDynamicContent);
+		}	else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
+				&& (ServiceUtil.EMAIL_TYPE_GUEST_EARLYSTART
+						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)))) {
+			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
+			emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
+			emailDynamicContent.setEmailType((String) claims.get(ServiceUtil.EMAIL_TYPE));
+			emailDynamicContent.setSubject((String) claims.get(ServiceUtil.SUBJECT));
+			emailDynamicContent.setGuestHelpUrl((String) claims.get(ServiceUtil.GUEST_HELP_URL));
+			emailDynamicContent.setMeetingURL((String) claims.get(ServiceUtil.MEETING_URL));
+			emailDynamicContent.setMeetingTime((String) claims.get(ServiceUtil.MEETING_TIME));
+			emailDynamicContent.setSignInUrl(ServiceUtil.SIGN_IN_URL);
+			enevelope.setEmailDynamicContent(emailDynamicContent);
 		}
 		output.setEnvelope(enevelope);
 		logger.info(LOG_EXITING);
