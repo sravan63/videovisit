@@ -1763,7 +1763,7 @@ public class MeetingCommand {
 			emailDynamicContent.setSubject((String) claims.get(ServiceUtil.SUBJECT));
 			emailDynamicContent.setPatientHelpUrl((String) claims.get(ServiceUtil.PATIENT_HELP_URL));
 			emailDynamicContent.setPatientJoinUrl((String) claims.get(ServiceUtil.PATIENT_JOIN_URL));
-			enevelope.setInstructionalEmail(emailDynamicContent);
+			enevelope.setEmailDynamicContent(emailDynamicContent);
 		} else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
 				&& (ServiceUtil.CAREGIVER_INSTRUCTIONAL_EMAIL
 						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)) || ServiceUtil.CAREGIVER_REMINDER_EMAIL
@@ -1780,7 +1780,7 @@ public class MeetingCommand {
 			emailDynamicContent.setDoctorFirstName((String) claims.get(ServiceUtil.DOCTOR_FIRSTNAME));
 			emailDynamicContent.setDoctorLastName((String) claims.get(ServiceUtil.DOCTOR_LASTNAME));
 			emailDynamicContent.setDoctorTitle((String) claims.get(ServiceUtil.DOCTOR_TITLE));
-			enevelope.setInstructionalEmail(emailDynamicContent);
+			enevelope.setEmailDynamicContent(emailDynamicContent);
 		}
 		output.setEnvelope(enevelope);
 		logger.info(LOG_EXITING);
