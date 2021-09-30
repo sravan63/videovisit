@@ -1470,10 +1470,11 @@ class Conference extends React.Component {
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
             }
         } else {
-                console.log(sessionStorage.getItem('isHostKicked'));
+            if(sessionStorage.getItem('isHostKicked') == 'true'){
+                this.props.history.push('https://mydoctor.kaiserpermanente.org/ncal/videovisit/');
                 sessionStorage.setItem('isHostKicked',false);
-                // this.props.history.push('/change url =' + this.state.meetingCode);
-                // return true;
+                return true;
+            }
             this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
         }
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
