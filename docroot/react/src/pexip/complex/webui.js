@@ -383,6 +383,7 @@ function remoteDisconnect(reason) {
         alert(reason);
     }else if(reason.indexOf("Disconnected by another participant") > -1){
         $(".leave-button").trigger("click");
+        sessionStorage.setItem('isHostKicked',true);
     } else {
         if (reason == 'Test call finished') {
             MessageService.sendMessage(GlobalConfig.TEST_CALL_FINISHED, null);

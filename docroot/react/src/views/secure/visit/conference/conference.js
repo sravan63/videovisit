@@ -1470,6 +1470,10 @@ class Conference extends React.Component {
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
             }
         } else {
+                console.log(sessionStorage.getItem('isHostKicked'));
+                sessionStorage.setItem('isHostKicked',false);
+                // this.props.history.push('/change url =' + this.state.meetingCode);
+                // return true;
             this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
         }
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
