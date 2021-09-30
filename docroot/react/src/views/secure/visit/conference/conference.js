@@ -1471,7 +1471,7 @@ class Conference extends React.Component {
             }
         } else {
             if(sessionStorage.getItem('isHostKicked') == 'true'){
-                this.props.history.push('https://mydoctor.kaiserpermanente.org/ncal/videovisit/');
+                window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
                 sessionStorage.setItem('isHostKicked',false);
                 return true;
             }
