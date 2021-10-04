@@ -73,5 +73,8 @@ public class ServiceUtil {
 	public static final String CAREGIVER_REMINDER_EMAIL="caregiver_reminder_email";
 	
 	public static final String EMAIL_TYPE_GUEST_EARLYSTART= "GUEST_EARLYSTART";
+	public static final String EMAIL_TYPE_MEMBER_EARLYSTART = "MEMBER_EARLYSTART";
 	public static final String SIGN_IN_URL="signInUrl";
+	public static final String DOWNLOAD_MDO_APP_URL="downloadMdoAppUrl";
+	public static final String VV_WEB_PAGE_URL="vvWebPage";
 }
