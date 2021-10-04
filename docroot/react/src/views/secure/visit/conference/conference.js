@@ -1080,7 +1080,11 @@ class Conference extends React.Component {
         var guestName;
         caregiver.forEach(function(val, index) {
             if (val.careGiverMeetingHash == details.meetingCode) {
-                guestName = val.lastName + ', ' + val.firstName + ', ' + val.emailAddress ? '(' + val.emailAddress + ')' : '' ;
+                let emailOrPhone = val.emailAddress ? val.emailAddress : val.phoneNumber;
+                if (emailOrPhone == val.phoneNumber)
+                    guestName = val.lastName + ', ' + val.firstName;
+                else
+                    guestName = val.lastName + ', ' + val.firstName + ', (' + emailOrPhone + ')';
             }
         });
         return guestName;
