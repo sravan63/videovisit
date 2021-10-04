@@ -1791,7 +1791,7 @@ public class MeetingCommand {
 			emailDynamicContent.setGuestHelpUrl((String) claims.get(ServiceUtil.GUEST_HELP_URL));
 			emailDynamicContent.setMeetingURL((String) claims.get(ServiceUtil.MEETING_URL));
 			emailDynamicContent.setMeetingTime((String) claims.get(ServiceUtil.MEETING_TIME));
-			emailDynamicContent.setSignInUrl(ServiceUtil.SIGN_IN_URL);
+			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.SIGN_IN_URL));
 			enevelope.setEmailDynamicContent(emailDynamicContent);
 		}
 		output.setEnvelope(enevelope);
