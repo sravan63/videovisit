@@ -51,7 +51,7 @@ public class ServiceUtil {
 	public static final String X_SESSIONID="X-SESSIONID";
 	public static final String IS_FROM_MOBILE_STRING="isFromMobile";
 	
-	public static final String AUTHORIZE_MEMBER_OAUTH = "authorizebyguid";
+	public static final String AUTHORIZE_MEMBER_OAUTH = "authorize";
 	
 	public static final String PATIENT_INSTRUCTIONAL_EMAIL="patient_instructional_email";
 	public static final String EMAIL_TYPE="emailType";
