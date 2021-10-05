@@ -24,6 +24,8 @@ public class EmailDynamicContent implements Serializable {
 	private String patientHelpUrl;
 	private String patientJoinUrl;
 	private String signInUrl;
+	private String downloadMdoAppUrl;
+	private String vvWebPage;
 
 	public String getMeetingId() {
 		return meetingId;
@@ -151,6 +153,22 @@ public class EmailDynamicContent implements Serializable {
 
 	public void setSignInUrl(String signInUrl) {
 		this.signInUrl = signInUrl;
+	}
+
+	public String getDownloadMdoAppUrl() {
+		return downloadMdoAppUrl;
+	}
+
+	public void setDownloadMdoAppUrl(String downloadMdoAppUrl) {
+		this.downloadMdoAppUrl = downloadMdoAppUrl;
+	}
+
+	public String getVvWebPage() {
+		return vvWebPage;
+	}
+
+	public void setVvWebPage(String vvWebPage) {
+		this.vvWebPage = vvWebPage;
 	}
 
     
