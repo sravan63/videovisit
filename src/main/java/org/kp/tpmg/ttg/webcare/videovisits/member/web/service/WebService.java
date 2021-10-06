@@ -2165,7 +2165,6 @@ public class WebService {
 			output = (String) responseEntity.getBody();
 		}
 		logger.info(LOG_ENTERED);
-		logger.info("Response from ssoAuth: " + output);
 		return output;
 	}
 	
