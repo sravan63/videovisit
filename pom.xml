@@ -9,7 +9,7 @@
 
 	<groupId>org.kp.tpmg.ttg.videovisit</groupId>
 	<artifactId>videovisitmember</artifactId>
-	<version>5.1.0-SNAPSHOT</version>
+	<version>5.1.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<properties>
