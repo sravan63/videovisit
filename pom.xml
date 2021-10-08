@@ -9,7 +9,7 @@
 
 	<groupId>org.kp.tpmg.ttg.videovisit</groupId>
 	<artifactId>videovisitmember</artifactId>
-	<version>5.1.0-SNAPSHOT</version>
+	<version>5.1.0</version>
 	<packaging>war</packaging>
 
 	<properties>
@@ -29,7 +29,7 @@
 	<scm>
 		<connection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</connection>
 		<developerConnection>scm:git:git@TTGSSDV0VRHCM01.TTGTPMG.NET:tpmg/videovisit/member-facing/videovisit-member-webapp.git</developerConnection>
-		<tag>HEAD</tag>
+		<tag>v5.1.0</tag>
 	</scm>
 
 	<!-- dependencies needed during compile time -->
