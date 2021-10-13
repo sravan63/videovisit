@@ -19,7 +19,6 @@ import ConferenceControls from '../../../../components/conference-controls/confe
 import GlobalConfig from '../../../../services/global.config';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 class Conference extends React.Component {
 
@@ -859,9 +858,9 @@ class Conference extends React.Component {
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
             // reloads the page only when the visibility state is visible
-            // if (document.visibilityState === 'visible') {
-            //     window.location.reload();
-            // }
+            if (document.visibilityState === 'visible') {
+                window.location.reload();
+            }
 
         /** Revertible code */
         /** Play/Pause the selfview when the visit on browser is changed from foreground to background and brought it back to foreground. */
@@ -1540,8 +1539,7 @@ class Conference extends React.Component {
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 //let uniqueParticipants = WebUI.removeDuplicateParticipants(this.state.participants);
                 let allModes =Object.values(this.aspectModes);
-                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='desktop'));
-                //allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='portrait'));
+                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='portrait'));
                 let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
 
                 if(participantCount === 2 && isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {
@@ -1551,7 +1549,6 @@ class Conference extends React.Component {
                         vh = document.documentElement.clientHeight -50;
                     }
                     this.remoteFeedMedia.current.style.setProperty('height', `${vh}px`);
-                    
                     return true;
                 }
             }
@@ -1563,7 +1560,6 @@ class Conference extends React.Component {
             this.setState({isRemoteFlippedToSelf: false});
         }
         this.remoteFeedMedia.current.style.removeProperty("height");
-        
         return false;
     }
     
@@ -1616,7 +1612,6 @@ class Conference extends React.Component {
 
     render() {
         let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
-        let remoteFeedPinchToZoom = document.getElementsByClassName("react-transform-component")[0];
         let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
         let remoteStreamVisible = this.state.videofeedflag && this.state.showSharedContent ? 'remoteStreamVisible' : 'noSMD';
@@ -1655,14 +1650,6 @@ class Conference extends React.Component {
             display : this.state.videofeedflag ? 'block' : 'none'
         };
         multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
-
-        if(Utilities.isMobileDevice() && !this.state.isRemoteFlippedToSelf && this.state.showSharedContent && remoteFeedPinchToZoom) {
-            remoteFeedPinchToZoom.style.setProperty("overflow", "unset");
-        }
-        else {
-            remoteFeedPinchToZoom && remoteFeedPinchToZoom.style.setProperty("overflow", "hidden");
-        }
-
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -1698,30 +1685,13 @@ class Conference extends React.Component {
                             <ConferenceControls controls={this.state} data={Details} />
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
-                                {Utilities.isMobileDevice()  && !this.state.isRemoteFlippedToSelf  ?
-                                    <TransformWrapper defaultScale={1} minScale={1}>
-                                    <TransformComponent>
-                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                    <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={remoteStreamVisible} style={remoteContainerStyle}>
-                                                {/* <div className={remoteStreamContainerClass} style={remoteContainerStyle}> */}
-                                                <div className={`${remoteStreamContainerClass} ${this.state.showSharedContent? "remoteFeedPinchAndZoom" : ""}`} style={remoteContainerStyle}>
-                                                    <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
-                                                    {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
-                                                </div>
+                                            <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
+                                                <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                                {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
+                                            </div>
                                         </div>
-                                    </TransformComponent>
-                                    </TransformWrapper>
-                                    :
-                                    <>
-                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                        <div className={remoteStreamVisible} style={remoteContainerStyle}>
-                                                <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
-                                                    <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
-                                                    {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
-                                                </div>
-                                        </div>
-                                    </>
-                                }
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
