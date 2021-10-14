@@ -157,7 +157,7 @@ class ConferenceDetails extends React.Component {
         var removeGuestName;
         if(isECInstantJoin || this.state.isGuest || patientName != memberName){
             var participant =JSON.parse(localStorage.getItem('memberName'));
-            if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
+            if( participant.indexOf('(') > -1 && participant.indexOf(')') > -1 ){
                         participant = participant.split('(')[0].trim();
                         if(participant.split(',').length > 2){ // lname, fname, (email)
                             var lastIndex = participant.lastIndexOf(',');
@@ -293,7 +293,7 @@ class ConferenceDetails extends React.Component {
 
 
         // TODO: Should remove this after UID implementation
-        if( participant.indexOf('(') > -1 && participant.indexOf('@') > -1 ){
+        if( participant.indexOf('(') > -1 && participant.indexOf(')') > -1 ){
             participant = participant.split('(')[0].trim();
             if(participant.split(',').length > 2){ // lname, fname, (email)
                 var lastIndex = participant.lastIndexOf(',');
