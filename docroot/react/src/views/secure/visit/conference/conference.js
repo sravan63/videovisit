@@ -1310,7 +1310,7 @@ class Conference extends React.Component {
              WebUI.pexipDisconnect();
             let headers = {};
                 headers.authtoken = this.state.userDetails.authToken;
-                headers.patientLastName = this.state.userDetails.lastname;
+                headers.patientLastName = this.state.isInstantPG ? this.state.meetingDetails.member.lastName: this.state.userDetails.lastname;
             var backButton = isFromBackButton ? isFromBackButton : false;
             BackendService.guestLogout(this.state.meetingCode,headers,backButton,this.state.isInstantPG).subscribe((response) => {
                 console.log("Success");
