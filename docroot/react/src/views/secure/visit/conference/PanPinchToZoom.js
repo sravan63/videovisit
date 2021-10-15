@@ -125,7 +125,7 @@ class PanPinchToZoom extends React.Component {
 				var oy=(this.pinchY)-(this.offsetY*scale);
 
 				if ((this.imageW*scale)>50){
-					document.getElementById(e.target.id).style.cssText=`left:${ox}px; top:${oy}px; width:${(this.imageW*scale)}px; height:${(this.imageH*scale)}px`;
+					document.getElementById(e.target.id).style.cssText=`position:absolute; left:${ox}px; top:${oy}px; width:${(this.imageW*scale)}px; height:${(this.imageH*scale)}px`;
 				}
 				// e.preventDefault();
 				e.stopPropagation();		  
