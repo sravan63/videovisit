@@ -19,7 +19,6 @@ import ConferenceControls from '../../../../components/conference-controls/confe
 import GlobalConfig from '../../../../services/global.config';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
-import PanPinchToZoom from "./PanPinchToZoom";
 
 class Conference extends React.Component {
 
@@ -66,7 +65,6 @@ class Conference extends React.Component {
         this.handleMove = this.handleMove.bind(this);
         this.handleStart = this.handleStart.bind(this);
         this.applyPosition = this.applyPosition.bind(this);
-        this.disablePanPinchZoom = this.disablePanPinchZoom.bind(this);
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
@@ -493,12 +491,7 @@ class Conference extends React.Component {
         document.onmousemove = null;
     }
 
-    handleStart(e) {
-        console.log(`eee${e.target.id}`);
-        //Return incase of pan pinch and zoom touch
-        if(e.target.id === "presvideo" || e.target.dataset.view === "larger"){
-            return;
-        }
+    handleStart(e){
         //If we switch to landscape scroll down the page again switch to portrait flip the view now switch to landscape then not able to scroll due to that smaller view is not visible.
         if(!this.state.isRemoteFlippedToSelf && e.target.dataset.view !== "larger"){
             e.preventDefault();
@@ -865,9 +858,9 @@ class Conference extends React.Component {
     handleVisibilityChange() {
         if(Utilities.isMobileDevice()){
             // reloads the page only when the visibility state is visible
-            // if (document.visibilityState === 'visible') {
-            //     window.location.reload();
-            // }
+            if (document.visibilityState === 'visible') {
+                window.location.reload();
+            }
 
         /** Revertible code */
         /** Play/Pause the selfview when the visit on browser is changed from foreground to background and brought it back to foreground. */
@@ -1540,9 +1533,6 @@ class Conference extends React.Component {
     }
 
     setPIPMode() {
-        if(this.remoteFeedMedia){
-            this.remoteFeedMedia.current =document.getElementById("video");
-        }
         if(this.state.isMobile && window.matchMedia("(orientation: portrait)").matches) {
             if(this.state.participants && this.state.participants.length > 0 ) {
                 let isAllParticipantInPortrait;
@@ -1620,18 +1610,6 @@ class Conference extends React.Component {
         }
     }
 
-    disablePanPinchZoom() {
-        const isLandscape = window.matchMedia("(orientation: landscape)").matches;
-        let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
-
-        if(Utilities.isMobileDevice() && !this.state.showSharedContent && (this.state.isPIPMode || (isLandscape && participantCount === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
-            this.zoomOnPinch = true;
-        }
-        else{
-            this.zoomOnPinch = false;
-        }
-    }
-
     render() {
         let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
         let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
@@ -1672,8 +1650,6 @@ class Conference extends React.Component {
             display : this.state.videofeedflag ? 'block' : 'none'
         };
         multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
-        this.disablePanPinchZoom();
-
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -1709,15 +1685,13 @@ class Conference extends React.Component {
                             <ConferenceControls controls={this.state} data={Details} />
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
-                                <PanPinchToZoom ref={(node) => { this.panPinchRemoteFeed = node; }} disablePanPinchToZoom={this.zoomOnPinch} isContentShared={this.state.showSharedContent} remoteContainerClass={remoteStreamContainerClass} remoteStreamVisibleClass={remoteStreamVisible} remoteContainerCssText={remoteContainerStyle} remoteVideoFeedClass={remoteFeedClass}>
-                                    <div ref={this.presentationViewMedia} id="presentation-view"  onTouchStart={this.handleStart} className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                    <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                         <div className={remoteStreamVisible} style={remoteContainerStyle}>
-                                        <div className={remoteStreamContainerClass} style={remoteContainerStyle} id="remoteFeedContainerDiv">
+                                            <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
                                                 <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                                 {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                             </div>
                                         </div>
-                                </PanPinchToZoom>
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
