@@ -70,7 +70,7 @@ class UserConfirmationBox extends Component {
                                   href="https://members.kaiserpermanente.org/kpweb/privacystate/entrypage.do"
                                   target="_blank">Privacy Practices</a></li>
                           </ul>
-                          <p className="copyright">Copyright ©2012-2020 The Permanente Medical Group, Inc. All rights
+                          <p className="copyright">Copyright ©2012-2022 The Permanente Medical Group, Inc. All rights
                               reserved.</p>
                       </div>
                   </div>
