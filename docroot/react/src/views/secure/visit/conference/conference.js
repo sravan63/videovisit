@@ -1544,7 +1544,7 @@ class Conference extends React.Component {
                 allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='desktop'));
                 let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
 
-                if(participantCount === 3 && isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {
+                if(participantCount === 2 && isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {
                // if(isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
                     //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
