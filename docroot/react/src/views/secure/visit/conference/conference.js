@@ -1698,17 +1698,28 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                 {/* <TransformWrapper options={{ disabled: this.disablePanPinchZoom() ? true : false, wrapperClass: 'my-wrapper-class', contentClass: this.disablePanPinchZoom() ? 'my-content-class' :'' }}> */}
                                     {/* <TransformComponent contentStyle={{ transform: 'none !important'}}> */}
-                                    <TransformWrapper options={{ disabled: this.disablePanPinchZoom()}}>
-                                    <TransformComponent>
-                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                        <div className={remoteStreamVisible} style={remoteContainerStyle} >
-                                            <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
-                                                <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                   { Utilities.isMobileDevice() ? 
+                                   <TransformWrapper options={{ disabled: this.disablePanPinchZoom()}}>
+                                   <TransformComponent>
+                                       <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                       <div className={remoteStreamVisible} style={remoteContainerStyle}>
+                                           <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
+                                               <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
+                                               {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
+                                           </div>
+                                       </div>
+                                   </TransformComponent>
+                               </TransformWrapper>
+                                : 
+                                <>
+                                    <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                    <div className={remoteStreamVisible} style={remoteContainerStyle}>
+                                        <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
+                                            <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                                 {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
-                                            </div>
                                         </div>
-                                    </TransformComponent>
-                                </TransformWrapper>
+                                    </div>
+                                </>}
                                     <Settings data={Details} />
                             </div> 
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
