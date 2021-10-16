@@ -1540,8 +1540,7 @@ class Conference extends React.Component {
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 //let uniqueParticipants = WebUI.removeDuplicateParticipants(this.state.participants);
                 let allModes =Object.values(this.aspectModes);
-                //allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='portrait'));
-                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='desktop'));
+                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='portrait'));
                 let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
 
                 if(participantCount === 2 && isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {
