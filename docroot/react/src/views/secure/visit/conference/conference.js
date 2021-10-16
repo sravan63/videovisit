@@ -19,6 +19,7 @@ import ConferenceControls from '../../../../components/conference-controls/confe
 import GlobalConfig from '../../../../services/global.config';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 class Conference extends React.Component {
 
@@ -509,7 +510,7 @@ class Conference extends React.Component {
     }
 
      handleMove(e) {
-        // Drag not allowed to larger view. 
+       // Drag not allowed to larger view. 
         if(e.target.dataset.view !== "smaller") {
             return;
         }
@@ -1539,10 +1540,12 @@ class Conference extends React.Component {
                 let isHostAvail = this.state.participants.some(WebUI.hostInMeeting);
                 //let uniqueParticipants = WebUI.removeDuplicateParticipants(this.state.participants);
                 let allModes =Object.values(this.aspectModes);
-                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='portrait'));
+                //allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='portrait'));
+                allModes.length && (isAllParticipantInPortrait = allModes.every(mode => mode ==='desktop'));
                 let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
 
-                if(participantCount === 2 && isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {
+                if(participantCount === 3 && isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {
+               // if(isAllParticipantInPortrait &&  !this.state.showSharedContent && isHostAvail) {
                     let vh = window.innerHeight - 50;
                     //To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
                     if(/iPhone/.test(navigator.userAgent) ) {
@@ -1602,18 +1605,27 @@ class Conference extends React.Component {
                 } 
                 !isLandscape && clickedElement.style.setProperty('height', `${vh}px`)
                 clickedElement.dataset.view = "larger";
-                this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
+               this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
                    this.initialPositionTop =  this.currentSmallerView.offsetTop +"px";
                    this.initialPositionLeft = this.currentSmallerView.offsetLeft +"px";
                 });
             }
         }
     }
+    disablePanPinchZoom() {
+        const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+        let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
+
+        if(Utilities.isMobileDevice() && !this.state.showSharedContent && (this.state.isPIPMode || (isLandscape && participantCount === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
+            return true;
+        }
+        return false;
+    }
 
     render() {
         let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
         let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
-        let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : 'stream-container';
+        let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : this.state.showSharedContent?'stream-container stream-container-SMD':'stream-container';
         let remoteStreamVisible = this.state.videofeedflag && this.state.showSharedContent ? 'remoteStreamVisible' : 'noSMD';
         //let selfviewandsmd = this.state.videofeedflag && this.state.showSharedContent ? 'remotestream self-view' : 'self-view';
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
@@ -1685,21 +1697,27 @@ class Conference extends React.Component {
                             <ConferenceControls controls={this.state} data={Details} />
                             <div className="col-11 col-md-12 p-0 remote-feed-container" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                 <WaitingRoom waitingroom={this.state} data={Details} />
-                                    <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
-                                        <div className={remoteStreamVisible} style={remoteContainerStyle}>
+                                {/* <TransformWrapper options={{ disabled: this.disablePanPinchZoom() ? true : false, wrapperClass: 'my-wrapper-class', contentClass: this.disablePanPinchZoom() ? 'my-content-class' :'' }}> */}
+                                    {/* <TransformComponent contentStyle={{ transform: 'none !important'}}> */}
+                                    <TransformWrapper options={{ disabled: this.disablePanPinchZoom()}}>
+                                    <TransformComponent>
+                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
+                                        <div className={remoteStreamVisible} style={remoteContainerStyle} >
                                             <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
                                                 <video ref ={this.remoteFeedMedia} data-view="larger" onTouchStart={this.handleStart} className={remoteFeedClass} width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video>
                                                 {/* <video ref ={this.remoteFeedMedia} className="remoteFeed" width="100%" height="100%"  id="video" autoPlay="autoplay" playsInline="playsinline"></video> */}
                                             </div>
                                         </div>
+                                    </TransformComponent>
+                                </TransformWrapper>
                                     <Settings data={Details} />
-                            </div>
+                            </div> 
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
                                <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
                                 </video>
                                {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
                                </video> */}
-                            </div>
+                            </div>                            
                             <div id="controls" className="controls-bar">
                               <ul className="video-controls m-0">
                                 <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>

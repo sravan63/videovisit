@@ -269,6 +269,25 @@
                  left: 26px!important;
              }
 
+             .react-transform-component{
+                width: auto;
+                height: auto;
+               // overflow: unset;
+             }
+
+             .react-transform-element{
+                width: auto;
+                height: auto;
+             }
+
+             .my-content-class {
+                transform: translate(0px, 0px) scale(1) !important;
+            }
+
+            .my-content-class-none {
+               transform: initial !important;
+           }
+
             .presentation-view {
                 width:93.5%;
                 height: 100%;
@@ -400,7 +419,7 @@
                 .remoteStreamVisible{
                     bottom: -100% !important;                    
                     max-width: unset !important;
-                    z-index: unset;
+                   // z-index: unset;
                     position: relative !important;
                 }             
             }
@@ -454,7 +473,7 @@
                     right: 0;
                     max-height: 25%;
                     width: 18.5% !important;
-                }
+                }          
                 .self-view {
                     // height: 50%;
                     width: 100%;
@@ -657,15 +676,24 @@
                         z-index: 2;
                     }
 
-                    .flipRemoteFeedPIP {
+                    // .flipRemoteFeedPIP {
+                    //     object-fit: cover;
+                    //     position: absolute;
+                    //     left: 16px;
+                    //     bottom: 0px;
+                    //     z-index: 3;
+                    //     max-height: 18%;
+                    //     max-width: 15%;
+                    // }
+                     .flipRemoteFeedPIP {
                         object-fit: cover;
-                        position: absolute;
+                        position: relative !important;
                         left: 16px;
                         bottom: 0px;
                         z-index: 3;
                         max-height: 18%;
                         max-width: 15%;
-                    }
+                     }
 
                     .presentation-view {
                         // padding-top: 2% !important;
@@ -727,6 +755,10 @@
                     position: relative;
                     display: none; 
                 }
+
+                .stream-container-SMD {
+                    height: 100vh !important;
+                }
             }
         }
     }
@@ -767,11 +799,23 @@
                 .flipStream-containerPIP {
                     transform: none;
                 }
+                // .remoteStreamVisible{
+                //     right: 8%;
+                //     left: unset;
+                //     max-width: 12.8%;
+                // }
+
                 .remoteStreamVisible{
-                    right: 8%;
-                    left: unset;
+                    position: relative;
+                    left: 78vw;
+                    top: 38vh;
                     max-width: 12.8%;
                 }
+                .react-transform-component{
+                    width: auto;
+                    height: auto;
+                    overflow: unset;
+                 }
             }
         }
     }
