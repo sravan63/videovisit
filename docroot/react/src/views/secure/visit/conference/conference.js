@@ -1698,7 +1698,7 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                 {/* <TransformWrapper options={{ disabled: this.disablePanPinchZoom() ? true : false, wrapperClass: 'my-wrapper-class', contentClass: this.disablePanPinchZoom() ? 'my-content-class' :'' }}> */}
                                     {/* <TransformComponent contentStyle={{ transform: 'none !important'}}> */}
-                                   { Utilities.isMobileDevice() ? 
+                                   { Utilities.isMobileDevice() && remoteStreamVisible == 'remoteStreamVisible' ? 
                                    <TransformWrapper options={{ disabled: this.disablePanPinchZoom()}}>
                                    <TransformComponent>
                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
