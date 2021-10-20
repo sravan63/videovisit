@@ -1629,9 +1629,9 @@ class Conference extends React.Component {
         if(Utilities.isMobileDevice() && !this.state.showSharedContent && (this.state.isPIPMode || (isLandscape && participantCount === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
             if(this.state.isRemoteFlippedToSelf) {
                 setTimeout(()=>{
-                    this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
-                    this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
-                },500);
+                    this.initialPositionTop = '';
+                    this.initialPositionLeft = '';
+                },100);
             }
             return true;
         }
