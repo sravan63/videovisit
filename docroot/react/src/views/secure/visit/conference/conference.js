@@ -774,6 +774,7 @@ class Conference extends React.Component {
         // if(this.mainContentWidth === window.innerWidth){
         //     return;
         // }
+        this.enablePinchPanZoom = this.disablePanPinchZoom();
 
         if(window.innerWidth > 1024) {
             this.currentSmallerView.style.top = "initial";
@@ -1661,6 +1662,8 @@ class Conference extends React.Component {
             display : this.state.videofeedflag ? 'block' : 'none'
         };
         multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
+        this.enablePinchPanZoom = this.disablePanPinchZoom();
+
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -1699,7 +1702,7 @@ class Conference extends React.Component {
                                 {/* <TransformWrapper options={{ disabled: this.disablePanPinchZoom() ? true : false, wrapperClass: 'my-wrapper-class', contentClass: this.disablePanPinchZoom() ? 'my-content-class' :'' }}> */}
                                     {/* <TransformComponent contentStyle={{ transform: 'none !important'}}> */}
                                    { Utilities.isMobileDevice() ? 
-                                   <TransformWrapper options={{ disabled: this.disablePanPinchZoom()}}>
+                                   <TransformWrapper options={{ disabled: this.enablePinchPanZoom , contentClass: !this.enablePinchPanZoom? 'my-content-class' : 'my-content-class-none' , contentClass: !this.enablePinchPanZoom ? 'my-content-class' : 'my-content-class-none' }}>
                                    <TransformComponent>
                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                        <div className={remoteStreamVisible} style={remoteContainerStyle}>
