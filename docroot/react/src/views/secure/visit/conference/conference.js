@@ -252,6 +252,16 @@ class Conference extends React.Component {
                 case GlobalConfig.START_SCREENSHARE:
                     this.setState({ showSharedContent: true, videofeedflag : true });
                     this.setState({isPIPMode: this.setPIPMode()});
+                    if(Utilities.isMobileDevice() && window.matchMedia("(orientation: landscape)").matches) {
+                        this.selfViewMedia.current.dataset.view = "smaller";
+                        this.remoteFeedMedia.current.dataset.view = "larger";
+                        this.currentSmallerView = this.selfViewMedia.current;
+                        
+                        this.setState({isRemoteFlippedToSelf:false}, function(){
+                            this.initialPositionTop =  this.currentSmallerView.offsetTop.offsetTop +"px";
+                            this.initialPositionLeft = this.currentSmallerView.offsetTop.offsetLeft +"px";
+                         });
+                    }
                     break;
                 case GlobalConfig.STOP_SCREENSHARE:
                     this.is50PIP= false;
@@ -494,7 +504,7 @@ class Conference extends React.Component {
 
     handleStart(e){
         //If we switch to landscape scroll down the page again switch to portrait flip the view now switch to landscape then not able to scroll due to that smaller view is not visible.
-        if(!this.state.isRemoteFlippedToSelf && e.target.dataset.view !== "larger"){
+        if((!this.state.isRemoteFlippedToSelf && !this.state.showSharedContent) && e.target.dataset.view !== "larger"){
             e.preventDefault();
         }
         var touchLocation = e.targetTouches[0];
@@ -544,18 +554,12 @@ class Conference extends React.Component {
             let confWidth = positionInfo.width - selfPosition.width - controlsPosition.width ;
 
             if(window.innerWidth >= 565 && window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches){
-                if(!this.state.isRemoteFlippedToSelf ){
-                    if ((elmnt.offsetTop - this.pos2) < 0) {
-                        elmnt.style.top = "0px";
-                    }
-                    else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
-                        elmnt.style.top = this.initialPositionTop;
-                    } else {
-                        elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
-                    }
+                if ((elmnt.offsetTop - this.pos2) < 0) {
+                    elmnt.style.top = "0px";
                 }
-                else{
-                    //NOTE :: Not overwriting top position for flipped remote view because pinch and zoom wrapper div  
+                else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
+                    elmnt.style.top = this.initialPositionTop;
+                } else {
                     elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
                 }
                 if (elmnt.offsetLeft - this.pos1 < 17) {
@@ -1623,6 +1627,12 @@ class Conference extends React.Component {
         let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
 
         if(Utilities.isMobileDevice() && !this.state.showSharedContent && (this.state.isPIPMode || (isLandscape && participantCount === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
+            if(this.state.isRemoteFlippedToSelf) {
+                setTimeout(()=>{
+                    this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
+                    this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
+                },500);
+            }
             return true;
         }
         return false;
