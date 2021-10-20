@@ -544,12 +544,18 @@ class Conference extends React.Component {
             let confWidth = positionInfo.width - selfPosition.width - controlsPosition.width ;
 
             if(window.innerWidth >= 565 && window.innerWidth <= 1024 && window.matchMedia("(orientation: landscape)").matches){
-                if ((elmnt.offsetTop - this.pos2) < 0) {
-                    elmnt.style.top = "0px";
+                if(!this.state.isRemoteFlippedToSelf ){
+                    if ((elmnt.offsetTop - this.pos2) < 0) {
+                        elmnt.style.top = "0px";
+                    }
+                    else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
+                        elmnt.style.top = this.initialPositionTop;
+                    } else {
+                        elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
+                    }
                 }
-                else if (elmnt.offsetTop - this.pos2 >= parseInt(this.initialPositionTop.slice(0, -2))) {
-                    elmnt.style.top = this.initialPositionTop;
-                } else {
+                else{
+                    //NOTE :: Not overwriting top position for flipped remote view because pinch and zoom wrapper div  
                     elmnt.style.top = (elmnt.offsetTop - this.pos2) + "px";
                 }
                 if (elmnt.offsetLeft - this.pos1 < 17) {
