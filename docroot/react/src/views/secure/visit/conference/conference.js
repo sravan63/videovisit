@@ -1643,6 +1643,8 @@ class Conference extends React.Component {
         let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : this.state.showSharedContent?'stream-container stream-container-SMD':'stream-container';
         let remoteStreamVisible = this.state.videofeedflag && this.state.showSharedContent ? 'remoteStreamVisible' : 'noSMD';
+        let pinchAndZoomDiv =document.getElementsByClassName("react-transform-element")[0];
+
         //let selfviewandsmd = this.state.videofeedflag && this.state.showSharedContent ? 'remotestream self-view' : 'self-view';
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             if(window.matchMedia("(orientation: landscape)").matches){
@@ -1679,10 +1681,13 @@ class Conference extends React.Component {
         };
         multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
         this.enablePinchPanZoom = this.disablePanPinchZoom();
-        if(multipleVideoParticipants){
-            let pinchAndZoomDiv =document.getElementsByClassName("react-transform-element")[0];
-            pinchAndZoomDiv.style.display ="block";
-            pinchAndZoomDiv.style.height ="100vh";
+        if(multipleVideoParticipants && window.matchMedia("(orientation: landscape)").matches){
+            pinchAndZoomDiv && pinchAndZoomDiv.style.setProperty('display', "block");
+            pinchAndZoomDiv&& pinchAndZoomDiv.style.setProperty('height', "85vh");
+        }
+        else{
+            pinchAndZoomDiv && pinchAndZoomDiv.style.removeProperty("height");
+            pinchAndZoomDiv && pinchAndZoomDiv.style.removeProperty("display");
         }
 
         return (
