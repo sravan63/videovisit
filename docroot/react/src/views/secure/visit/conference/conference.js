@@ -610,7 +610,7 @@ class Conference extends React.Component {
 
     handleEnd(e) {
         // Dragging or tapping on larger view must not perform anything. 
-        if(e.target.dataset.view === "larger") {
+        if(!e.target.dataset.view || e.target.dataset.view === "larger") {
             return;
         }
         //[Samsung issue] Calculate the distance between start and end position,if the distance is fairly small, fire a click event(this.flipView(e)).
