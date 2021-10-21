@@ -1679,6 +1679,11 @@ class Conference extends React.Component {
         };
         multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
         this.enablePinchPanZoom = this.disablePanPinchZoom();
+        if(multipleVideoParticipants){
+            let pinchAndZoomDiv =document.getElementsByClassName("react-transform-element")[0];
+            pinchAndZoomDiv.style.display ="block";
+            pinchAndZoomDiv.style.height ="100vh";
+        }
 
         return (
             <div className="conference-page pl-0 container-fluid">
