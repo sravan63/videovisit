@@ -1807,7 +1807,21 @@ public class MeetingCommand {
 			emailDynamicContent.setDownloadMdoAppUrl((String) claims.get(ServiceUtil.DOWNLOAD_MDO_APP_URL));
 			emailDynamicContent.setVvWebPage((String) claims.get(ServiceUtil.VV_WEB_PAGE_URL));
 			enevelope.setEmailDynamicContent(emailDynamicContent);
+		}else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
+				&& (ServiceUtil.EMAIL_TYPE_MEMBER_REMINDER_EMAILS
+						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)))) {
+			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
+			emailDynamicContent.setEmailType((String) claims.get(ServiceUtil.EMAIL_TYPE));
+			emailDynamicContent.setSubject((String) claims.get(ServiceUtil.SUBJECT));
+			emailDynamicContent.setGuestHelpUrl((String) claims.get(ServiceUtil.GUEST_HELP_URL));
+			emailDynamicContent.setMeetingURL((String) claims.get(ServiceUtil.MEETING_URL));
+			emailDynamicContent.setMeetingTime((String) claims.get(ServiceUtil.MEETING_TIME));
+			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.SIGN_IN_URL));
+			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.DOWNLOAD_MDO_APP_URL));
+			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.VV_WEB_PAGE_URL));
+			enevelope.setEmailDynamicContent(emailDynamicContent);
 		}
+		
 		output.setEnvelope(enevelope);
 		logger.info(LOG_EXITING);
 	}

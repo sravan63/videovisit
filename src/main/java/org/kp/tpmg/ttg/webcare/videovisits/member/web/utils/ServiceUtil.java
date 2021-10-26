@@ -77,4 +77,5 @@ public class ServiceUtil {
 	public static final String SIGN_IN_URL="signInUrl";
 	public static final String DOWNLOAD_MDO_APP_URL="downloadMdoAppUrl";
 	public static final String VV_WEB_PAGE_URL="vvWebPage";
+	public static final String EMAIL_TYPE_MEMBER_REMINDER_EMAILS = "MEMBER_REMINDEREMAILS";
 }
