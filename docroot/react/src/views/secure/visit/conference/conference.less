@@ -321,6 +321,7 @@
                 height: 100%;
                 display: none;
             }
+            
             .remoteStreamVisible{
                 display: block;
                 height: auto;
@@ -743,6 +744,26 @@
     }
 }
 
+@media only screen and (min-width: 1024px) and (orientation: landscape) {
+    .conference-page {
+        .video-conference-container {
+            .video-conference {
+
+                .remoteStreamVisible{ 
+                    display: block;
+                    height: 100vh;
+                    position: relative;
+                    max-width: 16.5%;
+                    top: 25vh;
+                    left: 78vw;
+                    z-index: 2;
+                }
+            }
+        }
+    }
+
+}
+
 
 // Maximum width for all mobile devices in portrait and landscape both
 @media only screen and (max-width: 980px) { //DE22610
@@ -784,6 +805,17 @@
 //     }
 // }
 
+@media only screen and (min-height: 1024px) and (orientation: portrait) {
+    .conference-page {
+        .video-conference-container {
+            .video-conference {
+                .stream-container-SMD {
+                    height: 140vh !important;
+                }
+            }
+        }
+    }
+}
 @media only screen and (max-width: 980px) and (orientation: landscape) { 
     .conference-page {
         .video-conference-container {
