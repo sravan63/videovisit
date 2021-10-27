@@ -749,15 +749,15 @@
         .video-conference-container {
             .video-conference {
 
-                // .remoteStreamVisible{ 
-                //     display: block;
-                //     height: 100vh;
-                //     position: relative;
-                //     max-width: 16.5%;
-                //     top: 25vh;
-                //     left: 78vw;
-                //     z-index: 2;
-                // }
+                .remoteStreamVisible{ 
+                    display: block;
+                    height: 100vh;
+                    position: relative;
+                    max-width: 16.5%;
+                    top: 25vh;
+                    left: 0vw;
+                    z-index: 2;
+                }
             }
         }
     }
@@ -781,6 +781,19 @@
                     height: 100vh !important;
                 }
             }
+        }
+    }
+}
+
+@media only screen and (min-width: 762px) and (max-device-width :1023px) and (orientation : portrait) { 
+    .conference-page {
+        .video-conference-container {
+            .video-conference {
+                .stream-container-SMD {
+                    height: 140vh !important;
+                } 
+            }
+            
         }
     }
 }
