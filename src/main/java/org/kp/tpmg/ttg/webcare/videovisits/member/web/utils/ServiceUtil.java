@@ -64,6 +64,7 @@ public class ServiceUtil {
 	public static final String MEETING_TIME="meetingTime";
 	public static final String MEETING_URL="meetingURL";
 	public static final String MEMBER_FIRSTNAME="memberFirstName";
+	public static final String MEMBER_LASTNAME="memberLastName";
 	public static final String DOCTOR_LASTNAME="doctorLastName";
 	public static final String DOCTOR_FIRSTNAME="doctorFirstName";
 	public static final String DOCTOR_TITLE="doctorTitle";
@@ -78,4 +79,5 @@ public class ServiceUtil {
 	public static final String DOWNLOAD_MDO_APP_URL="downloadMdoAppUrl";
 	public static final String VV_WEB_PAGE_URL="vvWebPage";
 	public static final String EMAIL_TYPE_MEMBER_REMINDER_EMAILS = "MEMBER_REMINDEREMAILS";
+	public static final String EMAIL_TYPE_CAREGIVER_RESCHEDULE = "CAREGIVER_RESCHEDULE";
 }
