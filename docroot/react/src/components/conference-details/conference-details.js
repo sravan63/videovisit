@@ -301,7 +301,7 @@ class ConferenceDetails extends React.Component {
             }
         }
 
-        this.state.participants.map(function(p){
+        this.state.participants.map((p)=>{
             if(hasJoined){
                 if(isTelephony){
                     if(isInterpreter){
