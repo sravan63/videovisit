@@ -318,6 +318,10 @@ class ConferenceDetails extends React.Component {
                         participantInList = true;
                         p.inCall = true;
                         p.uuid = data.uuid;
+                        if( p.name.toLowerCase() !== data.display_name.toLowerCase() ){
+                            p.name = data.display_name;
+                            this.state.telephonyGuests.map( (t) => { if( t.number == participant ){ t.name = data.display_name; } });
+                        }
                     }
                 } else {
                     if( !p.isTelephony 
