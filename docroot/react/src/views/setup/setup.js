@@ -28,7 +28,7 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {}, userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:'',isChromecheck: false};
+        this.state = { data: {},isSafari15_1:false,userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:'',isChromecheck: false};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
         this.getLanguage();
@@ -153,7 +153,8 @@ class Setup extends React.Component {
                  browserNames = response.data; 
                  this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                  if(UtilityService.validateBrowserBlock(browserNames)){
-                    this.setState({ isBrowserBlockError: true });
+                     let isSafari15_1 = UtilityService.getSafariBlocked();
+                     this.setState({ isBrowserBlockError: true,isSafari15_1:isSafari15_1 });
                  }
             } else {
                 // Do nothing

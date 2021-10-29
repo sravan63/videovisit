@@ -6,6 +6,7 @@ import Utilities from '../../../services/utilities-service.js';
 import GlobalConfig from '../../../services/global.config';
 import {MessageService} from "../../../services/message-service";
 import './visit.less';
+import UtilityService from "../../../services/utilities-service";
 
 const PreCallCheck = React.lazy(() => import('./pre-call-check/pre-call-check'));
 const Conference = React.lazy(() => import('./conference/conference'));
@@ -15,7 +16,7 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {}, staticData:{}, chin:'中文',span:'Español', showPage: false,isInstantJoin: false,isECInstantJoin:false, isInstantGuest: false, mdoHelpUrl:'', displayName:'', userConfirmBox:false, isBrowserBlockError: false, invalidSession: false, isMobile: false, showPreCheck: true };
+        this.state = { userDetails: {},isSafari15_1:false,staticData:{}, chin:'中文',span:'Español', showPage: false,isInstantJoin: false,isECInstantJoin:false, isInstantGuest: false, mdoHelpUrl:'', displayName:'', userConfirmBox:false, isBrowserBlockError: false, invalidSession: false, isMobile: false, showPreCheck: true };
         this.denyUser = this.denyUser.bind(this);
         this.allowLogin = this.allowLogin.bind(this);
     }
@@ -104,7 +105,8 @@ class Visit extends React.Component {
                 Utilities.setMinTimeToShowUserSurvey(response.data.MINIMUM_IN_MEETING_TIME_FOR_SURVEY);
                 if( Utilities.validateBrowserBlock(browserNames) ){
                     if( this.state.isECInstantJoin || this.state.isInstantGuest ){
-                        this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false });
+                        let isSafari15_1 = UtilityService.getSafariBlocked();
+                        this.setState({ userConfirmBox: true, isBrowserBlockError : true,isSafari15_1:isSafari15_1, invalidSession: false });
                     } else {
                         this.props.history.push('/login');
                     }

@@ -16,7 +16,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'' };
+        this.state = { lastname: '',isSafari15_1:false,displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'' };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -83,7 +83,8 @@ class Authentication extends React.Component {
                  sessionStorage.setItem('helpUrl',response.data.mdoHelpUrl);
                  sessionStorage.setItem('mediaStatsTimer',response.data.INSERT_MEDIA_STATS_FREQUENCY);
                  if(UtilityService.validateBrowserBlock(browserNames)){
-                    this.setState({ isBrowserBlockError: true });
+                     let isSafari15_1 = UtilityService.getSafariBlocked();
+                     this.setState({ isBrowserBlockError: true,isSafari15_1:isSafari15_1 });
                  }
             } else {
                 // Do nothing
