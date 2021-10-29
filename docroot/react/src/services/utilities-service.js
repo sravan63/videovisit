@@ -184,6 +184,9 @@ class UtilityService extends React.Component {
                     if (version < browserNames.IPAD_OS_VERSION) {
                         isBrowserBlockError = true;
                     }
+                    /*else if(version == GlobalConfig.IPHONE_VERSION){
+                        isBrowserBlockError = true;
+                    }*/
                 }
             }
             //Ipad Safari Desktop Site
@@ -196,6 +199,9 @@ class UtilityService extends React.Component {
                     if (version < browserNames.IPAD_OS_VERSION) {
                         isBrowserBlockError = true;
                     }
+                    /*else if(version == GlobalConfig.IPHONE_VERSION){
+                        isBrowserBlockError = true;
+                    }*/
                 }
             }
         }
