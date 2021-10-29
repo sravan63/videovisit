@@ -18,6 +18,7 @@ class UtilityService extends React.Component {
         this.ecData = null;
         this.surveyTimeout = null;
         this.lang='';
+        this.isSafari15_1 = false;
         this.validateBrowser = this.validateBrowser.bind(this);
         this.validateBrowser();
     }
@@ -33,6 +34,14 @@ class UtilityService extends React.Component {
             isAlliPadCheck:  /iPad/.test(navigator.userAgent) 
         }
         this.browserInfo = bObj;
+    }
+
+    setSafariBlocked(val){
+        this.isSafari15_1 = val;
+    }
+
+    getSafariBlocked(){
+        return this.isSafari15_1;
     }
 
     // Returns the browser informaion.
@@ -103,6 +112,7 @@ class UtilityService extends React.Component {
                 let IOSMobileVersion = ver[0]+'.'+ver[1];
                 if(IOSMobileVersion === GlobalConfig.IPHONE_VERSION){
                     isBrowserBlockError = true;
+                    this.setSafariBlocked(true);
                 }
             }
             else {
