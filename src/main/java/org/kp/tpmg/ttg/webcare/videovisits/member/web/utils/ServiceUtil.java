@@ -62,6 +62,9 @@ public class ServiceUtil {
 	
 	public static final String GUEST_HELP_URL="guestHelpUrl";
 	public static final String MEETING_TIME="meetingTime";
+	public static final String MEETING_TIME_STAMP="meetingTimeStamp";
+	public static final String MEETING_TIME_ONLY="meetingTimeOnly";
+	public static final String MEETING_RUN_LATE_TIME_ONLY="meetingRunLateTimeOnly";
 	public static final String MEETING_URL="meetingURL";
 	public static final String MEMBER_FIRSTNAME="memberFirstName";
 	public static final String MEMBER_LASTNAME="memberLastName";
@@ -80,4 +83,9 @@ public class ServiceUtil {
 	public static final String VV_WEB_PAGE_URL="vvWebPage";
 	public static final String EMAIL_TYPE_MEMBER_REMINDER_EMAILS = "MEMBER_REMINDEREMAILS";
 	public static final String EMAIL_TYPE_CAREGIVER_RESCHEDULE = "CAREGIVER_RESCHEDULE";
+	public static final String EMAIL_TYPE_MEMBER_RUNNINGLATE = "MEMBER_RUNNINGLATE";
+	public static final String EMAIL_TYPE_CAREGIVER_RUNNING_LATE = "CAREGIVER_RUNNING_LATE";
+	public static final String INSTANT_JOIN_MEMBER = "INSTANT_JOIN_MEMBER";
+	public static final String INSTANT_JOIN_VV_GUEST = "INSTANT_JOIN_VV_GUEST";
+	public static final String INSTANT_JOIN_EC_GUEST = "INSTANT_JOIN_EC_GUEST";
 }
