@@ -97,7 +97,15 @@ class UtilityService extends React.Component {
         if (this.getBrowserInformation().isSafari) {
             if (blockSafari) {
                 isBrowserBlockError = true;
-            } else {
+            }
+            else if(navigator.platform.toLowerCase() === GlobalConfig.IPHONE.toLowerCase()){
+                let ver = this.iOSversion();
+                let IOSMobileVersion = ver[0]+'.'+ver[1];
+                if(IOSMobileVersion === GlobalConfig.IPHONE_VERSION){
+                    isBrowserBlockError = true;
+                }
+            }
+            else {
                 var fullVersion  = ''+parseFloat(navigator.appVersion);
                 var majorVersion = parseInt(navigator.appVersion,10);
                 var verOffset;
