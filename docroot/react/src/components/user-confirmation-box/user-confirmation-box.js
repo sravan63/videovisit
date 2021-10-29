@@ -44,7 +44,7 @@ class UserConfirmationBox extends Component {
                     <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.props.conf.data.span}</span>
                 </div>
             </div>
-            {this.props.conf.data.isBrowserBlockError ? (<BrowserBlock browserblockinfo = {{isBrowserBlockError: this.props.conf.data.isBrowserBlockError }}/>) :('') }
+            {this.props.conf.data.isBrowserBlockError ? (<BrowserBlock browserblockinfo = {{isBrowserBlockError: this.props.conf.data.isBrowserBlockError,isSafari15_1:this.props.conf.data.isSafari15_1 }}/>) :('') }
           </div>
           {!this.props.conf.data.invalidSession && !this.props.conf.data.isBrowserBlockError ? 
               (<div>
