@@ -5,6 +5,7 @@ import BackendService from '../../../services/backendService.js';
 import Utilities from '../../../services/utilities-service.js';
 import GlobalConfig from '../../../services/global.config';
 import {MessageService} from "../../../services/message-service";
+import * as WebUI from '../../../pexip/complex/webui.js';
 import './visit.less';
 import UtilityService from "../../../services/utilities-service";
 
@@ -86,6 +87,7 @@ class Visit extends React.Component {
         var showPreCallCheck = (browserInfo.isSafari || browserInfo.isFireFox);
         if (showPreCallCheck && !peripheralsSelected) {
             this.setState({ showPreCheck: true });
+            WebUI.log("info","show_pct_page","event: Pre call test page is rendered");
         } else {
             this.setState({ showPreCheck: false });
         }

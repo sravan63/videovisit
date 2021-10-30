@@ -1101,6 +1101,7 @@ class Conference extends React.Component {
 
 
     startPexip(meeting) {
+        WebUI.log("info", "preparing_to_initiate_pexip_call", "event: Preparing user to join the conference.");
         localStorage.setItem('guestPin', meeting.vendorGuestPin);
         var guestPin = meeting.vendorGuestPin,
             roomJoinUrl = meeting.roomJoinUrl,
@@ -1124,11 +1125,23 @@ class Conference extends React.Component {
                 name = JSON.parse(localStorage.getItem('memberName'));
                 // localStorage.setItem('memberName', name);
             }
-            var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
+            let userType,userID;
+            if(this.state.isInstantPG){
+                userType = "Instant_Join_Guest";
+                userID = name;
+            }
+            else if(this.state.loginType == GlobalConfig.LOGIN_TYPE.EC){
+                userType = "EC_Instant_Join_Guest";
+                userID = name;
+            }
+            else{
+                userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
+                userID = meeting.member.mrn;
+            }
             var vendorDetails = {
                 "meetingId": meeting.meetingId,
                 "userType": userType,
-                "userId": meeting.member.mrn
+                "userId": userID
             };
             localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         } else {
@@ -1371,6 +1384,8 @@ class Conference extends React.Component {
 
     refreshPage() {
         window.location.reload(false);
+        WebUI.log('info','conference_page_refresh_button_click','event: User clicked on refresh button in conference page.');
+
     }
 
     toggleCamera(){
@@ -1407,7 +1422,7 @@ class Conference extends React.Component {
             }
         }
 
-        WebUI.switchDevices('video', vObject);
+        WebUI.switchDevices('camera', vObject,"vv");
     }
 
     initiateSurvey(){

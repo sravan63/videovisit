@@ -285,14 +285,16 @@ class MyMeetings extends React.Component {
             localStorage.setItem('isProxyMeeting', JSON.stringify(isProxyMeeting));
         }
         var userType = isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
-            var vendorDetails = {
-                "meetingId": meeting.meetingId,
-                "userType": userType,
-                "userId": meeting.member.mrn
-            };
-            localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
+        var vendorDetails = {
+            "meetingId": meeting.meetingId,
+            "userType": userType,
+            "userId": meeting.member.mrn
+        };
+        localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         sessionInfo.loginType = loginType;
         localStorage.setItem('sessionInfo', JSON.stringify(sessionInfo));
+        let params = ["info","join_now_called","Join now button is triggered, navigates to conference page",meeting.meetingId,userType,meeting.member.mrn];
+        BackendService.logVendorMeetingEvents(params);
         var isMobile = UtilityService.isMobileDevice();
         BackendService.launchMemberVisit(myMeetingsUrl, meetingId, headers, loginType, isMobile).subscribe((response) => {
             if (response.data && response.data.statusCode == '200') {
