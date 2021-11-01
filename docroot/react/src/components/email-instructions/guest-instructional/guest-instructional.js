@@ -164,7 +164,7 @@ class GuestInstructional extends Component {
                                         <td className="future-announcement">{details.futureAnnouncement1}<a href="#" style={{color: '#92ccf0'}}>{details.doNotReply}</a>{details.futureAnnouncement2}
                                         </td>
                                         <td className="privacy">
-                                            <a href="https://healthy.kaiserpermanente.org/privacy" style={{color: '#92ccf0'}}>{details.privacy}</a></td>
+                                            <a href="https://healthy.kaiserpermanente.org/privacy" target="_blank" style={{color: '#92ccf0'}}>{details.privacy}</a></td>
                                     </tr>
                                     </tbody>
                                 </table>
