@@ -48,7 +48,7 @@ class emailInstructions extends Component {
         let content = this.state.staticData;
         const emailTemplates = () => {
             switch(details && details.emailType) {
-                case "caregiver_earlystart":
+                case "member_earlystart":
                     return <EmailStartEarly data={details} />;   
                 case "caregiver_instruction":
                     return <GuestInstructional data={details} />;
