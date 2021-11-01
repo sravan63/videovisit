@@ -70,7 +70,7 @@ class GuestInstructional extends Component {
     render() {
         let details = this.state.staticData;
         return (
-                <div className="wrapper">
+                <div className="wrapper container-fluid p-0">
                     <div className="instruction">
                         <p className="instruct-header">{details.heading} </p>
                         <p className="instruct-description">{details.subHeading}</p>
