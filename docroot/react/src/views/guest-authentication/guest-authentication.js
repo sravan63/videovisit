@@ -16,7 +16,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'' };
+        this.state = { lastname: '', displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'', guestLoginHeading: 'Thank you for connecting with doctor online' };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -295,20 +295,31 @@ class Authentication extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="row mobile-logo-container">
-                    <div className="title">
-                        <p className="col-12 m-0 header">Kaiser Permanente</p>
-                        <p className="col-12 sub-header">{this.state.staticData.videoVisits}</p>
+                <div className="row mobile-logo-container rejoinpage-logo">
+                    <div className="title rejoin-title row">
+                        <p className="col-12 m-0 header px-1">Kaiser Permanente</p>
+                        <p className="col-12 sub-header px-1">{this.state.staticData.videoVisits}</p>
                     </div>
                 </div>
                 <div className="guest-form-content">
-                <BrowserBlock browserblockinfo = {this.state}/>
-                {this.state.ReJoin ? (
-                   <div className={this.toggleLangInfo()}>
-                      <button type = "submit" className = "btn w-50 rounded-0 p-0 rejoin" onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>{this.state.staticData.guestauth.Rejoin}</button>
-                      <button type = "submit" className = "btn w-50 rounded-0 p-0 signout" onClick={()=>this.SignOut()} disabled={this.state.isBrowserBlockError}>{Details.Signout}</button>
-                    </div>
-                ):
+                    <BrowserBlock browserblockinfo = {this.state}/>
+                    {this.state.ReJoin ? (
+                        <div className="guest-rejoin-wrapper">
+                            <h1 className="text-left rejoin-heading font-weight-bold text-md-center px-4">{this.state.guestLoginHeading}</h1>
+                            <div className="rejoin-description text-left mt-4 text-md-center px-4">Lost connection? <button className="guest-rejoin-button"  onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>Rejoin your visit</button></div> 
+                            <div className="guest-rejoin-banner">
+                                <div className="guest-rejoin-banner-header">
+                                    Next time try the <b>My Doctor Online app</b> for your video visit.
+                                </div>
+                                <div className="guest-rejoin-banner-main" />
+                                <div className="guest-rejoin-banner-footer d-flex justify-content-around">
+                                    <div className="guest-rejoin-banner-footer-left guest-rejoin-banner-footer-section" />
+                                    <div className="guest-rejoin-banner-footer-right guest-rejoin-banner-footer-section" />
+                                </div>
+                            </div> 
+                        </div>
+                   
+                    ):
                  (    
                     <div className="row guest-form" >
                     <div className="row notice">{Details.guestauth.GuestHeaderLabelTxt}</div>
