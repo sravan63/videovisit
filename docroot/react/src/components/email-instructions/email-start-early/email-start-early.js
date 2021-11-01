@@ -1,11 +1,6 @@
 import React, { Component } from "react";
-import BackendService from "../../../services/backendService";
 import './email-start-early.less';
 import Utilities from '../../../services/utilities-service.js';
-import GlobalConfig from "../../../services/global.config";
-import PermanenteHeader  from '../../../assets/email/pm-tpmg-blue.svg';
-import Logo from '../../../assets/email/kp-logo.png';
-import FooterLogo from '../../../assets/email/pm-tpmg-white.webp';
 
 class emailStartEarly extends Component {
     constructor(props) {

@@ -1,7 +1,6 @@
 import React, { Component,Suspense } from "react";
 import '../email-templates.less';
 import './guest-start-early.less';
-import GlobalConfig from "../../../services/global.config";
 import Utilities from "../../../services/utilities-service";
 
 class GuestStartEarly extends Component {
