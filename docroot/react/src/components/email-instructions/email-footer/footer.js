@@ -24,7 +24,7 @@ class emailfooter extends Component {
               <li>{this.props.content.emergency2}</li>
           </ul>
       </div>
-      <div className="col-12 future-announcement">{this.props.content.futureAnnouncement1}<a href="#" style={{color: '#92ccf0'}}>{this.props.content.doNotReply}</a>{this.props.content.futureAnnouncement2}
+      <div className="col-12 future-announcement">{this.props.content.futureAnnouncement1} <a href="#" style={{color: '#92ccf0', textDecoration:'underline'}}>{this.props.content.doNotReply}</a> {this.props.content.futureAnnouncement2}
       </div>
       <div className="col-12 privacy">
           <a href="https://healthy.kaiserpermanente.org/privacy" target="_blank" style={{color: '#92ccf0'}}>{this.props.content.privacy}</a>
