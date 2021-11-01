@@ -48,7 +48,7 @@ class emailInstructions extends Component {
         const emailTemplates = () => {
             switch(details && details.emailType) {
                 case "member_earlystart":
-                    return <EmailStartEarly data={details} />;
+                    return <EmailStartEarly data={details} content={content.email} />;
                 case "caregiver_instruction":
                     return <GuestInstructional data={details} content={content.email} />;
                 case "caregiver_earlystart":
