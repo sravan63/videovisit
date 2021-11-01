@@ -46,7 +46,7 @@ class emailInstructions extends Component {
                     else{
                         return <EmailStartEarlyCh data={details} />;
                     }
-                case "caregiver_instructional_email":
+                case "caregiver_instruction":
                     return <GuestInstructional data={details} />;
                 default:
                     return null
