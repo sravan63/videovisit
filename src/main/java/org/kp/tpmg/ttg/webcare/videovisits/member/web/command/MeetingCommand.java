@@ -1755,7 +1755,7 @@ public class MeetingCommand {
 		logger.info(LOG_ENTERED);
 		final EmailDynamicContentOutputEnvelope enevelope = new EmailDynamicContentOutputEnvelope();
 		if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
-				&& ServiceUtil.PATIENT_INSTRUCTIONAL_EMAIL
+				&& ServiceUtil.EMAIL_TYPE_MEMBER_INSTRUCTION
 						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE))) {
 			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
 			emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
@@ -1765,8 +1765,8 @@ public class MeetingCommand {
 			emailDynamicContent.setPatientJoinUrl((String) claims.get(ServiceUtil.PATIENT_JOIN_URL));
 			enevelope.setEmailDynamicContent(emailDynamicContent);
 		} else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
-				&& (ServiceUtil.CAREGIVER_INSTRUCTIONAL_EMAIL
-						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)) || ServiceUtil.CAREGIVER_REMINDER_EMAIL
+				&& (ServiceUtil.EMAIL_TYPE_CAREGIVER_INSTRUCTION
+						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)) || ServiceUtil.EMAIL_TYPE_CAREGIVER_REMINDER
 						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)))) {
 			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
 			emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
@@ -1783,7 +1783,7 @@ public class MeetingCommand {
 			emailDynamicContent.setDoctorTitle((String) claims.get(ServiceUtil.DOCTOR_TITLE));
 			enevelope.setEmailDynamicContent(emailDynamicContent);
 		}	else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
-				&& (ServiceUtil.EMAIL_TYPE_GUEST_EARLYSTART
+				&& (ServiceUtil.EMAIL_TYPE_CAREGIVER_EARLYSTART
 						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)))) {
 			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
 			emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
@@ -1811,7 +1811,7 @@ public class MeetingCommand {
 			emailDynamicContent.setVvWebPage((String) claims.get(ServiceUtil.VV_WEB_PAGE_URL));
 			enevelope.setEmailDynamicContent(emailDynamicContent);
 		}else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
-				&& (ServiceUtil.EMAIL_TYPE_MEMBER_REMINDER_EMAILS
+				&& (ServiceUtil.EMAIL_TYPE_MEMBER_REMINDER
 						.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)))) {
 			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
 			emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
@@ -1881,9 +1881,9 @@ public class MeetingCommand {
 			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.SIGN_IN_URL));
 			enevelope.setEmailDynamicContent(emailDynamicContent);
 		}else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))
-				&& (ServiceUtil.INSTANT_JOIN_EC_GUEST.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE))  
-						|| ServiceUtil.INSTANT_JOIN_VV_GUEST.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)) 
-						|| ServiceUtil.INSTANT_JOIN_MEMBER.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE))  )) {
+				&& (ServiceUtil.EMAIL_TYPE_CAREGIVER_EC_INSTANT_JOIN.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE))  
+						|| ServiceUtil.EMAIL_TYPE_CAREGIVER_VV_INSTANT_JOIN.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE)) 
+						|| ServiceUtil.EMAIL_TYPE_MEMBER_INSTANT_JOIN.equalsIgnoreCase((String) claims.get(ServiceUtil.EMAIL_TYPE))  )) {
 			final EmailDynamicContent emailDynamicContent = new EmailDynamicContent();
 			emailDynamicContent.setMeetingId((String) claims.get(ServiceUtil.MEETING_ID));
 			emailDynamicContent.setEmailType((String) claims.get(ServiceUtil.EMAIL_TYPE));
