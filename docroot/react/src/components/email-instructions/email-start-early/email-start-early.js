@@ -10,15 +10,12 @@ import FooterLogo from '../../../assets/email/pm-tpmg-white.webp';
 class emailStartEarly extends Component {
     constructor(props) {
         super(props);
-        this.state = {emailContentDetails:props.data,staticData:{}};
+        const content = props.content.startEarly;
+        content['instructions'] = props.content.instructions;
+        this.state = {emailContentDetails:props.data,staticData:content};
     }
 
-    componentDidMount() {
-      let data = require('../../../lang/'+this.state.emailContentDetails.lang+'.json');
-      this.setState({
-          staticData: data.email.startEarly
-      });
-    }
+    componentDidMount() { }
     getHoursAndMinutes(millis, type,lang) {
         if (!millis) {
             return;
@@ -39,10 +36,10 @@ class emailStartEarly extends Component {
                                   <div className="col-md-12 mb-2"><a href="http://kpdoc.org/mdoapp" target="_blank" className="email-data-link">{details.subHeading4}</a> {details.subHeading5} <a href="http://kpdoc.org/videovisits" target="_blank" className="email-data-link">{details.subHeading10}</a></div>                                  
                                   <div className="visit-rules">
                                   <ul>
-                                    <li style={{ fontWeight:'bold' }}>{details.rule1}</li>
-                                    <li>{details.rule2}</li>
-                                    <li>{details.rule3}</li>
-                                    <li style={{marginBottom:'12px'}}>{details.rule4}</li>
+                                    <li style={{ fontWeight:'bold' }}>{details.instructions.rule1}</li>
+                                    <li>{details.instructions.rule2}</li>
+                                    <li>{details.instructions.rule3}</li>
+                                    <li style={{marginBottom:'12px'}}>{details.instructions.rule4}</li>
                                   </ul>
                                 </div>
                                 

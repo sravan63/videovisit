@@ -1,15 +1,15 @@
 import React, { Component,Suspense } from "react";
 import '../email-templates.less';
-import './guest-instructional.less';
+import './guest-start-early.less';
 import GlobalConfig from "../../../services/global.config";
 import Utilities from "../../../services/utilities-service";
 
-class GuestInstructional extends Component {
+class GuestStartEarly extends Component {
     constructor(props) {
         super(props);
-        const content = props.content.caregiverInstructionalEmail;
+        const content = props.content.careGiverStartEarly;
         content['instructions'] = props.content.instructions;
-        this.state = {emailContentDetails:props.data,staticData:content};
+        this.state = { emailContentDetails:props.data, staticData:content };
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
     }
 
@@ -20,7 +20,6 @@ class GuestInstructional extends Component {
             return;
         }
         return Utilities.formatDateAndTimeForEmails(new Date(parseInt(millis)), type,lang);
-
     }
     
 
@@ -30,7 +29,7 @@ class GuestInstructional extends Component {
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">
                         <p className="instruct-header">{details.heading} </p>
-                        <p className="instruct-description">{details.subHeading}</p>
+                        <p className="instruct-description">{details.subHeading}, {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'date',this.state.emailContentDetails.lang)} {details.atText} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}, {details.subHeading2}</p>
                         <div className="visit-rules">
                             <ul>
                                 <li style={{ fontWeight:'bold' }}>{details.instructions.rule1}</li>
@@ -43,22 +42,17 @@ class GuestInstructional extends Component {
                             <a href={this.state.emailContentDetails.meetingURL}
                                target="_blank" className="start-visit">{details.startVisit}</a>
                         </div>
-                        <div className="time-details">
-                            <p>{details.dateTime}: {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'date',this.state.emailContentDetails.lang)} {details.at} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} Pacific Time</p>
-                            <p>{details.patient}: {this.state.emailContentDetails.memberFirstName} {this.state.emailContentDetails.lastNameFirstCharMember}</p>
-                            <p>{details.clinician}: {this.state.emailContentDetails.doctorFirstName} {this.state.emailContentDetails.doctorLastName} {this.state.emailContentDetails.doctorTitle}</p>
-                        </div>
-                        <div className="learn-more">
-                            <a href={this.state.emailContentDetails.guestHelpUrl} target="_blank">{details.learnMore}</a>
+                        <div className="addln-details">
+                            <p>{details.subHeading4}</p>
+                            <p>{details.subHeading5}</p>
+                            <p><a href={this.state.emailContentDetails.guestHelpUrl} target="_blank">{details.subHeading6}</a></p>
                         </div>
                         <div className="need-help">
-                            <p>{details.needHelp1}</p>
-                            <p>{details.needHelp2}</p>
-                            <p>{details.needHelp3}</p>
+                            <p><a href={this.state.emailContentDetails.signInUrl} target="_blank">{details.subHeading7}</a> {details.subHeading8}</p>
                         </div>
                     </div>
                 </div>)
     }
 }
 
-export default GuestInstructional;
+export default GuestStartEarly;

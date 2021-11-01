@@ -5,13 +5,6 @@ class emailfooter extends Component {
   
   constructor(props) {
       super(props);
-      this.state = { staticData : props.content };
-  }
-  componentDidMount() {
-      // let data = require('../../../lang/'+this.state.emailContentthis.state.staticData.lang+'.json');
-      this.setState({
-          staticData: this.props.content
-      });
   }
 
   render() {
@@ -22,19 +15,19 @@ class emailfooter extends Component {
           </a>
       </div>
       <div className="col-12 content-block">
-          <span className="apple-link">{this.state.staticData.notification}</span>
+          <span className="apple-link">{this.props.content.notification}</span>
       </div>
       <div className="col-12 important-block">
-          <span style={{fontWeight:'bold'}}>{this.state.staticData.important}</span>
+          <span style={{fontWeight:'bold'}}>{this.props.content.important}</span>
           <ul style={{marginBottom:'0', paddingLeft:'1rem'}}>
-              <li>{this.state.staticData.emergency1}</li>
-              <li>{this.state.staticData.emergency2}</li>
+              <li>{this.props.content.emergency1}</li>
+              <li>{this.props.content.emergency2}</li>
           </ul>
       </div>
-      <div className="col-12 future-announcement">{this.state.staticData.futureAnnouncement1}<a href="#" style={{color: '#92ccf0'}}>{this.state.staticData.doNotReply}</a>{this.state.staticData.futureAnnouncement2}
+      <div className="col-12 future-announcement">{this.props.content.futureAnnouncement1}<a href="#" style={{color: '#92ccf0'}}>{this.props.content.doNotReply}</a>{this.props.content.futureAnnouncement2}
       </div>
       <div className="col-12 privacy">
-          <a href="https://healthy.kaiserpermanente.org/privacy" target="_blank" style={{color: '#92ccf0'}}>{this.state.staticData.privacy}</a>
+          <a href="https://healthy.kaiserpermanente.org/privacy" target="_blank" style={{color: '#92ccf0'}}>{this.props.content.privacy}</a>
         </div>
       </div>
     </div>

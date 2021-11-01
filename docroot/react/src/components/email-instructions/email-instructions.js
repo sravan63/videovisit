@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import BackendService from "../../services/backendService";
 import EmailStartEarly from '../email-instructions/email-start-early/email-start-early';
 import GuestInstructional from "./guest-instructional/guest-instructional";
+import GuestStartEarly from "./guest-start-early/guest-start-early";
 
 import EmailHeader from "./email-header/header";
 import EmailFooter from "./email-footer/footer";
@@ -23,7 +24,7 @@ class emailInstructions extends Component {
         let lang = this.lang === 'spa'? "spanish" : "chinese";
         let data = require('../../lang/'+lang+'.json');
         this.setState({
-            staticData: data.email.caregiverInstructionalEmail
+            staticData: data
         });
     }
 
@@ -31,7 +32,6 @@ class emailInstructions extends Component {
         BackendService.validateJwtToken(tokenValue).subscribe((response) => {
             if (response.data && response.status == '200') {
                 let lang = this.lang === 'spa'? "spanish" : "chinese";
-                // this.setState({emailContentDetails : {emailType: 'caregiver_instruction', lang: lang }});
                 response.data.service.envelope.emailDynamicContent.lang = lang;
                 this.setState({emailContentDetails: response.data.service.envelope.emailDynamicContent});
             } else {
@@ -44,14 +44,15 @@ class emailInstructions extends Component {
 
     render() {
         let details = this.state.emailContentDetails;
-        let langName = this.state.langName;
         let content = this.state.staticData;
         const emailTemplates = () => {
             switch(details && details.emailType) {
                 case "member_earlystart":
-                    return <EmailStartEarly data={details} />;   
+                    return <EmailStartEarly data={details} />;
                 case "caregiver_instruction":
-                    return <GuestInstructional data={details} />;
+                    return <GuestInstructional data={details} content={content.email} />;
+                case "caregiver_earlystart":
+                    return <GuestStartEarly data={details} content={content.email} />;   
                 default:
                     return null
             }
@@ -60,7 +61,7 @@ class emailInstructions extends Component {
             (<div>
                 <EmailHeader/>
                 { emailTemplates() }
-                <EmailFooter content={content}/>
+                <EmailFooter content={content.email.footer}/>
             </div> ) : ('') )
     }
 }
