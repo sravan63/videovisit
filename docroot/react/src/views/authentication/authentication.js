@@ -17,7 +17,7 @@ class Authentication extends React.Component {
         super(props);
         localStorage.clear();
         this.tempAccessToken = false;
-        this.state = { tempAccessToken: false,staticData:{auth:{sso:{}},errorCodes:{}}, chin:'中文',span:'Español',instantJoin:false,isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'',isScrollPosition: false };
+        this.state = { tempAccessToken: false,isSafari15_1:false,staticData:{auth:{sso:{}},errorCodes:{}}, chin:'中文',span:'Español',instantJoin:false,isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'',isScrollPosition: false };
     }
 
     emitFromChild(obj) {
@@ -70,7 +70,8 @@ class Authentication extends React.Component {
                  Utilities.setMeetingFeedbackTimeout(response.data.MEETING_FEEDBACK_TIMEOUT);
                  Utilities.setMinTimeToShowUserSurvey(response.data.MINIMUM_IN_MEETING_TIME_FOR_SURVEY);
                  if(Utilities.validateBrowserBlock(browserNames)){
-                    this.setState({ isBrowserBlockError: true });
+                    let isSafari15_1 = Utilities.getSafariBlocked();
+                    this.setState({ isBrowserBlockError: true,isSafari15_1:isSafari15_1 });
                  }
             } else {
                 // Do nothing

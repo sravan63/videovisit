@@ -6,6 +6,7 @@ import { MessageService } from './message-service';
 import GlobalConfig from './global.config';
 import { range } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
+import * as WebUI from "../pexip/complex/webui";
 
 class MediaService extends React.Component {
 
@@ -152,6 +153,7 @@ class MediaService extends React.Component {
   
   // Error call back.
     handleError(error){
+        WebUI.log("info","handle_error_called_on_media_permission","event: Error" + error);
         let isSetup = sessionStorage.getItem('isSetupPage');
         var ErrorMsg = error.message,
             browserInfo = Utilities.getBrowserInformation();
@@ -189,6 +191,7 @@ class MediaService extends React.Component {
     onDeviceChange(event){
       console.log("DEVICE CHANGE EVENT TRIGGERED");
       if( !this.isDeviceChange ) {
+          WebUI.log("info","device_pluggedIn_pluggedOut","event: A new device is plugged in or an existing device is plugged out inside conference page");
           if( !Utilities.isMobileDevice() ){
               MessageService.sendMessage(GlobalConfig.RESET_MEDIA_DEVICES, null);
               this.isDeviceChange = true;
@@ -211,10 +214,12 @@ class MediaService extends React.Component {
 
     // Attach audio output device to video element using device/sink ID.
     attachSinkId(element, sinkId) {
-      if (typeof element.sinkId !== 'undefined') {
+        WebUI.log("info","speaker_change_method_invoke","event: linking selected speaker device id to the video element");
+        if (typeof element.sinkId !== 'undefined') {
         element.setSinkId(sinkId)
         .then(function() {
-          console.log('Success, audio output device attached: ' + sinkId);
+            WebUI.log("info","speaker_change_method_success","event: Success, speaker device id successfully linked to the video element: " + sinkId);
+            console.log('Success, audio output device attached: ' + sinkId);
         })
         .catch(function(error) {
           var errorMessage = error;
@@ -232,7 +237,8 @@ class MediaService extends React.Component {
             console.log('DEVICE GONE ABRUPTLY');
             // MessageService.sendMessage(GlobalConfig.UPDATE_MEDIA_DEVICES, this.mediaData);
           }
-          // console.error(errorMessage);
+          WebUI.log("error","speaker_change_method_failure","event: Failed to link the speaker device id with video element. Error : " + errorMessage);
+            // console.error(errorMessage);
         });
       } else {
         console.warn('Browser does not support output device selection.');

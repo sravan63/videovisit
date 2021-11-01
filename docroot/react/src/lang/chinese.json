@@ -105,5 +105,67 @@
       "CameraAccessBlockDefaultMsg":"在您的瀏覽器上方的地址 (URL)欄選擇攝像鏡頭/麥克風或設置圖符以允許使用，然後刷新。",
       "CameraAccessBlockSafariMsg":"點選「Refresh」（刷新）按鈕以允許使用您的攝像鏡頭和麥克風，或檢查您的瀏覽器設置。",
       "CameraAccessBlockMobileMsg":"在您的瀏覽器上方的地址 (URL)欄點選鎖的圖符，在「 Permissions」（許可）項下選擇允許使用攝像鏡頭/麥克風，然後刷新。"
+    },
+  "email": {
+    "instructions":{
+      "rule1": "請不要在移動的車輛上加入視訊就診。",
+      "rule2": "要訊號良好的Wi-Fi或網際網路連接。",
+      "rule3": "選擇安靜、光線充足的地方。",
+      "rule4": "儘量提前10分鐘加入以便做準備。"
+    },
+    "caregiverInstructionalEmail": {
+      "heading": "在進行Kaiser Permanente視訊就診時，您的線上身份是受邀請的「客方」(Guest)",
+      "subHeading": "您將使用智慧型手機或電腦在線上參加視訊就診。",
+      "startVisit": "開始您的視訊就診 ",
+      "dateTime": "日期/時間",
+      "patient": "患者",
+      "clinician": "臨床醫護人員",
+      "learnMore": "了解更多有關視訊就診和準備的資訊。",
+      "needHelp1": "如果您需要幫助來為視訊就診做準備，",
+      "needHelp2": "可在週一至週五上午6:30至晚上7:00打電話1-844-216-5769。",
+      "needHelp3": "如果您需要獲取口譯員協助，請您在視訊就診開始時告知我們。",
+      "at":"日 "
+    },
+    "careGiverStartEarly": {
+      "heading": "立即加入您的視訊就診",
+      "subHeading": "您原定於週三, 九月",
+      "atText":"日 ",
+      "timeZone": "Pacific Time",
+      "subHeading2":"的視訊就診現提前開始。",
+      "subHeading3": "您將使用智慧型手機或電腦在線上參加視訊就診。",
+      "startVisit": "開始您的視訊就診 ",
+      "subHeading4": "如果您需要獲取口譯員協助，請您在視訊就診開始時告知我們。",
+      "subHeading5": "無法登入？使用「Video Visits Temporary Access」（視訊就診臨時准入）。",
+      "subHeading6": "了解更多有關視訊就診和準備的資訊。 ",
+      "subHeading7": "請登入或致電",
+      "subHeading8": "1-866-454-8855以取消或重新安排視訊就診。"
+    },
+    "startEarly": {
+      "heading": "立即加入您的視訊就診",
+      "subHeading": "您原定於週",
+      "atText":"日 ",
+      "subHeading2":"的視訊就診現提前開始。",
+      "subHeading3":"要透過智慧型手機或平板電腦加入，",
+      "subHeading4":"請下載My Doctor Online.（我的線上醫生）應用程式。",
+      "subHeading5":"要透過電腦加入，請訪",
+      "subHeading10":"問視訊就診網頁。",
+      "startVisit": "開始您的視訊就診",
+      "timeZone": "Pacific Time",
+      "subHeading6": "如果您需要獲取口譯員協助，請您在視訊就診開始時告知我們。",
+      "subHeading7": "無法登入？使用「Video Visits Temporary Access」（視訊就診臨時准入）。",
+      "subHeading8": "了解更多有關視訊就診和準備的資訊。",
+      "needHelp1": "請登入或致電",
+      "needHelp2": "1-866-454-8855以取消或重新安排視訊就診。"
+    },
+    "footer":{
+      "notification": "此通知由Kaiser Permanente自動生成。請勿回覆本電子郵件。",
+      "important": "重要須知：請勿試圖透過本電子郵件取得急診或緊急醫護服務。",
+      "emergency1": "如果您認為您或您的家人有醫療或精神方面的緊急情況，請打電話911或前往最近的醫院。",
+      "emergency2": "如果您或您的家人發生緊急症狀，或者您想與護士講話，請打電話給您當地的Kaiser Permanente設施。",
+      "futureAnnouncement1": "為確保日後的通告都能遞送到您的信箱（而非垃圾郵件資料夾），請將",
+      "doNotReply": "kp-donotreply@kp.org",
+      "futureAnnouncement2": "添加到您的通訊錄。",
+      "privacy": "我們網站的私隱聲明"
     }
+  }
 }

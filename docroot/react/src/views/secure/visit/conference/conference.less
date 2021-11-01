@@ -281,7 +281,7 @@
              }
 
              .my-content-class {
-                transform: translate(0px, 0px) scale(1) !important;
+                transform: translate(0px, 0px) scale(1);
             }
 
             .my-content-class-none {
@@ -321,6 +321,7 @@
                 height: 100%;
                 display: none;
             }
+            
             .remoteStreamVisible{
                 display: block;
                 height: auto;
@@ -743,6 +744,25 @@
     }
 }
 
+@media only screen and (min-width: 1024px) and (orientation: landscape) {
+    .conference-page {
+        .video-conference-container {
+            .video-conference {
+                .remoteStreamVisible{ 
+                    display: block;
+                    height: 100vh;
+                    position: relative;
+                    max-width: 16.5%;
+                    top: 25vh;
+                    left: 0vw;
+                    z-index: 2;
+                }
+            }
+        }
+    }
+
+}
+
 
 // Maximum width for all mobile devices in portrait and landscape both
 @media only screen and (max-width: 980px) { //DE22610
@@ -763,6 +783,20 @@
         }
     }
 }
+
+@media only screen and (min-width: 762px) and (max-device-width :1023px) and (orientation : portrait) { 
+    .conference-page {
+        .video-conference-container {
+            .video-conference {
+                .stream-container-SMD {
+                    height: 140vh !important;
+                } 
+            }
+            
+        }
+    }
+}
+
 // will add later if require to remove black band in iPad
 // @media only screen and (max-width: 1366px) and (orientation: landscape) {
 //     .conference-page {
@@ -804,7 +838,9 @@
                 //     left: unset;
                 //     max-width: 12.8%;
                 // }
-
+                .stream-container-SMD {
+                    height: 68vh !important;
+                }   
                 .remoteStreamVisible{
                     position: relative;
                     left: 78vw;

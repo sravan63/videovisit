@@ -53,7 +53,6 @@ public class ServiceUtil {
 	
 	public static final String AUTHORIZE_MEMBER_OAUTH = "authorize";
 	
-	public static final String PATIENT_INSTRUCTIONAL_EMAIL="patient_instructional_email";
 	public static final String EMAIL_TYPE="emailType";
 	public static final String SUBJECT="subject";
 	public static final String MDO_URL="mdoUrl";
@@ -62,19 +61,34 @@ public class ServiceUtil {
 	
 	public static final String GUEST_HELP_URL="guestHelpUrl";
 	public static final String MEETING_TIME="meetingTime";
+	public static final String MEETING_TIME_STAMP="meetingTimeStamp";
+	public static final String MEETING_TIME_ONLY="meetingTimeOnly";
+	public static final String MEETING_RUN_LATE_TIME_ONLY="meetingRunLateTimeOnly";
 	public static final String MEETING_URL="meetingURL";
 	public static final String MEMBER_FIRSTNAME="memberFirstName";
+	public static final String MEMBER_LASTNAME="memberLastName";
 	public static final String DOCTOR_LASTNAME="doctorLastName";
 	public static final String DOCTOR_FIRSTNAME="doctorFirstName";
 	public static final String DOCTOR_TITLE="doctorTitle";
 	public static final String MEMBER_LASTNAME_FIRSTCHAR="lastNameFirstCharMember";
 	
-	public static final String CAREGIVER_INSTRUCTIONAL_EMAIL="caregiver_instructional_email";
-	public static final String CAREGIVER_REMINDER_EMAIL="caregiver_reminder_email";
+	// member email types
+	public static final String EMAIL_TYPE_MEMBER_INSTRUCTION="member_instruction";
+	public static final String EMAIL_TYPE_MEMBER_EARLYSTART = "member_earlystart";
+	public static final String EMAIL_TYPE_MEMBER_REMINDER = "member_reminder";
+	public static final String EMAIL_TYPE_MEMBER_RUNNINGLATE = "member_runninglate";
+	public static final String EMAIL_TYPE_MEMBER_INSTANT_JOIN = "member_instant_join";
+	// caregiver email types
+	public static final String EMAIL_TYPE_CAREGIVER_INSTRUCTION="caregiver_instruction";
+	public static final String EMAIL_TYPE_CAREGIVER_REMINDER="caregiver_reminder";
+	public static final String EMAIL_TYPE_CAREGIVER_EARLYSTART= "caregiver_earlystart";
+	public static final String EMAIL_TYPE_CAREGIVER_RESCHEDULE = "caregiver_reschedule";
+	public static final String EMAIL_TYPE_CAREGIVER_RUNNING_LATE = "caregiver_running_late";
+	public static final String EMAIL_TYPE_CAREGIVER_VV_INSTANT_JOIN = "caregiver_vv_instant_join";
+	public static final String EMAIL_TYPE_CAREGIVER_EC_INSTANT_JOIN = "caregiver_ec_instant_join";
 	
-	public static final String EMAIL_TYPE_GUEST_EARLYSTART= "GUEST_EARLYSTART";
-	public static final String EMAIL_TYPE_MEMBER_EARLYSTART = "MEMBER_EARLYSTART";
 	public static final String SIGN_IN_URL="signInUrl";
 	public static final String DOWNLOAD_MDO_APP_URL="downloadMdoAppUrl";
 	public static final String VV_WEB_PAGE_URL="vvWebPage";
+	
 }

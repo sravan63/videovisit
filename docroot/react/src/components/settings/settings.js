@@ -51,6 +51,12 @@ class Settings extends React.Component {
                     const camerasAfterChange = message.data.videoinput.length;
                     if( this.updatedDevices['camerasBeforeChange'] !== camerasAfterChange ) {
                         // Change in CAMERAS
+                        if(this.updatedDevices['camerasBeforeChange'] > camerasAfterChange){
+                            WebUI.log("info","camera_pluggedOut","event: An external camera device is plugged out inside conference page");
+                        }
+                        else{
+                           WebUI.log("info","camera_pluggedIn","event: An external camera device is plugged in inside conference page");
+                        }
                         const videoSource = this.updatedDevices['camerasBeforeChange'] > camerasAfterChange ? message.data.videoinput[0] : 
                         message.data.videoinput.length > 1 ? message.data.videoinput[1] : message.data.videoinput[0];
                         const micSource = this.updatedDevices['micsBeforeChange'] > micsAfterChange ? message.data.audioinput[0] : 
@@ -60,6 +66,12 @@ class Settings extends React.Component {
                         localStorage.setItem('selectedPeripherals', JSON.stringify(this.state.constrains));
                     } else if( this.updatedDevices['micsBeforeChange'] !== micsAfterChange ) {
                         // Change in MICS
+                        if(this.updatedDevices['micsBeforeChange'] > micsAfterChange){
+                            WebUI.log("info","microphone_pluggedOut","event: An external microphone device is plugged out inside conference page");
+                        }
+                        else{
+                            WebUI.log("info","microphone_pluggedIn","event: An external microphone device is plugged in inside conference page");
+                        }
                         const micSource = this.updatedDevices['micsBeforeChange'] > micsAfterChange ? message.data.audioinput[0] : 
                         message.data.audioinput.length > 1 ? message.data.audioinput[1] : message.data.audioinput[0];
                         this.selectPeripheral(micSource, 'mic');
@@ -67,6 +79,12 @@ class Settings extends React.Component {
                     }
                     if( !this.state.isbrowsercheck && (this.updatedDevices['speakersBeforeChange'] !== speakersAfterChange) ) {
                         // Change in SPEAKERS
+                        if(this.updatedDevices['speakersBeforeChange'] > speakersAfterChange){
+                            WebUI.log("info","speaker_pluggedOut","event: An external speaker device is plugged out inside conference page");
+                        }
+                        else{
+                            WebUI.log("info","speaker_pluggedIn","event: An external speaker device is plugged in inside conference page");
+                        }
                         const speakerSource = this.updatedDevices['speakersBeforeChange'] > speakersAfterChange ? message.data.audiooutput[0] : 
                         message.data.audiooutput.length > 1 ? message.data.audiooutput[1] : message.data.audiooutput[0];
                         this.selectPeripheral(speakerSource, 'speaker');
@@ -151,14 +169,14 @@ class Settings extends React.Component {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            WebUI.switchDevices('video', media);
+            WebUI.switchDevices('camera', media,"vv");
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media, 'video');
             // WebUI.switchDevices('speaker',media);
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
-            WebUI.switchDevices('mic',media);
+            WebUI.switchDevices('microphone',media,"vv");
         }
         // Sets the constrains in dropdowns.
         this.setState({

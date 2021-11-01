@@ -252,6 +252,16 @@ class Conference extends React.Component {
                 case GlobalConfig.START_SCREENSHARE:
                     this.setState({ showSharedContent: true, videofeedflag : true });
                     this.setState({isPIPMode: this.setPIPMode()});
+                    if(Utilities.isMobileDevice() && window.matchMedia("(orientation: landscape)").matches) {
+                        this.selfViewMedia.current.dataset.view = "smaller";
+                        this.remoteFeedMedia.current.dataset.view = "larger";
+                        this.currentSmallerView = this.selfViewMedia.current;
+                        
+                        this.setState({isRemoteFlippedToSelf:false}, function(){
+                            this.initialPositionTop =  this.currentSmallerView.offsetTop.offsetTop +"px";
+                            this.initialPositionLeft = this.currentSmallerView.offsetTop.offsetLeft +"px";
+                         });
+                    }
                     break;
                 case GlobalConfig.STOP_SCREENSHARE:
                     this.is50PIP= false;
@@ -494,7 +504,7 @@ class Conference extends React.Component {
 
     handleStart(e){
         //If we switch to landscape scroll down the page again switch to portrait flip the view now switch to landscape then not able to scroll due to that smaller view is not visible.
-        if(!this.state.isRemoteFlippedToSelf && e.target.dataset.view !== "larger"){
+        if((!this.state.isRemoteFlippedToSelf && !this.state.showSharedContent) && e.target.dataset.view !== "larger"){
             e.preventDefault();
         }
         var touchLocation = e.targetTouches[0];
@@ -600,7 +610,7 @@ class Conference extends React.Component {
 
     handleEnd(e) {
         // Dragging or tapping on larger view must not perform anything. 
-        if(e.target.dataset.view === "larger") {
+        if(!e.target.dataset.view || e.target.dataset.view === "larger") {
             return;
         }
         //[Samsung issue] Calculate the distance between start and end position,if the distance is fairly small, fire a click event(this.flipView(e)).
@@ -774,6 +784,7 @@ class Conference extends React.Component {
         // if(this.mainContentWidth === window.innerWidth){
         //     return;
         // }
+        this.enablePinchPanZoom = this.disablePanPinchZoom();
 
         if(window.innerWidth > 1024) {
             this.currentSmallerView.style.top = "initial";
@@ -1090,6 +1101,7 @@ class Conference extends React.Component {
 
 
     startPexip(meeting) {
+        WebUI.log("info", "preparing_to_initiate_pexip_call", "event: Preparing user to join the conference.");
         localStorage.setItem('guestPin', meeting.vendorGuestPin);
         var guestPin = meeting.vendorGuestPin,
             roomJoinUrl = meeting.roomJoinUrl,
@@ -1113,11 +1125,23 @@ class Conference extends React.Component {
                 name = JSON.parse(localStorage.getItem('memberName'));
                 // localStorage.setItem('memberName', name);
             }
-            var userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
+            let userType,userID;
+            if(this.state.isInstantPG){
+                userType = "Instant_Join_Guest";
+                userID = name;
+            }
+            else if(this.state.loginType == GlobalConfig.LOGIN_TYPE.EC){
+                userType = "EC_Instant_Join_Guest";
+                userID = name;
+            }
+            else{
+                userType = this.state.isProxyMeeting == 'Y' ? (meeting.member.mrn ? 'Patient_Proxy' : 'Non_Patient_Proxy') : 'Patient';
+                userID = meeting.member.mrn;
+            }
             var vendorDetails = {
                 "meetingId": meeting.meetingId,
                 "userType": userType,
-                "userId": meeting.member.mrn
+                "userId": userID
             };
             localStorage.setItem('vendorDetails', JSON.stringify(vendorDetails));
         } else {
@@ -1360,6 +1384,8 @@ class Conference extends React.Component {
 
     refreshPage() {
         window.location.reload(false);
+        WebUI.log('info','conference_page_refresh_button_click','event: User clicked on refresh button in conference page.');
+
     }
 
     toggleCamera(){
@@ -1396,7 +1422,7 @@ class Conference extends React.Component {
             }
         }
 
-        WebUI.switchDevices('video', vObject);
+        WebUI.switchDevices('camera', vObject,"vv");
     }
 
     initiateSurvey(){
@@ -1616,6 +1642,12 @@ class Conference extends React.Component {
         let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
 
         if(Utilities.isMobileDevice() && !this.state.showSharedContent && (this.state.isPIPMode || (isLandscape && participantCount === 2 && this.state.participants.some(WebUI.hostInMeeting)))) {
+            if(this.state.isRemoteFlippedToSelf) {
+                setTimeout(()=>{
+                    this.initialPositionTop = '';
+                    this.initialPositionLeft = '';
+                },100);
+            }
             return true;
         }
         return false;
@@ -1626,6 +1658,8 @@ class Conference extends React.Component {
         let multipleVideoParticipants = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length > 2;
         let remoteStreamContainerClass = this.state.moreparticpants ? 'mobile-remote-on-waiting-room stream-container' : this.state.showSharedContent?'stream-container stream-container-SMD':'stream-container';
         let remoteStreamVisible = this.state.videofeedflag && this.state.showSharedContent ? 'remoteStreamVisible' : 'noSMD';
+        let pinchAndZoomDiv =document.getElementsByClassName("react-transform-element")[0];
+
         //let selfviewandsmd = this.state.videofeedflag && this.state.showSharedContent ? 'remotestream self-view' : 'self-view';
         if(this.state.isPIPMode || window.matchMedia("(orientation: landscape)").matches) {
             if(window.matchMedia("(orientation: landscape)").matches){
@@ -1661,6 +1695,16 @@ class Conference extends React.Component {
             display : this.state.videofeedflag ? 'block' : 'none'
         };
         multipleVideoParticipants && (remoteContainerStyle.transform ='none' );
+        this.enablePinchPanZoom = this.disablePanPinchZoom();
+        if(multipleVideoParticipants && window.matchMedia("(orientation: landscape)").matches){
+            pinchAndZoomDiv && pinchAndZoomDiv.style.setProperty('display', "block");
+            pinchAndZoomDiv&& pinchAndZoomDiv.style.setProperty('height', "85vh");
+        }
+        else{
+            pinchAndZoomDiv && pinchAndZoomDiv.style.removeProperty("height");
+            pinchAndZoomDiv && pinchAndZoomDiv.style.removeProperty("display");
+        }
+
         return (
             <div className="conference-page pl-0 container-fluid">
                 <Notifier />
@@ -1699,7 +1743,7 @@ class Conference extends React.Component {
                                 {/* <TransformWrapper options={{ disabled: this.disablePanPinchZoom() ? true : false, wrapperClass: 'my-wrapper-class', contentClass: this.disablePanPinchZoom() ? 'my-content-class' :'' }}> */}
                                     {/* <TransformComponent contentStyle={{ transform: 'none !important'}}> */}
                                    { Utilities.isMobileDevice() ? 
-                                   <TransformWrapper options={{ disabled: this.disablePanPinchZoom()}}>
+                                   <TransformWrapper options={{ disabled: this.enablePinchPanZoom , contentClass: !this.enablePinchPanZoom? 'my-content-class' : 'my-content-class-none' , contentClass: !this.enablePinchPanZoom ? 'my-content-class' : 'my-content-class-none' }}>
                                    <TransformComponent>
                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                        <div className={remoteStreamVisible} style={remoteContainerStyle}>

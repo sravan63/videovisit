@@ -26,6 +26,33 @@ public class EmailDynamicContent implements Serializable {
 	private String signInUrl;
 	private String downloadMdoAppUrl;
 	private String vvWebPage;
+	private String meetingTimeOnly;
+	private String meetingRunLateTimeOnly;
+	private String meetingTimeStamp;
+
+	public String getMeetingTimeStamp() {
+		return meetingTimeStamp;
+	}
+
+	public void setMeetingTimeStamp(String meetingTimeStamp) {
+		this.meetingTimeStamp = meetingTimeStamp;
+	}
+
+	public String getMeetingTimeOnly() {
+		return meetingTimeOnly;
+	}
+
+	public void setMeetingTimeOnly(String meetingTimeOnly) {
+		this.meetingTimeOnly = meetingTimeOnly;
+	}
+
+	public String getMeetingRunLateTimeOnly() {
+		return meetingRunLateTimeOnly;
+	}
+
+	public void setMeetingRunLateTimeOnly(String meetingRunLateTimeOnly) {
+		this.meetingRunLateTimeOnly = meetingRunLateTimeOnly;
+	}
 
 	public String getMeetingId() {
 		return meetingId;

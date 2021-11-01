@@ -218,7 +218,7 @@ export function togglePresentation() {
 //}
 
 export function presentScreen() {
-    log("info", "smd_initiate_action", "console: presentScreen - on click of share my desktop button");
+    //log("info", "smd_initiate_action", "console: presentScreen - on click of share my desktop button");
     if (!presenting) {
         rtc.present('screen');
         presenting = true;
@@ -241,7 +241,7 @@ export function presentScreen() {
 }
 
 export function stopSharing() {
-    log("info", "smd_close_action", "event: stopSharing - disable share button");
+    //log("info", "smd_close_action", "event: stopSharing - disable share button");
     rtc.present(null);
     presenting = false;
     $('#id_screenshare').css('display', 'block');
@@ -369,14 +369,14 @@ export function cleanup(event) {
 }
 
 export function finalise(event) {
-    log("info", "ConferencePageClosed", "event: Closing video conference page and redirecting to visits page");
+    log("info", "conference_page_closed", "event: Closing video conference page and redirecting to visits page");
     //console.log("inside webui finalise");
     rtc.disconnect();
     cleanup();
 }
 
 function remoteDisconnect(reason) {
-    log("info","ConferenceRemoteDisconnect","event: Disconnecting the conference, reason :" + reason);
+    log("info","conference_page_remote_disconnect","event: Disconnecting the conference, reason :" + reason);
     cleanup();
     if (reason.indexOf("get access to camera") > -1) {
         MessageService.sendMessage(GlobalConfig.LEAVE_VISIT, null);
@@ -396,7 +396,7 @@ function remoteDisconnect(reason) {
 }
 
 function handleError(reason) {
-    log("error","ConnectionFailed","event: connection failed, reason :" + reason);
+    log("error","connection_failed_pexip","event: connection failed from pexip, reason :" + reason);
     MessageService.sendMessage(GlobalConfig.HIDE_LOADER, 'true');
     var isTimeOutError = rtc.error == "Timeout sending request: request_token" || reason == "Call Failed: Invalid token"; // || rtc.error == "Error sending request: calls";
     if( isTimeOutError ) {
@@ -431,7 +431,7 @@ function handleError(reason) {
 }
 
 function doneSetup(url, pin_status, conference_extension) {
-    log("info", "ReadyToConnect", "event: User is ready to join the conference.");
+    log("info", "ready_to_connect", "event: User is ready to join the conference.");
     var isSetupPage = localStorage.getItem('isSetupPage');
     if(isSetupPage){
         MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
@@ -451,7 +451,7 @@ function doneSetup(url, pin_status, conference_extension) {
 
 export function submitPinEntry() {
     //maincontent.classList.remove("hidden");
-    log("info", "EnteringPinToJoinConference", "event: Passing pin to join the conference.");
+    log("info", "enterPin_to_join_conference_room", "event: Passing pin to join the conference.");
     var Guestpin = localStorage.getItem('guestPin');
     pin = Guestpin;
     // console.log("PIN is now " + pin);
@@ -510,6 +510,7 @@ function getAspectMode() {
 
 function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
+    log("info","participant_joined","event: participant joined the visit - participant:" +participant.uuid);
     var uniqueKey = '';
     if(participant.display_name.indexOf('#') > -1){
         uniqueKey = participant.display_name.split('#')[1];
@@ -598,7 +599,7 @@ function participantUpdated(participant) {
 
 function participantDeleted(participant) {
     // CALL BACK WHEN A PARTICIPANT LEAVES THE MEETING
-    // log("info", "participantDeleted", "event: participantDeleted - inside participantDeleted - participant:" + participant);
+    log("info","participant_left","event: participant left the visit - participant:" +participant.uuid);
     if (isMobileDevice) {
         updateParticipantList(participant, 'left');
         console.log("inside participantDeleted");
@@ -753,7 +754,7 @@ function connected(url) {
     if(pexipInitialConnect==false){
         if (isSetup == null) {
             var isMobile = UtilityService.isMobileDevice();
-            log("info","ConferenceConnected","event: joined conference successfully.");
+            log("info","conference_connected","event: joined conference successfully.");
             //MessageService.sendMessage(GlobalConfig.CLOSE_MODAL_AUTOMATICALLY, null);
             MessageService.sendMessage(GlobalConfig.RENDER_VIDEO_DOM, 'conference');
             var isDirectLaunch = localStorage.getItem('isDirectLaunch');
@@ -812,19 +813,20 @@ export function setPatientGuestPresenceIndicatorManually() {
     }
 }
 
-export function switchDevices(constrain, device = null) {
-    log("info", constrain+"_peripheral_change_action", "event: peripherals"+constrain+"Change - on changing the peripheral dropdown to :: " + device.label);
-    if(constrain == 'video'){
+export function switchDevices(constrain, device = null,type) {
+    log("info", type+"_"+constrain+"_peripheral_change_action", "event: peripherals"+constrain+"Change - on changing the peripheral dropdown to :: " + device.label);
+    if(constrain == 'camera'){
         rtc.video_source = device.deviceId;
-    } else if(constrain == 'mic'){
+    } else if(constrain == 'microphone'){
         rtc.audio_source = device.deviceId;
     }
     rtc.renegotiate();
+    log("info","pexip_renegotiate_called","event: Pexip renegotiate function is invoked");
 }
 
 export function initialise(confnode, conf, userbw, username, userpin, req_source, flash_obj, config) {
     console.log("inside webui initialise");
-    log('info', 'initialise', "event: video visit initialise");
+    log('info', 'initialize_pexip_call', "event: video visit initialise");
 
     video = document.getElementById("video");
     id_selfview = document.getElementById('id_selfview');
@@ -859,7 +861,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
         if(peripherals.audioSource == null || peripherals.audioSource == ''){
             peripherals.audioSource = '';
         }
-        log('info', 'initialise peripherals', "event: video visit peripherals :: Camera - " + peripherals.videoSource.label + " Speaker - " + peripherals.audioSource == null ? "" : peripherals.audioSource.label + " Microphone - " + peripherals.micSource.label );
+        log('info', 'initialise_peripherals', "event: video visit peripherals :: Camera - " + peripherals.videoSource.label + " Speaker - " + peripherals.audioSource == null ? "" : peripherals.audioSource.label + " Microphone - " + peripherals.micSource.label );
     } 
     var browserInfo = UtilityService.getBrowserInformation();
     if(UtilityService.isMobileDevice() && browserInfo.isFireFox){
@@ -969,7 +971,7 @@ _
 }
 
 function setTurnServer(){
-    log("info","ICE connection failed","event: Callback for ice connection failure");
+    log("info","ice_connection_failed","event: Failed to gather ice connection.");
     //var turnServerDetails = JSON.parse(sessionStorage.getItem('turnServer'));
     //rtc.turn_server = getTurnServersObjs(turnServerDetails);
 }
@@ -1068,6 +1070,7 @@ export function pexipDisconnect() {
         selfvideo.srcObject = null;
     }
     rtc.disconnect();
+    log("info","user_self_disconnect","event: disconnecting from the conference page.");
     var isDirectLaunch = localStorage.getItem('isDirectLaunch');
     var inAppAccess = UtilityService.getInAppAccessFlag();
     if(isDirectLaunch || inAppAccess){
@@ -1182,7 +1185,7 @@ export function adjustLayout(participants, isHostAvail) {
 }
 
 export function disconnectOnRefresh() {
-    log("info", 'DisconnectOnRefresh', "event: Refresh::click - disconnectOnRefresh before calling navigateToPage if disconnected completely : ");
+    log("info",'unload_event_called_on_refresh/browserBack', "event: trigger backend call to updated meeting endtime");
     console.log("inside disconnect");
     disconnectAlreadyCalled = true;
     var guestName = $("#guestName").val();
