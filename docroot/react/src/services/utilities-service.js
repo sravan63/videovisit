@@ -328,7 +328,44 @@ class UtilityService extends React.Component {
         }
         return str;
     }
+    formatDateAndTimeForEmails(DateObj, type,lang) {
+        let str = '';
+        if (type == 'time') {
+            let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
+            let Minutes = (DateObj.getMinutes() <= 9) ? "0" + DateObj.getMinutes() : DateObj.getMinutes();
+            let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
+            Hour = (Hour == 0) ? 12 : Hour;
+            switch(lang){
+                case "spanish":
+                    str = Hour + ':' + Minutes + " " + (DateObj.getHours() > 11 ? 'p. m.' : 'a. m.');
+                    break;
+                case "chinese":
+                    str = (DateObj.getHours() > 11 ? '下午' : '上午') + ''+ Hour + ':' + Minutes;
+                    break;
+                default:
+                    str = Hour + ':' + Minutes + " " + AMPM;
+                    break;
+            }
 
+        } else {
+            let week = GlobalConfig.WEEK_DAYS[lang][DateObj.getDay()];
+            let month = GlobalConfig.MONTHS[lang][DateObj.getMonth()];
+            let date = DateObj.getDate() < 10 ? String(DateObj.getDate()).replace("0", "") : DateObj.getDate();
+
+            switch(lang){
+                case "spanish":
+                    str = week + ', ' + month + ' ' +  date;
+                    break;
+                case "chinese":
+                    str = week + ', ' + month + '' +  date;
+                    break;
+                default:
+                    str = week + ', ' + month + ' ' +  date;
+                    break;
+            }
+        }
+        return str;
+    }
     formatInMeetingRunningLateTime(runLateMeetingTime) {
         var meetingTime = new Date(parseInt(runLateMeetingTime));
         var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();        

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import BackendService from "../../services/backendService";
-import EmailStartEarlySp from '../email-instructions/email-start-early-sp';
-import EmailStartEarlyCh from '../email-instructions/email-start-early-ch';
+import EmailStartEarly from '../email-instructions/email-start-early/email-start-early';
 import GuestInstructional from "./guest-instructional/guest-instructional";
 
 class emailInstructions extends Component {
@@ -39,13 +38,8 @@ class emailInstructions extends Component {
         let langName = this.state.langName;
         const emailTemplates = () => {
             switch(details && details.emailType) {
-                case "GUEST_EARLYSTART":
-                    if(langName == "spa"){
-                        return <EmailStartEarlySp data={details} />;
-                    }
-                    else{
-                        return <EmailStartEarlyCh data={details} />;
-                    }
+                case "caregiver_earlystart":
+                    return <EmailStartEarly data={details} />;   
                 case "caregiver_instruction":
                     return <GuestInstructional data={details} />;
                 default:
