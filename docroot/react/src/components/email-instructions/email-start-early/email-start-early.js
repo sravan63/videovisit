@@ -21,7 +21,7 @@ class emailStartEarly extends Component {
     render() { 
       let details = this.state.staticData; 
       return ( <div>
-        <div className="container">
+        <div className="container-fluid p-0 member-container">
                           <div className="row">
                                   
                                   <div className="col-md-12">
