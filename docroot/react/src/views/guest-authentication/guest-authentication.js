@@ -306,8 +306,10 @@ class Authentication extends React.Component {
                     <BrowserBlock browserblockinfo = {this.state}/>
                     {this.state.ReJoin ? (
                         <div className="guest-rejoin-wrapper">
+                            <div className="guest-rejoin-header">
                             <h1 className="text-left rejoin-heading font-weight-bold text-md-center px-4">{this.state.guestLoginHeading}</h1>
                             <div className="rejoin-description text-left mt-4 text-md-center px-4">Lost connection? <button className="guest-rejoin-button"  onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>Rejoin your visit</button></div> 
+                            </div>
                             <div className="guest-rejoin-banner">
                                 <div className="guest-rejoin-banner-header">
                                     Next time try the <b>My Doctor Online app</b> for your video visit.
