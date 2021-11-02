@@ -21,7 +21,7 @@ class GuestInstructional extends Component {
         return Utilities.formatDateAndTimeForEmails(new Date(parseInt(millis)), type,lang);
 
     }
-    
+
 
     render() {
         let details = this.state.staticData;
@@ -43,9 +43,9 @@ class GuestInstructional extends Component {
                                target="_blank" className="start-visit">{details.startVisit}</a>
                         </div>
                         <div className="time-details">
-                            <p>{details.dateTime}: {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'date',this.state.emailContentDetails.lang)} {details.at} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} Pacific Time</p>
+                            <p>{details.dateTime}: {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'date',this.state.emailContentDetails.lang)}{details.at} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} Pacific Time</p>
                             <p>{details.patient}: {this.state.emailContentDetails.memberFirstName} {this.state.emailContentDetails.lastNameFirstCharMember}</p>
-                            <p>{details.clinician}: {this.state.emailContentDetails.doctorFirstName} {this.state.emailContentDetails.doctorLastName} {this.state.emailContentDetails.doctorTitle}</p>
+                            <p>{details.clinician}: {this.state.emailContentDetails.doctorFirstName} {this.state.emailContentDetails.doctorLastName}{this.state.emailContentDetails.doctorTitle}</p>
                         </div>
                         <div className="learn-more">
                             <a href={this.state.emailContentDetails.guestHelpUrl} target="_blank">{details.learnMore}</a>
