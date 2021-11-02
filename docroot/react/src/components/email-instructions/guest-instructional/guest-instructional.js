@@ -51,8 +51,7 @@ class GuestInstructional extends Component {
                             <a href={this.state.emailContentDetails.guestHelpUrl} target="_blank">{details.learnMore}</a>
                         </div>
                         <div className="need-help">
-                            <p>{details.needHelp1}</p>
-                            <p>{details.needHelp2}</p>
+                            <p>{details.needHelp1}{details.needHelp2}</p>
                             <p>{details.needHelp3}</p>
                         </div>
                     </div>
