@@ -139,7 +139,7 @@
         "download": "Descargar My Doctor Online",
         "computer": "Ingrese desde su computadora: ",
         "goTo": "Vaya a ",
-        "andSelect": " seleccione ",
+        "andSelect": " seleccione ,",
         "joinVisit": "ingrese a su consulta, ",
         "and": "e ",
         "signIn": "inicie sesión.",
@@ -168,7 +168,7 @@
       "startEarly": {
         "heading": "Ingrese a su videoconsulta ahora",
         "subHeading": "Su videoconsulta programada originalmente para el",
-        "atText":" a las ",
+        "atText":", a las ",
         "subHeading2":" va a empezar más temprano.",
         "subHeading3":"Para ingresar desde un teléfono inteligente o una tableta,",
         "subHeading4":"descargue la app My Doctor Online.",

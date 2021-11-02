@@ -43,8 +43,8 @@ class emailStartEarly extends Component {
                             <div className="col-md-12 text-center mb-4"><a href={this.state.emailContentDetails.meetingURL} target="_blank" className="start-visit">{details.startVisit}</a></div>
                           </div>
                           <div className="row">
-                            <div className="col-md-12">{details.needHelp1}{details.subHeading6}</div>
-                            <div className="col-md-12">{details.needHelp1}{details.subHeading7}</div>
+                            <div className="col-md-12">{details.subHeading6}</div>
+                            <div className="col-md-12">{details.subHeading7}</div>
                             <div className="col-md-12 mb-4"><a href={this.state.emailContentDetails.guestHelpUrl} className="email-data-link" target="_blank">{details.subHeading8} </a></div>
                           </div>
                           <div className="row">

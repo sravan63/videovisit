@@ -67,7 +67,7 @@ class PatientInstructional extends Component {
                     <div className="join-from-pc">{details.computer}</div>
                     <ul className="rules-computer">
                             <li>{details.goTo}<a href={this.state.emailContentDetails.lang==='spanish' ? 'http://kp.org/mydoctor/videovisitsespanol':'http://kp.org/mydoctor/videovisits'} target="_blank"
-                                         style={{textDecoration: 'none',color: '#006ba6',cursor: 'pointer'}}>{this.state.emailContentDetails.lang==='spanish' ? 'kp.org/mydoctor/videovisitsespanol':'kp.org/mydoctor/videovisits'}</a>,
+                                         style={{textDecoration: 'none',color: '#006ba6',cursor: 'pointer'}}>{this.state.emailContentDetails.lang==='spanish' ? 'kp.org/mydoctor/videovisitsespanol':'kp.org/mydoctor/videovisits'}</a>
                                 {details.andSelect}<b>{details.joinVisit}</b>{details.and}<b>{details.signIn}</b></li>
                             <li>{details.Select}<b>{details.joinYourVisit}</b>{details.computerRule}</li>
                     </ul>
