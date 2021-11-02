@@ -5,7 +5,7 @@ import Logo from '../../../assets/email/kp-logo.png';
 
 class emailheader extends Component {
   render() {
-    return <div className="header container-fluid">
+    return <div className="header-email container-fluid">
     <div className="row banner">
         <div className="image-holder">
             <a href="https://mydoctor.kaiserpermanente.org/ncal/mdo/#/?origin=sysoutreach"
