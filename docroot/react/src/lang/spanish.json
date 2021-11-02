@@ -27,7 +27,7 @@
     },
     "my_visits":{
       "VisitsTodayMsg":"Su videoconsulta de hoy",
-      "VisitsRunningLateMsg": "Lo siento, su médico va a llegar tarde. La nueva hora de inicio es:",      
+      "VisitsRunningLateMsg": "Lo siento, su médico va a llegar tarde. La nueva hora de inicio es:",
       "Wifimsg":"Es posible que esté ingresando antes que su médico. Gracias por su paciencia. Ingrese con una conexión confiable a Wi-Fi o a internet, desde un lugar tranquilo y bien alumbrado. Si necesita ayuda para prepararse para su videoconsulta, llame al 844-216-5769, lunes a viernes, de 5 a. m. a 7 p. m.",
       "JoinVisit":"Ingrese a su consulta",
       "AddParticipantsMsg":"Participantes adicionales",
@@ -88,7 +88,7 @@
       "Join":"Ingresar",
       "Back":"Atrás",
       "PlaySound":"Activar el sonido",
-      "PauseSound":" Pausar el sonido"      
+      "PauseSound":" Pausar el sonido"
     },
     "errorCodes":{
       "ErrorPatientInfo":"Información incorrecta del paciente",
@@ -125,6 +125,31 @@
         "needHelp2": "llame al 1-844-216-5769 de lunes a viernes, de 6:30 a. m. a 7 p. m. ",
         "needHelp3": "Si necesita un intérprete, avísenos al iniciar su consulta. ",
         "at": "a las"
+      },
+      "patientInstructionalEmail": {
+        "heading": "Prepárese para su videoconsulta",
+        "learnMore":"Entérese más acerca de las videoconsultas y cómo prepararse.",
+        "smartPhone": "Ingrese desde su teléfono inteligente o tableta",
+        "smartPhoneRules1": "Abra la app My Doctor Online (en inglés).",
+        "smartPhoneRules2": "Inicie sesión usando su identificación de usuario de kp.org y contraseña, vaya a ",
+        "appointment": "Appointments  ",
+        "smartPhoneRules3": "(citas), seleccione su videoconsulta, y toque en ",
+        "join": "Join ",
+        "smartPhoneRules4": "(ingrese) para empezar.",
+        "download": "Descargar My Doctor Online",
+        "computer": "Ingrese desde su computadora: ",
+        "goTo": "Vaya a ",
+        "andSelect": " seleccione ",
+        "joinVisit": "ingrese a su consulta, ",
+        "and": "e ",
+        "signIn": "inicie sesión.",
+        "Select": "Seleccione ",
+        "joinYourVisit": "ingrese a su consulta ",
+        "computerRule": "y permita el acceso a su cámara y su micrófono.",
+        "troubleSignIn1": "¿Tiene problemas para iniciar sesión? Use el acceso temporal a las videoconsultas (Video Visits Temporary Access). ",
+        "troubleSignIn2": "Si necesita ayuda para prepararse para su videoconsulta, llame al ",
+        "troubleSignIn3": " de lunes a viernes, de 6:30 a. m. a 7 p. m. ",
+        "troubleSignIn4": "Si necesita un intérprete, avísenos al iniciar su consulta."
       },
       "careGiverStartEarly": {
         "heading": "Inicie su videoconsulta ahora",

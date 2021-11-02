@@ -6,6 +6,7 @@ import GuestStartEarly from "./guest-start-early/guest-start-early";
 
 import EmailHeader from "./email-header/header";
 import EmailFooter from "./email-footer/footer";
+import PatientInstructional from "./patient-instructional/patient-instructional";
 
 class emailInstructions extends Component {
     constructor(props) {
@@ -49,15 +50,17 @@ class emailInstructions extends Component {
             switch(details && details.emailType) {
                 case "member_earlystart":
                     return <EmailStartEarly data={details} content={content.email} />;
+                case "member_instruction":
+                    return <PatientInstructional data={details} content={content.email} />;
                 case "caregiver_instruction":
                     return <GuestInstructional data={details} content={content.email} />;
                 case "caregiver_earlystart":
-                    return <GuestStartEarly data={details} content={content.email} />;   
+                    return <GuestStartEarly data={details} content={content.email} />;
                 default:
                     return null
             }
           }
-        return (  details && details.emailType ? 
+        return (  details && details.emailType ?
             (<div>
                 <EmailHeader/>
                 { emailTemplates() }
