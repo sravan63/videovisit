@@ -8,7 +8,7 @@ class emailfooter extends Component {
   }
 
   render() {
-    return  <div className="container-fluid p-0"> <div className="row footer">
+    return  <div className="container-fluid p-0"> <div className="row footer-email">
       <div className="col-12 footer-text">
           <a>
               <img src={FooterLogo} className="footer-logo"/>
