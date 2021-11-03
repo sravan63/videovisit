@@ -1341,7 +1341,8 @@ public class WebService {
 	public static String logVendorMeetingEvents(final long meetingId, final String userType, final String userId,
 			final String eventName, final String eventDescription, final String logType, final String sessionId,
 			final String clientId) {
-		logger.info(LOG_ENTERED + " meetingId: " + meetingId + " userType: " + userType);
+		logger.info(LOG_ENTERED + " meetingId: " + meetingId + ", userType: " + userType + ", eventName: " + eventName
+				+ ", eventDescription: " + eventDescription);
 		final Gson gson = new Gson();
 		String jsonOutput = null;
 		org.kp.tpmg.ttg.videovisitsintegration.model.notification.VendorMeetingEventInput input;

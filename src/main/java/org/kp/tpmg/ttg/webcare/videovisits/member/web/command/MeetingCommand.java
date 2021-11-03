@@ -14,6 +14,7 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.SUCCE
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.TRUE;
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.DATA_NOT_FOUND;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -833,7 +834,7 @@ public class MeetingCommand {
 		final String userType = request.getHeader("userType");
 		final String userId = request.getHeader("userId");
 		final String eventName = request.getHeader("eventName");
-		final String eventDescription = request.getHeader("eventDescription");
+		String eventDescription = request.getHeader("eventDescription");
 		final String logType = request.getHeader("logType");
 		final String sessionId = request.getSession().getId();
 		final String loginType = request.getHeader(LOGIN_TYPE);
@@ -841,6 +842,9 @@ public class MeetingCommand {
 		final Gson gson = new GsonBuilder().serializeNulls().create();
 		try {
 			String clientId = WebUtil.getClientIdByLoginType(loginType);
+			if (StringUtils.isNotBlank(eventDescription)) {
+				eventDescription = URLDecoder.decode(eventDescription, WebUtil.UTF_8);
+			}
 			jsonOutput = WebService.logVendorMeetingEvents(WebUtil.convertStringToLong(meetingId), userType, userId,
 					eventName, eventDescription, logType, sessionId, clientId);
 			if (StringUtils.isNotBlank(jsonOutput)) {

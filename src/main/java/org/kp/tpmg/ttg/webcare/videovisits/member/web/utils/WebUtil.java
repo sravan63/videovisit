@@ -96,6 +96,8 @@ public class WebUtil {
 	public static final String KEEP_ALIVE = "keep_alive";
 	public static final String SURVEY = "survey";
 	
+	public static final String UTF_8 = "UTF-8";
+	
 	
 	public static boolean isDOBMMYYYYFormat(String value) {
 		if (value == null)
