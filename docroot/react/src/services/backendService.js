@@ -98,9 +98,9 @@ class BackendService extends React.Component {
             userType : (params[4]) ? params[4] : '',
             userId :  (params[5]) ? params[5] : '',
             eventName : (params[1]) ? params[1] : '',
-            eventDescription :  (params[2]) ? params[2] : ''
+            eventDescription :  (params[2]) ? encodeURI(params[2]) : ''
         };
-        
+
         Axios.post(this.state.basePath + '/videovisit/' + 'logVendorMeetingEvents.json' + '?loginType=' + loginType,{},{ headers: headers }).subscribe((response) => {
                 console.log("success");
             },
@@ -188,9 +188,9 @@ class BackendService extends React.Component {
                 cache: false,
                 async: true,
                 crossDomain:true,
-                success: function(keepAliveData){               
+                success: function(keepAliveData){
                 },
-                error: function() {             
+                error: function() {
                 }
             });
 
@@ -247,7 +247,7 @@ class BackendService extends React.Component {
         let loginType = isInstantJoin ? 'instant_join' : 'ec_instant_join';
         let path = isInstantJoin ? 'authorizeVVCode.json' : 'authorizeECCode.json';
         return Axios.post(this.state.basePath + '/videovisit/' + path + '?loginType='+ loginType + '&isFromMobile=' + isFromMobile, {},{ headers: headers });
-        
+
     }
 
     validateJwtToken(tokenValue){
