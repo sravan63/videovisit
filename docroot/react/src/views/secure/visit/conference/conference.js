@@ -1481,7 +1481,8 @@ class Conference extends React.Component {
                     window.onpopstate = function(event) {
                     history.go(1);
                     };
-                    window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
+                    // window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit?xyz='+this.state.meetingCode;
+                    window.location.href = window.location.origin+ '/videovisit/#/guestlogin?meetingcode='+this.state.meetingCode;
                 } else {
                     this.props.history.push(GlobalConfig.LOGIN_URL);
                     history.pushState(null, null, location.href);
@@ -1491,7 +1492,8 @@ class Conference extends React.Component {
                 }
             } else if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
                 sessionStorage.clear();
-                window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
+                // window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
+                window.location.href = window.location.origin+ '/videovisit/#/guestlogin?meetingcode='+this.state.meetingCode;
             } else {
                 Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
