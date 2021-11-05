@@ -5,8 +5,6 @@ const GlobalConfig = {
     HOME_URL: _rootUrl,
     VIDEO_VISIT_ROOM_URL: _rootUrl + 'videoVisitReady',
     LOGIN_URL: _rootUrl + 'login',
-    IPHONE:'iPhone',
-    IPHONE_VERSION:'15.1',
     MEETINGS_URL: _rootUrl + 'myMeetings',
     AUTO_REFRESH_TIMER: '180000',
     RUNNING_LATE_TIMER: 120000,

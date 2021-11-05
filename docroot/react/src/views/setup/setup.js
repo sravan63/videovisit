@@ -28,7 +28,7 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {},isSafari15_1:false,userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:'',isChromecheck: false};
+        this.state = { data: {}, userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:'',isChromecheck: false};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
         this.getLanguage();
@@ -153,8 +153,7 @@ class Setup extends React.Component {
                  browserNames = response.data; 
                  this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                  if(UtilityService.validateBrowserBlock(browserNames)){
-                     let isSafari15_1 = UtilityService.getSafariBlocked();
-                     this.setState({ isBrowserBlockError: true,isSafari15_1:isSafari15_1 });
+                    this.setState({ isBrowserBlockError: true });
                  }
             } else {
                 // Do nothing
@@ -180,18 +179,18 @@ class Setup extends React.Component {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            WebUI.switchDevices('camera', media,"setupPage");
+            WebUI.switchDevices('video', media);
         } else if (type == 'speaker') {
             this.state.constrains.audioSource = media;
             MediaService.changeAudioDestination(media, 'video');
-            WebUI.switchDevices('speaker', media,"setupPage");
+            WebUI.switchDevices('speaker', media);
         } else if (type == 'mic') {
             this.state.constrains.micSource = media;
             const constrains = {
                 videoSource: this.state.constrains.videoSource,
                 audioSource: this.state.constrains.micSource,
             };
-            WebUI.switchDevices('microphone', media,"setupPage");
+            WebUI.switchDevices('mic', media);
         }
         // Sets the constrains in dropdowns.
         this.setState({

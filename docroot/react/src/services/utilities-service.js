@@ -18,7 +18,6 @@ class UtilityService extends React.Component {
         this.ecData = null;
         this.surveyTimeout = null;
         this.lang='';
-        this.isSafari15_1 = false;
         this.validateBrowser = this.validateBrowser.bind(this);
         this.validateBrowser();
     }
@@ -34,14 +33,6 @@ class UtilityService extends React.Component {
             isAlliPadCheck:  /iPad/.test(navigator.userAgent) 
         }
         this.browserInfo = bObj;
-    }
-
-    setSafariBlocked(val){
-        this.isSafari15_1 = val;
-    }
-
-    getSafariBlocked(){
-        return this.isSafari15_1;
     }
 
     // Returns the browser informaion.
@@ -106,16 +97,7 @@ class UtilityService extends React.Component {
         if (this.getBrowserInformation().isSafari) {
             if (blockSafari) {
                 isBrowserBlockError = true;
-            }
-            else if(navigator.platform.toLowerCase() === GlobalConfig.IPHONE.toLowerCase()){
-                let ver = this.iOSversion();
-                let IOSMobileVersion = ver[0]+'.'+ver[1];
-                if(IOSMobileVersion === GlobalConfig.IPHONE_VERSION){
-                    isBrowserBlockError = true;
-                    this.setSafariBlocked(true);
-                }
-            }
-            else {
+            } else {
                 var fullVersion  = ''+parseFloat(navigator.appVersion);
                 var majorVersion = parseInt(navigator.appVersion,10);
                 var verOffset;
@@ -184,9 +166,6 @@ class UtilityService extends React.Component {
                     if (version < browserNames.IPAD_OS_VERSION) {
                         isBrowserBlockError = true;
                     }
-                    /*else if(version == GlobalConfig.IPHONE_VERSION){
-                        isBrowserBlockError = true;
-                    }*/
                 }
             }
             //Ipad Safari Desktop Site
@@ -199,9 +178,6 @@ class UtilityService extends React.Component {
                     if (version < browserNames.IPAD_OS_VERSION) {
                         isBrowserBlockError = true;
                     }
-                    /*else if(version == GlobalConfig.IPHONE_VERSION){
-                        isBrowserBlockError = true;
-                    }*/
                 }
             }
         }
@@ -328,44 +304,7 @@ class UtilityService extends React.Component {
         }
         return str;
     }
-    formatDateAndTimeForEmails(DateObj, type,lang) {
-        let str = '';
-        if (type == 'time') {
-            let Hour = (DateObj.getHours() > 12 ? parseInt(DateObj.getHours()) - 12 : DateObj.getHours());
-            let Minutes = (DateObj.getMinutes() <= 9) ? "0" + DateObj.getMinutes() : DateObj.getMinutes();
-            let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
-            Hour = (Hour == 0) ? 12 : Hour;
-            switch(lang){
-                case "spanish":
-                    str = Hour + ':' + Minutes + " " + (DateObj.getHours() > 11 ? 'p. m.' : 'a. m.');
-                    break;
-                case "chinese":
-                    str = (DateObj.getHours() > 11 ? '下午' : '上午') + ''+ Hour + ':' + Minutes;
-                    break;
-                default:
-                    str = Hour + ':' + Minutes + " " + AMPM;
-                    break;
-            }
 
-        } else {
-            let week = GlobalConfig.WEEK_DAYS[lang][DateObj.getDay()];
-            let month = GlobalConfig.MONTHS[lang][DateObj.getMonth()];
-            let date = DateObj.getDate() < 10 ? String(DateObj.getDate()).replace("0", "") : DateObj.getDate();
-
-            switch(lang){
-                case "spanish":
-                    str = week + ', ' + month + ' ' +  date;
-                    break;
-                case "chinese":
-                    str = week + ', ' + month + '' +  date;
-                    break;
-                default:
-                    str = week + ', ' + month + ' ' +  date;
-                    break;
-            }
-        }
-        return str;
-    }
     formatInMeetingRunningLateTime(runLateMeetingTime) {
         var meetingTime = new Date(parseInt(runLateMeetingTime));
         var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();        
