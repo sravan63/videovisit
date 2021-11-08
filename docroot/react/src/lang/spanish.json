@@ -182,6 +182,18 @@
         "needHelp1": "Inicie sesión",
         "needHelp2": "o llame al 1-866-454-8855 para cancelar o reprogramar."
       },
+      "memberInstantJoin":{
+        "heading": "Ingrese a su videoconsulta ahora",
+        "subHeading":"Su videoconsulta de Kaiser Permanente empezará pronto.",
+        "subHeading2":"Ingrese a su ",
+        "subHeading3":"videoconsulta de la(s)",
+        "atText":", a las ",
+        "timeZone": " Pacific Time",
+        "subHeading4":" en línea usando su teléfono inteligente o computadora.",
+        "startVisit": "Inicie su videoconsulta",
+        "learnMore": "Entérese más acerca de las videoconsultas y cómo prepararse.",
+        "subHeading5": "Si necesita un intérprete, avísenos al iniciar su consulta. "
+      },
       "footer":{
         "notification": "Este aviso fue generado automáticamente por Kaiser Permanente. No responda a este correo electrónico. ",
         "important": "Importante: no trate de acceder a la atención de emergencia o de urgencia a través de este correo electrónico. ",

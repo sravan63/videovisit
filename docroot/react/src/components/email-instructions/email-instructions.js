@@ -3,6 +3,7 @@ import BackendService from "../../services/backendService";
 import EmailStartEarly from '../email-instructions/email-start-early/email-start-early';
 import GuestInstructional from "./guest-instructional/guest-instructional";
 import GuestStartEarly from "./guest-start-early/guest-start-early";
+import MemberInstantJoin from "./member-instant-join/member-instant-join";
 
 import EmailHeader from "./email-header/header";
 import EmailFooter from "./email-footer/footer";
@@ -56,6 +57,8 @@ class emailInstructions extends Component {
                     return <GuestInstructional data={details} content={content.email} />;
                 case "caregiver_earlystart":
                     return <GuestStartEarly data={details} content={content.email} />;
+                case "member_instant_join":
+                    return <MemberInstantJoin data={details} content={content.email} />;
                 default:
                     return null
             }

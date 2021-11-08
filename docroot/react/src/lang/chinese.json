@@ -182,6 +182,18 @@
       "needHelp1": "請登入或致電",
       "needHelp2": "1-866-454-8855以取消或重新安排視訊就診。"
     },
+    "memberInstantJoin":{
+      "heading": "立即加入您的視訊就診",
+      "subHeading":"您的Kaiser Permanente視訊看診即將開始。",
+      "subHeading2":"請使用智慧型手",
+      "subHeading3":"機或電腦在線上參加您的",
+      "atText":"日 ",
+      "timeZone": " Pacific Time",
+      "subHeading4":"視訊看診。",
+      "startVisit": "開始您的視訊就診 ",
+      "learnMore": "了解更多有關視訊就診和準備的資訊。",
+      "subHeading5": "如果您需要獲取口譯員協助，請您在視訊就診開始時告知我們。"
+    },
     "footer":{
       "notification": "此通知由Kaiser Permanente自動生成。請勿回覆本電子郵件。",
       "important": "重要須知：請勿試圖透過本電子郵件取得急診或緊急醫護服務。",
