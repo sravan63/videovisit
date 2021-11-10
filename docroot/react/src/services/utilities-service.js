@@ -511,7 +511,7 @@ class UtilityService extends React.Component {
     }
 
     getTimeDifference(time, newtime) {
-        return Math.abs(toSeconds(time) - toSeconds(newtime));
+        return Math.abs(this.toSeconds(time) - this.toSeconds(newtime));
     }
 
     toSeconds(time_str) {
