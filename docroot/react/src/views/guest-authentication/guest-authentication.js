@@ -11,20 +11,35 @@ import { MessageService } from '../../services/message-service.js';
 import UtilityService from '../../services/utilities-service.js';
 import GlobalConfig from '../../services/global.config';
 import BrowserBlock from '../../components/browser-block/browser-block';
+// import Conference from '../../../../Desktop/back';
 
 class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '',isSafari15_1:false,displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'', guestLoginHeading: 'Thank you for connecting with your doctor online' };
+        this.state = { lastname: '',isSafari15_1:false,displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'', guestLoginHeading: 'Thank you for connecting with your doctor online', };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
         this.errorCompForGuestLogin = this.errorCompForGuestLogin.bind(this);
         this.guestLogin = this.guestLogin.bind(this);
+        this.showRejoin={code:''};
     }
 
     componentDidMount() {
+        
+        this.showRejoin = this.props.location.state;
+        if(this.showRejoin && this.showRejoin.message && this.showRejoin.message=='showrejoin'){
+          this.setState({ReJoin:true, NotLoggedIn: true});
+          sessionStorage.setItem('code',this.showRejoin.code);
+          return;   
+        }else if(sessionStorage.getItem('code')){
+           let code = sessionStorage.getItem('code');
+            this.setState({ReJoin:true, NotLoggedIn: true});
+            return;
+        }
+
+        // localStorage.setItem('instantrejoinmeetingcode', window.location.hash.slice(25));
         //var meetingCode;
         var getMe = UtilityService.getBrowserInformation();
         if(sessionStorage.getItem('meetingCodeval') != window.location.hash.slice(25)){
@@ -33,7 +48,9 @@ class Authentication extends React.Component {
         if (window.location.hash.includes('meetingcode')) {
             this.state.meetingCode = window.location.hash.slice(25);
             sessionStorage.setItem('meetingCodeval',this.state.meetingCode);
+            
         }
+
         this.setState({ showLoader: true });
         var browserInfo = UtilityService.getBrowserInformation();
        if(!browserInfo.isIE){
@@ -115,10 +132,17 @@ class Authentication extends React.Component {
     }
 
     reJoinMeeting(){
-        sessionStorage.removeItem('guestLeave');
-        var pname = sessionStorage.getItem('lastname');
-        this.guestLogin(this.state.meetingCode,pname,this.state.authToken,true);
+        if((this.showRejoin && this.showRejoin.message && this.showRejoin.message=='showrejoin') || sessionStorage.getItem('code')){
+            let code = sessionStorage.getItem('code');
+            window.location.href = '/videovisitsauth/auth/pg/' + code;
+        }else{
+            sessionStorage.removeItem('guestLeave');
+            var pname = sessionStorage.getItem('lastname');
+            this.guestLogin(this.state.meetingCode,pname,this.state.authToken,true);
+
+        }
         //this.props.history.push(GlobalConfig.VIDEO_VISIT_ROOM_URL);
+
     }
 
     guestLogin(meetingCode,lastname,authToken,rejoin){

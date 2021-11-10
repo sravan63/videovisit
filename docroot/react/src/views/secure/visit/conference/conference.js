@@ -1184,6 +1184,7 @@ class Conference extends React.Component {
         window.clearTimeout(this.surveyTimer);
         this.subscription.unsubscribe();
         localStorage.setItem('meetingAttended', true);
+        localStorage.setItem('instantrejoinmeetingcode', this.state.meetingCode);
         if(this.state.isGuest == true){
             var isGuestLeave = sessionStorage.getItem('guestLeave');
             if(!isGuestLeave) {
@@ -1476,13 +1477,23 @@ class Conference extends React.Component {
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
             } else if ( this.state.loginType == GlobalConfig.LOGIN_TYPE.INSTANT ) {
                 if( this.state.isInstantPG ){
-                    sessionStorage.clear();
+                   
                     history.pushState(null, null, location.href);
                     window.onpopstate = function(event) {
                     history.go(1);
                     };
-                    // window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit?xyz='+this.state.meetingCode;
-                    window.location.href = window.location.origin+ '/videovisit/#/guestlogin?meetingcode='+this.state.meetingCode;
+                   
+                    if(sessionStorage.getItem('isHostKicked') == 'true'){
+                        window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
+                        sessionStorage.clear();
+
+                    }else{
+                        this.props.history.push({
+                            pathname: "/guestlogin",
+                            state: { message: "showrejoin", code: this.state.meetingCode },
+                        });
+                        this.state.meetingCode
+                    }
                 } else {
                     this.props.history.push(GlobalConfig.LOGIN_URL);
                     history.pushState(null, null, location.href);
@@ -1491,9 +1502,17 @@ class Conference extends React.Component {
                     };
                 }
             } else if( this.state.loginType == GlobalConfig.LOGIN_TYPE.EC ){
+                if(sessionStorage.getItem('isHostKicked') == 'true'){
+                    window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
+
+                }else{
+                    this.props.history.push({
+                        pathname: "/guestlogin",
+                        state: { message: "showrejoin" },
+                    });
+                }
                 sessionStorage.clear();
-                // window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
-                window.location.href = window.location.origin+ '/videovisit/#/guestlogin?meetingcode='+this.state.meetingCode;
+                
             } else {
                 Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
@@ -1504,7 +1523,7 @@ class Conference extends React.Component {
                 sessionStorage.setItem('isHostKicked',false);
                 return true;
             }
-            this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
+            this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);  
         }
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
         document.getElementsByTagName('body')[0].style.position = 'static';
