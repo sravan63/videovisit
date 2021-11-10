@@ -510,5 +510,17 @@ class UtilityService extends React.Component {
         });
     }
 
+    getTimeDifference(time, newtime) {
+        return Math.abs(toSeconds(time) - toSeconds(newtime));
+    }
+
+    toSeconds(time_str) {
+        // Extract hours, and minutes
+        var parts = time_str.split(':');
+        // compute and return total seconds
+        // an hour has 3600 seconds + a minute has 60 seconds
+        return parts[0] * 3600 + parts[1] * 60; // seconds
+    }
+
 }
 export default new UtilityService();

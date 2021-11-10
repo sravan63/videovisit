@@ -8,6 +8,8 @@ import MemberInstantJoin from "./member-instant-join/member-instant-join";
 import EmailHeader from "./email-header/header";
 import EmailFooter from "./email-footer/footer";
 import PatientInstructional from "./patient-instructional/patient-instructional";
+import PatientRunningLateReminder from "./patient-running-late-reminder/patient-running-late-reminder";
+import GuestRunningLateReminder from "./guest-running-late-reminder/guest-running-late-reminder";
 
 class emailInstructions extends Component {
     constructor(props) {
@@ -59,6 +61,10 @@ class emailInstructions extends Component {
                     return <GuestStartEarly data={details} content={content.email} />;
                 case "member_instant_join":
                     return <MemberInstantJoin data={details} content={content.email} />;
+                case "member_runninglate":
+                    return <PatientRunningLateReminder data={details} content={content.email}/>;
+                case "caregiver_running_late":
+                    return <GuestRunningLateReminder data={details} content={content.email}/>;
                 default:
                     return null
             }
