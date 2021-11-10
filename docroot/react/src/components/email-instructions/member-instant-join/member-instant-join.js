@@ -32,7 +32,7 @@ class memberInstantJoin extends Component {
                             <div className="col-md-12 text-center mb-4"><a href={this.state.emailContentDetails.meetingURL} target="_blank" className="start-visit">{details.startVisit}</a></div>
                           </div>
                           <div className="col-md-12 mb-2 pl-0">
-                                    <a href="http://kpdoc.org/mdoapp" target="_blank" className="email-data-link">{details.learnMore}</a> 
+                                    <a href={this.state.emailContentDetails.guestHelpUrl} target="_blank" className="email-data-link">{details.learnMore}</a> 
                           </div>
                           <div className="row">
                             <div className="col-md-12">{details.subHeading5}</div>
