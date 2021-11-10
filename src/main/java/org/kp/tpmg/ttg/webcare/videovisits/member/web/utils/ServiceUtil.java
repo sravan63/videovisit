@@ -64,6 +64,7 @@ public class ServiceUtil {
 	public static final String MEETING_TIME_STAMP="meetingTimeStamp";
 	public static final String MEETING_TIME_ONLY="meetingTimeOnly";
 	public static final String MEETING_RUN_LATE_TIME_ONLY="meetingRunLateTimeOnly";
+	public static final String MEETING_RUN_LATE_TIME_STAMP="meetingRunLateTimeStamp";
 	public static final String MEETING_URL="meetingURL";
 	public static final String MEMBER_FIRSTNAME="memberFirstName";
 	public static final String MEMBER_LASTNAME="memberLastName";

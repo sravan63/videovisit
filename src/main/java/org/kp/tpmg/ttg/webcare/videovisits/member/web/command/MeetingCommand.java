@@ -1865,6 +1865,7 @@ public class MeetingCommand {
 			emailDynamicContent.setMeetingURL((String) claims.get(ServiceUtil.MEETING_URL));
 			emailDynamicContent.setMeetingTimeOnly((String) claims.get(ServiceUtil.MEETING_TIME_ONLY));
 			emailDynamicContent.setMeetingRunLateTimeOnly((String) claims.get(ServiceUtil.MEETING_RUN_LATE_TIME_ONLY));
+			emailDynamicContent.setMeetingRunLateTimeStamp((String) claims.get(ServiceUtil.MEETING_RUN_LATE_TIME_STAMP));
 			emailDynamicContent.setMeetingTimeStamp((String) claims.get(ServiceUtil.MEETING_TIME_STAMP));
 			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.SIGN_IN_URL));
 			emailDynamicContent.setDownloadMdoAppUrl((String) claims.get(ServiceUtil.DOWNLOAD_MDO_APP_URL));
@@ -1882,6 +1883,7 @@ public class MeetingCommand {
 			emailDynamicContent.setMeetingTimeStamp((String) claims.get(ServiceUtil.MEETING_TIME_STAMP));
 			emailDynamicContent.setMeetingTimeOnly((String) claims.get(ServiceUtil.MEETING_TIME_ONLY));
 			emailDynamicContent.setMeetingRunLateTimeOnly((String) claims.get(ServiceUtil.MEETING_RUN_LATE_TIME_ONLY));
+			emailDynamicContent.setMeetingRunLateTimeStamp((String) claims.get(ServiceUtil.MEETING_RUN_LATE_TIME_STAMP));
 			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.SIGN_IN_URL));
 			enevelope.setEmailDynamicContent(emailDynamicContent);
 		}else if (StringUtils.isNotBlank((String) claims.get(ServiceUtil.EMAIL_TYPE))

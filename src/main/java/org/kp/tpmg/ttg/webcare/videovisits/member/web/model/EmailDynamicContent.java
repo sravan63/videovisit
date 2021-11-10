@@ -29,9 +29,18 @@ public class EmailDynamicContent implements Serializable {
 	private String meetingTimeOnly;
 	private String meetingRunLateTimeOnly;
 	private String meetingTimeStamp;
+	private String meetingRunLateTimeStamp;
 
 	public String getMeetingTimeStamp() {
 		return meetingTimeStamp;
+	}
+
+	public String getMeetingRunLateTimeStamp() {
+		return meetingRunLateTimeStamp;
+	}
+
+	public void setMeetingRunLateTimeStamp(String meetingRunLateTimeStamp) {
+		this.meetingRunLateTimeStamp = meetingRunLateTimeStamp;
 	}
 
 	public void setMeetingTimeStamp(String meetingTimeStamp) {
