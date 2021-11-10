@@ -519,7 +519,7 @@ class UtilityService extends React.Component {
         var parts = time_str.split(':');
         // compute and return total seconds
         // an hour has 3600 seconds + a minute has 60 seconds
-        return parts[0] * 3600 + parts[1] * 60; // seconds
+        return parseInt(parts[0]) * 3600 + parseInt(parts[1].split(' ')[0]) * 60; // seconds
     }
 
 }

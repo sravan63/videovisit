@@ -28,7 +28,7 @@ class GuestRunningLateReminder extends Component {
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">
                         <p className="instruct-header">{details.heading} </p>
-                        <p className="instruct-description">{details.subHeading} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)}, {details.subHeading2} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)}.</p>
+                        <p className="instruct-description">{details.subHeading} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading2} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingRunLateTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading3}</p>
                         <p className="instruct-description">{details.guestInstruction}</p>
                         <div className="visit-rules">
                             <ul>

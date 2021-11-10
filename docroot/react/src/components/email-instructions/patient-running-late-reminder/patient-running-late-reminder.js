@@ -14,15 +14,9 @@ class PatientRunningLateReminder extends Component {
 
     componentDidMount() { }
 
-    getHoursAndMinutes(millis, type, lang, time='default') {
+    getHoursAndMinutes(millis, type, lang) {
         if (!millis) {
             return;
-        }
-        if(time == 'late'){
-            const meetingTimeOnly = this.state.emailContentDetails.meetingTimeOnly;
-            const meetingRunLateTimeOnly = this.state.emailContentDetails.meetingRunLateTimeOnly;
-            const updatedTimeInSeconds = Utilities.getTimeDifference(meetingTimeOnly, meetingRunLateTimeOnly);
-            millis = parseInt(millis) + (updatedTimeInSeconds * 1000);
         }
         return Utilities.formatDateAndTimeForEmails(new Date(parseInt(millis)), type,lang);
     }
@@ -34,8 +28,8 @@ class PatientRunningLateReminder extends Component {
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">
                         <p className="instruct-header">{details.heading} </p>
-                        <p className="instruct-description">{details.subHeading} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)}, {details.subHeading2} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang, 'late')}{details.subHeading3}</p>
-                        <p className="instruct-description">{details.patientInstruction1}, <a href={this.state.emailContentDetails.downloadMdoAppUrl} target="_blank">{details.patientInstructionLink}</a>. {details.patientInstruction2} <a href={this.state.emailContentDetails.meetingURL} target="_blank">{details.patientInstructionAccessLink}</a></p>
+                        <p className="instruct-description">{details.subHeading} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading2} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingRunLateTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading3}</p>
+                        <p className="instruct-description">{details.patientInstruction1}, <a href={this.state.emailContentDetails.downloadMdoAppUrl} target="_blank">{details.patientInstructionLink}</a>{details.patientInstruction2}<a href={this.state.emailContentDetails.meetingURL} target="_blank">{details.patientInstructionAccessLink}</a></p>
                         <div className="visit-rules">
                             <ul>
                                 <li style={{ fontWeight:'bold' }}>{details.instructions.rule1}</li>

@@ -206,9 +206,9 @@
     },
     "runningLate":{
       "heading": "感謝您的耐心",
-      "subHeading":"您原定於下午",
+      "subHeading":"您原定於",
       "timeZone": "Pacific Time",
-      "subHeading2":"開始的視訊就診，現改為下午",
+      "subHeading2":" 開始的視訊就診，現改為",
       "subHeading3":" 開始。",
       "patientInstruction1":"要透過智慧型手機或平板電腦加入",
       "patientInstructionLink":"請下載My Doctor Online（我的線上醫生）應用程式。",
