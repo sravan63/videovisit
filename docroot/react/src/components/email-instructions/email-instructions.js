@@ -4,6 +4,7 @@ import EmailStartEarly from '../email-instructions/email-start-early/email-start
 import GuestInstructional from "./guest-instructional/guest-instructional";
 import GuestStartEarly from "./guest-start-early/guest-start-early";
 import MemberInstantJoin from "./member-instant-join/member-instant-join";
+import PatientReminder from "./patient-reminder/patient-reminder";
 
 import EmailHeader from "./email-header/header";
 import EmailFooter from "./email-footer/footer";
@@ -65,6 +66,8 @@ class emailInstructions extends Component {
                     return <PatientRunningLateReminder data={details} content={content.email}/>;
                 case "caregiver_running_late":
                     return <GuestRunningLateReminder data={details} content={content.email}/>;
+                case "member_reminder":
+                    return <PatientReminder data={details} content={content.email}/>;
                 default:
                     return null
             }
