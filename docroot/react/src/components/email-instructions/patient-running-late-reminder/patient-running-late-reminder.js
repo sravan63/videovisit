@@ -14,11 +14,11 @@ class PatientRunningLateReminder extends Component {
 
     componentDidMount() { }
 
-    getHoursAndMinutes(millis, type, lang, type='default') {
+    getHoursAndMinutes(millis, type, lang, time='default') {
         if (!millis) {
             return;
         }
-        if(type == 'late'){
+        if(time == 'late'){
             const meetingTimeOnly = this.state.emailContentDetails.meetingTimeOnly;
             const meetingRunLateTimeOnly = this.state.emailContentDetails.meetingRunLateTimeOnly;
             const updatedTimeInSeconds = Utilities.getTimeDifference(meetingTimeOnly, meetingRunLateTimeOnly);
