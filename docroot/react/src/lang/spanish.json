@@ -206,9 +206,9 @@
       },
       "runningLate":{
         "heading": "Gracias por su paciencia",
-        "subHeading":"Su videoconsulta programada para las",
+        "subHeading":"Su videoconsulta programada para las ",
         "timeZone": "Pacific Time",
-        "subHeading2":", se iniciará ahora a la",
+        "subHeading2":", se iniciará ahora a la ",
         "subHeading3":".",
         "patientInstruction1":"Para ingresar desde un teléfono inteligente o una tableta",
         "patientInstructionLink":"descargue la app My Doctor Online.",
@@ -220,7 +220,7 @@
         "troubleSiginIn": "¿Problemas para iniciar sesión? Use el acceso temporal a las videoconsultas (Video Visits Temporary Access).",
         "learnMore":"Aprenda más acerca de las videoconsultas y cómo prepararse.",
         "signIn":"Inicie sesión",
-        "orCall":"o llame al 1-866-454-8855 para cancelar o reprogramar."
+        "orCall":" o llame al 1-866-454-8855 para cancelar o reprogramar."
       },
       "footer":{
         "notification": "Este aviso fue generado automáticamente por Kaiser Permanente. No responda a este correo electrónico. ",

@@ -28,7 +28,7 @@ class GuestRunningLateReminder extends Component {
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">
                         <p className="instruct-header">{details.heading} </p>
-                        <p className="instruct-description">{details.subHeading} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading2} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingRunLateTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading3}</p>
+                        <p className="instruct-description">{details.subHeading}{this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading2}{this.getHoursAndMinutes(this.state.emailContentDetails.meetingRunLateTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading3}</p>
                         <p className="instruct-description">{details.guestInstruction}</p>
                         <div className="visit-rules">
                             <ul>
@@ -48,7 +48,7 @@ class GuestRunningLateReminder extends Component {
                             <p><a href={this.state.emailContentDetails.guestHelpUrl} target="_blank">{details.learnMore}</a></p>
                         </div>
                         <div className="need-help">
-                            <p><a href={this.state.emailContentDetails.signInUrl} target="_blank">{details.signIn}</a> {details.orCall}</p>
+                            <p><a href={this.state.emailContentDetails.signInUrl} target="_blank">{details.signIn}</a>{details.orCall}</p>
                         </div>
                     </div>
                 </div>)
