@@ -341,8 +341,8 @@ class Authentication extends React.Component {
                     {this.state.ReJoin ? (
                         <div className="guest-rejoin-wrapper">
                             <div className="guest-rejoin-header">
-                            <h1 className="text-left rejoin-heading font-weight-bold text-md-center px-4">{this.state.guestLoginHeading}</h1>
-                            <div className="rejoin-description text-left mt-4 text-md-center px-4">Lost connection? <button className="guest-rejoin-button p-0"  onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>Rejoin your visit</button></div> 
+                            <h1 className="text-left rejoin-heading font-weight-bold text-md-center px-4 mb-0">{this.state.guestLoginHeading}</h1>
+                            <div className="rejoin-description text-left mt-2 text-md-center px-4">Lost connection? <button className="guest-rejoin-button p-0"  onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>Rejoin your visit</button></div> 
                             </div>
                             <div className="guest-rejoin-banner">
                                 <div className="guest-rejoin-banner-header">
