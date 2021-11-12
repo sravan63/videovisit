@@ -1508,7 +1508,7 @@ class Conference extends React.Component {
                 }else{
                     this.props.history.push({
                         pathname: "/guestlogin",
-                        state: { message: "showrejoin", code: this.state.meetingCode},
+                        state: { message: "showrejoin", code: this.state.meetingCode, type: 'ec'},
                     });
                 }
                 sessionStorage.clear();
