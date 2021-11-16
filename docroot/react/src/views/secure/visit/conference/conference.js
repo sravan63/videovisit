@@ -256,7 +256,7 @@ class Conference extends React.Component {
                         this.selfViewMedia.current.dataset.view = "smaller";
                         this.remoteFeedMedia.current.dataset.view = "larger";
                         this.currentSmallerView = this.selfViewMedia.current;
-                        
+
                         this.setState({isRemoteFlippedToSelf:false}, function(){
                             this.initialPositionTop =  this.currentSmallerView.offsetTop.offsetTop +"px";
                             this.initialPositionLeft = this.currentSmallerView.offsetTop.offsetLeft +"px";
@@ -520,7 +520,7 @@ class Conference extends React.Component {
     }
 
      handleMove(e) {
-       // Drag not allowed to larger view. 
+       // Drag not allowed to larger view.
         if(e.target.dataset.view !== "smaller") {
             return;
         }
@@ -609,7 +609,7 @@ class Conference extends React.Component {
      }
 
     handleEnd(e) {
-        // Dragging or tapping on larger view must not perform anything. 
+        // Dragging or tapping on larger view must not perform anything.
         if(!e.target.dataset.view || e.target.dataset.view === "larger") {
             return;
         }
@@ -629,7 +629,7 @@ class Conference extends React.Component {
             const slideTo = this.getSlidePosition(coordinates);
             this.slideToCorner(slideTo);
         }
-        
+
         document.ontouchmove = null;
         document.ontouchend = null;
     }
@@ -654,7 +654,7 @@ class Conference extends React.Component {
         const wHeight = window.innerHeight; // 410
         const wWidth = window.innerWidth; // 1366
         const cornerOffset = 0.5; // % offset in the corners.
-        this.center = { 
+        this.center = {
             top : (cornerOffset/100 * wHeight),  // 41
             left: (cornerOffset/100 * wWidth), // 136
             bottom: wHeight - (cornerOffset/100 * wHeight), // 369
@@ -669,7 +669,7 @@ class Conference extends React.Component {
         this.pos3 = (elmnt.offsetLeft - this.pos1) +'px';
         this.pos4 = (elmnt.offsetTop - this.pos2) +'px';
     }
-    
+
     applyPosition(elmnt, cssprops){
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
         let dskTopView = false;
@@ -692,7 +692,7 @@ class Conference extends React.Component {
                 elmnt.style.left = isLandscape && !dskTopView ? rightPOS - (controls.offsetWidth + GlobalConfig.BUFFER_SPACE) + 'px' : rightPOS - GlobalConfig.BUFFER_SPACE + 'px';
             }else if(s == 'bottom'){
                 let bottomPOS;
-                var viewportHeight = isLandscape && window.scrollY > 0 && !dskTopView ? document.body.scrollHeight : window.innerHeight;             
+                var viewportHeight = isLandscape && window.scrollY > 0 && !dskTopView ? document.body.scrollHeight : window.innerHeight;
                 if(dskTopView && !this.state.isRemoteFlippedToSelf ){
                     bottomPOS = viewportHeight - (elmnt.offsetHeight * 2);
                 } else {
@@ -712,7 +712,7 @@ class Conference extends React.Component {
             }
         });
     }
-    
+
     appendParticipant(newParticipant) {
         this.setState({
             participants: [...this.state.participants, newParticipant]
@@ -877,7 +877,7 @@ class Conference extends React.Component {
         /** Revertible code */
         /** Play/Pause the selfview when the visit on browser is changed from foreground to background and brought it back to foreground. */
         /** Commenting the code till iOS versiom resolves this glitch in its future releases */
-        
+
         // let presentationView = this.presentationViewMedia ? this.presentationViewMedia.current.querySelector("#presvideo") : null;
             // if (document.visibilityState === 'visible') {
             //     window.location.reload();
@@ -900,7 +900,7 @@ class Conference extends React.Component {
             //     this.selfViewMedia && this.selfViewMedia.current.pause();
             //     this.remoteFeedMedia && this.remoteFeedMedia.current.pause();
             //     presentationView && presentationView.pause();
-            // } 
+            // }
         }
     }
 
@@ -1202,6 +1202,8 @@ class Conference extends React.Component {
        sessionStorage.removeItem('UUID');
        sessionStorage.removeItem('meetingTimeLog');
        sessionStorage.removeItem('loggedAsDuplicateMember');
+       sessionStorage.removeItem('isECInstantJoin');
+       sessionStorage.removeItem('isInstantJoin');
        window.removeEventListener('resize', this.handleResize, false);
        document.removeEventListener(this.visibilityChange, this.handleVisibilityChange, false);
        setTimeout(() => {
@@ -1478,12 +1480,11 @@ class Conference extends React.Component {
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
             } else if ( this.state.loginType == GlobalConfig.LOGIN_TYPE.INSTANT ) {
                 if( this.state.isInstantPG ){
-                   
                     history.pushState(null, null, location.href);
                     window.onpopstate = function(event) {
                     history.go(1);
                     };
-                   
+
                     if(sessionStorage.getItem('isHostKicked') == 'true'){
                         window.location.href = 'https://mydoctor.kaiserpermanente.org/ncal/videovisit/';
                         sessionStorage.clear();
@@ -1494,6 +1495,7 @@ class Conference extends React.Component {
                             state: { message: "showrejoin", code: this.state.meetingCode },
                         });
                     }
+                    sessionStorage.removeItem('isInstantJoin');
                 } else {
                     this.props.history.push(GlobalConfig.LOGIN_URL);
                     history.pushState(null, null, location.href);
@@ -1511,7 +1513,7 @@ class Conference extends React.Component {
                         state: { message: "showrejoin", code: this.state.meetingCode, type: 'ec'},
                     });
                 }
-                
+                sessionStorage.removeItem('isECInstantJoin');
             } else {
                 Utilities.setPromotionFlag(true);
                 this.props.history.push(GlobalConfig.MEETINGS_URL);
@@ -1522,7 +1524,7 @@ class Conference extends React.Component {
                 sessionStorage.setItem('isHostKicked',false);
                 return true;
             }
-            this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);  
+            this.props.history.push('/guestlogin?meetingcode=' + this.state.meetingCode);
         }
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
         document.getElementsByTagName('body')[0].style.position = 'static';
@@ -1610,7 +1612,7 @@ class Conference extends React.Component {
         this.remoteFeedMedia.current.style.removeProperty("height");
         return false;
     }
-    
+
     removePositionProp(){
         const positionMarginProp=["top", "right","bottom", "left"];
 
@@ -1647,7 +1649,7 @@ class Conference extends React.Component {
                 // To avoid overlapping issue in iPhone which we get due to white band(hidden safari tab bar bug).
                 if(/iPhone/.test(navigator.userAgent) ) {
                     vh = document.documentElement.clientHeight -50;
-                } 
+                }
                 !isLandscape && clickedElement.style.setProperty('height', `${vh}px`)
                 clickedElement.dataset.view = "larger";
                this.setState({isRemoteFlippedToSelf:!this.state.isRemoteFlippedToSelf}, function(){
@@ -1749,8 +1751,8 @@ class Conference extends React.Component {
                             <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
                                     <span>|</span>
                                     <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
-                            </div>    
-                            
+                            </div>
+
                         </ul>
                     </div>
                 </div>
@@ -1762,7 +1764,7 @@ class Conference extends React.Component {
                                 <WaitingRoom waitingroom={this.state} data={Details} />
                                 {/* <TransformWrapper options={{ disabled: this.disablePanPinchZoom() ? true : false, wrapperClass: 'my-wrapper-class', contentClass: this.disablePanPinchZoom() ? 'my-content-class' :'' }}> */}
                                     {/* <TransformComponent contentStyle={{ transform: 'none !important'}}> */}
-                                   { Utilities.isMobileDevice() ? 
+                                   { Utilities.isMobileDevice() ?
                                    <TransformWrapper options={{ disabled: this.enablePinchPanZoom , contentClass: !this.enablePinchPanZoom? 'my-content-class' : 'my-content-class-none' , contentClass: !this.enablePinchPanZoom ? 'my-content-class' : 'my-content-class-none' }}>
                                    <TransformComponent>
                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
@@ -1774,7 +1776,7 @@ class Conference extends React.Component {
                                        </div>
                                    </TransformComponent>
                                </TransformWrapper>
-                                : 
+                                :
                                 <>
                                     <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                     <div className={remoteStreamVisible} style={remoteContainerStyle}>
@@ -1785,13 +1787,13 @@ class Conference extends React.Component {
                                     </div>
                                 </>}
                                     <Settings data={Details} />
-                            </div> 
+                            </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
+                               <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                 </video>
-                               {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}> 
+                               {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video> */}
-                            </div>                            
+                            </div>
                             <div id="controls" className="controls-bar">
                               <ul className="video-controls m-0">
                                 <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
@@ -1819,7 +1821,7 @@ class Conference extends React.Component {
                                 {this.state.isMobile ? (
                                 <li ><span className="white-circle"><span id="cameraSwitch" className = {this.state.disableCamFlip && this.state.isMobileSafari ? 'icon-holder disable' : 'icon-holder'} onClick={()=>this.toggleCamera()}></span></span></li>):('')}
                                 <li style={{display: this.state.showvideoIcon ? 'block' : 'none'}}><span className="white-circle"><span id="camera"  className="icon-holder unmutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
-                                <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>                                
+                                <li style={{display: this.state.showvideoIcon ? 'none' : 'block'}}><span className="white-circle"><span id="camera" className="icon-holder mutedcamera" onClick={()=>this.toggleControls('video')}></span></span></li>
                               </ul>
                             </div>
                         </div>
