@@ -187,11 +187,13 @@ class Visit extends React.Component {
                         let isProxyMeeting = "N";
                         const mrn = this.state.isInstantJoin ? userData.meeting.member.mrn : '';
                         this.setState({ userConfirmBox: true, displayName: fullName });
-                        if( this.state.isECInstantJoin ){
+                        let userDetails = { isTempAccess: false, lastName :userData.lastName , firstName:userData.firstName , mrn: mrn, ssoSession: '' };
+                        if(this.state.isECInstantJoin ){
+                            Utilities.parseInstantForEcGuestName(userData.meeting.caregivers, userData);
+                            userDetails.meetingCode = userData.meetingCode;
                             Utilities.setECVisitDetails(userData);
                         }
-                        let userDetails = { isTempAccess: false, lastName :userData.lastName , firstName:userData.firstName , mrn: mrn, ssoSession: '' };
-                        if( isInstantGuest ){
+                        else if( isInstantGuest ){
                             userDetails.mrn = '';
                             userDetails.authToken = '';
                             const instantPG = {firstName: userData.firstName , lastName: userData.lastName, inMeetingDisplayName : userData.lastName + ", " + userData.firstName};

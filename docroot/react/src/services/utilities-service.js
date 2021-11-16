@@ -509,6 +509,14 @@ class UtilityService extends React.Component {
             }
         });
     }
+    parseInstantForEcGuestName(guests, member){
+        guests.map((g)=>{
+            if( g.lastName == member.lastName && g.firstName == member.firstName ){ 
+                //return g.meetingHash;
+                member.meetingCode = g.meetingHash;
+            }
+        });
+    }
 
     getTimeDifference(time, newtime) {
         return Math.abs(this.toSeconds(time) - this.toSeconds(newtime));

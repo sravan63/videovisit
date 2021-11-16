@@ -1042,6 +1042,7 @@ class Conference extends React.Component {
                     this.state.meetingCode = userDetails.meetingCode;
                 }
             } else if( isECInstantJoin ){
+                this.state.meetingCode = userDetails.meetingCode;
                 this.state.loginType = GlobalConfig.LOGIN_TYPE.EC;
             } else {
                 this.state.loginType = userDetails.isTempAccess ? GlobalConfig.LOGIN_TYPE.TEMP : GlobalConfig.LOGIN_TYPE.SSO
@@ -1492,7 +1493,6 @@ class Conference extends React.Component {
                             pathname: "/guestlogin",
                             state: { message: "showrejoin", code: this.state.meetingCode },
                         });
-                        this.state.meetingCode
                     }
                 } else {
                     this.props.history.push(GlobalConfig.LOGIN_URL);
@@ -1511,7 +1511,6 @@ class Conference extends React.Component {
                         state: { message: "showrejoin", code: this.state.meetingCode, type: 'ec'},
                     });
                 }
-                sessionStorage.clear();
                 
             } else {
                 Utilities.setPromotionFlag(true);
