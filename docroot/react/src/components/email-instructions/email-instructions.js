@@ -59,6 +59,8 @@ class emailInstructions extends Component {
                     return <PatientInstructional data={details} content={content.email} />;
                 case "caregiver_instruction":
                     return <GuestInstructional data={details} content={content.email} />;
+                case "caregiver_reminder":
+                    return <GuestInstructional data={details} content={content.email} />;
                 case "caregiver_earlystart":
                     return <GuestStartEarly data={details} content={content.email} />;
                 case "member_instant_join":
