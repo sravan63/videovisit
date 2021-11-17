@@ -204,6 +204,24 @@
         "learnMore": "Entérese más acerca de las videoconsultas y cómo prepararse.",
         "subHeading5": "Si necesita un intérprete, avísenos al iniciar su consulta. "
       },
+      "VavRescheduleEmail":{
+        "heading": "Prepárese para su videoconsulta",
+        "subHeading":"Reprogramada: videoconsulta de Kaiser Permanente .",
+        "subHeading2":"La videoconsulta a la que fue invitado ha sido reprogramada. ",
+        "subHeading3":"Su videoconsulta se realizará en línea usando su teléfono inteligente o computadora.",
+        "subHeading3Item1":"No ingrese desde un vehículo en movimiento.",
+        "subHeading3Item2":"Tenga una conexión fuerte a Wi-Fi o internet.",
+        "subHeading3Item3":"Esté en un lugar tranquilo y bien iluminado.",
+        "subHeading3Item4":"Trate de ingresar 10 minutos antes para prepararse.",
+        "buttonLabel":"Inicie su videoconsulta",
+        "dateLabel":"Fecha/Hora:",
+        "patientlabel":"Paciente:",
+        "clinicianLabel":"Profesional clínico de salud:",
+        "learnMore": "Aprenda más acerca de las videoconsultas y cómo prepararse. ",
+        "subHeading4":"Aprenda más acerca de las videoconsultas y cómo prepararse.", 
+        "helpLabel":"Si necesita ayuda para prepararse para su videoconsulta, llame al 1-844-216-5769 de lunes a viernes, de 6:30 a. m. a 7 p. m.  Si necesita un intérprete, avísenos al iniciar su consulta."
+
+      },
       "runningLate":{
         "heading": "Gracias por su paciencia",
         "subHeading":"Su videoconsulta programada para las ",

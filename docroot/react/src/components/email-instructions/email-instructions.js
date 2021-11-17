@@ -5,6 +5,7 @@ import GuestInstructional from "./guest-instructional/guest-instructional";
 import GuestStartEarly from "./guest-start-early/guest-start-early";
 import MemberInstantJoin from "./member-instant-join/member-instant-join";
 import PatientReminder from "./patient-reminder/patient-reminder";
+import VavReschedule from "./email-vav-reschedule/email-vav-reschedule";
 
 import EmailHeader from "./email-header/header";
 import EmailFooter from "./email-footer/footer";
@@ -68,6 +69,8 @@ class emailInstructions extends Component {
                     return <GuestRunningLateReminder data={details} content={content.email}/>;
                 case "member_reminder":
                     return <PatientReminder data={details} content={content.email}/>;
+                    case "caregiver_reschedule":
+                        return <VavReschedule data={details} content={content.email} />;
                 default:
                     return null
             }
