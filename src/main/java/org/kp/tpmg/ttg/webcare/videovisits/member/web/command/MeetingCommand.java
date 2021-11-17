@@ -1826,8 +1826,8 @@ public class MeetingCommand {
 			emailDynamicContent.setMeetingTime((String) claims.get(ServiceUtil.MEETING_TIME));
 			emailDynamicContent.setMeetingTimeStamp((String) claims.get(ServiceUtil.MEETING_TIME_STAMP));
 			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.SIGN_IN_URL));
-			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.DOWNLOAD_MDO_APP_URL));
-			emailDynamicContent.setSignInUrl((String) claims.get(ServiceUtil.VV_WEB_PAGE_URL));
+			emailDynamicContent.setDownloadMdoAppUrl((String) claims.get(ServiceUtil.DOWNLOAD_MDO_APP_URL));
+			emailDynamicContent.setVvWebPage((String) claims.get(ServiceUtil.VV_WEB_PAGE_URL));
 			emailDynamicContent.setMemberFirstName((String) claims.get(ServiceUtil.MEMBER_FIRSTNAME));
 			emailDynamicContent.setLastNameFirstCharMember((String) claims.get(ServiceUtil.MEMBER_LASTNAME_FIRSTCHAR));
 			emailDynamicContent.setMemberLastName((String) claims.get(ServiceUtil.MEMBER_LASTNAME));
