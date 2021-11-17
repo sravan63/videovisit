@@ -140,7 +140,7 @@ class Authentication extends React.Component {
     reJoinMeeting(){
         if((this.showRejoin && this.showRejoin.message && this.showRejoin.message=='showrejoin') || sessionStorage.getItem('code')){
             let code = sessionStorage.getItem('code');
-            if(this.showRejoin.type == 'ec'){
+            if(this.showRejoin && this.showRejoin.type == 'ec'){
                 window.location.href = '/videovisitsauth/auth/ec/' + code;
             }else{
                 window.location.href = '/videovisitsauth/auth/pg/' + code;
