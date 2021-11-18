@@ -44,7 +44,7 @@ class vavReschedule extends Component {
                         </div>
                         <div className="time-details">
                             <p>{details.dateLabel}: {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'date',this.state.emailContentDetails.lang)}{details.at} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} Pacific Time</p>
-                            <p>{details.patientlabel}: {this.state.emailContentDetails.memberFirstName} {this.state.emailContentDetails.lastNameFirstCharMember}</p>
+                            <p>{details.patientlabel}: {this.state.emailContentDetails.memberFirstName} {this.state.emailContentDetails.memberLastName}</p>
                             <p>{details.clinicianLabel}: {this.state.emailContentDetails.doctorFirstName} {this.state.emailContentDetails.doctorLastName}{this.state.emailContentDetails.doctorTitle}</p>
                         </div>
                         <div className="learn-more">
