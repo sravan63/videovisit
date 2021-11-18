@@ -37,9 +37,9 @@ class Authentication extends React.Component {
         if(this.showRejoin && this.showRejoin.message && this.showRejoin.message=='showrejoin'){
           this.setState({ReJoin:true, NotLoggedIn: true});
           sessionStorage.setItem('code',this.showRejoin.code);
+          sessionStorage.setItem('type',this.showRejoin.type);
           return;   
         }else if(sessionStorage.getItem('code')){
-           let code = sessionStorage.getItem('code');
             this.setState({ReJoin:true, NotLoggedIn: true});
             return;
         }
@@ -140,7 +140,8 @@ class Authentication extends React.Component {
     reJoinMeeting(){
         if((this.showRejoin && this.showRejoin.message && this.showRejoin.message=='showrejoin') || sessionStorage.getItem('code')){
             let code = sessionStorage.getItem('code');
-            if(this.showRejoin && this.showRejoin.type == 'ec'){
+            let type = sessionStorage.getItem('type');
+            if(type == 'ec'){
                 window.location.href = '/videovisitsauth/auth/ec/' + code;
             }else{
                 window.location.href = '/videovisitsauth/auth/pg/' + code;
