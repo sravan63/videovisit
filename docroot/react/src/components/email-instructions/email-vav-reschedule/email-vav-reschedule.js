@@ -26,8 +26,8 @@ class vavReschedule extends Component {
         return (
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">
-                        <p className="instruct-header">{details.heading} </p>
-                        <p className="instruct-description">{details.subHeading}</p>
+                        <p className="instruct-header">{details.subHeading} </p>
+                        {/* <p className="instruct-description">{details.subHeading}</p> */}
                         <p className="instruct-description">{details.subHeading2}</p>
                         <p className="instruct-description">{details.subHeading3}</p>
                         <div className="visit-rules" style={{padding:'0 20px'}}>
