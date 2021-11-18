@@ -163,20 +163,20 @@
     },
     "VavRescheduleEmail":{
       "heading": "為視訊就診做好準備 ",
-      "subHeading":"重新安排：Kaiser Permanente視訊就診.",
+      "subHeading":"重新安排：Kaiser Permanente視訊就診",
       "subHeading2":"已重新安排您受邀參加的視訊就診。",
-      "subHeading3":"您將使用智慧型手機或電腦在線上參加視訊就診",
-      "subHeading3Item1":"請不要在移動的車輛上加入視訊就診",
+      "subHeading3":"您將使用智慧型手機或電腦在線上參加視訊就診。",
+      "subHeading3Item1":"請不要在移動的車輛上加入視訊就診。",
       "subHeading3Item2":"要訊號良好的Wi-Fi或網際網路連接。",
       "subHeading3Item3":"選擇安靜、光線充足的地方。",
       "subHeading3Item4":"儘量提前10分鐘加入以便做準備。",
       "buttonLabel":"開始您的視訊就診 ",
-      "dateLabel":"日期/時間：週三, 九月12日 下午12:50 Pacific Time",
-      "patientlabel":"患者: ",
-      "clinicianLabel":"臨床醫護人員：",
+      "dateLabel":"日期/時間：週三,",
+      "patientlabel":"患者 ",
+      "clinicianLabel":"臨床醫護人員",
       "learnMore": "了解更多有關視訊就診和準備的資訊。",
       "subHeading4":"了解更多有關視訊就診和準備的資訊。 ",
-      "helpLabel":"如果您需要幫助來為視訊就診做準備，可在週一至週五上午6:30至晚上7:00打電話 1-844-216-5769。如果您需要獲取口譯員協助，請您在視訊就診開始時告知我們。."
+      "helpLabel":"如果您需要幫助來為視訊就診做準備，可在週一至週五上午6:30至晚上7:00打電話 1-844-216-5769。如果您需要獲取口譯員協助，請您在視訊就診開始時告知我們。"
     },
     "careGiverStartEarly": {
       "heading": "立即加入您的視訊就診",
