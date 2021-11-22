@@ -55,7 +55,6 @@ class Langtranslation extends React.Component {
         }else if(value=="Español" && sessionStorage.getItem('Lang-type')){
             Utilities.setLang('spanish');
         }else if(value=="English" && sessionStorage.getItem('Lang-type')){
-            sessionStorage.setItem('Instant-Lang-selection','english');
             Utilities.setLang('english'); 
          }
     }
