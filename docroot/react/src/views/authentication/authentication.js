@@ -9,6 +9,7 @@ import Utilities from '../../services/utilities-service.js';
 import BrowserBlock from '../../components/browser-block/browser-block';
 import GlobalConfig from '../../services/global.config';
 import {MessageService} from "../../services/message-service";
+import Langtranslation from "../../components/lang-translation/lang-translation";
 const Ssologin = React.lazy(() => import('../../components/ssologin/ssologin'));
 const Login = React.lazy(() => import('../../components/tempaccess/tempaccess'));
 
@@ -94,21 +95,21 @@ class Authentication extends React.Component {
         }
         
     }
-    changeLang(event){
-        let value = event.target.textContent;
-        if(value=="中文"){
-            sessionStorage.setItem('Instant-Lang-selection','chinese');
-            Utilities.setLang('chinese');
-        }
-        else if(value=="Español"){
-            sessionStorage.setItem('Instant-Lang-selection','spanish');
-            Utilities.setLang('spanish');
-         }
-        else{
-            sessionStorage.setItem('Instant-Lang-selection','english');
-            Utilities.setLang('english');
-        }
-    }
+    // changeLang(event){
+    //     let value = event.target.textContent;
+    //     if(value=="中文"){
+    //         sessionStorage.setItem('Instant-Lang-selection','chinese');
+    //         Utilities.setLang('chinese');
+    //     }
+    //     else if(value=="Español"){
+    //         sessionStorage.setItem('Instant-Lang-selection','spanish');
+    //         Utilities.setLang('spanish');
+    //      }
+    //     else{
+    //         sessionStorage.setItem('Instant-Lang-selection','english');
+    //         Utilities.setLang('english');
+    //     }
+    // }
     validateInAppAccess() {
         var urlStr = window.location.href;
         var url = new URL(urlStr);
@@ -145,11 +146,7 @@ class Authentication extends React.Component {
                 <div className={this.state.isMobileError ? "row help-link-container error-chk":"row help-link-container"}>                    
                     <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                         <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
-                        <div className="lang-change p-0">
-                            <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                            <span>|</span>
-                            <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
-                        </div>
+                        <Langtranslation />
                     </div>
                 </div>):('')}
                 { <BrowserBlock browserblockinfo = {this.state}/> }

@@ -4,7 +4,7 @@ import { MessageService } from '../../services/message-service.js';
 import UtilityService from '../../services/utilities-service.js';
 import GlobalConfig from '../../services/global.config';
 import KPLOGO from '../../components/kp-logo/kp-logo';
-
+import Langtranslation from '../lang-translation/lang-translation';
 import './header.less';
 
 class header extends React.Component {
@@ -105,11 +105,7 @@ class header extends React.Component {
                                     {this.state.name ? < a className = "sign-off" onClick = {this.signOffMethod}>{this.props.data.Signout}</a> :''}
                                 </li>   
                                 <li className="text-capitalize lang-trans">
-                                <div className="lang-change p-0">
-                                    <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                                    <span>|</span>
-                                    <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
-                                </div>    
+                                <Langtranslation />
                                 </li>                     
                             </ul> ) : (<KPLOGO />) }
                         </div>

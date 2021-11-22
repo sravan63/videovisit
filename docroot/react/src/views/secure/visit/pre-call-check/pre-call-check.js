@@ -19,6 +19,7 @@ import GlobalConfig from '../../../../services/global.config';
 import './pre-call-check.less';
 import Footer from '../../../../components/footer/footer';
 import VVModal from "../../../../modals/simple-modal/modal";
+import Langtranslation from "../../../../components/lang-translation/lang-translation";
 class PreCallCheck extends React.Component {
 
     constructor(props) {
@@ -255,11 +256,7 @@ class PreCallCheck extends React.Component {
                         <ul>
                             <li>
                             <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
-                                <div className="lang-change p-0">
-                                    <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                                    <span>|</span>
-                                    <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
-                                </div>    
+                            <Langtranslation />   
                         </li>
                         </ul>
                     </div>

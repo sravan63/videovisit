@@ -18,6 +18,7 @@ class emailInstructions extends Component {
         super(props);
         this.state = {emailContentDetails:null,langName:{}, staticData:{}};
         this.lang = '';
+        this.getLangData = this.getLangData.bind(this);
     }
 
     componentDidMount() {
@@ -47,7 +48,9 @@ class emailInstructions extends Component {
             console.log("Error");
         });
     }
-
+    getLangData(val){
+        this.setState({staticData: val});
+    }
     render() {
         let details = this.state.emailContentDetails;
         let content = this.state.staticData;
@@ -79,7 +82,7 @@ class emailInstructions extends Component {
           }
         return (  details && details.emailType ?
             (<div>
-                <EmailHeader/>
+                <EmailHeader langType = {content} sendData={this.getLangData} />
                 { emailTemplates() }
                 <EmailFooter content={content.email.footer}/>
             </div> ) : ('') )

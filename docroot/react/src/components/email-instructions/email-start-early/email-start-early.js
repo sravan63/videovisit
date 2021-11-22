@@ -18,8 +18,10 @@ class emailStartEarly extends Component {
         return Utilities.formatDateAndTimeForEmails(new Date(parseInt(millis)), type,lang);
     }
     
-    render() { 
-      let details = this.state.staticData; 
+    render() {  
+      var content = this.props.content.startEarly;
+      content['instructions'] = this.props.content.instructions;
+      let details = content;
       return ( <div>
         <div className="container-fluid p-0 member-container">
                           <div className="row">

@@ -19,7 +19,9 @@ class memberInstantJoin extends Component {
     }
     
     render() { 
-      let details = this.state.staticData; 
+      var content = this.props.content.memberInstantJoin;
+      content['instructions'] = this.props.content.instructions;
+      let details = content; 
       return ( <div>
         <div className="container-fluid p-0 member-container">
                           <div className="row">

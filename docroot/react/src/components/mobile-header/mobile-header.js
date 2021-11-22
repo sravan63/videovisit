@@ -9,7 +9,7 @@ import { MessageService } from '../../services/message-service.js'
 import GlobalConfig from '../../services/global.config';
 import Utilities from '../../services/utilities-service.js';
 import BackendService from '../../services/backendService.js';
-
+import Langtranslation from "../../components/lang-translation/lang-translation";
 class MobileHeader extends React.Component {
     constructor(props) {
         super(props);
@@ -151,11 +151,7 @@ class MobileHeader extends React.Component {
                                    <a href = {this.state.staticData.HelpLink} className="pr-2" target = "_blank">{this.state.staticData.Help}</a>|
                                    <a className="sign-off pl-2" onClick = {this.signOff}> {this.props.data.Signout}</a>
                                </div>    
-                               <div className="lang-change float-left p-0">
-                                       <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                                       <span>|</span>
-                                       <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>                        
-                                   </div>                     
+                               <Langtranslation />                    
                            </div>
                         <div className={this.state.hidePromotion ? "promotion-container hide-promotion" : "promotion-container show-promotion"} ref={this.promoContainer}>
                         <div className="promotion">
@@ -177,11 +173,7 @@ class MobileHeader extends React.Component {
                                    <a href = {this.state.staticData.HelpLink} className="pr-2" target = "_blank">{this.state.staticData.Help}</a>|
                                    <a className="sign-off pl-2" onClick = {this.signOff}> {this.props.data.Signout}</a>
                                </div>    
-                               <div className="lang-change float-left p-0">
-                                       <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                                       <span>|</span>
-                                       <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>                        
-                                   </div>                     
+                               <Langtranslation />                   
                            </div>) }
                     
                 </div>) :('') }

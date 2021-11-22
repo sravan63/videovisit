@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from '../header/header';
 import './user-confirmation-box.less';
 import BrowserBlock from '../browser-block/browser-block';
-
+import Langtranslation from '../lang-translation/lang-translation';
 class UserConfirmationBox extends Component {
   constructor(props) {
     super(props);
@@ -38,11 +38,7 @@ class UserConfirmationBox extends Component {
           : ('')}
             <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                 <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
-                <div className="lang-change p-0">
-                    <span className="divider" onClick={this.changeLang.bind(this)}>{this.props.conf.data.chin}</span>
-                    <span>|</span>
-                    <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.props.conf.data.span}</span>
-                </div>
+                <Langtranslation /> 
             </div>
             {this.props.conf.data.isBrowserBlockError ? (<BrowserBlock browserblockinfo = {{isBrowserBlockError: this.props.conf.data.isBrowserBlockError,isSafari15_1:this.props.conf.data.isSafari15_1 }}/>) :('') }
           </div>

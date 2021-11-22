@@ -20,6 +20,7 @@ import * as eventSource from '../../pexip/complex/EventSource.js';
 import UtilityService from '../../services/utilities-service';
 import BrowserBlock from '../../components/browser-block/browser-block';
 import Footer from '../../components/footer/footer';
+import Langtranslation from "../../components/lang-translation/lang-translation";
 import './setup.less';
 
 class Setup extends React.Component {
@@ -297,11 +298,7 @@ class Setup extends React.Component {
                  <div className="row mobile-help-link">
                  <div className="col-lg-12 col-md-12 help-icon text-right float-left p-0">
                         <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
-                        <div className="lang-change p-0">
-                            <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                            <span>|</span>
-                            <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
-                        </div>
+                        <Langtranslation />
                     </div>
                  </div>
                 <div className="row mobile-logo-container">

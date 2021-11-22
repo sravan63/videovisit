@@ -12,6 +12,7 @@ import UtilityService from '../../services/utilities-service.js';
 import GlobalConfig from '../../services/global.config';
 import BrowserBlock from '../../components/browser-block/browser-block';
 // import Conference from '../../../../Desktop/back';
+import Langtranslation from "../../components/lang-translation/lang-translation";
 
 class Authentication extends React.Component {
     constructor(props) {
@@ -324,11 +325,7 @@ class Authentication extends React.Component {
                 <div className={this.state.errorlogin ? "row mobile-help-link error-chk":"row mobile-help-link"}>
                     <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                         <a href={this.state.staticData.HelpLink} className="help-link" target="_blank">{this.state.staticData.Help}</a>
-                        <div className="lang-change p-0">
-                            <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                            <span>|</span>
-                            <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
-                        </div>
+                        <Langtranslation />
                     </div>
                 </div>
                 <div className="row mobile-logo-container rejoinpage-logo">

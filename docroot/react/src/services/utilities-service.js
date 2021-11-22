@@ -65,7 +65,15 @@ class UtilityService extends React.Component {
             return staticData;
         }
     }
-
+    getLangForEmails(){
+        const params = window.location.href.split('?')[1];
+        const urlParams = new URLSearchParams( params );
+        const tokenValue  = urlParams.has('tk') && urlParams.get('tk');
+        this.lang  = urlParams.has('lang') && urlParams.get('lang');
+        let langName = this.lang === 'spa'? "spanish" : "chinese";
+        let staticData = require('../lang/'+langName+'.json');
+        return staticData;
+    }
     validateBrowserBlock(browserNames){
         let blockChrome = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_CHROME_BROWSER == 'true') : (browserNames.BLOCK_CHROME_BROWSER == 'true');
         let blockFF = this.isMobileDevice() ? (browserNames.MOBILE_BLOCK_FIREFOX_BROWSER == 'true') : (browserNames.BLOCK_FIREFOX_BROWSER == 'true');

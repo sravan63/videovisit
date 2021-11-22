@@ -22,20 +22,21 @@ class vavReschedule extends Component {
 
     }
     render() {
-        let details = this.state.staticData;
+        var content = this.props.content.VavRescheduleEmail;
+        content['instructions'] = this.props.content.instructions;
+        let details = content; 
         return (
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">
                         <p className="instruct-header">{details.subHeading} </p>
-                        {/* <p className="instruct-description">{details.subHeading}</p> */}
                         <p className="instruct-description">{details.subHeading2}</p>
                         <p className="instruct-description">{details.subHeading3}</p>
                         <div className="visit-rules" style={{padding:'0 20px'}}>
                             <ul>
-                                <li style={{ fontWeight:'bold' }}>{details.subHeading3Item1}</li>
-                                <li>{details.subHeading3Item2}</li>
-                                <li>{details.subHeading3Item3}</li>
-                                <li style={{marginBottom:'12px'}}>{details.subHeading3Item4}</li>
+                                <li style={{ fontWeight:'bold' }}>{details.instructions.rule1}</li>
+                                <li>{details.instructions.rule2}</li>
+                                <li>{details.instructions.rule3}</li>
+                                <li style={{marginBottom:'12px'}}>{details.instructions.rule4}</li>
                             </ul>
                         </div>
                         <div className="text-center">

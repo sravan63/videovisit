@@ -20,6 +20,7 @@ import GlobalConfig from '../../../../services/global.config';
 import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import Langtranslation from '../../../../components/lang-translation/lang-translation';
 
 class Conference extends React.Component {
 
@@ -1747,12 +1748,7 @@ class Conference extends React.Component {
                             <li><a href={this.state.staticData.HelpLink} className="help-link" target="_blank">{this.state.staticData.Help}</a></li>
                             <li className="text-capitalize">|</li>
                             <li><a className="help-link" onClick={this.refreshPage}>{Details.conference.Refresh}</a></li>
-                            <div className="lang-change p-0">
-                            <span className="divider" onClick={this.changeLang.bind(this)}>{this.state.chin}</span>
-                                    <span>|</span>
-                                    <span className="spanishlabel" onClick={this.changeLang.bind(this)}>{this.state.span}</span>
-                            </div>
-
+                            <Langtranslation />
                         </ul>
                     </div>
                 </div>

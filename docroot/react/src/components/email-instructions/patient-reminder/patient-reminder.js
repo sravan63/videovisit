@@ -24,7 +24,9 @@ class PatientReminder extends Component {
 
 
     render() {
-        let details = this.state.staticData;
+        var content = this.props.content.caregiverInstructionalEmail;
+        content['instructions'] = this.props.content.instructions;
+        let details = content; 
         return (
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">

@@ -6,14 +6,13 @@ import Utilities from "../../../services/utilities-service";
 class GuestInstructional extends Component {
     constructor(props) {
         super(props);
-        const content = props.content.caregiverInstructionalEmail;
+        var content = props.content.caregiverInstructionalEmail;
         content['instructions'] = props.content.instructions;
         this.state = {emailContentDetails:props.data,staticData:content};
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
     }
 
-    componentDidMount() { }
-
+    componentDidMount() {}
     getHoursAndMinutes(millis, type,lang) {
         if (!millis) {
             return;
@@ -22,9 +21,10 @@ class GuestInstructional extends Component {
 
     }
 
-
     render() {
-        let details = this.state.staticData;
+        var content = this.props.content.caregiverInstructionalEmail;
+        content['instructions'] = this.props.content.instructions;
+        let details = content;
         return (
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">
