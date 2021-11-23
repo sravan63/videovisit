@@ -67,6 +67,8 @@ class Conference extends React.Component {
         this.handleMove = this.handleMove.bind(this);
         this.handleStart = this.handleStart.bind(this);
         this.applyPosition = this.applyPosition.bind(this);
+        this.resetZoomToDefault= this.resetZoomToDefault.bind(this);
+        this.resetZoomedView =null;
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
         this.surveyTimer = 0;
@@ -856,6 +858,9 @@ class Conference extends React.Component {
             }
             this.state.isRemoteFlippedToSelf && (this.removePositionProp(), remoteViewFeed.style.removeProperty("height"), selfViewFeed.style.setProperty('height', `${ window.innerHeight - 50}px`));
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
+            if(this.resetZoomedView){
+               this.resetZoomedView();
+            } 
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
              this.is50PIP = false;
@@ -863,6 +868,9 @@ class Conference extends React.Component {
             this.setState({isPIPMode: this.setPIPMode()});
             this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp());
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
+            if(this.resetZoomedView){
+               this.resetZoomedView();
+            } 
         }
         this.mainContentWidth = window.innerWidth;
         this.removeAllCornerClasses();
@@ -1660,6 +1668,11 @@ class Conference extends React.Component {
             }
         }
     }
+
+    resetZoomToDefault(resetTransform) {
+        this.resetZoomedView = resetTransform;
+    }
+
     disablePanPinchZoom() {
         const isLandscape = window.matchMedia("(orientation: landscape)").matches;
         let participantCount = this.state.participants.filter(p => (p.is_audio_only_call.toLowerCase() !== "yes" && p.display_name.toLowerCase().indexOf('interpreter - audio') === -1)).length;
@@ -1761,8 +1774,10 @@ class Conference extends React.Component {
                                 {/* <TransformWrapper options={{ disabled: this.disablePanPinchZoom() ? true : false, wrapperClass: 'my-wrapper-class', contentClass: this.disablePanPinchZoom() ? 'my-content-class' :'' }}> */}
                                     {/* <TransformComponent contentStyle={{ transform: 'none !important'}}> */}
                                    { Utilities.isMobileDevice() ?
-                                   <TransformWrapper options={{ disabled: this.enablePinchPanZoom , contentClass: !this.enablePinchPanZoom? 'my-content-class' : 'my-content-class-none' , contentClass: !this.enablePinchPanZoom ? 'my-content-class' : 'my-content-class-none' }}>
+                                   <TransformWrapper options={{ disabled: this.enablePinchPanZoom , contentClass: !this.enablePinchPanZoom? 'my-content-class' : 'my-content-class-none'}}>
+                                    {({ zoomIn, zoomOut, resetTransform }) => (
                                    <TransformComponent>
+                                        {this.resetZoomToDefault(resetTransform)}
                                        <div ref={this.presentationViewMedia} id="presentation-view" className="presentation-view" style={{display: this.state.showSharedContent ? 'flex' : 'none'}}></div>
                                        <div className={remoteStreamVisible} style={remoteContainerStyle}>
                                            <div className={remoteStreamContainerClass} style={remoteContainerStyle}>
@@ -1771,6 +1786,7 @@ class Conference extends React.Component {
                                            </div>
                                        </div>
                                    </TransformComponent>
+                                        )}
                                </TransformWrapper>
                                 :
                                 <>
