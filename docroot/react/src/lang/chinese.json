@@ -223,6 +223,15 @@
       "learnMore": "了解更多有關視訊就診和準備的資訊。",
       "subHeading5": "如果您需要獲取口譯員協助，請您在視訊就診開始時告知我們。"
     },
+    "careGiverInstantJoin":{
+      "heading": "在進行Kaiser Permanente視訊就診時，您的線上身份是受邀請的「客方」(Guest)",
+      "subHeading":"您將使用智慧型手機或電腦在線上參加視訊就診。",
+      "startVisit": "開始您的視訊就診 ",
+      "dateTime": "日期/時間",
+      "at":"日 ",
+      "learnMore": "了解更多有關視訊就診和準備的資訊。",
+      "note": "如果您需要獲取口譯員協助，請您在視訊就診開始時告知我們。"
+    },
     "runningLate":{
       "heading": "感謝您的耐心",
       "subHeading":"您原定於",
