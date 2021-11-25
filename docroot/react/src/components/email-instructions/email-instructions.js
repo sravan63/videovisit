@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import BackendService from "../../services/backendService";
+import {MessageService} from "../../services/message-service";
+import GlobalConfig from "../../services/global.config";
 import EmailStartEarly from '../email-instructions/email-start-early/email-start-early';
 import GuestInstructional from "./guest-instructional/guest-instructional";
 import GuestStartEarly from "./guest-start-early/guest-start-early";
@@ -13,13 +15,13 @@ import EmailFooter from "./email-footer/footer";
 import PatientInstructional from "./patient-instructional/patient-instructional";
 import PatientRunningLateReminder from "./patient-running-late-reminder/patient-running-late-reminder";
 import GuestRunningLateReminder from "./guest-running-late-reminder/guest-running-late-reminder";
+import utilitiesService from "../../services/utilities-service";
 
 class emailInstructions extends Component {
     constructor(props) {
         super(props);
         this.state = {emailContentDetails:null,langName:{}, staticData:{}};
         this.lang = '';
-        this.getLangData = this.getLangData.bind(this);
     }
 
     componentDidMount() {
@@ -31,9 +33,20 @@ class emailInstructions extends Component {
         this.getVisitDetails(tokenValue);
         let lang = this.lang === 'spa'? "spanish" : "chinese";
         let data = require('../../lang/'+lang+'.json');
-        this.setState({
-            staticData: data
+        this.setState({ staticData: data });
+        utilitiesService.setLang(lang);
+        
+        this.subscription = MessageService.getMessage().subscribe((message) => {
+            if( message.text == GlobalConfig.LANGUAGE_CHANGED ) {
+                const data = utilitiesService.getLang();
+                this.setState({ staticData: data });
+                this.state.emailContentDetails['lang'] = data.lang;
+            }
         });
+    }
+
+    componentWillUnmount() {
+        this.subscription.unsubscribe();
     }
 
     getVisitDetails(tokenValue){
@@ -49,9 +62,7 @@ class emailInstructions extends Component {
             console.log("Error");
         });
     }
-    getLangData(val){
-        this.setState({staticData: val});
-    }
+
     render() {
         let details = this.state.emailContentDetails;
         let content = this.state.staticData;
@@ -87,7 +98,7 @@ class emailInstructions extends Component {
           }
         return (  details && details.emailType ?
             (<div>
-                <EmailHeader langType = {content} sendData={this.getLangData} />
+                <EmailHeader/>
                 { emailTemplates() }
                 <EmailFooter content={content.email.footer}/>
             </div> ) : ('') )

@@ -74,7 +74,7 @@ class PatientInstructional extends Component {
                     </ul>
                     <div className="trouble-signIn">
                         <p>{details.troubleSignIn1}</p>
-                        <p>{details.troubleSignIn2}{this.state.emailContentDetails.lang==='spanish' ? (<span style={{color: '#006ba6'}}>1-844-216-5769</span>):('')}{details.troubleSignIn3}{this.state.emailContentDetails.lang==='chinese' ? (<span style={{color: '#006ba6'}}>1-844-216-5769。</span>):('')}</p>
+                        <p>{details.troubleSignIn2}{this.state.emailContentDetails.lang==='spanish' || this.state.emailContentDetails.lang==='english' ? (<span style={{color: '#006ba6'}}>1-844-216-5769</span>):('')}{details.troubleSignIn3}{this.state.emailContentDetails.lang==='chinese' ? (<span style={{color: '#006ba6'}}>1-844-216-5769。</span>):('')}</p>
                         <p>{details.troubleSignIn4}</p>
                     </div>
                 </div>

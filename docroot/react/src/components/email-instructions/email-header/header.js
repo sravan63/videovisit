@@ -19,7 +19,7 @@ class emailheader extends Component {
             </a>
         </div>
     </div>
-    <Langtranslation langType={this.props.langType} sendData={this.props.sendData} />
+    <Langtranslation />
 </div>
   }
 }

@@ -14,24 +14,17 @@ class Langtranslation extends React.Component {
         sessionStorage.removeItem('Lang-type');
         this.getLanguage();
         this.subscription = MessageService.getMessage().subscribe((message) => {
-            if(message.text==GlobalConfig.LANGUAGE_CHANGED){
+            if( message.text == GlobalConfig.LANGUAGE_CHANGED ){
                 this.getLanguage();
             }
         });      
     }  
     getLanguage(){
         let data = Utilities.getLang();
-        if(this.props.langType != null && !sessionStorage.getItem('Lang-type')){
-            data = Utilities.getLangForEmails();
-            sessionStorage.setItem('Lang-type','Emails');
-        }
-        if(this.props.langType != null){
-            this.props.sendData(data);
-        }
-        if(data.lang=='spanish'){
+        if(data.lang == 'spanish'){
             this.setState({span:'English',chin: '中文',staticData: data});
         }
-        else if(data.lang=='chinese'){
+        else if(data.lang == 'chinese'){
             this.setState({chin:'English',span:'Español',staticData: data});
         }
         else {
