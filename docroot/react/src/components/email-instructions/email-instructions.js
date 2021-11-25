@@ -32,8 +32,10 @@ class emailInstructions extends Component {
         this.setState({langName: this.lang});
         this.getVisitDetails(tokenValue);
         let lang = this.lang === 'spa'? "spanish" : "chinese";
+        lang = sessionStorage.getItem('Instant-Lang-selection') == null ? lang : sessionStorage.getItem('Instant-Lang-selection');
         let data = require('../../lang/'+lang+'.json');
         this.setState({ staticData: data });
+ 
         utilitiesService.setLang(lang);
         
         this.subscription = MessageService.getMessage().subscribe((message) => {
