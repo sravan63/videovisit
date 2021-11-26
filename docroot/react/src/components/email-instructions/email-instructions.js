@@ -32,17 +32,16 @@ class emailInstructions extends Component {
         this.setState({langName: this.lang});
         this.getVisitDetails(tokenValue);
         let lang = this.lang === 'spa'? "spanish" : "chinese";
-        lang = sessionStorage.getItem('Instant-Lang-selection') == null ? lang : sessionStorage.getItem('Instant-Lang-selection');
         let data = require('../../lang/'+lang+'.json');
         this.setState({ staticData: data });
- 
-        utilitiesService.setLang(lang);
-        
+        utilitiesService.setLang(lang);    
         this.subscription = MessageService.getMessage().subscribe((message) => {
             if( message.text == GlobalConfig.LANGUAGE_CHANGED ) {
                 const data = utilitiesService.getLang();
                 this.setState({ staticData: data });
                 this.state.emailContentDetails['lang'] = data.lang;
+                // Removing the langugage from session storage, to retain the default language(from URL) on reload.
+                sessionStorage.removeItem('Instant-Lang-selection');
             }
         });
     }

@@ -95,21 +95,21 @@ class Authentication extends React.Component {
         }
         
     }
-    // changeLang(event){
-    //     let value = event.target.textContent;
-    //     if(value=="中文"){
-    //         sessionStorage.setItem('Instant-Lang-selection','chinese');
-    //         Utilities.setLang('chinese');
-    //     }
-    //     else if(value=="Español"){
-    //         sessionStorage.setItem('Instant-Lang-selection','spanish');
-    //         Utilities.setLang('spanish');
-    //      }
-    //     else{
-    //         sessionStorage.setItem('Instant-Lang-selection','english');
-    //         Utilities.setLang('english');
-    //     }
-    // }
+    changeLang(event){
+        let value = event.target.textContent;
+        if(value=="中文"){
+            sessionStorage.setItem('Instant-Lang-selection','chinese');
+            Utilities.setLang('chinese');
+        }
+        else if(value=="Español"){
+            sessionStorage.setItem('Instant-Lang-selection','spanish');
+            Utilities.setLang('spanish');
+         }
+        else{
+            sessionStorage.setItem('Instant-Lang-selection','english');
+            Utilities.setLang('english');
+        }
+    }
     validateInAppAccess() {
         var urlStr = window.location.href;
         var url = new URL(urlStr);
