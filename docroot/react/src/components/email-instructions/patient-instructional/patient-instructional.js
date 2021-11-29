@@ -5,6 +5,9 @@ import IosSpanish from '../../../assets/badges/appstore-spanish.svg';
 import IosChinese from '../../../assets/badges/appstore-chinese.svg';
 import AndroidSpanish from '../../../assets/badges/android-spanish.png';
 import AndroidChinese from '../../../assets/badges/android-chinese.png';
+import AndroidEnglish from '../../../assets/badges/appstore.png';
+import IosEnglish from '../../../assets/badges/playstore.png';
+
 import MdoIcon from '../../../assets/mdo-icon.png';
 
 
@@ -16,7 +19,21 @@ class PatientInstructional extends Component {
         content['instructions'] = props.content.instructions;
         this.state = {emailContentDetails:props.data,staticData:content};
     }
+    getBadgeVersion(OSName){
+        let data = this.state.emailContentDetails.lang; 
+        switch(data){
+            case "spanish":
+                return OSName == 'Ios' ? IosSpanish : AndroidSpanish;
+                break;
+            case "chinese":
+                return OSName == 'Ios' ? IosChinese : AndroidChinese;
+                break;
+            default:
+                return OSName == 'Ios' ? IosEnglish : AndroidEnglish;
+                break;    
 
+        }
+    }
     render() {
         var content = this.props.content.patientInstructionalEmail;
         content['instructions'] = this.props.content.instructions;
@@ -55,12 +72,12 @@ class PatientInstructional extends Component {
                                 <a href="https://itunes.apple.com/us/app/kp-preventive-care-for-northern/id497468339?mt=8"
                                    target="_blank">
                                     <img
-                                        src={this.state.emailContentDetails.lang==='spanish' ? IosSpanish : IosChinese}
+                                        src={this.getBadgeVersion("Ios")}
                                         border="0" alt="The Permanente Medical Group" className="ios-link"/></a>
                                 <a href="https://play.google.com/store/apps/details?id=org.kp.tpmg.preventivecare&amp;hl=en"
                                    target="_blank">
                                     <img
-                                        src={this.state.emailContentDetails.lang==='spanish' ? AndroidSpanish : AndroidChinese}
+                                        src={this.getBadgeVersion("Android")}
                                         border="0" alt="The Permanente Medical Group" className="google-link"/></a>
                             </div>
                         </div>
