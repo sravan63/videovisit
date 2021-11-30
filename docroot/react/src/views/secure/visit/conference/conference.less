@@ -823,11 +823,14 @@
         .video-conference-container {
             .video-conference {
                 .stream-container {
-                    width: 100%;
-                    height: 100%;
+                    width: calc(100vw - 2.75rem);
+                    height: 100vh!important;
                     position: relative;
-                    display: none; 
-                    transform: scale(1.2);
+                    display: none;
+                    margin: 0 auto;
+                    .remoteFeed{
+                        margin: 0 0 0 0.5rem;
+                    }
                 }
 
                 .flipStream-containerPIP {
@@ -862,11 +865,10 @@
         .video-conference-container {
             .video-conference {
                 .stream-container {
-                    width: 100%;
-                    height: 100%;
+                    width: calc(100vw - 2.75rem);
+                    height: 100vh!important;
                     position: relative;
-                    display: none; 
-                    transform: scale(1.1);
+                    display: none;
                 }
 
                 .flipStream-containerPIP {
