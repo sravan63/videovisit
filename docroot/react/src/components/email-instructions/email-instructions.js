@@ -91,8 +91,8 @@ class emailInstructions extends Component {
                     return <GuestRunningLateReminder data={details} content={content.email}/>;
                 case "member_reminder":
                     return <PatientReminder data={details} content={content.email}/>;
-                    case "caregiver_reschedule":
-                        return <VavReschedule data={details} content={content.email} />;
+                case "caregiver_reschedule":
+                    return <VavReschedule data={details} content={content.email} />;
                 default:
                     return null
             }

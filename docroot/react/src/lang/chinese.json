@@ -182,7 +182,7 @@
     },
     "careGiverStartEarly": {
       "heading": "立即加入您的視訊就診",
-      "subHeading": "您原定於週三, 九月",
+      "subHeading": "您原定於",
       "atText":"日 ",
       "timeZone": "Pacific Time",
       "subHeading2":"的視訊就診現提前開始。",
@@ -196,7 +196,7 @@
     },
     "startEarly": {
       "heading": "立即加入您的視訊就診",
-      "subHeading": "您原定於週",
+      "subHeading": "您原定於",
       "atText":"日 ",
       "subHeading2":"的視訊就診現提前開始。",
       "subHeading3":"要透過智慧型手機或平板電腦加入，",

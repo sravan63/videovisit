@@ -30,7 +30,7 @@ class GuestStartEarly extends Component {
                 <div className="wrapper container-fluid p-0">
                     <div className="instruction">
                         <p className="instruct-header">{details.heading} </p>
-                        <p className="instruct-description">{details.subHeading}, {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'date',this.state.emailContentDetails.lang)} {details.atText} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone} {details.subHeading2}</p>
+                        <p className="instruct-description">{details.subHeading}{this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'date',this.state.emailContentDetails.lang)}{details.atText} {this.getHoursAndMinutes(this.state.emailContentDetails.meetingTimeStamp,'time',this.state.emailContentDetails.lang)} {details.timeZone}{details.subHeading2}</p>
                         <p className="instruct-description">{details.subHeading3}</p>
                         <div className="visit-rules">
                             <ul>
