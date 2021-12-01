@@ -1538,6 +1538,7 @@ class Conference extends React.Component {
         }
         document.getElementsByTagName('body')[0].style.overflow = 'auto';
         document.getElementsByTagName('body')[0].style.position = 'static';
+        document.getElementsByTagName('body')[0].style.backgroundColor = 'white';
     }
 
     submitSurvey(data){
