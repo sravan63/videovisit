@@ -1,5 +1,5 @@
 .conference-page {
-    
+
     .conference-header {
         min-height: 4.90rem;
         background-color: #FFFFFF;
@@ -64,8 +64,8 @@
                 .lang-change{
                     color: #006ba6;
                     cursor: pointer;
-                    .divider{                      
-                        padding-right: 0.5rem;                      
+                    .divider{
+                        padding-right: 0.5rem;
                       }
                       .spanishlabel{
                           padding-left: 0.5rem;
@@ -248,9 +248,9 @@
             }
 
             .remoteFeedPIP{
-                object-fit: cover; 
+                object-fit: cover;
              }
-             
+
              .flipRemoteFeedPIP {
                 object-fit: cover;
                 z-index: 3;
@@ -321,7 +321,7 @@
                 height: 100%;
                 display: none;
             }
-            
+
             .remoteStreamVisible{
                 display: block;
                 height: auto;
@@ -354,7 +354,7 @@
             .stream-container {
                 width: 91.5% !important;
             }
-            
+
             .presentation-view {
                 width: 91.5% !important;
             }
@@ -418,13 +418,13 @@
                     display: none;
                 }
                 .remoteStreamVisible{
-                    bottom: -100% !important;                    
+                    bottom: -100% !important;
                     max-width: unset !important;
                    // z-index: unset;
                     position: relative !important;
-                }             
+                }
             }
-            
+
             .stream-containerPIP {
                 width:100%;
                 transform: scale(1.2);
@@ -462,10 +462,10 @@
                     }
 
                     .remoteFeedPIP{
-                       object-fit: cover; 
+                       object-fit: cover;
                     }
                 }
-                
+
                 .flipRemoteFeedPIP{
                     object-fit: cover;
                     z-index: 3;
@@ -474,7 +474,7 @@
                     right: 0;
                     max-height: 25%;
                     width: 18.5% !important;
-                }          
+                }
                 .self-view {
                     // height: 50%;
                     width: 100%;
@@ -495,7 +495,7 @@
                         max-height: 25%;
                         right:0;
                         position: absolute;
-                    }                   
+                    }
                     .top{
                         top: 10px!important;
                     }
@@ -518,7 +518,7 @@
     }
 }
 
-@media only screen and (min-width: 768px) and (max-device-width :1023px) and (orientation : portrait) { 
+@media only screen and (min-width: 768px) and (max-device-width :1023px) and (orientation : portrait) {
     .conference-page {
         .video-conference-container {
 
@@ -527,7 +527,7 @@
                 transform: scale(1.5);
             }
             //As in flip view remote becomes self view so we don not need to scale the video up.
-            .flipStream-containerPIP{ 
+            .flipStream-containerPIP{
                 width:100%;
             }
         }
@@ -571,7 +571,7 @@
                 width:100%;
                 transform: scale(1.2);
             }
-            
+
             //As in flip view remote feed becomes self view so we don not need to scale the video up.
             .flipStream-containerPIP {
                 width:100%;
@@ -596,7 +596,7 @@
                     max-height: 25%;
                     max-width: 9.5% !important;
                  }
-                 
+
                  .flipSelfViewVideoPIP {
                     position: absolute;
                     top: 0px;
@@ -615,9 +615,7 @@
     body {
         position: relative;
         overflow: hidden;
-        background-color: hwb(27 10% 28%);
-        background-color: lch(67.5345% 42.5 258.2);
-        background-color: lab(62.2345% -34.9638 47.7721);
+        background-color: lch(0% 0 0);
     }
     .conference-page {
         .conference-header {
@@ -751,7 +749,7 @@
     .conference-page {
         .video-conference-container {
             .video-conference {
-                .remoteStreamVisible{ 
+                .remoteStreamVisible{
                     display: block;
                     height: 100vh;
                     position: relative;
@@ -776,7 +774,7 @@
                     width: 100%;
                     height: 100%;
                     position: relative;
-                    display: none; 
+                    display: none;
                 }
 
                 .stream-container-SMD {
@@ -787,15 +785,15 @@
     }
 }
 
-@media only screen and (min-width: 762px) and (max-device-width :1023px) and (orientation : portrait) { 
+@media only screen and (min-width: 762px) and (max-device-width :1023px) and (orientation : portrait) {
     .conference-page {
         .video-conference-container {
             .video-conference {
                 .stream-container-SMD {
                     height: 140vh !important;
-                } 
+                }
             }
-            
+
         }
     }
 }
@@ -809,7 +807,7 @@
 //                     width: 100%;
 //                     height: 100%;
 //                     position: relative;
-//                     display: none; 
+//                     display: none;
 //                     transform: scale(1.44);
 //                 }
 
@@ -821,7 +819,7 @@
 //     }
 // }
 
-@media only screen and (max-width: 980px) and (orientation: landscape) { 
+@media only screen and (max-width: 980px) and (orientation: landscape) {
     .conference-page {
         .video-conference-container {
             .video-conference {
@@ -846,7 +844,7 @@
                 // }
                 .stream-container-SMD {
                     height: 68vh !important;
-                }   
+                }
                 .remoteStreamVisible{
                     position: relative;
                     left: 78vw;
@@ -882,7 +880,7 @@
     }
 }
 
-@media only screen and (max-width: 960px) and (orientation: landscape) { 
+@media only screen and (max-width: 960px) and (orientation: landscape) {
     .conference-page {
         .video-conference-container {
             .video-conference {
@@ -892,7 +890,7 @@
                         height: calc(100vh - 35px);
                     }
                 }
-                
+
             }
         }
     }
