@@ -21,6 +21,7 @@ import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Langtranslation from '../../../../components/lang-translation/lang-translation';
+import  CapturePhoto  from '../conference/CapturePhoto';
 
 class Conference extends React.Component {
 
@@ -68,6 +69,7 @@ class Conference extends React.Component {
         this.handleStart = this.handleStart.bind(this);
         this.applyPosition = this.applyPosition.bind(this);
         this.resetZoomToDefault= this.resetZoomToDefault.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
         this.resetZoomedView =null;
         this.quitMeetingCalled = false;
         this.surveyInprogress = false;
@@ -1688,6 +1690,11 @@ class Conference extends React.Component {
         }
         return false;
     }
+    // Upload to local seaweedFS instance
+    uploadImage(file) {
+        const formData = new FormData();
+        formData.append('file', file);
+    }
 
     render() {
         let remoteFeedClass, selfViewClass, streamContainer, Details = this.state.staticData;
@@ -1801,6 +1808,8 @@ class Conference extends React.Component {
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
+                               
+                            <CapturePhoto id = "takeCameraFeedPhoto" sendFile={this.uploadImage} selfViewVideo ={this.selfViewMedia}/>
                                <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                 </video>
                                {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
