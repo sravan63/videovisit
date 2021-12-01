@@ -166,7 +166,7 @@
         "subHeading": "Your video visit originally scheduled for ",
         "atText":" at",
         "timeZone": "Pacific Time,",
-        "subHeading2":"is starting early.",
+        "subHeading2":" is starting early.",
         "subHeading3": "Your video visit will take place online using your smartphone or computer.",
         "startVisit": "Start your video visit",
         "subHeading4": "If you need an interpreter, let us know when you start your visit. ",
@@ -178,7 +178,7 @@
       "startEarly": {
         "heading": "Join your Video Visit Now",
         "subHeading": "Your video visit originally scheduled for",
-        "atText":", at ",
+        "atText":" at ",
         "subHeading2":" is starting early.",
         "subHeading3":"To join on a smartphone or tablet,",
         "subHeading4":"download the My Doctor Online app.",
@@ -224,8 +224,8 @@
         "clinicianLabel":"Clinician",
         "learnMore": "Learn more about video visits and how to prepare. ",
         "subHeading4":"Learn more about video visits and how to prepare.", 
-        "helpLabel":"If you need help getting ready for your video visit, call 1-844-216-5769 Monday to Friday, 6:30 AM to 7 PM.  If you need an interpreter, let us know when you start your visit."
-
+        "helpLabel":"If you need help getting ready for your video visit, call 1-844-216-5769 Monday to Friday, 6:30 AM to 7 PM.  If you need an interpreter, let us know when you start your visit.",
+        "at":" at"
       },
       "runningLate":{
         "heading": "Thanks for your patience",

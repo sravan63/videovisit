@@ -166,7 +166,7 @@
         "subHeading": "Su videoconsulta programada originalmente para el ",
         "atText":", a las",
         "timeZone": "Pacific Time,",
-        "subHeading2":"va a empezar más temprano.",
+        "subHeading2":" va a empezar más temprano.",
         "subHeading3": "Su videoconsulta se realizará en línea usando su teléfono inteligente o computadora.",
         "startVisit": "Inicie su videoconsulta",
         "subHeading4": "Si necesita un intérprete, avísenos al iniciar su consulta.  ",
@@ -228,8 +228,8 @@
         "clinicianLabel":"Profesional clínico de salud",
         "learnMore": "Aprenda más acerca de las videoconsultas y cómo prepararse. ",
         "subHeading4":"Aprenda más acerca de las videoconsultas y cómo prepararse.",
-        "helpLabel":"Si necesita ayuda para prepararse para su videoconsulta, llame al 1-844-216-5769 de lunes a viernes, de 6:30 a. m. a 7 p. m.  Si necesita un intérprete, avísenos al iniciar su consulta."
-
+        "helpLabel":"Si necesita ayuda para prepararse para su videoconsulta, llame al 1-844-216-5769 de lunes a viernes, de 6:30 a. m. a 7 p. m.  Si necesita un intérprete, avísenos al iniciar su consulta.",
+        "at": " a las"
       },
       "runningLate":{
         "heading": "Gracias por su paciencia",
