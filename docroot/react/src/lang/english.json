@@ -224,8 +224,8 @@
         "clinicianLabel":"Clinician",
         "learnMore": "Learn more about video visits and how to prepare. ",
         "subHeading4":"Learn more about video visits and how to prepare.", 
-        "helpLabel":"If you need help getting ready for your video visit, call 1-844-216-5769 Monday to Friday, 6:30 AM to 7 PM.  If you need an interpreter, let us know when you start your visit."
-
+        "helpLabel":"If you need help getting ready for your video visit, call 1-844-216-5769 Monday to Friday, 6:30 AM to 7 PM.  If you need an interpreter, let us know when you start your visit.",
+        "at":" at"
       },
       "runningLate":{
         "heading": "Thanks for your patience",
