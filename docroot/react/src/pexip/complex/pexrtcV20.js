@@ -1042,10 +1042,6 @@ PexRTCCall.prototype.gumError = function(err) {
 
 PexRTCCall.prototype.connect = function() {
     var self = this;
-    var takePhotocanvas = document.getElementById("capturedPhotoCanvas");
-    if(takePhotocanvas && takePhotocanvas.dataset.view === "captured") {
-        self.localStream = takePhotocanvas.captureStream(25);
-    } 
     self.getBandwidth();
 
     if (self.state != 'UPDATING') {

@@ -21,7 +21,6 @@ import MediaService from '../../../../services/media-service.js';
 import { MessageService } from '../../../../services/message-service.js';
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Langtranslation from '../../../../components/lang-translation/lang-translation';
-import  CapturePhoto  from '../conference/CapturePhoto';
 
 class Conference extends React.Component {
 
@@ -1808,10 +1807,7 @@ class Conference extends React.Component {
                                     <Settings data={Details} />
                             </div>
                             <div id="selfview"  className="self-view" style={{visibility: this.state.showVideoFeed ? 'visible' : 'hidden'}}>
-                               
-                            <CapturePhoto id = "takeCameraFeedPhoto" sendFile={this.uploadImage} selfViewVideo ={this.selfViewMedia}/>
-                               
-                               <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
+                              <video ref={this.selfViewMedia} data-view="smaller" id="selfvideo" className={selfViewClass} style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                 </video>
                                {/* <video ref={this.selfViewMedia} id="selfvideo" className="selfViewVideo" style={{transform: this.state.isMirrorView ? 'scaleX(-1)' : 'none'}} autoPlay="autoplay" playsInline="playsinline" muted={true}>
                                </video> */}
