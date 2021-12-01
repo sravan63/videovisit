@@ -149,7 +149,7 @@
         "download": "Download My Doctor Online",
         "computer": "Join from your computer: ",
         "goTo": "Go to ",
-        "andSelect": ", select ",
+        "andSelect": ", and select ",
         "joinVisit": "Join your visit, ",
         "and": "and ",
         "signIn": "Sign-in.",
@@ -176,7 +176,7 @@
         "subHeading8": "or call 1-866-454-8855 to cancel or reschedule."
       },
       "startEarly": {
-        "heading": "Join your Video Visit Now",
+        "heading": "Join your video visit now",
         "subHeading": "Your video visit originally scheduled for",
         "atText":" at ",
         "subHeading2":" is starting early.",
