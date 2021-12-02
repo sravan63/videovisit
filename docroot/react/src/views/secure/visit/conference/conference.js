@@ -367,6 +367,9 @@ class Conference extends React.Component {
                     //iPad desktop view in landscape or phone landscape view.
                     if(Utilities.isMobileDevice() && ((/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) || (window.matchMedia("(orientation: landscape)").matches))) {
                         document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
+                        if( browserInfo.isSafari ){
+                            document.getElementsByTagName('body')[0].style.backgroundColor = 'black';
+                        }
                     }
                     break;
                 case GlobalConfig.HIDE_LOADER:
