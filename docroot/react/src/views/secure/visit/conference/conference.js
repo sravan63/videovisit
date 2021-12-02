@@ -364,6 +364,10 @@ class Conference extends React.Component {
                     let positionInfo = element.getBoundingClientRect();
                     this.widthSideBar = positionInfo.width;
                     this.isDesktopView = ( /iPad|iPhone|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth >= 1024 );
+                    //iPad desktop view in landscape or phone landscape view.
+                    if(Utilities.isMobileDevice() && ((/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) || (window.matchMedia("(orientation: landscape)").matches))) {
+                        document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
+                    }
                     break;
                 case GlobalConfig.HIDE_LOADER:
                     this.setState({showLoader:false});
@@ -417,10 +421,6 @@ class Conference extends React.Component {
                 this.getLanguage();
             }
         });
-        //iPad desktop view in landscape or phone landscape view.
-        if(Utilities.isMobileDevice() && ((/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) || (window.matchMedia("(orientation: landscape)").matches))) {
-            document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
-        }
     }
 
     dragElement(elmnt) {
