@@ -865,10 +865,10 @@ class Conference extends React.Component {
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
              this.is50PIP = false;
-            document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
             this.setState({isPIPMode: this.setPIPMode()});
             this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp());
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
+            document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
             if(this.resetZoomedView){
                this.resetZoomedView();
             } 
@@ -881,7 +881,7 @@ class Conference extends React.Component {
         if(Utilities.isMobileDevice()){
             // reloads the page only when the visibility state is visible
             if (document.visibilityState === 'visible') {
-                window.location.reload();
+               // window.location.reload();
             }
 
         /** Revertible code */
