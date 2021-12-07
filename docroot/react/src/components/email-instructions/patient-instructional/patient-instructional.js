@@ -8,7 +8,7 @@ import AndroidChinese from '../../../assets/badges/android-chinese.png';
 import AndroidEnglish from '../../../assets/badges/appstore.png';
 import IosEnglish from '../../../assets/badges/playstore.png';
 
-import MdoIcon from '../../../assets/mdo-icon.png';
+import MdoIcon from '../../../assets/promotion/mdo-icon.svg';
 
 
 
