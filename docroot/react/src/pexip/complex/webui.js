@@ -785,6 +785,7 @@ function connected(url) {
                     BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
                 }
             }
+            /* *** US60748: Stop getMediaStats() Pexip event from both Provider/Member web app.
             let data = {
                 meetingId: meetingId,
                 memberName: memberName
@@ -792,7 +793,7 @@ function connected(url) {
             let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
             if(isChrome) {
                 MessageService.sendMessage(GlobalConfig.MEDIA_STATS_DATA, data);
-            }
+            } *** */
             pexipInitialConnect=true;
         }
     }
