@@ -18,7 +18,6 @@ class UtilityService extends React.Component {
         this.ecData = null;
         this.surveyTimeout = null;
         this.lang='';
-        this.isSafari15_1 = false;
         this.validateBrowser = this.validateBrowser.bind(this);
         this.validateBrowser();
     }
@@ -31,17 +30,9 @@ class UtilityService extends React.Component {
             isIE: /MSIE|Trident/.test(navigator.userAgent),
             isEdge: /Edge|Edg/.test(navigator.userAgent),
             isChrome:/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor),
-            isAlliPadCheck:  /iPad/.test(navigator.userAgent) 
+            isAlliPadCheck:  /iPad/.test(navigator.userAgent)
         }
         this.browserInfo = bObj;
-    }
-
-    setSafariBlocked(val){
-        this.isSafari15_1 = val;
-    }
-
-    getSafariBlocked(){
-        return this.isSafari15_1;
     }
 
     // Returns the browser informaion.
@@ -93,7 +84,7 @@ class UtilityService extends React.Component {
         if (this.getBrowserInformation().isChrome) {
             if (blockChrome) {
                    isBrowserBlockError = true;
-            } else {                
+            } else {
                 var chrome_ver = Number(window.navigator.appVersion.match(/Chrome\/(\d+)\./)[1], 10);
                 if (chrome_ver < blockChromeVersion) {
                    isBrowserBlockError = true;
@@ -115,14 +106,6 @@ class UtilityService extends React.Component {
             if (blockSafari) {
                 isBrowserBlockError = true;
             }
-            else if(navigator.platform.toLowerCase() === GlobalConfig.IPHONE.toLowerCase()){
-                let ver = this.iOSversion();
-                let IOSMobileVersion = ver[0]+'.'+ver[1];
-                if(IOSMobileVersion === GlobalConfig.IPHONE_VERSION){
-                    isBrowserBlockError = true;
-                    this.setSafariBlocked(true);
-                }
-            }
             else {
                 var fullVersion  = ''+parseFloat(navigator.appVersion);
                 var majorVersion = parseInt(navigator.appVersion,10);
@@ -133,13 +116,13 @@ class UtilityService extends React.Component {
                     fullVersion = navigator.userAgent.substring(verOffset+8);
                 }
                 majorVersion = parseInt(''+fullVersion,4);
-                // Block access from Safari version 12.                
+                // Block access from Safari version 12.
                 if (fullVersion.substr(0, 4) < blockSafariVersion) {
                     isBrowserBlockError = true;
                 }
             }
         }
-        
+
         if (this.getBrowserInformation().isEdge) {
             if (blockEdge) {
                 isBrowserBlockError = true;
@@ -147,10 +130,10 @@ class UtilityService extends React.Component {
                 var val = navigator.userAgent.split('Edge/');
                 var edge_ver = '';
                 if(val.length  == 1){
-                    edge_ver = Number(window.navigator.userAgent.match(/Edg\/(\d+)\./)[1], 10);                         
+                    edge_ver = Number(window.navigator.userAgent.match(/Edg\/(\d+)\./)[1], 10);
                 }else{
-                    edge_ver = val[1].slice(0, 2); 
-                }                
+                    edge_ver = val[1].slice(0, 2);
+                }
                 //var edge_ver = Number(window.navigator.userAgent.match(/Edge\/\d+\.(\d+)/)[1], 10);
                 if (edge_ver <= blockEdgeVersion) {
                     isBrowserBlockError = true;
@@ -192,9 +175,6 @@ class UtilityService extends React.Component {
                     if (version < browserNames.IPAD_OS_VERSION) {
                         isBrowserBlockError = true;
                     }
-                    /*else if(version == GlobalConfig.IPHONE_VERSION){
-                        isBrowserBlockError = true;
-                    }*/
                 }
             }
             //Ipad Safari Desktop Site
@@ -207,9 +187,6 @@ class UtilityService extends React.Component {
                     if (version < browserNames.IPAD_OS_VERSION) {
                         isBrowserBlockError = true;
                     }
-                    /*else if(version == GlobalConfig.IPHONE_VERSION){
-                        isBrowserBlockError = true;
-                    }*/
                 }
             }
         }
@@ -217,7 +194,7 @@ class UtilityService extends React.Component {
     }
 
     isMobileDevice() {
-        var isMobile = false; 
+        var isMobile = false;
         var iosMobile;
         if (navigator.maxTouchPoints > 1 && this.getAppOS() == 'iOS') {
             iosMobile = true;
@@ -306,32 +283,32 @@ class UtilityService extends React.Component {
             let AMPM = DateObj.getHours() > 11 ? "PM" : "AM";
             Hour = (Hour == 0) ? 12 : Hour;
             switch(this.getLang().lang){
-                case "spanish":                                    
+                case "spanish":
                     str = Hour + ':' + Minutes + " " + (DateObj.getHours() > 11 ? 'p. m.' : 'a. m.') + ', ';
                     break;
                 case "chinese":
                     str = (DateObj.getHours() > 11 ? '下午' : '上午') + ''+ Hour + ':' + Minutes + ', ';
                     break;
-                    default:                    
+                    default:
                     str = Hour + ':' + Minutes + " " + AMPM + ', ';
-                        break;        
+                        break;
             }
-            
+
         } else {
             let week = GlobalConfig.WEEK_DAYS[this.getLang().lang][DateObj.getDay()];
             let month = GlobalConfig.MONTHS[this.getLang().lang][DateObj.getMonth()];
             let date = DateObj.getDate() < 10 ? String(DateObj.getDate()).replace("0", "") : DateObj.getDate();
-            
+
             switch(this.getLang().lang){
-                case "spanish":                                    
+                case "spanish":
                     str = week + ', ' + date + ' de ' +  month;
                     break;
                 case "chinese":
                     str = week + ', ' + month + '' +  date;
                     break;
-                    default:                    
+                    default:
                     str = week + ', ' + month + ' ' +  date;
-                        break;        
+                        break;
             }
         }
         return str;
@@ -376,20 +353,20 @@ class UtilityService extends React.Component {
     }
     formatInMeetingRunningLateTime(runLateMeetingTime) {
         var meetingTime = new Date(parseInt(runLateMeetingTime));
-        var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();        
+        var minutes = (meetingTime.getMinutes() < 10) ? "0" + meetingTime.getMinutes() : meetingTime.getMinutes();
         var hours = (meetingTime.getHours() > 11) ? meetingTime.getHours() - 12 : meetingTime.getHours();
         hours = (hours == 0) ? 12 : hours;
         var ampmval = (meetingTime.getHours() > 11) ? 'PM' : 'AM';
         switch(this.getLang().lang){
-            case "spanish":                
+            case "spanish":
                 return hours + ':' + minutes + " " + (meetingTime.getHours() > 11 ? 'p. m.' : 'a. m.');
                 break;
             case "chinese":
                 return (meetingTime.getHours() > 11 ? '下午' : '上午') + ''+ hours + ':' + minutes;
                 break;
-                default:                    
+                default:
                     return hours + ':' + minutes + " " + ampmval;
-                    break;        
+                    break;
         }
     }
 
@@ -436,11 +413,11 @@ class UtilityService extends React.Component {
 		const meetingDurationInSecs = Math.floor(difference/1000);
 		return meetingDurationInSecs > minTimeInMeeting;
     }
-    
+
     logMeetingStartTime(meetingId){
         if( sessionStorage.getItem('meetingTimeLog') ) {
             const meetingTimeLog = JSON.parse(sessionStorage.getItem('meetingTimeLog'));
-            this.meetingBeginsAt = meetingTimeLog[meetingId] ? Number(meetingTimeLog[meetingId]) : new Date().getTime(); 
+            this.meetingBeginsAt = meetingTimeLog[meetingId] ? Number(meetingTimeLog[meetingId]) : new Date().getTime();
             if(!meetingTimeLog[meetingId]) {
                 meetingTimeLog[meetingId] = Number(this.meetingBeginsAt);
                 sessionStorage.setItem('meetingTimeLog', JSON.stringify(meetingTimeLog));
@@ -451,7 +428,7 @@ class UtilityService extends React.Component {
             meetingTimeLog[meetingId] = this.meetingBeginsAt;
             sessionStorage.setItem('meetingTimeLog', JSON.stringify(meetingTimeLog));
         }
-    }   
+    }
 
     checkForValidMediaDevice(num){
         var Exp = /((^[0-9=+-]+[a-z=+-]+)|(^[a-z=+-]+[0-9=+-]+))+[0-9=+-a-z=+-]+$/i;
@@ -519,7 +496,7 @@ class UtilityService extends React.Component {
     }
     parseInstantForEcGuestName(guests, member){
         guests.map((g)=>{
-            if( g.lastName == member.lastName && g.firstName == member.firstName ){ 
+            if( g.lastName == member.lastName && g.firstName == member.firstName ){
                 //return g.meetingHash;
                 member.meetingCode = g.meetingHash;
             }

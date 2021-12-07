@@ -18,7 +18,7 @@ class Authentication extends React.Component {
         super(props);
         localStorage.clear();
         this.tempAccessToken = false;
-        this.state = { tempAccessToken: false,isSafari15_1:false,staticData:{auth:{sso:{}},errorCodes:{}}, chin:'中文',span:'Español',instantJoin:false,isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'',isScrollPosition: false };
+        this.state = { tempAccessToken: false,staticData:{auth:{sso:{}},errorCodes:{}}, chin:'中文',span:'Español',instantJoin:false,isMobileError: false, isInApp: false, showLoader: false,propertyName:'',isBrowserBlockError:false, isMobile: false,mdoHelpUrl:'',isScrollPosition: false };
     }
 
     emitFromChild(obj) {
@@ -49,14 +49,14 @@ class Authentication extends React.Component {
         var inAppAccess = Utilities.getInAppAccessFlag();
         if(!inAppAccess){
             this.getBrowserBlockInfo();
-        }  
+        }
         this.getLanguage();
         this.subscription = MessageService.getMessage().subscribe((message) => {
             if(message.text==GlobalConfig.LANGUAGE_CHANGED){
                 this.getLanguage();
             }
-        });      
-    }    
+        });
+    }
     getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",
@@ -71,8 +71,7 @@ class Authentication extends React.Component {
                  Utilities.setMeetingFeedbackTimeout(response.data.MEETING_FEEDBACK_TIMEOUT);
                  Utilities.setMinTimeToShowUserSurvey(response.data.MINIMUM_IN_MEETING_TIME_FOR_SURVEY);
                  if(Utilities.validateBrowserBlock(browserNames)){
-                    let isSafari15_1 = Utilities.getSafariBlocked();
-                    this.setState({ isBrowserBlockError: true,isSafari15_1:isSafari15_1 });
+                     this.setState({ isBrowserBlockError: true });
                  }
             } else {
                 // Do nothing
@@ -93,7 +92,7 @@ class Authentication extends React.Component {
         else {
             this.setState({span: "Español", chin: '中文',staticData: data});
         }
-        
+
     }
     changeLang(event){
         let value = event.target.textContent;
@@ -134,7 +133,7 @@ class Authentication extends React.Component {
             {this.state.showLoader ? (<Loader />):('')}
              <Header helpUrl = {this.state.mdoHelpUrl} data={Details}/>
              <div className={this.state.isInApp && window.window.innerWidth >= 1024 ? "main-content occupy-space" : "main-content"}>
-                {this.state.isMobileError ? 
+                {this.state.isMobileError ?
                     (<div className="row error-text">
                         {this.state.tempAccessToken || this.state.isInApp ?
                             (<p className="col-sm-12">{Details.errorCodes.ErrorPatientInfo}</p>)
@@ -143,7 +142,7 @@ class Authentication extends React.Component {
                     </div>)
                 : ('')}
                 {!this.state.isInApp ? (
-                <div className={this.state.isMobileError ? "row help-link-container error-chk":"row help-link-container"}>                    
+                <div className={this.state.isMobileError ? "row help-link-container error-chk":"row help-link-container"}>
                     <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                         <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
                         <Langtranslation />
@@ -166,7 +165,7 @@ class Authentication extends React.Component {
                 {!this.state.isInApp ?(<div className="auth-form-footer" style={{bottom:this.state.isBrowserBlockError ? '0rem': ''}}>
                     <Footer />
                 </div>) : ('')}
-            </div>             
+            </div>
          </div>
         );
     }

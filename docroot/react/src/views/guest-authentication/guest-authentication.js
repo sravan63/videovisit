@@ -18,7 +18,7 @@ class Authentication extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem('LoginUserDetails');
-        this.state = { lastname: '',isSafari15_1:false,displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'', guestLoginHeading: 'Thank you for connecting with your doctor', };
+        this.state = { lastname: '',displayErrorMsg: '', authToken:'', ReJoin:false, staticData:{guestauth:{},errorCodes:{}}, chin:'中文',span:'Español', NotLoggedIn: false, meetingCode: null, showLoader: false, inputDisable: false, errorlogin: false,isBrowserBlockError: false,mdoHelpUrl:'',statusCode:'', guestLoginHeading: 'Thank you for connecting with your doctor', };
         this.button = { disabled: true }
         this.signOn = this.signOn.bind(this);
         this.renderErrorCompValidation = this.renderErrorCompValidation.bind(this);
@@ -39,7 +39,7 @@ class Authentication extends React.Component {
           this.setState({ReJoin:true, NotLoggedIn: true});
           sessionStorage.setItem('code',this.showRejoin.code);
           sessionStorage.setItem('type',this.showRejoin.type);
-          return;   
+          return;
         }else if(sessionStorage.getItem('code')){
             this.setState({ReJoin:true, NotLoggedIn: true});
             return;
@@ -52,9 +52,9 @@ class Authentication extends React.Component {
             sessionStorage.clear();
         }
         if (window.location.hash.includes('meetingcode')) {
-            this.state.meetingCode = window.location.hash.slice(25);    
+            this.state.meetingCode = window.location.hash.slice(25);
             sessionStorage.setItem('meetingCodeval',this.state.meetingCode);
-            
+
         }
 
         this.setState({ showLoader: true });
@@ -67,7 +67,7 @@ class Authentication extends React.Component {
                 this.setState({ ReJoin: true});
                 sessionStorage.setItem('ReJoin',true);
              }
-            } 
+            }
             else if (response.data.statusCode == 510){
                 this.setState({ statusCode: 510 });
                 this.renderErrorCompValidation(true);
@@ -80,7 +80,7 @@ class Authentication extends React.Component {
             this.renderErrorCompValidation();
 
         });
-        
+
     }else{
         this.renderErrorCompValidation();
         this.setState({ errorlogin: false, displayErrorMsg: '' });
@@ -94,7 +94,7 @@ class Authentication extends React.Component {
         //     if(message.text==GlobalConfig.LANGUAGE_CHANGED){
         //         this.getLanguage();
         //     }
-        // });   
+        // });
      }
      getBrowserBlockInfo(){
         var propertyName = 'browser',
@@ -102,13 +102,12 @@ class Authentication extends React.Component {
             browserNames = '';
         BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
             if (response.data && response.status == '200') {
-                 browserNames = response.data; 
+                 browserNames = response.data;
                  this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                  sessionStorage.setItem('helpUrl',response.data.mdoHelpUrl);
                  sessionStorage.setItem('mediaStatsTimer',response.data.INSERT_MEDIA_STATS_FREQUENCY);
                  if(UtilityService.validateBrowserBlock(browserNames)){
-                     let isSafari15_1 = UtilityService.getSafariBlocked();
-                     this.setState({ isBrowserBlockError: true,isSafari15_1:isSafari15_1 });
+                     this.setState({ isBrowserBlockError: true });
                  }
             } else {
                 // Do nothing
@@ -178,8 +177,8 @@ class Authentication extends React.Component {
                 }
             } else if (response.data.statusCode == 300 || response.data.statusCode == 900) {
                 if(rejoin){
-                this.setState({ showLoader: false });    
-                this.SignOut();  
+                this.setState({ showLoader: false });
+                this.SignOut();
                 window.location.reload(false);
                 window.scrollTo(0, 0);
                 }
@@ -190,13 +189,13 @@ class Authentication extends React.Component {
                 let data = UtilityService.getLang();
                 this.setState({ statusCode: 500 });
                 this.setState({ errorlogin: true, displayErrorMsg: data.errorCodes.ErrorNoMatchingMsg, showLoader: false });
-                window.scrollTo(0, 0); 
+                window.scrollTo(0, 0);
             } else {
                 if(rejoin){
-                this.setState({ showLoader: false });    
-                this.SignOut();  
-                window.location.reload(false); 
-                window.scrollTo(0, 0); 
+                this.setState({ showLoader: false });
+                this.SignOut();
+                window.location.reload(false);
+                window.scrollTo(0, 0);
                 }
                 else{
                 this.errorCompForGuestLogin();
@@ -204,10 +203,10 @@ class Authentication extends React.Component {
             }
         }, (err) => {
             if(rejoin){
-                this.setState({ showLoader: false });    
-                this.SignOut();   
+                this.setState({ showLoader: false });
+                this.SignOut();
                 window.location.reload(false);
-                window.scrollTo(0, 0); 
+                window.scrollTo(0, 0);
                 }
                 else{
                 this.errorCompForGuestLogin();
@@ -231,7 +230,7 @@ class Authentication extends React.Component {
             }
             if(this.state.statusCode == 500){
                 this.setState({ displayErrorMsg: data.errorCodes.ErrorNoMatchingMsg });
-            }    
+            }
         }
     }
     changeLang(event){
@@ -266,7 +265,7 @@ class Authentication extends React.Component {
         };
     }
 
-    
+
 
 
     handleChange(key, event) {
@@ -296,14 +295,14 @@ class Authentication extends React.Component {
 
     }
     toggleLangInfo(){
-        let data = UtilityService.getLang(); 
+        let data = UtilityService.getLang();
         switch(data.lang){
             case "spanish":
                 return "guest-form rejoinComp spanish";
-                break;            
+                break;
             default:
                 return  "guest-form rejoinComp";
-                break;    
+                break;
 
         }
     }
@@ -313,15 +312,15 @@ class Authentication extends React.Component {
             <div id='container' className="authentication-page">
              <Header helpUrl = {this.state.mdoHelpUrl} data={this.state.staticData} />
              {this.state.showLoader ? (<Loader />):('')}
-              {this.state.NotLoggedIn ?  (  
+              {this.state.NotLoggedIn ?  (
                 <div>
              <div className={this.state.ReJoin ? "guest-main-content rejoinchk":"guest-main-content"}>
-                {this.state.errorlogin ? 
+                {this.state.errorlogin ?
                     <div className="row error-text">
                          <p className="col-sm-12">{this.state.displayErrorMsg}</p>
                     </div>
                 : ('')}
-                
+
                 <div className={this.state.errorlogin ? "row mobile-help-link error-chk":"row mobile-help-link"}>
                     <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                         <a href={this.state.staticData.HelpLink} className="help-link" target="_blank">{this.state.staticData.Help}</a>
@@ -340,7 +339,7 @@ class Authentication extends React.Component {
                         <div className="guest-rejoin-wrapper">
                             <div className="guest-rejoin-header">
                             <h1 className="text-left rejoin-heading font-weight-bold text-md-center px-4 mb-0">{this.state.guestLoginHeading}</h1>
-                            <div className="rejoin-description text-left mt-4 text-md-center px-4">Lost connection? <button className="guest-rejoin-button p-0"  onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>Rejoin your visit</button></div> 
+                            <div className="rejoin-description text-left mt-4 text-md-center px-4">Lost connection? <button className="guest-rejoin-button p-0"  onClick={()=>this.reJoinMeeting()} disabled={this.state.isBrowserBlockError}>Rejoin your visit</button></div>
                             </div>
                             <div className="guest-rejoin-banner">
                                 <div className="guest-rejoin-banner-header">
@@ -351,11 +350,11 @@ class Authentication extends React.Component {
                                     <div className="guest-rejoin-banner-footer-left guest-rejoin-banner-footer-section" />
                                     <div className="guest-rejoin-banner-footer-right guest-rejoin-banner-footer-section" />
                                 </div>
-                            </div> 
+                            </div>
                         </div>
-                   
+
                     ):
-                 (    
+                 (
                     <div className="row guest-form" >
                     <div className="row notice">{Details.guestauth.GuestHeaderLabelTxt}</div>
                         <form className="col-xs-12 col-md-12 login-form">
@@ -377,7 +376,7 @@ class Authentication extends React.Component {
                 <div className="guest-form-footer">
                     <Footer />
                 </div>
-            </div> 
+            </div>
             </div> ) : ('')}
          </div>
         );

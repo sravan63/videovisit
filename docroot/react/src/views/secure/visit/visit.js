@@ -17,7 +17,7 @@ class Visit extends React.Component {
     constructor(props) {
         super(props);
         this.interval = '';
-        this.state = { userDetails: {},isSafari15_1:false,staticData:{}, chin:'中文',span:'Español', showPage: false,isInstantJoin: false,isECInstantJoin:false, isInstantGuest: false, mdoHelpUrl:'', displayName:'', userConfirmBox:false, isBrowserBlockError: false, invalidSession: false, isMobile: false, showPreCheck: true };
+        this.state = { userDetails: {},staticData:{}, chin:'中文',span:'Español', showPage: false,isInstantJoin: false,isECInstantJoin:false, isInstantGuest: false, mdoHelpUrl:'', displayName:'', userConfirmBox:false, isBrowserBlockError: false, invalidSession: false, isMobile: false, showPreCheck: true };
         this.denyUser = this.denyUser.bind(this);
         this.allowLogin = this.allowLogin.bind(this);
     }
@@ -107,8 +107,7 @@ class Visit extends React.Component {
                 Utilities.setMinTimeToShowUserSurvey(response.data.MINIMUM_IN_MEETING_TIME_FOR_SURVEY);
                 if( Utilities.validateBrowserBlock(browserNames) ){
                     if( this.state.isECInstantJoin || this.state.isInstantGuest ){
-                        let isSafari15_1 = UtilityService.getSafariBlocked();
-                        this.setState({ userConfirmBox: true, isBrowserBlockError : true,isSafari15_1:isSafari15_1, invalidSession: false });
+                        this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false });
                     } else {
                         this.props.history.push('/login');
                     }
@@ -166,7 +165,7 @@ class Visit extends React.Component {
             return;
         }
         this._getBrowserBlockInfo();
-        
+
         let isInstantJoin;
         let tokenValue;
         if( join_type == 'instant_join' ){
@@ -224,7 +223,7 @@ class Visit extends React.Component {
     _unAuthorizedAccess(){
         if( this.state.isECInstantJoin || this.state.isInstantGuest ){
             if(this.state.isBrowserBlockError){
-                this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false }); 
+                this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false });
             } else {
                 this.setState({ userConfirmBox: true, isBrowserBlockError : false, invalidSession: true });
             }
@@ -274,11 +273,11 @@ class Visit extends React.Component {
     togglePrecheck() {
         this.setState({ showPreCheck: false });
     }
-    
+
     render() {
         return (
-            <div> {this.state.isInstantJoin || this.state.isECInstantJoin ? 
-                (<UCB conf={{data : this.state, changeLang : this.changeLang.bind(this), allowLogin : this.allowLogin.bind(this), denyUser : this.denyUser.bind(this)}}/> 
+            <div> {this.state.isInstantJoin || this.state.isECInstantJoin ?
+                (<UCB conf={{data : this.state, changeLang : this.changeLang.bind(this), allowLogin : this.allowLogin.bind(this), denyUser : this.denyUser.bind(this)}}/>
                 ):(<Suspense fallback={<Loader />}>
                     {this.state.showPreCheck && !this.state.isMobile?
                         (<PreCallCheck history={this.props.history} data={{togglePrecheck: this.togglePrecheck.bind(this)}}/>)

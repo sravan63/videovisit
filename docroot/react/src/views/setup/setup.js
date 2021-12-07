@@ -29,7 +29,7 @@ class Setup extends React.Component {
         super(props);
         this.interval = '';
         this.list = [];
-        this.state = { data: {},isSafari15_1:false,userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:'',isChromecheck: false};
+        this.state = { data: {},userDetails: {},staticData:{}, chin:'中文',span:'Español', media: {}, constrains: {}, startTest: false, loadingSetup: false ,isBrowserBlockError: false,mdoHelpUrl:'',isChromecheck: false};
         this.joinVisit = this.joinVisit.bind(this);
         this.startTest = this.startTest.bind(this);
         this.getLanguage();
@@ -67,7 +67,7 @@ class Setup extends React.Component {
           this.getBrowserBlockInfo();
           return false;
         }
-        sessionStorage.setItem('isSetupPage', true);        
+        sessionStorage.setItem('isSetupPage', true);
         navigator.mediaDevices.addEventListener('devicechange',()=>{
             MediaService.onDeviceChange();
         });
@@ -89,7 +89,7 @@ class Setup extends React.Component {
                 case GlobalConfig.MEDIA_PERMISSION:
                     var modalData;
                     var browserInfo = UtilityService.getBrowserInformation();
-                    if(message.data=='denied'){                        
+                    if(message.data=='denied'){
                         if (browserInfo.isSafari) {
                             modalData = this.permissionDeniedForSafari;
                             MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
@@ -101,7 +101,7 @@ class Setup extends React.Component {
                             else {
                                 modalData = this.permissionDeniedContent;
                             }
-                        }                        
+                        }
                     }
                     else if(message.data==='prompt-no-Devices'){
                         modalData = this.noDevicesFound;
@@ -117,10 +117,10 @@ class Setup extends React.Component {
                     if(!browserInfo.isChrome && !browserInfo.isSafari){
                         MessageService.sendMessage(GlobalConfig.OPEN_MODAL, modalData);
                     }
-                    break;    
+                    break;
             }
         });
-        
+
         this.getBrowserBlockInfo();
         this.getLanguage();
         MediaService.loadDeviceMediaData();
@@ -151,11 +151,10 @@ class Setup extends React.Component {
             browserNames = '';
         BackendService.getBrowserBlockDetails(url, propertyName).subscribe((response) => {
             if (response.data && response.status == '200') {
-                 browserNames = response.data; 
+                 browserNames = response.data;
                  this.setState({ mdoHelpUrl: response.data.mdoHelpUrl });
                  if(UtilityService.validateBrowserBlock(browserNames)){
-                     let isSafari15_1 = UtilityService.getSafariBlocked();
-                     this.setState({ isBrowserBlockError: true,isSafari15_1:isSafari15_1 });
+                     this.setState({ isBrowserBlockError: true });
                  }
             } else {
                 // Do nothing
@@ -218,9 +217,9 @@ class Setup extends React.Component {
         setTimeout(() => {
            if(!localStorage.getItem('campermission') && !UtilityService.isMobileDevice()){
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt');
-           }    
-        }, 2000);        
-        this.setState({ loadingSetup: true });        
+           }
+        }, 2000);
+        this.setState({ loadingSetup: true });
         if(browserInfo.isSafari || browserInfo.isFireFox) {
           MediaService.stopAudio();
         }
@@ -319,13 +318,13 @@ class Setup extends React.Component {
                                         {this.state.constrains.videoSource ? this.state.constrains.videoSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isVideo ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
-                                        { this.state.media.videoinput && this.state.media.videoinput.length > 0 ? 
+                                        { this.state.media.videoinput && this.state.media.videoinput.length > 0 ?
                                             this.state.media.videoinput.map((item,key) =>{
                                             return (
                                                 <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item, 'camera')}>{item.label}</a>
                                             )
-                                        }) 
-                                         : ('') 
+                                        })
+                                         : ('')
                                         }
                                       </div>
                                  </div>
@@ -337,13 +336,13 @@ class Setup extends React.Component {
                                         {this.state.constrains.micSource ? this.state.constrains.micSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isAudio ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
-                                        { this.state.media.audioinput && this.state.media.audioinput.length > 0 ? 
+                                        { this.state.media.audioinput && this.state.media.audioinput.length > 0 ?
                                             this.state.media.audioinput.map((item,key) =>{
                                             return (
                                                 <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item, 'mic')}>{item.label}</a>
                                             )
-                                        }) 
-                                         : ('') 
+                                        })
+                                         : ('')
                                         }
                                       </div>
                                  </div>
@@ -355,13 +354,13 @@ class Setup extends React.Component {
                                         {this.state.constrains.audioSource ? this.state.constrains.audioSource.label : ''}
                                       </a>
                                       <div className={this.state.data.isSpeaker ? 'dropdown-menu show' : 'dropdown-menu'} aria-labelledby="dropdownMenuButton">
-                                        { this.state.media.audiooutput && this.state.media.audiooutput.length > 0 ? 
+                                        { this.state.media.audiooutput && this.state.media.audiooutput.length > 0 ?
                                             this.state.media.audiooutput.map((item,key) =>{
                                             return (
                                                 <a className="dropdown-item" key={key} onClick={this.selectPeripheral.bind(this,item, 'speaker')}>{item.label}</a>
                                             )
-                                        }) 
-                                         : ('') 
+                                        })
+                                         : ('')
                                         }
                                       </div>
                                  </div>
@@ -369,7 +368,7 @@ class Setup extends React.Component {
                          </div>
                          <div className="col-md-5 p-0 video-preview">
                                  <div className="start-test" style={{display: !this.state.startTest ? 'flex' : 'none'}}>
-                                     <button className="btn rounded-0 btn-primary" onClick={this.startTest} disabled={this.state.isBrowserBlockError}>{translateLang && translateLang.Start}</button>                                        
+                                     <button className="btn rounded-0 btn-primary" onClick={this.startTest} disabled={this.state.isBrowserBlockError}>{translateLang && translateLang.Start}</button>
                                  </div>
                                 <div className="preview" style={{display: !this.state.startTest ? 'none' : 'block'}} >
                                     <video id="video" playsInline autoPlay></video>

@@ -31,18 +31,18 @@ class UserConfirmationBox extends Component {
       <Header helpUrl = {this.props.conf.data.mdoHelpUrl} data={Details}/>
       <div className='instant-content'>
           <div className="row instant-help-link-container">
-          {this.props.conf.data.invalidSession ? 
+          {this.props.conf.data.invalidSession ?
               (<div className="row error-text">
                   <p className="col-sm-12">{Details.errorCodes.ECErrorInvalidLink}</p>
               </div>)
           : ('')}
             <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                 <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
-                <Langtranslation /> 
+                <Langtranslation />
             </div>
-            {this.props.conf.data.isBrowserBlockError ? (<BrowserBlock browserblockinfo = {{isBrowserBlockError: this.props.conf.data.isBrowserBlockError,isSafari15_1:this.props.conf.data.isSafari15_1 }}/>) :('') }
+            {this.props.conf.data.isBrowserBlockError ? (<BrowserBlock browserblockinfo = {{isBrowserBlockError: this.props.conf.data.isBrowserBlockError }}/>) :('') }
           </div>
-          {!this.props.conf.data.invalidSession && !this.props.conf.data.isBrowserBlockError ? 
+          {!this.props.conf.data.invalidSession && !this.props.conf.data.isBrowserBlockError ?
               (<div>
                   <div className="row instant-mobile-header">
                       <div className="title">
