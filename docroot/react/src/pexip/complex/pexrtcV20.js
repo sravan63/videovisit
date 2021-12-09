@@ -1,4 +1,4 @@
-/* PexRTC v25.3 04/09 */
+/* PexRTC v25.3.1 01/07/2022 */
 /* global window, navigator, WebSocket, console, URL, setTimeout, setInterval, clearInterval, EventSource */
 import $ from 'jquery';
 var SessionDescription = window.mozRTCSessionDescription || window.RTCSessionDescription;
@@ -1192,7 +1192,7 @@ PexRTCCall.prototype.pcCreateOffer = function(options) {
 
     if (self.safari_ver >= 12 || self.firefox_ver > 65) {
         self.pc.createOffer(constraints)
-                            .then(function(sdp) { 
+                            .then(function(sdp) {
                                 if (self.parent.use_trickle_ice) {
                                     self.sendOffer(sdp);
                                 } else {
@@ -1205,7 +1205,7 @@ PexRTCCall.prototype.pcCreateOffer = function(options) {
                                 self.handleError(err);
                             });
     } else {
-        self.pc.createOffer(function(sdp) { 
+        self.pc.createOffer(function(sdp) {
                                 if (self.parent.use_trickle_ice) {
                                     self.sendOffer(sdp);
                                 } else {
@@ -1637,10 +1637,10 @@ PexRTCCall.prototype.update = function(call_type) {
             }
         }
 
-        if (self.localStream) {
+        if (self.localStream && !(self.firefox_ver > 58 || self.chrome_ver > 71 || self.safari_ver >= 12.1)) {
             var tracks = self.localStream.getTracks();
             for (var i = 0; i < tracks.length; i++) {
-                if( self.is_android && self.android_ver == 11 && self.chrome_ver > 0 ){
+                if (self.is_android && self.android_ver == 11 && self.chrome_ver > 0) {
                     // Fix for Android 11 + Chrome freezing issue.
                     self.localStream.removeTrack(tracks[i]);
                     tracks[i].stop();
@@ -1649,8 +1649,7 @@ PexRTCCall.prototype.update = function(call_type) {
                     self.localStream.removeTrack(tracks[i]);
                 }
             }
-            // self.localStream = undefined;
-            if (self.firefox_ver > 47 || (self.safari_ver >= 11 && self.safari_ver < 12.1) || self.chrome_ver > 71) {
+            if (self.firefox_ver > 47 || (self.safari_ver >= 11 && self.safari_ver < 12.1)) {
                 var senders = self.pc.getSenders();
                 for (var i = 0; i < senders.length; i++) {
                     self.pc.removeTrack(senders[i]);
@@ -1675,7 +1674,7 @@ PexRTCCall.prototype.muteVideo = function(setting) {
         return self.mutedVideo;
     }
 
-    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 12 && !self.pc.getLocalStreams) || self.chrome_ver > 71)) {
+    if (self.pc && (self.firefox_ver > 47 || (self.safari_ver >= 12 && !self.pc.getLocalStreams) || self.safari_ver > 13 || self.chrome_ver > 71)) {
         var senders = self.pc.getSenders();
         for (var i = 0; i < senders.length; i++) {
             if (senders[i].track && senders[i].track.kind == 'video') {
@@ -2446,7 +2445,7 @@ export function PexRTC() {
         self.safari_ver = 0;
     }
 
-    if ((self.safari_ver == 0 && (self.chrome_ver >= 56 || navigator.userAgent.indexOf('OS X') != -1)) || (self.safari_ver > 14 && !self.is_mobile)) {
+    if ((self.safari_ver == 0 && (self.chrome_ver >= 56 || navigator.userAgent.indexOf('OS X') != -1)) || (self.safari_ver > 14 && !self.is_mobile) || self.safari_ver == 15.1) {
         // Disable H.264 to work around various issues:
         //   - H.264 hw accelerated decoding fails for some versions
         //     and some hardware, both on OS X and Windows.
@@ -2607,8 +2606,8 @@ PexRTC.prototype.requestToken = function(cb) {
             params.call_tag = self.call_tag;
         }
 
-        self.sendRequest("request_token", params, function(evt) { 
-            self.tokenRequested(evt, cb); 
+        self.sendRequest("request_token", params, function(evt) {
+            self.tokenRequested(evt, cb);
         }, "POST", 10, self.requestTimeout);
     } else if (cb) {
         cb();
@@ -3265,14 +3264,14 @@ PexRTC.prototype.videoMuted = function () {
     var self = this;
 
     var command = "participants/" + self.uuid + "/video_muted";
-    self.sendRequest(command);  
+    self.sendRequest(command);
 };
 
 PexRTC.prototype.videoUnmuted = function () {
     var self = this;
 
     var command = "participants/" + self.uuid + "/video_unmuted";
-    self.sendRequest(command);  
+    self.sendRequest(command);
 };
 
 PexRTC.prototype.handleError = function (err) {
