@@ -884,7 +884,7 @@ class Conference extends React.Component {
         if(Utilities.isMobileDevice()){
             // reloads the page only when the visibility state is visible
             if (document.visibilityState === 'visible') {
-               // window.location.reload();
+                window.location.reload();
             }
 
         /** Revertible code */
