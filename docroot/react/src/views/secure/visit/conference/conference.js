@@ -864,7 +864,7 @@ class Conference extends React.Component {
             WebUI.sendChatContent(this.state.meetingDetails.meetingVendorId);
             if(this.resetZoomedView){
                this.resetZoomedView();
-            } 
+            }
         }
          if(window.matchMedia("(orientation: landscape)").matches) {
              this.is50PIP = false;
@@ -874,7 +874,7 @@ class Conference extends React.Component {
             document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
             if(this.resetZoomedView){
                this.resetZoomedView();
-            } 
+            }
         }
         this.mainContentWidth = window.innerWidth;
         this.removeAllCornerClasses();
@@ -1446,7 +1446,7 @@ class Conference extends React.Component {
         let uValue;
         let uType;
         let meetingId = this.state.meetingDetails.meetingId;
-        if(!this.state.isGuest) {
+        if(!this.state.isGuest && !this.state.isInstantPG) {
             uValue = this.state.userDetails.mrn;
             uType = 'mrn';
         } else {
@@ -1551,7 +1551,7 @@ class Conference extends React.Component {
         } else {
             let uValue;
             let uType;
-            if(!this.state.isGuest) {
+            if(!this.state.isGuest && !this.state.isInstantPG) {
                 uValue = this.state.userDetails.mrn;
                 uType = 'mrn';
             } else {
