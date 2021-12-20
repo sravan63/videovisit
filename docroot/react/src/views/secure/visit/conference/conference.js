@@ -1239,9 +1239,10 @@ class Conference extends React.Component {
                 else{
                     this.selfViewMedia.current.style.removeProperty('border');
                 }
-                this.setState({
-                    showvideoIcon: !this.state.showvideoIcon
-                })
+                this.setState({showvideoIcon: !this.state.showvideoIcon}, function() {
+                    this.initialPositionTop =  "initial";
+                    this.initialPositionLeft = "initial";
+                });
                 WebUI.muteUnmuteVideo();
                 break;
             case GlobalConfig.AUDIO:
