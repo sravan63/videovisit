@@ -1419,6 +1419,10 @@ class Conference extends React.Component {
         videoSource = vObject.deviceId;
         this.state.isRearCamera = !this.state.isRearCamera;
         var browserInfo = Utilities.getBrowserInformation();
+        setTimeout(()=>{
+            this.initialPositionTop =  "initial";
+            this.initialPositionLeft = "initial";
+        },500);
 
         if (browserInfo.isFireFox) {
             var isRear = vObject.label.toLowerCase().indexOf('back') > -1 || vObject.label.toLowerCase().indexOf('rear') > -1;
