@@ -20,7 +20,7 @@ class MediaService extends React.Component {
         this.onDeviceChange = this.onDeviceChange.bind(this);
         this.loadDeviceMediaData = this.loadDeviceMediaData.bind(this);
     }
-    
+
     // Initiates the device load
     loadDeviceMediaData(){
       var browserInfo = Utilities.getBrowserInformation();
@@ -56,7 +56,7 @@ class MediaService extends React.Component {
               this.handleError(error);
           });
         }
-      
+
         // Registers the device change handler.
 
       }
@@ -150,7 +150,7 @@ class MediaService extends React.Component {
         }
       }
     }
-  
+
   // Error call back.
     handleError(error){
         WebUI.log("info","handle_error_called_on_media_permission","event: Error" + error);
@@ -167,7 +167,7 @@ class MediaService extends React.Component {
         }
         if (error.name && error.name == 'NotFoundError') {
                 MessageService.sendMessage(GlobalConfig.MEDIA_PERMISSION, 'prompt-no-Devices');
-        }        
+        }
         console.log('Media Service - Error Occured :: '+error);
     }
 
@@ -226,7 +226,15 @@ class MediaService extends React.Component {
           if (error.name === 'SecurityError') {
             errorMessage = 'You need to use HTTPS for selecting audio output ' +
                 'device: ' + error;
-          } else if(errorMessage == 'DOMException: Requested device not found' || errorMessage == 'DOMException: The operation could not be performed and was aborted'){
+          }
+          else if(error.name == 'AbortError' || error.name=='NotFoundError'){
+              MessageService.sendMessage(GlobalConfig.OPEN_MODAL, {
+                  type:"denied",
+                  heading: 'Unable to Change Speaker',
+                  message : "There's an issue with your audio device, please refresh the page",
+              });
+          }
+          else if(errorMessage == 'DOMException: Requested device not found' || errorMessage == 'DOMException: The operation could not be performed and was aborted'){
             // speaker is not compatible
             for(var i=this.mediaData['audiooutput'].length-1; i >=0; i--){
               const speaker = this.mediaData['audiooutput'][i];
