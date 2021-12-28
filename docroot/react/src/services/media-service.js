@@ -230,7 +230,7 @@ class MediaService extends React.Component {
           else if(error.name == 'AbortError' || error.name=='NotFoundError'){
               MessageService.sendMessage(GlobalConfig.OPEN_MODAL, {
                   type:"denied",
-                  heading: 'Unable to Change Speaker',
+                  heading: 'Unable to switch Speaker',
                   message : "There's an issue with your audio device, please refresh the page",
               });
           }
