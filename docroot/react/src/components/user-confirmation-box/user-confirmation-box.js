@@ -33,7 +33,7 @@ class UserConfirmationBox extends Component {
           <div className="row instant-help-link-container">
           {this.props.conf.data.invalidSession || this.props.conf.data.isBrowserBlockError ?
               (<div className="row error-text">
-                  <p className="col-sm-12" style={{fontWeight:this.props.conf.data.isBrowserBlockError ? 'bold': '',height:this.props.conf.data.isBrowserBlockError ? '60px': '',lineHeight:this.props.conf.data.isBrowserBlockError ? '52px': ''}}>{Details.errorCodes.ECErrorInvalidLink}</p>
+                  <p className="col-sm-12" style={{fontWeight:this.props.conf.data.isBrowserBlockError ? 'bold': '',height:this.props.conf.data.isBrowserBlockError ? '60px': '',lineHeight:this.props.conf.data.isBrowserBlockError ? '55px': ''}}>{Details.errorCodes.ECErrorInvalidLink}</p>
               </div>)
           : ('')}
             <div className="col-lg-12 col-md-12 help-icon text-right p-0">
