@@ -31,7 +31,7 @@ class UserConfirmationBox extends Component {
       <Header helpUrl = {this.props.conf.data.mdoHelpUrl} data={Details}/>
       <div className='instant-content'>
           <div className="row instant-help-link-container">
-          {this.props.conf.data.invalidSession ?
+          {this.props.conf.data.invalidSession || this.props.conf.data.isBrowserBlockError ?
               (<div className="row error-text">
                   <p className="col-sm-12">{Details.errorCodes.ECErrorInvalidLink}</p>
               </div>)
