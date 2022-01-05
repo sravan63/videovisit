@@ -866,7 +866,7 @@ class Conference extends React.Component {
                this.resetZoomedView();
             }
         }
-         if(window.matchMedia("(orientation: landscape)").matches) {
+         if(Utilities.isMobileDevice() && window.matchMedia("(orientation: landscape)").matches) {
              this.is50PIP = false;
             this.setState({isPIPMode: this.setPIPMode()});
             this.state.isRemoteFlippedToSelf && (selfViewFeed.style.removeProperty("height"),this.removePositionProp());
