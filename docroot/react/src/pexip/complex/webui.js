@@ -511,11 +511,6 @@ function getAspectMode() {
 function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     log("info","participant_joined","event: participant joined the visit - participant:" +participant.uuid);
-    var uniqueKey = '';
-    if(participant.display_name.indexOf('#') > -1){
-        uniqueKey = participant.display_name.split('#')[1];
-        participant.display_name = participant.display_name.split('#')[0];
-    }
     if (participant.protocol == "api" && participant.display_name.indexOf('TPLC') > -1){ 
         return;
     }
@@ -552,12 +547,12 @@ function participantCreated(participant) {
         loginUserName = JSON.parse(localStorage.getItem('memberName'));
     }
     if (loginUserName.toLowerCase().trim() === participant.display_name.toLowerCase().trim() && !sessionStorage.getItem('UUID')) {
-        // var isLoggedInUser = validateLoggedInUser(participant.start_time);
-        // if(isLoggedInUser) {
+        var isLoggedInUser = validateLoggedInUser(participant.call_tag);
+        if( isLoggedInUser ) {
             userDetails = participant;
             console.log('=====> SETTING UUID :: '+participant.uuid);
             sessionStorage.setItem('UUID',participant.uuid);
-        // }
+        }
     }
     loggedInUserName = loginUserName;
     toggleWaitingRoom(pexipParticipantsList);
@@ -919,7 +914,10 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
         }
     }*/
     
-    // name += '#'+uniqueKey; // Mama, Joe#12345667
+    // Setting UniqueKey for all the members/guests.
+    const uniqueKey = Math.random().toString(36).slice(2); // jzb6pwy8wrs.
+    sessionStorage.setItem('uKey', uniqueKey);
+    rtc.call_tag = uniqueKey;
     rtc.makeCall(confnode, conference, name, bandwidth, source, flash);
 }
 
