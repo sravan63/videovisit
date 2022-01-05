@@ -35,9 +35,12 @@ class UserConfirmationBox extends Component {
               (<div className="row error-text">
                   <p className="col-sm-12" style={{fontWeight:this.props.conf.data.isBrowserBlockError ? 'bold': '',height:this.props.conf.data.isBrowserBlockError ? '60px': '',lineHeight:this.props.conf.data.isBrowserBlockError ? '55px': ''}}>{Details.errorCodes.ECErrorInvalidLink}</p>
               </div>)
-          : (<div className="row error-text">
-          <p className="col-sm-12">{Details.errorCodes.ECErrorInvalidLink}</p>
-      </div>)}
+          : ('')}
+          {this.props.conf.data.invalidSession && !this.props.conf.data.isBrowserBlockError ?
+              (<div className="row error-text">
+                  <p className="col-sm-12">{Details.errorCodes.ECErrorInvalidLink}</p>
+              </div>)
+          : ('')}
             <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                 <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
                 <Langtranslation />
