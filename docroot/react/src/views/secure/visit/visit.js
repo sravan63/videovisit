@@ -223,7 +223,7 @@ class Visit extends React.Component {
     _unAuthorizedAccess(){
         if( this.state.isECInstantJoin || this.state.isInstantGuest ){
             if(this.state.isBrowserBlockError){
-                this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: true });
+                this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false });
             } else {
                 this.setState({ userConfirmBox: true, isBrowserBlockError : false, invalidSession: true });
             }
