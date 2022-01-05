@@ -107,7 +107,7 @@ class Visit extends React.Component {
                 Utilities.setMinTimeToShowUserSurvey(response.data.MINIMUM_IN_MEETING_TIME_FOR_SURVEY);
                 if( Utilities.validateBrowserBlock(browserNames) ){
                     if( this.state.isECInstantJoin || this.state.isInstantGuest ){
-                        this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false });
+                        this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: this.state.invalidSession ? true : false });
                     } else {
                         this.props.history.push('/login');
                     }
