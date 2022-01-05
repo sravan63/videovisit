@@ -223,9 +223,9 @@ class Visit extends React.Component {
     _unAuthorizedAccess(){
         if( this.state.isECInstantJoin || this.state.isInstantGuest ){
             if(this.state.isBrowserBlockError){
-                this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: false });
+                this.setState({ userConfirmBox: true, isBrowserBlockError : true, invalidSession: true });
             } else {
-                this.setState({ userConfirmBox: true, isBrowserBlockError : this.state.isBrowserBlockError, invalidSession: true });
+                this.setState({ userConfirmBox: true, isBrowserBlockError : false, invalidSession: true });
             }
             // this.setState({userConfirmBox: true, displayName:"Joe Mama"});
         } else if( this.state.isInstantJoin ){
