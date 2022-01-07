@@ -128,6 +128,7 @@ class Authentication extends React.Component {
 
     render() {
         var Details = this.state.staticData;
+        var isMobile = Utilities.isMobileDevice();
         return (
             <div id='container' className="authentication-page">
             {this.state.showLoader ? (<Loader />):('')}
@@ -137,7 +138,7 @@ class Authentication extends React.Component {
                     (<div className="row error-text">
                         {this.state.tempAccessToken || this.state.isInApp ?
                             (<p className="col-sm-12">{Details.errorCodes.ErrorPatientInfo}</p>)
-                           :this.state.instantJoin ?(<p className="col-sm-12" style={{fontWeight:this.state.isBrowserBlockError ? 'bold': '',height:this.state.isBrowserBlockError ? '60px': '',lineHeight:this.state.isBrowserBlockError ? '55px': ''}}>{Details.errorCodes.ErrorInvalidLink}</p>):(<p className="col-sm-12">{Details.errorCodes.ErrorInvalidUSerID}</p>)
+                           :this.state.instantJoin ?(<p className="col-sm-12" style={{fontWeight:isMobile ? 'bold': '',height:isMobile ? '60px': '',lineHeight:isMobile ? '55px': ''}}>{Details.errorCodes.ErrorInvalidLink}</p>):(<p className="col-sm-12">{Details.errorCodes.ErrorInvalidUSerID}</p>)
                         }
                     </div>)
                 : ('')}
