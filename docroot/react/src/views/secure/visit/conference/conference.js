@@ -801,7 +801,7 @@ class Conference extends React.Component {
                 this.initialPositionLeft = this.currentSmallerView.offsetLeft + "px";
                 this.currentSmallerView.style.top = this.initialPositionTop;
                 this.currentSmallerView.style.left = this.initialPositionLeft;
-            },500);
+            },0);
             let element = document.querySelector('.conference-details');
             let positionInfo = element.getBoundingClientRect();
             this.widthSideBar = positionInfo.width;
@@ -811,7 +811,7 @@ class Conference extends React.Component {
                 this.currentSmallerView.style.left = "16px";
                 setTimeout(()=>{
                     this.initialPositionTop = this.currentSmallerView.offsetTop + "px";
-                },500);
+                },0);
 
         }
         else{
