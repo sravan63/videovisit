@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>    
+    <property resource="application.properties" />
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} ${app.name} %X{traceId:-?} %c.%M %5p - %m%n</pattern>
+        </encoder>
+    </appender>
+    <!-- LOG everything at INFO level -->
+    <root level="${logging.level.root}">
+        <appender-ref ref="STDOUT" />  
+    </root>
+    <logger name="org.kp.tpmg.ttg.webcare.videovisits.member.web" level="${logging.level.root}" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.kp.tpmg.ttg.telehealth.dynamicpropertyloader" level="${logging.level.root}" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="org.springframework" level="${logging.level.root}" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+     <logger name="com.zaxxer.hikari" level="${logging.level.hikari}" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+	<logger name="com.zaxxer.HikariConfig" level="${logging.level.hikari}" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+    <logger name="com.zaxxer.HikariPool" level="${logging.level.hikari}" additivity="false">
+        <appender-ref ref="STDOUT" />
+    </logger>
+</configuration>
