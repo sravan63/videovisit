@@ -793,7 +793,7 @@ class Conference extends React.Component {
         // }
         this.enablePinchPanZoom = this.disablePanPinchZoom();
 
-        if(window.innerWidth > 1440) {
+        if(window.innerWidth > 1024) {
             this.currentSmallerView.style.top = "initial";
             this.currentSmallerView.style.left = "initial";
             setTimeout(()=>{
@@ -828,7 +828,7 @@ class Conference extends React.Component {
             }
         }
         //iPad desktop view in landscape.
-        if(/iPad|Mac|Macintosh/.test(navigator.userAgent) && window.innerWidth> 1024) { //window.matchMedia("(orientation: landscape)").matches) {
+        if((/iPad|Mac|Macintosh/.test(navigator.userAgent)) && (Utilities.isMobileDevice()) && (window.innerWidth> 1024)) {//window.matchMedia("(orientation: landscape)").matches) {
             this.currentSmallerView.style.top = "initial";
             this.currentSmallerView.style.left = "initial";
             document.getElementsByClassName('video-conference-container')[0].style.height = window.innerHeight + 'px';
