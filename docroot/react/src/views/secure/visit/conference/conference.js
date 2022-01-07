@@ -793,7 +793,7 @@ class Conference extends React.Component {
         // }
         this.enablePinchPanZoom = this.disablePanPinchZoom();
 
-        if(window.innerWidth > 1366) {
+        if(window.innerWidth > 1440) {
             this.currentSmallerView.style.top = "initial";
             this.currentSmallerView.style.left = "initial";
             setTimeout(()=>{
