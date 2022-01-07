@@ -1120,7 +1120,7 @@ class Conference extends React.Component {
         var guestPin = meeting.vendorGuestPin,
             roomJoinUrl = meeting.roomJoinUrl,
             alias = meeting.meetingVendorId,
-            bandwidth = parseInt("1280"),
+            bandwidth = parseInt("2400"),
             source = "Join+Conference",
             name;
         if (this.state.isGuest == false) {
