@@ -34,17 +34,17 @@ export default class Ssologin extends React.Component {
                 if (response.data.data != null && response.data.data != '') {
                     this.handleDataAfterResponse(response);
                 } else {
-                    this.setState({ NotLoggedIn: true, isInApp : this.props.data.isInApp });
+                    this.setState({ NotLoggedIn: true });
                 }
 
             } else {
-                this.setState({ NotLoggedIn: true, isInApp : this.props.data.isInApp });
+                this.setState({ NotLoggedIn: true });
             }
         }, (err) => {
             console.log(err);
-            this.setState({ NotLoggedIn: true, isInApp : this.props.data.isInApp });
+            this.setState({ NotLoggedIn: true });
         });
-        // this.setState({isInApp : this.props.data.isInApp});
+        this.setState({isInApp : this.props.data.isInApp});
         this.setScreenOrientation();
         window.addEventListener('orientationchange', this.setScreenOrientation, false);
     }
