@@ -16,8 +16,8 @@
 		<vvmeetingservice-clientVersion>5.0.0</vvmeetingservice-clientVersion>
 		<spring.version>4.3.1.RELEASE</spring.version>
 		<apachetiles.version>3.0.5</apachetiles.version>
-		<logback.version>1.2.9</logback.version>
-		<slf4j.version>1.7.30</slf4j.version>
+		<logback.version>1.2.10</logback.version>
+		<slf4j.version>1.7.32</slf4j.version>
 		<frontend-plugin.version>0.0.27</frontend-plugin.version>
 		<node.version>v10.13.0</node.version>
 		<npm.version>6.12.0</npm.version>
@@ -167,11 +167,6 @@
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jul-to-slf4j</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>log4j-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
 		<!-- to address ackage org.springframework.beans.factory -->
