@@ -21,7 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.model.VVResponse;
@@ -34,7 +35,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 public class WebUtil {
 
-	public static final Logger logger = Logger.getLogger(WebUtil.class);
+	public static final Logger logger = LoggerFactory.getLogger(WebUtil.class);
 	private static Pattern DOB_MMYYYY_PATTERN = Pattern.compile("\\d[\\d]/\\d\\d\\d\\d");
 	public static final String EMAIL_PATTERN ="[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+";
 	public static final String MOB_CLIENT_ID = "vv-mbr-mbl-web";

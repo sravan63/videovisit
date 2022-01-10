@@ -14,14 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 
 public class EmailActionServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 5283735648488487841L;
 
-	public static final Logger logger = Logger.getLogger(EmailActionServlet.class);
+	public static final Logger logger = LoggerFactory.getLogger(EmailActionServlet.class);
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException {
 		doGet(request, response);

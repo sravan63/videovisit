@@ -4,7 +4,8 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_EXITING;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,7 +19,7 @@ public class JwtUtil {
 	public final static String JWT_SECRET = "videovisit-jwt-secret-kaiser-ttg-tpmg-ncal-this-key";
 	public final static String JWT_SECRET_EMAIL = "videovisit-email-jwt-secret-kaiser-ttg-tpmg-ncal-this-key";
 	public final static long JWT_TOKEN_EXPIRATION_MILLIS = 7200000;// expiration set to 2 hours
-	public static final Logger logger = Logger.getLogger(JwtUtil.class);
+	public static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
 	public static Claims createClaims(String userName) {
 		return Jwts.claims().setSubject(userName);
@@ -33,7 +34,7 @@ public class JwtUtil {
 		} catch (Exception e) {
 			logger.warn("Error while validating token", e);
 		}
-		logger.debug(claims);
+		logger.debug("claims : {}",claims);
 		if (claims != null && !claims.isEmpty()) {
 			isValid = true;
 		}
@@ -58,7 +59,7 @@ public class JwtUtil {
 		} catch (Exception e) {
 			logger.warn("Error while validating mobile direct launch token ", e);
 		}
-		logger.debug(claims);
+		logger.debug("claims : {}",claims);
 		if (claims != null && !claims.isEmpty() && StringUtils.isNotBlank(reqMeetingId) && StringUtils.isNotBlank(reqMrn) ) {
 			final String meetingId = (String) claims.get("meetingId");
 			final String mrn = (String) claims.get("mrn");

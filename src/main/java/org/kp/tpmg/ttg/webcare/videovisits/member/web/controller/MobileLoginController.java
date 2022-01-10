@@ -6,7 +6,8 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -17,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class MobileLoginController {
-	public static final Logger logger = Logger.getLogger(MobileLoginController.class);
+	public static final Logger logger = LoggerFactory.getLogger(MobileLoginController.class);
 	private static final String JSONMAPPING = "jsonData";
 
 	@RequestMapping(value = "/mobileLogin.json", method = { RequestMethod.POST, RequestMethod.GET })

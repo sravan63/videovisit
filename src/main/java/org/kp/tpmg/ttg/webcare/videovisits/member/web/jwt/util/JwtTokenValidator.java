@@ -1,6 +1,7 @@
 package org.kp.tpmg.ttg.webcare.videovisits.member.web.jwt.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.codec.Base64;
 
 import io.jsonwebtoken.Claims;
@@ -14,7 +15,7 @@ import io.jsonwebtoken.Jwts;
  */
 public class JwtTokenValidator {
 	
-	public static final Logger logger = Logger.getLogger(JwtTokenValidator.class);
+	public static final Logger logger = LoggerFactory.getLogger(JwtTokenValidator.class);
 	
 	private JwtTokenValidator() {
 		

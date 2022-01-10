@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.springframework.stereotype.Controller;
@@ -20,7 +21,7 @@ import net.sf.json.JSONObject;
 @Controller
 public class LaunchMobileMeetingForMemberController{
 
-	public static final Logger logger = Logger.getLogger(LaunchMobileMeetingForMemberController.class);
+	public static final Logger logger = LoggerFactory.getLogger(LaunchMobileMeetingForMemberController.class);
 	private static final String JSONMAPPING = "jsonData";
 
 	@RequestMapping(value = "/launchMobileMeetingForMember.json", method = { RequestMethod.POST, RequestMethod.GET })

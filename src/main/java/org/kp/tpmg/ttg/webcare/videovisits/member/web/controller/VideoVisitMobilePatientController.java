@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.properties.AppProperties;
@@ -22,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class VideoVisitMobilePatientController {
 
 	private static final String JSONMAPPING = "jsonData";
-	protected final Logger logger = Logger.getLogger(VideoVisitMobilePatientController.class);
+	protected final Logger logger = LoggerFactory.getLogger(VideoVisitMobilePatientController.class);
 
 	@RequestMapping(value = "/videoVisitMobile.htm", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView videoVisitMobile(HttpServletRequest request, HttpServletResponse response) throws Exception {

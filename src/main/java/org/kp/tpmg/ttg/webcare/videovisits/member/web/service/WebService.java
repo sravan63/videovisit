@@ -16,7 +16,8 @@ import javax.xml.bind.DatatypeConverter;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.json.JSONObject;
 import org.kp.tpmg.common.security.Crypto;
 import org.kp.tpmg.ttg.common.property.IApplicationProperties;
@@ -61,7 +62,7 @@ import com.google.gson.JsonParser;
 
 public class WebService {
 
-	public static final Logger logger = Logger.getLogger(WebService.class);
+	public static final Logger logger = LoggerFactory.getLogger(WebService.class);
 
 	private static String serviceSecurityUsername = null;
 	private static String serviceSecurityPassword = null;

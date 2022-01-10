@@ -6,7 +6,8 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LogoffController {
 
-	public static final Logger logger = Logger.getLogger(LogoffController.class);
+	public static final Logger logger = LoggerFactory.getLogger(LogoffController.class);
 
 	@RequestMapping(value = "/logout.htm", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView logout(ModelAndView modelAndView, HttpServletRequest request, HttpServletResponse response) {

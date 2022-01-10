@@ -20,14 +20,15 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Crypto {
 
 	// Key should be length of 128, 192, or 256 bits for AES.
 	private static final String key = "x12#$der-md89&^-";// 312ert%";
 	private static final String initVector = "encryptionIntVec";
-	private static final Logger log = Logger.getLogger(Crypto.class);
+	private static final Logger log = LoggerFactory.getLogger(Crypto.class);
 	private static final String UTF_8 = "UTF-8";
 	private static final String AES = "AES";
 	private static final String CIPHER = "AES/CBC/PKCS5PADDING";

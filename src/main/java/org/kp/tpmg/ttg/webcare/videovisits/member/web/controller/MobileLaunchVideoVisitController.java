@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.data.VideoVisitParamsDTO;
@@ -25,7 +26,7 @@ import com.google.gson.Gson;
 @Controller
 public class MobileLaunchVideoVisitController {
 
-	public static final Logger logger = Logger.getLogger(MobileLaunchVideoVisitController.class);
+	public static final Logger logger = LoggerFactory.getLogger(MobileLaunchVideoVisitController.class);
 
 	@RequestMapping(value = "/mobilelaunchvv.htm", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView mobilelaunchvv(HttpServletRequest request, HttpServletResponse response) throws Exception {

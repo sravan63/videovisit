@@ -6,7 +6,8 @@ import static org.kp.tpmg.ttg.webcare.videovisits.member.web.utils.WebUtil.LOG_E
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.MeetingCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.command.WebAppContextCommand;
 import org.kp.tpmg.ttg.webcare.videovisits.member.web.context.WebAppContext;
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AppRootController {
 
-	protected final Logger logger = Logger.getLogger(AppRootController.class);
+	protected final Logger logger = LoggerFactory.getLogger(AppRootController.class);
 
 	@RequestMapping(value = "/mobileAppPatientLogin.htm", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView mobileAppPatientLogin(HttpServletRequest request, HttpServletResponse response)

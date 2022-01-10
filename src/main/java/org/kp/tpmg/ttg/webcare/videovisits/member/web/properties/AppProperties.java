@@ -3,7 +3,8 @@ package org.kp.tpmg.ttg.webcare.videovisits.member.web.properties;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.common.property.ApplicationProperty;
 import org.kp.tpmg.ttg.common.property.ApplicationPropertyException;
 import org.kp.tpmg.ttg.common.property.IApplicationProperties;
@@ -15,7 +16,7 @@ public class AppProperties {
 	
 	private static AppProperties instance;
 	private static IApplicationProperties properties = null;
-	private static final Logger logger = Logger.getLogger(AppProperties.class);
+	private static final Logger logger = LoggerFactory.getLogger(AppProperties.class);
 	public static final String PROPERTY_FILE_PATH = "/usr/local/middleware/tcservervv/conf/appconf/vvm/videovisit.properties";
 	
 	

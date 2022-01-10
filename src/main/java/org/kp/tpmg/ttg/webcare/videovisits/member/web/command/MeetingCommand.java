@@ -26,7 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsJSON;
 import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingDetailsOutput;
 import org.kp.tpmg.ttg.videovisit.mappointment.model.meeting.MeetingsEnvelope;
@@ -64,7 +65,7 @@ import net.sourceforge.wurfl.core.Device;
 
 public class MeetingCommand {
 	
-	public static final Logger logger = Logger.getLogger(MeetingCommand.class);
+	public static final Logger logger = LoggerFactory.getLogger(MeetingCommand.class);
 	public static final int PAST_MINUTES = 120;
 	public static final int FUTURE_MINUTES = 15;
 	
@@ -1732,7 +1733,7 @@ public class MeetingCommand {
 				final Claims claims = JwtUtil.validateEmailAuthToken(authtoken);
 				if (claims != null && !claims.isEmpty()) {
 					setEmailContentOutput(output, claims);
-					logger.debug(claims);
+					logger.debug("cliams : {}",claims);
 					status.setCode(SUCCESS_200);
 					status.setMessage(SUCCESS);
 				} else {

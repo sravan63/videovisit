@@ -8,14 +8,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import net.sourceforge.wurfl.core.Device;
 import net.sourceforge.wurfl.core.WURFLEngine;
 
 public class DeviceDetectionService {
 
-	public static final Logger logger = Logger.getLogger(DeviceDetectionService.class);
+	public static final Logger logger = LoggerFactory.getLogger(DeviceDetectionService.class);
 
 	public static Device checkForDevice(HttpServletRequest request) {
 		logger.info(LOG_ENTERED);
