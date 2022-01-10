@@ -142,7 +142,7 @@ class Authentication extends React.Component {
                         }
                     </div>)
                 : ('')}
-                {!this.state.isInApp  && this.state.instantJoin ? (
+                {!this.state.isInApp ? (
                 <div className={this.state.isMobileError ? "row help-link-container error-chk":"row help-link-container"}>
                     <div className="col-lg-12 col-md-12 help-icon text-right p-0">
                         <a href={Details.HelpLink} className="help-link" target="_blank">{Details.Help}</a>
