@@ -747,7 +747,7 @@
     }
 }
 
-@media only screen and (min-width: 1024px) and (orientation: landscape) {
+@media only screen and (min-width: 1025px) and (orientation: landscape) {
     body {
         background-color: hwb(0 0% 0%);
         background-color: lch(0% 0 0);
@@ -761,8 +761,8 @@
                     height: 100vh;
                     position: relative;
                     max-width: 16.5%;
-                    top: 44vh;
-                    left: 81vw;
+                    top: 25vh;
+                    left: 0vw;
                     z-index: 2;
                 }
             }
@@ -770,7 +770,24 @@
     }
 
 }
+@media only screen and (max-device-width :1024px) and (orientation : landscape) {
+    .conference-page {
+        .video-conference-container {
+            .video-conference {
+                .remoteStreamVisible{
+                    display: block;
+                    height: 100vh;
+                    position: relative;
+                    max-width: 16.5%;
+                    top: 42vh;
+                    left: 81vw;
+                    z-index: 2;
+                }
+            }
 
+        }
+    }
+}
 
 // Maximum width for all mobile devices in portrait and landscape both
 @media only screen and (max-width: 980px) { //DE22610
