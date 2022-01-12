@@ -138,7 +138,7 @@ class Authentication extends React.Component {
                     (<div className="row error-text">
                         {this.state.tempAccessToken || this.state.isInApp ?
                             (<p className="col-sm-12">{Details.errorCodes.ErrorPatientInfo}</p>)
-                           :this.state.instantJoin ?(<p className="col-sm-12" style={{fontWeight:isMobile ? 'bold': '',height:isMobile ? '60px': '',lineHeight:isMobile ? '55px': ''}}>{Details.errorCodes.ErrorInvalidLink}</p>):(<p className="col-sm-12">{Details.errorCodes.ErrorInvalidUSerID}</p>)
+                            :this.state.instantJoin ?(<p className="col-sm-12" style={{fontWeight:isMobile ? 'bold': '',height:isMobile ? '60px': '',display:isMobile ? 'flex': '',justifyContent:isMobile ? 'center': '',alignItems:isMobile ? 'center': ''}}>{Details.errorCodes.ErrorInvalidLink}</p>):(<p className="col-sm-12">{Details.errorCodes.ErrorInvalidUSerID}</p>)
                         }
                     </div>)
                 : ('')}
