@@ -55,8 +55,9 @@ class ConferenceDetails extends React.Component {
                 case GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR:
                     const gData = notification.data;
                     let isInList = false;
+                    let compareWith = gData.isPG ? this._extractPatientGuestName(gData.name) : gData.name;
                     this.state.participants.map((guest)=>{
-                        if( guest.backupName.toLowerCase().trim() == gData.name.toLowerCase().trim() ) {
+                        if( guest.backupName.toLowerCase().trim() == compareWith.toLowerCase().trim() ) {
                             guest.uuid = gData.uuid;
                             isInList = true;
                             if( !guest.inCall ){
@@ -96,6 +97,28 @@ class ConferenceDetails extends React.Component {
                 list.splice(i,1);
             }
         }
+    }
+
+    _extractPatientGuestName(participant){
+        let nameFormat = '';
+        const isDuplicateName = this.validateDuplicateUser(participant);
+        if(participant.split(',').length > 2){ // lname, fname, (email)
+            var lastIndex = participant.lastIndexOf(',');
+            if( isDuplicateName ){
+                const count = participant.charAt(participant.length-1);
+                nameFormat = participant.substring(0, lastIndex).split(',').join(' '+count+',');
+            } else {
+                nameFormat = participant.substring(0, lastIndex);
+            }
+        } else { // lname, fname (email)
+            if( isDuplicateName ){
+                const count = participant.charAt(participant.length-1);
+                nameFormat = participant.split('(')[0].trim().split(',').join(' '+count+',');
+            } else {
+                nameFormat = participant.split('(')[0].trim();
+            }
+        }
+        return nameFormat;
     }
 
     setSpotlight(key,data){
@@ -294,22 +317,7 @@ class ConferenceDetails extends React.Component {
 
         // TODO: Should remove this after UID implementation
         if( participant.indexOf('(') > -1 && participant.indexOf(')') > -1 ){
-            if(participant.split(',').length > 2){ // lname, fname, (email)
-                var lastIndex = participant.lastIndexOf(',');
-                if(data.hasOwnProperty('isDuplicate') ){
-                    const count = participant.charAt(participant.length-1);
-                    participant = participant.substring(0, lastIndex).split(',').join(' '+count+', ');
-                } else {
-                    participant = participant.substring(0, lastIndex);
-                }
-            } else { // lname, fname (email)
-                if(data.hasOwnProperty('isDuplicate') ){
-                    const count = participant.charAt(participant.length-1);
-                    participant = participant.split('(')[0].trim().split(',').join(' '+count+', ');
-                } else {
-                    participant = participant.split('(')[0].trim();
-                }
-            }
+            participant = this._extractPatientGuestName(participant);
         }
 
         this.state.participants.map((p)=>{
@@ -517,13 +525,8 @@ class ConferenceDetails extends React.Component {
     }
 
     validateDuplicateUser(userName){
-        var isDuplicate = false;
-        var patientName =  this.state.meetingDetails.member.lastName.toLowerCase() + ', ' + this.state.meetingDetails.member.firstName.toLowerCase();
-        if( userName.trim().toLowerCase().indexOf(patientName.toLowerCase()) > -1 ) {
-             // Mama, Joe 2
-             isDuplicate = isNaN(userName.slice(-1)) == false;
-        }
-        return isDuplicate;
+        // Mama, Joe 2
+        return isNaN(userName.slice(-1)) == false;
     }
     toggleLangInfo(){
         let data = Utilities.getLang(); 

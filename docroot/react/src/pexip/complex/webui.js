@@ -1015,19 +1015,22 @@ function chatReceived(message) {
             var userUUID = sessionStorage.getItem('UUID');
             var isDuplicateUser = false;
             var loggedInAs = '';
+            var areYouDuplicatePG = false;
             log("info", 'DuplicateMemberInVisit', "event: DuplicateMembersJoined - Total duplicate members in visit "+duplicateList.length);
             duplicateList.map((u)=>{
                 var dName = u.name; // mama, joe 2
                 var uuid = u.uuid;
+                var isPG = u.isPG;
                 // Update duplicate names in the participants list.
                 if( uuid == userUUID ) {
                     isDuplicateUser = true;
                     loggedInAs = dName.trim();
+                    areYouDuplicatePG = isPG;
                 } else {
                     pexipParticipantsList.map((p)=>{
                         if( p.uuid == uuid ) {
                             p.display_name = dName;
-                            MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:dName});
+                            MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:uuid, name:dName, isPG:isPG});
                         }
                     });
                 }
@@ -1035,12 +1038,12 @@ function chatReceived(message) {
             if( isDuplicateUser ){
                 localStorage.setItem('memberName', JSON.stringify(loggedInAs));
                 sessionStorage.setItem('loggedAsDuplicateMember', true);
-                // Extracting actual patient name.
+                // Extracting actual patient name or patientGuest names.
                 var patientName = loggedInAs.slice(0, -1).trim();
                 // Append actual patient to side bar.
                 pexipParticipantsList.map((p)=>{
                     if( p.display_name.toLowerCase().trim() == patientName.toLowerCase().trim() ){
-                        MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:p.uuid, name:patientName});
+                        MessageService.sendMessage(GlobalConfig.UPDATE_DUPLICATE_MEMBERS_TO_SIDEBAR, {uuid:p.uuid, name:patientName, isPG:areYouDuplicatePG});
                     }
                 });
             }
