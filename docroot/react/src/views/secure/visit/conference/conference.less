@@ -747,6 +747,30 @@
     }
 }
 
+@media only screen and (min-width: 1024px) and (orientation: landscape) {
+    body {
+        background-color: hwb(0 0% 0%);
+        background-color: lch(0% 0 0);
+        background-color: lab(0% 0 0);
+    }
+    .conference-page {
+        .video-conference-container {
+            .video-conference {
+                .remoteStreamVisible{
+                    display: block;
+                    height: 100vh;
+                    position: relative;
+                    max-width: 16.5%;
+                    top: 41vh;
+                    left: 80vw;
+                    z-index: 2;
+                }
+            }
+        }
+    }
+
+}
+
 @media only screen and (min-width: 1025px) and (orientation: landscape) {
     body {
         background-color: hwb(0 0% 0%);
@@ -769,24 +793,6 @@
         }
     }
 
-}
-@media only screen and (max-device-width :1024px) and (orientation : landscape) {
-    .conference-page {
-        .video-conference-container {
-            .video-conference {
-                .remoteStreamVisible{
-                    display: block;
-                    height: 100vh;
-                    position: relative;
-                    max-width: 16.5%;
-                    top: 41vh;
-                    left: 81vw;
-                    z-index: 2;
-                }
-            }
-
-        }
-    }
 }
 
 // Maximum width for all mobile devices in portrait and landscape both
@@ -876,8 +882,8 @@
                 }
                 .remoteStreamVisible{
                     position: relative;
-                    left: 81.3vw;
-                    top: 59vh;
+                    left: 80vw;
+                    top: 56vh;
                     max-width: 12.8%;
                 }
                 .react-transform-component{
