@@ -791,9 +791,9 @@ class Conference extends React.Component {
         // if(this.mainContentWidth === window.innerWidth){
         //     return;
         // }
-        // if(Utilities.isMobileDevice()){
-        //     alert("width "+ window.innerWidth + "height "+ window.innerHeight);
-        // }    
+        if(Utilities.isMobileDevice()){
+            alert("width "+ window.innerWidth + "height "+ window.innerHeight);
+        }    
         this.enablePinchPanZoom = this.disablePanPinchZoom();
 
         if(window.innerWidth > 1024) {
