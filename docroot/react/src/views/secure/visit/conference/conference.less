@@ -579,34 +579,24 @@
         }
     }
 }
-// @media only screen and (max-width : 724px) and (max-height : 292px) and (orientation : landscape) { 
-//     .conference-page {
-//         .video-conference-container {
-//             .video-conference {
-//                 .remoteStreamVisible{                    
-//                     top: 46vh !important;
-//                 }
-//             }
-//         }
-//     }
-// }
-// @media (height: 292px) and (orientation : landscape) {
-//     .conference-page {
-//         .video-conference-container {
-//             .video-conference {
-//                 .remoteStreamVisible{                    
-//                     top: 38vh !important;
-//                 }
-//             }
-//         }
-//     }
-//   }
+@media screen and (max-width: 724px), 
+       screen and (max-height: 292px) {
+        .conference-page {
+            .video-conference-container {
+                .video-conference {
+                    .remoteStreamVisible{                    
+                        top: 38vh !important;
+                    }
+                }
+            }
+        }
+}
 @media only screen and (min-width: 690px) and (max-width: 724px) and (orientation: landscape) {
     .conference-page {
         .video-conference-container {
             .video-conference {
                 .remoteStreamVisible{                    
-                    top: 43vh !important;
+                    top: 47vh !important;
                 }
             }
         }
