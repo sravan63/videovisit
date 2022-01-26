@@ -69,6 +69,10 @@ var loggedInUserName;
 
 var rtc = new PexRTC();
 
+export function getPexipList() {
+    return pexipParticipantsList;
+}
+
 /* ~~~ PRESENTATION STUFF ~~~ */
 export function presentationClosed() {
     if (presentation && $(presentation).find('#presvideo').length > 0) {

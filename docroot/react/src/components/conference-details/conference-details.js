@@ -68,6 +68,16 @@ class ConferenceDetails extends React.Component {
                     if( !isInList ) {
                         this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: gData.name, uuid: gData.uuid,spotlight:0, protocol: 'api', role: 'guest', isDuplicate: true});
                     }
+                    // re-mapping the names and uuids.
+                    const isPG = gData.isPG;
+                    WebUI.getPexipList().map((p) => {
+                        let actualName = isPG ? this._extractPatientGuestName(p.display_name) : p.display_name;
+                        this.state.participants.map((guest)=>{
+                            if(actualName.toLowerCase().trim() == guest.backupName.toLowerCase().trim()){
+                                guest.uuid = p.uuid;
+                            }
+                        });
+                    });
                 break;
                 case GlobalConfig.ACTIVESPEAKER:
                     this.setActiveSpeaker(true,notification.data);
