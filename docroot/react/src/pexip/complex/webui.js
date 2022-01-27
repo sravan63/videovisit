@@ -611,7 +611,7 @@ function participantDeleted(participant) {
             return user.uuid != participant.uuid;
         });
         if(!refreshingOrSelfJoinMeeting){
-            if (removingParticipant[0].protocol == "api" && removingParticipant[0].display_name.indexOf('TPLC') > -1){ 
+            if ((removingParticipant[0].protocol && removingParticipant[0].protocol == "api") && removingParticipant[0].display_name.indexOf('TPLC') > -1){ 
                 return;
             }
             var participantMsg = {
