@@ -57,11 +57,13 @@ class ConferenceDetails extends React.Component {
                     let isInList = false;
                     let compareWith = gData.isPG ? this._extractPatientGuestName(gData.name) : gData.name;
                     this.state.participants.map((guest)=>{
-                        if( guest.backupName.toLowerCase().trim() == compareWith.toLowerCase().trim() ) {
-                            guest.uuid = gData.uuid;
-                            isInList = true;
-                            if( !guest.inCall ){
-                                guest.inCall = true;
+                        if(!guest.isTelephony){
+                            if( guest.backupName.toLowerCase().trim() == compareWith.toLowerCase().trim() ) {
+                                guest.uuid = gData.uuid;
+                                isInList = true;
+                                if( !guest.inCall ){
+                                    guest.inCall = true;
+                                }
                             }
                         }
                     });
@@ -73,8 +75,10 @@ class ConferenceDetails extends React.Component {
                     WebUI.getPexipList().map((p) => {
                         let actualName = isPG ? this._extractPatientGuestName(p.display_name) : p.display_name;
                         this.state.participants.map((guest)=>{
-                            if(actualName.toLowerCase().trim() == guest.backupName.toLowerCase().trim()){
-                                guest.uuid = p.uuid;
+                            if(!guest.isTelephony){
+                                if(actualName.toLowerCase().trim() == guest.backupName.toLowerCase().trim()){
+                                    guest.uuid = p.uuid;
+                                }
                             }
                         });
                     });
