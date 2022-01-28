@@ -430,6 +430,9 @@ class ConferenceDetails extends React.Component {
                 this.state.telephonyGuests.push({ name: data.display_name.trim(), number: participant, inCall: true, isTelephony: true, uuid: data.uuid });
             }
         } else if(data.role == "guest") { // In 'Lastname, Firstname (email)' format.
+            if(participant.indexOf(',') === -1 && sessionStorage.getItem('isECInstantJoin')){
+                return;
+            }
             // var isGuest = localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true;
             var gName = participant.indexOf('(') > -1 ? participant.split('(')[0] : participant;
             var lName = participant.split(',')[0].trim();
