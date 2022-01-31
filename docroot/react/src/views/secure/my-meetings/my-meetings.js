@@ -8,7 +8,6 @@ import GlobalConfig from '../../../services/global.config';
 import UtilityService from '../../../services/utilities-service.js';
 import Footer from '../../../components/footer/footer';
 import './my-meetings.less';
-import Logo from '../../../assets/promotion/banner-image.svg';
 class MyMeetings extends React.Component {
 
     constructor(props) {
@@ -493,9 +492,7 @@ class MyMeetings extends React.Component {
                 { !this.state.hidePromotion ? 
                     (<div className="row promotion-container show-promotion">
                         <div className="promotion">
-                            <div className="banner"><div className="image-holder"><object type="image/svg+xml" data={Logo} width="800" height="800">
-          Your browser does not support SVG.
-        </object></div></div>
+                            <div className="banner"><div className="image-holder"></div></div>
                             <div className="message-container">
                                 <div className="wrapper">
                                     <div className="message">{Details.my_visits.MobileAppLabelTxt}</div>
