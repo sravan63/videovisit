@@ -11,7 +11,7 @@ import * as WebUI from '../../pexip/complex/webui.js';
 
 class ConferenceDetails extends React.Component {
     constructor(props) {
-        super(props);       
+        super(props);
         this.getHoursAndMinutes = this.getHoursAndMinutes.bind(this);
         this.getClinicianName = this.getClinicianName.bind(this);
         this.updateRunningLateTime = this.updateRunningLateTime.bind(this);
@@ -23,7 +23,7 @@ class ConferenceDetails extends React.Component {
             switch(notification.text) {
                 case GlobalConfig.SHOW_CONFERENCE_DETAILS:
                     this.setState({ meetingDetails: notification.data.meetingDetails });
-                    this.state.isGuest = ( localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true || 
+                    this.state.isGuest = ( localStorage.getItem('isGuest') && JSON.parse(localStorage.getItem('isGuest')) == true ||
                                            sessionStorage.getItem('isInstantPG') && JSON.parse(sessionStorage.getItem('isInstantPG')) == true );
                     this.setSortedParticipantList();
                     this.indicateUserOnJoin();
@@ -101,7 +101,7 @@ class ConferenceDetails extends React.Component {
                 break;
             }
         });
-        
+
     }
 
     _removeHostFromParticipantList(list, hostName) {
@@ -170,7 +170,7 @@ class ConferenceDetails extends React.Component {
             this.state.participants.map((val) => {
                     val.setactiveSpeaker = false;
                     this.setState({participants:this.state.participants});
-                
+
             });
         }
     }
@@ -189,7 +189,7 @@ class ConferenceDetails extends React.Component {
             var udata = JSON.parse(Utilities.decrypt(localStorage.getItem('userDetails')));
             var memberName = udata.lastName.toLowerCase() +', '+ udata.firstName.toLowerCase();
         }
-        
+
         var patientName =  this.state.meetingDetails.member.lastName.toLowerCase() + ', ' + this.state.meetingDetails.member.firstName.toLowerCase();
         var removeGuestName;
         if(isECInstantJoin || this.state.isGuest || patientName != memberName){
@@ -201,17 +201,17 @@ class ConferenceDetails extends React.Component {
                             participant = participant.substring(0, lastIndex);
                         }
                     }
-             if(this.state.isGuest){       
+             if(this.state.isGuest){
                  removeGuestName = guests.findIndex(x=>x.lastName.toLowerCase().trim() + ', '+ x.firstName.toLowerCase().trim() == participant.toLowerCase().trim());
              }else{
                 removeGuestName = guests.findIndex(x=>x.lastName.toLowerCase().trim() + ', '+ x.firstName.toLowerCase().trim() == memberName.trim());
              }
-             if(removeGuestName != -1){  
+             if(removeGuestName != -1){
                 participants = guests.splice(removeGuestName,1);
             }
             participants = guests;
             participants = clinicians.concat(guests);
-            
+
         }else{
              participants = clinicians.concat(guests);
         }
@@ -224,7 +224,7 @@ class ConferenceDetails extends React.Component {
                 backupName += guest.hasOwnProperty('title') ? guest.title ? ' ' + guest.title : '' : '';
                 list.push({ name: name.trim(), inCall: false, spotlighted:false, isTelephony: false, backupName: backupName });
             });
-            list.sort((a, b) => (a.name > b.name) ? 1 : -1);            
+            list.sort((a, b) => (a.name > b.name) ? 1 : -1);
             if(this.state.isGuest || patientName != memberName) {
                 let patientBackupName = this.state.meetingDetails.member.lastName + ', ' + this.state.meetingDetails.member.firstName;
                 let patient = this.state.meetingDetails.member.firstName.toLowerCase() + ' ' + this.state.meetingDetails.member.lastName.toLowerCase();
@@ -281,7 +281,7 @@ class ConferenceDetails extends React.Component {
                 this.validateGuestPresence(GlobalConfig.USER_JOINED, {display_name: name, uuid: null,spotlight:0, protocol: 'api', role: 'guest'});
             }
         }
-        
+
     }
 
     validateUser(participant) {
@@ -320,8 +320,8 @@ class ConferenceDetails extends React.Component {
     validateGuestPresence(type, data) {
         var participantInList = false;
         var hasJoined = type == GlobalConfig.USER_JOINED;
-        var participant = hasJoined ? 
-                          data.protocol == "sip" ? data.uri.substring(6, 16) : data.display_name 
+        var participant = hasJoined ?
+                          data.protocol == "sip" ? data.uri.substring(6, 16) : data.display_name
                           : data.uuid;
         var isTelephony = hasJoined ? data.protocol == "sip" : false;
         if(hasJoined){
@@ -357,8 +357,8 @@ class ConferenceDetails extends React.Component {
                         }
                     }
                 } else {
-                    if( !p.isTelephony 
-                        && (p.name.toLowerCase() == participant.toLowerCase() 
+                    if( !p.isTelephony
+                        && (p.name.toLowerCase() == participant.toLowerCase()
                         || p.backupName.toLowerCase() == participant.toLowerCase()
                     ) ){
                         participantInList = true;
@@ -400,7 +400,7 @@ class ConferenceDetails extends React.Component {
             hostclinician += hClinician.firstName ? ', ' + hClinician.firstName.toLowerCase() : '';
             hostclinician += hClinician.title ? ' ' + hClinician.title : '';
 
-            if(data.display_name.toLowerCase() == host.toLowerCase() || data.display_name.toLowerCase() == hostclinician.toLowerCase()){
+            if(data.display_name.toLowerCase().trim() == host.toLowerCase().trim() || data.display_name.toLowerCase().trim() == hostclinician.toLowerCase().trim()){
                 let pinFeed = data.spotlight !=0 ? true: false;
                 this.setState({
                     hostDetails: { hostInCall: true, uuid: data.uuid },
@@ -478,7 +478,7 @@ class ConferenceDetails extends React.Component {
             // if(filteredPatient == 0 && filteredPatient != -1){
             //     this.state.videoGuests.unshift({ name: patientName.trim(), inCall: false, isTelephony: false, backupName: patientName, uuid: data.uuid });
             // }
-            
+
         } else { // In 'Lastname, Firstname Title' format.
             var nArr = participant.split(',');
             var lName = nArr[0].trim();
@@ -546,14 +546,14 @@ class ConferenceDetails extends React.Component {
         return isNaN(userName.slice(-1)) == false;
     }
     toggleLangInfo(){
-        let data = Utilities.getLang(); 
+        let data = Utilities.getLang();
         switch(data.lang){
             case "spanish":
                 return "participant-details spanish-scroll";
-                break;            
+                break;
             default:
                 return  "participant-details";
-                break;    
+                break;
 
         }
     }
@@ -578,15 +578,15 @@ class ConferenceDetails extends React.Component {
                 <div className="participants-information">
                     <p className="header mb-0">{Details && Details.Guests}</p>
                     <div className={this.toggleLangInfo()} aria-labelledby="dropdownMenuButton">
-                        { this.state.participants && this.state.participants.length > 0 ? 
+                        { this.state.participants && this.state.participants.length > 0 ?
                             this.state.participants.map((item,key) =>{
                             if(!JSON.parse(localStorage.getItem('memberName')).includes(item.backupName)){
                                 return (
                                     <div className="participant mt-2" key={key}><span className = {item.spotlighted ? "pinnedIcon" : "pinnedIcon removePin"}></span><span className={item.spotlighted ? "name text-capitalize adjustWidth": "name text-capitalize"}><span className={item.setactiveSpeaker ? "activespeaker" : "notactivespeaker"}>{item.name}</span></span><span className={item.inCall ? "presence-indicator show" : "presence-indicator hide" }></span></div>
                                 )
                             }
-                        }) 
-                         : ('') 
+                        })
+                         : ('')
                         }
                    </div>
                 </div>
