@@ -335,6 +335,19 @@
         }
     }
 }
+@media only screen 
+  and (min-width: 768px) 
+  and (max-width: 1024px) 
+  and (orientation: portrait) {
+    .conference-page {
+        .video-conference-container {
+            .stream-container {
+                width: 96% !important;
+            }
+        }
+    }
+
+}
 
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .conference-page {
@@ -579,18 +592,6 @@
         }
     }
 }
-// @media screen and (max-width: 724px), 
-//        screen and (max-height: 292px) {
-//         .conference-page {
-//             .video-conference-container {
-//                 .video-conference {
-//                     .remoteStreamVisible{                    
-//                         top: 38vh !important;
-//                     }
-//                 }
-//             }
-//         }
-// }
 @media only screen and (min-width: 690px) and (max-width: 724px) and (orientation: landscape) {
     .conference-page {
         .video-conference-container {
