@@ -408,8 +408,8 @@ function handleError(reason) {
             clearInterval(rtc.refreshTokenProperties.retryTimer);
             rtc.refreshTokenProperties.retryTimer = null;
         }
-        MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
-            heading: 'Unable to join', 
+        MessageService.sendMessage(GlobalConfig.OPEN_MODAL, {
+            heading: 'Unable to join',
             message : 'Please try again. (ID: token)',
             controls : [{label: 'OK', type: 'leave'} ]
         });
@@ -450,7 +450,7 @@ function doneSetup(url, pin_status, conference_extension) {
     console.log("PIN status: " + pin_status);
     console.log("IVR status: " + conference_extension);
     submitPinEntry();
-    
+
 }
 
 export function submitPinEntry() {
@@ -487,14 +487,14 @@ export function sendChatContent(vmr, arg) {
 
     if(loggedInUserUUID) {
         let chatContent= {
-            aspectMode: cmdArgs.aspectMode, 
-            chatCmd: "selfAspectMode", 
-            chatVersion: "0.9.0", 
-            clientID: "VideoVisits", 
-            cmd: "selfAspectMode", 
-            cmdArgs, 
-            fromUUID: loggedInUserUUID, 
-            toUUID: loggedInUserUUID, 
+            aspectMode: cmdArgs.aspectMode,
+            chatCmd: "selfAspectMode",
+            chatVersion: "0.9.0",
+            clientID: "VideoVisits",
+            cmd: "selfAspectMode",
+            cmdArgs,
+            fromUUID: loggedInUserUUID,
+            toUUID: loggedInUserUUID,
             vmr
         };
 
@@ -515,12 +515,12 @@ function getAspectMode() {
 function participantCreated(participant) {
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
     log("info","participant_joined","event: participant joined the visit - participant:" +participant.uuid);
-    if (participant.protocol == "api" && participant.display_name.indexOf('TPLC') > -1){ 
+    if (participant.protocol == "api" && participant.display_name.indexOf('TPLC') > -1){
         return;
     }
     pexipParticipantsList.push(participant);
     // log("info", "participantCreated", "event: participantCreated - inside participantCreated - participant:" + participant);
-    
+
     if (participant.protocol == "sip") {
         var joinParticipantMsg = {
             message : participant.display_name + " "+GlobalConfig.JOINED_VISIT,
@@ -560,7 +560,7 @@ function participantCreated(participant) {
     }
     loggedInUserName = loginUserName;
     toggleWaitingRoom(pexipParticipantsList);
-    
+
     if(UtilityService.isMobileDevice()) {
         sendChatContent(conference);
     }
@@ -576,7 +576,7 @@ export function validateLoggedInUser(uniqueKey){
 }
 
 function participantUpdated(participant) {
-    if (participant.protocol == "api" && participant.display_name.indexOf('TPLC') > -1){ 
+    if (participant.protocol == "api" && participant.display_name.indexOf('TPLC') > -1){
         return;
     }
     // CALL BACK WHEN A PARTICIPANT JOINS THE MEETING
@@ -611,7 +611,7 @@ function participantDeleted(participant) {
             return user.uuid != participant.uuid;
         });
         if(!refreshingOrSelfJoinMeeting){
-            if ((removingParticipant[0].protocol && removingParticipant[0].protocol == "api") && removingParticipant[0].display_name.indexOf('TPLC') > -1){ 
+            if ((removingParticipant[0].protocol && removingParticipant[0].protocol == "api") && removingParticipant[0].display_name.indexOf('TPLC') > -1){
                 return;
             }
             var participantMsg = {
@@ -773,10 +773,10 @@ function connected(url) {
                 MessageService.sendMessage(GlobalConfig.SEND_JOIN_LEAVE_STATUS, JLData);
                 var memberName;
                 if(isProxyMeeting == 'Y'){
-                    memberName = udata.lastName +', '+ udata.firstName;                
+                    memberName = udata.lastName +', '+ udata.firstName;
                 } else {
                     memberName = JSON.parse(localStorage.getItem('memberName'));
-                }            
+                }
                if( localStorage.getItem('isGuest') || sessionStorage.getItem('isInstantPG') ) {
                     var meetingCode = udata.meetingCode;
                    BackendService.CaregiverJoinMeeting(meetingId, meetingCode);
@@ -784,15 +784,6 @@ function connected(url) {
                     BackendService.setConferenceStatus(meetingId, memberName, isProxyMeeting);
                 }
             }
-            /* *** US60748: Stop getMediaStats() Pexip event from both Provider/Member web app.
-            let data = {
-                meetingId: meetingId,
-                memberName: memberName
-            };
-            let isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-            if(isChrome) {
-                MessageService.sendMessage(GlobalConfig.MEDIA_STATS_DATA, data);
-            } *** */
             pexipInitialConnect=true;
         }
     }
@@ -862,10 +853,10 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
             peripherals.audioSource = '';
         }
         log('info', 'initialise_peripherals', "event: video visit peripherals :: Camera - " + peripherals.videoSource.label + " Speaker - " + peripherals.audioSource == null ? "" : peripherals.audioSource.label + " Microphone - " + peripherals.micSource.label );
-    } 
+    }
     var browserInfo = UtilityService.getBrowserInformation();
     if(UtilityService.isMobileDevice() && browserInfo.isFireFox){
-        var isRear = peripherals.videoSource.label.toLowerCase().indexOf('back') > -1 || peripherals.videoSource.label.toLowerCase().indexOf('rear') > -1;  
+        var isRear = peripherals.videoSource.label.toLowerCase().indexOf('back') > -1 || peripherals.videoSource.label.toLowerCase().indexOf('rear') > -1;
         MessageService.sendMessage(GlobalConfig.CAMERA_FLIP, !isRear);
     }
     rtc.video_source = cameraID; //cameraID
@@ -917,7 +908,7 @@ export function initialise(confnode, conf, userbw, username, userpin, req_source
             rtc.turn_server = getTurnServersObjs();
         }
     }*/
-    
+
     // Setting UniqueKey for all the members/guests.
     const uniqueKey = Math.random().toString(36).slice(2); // jzb6pwy8wrs.
     sessionStorage.setItem('uKey', uniqueKey);
@@ -965,7 +956,7 @@ _
                 const eTitle = UtilityService.isMobileDevice() ? 'Refresh Page' : "Can't establish network connection";
                 const eMessage = UtilityService.isMobileDevice() ? 'Unable to establish a network connection. If problem persists, switch to a cellular connection and refresh.' : 'Rejoin your visit or use your mobile device with an LTE connection.';
                 MessageService.sendMessage(GlobalConfig.CLOSE_INFO_MODAL, null);
-                MessageService.sendMessage(GlobalConfig.OPEN_MODAL, { 
+                MessageService.sendMessage(GlobalConfig.OPEN_MODAL, {
                     heading: eTitle, message : eMessage, controls : [{label: 'OK', type: 'leave'} ]
                 });
             }
@@ -1069,7 +1060,7 @@ export function getRTC(){
 export function pexipDisconnect() {
     connectionRefused = false;
     if( UtilityService.getAppOS() == 'Android' &&
-        UtilityService.getAndroidVersion() == 11 && 
+        UtilityService.getAndroidVersion() == 11 &&
         UtilityService.getBrowserInformation().isChrome ) {
         // Fix for Android 11 + Chrome freezing issue.
         video.srcObject = null;
@@ -1089,7 +1080,7 @@ export function JoinLeaveMobileCall(status){
     var meetingId = JSON.parse(localStorage.getItem('meetingId'));
     var isProxyMeeting = JSON.parse(localStorage.getItem('isProxyMeeting'));
     var udata = JSON.parse(UtilityService.decrypt(localStorage.getItem('userDetails')));
-    var userLoggedIn = udata.lastName +', '+ udata.firstName;  
+    var userLoggedIn = udata.lastName +', '+ udata.firstName;
     var inMeetingName = JSON.parse(localStorage.getItem('memberName'));
     var isDirectLaunch = localStorage.getItem('isDirectLaunch');
     var isPatient;
@@ -1255,7 +1246,7 @@ export var log = function(type, param, msg) {
                             userType = data.userType ? data.userType : '',
                             userId = data.userId ? data.userId : '';
 
-                            msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : ''; 
+                            msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : '';
 
                         var params = [type, param, msg, meetingId, userType, userId];
                         var isSetup = localStorage.getItem('isSetupPage');
@@ -1269,14 +1260,14 @@ export var log = function(type, param, msg) {
             break;
         case 'error':
             // Notify error to backed
-            msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : ''; 
+            msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : '';
             if (localStorage.getItem('vendorDetails')) {
                 data = JSON.parse(localStorage.getItem('vendorDetails')),
                     meetingId = data.meetingId ? data.meetingId : '',
                     userType = data.userType ? data.userType : '',
                     userId = data.userId ? data.userId : '';
 
-                    msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : ''; 
+                    msg += userDetails.uuid ? ' :: UUID :: '+ userDetails.uuid : '';
 
                 var params = [type, param, msg, meetingId, userType, userId];
                 var isSetup = localStorage.getItem('isSetupPage');
@@ -1304,7 +1295,7 @@ export function muteUnmuteVideo() {
     if (muteVideo) {
         log("info", "video_mute_action", "event: muteVideo - on click of mute video button");
     } else {
-        log("info", "video_unmute_action", "event: unmuteVideo - on click of unmute video  button");        
+        log("info", "video_unmute_action", "event: unmuteVideo - on click of unmute video  button");
     }
 }
 
@@ -1319,8 +1310,8 @@ export function muteUnmuteMic() {
 }
  function StageUpdated(participantsList){
     var activeSpeakersList = participantsList.filter(x=> x.vad == 100);
-    let mapUuidToSpeaker = activeSpeakersList.map(function(val, index){ 
-        return { uuid:val.participant_uuid}; 
+    let mapUuidToSpeaker = activeSpeakersList.map(function(val, index){
+        return { uuid:val.participant_uuid};
     });
     if(activeSpeakersList.length > 0){
         MessageService.sendMessage(GlobalConfig.ACTIVESPEAKER,mapUuidToSpeaker);

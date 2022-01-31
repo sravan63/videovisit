@@ -323,9 +323,6 @@ class Conference extends React.Component {
                 case GlobalConfig.INAPP_LEAVEMEETING:
                     this.props.history.push(GlobalConfig.MEETINGS_URL);
                     break;
-                case GlobalConfig.MEDIA_STATS_DATA:
-                    this.sendMediaStats(message.data);
-                    break;
                 case GlobalConfig.REMOVE_DUPLICATES:
                     this.setState({ hostavail: false, moreparticpants: false, videofeedflag: false });
                     this.toggleDockView(false);
@@ -752,26 +749,6 @@ class Conference extends React.Component {
         }
     }
 
-    sendMediaStats(data) {
-        if(this.MediaStats !== 0){
-            clearInterval(this.MediaStats);
-        }
-        let mediaStatsFrequency = localStorage.getItem('mediaStats');
-        if (mediaStatsFrequency){
-            if(mediaStatsFrequency == 0){
-                return;
-            }
-        }
-        else{
-            mediaStatsFrequency = 120;
-        }
-        mediaStatsFrequency = parseInt(mediaStatsFrequency) * 1000;
-        var meetingVmr = this.state.meetingDetails.meetingVendorId;
-        BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '');
-        this.MediaStats = setInterval(() => {
-            BackendService.storeMediaStats(data.meetingId, meetingVmr, data.memberName, '');
-        }, mediaStatsFrequency);
-    }
     /*getBrowserBlockInfo(){
         var propertyName = 'browser',
             url = "loadPropertiesByName.json",
@@ -793,7 +770,7 @@ class Conference extends React.Component {
         // }
         // if(Utilities.isMobileDevice()){
         //     alert("width "+ window.innerWidth + "height "+ window.innerHeight);
-        // }    
+        // }
         this.enablePinchPanZoom = this.disablePanPinchZoom();
 
         if(window.innerWidth > 1024) {
