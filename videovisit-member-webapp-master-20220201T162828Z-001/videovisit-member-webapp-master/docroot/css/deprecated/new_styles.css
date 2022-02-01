@@ -1,0 +1,225 @@
+/* NCAL */
+/* NOTE: These styles to be added to styles.css by deborah */
+
+/*  SUBSCRIPTION PAGE STYLES  */
+
+#subscriptionContainer	{width:750px;height:200px;float:left;margin-bottom:10px;background:transparent url('../../static/graphics/bg_subscription.jpg') left top no-repeat;}
+#subscriptionContainer h2 {width:550px;position:relative;top:10px;left:180px;font-size:2em;color:#a7503c;margin:0;}	
+#subscriptionContainer .info .buttons	{position:absolute; bottom:0;right:10px;}
+
+#subscriptionBox	{background:#ffffff;margin:10px 0 0 0;padding:10px 0 10px 10px;position:relative;top:3px;left:180px;float:left;height:130px;width:550px;border:1px solid #d9d3c5;}
+#subscriptionBox h4	{font-size:1.2em;margin-bottom:.3em;color:#512f24;font-weight:bold;}
+#subscriptionBox p	{margin-bottom:.3em;width:535px;}
+#subscriptionBox p span	{font-weight:bold;}
+#subscriptionBox label {font-size:.9em;}
+
+.subscriptionForm	{margin:5px 1px 5px 0;padding:13px 0 13px 10px;float:left;width:530px;background:#f6f3eb;}
+.subscriptionStatus {background: transparent url('../../img/icon_bookmarked.gif') left 50% no-repeat; display:block; padding-left:16px;}
+
+
+/*  LANDING DIALOG STYLES
+------------------------------------------- */
+
+.outer-layover h3 {margin:20px 0 0 0;font-size:2em;font-weight:normal;display:block;width:610px;float:right;padding-right:10px;}
+
+.inner-layover {padding:10px;width:600px;background:#fff;border:1px solid #ccc;margin:0;overflow:auto;float:right;}
+.inner-layover h3	{font-size:1.4em;font-weight:bold;}
+.inner-layover h4 {font-size:1.3em;margin-bottom:.3em;color:#512f24;font-weight:bold;}
+.inner-layover h5	{color:#333;font-size:1.1em;font-weight:bold;margin-bottom:.4em;}
+.inner-layover p {font-size:1.1em;margin:0 0 10px 0;padding:0;}
+.inner-layover ul   {padding-left:5px;line-height:1.5em;margin-bottom:1.25em;list-style:none;}
+.inner-layover ul li {padding-left:10px; margin-bottom:.1em;background:transparent url('/img/bg_anchoredlist.gif') left .5em no-repeat;font-size:1.1em;}
+.inner-layover .col2 {width: 225px;background:#f6f3eb;padding:10px;float:right;margin: 0 0 0 20px;}
+
+/*  emmi register dialog styles  */
+
+/*
+#emmiRegisterForm form .message {width:260px; float:left;display:inline-block;margin:0 0 0 20px;background:#ffffff;padding:3px;}
+#emmiRegisterForm form .message p {font-size:1.1em;margin-bottom:0;font-weight:normal;}
+*/
+
+#emmiRegisterForm h4 a {float:none;color: #ac5a41; text-decoration:underline;font-size:.8em;font-weight:normal;padding: 0 0 0 10px;}
+#emmiRegisterForm form p {font-size:1em;font-weight:normal;}
+#emmiRegisterForm legend {font-size:1.1em;font-weight:bold;color:#333;}
+#emmiRegisterForm form ul li {list-style-type: none; list-style-image: none;background:none;font-size:.9em;}
+#emmiRegisterForm form label {float: left;text-align:right;width:150px;padding-top:5px;}
+#emmiRegisterForm form input {margin-left: 15px;}
+#emmiRegisterForm fieldset li {float: left;clear: left; width: 100%;padding-bottom:2px;position:relative;}
+#emmiRegisterForm fieldset {width:550px;margin: 0;padding: 0;border:none;}
+#emmiRegisterForm fieldset label.error {position: absolute;left:345px;top: 0.2em;width:210px;text-align: left;font-weight:normal;color:#904848;}
+#emmiRegisterForm {width:inherit;height:inherit;padding:0 1em 0 0;background:transparent url('/ncal/static_includes/img/bg_emmi.jpg') left top no-repeat;margin:0 1.7em;}
+#emmiRegisterForm em img {display:inline;}
+.outer-layover {width:765px;height:526px;}
+
+/*  subscription dialog styles  */
+
+#childrenList br.clearBoth {line-height:1px;}   
+
+.inner-layover form {position:relative;margin:5px 1px 5px 0;padding:10px;float:left;width:575px;background:#f6f3eb;}
+.inner-layover form p {font-weight:bold;font-size:1em;}
+.inner-layover form ul {margin:0;padding:0;}
+.inner-layover form ul li {list-style-type: none; list-style-image: none;background:none;font-size:.9em;line-height:1em;}
+.inner-layover form label {font-size:1.1em;display:block;font-weight:bold;}
+.inner-layover form label.inlined {display:inline;padding-right:30px;font-weight:normal;}
+.inner-layover form .fieldGroup {text-align:left;}
+.inner-layover form ul.fieldGroup {margin:0 0 5px 0;padding:0 0 3px 0; width:570px;min-height:37px;position:relative;display:block;clear:both;}
+.inner-layover form ul.fieldGroup li {width:103px;float:left;display: inline-block;position:relative;height:inherit;background:none;margin:0;}
+.inner-layover form ul.fieldGroup input {width:103px;float:left;margin:0 3px 0 -.9em;}
+.inner-layover form ul.fieldGroup label {width:103px;margin:0 0 1px -.9em;}
+.inner-layover form .twoCol {float:left;display:inline-block;width:285px;}
+.inner-layover form .oneCol {float:left;display:inline-block;width:500px;}
+.childButton {font-size:1.1em;line-height:normal;background:#fff;border:1px solid #ccc;padding:3px 7px;float:left; display:inline-block;margin:.9em 0 0 -.9em;}
+
+/* pregnancy subscription  and edit dialog styles */
+
+.inner-layover form ul.dueDate {list-style:none;clear:both;display:block;}
+.inner-layover form ul.dueDate li{float:left;display:inline-block;width:285px;padding:0 15px 10px 0;padding:0;margin-bottom:5px;padding:0 0 3px 0;}
+.inner-layover form ul.dueDate input {float:left;margin-right:5px;}
+
+/* NEWSLETTER LANDING DIALOG  */
+
+/* background images */
+
+#healthyPregnancy, #healthyPregnancySubscribe, #healthyPregnancyUnsubscribe, #healthyPregnancyEdit {width:inherit;height:inherit;padding:0 1em 0 0;background:transparent url('../graphics/bg_pregnancy.jpg') left top no-repeat;margin:0 1.7em;}
+#healthyBabies, #healthyBabiesSubscribe, #healthyBabiesUnsubscribe,#healthyBabiesEdit {width:inherit;height:inherit;padding:0 1em 0 0;background:transparent url('../graphics/bg_babies.jpg') left top no-repeat;margin:0 1.7em;}
+#healthyKids, #healthyKidsSubscribe, #healthyKidsUnsubscribe, #healthyKidsEdit {width:inherit;height:inherit;padding:0 1em 0 0;background:transparent url('../graphics/bg_kids.jpg') left top no-repeat;margin:0 1.7em;}
+#healthyTeens, #healthyTeensSubscribe, #healthyTeensUnsubscribe, #healthyTeensEdit {width:inherit;height:inherit;padding:0 1em 0 0;background:transparent url('../graphics/bg_teens.jpg') left top no-repeat;margin:0 1.7em;}
+#physicalActivitySubscribe, #physicalActivityUnsubscribe {width:inherit;height:inherit;padding:0 1em 0 0;background:transparent url('../graphics/bg_physical.jpg') left top no-repeat;margin:0 1.7em;}
+#stressLessSubscribe, #stressLessUnsubscribe {width:inherit;height:inherit;padding:0 1em 0 0;background:transparent url('../graphics/bg_stress.jpg') left top no-repeat;margin:0 1.7em;}
+#smartEatingSubscribe, #smartEatingUnsubscribe {width:inherit;height:inherit;padding:0 1em 0 0;background:transparent url('../graphics/bg_smart.jpg') left top no-repeat;margin:0 1.7em;}
+
+/*  SIMPLE FORM DIALOG STYLES
+------------------------------------------- */
+
+.formDialog {padding:10px;width:inherit;background:#fff;border:1px solid #ccc;margin:0 1.5em;overflow:auto;}
+.formDialog h3	{font-size:1.4em;font-weight:bold;}
+.formDialog h4 {font-size:1.3em;margin-bottom:.3em;color:#512f24;font-weight:bold;}
+.formDialog h5	{color:#333;font-size:1.1em;font-weight:bold;margin-bottom:.4em;}
+.formDialog p {font-size:1.1em;margin:0 0 10px 0;padding:0;}
+.formDialog ul   {padding-left:5px;line-height:1.5em;margin-bottom:1.25em;list-style:none;}
+.formDialog ul li {padding-left:10px; margin-bottom:.1em;background:transparent url('../../img/bg_anchoredlist.gif') left .5em no-repeat;font-size:1.1em;}
+.formDialog form {position:relative;margin:5px 1px 5px 0;padding:10px;float:left;width:525px;background:#f6f3eb;}
+.formDialog form p {font-weight:bold;font-size:1em;}
+.formDialogform ul {margin:0;padding:0;}
+.formDialog form ul li {list-style-type: none; list-style-image: none;background:none;font-size:.9em;line-height:1em;margin:0 0 10px 0;}
+.formDialog form label {font-size:1.1em;display:block;font-weight:bold;}
+.formDialog form label.inlined {display:inline;padding-right:30px;font-weight:normal;}
+.formDialog form label.error {color:#904848; font-weight: normal; font-size:1.1em;padding:2px 0 0 0;}
+
+
+/* NEWSLETTER LANDING PAGE STYLES */
+
+#stayingHealthy { float: left; margin: 27px 0 0 22px; width: 751px;}
+#stayingHealthyCallout { background: url(../graphics/staying_healthy_callout_bg.jpg) no-repeat 100% 0; width: 400px; padding: 20px 331px 10px 20px; min-height: 182px;}
+#stayingHealthyCallout h1 { color: #A7503C; font-size: 2.2em; margin-bottom: .75em;}
+#stayingHealthyCallout p { font-size: 1.3em;}
+div.newsletter { display: table;}
+div.newsletter .title, div.newsletter .description, div.newsletter .buttons { display: table-cell; vertical-align: top; padding: 14px 20px 19px 0; border-bottom: 1px solid #ccc;}
+div.newsletter .title { width: 232px;}
+div.newsletter .description { width: 340px;}
+div.newsletter .buttons { text-align: right; padding-right: 0; vertical-align: bottom;}
+div.newsletter .title h2, div.newsletter p { margin: 0; float: none; position: static; display: block;}
+div.newsletter p { font-size: 1.1em;}
+a.loginToSubscribe { display: block; color: #573227; background: #d9d3c5; padding: 4px 11px; font-size: 1.09em; line-height: 1.5; font-weight: bold; float: right;}
+div.newsletter a.loginToSubscribe { margin-left: auto; float: none; overflow: visible;}
+
+
+
+/*  VALIDATION STYLES
+-----------------------------------  */
+
+/*  client-side inline */
+
+em.error {color:#904848; display:block;width:103px;margin:2px 0 5px -.9em; font-style:normal; font-size:1.1em;padding:2px 0 0 0;}
+input.error {border:#904848 2px solid;background:#f3e6e6;}
+
+/*  server-side other */
+
+#messageBox.error {color:#904848;background: #f3e6e6;border:#904848 solid 1px;padding:3px;margin:0 0 3px 0;}
+
+/*  USER MESSAGE DIALOG STYLES
+----------------------------------  */
+
+/* loading  dialog  */
+
+#loadingMdoForm {text-align:center;}
+#loadingMdoForm h4 {font-size:1.3em;font-weight:bold;color:#9999CC;}
+#loadingMdoForm img {display:block;margin: 0 auto;padding:30px 0 0 0;}
+#loadingMdoForm p {font-size:1.3em;font-weight:bold;color:#9999CC;}
+
+/*  success dialog  */
+
+div.successMessage {text-align:left;padding:10px;background:#f6f3eb;border:1px solid #ccc;margin:0 1.5em;overflow:auto;width:inherit;}
+div.successMessage h4 {font-size:1.3em;font-weight:bold;color:#512f24 !important;}
+div.successMessage p {font-size:1.1em;color:#333;}
+
+/*  error dialog  */
+
+div.errorMessage {text-align:left;padding:10px;color:#904848;background: #f3e6e6;border:#904848 solid 1px;margin:0 1.5em;overflow:auto;}
+div.errorMessage h4 {font-size:1.3em;font-weight:bold;color:#904848 !important;}
+div.errorMessage p {color:#904848;}
+
+/*** emmi loading image */
+.loading-image { background: transparent url('/img/ajax-loader.gif') no-repeat center center; }
+
+/*  Heel Pain Styles 
+--------------------------------------- */
+
+#heelPainContainer {width:774px;background:#fff;border:0px solid #ccc;margin:0;overflow:auto;}
+#heelPainContainer  p {font-size:1.1em;margin:0 0 4px 0;padding:0;}
+#heelPainContainer  ul   {padding-left:5px;line-height:1.5em;margin-bottom:1.25em;list-style:none;}
+#heelPainContainer  ul li {padding-left:10px; margin-bottom:.1em;background:transparent url('../../img/bg_anchoredlist.gif') left .5em no-repeat;font-size:1.1em;}
+
+#heelPainRegisterForm h4 a {float:none;color: #ac5a41; text-decoration:underline;font-size:.8em;font-weight:normal;padding: 0 0 0 10px;}
+#heelPainRegisterForm form p {font-size:1em;font-weight:normal;}
+#heelPainRegisterForm legend {font-size:1.1em;font-weight:bold;color:#333;}
+#heelPainRegisterForm form ul li {list-style-type: none; list-style-image: none;background:none;font-size:.9em;}
+#heelPainRegisterForm form label {float: left;text-align:right;width:320px;padding-top:5px;}
+#heelPainRegisterForm form input {margin-left: 15px;}
+#heelPainRegisterForm fieldset li {float: left;clear: left; width: auto;padding-bottom:2px;position:relative;}
+#heelPainRegisterForm fieldset {width:760px;margin: 0;padding: 0;border:none;}
+#heelPainRegisterForm fieldset label.error {position: absolute;left:510px;top: 0.01em;width:210px;text-align: left;font-weight:normal;color:#904848;}
+#heelPainRegisterForm {width:inherit;height:inherit;margin:0 1.7em;}
+#heelPainRegisterForm em img {display:inline;}
+.heel-pain-outer-layover {width:763px;height:430px;}
+
+#heelPainContainer  form {position:relative;margin:5px 1px 5px 0;padding:0px 5px 5px 5px;float:left;width:740px;background:#fff;}
+#heelPainContainer  form p {font-weight:bold;font-size:1em;}
+#heelPainContainer  form ul {margin:0;padding:0 0 0 0px;}
+#heelPainContainer  form ul li {list-style-type: none; list-style-image: none;background:none;font-size:.9em;line-height:1em;width:99%;}
+#heelPainContainer  form label {font-size:1.1em;display:block;font-weight:bold;}
+
+#heelPainRightCol p{font-weight:normal!important;}
+.captchaBox {background:#F7F7F7;border: 1px solid #CCCCCC;height: 35px !important;margin-left: 335px !important;width:147px !important;padding-top:10px;}
+
+
+/*** Program images ***/
+#mep_header {background: transparent url('/ncal/static_includes/img/heelpainheader.jpg') no-repeat center center; height:220px; padding-left:22px;}
+#mep_header h1 {color: #904848; font-size:18px; padding-top:27px;}
+#mep_header p {width:440px; color:#333; margin-bottom:10px;}
+#mep_header .button {background-color:#105068; color:#fff; text-decoration:none; font-weight:200; 
+	font-size:12px; border:0px; height:19px; padding:3px 10px 1px 10px; margin-top:10px;}
+#mep_header .button-message {color:#105068; font-size:1.05em; float:left; margin-right:315px; margin-top:-35px; margin-left:150px}
+#mep_header .button-message {_width:230px; _float:right; _margin-right:180px;}
+
+/*** New Carousel Styles ***/
+.nonJS{display: none;},#imageCarousel{color:#333 !important;}
+.scrollableContent{height: 300px;margin-left:50px;*margin-left:0 !important;border: 0 !important;_float:right;!important;clear:none; _position: relative; _left:-60px;*position:relative;*left:50px;}.copyRight{font-size:11px;color:#999999;margin:0 0 10px 0;position:relative;}
+.scrollableImg,.scrollableContent{width: 445px !important; background: none !important; border-radius: 5px; padding: 8px 20px 10px 0; -webkit-border-radius:5px; float:left; position:relative; overflow:hidden; border:1px solid #ccc;}
+.scrollableImg{height:296px;}
+.scrollableImg .items, .scrollableContent .items {width: 20000em;position: absolute;clear: both;}
+.nonJSImg img, .scrollableImg img{height:297px !important;width:auto !important;max-width: 445px;max-height: 366px;margin:0 !important;padding:0 !important;float:none !important;display: inline-block;}
+.items .carouselImg{float: left; width: 445px !important; text-align:center; margin:0 10px 0 10px;}
+.items .carouselDesc{color:#333; font-size:12px;float: left; width: 445px !important; *width:445px; margin:0 30px 0 0px;}.items .carouselDesc ol {margin:10px 0 10px 20px;*margin:10px 0 10px 20px;}
+.nonJSDesc ol,.carouselDesc ol{color:#b88631;font-weight:bold;font-size:15px;}.carouselDesc ol li {line-height:1.0em;}
+.nonJSDesc p,.carouselDesc p{color:#333; font-size:12px;font-weight:normal;margin:0; *margin-left:10px;}
+.nonJSDesc li,.carouselDesc ul li{margin:0 0 5px 0; _margin-left:25px;*margin-left:25px;font-size:12px;margin:5px 0 5px 0;color:#333;}.carouselDesc ul{*margin-left:8px;}
+.nonJSDesc {margin: 15px 10px 0px 30px;}.nonJSDesc li{margin:8px 0 8px 0;}.nonJSImg {float:left; border-bottom:1px solid #ccc;margin-bottom:10px;}
+.carouselName {position: absolute;} .carouselDesc {text-align: left !important;} .carouselDesc div {_width:445px; *width:430px; *margin-bottom:30px;}
+#jsCarousel .navi a {width: 8px; height: 8px; float: left; margin: 3px; background: url('/ncal/static_includes/img/navigator.png') 0 0 no-repeat; display: block; font-size: 1px;}
+#jsCarousel .navi a.active {background-position: 0 -16px;}
+#jsCarousel .navi {margin-left: 245px !important; float:none !important;}
+#jsCarousel a.prev {background: url('/ncal/static_includes/img/scroll_left_lg.gif') no-repeat !important;}
+#jsCarousel a.next {background: url('/ncal/static_includes/img/scroll_right_lg.gif') no-repeat !important;*left:10px;*margin:0 !important;}
+#jsCarousel a.prev, #jsCarousel a.next{display: block; width: 30px; height: 30px; float: left; margin: 10px 5px; cursor: pointer; font-size: 1px; position: relative; top: 125px;}
+#jsCarousel a.disabled {visibility: hidden !important;}

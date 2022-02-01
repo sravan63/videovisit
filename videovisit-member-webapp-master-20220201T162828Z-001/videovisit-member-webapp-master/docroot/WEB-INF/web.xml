@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+	<display-name>Video Visits Member</display-name>
+    
+    <!-- Log4jConfigListener -->
+    <context-param>
+	    <param-name>log4jConfigLocation</param-name>
+	    <param-value>file:/usr/local/middleware/tcservervv/conf/appconf/vvm/log4j.xml</param-value>
+    </context-param>
+  	<context-param>
+	 	<param-name>log4jExposeWebAppRoot</param-name>
+	 	<param-value>false</param-value>
+	</context-param>
+    <listener>
+	    <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+    
+	<context-param> 
+		<param-name>contextConfigLocation</param-name> 
+		<param-value> 
+			/WEB-INF/action-servlet.xml
+		</param-value> 
+	</context-param> 
+	
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<!--  Listener used to detect devices: mobile, tablet or desktop -->
+	<listener>
+	  <listener-class>
+	     net.sourceforge.wurfl.core.web.WURFLServletContextListener
+	  </listener-class>
+	</listener>
+	<context-param>
+		<param-name>wurfl</param-name>
+		<param-value>/WEB-INF/lib/wurfl.zip</param-value>
+	</context-param>
+	
+   <filter>
+      <filter-name>Back Button Filter</filter-name>
+      <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.BackButtonFilter</filter-class>
+      
+       <init-param>
+	      <param-name>includeURLs</param-name>
+	      <param-value>guestready.htm,videoVisitGuestReady.htm,videoVisitReady.htm,landingready.htm</param-value>
+	   </init-param>
+
+       <init-param>
+	      <param-name>excludeURLs</param-name>
+	      <param-value>mdo.htm,mdohelp.htm,mdolive.htm,mdohelplive.htm,intro.htm,setup.htm,mobileAppPatientLogin.htm,mobilelaunchvv.htm</param-value>
+	   </init-param>
+       	    
+   </filter>
+  
+   <filter-mapping>
+		<filter-name>Back Button Filter</filter-name>
+		 <url-pattern>*.htm</url-pattern>
+   </filter-mapping>	
+	
+	<!-- Session for regular Web FILTER -->
+   <filter>
+    	<filter-name>WebSessionFilter</filter-name>
+    	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>	    
+	</filter>
+   
+   <filter-mapping>
+      <filter-name>WebSessionFilter</filter-name>
+      <url-pattern>*.htm</url-pattern>
+   </filter-mapping>
+    <filter-mapping>
+      <filter-name>WebSessionFilter</filter-name>
+      <url-pattern>/guest</url-pattern>
+   </filter-mapping>
+   <!-- 
+   <filter-mapping>
+      <filter-name>WebSessionFilter</filter-name>
+      <url-pattern>/guest</url-pattern>
+   </filter-mapping>
+    -->  
+  <!-- Session for AJAX call FILTER -->
+   <filter>
+      <filter-name>DataSessionFilter</filter-name>
+      <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.DataSessionFilter</filter-class>
+      
+       <init-param>
+	      <param-name>excludeURL</param-name>
+	      <param-value>mobilelogin.json,isValidUserSession.json,createSetupWizardMeeting.json,terminateSetupWizardMeeting.json,isValidMeeting.json,ssosubmitlogin.json</param-value>
+	    </init-param>
+   </filter>
+  
+   <filter-mapping>
+      <filter-name>DataSessionFilter</filter-name>
+      <url-pattern>*.json</url-pattern>
+   </filter-mapping>
+
+   <!-- Request Logging FILTER -->
+   <filter>
+      <filter-name>RequestLoggingFilter</filter-name>
+      <filter-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.filter.RequestLoggingFilter</filter-class>
+   </filter>
+	<filter-mapping>
+		<filter-name>RequestLoggingFilter</filter-name>
+		<url-pattern>*.json</url-pattern>
+		<url-pattern>*.xml</url-pattern>
+		<url-pattern>*.php</url-pattern>
+		<url-pattern>*.htm</url-pattern>
+		<url-pattern>*.html</url-pattern>
+		<url-pattern>*.js</url-pattern>
+		<url-pattern>*.css</url-pattern>
+		<url-pattern>*.gif</url-pattern>
+	</filter-mapping>
+
+   	<servlet>
+		<servlet-name>livePage</servlet-name>
+		<jsp-file>/live.jsp</jsp-file>
+	</servlet>  
+   <!-- Main Dispatcher Controller -->
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>
+			org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+      <servlet-name>action</servlet-name>
+      <url-pattern>/sso</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+      <servlet-name>action</servlet-name>
+      <url-pattern>/healthMonitor</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+      <servlet-name>action</servlet-name>
+      <url-pattern>/guest</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.htm</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.json</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>livePage</servlet-name>
+		<url-pattern>/ping</url-pattern>
+	</servlet-mapping>		
+	
+	<!-- Session Configuration-->
+	<session-config>
+		<session-timeout>22</session-timeout> <!-- Currently its been configured to 22 minutes-->
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>		
+	</welcome-file-list>
+	
+	<error-page>
+    <!-- Missing login -->
+    <error-code>401</error-code>
+    <location>/WEB-INF/jsp/generalError.jsp</location>
+    </error-page>
+    
+    <error-page>
+    <!-- Forbidden directory listing -->
+    <error-code>403</error-code>
+    <location>/WEB-INF/jsp/generalError.jsp</location>
+    </error-page>
+ 
+    <error-page>
+    <!-- Missing resource -->
+    <error-code>404</error-code>
+    <location>/WEB-INF/jsp/generalError.jsp</location>
+    </error-page>
+
+    <error-page>
+    <!-- Uncaught exception -->
+    <error-code>500</error-code>
+    <location>/WEB-INF/jsp/generalError.jsp</location>
+    </error-page>
+    
+    <error-page>
+    <!-- Unsupported servlet method -->
+    <error-code>503</error-code>
+    <location>/WEB-INF/jsp/generalError.jsp</location>
+    </error-page>
+
+
+	<!-- Simple Captcha not needed
+
+    <servlet>
+        <servlet-name>SimpleCaptcha</servlet-name>
+        <servlet-class>nl.captcha.servlet.SimpleCaptchaServlet</servlet-class>
+        <init-param>
+            <param-name>width</param-name>
+            <param-value>250</param-value>
+        </init-param>
+        <init-param>
+            <param-name>height</param-name>
+            <param-value>75</param-value>
+        </init-param>
+    </servlet>
+
+   <servlet-mapping>
+        <servlet-name>SimpleCaptcha</servlet-name>
+        <url-pattern>/stickyImg</url-pattern>
+    </servlet-mapping>
+	
+	-->
+	<servlet>
+		<servlet-name>emailAction</servlet-name>
+		<servlet-class>org.kp.tpmg.ttg.webcare.videovisits.member.web.servlet.EmailActionServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>emailAction</servlet-name>
+		<url-pattern>/emailAction.png</url-pattern>
+	</servlet-mapping>
+	
+</web-app>

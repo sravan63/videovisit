@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="35px" height="35px" viewBox="0 0 35 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>Round Button</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <circle id="path-1" cx="17.5" cy="17.5" r="17.5"></circle>
+    </defs>
+    <g id="Round-Button" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <mask id="mask-2" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <use id="Oval" fill="#9D291F" xlink:href="#path-1"></use>
+        <g id="color/@red" mask="url(#mask-2)" fill="#9D291F">
+            <g transform="translate(-3.000000, -3.000000)" id="Rectangle">
+                <rect x="0" y="0" width="41" height="41"></rect>
+            </g>
+        </g>
+        <g id="Icon/Expand/Off" mask="url(#mask-2)">
+            <g transform="translate(-1.000000, -1.000000)" id="Group">
+                <g transform="translate(7.000000, 7.000000)">
+                    <polygon id="Fill-1" fill="#FFFFFF" transform="translate(17.000000, 5.000000) scale(-1, -1) translate(-17.000000, -5.000000) " points="22 0 13.7723214 0.952678571 15.7732143 2.95446429 12 6.72767857 15.2723214 10 19.0464286 6.22678571 21.0473214 8.22767857"></polygon>
+                    <polygon id="Fill-2" fill="#FFFFFF" transform="translate(5.000000, 17.000000) scale(-1, -1) translate(-5.000000, -17.000000) " points="2.9547281 15.7726583 0.953656576 13.7715867 0 22 8.22841325 21.0463434 6.22734173 19.0452719 10 15.2717207 6.72827931 12"></polygon>
+                    <polygon id="Fill-3" fill="#FFFFFF" transform="translate(17.000000, 17.000000) scale(-1, -1) translate(-17.000000, -17.000000) " points="12 15.2781753 15.7620751 19.0402504 13.7576029 21.0456172 22 22 21.0447227 13.7576029 19.0402504 15.7620751 15.2781753 12"></polygon>
+                    <polygon id="Fill-4" fill="#FFFFFF" transform="translate(5.000000, 5.000000) scale(-1, -1) translate(-5.000000, -5.000000) " points="0 0 0.953571429 8.22767857 2.95446429 6.22678571 6.72767857 10 10 6.72767857 6.22678571 2.95446429 8.22767857 0.952678571"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

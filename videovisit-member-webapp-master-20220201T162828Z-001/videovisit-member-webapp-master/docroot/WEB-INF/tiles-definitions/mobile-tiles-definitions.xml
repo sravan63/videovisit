@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC  
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<!-- Application Template -->
+	<definition name=".mobileWebPageTemplate" template="/WEB-INF/tiles-templates/mobileLayout.jsp">
+		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/mobile/common/header.jsp" />
+		<put-attribute name="sidebar"  value="/WEB-INF/jsp/blank.jsp"  />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
+	</definition>
+	<definition name=".mobileWebPageTemplatePG" template="/WEB-INF/tiles-templates/mobileLayout.jsp">
+		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/mobile/common/headerpg.jsp" />
+		<put-attribute name="sidebar"  value="/WEB-INF/jsp/blank.jsp"  />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
+	</definition>
+	<definition name=".mobileInAppPageTemplate" template="/WEB-INF/tiles-templates/mobileInAppBrowserLayout.jsp">
+		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="gtm" value="/WEB-INF/jsp/common/gtmSnippet.jsp" />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+	</definition>
+
+	<definition name=".mobileJavascriptNotSupportedLayout" template="/WEB-INF/tiles-templates/mobileJavascriptNotSupportedLayout.jsp">
+		<put-attribute name="title" value="Video Visits Mobile" type="string" />
+		<put-attribute name="header" value="/WEB-INF/jsp/mobile/common/header.jsp" />
+		<put-attribute name="sidebar"  value="/WEB-INF/jsp/blank.jsp"  />
+ 		<put-attribute name="content" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="footer" value="/WEB-INF/jsp/mobile/common/footer.jsp" />
+	</definition>
+
+	<definition name="mobileEnableJavascript" extends=".mobileJavascriptNotSupportedLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/enableJavascript.jsp" />
+	</definition>
+	
+	<definition name=".oneColumnLayout" extends=".mobileWebPageTemplate">
+		<!-- <put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />	 -->
+	</definition>
+	<definition name=".oneColumnLayoutPG" extends=".mobileWebPageTemplatePG">
+		<!-- <put-attribute name="sidebar" value="/WEB-INF/jsp/nav/sidebar-empty.jsp" />	 -->
+	</definition>
+	
+	<definition name="mPatientPreLoginPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/preLoginPage.jsp" />
+	</definition>
+	<definition name="mPatientLightAuthPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/patientLightAuth.jsp" />
+	</definition>
+	
+	<definition name="mPGLightAuthPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/pgLightAuth.jsp" />
+	</definition>
+	
+	<definition name="mPatientLogin" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileAppPatientLogin.jsp" />
+	</definition>
+	
+	<definition name="mAppDownload" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileAppDownload.jsp" />
+	</definition>
+	
+	<definition name="mVideoVisitLandingPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/videovisitLanding.jsp" />
+	</definition>
+	
+	
+	
+	<definition name="mPatientLandingPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPage.jsp" />
+	</definition>
+	
+	<definition name="mAppPatientLandingPage" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileAppLandingPage.jsp" />
+	</definition>
+	
+	<definition name="mPatientGuestLandingPage" extends=".oneColumnLayoutPG">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/landingPagePG.jsp" />
+	</definition>
+	
+	<definition name="mPatientGuestPreLoginPage" extends=".oneColumnLayoutPG">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/prePatientGuestLoginPage.jsp" />
+	</definition>
+	
+	<definition name="mPatientGuestLoginPage" extends=".oneColumnLayoutPG">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/patientguestLoginModal.jsp" />
+	</definition>
+	
+	<definition name="mLogoutPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/logout-confirmation.jsp" />
+	</definition>
+	<definition name="mPGLogoutPage" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/pg-logout-confirmation.jsp" />
+	</definition>
+	
+	<definition name="meetingExpired" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/expired-visit.jsp" />
+	</definition>
+	
+	<definition name="meetingExpiredMember" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/expired-visit-member.jsp" />
+	</definition>
+	
+	<definition name="meetingExpiredMemberPG" extends=".oneColumnLayout">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/expired-visit-member-pg.jsp" />
+	</definition>
+	
+	<definition name="mAppPatientMeetingExpired" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileAppPatientMeetingExpired.jsp" />
+	</definition>
+	
+	<definition name=".dataTemplate" template="/WEB-INF/tiles-templates/dataLayout.jsp">
+ 		<put-attribute name="header" value="/WEB-INF/jsp/blank.jsp" />
+ 		<put-attribute name="data" value="/WEB-INF/jsp/blank.jsp" />
+	</definition>
+	
+	
+	<!-- json data -->
+	<definition name="jsonData" extends=".dataTemplate">
+ 		<put-attribute name="header" value="/WEB-INF/jsp/data/jsonHeader.jsp" />
+ 		<put-attribute name="data" value="/WEB-INF/jsp/data/jsonData.jsp" />
+	</definition>
+
+	<definition name="videoVisitMobilePexip" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/videoVisitMobilePexip.jsp" />
+	</definition>
+	
+	<definition name="mauthError" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/authError.jsp" />
+	</definition>
+	
+	<definition name="mobileNativeLogout" extends=".mobileInAppPageTemplate">
+ 		<put-attribute name="content" value="/WEB-INF/jsp/mobile/mobileNativeLogout.jsp" />
+	</definition>
+
+</tiles-definitions>

@@ -1,0 +1,712 @@
+@CHARSET "ISO-8859-1";
+
+.videoVisitContainer .error {
+  color: #ac5a41;
+  font-weight: bold;
+}
+
+.videoVisitContainer{
+	float: left;
+	font-size: 12px;
+	padding: 30px 0;
+	width: 762px;
+	height: auto;
+}
+
+.videoVisitContainer h1{
+	color: #AC5A41;
+	font-size: 36px;
+	font-family: Arial;
+	font-style: regular;
+	font-weight: normal;
+	margin: 0;
+}
+
+.videoVisitContainer h2{
+	color: #AC5A41;
+	font-size: 28px;
+	font-family: Arial;
+	font-style: regular;
+	font-weight: normal;
+	margin:0;
+}
+
+.videoVisitContainer h3{
+	color: #AC5A41;
+	font-size: 18px;
+	font-family: Arial;
+	font-style: regular;
+	font-weight: normal;
+	margin: 0;
+	padding: 0;
+	line-height: 1.5em;
+}
+
+.videoVisitContainer h4{
+	color: #AC5A41;
+	font-size: 15px;
+	font-family: Arial;
+	font-weight: bold;
+	margin:0;
+}
+
+.videoVisitContainer p{
+	line-height: 1em;
+	font-size: 14px;
+	font-family: Arial;
+	font-style: regular;
+	color: #333333;
+}
+
+.videoVisitContainer .subHead{
+	color: #333333;
+	font-size: 14px;
+	font-family: Arial;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.videoVisitContainer ul{
+
+}
+
+.videoVisitContainer ul li{
+	list-style-type: disc;
+	margin-left: 30px;
+/* 	color: #357895; */
+}
+
+.landingHalf ul li{
+	color: #357895;
+}
+
+.videoVisitContainer #mainHeader{
+	float: left;
+	padding: 0;
+	margin: 0 0 0 40px;
+	width: 720px;
+}
+
+.videoVisitContainer #mainContent{
+	float: left;
+	padding: 0;
+	margin: 6px 0 6px 40px;	
+	width: 720px;
+}
+
+#videoWrapper{
+	width: auto;
+}
+
+#videoContainer{
+/* 	background: url("../../../images/mdo/image_landing_page.png") no-repeat scroll center transparent; */
+	font-size: 11px;
+	height: 329px;
+	margin: 0px;
+	padding-left: 1px;
+	width: auto;
+	border: 1px solid #CCCCCC;
+	position: relative;
+}
+#presentation-view{
+	height:200px;
+	width:300px;
+	position:absolute;
+	top:0px;
+	left:0px;
+	display:none;
+	z-index: 5;
+}
+#navContent{
+	width: auto;
+	margin: 15px 0 0;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.videoVisitContainer .row{
+	width: 100%;
+	height: auto;
+	padding: 0 2px 0 0;
+}
+
+.row:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.row p{
+	/*margin: 10px 0 10px;*/
+}
+
+.row a{
+	font-size: 12px;
+	font-family: Arial;
+	font-style: regular;
+	color: #4D8993;
+}
+
+.row > .threeColumns a,
+a:active,
+a:visited {
+  color: #4d8993;
+}
+
+.videoVisitContainer .innerNav{
+/* 	margin-left: 12px; */
+}
+
+.landingHalf{
+    float: left;
+    width: 43%;
+    height: auto;
+    padding: 5px 5px 0;
+}
+
+.landingHalf.iconpromo1{
+}
+
+.landingHalf.iconpromo2{
+	margin-left: 0;
+}
+
+.icon{
+	width: 50px;
+	height: 100px;
+	margin-right: 12px;
+}
+
+.landingHalf .icon{
+	float:left;
+}
+
+.iconpromo1{
+	width: 350px;
+	position: relative;
+	margin: 0;
+}
+
+.iconpromo2{
+	float: right;
+	width: 350px;
+	position: relative;
+	margin: 0;
+}
+
+div#iconpromo1{
+/*  background: url("../../../images/mdo/icon_checklist.png") no-repeat scroll top center transparent; */
+}
+
+div#iconpromo2{
+/* 	background: url("../../../images/mdo/icon_devices.png") no-repeat scroll top center transparent; */
+}
+
+.videoVisitContainer .landingHalf p{
+	margin-bottom: 6px;
+}
+
+.videoVisitContainer .buttons{
+	height: auto;
+	margin: 10px 0;
+	overflow: auto;
+}
+
+.videoVisitContainer .button{
+	margin: 0;
+	padding: 4px 10px 3px 7px;
+	background: none repeat scroll 0 0 #4D8993;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-family: Arial;
+	text-decoration: none;
+}
+
+#lastContent{
+	width: auto;
+	margin: 15px 0 0;
+	border: none;
+	float: left;
+	position: relative;
+	height: auto;
+}
+
+.threeColumns{
+	border-left: 1px solid #CCCCCC;
+    float: left;
+    width: 30%;
+    height: 140px;
+    border-left: 1px solid #CCCCCC;
+    margin: 0 0 20px;
+    padding: 5px 5px 0;
+}
+
+.threeColumns.promo1{
+	border: none;
+}
+
+.installbutton{
+	background: none repeat scroll 0 0 #4D8993;
+	color: #FFFFFF;
+	font-size: 15px;
+	font-weight: normal;
+	padding: 4px 10px 3px 7px;
+	text-decoration: none;
+}
+
+/* ********************** Temporary Mast Head Provider ********************* */
+/*satish US15275 start*/
+#header-main{
+	background: #bb1654 none repeat scroll 0 0;
+    color: #FFFFFF;
+    font-family: "Open Sans";
+    font-size: 16px;
+    font-weight: 400;
+    height: 76px;
+    line-height: 25px;
+    margin-bottom: 5px;
+}
+
+#header-main .mdo-video-logo {
+  bottom: 10px;
+  display: block;
+  left: 8px;
+  text-decoration: none;
+}
+
+#header-main a.mdo-video-logo:hover,
+#header-main a.mdo-video-logo:active {
+  text-decoration: none;
+}
+
+#header-main h1 {
+  color: #fff;
+  font-size: 24px;
+  line-height: inherit;
+  margin: 0;
+}
+#header-main h1 small{
+display: block;
+ font-size: 16px;	
+color:#FFFFFF;
+margin-top:4px;
+}
+/*satish US15275 end*/
+/* ******************************* Help Page ******************************* */
+.videoVisitContainer #videoVisitHelpPageContents{
+
+}
+
+#videoVisitHelpPageContents p{
+	margin: 0 0 1em;
+}
+
+#videoVisitHelpPageContents #helpPageTitle{
+	margin: 0 0 0 40px;
+}
+
+#videoVisitHelpPageContents .ui-widget{
+	margin: 0 0 0 40px;
+}
+
+#videoVisitHelpPageContents #helpMainContents{
+	margin: 0 0 0 40px;
+}
+
+#videoVisitHelpPageContents #helpNavContents{
+	width: 700px;
+	margin: 30px 0 0;
+	padding-bottom: 40px;
+	float: left;
+	position: relative;
+	height: auto;
+	/*border-bottom: 1px solid #CCCCCC;*/
+}
+
+#helpNavContents a,
+a:active,
+a:visited {
+  color: #4d8993;
+  display: inline;
+}
+
+#videoVisitHelpPageContents #helpLastContents{
+	width: 700px;
+	margin: 40px 0 0;
+	padding-top: 20px;
+	border-top: 1px solid #CCCCCC;
+	float: left;
+	position: relative;
+	height: auto;
+}
+
+#videoVisitHelpPageContents #helpLastContents h4{
+	/*margin-bottom:*/
+}
+
+#videoVisitHelpPageContents #helpLastContents ul{
+	font-size: 14px;
+	margin: 0 0 1em;
+}
+
+#videoVisitHelpPageContents .rightNavContent{
+	border-left: 1px solid #CCCCCC;
+	margin-left: 25px;
+	padding-left: 40px;
+}
+
+
+/* ********************** ScrollUp ********************* */
+.videoVisitContainer .scrollup {
+  background: url("../../../images/mobile/video-visit-ui@2x_new.png") no-repeat
+    right;
+  background-size: 520px;
+  position: fixed;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1000;
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(20, 30, 40, 0.2);
+  border: 1px solid rgb(208, 210, 212) \9;
+  /* IE 8 and below */
+  border-radius: 5px;
+  background-color: rgba(20, 30, 40, 0.3);
+  background-color: rgb(208, 210, 212) \9;
+  /* IE 8 and below */
+  background-position: -9px -134px;
+  background-position: -38px -290px \9;
+  /* IE 8 and below */
+  content: "";
+}
+
+
+/* ******************************* Setup Page ******************************* */
+#videoVisitSetupContainer{
+
+}
+
+#setupContainer-primary,
+#setupContainer-main {
+  display: block;
+  height: 0;
+  clear: both;
+  background: none;
+}
+
+#setupContainer-primary{
+	text-align: left;
+	width: 950px;
+	height: auto;
+	margin: 0 auto;
+	padding: 5px;	
+}
+
+#setupContainer-main{
+	background: none repeat scroll 0 0 white;
+	border: 1px solid #CCCCCC;
+	height: auto;
+	width: auto;
+}
+
+#setupContent-main{
+    display: block;
+    height: auto;
+    min-height: 500px;
+    padding: 0 0 100px;
+    width: 785px;
+    margin: 0 auto;
+}
+
+/*#setupContainer-main .videoVisitContainer{
+	width: 730px;
+}	*/
+
+.videoVisitContainer #videoVisitSetupPageContents{
+	width: 100%;
+	height: auto;
+}
+
+
+.videoVisitContainer #setupPageTitle{
+	width: auto;
+}
+
+.videoVisitContainer #setupPageTitle h2{
+	line-height: 1em;
+}
+
+#videoVisitSetupPageContents #helpButtonContent{
+	width: auto;
+	float: right;
+}
+
+#helpButtonContent .button{
+	float: right;
+	background: none repeat scroll 0 0 #1F5A78;
+}
+
+/*.videoVisitContainer #setupMainContents{
+	margin: 40px 0 0;
+	width: 725px;
+	height: auto;
+}
+
+.videoVisitContainer #setupMainContents iframe{
+	overflow-y: auto;
+}	*/
+
+#videoVisitSetupPageContents #setupNavContents{
+	width: 100%;
+	margin: 30px 0 0;
+	padding-bottom: 40px;
+	float: left;
+	position: relative;
+	height: auto;
+	border-bottom: 1px solid #CCCCCC;
+}
+
+#setupInstructions a,
+#setupInstructions a:active,
+#setupInstructions a:visited,
+#setupInstructions a:hover {
+  display: inline;
+  text-decoration: none;
+  color: #ffffff;
+}
+
+/************* START - Setup Display Devices **************/
+.vidyoSprite {
+  background-image: url("../../../images/conference/sprite.png");
+}
+
+#displayDevices{
+	margin-top: 10px;
+    /*padding: 10px;*/
+    border: 1px solid #E9E9E9;
+    border-top: 10px solid #E9E9E9;
+    color: #666666;
+    font-size: 15px;
+    font-family: Avenir Next, sans-serif;
+}
+#displayDevices h3{
+	display: inline-block;
+    color: #FFFFFF;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 17.5px;
+    font-weight: normal;
+}
+#displayDevices table{
+    font-size: 15px;
+    margin: 0;
+    width: 100%;
+}
+#displayDevices table th{
+    /*border: none;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;*/
+}
+#displayDevices table tr{
+    /*border: none;
+    font-size: 15px;*/
+}
+#displayDevices table td{
+    border: none;
+    font-size: 15px;
+    vertical-align: middle;
+    padding: 0;
+    text-align: left;
+}
+
+#displayDevices .icon{
+	margin-right: 10px;
+}
+
+#displayDevices .setupSprite {
+  background-image: url("../../../images/conference/setupSprite.png");
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+}
+
+#displayDevices .drop-down {
+  width: 40px;
+  height: 40px;
+  background-image: url("../../../images/conference/setupSprite.png");
+  background-repeat: no-repeat;
+  background-position: 10px 12px;
+  float: right;
+}
+
+#displayDevices #titleBar{
+	background-color: #3F3D3D;
+}
+
+#displayDevices #settingsTitle{
+	padding: 10px 10px 0;
+}
+
+#displayDevices #settingsLogo {
+  background-image: url("../../../images/conference/sprite.png");
+  background-position: -12px -80px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+#displayDevices .accessory-header{
+	background-color: #3F3D3D;
+}
+
+#displayDevices .selected-accessory{
+	background-color: #EEEEEE;
+	border-bottom: 2px solid #979797;
+	/*height: 27px;	*/
+}
+
+#displayDevices .accessory-demo{
+	background-color: #FFFFFF;
+	height: 200px;
+}
+
+#displayDevices .accessory-instructions{
+	background-color: #FFFFFF;
+}
+
+.selected-accessory span,
+.accessory-demo span,
+.accessory-instructions span {
+  color: #000000;
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  margin: 5px auto;
+}
+
+.selected-accessory .threeColumns{
+	line-height: 2em;
+	text-align: center;
+}
+
+#displayDevices .accessory-demo td{
+	height: 200px;
+}
+
+#displayDevices .accessory-instructions td{
+	height: 75px;
+}
+
+#displayDevices .threeColumns{
+    width: 33.15%;
+    border-left: 1px solid #E9E9E9;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    color: #FFFFFF;
+}
+
+#displayDevices .threeColumns a,
+a:active,
+a:visited {
+  color: #ffffff;
+  font-weight: normal;
+  display: block;
+  text-decoration: none;
+}
+
+#displayDevices .firstColumn{
+	border: none;
+}
+
+#displayDevices .vidyoSprite{
+	width:40px;
+	height:40px;
+	display:inline-block;
+	vertical-align:top;
+}
+
+#displayDevices #selectCamera{
+	background-position:-12px -413px;
+}
+
+#displayDevices #selectMicrophone{
+	background-position:-12px -190px;
+}
+
+#displayDevices #selectSpeaker{
+	background-position:-12px -300px;
+}
+
+.accessory-header .setupAccessoryConfigContainer{
+	position: absolute;
+	color: black;
+	z-index: 9;
+}
+
+.accessory-header #setupCameraConfigContainer{
+}
+
+.accessory-header #setupMicConfigContainer{
+}
+
+.accessory-header #setupSpeakerConfigContainer{
+}
+
+#displayDevices #infoWrapper{
+	background-color: #FFFFFF;
+	border: none;
+	padding: 0;
+}
+
+#setupContents,
+#infoWrapper {
+  border-radius: 0;
+  border: 1px solid #A2A0A0;
+}
+
+/************* END - Setup Display Devices **************/
+#videoVisitSetupPageContents #setupLastNav{
+	margin: 10px 0;
+	overflow: auto;
+}
+
+#setupLastNav .button{
+	float: right;
+}
+
+/* ============		@BROWSER FIXES	======================== */
+
+.ie6 #container-main {
+  margin: 0;
+}
+
+/*DE7868 Start*/
+#displayDevices #configurationMicrophone table td,
+#displayDevices #configurationSpeaker table td,
+#displayDevices #configurationCamera table td {
+  vertical-align: top;
+}
+
+/*DE7868 End*/
+/*DE13936*/
+.center-fixed-positioned-div
+  .modal-body
+  .dialog-content-question
+  #plugin_upgrade_message {
+  font-weight: bold;
+  margin: 10px 0px;
+}
+
+.center-fixed-positioned-div
+  .modal-body
+  .dialog-content-question
+  #plugin_file_download_button {
+  padding: 4px 10px 3px 7px;
+  font-size: 15px;
+  background: none repeat scroll 0 0 #4d8993;
+  color: #ffffff;
+}
+/*DE13936*/

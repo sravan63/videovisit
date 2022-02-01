@@ -1,0 +1,751 @@
+/* NCAL */
+body {background:#fff;margin:0;padding:0;color:#333333;text-decoration: none;font-family: arial, helvetica,  sans-serif; 
+	font-size: 12px;text-align: left;}
+ 
+div, li, form, label, dl, dt, dd   {margin: 0;padding: 0; border: 0; }
+
+h1, h2, h3, h4, h5, h6 {font-weight: normal;margin: 0 0 1em;page-break-before:auto;}
+h2	{color: #333;}
+h3, h3 a	{color:#ac5a41;}       
+p, blockquote { line-height: 1.5em;margin: 0 0 1.5em; padding: 0;}
+ul, ol {margin: 0;padding: 0;}
+img {display: block;margin: 0;border: 0;} 
+
+table	{width:100%;float:left;margin:10px 0 20px 0;font-weight:normal;font-size:1em;}
+table td	{padding: 7px 0 6px 12px;border-bottom:1px solid #ccc;font-size:.9em;}
+table thead	{font-weight:bold;}
+table th	{padding: 7px 0 6px 12px;border-bottom:1px solid #ccc;font-size:.9em; font-weight:bold;vertical-align:top;}
+table td option {font-size:.9em;}
+
+
+a {color: #1e5972;text-decoration: none;}
+a:hover {text-decoration: underline;}
+
+sup {bottom:0.4em;left:0.2em;margin-right:0.4em;position:relative;vertical-align:0;}
+em {font-style: italic;}
+
+
+/* general classes
+---------------------------------------------------------- */
+
+.clearBoth {clear: both;}  
+
+.podcastIcon, .interactiveIcon, .videoIcon, .webIcon, .pdfIcon, .photoIcon, .alertIcon 		{display:none;} 
+
+.moreLinks,	.lessLinks	{padding:0;} 
+.warning {color:#b70300;}
+
+.breadCrumb	{padding-right:9px;margin-right:2px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_breadcrumb_tcm82-11945.gif') right center no-repeat;}
+
+.backArrow {padding-left:8px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_back_tcm82-11938.gif') left .2em  no-repeat;}
+
+a.seeAll {display:block;float:left;padding:3px 7px;border:1px solid #d7e1e3;margin:0 0 20px 0;background:#e2eaeb;}
+
+/* 	navigation
+---------------------------------------------------------- */ 
+/* main nav */    
+
+#mainNav {display:none;}
+
+/* icon nav  */
+#iconNav ul#iconList {display:none;}
+
+/* 	content nav */ 
+#contentNavContainer {width:800px;padding: 15px 0 0 1px;} 
+#drContentNav  {width:800px;height:30px;margin:0;list-style: none; line-height:1;}
+#drContentNav li {float: left;font-size:1em;font-weight:bold;list-style: none;padding:0 5px 0 0;border-bottom:1px solid #ccc;} 
+#drContentNav li ul { display:none;}
+#drContentNav li.noBorder {}
+ #drContentNav a {display: block;padding:7px 5px 9px 0;margin-left:10px;text-align:center;}
+
+#drContentNav #resources a,
+#drContentNav #about a {padding-right:24px;}
+
+#drContentNav li#resources a {width:12.9em;}
+#drContentNav li#about a {width:5em;}
+#drContentNav li#offices	{width:12em;}
+#drContentNav li#languages	{width:7em;}
+
+#drContentNav li.activeContent	{border-top:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;border-bottom:none;}
+#drContentNav li.activeContent a {color:#512f24;}
+#drContentNav li.activeContent a#noBg {background:none !important;}
+#drContentNav li.activeContent a#noBg {background:none !important;}
+
+/* 	content subnav  */
+#drContentSubNav	{float:none;width:700px;padding: 6px 12px 0; margin: 0;list-style: none;overflow:auto;}     
+#drContentSubNav li {float: left;font-size:1em;list-style: none;margin-top:.1em;padding-bottom:.25em;border-bottom:1px solid #ccc;} 
+#drContentSubNav li.last	{border-right:1px solid #ece9e2;}
+#drContentSubNav li.activeContentSub	{border-top:1px solid #ccc;border-left:1px solid #ccc;border-right:1px solid #ccc;border-bottom:none;}
+#drContentSubNav li#subDisCon 	{width:11.8em;} 
+#drContentSubNav li#subOffice 	{width:6.4em;} 
+#drContentSubNav li#subForms 	{width:4.2em;} 
+#drContentSubNav li#subTools 	{width:12em;} 
+#drContentSubNav li#subFaq 		{width:3.4em;}
+#drContentSubNav li.moreNav  	{}
+#drContentSubNav li.activeContentSubMore	{border-top:1px solid #ccc;border-left:1px solid #ccc;border-right:none;border-bottom:none;}
+#drContentSubNav li.moreSubNav	{border-top:1px solid #ccc;border-left:none;border-right:1px solid #ccc;border-bottom:none;}
+#drContentSubNav li#subPro a	{width:76px;}
+#drContentSubNav li#subPers a	{width:64px;}
+#drContentSubNav li a	{display:block;padding:.25em .5em 0;color:#512f24;}
+
+/* 	content morenav  */ 
+#drContentSubNav .moreNav ul, #drContentSubNav .moreNav  ul li, #drContentSubNav .moreNav ul li a, #drContentSubNav .moreNav.sfhover ul 	 {display:none;}
+
+/* third nav */
+#drContent .thirdNav, #drContent .thirdNav h3, #drContent .thirdNav h4 	{display:none;}
+
+/* 	layout
+---------------------------------------------------------- */
+#container_wrap	{margin: 0px;width:800px;padding-bottom:18px;}
+
+/* masthead */
+#masthead	{float:none;padding:5px 0;border-bottom:1px solid #CA230B;}
+#masthead h1	{width:800px;font-size:2em;}
+#mastheadSearch, #mastheadSearchBox	{display:none;}
+
+/* left column */
+#leftCol	{display:none;}
+
+/* doctor page */
+#doctor	{padding:10px 0px 0px 0px;width:800px;height:200px;}
+img#headshot	{float:left;display:inline;border:2px solid #d1d1d1;margin-right:14px;}
+#drHeader	{width:600px;float:left;padding-bottom:5px;}
+#drTitle	{width:600px;}
+#drTitle h2	{margin-bottom:.1em;font-size:1.7em;color:#000;}
+#drTitle h3	{margin:0;color:#000;font-weight:bold;font-size:1.1em;}
+#drTitle h3 a, #drTitle h3 span span, #drTitle h3 span span		{display:none;}
+#drQuote {display:none;}
+	
+#myOffices	{width:600px;float:left;font-size:1em;padding-top:.5em;}
+#myOffices h4	{font-weight:bold;color:#333333;font-size:1em;margin-bottom:0;}
+#myOffices dl	{line-height:1.3em;}
+#myOffices dt   {margin-top:.6em;}
+#myOffices p a.seeAll		{display:none;}
+#linksHandouts {display:none;}	
+
+/* general page */
+
+/* middle column */
+#mainContent	{width:608px;float:left;margin-left:1px;margin-bottom:30px;}
+#mainContent ul {}
+#mainHeader	{width:583px;float:left;padding:11px 0 0px 25px;}	
+#mainTitle	{float:left;}
+#mainTitle h2	{margin-bottom:.5em;font-size:1.9em;color:#ac5a41;}
+#mainTitle p	{font-size:1.1em;margin-bottom:1em;}
+#mainIntro	{width:590px;float:left;padding-left:15px;font-size:1.1em;}	
+	
+/* right column */
+#rightCol	{width:800px;padding:22px 0 20px ;display:inline;margin-left:6px;}
+
+/* footer */
+#footer {display:none;}
+ 
+/* 	main dr content
+---------------------------------------------------------- */ 
+#drContent	{float:none;margin-left:1px;margin-bottom:30px;border:none;width:700px;padding:0 30px 30px;display:inline;}	
+#drContent ul {}
+#contentLoader, #contentLoader img, #navLoader,  #navLoader img {display:none;}
+
+/* 	diseases & conditions */  
+#drGeneral	{padding:.8em 0 1.5em 23px;}
+#drGeneral h3	{font-size:1.2em;margin-bottom:.5em;margin-top:.5em;}
+#drGeneral ul.conditionsList {margin-top:1em;font-size:1.1em;margin-bottom:30px;list-style:none;}
+#drGeneral ul.conditionsList li	{margin-bottom:1em;}
+div.disConIntro, div.disConCategory	{padding:25px;border-bottom:1px solid #d9d3c5;font-size:1.1em;width:600px;}
+.disConIntro h3	{font-size:1.2em;margin-bottom:.5em;margin-top:.5em;}
+.disConCategory h3	{font-size:1.3em;margin-bottom:.5em;margin-top:.5em;}
+.disConIntro h3 a	{color:#1e5972;}
+div.seeAll {padding:.8em 23px 0;border-bottom:none;margin-bottom:1em;}
+.seeAll p   {display:none;}
+#disConHeader	{float:none;margin:0 0 0 20px;width:700px;padding:0 0 10px 0;overflow:auto;border-bottom:1px solid #ccc;}
+#disConHeader h3	{padding-top:20px;font-size:1.4em;font-weight:bold;}
+#disConHeader h3 a 	{display:none;}
+#disConHeader ul	{width:260px;float:left;margin:0;list-style:none;font-size:.9em;}
+#disConHeader ul li	{margin-left:10px;margin-bottom:.2em;padding-left:10px;}
+li#disConHdrActive a {font-weight:bold;text-decoration:underline;}
+
+#drConTwoCol	{background:none;width:720px;} 
+#drConTwoCol h4	{margin-bottom:.7em;font-size:1.2em;color:#ac5a41;}
+#drConLeftCol	{padding:15px 45px 10px 20px;width:600px;}
+#drConLeftCol h5	{color:#333333;font-size:1em;font-weight:bold;margin-bottom:.4em;}
+#drConLeftCol div.segment ul   {float:none;margin-left:15px;padding-left:5px;line-height:1.5em;margin-bottom:1.25em;}
+#drConLeftCol div.segment ul li {padding-left:0px; margin-bottom:.3em;}
+div.segment p a	{text-decoration:underline;}
+#drConLeftCol a.seeAll{font-size:.9em;}
+#drConRightCol	{margin-left:10px;padding:12px 5px 20px 10px;font-size:.9em;}
+.bb-mdo-disclaimerNotice-message {display:none;}
+.bb-mdo-disclaimerNotice-intercept webIcon {width:600px;}
+#drConRightCol h3	{font-size:1.2em;}
+#drConRightCol h5	{color:#333333;font-size:1.1em;font-weight:bold;margin-bottom:.4em;}
+#drConRightCol ul	{margin-bottom:1.1em;width:600px;list-style:none;}
+#drConRightCol ul li	{margin-bottom:.5em;}
+#drConRightCol ul li ul {margin:.4em 0 0 0;padding-left:10px;}
+#drConRightCol div.legend ul, #drConRightCol a.login, #drConRightCol a.referral, #drConRightCol a.subscription		{display:none;}   
+.drConList p	{margin-bottom:0;}
+.drConList  ul   {float:left;padding-left:5px;line-height:1.5em;margin-bottom:1.25em;}
+.drConList ul li {padding-left:10px;}
+
+
+	.drRefImages	{float:right;background:#e5e5e5;color:#333;text-align:center;width:139px;margin-left:10px;}
+    	.drRefImages img {border:2px solid #d1d1d1;margin-bottom:6px;}
+		.drRefImages p{margin-bottom:6px;font-size:.9em;}
+		
+	#drConLeftCol div.additionalReferences h5   {font-size:.9em;font-weight:normal;color:#ac5a41;}
+	#drConLeftCol div.segment .drAddRefList   {margin-bottom:1.5em;}
+	#drConLeftCol div.segment ul.drAddRefList   {list-style:none;margin-left:0;}
+	#drConLeftCol div.segment .drAddRefList ul li   {margin-bottom:1em;}
+	#drConLeftCol div.segment .drAddRefList li   {margin-bottom:.4em;background:none;padding-left:0;margin-left:-5px;}
+	#drConLeftCol a.photoIcon  {text-decoration:none;}
+
+	div.segment table	{width:100%;margin:10px 0 20px 0;font-weight:normal;font-size:1em;}
+
+	div.segment table td	{padding: 7px 0 6px 12px;border-bottom:1px solid #ccc;}
+
+
+/* 	office visit + professional about  */
+
+	#anchorDrContent h3	{font-size:1.3em;}
+	#anchorDrContent h4	{font-size:1.1em;color:#555;margin-bottom:.4em;font-weight:bold;}
+	#anchorDrContent h5	{font-size:1em;color:#ac5a41;margin-bottom:.4em;}
+	#anchorDrContent ul	{line-height:1.5em;margin-bottom:1.25em;width:600px;}
+		#anchorDrContent ul li {margin-bottom:.3em; list-style-position:outside;margin-left:20px;}
+	#anchorDrContent p a	{text-decoration:underline;}
+	#anchorDrContent ul li a	{text-decoration:underline;}
+
+	ul.tableContents	{font-size:1em;line-height:1.7em;letter-spacing:0px;}
+
+
+	#wideDrContent	{padding:20px;font-size:1.1em;}
+
+		#wideDrContent h2	{color:#ac5a41;font-size:1.3em;}	
+		#wideDrContent h4	{font-weight:bold;margin-bottom:.5em;font-size:1em;}
+			#wideDrContent ul ul 	{padding-left:25px;margin:.25em 0 .35em;}
+			#wideDrContent ul li 	{list-style:none;font-size:.9em;}
+	    #wideDrContent p	{width:465px;margin-bottom:1.5em;}  
+	
+	
+/* 	health tools & classes  */ 
+	
+	.healthTools ul 	{margin-bottom:.5em;list-style:none;}
+	.healthTools .bb-mdo-tree-node ul li a	{padding: 0 0 0 16px;font-weight:bold;} 
+	.healthTools .bb-mdo-tree-node-closed ul li a	{padding: 0 0 0 16px;font-weight:normal;} 
+	
+	 
+	
+	.healthTools a.seeAll	{display:none;}
+	.displayTable	{width:565px;margin:10px 0 20px 0;font-weight:normal;font-size:1em;}
+	.displayTable th	{padding: 0 0 5px 12px;font-size:1em;border-bottom:1px solid #ccc;}
+
+		.displayTable .titleCol	{width:200px;} 
+		.displayTable .iconCol	{padding:0 0 5px 3px;font-size:.9em;} 
+		.displayTable .loginCol	{width:20px;padding-left:3px;} 
+		.displayTable .refCol	{width:20px;padding-left:3px;} 
+		.displayTable .subsCol	{width:20px;padding-left:3px;} 
+		.displayTable .topicCol	{width:150px;} 
+		.displayTable .typeCol	{width:155px;} 
+
+	.displayTable td	{padding: 7px 0 6px 12px;border-bottom:1px solid #ccc;}
+	.displayTable tr.odd td	{background:#f0f0f0;}
+
+	.healthTools .bb-mdo-tree-node-contents ul li a, 
+	.healthTools .bb-mdo-tree-node-contents-closed ul li a	{background:none;padding:0;}
+	
+	.displayTable tfoot td	{display:none;}
+	
+/* 	offices  & directions  */ 
+
+  	.drDirections	{width:560px;padding-bottom:30px;page-break-after:always;}
+	
+	.drOffices	{float:left;width:245px;padding-bottom:20px;}
+
+    	.drOffices ul   {margin-bottom:1.5em;}
+
+    	.drOffices ul li   {line-height:1.5em;}
+
+	#mapDirections	{float:right;display:inline;width:315px;padding-bottom:20px;}
+
+    	#mapDirections a 		{color: #1e5972 !important;}
+
+
+/* 	faq   */
+
+	#drFaq p  {width:465px;margin-bottom:.5em;}
+	#drFaq div.bb-mdo-tree-node	{padding: 0 0 0 16px;} 
+	#drFaq div.bb-mdo-tree-node-closed	{padding: 0 0 0 16px;margin-left:20px;} 
+
+         #drFaq div.bb-mdo-tree-node .bb-mdo-tree-node-contents, #drFaq div.bb-mdo-tree-node .bb-mdo-tree-node-contents-closed	{margin-bottom:1.5em;width:500px;}
+	#drFaq div.faqList	{margin-bottom:1.5em;}
+
+/* 	forms   */
+
+	#drForms {float:left;padding-bottom:20px;}
+	#drForms p  {margin-bottom:.7em;}
+	
+		#drForms p.open	{margin-bottom:.2em;}
+        #drForms p.indent	{padding-left:20px;}
+
+		.forms	{width:465px;}
+		div.formsSection	{margin-bottom:1.5em;}
+         
+		.forms ul, .forms ul ul	{margin:0 0 0 20px;list-style:none;}
+		.forms ul li	{margin:0 0 .8em 0;}
+		.forms ul ul li	{margin:0 0 .5em 0;}
+
+
+
+/* 	print full article
+---------------------------------------------------------- */
+#mastheadPrint	{float:none;padding:5px 0;border-bottom:1px solid #CA230B;}
+#mastheadPrint h1	{width:800px;font-size:2em;}
+
+body.print #container {width:800px;padding:0;position:relative;background: #fff;}
+
+	
+body.print #doctor {width:740px;float:none;height:80px;}
+
+	body.print #drHeader	{border:none;padding:0;width:700px;display:inline;float:none;} 
+
+	body.print #drTitle	{padding-top:0;float:none;} 
+	
+	body.print #printLink	{display:none;}	
+	
+body.print #drContent	{border:none;width:740px;padding:0 30px 30px;}	
+	
+body.print #drConTwoCol	{background:none;width:auto;} 
+
+	body.print #drConLeftCol	{padding:0;width:550px;background:none;}
+
+			body.print #drConLeftCol h3   {font-size:1.6em;}
+
+            body.print #drConLeftCol ul	{padding-left:5px;margin-bottom:1.75em; }
+				
+				body.print #drConLeftCol ul li {padding-left:10px; margin-bottom:.5em; list-style-position:inside;}
+
+	body.print #drConLeftCol .drAddRefList   {margin-bottom:1.5em;}
+	body.print #drConLeftCol .drAddRefList ul  {list-style:none;}
+	body.print #drConLeftCol .drAddRefList ul li   {margin-bottom:1em;}
+	body.print #drConLeftCol .drAddRefList li   {margin-bottom:.4em;background:none;padding-left:0;margin-left:0px;list-style:none;}
+				
+	body.print .printThumb	{float:none;margin-right:6px;margin-bottom:10px;border:1px solid #ccc;padding:5px;page-break-before:auto;}
+	body.print .printThumb img	{margin-right:6px;}
+
+		body.print .printThumb p	{float:none;width:auto;margin:5px 7px;text-align:left;letter-spacing:0;font-size:.9em;}
+
+	body.print #drConRightCol	{margin:0;padding:40px 0 0 0;font-size:1em;width:800px;}
+	
+	body.printall #doctor {height:60px;}
+	body.printall #printLink {display: none}
+	body.printall #drConLeftCol h3   {font-size:1.6em;}
+	body.printall .printThumb	{float:none;margin-right:6px;margin-bottom:10px;border:1px solid #ccc;padding:5px;page-break-before:auto;}
+	body.printall .printThumb img	{margin-right:6px;}
+	body.printall .printThumb p	{float:none;width:auto;margin:5px 7px;text-align:left;letter-spacing:0;font-size:.9em;}        
+	body.printall #drConLeftCol ul {padding-left:5px;margin-bottom:1.75em; }
+	body.printall #drConLeftCol ul li {padding-left:10px; margin-bottom:.5em; list-style-position:inside;}
+	body.printall #drConLeftCol .drAddRefList   {margin-bottom:1.5em;}
+	body.printall #drConLeftCol .drAddRefList ul  {list-style:none;}
+	body.printall #drConLeftCol .drAddRefList ul li   {margin-bottom:1em;}
+	body.printall #drConLeftCol .drAddRefList li   {margin-bottom:.4em;background:none;padding-left:0;margin-left:0px;list-style:none;}
+	body.printall #drConLeftCol .drAddRefList li a {cursor:text;color:#666;}
+	body.printall #drConRightCol li a  {cursor:text;color:#666;}
+
+/* 	doctor search
+---------------------------------------------------------- */
+	
+#drSearchHeader	{width:776px;float:left;padding:11px 0 16px 11px;}
+	
+	#searchTitle	{width:610px;float:left;padding-left:15px;}
+		#searchTitle h2	{margin-bottom:.5em;font-size:1.9em;color:#ac5a41;}
+		#searchTitle p	{font-size:1.1em;margin-bottom:0;}
+
+	#drSearchHeader ul#iconList	{margin:0;}
+
+	#drSearchIntro	{width:590px;float:left;padding-left:15px;font-size:1.1em;}	
+	
+
+/*  dr search form  */
+
+#drSearchContainer	{width:785px;float:left;margin-left:1px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_search_container_tcm82-11963.gif') left top repeat-y;padding-left:1px;}
+
+#drSearchContainerBottom {width:785px;float:left;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_search_container_bottom_tcm82-11964.gif') left bottom no-repeat;}	
+
+	.landingHalf 	{width:388px;float:left;display:inline; border-top:1px solid #d9d3c5;font-size:1.2em;}
+    	.drSearchLeft {margin-right:7px;}
+
+        .landingHalf h3	{width:381px;color:#512f24;font-size:1.1em;background:#d9d3c5 url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_searchbox_hdr_tcm82-11965.gif') left top repeat-x;padding:8px 0 5px 7px;}
+			.drSearchRight h3	{margin-bottom:0;}
+
+        .landingHalf p	{margin-left:7px;float:left;width:370px;}
+
+        .drSearchForm	{background:#f6f3eb;margin:0 1px 5px;padding:5px 0 5px 10px;float:left;width:374px;}
+			.drSearchForm h5	{font-weight:bold;font-size:1em;margin-bottom:.1em;}
+			
+			.drSearchForm input, .drSearchForm select {float:left;font-size:.9em;}
+ 			.drSearchForm label {font-size:.85em;}
+
+ 	form .drSearchForm div	{display:inline; margin-right:10px;float:left;margin-bottom:5px;}
+       
+			form .drSearchForm div.fieldFirstLast, .drSearchForm input.firstLast	{width:115px;}
+            form .drSearchForm div.fieldGender, .drSearchForm select.gender		{width:95px;}
+            form .drSearchForm div.fieldSpecialty, .drSearchForm input.specialty	{width:200px;}
+            form .drSearchForm div.fieldLanguage, .drSearchForm select.lang		{width:140px;}
+            form .drSearchForm div.fieldFacility, .drSearchForm select.facility	{width:130px;}
+            form .drSearchForm div.fieldCityZip, .drSearchForm input.cityZip		{width:90px;}
+            form .drSearchForm div.fieldDistance, .drSearchForm select.distance	{width:80px;}
+
+
+            .drSearchForm span	{font-weight:bold;margin-right:10px;float:left;padding-top:3px;}
+
+            .searchBtn {float:right;color:#573227;font-size:1.2em;font-weight:bold;padding:7px 12px;background:#d9d3c5;} 
+                    .drSearchLeft .searchBtn	{margin:10px 20px 20px;}
+                    .drSearchRight .searchBtn	{margin:0 20px 20px;}
+
+	    .drSearchRight img	{margin:4px;} 
+	
+	
+	
+/*  dr search results  */	
+	
+#drSearchResults	{float:left;width:778px;border:1px solid #d9d3c5;margin:0 0 15px 3px;padding:6px 0 20px 4px;font-size:1.1em;}	
+	
+#drSearchResults .showing	{padding-left:5px;}
+
+	.showing span	{color:#ac5a41;text-transform:uppercase;font-weight:bold;} 
+	
+
+/*  dr refine results  */
+
+#refineDrSearch	{background:#f6f3eb;margin:0 0 15px;padding:10px 0 10px 10px;float:left;width:762px;}
+
+	#refineDrSearch h4	{font-size:1.2em;margin-bottom:.9em;color:#512f24;}
+
+	#refineDrSearch h5	{font-weight:bold;font-size:1em;margin-bottom:0;}
+
+	#refineDrSearch input, #refineDrSearch select {float:left;margin-top:.2em;}
+	#refineDrSearch label, #refineDrSearch input, #refineDrSearch select {font-size:.9em;}
+	
+	#refineDrSearch form div	{display:inline; margin-right:10px;float:left;padding-bottom:6px;}
+	form div.fieldFirstLast, #refineDrSearch input.firstLast	{width:135px;}
+	form div.fieldSpecialty, #refineDrSearch input.specialty	{width:180px;}
+ 	form div.fieldGender, #refineDrSearch select.gender	{width:80px;}
+	form div.fieldLanguage, #refineDrSearch select.lang	{width:125px;}
+	form div.fieldFacility, #refineDrSearch select.facility	{width:150px;}
+	form div.fieldCityZip, #refineDrSearch input.cityZip	{width:80px;}
+ 	form div.fieldDistance, #refineDrSearch select.distance	{width:125px;}
+
+		 #refineDrSearch span	{font-weight:bold;margin-right:15px;float:left;padding-top:.6em;}
+
+         #refineDrSearch .searchBtn {float:left;margin:5px 0 0 0;} 
+   
+
+/*  results table  */
+
+.resultsTable	{width:774px;float:left;margin:20px 0px;}
+
+	.resultsTable th	{font-size:1.1em;padding: 0 0 15px 12px;color:#000;}
+    .resultsTable th a	{display:inline;color:#000;padding-right:1em;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_sort_col_tcm82-11966.gif') right .5em no-repeat;}
+    
+		.resultsTable th#lastCol	{width:95px;} 
+		.resultsTable th#firstCol   {width:131px;}
+		.resultsTable th#specCol    {width:132px;}
+		.resultsTable th#facCol     {width:93px;}
+		.resultsTable th#distCol    {width:99px;}
+		.resultsTable th#langCol    {width:89px;}
+		.resultsTable th#sexCol     {width:48px;}
+
+	.displayTable td, .resultsTable td	{padding: 7px 0 6px 12px;}
+
+    .displayTable tr.odd td, .resultsTable tr.odd td {background:#f0f0f0;}
+
+
+
+/* 	global search
+---------------------------------------------------------- */ 
+
+
+#resultsContent	{width:700px;margin-left:1px;margin-bottom:30px;}
+	#resultsContent ul	{margin:0 0 20px 20px;}
+	#resultsContent ul li	{margin-bottom:1em;}
+	
+	#resultsContent	#drConLeftCol {padding:20px 25px;width:600px;}
+	
+dl.resultsList	{line-height:1.5em;}	
+
+	dl.resultsList dd {margin-bottom:1.5em;}
+	
+
+dl.drList	{line-height:1.4em;margin-bottom:15px;}
+	dl.drList  dt   {margin-top:.6em;}
+	
+
+
+/* 	structured content without clinician
+---------------------------------------------------------- */ 
+#conditionHeader	{float:none;padding:11px 0 10px 25px;margin:0 0 20px 0;overflow:auto;border-bottom:1px solid #ccc;width:700px;}
+
+	#conditionHeader h3	{font-size:1.9em;}
+	#conditionHeader h3 a 	{display:none;}
+
+	  	#conditionHeader ul	{width:260px;float:left;margin:0;list-style:none;}
+	      	#conditionHeader ul li	{margin-left:10px;margin-bottom:.2em;padding-left:10px;}
+							
+		li#disConHdrActive a {font-weight:bold;text-decoration:underline;}
+
+  #conditionsDescrip	{width:520px;float:left;font-size:1.1em;padding:20px 60px 20px 20px; border:1px solid #d9d3c5;}
+
+		#conditionsDescrip h4	{font-weight:bold;text-transform:uppercase;margin-bottom:.7em;font-size:1em;}
+
+
+
+/* 	health tools
+---------------------------------------------------------- */ 
+#drSearchResults h4.refineToolsHdr	{width:185px;float:left;}
+
+.multiSelect 	{margin:3px 10px 5px 0;float:left;width:425px;position:relative;}
+
+.multiSelect select	{width:190px;}
+
+       #drSearchResults select option	{margin:.1em 0;}
+
+.multiSelect p	{font-size:.9em;width:200px;float:left;line-height:1.3em;}
+
+
+.multiSelect a.searchBtn	{position:absolute;bottom:0; left:200px;}
+
+
+		#healthToolsTable th#mediaCol	{width:110px;} 
+		#healthToolsTable th#titleCol	{width:210px;} 
+		#healthToolsTable th#topicCol	{width:140px;} 
+		#healthToolsTable th#typeCol	{width:142px;} 
+		
+		#healthToolsTable tfoot td	{border-top:1px solid #ddd;padding:2px 0 0 12px;} 
+
+
+			 #healthToolsTable div.legend ul	{font-size:.9em;margin:0;padding:0;color:#999999;list-style:none;}
+			 #healthToolsTable div.legend ul li	{float:left;margin-right:20px;}
+
+			#healthToolsTable a.login		{display:block;height:12px;width:15px;text-indent:-9999px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/icon_login_sm_tcm82-12803.gif') left 3px no-repeat;float:left;}     
+			#healthToolsTable a.referral	{display:block;height:12px;width:15px;text-indent:-9999px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/icon_referral_sm_tcm82-12804.gif') left 3px no-repeat;float:left;}     
+			#healthToolsTable a.subscription	{display:block;height:12px;width:15px;text-indent:-9999px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/icon_subscription_sm_tcm82-12805.gif') left 3px no-repeat;float:left;}     
+
+
+
+
+
+
+
+/* 	pagination
+---------------------------------------------------------- */ 
+
+.drSearchPagination 	{float:left;display:inline;width:774px;}
+.conditionPagination 	{display:none;}
+
+ul.pagination	{list-style:none;font-size:.9em;text-align:center;padding:6px 0;}
+
+	ul.pagination li	{display:inline;background:none;padding-right:0;margin-right:0;}
+		
+		ul.pagination li.grey	{display:inline;padding:5px 4px 5px 7px;border:1px solid #dddddd;color:#dddddd;margin-right:10px;}
+
+ 		ul.pagination li.current	{display:inline;padding:5px 5px 5px 7px;font-weight:bold;margin-right:10px;}
+
+		ul.pagination li.ellipse	{padding:5px 0;margin-right:10px;}	
+	
+	ul.pagination li a	{padding:5px 7px; border:1px solid #91a5ad;margin-right:8px;color:#578396;background:#f3f3f3;}
+
+	
+	
+	
+
+
+/* 	ajax modal windows
+---------------------------------------------------------- */
+
+
+#bookmark	{width:621px;background:#fff url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_bkmrk_tcm82-11939.jpg') left top no-repeat;padding:90px 0 25px 123px; text-align:left;font-size:1.1em;position:relative;}
+
+	.modalClose	{position:absolute;top:6px;right:10px;font-size:1.1em;}
+	
+.videoBox .btl-modal-content .modalClose	{font-size:1em;}
+
+
+		.modalClose a	{color:#573227;padding:4px 22px 4px 0; background: transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_modal_close_tcm82-11960.gif') right center no-repeat;}
+		
+
+    #bookmark_bg_wrapper	{float:left; width:282px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_bkmrk_content_tcm82-11940.jpg') right top repeat-y;}
+    #bookmark_bot_wrapper	{float:left; width:282px;background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_bkmrk_content_bot_tcm82-11941.jpg') right bottom no-repeat;}
+    
+    #bookmark_drs, #bookmark_pages	{float:left; width:222px;padding:12px 20px 25px 40px;}
+
+    	#bookmark_drs {background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_bkmrk_drs_content_top_tcm82-11928.jpg') right top no-repeat;}
+    	#bookmark_pages {background:transparent url('http://mydoctor.kaiserpermanente.org/ncal/Images/bg_bkmrk_pages_content_top_tcm82-11942.jpg') right top no-repeat;}
+
+
+    #manageLink, #deleteLink	{float:left;color:#573227;font-size:1.1em;font-weight:bold;padding:7px;background:#d9d3c5;}
+    
+		#manageLink {margin:0 0 0 40px;}
+
+        #deleteLink {margin:15px 0 0;}
+
+    #cancelLink	{float:left;margin:20px 10px 0 20px;color:#573227;font-size:1.2em;}
+
+    #bookmark form {float:left;display:block;margin:0;padding:0;}
+
+		#bookmark label 	{float:left;width:220px;padding: 0 0 .7em;margin:0;}
+        #bookmark  input	{margin:0 5px 0 0;float:left;} 
+
+#textBox {width: 400px;background: #fff;position: relative;}
+
+.modalContent {padding: 40px 20px 0;}
+
+	.modalContent p {font-size: 1.33em;;}
+	
+.modalBtnFooter {margin: 15px;float: right;}
+
+	.modalBtnFooter a {float: left;color: #573227;font-size: 1.2em;}
+	.modalBtnFooter a.modalCancel {padding: 7px 12px;}
+	
+
+.disclaimerNotice {background: #fff;position: absolute;}
+
+.videoBox {width: 793px; background-color: #fff;position: absolute;font-size: 1.2em;text-align: left;}
+
+.modalVideo {width: 546px;padding: 0 10px 10px; }
+
+	.modalVideo p { padding: 0 6px; margin: 0; }
+	.modalVideo .modalMp3Image { display: none; }
+	.modalVideo .modalMp3Image img { margin: 0 auto; }
+	.modalVideo .modalFlashVideo { width: 100%; height: 436px; }
+	.modalVideo .modalFlashVideo object, .modalVideo .modalFlashVideo embed { width: 100%; height: 100%; }
+
+
+.modalVideoList {width: 202px;position:absolute;right:0;top:35px;padding: 0 20px 0 5px;font-size: 0.9em;overflow:auto;height:431px;overflow-x:hidden;}
+
+	.modalVideoList h1 { font-weight: bold; margin: 0 0 .9em; font-size: 1em;}
+	.modalVideoList ul {list-style: none;padding: 0;width:100%;}
+	.modalVideoList li { margin: 0 0 .8em;padding-left: 15px;}
+
+
+.modalVideoFooter p { margin:0 0 2px; zoom: 1;}
+
+.largeflash .modalVideo { width: auto; padding-top: 35px; }
+.largeflash .modalVideo .modalFlashVideo { }
+.largeflash .modalVideo p { display: none; }
+.largeflash .modalVideoList { display: none; }
+.largeflash .modalVideoFooter { display: none; }
+
+
+.mp3 .modalVideo .modalMp3Image { display: block; }
+.mp3 .modalVideo .modalFlashVideo { height: 20px; width: 400px; margin: 0 auto 10px; }
+.mp3 .modalVideoList { height: 170px; }
+
+.galleryBox {width: 670px;background: #fff;position: absolute;}
+
+	.galleryImg {padding: 40px 0 0;font-size: 1.2em;} 
+
+		.galleryImgArea { height: 300px; position: relative; overflow: hidden; }
+			.galleryImgArea img { margin: 0 auto; position: absolute; }
+		.galleryImg p.galleryCaption { margin: 0; padding: 0 40px 5px; height: 35px; }
+		.galleryImg p.galleryCopy {margin: 0; font-size: 0.75em; padding: 0;text-align: center; height: 15px; }
+	
+	.galleryThumbs {width: 651px;border: 2px solid #dadada;background: #f3f0e6 none;padding: 10px 0 8px 15px;overflow:hidden; }
+	
+		.galleryThumbsSlider { height: 80px; overflow:hidden; white-space: nowrap; position: relative; }
+			.galleryThumbsSlider img { border: 10px solid #f3f0e6; margin-right: 2px; top: 0px; display: inline; position: relative; cursor: hand; cursor: pointer; }
+	
+
+#justVid {width: 581px;background: #fff url('http://mydoctor.kaiserpermanente.org/ncal/Images/modal_header_logo_tcm82-11984.gif') 15px 10px no-repeat;position: relative;text-align: left;}
+
+	#justVid_video {padding: 45px 10px 0;}
+	
+	.largeJustVid #justVid { width:765px;} 
+	
+
+.printSection {width: 530px;background: #fff;position: absolute;text-align: left;}
+
+	.printSection p {color: #ac5a41;font-size: 1.5em;padding: 40px 0 0 15px;}
+		
+	.printSection label {display: block;height: 70px;padding: 20px 0 0 140px;font-size: 1.33em;}
+		.printSection label.printEntirePage {background: url('http://mydoctor.kaiserpermanente.org/ncal/Images/icon_print_entire_page_tcm82-11985.gif') 40px 0 no-repeat;}
+		.printSection label.printMainSection {background: url('http://mydoctor.kaiserpermanente.org/ncal/Images/icon_print_main_section_tcm82-11986.gif') 40px 0 no-repeat;}
+
+
+.bb-mdo-bookmarkDoctor-bookmarkMe {display:none;}
+
+ /* custom review styles */
+
+         #drContentNav #about.previewNoLink, #drContentNav #offices.previewNoLink {color:#1e5972;display: block;padding:7px 5px 9px 5px;text-align:center;}
+	     #drContentNav li#about.previewNoLink {width:5em;}
+ 	     #drContentNav li#offices.previewNoLink	{width:12em;}
+
+		.bb-mdo-content-subcontentlink-name {display:none;}
+		
+/* print link urls */
+
+#drConLeftCol div.segment .drAddRefList a {
+   content: " (" attr(href) ") ";
+   }
+
+/* 	transition message 
+---------------------------------------------------------- */
+
+#meerkat-wrap {display: none;}
+#meerkat {display: none;}
+#meerkat-content {display: none;}
+
+
+/*   STAYING HEALTHY PAGE 
+----------------------------------------------------------------*/
+
+#mdoHomeContainer #drContent #resultsContent { border-bottom: none !important; width:598px!important; margin-bottom: 0;}
+.clinician	{border:1px solid #97a0ab;border-top:none;}
+#mdoHomeContainer .nonClinician	{border:1px solid #d9d3c5 !important;margin-top:20px;}
+
+#ajax-loader {display:none;}
+.crumb_submenu {display:none;}
+.sh_hero {display:none;}
+.footer {display:none;}
+
+#breadcrumb {background: #f1f2f2;height: 30px;margin: 0 0 20px 0;font-size: 18px;list-style-type: none;font-weight:bold;}
+#breadcrumb .crumb {display:none;}
+#breadcrumb .active {display:block;}
+#breadcrumb .bucket {display: inline-block;padding: 7px 20px 0 0px;}
+#landingRight .carousel {display:none;}
+.landingListColumn{margin:10px 10px 0px 0px;width:275px;float:left;}
+.landingListColumn ul {list-style:none;}
+.bg_bottom_divider{margin-bottom:0px;border-bottom:1px solid #cccccc;}
+
+
+#fullWidthBottomContent {  margin-top: 25px; }
+.featuredArticlesWrapper {  display: inline-block;  margin-bottom: 10px;}
+.featuredArticlesboxLeft { 	margin: 10px 10px 0 0;  padding: 8px 0px 0px;  width: 275px;float:left; }
+.featuredArticlesWrapper h5 {  color: #AC5A41;  font-size: 14px;  padding-bottom: 3px;  margin-bottom: 0px;}
+
+.promoLarge {display:none;}
+a.seeAll{float:none;}
+.drRefImages {float:none;}
+
+
+#fullWidthBottomContent .carousel {  display:none; }
+#healthguideSearchDocBox, #healthguideSearchDocBox_sm {display:none;}
+#contentList	{width:600px;margin-left:1px;margin: 0; border: 1px solid #d9d3c5; border-bottom: 0;}
+#contentList .disConIntro, #contentList .disConCategory	{padding:.8em 20px 0;border-bottom:1px solid #d9d3c5;line-height: 1.5em;width: 600px;}
+
+#drConRightCol h4	{color:#ac5a41;font-weight: normal;}
+#drConRightCol h5	{color:#333333; font-weight:normal; margin-bottom:.4em;}
+
+/* Structured Article  Staying Healthy Page styles*/
+
+#mdoHomeContainer #conditionHeader	{padding:11px 0 20px 0;margin: 0px;float:left;}
+#mdoHomeContainer #conditionHeader h3 {font-size:18px; font-weight:bold;} 
+#mdoHomeContainer #conditionHeader h3 a 	{margin-left:1.5em;font-size:.52em;}
+#mdoHomeContainer #conditionHeader ul	{width:300px;float:left;list-style:disc inside;}
+#mdoHomeContainer #conditionHeader ul li	{margin-left:0px;margin-bottom:.2em;padding-left:0px;}
+#mdoHomeContainer #drConTwoCol{width:600px;}
+#mdoHomeContainer #resultsContent #drConLeftCol {  padding: 20px 0px;  }
+#mdoHomeContainer #resultsContent #drConRightCol {  padding: 20px 0px;  margin-left:0px;}
+#mdoHomeContainer .drRefImages {margin-left:0px;}
+#mdoHomeContainer .additionalReferences h5{font-size:14px !important;}
+
+#legalCopy {font-size:10px;width:600px;}
+
+#mdoHomeContainer, #conditionHeader, #drContent {width:600px !important;}
+#jsCarousel {display:none !important;}
