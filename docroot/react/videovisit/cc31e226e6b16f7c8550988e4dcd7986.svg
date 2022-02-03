@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Header/White/Right/Close</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="VV" transform="translate(-934.000000, -343.000000)" fill="#333333">
+            <g id="Header/White/Right/Close" transform="translate(934.000000, 343.000000)">
+                <polygon id="Close-Right" points="17.7174216 0.000408016157 10.000476 7.71735361 2.28489048 0.000408016157 0 2.28393844 7.71694559 9.99952398 0 17.7164696 2.28489048 20 10.000476 12.2830544 17.7174216 20 19.999592 17.7164696 12.2840064 9.99952398 19.999592 2.28393844"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

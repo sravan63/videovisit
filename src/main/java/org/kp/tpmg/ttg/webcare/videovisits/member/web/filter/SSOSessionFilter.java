@@ -52,7 +52,7 @@ public class SSOSessionFilter implements Filter {
 					updateAuthToken(req, resp);
 					chain.doFilter(req, resp);
 				} else {
-					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+					chain.doFilter(req, resp);
 				}
 			}
 		} else {
@@ -115,7 +115,7 @@ public class SSOSessionFilter implements Filter {
 					if (StringUtils.isNotBlank(req.getHeader(WebUtil.SSO_SESSION))) {
 						MeetingCommand.performSSOSignOff(req, resp, req.getHeader(WebUtil.SSO_SESSION));
 					}
-					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+					chain.doFilter(req, resp);
 				}
 			}
 			if (ssoCookie != null && StringUtils.isNotBlank(ssoCookie.getValue())) {
@@ -127,7 +127,7 @@ public class SSOSessionFilter implements Filter {
 					chain.doFilter(req, resp);
 				} else {
 					MeetingCommand.performSSOSignOff(req, resp, ssoCookie.getValue());
-					resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+					chain.doFilter(req, resp);
 				}
 			}
 		} catch (Exception e) {
